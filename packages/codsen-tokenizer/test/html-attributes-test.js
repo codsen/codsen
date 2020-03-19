@@ -405,47 +405,50 @@ t.test(
   }
 );
 
-t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
-  const gathered = [];
-  ct(`<body alink="rgb()">`, {
-    tagCb: obj => {
-      gathered.push(obj);
-    }
-  });
+t.test(
+  `02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - false alarm, brackets - rgb()`,
+  t => {
+    const gathered = [];
+    ct(`<body alink="rgb()">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
 
-  t.match(gathered, [
-    {
-      tagNameStartsAt: 1,
-      tagNameEndsAt: 5,
-      tagName: "body",
-      recognised: true,
-      closing: false,
-      void: false,
-      pureHTML: true,
-      esp: [],
-      type: "tag",
-      start: 0,
-      end: 20,
-      tail: null,
-      kind: null,
-      attribs: [
-        {
-          attribName: "alink",
-          attribNameStartsAt: 6,
-          attribNameEndsAt: 11,
-          attribOpeningQuoteAt: 12,
-          attribClosingQuoteAt: 18,
-          attribValue: "rgb()",
-          attribValueStartsAt: 13,
-          attribValueEndsAt: 18,
-          attribStart: 6,
-          attribEnd: 19
-        }
-      ]
-    }
-  ]);
-  t.end();
-});
+    t.match(gathered, [
+      {
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "tag",
+        start: 0,
+        end: 20,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "alink",
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValue: "rgb()",
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
+            attribStart: 6,
+            attribEnd: 19
+          }
+        ]
+      }
+    ]);
+    t.end();
+  }
+);
 
 // 03. bool attributes
 // -----------------------------------------------------------------------------
@@ -1238,7 +1241,7 @@ t.test(`06.01 - two attrs, one recognised one not`, t => {
   t.end();
 });
 
-// 07. broken
+// 07. broken opening
 // -----------------------------------------------------------------------------
 
 t.test(
@@ -2012,6 +2015,142 @@ t.todo(
       }
     });
     t.match(gathered, [], "07.20");
+    t.end();
+  }
+);
+
+// 07. broken opening
+// -----------------------------------------------------------------------------
+
+t.test(
+  `08.01 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, one attr`,
+  t => {
+    const gathered = [];
+    ct(`<span width="100>zzz</span>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value: '<span width="100>',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 6,
+              attribEnd: 16
+            }
+          ]
+        },
+        {
+          type: "text",
+          start: 17,
+          end: 20,
+          value: "zzz"
+        },
+        {
+          type: "tag",
+          start: 20,
+          end: 27,
+          value: "</span>",
+          tagNameStartsAt: 22,
+          tagNameEndsAt: 26,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: []
+        }
+      ],
+      "08.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `08.02 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, two attrs`,
+  t => {
+    const gathered = [];
+    ct(`<a href="xyz border="0">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 24,
+          value: '<a href="xyz border="0">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "href",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 7,
+              attribOpeningQuoteAt: 8,
+              attribClosingQuoteAt: null,
+              attribValue: "xyz",
+              attribValueStartsAt: 9,
+              attribValueEndsAt: 12,
+              attribStart: 3,
+              attribEnd: 12
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 13,
+              attribNameEndsAt: 19,
+              attribOpeningQuoteAt: 20,
+              attribClosingQuoteAt: 22,
+              attribValue: "0",
+              attribValueStartsAt: 21,
+              attribValueEndsAt: 22,
+              attribStart: 13,
+              attribEnd: 23
+            }
+          ]
+        }
+      ],
+      "08.02"
+    );
     t.end();
   }
 );

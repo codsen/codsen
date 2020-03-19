@@ -828,6 +828,37 @@ function tokenizer(str, originalOpts) {
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
+      } else if (str[i] === "=" && "'\"".includes(str[stringLeftRight.right(str, i)])) {
+        var whitespaceFound = void 0;
+        var attribClosingQuoteAt = void 0;
+        for (var _y3 = stringLeftRight.left(str, i); _y3 >= attrib.attribValueStartsAt; _y3--) {
+          if (!whitespaceFound && !str[_y3].trim().length) {
+            whitespaceFound = true;
+            if (attribClosingQuoteAt) {
+              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
+            }
+          }
+          if (whitespaceFound && str[_y3].trim().length) {
+            whitespaceFound = false;
+            if (!attribClosingQuoteAt) {
+              attribClosingQuoteAt = _y3 + 1;
+            }
+          }
+        }
+        if (attribClosingQuoteAt) {
+          attrib.attribValueEndsAt = attribClosingQuoteAt;
+          if (Number.isInteger(attrib.attribValueStartsAt)) {
+            attrib.attribValue = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
+          }
+          attrib.attribEnd = attribClosingQuoteAt;
+          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            layers.pop();
+          }
+          token.attribs.push(clone(attrib));
+          attribReset();
+          i = attribClosingQuoteAt - 1;
+          continue;
+        }
       }
     }
     if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i].trim().length) {
@@ -849,19 +880,19 @@ function tokenizer(str, originalOpts) {
     if (str[i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
       var thisIsRealEnding = false;
       if (str[i + 1]) {
-        for (var _y3 = i + 1; _y3 < len; _y3++) {
-          if (attrib.attribOpeningQuoteAt !== null && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
-            if (_y3 !== i + 1 && str[_y3 - 1] !== "=") {
+        for (var _y4 = i + 1; _y4 < len; _y4++) {
+          if (attrib.attribOpeningQuoteAt !== null && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
+            if (_y4 !== i + 1 && str[_y4 - 1] !== "=") {
               thisIsRealEnding = true;
             }
             break;
-          } else if (str[_y3] === ">") {
+          } else if (str[_y4] === ">") {
             break;
-          } else if (str[_y3] === "<") {
+          } else if (str[_y4] === "<") {
             thisIsRealEnding = true;
             layers.pop();
             break;
-          } else if (!str[_y3 + 1]) {
+          } else if (!str[_y4 + 1]) {
             thisIsRealEnding = true;
             break;
           }

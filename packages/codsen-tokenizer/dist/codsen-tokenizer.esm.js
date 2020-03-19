@@ -1302,6 +1302,40 @@ function tokenizer(str, originalOpts) {
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
+      } else if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+        let whitespaceFound;
+        let attribClosingQuoteAt;
+        for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
+          if (!whitespaceFound && !str[y].trim().length) {
+            whitespaceFound = true;
+            if (attribClosingQuoteAt) {
+              const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
+            }
+          }
+          if (whitespaceFound && str[y].trim().length) {
+            whitespaceFound = false;
+            if (!attribClosingQuoteAt) {
+              attribClosingQuoteAt = y + 1;
+            }
+          }
+        }
+        if (attribClosingQuoteAt) {
+          attrib.attribValueEndsAt = attribClosingQuoteAt;
+          if (Number.isInteger(attrib.attribValueStartsAt)) {
+            attrib.attribValue = str.slice(
+              attrib.attribValueStartsAt,
+              attribClosingQuoteAt
+            );
+          }
+          attrib.attribEnd = attribClosingQuoteAt;
+          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            layers.pop();
+          }
+          token.attribs.push(clone(attrib));
+          attribReset();
+          i = attribClosingQuoteAt - 1;
+          continue;
+        }
       }
     }
     if (
