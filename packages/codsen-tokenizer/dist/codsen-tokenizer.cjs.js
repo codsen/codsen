@@ -827,6 +827,7 @@ function tokenizer(str, originalOpts) {
         attrib.attribEnd = i;
         token.attribs.push(clone(attrib));
         attribReset();
+        layers.pop();
       }
     }
     if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i].trim().length) {

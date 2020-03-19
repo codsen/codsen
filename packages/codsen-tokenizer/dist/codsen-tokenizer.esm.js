@@ -1301,6 +1301,7 @@ function tokenizer(str, originalOpts) {
         attrib.attribEnd = i;
         token.attribs.push(clone(attrib));
         attribReset();
+        layers.pop();
       }
     }
     if (
