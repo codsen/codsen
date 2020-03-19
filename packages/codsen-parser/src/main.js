@@ -884,19 +884,39 @@ function cparser(str, originalOpts) {
           previousTagsToken.type !== tokenObj.type ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
-        console.log(
-          `888 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
-            tokenObj.type === "comment" ? tokenObj.kind : ""
-          }-missing-opening`}\u001b[${39}m`}`
-        );
-        if (opts.errCb) {
-          opts.errCb({
-            ruleId: `${tokenObj.type}${
-              tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
-            }-missing-opening`,
-            idxFrom: tokenObj.start,
-            idxTo: tokenObj.end
-          });
+        if (tokenObj.void) {
+          console.log(
+            `889 frontal slash must be removed because it's a void tag`
+          );
+          if (opts.errCb) {
+            console.log(
+              `893 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+                tokenObj.type === "comment" ? tokenObj.kind : ""
+              }-missing-opening`}\u001b[${39}m`}`
+            );
+            opts.errCb({
+              ruleId: `tag-void-frontal-slash`,
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end,
+              fix: { ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]] }
+            });
+          }
+        } else {
+          console.log(`905 it's an unpaired tag`);
+          if (opts.errCb) {
+            console.log(
+              `908 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+                tokenObj.type === "comment" ? tokenObj.kind : ""
+              }-missing-opening`}\u001b[${39}m`}`
+            );
+            opts.errCb({
+              ruleId: `${tokenObj.type}${
+                tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+              }-missing-opening`,
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end
+            });
+          }
         }
       }
 
@@ -936,7 +956,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `939 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `959 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

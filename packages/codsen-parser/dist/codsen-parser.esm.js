@@ -439,14 +439,25 @@ function cparser(str, originalOpts) {
           previousTagsToken.type !== tokenObj.type ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
-        if (opts.errCb) {
-          opts.errCb({
-            ruleId: `${tokenObj.type}${
-              tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
-            }-missing-opening`,
-            idxFrom: tokenObj.start,
-            idxTo: tokenObj.end
-          });
+        if (tokenObj.void) {
+          if (opts.errCb) {
+            opts.errCb({
+              ruleId: `tag-void-frontal-slash`,
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end,
+              fix: { ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]] }
+            });
+          }
+        } else {
+          if (opts.errCb) {
+            opts.errCb({
+              ruleId: `${tokenObj.type}${
+                tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+              }-missing-opening`,
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end
+            });
+          }
         }
       }
       lastProcessedToken = { ...tokenObj };

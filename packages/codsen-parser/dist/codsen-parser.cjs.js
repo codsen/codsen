@@ -292,12 +292,25 @@ function cparser(str, originalOpts) {
         op.set(res, path, tokenObj);
       }
       if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-        if (opts.errCb) {
-          opts.errCb({
-            ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
-            idxFrom: tokenObj.start,
-            idxTo: tokenObj.end
-          });
+        if (tokenObj["void"]) {
+          if (opts.errCb) {
+            opts.errCb({
+              ruleId: "tag-void-frontal-slash",
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end,
+              fix: {
+                ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
+              }
+            });
+          }
+        } else {
+          if (opts.errCb) {
+            opts.errCb({
+              ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
+              idxFrom: tokenObj.start,
+              idxTo: tokenObj.end
+            });
+          }
         }
       }
       lastProcessedToken = _objectSpread2({}, tokenObj);
