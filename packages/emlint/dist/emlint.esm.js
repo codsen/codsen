@@ -147,6 +147,7 @@ var allBadCharacterRules = [
 ];
 
 var allTagRules = [
+	"tag-bad-self-closing",
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
@@ -2814,6 +2815,31 @@ function tagBold(context, ...opts) {
           fix: {
             ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
           }
+        });
+      }
+    }
+  };
+}
+
+function tagBadSelfClosing(context) {
+  return {
+    tag: function(node) {
+      if (
+        !node.void &&
+        node.value.endsWith(">") &&
+        node.value[left(node.value, node.value.length - 1)] === "/"
+      ) {
+        const idxFrom =
+          node.start +
+          left(node.value, left(node.value, node.value.length - 1)) +
+          1;
+        const idxTo = node.start + node.value.length - 1;
+        context.report({
+          ruleId: "tag-bad-self-closing",
+          message: "Remove the slash.",
+          idxFrom,
+          idxTo,
+          fix: { ranges: [[idxFrom, idxTo]] }
         });
       }
     }
@@ -10190,6 +10216,7 @@ defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
+defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(

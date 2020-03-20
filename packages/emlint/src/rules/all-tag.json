@@ -1,4 +1,5 @@
 [
+  "tag-bad-self-closing",
   "tag-bold",
   "tag-closing-backslash",
   "tag-is-present",

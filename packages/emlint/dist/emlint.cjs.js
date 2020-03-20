@@ -300,6 +300,7 @@ var allBadCharacterRules = [
 ];
 
 var allTagRules = [
+	"tag-bad-self-closing",
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
@@ -3039,6 +3040,26 @@ function tagBold(context) {
           idxTo: node.end,
           fix: {
             ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function tagBadSelfClosing(context) {
+  return {
+    tag: function tag(node) {
+      if (!node["void"] && node.value.endsWith(">") && node.value[stringLeftRight.left(node.value, node.value.length - 1)] === "/") {
+        var idxFrom = node.start + stringLeftRight.left(node.value, stringLeftRight.left(node.value, node.value.length - 1)) + 1;
+        var idxTo = node.start + node.value.length - 1;
+        context.report({
+          ruleId: "tag-bad-self-closing",
+          message: "Remove the slash.",
+          idxFrom: idxFrom,
+          idxTo: idxTo,
+          fix: {
+            ranges: [[idxFrom, idxTo]]
           }
         });
       }
@@ -8592,6 +8613,9 @@ defineLazyProp(builtInRules, "tag-is-present", function () {
 });
 defineLazyProp(builtInRules, "tag-bold", function () {
   return tagBold;
+});
+defineLazyProp(builtInRules, "tag-bad-self-closing", function () {
+  return tagBadSelfClosing;
 });
 defineLazyProp(builtInRules, "attribute-duplicate", function () {
   return attributeDuplicate;

@@ -823,6 +823,9 @@ defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 import tagBold from "./rules/tag/tag-bold";
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 
+import tagBadSelfClosing from "./rules/tag/tag-bad-self-closing";
+defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
+
 // ATTRIBUTE rules
 // -----------------------------------------------------------------------------
 
@@ -1856,7 +1859,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1859 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1862 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
