@@ -2,7 +2,6 @@
 
 > Edit package.json without parsing, as string, keep indentation etc intact
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -229,8 +228,6 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 
-[node-img]: https://img.shields.io/node/v/edit-package-json.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/edit-package-json
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
 [cov-img]: https://img.shields.io/badge/coverage-98.27%25-brightgreen.svg?style=flat-square

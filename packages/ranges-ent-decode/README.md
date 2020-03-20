@@ -2,7 +2,6 @@
 
 > Decode HTML entities recursively, get string index ranges of what needs to be replaced where
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -191,8 +190,6 @@ Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>
 https://github.com/mathiasbynens/he
 
-[node-img]: https://img.shields.io/node/v/ranges-ent-decode.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/ranges-ent-decode
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode
 [cov-img]: https://img.shields.io/badge/coverage-94.44%25-brightgreen.svg?style=flat-square

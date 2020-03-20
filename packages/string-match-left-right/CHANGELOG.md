@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - no more opts.relaxedApi - it's relaxed as much as possible by default, no
-emoji-related code
+  emoji-related code
 
 ## CHANGES
 

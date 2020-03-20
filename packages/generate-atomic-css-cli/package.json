@@ -113,7 +113,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "generate-atomic-css": "^1.2.33",
     "globby": "^11.0.0",
     "is-d": "^1.0.0",

@@ -174,8 +174,6 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Icons mapping in util.js/`defaultTypes` taken from [all-contributors-cli](https://github.com/jfmengels/all-contributors-cli). MIT Licence.
 
-[node-img]: https://img.shields.io/node/v/lect.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/lect
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lect
 [cov-img]: https://img.shields.io/badge/coverage-Unknown%25-red.svg?style=flat-square

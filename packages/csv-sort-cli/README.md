@@ -2,7 +2,6 @@
 
 > Command line app to sort double-entry CSVs coming from internet banking statements
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -118,8 +117,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/csv-sort-cli.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/csv-sort-cli
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

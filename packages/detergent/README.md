@@ -314,8 +314,6 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
 
-[node-img]: https://img.shields.io/node/v/detergent.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/detergent
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
 [cov-img]: https://img.shields.io/badge/coverage-90.26%25-brightgreen.svg?style=flat-square

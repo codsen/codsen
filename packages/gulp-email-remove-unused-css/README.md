@@ -2,7 +2,6 @@
 
 > Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -152,8 +151,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/gulp-email-remove-unused-css.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css
 [cov-img]: https://img.shields.io/badge/coverage-77.78%25-yellow.svg?style=flat-square

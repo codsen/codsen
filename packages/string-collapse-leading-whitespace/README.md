@@ -2,7 +2,6 @@
 
 > Collapse the leading and trailing whitespace of a string
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![no dependencies][no-deps-img]][no-deps-url]
@@ -160,8 +159,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/string-collapse-leading-whitespace.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/string-collapse-leading-whitespace
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
 [cov-img]: https://img.shields.io/badge/coverage-94.64%25-brightgreen.svg?style=flat-square

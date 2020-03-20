@@ -2,7 +2,6 @@
 
 > Tells, is given character a part of astral character, specifically, a high and low surrogate
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![no dependencies][no-deps-img]][no-deps-url]
@@ -157,8 +156,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/string-character-is-astral-surrogate.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/string-character-is-astral-surrogate
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-character-is-astral-surrogate
 [cov-img]: https://img.shields.io/badge/coverage-91.3%25-brightgreen.svg?style=flat-square

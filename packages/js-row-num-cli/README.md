@@ -218,8 +218,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/js-row-num-cli.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/js-row-num-cli
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

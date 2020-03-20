@@ -33,13 +33,6 @@
 	},
 	"badges": [
 		{
-			"node": {
-				"alt": "Minimum Node version required",
-				"img": "https://img.shields.io/node/v/%REPONAME%.svg?style=flat-square&label=works%20on%20node",
-				"url": "https://www.npmjs.com/package/%REPONAME%"
-			}
-		},
-		{
 			"gitlab": {
 				"alt": "Repository is on GitLab",
 				"img": "https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square",
@@ -264,7 +257,7 @@
 			"tap": "^14.10.6",
 			"benchmark": "^2.1.4",
 			"lect": "^0.12.2",
-			"rollup": "^2.0.6",
+			"rollup": "^2.1.0",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-babel": "^4.4.0",
 			"rollup-plugin-cleanup": "^3.1.1",

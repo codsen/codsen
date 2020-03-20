@@ -114,7 +114,7 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "email-all-chars-within-ascii": "^2.9.56",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "globby": "^11.0.0",
     "inquirer": "^7.1.0",
     "lodash.pullall": "^4.2.0",

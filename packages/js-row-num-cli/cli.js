@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint no-console:0 */
-
 const meow = require("meow");
 const fs = require("fs-extra");
 const globby = require("globby");

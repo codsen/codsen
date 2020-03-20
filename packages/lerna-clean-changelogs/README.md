@@ -199,8 +199,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/lerna-clean-changelogs.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/lerna-clean-changelogs
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
 [cov-img]: https://img.shields.io/badge/coverage-95.35%25-brightgreen.svg?style=flat-square

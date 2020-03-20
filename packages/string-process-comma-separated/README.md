@@ -2,7 +2,6 @@
 
 > Extracts chunks from possibly comma or whatever-separated string
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![no dependencies][no-deps-img]][no-deps-url]
@@ -371,8 +370,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/string-process-comma-separated.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/string-process-comma-separated
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
 [cov-img]: https://img.shields.io/badge/coverage-92.41%25-brightgreen.svg?style=flat-square

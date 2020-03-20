@@ -43,7 +43,7 @@
         "generate-atomic-css": 1,
         "get-pkg-repo": 2,
         "github-slugger": 1,
-        "globby": 9,
+        "globby": 10,
         "he": 4,
         "hex-color-regex": 1,
         "html-all-known-attributes": 2,
@@ -52,7 +52,7 @@
         "html-entities-not-email-friendly": 2,
         "import-modules": 1,
         "inquirer": 3,
-        "is-d": 4,
+        "is-d": 5,
         "is-html-tag-opening": 1,
         "is-language-code": 1,
         "is-media-descriptor": 1,
@@ -86,7 +86,7 @@
         "log-symbols": 2,
         "log-update": 1,
         "matcher": 10,
-        "meow": 12,
+        "meow": 13,
         "mime-db": 1,
         "object-all-values-equal-to": 1,
         "object-delete-key": 1,
@@ -100,7 +100,7 @@
         "p-map": 4,
         "p-one": 1,
         "p-progress": 1,
-        "p-reduce": 8,
+        "p-reduce": 9,
         "package-json-editor": 1,
         "pacote": 1,
         "plugin-error": 1,
@@ -146,7 +146,7 @@
         "through2": 1,
         "type-detect": 4,
         "unescape-js": 1,
-        "update-notifier": 12,
+        "update-notifier": 13,
         "url-regex": 1,
         "util-array-object-or-both": 2,
         "util-nonempty": 1,
@@ -212,22 +212,22 @@
             "lodash.clonedeep": 22
         },
         {
-            "meow": 12
+            "meow": 13
         },
         {
-            "update-notifier": 12
+            "update-notifier": 13
         },
         {
             "matcher": 10
         },
         {
+            "globby": 10
+        },
+        {
             "fs-extra": 9
         },
         {
-            "globby": 9
-        },
-        {
-            "p-reduce": 8
+            "p-reduce": 9
         },
         {
             "lodash.uniq": 7

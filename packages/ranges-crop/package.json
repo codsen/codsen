@@ -128,7 +128,7 @@
     "lect": "^0.12.2",
     "lodash.clonedeep": "^4.5.0",
     "ranges-apply": "^3.1.1",
-    "rollup": "^2.0.6",
+    "rollup": "^2.1.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",

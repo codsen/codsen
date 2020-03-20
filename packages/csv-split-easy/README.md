@@ -2,7 +2,6 @@
 
 > Splits the CSV string into array of arrays, each representing a row of columns
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -191,8 +190,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/csv-split-easy.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/csv-split-easy
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
 [cov-img]: https://img.shields.io/badge/coverage-97.5%25-brightgreen.svg?style=flat-square

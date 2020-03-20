@@ -185,8 +185,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/ast-monkey-traverse.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/ast-monkey-traverse
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
 [cov-img]: https://img.shields.io/badge/coverage-95.83%25-brightgreen.svg?style=flat-square

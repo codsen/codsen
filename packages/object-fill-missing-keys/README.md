@@ -2,7 +2,6 @@
 
 > Add missing keys into plain objects, according to a reference object
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -367,8 +366,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/object-fill-missing-keys.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/object-fill-missing-keys
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
 [cov-img]: https://img.shields.io/badge/coverage-97.01%25-brightgreen.svg?style=flat-square

@@ -2,7 +2,6 @@
 
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -84,8 +83,6 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 Unit test #13 - uses changelog of **giu 0.13.4** to test automated error fixing, released under MIT License (MIT) Copyright © 2016-2018 Guillermo Grau Panea
 Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated error fixing, released under MIT License (MIT) Copyright © 2016 Jed Watson
 
-[node-img]: https://img.shields.io/node/v/chlu.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/chlu
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
 [cov-img]: https://img.shields.io/badge/coverage-88.43%25-brightgreen.svg?style=flat-square

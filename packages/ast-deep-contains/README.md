@@ -2,7 +2,6 @@
 
 > an alternative assertion for Ava's t.deepEqual and Tap's t.same
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -343,8 +342,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-[node-img]: https://img.shields.io/node/v/ast-deep-contains.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/ast-deep-contains
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
 [cov-img]: https://img.shields.io/badge/coverage-93.9%25-brightgreen.svg?style=flat-square
