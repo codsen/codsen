@@ -35,7 +35,8 @@ const linkTypes = [
 ];
 
 const astErrMessages = {
-  "tag-missing-opening": "Opening tag is missing."
+  "tag-missing-opening": "Opening tag is missing.",
+  "tag-void-frontal-slash": "Remove frontal slash."
 };
 
 // -----------------------------------------------------------------------------
@@ -94,14 +95,14 @@ function isObj(something) {
 
 function isAnEnabledRule(config, ruleId) {
   console.log(
-    `097 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+    `098 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
       config,
       null,
       4
     )}`
   );
   console.log(
-    `104 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+    `105 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
       ruleId,
       null,
       4
@@ -109,7 +110,7 @@ function isAnEnabledRule(config, ruleId) {
   );
 
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
-    console.log(`112 RETURN ${config[ruleId]}`);
+    console.log(`113 RETURN ${config[ruleId]}`);
     return config[ruleId];
   } else if (
     ruleId.includes("-") &&
@@ -120,7 +121,7 @@ function isAnEnabledRule(config, ruleId) {
     isObj(config) &&
     Object.prototype.hasOwnProperty.call(config, "all")
   ) {
-    console.log(`123 RETURN ${config.all}`);
+    console.log(`124 RETURN ${config.all}`);
     return config.all;
   }
 

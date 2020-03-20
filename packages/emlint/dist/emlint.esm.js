@@ -155,6 +155,7 @@ var allTagRules = [
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
+	"tag-void-frontal-slash",
 	"tag-void-slash"
 ];
 
@@ -361,7 +362,8 @@ const linkTypes = [
   "tag"
 ];
 const astErrMessages = {
-  "tag-missing-opening": "Opening tag is missing."
+  "tag-missing-opening": "Opening tag is missing.",
+  "tag-void-frontal-slash": "Remove frontal slash."
 };
 function isLetter(str) {
   return (
@@ -2881,7 +2883,8 @@ function attributeMalformed(context, ...opts) {
             fix: null
           });
         }
-      } else if (
+      }
+      if (
         node.attribValueStartsAt !== null &&
         context.str[node.attribNameEndsAt] !== "="
       ) {
@@ -2891,6 +2894,40 @@ function attributeMalformed(context, ...opts) {
           idxFrom: node.attribStart,
           idxTo: node.attribEnd,
           fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
+        });
+      }
+      const ranges = [];
+      if (
+        node.attribOpeningQuoteAt === null &&
+        node.attribValueStartsAt !== null
+      ) {
+        ranges.push([
+          node.attribValueStartsAt,
+          node.attribValueStartsAt,
+          node.attribClosingQuoteAt === null
+            ? `"`
+            : context.str[node.attribClosingQuoteAt]
+        ]);
+      }
+      if (
+        node.attribClosingQuoteAt === null &&
+        node.attribValueEndsAt !== null
+      ) {
+        ranges.push([
+          node.attribValueEndsAt,
+          node.attribValueEndsAt,
+          node.attribOpeningQuoteAt === null
+            ? `"`
+            : context.str[node.attribOpeningQuoteAt]
+        ]);
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "attribute-malformed",
+          message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
+          idxFrom: node.attribStart,
+          idxTo: node.attribEnd,
+          fix: { ranges }
         });
       }
     }
@@ -11316,7 +11353,14 @@ class Linter extends EventEmitter {
                 message = astErrMessages[obj.ruleId];
               }
               this.report(
-                Object.assign({ message, severity: currentRulesSeverity }, obj)
+                Object.assign(
+                  {
+                    message,
+                    severity: currentRulesSeverity,
+                    fix: null
+                  },
+                  obj
+                )
               );
             }
           }

@@ -74,17 +74,59 @@ function attributeMalformed(context, ...opts) {
             fix: null
           });
         }
-      } else if (
+      }
+
+      // equal missing
+      if (
         node.attribValueStartsAt !== null &&
         context.str[node.attribNameEndsAt] !== "="
       ) {
-        console.log(`081 RAISE ERROR`);
+        console.log(`084 RAISE ERROR ABOUT EQUALS SIGN`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd, // second elem. from last range
           fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
+        });
+      }
+
+      // opening quotes missing
+      const ranges = [];
+      if (
+        node.attribOpeningQuoteAt === null &&
+        node.attribValueStartsAt !== null
+      ) {
+        console.log(`100 OPENING QUOTE MISSING`);
+        ranges.push([
+          node.attribValueStartsAt,
+          node.attribValueStartsAt,
+          node.attribClosingQuoteAt === null
+            ? `"`
+            : context.str[node.attribClosingQuoteAt]
+        ]);
+      }
+      if (
+        node.attribClosingQuoteAt === null &&
+        node.attribValueEndsAt !== null
+      ) {
+        console.log(`113 CLOSING QUOTE MISSING`);
+        ranges.push([
+          node.attribValueEndsAt,
+          node.attribValueEndsAt,
+          node.attribOpeningQuoteAt === null
+            ? `"`
+            : context.str[node.attribOpeningQuoteAt]
+        ]);
+      }
+      if (ranges.length) {
+        console.log(`123 RAISE ERROR ABOUT QUOTES`);
+        context.report({
+          ruleId: "attribute-malformed",
+          message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
+          idxFrom: node.attribStart,
+          idxTo: node.attribEnd, // second elem. from last range
+          fix: { ranges }
         });
       }
     }

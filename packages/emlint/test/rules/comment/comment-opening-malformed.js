@@ -678,13 +678,16 @@ t.todo(
     const str = `<!--if !mso><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
+    const fixed = `<!--if !mso><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.10");
+    t.equal(applyFixes(str, messages), fixed, "03.10");
     t.end();
   }
 );

@@ -308,6 +308,7 @@ var allTagRules = [
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
+	"tag-void-frontal-slash",
 	"tag-void-slash"
 ];
 
@@ -459,7 +460,8 @@ var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 var fontSizeRegex = /^[+-]?[1-7]$/;
 var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
 var astErrMessages = {
-  "tag-missing-opening": "Opening tag is missing."
+  "tag-missing-opening": "Opening tag is missing.",
+  "tag-void-frontal-slash": "Remove frontal slash."
 };
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
@@ -3097,7 +3099,8 @@ function attributeMalformed(context) {
             fix: null
           });
         }
-      } else if (node.attribValueStartsAt !== null && context.str[node.attribNameEndsAt] !== "=") {
+      }
+      if (node.attribValueStartsAt !== null && context.str[node.attribNameEndsAt] !== "=") {
         context.report({
           ruleId: "attribute-malformed",
           message: "Equal is missing.",
@@ -3105,6 +3108,24 @@ function attributeMalformed(context) {
           idxTo: node.attribEnd,
           fix: {
             ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]]
+          }
+        });
+      }
+      var ranges = [];
+      if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
+        ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? "\"" : context.str[node.attribClosingQuoteAt]]);
+      }
+      if (node.attribClosingQuoteAt === null && node.attribValueEndsAt !== null) {
+        ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "attribute-malformed",
+          message: "Quote".concat(ranges.length > 1 ? "s are" : " is", " missing."),
+          idxFrom: node.attribStart,
+          idxTo: node.attribEnd,
+          fix: {
+            ranges: ranges
           }
         });
       }
@@ -9398,7 +9419,8 @@ var Linter = function (_EventEmitter) {
             }
             _this.report(Object.assign({
               message: message,
-              severity: currentRulesSeverity
+              severity: currentRulesSeverity,
+              fix: null
             }, obj));
           }
         }
