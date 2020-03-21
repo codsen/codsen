@@ -11,10 +11,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- correctly recognise !-- pattern, don't trigger unspaced-punctuation ([d3ae0d8](https://gitlab.com/codsen/codsen/commit/d3ae0d87da68cba134c9ce804e35308ce4d47d66))
+- correctly recognise `!--` pattern, don't trigger unspaced-punctuation ([d3ae0d8](https://gitlab.com/codsen/codsen/commit/d3ae0d87da68cba134c9ce804e35308ce4d47d66))
 - emit token events from the traversed AST (instead of directly from tokenizer) ([ee460c0](https://gitlab.com/codsen/codsen/commit/ee460c0a114a52b2ab9d78c4f9a0fad9c05af139))
 - improvements to opening comment tag recognition ([9dfacc4](https://gitlab.com/codsen/codsen/commit/9dfacc4b28d825641a0149581a4cdceca1a6f290))
-- make character-encode rule to consume text type nodes, to traverse them ([d5ee8b5](https://gitlab.com/codsen/codsen/commit/d5ee8b5bb6c2488779a42a1a15facd4745518359))
+- make `character-encode` rule to consume text type nodes, to traverse them ([d5ee8b5](https://gitlab.com/codsen/codsen/commit/d5ee8b5bb6c2488779a42a1a15facd4745518359))
 - new rule, `comment-mismatching-pair` ([72bcb44](https://gitlab.com/codsen/codsen/commit/72bcb44ae7f1439c80e93e2cb95a5a2900dcb0fe))
 - tap `string-find-malformed` and implement the broken simple opening comment search ([53807d0](https://gitlab.com/codsen/codsen/commit/53807d09e4b1909c81978e2720b3d45ac2cfeef7))
 
@@ -22,8 +22,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- complete the rule `media-malformed` ([cac1c17](https://gitlab.com/codsen/codsen/commit/cac1c17d93f8ba7ba79755af6eba21aefbea36e3))
-- new rule, `media-malformed` ([863878c](https://gitlab.com/codsen/codsen/commit/863878c4c767020b391d7931c4affb6105bc13e9))
+- new rule `media-malformed` ([cac1c17](https://gitlab.com/codsen/codsen/commit/cac1c17d93f8ba7ba79755af6eba21aefbea36e3))
 - new rules, `comment-only-closing-malformed` & `comment-only-opening-malformed` ([84f9319](https://gitlab.com/codsen/codsen/commit/84f931979c5511e4c94e5e076f437f542ca49e8a))
 - recognise broken html simple closing comments with missing dashes ([88874b6](https://gitlab.com/codsen/codsen/commit/88874b60aa2876cb08f566c72434f1f0ae342f14))
 - recognise more broken closing comment tag cases ([fe77d70](https://gitlab.com/codsen/codsen/commit/fe77d70bb7b24c3563c7eea300ce29ce7f87e345))

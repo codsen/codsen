@@ -278,4 +278,38 @@ t.test(
   }
 );
 
+t.test(
+  `03.03 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single quotes instead of equal`,
+  t => {
+    const str = `<table width''100'>\n  zzz\n</table>`;
+    const fixed = `<table width='100'>\n  zzz\n</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2
+      }
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double quotes instead of equal`,
+  t => {
+    const str = `<table width""100">\n  zzz\n</table>`;
+    const fixed = `<table width="100">\n  zzz\n</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2
+      }
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
