@@ -807,7 +807,17 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[i])) {
-        if (
+        if (str[stringLeftRight.left(str, i)] === str[i] && str[i + 1].trim().length && !"/>".includes(str[i + 1]) && !espChars.includes(str[i + 1]) && !xBeforeYOnTheRight(str, i, "=", "\"") && !xBeforeYOnTheRight(str, i, "=", "'") && (xBeforeYOnTheRight(str, i, "\"", ">") || xBeforeYOnTheRight(str, i, "'", ">")) && (
+        !str.slice(i + 1).includes("<") ||
+        !str.slice(0, str.indexOf("<")).includes("="))) {
+          attrib.attribOpeningQuoteAt = i;
+          attrib.attribValueStartsAt = i + 1;
+          layers.push({
+            type: "simple",
+            value: str[i],
+            position: i
+          });
+        } else if (
         (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i]) && !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         }) ||

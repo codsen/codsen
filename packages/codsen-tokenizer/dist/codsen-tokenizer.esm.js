@@ -1275,6 +1275,25 @@ function tokenizer(str, originalOpts) {
     ) {
       if (`'"`.includes(str[i])) {
         if (
+          str[left(str, i)] === str[i] &&
+          str[i + 1].trim().length &&
+          !`/>`.includes(str[i + 1]) &&
+          !espChars.includes(str[i + 1]) &&
+          !xBeforeYOnTheRight(str, i, "=", `"`) &&
+          !xBeforeYOnTheRight(str, i, "=", `'`) &&
+          (xBeforeYOnTheRight(str, i, `"`, `>`) ||
+            xBeforeYOnTheRight(str, i, `'`, `>`)) &&
+          (!str.slice(i + 1).includes("<") ||
+            !str.slice(0, str.indexOf("<")).includes("="))
+        ) {
+          attrib.attribOpeningQuoteAt = i;
+          attrib.attribValueStartsAt = i + 1;
+          layers.push({
+            type: "simple",
+            value: str[i],
+            position: i
+          });
+        } else if (
           ((attrib.attribOpeningQuoteAt === null ||
             str[attrib.attribOpeningQuoteAt] === str[i]) &&
             !layers.some(layerObj => layerObj.type === "esp")) ||
