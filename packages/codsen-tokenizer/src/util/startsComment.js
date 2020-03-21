@@ -5,6 +5,33 @@ import { matchLeft, matchRight } from "string-match-left-right";
 // so we extracted into a function.
 
 function startsComment(str, i, token) {
+  console.log(
+    `R1: ${!!matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
+      trimBeforeMatching: true
+    }) ||
+      matchRight(str, i, ["![endif]"], {
+        i: true,
+        maxMismatches: 2,
+        trimBeforeMatching: true
+      })}`
+  );
+  console.log(
+    `R2: ${!matchRight(str, i, ["![cdata", "<"], {
+      i: true,
+      maxMismatches: 1,
+      trimBeforeMatching: true
+    })}`
+  );
+  console.log(`R3: ${!!(token.type !== "comment" || token.kind !== "not")}`);
+  console.log(
+    `R3*: ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${JSON.stringify(
+      token.kind,
+      null,
+      4
+    )}`
+  );
   return (
     // the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
     ((str[i] === "<" &&

@@ -822,6 +822,65 @@ t.test(
   }
 );
 
+t.test(
+  `02.13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`,
+  t => {
+    const gathered = [];
+    // ct(`<!--tralala--><![endif]-->`, {
+    ct(`<!--[if mso]><!--tralala--><![endif]-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 13,
+          value: "<!--[if mso]>",
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "comment",
+          start: 13,
+          end: 17,
+          value: "<!--",
+          kind: "simple",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 17,
+          end: 24,
+          value: "tralala"
+        },
+        {
+          type: "comment",
+          start: 24,
+          end: 27,
+          value: "-->",
+          kind: "simple",
+          closing: true
+        },
+        {
+          type: "comment",
+          start: 27,
+          end: 39,
+          value: "<![endif]-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.13"
+    );
+    t.end();
+  }
+);
+
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 
@@ -926,9 +985,9 @@ t.test(
 // </xml><![endif]-->def
 
 // <!--[if mso]>
-//     <img src="fallback">
+//     <img src="fallback"/>
 // <![endif]-->
 
 // <!--[if !mso]><!-->
-//     <img src="gif">
+//     <img src="gif"/>
 // <!--<![endif]-->

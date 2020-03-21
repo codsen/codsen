@@ -894,7 +894,9 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         }
       } else if (startsComment(str, i, token)) {
-        dumpCurrentToken(token, i);
+        if (Number.isInteger(token.start)) {
+          dumpCurrentToken(token, i);
+        }
         tokenReset();
         initToken("comment", i);
         if (str[i] === "-") {
@@ -1081,6 +1083,7 @@ function tokenizer(str, originalOpts) {
         ) {
           token.kind = "only";
         } else if (
+          str[token.start] !== "-" &&
           matchRightIncl(str, i, ["-<![endif"], {
             trimBeforeMatching: true,
             maxMismatches: 2
@@ -1110,7 +1113,8 @@ function tokenizer(str, originalOpts) {
         if (
           matchRight(str, i, ["<!-->"], {
             trimBeforeMatching: true,
-            maxMismatches: 1
+            maxMismatches: 1,
+            lastMustMatch: true
           })
         ) {
           token.kind = "not";
