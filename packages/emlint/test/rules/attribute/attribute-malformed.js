@@ -197,7 +197,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   t.end();
 });
 
-t.only(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = `<td zzzz="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -218,3 +218,64 @@ t.only(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   ]);
   t.end();
 });
+
+// 03. repeated opening quotes
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double`,
+  t => {
+    const str = `<table width=""100">\n  zzz\n</table>`;
+    const fixed = `<table width="100">\n  zzz\n</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 1
+      }
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.match(messages, [
+      {
+        ruleId: "attribute-malformed",
+        idxFrom: 7,
+        idxTo: 19,
+        message: `Delete repeated opening quotes.`,
+        fix: {
+          ranges: [[13, 14]]
+        }
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single`,
+  t => {
+    const str = `<table width=''100'>\n  zzz\n</table>`;
+    const fixed = `<table width='100'>\n  zzz\n</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 1
+      }
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.match(messages, [
+      {
+        ruleId: "attribute-malformed",
+        idxFrom: 7,
+        idxTo: 19,
+        message: `Delete repeated opening quotes.`,
+        fix: {
+          ranges: [[13, 14]]
+        }
+      }
+    ]);
+    t.end();
+  }
+);
+
+// -----------------------------------------------------------------------------

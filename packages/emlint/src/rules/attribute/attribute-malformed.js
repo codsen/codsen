@@ -1,5 +1,6 @@
 import { allHtmlAttribs } from "html-all-known-attributes";
 import leven from "leven";
+import { left } from "string-left-right";
 
 // rule: attribute-malformed
 // -----------------------------------------------------------------------------
@@ -16,14 +17,14 @@ function attributeMalformed(context, ...opts) {
         `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
       );
       console.log(
-        `019 attributeMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `020 attributeMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
         )}`
       );
       console.log(
-        `026 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `027 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       // if Levenshtein distance is 1 and it's not among known attribute names,
@@ -34,13 +35,13 @@ function attributeMalformed(context, ...opts) {
         !blacklist.includes(node.parent.tagName)
       ) {
         console.log(
-          `037 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
+          `038 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
         );
 
         let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
-            console.log(`043 RAISE ERROR`);
+            console.log(`044 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
@@ -64,7 +65,7 @@ function attributeMalformed(context, ...opts) {
         if (!somethingMatched) {
           // the attribute was not recognised
           console.log(
-            `067 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+            `068 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -81,7 +82,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueStartsAt !== null &&
         context.str[node.attribNameEndsAt] !== "="
       ) {
-        console.log(`084 RAISE ERROR ABOUT EQUALS SIGN`);
+        console.log(`085 RAISE ERROR ABOUT EQUALS SIGN`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,
@@ -97,7 +98,7 @@ function attributeMalformed(context, ...opts) {
         node.attribOpeningQuoteAt === null &&
         node.attribValueStartsAt !== null
       ) {
-        console.log(`100 OPENING QUOTE MISSING`);
+        console.log(`101 OPENING QUOTE MISSING`);
         ranges.push([
           node.attribValueStartsAt,
           node.attribValueStartsAt,
@@ -110,7 +111,7 @@ function attributeMalformed(context, ...opts) {
         node.attribClosingQuoteAt === null &&
         node.attribValueEndsAt !== null
       ) {
-        console.log(`113 CLOSING QUOTE MISSING`);
+        console.log(`114 CLOSING QUOTE MISSING`);
         ranges.push([
           node.attribValueEndsAt,
           node.attribValueEndsAt,
@@ -120,7 +121,7 @@ function attributeMalformed(context, ...opts) {
         ]);
       }
       if (ranges.length) {
-        console.log(`123 RAISE ERROR ABOUT QUOTES`);
+        console.log(`124 RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
@@ -128,6 +129,37 @@ function attributeMalformed(context, ...opts) {
           idxTo: node.attribEnd, // second elem. from last range
           fix: { ranges }
         });
+      }
+
+      // repeated opening
+      if (
+        node.attribOpeningQuoteAt !== null &&
+        node.attribNameEndsAt !== null
+      ) {
+        const whatShouldHaveBeenSinceEqualCharacter = context.str.slice(
+          node.attribNameEndsAt,
+          node.attribOpeningQuoteAt
+        );
+        if (
+          `"'`.includes(whatShouldHaveBeenSinceEqualCharacter.slice(-1)) &&
+          whatShouldHaveBeenSinceEqualCharacter.includes("=")
+        ) {
+          console.log(`147 RAISE ERROR ABOUT REPEATED OPENING QUOTES`);
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `Delete repeated opening quotes.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                [
+                  left(context.str, node.attribOpeningQuoteAt),
+                  node.attribOpeningQuoteAt
+                ]
+              ]
+            }
+          });
+        }
       }
     }
   };

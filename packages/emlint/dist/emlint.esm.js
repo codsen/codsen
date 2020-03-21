@@ -2956,6 +2956,34 @@ function attributeMalformed(context, ...opts) {
           fix: { ranges }
         });
       }
+      if (
+        node.attribOpeningQuoteAt !== null &&
+        node.attribNameEndsAt !== null
+      ) {
+        const whatShouldHaveBeenSinceEqualCharacter = context.str.slice(
+          node.attribNameEndsAt,
+          node.attribOpeningQuoteAt
+        );
+        if (
+          `"'`.includes(whatShouldHaveBeenSinceEqualCharacter.slice(-1)) &&
+          whatShouldHaveBeenSinceEqualCharacter.includes("=")
+        ) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `Deleted repeated opening quotes.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                [
+                  left(context.str, node.attribOpeningQuoteAt),
+                  node.attribOpeningQuoteAt
+                ]
+              ]
+            }
+          });
+        }
+      }
     }
   };
 }

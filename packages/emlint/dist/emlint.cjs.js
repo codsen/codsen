@@ -3150,6 +3150,20 @@ function attributeMalformed(context) {
           }
         });
       }
+      if (node.attribOpeningQuoteAt !== null && node.attribNameEndsAt !== null) {
+        var whatShouldHaveBeenSinceEqualCharacter = context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt);
+        if ("\"'".includes(whatShouldHaveBeenSinceEqualCharacter.slice(-1)) && whatShouldHaveBeenSinceEqualCharacter.includes("=")) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Deleted repeated opening quotes.",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [[stringLeftRight.left(context.str, node.attribOpeningQuoteAt), node.attribOpeningQuoteAt]]
+            }
+          });
+        }
+      }
     }
   };
 }
