@@ -970,6 +970,33 @@ t.test(
   }
 );
 
+t.test(
+  `03.03 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
+  t => {
+    const gathered = [];
+    ct(`<!--[if !mso]><!--z>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 20,
+          kind: "not",
+          closing: false
+        }
+      ],
+      "03.03"
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 
 // For a reference:
