@@ -678,7 +678,7 @@ t.todo(
     const str = `<!--if !mso><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--if !mso><!-->
+    const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
@@ -727,23 +727,8 @@ t.todo(
   }
 );
 
-t.todo(`03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - TBC`, t => {
-  const str = `<!--[if !mso><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "comment-opening-malformed": 2
-    }
-  });
-  t.equal(applyFixes(str, messages), str, "03.13.01");
-  t.match(messages, [], "03.13.02");
-  t.end();
-});
-
 t.todo(
-  `03.14 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
+  `03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
   t => {
     const str = `<!--[if !mso><-->
   <img src="gif"/>
@@ -754,17 +739,17 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.14.01");
-    t.match(messages, [], "03.14.02");
+    t.equal(applyFixes(str, messages), str, "03.13.01");
+    t.match(messages, [], "03.13.02");
     t.end();
   }
 );
 
-// various other
+// 04. various cases
 // -----------------------------------------------------------------------------
 
 t.todo(
-  `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - first part missing`,
+  `04.01 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`,
   t => {
     const str = `<!-->
   <img src="gif"/>
@@ -775,14 +760,14 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.07.01");
-    t.match(messages, [], "03.07.02");
+    t.equal(applyFixes(str, messages), str, "04.01.01");
+    t.match(messages, [], "04.01.02");
     t.end();
   }
 );
 
 t.todo(
-  `03.12 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, letter`,
+  `04.02 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
   t => {
     const str = `<!--[if !mso><!--><!--z-->
   <img src="gif"/>
@@ -793,8 +778,8 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.12.01");
-    t.match(messages, [], "03.12.02");
+    t.equal(applyFixes(str, messages), str, "04.02.01");
+    t.match(messages, [], "04.02.02");
     t.end();
   }
 );

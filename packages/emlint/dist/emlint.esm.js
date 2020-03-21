@@ -9659,6 +9659,41 @@ function commentMismatchingPair(context, ...opts) {
   };
 }
 
+function commentConditionalNested(context) {
+  return {
+    ast: function(node) {
+      const pathsWithOpeningComments = [];
+      traverse(
+        node,
+        (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          if (isObj(current)) {
+            if (current.type === "comment") {
+              if (
+                pathsWithOpeningComments.some(pathStr =>
+                  innerObj.path.startsWith(pathStr)
+                )
+              ) {
+                context.report({
+                  ruleId: "comment-conditional-nested",
+                  message: `Don't nest comments.`,
+                  idxFrom: current.start,
+                  idxTo: current.end,
+                  fix: null
+                });
+              }
+              if (!current.closing) {
+                pathsWithOpeningComments.push(innerObj.path);
+              }
+            }
+          }
+          return current;
+        }
+      );
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -10840,6 +10875,11 @@ defineLazyProp(
   builtInRules,
   "comment-mismatching-pair",
   () => commentMismatchingPair
+);
+defineLazyProp(
+  builtInRules,
+  "comment-conditional-nested",
+  () => commentConditionalNested
 );
 function get(something) {
   return builtInRules[something];

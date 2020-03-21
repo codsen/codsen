@@ -8253,6 +8253,37 @@ function commentMismatchingPair(context) {
   };
 }
 
+function commentConditionalNested(context) {
+  return {
+    ast: function ast(node) {
+      var pathsWithOpeningComments = [];
+      traverse(node,
+      function (key, val, innerObj) {
+        var current = val !== undefined ? val : key;
+        if (isObj(current)) {
+          if (current.type === "comment") {
+            if (pathsWithOpeningComments.some(function (pathStr) {
+              return innerObj.path.startsWith(pathStr);
+            })) {
+              context.report({
+                ruleId: "comment-conditional-nested",
+                message: "Don't nest comments.",
+                idxFrom: current.start,
+                idxTo: current.end,
+                fix: null
+              });
+            }
+            if (!current.closing) {
+              pathsWithOpeningComments.push(innerObj.path);
+            }
+          }
+        }
+        return current;
+      });
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -9000,6 +9031,9 @@ defineLazyProp(builtInRules, "comment-opening-malformed", function () {
 });
 defineLazyProp(builtInRules, "comment-mismatching-pair", function () {
   return commentMismatchingPair;
+});
+defineLazyProp(builtInRules, "comment-conditional-nested", function () {
+  return commentConditionalNested;
 });
 function get(something) {
   return builtInRules[something];

@@ -1742,6 +1742,13 @@ defineLazyProp(
   () => commentMismatchingPair
 );
 
+import commentConditionalNested from "./rules/comment/comment-conditional-nested";
+defineLazyProp(
+  builtInRules,
+  "comment-conditional-nested",
+  () => commentConditionalNested
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1859,7 +1866,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1862 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1869 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
