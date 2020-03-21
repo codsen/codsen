@@ -424,6 +424,22 @@ t.test(
   }
 );
 
+t.test(
+  `02.09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`,
+  t => {
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "02.09"
+    );
+    t.end();
+  }
+);
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
@@ -1258,9 +1274,15 @@ t.test(
         trimBeforeMatching: true
       }),
       "!--",
-      "05.08.01"
+      "05.08"
     );
+    t.end();
+  }
+);
 
+t.test(
+  `05.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, pass`,
+  t => {
     // enforcing the exclamation mark:
     t.equal(
       matchRight("a<--b", 1, ["!--"], {
@@ -1269,7 +1291,7 @@ t.test(
         firstMustMatch: true
       }),
       false,
-      "05.08.02"
+      "05.09"
     );
 
     t.end();
@@ -1277,7 +1299,7 @@ t.test(
 );
 
 t.test(
-  `05.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`,
+  `05.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`,
   t => {
     t.equal(
       matchRight("a<!-b", 1, ["!--"], {
@@ -1285,7 +1307,7 @@ t.test(
         trimBeforeMatching: true
       }),
       "!--",
-      "05.09.01"
+      "05.10.01"
     );
 
     // enforcing the exclamation mark:
@@ -1296,7 +1318,7 @@ t.test(
         firstMustMatch: true
       }),
       "!--",
-      "05.09.02"
+      "05.10.02"
     );
 
     // now matchRightIncl():
@@ -1307,7 +1329,7 @@ t.test(
         trimBeforeMatching: true
       }),
       "!--",
-      "05.09.03"
+      "05.10.03"
     );
 
     // enforcing the exclamation mark:
@@ -1318,7 +1340,7 @@ t.test(
         firstMustMatch: true
       }),
       "!--",
-      "05.09.04"
+      "05.10.04"
     );
 
     t.end();
@@ -1326,28 +1348,13 @@ t.test(
 );
 
 t.test(
-  `05.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`,
+  `05.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`,
   t => {
     t.equal(
       matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 1, ["![cdata"], {
         i: true,
         maxMismatches: 1,
         trimBeforeMatching: true
-      }),
-      false,
-      "05.10"
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `05.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`,
-  t => {
-    t.equal(
-      matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 19, ["<!-->"], {
-        trimBeforeMatching: true,
-        maxMismatches: 1
       }),
       false,
       "05.11"
@@ -1357,15 +1364,14 @@ t.test(
 );
 
 t.test(
-  `05.12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`,
+  `05.12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["![endif]"], {
-        i: true,
-        maxMismatches: 2,
-        trimBeforeMatching: true
+      matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 19, ["<!-->"], {
+        trimBeforeMatching: true,
+        maxMismatches: 1
       }),
-      "![endif]",
+      false,
       "05.12"
     );
     t.end();
@@ -1373,10 +1379,10 @@ t.test(
 );
 
 t.test(
-  `05.13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
+  `05.13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
@@ -1392,7 +1398,7 @@ t.test(
   `05.14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<[endif]-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
@@ -1408,7 +1414,7 @@ t.test(
   `05.15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<endif]-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<[endif]-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
@@ -1421,15 +1427,15 @@ t.test(
 );
 
 t.test(
-  `05.16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `05.16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<endif-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<endif]-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
       }),
-      false,
+      "![endif]",
       "05.16"
     );
     t.end();
@@ -1440,7 +1446,7 @@ t.test(
   `05.17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<ndif]-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<endif-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
@@ -1456,7 +1462,7 @@ t.test(
   `05.18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   t => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<[ndif-->`, 20, ["![endif]"], {
+      matchRight(`<!--[if gte mso 9]>x<ndif]-->`, 20, ["![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true
@@ -1472,12 +1478,12 @@ t.test(
   `05.19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   t => {
     t.equal(
-      matchRight(`abc<!--[if gte mso 9]><xml>`, 3, ["!--"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
+      matchRight(`<!--[if gte mso 9]>x<[ndif-->`, 20, ["![endif]"], {
+        i: true,
+        maxMismatches: 2,
         trimBeforeMatching: true
       }),
-      "!--",
+      false,
       "05.19"
     );
     t.end();
@@ -1488,19 +1494,12 @@ t.test(
   `05.20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   t => {
     t.equal(
-      matchRight(
-        `a<!--[if]><z>
-<AAAch>>
-</o:Offict`,
-        1,
-        ["![cdata"],
-        {
-          i: true,
-          maxMismatches: 1,
-          trimBeforeMatching: true
-        }
-      ),
-      false,
+      matchRight(`abc<!--[if gte mso 9]><xml>`, 3, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true
+      }),
+      "!--",
       "05.20"
     );
     t.end();
@@ -1648,6 +1647,45 @@ t.test(
       }),
       "cde",
       "05.21.19"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1 + lastMustMatch`,
+  t => {
+    t.equal(
+      matchRight(`><!--z>`, 0, ["<!-->"], {
+        trimBeforeMatching: true,
+        maxMismatches: 1,
+        lastMustMatch: true
+      }),
+      "<!-->",
+      "05.22"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  t => {
+    t.equal(
+      matchRight(
+        `a<!--[if]><z>
+<AAAch>>
+</o:Offict`,
+        1,
+        ["![cdata"],
+        {
+          i: true,
+          maxMismatches: 1,
+          trimBeforeMatching: true
+        }
+      ),
+      false,
+      "05.23"
     );
     t.end();
   }

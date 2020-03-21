@@ -51,6 +51,8 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
   var patience = opts.maxMismatches;
   var i = fromIndexInclusive;
   var somethingFound = false;
+  var firstCharacterMatched = false;
+  var lastCharacterMatched = false;
   while (str[i]) {
     var nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
@@ -77,26 +79,32 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
       }
+      if (charsToCheckCount === whatToMatchVal.length) {
+        firstCharacterMatched = true;
+      } else if (charsToCheckCount === 1) {
+        lastCharacterMatched = true;
+      }
       charsToCheckCount -= 1;
       if (charsToCheckCount < 1) {
         return i;
       }
     } else {
-      if (opts.maxMismatches && patience && i && (
-      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length) && (!opts.lastMustMatch || charsToCheckCount !== 1)) {
+      if (opts.maxMismatches && patience && i) {
         patience--;
         for (var y = 0; y <= patience; y++) {
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           var nextCharInSource = str[getNextIdx(i)];
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
-          } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound) {
+          } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
             return i;
           }
         }

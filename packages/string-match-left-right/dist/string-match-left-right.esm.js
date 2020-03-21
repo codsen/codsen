@@ -39,6 +39,8 @@ function march(
   let patience = opts.maxMismatches;
   let i = fromIndexInclusive;
   let somethingFound = false;
+  let firstCharacterMatched = false;
+  let lastCharacterMatched = false;
   while (str[i]) {
     const nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
@@ -75,18 +77,17 @@ function march(
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
       }
+      if (charsToCheckCount === whatToMatchVal.length) {
+        firstCharacterMatched = true;
+      } else if (charsToCheckCount === 1) {
+        lastCharacterMatched = true;
+      }
       charsToCheckCount -= 1;
       if (charsToCheckCount < 1) {
         return i;
       }
     } else {
-      if (
-        opts.maxMismatches &&
-        patience &&
-        i &&
-        (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length) &&
-        (!opts.lastMustMatch || charsToCheckCount !== 1)
-      ) {
+      if (opts.maxMismatches && patience && i) {
         patience--;
         for (let y = 0; y <= patience; y++) {
           const nextCharToCompareAgainst =
@@ -101,7 +102,9 @@ function march(
             ((!opts.i && str[i] === nextCharToCompareAgainst) ||
               (opts.i &&
                 str[i].toLowerCase() ===
-                  nextCharToCompareAgainst.toLowerCase()))
+                  nextCharToCompareAgainst.toLowerCase())) &&
+            (!opts.firstMustMatch ||
+              charsToCheckCount !== whatToMatchVal.length)
           ) {
             charsToCheckCount -= 2;
             somethingFound = true;
@@ -112,7 +115,9 @@ function march(
             ((!opts.i && nextCharInSource === nextCharToCompareAgainst) ||
               (opts.i &&
                 nextCharInSource.toLowerCase() ===
-                  nextCharToCompareAgainst.toLowerCase()))
+                  nextCharToCompareAgainst.toLowerCase())) &&
+            (!opts.firstMustMatch ||
+              charsToCheckCount !== whatToMatchVal.length)
           ) {
             charsToCheckCount -= 1;
             somethingFound = true;
@@ -120,7 +125,9 @@ function march(
           } else if (
             nextCharToCompareAgainst === undefined &&
             patience >= 0 &&
-            somethingFound
+            somethingFound &&
+            (!opts.firstMustMatch || firstCharacterMatched) &&
+            (!opts.lastMustMatch || lastCharacterMatched)
           ) {
             return i;
           }
