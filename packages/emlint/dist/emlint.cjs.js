@@ -13,7 +13,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var parser = _interopDefault(require('codsen-parser'));
+var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
@@ -35,7 +35,7 @@ var traverse = _interopDefault(require('ast-monkey-traverse'));
 var astMonkeyUtil = require('ast-monkey-util');
 var op = _interopDefault(require('object-path'));
 var lineColumn = _interopDefault(require('line-column'));
-var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
+var parser = _interopDefault(require('codsen-parser'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -106,6 +106,19 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -122,20 +135,33 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function _createSuper(Derived) {
+  return function () {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (_isNativeReflectConstruct()) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
 function _arrayWithHoles(arr) {
@@ -143,14 +169,11 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -176,12 +199,29 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 var allBadCharacterRules = [
@@ -8224,6 +8264,11 @@ function commentOpeningMalformed(context) {
   };
 }
 
+var reference = {
+  simple: "-->",
+  only: "<![endif]-->",
+  not: "<!--<![endif]-->"
+};
 function commentMismatchingPair(context) {
   return {
     ast: function ast(node) {
@@ -8235,23 +8280,31 @@ function commentMismatchingPair(context) {
             var previousToken = op.get(node, astMonkeyUtil.pathPrev(innerObj.path));
             if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
               if (previousToken.kind === "not" && current.kind === "only") {
+                var ranges = null;
+                if (current.value === reference.only) {
+                  ranges = [[current.start, current.start, "<!--"]];
+                }
                 context.report({
                   ruleId: "comment-mismatching-pair",
                   message: "Add \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
-                    ranges: [[current.start, current.start, "<!--"]]
+                    ranges: ranges
                   }
                 });
               } else if (previousToken.kind === "only" && current.kind === "not") {
+                var _ranges = null;
+                if (current.value === reference.not) {
+                  _ranges = [[current.start, current.end, "<![endif]-->"]];
+                }
                 context.report({
                   ruleId: "comment-mismatching-pair",
                   message: "Remove \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
-                    ranges: [[current.start, current.end, "<![endif]-->"]]
+                    ranges: _ranges
                   }
                 });
               }
@@ -9427,9 +9480,10 @@ function unwrapListeners(arr) {
 EventEmitter.defaultMaxListeners = 0;
 var Linter = function (_EventEmitter) {
   _inherits(Linter, _EventEmitter);
+  var _super = _createSuper(Linter);
   function Linter() {
     _classCallCheck(this, Linter);
-    return _possibleConstructorReturn(this, _getPrototypeOf(Linter).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
   _createClass(Linter, [{
     key: "verify",
@@ -9437,7 +9491,7 @@ var Linter = function (_EventEmitter) {
       var _this = this;
       this.messages = [];
       this.str = str;
-      this.config = config;
+      this.config = clone(config);
       if (config) {
         if (_typeof(config) !== "object") {
           throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ".concat(_typeof(config), ". It's equal to:\n").concat(JSON.stringify(config, null, 4)));
@@ -9576,10 +9630,12 @@ var Linter = function (_EventEmitter) {
           }
         });
       }
-      ["tag", "at", "rule", "text", "esp", "character"].forEach(function (eventName) {
+      ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(function (eventName) {
         _this.removeAllListeners(eventName);
       });
-      return this.messages;
+      var res = clone(this.messages);
+      this.messages = [];
+      return res;
     }
   }, {
     key: "report",

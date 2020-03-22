@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
-import parser from 'codsen-parser';
+import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
@@ -29,7 +29,7 @@ import traverse from 'ast-monkey-traverse';
 import { pathPrev } from 'ast-monkey-util';
 import op from 'object-path';
 import lineColumn from 'line-column';
-import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
+import parser from 'codsen-parser';
 
 var allBadCharacterRules = [
 	"bad-character-acknowledge",
@@ -9633,6 +9633,11 @@ function commentOpeningMalformed(context, ...opts) {
   };
 }
 
+const reference = {
+  simple: "-->",
+  only: "<![endif]-->",
+  not: "<!--<![endif]-->"
+};
 function commentMismatchingPair(context, ...opts) {
   return {
     ast: function(node) {
@@ -9649,26 +9654,34 @@ function commentMismatchingPair(context, ...opts) {
                 !previousToken.closing
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
+                  let ranges = null;
+                  if (current.value === reference.only) {
+                    ranges = [[current.start, current.start, "<!--"]];
+                  }
                   context.report({
                     ruleId: "comment-mismatching-pair",
                     message: `Add "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges: [[current.start, current.start, "<!--"]]
+                      ranges
                     }
                   });
                 } else if (
                   previousToken.kind === "only" &&
                   current.kind === "not"
                 ) {
+                  let ranges = null;
+                  if (current.value === reference.not) {
+                    ranges = [[current.start, current.end, "<![endif]-->"]];
+                  }
                   context.report({
                     ruleId: "comment-mismatching-pair",
                     message: `Remove "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges: [[current.start, current.end, "<![endif]-->"]]
+                      ranges
                     }
                   });
                 }
@@ -11368,7 +11381,7 @@ class Linter extends EventEmitter {
   verify(str, config) {
     this.messages = [];
     this.str = str;
-    this.config = config;
+    this.config = clone(config);
     if (config) {
       if (typeof config !== "object") {
         throw new Error(
@@ -11570,10 +11583,14 @@ class Linter extends EventEmitter {
         }
       });
     }
-    ["tag", "at", "rule", "text", "esp", "character"].forEach(eventName => {
-      this.removeAllListeners(eventName);
-    });
-    return this.messages;
+    ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(
+      eventName => {
+        this.removeAllListeners(eventName);
+      }
+    );
+    const res = clone(this.messages);
+    this.messages = [];
+    return res;
   }
   report(obj) {
     const { line, col } = lineColumn(this.str, obj.idxFrom);

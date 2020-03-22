@@ -559,7 +559,7 @@ t.test(
 t.test(
   `03.06 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
   t => {
-    const str = `<!--[if !mso]><!--><img src="gif"/><!--[endif]-->`;
+    const str = `<!--[if !mso]><!--><img src="gif"/><!--<[endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {

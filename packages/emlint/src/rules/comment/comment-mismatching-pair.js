@@ -7,6 +7,12 @@ import { pathPrev } from "ast-monkey-util";
 import { isObj } from "../../util/util";
 import op from "object-path";
 
+const reference = {
+  simple: "-->",
+  only: "<![endif]-->",
+  not: "<!--<![endif]-->"
+};
+
 function commentMismatchingPair(context, ...opts) {
   return {
     ast: function(node) {
@@ -14,7 +20,7 @@ function commentMismatchingPair(context, ...opts) {
         `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
       );
       console.log(
-        `017 commentMismatchingPair(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `023 commentMismatchingPair(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -49,7 +55,7 @@ function commentMismatchingPair(context, ...opts) {
 
             if (current.type === "comment" && current.closing) {
               console.log(
-                `052 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
+                `058 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
                   current,
                   null,
                   4
@@ -58,7 +64,7 @@ function commentMismatchingPair(context, ...opts) {
 
               const previousToken = op.get(node, pathPrev(innerObj.path));
               console.log(
-                `061 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
+                `067 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
                   previousToken,
                   null,
                   4
@@ -72,8 +78,15 @@ function commentMismatchingPair(context, ...opts) {
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
                   console.log(
-                    `075 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
+                    `081 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
                   );
+                  // only amend the tails if they are correct currently,
+                  // to prevent fix clashes
+                  let ranges = null;
+                  if (current.value === reference.only) {
+                    ranges = [[current.start, current.start, "<!--"]];
+                  }
+
                   // turn tail into "not"-kind, add front part (<!--)
                   context.report({
                     ruleId: "comment-mismatching-pair",
@@ -81,7 +94,7 @@ function commentMismatchingPair(context, ...opts) {
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges: [[current.start, current.start, "<!--"]]
+                      ranges
                     }
                   });
                 } else if (
@@ -89,8 +102,13 @@ function commentMismatchingPair(context, ...opts) {
                   current.kind === "not"
                 ) {
                   console.log(
-                    `092 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
+                    `105 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
                   );
+                  let ranges = null;
+                  if (current.value === reference.not) {
+                    ranges = [[current.start, current.end, "<![endif]-->"]];
+                  }
+
                   // turn tail into "only"-kind, remove front part (<!--)
                   context.report({
                     ruleId: "comment-mismatching-pair",
@@ -98,7 +116,7 @@ function commentMismatchingPair(context, ...opts) {
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges: [[current.start, current.end, "<![endif]-->"]]
+                      ranges
                     }
                   });
                 }

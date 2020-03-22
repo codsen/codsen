@@ -4,7 +4,7 @@ function applyFixes(str, messages) {
   if (!Array.isArray(messages) || !messages.length) {
     return str;
   }
-  // So there are ranges. Let's rather all the ranges from all the
+  // So there are ranges. Let's gather all the ranges from all the
   // objects in "messages"
   return rangesApply(
     str,
