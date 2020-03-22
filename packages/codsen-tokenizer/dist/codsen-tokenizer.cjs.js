@@ -14,8 +14,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
-var clone = _interopDefault(require('lodash.clonedeep'));
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
+var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -807,7 +807,8 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[i])) {
-        if (str[stringLeftRight.left(str, i)] === str[i] && str[i + 1].trim().length && !"/>".includes(str[i + 1]) && !espChars.includes(str[i + 1]) && !xBeforeYOnTheRight(str, i, "=", "\"") && !xBeforeYOnTheRight(str, i, "=", "'") && (xBeforeYOnTheRight(str, i, "\"", ">") || xBeforeYOnTheRight(str, i, "'", ">")) && (
+        if (str[stringLeftRight.left(str, i)] === str[i] &&
+        !"/>".concat(espChars).includes(str[stringLeftRight.right(str, i)]) && !xBeforeYOnTheRight(str, i, "=", "\"") && !xBeforeYOnTheRight(str, i, "=", "'") && (xBeforeYOnTheRight(str, i, "\"", ">") || xBeforeYOnTheRight(str, i, "'", ">")) && (
         !str.slice(i + 1).includes("<") ||
         !str.slice(0, str.indexOf("<")).includes("="))) {
           attrib.attribOpeningQuoteAt = i;

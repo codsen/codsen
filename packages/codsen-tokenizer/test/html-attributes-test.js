@@ -1,5 +1,7 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
+const doubleQuotes = `\u0022`;
+const apostrophe = `\u0027`;
 
 // 01. basic - double quoted attributes
 // -----------------------------------------------------------------------------
@@ -1702,7 +1704,7 @@ t.test(
   t => {
     const gathered = [];
     ct(
-      `<table width=""100">
+      `<table width="${doubleQuotes}100">
   zzz
 </table>`,
       {
@@ -1718,7 +1720,7 @@ t.test(
           type: "tag",
           start: 0,
           end: 20,
-          value: '<table width=""100">',
+          value: `<table width="${doubleQuotes}100">`,
           tagNameStartsAt: 1,
           tagNameEndsAt: 6,
           tagName: "table",
@@ -1773,21 +1775,51 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `07.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
   t => {
     const gathered = [];
-    ct(
-      `<span width="" 100">
-  zzz
-</span>`,
-      {
-        tagCb: obj => {
-          gathered.push(obj);
-        }
+    ct(`<span width="${doubleQuotes} 100">`, {
+      tagCb: obj => {
+        gathered.push(obj);
       }
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 20,
+          value: `<span width="${doubleQuotes} 100">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: 18,
+              attribValue: " 100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 18,
+              attribStart: 6,
+              attribEnd: 19
+            }
+          ]
+        }
+      ],
+      "07.07"
     );
-    t.match(gathered, [], "07.07");
     t.end();
   }
 );
@@ -1797,7 +1829,7 @@ t.todo(
   t => {
     const gathered = [];
     ct(
-      `<span width="" 100'>
+      `<span width="${doubleQuotes} 100'>
   zzz
 </span>`,
       {
@@ -1816,7 +1848,7 @@ t.todo(
   t => {
     const gathered = [];
     ct(
-      `<span width='' 100'>
+      `<span width='${apostrophe} 100'>
   zzz
 </span>`,
       {

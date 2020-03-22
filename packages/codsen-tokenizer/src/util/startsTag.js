@@ -1,7 +1,7 @@
 import isTagOpening from "is-html-tag-opening";
 import { left, right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
-import { isLatinLetter } from "../util";
+import { isLatinLetter } from "./util";
 const BACKSLASH = "\u005C";
 
 // This is an extracted logic which detects where token of a particular kind

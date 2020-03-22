@@ -1,5 +1,5 @@
 import { left, right } from "string-left-right";
-import { espChars } from "../util";
+import { espChars } from "./util";
 
 // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and

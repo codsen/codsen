@@ -77,20 +77,6 @@ export default commandLineArgs => {
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
-      external: [],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        cleanup({ comments: "istanbul" })
-      ]
     }
   ];
 
