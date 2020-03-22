@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 40534,
+        "size": 41375,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -252,7 +252,7 @@
     },
     {
         "name": "emlint",
-        "size": 306836,
+        "size": 309331,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -636,7 +636,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 12818,
+        "size": 13224,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
