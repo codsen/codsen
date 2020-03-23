@@ -48,7 +48,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       }
       whitespaceStartsAt = null;
       // console.log(
-      //   `048 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+      //   `051 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
       // );
     }
 
@@ -56,37 +56,40 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     if (nameStartsAt === null && str[i].trim().length) {
       nameStartsAt = i;
       // console.log(
-      //   `056 splitByWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
+      //   `059 splitByWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
       // );
     }
 
     // catch the ending of a name
     if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
       // console.log(
-      //   `063 splitByWhitespace(): ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`carved out ${opts.typeName} name`}\u001b[${39}m`} ${JSON.stringify(
-      //     str.slice(nameStartsAt, i + 1 === opts.to ? i + 1 : i),
+      //   `066 splitByWhitespace(): ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`carved out ${opts.typeName} name`}\u001b[${39}m`} ${JSON.stringify(
+      //     str.slice(
+      //       nameStartsAt,
+      //       i + 1 === opts.to && str[i].trim().length ? i + 1 : i
+      //     ),
       //     null,
       //     0
       //   )}`
       // );
 
-      // call CB
+      // // call CB
       // console.log(
-      //   `072 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} chunk [${nameStartsAt}, ${
-      //     i + 1 === opts.to ? i + 1 : i
+      //   `078 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} chunk [${nameStartsAt}, ${
+      //     i + 1 === opts.to ? i + 1 && str[i].trim().length : i
       //   }]`
       // );
       if (typeof cbValues === "function") {
         cbValues([
           nameStartsAt + opts.offset,
-          (i + 1 === opts.to ? i + 1 : i) + opts.offset
+          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset
         ]);
       }
 
       // reset
       nameStartsAt = null;
       // console.log(
-      //   `083 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
+      //   `092 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
       // );
     }
 

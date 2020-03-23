@@ -2846,15 +2846,59 @@ function tagBadSelfClosing(context) {
   };
 }
 
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  const defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  let nameStartsAt = null;
+  let whitespaceStartsAt = null;
+  for (let i = opts.from; i < opts.to; i++) {
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i;
+    }
+    if (
+      whitespaceStartsAt !== null &&
+      (str[i].trim().length || i + 1 === opts.to)
+    ) {
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([
+          whitespaceStartsAt + opts.offset,
+          (str[i].trim().length ? i : i + 1) + opts.offset
+        ]);
+      }
+      whitespaceStartsAt = null;
+    }
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i;
+    }
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbValues === "function") {
+        cbValues([
+          nameStartsAt + opts.offset,
+          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset
+        ]);
+      }
+      nameStartsAt = null;
+    }
+  }
+}
+
 function attributeDuplicate(context, ...opts) {
+  const attributesWhichCanBeMerged = ["id", "class"];
   return {
     tag: function(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         const attrsGatheredSoFar = [];
+        const mergeableAttrsCaught = [];
         for (let i = 0, len = node.attribs.length; i < len; i++) {
           if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
             attrsGatheredSoFar.push(node.attribs[i].attribName);
-          } else {
+          } else if (
+            !attributesWhichCanBeMerged.includes(node.attribs[i].attribName)
+          ) {
             context.report({
               ruleId: "attribute-duplicate",
               message: `Duplicate attribute "${node.attribs[i].attribName}".`,
@@ -2862,7 +2906,50 @@ function attributeDuplicate(context, ...opts) {
               idxTo: node.attribs[i].attribEnd,
               fix: null
             });
+          } else if (
+            !mergeableAttrsCaught.includes(node.attribs[i].attribName)
+          ) {
+            mergeableAttrsCaught.push(node.attribs[i].attribName);
           }
+        }
+        if (mergeableAttrsCaught.length) {
+          mergeableAttrsCaught.forEach(attrNameBeingMerged => {
+            const theFirstRange = [];
+            const extractedValues = [];
+            const allOtherRanges = [];
+            for (let i = 0, len = node.attribs.length; i < len; i++) {
+              if (node.attribs[i].attribName === attrNameBeingMerged) {
+                if (!theFirstRange.length) {
+                  theFirstRange.push(
+                    node.attribs[i].attribValueStartsAt,
+                    node.attribs[i].attribValueEndsAt
+                  );
+                } else {
+                  allOtherRanges.push([
+                    i
+                      ? left(context.str, node.attribs[i].attribStart) + 1
+                      : node.attribs[i].attribStart,
+                    node.attribs[i].attribEnd
+                  ]);
+                }
+                splitByWhitespace(node.attribs[i].attribValue, ([from, to]) => {
+                  extractedValues.push(
+                    node.attribs[i].attribValue.slice(from, to)
+                  );
+                });
+              }
+            }
+            const mergedValue = extractedValues.sort().join(" ");
+            context.report({
+              ruleId: "attribute-duplicate",
+              message: `Duplicate attribute "${attrNameBeingMerged}".`,
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: {
+                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges]
+              }
+            });
+          });
         }
       }
     }
@@ -3590,46 +3677,6 @@ function attributeValidateAccesskey(context, ...opts) {
       }
     }
   };
-}
-
-function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
-  const defaults = {
-    offset: 0,
-    from: 0,
-    to: str.length
-  };
-  const opts = Object.assign({}, defaults, originalOpts);
-  let nameStartsAt = null;
-  let whitespaceStartsAt = null;
-  for (let i = opts.from; i < opts.to; i++) {
-    if (whitespaceStartsAt === null && !str[i].trim().length) {
-      whitespaceStartsAt = i;
-    }
-    if (
-      whitespaceStartsAt !== null &&
-      (str[i].trim().length || i + 1 === opts.to)
-    ) {
-      if (typeof cbWhitespace === "function") {
-        cbWhitespace([
-          whitespaceStartsAt + opts.offset,
-          (str[i].trim().length ? i : i + 1) + opts.offset
-        ]);
-      }
-      whitespaceStartsAt = null;
-    }
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-    }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbValues === "function") {
-        cbValues([
-          nameStartsAt + opts.offset,
-          (i + 1 === opts.to ? i + 1 : i) + opts.offset
-        ]);
-      }
-      nameStartsAt = null;
-    }
-  }
 }
 
 function isSingleSpace(str, originalOpts, errorArr) {

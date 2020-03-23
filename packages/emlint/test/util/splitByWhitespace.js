@@ -72,7 +72,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
+  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   t => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -90,6 +90,33 @@ t.test(
       [7, 10]
     ]);
     t.match(gatheredWhitespace, [[3, 7]]);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredWhitespace = [];
+    splitByWhitespace(
+      " kk  \t ll ",
+      valuesArr => {
+        gatheredChunks.push(valuesArr);
+      },
+      whitespaceArr => {
+        gatheredWhitespace.push(whitespaceArr);
+      }
+    );
+    t.match(gatheredChunks, [
+      [1, 3],
+      [7, 9]
+    ]);
+    t.match(gatheredWhitespace, [
+      [0, 1],
+      [3, 7],
+      [9, 10]
+    ]);
     t.end();
   }
 );

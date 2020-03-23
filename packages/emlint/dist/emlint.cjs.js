@@ -3107,15 +3107,48 @@ function tagBadSelfClosing(context) {
   };
 }
 
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  var defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  var nameStartsAt = null;
+  var whitespaceStartsAt = null;
+  for (var i = opts.from; i < opts.to; i++) {
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i;
+    }
+    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([whitespaceStartsAt + opts.offset, (str[i].trim().length ? i : i + 1) + opts.offset]);
+      }
+      whitespaceStartsAt = null;
+    }
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i;
+    }
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbValues === "function") {
+        cbValues([nameStartsAt + opts.offset, (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset]);
+      }
+      nameStartsAt = null;
+    }
+  }
+}
+
 function attributeDuplicate(context) {
+  var attributesWhichCanBeMerged = ["id", "class"];
   return {
     tag: function tag(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         var attrsGatheredSoFar = [];
+        var mergeableAttrsCaught = [];
         for (var i = 0, len = node.attribs.length; i < len; i++) {
           if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
             attrsGatheredSoFar.push(node.attribs[i].attribName);
-          } else {
+          } else if (!attributesWhichCanBeMerged.includes(node.attribs[i].attribName)) {
             context.report({
               ruleId: "attribute-duplicate",
               message: "Duplicate attribute \"".concat(node.attribs[i].attribName, "\"."),
@@ -3123,7 +3156,44 @@ function attributeDuplicate(context) {
               idxTo: node.attribs[i].attribEnd,
               fix: null
             });
+          } else if (!mergeableAttrsCaught.includes(node.attribs[i].attribName)) {
+            mergeableAttrsCaught.push(node.attribs[i].attribName);
           }
+        }
+        if (mergeableAttrsCaught.length) {
+          mergeableAttrsCaught.forEach(function (attrNameBeingMerged) {
+            var theFirstRange = [];
+            var extractedValues = [];
+            var allOtherRanges = [];
+            var _loop = function _loop(_i, _len) {
+              if (node.attribs[_i].attribName === attrNameBeingMerged) {
+                if (!theFirstRange.length) {
+                  theFirstRange.push(node.attribs[_i].attribValueStartsAt, node.attribs[_i].attribValueEndsAt);
+                } else {
+                  allOtherRanges.push([_i ? stringLeftRight.left(context.str, node.attribs[_i].attribStart) + 1 : node.attribs[_i].attribStart, node.attribs[_i].attribEnd]);
+                }
+                splitByWhitespace(node.attribs[_i].attribValue, function (_ref) {
+                  var _ref2 = _slicedToArray(_ref, 2),
+                      from = _ref2[0],
+                      to = _ref2[1];
+                  extractedValues.push(node.attribs[_i].attribValue.slice(from, to));
+                });
+              }
+            };
+            for (var _i = 0, _len = node.attribs.length; _i < _len; _i++) {
+              _loop(_i);
+            }
+            var mergedValue = extractedValues.sort().join(" ");
+            context.report({
+              ruleId: "attribute-duplicate",
+              message: "Duplicate attribute \"".concat(attrNameBeingMerged, "\"."),
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: {
+                ranges: [[].concat(theFirstRange, [mergedValue])].concat(allOtherRanges)
+              }
+            });
+          });
         }
       }
     }
@@ -3499,37 +3569,6 @@ function attributeValidateAccesskey(context) {
       }
     }
   };
-}
-
-function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
-  var defaults = {
-    offset: 0,
-    from: 0,
-    to: str.length
-  };
-  var opts = Object.assign({}, defaults, originalOpts);
-  var nameStartsAt = null;
-  var whitespaceStartsAt = null;
-  for (var i = opts.from; i < opts.to; i++) {
-    if (whitespaceStartsAt === null && !str[i].trim().length) {
-      whitespaceStartsAt = i;
-    }
-    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt + opts.offset, (str[i].trim().length ? i : i + 1) + opts.offset]);
-      }
-      whitespaceStartsAt = null;
-    }
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-    }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbValues === "function") {
-        cbValues([nameStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]);
-      }
-      nameStartsAt = null;
-    }
-  }
 }
 
 function isSingleSpace(str, originalOpts, errorArr) {
