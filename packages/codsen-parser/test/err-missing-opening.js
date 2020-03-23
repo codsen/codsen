@@ -159,68 +159,137 @@ t.test(
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two tags`, t => {
-  const gatheredErr = [];
-  t.match(
-    cparser(`<div><a>z</a></div></div>`, {
-      errCb: errObj => gatheredErr.push(errObj)
-    }),
-    [
-      {
-        children: [
-          {
-            children: [
-              {
-                type: "text",
-                start: 8,
-                end: 9
-              }
-            ],
-            type: "tag",
-            start: 5,
-            end: 8,
-            closing: false
-          },
-          {
-            type: "tag",
-            start: 9,
-            end: 13,
-            closing: true
-          }
-        ],
-        type: "tag",
-        start: 0,
-        end: 5,
-        closing: false
-      },
-      {
-        type: "tag",
-        start: 13,
-        end: 19,
-        closing: true
-      },
-      {
-        type: "tag",
-        start: 19,
-        end: 25,
-        closing: true
-      }
-    ],
-    "01.01.01"
-  );
-  t.match(
-    gatheredErr,
-    [
-      {
-        ruleId: "tag-missing-opening",
-        idxFrom: 19,
-        idxTo: 25
-      }
-    ],
-    "01.01.02"
-  );
-  t.end();
-});
+t.test(
+  `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - extra closing tag`,
+  t => {
+    const gatheredErr = [];
+    t.match(
+      cparser(`<div><a>z</a></div></div>`, {
+        errCb: errObj => gatheredErr.push(errObj)
+      }),
+      [
+        {
+          children: [
+            {
+              children: [
+                {
+                  type: "text",
+                  start: 8,
+                  end: 9
+                }
+              ],
+              type: "tag",
+              start: 5,
+              end: 8,
+              closing: false
+            },
+            {
+              type: "tag",
+              start: 9,
+              end: 13,
+              closing: true
+            }
+          ],
+          type: "tag",
+          start: 0,
+          end: 5,
+          closing: false
+        },
+        {
+          type: "tag",
+          start: 13,
+          end: 19,
+          closing: true
+        },
+        {
+          type: "tag",
+          start: 19,
+          end: 25,
+          closing: true
+        }
+      ],
+      "01.01.01"
+    );
+    t.match(
+      gatheredErr,
+      [
+        {
+          ruleId: "tag-missing-opening",
+          idxFrom: 19,
+          idxTo: 25
+        }
+      ],
+      "01.01.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - extra opening tag - error is not raised`,
+  t => {
+    const gatheredErr = [];
+    t.match(
+      cparser(`<div><div><a>z</a></div>`, {
+        errCb: errObj => gatheredErr.push(errObj)
+      }),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 5,
+          value: "<div>",
+          closing: false,
+          children: [
+            {
+              type: "tag",
+              start: 5,
+              end: 10,
+              value: "<div>",
+              closing: false,
+              children: [
+                {
+                  type: "tag",
+                  start: 10,
+                  end: 13,
+                  value: "<a>",
+                  closing: false,
+                  children: [
+                    {
+                      type: "text",
+                      start: 13,
+                      end: 14,
+                      value: "z"
+                    }
+                  ]
+                },
+                {
+                  type: "tag",
+                  start: 14,
+                  end: 18,
+                  value: "</a>",
+                  closing: true,
+                  children: []
+                }
+              ]
+            },
+            {
+              type: "tag",
+              start: 18,
+              end: 24,
+              value: "</div>",
+              closing: true,
+              children: []
+            }
+          ]
+        }
+      ],
+      "01.02.01"
+    );
+    t.same(gatheredErr, [], "01.02.02");
+    t.end();
+  }
+);
 
 // 02. comment tag, "simple"
 // -----------------------------------------------------------------------------
