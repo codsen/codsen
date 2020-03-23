@@ -402,14 +402,12 @@ class Linter extends EventEmitter {
         4
       )}`
     );
-    const res = clone(this.messages);
-    this.messages = [];
-    return res;
+    return this.messages;
   }
 
   report(obj) {
     console.log(
-      `412 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+      `410 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
         obj,
         null,
         4
@@ -419,7 +417,7 @@ class Linter extends EventEmitter {
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity = obj.severity; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `422 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `420 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -437,7 +435,7 @@ class Linter extends EventEmitter {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `440 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `438 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(

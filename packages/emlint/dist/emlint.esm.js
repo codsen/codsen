@@ -11588,9 +11588,7 @@ class Linter extends EventEmitter {
         this.removeAllListeners(eventName);
       }
     );
-    const res = clone(this.messages);
-    this.messages = [];
-    return res;
+    return this.messages;
   }
   report(obj) {
     const { line, col } = lineColumn(this.str, obj.idxFrom);

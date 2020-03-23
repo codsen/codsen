@@ -9633,9 +9633,7 @@ var Linter = function (_EventEmitter) {
       ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(function (eventName) {
         _this.removeAllListeners(eventName);
       });
-      var res = clone(this.messages);
-      this.messages = [];
-      return res;
+      return this.messages;
     }
   }, {
     key: "report",

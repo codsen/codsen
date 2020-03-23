@@ -135,3 +135,75 @@ t.test(
     t.end();
   }
 );
+
+// 02. various
+// -----------------------------------------------------------------------------
+
+t.test(
+  `02.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
+  t => {
+    const str = `<br><br>zzz</br></br>`;
+    const fixed = `<br/><br/>zzz<br/><br/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.01");
+    t.end();
+  }
+);
+
+t.test(
+  `02.02 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
+  t => {
+    const str = `<br><br>zzz<br>`;
+    const fixed = `<br/><br/>zzz<br/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.match(
+      messages,
+      [
+        {
+          severity: 2,
+          ruleId: "tag-void-slash",
+          message: "Missing slash.",
+          idxFrom: 3,
+          idxTo: 3,
+          fix: {
+            ranges: [[3, 3, "/"]]
+          }
+        },
+        {
+          severity: 2,
+          ruleId: "tag-void-slash",
+          message: "Missing slash.",
+          idxFrom: 7,
+          idxTo: 7,
+          fix: {
+            ranges: [[7, 7, "/"]]
+          }
+        },
+        {
+          severity: 2,
+          ruleId: "tag-void-slash",
+          message: "Missing slash.",
+          idxFrom: 14,
+          idxTo: 14,
+          fix: {
+            ranges: [[14, 14, "/"]]
+          }
+        }
+      ],
+      "02.02.02"
+    );
+    t.is(messages.length, 3, "02.02.03");
+    t.end();
+  }
+);

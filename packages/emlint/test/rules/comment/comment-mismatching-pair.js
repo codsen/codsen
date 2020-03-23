@@ -56,6 +56,7 @@ t.test(
       ],
       "01.02.02"
     );
+    t.is(messages.length, 1, "01.02.03");
     t.end();
   }
 );
@@ -148,10 +149,10 @@ t.test(
   `02.01 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`,
   t => {
     const str = `<!--[if !mso]><!-->
-  <img src="fallback">
+  <img src="fallback"/>
 <![endif]-->`;
     const fixed = `<!--[if !mso]><!-->
-  <img src="fallback">
+  <img src="fallback"/>
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -161,17 +162,19 @@ t.test(
     });
     // turns tails comment tag into "not"-kind
     t.equal(applyFixes(str, messages), fixed, "02.01.01");
-    t.match(
+    t.same(
       messages,
       [
         {
+          line: 3,
+          column: 1,
           severity: 2,
           ruleId: "comment-mismatching-pair",
-          idxFrom: 43,
-          idxTo: 55,
-          message: `Add "<!--".`,
+          message: 'Add "<!--".',
+          idxFrom: 44,
+          idxTo: 56,
           fix: {
-            ranges: [[43, 43]]
+            ranges: [[44, 44, "<!--"]]
           }
         }
       ],
@@ -181,9 +184,115 @@ t.test(
   }
 );
 
-t.todo("heads tag is also dirty");
-t.todo("tails tag is also dirty");
-t.todo("both tags are also dirty");
+t.test(
+  `02.02 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`,
+  t => {
+    const str = `<!-[if !mso]><!-->
+  <img src="fallback"/>
+<![endif]-->`;
+    const fixed = `<!--[if !mso]><!-->
+  <img src="fallback"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 2
+      }
+    });
+    // turns tails comment tag into "not"-kind
+    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.match(
+      messages,
+      [
+        {
+          line: 1,
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 18,
+          message: "Malformed opening comment tag.",
+          fix: {
+            ranges: [[0, 4, "<!--["]]
+          },
+          ruleId: "comment-opening-malformed"
+        },
+        {
+          line: 3,
+          severity: 2,
+          ruleId: "comment-mismatching-pair",
+          message: 'Add "<!--".',
+          idxFrom: 43,
+          idxTo: 55,
+          fix: {
+            ranges: [[43, 43, "<!--"]]
+          }
+        }
+      ],
+      "02.02.02"
+    );
+    t.is(messages.length, 2, "02.02.03");
+    t.end();
+  }
+);
+
+t.test(
+  `02.03 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`,
+  t => {
+    const str = `<!--[if mso]><!-->
+  <img src="fallback"/>
+<[endif]-->`;
+    const fixed = `<!--[if mso]><!-->
+  <img src="fallback"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 2
+      }
+    });
+    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
+      rules: {
+        all: 2
+      }
+    });
+    // turns tails comment tag into "only"-kind
+    t.equal(
+      applyFixes(applyFixes(str, messages), secondRoundMessages),
+      fixed,
+      "02.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.04 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`,
+  t => {
+    const str = `<!-[if mso]><!-->
+  <img src="fallback"/>
+<[endif]-->`;
+    const fixed = `<!--[if mso]><!-->
+  <img src="fallback"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 2
+      }
+    });
+    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
+      rules: {
+        all: 2
+      }
+    });
+    // turns tails comment tag into "only"-kind
+    t.equal(
+      applyFixes(applyFixes(str, messages), secondRoundMessages),
+      fixed,
+      "02.04"
+    );
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 
