@@ -18,7 +18,6 @@
   "ignorePatterns": [
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
-    "rollup.config.js",
     "**/tap/**"
   ],
   "rules": {
