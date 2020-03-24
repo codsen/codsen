@@ -4,7 +4,6 @@
 
 <div align="center"><p>Utility library of AST helper functions</p></div>
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![Downloads/Month][downloads-img]][downloads-url]

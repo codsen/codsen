@@ -4,7 +4,6 @@
 
 <div align="center"><p>Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)</p></div>
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]

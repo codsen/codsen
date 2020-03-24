@@ -8,7 +8,6 @@
 
 <div align="center"><p>Cleans all the crap from Lerna and Conventional Commits-generated changelogs</p></div>
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]

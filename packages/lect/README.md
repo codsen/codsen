@@ -4,7 +4,6 @@
 
 <div align="center"><p>Maintenance CLI for internal consumption</p></div>
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -147,7 +146,7 @@ Alternatively, you can create your own badges with different naming schema. Here
 This would get rendered as markdown code in the :
 
 ```
-[![Minimum Node version required][node-img]][node-url]
+
 [![Sparkles][sparkles-img]][sparkles-url]
 ```
 

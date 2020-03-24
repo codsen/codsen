@@ -8,7 +8,6 @@
 
 <div align="center"><p>CLI application to cleanse the lerna-generated changelogs</p></div>
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
