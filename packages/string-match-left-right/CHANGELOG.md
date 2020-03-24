@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.1](https://gitlab.com/codsen/codsen/compare/string-match-left-right@4.0.0...string-match-left-right@4.0.1) (2020-03-24)
-
+## 4.0.1 (2020-03-24)
 
 ### Bug Fixes
 
-* fix `opts.firstMustMatch` ([195350b](https://gitlab.com/codsen/codsen/commit/195350b56c26d3e856b5cd3d1a2abb947c9ada3d))
-
-
-
-
+- fix `opts.firstMustMatch` ([195350b](https://gitlab.com/codsen/codsen/commit/195350b56c26d3e856b5cd3d1a2abb947c9ada3d))
 
 ## 4.0.0 (2020-03-16)
 

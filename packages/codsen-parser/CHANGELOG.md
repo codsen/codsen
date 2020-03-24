@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.4.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.3.0...codsen-parser@0.4.0) (2020-03-24)
-
+## 0.4.0 (2020-03-24)
 
 ### Bug Fixes
 
-* correctly nest empty tags ([380c268](https://gitlab.com/codsen/codsen/commit/380c26893d8cd05e2d07c7d6110167183cf8cce0))
-
+- correctly nest empty tags ([380c268](https://gitlab.com/codsen/codsen/commit/380c26893d8cd05e2d07c7d6110167183cf8cce0))
 
 ### Features
 
-* new error rule, `tag-void-frontal-slash` ([6a93052](https://gitlab.com/codsen/codsen/commit/6a930521f5a7f11f0a57183006d19bae29c013ff))
-
-
-
-
+- new error rule, `tag-void-frontal-slash` ([6a93052](https://gitlab.com/codsen/codsen/commit/6a930521f5a7f11f0a57183006d19bae29c013ff))
 
 ## 0.3.0 (2020-03-16)
 

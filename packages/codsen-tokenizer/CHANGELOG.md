@@ -3,26 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.10.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.9.0...codsen-tokenizer@2.10.0) (2020-03-24)
-
+## 2.10.0 (2020-03-24)
 
 ### Bug Fixes
 
-* recognise "only"-kind closing tails with simple comment tails preceding ([f0d3624](https://gitlab.com/codsen/codsen/commit/f0d3624ca9f441cb6c741bd7da223562f0064517))
-* second part of newly-added layer quotes - removing them ([9378cb9](https://gitlab.com/codsen/codsen/commit/9378cb9c76aa38a1ff8c683e1e020e3ef83cbac4))
-
+- recognise "only"-kind closing tails with simple comment tails preceding ([f0d3624](https://gitlab.com/codsen/codsen/commit/f0d3624ca9f441cb6c741bd7da223562f0064517))
+- second part of newly-added layer quotes - removing them ([9378cb9](https://gitlab.com/codsen/codsen/commit/9378cb9c76aa38a1ff8c683e1e020e3ef83cbac4))
 
 ### Features
 
-* recognise conditional comment tags with wrong brackets ([c399b92](https://gitlab.com/codsen/codsen/commit/c399b92a32ebbbc8e041c8bd88d0f9215425312b))
-* recognise mismatching quotes around HTML attributes ([7e2818c](https://gitlab.com/codsen/codsen/commit/7e2818c3ee0b1495343282e644b030d42d704f92))
-* recognise missing closing quotes on HTML attibutes ([610e400](https://gitlab.com/codsen/codsen/commit/610e400f561051af7824924e1f9f86afc866532c))
-* recognise missing opening quotes on HTML attributes ([41b85f0](https://gitlab.com/codsen/codsen/commit/41b85f0b3feabb15e692065426f4da2cecc7dc60))
-* recognise repeated opening quotes on HTML attributes ([55707d5](https://gitlab.com/codsen/codsen/commit/55707d53d14ca8d893ef20a8b2494cdc3c91d5b6))
-
-
-
-
+- recognise conditional comment tags with wrong brackets ([c399b92](https://gitlab.com/codsen/codsen/commit/c399b92a32ebbbc8e041c8bd88d0f9215425312b))
+- recognise mismatching quotes around HTML attributes ([7e2818c](https://gitlab.com/codsen/codsen/commit/7e2818c3ee0b1495343282e644b030d42d704f92))
+- recognise missing closing quotes on HTML attibutes ([610e400](https://gitlab.com/codsen/codsen/commit/610e400f561051af7824924e1f9f86afc866532c))
+- recognise missing opening quotes on HTML attributes ([41b85f0](https://gitlab.com/codsen/codsen/commit/41b85f0b3feabb15e692065426f4da2cecc7dc60))
+- recognise repeated opening quotes on HTML attributes ([55707d5](https://gitlab.com/codsen/codsen/commit/55707d53d14ca8d893ef20a8b2494cdc3c91d5b6))
 
 ## 2.9.0 (2020-03-16)
 
