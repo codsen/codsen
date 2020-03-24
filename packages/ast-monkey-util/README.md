@@ -108,7 +108,7 @@ console.log(pathPrev("9.children.1.children.2"));
 
 ## API - `pathUp`
 
-It takes (a string) path and goes "one level" up:
+It takes (a string) path and goes "one level" up, discarding the last two path parts:
 
 ```js
 console.log(pathUp("1"));
@@ -121,7 +121,7 @@ console.log(pathUp("9.children.1.children.2"));
 // => "9.children.1"
 ```
 
-Practically, if you think, `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) root is array. It contains zero or more plain objects, each representing a tag, a chunk of text, a comment tag and so on.
+Practically, if you think, `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) always outputs an array. It contains zero or more plain objects, each representing a tag, a chunk of text, a comment tag and so on.
 
 Since root element is array, paths of those plain objects are digits: `0`, `1`, `5.children.0` and so on.
 
@@ -163,7 +163,7 @@ Would yield AST (many keys omitted):
 ]
 ```
 
-Thus, text node for value "text" is at the path `0.children.0` and "going up" would mean "0" - that's splitting by dot into an array and discarding the last two elements from that array, then joining it back with a dot.
+Thus, a text node for value "text" (one with `"start": 3` above) is at the path `0.children.0` (first element's first child node) and "going up" would mean "0" - that's splitting by dot into an array and discarding the last two elements from that array, then joining it back with a dot.
 
 ```
 0 . children . 0
