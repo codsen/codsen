@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.2](https://gitlab.com/codsen/codsen/compare/array-of-arrays-sort-by-col@2.12.1...array-of-arrays-sort-by-col@2.12.2) (2020-03-24)
+
+**Note:** Version bump only for package array-of-arrays-sort-by-col
+
+
+
+
+
 ## 2.12.0 (2020-01-26)
 
 ### Features

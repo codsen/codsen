@@ -1,7 +1,7 @@
 /**
  * ranges-iterate
  * Iterate a string and any changes within already existing ranges
- * Version: 1.1.33
+ * Version: 1.1.34
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-iterate

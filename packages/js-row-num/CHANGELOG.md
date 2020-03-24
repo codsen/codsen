@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.7](https://gitlab.com/codsen/codsen/compare/js-row-num@2.7.6...js-row-num@2.7.7) (2020-03-24)
+
+**Note:** Version bump only for package js-row-num
+
+
+
+
+
 ## 2.7.0 (2019-12-14)
 
 ### Bug Fixes

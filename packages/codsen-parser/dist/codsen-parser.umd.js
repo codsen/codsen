@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken code, especially HTML & CSS
- * Version: 0.3.0
+ * Version: 0.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser

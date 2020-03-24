@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.15.0](https://gitlab.com/codsen/codsen/compare/emlint@2.14.0...emlint@2.15.0) (2020-03-24)
+
+
+### Features
+
+* improvements to `attribute-malformed` - detect repeated opening quotes on attributes ([c4db5bf](https://gitlab.com/codsen/codsen/commit/c4db5bf3613ab8e297a2ddfef38169090cc7c10e))
+* improvements to `attribute-malformed` - recognise repeated double quotes instead of equal ([f7d487e](https://gitlab.com/codsen/codsen/commit/f7d487e2ca160545bb3a0c4b2d30c9adbfe59992))
+* new rule, `comment-conditional-nested` ([b5de5b9](https://gitlab.com/codsen/codsen/commit/b5de5b9c8ffd6ea2ec25edab17600f59ac090cb1))
+* new rule, `tag-bad-self-closing` ([1d6c1db](https://gitlab.com/codsen/codsen/commit/1d6c1dbb68f02cc422206746b7c323fd191ac986))
+* new rule, `tag-void-frontal-slash`; recognise HTML attr missing quotes (`attribute-malformed`) ([7de6964](https://gitlab.com/codsen/codsen/commit/7de69647ff2a53ab3ee2ebce63b7d5301cc76b99))
+* recognise errors on the opening "only"-kind comment tag endings ([abf504c](https://gitlab.com/codsen/codsen/commit/abf504c87e3cb213da1415f220f46b5c5b45730b))
+* recognise wrong brackets in comment tags (both closing and opening) ([e97dccb](https://gitlab.com/codsen/codsen/commit/e97dccb0131159e44b6f5f2208fc36d2f246f1ad))
+* tweaks to `comment-mismatching-pair` to mind malformed closing tags to prevent fixes clashes ([5f389b5](https://gitlab.com/codsen/codsen/commit/5f389b5c3e69ebaf211d4096477fcc4b0aad3920))
+
+
+
+
+
 ## 2.14.0 (2020-03-16)
 
 ### Bug Fixes
