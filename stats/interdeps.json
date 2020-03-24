@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 41375,
+        "size": 41312,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -252,7 +252,7 @@
     },
     {
         "name": "emlint",
-        "size": 309331,
+        "size": 311696,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",

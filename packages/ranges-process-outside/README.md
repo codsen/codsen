@@ -45,9 +45,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-process-outside.cjs.js` | 4 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-process-outside.cjs.js` | 5 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-process-outside.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-process-outside.umd.js` | 10 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-process-outside.umd.js` | 11 KB |
 
 **[⬆ back to top](#)**
 
@@ -72,7 +72,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
-[cov-img]: https://img.shields.io/badge/coverage-66.07%25-yellow.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-57.81%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-process-outside

@@ -84,7 +84,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 12 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 13 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 11 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-left-right.umd.js` | 16 KB |
 
@@ -363,7 +363,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-[cov-img]: https://img.shields.io/badge/coverage-95.59%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-93.16%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-left-right

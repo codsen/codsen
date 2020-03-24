@@ -45,9 +45,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                      | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-of-arrays-sort-by-col.cjs.js` | 4 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-of-arrays-sort-by-col.cjs.js` | 5 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-of-arrays-sort-by-col.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-sort-by-col.umd.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-sort-by-col.umd.js` | 3 KB |
 
 **[⬆ back to top](#)**
 
@@ -185,7 +185,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
-[cov-img]: https://img.shields.io/badge/coverage-93.22%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-84.85%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/array-of-arrays-sort-by-col?activeTab=dependencies
