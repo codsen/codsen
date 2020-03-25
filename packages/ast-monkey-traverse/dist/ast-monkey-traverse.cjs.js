@@ -29,9 +29,8 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function trimFirstDot(str) {
-  if (typeof str === "string" && str.length > 0 && str[0] === ".") {
+  if (typeof str === "string" && str.length && str[0] === ".") {
     return str.slice(1);
   }
   return str;
@@ -53,7 +52,7 @@ function astMonkeyTraverse(tree1, cb1) {
       path: ""
     }, innerObj);
     innerObj.depth += 1;
-    if (isArr(tree)) {
+    if (Array.isArray(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
         if (stop.now) {
           break;

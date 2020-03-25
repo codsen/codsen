@@ -1,8 +1,7 @@
 import clone from "lodash.clonedeep";
 
-const isArr = Array.isArray;
 function trimFirstDot(str) {
-  if (typeof str === "string" && str.length > 0 && str[0] === ".") {
+  if (typeof str === "string" && str.length && str[0] === ".") {
     return str.slice(1);
   }
   return str;
@@ -18,7 +17,7 @@ function astMonkeyTraverse(tree1, cb1) {
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
   function traverseInner(treeOriginal, callback, innerObj, stop) {
-    console.log(`021 ======= traverseInner() =======`);
+    console.log(`020 ======= traverseInner() =======`);
     const tree = clone(treeOriginal);
 
     let i;
@@ -26,14 +25,14 @@ function astMonkeyTraverse(tree1, cb1) {
     let res;
     innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
     innerObj.depth += 1;
-    if (isArr(tree)) {
-      console.log(`030 tree is array!`);
+    if (Array.isArray(tree)) {
+      console.log(`029 tree is array!`);
       for (i = 0, len = tree.length; i < len; i++) {
         console.log(
-          `033 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          `032 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
         if (stop.now) {
-          console.log(`036 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`035 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         const path = `${innerObj.path}.${i}`;
@@ -63,13 +62,13 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     } else if (isObj(tree)) {
-      console.log(`066 tree is object`);
+      console.log(`065 tree is object`);
       for (const key in tree) {
         console.log(
-          `069 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          `068 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
         if (stop.now && key != null) {
-          console.log(`072 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`071 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         const path = `${innerObj.path}.${key}`;
@@ -96,7 +95,7 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     }
-    console.log(`099 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    console.log(`098 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
   return traverseInner(tree1, cb1, {}, stop);
