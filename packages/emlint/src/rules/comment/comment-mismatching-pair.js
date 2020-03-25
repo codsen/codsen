@@ -7,12 +7,6 @@ import { pathPrev } from "ast-monkey-util";
 import { isObj } from "../../util/util";
 import op from "object-path";
 
-const reference = {
-  simple: "-->",
-  only: "<![endif]-->",
-  not: "<!--<![endif]-->",
-};
-
 function commentMismatchingPair(context, ...opts) {
   return {
     ast: function (node) {
@@ -20,7 +14,7 @@ function commentMismatchingPair(context, ...opts) {
         `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
       );
       console.log(
-        `023 commentMismatchingPair(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `017 commentMismatchingPair(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -55,7 +49,7 @@ function commentMismatchingPair(context, ...opts) {
 
             if (current.type === "comment" && current.closing) {
               console.log(
-                `058 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
+                `052 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
                   current,
                   null,
                   4
@@ -64,7 +58,7 @@ function commentMismatchingPair(context, ...opts) {
 
               const previousToken = op.get(node, pathPrev(innerObj.path));
               console.log(
-                `067 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
+                `061 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
                   previousToken,
                   null,
                   4
@@ -78,7 +72,7 @@ function commentMismatchingPair(context, ...opts) {
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
                   console.log(
-                    `081 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
+                    `075 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
                   );
 
                   // turn tail into "not"-kind, add front part (<!--)
@@ -101,7 +95,7 @@ function commentMismatchingPair(context, ...opts) {
                   current.kind === "not"
                 ) {
                   console.log(
-                    `104 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
+                    `098 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
                   );
 
                   // turn tail into "only"-kind, remove front part (<!--)
