@@ -11,14 +11,14 @@ const flagshipLibsList = ["email-comb", "html-crush", "detergent"];
 const webApps = {
   "email-comb": "emailcomb.com",
   "html-crush": "htmlcrush.com",
-  detergent: "detergent.io"
+  detergent: "detergent.io",
 };
 const rangeLibsList = [
   "ranges-push",
   "ranges-apply",
   "ranges-merge",
   "ranges-sort",
-  "string-range-expander"
+  "string-range-expander",
 ];
 const objectLibsList = [
   "ast-monkey",
@@ -26,7 +26,7 @@ const objectLibsList = [
   "ast-monkey-util",
   "json-comb-core",
   "json-variables",
-  "object-merge-advanced"
+  "object-merge-advanced",
 ];
 const stringLibsList = [
   "edit-package-json",
@@ -34,19 +34,19 @@ const stringLibsList = [
   "str-indexes-of-plus",
   "bitbucket-slug",
   "email-all-chars-within-ascii",
-  "js-row-num"
+  "js-row-num",
 ];
 const cliAppsList = [
   "json-comb",
   "update-versions",
   "lerna-clean-changelogs-cli",
   "lerna-link-dep",
-  "lect"
+  "lect",
 ];
 const lernaLibsList = [
   "lerna-clean-changelogs-cli",
   "lerna-link-dep",
-  "update-versions"
+  "update-versions",
 ];
 const htmlLibsList = [
   "emlint",
@@ -56,7 +56,7 @@ const htmlLibsList = [
   "is-html-tag-opening",
   "is-language-code",
   "is-media-descriptor",
-  "is-relative-uri"
+  "is-relative-uri",
 ];
 
 // note for future self - use package.json "private" key instead:
@@ -109,7 +109,7 @@ function topRow(webapp) {
 const allPackages = fs
   .readdirSync(path.resolve("packages"))
   .filter(
-    packageName =>
+    (packageName) =>
       typeof packageName === "string" &&
       packageName.length &&
       fs.statSync(path.join("packages", packageName)).isDirectory() &&
@@ -131,8 +131,8 @@ function noListsInclude(lib) {
     htmlLibsList,
     stringLibsList,
     cliAppsList,
-    lernaLibsList
-  ].every(arr2 => !arr2.includes(lib));
+    lernaLibsList,
+  ].every((arr2) => !arr2.includes(lib));
 }
 
 // COMPILE LISTS
@@ -143,24 +143,26 @@ function noListsInclude(lib) {
 
 // -------------------------------------
 
-const filteredFlagshipAppsList = Array.from(flagshipLibsList).filter(lib =>
+const filteredFlagshipAppsList = Array.from(flagshipLibsList).filter((lib) =>
   allPackages.includes(lib)
 );
 
 // -------------------------------------
 
 const filteredCliAppsList = Array.from(cliAppsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
-    allPackages.filter(lib => lib.endsWith("-cli") && noListsInclude(lib))
+    allPackages.filter((lib) => lib.endsWith("-cli") && noListsInclude(lib))
   );
 
 // -------------------------------------
 
 const filteredRangeLibsList = Array.from(rangeLibsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
-    allPackages.filter(lib => lib.startsWith("ranges-") && noListsInclude(lib))
+    allPackages.filter(
+      (lib) => lib.startsWith("ranges-") && noListsInclude(lib)
+    )
   );
 // console.log(
 //   `${`\u001b[${33}m${`filteredRangeLibsList`}\u001b[${39}m`} = ${JSON.stringify(
@@ -173,10 +175,10 @@ const filteredRangeLibsList = Array.from(rangeLibsList)
 // -------------------------------------
 
 const filteredHtmlLibsList = Array.from(htmlLibsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
     allPackages.filter(
-      lib =>
+      (lib) =>
         (lib.startsWith("html-") || lib.startsWith("css-")) &&
         noListsInclude(lib)
     )
@@ -192,10 +194,10 @@ const filteredHtmlLibsList = Array.from(htmlLibsList)
 // -------------------------------------
 
 const filteredStringLibsList = Array.from(stringLibsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
     allPackages.filter(
-      lib =>
+      (lib) =>
         (lib.startsWith("string-") ||
           lib.startsWith("str-") ||
           lib.startsWith("csv-")) &&
@@ -213,10 +215,10 @@ const filteredStringLibsList = Array.from(stringLibsList)
 // -------------------------------------
 
 const filteredObjectLibsList = Array.from(objectLibsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
     allPackages.filter(
-      lib =>
+      (lib) =>
         (lib.startsWith("object-") ||
           lib.startsWith("obj-") ||
           lib.startsWith("ast-")) &&
@@ -234,10 +236,10 @@ const filteredObjectLibsList = Array.from(objectLibsList)
 // -------------------------------------
 
 const filteredLernaLibsList = Array.from(lernaLibsList)
-  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .filter((lib) => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
   .concat(
     allPackages.filter(
-      lib =>
+      (lib) =>
         lib.startsWith("lerna-") &&
         noListsInclude(lib) &&
         lib !== "lerna-clean-changelogs"
@@ -254,7 +256,7 @@ const filteredLernaLibsList = Array.from(lernaLibsList)
 // -------------------------------------
 
 const filteredOtherLibsList = allPackages.filter(
-  lib =>
+  (lib) =>
     !flagshipLibsList.includes(lib) &&
     !filteredCliAppsList.includes(lib) &&
     !filteredRangeLibsList.includes(lib) &&
@@ -268,8 +270,33 @@ const filteredOtherLibsList = allPackages.filter(
 
 const template = `# Codsen
 
-    A lerna monorepo for our ${allPackages.length -
-      ignoreList.length} npm libraries 📦📦📦
+    A lerna monorepo for our ${
+      allPackages.length - ignoreList.length
+    } npm libraries 📦📦📦
+
+The aim of Codsen is to help people.
+
+We don't need billions of dollars to produce great programs.
+
+It's not about the money.
+
+We code courageosly, swiftly and aim big (feature-wise). There are no strings attached: stakeholders, meetings, approvals or whatever.
+
+Just a plain TDD JavaScript.
+
+The passion, the idea, _the drive_ comes from _above_, from outside of a person.
+
+We're just funneling what has been given to us from _above_.
+
+If you abuse what's given to you, if you _take_ rather than _give_, you lose the stream.
+
+But if you keep giving, the stream, the drive from above never ends.
+
+So, use these programs, profit from them, use them as ingredients to make even greater projects.
+
+We're all in the same boat.
+
+🍻
 
 ## 💡 Table of Contents
 
@@ -289,7 +316,7 @@ const template = `# Codsen
 ## 🚢 Flagship Libraries
 
 ${topRow(true)}
-${filteredFlagshipAppsList.map(lib => row(lib, true)).join("\n")}
+${filteredFlagshipAppsList.map((lib) => row(lib, true)).join("\n")}
 
 Let's group all others by their purpose.
 
@@ -326,7 +353,7 @@ Performing string processing only once is better for both **performance** reason
 If you think, strings are immutable in JavaScript — each change of a string means rewriting it in a computer memory. Let's say you want to add a letter and delete the same letter in a string which consists of a thousand characters. Both actions cancel each other out. However, if you do the string edits sequentially, you write a thousand characters to memory two times, after every amend. On the other hand, if you use _ranges_ approach, you'd only [create a new record](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) in the computer memory, housing a couple of arrays, each consisting of couple index numbers. When you [process the ranges](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply), they would cancel each other out, and we would not write anything to the memory at all. Now, if you scale this — longer strings, more amends, and done many times — you'll soon feel the difference in performance.
 
 ${topRow()}
-${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
+${filteredRangeLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -343,7 +370,7 @@ It is vital to support _broken code_ because this allows us to make broken code 
 It is equally vital to support _mixed code_ because both web page and email template HTML can contain anything from templating languages to programming languages. For example, Wordpress website has some HTML within PHP files. Another example, email templates are coded in Nunjucks templating language and \`.nunjucks\` files are HTML sprinkled with their templating literals. If tooling supports HTML mixed with _other things_, we will be able to process that HTML and skip those _other things_.
 
 ${topRow()}
-${filteredHtmlLibsList.map(lib => row(lib)).join("\n")}
+${filteredHtmlLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -354,7 +381,7 @@ ${filteredStringLibsList.length} in total.
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
 ${topRow()}
-${filteredStringLibsList.map(lib => row(lib)).join("\n")}
+${filteredStringLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -367,7 +394,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ na
 "\`ast-\`" in the library's name below just emphasises that it really works on nested objects (so-called Abstract Syntax Trees that come from parsed things).
 
 ${topRow()}
-${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
+${filteredObjectLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -380,7 +407,7 @@ While maintaining this very monorepo we found that some essential tools were mis
 If you also use Lerna monorepos, check these out:
 
 ${topRow()}
-${filteredLernaLibsList.map(lib => row(lib)).join("\n")}
+${filteredLernaLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -395,7 +422,7 @@ You use them in the Terminal (command line), for example:
 ![CLI app](packages/email-all-chars-within-ascii-cli/media/mov2.gif)
 
 ${topRow()}
-${filteredCliAppsList.map(lib => row(lib)).join("\n")}
+${filteredCliAppsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -404,7 +431,7 @@ ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
 ${filteredOtherLibsList.length} in total.
 
 ${topRow()}
-${filteredOtherLibsList.map(lib => row(lib)).join("\n")}
+${filteredOtherLibsList.map((lib) => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
@@ -439,7 +466,7 @@ fs.writeFile(
       "https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here"
     )
     .replace(/ - /gm, " — "),
-  err => {
+  (err) => {
     if (err) {
       throw err;
     }
