@@ -236,7 +236,7 @@ For example, a minimal application would look like this:
 const { removeWidows } = require("string-remove-widows");
 // second input argument is a plain object, the Optional Options Object:
 const result = removeWidows("Some raw text in a very long line.", {
-  targetLanguage: "css"
+  targetLanguage: "css",
 });
 // now the widow words will be prevented considering that content will go to CSS content:
 console.log(result);
@@ -273,13 +273,13 @@ const result = removeWidows("Here is a very long line of text", {
   ignore: [
     {
       heads: "{{",
-      tails: "}}"
+      tails: "}}",
     },
     {
       heads: ["{% if", "{%- if"],
-      tails: ["{% endif", "{%- endif"]
-    }
-  ]
+      tails: ["{% endif", "{%- endif"],
+    },
+  ],
 });
 ```
 
@@ -300,7 +300,7 @@ for example:
 const { removeWidows } = require("string-remove-widows");
 const result = removeWidows("Here is a very long line of text", {
   targetLanguage: "html",
-  ignore: "jinja"
+  ignore: "jinja",
 });
 ```
 

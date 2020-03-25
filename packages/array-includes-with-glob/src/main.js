@@ -12,7 +12,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   const defaults = {
-    arrayVsArrayAllMustBeFound: "any" // two options: 'any' or 'all'
+    arrayVsArrayAllMustBeFound: "any", // two options: 'any' or 'all'
   };
 
   const opts = Object.assign({}, defaults, originalOpts);
@@ -57,7 +57,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   // prevent any mutation + filter out undefined and null elements:
-  const input = originalInput.filter(elem => existy(elem));
+  const input = originalInput.filter((elem) => existy(elem));
 
   // if array contained only null/undefined values, do a Dutch leave:
   if (input.length === 0) {
@@ -65,20 +65,20 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   if (isStr(stringToFind)) {
-    return input.some(val =>
+    return input.some((val) =>
       matcher.isMatch(val, stringToFind, { caseSensitive: true })
     );
   }
   // array then.
   if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(stringToFindVal =>
-      input.some(val =>
+    return stringToFind.some((stringToFindVal) =>
+      input.some((val) =>
         matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
       )
     );
   }
-  return stringToFind.every(stringToFindVal =>
-    input.some(val =>
+  return stringToFind.every((stringToFindVal) =>
+    input.some((val) =>
       matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
     )
   );

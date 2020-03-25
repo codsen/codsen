@@ -74,14 +74,14 @@ compare(
       b: "d",
       c: [],
       e: "f",
-      g: "h"
-    }
+      g: "h",
+    },
   },
   {
     a: {
       b: "d",
-      c: []
-    }
+      c: [],
+    },
   }
 );
 // => true
@@ -97,11 +97,11 @@ For example these two are equal:
 compare(
   {
     a: "a",
-    b: "\n \n\n"
+    b: "\n \n\n",
   },
   {
     a: "a",
-    b: "\t\t \t"
+    b: "\t\t \t",
   }
 );
 // => true
@@ -114,11 +114,11 @@ compare(
   {
     a: "a",
     b: [[["\n \n\n"]]],
-    c: "c"
+    c: "c",
   },
   {
     a: "a",
-    b: { c: { d: "   \t\t \t" } }
+    b: { c: { d: "   \t\t \t" } },
   }
 );
 // => true

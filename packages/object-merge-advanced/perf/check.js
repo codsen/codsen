@@ -17,41 +17,41 @@ const testme = () =>
           d: [
             {
               e: false,
-              f: false
-            }
-          ]
-        }
+              f: false,
+            },
+          ],
+        },
       ],
       g: false,
       h: [
         {
-          i: "i"
-        }
+          i: "i",
+        },
       ],
-      j: "j"
+      j: "j",
     },
     {
       a: [
         {
           b: {
-            b2: "b2"
+            b2: "b2",
           },
           c: false,
           d: [
             {
               e: false,
-              f: false
-            }
-          ]
-        }
+              f: false,
+            },
+          ],
+        },
       ],
       g: false,
       h: [
         {
-          i: "i"
-        }
+          i: "i",
+        },
       ],
-      j: "j"
+      j: "j",
     }
   );
 

@@ -9,11 +9,11 @@ const det1 = detergent.det;
 
 t.test(
   `01.01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
-  t => {
+  (t) => {
     t.same(
       Object.keys(
         det1(`&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`, {
-          convertEntities: 1
+          convertEntities: 1,
         }).applicableOpts
       ).sort(),
       [
@@ -29,7 +29,7 @@ t.test(
         "addMissingSpaces",
         "convertDotsToEllipsis",
         "stripHtml",
-        "eol"
+        "eol",
       ].sort()
     );
     t.end();

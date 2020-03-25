@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateFrame(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFrame() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateFrame(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -46,9 +46,9 @@ function attributeValidateFrame(context, ...opts) {
               "rhs", // The left-hand side only.
               "vsides", // The right-hand side only.
               "box", // All four sides.
-              "border" // All four sides.
+              "border", // All four sides.
             ],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -60,16 +60,16 @@ function attributeValidateFrame(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frame"
+              ruleId: "attribute-validate-frame",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

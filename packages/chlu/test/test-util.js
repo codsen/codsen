@@ -6,7 +6,7 @@ const {
   aContainsB,
   getSetFooterLink,
   getRow,
-  filterDate
+  filterDate,
 } = require("../dist/util.cjs");
 
 // 01. isTitle
@@ -14,7 +14,7 @@ const {
 
 t.test(
   `01.01 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - negative result`,
-  t => {
+  (t) => {
     t.same(isTitle(""), false, "01.01.01");
     t.same(isTitle("a.a.a"), false, "01.01.02");
     t.same(isTitle("a.a.a."), false, "01.01.03");
@@ -57,7 +57,7 @@ whatever
 
 t.test(
   `01.02 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - positive result`,
-  t => {
+  (t) => {
     t.same(isTitle("## [1.2.0] - 2017-04-24"), true, "01.02.01");
     t.same(isTitle("## [1.2.0]"), true, "01.02.02");
     t.same(isTitle("## [1.2.0] aaa"), true, "01.02.03");
@@ -70,7 +70,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - non-semver, 2 digits only`,
-  t => {
+  (t) => {
     t.same(isTitle("## [1.2] - 2017-04-24"), true, "01.03.01");
     t.same(isTitle("## [1.2]"), true, "01.03.02");
     t.same(isTitle("## [1.2] aaa"), true, "01.03.03");
@@ -87,7 +87,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - three hashes, H3`,
-  t => {
+  (t) => {
     t.same(isTitle("### [1.2.0] - 2017-04-24"), true, "01.04.01");
     t.same(isTitle("### [1.2.0]"), true, "01.04.02");
     t.same(isTitle("### [1.2.0] aaa"), true, "01.04.03");
@@ -97,7 +97,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - four hashes, H4`,
-  t => {
+  (t) => {
     t.same(isTitle("#### [1.2.0] - 2017-04-24"), true, "01.05.01");
     t.same(isTitle("#### [1.2.0]"), true, "01.05.02");
     t.same(isTitle("#### [1.2.0] aaa"), true, "01.05.03");
@@ -107,7 +107,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - all kinds of throws`,
-  t => {
+  (t) => {
     t.throws(() => isTitle(1));
     t.throws(() => isTitle(true));
     t.throws(() => isTitle(null));
@@ -122,7 +122,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - negative result`,
-  t => {
+  (t) => {
     t.same(isFooterLink(""), false, "02.01.01");
     t.same(isFooterLink(), false, "02.01.02");
     t.same(isFooterLink("[1.1.0](https://github.com)"), false, "02.01.03");
@@ -135,7 +135,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - positive result`,
-  t => {
+  (t) => {
     t.same(
       isFooterLink(
         "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.0...v1.1.0"
@@ -150,7 +150,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - all kinds of throws`,
-  t => {
+  (t) => {
     t.throws(() => isFooterLink(1));
     t.throws(() => isFooterLink(true));
     t.throws(() => isFooterLink(null));
@@ -165,7 +165,7 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - various throws`,
-  t => {
+  (t) => {
     t.throws(() => getPreviousVersion());
     t.throws(() => getPreviousVersion("zzz"));
     t.throws(() => getPreviousVersion(1, ["zzz"]));
@@ -179,7 +179,7 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - BAU`,
-  t => {
+  (t) => {
     // without "v."
     t.same(
       getPreviousVersion("1.1.0", ["1.1.0", "1.2.0", "1.3.0", "1.0.0"]),
@@ -236,7 +236,7 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - requesting previous of a first`,
-  t => {
+  (t) => {
     t.same(
       getPreviousVersion("1.1.0", ["1.1.0", "1.2.0", "1.3.0"]),
       null,
@@ -249,19 +249,22 @@ t.test(
 // 04. aContainsB
 // ------------------
 
-t.test(`04.01 - ${`\u001b[${33}m${`aContainsB()`}\u001b[${39}m`} - BAU`, t => {
-  t.same(aContainsB("aaaaaabcdddddd", "bc"), true, "04.01.01");
-  t.same(aContainsB("aaaaaabcdddddd", null), false, "04.01.02");
-  t.same(aContainsB("aaaaaabcdddddd"), false, "04.01.03");
-  t.end();
-});
+t.test(
+  `04.01 - ${`\u001b[${33}m${`aContainsB()`}\u001b[${39}m`} - BAU`,
+  (t) => {
+    t.same(aContainsB("aaaaaabcdddddd", "bc"), true, "04.01.01");
+    t.same(aContainsB("aaaaaabcdddddd", null), false, "04.01.02");
+    t.same(aContainsB("aaaaaabcdddddd"), false, "04.01.03");
+    t.end();
+  }
+);
 
 // 05. getSetFooterLink
 // -----------
 
 t.test(
   `05.01 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly GitHub`,
-  t => {
+  (t) => {
     t.same(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
@@ -269,7 +272,7 @@ t.test(
           user: "newUser",
           project: "newProject",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://github.com/newUser/newProject/compare/v1.0.1...v1.1.0",
@@ -282,7 +285,7 @@ t.test(
         {
           user: "newUser",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://github.com/newUser/libName/compare/v1.0.1...v1.1.0",
@@ -295,7 +298,7 @@ t.test(
         {
           project: "package",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://github.com/userName/package/compare/v1.0.1...v1.1.0",
@@ -308,7 +311,7 @@ t.test(
         {
           versBefore: "4.0.0",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://github.com/userName/libName/compare/v4.0.0...v1.1.0",
@@ -321,7 +324,7 @@ t.test(
         {
           versAfter: "5.0.0",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v5.0.0",
@@ -334,7 +337,7 @@ t.test(
         {
           version: "9.9.9",
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[9.9.9]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
@@ -351,7 +354,7 @@ t.test(
           versAfter: "8.1.0",
           version: "8.2.0", // <----- this is naughty, it should match versAfter in real life
           type: "github",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[8.2.0]: https://github.com/joe/amazing/compare/v8.0.44...v8.1.0",
@@ -368,7 +371,7 @@ t.test(
           versAfter: "8.1.0",
           version: "8.2.0", // <----- this is naughty, it should match versAfter in real life
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[8.2.0]: https://bitbucket.org/joe/amazing/branches/compare/v8.1.0%0Dv8.0.44#diff",
@@ -380,7 +383,7 @@ t.test(
 
 t.test(
   `05.02 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly GitHub`,
-  t => {
+  (t) => {
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
@@ -391,7 +394,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "github"
+        type: "github",
       },
       "05.02.01"
     );
@@ -406,7 +409,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "github"
+        type: "github",
       },
       "05.02.02 - null as second arg"
     );
@@ -420,7 +423,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "github"
+        type: "github",
       },
       "05.02.03 - error with double v - still OK"
     );
@@ -434,7 +437,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "github"
+        type: "github",
       },
       '05.02.04 - characters "v" missing completely'
     );
@@ -448,7 +451,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "github"
+        type: "github",
       },
       "05.02.05 - one missing, one double v"
     );
@@ -465,7 +468,7 @@ t.test(
 
 t.test(
   `05.03 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly Bitbucket`,
-  t => {
+  (t) => {
     t.same(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
@@ -473,7 +476,7 @@ t.test(
           user: "newUser",
           project: "newProject",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://bitbucket.org/newUser/newProject/branches/compare/v1.1.0%0Dv1.0.1#diff",
@@ -486,7 +489,7 @@ t.test(
         {
           user: "newUser",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://bitbucket.org/newUser/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
@@ -499,7 +502,7 @@ t.test(
         {
           project: "package",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://bitbucket.org/userName/package/branches/compare/v1.1.0%0Dv1.0.1#diff",
@@ -512,7 +515,7 @@ t.test(
         {
           versBefore: "4.0.0",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv4.0.0#diff",
@@ -525,7 +528,7 @@ t.test(
         {
           versAfter: "5.0.0",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v5.0.0%0Dv1.0.1#diff",
@@ -538,7 +541,7 @@ t.test(
         {
           version: "9.9.9",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[9.9.9]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
@@ -555,7 +558,7 @@ t.test(
           versAfter: "8.1.0",
           version: "8.1.0",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[8.1.0]: https://bitbucket.org/joe/amazing/branches/compare/v8.1.0%0Dv8.0.44#diff",
@@ -572,7 +575,7 @@ t.test(
           versAfter: "8.1.0",
           version: "8.2.0",
           type: "bitbucket",
-          mode: "set"
+          mode: "set",
         }
       ),
       "[8.2.0]: https://bitbucket.org/joe/amazing/branches/compare/v8.1.0%0Dv8.0.44#diff",
@@ -584,13 +587,13 @@ t.test(
 
 t.test(
   `05.04 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - without diff`,
-  t => {
+  (t) => {
     // passing {mode: "get"}:
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -599,7 +602,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.01 - URL IS WRONG! It should contain %0D not ..."
     );
@@ -607,7 +610,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -616,7 +619,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.02 - error with double v - still OK"
     );
@@ -624,7 +627,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -633,7 +636,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.04.03 - characters "v" missing completely'
     );
@@ -641,7 +644,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -650,7 +653,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.04 - one missing, one double v"
     );
@@ -667,7 +670,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.05 - URL IS WRONG! It should contain %0D not ..."
     );
@@ -681,7 +684,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.06 - error with double v - still OK"
     );
@@ -695,7 +698,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.04.07 - characters "v" missing completely'
     );
@@ -709,7 +712,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.04.08 - one missing, one double v"
     );
@@ -719,12 +722,12 @@ t.test(
 
 t.test(
   `05.05 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - without diff`,
-  t => {
+  (t) => {
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -733,7 +736,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.05.01 - diff is separated by %0D not ..."
     );
@@ -741,7 +744,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0%0Dvv1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -750,7 +753,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.05.02 - error with double v - still OK"
     );
@@ -758,7 +761,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0D1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -767,7 +770,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.05.03 - characters "v" missing completely'
     );
@@ -775,7 +778,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0Dvv1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -784,7 +787,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.05.04 - one missing, one double v"
     );
@@ -794,13 +797,13 @@ t.test(
 
 t.test(
   `05.06 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - with diff`,
-  t => {
+  (t) => {
     // with explicit {mode: "get"} object passed:
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -809,7 +812,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.01 - URL IS WRONG! It should contain %0D not ..."
     );
@@ -817,7 +820,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -826,7 +829,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.02 - error with double v - still OK"
     );
@@ -834,7 +837,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -843,7 +846,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.06.03 - characters "v" missing completely'
     );
@@ -851,7 +854,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -860,7 +863,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.04 - one missing, one double v"
     );
@@ -876,7 +879,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.05 - URL IS WRONG! It should contain %0D not ..."
     );
@@ -890,7 +893,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.06 - error with double v - still OK"
     );
@@ -904,7 +907,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.06.07 - characters "v" missing completely'
     );
@@ -918,7 +921,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.06.08 - one missing, one double v"
     );
@@ -928,13 +931,13 @@ t.test(
 
 t.test(
   `05.07 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - with diff`,
-  t => {
+  (t) => {
     // with explicit {mode: "get"} object being passed:
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -943,7 +946,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.01 - diff is separated by %0D not ..."
     );
@@ -951,7 +954,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0%0Dvv1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -960,7 +963,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.02 - error with double v - still OK"
     );
@@ -968,7 +971,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0D1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -977,7 +980,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.07.03 - characters "v" missing completely'
     );
@@ -985,7 +988,7 @@ t.test(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0Dvv1.0.1#diff",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       {
@@ -994,7 +997,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.04 - one missing, one double v"
     );
@@ -1010,7 +1013,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.05 - diff is separated by %0D not ..."
     );
@@ -1024,7 +1027,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.06 - error with double v - still OK"
     );
@@ -1038,7 +1041,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       '05.07.07 - characters "v" missing completely'
     );
@@ -1052,7 +1055,7 @@ t.test(
         versBefore: "1.0.1",
         versAfter: "1.1.0",
         version: "999.88.7",
-        type: "bitbucket"
+        type: "bitbucket",
       },
       "05.07.08 - one missing, one double v"
     );
@@ -1062,12 +1065,12 @@ t.test(
 
 t.test(
   `05.08 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${36}m${`get`}\u001b[${39}m`} errors-out, returning null, when link is erroneous`,
-  t => {
+  (t) => {
     t.same(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.0.1",
         {
-          mode: "get"
+          mode: "get",
         }
       ),
       null,
@@ -1082,7 +1085,7 @@ t.test(
 
 t.test(
   `06.01 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - all kinds of throws`,
-  t => {
+  (t) => {
     t.throws(() => getRow(1));
     t.throws(() => getRow("a"));
     t.throws(() => getRow(1, 1));
@@ -1091,7 +1094,7 @@ t.test(
   }
 );
 
-t.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, t => {
+t.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
   t.same(getRow(["aaa", "bbb", "ccc"], 2), "ccc", "07.02.01 - found");
   t.same(getRow(["aaa", "bbb", "ccc"], 99), null, "07.02.01 - not found");
   t.end();
@@ -1102,7 +1105,7 @@ t.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, t => {
 
 t.test(
   `07.01 - ${`\u001b[${35}m${`filterDate()`}\u001b[${39}m`} - filters out date string`,
-  t => {
+  (t) => {
     t.same(filterDate(" ]  (March 1st, 2017)"), "March 1st 2017", "07.01.01");
     t.same(filterDate("]  (March 1st, 2017)"), "March 1st 2017", "07.01.02");
     t.same(filterDate("   (March 1st, 2017)"), "March 1st 2017", "07.01.03");

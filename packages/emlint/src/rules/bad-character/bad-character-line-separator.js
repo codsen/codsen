@@ -6,7 +6,7 @@
 
 function badCharacterLineSeparator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",
@@ -14,11 +14,11 @@ function badCharacterLineSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

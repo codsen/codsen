@@ -10,7 +10,7 @@ function attributeDuplicate(context, ...opts) {
   const attributesWhichCanBeMerged = ["id", "class"];
 
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ attributeDuplicate() ███████████████████████████████████████`
       );
@@ -58,7 +58,7 @@ function attributeDuplicate(context, ...opts) {
               message: `Duplicate attribute "${node.attribs[i].attribName}".`,
               idxFrom: node.attribs[i].attribStart,
               idxTo: node.attribs[i].attribEnd,
-              fix: null
+              fix: null,
             });
           } else if (
             !mergeableAttrsCaught.includes(node.attribs[i].attribName)
@@ -85,7 +85,7 @@ function attributeDuplicate(context, ...opts) {
           console.log(` `);
           console.log(` `);
           console.log(` `);
-          mergeableAttrsCaught.forEach(attrNameBeingMerged => {
+          mergeableAttrsCaught.forEach((attrNameBeingMerged) => {
             console.log(` `);
             console.log(` ====== `);
             console.log(` `);
@@ -129,7 +129,7 @@ function attributeDuplicate(context, ...opts) {
                     i
                       ? left(context.str, node.attribs[i].attribStart) + 1
                       : node.attribs[i].attribStart,
-                    node.attribs[i].attribEnd
+                    node.attribs[i].attribEnd,
                   ]);
                 }
 
@@ -210,8 +210,8 @@ function attributeDuplicate(context, ...opts) {
               idxFrom: node.start,
               idxTo: node.end,
               fix: {
-                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges]
-              }
+                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges],
+              },
             });
           });
 
@@ -220,7 +220,7 @@ function attributeDuplicate(context, ...opts) {
           console.log(` `);
         }
       }
-    }
+    },
   };
 }
 

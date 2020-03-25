@@ -14,7 +14,7 @@ Author: Roy Revelt, Codsen Ltd
 License: ${pkg.license}
 Homepage: ${pkg.homepage}`;
 
-export default commandLineArgs => {
+export default (commandLineArgs) => {
   const finalConfig = [
     // browser-friendly UMD build
     {
@@ -22,18 +22,18 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "jsonVariables"
+        name: "jsonVariables",
       },
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         resolve(),
         commonjs(),
         babel(),
         terser(),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // CommonJS build (for Node)
@@ -52,16 +52,16 @@ export default commandLineArgs => {
         "ranges-push",
         "string-find-heads-tails",
         "string-match-left-right",
-        "string-remove-duplicate-heads-tails"
+        "string-remove-duplicate-heads-tails",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         babel(),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // ES module build (for bundlers)
@@ -80,16 +80,16 @@ export default commandLineArgs => {
         "ranges-push",
         "string-find-heads-tails",
         "string-match-left-right",
-        "string-remove-duplicate-heads-tails"
+        "string-remove-duplicate-heads-tails",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
-    }
+        banner(licensePiece),
+      ],
+    },
   ];
 
   if (commandLineArgs.dev) {

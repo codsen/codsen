@@ -3,14 +3,14 @@ const t = require("tap");
 // const det1 = detergent.det;
 const {
   det,
-  mixer //, allCombinations
+  mixer, //, allCombinations
 } = require("../t-util/util");
 const {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
   // rawNbsp,
-  rawhairspace
+  rawhairspace,
   // rawEllipsis,
   // rightSingleQuote,
   // rightDoubleQuote,
@@ -18,12 +18,12 @@ const {
   // leftSingleQuote
 } = require("../dist/util.cjs");
 
-t.test(`00 - empty string input`, t => {
+t.test(`00 - empty string input`, (t) => {
   t.equal(det(t, 0, "").res, "");
   t.end();
 });
 
-t.test(`01 - all low ASCII invisible characters are removed`, t => {
+t.test(`01 - all low ASCII invisible characters are removed`, (t) => {
   t.equal(
     det(
       t,
@@ -36,9 +36,9 @@ t.test(`01 - all low ASCII invisible characters are removed`, t => {
   t.end();
 });
 
-t.test(`02 - hairspace - tight - hairspace changed to space`, t => {
+t.test(`02 - hairspace - tight - hairspace changed to space`, (t) => {
   mixer({
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -56,9 +56,9 @@ t.test(`02 - hairspace - tight - hairspace changed to space`, t => {
 
 t.test(
   `03 - hairspace - tight - hairspace changed to space (lots of spaces)`,
-  t => {
+  (t) => {
     mixer({
-      removeWidows: 0
+      removeWidows: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -77,10 +77,10 @@ t.test(
 
 t.test(
   `04 - hairspace - tight - hairspace changed to space: +widows+entities`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -97,10 +97,10 @@ t.test(
   }
 );
 
-t.test("05 - invisible breaks - raw", t => {
+t.test("05 - invisible breaks - raw", (t) => {
   mixer({
     replaceLineBreaks: 0,
-    removeLineBreaks: 0
+    removeLineBreaks: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
@@ -111,10 +111,10 @@ t.test("05 - invisible breaks - raw", t => {
   t.end();
 });
 
-t.test("06 - invisible breaks - encoded decimal HTML entities", t => {
+t.test("06 - invisible breaks - encoded decimal HTML entities", (t) => {
   mixer({
     replaceLineBreaks: 0,
-    removeLineBreaks: 0
+    removeLineBreaks: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
@@ -125,9 +125,9 @@ t.test("06 - invisible breaks - encoded decimal HTML entities", t => {
   t.end();
 });
 
-t.test("07 - invisible breaks - remove all line breaks on", t => {
+t.test("07 - invisible breaks - remove all line breaks on", (t) => {
   mixer({
-    removeLineBreaks: 1
+    removeLineBreaks: 1,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
@@ -138,11 +138,11 @@ t.test("07 - invisible breaks - remove all line breaks on", t => {
   t.end();
 });
 
-t.test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
+t.test("08 - invisible breaks - replace breaks into XHTML BR's", (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
-    useXHTML: 1
+    useXHTML: 1,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
@@ -153,11 +153,11 @@ t.test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
   t.end();
 });
 
-t.test("09 - invisible breaks - replace breaks into HTML BR's", t => {
+t.test("09 - invisible breaks - replace breaks into HTML BR's", (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
-    useXHTML: 0
+    useXHTML: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
@@ -168,35 +168,35 @@ t.test("09 - invisible breaks - replace breaks into HTML BR's", t => {
   t.end();
 });
 
-t.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", t => {
+t.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
   mixer({
     replaceLineBreaks: 0,
-    removeLineBreaks: 1
+    removeLineBreaks: 1,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
   });
   t.end();
 });
 
-t.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", t => {
+t.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    convertEntities: 0
+    convertEntities: 0,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
   });
   t.end();
 });
 
-t.test("12 - narrow no break space", t => {
+t.test("12 - narrow no break space", (t) => {
   mixer({
-    convertEntities: 0
+    convertEntities: 0,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });
   mixer({
-    convertEntities: 1
+    convertEntities: 1,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });

@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateClassid(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateClassid() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateClassid(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -73,20 +73,20 @@ function attributeValidateClassid(context, ...opts) {
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
             message: `Should be: left|all|right|none.`,
-            fix: null
+            fix: null,
           });
         }
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`081 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-clear"
+              ruleId: "attribute-validate-clear",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -6,7 +6,7 @@ const equal = require("deep-equal");
 
 t.test(
   "18.01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
-  t => {
+  (t) => {
     // control:
     t.same(
       mergeAdvanced(
@@ -15,18 +15,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         }
       ),
       {
@@ -34,9 +34,9 @@ t.test(
           b: true,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: "test"
+        b: "test",
       },
       "18.01.01 - control, default behaviour (logical OR)"
     );
@@ -48,21 +48,21 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         },
         {
-          mergeBoolsUsingOrNotAnd: false
+          mergeBoolsUsingOrNotAnd: false,
         }
       ),
       {
@@ -70,9 +70,9 @@ t.test(
           b: false,
           c: false,
           d: true,
-          e: false
+          e: false,
         },
-        b: "test"
+        b: "test",
       },
       "18.01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
     );
@@ -84,18 +84,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: "" // <---- make sure this string value will not be hard-merged over "b" in object from argument #1 above
+          b: "", // <---- make sure this string value will not be hard-merged over "b" in object from argument #1 above
         },
         {
           cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -106,7 +106,7 @@ t.test(
               return inputArg2;
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -114,9 +114,9 @@ t.test(
           b: false,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: "test" // <---- notice how hard merging on Bools didn't affect this string
+        b: "test", // <---- notice how hard merging on Bools didn't affect this string
       },
       "18.01.03 - cb overriding all Boolean merges"
     );
@@ -128,18 +128,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test" // <---- our callback won't apply to non-Bool, so it will get ignored
+          b: "test", // <---- our callback won't apply to non-Bool, so it will get ignored
         },
         {
           ignoreEverything: true, // means, upon clash, values from 1st arg. prevail
@@ -151,7 +151,7 @@ t.test(
               return inputArg2;
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -159,9 +159,9 @@ t.test(
           b: false,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: "" // <---- it was outside of cb's scope as cb dealt with Bools only.
+        b: "", // <---- it was outside of cb's scope as cb dealt with Bools only.
       },
       "18.01.04 - cb partially overriding opts.ignoreEverything"
     );
@@ -173,18 +173,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test" // <---- our callback won't apply to non-Bool, so it will get ignored
+          b: "test", // <---- our callback won't apply to non-Bool, so it will get ignored
         },
         {
           mergeBoolsUsingOrNotAnd: false, // <------- sets AND as means to merge Bools
@@ -196,7 +196,7 @@ t.test(
               return inputArg2;
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -205,9 +205,9 @@ t.test(
           b: false,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: "test" // <---- standard rule applies (non-empty string vs. empty string)
+        b: "test", // <---- standard rule applies (non-empty string vs. empty string)
       },
       "18.01.05 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
     );
@@ -217,7 +217,7 @@ t.test(
 
 t.test(
   "18.02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
-  t => {
+  (t) => {
     // control:
     t.same(
       mergeAdvanced(
@@ -226,18 +226,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         }
       ),
       {
@@ -245,9 +245,9 @@ t.test(
           b: true,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: "test"
+        b: "test",
       },
       "18.02.01"
     );
@@ -259,21 +259,21 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         },
         {
-          hardMergeEverything: true
+          hardMergeEverything: true,
         }
       ),
       {
@@ -282,9 +282,9 @@ t.test(
           b: false,
           c: true,
           d: true,
-          e: false
+          e: false,
         },
-        b: ""
+        b: "",
       },
       "18.02.02"
     );
@@ -296,18 +296,18 @@ t.test(
             b: true,
             c: false,
             d: true,
-            e: false
+            e: false,
           },
-          b: "test"
+          b: "test",
         },
         {
           a: {
             b: false,
             c: true,
             d: true,
-            e: false
+            e: false,
           },
-          b: ""
+          b: "",
         },
         {
           hardMergeEverything: true,
@@ -321,7 +321,7 @@ t.test(
               // - same as opts.ignoreEverything=true (but here only on Booleans)
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -330,9 +330,9 @@ t.test(
           b: true, // still "true" even though 2nd arg's "false" was hardMerged!
           c: false,
           d: true,
-          e: false
+          e: false,
         },
-        b: "" // being hard-merged as usual
+        b: "", // being hard-merged as usual
       },
       "18.02.03"
     );
@@ -342,7 +342,7 @@ t.test(
 
 t.test(
   "18.03 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
-  t => {
+  (t) => {
     // control:
     t.same(
       mergeAdvanced(
@@ -351,18 +351,18 @@ t.test(
             b: "old value for b",
             c: "old value for c",
             d: "old value for c",
-            e: "old value for d"
+            e: "old value for d",
           },
-          b: false
+          b: false,
         },
         {
           a: {
             b: "var1",
             c: "var2",
             d: "var3",
-            e: "var4"
+            e: "var4",
           },
-          b: null
+          b: null,
         }
       ),
       {
@@ -370,9 +370,9 @@ t.test(
           b: "var1",
           c: "var2",
           d: "var3",
-          e: "var4"
+          e: "var4",
         },
-        b: false
+        b: false,
       },
       "18.03.01 - control, default behaviour (logical OR)"
     );
@@ -384,18 +384,18 @@ t.test(
             b: "old value for b",
             c: "old value for c",
             d: "old value for c",
-            e: "old value for d"
+            e: "old value for d",
           },
-          b: false
+          b: false,
         },
         {
           a: {
             b: "var1",
             c: "var2",
             d: "var3",
-            e: "var4"
+            e: "var4",
           },
-          b: null
+          b: null,
         },
         {
           cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -403,7 +403,7 @@ t.test(
               return `{{ ${resultAboutToBeReturned} }}`;
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -411,9 +411,9 @@ t.test(
           b: "{{ var1 }}",
           c: "{{ var2 }}",
           d: "{{ var3 }}",
-          e: "{{ var4 }}"
+          e: "{{ var4 }}",
         },
-        b: false
+        b: false,
       },
       "18.03.02 - wraps if string"
     );
@@ -423,7 +423,7 @@ t.test(
 
 t.test(
   "18.04 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values",
-  t => {
+  (t) => {
     const tester = mergeAdvanced(
       {
         a: {
@@ -433,10 +433,10 @@ t.test(
           n: [
             {
               p: "p val 1",
-              r: "r val 1"
-            }
-          ]
-        }
+              r: "r val 1",
+            },
+          ],
+        },
       },
       {
         a: {
@@ -446,10 +446,10 @@ t.test(
           n: [
             {
               p: "p val 2",
-              r: "r val 2"
-            }
-          ]
-        }
+              r: "r val 2",
+            },
+          ],
+        },
       },
       {
         cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
@@ -459,7 +459,7 @@ t.test(
               {
                 key: "b",
                 path: "a.b",
-                type: ["object", "object"]
+                type: ["object", "object"],
               },
               "18.04.01 - cb values pinned an object"
             );
@@ -471,7 +471,7 @@ t.test(
               {
                 key: "d",
                 path: "a.d",
-                type: ["object", "object"]
+                type: ["object", "object"],
               },
               "18.04.02 - cb values pinned a key which has a value of array"
             );
@@ -483,13 +483,13 @@ t.test(
               {
                 key: "x",
                 path: "a.m.0",
-                type: ["array", "array"]
+                type: ["array", "array"],
               },
               "18.04.03 - cb values pinned an element within an array"
             );
           }
           return resultAboutToBeReturned;
-        }
+        },
       }
     );
 
@@ -501,7 +501,7 @@ t.test(
 
 t.test(
   "18.05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
-  t => {
+  (t) => {
     t.same(
       mergeAdvanced(
         {
@@ -509,22 +509,22 @@ t.test(
             key: "a",
             c: "c val 1",
             d: "d val 1",
-            e: "e val 1"
+            e: "e val 1",
           },
           z: {
-            key: "z.key val 1"
-          }
+            key: "z.key val 1",
+          },
         },
         {
           x: {
             key: "b",
             c: "c val 2",
             d: "d val 2",
-            e: "e val 2"
+            e: "e val 2",
           },
           z: {
-            key: "z.key val 2"
-          }
+            key: "z.key val 2",
+          },
         }
       ),
       {
@@ -532,11 +532,11 @@ t.test(
           key: "b",
           c: "c val 2",
           d: "d val 2",
-          e: "e val 2"
+          e: "e val 2",
         },
         z: {
-          key: "z.key val 2"
-        }
+          key: "z.key val 2",
+        },
       },
       "18.05.01 - default behaviour, control"
     );
@@ -547,22 +547,22 @@ t.test(
             key: "a", // <------- merge this
             c: "c val 1",
             d: "d val 1",
-            e: "e val 1"
+            e: "e val 1",
           },
           z: {
-            key: "z.key val 1"
-          }
+            key: "z.key val 1",
+          },
         },
         {
           x: {
             key: "b", // <------- with this, but only this path
             c: "c val 2",
             d: "d val 2",
-            e: "e val 2"
+            e: "e val 2",
           },
           z: {
-            key: "z.key val 2" // <---- even though this key is also same-named
-          }
+            key: "z.key val 2", // <---- even though this key is also same-named
+          },
         },
         {
           cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
@@ -581,7 +581,7 @@ t.test(
               );
             }
             return resultAboutToBeReturned;
-          }
+          },
         }
       ),
       {
@@ -589,11 +589,11 @@ t.test(
           key: "ab",
           c: "c val 2",
           d: "d val 2",
-          e: "e val 2"
+          e: "e val 2",
         },
         z: {
-          key: "z.key val 2"
-        }
+          key: "z.key val 2",
+        },
       },
       "18.05.02 - cb fourth arg's path info used to override to merge strings"
     );
@@ -603,7 +603,7 @@ t.test(
 
 t.test(
   "18.06 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays",
-  t => {
+  (t) => {
     // control:
     t.same(
       mergeAdvanced(
@@ -611,53 +611,53 @@ t.test(
           a: {
             b: [
               {
-                c: "d"
+                c: "d",
               },
               {
-                e: "f"
-              }
-            ]
+                e: "f",
+              },
+            ],
           },
           k: "l", // should be left intact
           m: {
             // should be left intact too
             n: {
               o: {
-                p: "r"
-              }
-            }
-          }
+                p: "r",
+              },
+            },
+          },
         },
         {
           a: {
             b: [
               {
-                c: "x"
-              }
-            ]
-          }
+                c: "x",
+              },
+            ],
+          },
         }
       ),
       {
         a: {
           b: [
             {
-              c: "x"
+              c: "x",
             },
             {
-              e: "f"
-            }
-          ]
+              e: "f",
+            },
+          ],
         },
         k: "l", // should be left intact
         m: {
           // should be left intact too
           n: {
             o: {
-              p: "r"
-            }
-          }
-        }
+              p: "r",
+            },
+          },
+        },
       },
       "18.06.01"
     );
@@ -669,55 +669,55 @@ t.test(
           a: {
             b: [
               {
-                c: "d"
+                c: "d",
               },
               {
-                e: "f"
-              }
+                e: "f",
+              },
             ],
-            s: "t"
+            s: "t",
           },
           k: "l", // should be left intact
           m: {
             // should be left intact too
             n: {
               o: {
-                p: "r"
-              }
-            }
-          }
+                p: "r",
+              },
+            },
+          },
         },
         {
           a: {
             b: [
               {
-                c: "x"
-              }
-            ]
-          }
+                c: "x",
+              },
+            ],
+          },
         },
         {
-          hardMergeEverything: true
+          hardMergeEverything: true,
         }
       ),
       {
         a: {
           b: [
             {
-              c: "x"
-            }
+              c: "x",
+            },
           ],
-          s: "t"
+          s: "t",
         },
         k: "l", // should be left intact
         m: {
           // should be left intact too
           n: {
             o: {
-              p: "r"
-            }
-          }
-        }
+              p: "r",
+            },
+          },
+        },
       },
       "18.06.02"
     );

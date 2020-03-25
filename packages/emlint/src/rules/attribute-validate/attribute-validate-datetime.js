@@ -5,7 +5,7 @@ import { validateString, isoDateRegex } from "../../util/util";
 
 function attributeValidateDatetime(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDatetime() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateDatetime(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -44,7 +44,7 @@ function attributeValidateDatetime(context, ...opts) {
             quickPermittedValues: [isoDateRegex],
             permittedValues: null,
             canBeCommaSeparated: false,
-            noSpaceAfterComma: false
+            noSpaceAfterComma: false,
           }
         );
         console.log(
@@ -58,16 +58,16 @@ function attributeValidateDatetime(context, ...opts) {
         // value against all official MIME types, taken from IANA and other sources,
         // https://www.npmjs.com/package/mime-db
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`062 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-datetime"
+              ruleId: "attribute-validate-datetime",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

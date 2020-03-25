@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two FIRST STRONG ISOLATE characters`, t => {
+t.test(`01.01 - detects two FIRST STRONG ISOLATE characters`, (t) => {
   const str = "\u2068dlkgjld\u2068j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-first-strong-isolate": 2
-    }
+      "bad-character-first-strong-isolate": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two FIRST STRONG ISOLATE characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - FIRST STRONG ISOLATE.",
       fix: {
-        ranges: [[0, 1]]
-      }
+        ranges: [[0, 1]],
+      },
     },
     {
       ruleId: "bad-character-first-strong-isolate",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two FIRST STRONG ISOLATE characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - FIRST STRONG ISOLATE.",
       fix: {
-        ranges: [[8, 9]]
-      }
-    }
+        ranges: [[8, 9]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), "dlkgjldj");
   t.end();

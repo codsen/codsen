@@ -14,7 +14,7 @@ function rand(from, to) {
 
 t.test(
   `01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported uglify is a function`,
-  t => {
+  (t) => {
     t.equal(typeof uglifyById, "function", "01");
     t.end();
   }
@@ -22,7 +22,7 @@ t.test(
 
 t.test(
   `02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`,
-  t => {
+  (t) => {
     t.equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02");
     t.end();
   }
@@ -50,7 +50,7 @@ function makeRandomArr(len = 500, dotshashes = true) {
 
 t.test(
   `03 - ${`\u001b[${33}m${`uglifyById`}\u001b[${39}m`} - generates unique and short class names`,
-  t => {
+  (t) => {
     const randomArr = makeRandomArr();
     randomArr.forEach((key, idx) => {
       t.ok(typeof uglifyById(randomArr, idx) === "string", "01.01 - it exists");
@@ -70,7 +70,7 @@ t.test(
 
 t.test(
   `04 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates uglified array from reference array`,
-  t => {
+  (t) => {
     const generated = makeRandomArr(5000);
     t.equal(generated.length, uglifyArr(generated).length, "04");
     t.end();
@@ -79,7 +79,7 @@ t.test(
 
 t.test(
   `05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique elements array`,
-  t => {
+  (t) => {
     // all are unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length));
@@ -96,7 +96,7 @@ t.test(
 
 t.test(
   `06 - ${`\u001b[${31}m${`wrong cases`}\u001b[${39}m`} - bypasses for everything else`,
-  t => {
+  (t) => {
     t.equal(uglifyArr(true), true, "06.01");
     t.equal(uglifyArr("z"), "z", "06.02");
     t.equal(uglifyArr(1), 1, "06.03");
@@ -111,7 +111,7 @@ t.test(
 const howMany = 5000;
 t.test(
   `07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`,
-  t => {
+  (t) => {
     // generate two arrays: {howMany}-long random class/id names array and clone of it
     // where there's extra thing on top.
     const randArr1 = makeRandomArr(howMany);
@@ -126,7 +126,7 @@ t.test(
     generated2.shift();
 
     let counter = 0;
-    generated1.forEach(key => {
+    generated1.forEach((key) => {
       if (!generated2.includes(key)) {
         counter++;
       }
@@ -148,7 +148,7 @@ t.test(
 
 t.test(
   `08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`,
-  t => {
+  (t) => {
     const randArr1 = makeRandomArr(1);
 
     for (let i = 0; i < 100; i++) {
@@ -167,7 +167,7 @@ t.test(
 
 t.test(
   `09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`,
-  t => {
+  (t) => {
     // all are still unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length, false));
@@ -184,7 +184,7 @@ t.test(
 
 t.test(
   `10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`,
-  t => {
+  (t) => {
     t.same(
       uglifyArr([
         ".class1",
@@ -198,7 +198,7 @@ t.test(
         ".class7",
         ".class8",
         ".class9",
-        ".class10"
+        ".class10",
       ]),
       [".f", ".f", ".f", ".g", ".h", ".i", ".j", ".k", ".l", ".m", ".n", ".b"],
       "10"
@@ -209,7 +209,7 @@ t.test(
 
 t.test(
   `11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`,
-  t => {
+  (t) => {
     t.same(
       uglifyArr([
         "zzz",
@@ -223,7 +223,7 @@ t.test(
         "zzz",
         "zzz",
         "zzz",
-        "zzz"
+        "zzz",
       ]),
       ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
       "11"
@@ -234,7 +234,7 @@ t.test(
 
 t.test(
   `12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter name, repeating, cross-type`,
-  t => {
+  (t) => {
     t.same(
       uglifyArr([
         "a",
@@ -257,7 +257,7 @@ t.test(
         "#aaa",
         "bbb",
         ".bbb",
-        "#bbk"
+        "#bbk",
       ]),
       [
         "a",
@@ -280,7 +280,7 @@ t.test(
         "#o",
         "i",
         ".c",
-        "#ao" // <---------- notice it does not take #a because #a is already taken
+        "#ao", // <---------- notice it does not take #a because #a is already taken
       ],
       "12"
     );

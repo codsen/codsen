@@ -6,7 +6,7 @@ const i = require("../dist/ranges-invert.cjs");
 // 0. THROWS
 // ==============================
 
-t.test("00.01 - not array", t => {
+t.test("00.01 - not array", (t) => {
   // throw pinning:
   t.throws(() => {
     i(null);
@@ -35,7 +35,7 @@ t.test("00.01 - not array", t => {
   t.end();
 });
 
-t.test("00.02 - not two arguments in one of ranges", t => {
+t.test("00.02 - not two arguments in one of ranges", (t) => {
   t.throws(() => {
     i([[1, 2, 3]], 4, { strictlyTwoElementsInRangeArrays: true });
   }, /THROW_ID_04/g);
@@ -44,7 +44,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
     i(
       [
         [1, 2, 3],
-        [4, 5, 6]
+        [4, 5, 6],
       ],
       6,
       { strictlyTwoElementsInRangeArrays: true }
@@ -56,11 +56,11 @@ t.test("00.02 - not two arguments in one of ranges", t => {
       [
         [1, 2],
         [4, 5, 6],
-        [7, 8]
+        [7, 8],
       ],
       9,
       {
-        strictlyTwoElementsInRangeArrays: true
+        strictlyTwoElementsInRangeArrays: true,
       }
     );
   }, /THROW_ID_04/g);
@@ -72,7 +72,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
       [
         [1, 2],
         [4, 5],
-        [7, 8]
+        [7, 8],
       ],
       9
     );
@@ -85,7 +85,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
     i(
       [
         [1, 2, 3],
-        [4, 5, 6]
+        [4, 5, 6],
       ],
       6
     );
@@ -95,7 +95,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
       [
         [1, 2],
         [4, 5, 6],
-        [7, 8]
+        [7, 8],
       ],
       8
     );
@@ -108,7 +108,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
     i(
       [
         [1, 2, "zzz"],
-        [4, 5, "yyyy"]
+        [4, 5, "yyyy"],
       ],
       6
     );
@@ -118,7 +118,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
       [
         [1, 2, null],
         [4, 5, "aaa", "bbb"],
-        [7, 8, "ccc"]
+        [7, 8, "ccc"],
       ],
       8
     );
@@ -128,7 +128,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
       [
         [1, 2, null],
         [4, 5, "aaa", "bbb"],
-        [7, 8, "ccc"]
+        [7, 8, "ccc"],
       ],
       80
     );
@@ -137,7 +137,7 @@ t.test("00.02 - not two arguments in one of ranges", t => {
   t.end();
 });
 
-t.test("00.03 - some/all range indexes are not natural numbers", t => {
+t.test("00.03 - some/all range indexes are not natural numbers", (t) => {
   t.doesNotThrow(() => {
     i([[0, 3]], 3);
   });
@@ -172,7 +172,7 @@ t.test("00.03 - some/all range indexes are not natural numbers", t => {
   t.end();
 });
 
-t.test("00.04 - second arg, strLen is wrong", t => {
+t.test("00.04 - second arg, strLen is wrong", (t) => {
   t.doesNotThrow(() => {
     i([[0, 0]], 0);
   });
@@ -187,7 +187,7 @@ t.test("00.04 - second arg, strLen is wrong", t => {
   t.end();
 });
 
-t.test("00.05 - zero-length ranges array", t => {
+t.test("00.05 - zero-length ranges array", (t) => {
   t.doesNotThrow(() => {
     i([], 0);
     i([], 1);
@@ -203,7 +203,7 @@ t.test("00.05 - zero-length ranges array", t => {
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string covers the range`,
-  t => {
+  (t) => {
     const ref = "abcdefghij";
     const range1 = [1, 3];
     const range2p1 = [0, 1];
@@ -229,7 +229,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`,
-  t => {
+  (t) => {
     // good:
     t.same(i([[1, 3]], 3), [[0, 1]], "01.02.01");
     // one too short - will crop:
@@ -241,7 +241,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - same element range invert`,
-  t => {
+  (t) => {
     t.same(i([[0, 0]], 3), [[0, 3]], "01.03.01 - yields everything");
     t.same(i([[1, 1]], 3), [[0, 3]], "01.03.02");
     t.end();
@@ -250,7 +250,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string covers the ranges`,
-  t => {
+  (t) => {
     const ref = "abcdefghij";
     const range1 = [1, 3];
     const range2 = [5, 6];
@@ -282,18 +282,18 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each other`,
-  t => {
+  (t) => {
     t.same(
       i(
         [
           [3, 5],
-          [5, 7]
+          [5, 7],
         ],
         9
       ),
       [
         [0, 3],
-        [7, 9]
+        [7, 9],
       ],
       "01.05.01 - ranges with deltas of two indexes"
     );
@@ -301,13 +301,13 @@ t.test(
       i(
         [
           [3, 4],
-          [4, 7]
+          [4, 7],
         ],
         9
       ),
       [
         [0, 3],
-        [7, 9]
+        [7, 9],
       ],
       "01.05.02 - ranges with deltas of one index"
     );
@@ -315,7 +315,7 @@ t.test(
       i(
         [
           [0, 1],
-          [1, 2]
+          [1, 2],
         ],
         9
       ),
@@ -327,7 +327,7 @@ t.test(
         [
           [0, 1],
           [1, 2],
-          [5, 9]
+          [5, 9],
         ],
         9
       ),
@@ -338,7 +338,7 @@ t.test(
       i(
         [
           [0, 1],
-          [1, 9]
+          [1, 9],
         ],
         9
       ),
@@ -352,14 +352,14 @@ t.test(
       i(
         [
           [3, 5],
-          [5, 7]
+          [5, 7],
         ],
         9,
         { skipChecks: true }
       ),
       [
         [0, 3],
-        [7, 9]
+        [7, 9],
       ],
       "01.05.06 - ranges with deltas of two indexes"
     );
@@ -367,14 +367,14 @@ t.test(
       i(
         [
           [3, 4],
-          [4, 7]
+          [4, 7],
         ],
         9,
         { skipChecks: true }
       ),
       [
         [0, 3],
-        [7, 9]
+        [7, 9],
       ],
       "01.05.07 - ranges with deltas of one index"
     );
@@ -382,7 +382,7 @@ t.test(
       i(
         [
           [0, 1],
-          [1, 2]
+          [1, 2],
         ],
         9,
         { skipChecks: true }
@@ -395,7 +395,7 @@ t.test(
         [
           [0, 1],
           [1, 2],
-          [5, 9]
+          [5, 9],
         ],
         9,
         { skipChecks: true }
@@ -407,7 +407,7 @@ t.test(
       i(
         [
           [0, 1],
-          [1, 9]
+          [1, 9],
         ],
         9,
         { skipChecks: true }
@@ -421,12 +421,12 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`,
-  t => {
+  (t) => {
     t.same(
       i(
         [
           [0, 5],
-          [3, 7]
+          [3, 7],
         ],
         9
       ),
@@ -437,13 +437,13 @@ t.test(
       i(
         [
           [2, 5],
-          [3, 7]
+          [3, 7],
         ],
         9
       ),
       [
         [0, 2],
-        [7, 9]
+        [7, 9],
       ],
       "01.06.01 - does not start at zero"
     );
@@ -451,13 +451,13 @@ t.test(
       i(
         [
           [3, 5],
-          [2, 7]
+          [2, 7],
         ],
         9
       ),
       [
         [0, 2],
-        [7, 9]
+        [7, 9],
       ],
       "01.06.02 - does not start at zero"
     );
@@ -467,7 +467,7 @@ t.test(
       i(
         [
           [0, 5],
-          [3, 7]
+          [3, 7],
         ],
         9,
         { skipChecks: true }
@@ -479,12 +479,12 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`,
-  t => {
+  (t) => {
     t.same(
       i(
         [
           [0, 5, "zzz"],
-          [3, 7, "aaaa"]
+          [3, 7, "aaaa"],
         ],
         9
       ),
@@ -497,7 +497,7 @@ t.test(
 
 t.test(
   `01.08 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     t.same(i(null, 0), [], "01.08.01");
     t.same(i(null, 3), [[0, 3]], "01.08.02");
     t.end();
@@ -506,7 +506,7 @@ t.test(
 
 t.test(
   `01.09 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`,
-  t => {
+  (t) => {
     t.same(i([[100, 200]], 10), [[0, 10]], "01.09");
     t.end();
   }
@@ -514,12 +514,12 @@ t.test(
 
 t.test(
   `01.10 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`,
-  t => {
+  (t) => {
     t.same(
       i(
         [
           [100, 200],
-          [300, 400]
+          [300, 400],
         ],
         10
       ),
@@ -532,12 +532,12 @@ t.test(
 
 t.test(
   `01.11 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`,
-  t => {
+  (t) => {
     t.same(
       i(
         [
           [300, 400],
-          [100, 200]
+          [100, 200],
         ],
         10
       ),

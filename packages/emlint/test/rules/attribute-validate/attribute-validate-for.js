@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 0`,
-  t => {
+  (t) => {
     const str = `<label>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 0
-      }
+        "attribute-validate-for": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 1`,
-  t => {
+  (t) => {
     const str = `<label>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 1
-      }
+        "attribute-validate-for": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 2`,
-  t => {
+  (t) => {
     const str = `<label>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy for`,
-  t => {
+  (t) => {
     const str = `<label for='abc'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<label for=" abcde">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<label for="abcde">`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 13,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[12, 13]]
-        }
-      }
+          ranges: [[12, 13]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<label for="abcde ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<label for="abcde">`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 18,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[17, 18]]
-        }
-      }
+          ranges: [[17, 18]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - one for, copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<label for="  abcde  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<label for="abcde">`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [12, 14],
-            [19, 22]
-          ]
-        }
-      }
+            [19, 22],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<label for="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -171,8 +171,8 @@ t.test(
         idxFrom: 12,
         idxTo: 15,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -180,13 +180,13 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<label for="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -196,8 +196,8 @@ t.test(
         idxFrom: 12,
         idxTo: 12,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -205,13 +205,13 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - two values, space-separated`,
-  t => {
+  (t) => {
     const str = `<label for="abc def">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -221,8 +221,8 @@ t.test(
         idxFrom: 12,
         idxTo: 19,
         message: `Should be one value, no spaces.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -233,13 +233,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - value starts with hash`,
-  t => {
+  (t) => {
     const str = `<label for="#abc">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // will fix:
     t.equal(applyFixes(str, messages), `<label for="abc">`);
@@ -250,9 +250,9 @@ t.test(
         idxTo: 13,
         message: `Remove hash.`,
         fix: {
-          ranges: [[12, 13]]
-        }
-      }
+          ranges: [[12, 13]],
+        },
+      },
     ]);
     t.end();
   }
@@ -260,13 +260,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - value starts with hash`,
-  t => {
+  (t) => {
     const str = `<label for=".abc">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -276,8 +276,8 @@ t.test(
         idxFrom: 12,
         idxTo: 16,
         message: `Wrong id name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -285,13 +285,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - only dot`,
-  t => {
+  (t) => {
     const str = `<label for=".">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-for": 2
-      }
+        "attribute-validate-for": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -301,8 +301,8 @@ t.test(
         idxFrom: 12,
         idxTo: 13,
         message: `Wrong id name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

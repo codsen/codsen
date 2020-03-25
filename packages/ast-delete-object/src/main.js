@@ -31,7 +31,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
 
   const defaults = {
     matchKeysStrictly: false,
-    hungryForWhitespace: false
+    hungryForWhitespace: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -42,7 +42,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
   if (
     compare(input, objToDelete, {
       hungryForWhitespace: opts.hungryForWhitespace,
-      matchStrictly: opts.matchKeysStrictly
+      matchStrictly: opts.matchKeysStrictly,
     })
   ) {
     return {};
@@ -62,7 +62,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
       } else if (
         compare(current, objToDelete, {
           hungryForWhitespace: opts.hungryForWhitespace,
-          matchStrictly: opts.matchKeysStrictly
+          matchStrictly: opts.matchKeysStrictly,
         })
       ) {
         return NaN;

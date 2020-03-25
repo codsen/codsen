@@ -127,15 +127,15 @@ const input = {
     {
       // object number 1
       b: "b1",
-      c: "c1"
+      c: "c1",
     },
     {
       // object number 2
       b: "b2",
       c: "c2",
-      x: "y"
-    }
-  ]
+      x: "y",
+    },
+  ],
 };
 
 const reference = {
@@ -143,9 +143,9 @@ const reference = {
     {
       // << just one object!
       b: "b3",
-      c: "c3"
-    }
-  ]
+      c: "c3",
+    },
+  ],
 };
 ```
 
@@ -165,10 +165,10 @@ const res = nnk(
   {
     a: "a",
     b: "b",
-    c: "c"
+    c: "c",
   },
   {
-    c: "z"
+    c: "z",
   }
 );
 console.log("nnk = " + JSON.stringify(nnk, null, 4));
@@ -188,27 +188,27 @@ const res = nnk(
       {
         b: "aaa",
         d: "aaa", // rogue key, record it
-        f: "fff" // another rogue key, record it
+        f: "fff", // another rogue key, record it
       },
       {
         c: "aaa",
-        k: "kkk" // yet another rogue key, record it
-      }
+        k: "kkk", // yet another rogue key, record it
+      },
     ],
-    x: "x" // rogue too
+    x: "x", // rogue too
   },
   {
     // <<< reference
     a: [
       {
         b: "bbb",
-        c: "ccc"
+        c: "ccc",
       },
       {
         b: "yyy",
-        c: "zzz"
-      }
-    ]
+        c: "zzz",
+      },
+    ],
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));

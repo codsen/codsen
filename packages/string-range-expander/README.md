@@ -74,7 +74,7 @@ const res = expand({
   str: "something>\n\t    zzzz <here",
   from: 16,
   to: 20,
-  ifRightSideIncludesThisThenCropTightly: "<"
+  ifRightSideIncludesThisThenCropTightly: "<",
 });
 console.log("res = " + JSON.stringify(res1, null, 4));
 // => [10, 21]

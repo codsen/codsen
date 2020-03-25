@@ -6,7 +6,7 @@
 
 function badCharacterStringTerminator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 156) {
         context.report({
           ruleId: "bad-character-string-terminator",
@@ -14,11 +14,11 @@ function badCharacterStringTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

@@ -22,7 +22,7 @@ function fromString(input, path, func) {
           cb(null, file);
         })
       )
-      .on("error", e => {
+      .on("error", (e) => {
         rej(e);
       })
       .on("end", () => {
@@ -31,7 +31,7 @@ function fromString(input, path, func) {
   });
 }
 
-t.test("removes unused CSS", async t => {
+t.test("removes unused CSS", async (t) => {
   const source = `
 <!DOCTYPE html>
 <head>
@@ -89,7 +89,7 @@ t.test("removes unused CSS", async t => {
     source,
     "test/source.html",
     geruc
-  ).then(output => output.contents.toString());
+  ).then((output) => output.contents.toString());
   t.equal(contents, intended, "Sass compiled as expected");
   t.end();
 });

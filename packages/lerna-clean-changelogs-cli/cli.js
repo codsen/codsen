@@ -65,7 +65,7 @@ if (cli.flags.v) {
 function readSortAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
-    .then(filesContent => {
+    .then((filesContent) => {
       let preppedContents;
       try {
         preppedContents = clean(filesContent);
@@ -85,7 +85,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
         return "ok";
       });
     })
-    .catch(err => {
+    .catch((err) => {
       `${oneOfPaths} - ${err}`;
     });
 }
@@ -102,33 +102,33 @@ if (isArr(cli.input) && cli.input.length) {
   thePromise = pReduce(
     cli.input,
     (total, curr) => {
-      return globby([curr, "!**/node_modules/**"]).then(res => {
+      return globby([curr, "!**/node_modules/**"]).then((res) => {
         if (res) {
           // add only unique paths:
-          return total.concat(res.filter(p => !total.includes(p)));
+          return total.concat(res.filter((p) => !total.includes(p)));
         }
         return total;
       });
     },
     []
-  ).then(preppedPathsArr => {
+  ).then((preppedPathsArr) => {
     if (!preppedPathsArr.length) {
       log(`${signature}${chalk.red("no changelogs found")}`);
       process.exit(0);
     }
 
-    return pFilter(preppedPathsArr, onePath =>
+    return pFilter(preppedPathsArr, (onePath) =>
       fs.stat(path.resolve(onePath)).catch(() => {
         return Promise.resolve(false);
       })
-    ).then(resultArr => {
+    ).then((resultArr) => {
       if (!isArr(resultArr) || !resultArr.length) {
         // spinner.warn("no changelogs found");
         process.exit(0);
       } else {
         // filter changelog files
         return resultArr.filter(
-          p =>
+          (p) =>
             isStr(path.basename(p)) &&
             path.basename(p).toLowerCase() === "changelog.md"
         );
@@ -140,7 +140,7 @@ if (isArr(cli.input) && cli.input.length) {
 }
 
 // ASYNCHRONOUS PART:
-thePromise.then(received => {
+thePromise.then((received) => {
   if (!isArr(received) || !received.length) {
     // spinner.warn("no changelogs found");
     log(`${signature}${chalk.red("no changelogs found")}`);
@@ -150,26 +150,26 @@ thePromise.then(received => {
     received,
     (counter, currentPath) =>
       readSortAndWriteOverFile(currentPath)
-        .then(res =>
+        .then((res) =>
           res
             ? res === "ok"
               ? {
                   good: counter.good.concat([currentPath]),
                   bad: counter.bad,
-                  ignored: counter.ignored
+                  ignored: counter.ignored,
                 }
               : {
                   good: counter.good,
                   bad: counter.bad,
-                  ignored: counter.ignored.concat([currentPath])
+                  ignored: counter.ignored.concat([currentPath]),
                 }
             : {
                 good: counter.good,
                 bad: counter.bad.concat([currentPath]),
-                ignored: counter.ignored
+                ignored: counter.ignored,
               }
         )
-        .catch(err => {
+        .catch((err) => {
           log(
             `${signature}${chalk.red(
               "Could not write the cleaned file:"
@@ -178,7 +178,7 @@ thePromise.then(received => {
           return counter;
         }),
     { good: [], bad: [], ignored: [] }
-  ).then(counter => {
+  ).then((counter) => {
     // console.log(
     //   `${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
     //     counter,

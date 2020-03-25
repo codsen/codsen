@@ -9,7 +9,7 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 const f = require("../");
 const gather = [];
 const testme = () =>
-  f("abcdefghij", [[1, 5]], idx => {
+  f("abcdefghij", [[1, 5]], (idx) => {
     gather.push(idx);
   });
 

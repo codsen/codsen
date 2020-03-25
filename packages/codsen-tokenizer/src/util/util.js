@@ -144,7 +144,7 @@ const allHTMLTagsKnownToHumanity = [
   "var",
   "video",
   "wbr",
-  "xmp"
+  "xmp",
 ];
 
 // contains all common templating language head/tail marker characters:
@@ -302,5 +302,5 @@ export {
   firstChar,
   lastChar,
   espChars,
-  isStr
+  isStr,
 };

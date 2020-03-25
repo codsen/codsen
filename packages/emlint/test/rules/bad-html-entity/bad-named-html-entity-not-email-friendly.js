@@ -8,13 +8,13 @@ const { applyFixes } = require("../../../t-util/util");
 // 01. one entity of the list
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
   const str = `abc&Intersection;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-html-entity": 2
-    }
+      "bad-html-entity": 2,
+    },
   });
   t.equal(applyFixes(str, messages), "abc&#x22C2;def");
   t.match(messages, [
@@ -25,20 +25,20 @@ t.test(`01.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, t => {
       idxTo: 17,
       message: "Email-unfriendly named HTML entity.",
       fix: {
-        ranges: [[3, 17, "&#x22C2;"]]
-      }
-    }
+        ranges: [[3, 17, "&#x22C2;"]],
+      },
+    },
   ]);
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, t => {
+t.test(`01.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, (t) => {
   const str = `abc&Intersection;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-named-html-entity-not-email-friendly": 1
-    }
+      "bad-named-html-entity-not-email-friendly": 1,
+    },
   });
   t.equal(applyFixes(str, messages), "abc&#x22C2;def");
   t.match(messages, [
@@ -49,22 +49,22 @@ t.test(`01.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, t => {
       idxTo: 17,
       message: "Email-unfriendly named HTML entity.",
       fix: {
-        ranges: [[3, 17, "&#x22C2;"]]
-      }
-    }
+        ranges: [[3, 17, "&#x22C2;"]],
+      },
+    },
   ]);
   t.end();
 });
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`,
-  t => {
+  (t) => {
     const str = `abc&Intersection;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-not-email-*": 1
-      }
+        "bad-named-html-entity-not-email-*": 1,
+      },
     });
     t.equal(applyFixes(str, messages), "abc&#x22C2;def");
     t.match(messages, [
@@ -75,9 +75,9 @@ t.test(
         idxTo: 17,
         message: "Email-unfriendly named HTML entity.",
         fix: {
-          ranges: [[3, 17, "&#x22C2;"]]
-        }
-      }
+          ranges: [[3, 17, "&#x22C2;"]],
+        },
+      },
     ]);
     t.end();
   }
@@ -85,13 +85,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`,
-  t => {
+  (t) => {
     const str = `abc&Intersection;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad*": 1
-      }
+        "bad*": 1,
+      },
     });
     t.equal(applyFixes(str, messages), "abc&#x22C2;def");
     t.match(messages, [
@@ -102,9 +102,9 @@ t.test(
         idxTo: 17,
         message: "Email-unfriendly named HTML entity.",
         fix: {
-          ranges: [[3, 17, "&#x22C2;"]]
-        }
-      }
+          ranges: [[3, 17, "&#x22C2;"]],
+        },
+      },
     ]);
     t.end();
   }

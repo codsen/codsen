@@ -114,7 +114,7 @@ function rangesApply(str, rangesArr, progressFn) {
 
   // allocate another 10% of the progress indicator length to the rangesMerge step:
   const workingRanges = rangesMerge(rangesArr, {
-    progressFn: perc => {
+    progressFn: (perc) => {
       if (progressFn) {
         // since "perc" is already from zero to hundred, we just divide by 10 and
         // get the range from zero to ten:
@@ -125,7 +125,7 @@ function rangesApply(str, rangesArr, progressFn) {
           progressFn(percentageDone);
         }
       }
-    }
+    },
   });
 
   // allocate the rest 80% to the actual string assembly:

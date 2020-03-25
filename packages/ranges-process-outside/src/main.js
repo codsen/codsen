@@ -74,7 +74,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
         const charLength = runes(str.slice(i))[0].length;
 
         console.log(`076 charLength = ${charLength}`);
-        cb(i, i + charLength, offsetValue => {
+        cb(i, i + charLength, (offsetValue) => {
           if (offsetValue != null) {
             console.log(`079 offset i by "${offsetValue}" requested`);
             console.log(`080 old i = ${i}`);
@@ -98,7 +98,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
     // if ranges are given, invert and run callback against each character
     const temp = crop(
       invert(skipChecks ? originalRanges : originalRanges, str.length, {
-        skipChecks: !!skipChecks
+        skipChecks: !!skipChecks,
       }),
       str.length
     );

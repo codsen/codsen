@@ -18,7 +18,7 @@ const tempy = require("tempy");
 //                                  *
 //                                  *
 
-t.test("01 - there are no usable files at all", async t => {
+t.test("01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "index.html"), "zzz")
@@ -30,12 +30,12 @@ t.test("01 - there are no usable files at all", async t => {
           "cli.js"
         )} "index.html"`,
         {
-          shell: true
+          shell: true,
         }
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
   // confirm that the existing file is intact:
   t.equal(await processedFileContents, "zzz");
   t.end();
@@ -55,7 +55,7 @@ t.test("01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-t.test("02 - index.html in the root", async t => {
+t.test("02 - index.html in the root", async (t) => {
   const originalFile = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -102,12 +102,12 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
           "cli.js"
         )} "index.html"`,
         {
-          shell: true
+          shell: true,
         }
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   // 3. compare:
   t.equal(await processedFileContents, intendedFile);
@@ -128,7 +128,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 //                                  *
 //                                  *
 
-t.test("03 - two files processed by calling glob with wildcard", async t => {
+t.test("03 - two files processed by calling glob with wildcard", async (t) => {
   const file1 = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -167,12 +167,12 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
       execa(
         `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "*.html"`,
         {
-          shell: true
+          shell: true,
         }
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "file1.html"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   const file2contents = await fs.readFile(
     path.join(tempFolder, "file2.html"),

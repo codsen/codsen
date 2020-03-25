@@ -202,7 +202,7 @@ const res = fixRowNums(
 console.log('099 something')
 `,
   {
-    overrideRowNum: 5
+    overrideRowNum: 5,
   }
 );
 console.log(res);
@@ -221,7 +221,7 @@ console.log('099 something')
 `,
   {
     overrideRowNum: 5,
-    returnRangesOnly: true
+    returnRangesOnly: true,
   }
 );
 console.log(res);

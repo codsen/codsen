@@ -76,14 +76,14 @@ let res = deleteObj(
     {
       findme1: "zzz",
       findme2: "yyy",
-      somethingelse: "qqq"
+      somethingelse: "qqq",
     },
-    "elem2"
+    "elem2",
   ],
   {
     // arg #2 - what to look for
     findme1: "zzz",
-    findme2: "yyy"
+    findme2: "yyy",
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -109,16 +109,16 @@ let res = deleteObj(
     {
       findme1: "zzz",
       findme2: "yyy",
-      somethingelse: "qqq"
+      somethingelse: "qqq",
     },
-    "elem2"
+    "elem2",
   ],
   {
     findme1: "zzz",
-    findme2: "yyy"
+    findme2: "yyy",
   },
   {
-    matchKeysStrictly: true
+    matchKeysStrictly: true,
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -149,10 +149,10 @@ let res = deleteObj(
     { a: "\n" },
     {
       key3: "val3",
-      key4: "val4"
+      key4: "val4",
     },
     { b: "   " },
-    { c: "" }
+    { c: "" },
   ],
   {},
   { matchKeysStrictly: false, hungryForWhitespace: true }
@@ -211,9 +211,9 @@ Simple nested array/object:
   {
     key2: "val2",
     key3: "val3",
-    key4: "val4" // this key value pair will get deleted along with its parent object
+    key4: "val4", // this key value pair will get deleted along with its parent object
   },
-  "elem5"
+  "elem5",
 ];
 ```
 
@@ -238,17 +238,17 @@ If the mode is default, non-strict, this library will match things (object or ar
 delObj(
   [
     {
-      x: "y"
+      x: "y",
     },
     {
       a: "a",
       b: ["\t\t\t \n\n\n"],
-      c: "c"
-    }
+      c: "c",
+    },
   ],
   {
     a: "a",
-    b: [""]
+    b: [""],
   }
 );
 // => [{x: 'y'}]

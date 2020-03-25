@@ -87,7 +87,7 @@ conv("aaaa #f0c zzzz\n\t\t\t#fc0");
 conv({
   a: "#ffcc00",
   b: "#f0c",
-  c: "text"
+  c: "text",
 });
 // => {
 //   a: '#ffcc00',
@@ -137,7 +137,7 @@ function getScssVars() {
     "modules/src/scss/_variables.scss"
   );
   var tempSassVars = scssToJson(sassFilePath);
-  sassVars = _.mapKeys(tempSassVars, function(value, key) {
+  sassVars = _.mapKeys(tempSassVars, function (value, key) {
     return key.slice(1);
   });
   // convert all bad hex codes:

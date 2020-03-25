@@ -6,7 +6,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   const defaults = {
     offset: 0,
     from: 0,
-    to: str.length
+    to: str.length,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -43,7 +43,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       if (typeof cbWhitespace === "function") {
         cbWhitespace([
           whitespaceStartsAt + opts.offset,
-          (str[i].trim().length ? i : i + 1) + opts.offset
+          (str[i].trim().length ? i : i + 1) + opts.offset,
         ]);
       }
       whitespaceStartsAt = null;
@@ -82,7 +82,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       if (typeof cbValues === "function") {
         cbValues([
           nameStartsAt + opts.offset,
-          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset
+          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset,
         ]);
       }
 

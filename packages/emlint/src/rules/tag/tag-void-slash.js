@@ -9,7 +9,7 @@ const BACKSLASH = "\u005C";
 
 function tagVoidSlash(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
       );
@@ -39,7 +39,7 @@ function tagVoidSlash(context, ...opts) {
           message: "Remove the slash.",
           idxFrom: leftOfSlashPos + 1,
           idxTo: closingBracketPos,
-          fix: { ranges: [[leftOfSlashPos + 1, closingBracketPos]] }
+          fix: { ranges: [[leftOfSlashPos + 1, closingBracketPos]] },
         });
       } else if (
         mode === "always" &&
@@ -83,7 +83,7 @@ function tagVoidSlash(context, ...opts) {
               message: "Missing slash.",
               idxFrom: slashPos + 2,
               idxTo: closingBracketPos,
-              fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] }
+              fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] },
             });
           } else {
             // space is missing so add one
@@ -93,7 +93,7 @@ function tagVoidSlash(context, ...opts) {
               message: "Missing slash.",
               idxFrom: slashPos + 1,
               idxTo: closingBracketPos,
-              fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] }
+              fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] },
             });
           }
         } else if (
@@ -117,11 +117,11 @@ function tagVoidSlash(context, ...opts) {
             message: "Missing slash.",
             idxFrom: slashPos + 1,
             idxTo: closingBracketPos,
-            fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] }
+            fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] },
           });
         }
       }
-    }
+    },
   };
 }
 

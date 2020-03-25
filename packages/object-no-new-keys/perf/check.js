@@ -14,22 +14,22 @@ const testme = () =>
         {
           b: "aaa",
           d: "aaa",
-          f: "fff"
+          f: "fff",
         },
         {
           c: "aaa",
-          k: "kkk"
-        }
+          k: "kkk",
+        },
       ],
-      x: "x"
+      x: "x",
     },
     {
       a: [
         {
           b: "bbb",
-          c: "ccc"
-        }
-      ]
+          c: "ccc",
+        },
+      ],
     },
     { mode: 1 }
   );

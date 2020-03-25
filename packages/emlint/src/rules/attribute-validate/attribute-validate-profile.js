@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateProfile(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateProfile() ███████████████████████████████████████`
       );
@@ -32,25 +32,25 @@ function attributeValidateProfile(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // Call validation upon whole attribute's value. Validator includes
           // whitespace checks.
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: true
-          }).forEach(errorObj => {
+            multipleOK: true,
+          }).forEach((errorObj) => {
             console.log(`044 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-profile"
+                ruleId: "attribute-validate-profile",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

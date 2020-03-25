@@ -24,7 +24,7 @@ const locationsArr = [
   "./test/*.js",
   "./main.js",
   "./cli.js",
-  "./index.js"
+  "./index.js",
 ];
 
 const cli = meow(
@@ -53,13 +53,13 @@ const cli = meow(
     flags: {
       pad: {
         type: "number",
-        alias: "p"
+        alias: "p",
       },
       trigger: {
         type: "string",
-        alias: "t"
-      }
-    }
+        alias: "t",
+      },
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -67,9 +67,9 @@ updateNotifier({ pkg: cli.pkg }).notify();
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
-    .then(filesContent => {
+    .then((filesContent) => {
       const conf = {
-        padStart: existy(cli.flags.pad) ? cli.flags.pad : 3
+        padStart: existy(cli.flags.pad) ? cli.flags.pad : 3,
       };
       if (cli.flags.trigger) {
         conf.triggerKeywords = arrayiffy(cli.flags.trigger);
@@ -82,7 +82,7 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
         return true;
       });
     })
-    .catch(err => {
+    .catch((err) => {
       `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
     });
 }
@@ -90,17 +90,17 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
 function processPaths(paths) {
   return (
     globby(paths)
-      .then(paths =>
+      .then((paths) =>
         pReduce(
           paths,
           (concattedTotal, singleDirOrFilePath) =>
             concattedTotal.concat(
-              isDirectory(singleDirOrFilePath).then(bool =>
+              isDirectory(singleDirOrFilePath).then((bool) =>
                 bool
                   ? globby(singleDirOrFilePath, {
                       expandDirectories: {
-                        files: ["*.js"]
-                      }
+                        files: ["*.js"],
+                      },
                     })
                   : [singleDirOrFilePath]
               )
@@ -109,36 +109,36 @@ function processPaths(paths) {
         )
       )
       // then reduce again, now actually concatenating them all together
-      .then(received =>
+      .then((received) =>
         pReduce(received, (total, single) => total.concat(single), [])
       )
-      .then(res =>
-        res.filter(oneOfPaths => !oneOfPaths.includes("node_modules"))
+      .then((res) =>
+        res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules"))
       )
-      .then(received =>
+      .then((received) =>
         pReduce(
           received,
           (counter, currentPath) =>
             readUpdateAndWriteOverFile(currentPath)
-              .then(res =>
+              .then((res) =>
                 res
                   ? {
                       good: counter.good.concat([currentPath]),
-                      bad: counter.bad
+                      bad: counter.bad,
                     }
                   : {
                       good: counter.good,
-                      bad: counter.bad.concat([currentPath])
+                      bad: counter.bad.concat([currentPath]),
                     }
               )
-              .catch(err => {
+              .catch((err) => {
                 log(
                   `${messagePrefix}${`\u001b[${31}m${`Could not write out the file:`}\u001b[${39}m`}\n${err}`
                 );
                 return counter;
               }),
           { good: [], bad: [] }
-        ).then(counter => {
+        ).then((counter) => {
           let message;
           if (
             (!counter.bad || !counter.bad.length) &&

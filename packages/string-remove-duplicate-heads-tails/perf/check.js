@@ -10,7 +10,7 @@ const f = require("../");
 const testme = () =>
   f("{{ Hi {{ first_name }}! }}", {
     heads: "   {{     ",
-    tails: "    }}       "
+    tails: "    }}       ",
   });
 
 // action

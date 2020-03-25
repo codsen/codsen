@@ -13,29 +13,29 @@ const testme = () =>
       a: false,
       b: {
         c: {
-          d: [{ a: "aaa" }]
-        }
-      }
+          d: [{ a: "aaa" }],
+        },
+      },
     },
     {
       b: {
         c: {
-          d: [{ b: "bbb", c: "ccc" }]
-        }
-      }
+          d: [{ b: "bbb", c: "ccc" }],
+        },
+      },
     },
     {
       b: {
         c: {
-          d: false
-        }
-      }
+          d: false,
+        },
+      },
     },
     {
       b: {
-        c: false
-      }
-    }
+        c: false,
+      },
+    },
   ]);
 
 // action

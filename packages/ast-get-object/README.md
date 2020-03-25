@@ -108,16 +108,16 @@ const result = getObj(
     {
       tag: "meta",
       content: "UTF-8",
-      something: "else"
+      something: "else",
     },
     {
       tag: "title",
-      attrs: "Text of the title"
-    }
+      attrs: "Text of the title",
+    },
   ],
   {
     // <- search for this object, the second argument
-    tag: "meta"
+    tag: "meta",
   }
 );
 ```
@@ -129,8 +129,8 @@ const result = getObj(
   {
     tag: "meta",
     content: "UTF-8",
-    something: "else"
-  }
+    something: "else",
+  },
 ];
 ```
 
@@ -147,12 +147,12 @@ All findings are always wrapped in an array, even if there's just one finding as
   {
     tag: ["two", "values"],
     content: "UTF-8",
-    something: "else"
+    something: "else",
   },
   {
     tag: "title",
-    attrs: "Text of the title"
-  }
+    attrs: "Text of the title",
+  },
 ];
 ```
 
@@ -178,22 +178,22 @@ getObj(
     {
       tag: ["two", "values"],
       content: "UTF-8",
-      something: "else"
+      something: "else",
     },
     {
       tag: "title",
-      attrs: "Text of the title"
-    }
+      attrs: "Text of the title",
+    },
   ],
   {
-    tag: ["two", "values"]
+    tag: ["two", "values"],
   },
   [
     {
       tag: ["three", "values", "here"],
       content: "UTF-8",
-      something: "else"
-    }
+      something: "else",
+    },
   ]
 );
 ```
@@ -207,12 +207,12 @@ Result of the above will be:
   {
     tag: ["three", "values", "here"],
     content: "UTF-8",
-    something: "else"
+    something: "else",
   },
   {
     tag: "title",
-    attrs: "Text of the title"
-  }
+    attrs: "Text of the title",
+  },
 ];
 ```
 

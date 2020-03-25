@@ -2,7 +2,7 @@ import checkForWhitespace from "./checkForWhitespace";
 import {
   basicColorNames,
   extendedColorNames,
-  sixDigitHexColorRegex
+  sixDigitHexColorRegex,
 } from "./constants";
 import { isLetter } from "./util";
 
@@ -53,10 +53,10 @@ function validateColor(str, idxOffset, opts) {
               [
                 idxOffset + charStart,
                 idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
+                extendedColorNames[attrVal.toLowerCase()],
+              ],
+            ],
+          },
         });
       } else if (
         !opts.namedCssLevel2PlusOK &&
@@ -72,10 +72,10 @@ function validateColor(str, idxOffset, opts) {
               [
                 idxOffset + charStart,
                 idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
+                extendedColorNames[attrVal.toLowerCase()],
+              ],
+            ],
+          },
         });
       }
     } else if (attrVal.startsWith("#")) {
@@ -84,7 +84,7 @@ function validateColor(str, idxOffset, opts) {
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Hex color code should be 6 digits-long.`,
-          fix: null
+          fix: null,
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
         console.log(
@@ -94,14 +94,14 @@ function validateColor(str, idxOffset, opts) {
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Unrecognised hex code.`,
-          fix: null
+          fix: null,
         });
       } else if (!opts.hexSixOK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Hex colors not allowed.`,
-          fix: null
+          fix: null,
         });
       }
     } else if (attrVal.startsWith("rgb(")) {
@@ -109,14 +109,14 @@ function validateColor(str, idxOffset, opts) {
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: `rgb() is not allowed.`,
-        fix: null
+        fix: null,
       });
     } else {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: `Unrecognised color value.`,
-        fix: null
+        fix: null,
       });
     }
   }

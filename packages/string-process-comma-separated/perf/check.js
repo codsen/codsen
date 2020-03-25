@@ -24,7 +24,7 @@ const testme = () => {
       //   `018 test/helper(): opts.errCb called, idxFrom = ${idxFrom}, idxTo = ${idxTo}; errName = ${errName}`
       // );
       gatheredErrors.push({ ranges, message });
-    }
+    },
   });
 };
 

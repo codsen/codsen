@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateShape(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateShape() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateShape(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -37,7 +37,7 @@ function attributeValidateShape(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["default", "rect", "circle", "poly"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -49,16 +49,16 @@ function attributeValidateShape(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-shape"
+              ruleId: "attribute-validate-shape",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -6,7 +6,7 @@
 
 function badCharacterSingleShiftTwo(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 143) {
         context.report({
           ruleId: "bad-character-single-shift-three",
@@ -14,11 +14,11 @@ function badCharacterSingleShiftTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

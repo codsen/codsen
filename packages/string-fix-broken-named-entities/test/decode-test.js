@@ -10,9 +10,9 @@ t.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     Object.keys(allNamedEntities)
-      .filter(entity => entity !== "nbsp")
+      .filter((entity) => entity !== "nbsp")
       .forEach((singleEntity, i, arr) => {
         //
         // healthy entity but decode requested:
@@ -20,7 +20,7 @@ t.test(
         t.same(
           fix(`&${singleEntity};`, {
             decode: true,
-            cb: obj => obj
+            cb: (obj) => obj,
           }),
           [
             {
@@ -29,8 +29,8 @@ t.test(
               rangeFrom: 0,
               rangeTo: singleEntity.length + 2,
               rangeValEncoded: `&${singleEntity};`,
-              rangeValDecoded: decode(`&${singleEntity};`)
-            }
+              rangeValDecoded: decode(`&${singleEntity};`),
+            },
           ],
           `${singleEntity} - 05; ${i + 1}/${arr.length}`
         );

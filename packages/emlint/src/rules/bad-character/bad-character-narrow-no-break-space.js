@@ -6,7 +6,7 @@
 
 function badCharacterNarrowNoBreakSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8239) {
         context.report({
           ruleId: "bad-character-narrow-no-break-space",
@@ -14,11 +14,11 @@ function badCharacterNarrowNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-          }
+            ranges: [[i, i + 1, " "]], // replace with a normal space
+          },
         });
       }
-    }
+    },
   };
 }
 

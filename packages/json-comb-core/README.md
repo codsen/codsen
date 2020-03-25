@@ -41,7 +41,7 @@ const {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync
+  findUnusedSync,
 } = require("json-comb-core");
 ```
 
@@ -55,7 +55,7 @@ import {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync
+  findUnusedSync,
 } from "json-comb-core";
 ```
 
@@ -74,7 +74,7 @@ const {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync
+  findUnusedSync,
 } = jsonCombCore;
 ```
 
@@ -241,19 +241,19 @@ let schema = getKeyset([
     b: "c",
     c: {
       d: "d",
-      e: "e"
-    }
+      e: "e",
+    },
   },
   {
     // <- object #2
-    a: "a"
+    a: "a",
   },
   {
     // <- object #3
     c: {
-      f: "f"
-    }
-  }
+      f: "f",
+    },
+  },
 ]);
 console.log("schema = " + JSON.stringify(schema, null, 4));
 // => {
@@ -279,19 +279,19 @@ let schema = getKeyset(
       b: "c",
       c: {
         d: "d",
-        e: "e"
-      }
+        e: "e",
+      },
     },
     {
       // <- object #2
-      a: "a"
+      a: "a",
     },
     {
       // <- object #3
       c: {
-        f: "f"
-      }
-    }
+        f: "f",
+      },
+    },
   ],
   { placeholder: "" }
 );
@@ -345,17 +345,17 @@ const obj1 = {
   b: [
     {
       c: "ccc",
-      d: "ddd"
-    }
+      d: "ddd",
+    },
   ],
-  a: "aaa"
+  a: "aaa",
 };
 const obj2 = {
   a: "ccc",
-  e: "eee"
+  e: "eee",
 };
 const obj3 = {
-  a: "zzz"
+  a: "zzz",
 };
 // calculate the schema:
 const schema = await getKeyset([obj1, obj2, obj3]);
@@ -448,11 +448,11 @@ A clone of an input object, with the same key set as the `schema` object.
 const { getKeyset } = require("json-comb-core");
 const { enforceKeyset } = require("json-comb-core");
 let inputObj = {
-  a: "ccc"
+  a: "ccc",
 };
 let anotherObj = {
   a: "aaa",
-  b: "bbb"
+  b: "bbb",
 };
 let schema = getKeyset([inputObj, anotherObj]); // <= notice both are fed via an array
 
@@ -498,12 +498,12 @@ let res = noNewKeys(
     // <- input we're checking
     a: "a",
     b: "b",
-    c: "c"
+    c: "c",
   },
   {
     // <- reference keyset
     a: "aaa",
-    c: "ccc"
+    c: "ccc",
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -521,27 +521,27 @@ let res = noNewKeys(
       {
         a: "a",
         b: "b",
-        c: "c"
+        c: "c",
       },
       {
         a: false,
         b: false,
-        c: "c"
-      }
-    ]
+        c: "c",
+      },
+    ],
   },
   {
     // <- reference keyset
     z: [
       {
         a: "a",
-        b: "b"
+        b: "b",
       },
       {
         a: false,
-        b: false
-      }
-    ]
+        b: false,
+      },
+    ],
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -587,15 +587,15 @@ let res = findUnused([
     // <- object #1
     a: false,
     b: "bbb1",
-    c: false
+    c: false,
   },
   {
     // <- object #2
     a: "aaa",
     b: "bbb2",
-    c: false
+    c: false,
   },
-  {} // <- object #3
+  {}, // <- object #3
 ]);
 console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c']
@@ -613,35 +613,35 @@ let res = findUnused([
       {
         k: false,
         l: false,
-        m: false
+        m: false,
       },
       {
         k: "k",
         l: false,
-        m: "m"
-      }
+        m: "m",
+      },
     ],
     b: "bbb1",
-    c: false
+    c: false,
   },
   {
     a: [
       {
         k: "k",
         l: false,
-        m: "m"
+        m: "m",
       },
       {
         k: "k",
         l: false,
-        m: "m"
-      }
+        m: "m",
+      },
     ],
     b: "bbb2",
-    c: false
+    c: false,
   },
   { b: false },
-  { c: false }
+  { c: false },
 ]);
 console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c', 'a[0].l']
@@ -679,7 +679,7 @@ const { sortAllObjects } = require("json-comb-core");
 let res = sortAllObjects({
   a: "a",
   c: "c",
-  b: "b"
+  b: "b",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // => {

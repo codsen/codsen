@@ -3,7 +3,7 @@ const isArr = Array.isArray;
 function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   const defaults = {
     inclusiveRangeEnds: false,
-    returnMatchedRangeInsteadOfTrue: false
+    returnMatchedRangeInsteadOfTrue: false,
   };
 
   const opts = Object.assign(Object.assign({}, defaults), originalOpts);
@@ -13,14 +13,14 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
 
   if (opts.returnMatchedRangeInsteadOfTrue) {
     return (
-      rangesArr.find(arr =>
+      rangesArr.find((arr) =>
         opts.inclusiveRangeEnds
           ? originalIndex >= arr[0] && originalIndex <= arr[1]
           : originalIndex > arr[0] && originalIndex < arr[1]
       ) || false
     );
   }
-  return rangesArr.some(arr =>
+  return rangesArr.some((arr) =>
     opts.inclusiveRangeEnds
       ? originalIndex >= arr[0] && originalIndex <= arr[1]
       : originalIndex > arr[0] && originalIndex < arr[1]

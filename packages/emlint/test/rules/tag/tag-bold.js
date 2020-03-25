@@ -6,26 +6,26 @@ const { applyFixes } = require("../../../t-util/util");
 // 01. no config
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-bold": 0
-    }
+      "tag-bold": 0,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.same(messages, []);
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
+t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-bold": 1
-    }
+      "tag-bold": 1,
+    },
   });
   t.equal(applyFixes(str, messages), "<strong>z</strong>");
   t.match(messages, [
@@ -36,8 +36,8 @@ t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
       idxTo: 6,
       message: `Tag "bold" does not exist in HTML.`,
       fix: {
-        ranges: [[1, 5, "strong"]]
-      }
+        ranges: [[1, 5, "strong"]],
+      },
     },
     {
       ruleId: "tag-bold",
@@ -46,20 +46,20 @@ t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
       idxTo: 14,
       message: `Tag "bold" does not exist in HTML.`,
       fix: {
-        ranges: [[9, 13, "strong"]]
-      }
-    }
+        ranges: [[9, 13, "strong"]],
+      },
+    },
   ]);
   t.end();
 });
 
-t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-bold": 2
-    }
+      "tag-bold": 2,
+    },
   });
   t.equal(applyFixes(str, messages), "<strong>z</strong>");
   t.match(messages, [
@@ -70,8 +70,8 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
       idxTo: 6,
       message: `Tag "bold" does not exist in HTML.`,
       fix: {
-        ranges: [[1, 5, "strong"]]
-      }
+        ranges: [[1, 5, "strong"]],
+      },
     },
     {
       ruleId: "tag-bold",
@@ -80,9 +80,9 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
       idxTo: 14,
       message: `Tag "bold" does not exist in HTML.`,
       fix: {
-        ranges: [[9, 13, "strong"]]
-      }
-    }
+        ranges: [[9, 13, "strong"]],
+      },
+    },
   ]);
   t.end();
 });
@@ -92,13 +92,13 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
 
 t.test(
   `02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`,
-  t => {
+  (t) => {
     const str = "<bold>z</bold>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-bold": [2]
-      }
+        "tag-bold": [2],
+      },
     });
     t.equal(applyFixes(str, messages), "<strong>z</strong>");
     t.match(messages, [
@@ -109,8 +109,8 @@ t.test(
         idxTo: 6,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[1, 5, "strong"]]
-        }
+          ranges: [[1, 5, "strong"]],
+        },
       },
       {
         ruleId: "tag-bold",
@@ -119,9 +119,9 @@ t.test(
         idxTo: 14,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[9, 13, "strong"]]
-        }
-      }
+          ranges: [[9, 13, "strong"]],
+        },
+      },
     ]);
     t.end();
   }
@@ -129,13 +129,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`,
-  t => {
+  (t) => {
     const str = "<bold>z</bold>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-bold": [2, "strong"]
-      }
+        "tag-bold": [2, "strong"],
+      },
     });
     t.equal(applyFixes(str, messages), "<strong>z</strong>");
     t.match(messages, [
@@ -146,8 +146,8 @@ t.test(
         idxTo: 6,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[1, 5, "strong"]]
-        }
+          ranges: [[1, 5, "strong"]],
+        },
       },
       {
         ruleId: "tag-bold",
@@ -156,9 +156,9 @@ t.test(
         idxTo: 14,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[9, 13, "strong"]]
-        }
-      }
+          ranges: [[9, 13, "strong"]],
+        },
+      },
     ]);
     t.end();
   }
@@ -166,13 +166,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`,
-  t => {
+  (t) => {
     const str = "<bold>z</bold>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-bold": [2, "b"]
-      }
+        "tag-bold": [2, "b"],
+      },
     });
     t.equal(applyFixes(str, messages), "<b>z</b>");
     t.match(messages, [
@@ -183,8 +183,8 @@ t.test(
         idxTo: 6,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[1, 5, "b"]]
-        }
+          ranges: [[1, 5, "b"]],
+        },
       },
       {
         ruleId: "tag-bold",
@@ -193,9 +193,9 @@ t.test(
         idxTo: 14,
         message: `Tag "bold" does not exist in HTML.`,
         fix: {
-          ranges: [[9, 13, "b"]]
-        }
-      }
+          ranges: [[9, 13, "b"]],
+        },
+      },
     ]);
     t.end();
   }

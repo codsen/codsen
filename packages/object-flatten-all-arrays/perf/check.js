@@ -15,13 +15,13 @@ const testme = () =>
     c: [
       {
         b: "b",
-        a: "a"
+        a: "a",
       },
       {
         d: "d",
-        c: "c"
-      }
-    ]
+        c: "c",
+      },
+    ],
   });
 
 // action

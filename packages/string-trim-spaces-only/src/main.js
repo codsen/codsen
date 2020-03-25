@@ -16,7 +16,7 @@ function trimSpaces(s, originalOpts) {
     lf: false,
     tab: false,
     space: true,
-    nbsp: false
+    nbsp: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -68,7 +68,7 @@ function trimSpaces(s, originalOpts) {
           console.log("068");
           return {
             res: "",
-            ranges: [[0, s.length]]
+            ranges: [[0, s.length]],
           };
         }
       }
@@ -118,34 +118,34 @@ function trimSpaces(s, originalOpts) {
           res: s.slice(newStart, newEnd),
           ranges: [
             [0, newStart],
-            [newEnd, s.length]
-          ]
+            [newEnd, s.length],
+          ],
         };
       }
       console.log("125 - returning trimmed heads");
       return {
         res: s.slice(newStart),
-        ranges: [[0, newStart]]
+        ranges: [[0, newStart]],
       };
     }
     if (newEnd) {
       console.log("132 - returning trimmed tails");
       return {
         res: s.slice(0, newEnd),
-        ranges: [[newEnd, s.length]]
+        ranges: [[newEnd, s.length]],
       };
     }
     // if we reached this far, there was nothing to trim:
     return {
       res: s, // return original string. No need to clone because it's string.
-      ranges: []
+      ranges: [],
     };
   }
   // if we reached this far, this means it's an empty string. In which case,
   // return empty values:
   return {
     res: "",
-    ranges: []
+    ranges: [],
   };
 }
 

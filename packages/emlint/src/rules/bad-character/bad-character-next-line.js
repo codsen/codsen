@@ -6,7 +6,7 @@
 
 function badCharacterNextLine(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 133) {
         context.report({
           ruleId: "bad-character-next-line",
@@ -14,11 +14,11 @@ function badCharacterNextLine(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

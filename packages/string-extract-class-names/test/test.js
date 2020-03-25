@@ -9,14 +9,14 @@ const e = require("../dist/string-extract-class-names.cjs");
 
 t.test(
   "01.01 - class: just class passed, nothing done, falls on default",
-  t => {
+  (t) => {
     t.same(e(".class-name"), [".class-name"], "01.01.01");
     t.same(e(".class-name", true), [[0, 11]], "01.01.02");
     t.end();
   }
 );
 
-t.test("01.02 - tag with two classes", t => {
+t.test("01.02 - tag with two classes", (t) => {
   t.same(
     e("div.first-class.second-class"),
     [".first-class", ".second-class"],
@@ -26,14 +26,14 @@ t.test("01.02 - tag with two classes", t => {
     e("div.first-class.second-class", true),
     [
       [3, 15],
-      [15, 28]
+      [15, 28],
     ],
     "01.02.02"
   );
   t.end();
 });
 
-t.test("01.03 - class: class within tag", t => {
+t.test("01.03 - class: class within tag", (t) => {
   t.same(e("div .class-name"), [".class-name"], "01.03.01");
   t.same(e("div .class-name "), [".class-name"], "01.03.02");
   t.same(e("div       .class-name        "), [".class-name"], "01.03.03");
@@ -52,14 +52,14 @@ t.test("01.03 - class: class within tag", t => {
     e("div       .first-class.second-class        ", true),
     [
       [10, 22],
-      [22, 35]
+      [22, 35],
     ],
     "01.03.08"
   );
   t.end();
 });
 
-t.test("01.04 - class: class within tag's child tag", t => {
+t.test("01.04 - class: class within tag's child tag", (t) => {
   t.same(e("div .class-name a"), [".class-name"], "01.04.01");
   t.same(
     e("div .first-class.second-class a"),
@@ -72,14 +72,14 @@ t.test("01.04 - class: class within tag's child tag", t => {
     e("div .first-class.second-class a", true),
     [
       [4, 16],
-      [16, 29]
+      [16, 29],
     ],
     "01.04.04"
   );
   t.end();
 });
 
-t.test("01.05 - class: more, sandwitched", t => {
+t.test("01.05 - class: more, sandwitched", (t) => {
   t.same(
     e(
       "div~!@$%^&*()+=,/';:\"?><[]{}|`.class-name~!@$%^&*()+=,/';:\"?><[]{}|`#"
@@ -98,7 +98,7 @@ t.test("01.05 - class: more, sandwitched", t => {
   t.end();
 });
 
-t.test("01.06 - class: exclamation mark", t => {
+t.test("01.06 - class: exclamation mark", (t) => {
   t.same(e("div .class-name!a"), [".class-name"], "01.06.01");
   t.same(e("div.class-name!a"), [".class-name"], "01.06.02");
   t.same(e(".class-name!a"), [".class-name"], "01.06.03");
@@ -117,14 +117,14 @@ t.test("01.06 - class: exclamation mark", t => {
     e("!.first-class.second-class!a", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.06.10"
   );
   t.end();
 });
 
-t.test("01.07 - class: ampersand", t => {
+t.test("01.07 - class: ampersand", (t) => {
   t.same(e("div .class-name&a"), [".class-name"], "01.07.01");
   t.same(e("div.class-name&a"), [".class-name"], "01.07.02");
   t.same(e(".class-name&a"), [".class-name"], "01.07.03");
@@ -143,14 +143,14 @@ t.test("01.07 - class: ampersand", t => {
     e("&.first-class.second-class&a", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.07.10"
   );
   t.end();
 });
 
-t.test("01.08 - class: dollar", t => {
+t.test("01.08 - class: dollar", (t) => {
   t.same(e("div .class-name$a"), [".class-name"], "01.08.01");
   t.same(e("div.class-name$a"), [".class-name"], "01.08.02");
   t.same(e(".class-name$a"), [".class-name"], "01.08.03");
@@ -171,14 +171,14 @@ t.test("01.08 - class: dollar", t => {
     e("a[title~=name] .first-class.second-class$a", true),
     [
       [15, 27],
-      [27, 40]
+      [27, 40],
     ],
     "01.08.12"
   );
   t.end();
 });
 
-t.test("01.09 - class: percentage", t => {
+t.test("01.09 - class: percentage", (t) => {
   t.same(e("div .class-name%a"), [".class-name"], "01.09.01");
   t.same(e("div.class-name%a"), [".class-name"], "01.09.02");
   t.same(e(".class-name%a"), [".class-name"], "01.09.03");
@@ -199,14 +199,14 @@ t.test("01.09 - class: percentage", t => {
     e("[%~class-name] .first-class.second-class%a", true),
     [
       [15, 27],
-      [27, 40]
+      [27, 40],
     ],
     "01.09.12"
   );
   t.end();
 });
 
-t.test("01.10 - class: circumflex", t => {
+t.test("01.10 - class: circumflex", (t) => {
   t.same(e('a.class-name[href^="https"]'), [".class-name"], "01.10.01");
   t.same(
     e('a.first-class.second-class[href^="https"]'),
@@ -219,14 +219,14 @@ t.test("01.10 - class: circumflex", t => {
     e('a.first-class.second-class[href^="https"]', true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.10.04"
   );
   t.end();
 });
 
-t.test("01.11 - class: ampersand", t => {
+t.test("01.11 - class: ampersand", (t) => {
   t.same(e(".class-name &"), [".class-name"], "01.11.01");
   t.same(
     e(".first-class.second-class &"),
@@ -239,14 +239,14 @@ t.test("01.11 - class: ampersand", t => {
     e(".first-class.second-class &", true),
     [
       [0, 12],
-      [12, 25]
+      [12, 25],
     ],
     "01.11.04"
   );
   t.end();
 });
 
-t.test("01.12 - class: asterisk", t => {
+t.test("01.12 - class: asterisk", (t) => {
   t.same(e(".class-name *"), [".class-name"], "01.12.01");
   t.same(e("*.class-name *"), [".class-name"], "01.12.02");
   t.same(
@@ -261,14 +261,14 @@ t.test("01.12 - class: asterisk", t => {
     e("*.first-class.second-class*", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.12.06"
   );
   t.end();
 });
 
-t.test("01.13 - class: brackets", t => {
+t.test("01.13 - class: brackets", (t) => {
   t.same(e("p.class-name:lang(it)"), [".class-name"], "01.13.01");
   t.same(
     e("p.class-name:lang(it) p.class-name-other:lang(en)"),
@@ -286,7 +286,7 @@ t.test("01.13 - class: brackets", t => {
     e("p.class-name:lang(it) p.class-name-other:lang(en)", true),
     [
       [1, 12],
-      [23, 40]
+      [23, 40],
     ],
     "01.13.05"
   );
@@ -294,14 +294,14 @@ t.test("01.13 - class: brackets", t => {
     e(":.first-class.second-class:", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.13.06"
   );
   t.end();
 });
 
-t.test("01.14 - class: plus", t => {
+t.test("01.14 - class: plus", (t) => {
   t.same(e("div.class-name + p"), [".class-name"], "01.14.01");
   t.same(e("div.class-name+p"), [".class-name"], "01.14.02");
   t.same(
@@ -316,14 +316,14 @@ t.test("01.14 - class: plus", t => {
     e("+.first-class.second-class+", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.14.06"
   );
   t.end();
 });
 
-t.test("01.15 - class: equals", t => {
+t.test("01.15 - class: equals", (t) => {
   t.same(e('a.class-name[href*="npmjs"]'), [".class-name"], "01.15.01");
   t.same(e('a.class-name [href *= "npmjs"]'), [".class-name"], "01.15.02");
   t.same(
@@ -338,14 +338,14 @@ t.test("01.15 - class: equals", t => {
     e("=.first-class.second-class=", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.15.06"
   );
   t.end();
 });
 
-t.test("01.16 - class: colon", t => {
+t.test("01.16 - class: colon", (t) => {
   t.same(
     e(".class-name, .class-name-other"),
     [".class-name", ".class-name-other"],
@@ -366,7 +366,7 @@ t.test("01.16 - class: colon", t => {
     e(".class-name, .class-name-other", true),
     [
       [0, 11],
-      [13, 30]
+      [13, 30],
     ],
     "01.16.04"
   );
@@ -374,7 +374,7 @@ t.test("01.16 - class: colon", t => {
     e(".class-name,.class-name-other", true),
     [
       [0, 11],
-      [12, 29]
+      [12, 29],
     ],
     "01.16.05"
   );
@@ -382,14 +382,14 @@ t.test("01.16 - class: colon", t => {
     e(",.first-class.second-class,", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.16.06"
   );
   t.end();
 });
 
-t.test("01.17 - class: right slash", t => {
+t.test("01.17 - class: right slash", (t) => {
   t.same(e(".class-name/class-name-other"), [".class-name"], "01.17.01");
   t.same(e(".class-name /class-name-other"), [".class-name"], "01.17.02");
   t.same(
@@ -404,14 +404,14 @@ t.test("01.17 - class: right slash", t => {
     e("/.first-class.second-class/", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.17.06"
   );
   t.end();
 });
 
-t.test("01.18 - class: apostrophe", t => {
+t.test("01.18 - class: apostrophe", (t) => {
   t.same(e(".class-name'"), [".class-name"], "01.18.01");
   t.same(e("'.class-name"), [".class-name"], "01.18.02");
   t.same(
@@ -426,14 +426,14 @@ t.test("01.18 - class: apostrophe", t => {
     e("'.first-class.second-class'", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.18.06"
   );
   t.end();
 });
 
-t.test("01.19 - class: semicolon", t => {
+t.test("01.19 - class: semicolon", (t) => {
   t.same(
     e(".class-name-1;.class-name-2"),
     [".class-name-1", ".class-name-2"],
@@ -459,7 +459,7 @@ t.test("01.19 - class: semicolon", t => {
     e(".class-name-1;.class-name-2", true),
     [
       [0, 13],
-      [14, 27]
+      [14, 27],
     ],
     "01.19.05"
   );
@@ -467,7 +467,7 @@ t.test("01.19 - class: semicolon", t => {
     e(".class-name-1;.class-name-2", true),
     [
       [0, 13],
-      [14, 27]
+      [14, 27],
     ],
     "01.19.06"
   );
@@ -475,7 +475,7 @@ t.test("01.19 - class: semicolon", t => {
     e(";.class-name-1;.class-name-2;", true),
     [
       [1, 14],
-      [15, 28]
+      [15, 28],
     ],
     "01.19.07"
   );
@@ -483,14 +483,14 @@ t.test("01.19 - class: semicolon", t => {
     e(";.first-class.second-class;", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.19.08"
   );
   t.end();
 });
 
-t.test("01.20 - class: colon", t => {
+t.test("01.20 - class: colon", (t) => {
   t.same(e("input.class-name:read-only"), [".class-name"], "01.20.01");
   t.same(
     e("input:out-of-range .class-name input:out-of-range"),
@@ -528,14 +528,14 @@ t.test("01.20 - class: colon", t => {
     e(":.first-class.second-class:", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.20.08"
   );
   t.end();
 });
 
-t.test("01.21 - class: double quote", t => {
+t.test("01.21 - class: double quote", (t) => {
   t.same(e('.class-name a[href^="https"]'), [".class-name"], "01.21.01");
   t.same(
     e('a[href^="https"] .class-name a[href^="https"]'),
@@ -560,14 +560,14 @@ t.test("01.21 - class: double quote", t => {
     e('"https".first-class.second-class"https"', true),
     [
       [7, 19],
-      [19, 32]
+      [19, 32],
     ],
     "01.21.08"
   );
   t.end();
 });
 
-t.test("01.22 - class: question mark", t => {
+t.test("01.22 - class: question mark", (t) => {
   t.same(e(".class-name ?"), [".class-name"], "01.22.01");
   t.same(e("? .class-name?"), [".class-name"], "01.22.02");
   t.same(e("?.class-name?"), [".class-name"], "01.22.03");
@@ -584,14 +584,14 @@ t.test("01.22 - class: question mark", t => {
     e("?.first-class.second-class?", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.22.08"
   );
   t.end();
 });
 
-t.test("01.23 - class: greater than sign", t => {
+t.test("01.23 - class: greater than sign", (t) => {
   t.same(e(".class-name> p"), [".class-name"], "01.23.01");
   t.same(
     e("* > .class-name > p > .class-name-other"),
@@ -614,7 +614,7 @@ t.test("01.23 - class: greater than sign", t => {
     e("* > .class-name > p > .class-name-other", true),
     [
       [4, 15],
-      [22, 39]
+      [22, 39],
     ],
     "01.23.06"
   );
@@ -623,7 +623,7 @@ t.test("01.23 - class: greater than sign", t => {
     [
       [1, 12],
       [14, 31],
-      [37, 56]
+      [37, 56],
     ],
     "01.23.07"
   );
@@ -635,14 +635,14 @@ t.test("01.23 - class: greater than sign", t => {
       [17, 24],
       [24, 31],
       [37, 44],
-      [44, 51]
+      [44, 51],
     ],
     "01.23.08"
   );
   t.end();
 });
 
-t.test("01.24 - class: square brackets", t => {
+t.test("01.24 - class: square brackets", (t) => {
   t.same(
     e("a[target=_blank] .class-name a[target=_blank]"),
     [".class-name"],
@@ -683,14 +683,14 @@ t.test("01.24 - class: square brackets", t => {
     e("a[target=_blank].first-class.second-class[target=_blank]", true),
     [
       [16, 28],
-      [28, 41]
+      [28, 41],
     ],
     "01.24.08"
   );
   t.end();
 });
 
-t.test("01.25 - class: curly brackets", t => {
+t.test("01.25 - class: curly brackets", (t) => {
   t.same(
     e("a{target=_blank} .class-name a{target=_blank}"),
     [".class-name"],
@@ -731,14 +731,14 @@ t.test("01.25 - class: curly brackets", t => {
     e("a{target=_blank}.first-class.second-class{target=_blank}", true),
     [
       [16, 28],
-      [28, 41]
+      [28, 41],
     ],
     "01.25.08"
   );
   t.end();
 });
 
-t.test("01.26 - class: pipe", t => {
+t.test("01.26 - class: pipe", (t) => {
   t.same(e("|.class-name|=en]"), [".class-name"], "01.26.01");
   t.same(e("a[lang|=en] .class-name[lang|=en]"), [".class-name"], "01.26.02");
   t.same(e("|.class-name|"), [".class-name"], "01.26.03");
@@ -755,14 +755,14 @@ t.test("01.26 - class: pipe", t => {
     e("|.first-class.second-class|", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.26.08"
   );
   t.end();
 });
 
-t.test("01.27 - class: tick", t => {
+t.test("01.27 - class: tick", (t) => {
   t.same(e("`.class-name`"), [".class-name"], "01.27.01");
   t.same(
     e("`.first-class.second-class`"),
@@ -775,14 +775,14 @@ t.test("01.27 - class: tick", t => {
     e("`.first-class.second-class`", true),
     [
       [1, 13],
-      [13, 26]
+      [13, 26],
     ],
     "01.27.04"
   );
   t.end();
 });
 
-t.test("01.28 - one-letter class names", t => {
+t.test("01.28 - one-letter class names", (t) => {
   t.same(e(".h"), [".h"], "01.28.01");
   t.same(e(".a.b.c"), [".a", ".b", ".c"], "01.28.02");
   // -------
@@ -792,7 +792,7 @@ t.test("01.28 - one-letter class names", t => {
     [
       [0, 2],
       [2, 4],
-      [4, 6]
+      [4, 6],
     ],
     "01.28.04"
   );
@@ -803,13 +803,13 @@ t.test("01.28 - one-letter class names", t => {
 // Hash, in case if ID's are found
 // ==============================
 
-t.test("02.01 - id: just id passed, nothing done, falls on default", t => {
+t.test("02.01 - id: just id passed, nothing done, falls on default", (t) => {
   t.same(e("#id-name"), ["#id-name"], "02.01.01");
   t.same(e("#id-name", true), [[0, 8]], "02.01.02");
   t.end();
 });
 
-t.test("02.02 - id: tag with id", t => {
+t.test("02.02 - id: tag with id", (t) => {
   t.same(e("div#id-name#whatever"), ["#id-name", "#whatever"], "02.02.01");
   t.same(
     e("div#id-name.class.another"),
@@ -821,7 +821,7 @@ t.test("02.02 - id: tag with id", t => {
     e("div#id-name#whatever", true),
     [
       [3, 11],
-      [11, 20]
+      [11, 20],
     ],
     "02.02.03"
   );
@@ -830,14 +830,14 @@ t.test("02.02 - id: tag with id", t => {
     [
       [3, 11],
       [11, 17],
-      [17, 25]
+      [17, 25],
     ],
     "02.02.04"
   );
   t.end();
 });
 
-t.test("02.03 - id: id within tag", t => {
+t.test("02.03 - id: id within tag", (t) => {
   t.same(e("div #id-name"), ["#id-name"], "02.03.01");
   t.same(e("div #id-name "), ["#id-name"], "02.03.02");
   t.same(e("div       #id-name        "), ["#id-name"], "02.03.03");
@@ -854,14 +854,14 @@ t.test("02.03 - id: id within tag", t => {
     e("div       #first-id#second-id        ", true),
     [
       [10, 19],
-      [19, 29]
+      [19, 29],
     ],
     "02.03.08"
   );
   t.end();
 });
 
-t.test("02.04 - id: id within tag's child tag", t => {
+t.test("02.04 - id: id within tag's child tag", (t) => {
   t.same(e("div #id-name a"), ["#id-name"], "02.04.01");
   t.same(
     e("div #id-name#second#third a"),
@@ -880,7 +880,7 @@ t.test("02.04 - id: id within tag's child tag", t => {
     [
       [4, 12],
       [12, 19],
-      [19, 25]
+      [19, 25],
     ],
     "02.04.05"
   );
@@ -889,14 +889,14 @@ t.test("02.04 - id: id within tag's child tag", t => {
     [
       [4, 12],
       [12, 19],
-      [19, 25]
+      [19, 25],
     ],
     "02.04.06"
   );
   t.end();
 });
 
-t.test("02.05 - id: more, sandwitched", t => {
+t.test("02.05 - id: more, sandwitched", (t) => {
   t.same(
     e(
       "~!@$%^&*()+=,/';:\"?><[]{}|`#id-name#second#third[]yo~!@$%^&*()+=,/';:\"?><[]{}|`"
@@ -912,14 +912,14 @@ t.test("02.05 - id: more, sandwitched", t => {
     [
       [27, 35],
       [35, 42],
-      [42, 48]
+      [42, 48],
     ],
     "02.05.02"
   );
   t.end();
 });
 
-t.test("02.06 - id: exclamation mark", t => {
+t.test("02.06 - id: exclamation mark", (t) => {
   t.same(e("div #id-name!a"), ["#id-name"], "02.06.01");
   t.same(e("!#id-name!"), ["#id-name"], "02.06.02");
   t.same(
@@ -940,7 +940,7 @@ t.test("02.06 - id: exclamation mark", t => {
     [
       [1, 9],
       [9, 16],
-      [16, 22]
+      [16, 22],
     ],
     "02.06.07"
   );
@@ -950,14 +950,14 @@ t.test("02.06 - id: exclamation mark", t => {
       [1, 9],
       [9, 16],
       [16, 22],
-      [22, 29]
+      [22, 29],
     ],
     "02.06.08"
   );
   t.end();
 });
 
-t.test("02.07 - id: ampersand", t => {
+t.test("02.07 - id: ampersand", (t) => {
   t.same(e("div #id-name&a"), ["#id-name"], "02.07.01");
   t.same(e("div#id-name&a"), ["#id-name"], "02.07.02");
   t.same(e("#id-name&a"), ["#id-name"], "02.07.03");
@@ -977,14 +977,14 @@ t.test("02.07 - id: ampersand", t => {
     [
       [1, 9],
       [9, 16],
-      [16, 22]
+      [16, 22],
     ],
     "02.07.10"
   );
   t.end();
 });
 
-t.test("02.08 - id: dollar", t => {
+t.test("02.08 - id: dollar", (t) => {
   t.same(e("div #id-name$a"), ["#id-name"], "02.08.01");
   t.same(e("div#id-name$a"), ["#id-name"], "02.08.02");
   t.same(e("#id-name$a"), ["#id-name"], "02.08.03");
@@ -1003,14 +1003,14 @@ t.test("02.08 - id: dollar", t => {
     e("$#id-name#second$", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.08.14"
   );
   t.end();
 });
 
-t.test("02.09 - id: percentage", t => {
+t.test("02.09 - id: percentage", (t) => {
   t.same(e("div #id-name%a"), ["#id-name"], "02.09.01");
   t.same(e("div#id-name%a"), ["#id-name"], "02.09.02");
   t.same(e("#id-name%a"), ["#id-name"], "02.09.03");
@@ -1029,14 +1029,14 @@ t.test("02.09 - id: percentage", t => {
     e("%#id-name#second%", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.09.14"
   );
   t.end();
 });
 
-t.test("02.10 - id: circumflex", t => {
+t.test("02.10 - id: circumflex", (t) => {
   t.same(e('a#id-name[href^="https"]'), ["#id-name"], "02.10.01");
   t.same(e("^#id-name^"), ["#id-name"], "02.10.02");
   t.same(e("^#id-name#second^"), ["#id-name", "#second"], "02.10.03");
@@ -1047,14 +1047,14 @@ t.test("02.10 - id: circumflex", t => {
     e("^#id-name#second^", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.10.06"
   );
   t.end();
 });
 
-t.test("02.11 - id: ampersand", t => {
+t.test("02.11 - id: ampersand", (t) => {
   t.same(e("#id-name &"), ["#id-name"], "02.11.01");
   t.same(e("&#id-name&"), ["#id-name"], "02.11.02");
   t.same(e("&#id-name#second&"), ["#id-name", "#second"], "02.11.03");
@@ -1065,14 +1065,14 @@ t.test("02.11 - id: ampersand", t => {
     e("&#id-name#second&", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.11.06"
   );
   t.end();
 });
 
-t.test("02.12 - id: asterisk", t => {
+t.test("02.12 - id: asterisk", (t) => {
   t.same(e("#id-name *"), ["#id-name"], "02.12.01");
   t.same(e("*#id-name *"), ["#id-name"], "02.12.02");
   t.same(e("*#id-name*"), ["#id-name"], "02.12.03");
@@ -1085,14 +1085,14 @@ t.test("02.12 - id: asterisk", t => {
     e("*#id-name#second*", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.12.08"
   );
   t.end();
 });
 
-t.test("02.13 - id: brackets", t => {
+t.test("02.13 - id: brackets", (t) => {
   t.same(e("p#id-name:lang(it)"), ["#id-name"], "02.13.01");
   t.same(
     e("p#id-name:lang(it) p#id-name-other:lang(en)"),
@@ -1112,7 +1112,7 @@ t.test("02.13 - id: brackets", t => {
     e("p#id-name:lang(it) p#id-name-other:lang(en)", true),
     [
       [1, 9],
-      [20, 34]
+      [20, 34],
     ],
     "02.13.07"
   );
@@ -1123,14 +1123,14 @@ t.test("02.13 - id: brackets", t => {
     [
       [1, 9],
       [9, 16],
-      [16, 22]
+      [16, 22],
     ],
     "02.13.10"
   );
   t.end();
 });
 
-t.test("02.14 - id: plus", t => {
+t.test("02.14 - id: plus", (t) => {
   t.same(e("div#id-name + p"), ["#id-name"], "02.14.01");
   t.same(e("div#id-name+p"), ["#id-name"], "02.14.02");
   t.same(e("+#id-name+"), ["#id-name"], "02.14.03");
@@ -1143,14 +1143,14 @@ t.test("02.14 - id: plus", t => {
     e("+#id-name#second+", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.14.08"
   );
   t.end();
 });
 
-t.test("02.15 - id: equals", t => {
+t.test("02.15 - id: equals", (t) => {
   t.same(e('a#id-name[href*="npmjs"]'), ["#id-name"], "02.15.01");
   t.same(e('a#id-name [href *= "npmjs"]'), ["#id-name"], "02.15.02");
   t.same(e('a#id-name  [href *= "npmjs"]'), ["#id-name"], "02.15.03");
@@ -1163,14 +1163,14 @@ t.test("02.15 - id: equals", t => {
     e("=#id-name#second=", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.15.08"
   );
   t.end();
 });
 
-t.test("02.16 - id: colon", t => {
+t.test("02.16 - id: colon", (t) => {
   t.same(
     e("#id-name, #id-name-other"),
     ["#id-name", "#id-name-other"],
@@ -1188,7 +1188,7 @@ t.test("02.16 - id: colon", t => {
     e("#id-name, #id-name-other", true),
     [
       [0, 8],
-      [10, 24]
+      [10, 24],
     ],
     "02.16.05"
   );
@@ -1196,7 +1196,7 @@ t.test("02.16 - id: colon", t => {
     e("#id-name,#id-name-other", true),
     [
       [0, 8],
-      [9, 23]
+      [9, 23],
     ],
     "02.16.06"
   );
@@ -1205,14 +1205,14 @@ t.test("02.16 - id: colon", t => {
     e(",#id-name#second,", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.16.08"
   );
   t.end();
 });
 
-t.test("02.17 - id: right slash", t => {
+t.test("02.17 - id: right slash", (t) => {
   t.same(
     e("#id-name/#id-name-other"),
     ["#id-name", "#id-name-other"],
@@ -1230,7 +1230,7 @@ t.test("02.17 - id: right slash", t => {
     e("#id-name/#id-name-other", true),
     [
       [0, 8],
-      [9, 23]
+      [9, 23],
     ],
     "02.17.05"
   );
@@ -1238,7 +1238,7 @@ t.test("02.17 - id: right slash", t => {
     e("/#id-name/#id-name-other", true),
     [
       [1, 9],
-      [10, 24]
+      [10, 24],
     ],
     "02.17.06"
   );
@@ -1247,14 +1247,14 @@ t.test("02.17 - id: right slash", t => {
     e("/#id-name#second/", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.17.08"
   );
   t.end();
 });
 
-t.test("02.18 - id: apostrophe", t => {
+t.test("02.18 - id: apostrophe", (t) => {
   t.same(e("#id-name'"), ["#id-name"], "02.18.01");
   t.same(e("'#id-name"), ["#id-name"], "02.18.02");
   t.same(e("'#id-name#second"), ["#id-name", "#second"], "02.18.03");
@@ -1265,14 +1265,14 @@ t.test("02.18 - id: apostrophe", t => {
     e("'#id-name#second", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.18.06"
   );
   t.end();
 });
 
-t.test("02.19 - id: semicolon", t => {
+t.test("02.19 - id: semicolon", (t) => {
   t.same(e("#id1;#id2"), ["#id1", "#id2"], "02.19.01");
   t.same(
     e("#id-name;#id-name-other"),
@@ -1294,7 +1294,7 @@ t.test("02.19 - id: semicolon", t => {
     e("#id1;#id2", true),
     [
       [0, 4],
-      [5, 9]
+      [5, 9],
     ],
     "02.19.05"
   );
@@ -1302,7 +1302,7 @@ t.test("02.19 - id: semicolon", t => {
     e("#id-name;#id-name-other", true),
     [
       [0, 8],
-      [9, 23]
+      [9, 23],
     ],
     "02.19.06"
   );
@@ -1310,7 +1310,7 @@ t.test("02.19 - id: semicolon", t => {
     e(";#id-name;#id-name-other;", true),
     [
       [1, 9],
-      [10, 24]
+      [10, 24],
     ],
     "02.19.07"
   );
@@ -1320,14 +1320,14 @@ t.test("02.19 - id: semicolon", t => {
       [1, 5],
       [5, 9],
       [10, 14],
-      [14, 18]
+      [14, 18],
     ],
     "02.19.08"
   );
   t.end();
 });
 
-t.test("02.20 - id: colon", t => {
+t.test("02.20 - id: colon", (t) => {
   t.same(e("input#id-name:read-only"), ["#id-name"], "02.20.01");
   t.same(
     e("input:out-of-range #id-name input:out-of-range"),
@@ -1369,14 +1369,14 @@ t.test("02.20 - id: colon", t => {
     [
       [19, 27],
       [27, 34],
-      [34, 40]
+      [34, 40],
     ],
     "02.20.08"
   );
   t.end();
 });
 
-t.test("02.21 - id: double quote", t => {
+t.test("02.21 - id: double quote", (t) => {
   t.same(e('#id-name a[href^="https"]'), ["#id-name"], "02.21.01");
   t.same(
     e('a[href^="https"] #id-name a[href^="https"]'),
@@ -1399,14 +1399,14 @@ t.test("02.21 - id: double quote", t => {
     e('a[href^="https"] #id-name#second a[href^="https"]', true),
     [
       [17, 25],
-      [25, 32]
+      [25, 32],
     ],
     "02.21.06"
   );
   t.end();
 });
 
-t.test("02.22 - id: question mark", t => {
+t.test("02.22 - id: question mark", (t) => {
   t.same(e("#id-name ?"), ["#id-name"], "02.22.01");
   t.same(e("?#id-name?"), ["#id-name"], "02.22.02");
   t.same(e("?#id-name#second?"), ["#id-name", "#second"], "02.22.03");
@@ -1417,14 +1417,14 @@ t.test("02.22 - id: question mark", t => {
     e("?#id-name#second?", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.22.06"
   );
   t.end();
 });
 
-t.test("02.23 - id: question mark", t => {
+t.test("02.23 - id: question mark", (t) => {
   t.same(e("?#id-name?"), ["#id-name"], "02.23.01");
   t.same(
     e("?#id-name? > p > #id-name-other"),
@@ -1447,7 +1447,7 @@ t.test("02.23 - id: question mark", t => {
     e("?#id-name? > p > #id-name-other", true),
     [
       [1, 9],
-      [17, 31]
+      [17, 31],
     ],
     "02.23.06"
   );
@@ -1456,7 +1456,7 @@ t.test("02.23 - id: question mark", t => {
     [
       [1, 11],
       [13, 23],
-      [29, 39]
+      [29, 39],
     ],
     "02.23.07"
   );
@@ -1468,14 +1468,14 @@ t.test("02.23 - id: question mark", t => {
       [11, 15],
       [15, 19],
       [25, 29],
-      [29, 33]
+      [29, 33],
     ],
     "02.23.08"
   );
   t.end();
 });
 
-t.test("02.24 - id: square brackets", t => {
+t.test("02.24 - id: square brackets", (t) => {
   t.same(
     e("a[target=_blank] #id-name a[target=_blank]"),
     ["#id-name"],
@@ -1507,7 +1507,7 @@ t.test("02.24 - id: square brackets", t => {
     e("[zzz]#id-name#second[target=_blank]", true),
     [
       [5, 13],
-      [13, 20]
+      [13, 20],
     ],
     "02.24.07"
   );
@@ -1515,14 +1515,14 @@ t.test("02.24 - id: square brackets", t => {
     e("zzz[#id-name#second]zzz", true),
     [
       [4, 12],
-      [12, 19]
+      [12, 19],
     ],
     "02.24.08"
   );
   t.end();
 });
 
-t.test("02.25 - id: curly brackets", t => {
+t.test("02.25 - id: curly brackets", (t) => {
   t.same(
     e("a{target=_blank} #id-name a{target=_blank}"),
     ["#id-name"],
@@ -1555,7 +1555,7 @@ t.test("02.25 - id: curly brackets", t => {
     e("aaa{bbb}#id-name#second{ccc}ddd", true),
     [
       [8, 16],
-      [16, 23]
+      [16, 23],
     ],
     "02.25.08"
   );
@@ -1563,7 +1563,7 @@ t.test("02.25 - id: curly brackets", t => {
     e("{#id-name#second}", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.25.09"
   );
@@ -1571,14 +1571,14 @@ t.test("02.25 - id: curly brackets", t => {
     e("zz{#id-name#second}zzz", true),
     [
       [3, 11],
-      [11, 18]
+      [11, 18],
     ],
     "02.25.10"
   );
   t.end();
 });
 
-t.test("02.26 - id: pipe", t => {
+t.test("02.26 - id: pipe", (t) => {
   t.same(e("|#id-name|=en]"), ["#id-name"], "02.26.01");
   t.same(e("a[lang|=en] #id-name[lang|=en]"), ["#id-name"], "02.26.02");
   t.same(e("|#id-name#second|"), ["#id-name", "#second"], "02.26.03");
@@ -1589,14 +1589,14 @@ t.test("02.26 - id: pipe", t => {
     e("|#id-name#second|", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.26.06"
   );
   t.end();
 });
 
-t.test("02.27 - id: tick", t => {
+t.test("02.27 - id: tick", (t) => {
   t.same(e("`#id-name`"), ["#id-name"], "02.27.01");
   t.same(e("`#id-name#second`"), ["#id-name", "#second"], "02.27.02");
   // -------
@@ -1605,7 +1605,7 @@ t.test("02.27 - id: tick", t => {
     e("`#id-name#second`", true),
     [
       [1, 9],
-      [9, 16]
+      [9, 16],
     ],
     "02.27.04"
   );
@@ -1616,7 +1616,7 @@ t.test("02.27 - id: tick", t => {
 // Recognising class/id names after any character which is not allowed in class/id names
 // ==============================
 
-t.test("03.01 - classes separated with a space should be recognised", t => {
+t.test("03.01 - classes separated with a space should be recognised", (t) => {
   t.same(
     e("div.first-class .second-class"),
     [".first-class", ".second-class"],
@@ -1637,7 +1637,7 @@ t.test("03.01 - classes separated with a space should be recognised", t => {
     e("div.first-class .second-class", true),
     [
       [3, 15],
-      [16, 29]
+      [16, 29],
     ],
     "03.01.04"
   );
@@ -1645,7 +1645,7 @@ t.test("03.01 - classes separated with a space should be recognised", t => {
     e("div.first-class div.second-class", true),
     [
       [3, 15],
-      [19, 32]
+      [19, 32],
     ],
     "03.01.05"
   );
@@ -1653,14 +1653,14 @@ t.test("03.01 - classes separated with a space should be recognised", t => {
     e(".first-class .second-class", true),
     [
       [0, 12],
-      [13, 26]
+      [13, 26],
     ],
     "03.01.06"
   );
   t.end();
 });
 
-t.test("03.02 - classes recognised after brackets", t => {
+t.test("03.02 - classes recognised after brackets", (t) => {
   t.same(
     e("div.class1[lang|=en]#id1[something] .class2[lang|=en] #id2"),
     [".class1", "#id1", ".class2", "#id2"],
@@ -1683,7 +1683,7 @@ t.test("03.02 - classes recognised after brackets", t => {
       [3, 10],
       [20, 24],
       [36, 43],
-      [54, 58]
+      [54, 58],
     ],
     "03.02.04"
   );
@@ -1691,7 +1691,7 @@ t.test("03.02 - classes recognised after brackets", t => {
     e("div.first-class[lang|=en] div.second-class[lang|=en]", true),
     [
       [3, 15],
-      [29, 42]
+      [29, 42],
     ],
     "03.02.05"
   );
@@ -1699,14 +1699,14 @@ t.test("03.02 - classes recognised after brackets", t => {
     e(".first-class[lang|=en] .second-class[lang|=en]", true),
     [
       [0, 12],
-      [23, 36]
+      [23, 36],
     ],
     "03.02.06"
   );
   t.end();
 });
 
-t.test("03.03 - old bracket notation - classes", t => {
+t.test("03.03 - old bracket notation - classes", (t) => {
   t.same(e("td[class=rr]"), [".rr"], "03.03.01");
   t.same(e("td [ class = rr ]"), [".rr"], "03.03.02");
   t.same(e("td [ class = abc-def ]"), [".abc-def"], "03.03.03");
@@ -1717,7 +1717,7 @@ t.test("03.03 - old bracket notation - classes", t => {
   t.end();
 });
 
-t.test("03.04 - old bracket notation - classes that need trimming", t => {
+t.test("03.04 - old bracket notation - classes that need trimming", (t) => {
   t.same(e(`td [ class = " abc-def " ]`), [".abc-def"], "03.04.01");
   t.same(e(`td [ class = ' abc-def ' ]`), [".abc-def"], "03.04.02");
   t.same(e(`td[class=" abc-def "]`), [".abc-def"], "03.04.03");
@@ -1725,7 +1725,7 @@ t.test("03.04 - old bracket notation - classes that need trimming", t => {
   t.end();
 });
 
-t.test("03.05 - old bracket notation - ids", t => {
+t.test("03.05 - old bracket notation - ids", (t) => {
   t.same(e("td[id=rr]"), ["#rr"], "03.05.01");
   t.same(e("td [ id = rr ]"), ["#rr"], "03.05.02");
   t.same(e("td [ id = abc-def ]"), ["#abc-def"], "03.05.03");
@@ -1736,7 +1736,7 @@ t.test("03.05 - old bracket notation - ids", t => {
   t.end();
 });
 
-t.test("03.06 - old bracket notation - ids that need trimming", t => {
+t.test("03.06 - old bracket notation - ids that need trimming", (t) => {
   t.same(e(`td [ id = " abc-def " ]`), ["#abc-def"], "03.06.01");
   t.same(e(`td [ id = ' abc-def ' ]`), ["#abc-def"], "03.06.02");
   t.same(e(`td[id=" abc-def "]`), ["#abc-def"], "03.06.03");
@@ -1744,7 +1744,7 @@ t.test("03.06 - old bracket notation - ids that need trimming", t => {
   t.end();
 });
 
-t.test("03.07 - old bracket notation - empty values", t => {
+t.test("03.07 - old bracket notation - empty values", (t) => {
   // .
   t.same(e(`td[class=']`), [], "03.07.01");
   t.same(e(`td[class='']`), [], "03.07.02");
@@ -1773,21 +1773,21 @@ t.test("03.07 - old bracket notation - empty values", t => {
 // Precautions
 // ==============================
 
-t.test("04.01 - no params", t => {
+t.test("04.01 - no params", (t) => {
   t.throws(() => {
     e(undefined);
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test("04.02 - first input arg of a wrong type", t => {
+t.test("04.02 - first input arg of a wrong type", (t) => {
   t.throws(() => {
     e(1);
   }, /THROW_ID_02/g);
   t.end();
 });
 
-t.test("04.03 - second input arg of a wrong type", t => {
+t.test("04.03 - second input arg of a wrong type", (t) => {
   t.throws(() => {
     e("a", 1);
   }, /THROW_ID_03/g);
@@ -1799,7 +1799,7 @@ t.test("04.03 - second input arg of a wrong type", t => {
 // discovered working on emailcomb.com
 // ==============================
 
-t.test("05.01 - encoded line breaks", t => {
+t.test("05.01 - encoded line breaks", (t) => {
   t.same(e("#unused-1\n\n\n\n\t\t\t\t\nz\t\ta"), ["#unused-1"], "05.01.01");
   t.same(e("#unused-1\n\n\n\n\t\t\t\t\nz\t\ta", true), [[0, 9]], "05.01.02");
   t.end();
@@ -1807,7 +1807,7 @@ t.test("05.01 - encoded line breaks", t => {
 
 t.test(
   "05.02 - recognises JS escaped strings and repeated dots & hashes",
-  t => {
+  (t) => {
     t.same(
       e(
         "\naaa\n...    .unused-1\n\n\n.unused-2, .unused-3\n\t\t,,,\t###\t\nz\t\ta"
@@ -1823,7 +1823,7 @@ t.test(
       [
         [12, 21],
         [24, 33],
-        [35, 44]
+        [35, 44],
       ],
       "05.02.02"
     );

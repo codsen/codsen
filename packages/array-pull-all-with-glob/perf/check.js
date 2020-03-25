@@ -15,7 +15,7 @@ const testme = () =>
       "module-2",
       "module-3",
       "elements",
-      "elemental"
+      "elemental",
     ],
     ["module-*", "something else", "element*"]
   );

@@ -6,7 +6,7 @@
 
 function badCharacterNominalDigitShapes(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8303) {
         context.report({
           ruleId: "bad-character-nominal-digit-shapes",
@@ -14,11 +14,11 @@ function badCharacterNominalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

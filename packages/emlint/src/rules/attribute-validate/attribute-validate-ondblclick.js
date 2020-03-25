@@ -5,7 +5,7 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOndblclick(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOndblclick() ███████████████████████████████████████`
       );
@@ -47,7 +47,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -55,7 +55,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate the script value
@@ -71,17 +71,17 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             )}`
           );
 
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`075 attributeValidateOndblclick(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ondblclick"
+                ruleId: "attribute-validate-ondblclick",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

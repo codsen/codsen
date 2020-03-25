@@ -53,13 +53,13 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-no-unsanitized": "^3.1.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.7",
+    "eslint-plugin-row-num": "^1.1.8",
     "husky": "^4.2.3",
-    "lect": "^0.12.2",
+    "lect": "^0.12.3",
     "lerna": "^3.20.2",
-    "lerna-clean-changelogs-cli": "^1.2.50",
+    "lerna-clean-changelogs-cli": "^1.2.51",
     "npm-watch": "^0.6.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.2",
     "tap-parse-string-to-object": "^1.2.6"
   }
 }

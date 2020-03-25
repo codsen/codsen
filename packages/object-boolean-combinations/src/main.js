@@ -87,7 +87,7 @@ function objectBooleanCombinations(
       Object.keys(incomingObject)
     );
     // propertiesToMix = all incoming object's properties MINUS properties to override
-    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem));
+    propertiesToBeOverridden.forEach((elem) => pull(propertiesToMix, elem));
   }
 
   // mix up whatever propertiesToMix has came to this point
@@ -107,8 +107,8 @@ function objectBooleanCombinations(
   // propertiesToMix array:
   // ------------------------------------------------------------------------------
   if (override) {
-    outcomingObjectsArray.forEach(elem3 =>
-      propertiesToBeOverridden.forEach(elem4 => {
+    outcomingObjectsArray.forEach((elem3) =>
+      propertiesToBeOverridden.forEach((elem4) => {
         elem3[elem4] = overrideObject[elem4];
       })
     );

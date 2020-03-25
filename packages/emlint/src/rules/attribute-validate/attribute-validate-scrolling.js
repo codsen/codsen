@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateScrolling(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateScrolling() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateScrolling(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -41,7 +41,7 @@ function attributeValidateScrolling(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["auto", "yes", "no"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -53,16 +53,16 @@ function attributeValidateScrolling(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`057 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scrolling"
+              ruleId: "attribute-validate-scrolling",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

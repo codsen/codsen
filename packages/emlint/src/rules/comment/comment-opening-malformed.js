@@ -6,7 +6,7 @@ import findMalformed from "string-find-malformed";
 
 function commentOpeningMalformed(context, ...opts) {
   return {
-    text: node => {
+    text: (node) => {
       console.log(
         `███████████████████████████████████████ commentOpeningMalformed() TEXT ███████████████████████████████████████`
       );
@@ -16,7 +16,7 @@ function commentOpeningMalformed(context, ...opts) {
       findMalformed(
         node.value,
         "<!--",
-        errorObj => {
+        (errorObj) => {
           console.log(
             `021 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
           );
@@ -25,17 +25,17 @@ function commentOpeningMalformed(context, ...opts) {
               message: "Malformed opening comment tag.",
               ruleId: "comment-opening-malformed",
               fix: {
-                ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]]
-              }
+                ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]],
+              },
             })
           );
         },
         {
-          stringOffset: node.start
+          stringOffset: node.start,
         }
       );
     },
-    comment: node => {
+    comment: (node) => {
       console.log(
         `███████████████████████████████████████ commentOpeningMalformed() COMMENT ███████████████████████████████████████`
       );
@@ -57,16 +57,16 @@ function commentOpeningMalformed(context, ...opts) {
           `057 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`061 commentOpeningMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-opening-malformed"
+              ruleId: "comment-opening-malformed",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

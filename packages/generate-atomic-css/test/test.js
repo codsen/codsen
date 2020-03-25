@@ -3,7 +3,7 @@ const {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } = require("../dist/generate-atomic-css.cjs");
 
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
@@ -12,43 +12,43 @@ const allOptsVariations = [
   {
     includeConfig: true,
     includeHeadsAndTails: true,
-    pad: true
+    pad: true,
   },
   {
     includeConfig: true,
     includeHeadsAndTails: true,
-    pad: false
+    pad: false,
   },
   {
     includeConfig: true,
     includeHeadsAndTails: false,
-    pad: true
+    pad: true,
   },
   {
     includeConfig: false,
     includeHeadsAndTails: true,
-    pad: true
+    pad: true,
   },
   {
     includeConfig: false,
     includeHeadsAndTails: false,
-    pad: true
+    pad: true,
   },
   {
     includeConfig: false,
     includeHeadsAndTails: true,
-    pad: false
+    pad: false,
   },
   {
     includeConfig: true,
     includeHeadsAndTails: false,
-    pad: false
+    pad: false,
   },
   {
     includeConfig: false,
     includeHeadsAndTails: false,
-    pad: false
-  }
+    pad: false,
+  },
 ];
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ const allOptsVariations = [
 
 t.test(
   `01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input`,
-  t => {
+  (t) => {
     t.throws(() => {
       genAtomic();
     }, /THROW_ID_01/g);
@@ -67,7 +67,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - undefined literal`,
-  t => {
+  (t) => {
     t.throws(() => {
       genAtomic(undefined);
     }, /THROW_ID_01/g);
@@ -75,21 +75,21 @@ t.test(
   }
 );
 
-t.test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - numbers`, t => {
+t.test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - numbers`, (t) => {
   t.throws(() => {
     genAtomic(1);
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - null`, t => {
+t.test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - null`, (t) => {
   t.throws(() => {
     genAtomic(null);
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, t => {
+t.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, (t) => {
   t.throws(() => {
     genAtomic(true);
   }, /THROW_ID_01/g);
@@ -102,57 +102,57 @@ t.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, t => {
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`,
-  t => {
+  (t) => {
     const source = "zzz";
     t.same(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }),
       {
         result: source,
         log: {
-          count: 0
-        }
+          count: 0,
+        },
       },
       "02.01.01"
     );
     t.same(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }),
       {
         result: source,
         log: {
-          count: 0
-        }
+          count: 0,
+        },
       },
       "02.01.02"
     );
     t.same(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }),
       {
         result: source,
         log: {
-          count: 0
-        }
+          count: 0,
+        },
       },
       "02.01.03"
     );
     t.same(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }),
       {
         result: source,
         log: {
-          count: 0
-        }
+          count: 0,
+        },
       },
       "02.01.04"
     );
@@ -162,13 +162,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - multiliner`,
-  t => {
+  (t) => {
     const source =
       "zzz\n\t\t\tyyyyy\ntralala\none dollar here $\ntwo dollars here $$\n";
     t.equal(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       source,
       "02.02.01"
@@ -176,7 +176,7 @@ t.test(
     t.equal(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       source,
       "02.02.02"
@@ -184,7 +184,7 @@ t.test(
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       source,
       "02.02.03"
@@ -192,7 +192,7 @@ t.test(
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       source,
       "02.02.04"
@@ -203,7 +203,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(`111
 222
@@ -244,7 +244,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `02.04 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content, no pad`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `111
@@ -288,7 +288,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `02.05 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -312,7 +312,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `02.06 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -344,7 +344,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `02.07 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with p`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -370,7 +370,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `02.08 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - starts with a placeholder (not legit)`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -400,11 +400,11 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - defaults, empty content`,
-  t => {
+  (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: false
+      includeHeadsAndTails: false,
     }).result;
     t.equal(generated.trim().split("\n").length, 501, "03.01.01");
     t.ok(generated.includes("padding-top:     0 !important", "03.01.02"));
@@ -421,7 +421,7 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - min max set #1`,
-  t => {
+  (t) => {
     const source1 = `
 .pt$$$ { padding-top: $$$px !important; }|0|5
 .pr$$$ { padding-right: $$$px !important; }|0|5
@@ -452,11 +452,11 @@ t.test(
 `;
     const generated1 = genAtomic(source1, {
       includeConfig: false,
-      includeHeadsAndTails: false
+      includeHeadsAndTails: false,
     }).result;
     const generated2 = genAtomic(source2, {
       includeConfig: false,
-      includeHeadsAndTails: false
+      includeHeadsAndTails: false,
     }).result;
 
     t.equal(generated1, ref, "03.02.01");
@@ -467,7 +467,7 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - min max set #2`,
-  t => {
+  (t) => {
     const source = `
 | .pt$$$ { padding-top: $$$px !important; } |5|10|
 |.pr$$$ { padding-right: $$$px !important; } | 5|10
@@ -493,7 +493,7 @@ t.test(
 `;
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: false
+      includeHeadsAndTails: false,
     }).result;
 
     t.equal(generated, ref, "03.03.01");
@@ -507,11 +507,11 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, default range`,
-  t => {
+  (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     t.equal(generated.split("\n").length, 504, "04.01.01");
     t.ok(generated.includes("padding-top:     0 !important", "04.01.02"));
@@ -530,7 +530,7 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
-  t => {
+  (t) => {
     const source1 = `
 .pt$$$ { padding-top: $$$px !important; }|0|5
 .pr$$$ { padding-right: $$$px !important; }|0|5
@@ -563,11 +563,11 @@ t.test(
 `;
     const generated1 = genAtomic(source1, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     const generated2 = genAtomic(source2, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated1, ref, "04.02.01");
@@ -580,7 +580,7 @@ t.test(
 
 t.test(
   `04.03 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, fully custom range`,
-  t => {
+  (t) => {
     const source = `
 | .pt$$$ { padding-top: $$$px !important; } |5|10|
 |.pr$$$ { padding-right: $$$px !important; } | 5|10
@@ -608,7 +608,7 @@ t.test(
 `;
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated, ref, "04.03");
@@ -619,7 +619,7 @@ t.test(
 
 t.test(
   `04.04 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incoming content heads without opening comment and content in front`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `zzz
@@ -656,7 +656,7 @@ ${CONTENTHEAD}
 
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     t.equal(generated, ref, "04.04");
     // without config we can't do a second cycle so unit test ends here
@@ -666,7 +666,7 @@ ${CONTENTHEAD}
 
 t.test(
   `04.05 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incoming content heads without opening comment and comments clash`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `/* zzz
@@ -697,7 +697,7 @@ ${CONTENTHEAD} */
 
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -711,7 +711,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `04.06 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - content's heads and tails instead of config's heads and tails`,
-  t => {
+  (t) => {
     const source = `/*${CONTENTHEAD}*/
 
 .pb$$$ { padding-bottom: $$$px !important; } | 5 | 7
@@ -731,7 +731,7 @@ t.test(
 
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated, ref, "04.06");
@@ -743,7 +743,7 @@ t.test(
 
 t.test(
   `04.07 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - blank content heads/tails`,
-  t => {
+  (t) => {
     const contents = `\t\n\n \t\t\t   \t`;
     const input = `
 ${CONTENTHEAD}${contents}${CONTENTTAIL}
@@ -751,7 +751,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       "",
       "04.07.01"
@@ -759,7 +759,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "",
       "04.07.02"
@@ -767,7 +767,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: true,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       "",
       "04.07.03"
@@ -775,7 +775,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "",
       "04.07.04"
@@ -786,7 +786,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
 
 t.test(
   `04.08 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - blank config heads/tails`,
-  t => {
+  (t) => {
     const input = `
 ${CONTENTHEAD}
 \t\n\n \t\t\t   \t
@@ -795,7 +795,7 @@ ${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       "",
       "04.08.01"
@@ -803,7 +803,7 @@ ${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "",
       "04.08.02"
@@ -811,7 +811,7 @@ ${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: true,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       "",
       "04.08.03"
@@ -819,7 +819,7 @@ ${CONTENTTAIL}
     t.equal(
       genAtomic(input, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "",
       "04.08.04"
@@ -830,7 +830,7 @@ ${CONTENTTAIL}
 
 t.test(
   `04.09 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -842,7 +842,7 @@ t.test(
 lala`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -867,7 +867,7 @@ lala
 
 t.test(
   `04.10 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around, incl. tails`,
-  t => {
+  (t) => {
     const { log, result } = genAtomic(
       `tra
 
@@ -880,7 +880,7 @@ t.test(
 lala`,
       {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }
     );
     t.same(
@@ -908,7 +908,7 @@ lala
 
 t.test(
   `04.11 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -922,7 +922,7 @@ t.test(
 lala`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -947,7 +947,7 @@ lala
 
 t.test(
   `04.12 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -961,7 +961,7 @@ GENERATE-ATOMIC-CSS-CONFIG-ENDS */
 lala`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -986,7 +986,7 @@ lala
 
 t.test(
   `04.13 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -998,7 +998,7 @@ t.test(
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1028,7 +1028,7 @@ lala
 
 t.test(
   `04.14 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. tails`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -1042,7 +1042,7 @@ t.test(
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1072,7 +1072,7 @@ lala
 
 t.test(
   `04.15 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -1086,7 +1086,7 @@ t.test(
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1116,7 +1116,7 @@ lala
 
 t.test(
   `04.16 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -1130,7 +1130,7 @@ GENERATE-ATOMIC-CSS-CONFIG-ENDS */
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1160,7 +1160,7 @@ lala
 
 t.test(
   `04.19 - ${`\u001b[${35}m${`config present no config requested`}\u001b[${39}m`} - comments surrounding`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* tra */
@@ -1174,7 +1174,7 @@ t.test(
 /* lala */`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `/* tra */
@@ -1199,7 +1199,7 @@ t.test(
 
 t.test(
   `04.20 - ${`\u001b[${35}m${`content tails present no config requested`}\u001b[${39}m`} - comments surrounding`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* tra */
@@ -1213,7 +1213,7 @@ t.test(
 /* lala */`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `/* tra */
@@ -1238,7 +1238,7 @@ t.test(
 
 t.test(
   `04.21 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
-  t => {
+  (t) => {
     const source = `a
 .pt$$$ { padding-top: $$$px !important; }|0|5
 .pr$$$ { padding-right: $$$px !important; }|0|5
@@ -1269,7 +1269,7 @@ b
 `;
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     t.equal(generated, ref, "04.21");
     t.end();
@@ -1278,7 +1278,7 @@ b
 
 t.test(
   `04.22 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - head missing`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -1291,7 +1291,7 @@ t.test(
 lala`,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1320,11 +1320,11 @@ lala
 
 t.test(
   `05.01 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, default range`,
-  t => {
+  (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
     const generated = genAtomic(source, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     t.equal(generated.split("\n").length, 507, "05.01.01");
     t.ok(generated.includes("padding-top:     0 !important", "05.01.02"));
@@ -1348,7 +1348,7 @@ t.test(
 
 t.test(
   `05.02 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
-  t => {
+  (t) => {
     const source1 = `
 .pt$$$ { padding-top: $$$px !important; }|0|5
 .pr$$$ { padding-right: $$$px !important; }|0|5
@@ -1410,11 +1410,11 @@ ${CONTENTHEAD} */
 `;
     const generated1 = genAtomic(source1, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     const generated2 = genAtomic(source2, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated1, ref1, "05.02.01");
@@ -1425,7 +1425,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.03 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`,
-  t => {
+  (t) => {
     const ref1 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .pt$$$ { padding-top: $$$px !important; }|0|5
 .pr$$$ { padding-right: $$$px !important; }|0|5
@@ -1454,7 +1454,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 `;
     const { log, result } = genAtomic(ref1, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     });
 
     t.equal(result, ref1, "05.03.01");
@@ -1463,7 +1463,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
       result,
       genAtomic(result, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "05.03.03"
     );
@@ -1473,7 +1473,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `05.04 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`,
-  t => {
+  (t) => {
     const ref2 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .pt$$$ { padding-top: $$$px !important; }|5
 .pr$$$ { padding-right: $$$px !important; }|5
@@ -1502,14 +1502,14 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 `;
     const generated2 = genAtomic(ref2, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
     t.equal(generated2, ref2, "05.04.01");
     t.equal(
       generated2,
       genAtomic(generated2, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "05.04.02"
     );
@@ -1519,7 +1519,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `05.05 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, fully custom range`,
-  t => {
+  (t) => {
     const source = `
 | .pt$$$ { padding-top: $$$px !important; } |5|10|
 |.pr$$$ { padding-right: $$$px !important; } | 5|10
@@ -1551,7 +1551,7 @@ ${CONTENTHEAD} */
 `;
     const generated = genAtomic(source, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated, ref, "05.05.01");
@@ -1561,7 +1561,7 @@ ${CONTENTHEAD} */
       generated,
       genAtomic(generated, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "05.05.02"
     );
@@ -1571,7 +1571,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.06 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - only content heads/tails, no content around`,
-  t => {
+  (t) => {
     const source = `
 .pt$$$ { padding-top: $$$rem !important; }\t|\t3\t|
 |.pr$$$ { padding-right: $$$vmax !important; }\t|\t99\t|\t101\t
@@ -1591,7 +1591,7 @@ ${CONTENTHEAD} */
 `;
     const generated = genAtomic(source, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated, ref, "05.06.01");
@@ -1601,7 +1601,7 @@ ${CONTENTHEAD} */
       generated,
       genAtomic(generated, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "05.06.02"
     );
@@ -1611,7 +1611,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.07 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - only content heads/tails, content on top`,
-  t => {
+  (t) => {
     const source = `
 .pt$$$ { padding-top: $$$rem !important; }\t|\t3\t|
 |.pr$$$ { padding-right: $$$vmax !important; }\t|\t99\t|\t101\t
@@ -1632,7 +1632,7 @@ ${CONTENTHEAD} */
 `;
     const generated = genAtomic(`<div>zzz</div>\n${source}`, {
       includeConfig: true,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     t.equal(generated, ref, "05.07.01");
@@ -1642,7 +1642,7 @@ ${CONTENTHEAD} */
       generated,
       genAtomic(generated, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       "05.07.02"
     );
@@ -1652,7 +1652,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.08 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, content tails`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `<style>
@@ -1671,7 +1671,7 @@ t.test(
 `,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `<style>
@@ -1700,7 +1700,7 @@ t.test(
 
 t.test(
   `05.09 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, config tails`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `<style>
@@ -1719,7 +1719,7 @@ t.test(
 `,
         {
           includeConfig: false,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `<style>
@@ -1748,7 +1748,7 @@ t.test(
 
 t.test(
   `05.10 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `tra
@@ -1760,7 +1760,7 @@ t.test(
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `tra
@@ -1790,7 +1790,7 @@ lala
 
 t.test(
   `05.11 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - above there are comments followed by content`,
-  t => {
+  (t) => {
     t.same(
       genAtomic(
         `/* tra */
@@ -1803,7 +1803,7 @@ t.test(
 lala`,
         {
           includeConfig: true,
-          includeHeadsAndTails: true
+          includeHeadsAndTails: true,
         }
       ).result,
       `/* tra */
@@ -1834,7 +1834,7 @@ lala
 
 t.test(
   `05.12 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, fully custom range, no pad`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `
@@ -1875,7 +1875,7 @@ ${CONTENTHEAD} */
     const generated = genAtomic(source, {
       includeConfig: true,
       includeHeadsAndTails: true,
-      pad: false
+      pad: false,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -1890,7 +1890,7 @@ ${CONTENTHEAD} */
       genAtomic(generated, {
         includeConfig: true,
         includeHeadsAndTails: true,
-        pad: false
+        pad: false,
       }).result,
       "05.12.02"
     );
@@ -1900,7 +1900,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.13 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `
@@ -1926,7 +1926,7 @@ ${CONTENTHEAD} */
     const generated = genAtomic(source, {
       includeConfig: true,
       includeHeadsAndTails: true,
-      pad: false
+      pad: false,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -1941,7 +1941,7 @@ ${CONTENTHEAD} */
       genAtomic(generated, {
         includeConfig: true,
         includeHeadsAndTails: true,
-        pad: false
+        pad: false,
       }).result,
       "05.13.02"
     );
@@ -1951,7 +1951,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.14 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `
@@ -1977,7 +1977,7 @@ ${CONTENTHEAD} */
     const generated = genAtomic(source, {
       includeConfig: true,
       includeHeadsAndTails: true,
-      pad: false
+      pad: false,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -1992,7 +1992,7 @@ ${CONTENTHEAD} */
       genAtomic(generated, {
         includeConfig: true,
         includeHeadsAndTails: true,
-        pad: false
+        pad: false,
       }).result,
       "05.14.02"
     );
@@ -2002,7 +2002,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.15 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - style with no $$$`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `a
@@ -2031,7 +2031,7 @@ b
 
     const generated = genAtomic(source, {
       includeConfig: false,
-      includeHeadsAndTails: true
+      includeHeadsAndTails: true,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -2043,7 +2043,7 @@ b
 
 t.test(
   `05.16 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$, no pad`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `/* ${CONFIGHEAD}
@@ -2076,7 +2076,7 @@ ${CONTENTHEAD} */
     const generated = genAtomic(source, {
       includeConfig: false,
       includeHeadsAndTails: true,
-      pad: 0
+      pad: 0,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -2088,7 +2088,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.17 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`,
-  t => {
+  (t) => {
     // ---------------------------------------------------------------------------
 
     const source = `/* ${CONFIGHEAD}
@@ -2122,7 +2122,7 @@ ${CONTENTHEAD} */
       includeConfig: false,
       includeHeadsAndTails: true,
       pad: 0,
-      configOverride: source
+      configOverride: source,
     }).result;
 
     // ---------------------------------------------------------------------------
@@ -2138,7 +2138,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `05.18 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride`,
-  t => {
+  (t) => {
     const source = `
 /* ${CONFIGHEAD}
 .m$$$ { margin: $$$px !important }|1
@@ -2183,7 +2183,7 @@ b
         includeConfig: false,
         includeHeadsAndTails: true,
         pad: 0,
-        configOverride: source
+        configOverride: source,
       }
     ).result;
 
@@ -2198,7 +2198,7 @@ b
 
 t.test(
   `05.19 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`,
-  t => {
+  (t) => {
     const source = `
 /* ${CONFIGHEAD}
 .m$$$ { margin: $$$px !important }|1
@@ -2248,7 +2248,7 @@ y
         includeConfig: true,
         includeHeadsAndTails: true,
         pad: 0,
-        configOverride: source
+        configOverride: source,
       }
     ).result;
 
@@ -2263,7 +2263,7 @@ y
 
 t.test(
   `05.20 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #2`,
-  t => {
+  (t) => {
     const source = `
 /* ${CONFIGHEAD}
 .m$$$ { margin: $$$px !important }|1
@@ -2308,7 +2308,7 @@ b
         includeConfig: false,
         includeHeadsAndTails: true,
         pad: 0,
-        configOverride: source
+        configOverride: source,
       }
     ).result;
 
@@ -2323,7 +2323,7 @@ b
 
 t.test(
   `05.21 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #3`,
-  t => {
+  (t) => {
     const source = `
 /* ${CONFIGHEAD}
 .m$$$ { margin: $$$px !important }|1
@@ -2368,7 +2368,7 @@ b
         includeConfig: false,
         includeHeadsAndTails: true,
         pad: 0,
-        configOverride: source
+        configOverride: source,
       }
     ).result;
 
@@ -2387,7 +2387,7 @@ b
 
 t.test(
   `06.01 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #1`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2405,7 +2405,7 @@ z`;
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       `a
 
@@ -2425,7 +2425,7 @@ z
 
 t.test(
   `06.02 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #2`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2443,7 +2443,7 @@ z`;
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       `a
 
@@ -2469,7 +2469,7 @@ z
 
 t.test(
   `06.03 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #3`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2487,7 +2487,7 @@ z`;
     t.equal(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       `a
 
@@ -2522,7 +2522,7 @@ z
 
 t.test(
   `07.01 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - control`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2536,7 +2536,7 @@ z`;
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       `a
 
@@ -2552,7 +2552,7 @@ z
 
 t.test(
   `07.02 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config/tails off`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2567,7 +2567,7 @@ z`;
       genAtomic(source, {
         includeConfig: false,
         includeHeadsAndTails: false,
-        configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+        configOverride: `.mt$$$ { margin-top: $$$px; }|3`,
       }).result,
       `a
 
@@ -2586,7 +2586,7 @@ z
 
 t.test(
   `07.03 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - only tails on`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2601,7 +2601,7 @@ z`;
       genAtomic(source, {
         includeConfig: false,
         includeHeadsAndTails: true,
-        configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+        configOverride: `.mt$$$ { margin-top: $$$px; }|3`,
       }).result,
       `a
 
@@ -2622,7 +2622,7 @@ z
 
 t.test(
   `07.04 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config & tails on`,
-  t => {
+  (t) => {
     const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -2638,7 +2638,7 @@ z`;
     t.equal(
       genAtomic(source, {
         includeConfig: true,
-        configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+        configOverride: `.mt$$$ { margin-top: $$$px; }|3`,
       }).result,
       `a
 
@@ -2666,7 +2666,7 @@ z
 
 t.test(
   `08.01 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - combo styles`,
-  t => {
+  (t) => {
     const content = `
 .plr$$$ { padding-left: $$$px!important; padding-right: $$$px!important }|0|2
 .db { display: block !important }
@@ -2701,7 +2701,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `08.02 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - combo styles #2, tighter`,
-  t => {
+  (t) => {
     const content = `
 .plr$$$ { padding-left:$$$px!important;padding-right:$$$px!important }|0|2
 .db { display: block !important }
@@ -2734,7 +2734,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `08.03 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - control`,
-  t => {
+  (t) => {
     const content = `
 .p$$$ { padding: $$$px !important } | 1
 .zzz1 { yyy: 0 auto !important }
@@ -2771,7 +2771,7 @@ ${CONTENTHEAD} */
 
 t.test(
   `08.04 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last`,
-  t => {
+  (t) => {
     const content1 = `
 .zzz1 { yyy: 0 auto !important }
 .zzz2 { yyy: 0 auto !important }
@@ -2843,7 +2843,7 @@ zzz
 
 t.test(
   `08.05 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last - content via opts.configOverride`,
-  t => {
+  (t) => {
     const content1 = `
 .zzz1 { yyy: 0 auto !important }
 .zzz2 { yyy: 0 auto !important }
@@ -2941,14 +2941,14 @@ replace me
 
 t.test(
   `08.06 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - two levels of curlies wrapping the source`,
-  t => {
+  (t) => {
     const source = `@media screen and (max-width: 650px) {
   .w$$$p { width: $$$% !important }|0|2
 }`;
     t.equal(
       genAtomic(source, {
         includeConfig: true,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 @media screen and (max-width: 650px) {
@@ -2971,14 +2971,14 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 t.test(
   `08.07 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - only content heads/tails`,
-  t => {
+  (t) => {
     const source = `@media screen and (max-width: 650px) {
   .w$$$p { width: $$$% !important }|0|2
 }`;
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: true
+        includeHeadsAndTails: true,
       }).result,
       `/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 @media screen and (max-width: 650px) {
@@ -2996,14 +2996,14 @@ t.test(
 
 t.test(
   `08.08 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - no heads/tails`,
-  t => {
+  (t) => {
     const source = `@media screen and (max-width: 650px) {
   .w$$$p { width: $$$% !important }|0|2
 }`;
     t.equal(
       genAtomic(source, {
         includeConfig: false,
-        includeHeadsAndTails: false
+        includeHeadsAndTails: false,
       }).result,
       `@media screen and (max-width: 650px) {
   .w0p { width:  0 !important }
@@ -3023,7 +3023,7 @@ t.test(
 
 t.test(
   `98.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 1 arg`,
-  t => {
+  (t) => {
     t.same(extractFromToSource("mt|10"), [0, 10, "mt"], "98.01.01");
     t.same(extractFromToSource("mt|10|"), [0, 10, "mt"], "98.01.02");
     t.same(extractFromToSource("|mt|10|"), [0, 10, "mt"], "98.01.03");
@@ -3037,7 +3037,7 @@ t.test(
 
 t.test(
   `98.02 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 2 args`,
-  t => {
+  (t) => {
     t.same(extractFromToSource("mt|2|10"), [2, 10, "mt"], "98.02.01");
     t.same(extractFromToSource("mt|2|10|"), [2, 10, "mt"], "98.02.02");
     t.same(extractFromToSource("|mt|2|10|"), [2, 10, "mt"], "98.02.03");
@@ -3061,7 +3061,7 @@ t.test(
 
 t.test(
   `98.03 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
-  t => {
+  (t) => {
     // takes first two digits
     t.same(extractFromToSource("mt|2|10|0"), [2, 10, "mt"], "98.03.01");
     t.same(extractFromToSource("mt|2|10|0|"), [2, 10, "mt"], "98.03.02");
@@ -3073,7 +3073,7 @@ t.test(
 
 t.test(
   `98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args - taster`,
-  t => {
+  (t) => {
     t.same(
       extractFromToSource("mt[lang|=en]|2"),
       [0, 2, "mt[lang|=en]"],
@@ -3085,7 +3085,7 @@ t.test(
 
 t.test(
   `98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
-  t => {
+  (t) => {
     t.same(
       extractFromToSource("mt[lang|=en]|2|10"),
       [2, 10, "mt[lang|=en]"],
@@ -3127,7 +3127,7 @@ t.test(
 
 t.test(
   `98.05 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 1 arg`,
-  t => {
+  (t) => {
     t.same(
       extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 10"),
       [0, 10, ".mt$$$ { margin-top: $$$px !important; }"],
@@ -3175,7 +3175,7 @@ t.test(
 
 t.test(
   `98.06 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 2 arg`,
-  t => {
+  (t) => {
     t.same(
       extractFromToSource(".mt$$$ { margin-top: $$$px !important; }|2|10"),
       [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
@@ -3227,7 +3227,7 @@ t.test(
 
 t.test(
   `98.07 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - pipe in CSS`,
-  t => {
+  (t) => {
     t.same(
       extractFromToSource(
         ".mt$$$[lang|=en] { margin-top: $$$px !important; }|10"
@@ -3273,7 +3273,7 @@ t.test(
 
 t.test(
   `99.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - version is exported`,
-  t => {
+  (t) => {
     t.match(version, /\d+\.\d+\.\d+/g, "99.01");
     t.end();
   }
@@ -3281,7 +3281,7 @@ t.test(
 
 t.test(
   `99.02 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - heads and tails are exported`,
-  t => {
+  (t) => {
     t.equal(Object.keys(headsAndTails).length, 4, "99.02");
     t.end();
   }
@@ -3289,15 +3289,15 @@ t.test(
 
 t.test(
   `99.03 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - exports reportProgressFunc which works`,
-  t => {
+  (t) => {
     const counterArr = [];
     const source = ".pt$$$ { padding-top: $$$px !important; }";
     const generated = genAtomic(source, {
       includeConfig: false,
       includeHeadsAndTails: false,
-      reportProgressFunc: perc => {
+      reportProgressFunc: (perc) => {
         counterArr.push(perc);
-      }
+      },
     }).result;
     t.ok(generated.split("\n").length > 500, "99.03.01");
     t.ok(counterArr.length > 98, "99.03.02");

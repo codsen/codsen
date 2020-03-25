@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 0`,
-  t => {
+  (t) => {
     const str = `<html>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 0
-      }
+        "attribute-validate-version": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 1`,
-  t => {
+  (t) => {
     const str = `<html>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 1
-      }
+        "attribute-validate-version": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 2`,
-  t => {
+  (t) => {
     const str = `<html>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const str = `<html version='zz'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div version="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -90,8 +90,8 @@ t.test(
         idxFrom: 5,
         idxTo: 24,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -99,13 +99,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz version="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -115,8 +115,8 @@ t.test(
         idxFrom: 5,
         idxTo: 24,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -127,13 +127,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<html version="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -143,8 +143,8 @@ t.test(
         idxFrom: 15,
         idxTo: 15,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -152,13 +152,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  t => {
+  (t) => {
     const str = `<html version=" something ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-version": 2
-      }
+        "attribute-validate-version": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<html version="something">`);
     t.match(messages, [
@@ -170,10 +170,10 @@ t.test(
         fix: {
           ranges: [
             [15, 16],
-            [25, 26]
-          ]
-        }
-      }
+            [25, 26],
+          ],
+        },
+      },
     ]);
     t.end();
   }

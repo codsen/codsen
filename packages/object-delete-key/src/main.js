@@ -24,12 +24,12 @@ function deleteKey(originalInput, originalOpts) {
     key: null,
     val: undefined,
     cleanup: true,
-    only: "any"
+    only: "any",
   };
   const opts = Object.assign({}, defaults, originalOpts);
   opts.only = validateTheOnly(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
-    optsVarName: "opts.only"
+    optsVarName: "opts.only",
   });
   // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
 
@@ -44,7 +44,7 @@ function deleteKey(originalInput, originalOpts) {
     let findings = find(input, {
       key: opts.key,
       val: opts.val,
-      only: opts.only
+      only: opts.only,
     });
     let currentIndex;
     let nodeToDelete;
@@ -57,7 +57,7 @@ function deleteKey(originalInput, originalOpts) {
             del(get(input, { index: currentIndex }), {
               key: opts.key,
               val: opts.val,
-              only: opts.only
+              only: opts.only,
             })
           )
         ) {

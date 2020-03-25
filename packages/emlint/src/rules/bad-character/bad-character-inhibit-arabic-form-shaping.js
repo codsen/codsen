@@ -6,7 +6,7 @@
 
 function badCharacterInhibitArabicFormShaping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8300) {
         context.report({
           ruleId: "bad-character-inhibit-arabic-form-shaping",
@@ -14,11 +14,11 @@ function badCharacterInhibitArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

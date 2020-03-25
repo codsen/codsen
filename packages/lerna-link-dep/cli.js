@@ -33,19 +33,19 @@ const cli = meow(
       dev: {
         type: "boolean",
         alias: "d",
-        default: false
+        default: false,
       },
       help: {
         type: "boolean",
         alias: "h",
-        default: false
+        default: false,
       },
       version: {
         type: "boolean",
         alias: "v",
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   }
 );
 
@@ -233,7 +233,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             cli.input[i]
           )}`,
           {
-            shell: true
+            shell: true,
           }
         );
 
@@ -296,7 +296,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
               requestedPackageJsonContents.bin[binName]
             )} ${path.resolve("./", "node_modules", ".bin", binName)}`,
             {
-              shell: true
+              shell: true,
             }
           );
 

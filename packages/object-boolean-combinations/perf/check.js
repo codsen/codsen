@@ -15,7 +15,7 @@ const testme = () =>
     d: 1,
     e: 0,
     f: 1,
-    g: 1
+    g: 1,
   });
 
 // action

@@ -6,7 +6,7 @@
 
 function badCharacterControlSequenceIntroducer(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 155) {
         context.report({
           ruleId: "bad-character-control-sequence-introducer",
@@ -14,11 +14,11 @@ function badCharacterControlSequenceIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

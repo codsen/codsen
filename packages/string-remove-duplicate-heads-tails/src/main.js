@@ -34,7 +34,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     );
   }
   if (existy(originalOpts) && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every(val => isStr(val))) {
+    if (!arrayiffy(originalOpts.heads).every((val) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!"
       );
@@ -43,7 +43,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     }
   }
   if (existy(originalOpts) && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every(val => isStr(val))) {
+    if (!arrayiffy(originalOpts.tails).every((val) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!"
       );
@@ -61,13 +61,13 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
   const defaults = {
     heads: ["{{"],
-    tails: ["}}"]
+    tails: ["}}"],
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
   // first, let's trim heads and tails' array elements:
-  opts.heads = opts.heads.map(el => el.trim());
-  opts.tails = opts.tails.map(el => el.trim());
+  opts.heads = opts.heads.map((el) => el.trim());
+  opts.tails = opts.tails.map((el) => el.trim());
 
   //                        P R E P A R A T I O N S
 
@@ -121,7 +121,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         noteDownTheIndex = index;
         return true;
       },
-      relaxedApi: true
+      relaxedApi: true,
     });
     if (!resultOfAttemptToMatchHeads) {
       // if heads were not matched, bail - there's no point matching trailing tails
@@ -141,7 +141,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (resultOfAttemptToMatchTails) {
@@ -169,7 +169,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (!resultOfAttemptToMatchTails) {
@@ -190,7 +190,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (resultOfAttemptToMatchHeads) {
@@ -210,12 +210,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
       trimBeforeMatching: true,
-      relaxedApi: true
+      relaxedApi: true,
     }) ||
     !opts.tails.length ||
     !matchLeftIncl(str, str.length - 1, opts.tails, {
       trimBeforeMatching: true,
-      relaxedApi: true
+      relaxedApi: true,
     })
   ) {
     console.log(
@@ -299,7 +299,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       });
       if (resultOfAttemptToMatchHeads) {
         // reset marker
@@ -325,7 +325,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
               tempIndexUpTo = index;
               return true;
             },
-            relaxedApi: true
+            relaxedApi: true,
           }
         );
         if (resultOfAttemptToMatchTails) {
@@ -384,8 +384,9 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 4. offset the index
         console.log(
-          `\u001b[${33}m${`387 offsetting i to ${noteDownTheIndex -
-            1}`}\u001b[${39}m`
+          `\u001b[${33}m${`387 offsetting i to ${
+            noteDownTheIndex - 1
+          }`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
 
@@ -435,14 +436,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
 
       // match tails
-      console.log("438 calling matchRightIncl()");
+      console.log("439 calling matchRightIncl()");
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = existy(index) ? index : str.length;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       });
       if (resultOfAttemptToMatchTails) {
         // reset marker
@@ -486,8 +487,9 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 2. offset the index
         console.log(
-          `\u001b[${33}m${`489 offsetting i to ${noteDownTheIndex -
-            1}`}\u001b[${39}m`
+          `\u001b[${33}m${`489 offsetting i to ${
+            noteDownTheIndex - 1
+          }`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
 

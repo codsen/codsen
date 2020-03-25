@@ -5,7 +5,7 @@ const wthn = require("../dist/ranges-is-index-within.cjs");
 // 01. One range
 // ==============================
 
-t.test("01.01 - one range, both defaults and inclusive", t => {
+t.test("01.01 - one range, both defaults and inclusive", (t) => {
   t.same(wthn(1, [[0, 3]]), true, "01.01.01 - within range");
   t.same(wthn(0, [[0, 3]]), false, "01.01.02 - on the starting of the range");
   t.same(
@@ -34,7 +34,7 @@ t.test("01.01 - one range, both defaults and inclusive", t => {
   t.end();
 });
 
-t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
+t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
   t.same(
     wthn(1, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     [0, 3],
@@ -48,7 +48,7 @@ t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
   t.same(
     wthn(0, [[0, 3]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 3],
     "01.02.03 - on the starting of the range, inclusive"
@@ -61,7 +61,7 @@ t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
   t.same(
     wthn(3, [[0, 3]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 3],
     "01.02.05 - on the ending of the range, inclusive"
@@ -74,7 +74,7 @@ t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
   t.same(
     wthn(99, [[0, 3]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "01.02.07 - outside of the range, inclusive"
@@ -86,11 +86,11 @@ t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
 // 02. Two ranges
 // ==============================
 
-t.test("02.01 - two ranges, edges on defaults", t => {
+t.test("02.01 - two ranges, edges on defaults", (t) => {
   t.same(
     wthn(1, [
       [2, 4],
-      [6, 8]
+      [6, 8],
     ]),
     false,
     "02.01.01 - outside of the range"
@@ -98,7 +98,7 @@ t.test("02.01 - two ranges, edges on defaults", t => {
   t.same(
     wthn(5, [
       [2, 4],
-      [6, 8]
+      [6, 8],
     ]),
     false,
     "02.01.02 - outside of the range"
@@ -106,7 +106,7 @@ t.test("02.01 - two ranges, edges on defaults", t => {
   t.same(
     wthn(9, [
       [2, 4],
-      [6, 8]
+      [6, 8],
     ]),
     false,
     "02.01.03 - outside of the range"
@@ -114,7 +114,7 @@ t.test("02.01 - two ranges, edges on defaults", t => {
   t.same(
     wthn(3, [
       [2, 4],
-      [6, 8]
+      [6, 8],
     ]),
     true,
     "02.01.04 - outside of the range"
@@ -122,7 +122,7 @@ t.test("02.01 - two ranges, edges on defaults", t => {
   t.same(
     wthn(7, [
       [2, 4],
-      [6, 8]
+      [6, 8],
     ]),
     true,
     "02.01.05 - outside of the range"
@@ -130,14 +130,14 @@ t.test("02.01 - two ranges, edges on defaults", t => {
   t.end();
 });
 
-t.test("02.02 - two ranges, edges inclusive", t => {
+t.test("02.02 - two ranges, edges inclusive", (t) => {
   // same as 02.01
   t.same(
     wthn(
       1,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -149,7 +149,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       5,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -161,7 +161,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       9,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -173,7 +173,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       3,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -185,7 +185,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       7,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -199,7 +199,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       2,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -211,7 +211,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       4,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -223,7 +223,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       6,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -235,7 +235,7 @@ t.test("02.02 - two ranges, edges inclusive", t => {
       8,
       [
         [2, 4],
-        [6, 8]
+        [6, 8],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -247,13 +247,13 @@ t.test("02.02 - two ranges, edges inclusive", t => {
 
 t.test(
   "02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
-  t => {
+  (t) => {
     t.same(
       wthn(
         1,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         { returnMatchedRangeInsteadOfTrue: true }
       ),
@@ -265,7 +265,7 @@ t.test(
         5,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         { returnMatchedRangeInsteadOfTrue: true }
       ),
@@ -277,7 +277,7 @@ t.test(
         9,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         { returnMatchedRangeInsteadOfTrue: true }
       ),
@@ -289,7 +289,7 @@ t.test(
         3,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         { returnMatchedRangeInsteadOfTrue: true }
       ),
@@ -301,7 +301,7 @@ t.test(
         7,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         { returnMatchedRangeInsteadOfTrue: true }
       ),
@@ -314,18 +314,18 @@ t.test(
 
 t.test(
   "02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive",
-  t => {
+  (t) => {
     // same as 02.01
     t.same(
       wthn(
         1,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       false,
@@ -336,11 +336,11 @@ t.test(
         5,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       false,
@@ -351,11 +351,11 @@ t.test(
         9,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       false,
@@ -366,11 +366,11 @@ t.test(
         3,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [2, 4],
@@ -381,11 +381,11 @@ t.test(
         7,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [6, 8],
@@ -397,11 +397,11 @@ t.test(
         2,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [2, 4],
@@ -412,11 +412,11 @@ t.test(
         4,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [2, 4],
@@ -427,11 +427,11 @@ t.test(
         6,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [6, 8],
@@ -442,11 +442,11 @@ t.test(
         8,
         [
           [2, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [6, 8],
@@ -457,11 +457,11 @@ t.test(
         0,
         [
           [0, 4],
-          [6, 8]
+          [6, 8],
         ],
         {
           inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true
+          returnMatchedRangeInsteadOfTrue: true,
         }
       ),
       [0, 4],
@@ -475,7 +475,7 @@ t.test(
 // 03. Many ranges
 // ==============================
 
-t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
+t.test("03.01 - more than two ranges, uneven count, not inclusive", (t) => {
   t.same(
     wthn(5, [
       [2, 4],
@@ -484,7 +484,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
       [20, 30],
       [35, 40],
       [45, 50],
-      [55, 60]
+      [55, 60],
     ]),
     false,
     "03.01.01 - outside of the range"
@@ -499,7 +499,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
         [20, 30],
         [35, 40],
         [45, 50],
-        [55, 60]
+        [55, 60],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -516,7 +516,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
         [20, 30],
         [35, 40],
         [45, 50],
-        [55, 60]
+        [55, 60],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -533,7 +533,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
         [20, 30],
         [35, 40],
         [45, 50],
-        [55, 60]
+        [55, 60],
       ],
       { returnMatchedRangeInsteadOfTrue: true, inclusiveRangeEnds: true }
     ),
@@ -543,7 +543,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
   t.end();
 });
 
-t.test("03.02 - even more ranges, not inclusive", t => {
+t.test("03.02 - even more ranges, not inclusive", (t) => {
   t.same(
     wthn(0, [
       [5, 10],
@@ -558,7 +558,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.00"
@@ -579,7 +579,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -600,7 +600,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.01"
@@ -621,7 +621,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -642,7 +642,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.02"
@@ -661,7 +661,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.03"
@@ -680,7 +680,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.04"
@@ -699,7 +699,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.05"
@@ -720,7 +720,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -741,7 +741,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.06"
@@ -762,7 +762,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -783,7 +783,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.07"
@@ -804,7 +804,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -825,7 +825,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.08"
@@ -846,7 +846,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -867,7 +867,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.09"
@@ -888,7 +888,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -909,7 +909,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.10"
@@ -930,7 +930,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -951,7 +951,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.11"
@@ -972,7 +972,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -993,7 +993,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.12"
@@ -1012,7 +1012,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.13"
@@ -1031,7 +1031,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.14"
@@ -1050,7 +1050,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.15"
@@ -1071,7 +1071,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -1094,7 +1094,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -1117,7 +1117,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -1138,7 +1138,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.16"
@@ -1159,7 +1159,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -1180,7 +1180,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.17"
@@ -1199,7 +1199,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.18"
@@ -1218,7 +1218,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.19"
@@ -1237,7 +1237,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.20"
@@ -1258,7 +1258,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -1281,7 +1281,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -1304,7 +1304,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -1325,7 +1325,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.21"
@@ -1344,7 +1344,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.22"
@@ -1363,7 +1363,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.23"
@@ -1382,7 +1382,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.24"
@@ -1401,7 +1401,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.25"
@@ -1420,7 +1420,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.26"
@@ -1439,7 +1439,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.27"
@@ -1458,7 +1458,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.28"
@@ -1477,7 +1477,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.29"
@@ -1496,7 +1496,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.30"
@@ -1515,7 +1515,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.31"
@@ -1534,7 +1534,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.32"
@@ -1553,7 +1553,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.33"
@@ -1572,7 +1572,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.34"
@@ -1591,7 +1591,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.35"
@@ -1610,7 +1610,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.36"
@@ -1629,7 +1629,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.37"
@@ -1648,7 +1648,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.38"
@@ -1667,7 +1667,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.39"
@@ -1686,7 +1686,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.40"
@@ -1705,7 +1705,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.41"
@@ -1724,7 +1724,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.42"
@@ -1743,7 +1743,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.43"
@@ -1762,7 +1762,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.44"
@@ -1781,7 +1781,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.45"
@@ -1800,7 +1800,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.46"
@@ -1819,7 +1819,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.47"
@@ -1838,7 +1838,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.48"
@@ -1857,7 +1857,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.49"
@@ -1876,7 +1876,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.50"
@@ -1895,7 +1895,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.51"
@@ -1914,7 +1914,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.52"
@@ -1933,7 +1933,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.53"
@@ -1952,7 +1952,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.54"
@@ -1971,7 +1971,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.55-1"
@@ -1992,7 +1992,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -2015,7 +2015,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2038,7 +2038,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2059,7 +2059,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.56-1"
@@ -2080,7 +2080,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2101,7 +2101,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.57"
@@ -2120,7 +2120,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.58"
@@ -2139,7 +2139,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.59"
@@ -2158,7 +2158,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.60"
@@ -2177,7 +2177,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.61"
@@ -2196,7 +2196,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.62"
@@ -2215,7 +2215,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.63"
@@ -2234,7 +2234,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.64-1"
@@ -2255,7 +2255,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2276,7 +2276,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.65-1"
@@ -2297,7 +2297,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2318,7 +2318,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.66-1"
@@ -2339,7 +2339,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2360,7 +2360,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.67"
@@ -2379,7 +2379,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.68-1"
@@ -2400,7 +2400,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2421,7 +2421,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.69"
@@ -2440,7 +2440,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.70"
@@ -2459,7 +2459,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.71"
@@ -2478,7 +2478,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.72"
@@ -2497,7 +2497,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.73"
@@ -2516,7 +2516,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.74"
@@ -2535,7 +2535,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.75"
@@ -2554,7 +2554,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.76-1"
@@ -2575,7 +2575,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2596,7 +2596,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.77"
@@ -2615,7 +2615,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.78"
@@ -2634,7 +2634,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.79"
@@ -2653,7 +2653,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.80"
@@ -2672,7 +2672,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.81"
@@ -2691,7 +2691,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.82"
@@ -2710,7 +2710,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.83"
@@ -2729,7 +2729,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.84"
@@ -2748,7 +2748,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.85"
@@ -2767,7 +2767,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.86-1"
@@ -2788,7 +2788,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -2809,7 +2809,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.87"
@@ -2828,7 +2828,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.88"
@@ -2847,7 +2847,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.89"
@@ -2866,7 +2866,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.90"
@@ -2885,7 +2885,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.91"
@@ -2904,7 +2904,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.92"
@@ -2923,7 +2923,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.93"
@@ -2942,7 +2942,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.94"
@@ -2961,7 +2961,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.95"
@@ -2980,7 +2980,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.96"
@@ -2999,7 +2999,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.97-1"
@@ -3020,7 +3020,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3041,7 +3041,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.98"
@@ -3060,7 +3060,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "03.02.99"
@@ -3079,7 +3079,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "03.02.100-1"
@@ -3100,7 +3100,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -3123,7 +3123,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3146,7 +3146,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3172,7 +3172,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3195,7 +3195,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3218,7 +3218,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3241,7 +3241,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3264,7 +3264,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3287,7 +3287,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3310,7 +3310,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3333,7 +3333,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3356,7 +3356,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3379,7 +3379,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3402,7 +3402,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3425,7 +3425,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3448,7 +3448,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3471,7 +3471,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3495,7 +3495,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3518,7 +3518,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3541,7 +3541,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3564,7 +3564,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3589,7 +3589,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3612,7 +3612,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3635,7 +3635,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3658,7 +3658,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3681,7 +3681,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3704,7 +3704,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3727,7 +3727,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
@@ -3750,7 +3750,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3760,7 +3760,7 @@ t.test("03.02 - even more ranges, not inclusive", t => {
   t.end();
 });
 
-t.test("03.03 - small ranges - zero", t => {
+t.test("03.03 - small ranges - zero", (t) => {
   t.same(wthn(0, [[0, 1]]), false, "03.03.01 - no opts");
   t.same(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: false }),
@@ -3775,7 +3775,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [
       [0, 1],
-      [2, 3]
+      [2, 3],
     ]),
     false,
     "03.03.04"
@@ -3783,7 +3783,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [
       [0, 1],
-      [1, 3]
+      [1, 3],
     ]),
     false,
     "03.03.05 - overlap"
@@ -3791,7 +3791,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [
       [0, 1],
-      [0, 3]
+      [0, 3],
     ]),
     false,
     "03.03.06 - overlap #2"
@@ -3799,7 +3799,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [
       [0, 10],
-      [0, 3]
+      [0, 3],
     ]),
     false,
     "03.03.06 - overlap and wrong order"
@@ -3809,7 +3809,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 10],
-        [0, 3]
+        [0, 3],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -3821,7 +3821,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [1, 10],
-        [0, 3]
+        [0, 3],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -3839,7 +3839,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.03.10 - hardcoded opts defaults"
@@ -3847,7 +3847,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.same(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 1],
     "03.03.11 - inclusive"
@@ -3857,7 +3857,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 1],
-        [2, 3]
+        [2, 3],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3869,7 +3869,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 1],
-        [1, 3]
+        [1, 3],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3881,7 +3881,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 1],
-        [0, 3]
+        [0, 3],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3893,7 +3893,7 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 10],
-        [0, 3]
+        [0, 3],
       ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -3905,11 +3905,11 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [0, 10],
-        [0, 3]
+        [0, 3],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [0, 10],
@@ -3920,11 +3920,11 @@ t.test("03.03 - small ranges - zero", t => {
       0,
       [
         [1, 10],
-        [0, 3]
+        [0, 3],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [0, 3],
@@ -3933,7 +3933,7 @@ t.test("03.03 - small ranges - zero", t => {
   t.end();
 });
 
-t.test("03.04 - small ranges - one", t => {
+t.test("03.04 - small ranges - one", (t) => {
   t.same(wthn(1, [[0, 1]]), false, "03.04.01 - no opts");
   t.same(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: false }),
@@ -3955,7 +3955,7 @@ t.test("03.04 - small ranges - one", t => {
   t.same(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.04.05 - hardcoded opts defaults"
@@ -3963,7 +3963,7 @@ t.test("03.04 - small ranges - one", t => {
   t.same(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 1],
     "03.04.06 - inclusive"
@@ -3971,7 +3971,7 @@ t.test("03.04 - small ranges - one", t => {
   t.end();
 });
 
-t.test("03.05 - identical range endings", t => {
+t.test("03.05 - identical range endings", (t) => {
   t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: false }), false, "03.05.01");
   t.same(wthn(1, [[1, 1]], { inclusiveRangeEnds: false }), false, "03.05.02");
   t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "03.05.03");
@@ -3997,7 +3997,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: false }
     ),
@@ -4010,7 +4010,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: false }
     ),
@@ -4023,7 +4023,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: false }
     ),
@@ -4036,7 +4036,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -4049,7 +4049,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -4062,7 +4062,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -4075,7 +4075,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [3, 3],
-        [4, 4]
+        [4, 4],
       ],
       { inclusiveRangeEnds: true }
     ),
@@ -4088,7 +4088,7 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [3, 3],
-        [4, 4]
+        [4, 4],
       ],
       { inclusiveRangeEnds: false }
     ),
@@ -4100,7 +4100,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.05.16"
@@ -4108,7 +4108,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.05.17"
@@ -4116,7 +4116,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 0],
     "03.05.18"
@@ -4124,7 +4124,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     [1, 1],
     "03.05.19"
@@ -4132,7 +4132,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(0, [[1, 1]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.05.20 - identical range ends, index under"
@@ -4140,7 +4140,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.05.21 - identical range ends, index above"
@@ -4148,7 +4148,7 @@ t.test("03.05 - identical range endings", t => {
   t.same(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
     "03.05.22 - identical range ends, index above"
@@ -4159,11 +4159,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: false,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     false,
@@ -4175,11 +4175,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: false,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     false,
@@ -4191,11 +4191,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: false,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     false,
@@ -4207,11 +4207,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [1, 1],
@@ -4223,11 +4223,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [2, 2],
@@ -4239,11 +4239,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [2, 2],
-        [3, 3]
+        [3, 3],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [3, 3],
@@ -4255,11 +4255,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [3, 3],
-        [4, 4]
+        [4, 4],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     false,
@@ -4271,11 +4271,11 @@ t.test("03.05 - identical range endings", t => {
       [
         [1, 1],
         [3, 3],
-        [4, 4]
+        [4, 4],
       ],
       {
         inclusiveRangeEnds: false,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     false,
@@ -4288,7 +4288,7 @@ t.test("03.05 - identical range endings", t => {
 // 4. AD-HOC
 // ==============================
 
-t.test("Ad-hoc #1", t => {
+t.test("Ad-hoc #1", (t) => {
   t.same(
     wthn(
       130,
@@ -4305,7 +4305,7 @@ t.test("Ad-hoc #1", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
@@ -4328,11 +4328,11 @@ t.test("Ad-hoc #1", t => {
         [95, 100],
         [105, 110],
         [115, 120],
-        [125, 130]
+        [125, 130],
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
+        returnMatchedRangeInsteadOfTrue: true,
       }
     ),
     [125, 130],
@@ -4341,7 +4341,7 @@ t.test("Ad-hoc #1", t => {
   t.end();
 });
 
-t.test("Ad-hoc #2", t => {
+t.test("Ad-hoc #2", (t) => {
   t.same(
     wthn(21, [
       [5, 10],
@@ -4356,7 +4356,7 @@ t.test("Ad-hoc #2", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     false,
     "04.02"
@@ -4364,7 +4364,7 @@ t.test("Ad-hoc #2", t => {
   t.end();
 });
 
-t.test("Ad-hoc #3", t => {
+t.test("Ad-hoc #3", (t) => {
   t.same(
     wthn(6, [
       [5, 10],
@@ -4379,7 +4379,7 @@ t.test("Ad-hoc #3", t => {
       [95, 100],
       [105, 110],
       [115, 120],
-      [125, 130]
+      [125, 130],
     ]),
     true,
     "04.03"

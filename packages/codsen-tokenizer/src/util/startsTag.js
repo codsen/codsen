@@ -27,13 +27,13 @@ function startsTag(str, i, token, layers) {
     !["doctype", "xml"].includes(token.kind) &&
     ((str[i] === "<" &&
       (isTagOpening(str, i, {
-        allowCustomTagNames: true
+        allowCustomTagNames: true,
       }) ||
         str[right(str, i)] === ">" ||
         matchRight(str, i, ["doctype", "xml", "cdata"], {
           i: true,
           trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
         }))) ||
       (isLatinLetter(str[i]) &&
         (!str[i - 1] ||
@@ -41,7 +41,7 @@ function startsTag(str, i, token, layers) {
             !["<", "/", "!", BACKSLASH].includes(str[left(str, i)]))) &&
         isTagOpening(str, i, {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
-          skipOpeningBracket: true
+          skipOpeningBracket: true,
         }))) &&
     // (
     //   (str[i] === "<" &&

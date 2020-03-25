@@ -3,7 +3,7 @@ const { comb } = require("../dist/email-comb.cjs");
 
 t.todo(
   `01.01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word class in text`,
-  t => {
+  (t) => {
     const source = `<html>
   <head>
   </head>

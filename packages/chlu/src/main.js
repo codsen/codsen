@@ -14,7 +14,7 @@ import {
   setRow,
   getRow,
   versionSort,
-  filterDate
+  filterDate,
 } from "./util";
 
 // F'S
@@ -85,7 +85,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     existy(gitTags.latest)
   ) {
     processedGitTags = {};
-    processedGitTags.latest = gitTags.latest.split("|").map(val => {
+    processedGitTags.latest = gitTags.latest.split("|").map((val) => {
       if (val[0] === "v") {
         return val.slice(1);
       }
@@ -94,7 +94,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     processedGitTags.all = {};
     processedGitTags.versionsOnly = [];
     if (isArr(gitTags.all)) {
-      gitTags.all.sort().forEach(key => {
+      gitTags.all.sort().forEach((key) => {
         processedGitTags.all[key.slice(12)] = key.slice(0, 10);
         processedGitTags.versionsOnly.push(key.slice(12));
       });
@@ -208,7 +208,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     if (
       !existy(
         getSetFooterLink(footerLinks[i].content, {
-          mode: "get"
+          mode: "get",
         })
       )
     ) {
@@ -276,20 +276,20 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // =======
   // stage 3: get the ordered array of all title versions
 
-  const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
+  const sortedTitlesArray = titles.map((el) => el.version).sort(semverCompare);
 
   // =======
   // stage 4: find unused footer links
 
   let unusedFooterLinks = footerLinks.filter(
-    link => !titles.map(title => title.version).includes(link.version)
+    (link) => !titles.map((title) => title.version).includes(link.version)
   );
 
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(
-      link => !titles.map(title => title.version).includes(link.version)
+      (link) => !titles.map((title) => title.version).includes(link.version)
     );
   }
 
@@ -300,7 +300,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   for (let i = 0, len = titles.length; i < len; i++) {
     if (len > 1 && titles[i].version !== sortedTitlesArray[0]) {
       const linkFound = footerLinks.some(
-        el => titles[i].version === el.version
+        (el) => titles[i].version === el.version
       );
       if (!linkFound) {
         missingFooterLinks.push(titles[i]);
@@ -365,25 +365,26 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     (packageJson && packageJson.type && packageJson.type === "github") ||
     assumedPackageJsonType === "github"
   ) {
-    missingFooterLinks.forEach(key => {
+    missingFooterLinks.forEach((key) => {
       temp.push(
-        `[${key.version}]: https://github.com/${assumedPackageUser ||
-          packageJson.user}/${assumedPackageProject ||
-          packageJson.project}/compare/v${getPreviousVersion(
-          key.version,
-          sortedTitlesArray
-        )}...v${key.version}`
+        `[${key.version}]: https://github.com/${
+          assumedPackageUser || packageJson.user
+        }/${
+          assumedPackageProject || packageJson.project
+        }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
+          key.version
+        }`
       );
     });
   } else if (
     (packageJson && packageJson.type && packageJson.type === "bitbucket") ||
     assumedPackageJsonType === "bitbucket"
   ) {
-    missingFooterLinks.forEach(key => {
+    missingFooterLinks.forEach((key) => {
       temp.push(
-        `[${key.version}]: https://bitbucket.org/${assumedPackageUser ||
-          packageJson.user}/${assumedPackageProject ||
-          packageJson.project}/branches/compare/v${
+        `[${key.version}]: https://bitbucket.org/${
+          assumedPackageUser || packageJson.user
+        }/${assumedPackageProject || packageJson.project}/branches/compare/v${
           key.version
         }%0Dv${getPreviousVersion(key.version, sortedTitlesArray)}#diff`
       );
@@ -440,7 +441,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       )} i = ${i}`
     );
     const extracted = getSetFooterLink(footerLinks[i].content, {
-      mode: "get"
+      mode: "get",
     });
     console.log(
       `\nCHLU MAIN 356 ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
@@ -485,7 +486,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             processedGitTags.versionsOnly.length - 1
           ];
         console.log(
-          `488 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+          `489 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
             processedGitTags.versionsOnly,
             null,
             4
@@ -497,12 +498,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly
         );
         console.log(
-          `500 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+          `501 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
         );
       }
     } else {
       console.log(
-        `505 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+        `506 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
       );
       // if the Git data is not available, use existing parsed Changelog data.
 
@@ -559,10 +560,10 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       versAfter: finalVersAfter,
       version: finalVersion,
       type: assumedPackageJsonType || packageJson.type,
-      mode: "set"
+      mode: "set",
     });
     console.log(
-      `565 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+      `566 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
         footerLinks[i].content,
         null,
         4
@@ -592,7 +593,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // ========
   // stage 12: delete empty rows between footer links:
 
-  const firstRowWithFooterLink = min(footerLinks.map(link => link.rowNum));
+  const firstRowWithFooterLink = min(footerLinks.map((link) => link.rowNum));
   for (
     let i = firstRowWithFooterLink + 1, len = newLinesArr.length;
     i < len;
@@ -637,7 +638,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   if (gitStuffReadyYet) {
     // TODO: implement lookup against .git logs
   } else {
-    titles.forEach(title => {
+    titles.forEach((title) => {
       const fixedDate = dd(filterDate(title.afterVersion));
 
       if (fixedDate !== null) {

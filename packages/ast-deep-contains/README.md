@@ -78,8 +78,8 @@ Imagine the source, taken from `emlint` ([npm](https://www.npmjs.com/package/eml
     idxTo: 4,
     message: "h1 is not allowed.",
     fix: {
-      ranges: [[0, 4]]
-    }
+      ranges: [[0, 4]],
+    },
   },
   {
     ruleId: "tag-is-present",
@@ -90,9 +90,9 @@ Imagine the source, taken from `emlint` ([npm](https://www.npmjs.com/package/eml
     idxTo: 48,
     message: "h1 is not allowed.",
     fix: {
-      ranges: [[43, 48]]
-    }
-  }
+      ranges: [[43, 48]],
+    },
+  },
 ];
 ```
 
@@ -106,8 +106,8 @@ Matched objects are in wrong order and contain only subset of keys:
     idxTo: 48,
     message: "h1 is not allowed.",
     fix: {
-      ranges: [[43, 48]]
-    }
+      ranges: [[43, 48]],
+    },
   },
   {
     ruleId: "tag-is-present",
@@ -115,9 +115,9 @@ Matched objects are in wrong order and contain only subset of keys:
     idxTo: 4,
     message: "h1 is not allowed.",
     fix: {
-      ranges: [[0, 4]]
-    }
-  }
+      ranges: [[0, 4]],
+    },
+  },
 ];
 ```
 
@@ -144,9 +144,9 @@ const t = require("tap");
 import ct from "codsen-tokenizer";
 import deepContains from "ast-deep-contains";
 
-test("01.01 — text-tag-text", t => {
+test("01.01 — text-tag-text", (t) => {
   const gathered = [];
-  ct("  <a>z", obj => {
+  ct("  <a>z", (obj) => {
     gathered.push(obj);
   });
 
@@ -156,19 +156,19 @@ test("01.01 — text-tag-text", t => {
       {
         type: "text",
         start: 0,
-        end: 2
+        end: 2,
         // <---- tokenizer reports way more keys than that
       },
       {
         type: "html",
         start: 2,
-        end: 5
+        end: 5,
       },
       {
         type: "text",
         start: 5,
-        end: 6
-      }
+        end: 6,
+      },
     ],
     t.is, // each pair of keys is ran by this function
     t.fail // major failures are pinged to this function
@@ -206,14 +206,14 @@ const BACKSLASH = "\u005C";
 
 t.test(
   `06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`,
-  t => {
+  (t) => {
     const str = `<${BACKSLASH}br${BACKSLASH}>`;
     const linter = new Linter();
     // call the linter and record the result's error messages:
     const messages = linter.verify(str, {
       rules: {
-        tag: 2
-      }
+        tag: 2,
+      },
     });
     // assertion:
     deepContains(
@@ -227,8 +227,8 @@ t.test(
           idxTo: 2,
           message: "Wrong slash - backslash.",
           fix: {
-            ranges: [[1, 2]]
-          }
+            ranges: [[1, 2]],
+          },
           // <---- "messages" we're comparing against will have more keys but we don't care
         },
         {
@@ -238,9 +238,9 @@ t.test(
           idxTo: 5,
           message: "Replace backslash with slash.",
           fix: {
-            ranges: [[4, 5, "/"]]
-          }
-        }
+            ranges: [[4, 5, "/"]],
+          },
+        },
       ],
       t.is, // each pair of key values is ran by this function
       t.fail // major failures are pinged to this function

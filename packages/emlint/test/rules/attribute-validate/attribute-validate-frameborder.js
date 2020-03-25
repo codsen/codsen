@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no frameborder, error level 0`,
-  t => {
+  (t) => {
     const str = `<frame>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 0
-      }
+        "attribute-validate-frameborder": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no frameborder, error level 1`,
-  t => {
+  (t) => {
     const str = `<frame>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 1
-      }
+        "attribute-validate-frameborder": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no frameborder, error level 2`,
-  t => {
+  (t) => {
     const str = `<frame>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, frame`,
-  t => {
+  (t) => {
     const str = `<frame frameborder="1">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, iframe`,
-  t => {
+  (t) => {
     const str = `<iframe frameborder="0">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -90,13 +90,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<frame frameborder=' 0'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<frame frameborder='0'>`);
     t.match(messages, [
@@ -106,9 +106,9 @@ t.test(
         idxTo: 21,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[20, 21]]
-        }
-      }
+          ranges: [[20, 21]],
+        },
+      },
     ]);
     t.is(messages.length, 1);
     t.end();
@@ -117,13 +117,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<frame frameborder='0 '>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<frame frameborder='0'>`);
     t.match(messages, [
@@ -133,9 +133,9 @@ t.test(
         idxTo: 22,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[21, 22]]
-        }
-      }
+          ranges: [[21, 22]],
+        },
+      },
     ]);
     t.end();
   }
@@ -143,13 +143,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<frame frameborder='  0  \t'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<frame frameborder='0'>`);
     t.match(messages, [
@@ -161,10 +161,10 @@ t.test(
         fix: {
           ranges: [
             [20, 22],
-            [23, 26]
-          ]
-        }
-      }
+            [23, 26],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -172,13 +172,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<frame frameborder="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -188,8 +188,8 @@ t.test(
         idxFrom: 20,
         idxTo: 23,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -200,13 +200,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div frameborder="0">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -216,8 +216,8 @@ t.test(
         idxFrom: 5,
         idxTo: 20,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -225,13 +225,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz frameborder="0">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -241,8 +241,8 @@ t.test(
         idxFrom: 5,
         idxTo: 20,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -253,13 +253,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out-of-whack value`,
-  t => {
+  (t) => {
     const str = `<frame frameborder="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-frameborder": 2
-      }
+        "attribute-validate-frameborder": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -269,8 +269,8 @@ t.test(
         idxFrom: 20,
         idxTo: 27,
         message: `Should be "0|1".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

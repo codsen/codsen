@@ -37,7 +37,7 @@ function monkey(input, opts) {
   opts = Object.assign(
     {
       key: null,
-      val: undefined
+      val: undefined,
     },
     opts
   );
@@ -153,14 +153,14 @@ function find(input, opts) {
     schema: {
       key: ["null", "string"],
       val: "any",
-      only: ["undefined", "null", "string"]
+      only: ["undefined", "null", "string"],
     },
-    msg: "ast-monkey/get(): [THROW_ID_04*]"
+    msg: "ast-monkey/get(): [THROW_ID_04*]",
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
     opts.only = arrayObjectOrBoth(opts.only, {
       optsVarName: "opts.only",
-      msg: "ast-monkey/find(): [THROW_ID_05*]"
+      msg: "ast-monkey/find(): [THROW_ID_05*]",
     });
   } else {
     opts.only = "any";
@@ -231,9 +231,9 @@ function set(input, opts) {
     schema: {
       key: [null, "string"],
       val: "any",
-      index: "number"
+      index: "number",
     },
-    msg: "ast-monkey/set(): [THROW_ID_18*]"
+    msg: "ast-monkey/set(): [THROW_ID_18*]",
   });
   return monkey(input, Object.assign({}, opts, { mode: "set" }));
 }
@@ -284,14 +284,14 @@ function del(input, opts) {
     schema: {
       key: [null, "string"],
       val: "any",
-      only: ["undefined", "null", "string"]
+      only: ["undefined", "null", "string"],
     },
-    msg: "ast-monkey/drop(): [THROW_ID_29*]"
+    msg: "ast-monkey/drop(): [THROW_ID_29*]",
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
     opts.only = arrayObjectOrBoth(opts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
-      optsVarName: "opts.only"
+      optsVarName: "opts.only",
     });
   } else {
     opts.only = "any";

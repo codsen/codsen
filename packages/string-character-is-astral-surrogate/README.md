@@ -30,7 +30,7 @@ Consume via a `require()`:
 ```js
 const {
   isHighSurrogate,
-  isLowSurrogate
+  isLowSurrogate,
 } = require("string-character-is-astral-surrogate");
 ```
 
@@ -39,7 +39,7 @@ or as an ES Module:
 ```js
 import {
   isHighSurrogate,
-  isLowSurrogate
+  isLowSurrogate,
 } from "string-character-is-astral-surrogate";
 ```
 
@@ -89,7 +89,7 @@ In theory, high surrogate goes first, low surrogate goes second [source](https:/
 ```js
 const {
   isHighSurrogate,
-  isLowSurrogate
+  isLowSurrogate,
 } = require("string-character-is-astral-surrogate");
 // 🧢 = \uD83E\uDDE2
 console.log(isHighSurrogate("\uD83E"));

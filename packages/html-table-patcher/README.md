@@ -131,7 +131,7 @@ import { patcher, defaults, version } from "html-table-patcher";
 const result = patcher("<table>1<tr><td>zzz</td></tr></table>", {
   // <---- options object
   cssStylesContent: "",
-  alwaysCenter: false
+  alwaysCenter: false,
 });
 ```
 

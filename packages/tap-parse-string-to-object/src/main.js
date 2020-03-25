@@ -40,14 +40,14 @@ function externalApi(something) {
         assertsFailed: 0,
         suitesTotal: 0,
         suitesPassed: 0,
-        suitesFailed: 0
+        suitesFailed: 0,
       };
     }
     // in which case, synchronously traverse the string and slice and ping line by
     // line
 
     const counter = new Counter();
-    stringPingLineByLine(something, line => {
+    stringPingLineByLine(something, (line) => {
       counter.readLine(line);
     });
 

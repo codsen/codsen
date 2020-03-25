@@ -144,7 +144,7 @@ const currencySigns = [
   "₣",
   "﷼",
   "R",
-  "Z$"
+  "Z$",
 ];
 
 function findtype(something) {
@@ -156,7 +156,7 @@ function findtype(something) {
   if (isNumeric(something)) {
     return "numeric";
   } else if (
-    currencySigns.some(singleSign =>
+    currencySigns.some((singleSign) =>
       // We remove all known currency symbols one by one from this input string.
       // If at least one passes as numeric after the currency symbol-removing, it's numeric.
       isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
@@ -255,7 +255,7 @@ function csvSort(input) {
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
         stateHeaderRowPresent = content[i].every(
-          el => findtype(el) === "text" || findtype(el) === "empty"
+          (el) => findtype(el) === "text" || findtype(el) === "empty"
         );
 
         // if schema was calculated (this means there's header row and at least one content row),
@@ -345,7 +345,7 @@ function csvSort(input) {
 
   // if there are empty column in front, trim (via slice) both content and schema
   if (nonEmptyColsStartAt !== 0) {
-    content = content.map(arr =>
+    content = content.map((arr) =>
       arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
     );
     schema = schema.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
@@ -781,7 +781,7 @@ function csvSort(input) {
   return {
     res: resContent,
     msgContent,
-    msgType
+    msgType,
   };
 }
 

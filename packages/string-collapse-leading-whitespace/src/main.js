@@ -101,7 +101,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     if (str.trim() === "") {
       const resArr = [];
       limit = limitLinebreaksCount;
-      Array.from(str).forEach(char => {
+      Array.from(str).forEach((char) => {
         if (char !== "\n" || limit) {
           if (char === "\n") {
             limit--;

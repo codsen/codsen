@@ -7,7 +7,7 @@ import matcher from "matcher";
 
 function tagIsPresent(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagIsPresent() ███████████████████████████████████████`
       );
@@ -42,11 +42,11 @@ function tagIsPresent(context, ...opts) {
             message: `${node.tagName} is not allowed.`,
             idxFrom: node.start,
             idxTo: node.end, // second elem. from last range
-            fix: { ranges: [[node.start, node.end]] }
+            fix: { ranges: [[node.start, node.end]] },
           });
         }
       }
-    }
+    },
   };
 }
 

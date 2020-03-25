@@ -6,7 +6,7 @@
 
 function badCharacterEndOfProtectedArea(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 151) {
         context.report({
           ruleId: "bad-character-end-of-protected-area",
@@ -14,11 +14,11 @@ function badCharacterEndOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

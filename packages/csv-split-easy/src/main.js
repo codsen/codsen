@@ -28,7 +28,7 @@ function splitEasy(str, originalOpts) {
   const defaults = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
-    forceUKStyle: false
+    forceUKStyle: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -80,7 +80,7 @@ function splitEasy(str, originalOpts) {
               removeThousandSeparatorsFromNumbers:
                 opts.removeThousandSeparatorsFromNumbers,
               padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle
+              forceUKStyle: opts.forceUKStyle,
             });
         rowArray.push(processedElem); // push it anyway, if it's empty or not.
         // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still
@@ -109,7 +109,7 @@ function splitEasy(str, originalOpts) {
               removeThousandSeparatorsFromNumbers:
                 opts.removeThousandSeparatorsFromNumbers,
               padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle
+              forceUKStyle: opts.forceUKStyle,
             }
           )
         );
@@ -142,7 +142,7 @@ function splitEasy(str, originalOpts) {
               removeThousandSeparatorsFromNumbers:
                 opts.removeThousandSeparatorsFromNumbers,
               padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle
+              forceUKStyle: opts.forceUKStyle,
             })
           );
         }
@@ -187,7 +187,7 @@ function splitEasy(str, originalOpts) {
             removeThousandSeparatorsFromNumbers:
               opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-            forceUKStyle: opts.forceUKStyle
+            forceUKStyle: opts.forceUKStyle,
           })
         );
       }

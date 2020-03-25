@@ -267,9 +267,9 @@ const res = mergeAdvanced(
       b: true,
       c: false,
       d: true,
-      e: false
+      e: false,
     },
-    b: "test"
+    b: "test",
   },
   {
     // input #2
@@ -277,9 +277,9 @@ const res = mergeAdvanced(
       b: false,
       c: true,
       d: true,
-      e: false
+      e: false,
     },
-    b: "" // <---- checking to make sure this empty string will not be hard-merged over "b" from input #1
+    b: "", // <---- checking to make sure this empty string will not be hard-merged over "b" from input #1
   },
   {
     cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
@@ -287,7 +287,7 @@ const res = mergeAdvanced(
         return inputArg2;
       }
       return resultAboutToBeReturned;
-    }
+    },
   }
 );
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
@@ -318,18 +318,18 @@ const res = mergeAdvanced(
       b: "old value for b",
       c: "old value for c",
       d: "old value for c",
-      e: "old value for d"
+      e: "old value for d",
     },
-    b: false
+    b: false,
   },
   {
     a: {
       b: "var1", // <--- in this case, it will be non-empty-string vs. non-empty-string
       c: "var2", //      clashes, where second input's string goes to the result.
       d: "var3",
-      e: "var4"
+      e: "var4",
     },
-    b: null
+    b: null,
   },
   {
     cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
@@ -337,7 +337,7 @@ const res = mergeAdvanced(
         return `{{ ${resultAboutToBeReturned} }}`; // <--- use template literals
       }
       return resultAboutToBeReturned;
-    }
+    },
   }
 );
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
@@ -363,12 +363,12 @@ Let's say you want to perform a regular merge on two objects, except a certain k
 ```js
 let obj1 = {
   key: "a",
-  x: "z"
+  x: "z",
 };
 
 let obj2 = {
   key: "b",
-  x: "y"
+  x: "y",
 };
 ```
 
@@ -383,22 +383,22 @@ const res = mergeAdvanced(
       key: "a", // <------- concatenate this
       c: "c val 1",
       d: "d val 1",
-      e: "e val 1"
+      e: "e val 1",
     },
     z: {
-      key: "z.key val 1"
-    }
+      key: "z.key val 1",
+    },
   },
   {
     x: {
       key: "b", // <------- with this, but only this path
       c: "c val 2",
       d: "d val 2",
-      e: "e val 2"
+      e: "e val 2",
     },
     z: {
-      key: "z.key val 2" // <---- even though this key is also same-named
-    }
+      key: "z.key val 2", // <---- even though this key is also same-named
+    },
   },
   {
     cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
@@ -425,7 +425,7 @@ const res = mergeAdvanced(
         );
       }
       return resultAboutToBeReturned;
-    }
+    },
   }
 );
 // ==> {
@@ -458,9 +458,9 @@ const obj1 = {
     {
       a: "a",
       b: "b",
-      yyyy: "yyyy"
-    }
-  ]
+      yyyy: "yyyy",
+    },
+  ],
 };
 
 const obj2 = {
@@ -468,9 +468,9 @@ const obj2 = {
     {
       xxxx: "xxxx",
       b: "b",
-      c: "c"
-    }
-  ]
+      c: "c",
+    },
+  ],
 };
 
 const res1 = mergeAdvanced(object1, object2);
@@ -496,7 +496,7 @@ but if you turn off the safeguard, `{ mergeObjectsOnlyWhenKeysetMatches: false }
 
 ```js
 const res2 = mergeAdvanced(object1, object2, {
-  mergeObjectsOnlyWhenKeysetMatches: false
+  mergeObjectsOnlyWhenKeysetMatches: false,
 });
 console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => {

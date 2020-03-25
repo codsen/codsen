@@ -39,10 +39,10 @@ function checkTypesMini(
   function pullAllWithGlob(originalInput, toBeRemoved) {
     toBeRemoved = arrayiffyIfString(toBeRemoved);
     return Array.from(originalInput).filter(
-      originalVal =>
-        !toBeRemoved.some(remVal =>
+      (originalVal) =>
+        !toBeRemoved.some((remVal) =>
           matcher.isMatch(originalVal, remVal, {
-            caseSensitive: true
+            caseSensitive: true,
           })
         )
     );
@@ -68,7 +68,7 @@ function checkTypesMini(
     "everything",
     "all",
     "whatever",
-    "whatevs"
+    "whatevs",
   ];
   const isArr = Array.isArray;
 
@@ -89,7 +89,7 @@ function checkTypesMini(
     enforceStrictKeyset: true,
     schema: {},
     msg: "check-types-mini",
-    optsVarName: "opts"
+    optsVarName: "opts",
   };
   let opts;
   if (existy(originalOptions) && isObj(originalOptions)) {
@@ -137,7 +137,7 @@ function checkTypesMini(
     //     option2: "whatever"
     //   }
     // }
-    Object.keys(opts.schema).forEach(oneKey => {
+    Object.keys(opts.schema).forEach((oneKey) => {
       if (isObj(opts.schema[oneKey])) {
         // 1. extract all unique AST branches leading to their tips
         const tempObj = {};
@@ -187,15 +187,15 @@ function checkTypesMini(
     //
 
     // 2. arrayiffy
-    Object.keys(opts.schema).forEach(oneKey => {
+    Object.keys(opts.schema).forEach((oneKey) => {
       if (!isArr(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
       }
       // then turn all keys into strings and trim and lowercase them:
       opts.schema[oneKey] = opts.schema[oneKey]
         .map(String)
-        .map(el => el.toLowerCase())
-        .map(el => el.trim());
+        .map((el) => el.toLowerCase())
+        .map((el) => el.trim());
     });
   }
 
@@ -392,7 +392,7 @@ function checkTypesMini(
     if (
       isArr(ignoredPathsArr) &&
       ignoredPathsArr.length &&
-      ignoredPathsArr.some(path => innerObj.path.startsWith(path))
+      ignoredPathsArr.some((path) => innerObj.path.startsWith(path))
     ) {
       console.log(
         `398 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT'S A CHILD OF IGNORED PATH`}\u001b[${39}m`
@@ -403,7 +403,7 @@ function checkTypesMini(
     // if this key is ignored, skip it:
     if (
       objKey &&
-      opts.ignoreKeys.some(oneOfKeysToIgnore =>
+      opts.ignoreKeys.some((oneOfKeysToIgnore) =>
         matcher.isMatch(objKey, oneOfKeysToIgnore)
       )
     ) {
@@ -426,7 +426,7 @@ function checkTypesMini(
 
     // if this path is ignored, skip it:
     if (
-      opts.ignorePaths.some(oneOfPathsToIgnore =>
+      opts.ignorePaths.some((oneOfPathsToIgnore) =>
         matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
       )
     ) {
@@ -596,7 +596,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       );
       const currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path])
         .map(String)
-        .map(el => el.toLowerCase());
+        .map((el) => el.toLowerCase());
       console.log(
         `601 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
           currentKeysSchema,
@@ -718,7 +718,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       ) {
         console.log("719 2-1: check accept arrays");
         const allMatch = current.every(
-          el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
+          (el) => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
         );
         if (!allMatch) {
           throw new TypeError(

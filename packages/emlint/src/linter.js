@@ -10,7 +10,7 @@ import {
   isAnEnabledValue,
   isAnEnabledRule,
   astErrMessages,
-  isObj
+  isObj,
 } from "./util/util";
 
 EventEmitter.defaultMaxListeners = 0;
@@ -72,9 +72,9 @@ class Linter extends EventEmitter {
       // filter out the rules coming from external packages - they'll be
       // processed separately, in the callbacks coming out og external packages,
       // see the section "rules coming from standalone packages".
-      .filter(ruleName => get(ruleName))
+      .filter((ruleName) => get(ruleName))
       // filter out enabled rules:
-      .filter(ruleName => {
+      .filter((ruleName) => {
         // same config like in ESLint - 0 is off, 1 is warning, 2 is error
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
@@ -82,7 +82,7 @@ class Linter extends EventEmitter {
           return processedRulesConfig[ruleName][0] > 0;
         }
       })
-      .forEach(rule => {
+      .forEach((rule) => {
         // console.log(
         //   `086 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
         // );
@@ -101,7 +101,7 @@ class Linter extends EventEmitter {
           // just pass "this", the context
           rulesFunction = get(rule)(this);
         }
-        Object.keys(rulesFunction).forEach(consumedNode => {
+        Object.keys(rulesFunction).forEach((consumedNode) => {
           this.on(consumedNode, (...args) => {
             // console.log(
             //   `106 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
@@ -146,7 +146,7 @@ class Linter extends EventEmitter {
       "ast",
       traverse(
         parser(str, {
-          charCb: obj => {
+          charCb: (obj) => {
             // We call the character-level callback from raw characters, coming
             // if from parser which comes straight from tokenizer.
 
@@ -159,7 +159,7 @@ class Linter extends EventEmitter {
             // );
             this.emit("character", obj);
           },
-          errCb: obj => {
+          errCb: (obj) => {
             console.log(
               `164 ██ ${`\u001b[${35}m${`linter/errCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
                 obj,
@@ -198,13 +198,13 @@ class Linter extends EventEmitter {
                   {
                     message,
                     severity: currentRulesSeverity,
-                    fix: null
+                    fix: null,
                   },
                   obj
                 )
               );
             }
-          }
+          },
         }),
         // (key, val, innerObj, stop) => {
         (key, val) => {
@@ -228,11 +228,11 @@ class Linter extends EventEmitter {
               Array.isArray(current.attribs) &&
               current.attribs.length
             ) {
-              current.attribs.forEach(attribObj => {
+              current.attribs.forEach((attribObj) => {
                 this.emit(
                   "attribute",
                   Object.assign({}, attribObj, {
-                    parent: Object.assign({}, current)
+                    parent: Object.assign({}, current),
                   })
                 );
               });
@@ -260,7 +260,7 @@ class Linter extends EventEmitter {
     // 1. if any of bad named HTML entity catcher rules is requested, run it
     if (
       Object.keys(config.rules).some(
-        ruleName =>
+        (ruleName) =>
           (ruleName === "all" || // group blanket setting
           ruleName === "bad-html-entity" || // group blanket setting
             ruleName.startsWith("bad-html-entity") ||
@@ -275,7 +275,7 @@ class Linter extends EventEmitter {
     ) {
       console.log(`276 linter.js: call stringFixBrokenNamedEntities()`);
       stringFixBrokenNamedEntities(str, {
-        cb: obj => {
+        cb: (obj) => {
           console.log(
             `280 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
               obj,
@@ -306,7 +306,7 @@ class Linter extends EventEmitter {
               severity = config.rules["bad-html-entity"];
             }
           } else if (
-            Object.keys(config.rules).some(rulesName => {
+            Object.keys(config.rules).some((rulesName) => {
               console.log(
                 `${`\u001b[${36}m${`--- rulesName: ${rulesName}`}\u001b[${39}m`}`
               );
@@ -360,8 +360,8 @@ class Linter extends EventEmitter {
               [
                 obj.rangeFrom,
                 obj.rangeTo,
-                obj.rangeValEncoded ? obj.rangeValEncoded : ""
-              ]
+                obj.rangeValEncoded ? obj.rangeValEncoded : "",
+              ],
             ];
             if (obj.ruleName === "bad-named-html-entity-unrecognised") {
               ranges = [];
@@ -374,8 +374,8 @@ class Linter extends EventEmitter {
               idxFrom: obj.rangeFrom,
               idxTo: obj.rangeTo,
               fix: {
-                ranges
-              }
+                ranges,
+              },
             });
           }
         },
@@ -384,13 +384,13 @@ class Linter extends EventEmitter {
             `384 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
           );
           this.emit("entity", { idxFrom: from, idxTo: to });
-        }
+        },
       });
     }
 
     // remove all listeners
     ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(
-      eventName => {
+      (eventName) => {
         this.removeAllListeners(eventName);
       }
     );

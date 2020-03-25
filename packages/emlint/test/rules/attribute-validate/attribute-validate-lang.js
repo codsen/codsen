@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 0`,
-  t => {
+  (t) => {
     const str = `<html><p>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 0
-      }
+        "attribute-validate-lang": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 1`,
-  t => {
+  (t) => {
     const str = `<html><p>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 1
-      }
+        "attribute-validate-lang": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 2`,
-  t => {
+  (t) => {
     const str = `<html><p>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 2
-      }
+        "attribute-validate-lang": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,7 +55,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const healthyValues = [
       "fr-Brai",
       "ja-Kana",
@@ -67,15 +67,15 @@ t.test(
       "am-et",
       "x-default",
       "pt-pt",
-      "fr-fr"
+      "fr-fr",
     ];
     const linter = new Linter();
-    healthyValues.forEach(healthyValue => {
+    healthyValues.forEach((healthyValue) => {
       const str = `<span lang="${healthyValue}">`;
       const messages = linter.verify(str, {
         rules: {
-          "attribute-validate-lang": 2
-        }
+          "attribute-validate-lang": 2,
+        },
       });
       t.equal(applyFixes(str, messages), str);
       t.same(messages, []);
@@ -89,7 +89,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const badParentTags = [
       "base",
       "head",
@@ -97,15 +97,15 @@ t.test(
       "meta",
       "script",
       "style",
-      "title"
+      "title",
     ];
     const linter = new Linter();
-    badParentTags.forEach(badParentTag => {
+    badParentTags.forEach((badParentTag) => {
       const str = `<${badParentTag} lang="de">`;
       const messages = linter.verify(str, {
         rules: {
-          "attribute-validate-lang": 2
-        }
+          "attribute-validate-lang": 2,
+        },
       });
       // can't fix:
       t.equal(applyFixes(str, messages), str);
@@ -115,8 +115,8 @@ t.test(
           idxFrom: badParentTag.length + 2,
           idxTo: badParentTag.length + 2 + 9,
           message: `Tag "${badParentTag}" can't have this attribute.`,
-          fix: null
-        }
+          fix: null,
+        },
       ]);
     });
     t.end();
@@ -125,13 +125,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`,
-  t => {
+  (t) => {
     const str = `<script lang="de">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 2
-      }
+        "attribute-validate-lang": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -141,8 +141,8 @@ t.test(
         idxFrom: 8,
         idxTo: 17,
         message: `Tag "script" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -153,13 +153,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div lang="a-DE">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 2
-      }
+        "attribute-validate-lang": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -169,8 +169,8 @@ t.test(
         idxFrom: 11,
         idxTo: 15,
         message: `Starts with singleton, "a".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -178,13 +178,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`,
-  t => {
+  (t) => {
     const str = `<a lang=" de">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 2
-      }
+        "attribute-validate-lang": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<a lang="de">`);
     t.match(messages, [
@@ -194,9 +194,9 @@ t.test(
         idxTo: 10,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[9, 10]]
-        }
-      }
+          ranges: [[9, 10]],
+        },
+      },
     ]);
     t.end();
   }
@@ -204,15 +204,15 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`,
-  t => {
+  (t) => {
     // notice wrong tag name case - it won't get reported because
     // that's different rule and we didn't ask for it
     const str = `<A lang=" 123 ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-lang": 2
-      }
+        "attribute-validate-lang": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<A lang="123">`);
     t.match(messages, [
@@ -224,17 +224,17 @@ t.test(
         fix: {
           ranges: [
             [9, 10],
-            [13, 14]
-          ]
-        }
+            [13, 14],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-lang",
         idxFrom: 10,
         idxTo: 13,
         message: `Unrecognised language subtag, "123".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -242,14 +242,14 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`,
-  t => {
+  (t) => {
     const str = `<A lang=" 123 ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-lang": 2,
-        "tag-name-case": 2 // <--------------- !
-      }
+        "tag-name-case": 2, // <--------------- !
+      },
     });
     t.equal(applyFixes(str, messages), `<a lang="123">`);
     t.match(messages, [
@@ -259,8 +259,8 @@ t.test(
         idxTo: 2,
         message: "Bad tag name case.",
         fix: {
-          ranges: [[1, 2, "a"]]
-        }
+          ranges: [[1, 2, "a"]],
+        },
       },
       {
         ruleId: "attribute-validate-lang",
@@ -270,17 +270,17 @@ t.test(
         fix: {
           ranges: [
             [9, 10],
-            [13, 14]
-          ]
-        }
+            [13, 14],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-lang",
         idxFrom: 10,
         idxTo: 13,
         message: `Unrecognised language subtag, "123".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

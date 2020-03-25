@@ -69,7 +69,7 @@ Tag getter in parsed HTML:
 const get = require("ast-get-values-by-key");
 var res = get(
   {
-    tag: "html"
+    tag: "html",
   },
   "tag" // < tag to look for
 );
@@ -84,7 +84,7 @@ Tag setter in parsed HTML — just pass array of values to write as a third argu
 const get = require("ast-get-values-by-key");
 var res = get(
   {
-    tag: "html"
+    tag: "html",
   }, // <--- input
   "tag", // <--- key to look for
   ["style"] // <---- list of values to rewrite the values of the above keys if found

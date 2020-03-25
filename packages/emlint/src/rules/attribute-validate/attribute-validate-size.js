@@ -7,7 +7,7 @@ import { fontSizeRegex } from "../../util/util";
 
 function attributeValidateSize(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateSize() ███████████████████████████████████████`
       );
@@ -34,7 +34,7 @@ function attributeValidateSize(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -56,11 +56,11 @@ function attributeValidateSize(context, ...opts) {
           // sort errorArr right here because some of the values will be
           // checked with regex quickly and it would be burden to stick
           // this whitespace reporting on every size attribute tag's case
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`060 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-size"
+                ruleId: "attribute-validate-size",
               })
             );
           });
@@ -92,13 +92,13 @@ function attributeValidateSize(context, ...opts) {
                   type: "integer",
                   negativeOK: false,
                   theOnlyGoodUnits: [], // empty array means no units allowed
-                  skipWhitespaceChecks: true
+                  skipWhitespaceChecks: true,
                 }
-              ).forEach(errorObj => {
+              ).forEach((errorObj) => {
                 console.log(`098 RAISE ERROR`);
                 context.report(
                   Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-size"
+                    ruleId: "attribute-validate-size",
                   })
                 );
               });
@@ -113,7 +113,7 @@ function attributeValidateSize(context, ...opts) {
                     negativeOK: false,
                     theOnlyGoodUnits: [], // empty array means no units allowed
                     skipWhitespaceChecks: true,
-                    customGenericValueError: `Should be integer 1-7, plus/minus are optional.`
+                    customGenericValueError: `Should be integer 1-7, plus/minus are optional.`,
                   }
                 );
 
@@ -126,15 +126,15 @@ function attributeValidateSize(context, ...opts) {
                     idxFrom: node.attribValueStartsAt + charStart,
                     idxTo: node.attribValueStartsAt + charEnd,
                     message: `Should be integer 1-7, plus/minus are optional.`,
-                    fix: null
+                    fix: null,
                   });
                 }
 
-                errorArr2.forEach(errorObj => {
+                errorArr2.forEach((errorObj) => {
                   console.log(`134 RAISE ERROR`);
                   context.report(
                     Object.assign({}, errorObj, {
-                      ruleId: "attribute-validate-size"
+                      ruleId: "attribute-validate-size",
                     })
                   );
                 });
@@ -143,7 +143,7 @@ function attributeValidateSize(context, ...opts) {
           }
         }
       }
-    }
+    },
   };
 }
 

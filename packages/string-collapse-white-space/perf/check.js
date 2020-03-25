@@ -11,7 +11,7 @@ const testme = () =>
   f(" a \n \n b ", {
     trimLines: false,
     trimnbsp: true,
-    removeEmptyLines: false
+    removeEmptyLines: false,
   });
 
 // action

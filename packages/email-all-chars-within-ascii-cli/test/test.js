@@ -4,7 +4,7 @@ const t = require("tap");
 const execa = require("execa");
 const tempy = require("tempy");
 
-t.test("01.01 - called upon a single file which is healthy", async t => {
+t.test("01.01 - called upon a single file which is healthy", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -35,7 +35,7 @@ t.test("01.01 - called upon a single file which is healthy", async t => {
 
 t.test(
   "01.02 - called upon a single file which contains non-ASCII symbol",
-  async t => {
+  async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -62,7 +62,7 @@ t.test(
   }
 );
 
-t.test("01.03 - version output mode", async t => {
+t.test("01.03 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.match(reportedVersion1.stdout.trim(), /\d\.\d/);
 
@@ -71,7 +71,7 @@ t.test("01.03 - version output mode", async t => {
   t.end();
 });
 
-t.test("01.04 - help output mode", async t => {
+t.test("01.04 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.match(reportedVersion1.stdout, /Usage/);
   t.match(reportedVersion1.stdout, /Options/);
@@ -84,7 +84,7 @@ t.test("01.04 - help output mode", async t => {
   t.end();
 });
 
-t.test("01.05 - no files found in the given directory", async t => {
+t.test("01.05 - no files found in the given directory", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder

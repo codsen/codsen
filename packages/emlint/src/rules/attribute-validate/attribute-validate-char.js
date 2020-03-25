@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateChar(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateChar() ███████████████████████████████████████`
       );
@@ -31,7 +31,7 @@ function attributeValidateChar(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -39,7 +39,7 @@ function attributeValidateChar(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -65,21 +65,21 @@ function attributeValidateChar(context, ...opts) {
               idxFrom: node.attribValueStartsAt + charStart,
               idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character.`,
-              fix: null
+              fix: null,
             });
           }
         }
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`074 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-char"
+              ruleId: "attribute-validate-char",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

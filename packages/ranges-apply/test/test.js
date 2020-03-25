@@ -5,7 +5,7 @@ const repl = require("../dist/ranges-apply.cjs");
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - wrong inputs", t => {
+t.test("01.01 - wrong inputs", (t) => {
   // no input
   t.throws(() => {
     repl();
@@ -43,7 +43,7 @@ t.test("01.01 - wrong inputs", t => {
   t.doesNotThrow(() => {
     repl("aaa", [
       [1, "2"],
-      ["3", "4"]
+      ["3", "4"],
     ]);
   });
   t.doesNotThrow(() => {
@@ -71,7 +71,7 @@ t.test("01.01 - wrong inputs", t => {
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
         [10, 20],
-        [15, 16]
+        [15, 16],
       ],
       1
     );
@@ -82,7 +82,7 @@ t.test("01.01 - wrong inputs", t => {
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
         [10, 20],
-        [15, 16]
+        [15, 16],
       ],
       true
     );
@@ -90,7 +90,7 @@ t.test("01.01 - wrong inputs", t => {
   t.end();
 });
 
-t.test("01.02 - correct inputs", t => {
+t.test("01.02 - correct inputs", (t) => {
   // all inputs can be empty as long as types are correct
   t.doesNotThrow(() => {
     repl("", []);
@@ -110,7 +110,7 @@ t.test("01.02 - correct inputs", t => {
 // 02. normal use, no opts
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - deletes multiple chunks correctly", t => {
+t.test("02.01 - deletes multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n115.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -118,7 +118,7 @@ t.test("02.01 - deletes multiple chunks correctly", t => {
   t.same(
     repl(str, [
       [4, 14],
-      [18, 29]
+      [18, 29],
     ]),
     "aaa bbb ccc",
     "02.01"
@@ -126,7 +126,7 @@ t.test("02.01 - deletes multiple chunks correctly", t => {
   t.end();
 });
 
-t.test("02.02 - replaces multiple chunks correctly", t => {
+t.test("02.02 - replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n131.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -134,7 +134,7 @@ t.test("02.02 - replaces multiple chunks correctly", t => {
   t.same(
     repl(str, [
       [4, 13, "zzz"],
-      [18, 28, "yyy"]
+      [18, 28, "yyy"],
     ]),
     "aaa zzz bbb yyy ccc",
     "02.02"
@@ -142,7 +142,7 @@ t.test("02.02 - replaces multiple chunks correctly", t => {
   t.end();
 });
 
-t.test("02.03 - deletes and replaces multiple chunks correctly", t => {
+t.test("02.03 - deletes and replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb replace me ccc";
   // console.log('\n===============\n147.03')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -150,7 +150,7 @@ t.test("02.03 - deletes and replaces multiple chunks correctly", t => {
   t.same(
     repl(str, [
       [4, 13],
-      [18, 28, "zzz"]
+      [18, 28, "zzz"],
     ]),
     "aaa  bbb zzz ccc",
     "02.03"
@@ -158,12 +158,12 @@ t.test("02.03 - deletes and replaces multiple chunks correctly", t => {
   t.end();
 });
 
-t.test("02.04 - empty ranges array", t => {
+t.test("02.04 - empty ranges array", (t) => {
   t.same(repl("some text", []), "some text", "02.04");
   t.end();
 });
 
-t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
+t.test("02.05 - deletes multiple chunks with zero indexes correctly", (t) => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n168.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
@@ -171,7 +171,7 @@ t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
   t.same(
     repl(str, [
       [0, 10],
-      [14, 25]
+      [14, 25],
     ]),
     "bbb ccc",
     "02.05"
@@ -179,7 +179,7 @@ t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
   t.end();
 });
 
-t.test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
+t.test("02.06 - replaces multiple chunks with zero indexes correctly", (t) => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n184.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
@@ -187,7 +187,7 @@ t.test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
   t.same(
     repl(str, [
       [0, 9, "aaa"],
-      [14, 25]
+      [14, 25],
     ]),
     "aaa bbb ccc",
     "02.06"
@@ -195,7 +195,7 @@ t.test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
   t.end();
 });
 
-t.test("02.07 - replace with ending index zero", t => {
+t.test("02.07 - replace with ending index zero", (t) => {
   const str = "bbb ccc";
   t.same(
     repl(str, [[0, 0, "aaa "]]),
@@ -210,7 +210,7 @@ t.test("02.07 - replace with ending index zero", t => {
   t.end();
 });
 
-t.test("02.08 - null in third arg does nothing", t => {
+t.test("02.08 - null in third arg does nothing", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n215.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -218,7 +218,7 @@ t.test("02.08 - null in third arg does nothing", t => {
   t.same(
     repl(str, [
       [4, 14, null],
-      [18, 29]
+      [18, 29],
     ]),
     "aaa bbb ccc",
     "02.08.01"
@@ -226,7 +226,7 @@ t.test("02.08 - null in third arg does nothing", t => {
   t.same(
     repl(str, [
       [4, 14],
-      [18, 29, null]
+      [18, 29, null],
     ]),
     "aaa bbb ccc",
     "02.08.02"
@@ -234,7 +234,7 @@ t.test("02.08 - null in third arg does nothing", t => {
   t.same(
     repl(str, [
       [4, 14, null],
-      [18, 29, null]
+      [18, 29, null],
     ]),
     "aaa bbb ccc",
     "02.08.03"
@@ -242,7 +242,7 @@ t.test("02.08 - null in third arg does nothing", t => {
   t.end();
 });
 
-t.test("02.09 - replaces multiple chunks correctly", t => {
+t.test("02.09 - replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n247.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -250,7 +250,7 @@ t.test("02.09 - replaces multiple chunks correctly", t => {
   t.same(
     repl(str, [
       [4, 13, "zzz"],
-      [18, 28, null]
+      [18, 28, null],
     ]),
     "aaa zzz bbb  ccc",
     "02.09"
@@ -260,7 +260,7 @@ t.test("02.09 - replaces multiple chunks correctly", t => {
 
 t.test(
   "02.10 - replaces multiple chunks correctly given in a wrong order",
-  t => {
+  (t) => {
     const str = "aaa delete me bbb and me too ccc";
     // console.log('\n===============\n265.10')
     // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -268,7 +268,7 @@ t.test(
     t.same(
       repl(str, [
         [18, 28, "yyy"],
-        [4, 13, "zzz"]
+        [4, 13, "zzz"],
       ]),
       "aaa zzz bbb yyy ccc",
       "02.10"
@@ -277,7 +277,7 @@ t.test(
   }
 );
 
-t.test("02.11 - null as replacement range - does nothing", t => {
+t.test("02.11 - null as replacement range - does nothing", (t) => {
   const str = "zzzzzzzz";
   t.same(repl(str, null), str, "02.11.01");
   t.end();
@@ -287,20 +287,20 @@ t.test("02.11 - null as replacement range - does nothing", t => {
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - basic replacement", t => {
+t.test("03.01 - basic replacement", (t) => {
   t.same(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "03.01.01");
   t.same(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "03.01.02");
   t.end();
 });
 
-t.test("03.02 - multiple replacement pieces", t => {
+t.test("03.02 - multiple replacement pieces", (t) => {
   // let str = 'aaa  ccc  eee'
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
   t.same(
     repl("aaa  ccc  eee", [
       [4, 4, "bbb"],
-      [9, 9, "ddd"]
+      [9, 9, "ddd"],
     ]),
     "aaa bbb ccc ddd eee",
     "03.02"
@@ -308,7 +308,7 @@ t.test("03.02 - multiple replacement pieces", t => {
   t.end();
 });
 
-t.test("03.03 - null in replacement op - does nothing", t => {
+t.test("03.03 - null in replacement op - does nothing", (t) => {
   t.same(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "03.03.01");
   t.same(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "03.03.02");
   t.end();
@@ -318,7 +318,7 @@ t.test("03.03 - null in replacement op - does nothing", t => {
 // 04. progressFn
 // -----------------------------------------------------------------------------
 
-t.test("04.01 - progressFn - basic replacement", t => {
+t.test("04.01 - progressFn - basic replacement", (t) => {
   let count = 0;
   t.same(
     repl("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
@@ -339,7 +339,7 @@ t.test("04.01 - progressFn - basic replacement", t => {
       [30, 33],
       [1, 2, "z"],
       [30, 37],
-      [5, 7]
+      [5, 7],
     ]),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
     "04.01 - baseline"
@@ -365,9 +365,9 @@ t.test("04.01 - progressFn - basic replacement", t => {
         [30, 33],
         [1, 2, "z"],
         [30, 37],
-        [5, 7]
+        [5, 7],
       ],
-      perc => {
+      (perc) => {
         // console.log(`perc = ${perc}`);
         t.ok(typeof perc === "number");
         count++;

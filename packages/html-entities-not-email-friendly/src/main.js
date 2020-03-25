@@ -19,5 +19,5 @@ const notEmailFriendlyMaxLength = 31;
 export {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength
+  notEmailFriendlyMaxLength,
 };

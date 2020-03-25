@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateFace(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFace() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateFace(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -56,16 +56,16 @@ function attributeValidateFace(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`060 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-face"
+              ruleId: "attribute-validate-face",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

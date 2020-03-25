@@ -6,7 +6,7 @@ import db from "mime-db";
 
 function attributeValidateCodetype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCodetype() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateCodetype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -71,11 +71,11 @@ function attributeValidateCodetype(context, ...opts) {
               "image/png",
               "image/jpeg",
               "image/gif",
-              "application/vnd.api+json"
+              "application/vnd.api+json",
             ],
             permittedValues: Object.keys(db),
             canBeCommaSeparated: false,
-            noSpaceAfterComma: false
+            noSpaceAfterComma: false,
           }
         );
         console.log(
@@ -89,16 +89,16 @@ function attributeValidateCodetype(context, ...opts) {
         // value against all official MIME types, taken from IANA and other sources,
         // https://www.npmjs.com/package/mime-db
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`093 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-codetype"
+              ruleId: "attribute-validate-codetype",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateWidth(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateWidth() ███████████████████████████████████████`
       );
@@ -34,7 +34,7 @@ function attributeValidateWidth(context, ...opts) {
             "applet",
             "col",
             "colgroup",
-            "pre"
+            "pre",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -42,19 +42,19 @@ function attributeValidateWidth(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (node.parent.tagName === "pre") {
             // number only
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               theOnlyGoodUnits: [],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               console.log(`054 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
@@ -63,12 +63,12 @@ function attributeValidateWidth(context, ...opts) {
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               theOnlyGoodUnits: ["*", "%"],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               console.log(`068 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
@@ -76,19 +76,19 @@ function attributeValidateWidth(context, ...opts) {
             // normal length
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               console.log(`081 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 

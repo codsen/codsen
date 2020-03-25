@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no label, error level 0`,
-  t => {
+  (t) => {
     const str = `<option class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 0
-      }
+        "attribute-validate-label": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no label, error level 1`,
-  t => {
+  (t) => {
     const str = `<option class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 1
-      }
+        "attribute-validate-label": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no label, error level 2`,
-  t => {
+  (t) => {
     const str = `<option class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, option`,
-  t => {
+  (t) => {
     const str = `<option label='something'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, optgroup`,
-  t => {
+  (t) => {
     const str = `<optgroup label="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -90,13 +90,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div label="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -106,8 +106,8 @@ t.test(
         idxFrom: 5,
         idxTo: 22,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -115,13 +115,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz label="something" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -131,8 +131,8 @@ t.test(
         idxFrom: 5,
         idxTo: 22,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -143,13 +143,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<option label="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -159,8 +159,8 @@ t.test(
         idxFrom: 15,
         idxTo: 15,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -168,13 +168,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  t => {
+  (t) => {
     const str = `<option label=" something ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-label": 2
-      }
+        "attribute-validate-label": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<option label="something">`);
     t.match(messages, [
@@ -186,10 +186,10 @@ t.test(
         fix: {
           ranges: [
             [15, 16],
-            [25, 26]
-          ]
-        }
-      }
+            [25, 26],
+          ],
+        },
+      },
     ]);
     t.end();
   }

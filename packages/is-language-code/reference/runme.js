@@ -35,29 +35,20 @@ const ranged = [];
 
 ianaSpec
   .split("%%")
-  .filter(val => val.trim().length && val.includes("Type:"))
-  .forEach(val => {
-    const splitLinesArr = val.split("\n").filter(val => val.trim().length);
+  .filter((val) => val.trim().length && val.includes("Type:"))
+  .forEach((val) => {
+    const splitLinesArr = val.split("\n").filter((val) => val.trim().length);
 
     let type;
     let value;
     // 1. extract the type and value
-    splitLinesArr.forEach(lineStr => {
+    splitLinesArr.forEach((lineStr) => {
       if (lineStr.startsWith("Type:")) {
-        type = lineStr
-          .slice(5)
-          .trim()
-          .toLowerCase();
+        type = lineStr.slice(5).trim().toLowerCase();
       } else if (lineStr.startsWith("Subtag:")) {
-        value = lineStr
-          .slice(7)
-          .trim()
-          .toLowerCase();
+        value = lineStr.slice(7).trim().toLowerCase();
       } else if (lineStr.startsWith("Tag:")) {
-        value = lineStr
-          .slice(4)
-          .trim()
-          .toLowerCase();
+        value = lineStr.slice(4).trim().toLowerCase();
       }
     });
 
@@ -92,7 +83,7 @@ ianaSpec
       // this covers quite a few subtags and we have to write regexes
       ranged.push({
         type,
-        value
+        value,
       });
     }
 

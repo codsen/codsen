@@ -6,7 +6,7 @@
 
 function badCharacterNoBreakHere(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 131) {
         context.report({
           ruleId: "bad-character-no-break-here",
@@ -14,11 +14,11 @@ function badCharacterNoBreakHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

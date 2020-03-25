@@ -6,7 +6,7 @@ import {
   flattenObject,
   flattenArr,
   arrayiffyString,
-  reclaimIntegerString
+  reclaimIntegerString,
 } from "./util";
 
 const isArr = Array.isArray;
@@ -78,7 +78,7 @@ function outer(originalInput1, originalReference1, opts1) {
       // add <br /> between the rows?
       mergeWithoutTrailingBrIfLineContainsBr: true, // if line already contains BR,
       // don't add another, trailing-one
-      enforceStrictKeyset: true // are you allowed to pass-in any unrecognised
+      enforceStrictKeyset: true, // are you allowed to pass-in any unrecognised
       // keys in an options object?
     };
     opts = Object.assign({}, defaults, opts);
@@ -97,7 +97,7 @@ function outer(originalInput1, originalReference1, opts1) {
     }
 
     if (isObj(input)) {
-      Object.keys(input).forEach(key => {
+      Object.keys(input).forEach((key) => {
         const currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
         // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
@@ -107,13 +107,14 @@ function outer(originalInput1, originalReference1, opts1) {
             if (opts.dontWrapKeys.length > 0) {
               wrap =
                 wrap &&
-                !opts.dontWrapKeys.some(elem =>
+                !opts.dontWrapKeys.some((elem) =>
                   matcher.isMatch(key, elem, { caseSensitive: true })
                 );
             }
             if (opts.dontWrapPaths.length > 0) {
               wrap =
-                wrap && !opts.dontWrapPaths.some(elem => elem === currentPath);
+                wrap &&
+                !opts.dontWrapPaths.some((elem) => elem === currentPath);
             }
             if (
               opts.preventWrappingIfContains.length > 0 &&
@@ -121,7 +122,7 @@ function outer(originalInput1, originalReference1, opts1) {
             ) {
               wrap =
                 wrap &&
-                !opts.preventWrappingIfContains.some(elem =>
+                !opts.preventWrappingIfContains.some((elem) =>
                   input[key].includes(elem)
                 );
             }
@@ -168,12 +169,12 @@ function outer(originalInput1, originalReference1, opts1) {
                 // ['xxxx', [...], 'yyyy', 'zzzz'] should be joined by BR's
                 if (
                   input[key].every(
-                    el => typeof el === "string" || Array.isArray(el)
+                    (el) => typeof el === "string" || Array.isArray(el)
                   )
                 ) {
                   // check that those array elements contain only string elements:
                   let allOK = true;
-                  input[key].forEach(oneOfElements => {
+                  input[key].forEach((oneOfElements) => {
                     // check that child arrays contain only string elements
                     if (
                       Array.isArray(oneOfElements) &&

@@ -5,25 +5,25 @@ const source = [
   {
     tag: "meta",
     content: "UTF-8",
-    something: "else"
+    something: "else",
   },
   {
     tag: "title",
-    attrs: "Text of the title"
-  }
+    attrs: "Text of the title",
+  },
 ];
 const target = {
-  tag: "meta"
+  tag: "meta",
 };
 const res = [
   {
     tag: "meta",
     content: "UTF-8",
-    something: "else"
-  }
+    something: "else",
+  },
 ];
 
-t.test("UMD build works fine", t => {
+t.test("UMD build works fine", (t) => {
   t.same(get1(source, target), res);
   t.end();
 });

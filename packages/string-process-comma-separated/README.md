@@ -124,7 +124,7 @@ processCommaSeparated(`<FRAMESET rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`, {
   },
   errCb: (ranges, message) => {
     gatheredErrors.push({ ranges, message });
-  }
+  },
 });
 
 console.log(JSON.stringify(gatheredChunks, null, 4));
@@ -245,7 +245,7 @@ const gatheredChunks = [];
 processCommaSeparated("abc,def", {
   cb: (idxFrom, idxTo) => {
     gatheredChunks.push([idxFrom, idxTo]);
-  }
+  },
 });
 console.log(JSON.stringify(gatheredChunks, null, 4));
 // => [
@@ -263,7 +263,7 @@ We omitted the error callback for brevity (`opts.errCb`, see its API below), her
 Strictly speaking, function you pass as `opts.cb` value does not return anything, it's like `Array.forEach(key => {})` — you don't expect that arrow function to return something, as in:
 
 ```js
-["abc", "def"].forEach(key => {
+["abc", "def"].forEach((key) => {
   return "whatever"; // <-- that returned value will be lost
 });
 ```
@@ -290,7 +290,7 @@ processCommaSeparated(`<FRAMESET rows="50%, 50%">`, {
   },
   errCb: (ranges, message) => {
     gatheredErrors.push({ ranges, message });
-  }
+  },
 });
 console.log(JSON.stringify(gatheredChunks, null, 4));
 // => [
@@ -322,7 +322,7 @@ We have made more _range_ processing libraries see https://gitlab.com/codsen/cod
 Same thing like in `opts.cb` — whatever your callback function returns does not matter. You take the values that are passed into function's arguments and do things with them. You don't return anything from the callback function.
 
 ```js
-["abc", "def"].forEach(key => {
+["abc", "def"].forEach((key) => {
   return "whatever"; // <-- that returned value will be lost
 });
 ```

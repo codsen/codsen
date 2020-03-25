@@ -17,7 +17,7 @@ const testme = () =>
       searchFor: "nbsp",
       rightMaybe: "",
       rightOutside: "",
-      rightOutsideNot: ";"
+      rightOutsideNot: ";",
     },
     "nbsp;"
   );

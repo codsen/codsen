@@ -168,7 +168,7 @@ det("text to clean", {
   stripHtml: true,
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"],
-  cb: null
+  cb: null,
 });
 ```
 
@@ -265,7 +265,7 @@ Now, using custom settings object with one custom setting `convertEntities` (oth
 ```js
 const { det } = require("detergent");
 let { res } = det("clean this text £", {
-  convertEntities: 0 // <--- zero is like "false", turns off the feature
+  convertEntities: 0, // <--- zero is like "false", turns off the feature
 });
 console.log(res);
 // > 'clean this text £'
@@ -284,7 +284,7 @@ Here's an example, where we have widow word removal, HTML tags and additionally,
 ```js
 const { det } = require("detergent");
 const { res } = det(`aAa\n\nbBb\n\ncCc`, {
-  cb: str => str.toUpperCase()
+  cb: (str) => str.toUpperCase(),
 });
 console.log(res);
 // => "AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC"

@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateAlign(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
       );
@@ -48,7 +48,7 @@ function attributeValidateAlign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -56,7 +56,7 @@ function attributeValidateAlign(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -70,7 +70,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "bottom", "left", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -84,7 +84,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "middle", "bottom", "left", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -96,7 +96,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -110,7 +110,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -122,7 +122,7 @@ function attributeValidateAlign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName.toLowerCase())
         ) {
           // left|center|right|justify|char
@@ -131,7 +131,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify", "char"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         }
@@ -144,16 +144,16 @@ function attributeValidateAlign(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`148 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-align"
+              ruleId: "attribute-validate-align",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -59,12 +59,12 @@ function offerAListOfFilesToPickFrom() {
       type: "list",
       name: "file",
       message: "Which file would you like to check?",
-      choices: allFilesHere
-    }
+      choices: allFilesHere,
+    },
   ];
   ui.log.write(chalk.yellow("Please pick a file:"));
-  return inquirer.prompt(questions).then(answer => ({
-    toDoList: [path.basename(answer.file)]
+  return inquirer.prompt(questions).then((answer) => ({
+    toDoList: [path.basename(answer.file)],
   }));
 }
 
@@ -89,13 +89,13 @@ if (cli.input.length > 0) {
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
 if (Object.keys(cli.flags).length !== 0) {
   // each non-boolean cli.flags value must be added to the `toDoList`
-  Object.keys(cli.flags).forEach(key => {
+  Object.keys(cli.flags).forEach((key) => {
     if (typeof cli.flags[key] !== "boolean") {
       if (!isArr(cli.flags[key])) {
         state.toDoList.push(cli.flags[key]);
       } else {
         state.toDoList = state.toDoList.concat(
-          cli.flags[key].filter(val => isStr(val))
+          cli.flags[key].filter((val) => isStr(val))
         );
       }
     }
@@ -112,15 +112,15 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   // if no arguments were given, offer a list:
   thePromise = offerAListOfFilesToPickFrom(state);
 } else if (
-  state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync)
+  state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
     .length > 0
 ) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
   const erroneous = pullAll(
-    state.toDoList.map(onePath => path.resolve(onePath)),
-    state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync)
-  ).map(singlePath => path.basename(singlePath)); // then filtering file names-only
+    state.toDoList.map((onePath) => path.resolve(onePath)),
+    state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
+  ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
@@ -138,7 +138,7 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
 
   // remove non-existing paths from toDoList:
   state.toDoList = state.toDoList
-    .map(onePath => path.resolve(onePath))
+    .map((onePath) => path.resolve(onePath))
     .filter(fs.existsSync);
 
   // create the final promise variable we're going to use later:
@@ -160,9 +160,9 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
 // -----------------------------------------------------------------------------
 
 thePromise
-  .then(receivedState => {
+  .then((receivedState) => {
     let noErrors = true;
-    receivedState.toDoList.forEach(requestedPath => {
+    receivedState.toDoList.forEach((requestedPath) => {
       let filesContents = "";
       let fileNameInfo = "";
       if (receivedState.toDoList.length > 0) {
@@ -210,7 +210,7 @@ thePromise
     // console.log("210");
     return Promise.resolve(noErrors);
   })
-  .then(noErrors => {
+  .then((noErrors) => {
     // console.log("214");
     return process.exit(noErrors ? 0 : 1);
   })

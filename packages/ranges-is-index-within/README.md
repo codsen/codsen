@@ -79,7 +79,7 @@ Imagine you have a natural number (let's call it `index`), for example, `79` and
   [95, 100],
   [105, 110],
   [115, 120],
-  [125, 130]
+  [125, 130],
 ];
 ```
 
@@ -143,7 +143,7 @@ let res1 = isIndexWithin(79, [
   [95, 100],
   [105, 110],
   [115, 120],
-  [125, 130]
+  [125, 130],
 ]);
 console.log(res1);
 // > true
@@ -161,7 +161,7 @@ let res2 = isIndexWithin(31, [
   [95, 100],
   [105, 110],
   [115, 120],
-  [125, 130]
+  [125, 130],
 ]);
 console.log(res2);
 // > false
@@ -181,7 +181,7 @@ let res3 = isIndexWithin(
     [95, 100],
     [105, 110],
     [115, 120],
-    [125, 130]
+    [125, 130],
   ],
   { inclusiveRangeEnds: true }
 );
@@ -203,7 +203,7 @@ let res4 = isIndexWithin(
     [95, 100],
     [105, 110],
     [115, 120],
-    [125, 130]
+    [125, 130],
   ],
   { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
 );

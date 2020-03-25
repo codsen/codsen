@@ -1,7 +1,7 @@
 const t = require("tap");
 const deepContains1 = require("../dist/ast-deep-contains.umd");
 
-t.test("UMD build works fine", t => {
+t.test("UMD build works fine", (t) => {
   const gathered = [];
   const errors = [];
 
@@ -11,14 +11,14 @@ t.test("UMD build works fine", t => {
     (leftSideVal, rightSideVal) => {
       gathered.push([leftSideVal, rightSideVal]);
     },
-    err => {
+    (err) => {
       errors.push(err);
     }
   );
 
   t.same(gathered, [
     ["1", "1"],
-    ["2", "2"]
+    ["2", "2"],
   ]);
   t.same(errors, []);
   t.end();

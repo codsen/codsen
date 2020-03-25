@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateLanguage(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateLanguage() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateLanguage(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -49,16 +49,16 @@ function attributeValidateLanguage(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-language"
+              ruleId: "attribute-validate-language",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

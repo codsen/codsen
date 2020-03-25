@@ -8,7 +8,7 @@ const BACKSLASH = "\u005C";
 
 t.test(
   `00.01 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
-  t => {
+  (t) => {
     t.throws(() => {
       isRel();
     }, /THROW_ID_01/gm);
@@ -18,7 +18,7 @@ t.test(
 
 t.test(
   `00.02 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
-  t => {
+  (t) => {
     t.throws(() => {
       isRel(true);
     }, /THROW_ID_01/gm);
@@ -28,7 +28,7 @@ t.test(
 
 t.test(
   `00.03 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
-  t => {
+  (t) => {
     t.throws(() => {
       isRel(1);
     }, /THROW_ID_01/gm);
@@ -38,7 +38,7 @@ t.test(
 
 t.test(
   `00.04 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
-  t => {
+  (t) => {
     t.throws(() => {
       isRel("", true);
     }, /THROW_ID_02/gm);
@@ -48,7 +48,7 @@ t.test(
 
 t.test(
   `00.05 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
-  t => {
+  (t) => {
     t.throws(() => {
       isRel("", 1);
     }, /THROW_ID_02/gm);
@@ -59,7 +59,7 @@ t.test(
 // 01. correct values
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, (t) => {
   [
     "//example.com/path/resource.txt",
     "/path/resource.txt",
@@ -73,8 +73,8 @@ t.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, t => {
     "../resource.txt",
     "./resource.txt",
     "resource.txt",
-    "#fragment"
-  ].forEach(val => {
+    "#fragment",
+  ].forEach((val) => {
     t.ok(isRel(val).res, val);
   });
   t.end();
@@ -84,7 +84,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, t => {
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 t.test(
   `01.02 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} Part II`,
-  t => {
+  (t) => {
     [
       "g:h", // -> "g:h"
       "g", // -> "http://a/b/c/g"
@@ -108,8 +108,8 @@ t.test(
       "../g", // -> "http://a/b/g"
       "../..", // -> "http://a/"
       "../../", // -> "http://a/"
-      "../../g" // -> "http://a/g"
-    ].forEach(val => {
+      "../../g", // -> "http://a/g"
+    ].forEach((val) => {
       t.ok(isRel(val).res, val);
     });
     t.end();
@@ -118,7 +118,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
-  t => {
+  (t) => {
     t.ok(isRel(`.`).res);
     t.end();
   }
@@ -126,7 +126,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
-  t => {
+  (t) => {
     t.ok(isRel(`..`).res);
     t.end();
   }
@@ -134,7 +134,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
-  t => {
+  (t) => {
     t.ok(isRel(`../..`).res);
     t.end();
   }
@@ -145,7 +145,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with three or more slashes`,
-  t => {
+  (t) => {
     t.notOk(isRel(`///example.com`).res);
     t.end();
   }
@@ -153,7 +153,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - two or more slashes anywhere in the middle`,
-  t => {
+  (t) => {
     t.notOk(isRel(`path//resource.txt`).res);
     t.end();
   }
@@ -161,7 +161,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with more than two dots`,
-  t => {
+  (t) => {
     t.notOk(isRel(`.../resource.txt`).res);
     t.end();
   }
@@ -169,8 +169,8 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - bad characters`,
-  t => {
-    [BACKSLASH, "%g", "<", ">", "[", "]", "{", "}", "|", "^"].forEach(val => {
+  (t) => {
+    [BACKSLASH, "%g", "<", ">", "[", "]", "{", "}", "|", "^"].forEach((val) => {
       t.notOk(isRel(`a${val}b`).res, val);
     });
     t.end();
@@ -179,7 +179,7 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with dot`,
-  t => {
+  (t) => {
     t.notOk(isRel(`path/resource.`).res);
     t.end();
   }
@@ -187,7 +187,7 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - dot dot not-slash`,
-  t => {
+  (t) => {
     t.notOk(isRel(`..a/g`).res);
     t.end();
   }
@@ -198,7 +198,7 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - hash followed by slash`,
-  t => {
+  (t) => {
     t.notOk(isRel(`abc/def#ghi/jkl`).res);
     t.end();
   }
@@ -206,7 +206,7 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with hash`,
-  t => {
+  (t) => {
     t.notOk(isRel(`abc/def#`).res);
     t.end();
   }
@@ -217,7 +217,7 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
-  t => {
+  (t) => {
     t.notOk(isRel(`mailto:John.Doe@example.com`).res);
     t.end();
   }
@@ -225,10 +225,10 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
-  t => {
+  (t) => {
     t.ok(
       isRel(`mailto:John.Doe@example.com`, {
-        flagUpUrisWithSchemes: false
+        flagUpUrisWithSchemes: false,
       }).res
     );
     t.end();

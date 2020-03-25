@@ -303,7 +303,7 @@ function generate() {
   )}`;
 }
 
-t.test(`*** non-deterministic tests`, t => {
+t.test(`*** non-deterministic tests`, (t) => {
   let run = true;
   let counter = 0;
   const startTime = Date.now();
@@ -377,7 +377,7 @@ t.test(`*** non-deterministic tests`, t => {
                 3000
               ),
               removeIndentations: chance(),
-              removeLineBreaks: chance()
+              removeLineBreaks: chance(),
             }).result
           ),
           `source was:\n-----------\n${JSON.stringify(

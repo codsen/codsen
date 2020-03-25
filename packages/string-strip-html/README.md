@@ -285,7 +285,7 @@ const cb = ({
   deleteTo,
   insert,
   rangesArr,
-  proposedReturn
+  proposedReturn,
 }) => {
   // default action which does nothing different from normal, non-callback operation
   rangesArr.push(deleteFrom, deleteTo, insert);
@@ -311,7 +311,7 @@ const cb = ({
   deleteTo,
   insert,
   rangesArr,
-  proposedReturn
+  proposedReturn,
 }) => {
   rangesArr.push(deleteFrom, deleteTo, insert);
 };
@@ -341,7 +341,7 @@ const cb = ({
   deleteFrom,
   deleteTo,
   // insert,
-  rangesArr
+  rangesArr,
   // proposedReturn
 }) => {
   rangesArr.push(
@@ -356,7 +356,7 @@ console.log(`res1 = "${res1}"`);
 
 const res2 = stripHtml("<div >abc</ div>", {
   returnRangesOnly: true,
-  cb
+  cb,
 });
 console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
 // res2 = [

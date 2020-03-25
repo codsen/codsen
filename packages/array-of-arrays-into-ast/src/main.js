@@ -28,18 +28,18 @@ function generateAst(input, opts) {
   }
 
   const defaults = {
-    dedupe: true
+    dedupe: true,
   };
   opts = Object.assign({}, defaults, opts);
 
   checkTypes(opts, defaults, {
     msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
-    optsVarName: "opts"
+    optsVarName: "opts",
   });
 
   let res = {};
 
-  input.forEach(arr => {
+  input.forEach((arr) => {
     console.log(
       `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
     );

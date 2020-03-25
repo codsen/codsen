@@ -13,13 +13,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`,
-  t => {
+  (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": 0 // means every TAB will be flagged up
-      }
+        "bad-character-tabulation": 0, // means every TAB will be flagged up
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);
@@ -29,13 +29,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`,
-  t => {
+  (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": [0] // means every TAB will be flagged up
-      }
+        "bad-character-tabulation": [0], // means every TAB will be flagged up
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);
@@ -45,13 +45,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`,
-  t => {
+  (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": 1 // means every TAB will be flagged up
-      }
+        "bad-character-tabulation": 1, // means every TAB will be flagged up
+      },
     });
     t.match(messages, [
       {
@@ -63,8 +63,8 @@ t.test(
         column: 1, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[0, 1, " "]]
-        }
+          ranges: [[0, 1, " "]],
+        },
       },
       {
         ruleId: "bad-character-tabulation",
@@ -75,9 +75,9 @@ t.test(
         column: 9, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[8, 9, " "]]
-        }
-      }
+          ranges: [[8, 9, " "]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), " dlkgjld j");
     t.end();
@@ -86,13 +86,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`,
-  t => {
+  (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": 2 // means every TAB will be flagged up
-      }
+        "bad-character-tabulation": 2, // means every TAB will be flagged up
+      },
     });
     t.match(messages, [
       {
@@ -104,8 +104,8 @@ t.test(
         column: 1, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[0, 1, " "]]
-        }
+          ranges: [[0, 1, " "]],
+        },
       },
       {
         ruleId: "bad-character-tabulation",
@@ -116,9 +116,9 @@ t.test(
         column: 9, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[8, 9, " "]]
-        }
-      }
+          ranges: [[8, 9, " "]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), " dlkgjld j");
     t.end();
@@ -130,13 +130,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`,
-  t => {
+  (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": [1, "never"] // means every TAB will be flagged up
-      }
+        "bad-character-tabulation": [1, "never"], // means every TAB will be flagged up
+      },
     });
     t.match(messages, [
       {
@@ -148,8 +148,8 @@ t.test(
         column: 1, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[0, 1, " "]]
-        }
+          ranges: [[0, 1, " "]],
+        },
       },
       {
         ruleId: "bad-character-tabulation",
@@ -160,9 +160,9 @@ t.test(
         column: 9, // remember columns numbers start from 1, not zero
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[8, 9, " "]]
-        }
-      }
+          ranges: [[8, 9, " "]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), " dlkgjld j");
     t.end();
@@ -171,13 +171,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`,
-  t => {
+  (t) => {
     const str = "\t\t\tdlkgjld\tj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-tabulation": [2, "indentationIsFine"] // btw, setting is not case sensitive
-      }
+        "bad-character-tabulation": [2, "indentationIsFine"], // btw, setting is not case sensitive
+      },
     });
     t.match(messages, [
       {
@@ -187,9 +187,9 @@ t.test(
         idxTo: 11,
         message: "Bad character - TABULATION.",
         fix: {
-          ranges: [[10, 11, " "]]
-        }
-      }
+          ranges: [[10, 11, " "]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "\t\t\tdlkgjld j");
     t.end();

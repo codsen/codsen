@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no usemap, error level 0`,
-  t => {
+  (t) => {
     const str = `<img><div>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 0
-      }
+        "attribute-validate-usemap": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no usemap, error level 1`,
-  t => {
+  (t) => {
     const str = `<img><div>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 1
-      }
+        "attribute-validate-usemap": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no usemap, error level 2`,
-  t => {
+  (t) => {
     const str = `<img><div>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const str = `<img usemap="https://codsen.com">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div usemap="https://codsen.com">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -90,8 +90,8 @@ t.test(
         idxFrom: 5,
         idxTo: 32,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -99,13 +99,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz usemap="https://codsen.com">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -115,8 +115,8 @@ t.test(
         idxFrom: 5,
         idxTo: 32,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -127,13 +127,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<img usemap="zzz??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -143,8 +143,8 @@ t.test(
         idxFrom: 13,
         idxTo: 18,
         message: `Should be an URI.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -152,13 +152,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit URL`,
-  t => {
+  (t) => {
     const str = `<img usemap=" https://codsen.com">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<img usemap="https://codsen.com">`);
     t.match(messages, [
@@ -168,9 +168,9 @@ t.test(
         idxTo: 14,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[13, 14]]
-        }
-      }
+          ranges: [[13, 14]],
+        },
+      },
     ]);
     t.end();
   }
@@ -178,14 +178,14 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
-  t => {
+  (t) => {
     // notice wrong tag name case:
     const str = `<INPUT usemap=" zzz?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-usemap": 2
-      }
+        "attribute-validate-usemap": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<INPUT usemap="zzz??">`);
     t.match(messages, [
@@ -197,17 +197,17 @@ t.test(
         fix: {
           ranges: [
             [15, 16],
-            [21, 22]
-          ]
-        }
+            [21, 22],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-usemap",
         idxFrom: 16,
         idxTo: 21,
         message: `Should be an URI.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

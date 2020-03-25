@@ -221,7 +221,7 @@ Result is either
   [10, 20, " insert this string after deleting range between indexes 10 & 20"][
     (30, 50)
   ],
-  [51, 55]
+  [51, 55],
 ];
 ```
 

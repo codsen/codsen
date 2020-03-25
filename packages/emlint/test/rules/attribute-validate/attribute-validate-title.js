@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no title, error level 0`,
-  t => {
+  (t) => {
     const str = `<a class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 0
-      }
+        "attribute-validate-title": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no title, error level 1`,
-  t => {
+  (t) => {
     const str = `<a class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 1
-      }
+        "attribute-validate-title": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no title, error level 2`,
-  t => {
+  (t) => {
     const str = `<a class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const str = `<a title='dynamic'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<title title="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -90,8 +90,8 @@ t.test(
         idxFrom: 7,
         idxTo: 24,
         message: `Tag "title" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -99,13 +99,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz title="something" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -119,13 +119,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<a title="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -135,8 +135,8 @@ t.test(
         idxFrom: 10,
         idxTo: 10,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -144,13 +144,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  t => {
+  (t) => {
     const str = `<a title=" something ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-title": 2
-      }
+        "attribute-validate-title": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<a title="something">`);
     t.match(messages, [
@@ -162,10 +162,10 @@ t.test(
         fix: {
           ranges: [
             [10, 11],
-            [20, 21]
-          ]
-        }
-      }
+            [20, 21],
+          ],
+        },
+      },
     ]);
     t.end();
   }

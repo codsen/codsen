@@ -13,17 +13,17 @@ const testme = () =>
       {
         a: "a",
         b: "delete this key",
-        c: ["b", "b", { b: "d" }]
+        c: ["b", "b", { b: "d" }],
       },
       {
         b: ["and this key too", "together with this"],
         d: {
-          e: { f: { g: ["b", { b: "and this, no matter how deep-nested" }] } }
-        }
-      }
+          e: { f: { g: ["b", { b: "and this, no matter how deep-nested" }] } },
+        },
+      },
     ],
     {
-      key: "b"
+      key: "b",
     }
   );
 

@@ -178,7 +178,7 @@ var res = jVar({
   a: "some text %%_var1_%% more text %%_var2_%%",
   b: "something",
   var1: "value1",
-  var2: "value2"
+  var2: "value2",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // ==> {
@@ -198,11 +198,11 @@ var res = jVar(
     a: "some text {var1} more text {var2}",
     b: "something",
     var1: "value1",
-    var2: "value2"
+    var2: "value2",
   },
   {
     heads: "{",
-    tails: "}"
+    tails: "}",
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -223,12 +223,12 @@ var res = jVar(
     a: "some text %%_var1_%% more text %%_var2_%%",
     b: "something",
     var1: "value1",
-    var2: "value2"
+    var2: "value2",
   },
   {
     wrapHeadsWith: "${",
     wrapTailsWith: "}",
-    dontWrapVars: ["*zzz", "*3", "*6"]
+    dontWrapVars: ["*zzz", "*3", "*6"],
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -249,7 +249,7 @@ var res = jVar({
   b: "%%_c_%%",
   c: "%%_d_%%",
   d: "%%_e_%%",
-  e: "%%_b_%%"
+  e: "%%_b_%%",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // THROWS because "e" loops to "b" forming an infinite loop.
@@ -264,7 +264,7 @@ var res = jVar({
   b: "%%_c_%%",
   c: "%%_d_%%",
   d: "%%_e_%%",
-  e: "zzz"
+  e: "zzz",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // => {
@@ -285,12 +285,12 @@ var res = jVar(
     a: "some text %%_var1.key1_%% more text %%_var2.key2_%%",
     b: "something",
     var1: { key1: "value1" },
-    var2: { key2: "value2" }
+    var2: { key2: "value2" },
   },
   {
     wrapHeadsWith: "%%=",
     wrapTailsWith: "=%%",
-    dontWrapVars: ["*zzz", "*3", "*6"]
+    dontWrapVars: ["*zzz", "*3", "*6"],
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -342,9 +342,9 @@ var res = jVar({
   a: "some text %%_var1_%% more text %%_var3_%%.",
   a_data: {
     var1: "value1",
-    var3: "333333"
+    var3: "333333",
   },
-  b: "something"
+  b: "something",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // => {
@@ -365,9 +365,9 @@ var res = jVar({
   a: "some text %%_var1.key1.key2.key3_%% more text %%_var3_%%.",
   a_data: {
     var1: { key1: { key2: { key3: "value1" } } },
-    var3: "333333"
+    var3: "333333",
   },
-  b: "something"
+  b: "something",
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // => {
@@ -392,12 +392,12 @@ var res = jVar(
   {
     a: "%%_b_%%",
     b: "%%_c_%%",
-    c: "val"
+    c: "val",
   },
   {
     wrapHeadsWith: "{",
     wrapTailsWith: "}",
-    dontWrapVars: ["b*", "c*"]
+    dontWrapVars: ["b*", "c*"],
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));
@@ -531,7 +531,7 @@ Observe:
 ```js
 var res = jVar({
   a: "zzz %%_b_%% zzz",
-  b: true
+  b: true,
 });
 console.log("res = " + JSON.stringify(res, null, 4));
 // => {
@@ -544,10 +544,10 @@ console.log("res = " + JSON.stringify(res, null, 4));
 var res = jVar(
   {
     a: "zzz %%_b_%% zzz",
-    b: true
+    b: true,
   },
   {
-    resolveToFalseIfAnyValuesContainBool: false
+    resolveToFalseIfAnyValuesContainBool: false,
   }
 );
 console.log("res = " + JSON.stringify(res, null, 4));

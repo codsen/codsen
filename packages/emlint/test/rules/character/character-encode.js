@@ -11,13 +11,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
-  t => {
+  (t) => {
     const str = "fsdhkfdfgh kj ";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": 2
-      }
+        "character-encode": 2,
+      },
     });
     t.same(messages, [], "01.01.01");
     t.equal(applyFixes(str, messages), str, "01.01.02");
@@ -27,13 +27,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
-  t => {
+  (t) => {
     const str = "£100";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": 2
-      }
+        "character-encode": 2,
+      },
     });
     t.match(
       messages,
@@ -46,9 +46,9 @@ t.test(
           line: 1,
           message: "Unencoded pound sign character.",
           fix: {
-            ranges: [[0, 1, "&pound;"]]
-          }
-        }
+            ranges: [[0, 1, "&pound;"]],
+          },
+        },
       ],
       "01.02.01"
     );
@@ -59,13 +59,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
-  t => {
+  (t) => {
     const str = "£100";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 1
-      }
+        all: 1,
+      },
     });
     t.match(
       messages,
@@ -78,9 +78,9 @@ t.test(
           line: 1,
           message: "Unencoded pound sign character.",
           fix: {
-            ranges: [[0, 1, "&pound;"]]
-          }
-        }
+            ranges: [[0, 1, "&pound;"]],
+          },
+        },
       ],
       "01.03.01"
     );
@@ -92,44 +92,15 @@ t.test(
 // 02. basic tests, no config
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "named"]
-    }
-  });
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "character-encode",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        message: "Unencoded pound sign character.",
-        fix: {
-          ranges: [[0, 1, "&pound;"]]
-        }
-      }
-    ],
-    "02.01.01"
-  );
-  t.equal(applyFixes(str, messages), "&pound;100", "02.01.02");
-  t.end();
-});
-
 t.test(
-  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
-  t => {
+  `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`,
+  (t) => {
     const str = "£100";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "numeric"]
-      }
+        "character-encode": [2, "named"],
+      },
     });
     t.match(
       messages,
@@ -142,9 +113,41 @@ t.test(
           line: 1,
           message: "Unencoded pound sign character.",
           fix: {
-            ranges: [[0, 1, "&#xA3;"]]
-          }
-        }
+            ranges: [[0, 1, "&pound;"]],
+          },
+        },
+      ],
+      "02.01.01"
+    );
+    t.equal(applyFixes(str, messages), "&pound;100", "02.01.02");
+    t.end();
+  }
+);
+
+t.test(
+  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
+  (t) => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "numeric"],
+      },
+    });
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "character-encode",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 1,
+          line: 1,
+          message: "Unencoded pound sign character.",
+          fix: {
+            ranges: [[0, 1, "&#xA3;"]],
+          },
+        },
       ],
       "02.02.01"
     );
@@ -155,13 +158,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
-  t => {
+  (t) => {
     const str = "£100";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2]
-      }
+        "character-encode": [2],
+      },
     });
     t.match(
       messages,
@@ -174,9 +177,9 @@ t.test(
           line: 1,
           message: "Unencoded pound sign character.",
           fix: {
-            ranges: [[0, 1, "&pound;"]]
-          }
-        }
+            ranges: [[0, 1, "&pound;"]],
+          },
+        },
       ],
       "02.03.01"
     );
@@ -187,13 +190,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
-  t => {
+  (t) => {
     const str = "£100";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "yo"]
-      }
+        "character-encode": [2, "yo"],
+      },
     });
     t.match(
       messages,
@@ -206,9 +209,9 @@ t.test(
           line: 1,
           message: "Unencoded pound sign character.",
           fix: {
-            ranges: [[0, 1, "&pound;"]]
-          }
-        }
+            ranges: [[0, 1, "&pound;"]],
+          },
+        },
       ],
       "02.04.01"
     );
@@ -219,13 +222,13 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
-  t => {
+  (t) => {
     const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": 2
-      }
+        "character-encode": 2,
+      },
     });
     t.same(messages, [], "02.05.01");
     t.equal(applyFixes(str, messages), str, "02.05.02");
@@ -238,13 +241,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
-  t => {
+  (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": 1
-      }
+        "character-encode": 1,
+      },
     });
     t.match(
       messages,
@@ -257,9 +260,9 @@ t.test(
           line: 1,
           message: "Unencoded character.",
           fix: {
-            ranges: [[0, 1, "&#x424;"]]
-          }
-        }
+            ranges: [[0, 1, "&#x424;"]],
+          },
+        },
       ],
       "03.01.01"
     );
@@ -270,13 +273,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
-  t => {
+  (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "named"]
-      }
+        "character-encode": [2, "named"],
+      },
     });
     t.match(
       messages,
@@ -289,9 +292,9 @@ t.test(
           line: 1,
           message: "Unencoded character.",
           fix: {
-            ranges: [[0, 1, "&#x424;"]]
-          }
-        }
+            ranges: [[0, 1, "&#x424;"]],
+          },
+        },
       ],
       "03.02.01"
     );
@@ -302,13 +305,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
-  t => {
+  (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "numeric"]
-      }
+        "character-encode": [2, "numeric"],
+      },
     });
     t.match(
       messages,
@@ -321,9 +324,9 @@ t.test(
           line: 1,
           message: "Unencoded character.",
           fix: {
-            ranges: [[0, 1, "&#x424;"]]
-          }
-        }
+            ranges: [[0, 1, "&#x424;"]],
+          },
+        },
       ],
       "03.03.01"
     );
@@ -337,13 +340,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
-  t => {
+  (t) => {
     const str = `><'"&`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "named"]
-      }
+        "character-encode": [2, "named"],
+      },
     });
     t.match(
       messages,
@@ -356,8 +359,8 @@ t.test(
           line: 1,
           message: "Unencoded greater than character.",
           fix: {
-            ranges: [[0, 1, "&gt;"]]
-          }
+            ranges: [[0, 1, "&gt;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -367,8 +370,8 @@ t.test(
           line: 1,
           message: "Unencoded less than character.",
           fix: {
-            ranges: [[1, 2, "&lt;"]]
-          }
+            ranges: [[1, 2, "&lt;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -378,8 +381,8 @@ t.test(
           line: 1,
           message: "Unencoded double quotes character.",
           fix: {
-            ranges: [[3, 4, "&quot;"]]
-          }
+            ranges: [[3, 4, "&quot;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -389,9 +392,9 @@ t.test(
           line: 1,
           message: "Unencoded ampersand character.",
           fix: {
-            ranges: [[4, 5, "&amp;"]]
-          }
-        }
+            ranges: [[4, 5, "&amp;"]],
+          },
+        },
       ],
       "04.01.01"
     );
@@ -402,13 +405,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
-  t => {
+  (t) => {
     const str = `><'"&`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": [2, "numeric"]
-      }
+        "character-encode": [2, "numeric"],
+      },
     });
     t.match(
       messages,
@@ -421,8 +424,8 @@ t.test(
           line: 1,
           message: "Unencoded greater than character.",
           fix: {
-            ranges: [[0, 1, "&#x3E;"]]
-          }
+            ranges: [[0, 1, "&#x3E;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -432,8 +435,8 @@ t.test(
           line: 1,
           message: "Unencoded less than character.",
           fix: {
-            ranges: [[1, 2, "&#x3C;"]]
-          }
+            ranges: [[1, 2, "&#x3C;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -443,8 +446,8 @@ t.test(
           line: 1,
           message: "Unencoded double quotes character.",
           fix: {
-            ranges: [[3, 4, "&#x22;"]]
-          }
+            ranges: [[3, 4, "&#x22;"]],
+          },
         },
         {
           ruleId: "character-encode",
@@ -454,9 +457,9 @@ t.test(
           line: 1,
           message: "Unencoded ampersand character.",
           fix: {
-            ranges: [[4, 5, "&#x26;"]]
-          }
-        }
+            ranges: [[4, 5, "&#x26;"]],
+          },
+        },
       ],
       "04.02.01"
     );
@@ -470,13 +473,13 @@ t.test(
 
 t.test(
   `05.01 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
-  t => {
+  (t) => {
     const str = "a<!--b->c";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "character-encode": 2
-      }
+        "character-encode": 2,
+      },
     });
     t.same(messages, [], "05.01.01");
     t.equal(applyFixes(str, messages), str, "05.01.02");
@@ -486,15 +489,15 @@ t.test(
 
 t.test(
   `05.02 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
-  t => {
+  (t) => {
     const str = "a<!--b->c";
     const fixed = "a<!--b-->c";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "character-encode": 2,
-        "comment-closing-malformed": 2
-      }
+        "comment-closing-malformed": 2,
+      },
     });
     t.match(
       messages,
@@ -506,9 +509,9 @@ t.test(
           idxTo: 8,
           message: `Malformed closing comment tag.`,
           fix: {
-            ranges: [[6, 8, "-->"]]
-          }
-        }
+            ranges: [[6, 8, "-->"]],
+          },
+        },
       ],
       "05.02.01"
     );

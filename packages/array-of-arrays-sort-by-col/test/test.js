@@ -31,7 +31,7 @@ function mixer(t, tested, reference, idx) {
 
 // -----------------------------------------------------------------------------
 
-t.test("1.1 - multiple elements, #1", t => {
+t.test("1.1 - multiple elements, #1", (t) => {
   mixer(
     t,
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
@@ -93,7 +93,7 @@ t.test("1.1 - multiple elements, #1", t => {
   t.end();
 });
 
-t.test("1.2.1 - multiple elements, #2", t => {
+t.test("1.2.1 - multiple elements, #2", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
@@ -102,7 +102,7 @@ t.test("1.2.1 - multiple elements, #2", t => {
   t.end();
 });
 
-t.test("1.2.2 - multiple elements, #2", t => {
+t.test("1.2.2 - multiple elements, #2", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
@@ -112,7 +112,7 @@ t.test("1.2.2 - multiple elements, #2", t => {
   t.end();
 });
 
-t.test("1.2.3 - multiple elements, #2", t => {
+t.test("1.2.3 - multiple elements, #2", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
@@ -122,7 +122,7 @@ t.test("1.2.3 - multiple elements, #2", t => {
   t.end();
 });
 
-t.test("1.2.4 - multiple elements, #2", t => {
+t.test("1.2.4 - multiple elements, #2", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
@@ -132,21 +132,21 @@ t.test("1.2.4 - multiple elements, #2", t => {
   t.end();
 });
 
-t.test("1.2.5 - multiple elements, #2 - axis outside of the range", t => {
+t.test("1.2.5 - multiple elements, #2 - axis outside of the range", (t) => {
   t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
   }, /THROW_ID_03/);
   t.end();
 });
 
-t.test("1.2.6 - multiple elements, #2 - axis outside of the range", t => {
+t.test("1.2.6 - multiple elements, #2 - axis outside of the range", (t) => {
   t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
   }, /THROW_ID_03/);
   t.end();
 });
 
-t.test("1.3 - multiple elements, #3 - opposite order", t => {
+t.test("1.3 - multiple elements, #3 - opposite order", (t) => {
   mixer(
     t,
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
@@ -173,7 +173,7 @@ t.test("1.3 - multiple elements, #3 - opposite order", t => {
   t.end();
 });
 
-t.test("1.4 - multiple elements, #4 - single elements", t => {
+t.test("1.4 - multiple elements, #4 - single elements", (t) => {
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]]);
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], 0);
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], "0");
@@ -188,7 +188,7 @@ t.test("1.4 - multiple elements, #4 - single elements", t => {
   t.end();
 });
 
-t.test("1.5.1 - first column indexes contain opposite order values", t => {
+t.test("1.5.1 - first column indexes contain opposite order values", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
@@ -197,7 +197,7 @@ t.test("1.5.1 - first column indexes contain opposite order values", t => {
   t.end();
 });
 
-t.test("1.5.2 - first column indexes contain opposite order values", t => {
+t.test("1.5.2 - first column indexes contain opposite order values", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
@@ -207,7 +207,7 @@ t.test("1.5.2 - first column indexes contain opposite order values", t => {
   t.end();
 });
 
-t.test("1.5.3 - first column indexes contain opposite order values", t => {
+t.test("1.5.3 - first column indexes contain opposite order values", (t) => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
@@ -217,7 +217,7 @@ t.test("1.5.3 - first column indexes contain opposite order values", t => {
   t.end();
 });
 
-t.test("1.5.4 - first column indexes contain opposite order values", t => {
+t.test("1.5.4 - first column indexes contain opposite order values", (t) => {
   // zero's were done first, so [1] goes last. Since all second indexes are the same
   // across rows, matching containued by comparing using a ripple
   // algorithm, which will start on index column on the left
@@ -232,49 +232,49 @@ t.test("1.5.4 - first column indexes contain opposite order values", t => {
   t.end();
 });
 
-t.test("1.6 - null over number", t => {
+t.test("1.6 - null over number", (t) => {
   mixer(
     t,
     [
       [1, null],
-      [1, 1]
+      [1, 1],
     ],
     [
       [1, 1],
-      [1, null]
+      [1, null],
     ]
   );
   mixer(
     t,
     [
       [1, null],
-      [1, 1]
+      [1, 1],
     ],
     [
       [1, 1],
-      [1, null]
+      [1, null],
     ],
     1
   );
   t.end();
 });
 
-t.test("1.7 - just nulls over numbers", t => {
+t.test("1.7 - just nulls over numbers", (t) => {
   mixer(
     t,
     [
       [null, null, null],
-      [1, 1, 1]
+      [1, 1, 1],
     ],
     [
       [1, 1, 1],
-      [null, null, null]
+      [null, null, null],
     ]
   );
   t.end();
 });
 
-t.test("1.8 - just nulls over numbers", t => {
+t.test("1.8 - just nulls over numbers", (t) => {
   mixer(t, [[1, 4], [1]], [[1, 4], [1]]);
   mixer(t, [[1, 4], [1]], [[1, 4], [1]], 0);
   mixer(t, [[1, 4], [1]], [[1, 4], [1]], 1);
@@ -283,22 +283,22 @@ t.test("1.8 - just nulls over numbers", t => {
     t,
     [
       [1, 4],
-      [1, 3]
+      [1, 3],
     ],
     [
       [1, 3],
-      [1, 4]
+      [1, 4],
     ]
   );
   mixer(
     t,
     [
       [1, 4],
-      [1, 3]
+      [1, 3],
     ],
     [
       [1, 3],
-      [1, 4]
+      [1, 4],
     ],
     0
   );
@@ -306,31 +306,31 @@ t.test("1.8 - just nulls over numbers", t => {
     t,
     [
       [1, 4],
-      [1, 3]
+      [1, 3],
     ],
     [
       [1, 3],
-      [1, 4]
+      [1, 4],
     ],
     1
   );
   t.end();
 });
 
-t.test("1.9 - just nulls over numbers", t => {
+t.test("1.9 - just nulls over numbers", (t) => {
   mixer(
     t,
     [
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 1],
       [null, null, null, null, null, null],
-      [null, null, null, null, null, 9]
+      [null, null, null, null, null, 9],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     0
   );
@@ -340,13 +340,13 @@ t.test("1.9 - just nulls over numbers", t => {
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     1
   );
@@ -356,13 +356,13 @@ t.test("1.9 - just nulls over numbers", t => {
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     2
   );
@@ -372,13 +372,13 @@ t.test("1.9 - just nulls over numbers", t => {
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     3
   );
@@ -388,13 +388,13 @@ t.test("1.9 - just nulls over numbers", t => {
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 1],
       [null, null, null, null, null, null],
-      [null, null, null, null, null, 9]
+      [null, null, null, null, null, 9],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     4
   );
@@ -404,40 +404,40 @@ t.test("1.9 - just nulls over numbers", t => {
       [null, null, null, null, null, 2],
       [null, null, null, null, null, null],
       [null, null, null, null, null, 1],
-      [null, null, null, null, null, 9]
+      [null, null, null, null, null, 9],
     ],
     [
       [null, null, null, null, null, 1],
       [null, null, null, null, null, 2],
       [null, null, null, null, null, 9],
-      [null, null, null, null, null, null]
+      [null, null, null, null, null, null],
     ],
     5
   );
   t.end();
 });
 
-t.test("1.10 - value of first ripple-left is null", t => {
+t.test("1.10 - value of first ripple-left is null", (t) => {
   mixer(
     t,
     [
       [null, 9],
-      [1, 9]
+      [1, 9],
     ],
     [
       [1, 9],
-      [null, 9]
+      [null, 9],
     ]
   );
   mixer(
     t,
     [
       [null, 9],
-      [1, 9]
+      [1, 9],
     ],
     [
       [1, 9],
-      [null, 9]
+      [null, 9],
     ],
     0
   );
@@ -445,11 +445,11 @@ t.test("1.10 - value of first ripple-left is null", t => {
     t,
     [
       [null, 9],
-      [1, 9]
+      [1, 9],
     ],
     [
       [1, 9],
-      [null, 9]
+      [null, 9],
     ],
     1
   );
@@ -459,7 +459,7 @@ t.test("1.10 - value of first ripple-left is null", t => {
 // -----------------------------------------------------------------------------
 // 2. edge-cases
 
-t.test("2.1 - various empty arrays", t => {
+t.test("2.1 - various empty arrays", (t) => {
   mixer(t, [], []);
   mixer(t, [[]], [[]]);
   mixer(t, [[], []], [[], []]);
@@ -475,7 +475,7 @@ t.test("2.1 - various empty arrays", t => {
   t.end();
 });
 
-t.test("2.2 - throws", t => {
+t.test("2.2 - throws", (t) => {
   // pinning throws by throw ID:
   t.throws(() => {
     sortByCol(1);
@@ -496,13 +496,13 @@ t.test("2.2 - throws", t => {
   t.end();
 });
 
-t.test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
+t.test("2.3 - throws when sort-by value is outside of any sub-arrays", (t) => {
   // pinning throws by throw ID:
   t.throws(() => {
     sortByCol(
       [
         [1, 2, 3],
-        [4, 5, 6]
+        [4, 5, 6],
       ],
       3 // all sub-arrays' max-length=2 since it's zero-indexed
     );
@@ -514,16 +514,16 @@ t.test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
 // -----------------------------------------------------------------------------
 // 3. sorting by column and clumping of values around the column sorted
 
-t.test("3.1 - clumping - simple case with values as undefined", t => {
+t.test("3.1 - clumping - simple case with values as undefined", (t) => {
   mixer(
     t,
     [
       [null, null, 2, 1, null],
-      [null, 1, 2, 1, 0]
+      [null, 1, 2, 1, 0],
     ],
     [
       [null, 1, 2, 1, 0],
-      [null, null, 2, 1, null]
+      [null, null, 2, 1, null],
     ],
     2
   );
@@ -533,18 +533,18 @@ t.test("3.1 - clumping - simple case with values as undefined", t => {
 
 t.test(
   "3.2 - clumping - left side takes priority over right - case #1 - values on both sides",
-  t => {
+  (t) => {
     mixer(
       t,
       [
         [null, null, null, 7, 2],
         [null, null, null, 7, 1],
-        [null, null, 1, 7, null]
+        [null, null, 1, 7, null],
       ],
       [
         [null, null, 1, 7, null],
         [null, null, null, 7, 1],
-        [null, null, null, 7, 2]
+        [null, null, null, 7, 2],
       ],
       3
     );
@@ -554,18 +554,18 @@ t.test(
 
 t.test(
   "3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col",
-  t => {
+  (t) => {
     mixer(
       t,
       [
         [7, 2],
         [7, 1],
-        [7, null]
+        [7, null],
       ],
       [
         [7, 1],
         [7, 2],
-        [7, null]
+        [7, null],
       ],
       0
     );
@@ -575,18 +575,18 @@ t.test(
 
 t.test(
   "3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays)",
-  t => {
+  (t) => {
     mixer(
       t,
       [
         [null, null, 2, 7],
         [null, null, null, 7],
-        [null, null, 1, 7]
+        [null, null, 1, 7],
       ],
       [
         [null, null, 1, 7],
         [null, null, 2, 7],
-        [null, null, null, 7]
+        [null, null, null, 7],
       ],
       3
     );

@@ -10,26 +10,26 @@ const { applyFixes } = require("../../../t-util/util");
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-missing-opening": 0
-    }
+      "tag-missing-opening": 0,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.same(messages, []);
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, t => {
+t.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-missing-opening": 1
-    }
+      "tag-missing-opening": 1,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.match(messages, [
@@ -39,19 +39,19 @@ t.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, t => {
       idxFrom: 2,
       idxTo: 6,
       message: `Opening tag is missing.`,
-      fix: null
-    }
+      fix: null,
+    },
   ]);
   t.end();
 });
 
-t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, t => {
+t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-missing-opening": 2
-    }
+      "tag-missing-opening": 2,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.match(messages, [
@@ -61,21 +61,21 @@ t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, t => {
       idxFrom: 2,
       idxTo: 6,
       message: `Opening tag is missing.`,
-      fix: null
-    }
+      fix: null,
+    },
   ]);
   t.end();
 });
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`,
-  t => {
+  (t) => {
     const str = "z </b>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        tag: 1
-      }
+        tag: 1,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.04.01");
     t.match(
@@ -87,8 +87,8 @@ t.test(
           idxFrom: 2,
           idxTo: 6,
           message: `Opening tag is missing.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.04.01"
     );
@@ -98,13 +98,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`,
-  t => {
+  (t) => {
     const str = "z </b>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        tag: 2
-      }
+        tag: 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.05.01");
     t.match(
@@ -116,8 +116,8 @@ t.test(
           idxFrom: 2,
           idxTo: 6,
           message: `Opening tag is missing.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.05.02"
     );
@@ -127,13 +127,13 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
-  t => {
+  (t) => {
     const str = "<style>\n\n</style>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-missing-opening": 2
-      }
+        "tag-missing-opening": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.06.01");
     t.same(messages, [], "01.06.02");
@@ -146,14 +146,14 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
-  t => {
+  (t) => {
     const str = `<br><br>zzz</br></br>`;
     const fixed = `<br/><br/>zzz<br/><br/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     t.equal(applyFixes(str, messages), fixed, "02.01");
     t.end();
@@ -162,14 +162,14 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
-  t => {
+  (t) => {
     const str = `<br><br>zzz<br>`;
     const fixed = `<br/><br/>zzz<br/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     t.equal(applyFixes(str, messages), fixed, "02.02.01");
     t.match(
@@ -182,8 +182,8 @@ t.test(
           idxFrom: 3,
           idxTo: 3,
           fix: {
-            ranges: [[3, 3, "/"]]
-          }
+            ranges: [[3, 3, "/"]],
+          },
         },
         {
           severity: 2,
@@ -192,8 +192,8 @@ t.test(
           idxFrom: 7,
           idxTo: 7,
           fix: {
-            ranges: [[7, 7, "/"]]
-          }
+            ranges: [[7, 7, "/"]],
+          },
         },
         {
           severity: 2,
@@ -202,9 +202,9 @@ t.test(
           idxFrom: 14,
           idxTo: 14,
           fix: {
-            ranges: [[14, 14, "/"]]
-          }
-        }
+            ranges: [[14, 14, "/"]],
+          },
+        },
       ],
       "02.02.02"
     );

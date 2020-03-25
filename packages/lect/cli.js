@@ -35,7 +35,7 @@ const {
   // initNpmIgnore,
   npmWillTakeCareOfThese,
   encodeDot,
-  decodeDot
+  decodeDot,
 } = require("./init-npmignore");
 const pull1 = require("array-pull-all-with-glob");
 
@@ -53,7 +53,7 @@ const {
   extractStringUnderBadges,
   parseReadme,
   standardiseBools,
-  assembleRollupInfoTable
+  assembleRollupInfoTable,
 } = require("./util");
 
 const DEBUG = 0;
@@ -105,14 +105,14 @@ const readmeNames = [
   "ReadMe.txt", // strange, but possible. Likely on Windows.
   "readme", // small caps, no extension
   "README", // all caps, no extension
-  "Readme" // first capital, no extension
+  "Readme", // first capital, no extension
 ];
 
 const packageJsonlectKeyDefaults = {
   special: false,
   babelrc: {
     override: false,
-    set: false
+    set: false,
   },
   badges: {
     node: true,
@@ -127,47 +127,47 @@ const packageJsonlectKeyDefaults = {
     downloads: true,
     runkit: true,
     contributors: true,
-    license: true
+    license: true,
   },
   cliSpecialKeyword: "",
   cliSpecialKeywordInstructions: "",
   eslintrc: {
     add: [],
-    remove: []
+    remove: [],
   },
   files: {
     delete: [],
     write_hard: [
       {
         name: "",
-        contents: ""
-      }
+        contents: "",
+      },
     ],
     write_soft: [
       {
         name: "",
-        contents: ""
-      }
-    ]
+        contents: "",
+      },
+    ],
   },
   header: {
     dontQuoteDescription: false,
-    rightFloatedBadge: []
+    rightFloatedBadge: [],
   },
   licence: {
-    extras: ["", ""]
+    extras: ["", ""],
   },
   npmignore: {
     badFiles: [],
     badFolders: [],
     goodFiles: [],
-    goodFolders: []
+    goodFolders: [],
   },
   various: {
     rollupEntryPoint: "",
     travisVersionsOverride: [""],
-    devDependencies: []
-  }
+    devDependencies: [],
+  },
 };
 
 // For every setting fetching, we first look for lectrc if something is set.
@@ -190,12 +190,12 @@ function get(
 
   if (opts.mode === "merge") {
     res = mergeAdvanced(lectrcContents, packContents, {
-      mergeBoolsUsingOrNotAnd: false
+      mergeBoolsUsingOrNotAnd: false,
     });
     return res;
   }
   res = mergeAdvanced(lectrcContents, packContents, {
-    mergeBoolsUsingOrNotAnd: false
+    mergeBoolsUsingOrNotAnd: false,
   });
   if (isStr(res) && res.length > 0) {
     return res;
@@ -208,10 +208,7 @@ function slugify(str) {
   if (typeof str !== "string") {
     return str;
   }
-  return str
-    .split(" ")[0]
-    .replace(" ", "_")
-    .toLowerCase();
+  return str.split(" ")[0].replace(" ", "_").toLowerCase();
 }
 
 //
@@ -296,7 +293,7 @@ async function step14(receivedPack) {
       .then(() => {
         log(`${chalk.green(logSymbols.success, ".lectrc.json written OK")}`);
       })
-      .catch(err => {
+      .catch((err) => {
         log(
           `${chalk.red(
             logSymbols.error,
@@ -315,7 +312,7 @@ async function step14(receivedPack) {
 
   if (isStr(formattedPack) && formattedPack.length) {
     // and also write out amended var "pack" contents (formattedPack) onto package.json
-    writeFileAtomic("package.json", formattedPack, err => {
+    writeFileAtomic("package.json", formattedPack, (err) => {
       if (err) {
         log(
           `${chalk.red(
@@ -341,12 +338,12 @@ function step13() {
     return str
       .split("\n")
       .filter(
-        row =>
+        (row) =>
           row.startsWith("import") ||
           (row.startsWith("const") && row.includes("require("))
       )
       .map(
-        row =>
+        (row) =>
           row.match(contentWithinQuotes) ? row.match(contentWithinQuotes) : [] // can come null
       );
   }
@@ -370,7 +367,7 @@ function step13() {
     try {
       allFilesInSrc = fs
         .readdirSync("src")
-        .filter(file => {
+        .filter((file) => {
           return (
             fs.statSync(path.join("src", file)).isFile() &&
             (!objectPath.get(pack, "lect.various.rollupIgnoreFilesForDist") ||
@@ -380,7 +377,7 @@ function step13() {
                 pack.lect.various.rollupIgnoreFilesForDist !== file))
           );
         })
-        .filter(file => file !== "main.js" && file.endsWith(".js"));
+        .filter((file) => file !== "main.js" && file.endsWith(".js"));
     } catch (err) {
       step14(pack);
       return;
@@ -401,7 +398,7 @@ function step13() {
   if (isArr(rollupExtraPlugins) && rollupExtraPlugins.length > 0) {
     // trim any commas
     rollupPluginsStrToInsert = `\n        ${rollupExtraPlugins
-      .map(val => trim(val, " ,"))
+      .map((val) => trim(val, " ,"))
       .join(",\n        ")},`;
   }
 
@@ -414,7 +411,7 @@ function step13() {
       fs.readFileSync(`./src/${currVal}`, "utf8")
     )
       .sort()
-      .map(val => {
+      .map((val) => {
         if (String(val).startsWith(`"./`)) {
           return `"${String(val).slice(3)}`;
         }
@@ -611,7 +608,7 @@ export default commandLineArgs => {
   return finalConfig;
 };
 `;
-  fs.outputFile("rollup.config.js", newRollupConfig, err => {
+  fs.outputFile("rollup.config.js", newRollupConfig, (err) => {
     if (err) {
       log(
         `${chalk.red(
@@ -719,21 +716,21 @@ function ask(regardingSomePath, what = "folder") {
       choices: [
         {
           name: `${chalk.green("do not put")} onto any .npmignore`,
-          value: false
+          value: false,
         },
         {
           name: `${chalk.red("put")} onto ${chalk.yellow(
             "local"
           )} lectrc npmignore in package.json`,
-          value: 1
+          value: 1,
         },
         {
           name: `${chalk.red("put")} onto ${chalk.yellow(
             "global"
           )} lectrc npmignore list in .lectrc`,
-          value: 2
-        }
-      ]
+          value: 2,
+        },
+      ],
     }))
   );
 }
@@ -756,7 +753,7 @@ async function step11part2(files) {
 
   let badFolders = [];
   let unclearFolders = [];
-  [badFolders, unclearFolders] = partition(foldersList, foldersName =>
+  [badFolders, unclearFolders] = partition(foldersList, (foldersName) =>
     get("npmignore.badFolders").includes(foldersName)
   );
   unclearFolders = pull(unclearFolders, get("npmignore.goodFolders"));
@@ -767,8 +764,8 @@ async function step11part2(files) {
     const folderAnswers = await ask(encodeDot(unclearFolders));
     // remove paths which are equal to "false". Leave only ones with values 1 & 2.
     [foldersToAddToLocalList, foldersToAddToGlobalList] = partition(
-      Object.keys(folderAnswers).filter(key1 => folderAnswers[key1]),
-      key2 => folderAnswers[key2] === 1
+      Object.keys(folderAnswers).filter((key1) => folderAnswers[key1]),
+      (key2) => folderAnswers[key2] === 1
     );
     foldersToAddToLocalList = decodeDot(foldersToAddToLocalList);
     foldersToAddToGlobalList = decodeDot(foldersToAddToGlobalList);
@@ -778,7 +775,7 @@ async function step11part2(files) {
 
   let badFiles = [];
   let unclearFiles = [];
-  [badFiles, unclearFiles] = partition(filesList, filesName =>
+  [badFiles, unclearFiles] = partition(filesList, (filesName) =>
     get("npmignore.badFiles").includes(filesName)
   );
   unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"));
@@ -789,8 +786,8 @@ async function step11part2(files) {
     const fileAnswers = await ask(encodeDot(unclearFiles), "file");
     // remove paths which are equal to "false". Leave only ones with values 1 & 2.
     [filesToAddToLocalList, filesToAddToGlobalList] = partition(
-      Object.keys(fileAnswers).filter(key1 => fileAnswers[key1]),
-      key2 => fileAnswers[key2] === 1
+      Object.keys(fileAnswers).filter((key1) => fileAnswers[key1]),
+      (key2) => fileAnswers[key2] === 1
     );
     filesToAddToLocalList = decodeDot(filesToAddToLocalList);
     filesToAddToGlobalList = decodeDot(filesToAddToGlobalList);
@@ -809,7 +806,7 @@ async function step11part2(files) {
     .sort()
     .join("\n")}\n`;
 
-  writeFileAtomic(".npmignore", finalNpmIgnoreFile, err => {
+  writeFileAtomic(".npmignore", finalNpmIgnoreFile, (err) => {
     if (err) {
       log(
         `${chalk.red(logSymbols.error, `could not write .npmignore:\n${err}`)}`
@@ -912,7 +909,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     // and to stop suggesting to set it as const
     objectPath.set(defaultlectKeys, "lect", packageJsonlectKeyDefaults);
     defaultlectKeys.lect.various.travisVersionsOverride = defaultlectKeys.lect.various.travisVersionsOverride.filter(
-      val => val.length > 0 && val.trim().length !== 0
+      (val) => val.length > 0 && val.trim().length !== 0
     );
 
     // object-assign the defaults:
@@ -923,7 +920,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         concatInsteadOfMerging: false,
         dedupeStringsInArrayValues: true,
         mergeBoolsUsingOrNotAnd: false,
-        ignoreKeys: []
+        ignoreKeys: [],
       }
     );
   }
@@ -1050,7 +1047,7 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   // console.log("\n-------\n");
 
-  Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
+  Object.keys(receivedPackageJsonObj.devDependencies).forEach((key) => {
     // console.log(`1050 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
@@ -1065,7 +1062,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1068 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1065 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1078,7 +1075,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     // console.log("\n-------\n");
   });
 
-  Object.keys(lectrcDevDeps).forEach(key => {
+  Object.keys(lectrcDevDeps).forEach((key) => {
     // if certain key is not present in package.json dev deps but it's listed
     // in lectrc, add it.
     // Ensure it's not a CLI app or it is but it's not rollup-
@@ -1131,7 +1128,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     adhocKeyOpsToDo.write_hard &&
     isObj(adhocKeyOpsToDo.write_hard)
   ) {
-    Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
+    Object.keys(adhocKeyOpsToDo.write_hard).forEach((key) => {
       if (isStr(key) && key.trim().length) {
         // console.log(`1132 lect cli: key to write hard =${key}`);
         objectPath.set(
@@ -1167,7 +1164,7 @@ async function step10() {
     // detect non-rollup setups and remove rollup if necessary:
     if (!objectPath.has(pack, "devDependencies.rollup")) {
       // 1. delete Rollup-related devdeps:
-      ["rollup*", "uglify-es"].forEach(key => {
+      ["rollup*", "uglify-es"].forEach((key) => {
         newValues = deleteKey(newValues, { key });
       });
 
@@ -1180,7 +1177,7 @@ async function step10() {
               log(chalk.green(logSymbols.success, "rollup.config.js DELETED"));
               // and move on to the next step
             })
-            .catch(err => {
+            .catch((err) => {
               log(
                 `${chalk.red(
                   logSymbols.error,
@@ -1206,7 +1203,7 @@ async function step10() {
 
     const finalThing = mergeAdvanced(newValues, pack, {
       concatInsteadOfMerging: false,
-      dedupeStringsInArrayValues: true
+      dedupeStringsInArrayValues: true,
     });
     // console.log(
     //   `1208 lect.js: ${`\u001b[${33}m${`finalThing`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1309,8 +1306,8 @@ function step9() {
 function step8() {
   // log(`${chalk.white("\nSTEP 8 - ad-hoc delete files")}`);
 
-  const thingsToDelete = get("files.delete").filter(val => val.trim() !== "");
-  pMap(thingsToDelete, path => {
+  const thingsToDelete = get("files.delete").filter((val) => val.trim() !== "");
+  pMap(thingsToDelete, (path) => {
     fs.access(path, fs.constants.F_OK)
       .then(() =>
         fs
@@ -1324,7 +1321,7 @@ function step8() {
     .then(() => {
       step9();
     })
-    .catch(err => {
+    .catch((err) => {
       log(`${chalk.red(logSymbols.error, `error deleting file:\n${err}`)}`);
       step9();
     });
@@ -1337,7 +1334,7 @@ function step8() {
 function step7() {
   // log(`${chalk.white("\nSTEP 7 - hard writing static files")}`);
 
-  const contentsToWriteHard = get("files.write_hard").filter(obj => {
+  const contentsToWriteHard = get("files.write_hard").filter((obj) => {
     return (
       existy(obj.name) &&
       isStr(obj.name) &&
@@ -1356,7 +1353,7 @@ function step7() {
     step8();
   }
 
-  pMap(contentsToWriteHard, oneToDoObj => {
+  pMap(contentsToWriteHard, (oneToDoObj) => {
     fs.outputFile(
       oneToDoObj.name,
       resolveVars(oneToDoObj.contents, pack, parsedPack)
@@ -1368,7 +1365,7 @@ function step7() {
     .then(() => {
       step8();
     })
-    .catch(err => {
+    .catch((err) => {
       log(`${chalk.red(logSymbols.error, `error writing file:\n${err}`)}`);
       step8();
     });
@@ -1386,8 +1383,9 @@ function step6() {
   //   )}`
   // );
 
-  const backToTop = `**[${get("various.back_to_top.label") ||
-    "⬆  back to top"}](${get("various.back_to_top.url") || "#"})**`;
+  const backToTop = `**[${
+    get("various.back_to_top.label") || "⬆  back to top"
+  }](${get("various.back_to_top.url") || "#"})**`;
   const noDepsBadge = `https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square`;
   const noDepsUrl = `https://www.npmjs.com/package/${pack.name}?activeTab=dependencies`;
   if (
@@ -1427,7 +1425,7 @@ function step6() {
     if (customBadges) {
       // if (DEBUG) { console.log(`customBadges = ${JSON.stringify(customBadges, null, 4)}`) }
       customBadgesSortedIndexList = uniq(
-        Object.keys(customBadges).map(badgeName =>
+        Object.keys(customBadges).map((badgeName) =>
           parseInt(customBadges[badgeName].insert_before, 10)
         )
       ).sort();
@@ -1493,13 +1491,13 @@ function step6() {
       .split("\n")
       .map((el, idx, wholeArr) => {
         if (customBadgesSortedIndexList.includes(idx + 2)) {
-          Object.keys(customBadges).forEach(key => {
+          Object.keys(customBadges).forEach((key) => {
             if (customBadges[key].insert_before === idx + 2) {
               const slug = slugify(customBadges[key].alt);
               // check, do any of the existing slugs match it, and if so, throw
               if (
                 wholeArr.some(
-                  oneOfBadgeObjects =>
+                  (oneOfBadgeObjects) =>
                     Object.keys(oneOfBadgeObjects)[0] === slug
                 )
               ) {
@@ -1511,7 +1509,7 @@ function step6() {
                       null,
                       4
                     )}\nthe slug we generated (${slug}) is clashing with one of existing badges from .lectrc.json:\n${JSON.stringify(
-                      wholeArr.filter(obj => obj[slug] !== undefined)[0],
+                      wholeArr.filter((obj) => obj[slug] !== undefined)[0],
                       null,
                       4
                     )}. Please set a different "alt" value for the custom badge in this package.json.`
@@ -1534,7 +1532,7 @@ function step6() {
         // If there are custom badges, add their corresponding footer links too:
         if (customBadgesSortedIndexList.includes(i)) {
           // if (DEBUG) { console.log(`add before this badge: ${JSON.stringify(badge, null, 4)}`) }
-          Object.keys(customBadges).forEach(key => {
+          Object.keys(customBadges).forEach((key) => {
             if (customBadges[key].insert_before === i) {
               const slug = slugify(customBadges[key].alt);
               // no need to check, do any of the existing slugs match it
@@ -1704,7 +1702,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1707 clause #3`);
+        console.log(`1705 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1716,20 +1714,20 @@ function step6() {
 
       if (readmePiece.heading.toLowerCase().includes("table of contents")) {
         readmePiece.restofit = readmeData
-          .map(obj => obj.heading)
+          .map((obj) => obj.heading)
           .filter(
-            val =>
+            (val) =>
               isStr(val) &&
               val.includes("##") &&
               !val.includes("###") &&
               !val.includes("###")
           )
-          .map(val => val.replace(/##/g, "").trim())
-          .filter(val => !val.toLowerCase().includes("table of contents"))
-          .map(val => {
+          .map((val) => val.replace(/##/g, "").trim())
+          .filter((val) => !val.toLowerCase().includes("table of contents"))
+          .map((val) => {
             return {
               fullTitle: val,
-              slug: slugger.slug(val.replace(" - ", " "))
+              slug: slugger.slug(val.replace(" - ", " ")),
             };
           })
           .map(({ fullTitle, slug }) => `- [${fullTitle}](#${slug})`)
@@ -1793,7 +1791,7 @@ npm i ${isCLI ? "-g " : ""}${pack.name}
               ? "one of the following keywords"
               : "keyword"
           }:\n\n\`\`\`bash`;
-          Object.keys(pack.bin).forEach(key => {
+          Object.keys(pack.bin).forEach((key) => {
             if (
               !(
                 pack &&
@@ -1940,7 +1938,7 @@ const ${consumedName} = ${camelCase(pack.name)};
 
   if (licenceExtras) {
     content += `\n${arrayiffy(licenceExtras)
-      .filter(singleExtra => singleExtra.length > 0)
+      .filter((singleExtra) => singleExtra.length > 0)
       .join("\n")}`;
   }
 
@@ -1963,7 +1961,7 @@ const ${consumedName} = ${camelCase(pack.name)};
     let perc = objectPath.get(coverageValues, "total.lines.pct");
     let caught;
     if (
-      Object.keys(coverageValues).some(key => {
+      Object.keys(coverageValues).some((key) => {
         caught = key;
         return key.includes(".esm.");
       })
@@ -1986,7 +1984,7 @@ const ${consumedName} = ${camelCase(pack.name)};
     // }
   }
 
-  writeFileAtomic("README.md", content, err => {
+  writeFileAtomic("README.md", content, (err) => {
     if (err) {
       throw new Error(`${chalk.red(logSymbols.error, err)}`);
     }
@@ -2047,7 +2045,7 @@ function step5() {
         (objectPath.has(pack, "devDependencies") &&
           isObj(pack.devDependencies) &&
           Object.keys(pack.devDependencies).length > 0 &&
-          Object.keys(pack.devDependencies).some(key =>
+          Object.keys(pack.devDependencies).some((key) =>
             key.startsWith("babel")
           )))
     ) {
@@ -2070,7 +2068,7 @@ function step5() {
       ) {
         finalBabelrc = mergeAdvanced(finalBabelrc, pack.lect.babelrc.override, {
           hardMergeEverything: true,
-          mergeObjectsOnlyWhenKeysetMatches: false
+          mergeObjectsOnlyWhenKeysetMatches: false,
         });
       }
 
@@ -2095,7 +2093,7 @@ function step5() {
       writeFileAtomic(
         ".babelrc",
         JSON.stringify(finalBabelrc, null, 2),
-        err => {
+        (err) => {
           if (err) {
             log(
               `${chalk.red(
@@ -2118,7 +2116,7 @@ function step5() {
         objectPath.set(
           pack,
           "lect.npmignore.badFiles",
-          badFiles.filter(val => val !== "cli.js")
+          badFiles.filter((val) => val !== "cli.js")
         );
       }
 
@@ -2135,7 +2133,7 @@ function step5() {
           // and move on to the next step
           step6();
         })
-        .catch(err => {
+        .catch((err) => {
           log(
             `${chalk.red(logSymbols.error, `error deleting .babelrc:\n${err}`)}`
           );
@@ -2367,7 +2365,7 @@ function checkOneOfNames(i) {
         },
         onerror() {
           checkOneOfNames(i + 1);
-        }
+        },
       },
       i
     );

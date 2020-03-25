@@ -244,7 +244,7 @@ This is a huge boost for my productivity.
 ```js
 module.exports = {
   detergent: detergent,
-  opts: defaultsObj
+  opts: defaultsObj,
 };
 ```
 

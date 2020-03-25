@@ -38,7 +38,7 @@ const {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } = require("all-named-html-entities");
 ```
 
@@ -55,7 +55,7 @@ import {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } from "all-named-html-entities";
 ```
 
@@ -77,7 +77,7 @@ const {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } = allNamedHtmlEntities;
 ```
 
@@ -154,7 +154,7 @@ if (
   workingSlice &&
   entStartsWith.hasOwnProperty(workingSlice[0]) &&
   entStartsWith[workingSlice[0]].hasOwnProperty(workingSlice[1]) &&
-  entStartsWith[workingSlice[0]][workingSlice[1]].some(entity =>
+  entStartsWith[workingSlice[0]][workingSlice[1]].some((entity) =>
     workingSlice.startsWith(entity)
   )
 ) {

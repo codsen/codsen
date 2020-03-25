@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateBorder(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateBorder(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -38,23 +38,23 @@ function attributeValidateBorder(context, ...opts) {
           {
             type: "integer",
             negativeOK: false,
-            theOnlyGoodUnits: [] // empty array means no units allowed
+            theOnlyGoodUnits: [], // empty array means no units allowed
           }
         );
         console.log(
           `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-border"
+              ruleId: "attribute-validate-border",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -10,12 +10,12 @@ import op from "object-path";
 const reference = {
   simple: "-->",
   only: "<![endif]-->",
-  not: "<!--<![endif]-->"
+  not: "<!--<![endif]-->",
 };
 
 function commentMismatchingPair(context, ...opts) {
   return {
-    ast: function(node) {
+    ast: function (node) {
       console.log(
         `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
       );
@@ -94,8 +94,8 @@ function commentMismatchingPair(context, ...opts) {
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges
-                    }
+                      ranges,
+                    },
                   });
                 } else if (
                   previousToken.kind === "only" &&
@@ -116,8 +116,8 @@ function commentMismatchingPair(context, ...opts) {
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges
-                    }
+                      ranges,
+                    },
                   });
                 }
               }
@@ -131,7 +131,7 @@ function commentMismatchingPair(context, ...opts) {
       //     Object.assign({}, errorObj, {
       //       ruleId: "comment-mismatching-pair"
       //     })
-    }
+    },
   };
 }
 

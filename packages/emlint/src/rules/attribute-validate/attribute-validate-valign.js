@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateValign(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValign() ███████████████████████████████████████`
       );
@@ -31,7 +31,7 @@ function attributeValidateValign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -39,7 +39,7 @@ function attributeValidateValign(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateString(
@@ -47,19 +47,19 @@ function attributeValidateValign(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "middle", "bottom", "baseline"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
-          ).forEach(errorObj => {
+          ).forEach((errorObj) => {
             console.log(`053 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valign"
+                ruleId: "attribute-validate-valign",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

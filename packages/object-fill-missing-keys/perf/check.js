@@ -11,22 +11,22 @@ const testme = () =>
   f(
     {
       a: {
-        x: "x"
+        x: "x",
       },
-      z: "z"
+      z: "z",
     },
     {
       a: {
         b: {
           c: false,
-          d: false
+          d: false,
         },
-        x: false
+        x: false,
       },
-      z: false
+      z: false,
     },
     {
-      doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+      doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
     }
   );
 

@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no align, error level 0`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 0
-      }
+        "attribute-validate-align": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no align, error level 1`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 1
-      }
+        "attribute-validate-align": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no align, error level 2`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`,
-  t => {
+  (t) => {
     const str = `<table align='left'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<table align=" left">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table align="left">`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 15,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[14, 15]]
-        }
-      }
+          ranges: [[14, 15]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<table align="left ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table align="left">`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 19,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[18, 19]]
-        }
-      }
+          ranges: [[18, 19]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<table align="   left  \t ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table align="left">`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [14, 17],
-            [21, 25]
-          ]
-        }
-      }
+            [21, 25],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<table align="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -171,8 +171,8 @@ t.test(
         idxFrom: 14,
         idxTo: 17,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -183,13 +183,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<span align=".jpg">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -199,8 +199,8 @@ t.test(
         idxFrom: 6,
         idxTo: 18,
         message: `Tag "span" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -208,13 +208,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz align=".jpg" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -224,8 +224,8 @@ t.test(
         idxFrom: 5,
         idxTo: 17,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -236,13 +236,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`legend/caption`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<legend align="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -252,8 +252,8 @@ t.test(
         idxFrom: 15,
         idxTo: 22,
         message: `Should be "top|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -261,13 +261,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`legend/caption`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<caption align="top,">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -277,8 +277,8 @@ t.test(
         idxFrom: 16,
         idxTo: 20,
         message: `Should be "top|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -286,13 +286,13 @@ t.test(
 
 t.test(
   `04.03 - ${`\u001b[${35}m${`legend/caption`}\u001b[${39}m`} - wrong value, middle`,
-  t => {
+  (t) => {
     const str = `<legend align="middle">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -302,8 +302,8 @@ t.test(
         idxFrom: 15,
         idxTo: 21,
         message: `Should be "top|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -311,13 +311,13 @@ t.test(
 
 t.test(
   `04.04 - ${`\u001b[${35}m${`legend/caption`}\u001b[${39}m`} - good value`,
-  t => {
+  (t) => {
     const str = `<table class="zz" id="yy" align='left' valign="xx">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -330,13 +330,13 @@ t.test(
 
 t.test(
   `05.01 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<img align="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -346,8 +346,8 @@ t.test(
         idxFrom: 12,
         idxTo: 19,
         message: `Should be "top|middle|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -355,13 +355,13 @@ t.test(
 
 t.test(
   `05.02 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<img align="top,">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -371,8 +371,8 @@ t.test(
         idxFrom: 12,
         idxTo: 16,
         message: `Should be "top|middle|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -380,13 +380,13 @@ t.test(
 
 t.test(
   `05.03 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - wrong value, justify`,
-  t => {
+  (t) => {
     const str = `<img align="justify">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -396,20 +396,20 @@ t.test(
         idxFrom: 12,
         idxTo: 19,
         message: `Should be "top|middle|bottom|left|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
 );
 
-t.test(`05.04 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - good value`, t => {
+t.test(`05.04 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - good value`, (t) => {
   const str = `<img id="yy" align='bottom' class="zz">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "attribute-validate-align": 2
-    }
+      "attribute-validate-align": 2,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.same(messages, []);
@@ -421,13 +421,13 @@ t.test(`05.04 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - good value`, t => {
 
 t.test(
   `06.01 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<table align="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -437,8 +437,8 @@ t.test(
         idxFrom: 14,
         idxTo: 21,
         message: `Should be "left|center|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -446,13 +446,13 @@ t.test(
 
 t.test(
   `06.02 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<table align="left,">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -462,8 +462,8 @@ t.test(
         idxFrom: 14,
         idxTo: 19,
         message: `Should be "left|center|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -471,13 +471,13 @@ t.test(
 
 t.test(
   `06.03 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - wrong value, top`,
-  t => {
+  (t) => {
     const str = `<table align="top">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -487,38 +487,41 @@ t.test(
         idxFrom: 14,
         idxTo: 17,
         message: `Should be "left|center|right".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
 );
 
-t.test(`06.04 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - good value`, t => {
-  const str = `<table id='yy' align='left' class='zz'>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-align": 2
-    }
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
-  t.end();
-});
+t.test(
+  `06.04 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - good value`,
+  (t) => {
+    const str = `<table id='yy' align='left' class='zz'>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-align": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
 // 07. wrong value - div
 // -----------------------------------------------------------------------------
 
 t.test(
   `07.01 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<div align="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -528,8 +531,8 @@ t.test(
         idxFrom: 12,
         idxTo: 19,
         message: `Should be "left|center|right|justify".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -537,13 +540,13 @@ t.test(
 
 t.test(
   `07.02 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<div align="left,">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -553,8 +556,8 @@ t.test(
         idxFrom: 12,
         idxTo: 17,
         message: `Should be "left|center|right|justify".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -562,13 +565,13 @@ t.test(
 
 t.test(
   `07.03 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - wrong value, top`,
-  t => {
+  (t) => {
     const str = `<div align="top">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -578,20 +581,20 @@ t.test(
         idxFrom: 12,
         idxTo: 15,
         message: `Should be "left|center|right|justify".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
 );
 
-t.test(`07.04 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - good value`, t => {
+t.test(`07.04 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - good value`, (t) => {
   const str = `<div id='yy' align='left' class='zz'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "attribute-validate-align": 2
-    }
+      "attribute-validate-align": 2,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.same(messages, []);
@@ -603,13 +606,13 @@ t.test(`07.04 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - good value`, t => {
 
 t.test(
   `08.01 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<td align="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -619,8 +622,8 @@ t.test(
         idxFrom: 11,
         idxTo: 18,
         message: `Should be "left|center|right|justify|char".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -628,13 +631,13 @@ t.test(
 
 t.test(
   `08.02 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<td class="zz" align="left," id='yy'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -644,8 +647,8 @@ t.test(
         idxFrom: 22,
         idxTo: 27,
         message: `Should be "left|center|right|justify|char".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -653,13 +656,13 @@ t.test(
 
 t.test(
   `08.03 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - wrong value, top`,
-  t => {
+  (t) => {
     const str = `<td align="top">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-align": 2
-      }
+        "attribute-validate-align": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -669,20 +672,20 @@ t.test(
         idxFrom: 11,
         idxTo: 14,
         message: `Should be "left|center|right|justify|char".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
 );
 
-t.test(`08.04 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - good value`, t => {
+t.test(`08.04 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - good value`, (t) => {
   const str = `<td id='yy' align='left' class='zz'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "attribute-validate-align": 2
-    }
+      "attribute-validate-align": 2,
+    },
   });
   t.equal(applyFixes(str, messages), str);
   t.same(messages, []);

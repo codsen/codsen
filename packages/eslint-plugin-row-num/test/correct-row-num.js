@@ -16,16 +16,16 @@ console.log(`linter.version = ${linter.version}`);
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - double quotes`,
-  t => {
+  (t) => {
     t.match(
       linter.verifyAndFix(`\n${letterC}onsole.log("9 something")`, {
         rules: {
-          "row-num/correct-row-num": "error"
-        }
+          "row-num/correct-row-num": "error",
+        },
       }),
       {
         fixed: true,
-        output: `\n${letterC}onsole.log("002 something")`
+        output: `\n${letterC}onsole.log("002 something")`,
         // messages: []
       }
     );
@@ -36,16 +36,16 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - single quotes`,
-  t => {
+  (t) => {
     t.match(
       linter.verifyAndFix(`\n${letterC}onsole.log('9 something')`, {
         rules: {
-          "row-num/correct-row-num": "error"
-        }
+          "row-num/correct-row-num": "error",
+        },
       }),
       {
         fixed: true,
-        output: `\n${letterC}onsole.log('002 something')`
+        output: `\n${letterC}onsole.log('002 something')`,
         // messages: []
       }
     );
@@ -56,42 +56,42 @@ t.test(
 
 // Think:
 // \nconsole.log('9 something')
-t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, t => {
+t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
   t.same(
     linter.verifyAndFix(
       `\n${letterC}onsole.log(${backtick}9 something${backtick})`,
       {
         parserOptions: { ecmaVersion: 6 },
         rules: {
-          "row-num/correct-row-num": "error"
-        }
+          "row-num/correct-row-num": "error",
+        },
       }
     ),
     {
       fixed: true,
       output: `\n${letterC}onsole.log(${backtick}002 something${backtick})`,
-      messages: []
+      messages: [],
     }
   );
 
   t.end();
 });
 
-t.test(`01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, t => {
+t.test(`01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
   t.same(
     linter.verifyAndFix(
       `\n${letterC}onsole.log(\n${backtick}9 something${backtick}\n)`,
       {
         parserOptions: { ecmaVersion: 6 },
         rules: {
-          "row-num/correct-row-num": "error"
-        }
+          "row-num/correct-row-num": "error",
+        },
       }
     ),
     {
       fixed: true,
       output: `\n${letterC}onsole.log(\n${backtick}003 something${backtick}\n)`,
-      messages: []
+      messages: [],
     }
   );
 
@@ -101,7 +101,7 @@ t.test(`01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, t => {
 // 02. false positives
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - false positives - various tests`, t => {
+t.test(`02.01 - false positives - various tests`, (t) => {
   [
     `const z = "something"`,
     `const z = "something\n01"`,
@@ -109,17 +109,17 @@ t.test(`02.01 - false positives - various tests`, t => {
     `const z = "something 01"`,
     `const z = "01 something 01"`,
     `const z = "01 something 01\n"`,
-    `const z = "\t01 something 01\n"`
-  ].forEach(testStr => {
+    `const z = "\t01 something 01\n"`,
+  ].forEach((testStr) => {
     t.match(
       linter.verifyAndFix(testStr, {
         rules: {
-          "row-num/correct-row-num": "error"
-        }
+          "row-num/correct-row-num": "error",
+        },
       }),
       {
         fixed: false,
-        output: testStr
+        output: testStr,
       }
     );
   });

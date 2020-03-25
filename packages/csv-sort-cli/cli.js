@@ -42,9 +42,9 @@ const cli = meow(
       overwrite: {
         type: "boolean",
         alias: "o",
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -79,8 +79,8 @@ function offerAListOfCSVsToPickFrom(stateObj) {
       type: "list",
       name: "file",
       message: "Which CSV would you like to check?",
-      choices: allCSVsHere
-    }
+      choices: allCSVsHere,
+    },
   ];
   if (
     stateObj === undefined ||
@@ -94,14 +94,14 @@ function offerAListOfCSVsToPickFrom(stateObj) {
       message: "Do you want to overwrite this file with a sorted result?",
       choices: [
         { name: "yes", value: true },
-        { name: "no", value: false }
-      ]
+        { name: "no", value: false },
+      ],
     });
   }
   ui.log.write(chalk.yellow("Please pick a file:"));
-  return inquirer.prompt(questions).then(answer => ({
+  return inquirer.prompt(questions).then((answer) => ({
     toDoList: [path.basename(answer.file)],
-    overwrite: answer.overwrite || false
+    overwrite: answer.overwrite || false,
   }));
 }
 
@@ -146,15 +146,15 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   // if no arguments were given, offer a list:
   thePromise = offerAListOfCSVsToPickFrom(state);
 } else if (
-  state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync)
+  state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
     .length > 0
 ) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
   const erroneous = pullAll(
-    state.toDoList.map(onePath => path.resolve(onePath)),
-    state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync)
-  ).map(singlePath => path.basename(singlePath)); // then filtering file names-only
+    state.toDoList.map((onePath) => path.resolve(onePath)),
+    state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
+  ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
@@ -169,7 +169,7 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
 
   // remove non-existing paths from toDoList:
   state.toDoList = state.toDoList
-    .map(onePath => path.resolve(onePath))
+    .map((onePath) => path.resolve(onePath))
     .filter(fs.existsSync);
 
   // create the final promise variable we're going to use later:
@@ -195,8 +195,8 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
 // -----------------------------------------------------------------------------
 
 thePromise
-  .then(receivedState => {
-    receivedState.toDoList.map(requestedCSVsPath => {
+  .then((receivedState) => {
+    receivedState.toDoList.map((requestedCSVsPath) => {
       // read the source
       fs.readFile(requestedCSVsPath, "utf8", (csvError, csvData) => {
         if (csvData) {
@@ -208,7 +208,7 @@ thePromise
                 path.basename(requestedCSVsPath),
                 cleaned.res.join("\n"),
                 "utf8",
-                err => {
+                (err) => {
                   if (err) {
                     throw err;
                   }
@@ -235,7 +235,7 @@ thePromise
                     proposedNewFileName,
                     cleaned.res.join("\n"),
                     "utf8",
-                    err => {
+                    (err) => {
                       if (err) {
                         throw err;
                       }
@@ -272,7 +272,7 @@ thePromise
       });
     });
   })
-  .catch(err => {
+  .catch((err) => {
     log(chalk.red(err));
     process.exit(1);
   });

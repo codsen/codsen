@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateSpan(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateSpan() ███████████████████████████████████████`
       );
@@ -25,7 +25,7 @@ function attributeValidateSpan(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -37,23 +37,23 @@ function attributeValidateSpan(context, ...opts) {
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units.",
             zeroOK: false,
-            customPxMessage: `Columns number is not in pixels.`
+            customPxMessage: `Columns number is not in pixels.`,
           }
         );
         console.log(
           `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-span"
+              ruleId: "attribute-validate-span",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

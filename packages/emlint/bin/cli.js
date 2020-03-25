@@ -19,9 +19,9 @@ const cli = meow(
     flags: {
       pad: {
         type: "number",
-        alias: "p"
-      }
-    }
+        alias: "p",
+      },
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();

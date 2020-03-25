@@ -5,7 +5,7 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOnfocus(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOnfocus() ███████████████████████████████████████`
       );
@@ -37,7 +37,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             "input",
             "label",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -45,7 +45,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate the script value
@@ -61,17 +61,17 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             )}`
           );
 
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`065 attributeValidateOnfocus(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onfocus"
+                ruleId: "attribute-validate-onfocus",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

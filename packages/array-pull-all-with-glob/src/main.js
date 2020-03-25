@@ -46,7 +46,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   if (originalInput.length === 0 || originalToBeRemoved.length === 0) {
     return originalInput;
   }
-  if (!originalInput.every(el => isStr(el))) {
+  if (!originalInput.every((el) => isStr(el))) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_05] first argument array contains non-string elements: ${JSON.stringify(
         originalInput,
@@ -55,7 +55,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
       )}`
     );
   }
-  if (!toBeRemoved.every(el => isStr(el))) {
+  if (!toBeRemoved.every((el) => isStr(el))) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(
         toBeRemoved,
@@ -77,7 +77,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
 
   let opts;
   const defaults = {
-    caseSensitive: true
+    caseSensitive: true,
   };
   if (originalOpts === null) {
     opts = Object.assign({}, defaults);
@@ -86,10 +86,10 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   }
 
   return Array.from(originalInput).filter(
-    originalVal =>
-      !toBeRemoved.some(remVal =>
+    (originalVal) =>
+      !toBeRemoved.some((remVal) =>
         matcher.isMatch(originalVal, remVal, {
-          caseSensitive: opts.caseSensitive
+          caseSensitive: opts.caseSensitive,
         })
       )
   );

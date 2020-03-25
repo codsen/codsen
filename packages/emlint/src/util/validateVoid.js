@@ -11,7 +11,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
 
   const defaults = {
     xhtml: false,
-    enforceSiblingAttributes: null
+    enforceSiblingAttributes: null,
   };
 
   const opts = Object.assign({}, defaults, originalOpts);
@@ -51,7 +51,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
           [
             node.attribNameEndsAt,
             node.attribEnd,
-            `=${quotesType}${node.attribName}${quotesType}`
+            `=${quotesType}${node.attribName}${quotesType}`,
           ],
           null,
           4
@@ -67,10 +67,10 @@ function validateVoid(node, context, errorArr, originalOpts) {
             [
               node.attribNameEndsAt,
               node.attribEnd,
-              `=${quotesType}${node.attribName}${quotesType}`
-            ]
-          ]
-        }
+              `=${quotesType}${node.attribName}${quotesType}`,
+            ],
+          ],
+        },
       });
     }
   } else if (node.attribValue !== null) {
@@ -79,8 +79,8 @@ function validateVoid(node, context, errorArr, originalOpts) {
       idxTo: node.attribEnd,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndsAt, node.attribEnd]]
-      }
+        ranges: [[node.attribNameEndsAt, node.attribEnd]],
+      },
     });
   }
 
@@ -89,14 +89,14 @@ function validateVoid(node, context, errorArr, originalOpts) {
     Object.keys(opts.enforceSiblingAttributes).length
   ) {
     console.log(`091 validateVoid(): sibling attributes enforced`);
-    Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
+    Object.keys(opts.enforceSiblingAttributes).forEach((siblingAttr) => {
       console.log(
         `094 validateVoid(): checking presence of attribute "${siblingAttr}"`
       );
       if (
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(
-          attribObj => attribObj.attribName === siblingAttr
+          (attribObj) => attribObj.attribName === siblingAttr
         )
       ) {
         // parent tag is missing the requested attribute
@@ -104,14 +104,14 @@ function validateVoid(node, context, errorArr, originalOpts) {
           idxFrom: node.parent.start,
           idxTo: node.parent.end,
           message: `Should have attribute "${siblingAttr}".`,
-          fix: null
+          fix: null,
         });
       } else if (
         opts.enforceSiblingAttributes[siblingAttr] &&
         Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) &&
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(
-          attribObj =>
+          (attribObj) =>
             attribObj.attribName === siblingAttr &&
             opts.enforceSiblingAttributes[siblingAttr].includes(
               attribObj.attribValue
@@ -137,9 +137,9 @@ function validateVoid(node, context, errorArr, originalOpts) {
           idxFrom,
           idxTo,
           message: `Only tags with ${opts.enforceSiblingAttributes[siblingAttr]
-            .map(val => `"${val}"`)
+            .map((val) => `"${val}"`)
             .join(" or ")} attributes can be ${node.attribName}.`,
-          fix: null
+          fix: null,
         });
       }
     });

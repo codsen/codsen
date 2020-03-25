@@ -7,14 +7,14 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`,
-  t => {
+  (t) => {
     const str = "</br>";
     const fixed = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-frontal-slash": 2
-      }
+        "tag-void-frontal-slash": 2,
+      },
     });
     t.equal(applyFixes(str, messages), fixed, "01.01.01");
     t.match(
@@ -26,8 +26,8 @@ t.test(
           idxFrom: 0,
           idxTo: 5,
           message: `Remove frontal slash.`,
-          fix: { ranges: [[1, 2]] }
-        }
+          fix: { ranges: [[1, 2]] },
+        },
       ],
       "01.01.02"
     );
@@ -38,14 +38,14 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`,
-  t => {
+  (t) => {
     const str = "</br>";
     const fixed = "<br/>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        tag: 1
-      }
+        tag: 1,
+      },
     });
     t.equal(applyFixes(str, messages), fixed, "01.02.01");
     t.match(
@@ -55,11 +55,11 @@ t.test(
           severity: 1,
           message: "Remove frontal slash.",
           fix: {
-            ranges: [[1, 2]]
+            ranges: [[1, 2]],
           },
           ruleId: "tag-void-frontal-slash",
           idxFrom: 0,
-          idxTo: 5
+          idxTo: 5,
         },
         {
           severity: 1,
@@ -68,9 +68,9 @@ t.test(
           idxFrom: 4,
           idxTo: 4,
           fix: {
-            ranges: [[4, 4, "/"]]
-          }
-        }
+            ranges: [[4, 4, "/"]],
+          },
+        },
       ],
       "01.02.02"
     );
@@ -81,14 +81,14 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`,
-  t => {
+  (t) => {
     const str = "</br>";
     const fixed = "<br/>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        tag: 2
-      }
+        tag: 2,
+      },
     });
     t.equal(applyFixes(str, messages), fixed, "01.03.01");
     t.match(
@@ -98,11 +98,11 @@ t.test(
           severity: 2,
           message: "Remove frontal slash.",
           fix: {
-            ranges: [[1, 2]]
+            ranges: [[1, 2]],
           },
           ruleId: "tag-void-frontal-slash",
           idxFrom: 0,
-          idxTo: 5
+          idxTo: 5,
         },
         {
           severity: 2,
@@ -111,9 +111,9 @@ t.test(
           idxFrom: 4,
           idxTo: 4,
           fix: {
-            ranges: [[4, 4, "/"]]
-          }
-        }
+            ranges: [[4, 4, "/"]],
+          },
+        },
       ],
       "01.03.02"
     );

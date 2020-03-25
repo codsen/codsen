@@ -102,7 +102,7 @@ Example result of `v.1` API:
 ```js
 [
   [3, 15],
-  [9, 21]
+  [9, 21],
 ];
 ```
 
@@ -114,14 +114,14 @@ now the same example in `v.2` API:
     headsStartAt: 3,
     headsEndAt: 6,
     tailsStartAt: 9,
-    tailsEndAt: 12
+    tailsEndAt: 12,
   },
   {
     headsStartAt: 15,
     headsEndAt: 18,
     tailsStartAt: 21,
-    tailsEndAt: 24
-  }
+    tailsEndAt: 24,
+  },
 ];
 ```
 

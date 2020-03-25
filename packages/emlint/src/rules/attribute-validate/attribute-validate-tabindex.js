@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateTabindex(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateTabindex() ███████████████████████████████████████`
       );
@@ -27,7 +27,7 @@ function attributeValidateTabindex(context, ...opts) {
             "input",
             "object",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -35,7 +35,7 @@ function attributeValidateTabindex(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -48,23 +48,23 @@ function attributeValidateTabindex(context, ...opts) {
             customGenericValueError: "Should be integer, no units.",
             zeroOK: true,
             customPxMessage: `Tabbing order number should not be in pixels.`,
-            maxValue: 32767
+            maxValue: 32767,
           }
         );
         console.log(
           `055 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`059 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-tabindex"
+              ruleId: "attribute-validate-tabindex",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

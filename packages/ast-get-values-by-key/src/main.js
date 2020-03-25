@@ -72,7 +72,7 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
       if (replacement === undefined) {
         res.push({
           val,
-          path: innerObj.path
+          path: innerObj.path,
         });
       } else if (replacement.length > 0) {
         return replacement.shift();

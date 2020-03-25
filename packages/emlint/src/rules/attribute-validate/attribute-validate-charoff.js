@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCharoff(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCharoff() ███████████████████████████████████████`
       );
@@ -35,7 +35,7 @@ function attributeValidateCharoff(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -43,7 +43,7 @@ function attributeValidateCharoff(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -54,7 +54,7 @@ function attributeValidateCharoff(context, ...opts) {
             type: "integer",
             negativeOK: true,
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
         console.log(
@@ -64,27 +64,27 @@ function attributeValidateCharoff(context, ...opts) {
         // tag has to have "char" attribute:
         if (
           !node.parent.attribs.some(
-            attribObj => attribObj.attribName === "char"
+            (attribObj) => attribObj.attribName === "char"
           )
         ) {
           errorArr.push({
             idxFrom: node.parent.start,
             idxTo: node.parent.end,
             message: `Attribute "char" missing.`,
-            fix: null
+            fix: null,
           });
         }
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`079 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charoff"
+              ruleId: "attribute-validate-charoff",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

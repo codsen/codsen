@@ -139,12 +139,12 @@ console.log(
       [11, 15],
       [6, 10],
       [16, 20],
-      [10, 30]
+      [10, 30],
     ],
     {
-      progressFn: perc => {
+      progressFn: (perc) => {
         console.log(`done: ${perc}`);
-      }
+      },
     }
   )
 );
@@ -209,12 +209,12 @@ Range-wise, it could look like this:
 [
   {
     name: "bad-character-unencoded-ampersand",
-    position: [[5, 6, "&amp;"]]
+    position: [[5, 6, "&amp;"]],
   },
   {
     name: "malformed &nbsp;",
-    position: [[5, 12, "&nbsp;"]]
-  }
+    position: [[5, 12, "&nbsp;"]],
+  },
 ];
 ```
 
@@ -228,7 +228,7 @@ For example,
 const res1 = mergeRanges(
   [
     [3, 4, "aaa"],
-    [3, 12, "zzz"]
+    [3, 12, "zzz"],
   ],
   { mergeType: 1 }
 );
@@ -238,7 +238,7 @@ console.log(res1);
 const res2 = mergeRanges(
   [
     [3, 4, "aaa"],
-    [3, 12, "zzz"]
+    [3, 12, "zzz"],
   ],
   { mergeType: 2 }
 );

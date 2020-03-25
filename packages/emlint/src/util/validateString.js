@@ -17,10 +17,10 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
   if (
     !(
       includesWithRegex(opts.quickPermittedValues, extractedValue, {
-        caseInsensitive: opts.caseInsensitive
+        caseInsensitive: opts.caseInsensitive,
       }) ||
       includesWithRegex(opts.permittedValues, extractedValue, {
-        caseInsensitive: opts.caseInsensitive
+        caseInsensitive: opts.caseInsensitive,
       })
     )
   ) {
@@ -41,15 +41,15 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
           [
             charStart + idxOffset,
             charEnd + idxOffset,
-            extractedValue.toLowerCase()
-          ]
-        ]
+            extractedValue.toLowerCase(),
+          ],
+        ],
       };
     } else if (
       Array.isArray(opts.quickPermittedValues) &&
       opts.quickPermittedValues.length &&
       opts.quickPermittedValues.length < 6 &&
-      opts.quickPermittedValues.every(val => typeof val === "string") &&
+      opts.quickPermittedValues.every((val) => typeof val === "string") &&
       (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) &&
       opts.quickPermittedValues.join("|").length < 40
     ) {
@@ -64,7 +64,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       Array.isArray(opts.permittedValues) &&
       opts.permittedValues.length &&
       opts.permittedValues.length < 6 &&
-      opts.permittedValues.every(val => typeof val === "string") &&
+      opts.permittedValues.every((val) => typeof val === "string") &&
       (!Array.isArray(opts.quickPermittedValues) ||
         !opts.quickPermittedValues.length) &&
       opts.permittedValues.join("|").length < 40
@@ -82,7 +82,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       idxFrom: charStart + idxOffset,
       idxTo: charEnd + idxOffset,
       message,
-      fix
+      fix,
     });
     console.log(
       `088 validateString/validateValue after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -110,7 +110,7 @@ function validateString(str, idxOffset, originalOpts) {
     canBeCommaSeparated: false,
     caseInsensitive: false,
     quickPermittedValues: null,
-    permittedValues: null
+    permittedValues: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -172,8 +172,8 @@ function validateString(str, idxOffset, originalOpts) {
             idxTo: ranges[ranges.length - 1][1],
             message,
             fix: {
-              ranges
-            }
+              ranges,
+            },
           });
           console.log(
             `179 validateString(): after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -182,7 +182,7 @@ function validateString(str, idxOffset, originalOpts) {
               4
             )}`
           );
-        }
+        },
       });
     } else {
       console.log(`188 validateString(): single value clauses`);

@@ -5,7 +5,7 @@ import { validateString, linkTypes } from "../../util/util";
 
 function attributeValidateRel(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRel() ███████████████████████████████████████`
       );
@@ -31,7 +31,7 @@ function attributeValidateRel(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -42,7 +42,7 @@ function attributeValidateRel(context, ...opts) {
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
-            caseInsensitive
+            caseInsensitive,
           }
         );
 
@@ -54,16 +54,16 @@ function attributeValidateRel(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rel"
+              ruleId: "attribute-validate-rel",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

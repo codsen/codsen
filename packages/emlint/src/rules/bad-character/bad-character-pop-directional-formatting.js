@@ -6,7 +6,7 @@
 
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",
@@ -14,11 +14,11 @@ function badCharacterPopDirectionalFormatting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

@@ -6,12 +6,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -23,8 +23,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 2
-        }
+          end: 2,
+        },
       ],
       "01.01"
     );
@@ -34,12 +34,12 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<>a`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -51,13 +51,13 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 2
+          end: 2,
         },
         {
           type: "text",
           start: 2,
-          end: 3
-        }
+          end: 3,
+        },
       ],
       "01.02"
     );
@@ -67,12 +67,12 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`< >`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -84,8 +84,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 3
-        }
+          end: 3,
+        },
       ],
       "01.03"
     );
@@ -95,12 +95,12 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`< >< >< >`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -112,7 +112,7 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "tag",
@@ -120,7 +120,7 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 3,
-          end: 6
+          end: 6,
         },
         {
           type: "tag",
@@ -128,8 +128,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 6,
-          end: 9
-        }
+          end: 9,
+        },
       ],
       "01.04"
     );
@@ -139,12 +139,12 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(` < > < > < > `, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -153,7 +153,7 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "tag",
@@ -161,12 +161,12 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 1,
-          end: 4
+          end: 4,
         },
         {
           type: "text",
           start: 4,
-          end: 5
+          end: 5,
         },
         {
           type: "tag",
@@ -174,12 +174,12 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 5,
-          end: 8
+          end: 8,
         },
         {
           type: "text",
           start: 8,
-          end: 9
+          end: 9,
         },
         {
           type: "tag",
@@ -187,13 +187,13 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 9,
-          end: 12
+          end: 12,
         },
         {
           type: "text",
           start: 12,
-          end: 13
-        }
+          end: 13,
+        },
       ],
       "01.05"
     );
@@ -206,12 +206,12 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -223,8 +223,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 3
-        }
+          end: 3,
+        },
       ],
       "02.01.01"
     );
@@ -235,12 +235,12 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -252,8 +252,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 4
-        }
+          end: 4,
+        },
       ],
       "02.02.01"
     );
@@ -264,12 +264,12 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<----->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -281,8 +281,8 @@ t.test(
           tagNameEndsAt: null,
           tagName: null,
           start: 0,
-          end: 7
-        }
+          end: 7,
+        },
       ],
       "02.03"
     );

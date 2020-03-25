@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two END OF TEXT characters`, t => {
+t.test(`01.01 - detects two END OF TEXT characters`, (t) => {
   const str = "\u0003dlkgjld\u0003j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-end-of-text": 2
-    }
+      "bad-character-end-of-text": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two END OF TEXT characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - END OF TEXT.",
       fix: {
-        ranges: [[0, 1, "\n"]]
-      }
+        ranges: [[0, 1, "\n"]],
+      },
     },
     {
       ruleId: "bad-character-end-of-text",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two END OF TEXT characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - END OF TEXT.",
       fix: {
-        ranges: [[8, 9, "\n"]]
-      }
-    }
+        ranges: [[8, 9, "\n"]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), "\ndlkgjld\nj");
   t.end();

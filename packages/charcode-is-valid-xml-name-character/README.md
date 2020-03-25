@@ -32,7 +32,7 @@ const {
   isProduction4,
   isProduction4a,
   validFirstChar,
-  validSecondCharOnwards
+  validSecondCharOnwards,
 } = require("charcode-is-valid-xml-name-character");
 ```
 
@@ -43,7 +43,7 @@ import {
   isProduction4,
   isProduction4a,
   validFirstChar,
-  validSecondCharOnwards
+  validSecondCharOnwards,
 } from "charcode-is-valid-xml-name-character";
 ```
 
@@ -59,7 +59,7 @@ const {
   isProduction4,
   isProduction4a,
   validFirstChar,
-  validSecondCharOnwards
+  validSecondCharOnwards,
 } = charcodeIsValidXmlNameCharacter;
 ```
 
@@ -135,7 +135,7 @@ Pass any character (including astral-one) into function `isProduction4()`, and i
 ```js
 const {
   isProduction4,
-  validFirstChar
+  validFirstChar,
   // isProduction4a,
 } = require("charcode-is-valid-xml-name-character");
 
@@ -162,7 +162,7 @@ Pass any character (including astral-one) into function `isProduction4a()`, and 
 ```js
 const {
   // isProduction4,
-  isProduction4a
+  isProduction4a,
 } = require("charcode-is-valid-xml-name-character");
 
 const res1 = isProduction4a("-"); // or use validSecondCharOnwards(), the same

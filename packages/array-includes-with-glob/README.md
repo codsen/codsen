@@ -144,7 +144,7 @@ console.log("res1 = " + res1);
 // => res1 = true, because at one element, 'a*' was found in source (it was its first element)
 
 var res2 = arrayIncludesWithGlob(source, whatToLookFor, {
-  arrayVsArrayAllMustBeFound: "all"
+  arrayVsArrayAllMustBeFound: "all",
 });
 console.log("res2 = " + res2);
 // => res2 = false, because not all elements were found in source: 'd*' was not present in source!
@@ -162,16 +162,16 @@ mergeAdvanced(
     // first object to merge
     something: "a",
     anything: "b",
-    everything: "c"
+    everything: "c",
   },
   {
     // second object to merge
     something: ["a"],
     anything: ["b"],
-    everything: "d"
+    everything: "d",
   },
   {
-    ignoreKeys: ["*thing"]
+    ignoreKeys: ["*thing"],
   }
 );
 ```

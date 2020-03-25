@@ -12,8 +12,8 @@ const nonFileBasedTagRules = require("../src/util/nonFileBasedTagRules.json");
 
 const allBadCharacterRules = fs
   .readdirSync(path.resolve("src/rules/bad-character/"))
-  .filter(val => val.startsWith("bad-character"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("bad-character"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-bad-character.json"),
@@ -24,8 +24,8 @@ fs.writeFileSync(
 
 const allTagRules = fs
   .readdirSync(path.resolve("src/rules/tag/"))
-  .filter(val => val.startsWith("tag-"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("tag-"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-tag.json"),
@@ -36,8 +36,8 @@ fs.writeFileSync(
 
 const allMediaRules = fs
   .readdirSync(path.resolve("src/rules/media/"))
-  .filter(val => val.startsWith("media-"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("media-"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-media.json"),
@@ -48,8 +48,8 @@ fs.writeFileSync(
 
 const allAttribRules = fs
   .readdirSync(path.resolve("src/rules/attribute/"))
-  .filter(val => val.startsWith("attribute-"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("attribute-"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-attribute.json"),
@@ -60,8 +60,8 @@ fs.writeFileSync(
 
 const allAttribValidateRules = fs
   .readdirSync(path.resolve("src/rules/attribute-validate/"))
-  .filter(val => val.startsWith("attribute-validate-"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("attribute-validate-"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-attribute-validate.json"),
@@ -72,8 +72,8 @@ fs.writeFileSync(
 
 const allCharacter = fs
   .readdirSync(path.resolve("src/rules/character/"))
-  .filter(val => val.startsWith("character-"))
-  .map(val => path.parse(val).name);
+  .filter((val) => val.startsWith("character-"))
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-character.json"),
@@ -87,7 +87,7 @@ fs.writeFileSync(
 
 const allBadNamedHTMLEntityRules = fs
   .readdirSync(path.resolve("test/rules/bad-html-entity/"))
-  .map(val => path.parse(val).name);
+  .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
   path.resolve("src/rules/all-bad-named-html-entity.json"),

@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 0`,
-  t => {
+  (t) => {
     const str = `<td>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 0
-      }
+        "attribute-validate-style": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 1`,
-  t => {
+  (t) => {
     const str = `<td>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 1
-      }
+        "attribute-validate-style": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 2`,
-  t => {
+  (t) => {
     const str = `<td>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy style, zero`,
-  t => {
+  (t) => {
     const str = `<td style='font-size: 10px;'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<td style=" font-size: 10px;">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td style="font-size: 10px;">`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 12,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[11, 12]]
-        }
-      }
+          ranges: [[11, 12]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<td style="font-size: 10px; ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td style="font-size: 10px;">`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 28,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[27, 28]]
-        }
-      }
+          ranges: [[27, 28]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<td style="  font-size: 10px;  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td style="font-size: 10px;">`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [11, 13],
-            [29, 31]
-          ]
-        }
-      }
+            [29, 31],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<td style="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -171,8 +171,8 @@ t.test(
         idxFrom: 11,
         idxTo: 14,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -183,13 +183,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`,
-  t => {
+  (t) => {
     const str = `<html style="font-size: 10px;">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-style": 2
-      }
+        "attribute-validate-style": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -199,8 +199,8 @@ t.test(
         idxFrom: 6,
         idxTo: 30,
         message: `Tag "html" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

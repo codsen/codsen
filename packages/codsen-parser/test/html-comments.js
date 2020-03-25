@@ -6,14 +6,14 @@ const cparser = require("../dist/codsen-parser.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
-  t => {
+  (t) => {
     t.match(
       cparser("a<!--b-->c"),
       [
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
@@ -24,21 +24,21 @@ t.test(
             {
               type: "text",
               start: 5,
-              end: 6
-            }
-          ]
+              end: 6,
+            },
+          ],
         },
         {
           type: "comment",
           kind: "simple",
           start: 6,
-          end: 9
+          end: 9,
         },
         {
           type: "text",
           start: 9,
-          end: 10
-        }
+          end: 10,
+        },
       ],
       "01.01"
     );
@@ -48,7 +48,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
-  t => {
+  (t) => {
     t.match(
       cparser("a<!--b->c"),
       [
@@ -56,7 +56,7 @@ t.test(
           type: "text",
           start: 0,
           end: 1,
-          value: "a"
+          value: "a",
         },
         {
           type: "comment",
@@ -70,9 +70,9 @@ t.test(
               type: "text",
               start: 5,
               end: 6,
-              value: "b"
-            }
-          ]
+              value: "b",
+            },
+          ],
         },
         {
           type: "comment",
@@ -81,14 +81,14 @@ t.test(
           end: 8,
           value: "->",
           closing: true,
-          children: []
+          children: [],
         },
         {
           type: "text",
           start: 8,
           end: 9,
-          value: "c"
-        }
+          value: "c",
+        },
       ],
       "01.02"
     );
@@ -98,7 +98,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
-  t => {
+  (t) => {
     t.match(
       cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
       [
@@ -106,7 +106,7 @@ t.test(
           type: "text",
           start: 0,
           end: 1,
-          value: "a"
+          value: "a",
         },
         {
           type: "comment",
@@ -124,48 +124,48 @@ t.test(
                           type: "text",
                           start: 20,
                           end: 21,
-                          value: "."
-                        }
+                          value: ".",
+                        },
                       ],
                       type: "tag",
                       start: 16,
                       end: 20,
-                      value: "<td>"
+                      value: "<td>",
                     },
                     {
                       children: [],
                       type: "tag",
                       start: 21,
                       end: 26,
-                      value: "</td>"
-                    }
+                      value: "</td>",
+                    },
                   ],
                   type: "tag",
                   start: 12,
                   end: 16,
-                  value: "<tr>"
+                  value: "<tr>",
                 },
                 {
                   children: [],
                   type: "tag",
                   start: 26,
                   end: 31,
-                  value: "</tr>"
-                }
+                  value: "</tr>",
+                },
               ],
               type: "tag",
               start: 5,
               end: 12,
-              value: "<table>"
+              value: "<table>",
             },
             {
               children: [],
               type: "tag",
               start: 31,
               end: 39,
-              value: "</table>"
-            }
-          ]
+              value: "</table>",
+            },
+          ],
         },
         {
           type: "comment",
@@ -173,14 +173,14 @@ t.test(
           end: 41,
           value: "->",
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 41,
           end: 42,
-          value: "c"
-        }
+          value: "c",
+        },
       ],
       "01.03"
     );
@@ -190,14 +190,14 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
-  t => {
+  (t) => {
     t.match(
       cparser("x<a>y->b"),
       [
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           children: [
@@ -205,14 +205,14 @@ t.test(
               type: "text", // <--------- !!!!
               start: 4,
               end: 8,
-              value: "y->b"
-            }
+              value: "y->b",
+            },
           ],
           type: "tag",
           start: 1,
           end: 4,
-          value: "<a>"
-        }
+          value: "<a>",
+        },
       ],
       "01.04"
     );
@@ -222,7 +222,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
-  t => {
+  (t) => {
     t.match(
       cparser("<!--x<a>-->y->b"),
       [
@@ -236,28 +236,28 @@ t.test(
               type: "text",
               start: 4,
               end: 5,
-              value: "x"
+              value: "x",
             },
             {
               type: "tag",
               start: 5,
               end: 8,
-              value: "<a>"
-            }
-          ]
+              value: "<a>",
+            },
+          ],
         },
         {
           type: "comment",
           start: 8,
           end: 11,
-          value: "-->"
+          value: "-->",
         },
         {
           type: "text", // <--------- !!!!
           start: 11,
           end: 15,
-          value: "y->b"
-        }
+          value: "y->b",
+        },
       ],
       "01.05"
     );
@@ -267,14 +267,14 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
-  t => {
+  (t) => {
     t.match(
       cparser(`a<!--b--!>c`),
       [
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
@@ -285,21 +285,21 @@ t.test(
             {
               type: "text",
               start: 5,
-              end: 6
-            }
-          ]
+              end: 6,
+            },
+          ],
         },
         {
           type: "comment",
           kind: "simple",
           start: 6,
-          end: 10
+          end: 10,
         },
         {
           type: "text",
           start: 10,
-          end: 11
-        }
+          end: 11,
+        },
       ],
       "01.06"
     );
@@ -310,14 +310,14 @@ t.test(
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, t => {
+t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
     [
       {
         type: "text",
         start: 0,
-        end: 1
+        end: 1,
       },
       {
         type: "comment",
@@ -329,22 +329,22 @@ t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, t => {
           {
             type: "text",
             start: 20,
-            end: 21
-          }
-        ]
+            end: 21,
+          },
+        ],
       },
       {
         type: "comment",
         start: 21,
         end: 33,
         kind: "only",
-        closing: true
+        closing: true,
       },
       {
         type: "text",
         start: 33,
-        end: 34
-      }
+        end: 34,
+      },
     ],
     "02.01"
   );
@@ -354,14 +354,14 @@ t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, t => {
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, t => {
+t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
     [
       {
         type: "text",
         start: 0,
-        end: 1
+        end: 1,
       },
       {
         type: "comment",
@@ -373,22 +373,22 @@ t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, t => {
           {
             type: "text",
             start: 20,
-            end: 21
-          }
-        ]
+            end: 21,
+          },
+        ],
       },
       {
         type: "comment",
         start: 21,
         end: 37,
         kind: "not",
-        closing: true
+        closing: true,
       },
       {
         type: "text",
         start: 37,
-        end: 38
-      }
+        end: 38,
+      },
     ],
     "03.01"
   );
@@ -397,22 +397,22 @@ t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, t => {
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/>!--<![endif]-->`),
       [
         {
           type: "tag",
           start: 0,
-          end: 6
+          end: 6,
         },
         {
           type: "comment",
           start: 6,
           end: 21,
           kind: "not",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.02"
     );
@@ -422,22 +422,22 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/><--<![endif]-->`),
       [
         {
           type: "tag",
           start: 0,
-          end: 6
+          end: 6,
         },
         {
           type: "comment",
           start: 6,
           end: 21,
           kind: "not",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.03"
     );
@@ -447,22 +447,22 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/><1--<![endif]-->`),
       [
         {
           type: "tag",
           start: 0,
-          end: 6
+          end: 6,
         },
         {
           type: "comment",
           start: 6,
           end: 22,
           kind: "not",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.04"
     );
@@ -472,22 +472,22 @@ t.test(
 
 t.test(
   `03.05 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/><!-<![endif]-->`),
       [
         {
           type: "tag",
           start: 0,
-          end: 6
+          end: 6,
         },
         {
           type: "comment",
           start: 6,
           end: 21,
           kind: "not",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.05"
     );
@@ -497,7 +497,7 @@ t.test(
 
 t.test(
   `03.06 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
       [
@@ -505,13 +505,13 @@ t.test(
           type: "tag",
           start: 0,
           end: 6,
-          value: "<img/>"
+          value: "<img/>",
         },
         {
           type: "text",
           start: 6,
           end: 18,
-          value: "<1--<1--<1--"
+          value: "<1--<1--<1--",
         },
         {
           type: "comment",
@@ -519,8 +519,8 @@ t.test(
           end: 34,
           value: `<1--<![endif]-->`,
           kind: "not",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.06"
     );
@@ -530,27 +530,27 @@ t.test(
 
 t.test(
   `03.07 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  t => {
+  (t) => {
     t.match(
       cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
       [
         {
           type: "tag",
           start: 0,
-          end: 6
+          end: 6,
         },
         {
           type: "text",
           start: 6,
-          end: 26
+          end: 26,
         },
         {
           type: "comment",
           start: 26,
           end: 38,
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "03.07"
     );
@@ -560,7 +560,7 @@ t.test(
 
 t.test(
   `03.08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
-  t => {
+  (t) => {
     // below, two tokens,
     // "<img src="gif"/>"
     // and
@@ -603,12 +603,12 @@ t.test(
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
                   attribStart: 24,
-                  attribEnd: 33
-                }
+                  attribEnd: 33,
+                },
               ],
-              children: []
-            }
-          ]
+              children: [],
+            },
+          ],
         },
         {
           type: "comment",
@@ -617,8 +617,8 @@ t.test(
           value: "!--<![endif]-->",
           kind: "not",
           closing: true,
-          children: []
-        }
+          children: [],
+        },
       ],
       "03.08"
     );
@@ -628,7 +628,7 @@ t.test(
 
 t.test(
   `03.09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
-  t => {
+  (t) => {
     // below, two tokens,
     // "<img src="gif"/>"
     // and
@@ -671,18 +671,18 @@ t.test(
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
                   attribStart: 24,
-                  attribEnd: 33
-                }
+                  attribEnd: 33,
+                },
               ],
-              children: []
+              children: [],
             },
             {
               type: "text",
               start: 35,
               end: 38,
-              value: "zzz"
-            }
-          ]
+              value: "zzz",
+            },
+          ],
         },
         {
           type: "comment",
@@ -691,8 +691,8 @@ t.test(
           value: "!--<![endif]-->",
           kind: "not",
           closing: true,
-          children: []
-        }
+          children: [],
+        },
       ],
       "03.09"
     );
@@ -700,7 +700,7 @@ t.test(
   }
 );
 
-t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, t => {
+t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
   // clauses are triggered but nothing's found from characters: <, ! and -
   t.same(
     cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
@@ -739,18 +739,18 @@ t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, t => {
                 attribValueStartsAt: 29,
                 attribValueEndsAt: 32,
                 attribStart: 24,
-                attribEnd: 33
-              }
+                attribEnd: 33,
+              },
             ],
-            children: []
+            children: [],
           },
           {
             type: "text",
             start: 35,
             end: 39,
-            value: "zzz-"
-          }
-        ]
+            value: "zzz-",
+          },
+        ],
       },
       {
         type: "comment",
@@ -759,36 +759,39 @@ t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, t => {
         value: "<![endif]-->",
         kind: "only",
         closing: true,
-        children: []
-      }
+        children: [],
+      },
     ],
     "03.10"
   );
   t.end();
 });
 
-t.test(`03.11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`, t => {
-  // clauses are triggered but nothing's found from characters: <, ! and -
-  t.same(
-    cparser(`zzz<<![endif]-->`),
-    [
-      {
-        type: "text",
-        start: 0,
-        end: 4,
-        value: "zzz<"
-      },
-      {
-        type: "comment",
-        start: 4,
-        end: 16,
-        value: "<![endif]-->",
-        kind: "only",
-        closing: true,
-        children: []
-      }
-    ],
-    "03.11"
-  );
-  t.end();
-});
+t.test(
+  `03.11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
+  (t) => {
+    // clauses are triggered but nothing's found from characters: <, ! and -
+    t.same(
+      cparser(`zzz<<![endif]-->`),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 4,
+          value: "zzz<",
+        },
+        {
+          type: "comment",
+          start: 4,
+          end: 16,
+          value: "<![endif]-->",
+          kind: "only",
+          closing: true,
+          children: [],
+        },
+      ],
+      "03.11"
+    );
+    t.end();
+  }
+);

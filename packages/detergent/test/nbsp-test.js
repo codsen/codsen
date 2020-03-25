@@ -1,13 +1,13 @@
 const t = require("tap");
 const { det, mixer } = require("../t-util/util");
 
-t.test(`01.01 - repetitions - semicols`, t => {
+t.test(`01.01 - repetitions - semicols`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa &nnnbbbspp;;;; aaa", opt).res,
@@ -18,13 +18,13 @@ t.test(`01.01 - repetitions - semicols`, t => {
   t.end();
 });
 
-t.test(`01.02 - repetitions - no semicols`, t => {
+t.test(`01.02 - repetitions - no semicols`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa nnnbbbsssp aaaa", opt).res,
@@ -35,13 +35,13 @@ t.test(`01.02 - repetitions - no semicols`, t => {
   t.end();
 });
 
-t.test(`01.03 - repetitions - mashed`, t => {
+t.test(`01.03 - repetitions - mashed`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaaa&nnnnbbbssssppp;aaa", opt).res,
@@ -52,13 +52,13 @@ t.test(`01.03 - repetitions - mashed`, t => {
   t.end();
 });
 
-t.test(`01.04 - repetitions - amp missing, repetitions`, t => {
+t.test(`01.04 - repetitions - amp missing, repetitions`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaannnbbbsssp;aaaa", opt).res,
@@ -69,13 +69,13 @@ t.test(`01.04 - repetitions - amp missing, repetitions`, t => {
   t.end();
 });
 
-t.test(`01.05 - repetitions - amp and semicol missing`, t => {
+t.test(`01.05 - repetitions - amp and semicol missing`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa&nnnbbbssspaaaa", opt).res,
@@ -86,13 +86,13 @@ t.test(`01.05 - repetitions - amp and semicol missing`, t => {
   t.end();
 });
 
-t.test(`01.06 - repetitions - sandwiched, n repeated`, t => {
+t.test(`01.06 - repetitions - sandwiched, n repeated`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa&nnbsp;aaaa", opt).res,
@@ -103,13 +103,13 @@ t.test(`01.06 - repetitions - sandwiched, n repeated`, t => {
   t.end();
 });
 
-t.test(`01.07 - repetitions - sandwiched, amp missing`, t => {
+t.test(`01.07 - repetitions - sandwiched, amp missing`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaannbsp;aaaa", opt).res,
@@ -120,13 +120,13 @@ t.test(`01.07 - repetitions - sandwiched, amp missing`, t => {
   t.end();
 });
 
-t.test(`01.08 - repetitions - sandwiched, amp missing`, t => {
+t.test(`01.08 - repetitions - sandwiched, amp missing`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa&nnbspaaaa", opt).res,
@@ -137,13 +137,13 @@ t.test(`01.08 - repetitions - sandwiched, amp missing`, t => {
   t.end();
 });
 
-t.test(`01.09 - repetitions - n repeated, spaced`, t => {
+t.test(`01.09 - repetitions - n repeated, spaced`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa &nnbsp; aaaa", opt).res,
@@ -154,13 +154,13 @@ t.test(`01.09 - repetitions - n repeated, spaced`, t => {
   t.end();
 });
 
-t.test(`01.10 - repetitions - n repeated, spaced, amp missing`, t => {
+t.test(`01.10 - repetitions - n repeated, spaced, amp missing`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa nnbsp; aaaa", opt).res,
@@ -171,13 +171,13 @@ t.test(`01.10 - repetitions - n repeated, spaced, amp missing`, t => {
   t.end();
 });
 
-t.test(`01.11 - repetitions - n repeated, spaced, semicol missing`, t => {
+t.test(`01.11 - repetitions - n repeated, spaced, semicol missing`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "aaa &nnbsp aaaa", opt).res,
@@ -188,14 +188,14 @@ t.test(`01.11 - repetitions - n repeated, spaced, semicol missing`, t => {
   t.end();
 });
 
-t.test(`01.12 - repetitions - longer sentence, convertEntities=on`, t => {
+t.test(`01.12 - repetitions - longer sentence, convertEntities=on`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 1,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -211,14 +211,14 @@ t.test(`01.12 - repetitions - longer sentence, convertEntities=on`, t => {
   t.end();
 });
 
-t.test(`01.13 - repetitions - longer sentence, useXHTML=off`, t => {
+t.test(`01.13 - repetitions - longer sentence, useXHTML=off`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -234,12 +234,12 @@ t.test(`01.13 - repetitions - longer sentence, useXHTML=off`, t => {
   t.end();
 });
 
-t.test(`01.14 - repetitions - longer sentence, repeated semicols`, t => {
+t.test(`01.14 - repetitions - longer sentence, repeated semicols`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     removeLineBreaks: 1,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -255,10 +255,10 @@ t.test(`01.14 - repetitions - longer sentence, repeated semicols`, t => {
   t.end();
 });
 
-t.test(`01.15 - nbSp with no semicol #1, convertEntities=on`, t => {
+t.test(`01.15 - nbSp with no semicol #1, convertEntities=on`, (t) => {
   mixer({
     fixBrokenEntities: 1,
-    convertEntities: 1
+    convertEntities: 1,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a nbbSp a", opt).res,
@@ -269,10 +269,10 @@ t.test(`01.15 - nbSp with no semicol #1, convertEntities=on`, t => {
   t.end();
 });
 
-t.test(`01.16 - nbSp with no semicol #2, convertEntities=off`, t => {
+t.test(`01.16 - nbSp with no semicol #2, convertEntities=off`, (t) => {
   mixer({
     fixBrokenEntities: 1,
-    convertEntities: 1
+    convertEntities: 1,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a nbbSppp; a", opt).res,
@@ -285,13 +285,13 @@ t.test(`01.16 - nbSp with no semicol #2, convertEntities=off`, t => {
 
 // NBSP missing letters AMPERSAND OBLIGATORY, SEMICOL - NOT:
 
-t.test(`01.17 - NBSP missing letters - &nbsp missing p`, t => {
+t.test(`01.17 - NBSP missing letters - &nbsp missing p`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -307,13 +307,13 @@ t.test(`01.17 - NBSP missing letters - &nbsp missing p`, t => {
   t.end();
 });
 
-t.test(`01.18 - NBSP missing letters - &nbsp missing s`, t => {
+t.test(`01.18 - NBSP missing letters - &nbsp missing s`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -329,13 +329,13 @@ t.test(`01.18 - NBSP missing letters - &nbsp missing s`, t => {
   t.end();
 });
 
-t.test(`01.19 - NBSP missing letters - &nbsp missing b`, t => {
+t.test(`01.19 - NBSP missing letters - &nbsp missing b`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -351,13 +351,13 @@ t.test(`01.19 - NBSP missing letters - &nbsp missing b`, t => {
   t.end();
 });
 
-t.test(`01.20 - NBSP missing letters - &nbsp missing n`, t => {
+t.test(`01.20 - NBSP missing letters - &nbsp missing n`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -375,13 +375,13 @@ t.test(`01.20 - NBSP missing letters - &nbsp missing n`, t => {
 
 // NBSP missing letters SEMICOL OBLIGATORY, AMPERSAND - NOT:
 
-t.test(`01.21 - broken nbsp - nbsp; (no ampersand)`, t => {
+t.test(`01.21 - broken nbsp - nbsp; (no ampersand)`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -397,13 +397,13 @@ t.test(`01.21 - broken nbsp - nbsp; (no ampersand)`, t => {
   t.end();
 });
 
-t.test(`01.22 - broken nbsp - nbsp; (no ampersand)`, t => {
+t.test(`01.22 - broken nbsp - nbsp; (no ampersand)`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -419,13 +419,13 @@ t.test(`01.22 - broken nbsp - nbsp; (no ampersand)`, t => {
   t.end();
 });
 
-t.test(`01.23 - broken nbsp - nbsp; (no ampersand)`, t => {
+t.test(`01.23 - broken nbsp - nbsp; (no ampersand)`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -441,13 +441,13 @@ t.test(`01.23 - broken nbsp - nbsp; (no ampersand)`, t => {
   t.end();
 });
 
-t.test(`01.24 - broken nbsp - nbsp; (no ampersand)`, t => {
+t.test(`01.24 - broken nbsp - nbsp; (no ampersand)`, (t) => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1,
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
-    removeWidows: 0
+    removeWidows: 0,
   }).forEach((opt, n) => {
     t.equal(
       det(

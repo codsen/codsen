@@ -11,13 +11,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash present`,
-  t => {
+  (t) => {
     const str = "<br/>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": 2
-      }
+        "tag-void-slash": 2,
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);
@@ -27,13 +27,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash absent`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": 2
-      }
+        "tag-void-slash": 2,
+      },
     });
     t.match(messages, [
       {
@@ -45,9 +45,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -56,14 +56,14 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-slash"`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "tag-space-before-closing-slash": 2,
-        "tag-void-slash": 2
-      }
+        "tag-void-slash": 2,
+      },
     });
     t.match(messages, [
       {
@@ -75,9 +75,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -86,13 +86,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "tag"`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        tag: 2
-      }
+        tag: 2,
+      },
     });
     t.match(messages, [
       {
@@ -104,9 +104,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -115,14 +115,14 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=always`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "tag-space-before-closing-slash": [2, "always"],
-        "tag-void-slash": 2
-      }
+        "tag-void-slash": 2,
+      },
     });
     t.match(messages, [
       {
@@ -134,9 +134,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, " /"]]
-        }
-      }
+          ranges: [[3, 3, " /"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br />");
     t.end();
@@ -145,14 +145,14 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
-        "tag-void-slash": 2
-      }
+        "tag-void-slash": 2,
+      },
     });
     t.match(messages, [
       {
@@ -164,9 +164,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -175,14 +175,14 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never, hardcoded void's default always`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
-        "tag-void-slash": [2, "always"]
-      }
+        "tag-void-slash": [2, "always"],
+      },
     });
     t.match(messages, [
       {
@@ -194,9 +194,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -205,14 +205,14 @@ t.test(
 
 t.test(
   `01.08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - both never`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
-        "tag-void-slash": [2, "never"]
-      }
+        "tag-void-slash": [2, "never"],
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);
@@ -225,13 +225,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=always`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": [2, "always"]
-      }
+        "tag-void-slash": [2, "always"],
+      },
     });
     t.match(messages, [
       {
@@ -243,9 +243,9 @@ t.test(
         column: 4,
         message: "Missing slash.",
         fix: {
-          ranges: [[3, 3, "/"]]
-        }
-      }
+          ranges: [[3, 3, "/"]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br/>");
     t.end();
@@ -254,13 +254,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=never`,
-  t => {
+  (t) => {
     const str = "<br>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": [2, "never"]
-      }
+        "tag-void-slash": [2, "never"],
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);
@@ -270,13 +270,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=never`,
-  t => {
+  (t) => {
     const str = "<br/>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": [2, "never"]
-      }
+        "tag-void-slash": [2, "never"],
+      },
     });
     t.match(messages, [
       {
@@ -288,9 +288,9 @@ t.test(
         column: 4,
         message: "Remove the slash.",
         fix: {
-          ranges: [[3, 4]]
-        }
-      }
+          ranges: [[3, 4]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "<br>");
     t.end();
@@ -299,13 +299,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=always`,
-  t => {
+  (t) => {
     const str = "<br/>";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "tag-void-slash": [2, "always"]
-      }
+        "tag-void-slash": [2, "always"],
+      },
     });
     t.same(messages, []);
     t.equal(applyFixes(str, messages), str);

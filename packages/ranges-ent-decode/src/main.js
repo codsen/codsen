@@ -35,7 +35,7 @@ function decode(str, originalOpts) {
   }
   const defaults = {
     isAttributeValue: false,
-    strict: false
+    strict: false,
   };
   let opts;
   if (!originalOpts) {
@@ -98,32 +98,30 @@ function decode(str, originalOpts) {
 
   while ((array1 = entityRegex.exec(str)) !== null) {
     console.log(
-      `--------\nFound ${`\u001b[${33}m${
-        array1[0]
-      }\u001b[${39}m`} Range: [${entityRegex.lastIndex - array1[0].length}, ${
-        entityRegex.lastIndex
-      }]`
+      `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
+        entityRegex.lastIndex - array1[0].length
+      }, ${entityRegex.lastIndex}]`
     );
     const chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('109 chomped === "&"');
+      console.log('107 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
-        "&"
+        "&",
       ]);
     } else {
       const decoded = he.decode(chomped, opts);
       console.log(
-        `118 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+        `116 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
       );
       if (decoded !== chomped) {
         console.log(
-          `122 will push "${`\u001b[${33}m${JSON.stringify(
+          `120 will push "${`\u001b[${33}m${JSON.stringify(
             [
               entityRegex.lastIndex - array1[0].length,
               entityRegex.lastIndex,
-              decoded
+              decoded,
             ],
             null,
             4
@@ -132,7 +130,7 @@ function decode(str, originalOpts) {
         rangesArr.push([
           entityRegex.lastIndex - array1[0].length,
           entityRegex.lastIndex,
-          decoded
+          decoded,
         ]);
       }
     }

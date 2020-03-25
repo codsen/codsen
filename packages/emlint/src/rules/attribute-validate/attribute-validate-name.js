@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateName(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateName() ███████████████████████████████████████`
       );
@@ -37,7 +37,7 @@ function attributeValidateName(context, ...opts) {
             "object",
             "map",
             "param",
-            "meta"
+            "meta",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -45,7 +45,7 @@ function attributeValidateName(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -62,16 +62,16 @@ function attributeValidateName(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`066 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-name"
+              ruleId: "attribute-validate-name",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

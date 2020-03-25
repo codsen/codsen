@@ -123,5 +123,5 @@ export {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 };

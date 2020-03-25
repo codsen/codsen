@@ -11,13 +11,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-html-entity": 2
-      }
+        "bad-html-entity": 2,
+      },
     });
     t.equal(applyFixes(str, messages), "az");
     t.match(messages, [
@@ -28,9 +28,9 @@ t.test(
         idxTo: 21,
         message: "Malformed numeric entity.",
         fix: {
-          ranges: [[1, 21]]
-        }
-      }
+          ranges: [[1, 21]],
+        },
+      },
     ]);
     t.end();
   }
@@ -38,13 +38,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 1`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-malformed-numeric-character-entity": 1
-      }
+        "bad-malformed-numeric-character-entity": 1,
+      },
     });
     t.equal(applyFixes(str, messages), "az");
     t.match(messages, [
@@ -55,9 +55,9 @@ t.test(
         idxTo: 21,
         message: "Malformed numeric entity.",
         fix: {
-          ranges: [[1, 21]]
-        }
-      }
+          ranges: [[1, 21]],
+        },
+      },
     ]);
     t.end();
   }
@@ -65,13 +65,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 2`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-malformed-numeric-character-entity": 2
-      }
+        "bad-malformed-numeric-character-entity": 2,
+      },
     });
     t.equal(applyFixes(str, messages), "az");
     t.match(messages, [
@@ -82,9 +82,9 @@ t.test(
         idxTo: 21,
         message: "Malformed numeric entity.",
         fix: {
-          ranges: [[1, 21]]
-        }
-      }
+          ranges: [[1, 21]],
+        },
+      },
     ]);
     t.end();
   }
@@ -95,13 +95,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar instead of hash - rule by wildcard`,
-  t => {
+  (t) => {
     const str = `_&$65;_`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-malformed-*": 2
-      }
+        "bad-malformed-*": 2,
+      },
     });
     t.equal(applyFixes(str, messages), "__");
     t.match(messages, [
@@ -112,9 +112,9 @@ t.test(
         idxTo: 6,
         message: "Malformed numeric entity.",
         fix: {
-          ranges: [[1, 6]]
-        }
-      }
+          ranges: [[1, 6]],
+        },
+      },
     ]);
     t.end();
   }
@@ -125,13 +125,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-html-entity": 0
-      }
+        "bad-html-entity": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -141,13 +141,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 0`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-malformed-numeric-character-entity": [0]
-      }
+        "bad-malformed-numeric-character-entity": [0],
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -157,14 +157,14 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, with other rules`,
-  t => {
+  (t) => {
     const str = `a&#99999999999999999;z<br>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "bad-malformed-numeric-character-entity": [0],
-        "tag-void-slash": [1]
-      }
+        "tag-void-slash": [1],
+      },
     });
     t.equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>");
     t.match(messages, [
@@ -175,9 +175,9 @@ t.test(
         idxTo: 25,
         message: "Missing slash.",
         fix: {
-          ranges: [[25, 25, "/"]]
-        }
-      }
+          ranges: [[25, 25, "/"]],
+        },
+      },
     ]);
     t.end();
   }

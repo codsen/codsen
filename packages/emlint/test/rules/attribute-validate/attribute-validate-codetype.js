@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 0`,
-  t => {
+  (t) => {
     const str = `<object>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 0
-      }
+        "attribute-validate-codetype": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 1`,
-  t => {
+  (t) => {
     const str = `<object>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 1
-      }
+        "attribute-validate-codetype": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 2`,
-  t => {
+  (t) => {
     const str = `<object>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`,
-  t => {
+  (t) => {
     const str = `<object codetype='application/json'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the list`,
-  t => {
+  (t) => {
     const str = `<object codetype="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -90,13 +90,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<object codetype=" application/json">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<object codetype="application/json">`);
     t.match(messages, [
@@ -106,9 +106,9 @@ t.test(
         idxTo: 19,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[18, 19]]
-        }
-      }
+          ranges: [[18, 19]],
+        },
+      },
     ]);
     t.end();
   }
@@ -116,13 +116,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<object codetype="application/json ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<object codetype="application/json">`);
     t.match(messages, [
@@ -132,9 +132,9 @@ t.test(
         idxTo: 35,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[34, 35]]
-        }
-      }
+          ranges: [[34, 35]],
+        },
+      },
     ]);
     t.end();
   }
@@ -142,13 +142,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<object codetype="  application/json \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<object codetype="application/json">`);
     t.match(messages, [
@@ -160,10 +160,10 @@ t.test(
         fix: {
           ranges: [
             [18, 20],
-            [36, 38]
-          ]
-        }
-      }
+            [36, 38],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -171,13 +171,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<object codetype="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -187,8 +187,8 @@ t.test(
         idxFrom: 18,
         idxTo: 21,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -199,13 +199,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value`,
-  t => {
+  (t) => {
     const str = `<object codetype="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -215,8 +215,8 @@ t.test(
         idxFrom: 18,
         idxTo: 25,
         message: `Unrecognised value: "tralala".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -227,13 +227,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div codetype="application/json">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -243,8 +243,8 @@ t.test(
         idxFrom: 5,
         idxTo: 32,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -252,13 +252,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz codetype="application/json" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-codetype": 2
-      }
+        "attribute-validate-codetype": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -268,8 +268,8 @@ t.test(
         idxFrom: 5,
         idxTo: 32,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

@@ -26,7 +26,7 @@ function within(str, originalOpts) {
   // declare defaults, so we can enforce types later:
   const defaults = {
     messageOnly: false,
-    checkLineLength: true
+    checkLineLength: true,
   };
 
   // fill any settings with defaults if missing:

@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateTitle(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateTitle() ███████████████████████████████████████`
       );
@@ -31,7 +31,7 @@ function attributeValidateTitle(context, ...opts) {
             "meta",
             "param",
             "script",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -39,7 +39,7 @@ function attributeValidateTitle(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -56,16 +56,16 @@ function attributeValidateTitle(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`060 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-title"
+              ruleId: "attribute-validate-title",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -12,7 +12,7 @@ import { left } from "string-left-right";
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       // since we know the location of the closing bracket,
       // let's look to the left, is there a slash and check the distance
       if (
@@ -28,10 +28,10 @@ function tagSpaceBetweenSlashAndBracket(context) {
           message: "Bad whitespace.",
           idxFrom,
           idxTo: node.end - 1,
-          fix: { ranges: [[idxFrom, node.end - 1]] }
+          fix: { ranges: [[idxFrom, node.end - 1]] },
         });
       }
-    }
+    },
   };
 }
 

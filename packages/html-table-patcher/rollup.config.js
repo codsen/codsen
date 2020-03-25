@@ -17,7 +17,7 @@ Author: Roy Revelt, Codsen Ltd
 License: ${pkg.license}
 Homepage: ${pkg.homepage}`;
 
-export default commandLineArgs => {
+export default (commandLineArgs) => {
   const finalConfig = [
     // browser-friendly UMD build
     {
@@ -25,11 +25,11 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "htmlTablePatcher"
+        name: "htmlTablePatcher",
       },
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         builtins(),
         globals(),
@@ -38,8 +38,8 @@ export default commandLineArgs => {
         commonjs(),
         babel(),
         terser(),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // CommonJS build (for Node)
@@ -50,19 +50,19 @@ export default commandLineArgs => {
         "dom-serializer",
         "domutils-bastardised",
         "html-comment-regex",
-        "html-dom-parser"
+        "html-dom-parser",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         builtins(),
         globals(),
         json(),
         babel(),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // ES module build (for bundlers)
@@ -73,19 +73,19 @@ export default commandLineArgs => {
         "dom-serializer",
         "domutils-bastardised",
         "html-comment-regex",
-        "html-dom-parser"
+        "html-dom-parser",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         builtins(),
         globals(),
         json(),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
-    }
+        banner(licensePiece),
+      ],
+    },
   ];
 
   if (commandLineArgs.dev) {

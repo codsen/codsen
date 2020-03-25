@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two SET TRANSMIT STATE characters`, t => {
+t.test(`01.01 - detects two SET TRANSMIT STATE characters`, (t) => {
   const str = "\u0093dlkgjld\u0093j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-set-transmit-state": 2
-    }
+      "bad-character-set-transmit-state": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two SET TRANSMIT STATE characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - SET TRANSMIT STATE.",
       fix: {
-        ranges: [[0, 1]]
-      }
+        ranges: [[0, 1]],
+      },
     },
     {
       ruleId: "bad-character-set-transmit-state",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two SET TRANSMIT STATE characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - SET TRANSMIT STATE.",
       fix: {
-        ranges: [[8, 9]]
-      }
-    }
+        ranges: [[8, 9]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), "dlkgjldj");
   t.end();

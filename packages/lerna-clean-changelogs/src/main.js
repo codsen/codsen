@@ -138,7 +138,7 @@ function c(changelogContents) {
 
   return {
     version,
-    res: final || changelogContents
+    res: final || changelogContents,
   };
 }
 

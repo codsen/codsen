@@ -10,14 +10,14 @@ function isStr(something) {
 const isArr = Array.isArray;
 const defaults = {
   cssStylesContent: "",
-  alwaysCenter: false
+  alwaysCenter: false,
 };
 
 function traverse(nodes = [], cb) {
   if (!isArr(nodes) || !nodes.length) {
     return;
   }
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     cb(node);
     traverse(node.children, cb);
   });
@@ -37,7 +37,7 @@ function patcher(html, generalOpts) {
   }
 
   const dom = parser(html);
-  traverse(dom, node => {
+  traverse(dom, (node) => {
     if (
       node.type === "text" &&
       node["parent"] &&
@@ -88,12 +88,12 @@ function patcher(html, generalOpts) {
       const replacementTr = {
         type: "tag",
         name: "tr",
-        children: []
+        children: [],
       };
       const replacementTd = {
         type: "tag",
         name: "td",
-        children: [node]
+        children: [node],
       };
       if (colspan && colspan > 1) {
         if (!replacementTd["attribs"]) {
@@ -112,7 +112,7 @@ function patcher(html, generalOpts) {
       }
       const linebreak = {
         type: "text",
-        data: "\n"
+        data: "\n",
       };
       appendChild(replacementTr, replacementTd);
       appendChild(replacementTr, linebreak);
@@ -122,12 +122,12 @@ function patcher(html, generalOpts) {
       node.name === "table" &&
       node.children &&
       node.children.some(
-        node =>
+        (node) =>
           node.type === "tag" &&
           node.name === "tr" &&
           node.children &&
           node.children.some(
-            childNode =>
+            (childNode) =>
               childNode.type === "text" &&
               isStr(childNode.data) &&
               childNode.data.trim().length
@@ -141,7 +141,7 @@ function patcher(html, generalOpts) {
       let centered = !!opts.alwaysCenter;
 
       const newChildren = [];
-      node.children.forEach(oneOfNodes => {
+      node.children.forEach((oneOfNodes) => {
         // 1. if it's whitespace text node, let it pass:
         if (
           oneOfNodes.type === "text" &&
@@ -193,7 +193,7 @@ function patcher(html, generalOpts) {
 
           let consecutiveTDs = 0;
           let lastWasTd = false;
-          oneOfNodes.children.forEach(oneOfSubNodes => {
+          oneOfNodes.children.forEach((oneOfSubNodes) => {
             if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
               // 1. check for centered'ness
               if (
@@ -237,7 +237,7 @@ function patcher(html, generalOpts) {
           // "newChildren" array.
           let staging = [];
 
-          oneOfNodes.children.forEach(oneOfSubNodes => {
+          oneOfNodes.children.forEach((oneOfSubNodes) => {
             if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
               // if it's a TD, submit it
 
@@ -260,7 +260,7 @@ function patcher(html, generalOpts) {
                   newChildren.push({
                     type: "tag",
                     name: "tr",
-                    children: Array.from(staging)
+                    children: Array.from(staging),
                   });
                   staging = [];
                 }
@@ -269,12 +269,12 @@ function patcher(html, generalOpts) {
                 const replacementTr = {
                   type: "tag",
                   name: "tr",
-                  children: []
+                  children: [],
                 };
                 const replacementTd = {
                   type: "tag",
                   name: "td",
-                  children: [oneOfSubNodes]
+                  children: [oneOfSubNodes],
                 };
                 if (consecutiveTDs > 0) {
                   if (!replacementTd.attribs) {
@@ -306,7 +306,7 @@ function patcher(html, generalOpts) {
               newChildren.push({
                 type: "tag",
                 name: "tr",
-                children: Array.from(staging)
+                children: Array.from(staging),
               });
 
               // 2. Wipe stage
@@ -322,7 +322,7 @@ function patcher(html, generalOpts) {
             newChildren.push({
               type: "tag",
               name: "tr",
-              children: Array.from(staging)
+              children: Array.from(staging),
             });
             // wipe
             staging = [];

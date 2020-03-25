@@ -3,14 +3,14 @@ const {
   isProduction4,
   isProduction4a,
   validFirstChar,
-  validSecondCharOnwards
+  validSecondCharOnwards,
 } = require("../dist/charcode-is-valid-xml-name-character.cjs");
 
 // -----------------------------------------------------------------------------
 // 01. isProduction4
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - isProduction4()", t => {
+t.test("01.01 - isProduction4()", (t) => {
   t.equal(isProduction4("a"), true, "01.01.01");
   t.equal(isProduction4("Z"), true, "01.01.02");
   t.equal(isProduction4("?"), false, "01.01.03");
@@ -31,7 +31,7 @@ t.test("01.01 - isProduction4()", t => {
   t.end();
 });
 
-t.test("01.02 - validFirstChar() same as isProduction4()", t => {
+t.test("01.02 - validFirstChar() same as isProduction4()", (t) => {
   t.equal(validFirstChar("a"), true, "01.02.01");
   t.equal(validFirstChar("Z"), true, "01.02.02");
   t.equal(validFirstChar("?"), false, "01.02.03");
@@ -56,7 +56,7 @@ t.test("01.02 - validFirstChar() same as isProduction4()", t => {
 // 02. isProduction4a
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - isProduction4a()", t => {
+t.test("02.01 - isProduction4a()", (t) => {
   t.equal(isProduction4a("a"), true, "02.01.01");
   t.equal(isProduction4a("?"), false, "02.01.02");
   t.equal(isProduction4a("-"), true, "02.01.03");
@@ -76,7 +76,7 @@ t.test("02.01 - isProduction4a()", t => {
   t.end();
 });
 
-t.test("02.02 - validSecondCharOnwards() same as isProduction4a()", t => {
+t.test("02.02 - validSecondCharOnwards() same as isProduction4a()", (t) => {
   t.equal(validSecondCharOnwards("a"), true, "02.02.01");
   t.equal(validSecondCharOnwards("?"), false, "02.02.02");
   t.equal(validSecondCharOnwards("-"), true, "02.02.03");

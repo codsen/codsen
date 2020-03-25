@@ -41,7 +41,7 @@ const {
   chompLeft,
   chompRight,
   leftStopAtNewLines,
-  rightStopAtNewLines
+  rightStopAtNewLines,
 } = require("string-left-right");
 ```
 
@@ -56,7 +56,7 @@ import {
   chompLeft,
   chompRight,
   leftStopAtNewLines,
-  rightStopAtNewLines
+  rightStopAtNewLines,
 } from "string-left-right";
 ```
 
@@ -76,7 +76,7 @@ const {
   chompLeft,
   chompRight,
   leftStopAtNewLines,
-  rightStopAtNewLines
+  rightStopAtNewLines,
 } = stringLeftRight;
 ```
 
@@ -111,7 +111,7 @@ const {
   chompLeft,
   chompRight,
   leftStopAtNewLines,
-  rightStopAtNewLines
+  rightStopAtNewLines,
 } = require("string-left-right");
 // let's get the closest non-whitespace letter to the left of "d"
 const str = "abc   def";
@@ -293,10 +293,10 @@ t.same(
     gaps: [
       [7, 9],
       [10, 12],
-      [13, 15]
+      [13, 15],
     ],
     leftmostChar: 6,
-    rightmostChar: 12
+    rightmostChar: 12,
   },
   "04.01.02"
 );

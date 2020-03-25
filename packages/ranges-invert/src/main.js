@@ -42,7 +42,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   // declare defaults, so we can enforce types later:
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
-    skipChecks: false
+    skipChecks: false,
   };
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptions);
@@ -103,8 +103,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
 
     throw new TypeError(
-      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex +
-        1}th range (${JSON.stringify(
+      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
+        culpritsIndex + 1
+      }th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -124,11 +125,11 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     // and there's overlap. In reality, merged result is simply [[0, 4]].
     // Then, we invert from 4 onwards to the end of reference string length.
     prep = mergeRanges(
-      arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1])
+      arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1])
     );
   } else {
     // but if checks are turned off, filter straight away:
-    prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
+    prep = arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1]);
     // hopefully input ranges were really sorted...
   }
 
@@ -140,7 +141,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
 
   console.log(
-    `143 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `144 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -159,7 +160,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`162 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`163 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res.push([0, arr[0][0]]);
     }
 
@@ -169,7 +170,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `172 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `173 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

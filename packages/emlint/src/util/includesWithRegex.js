@@ -27,7 +27,7 @@ function includesWithRegex(arr, whatToMatch, opts = {}) {
   // );
 
   return arr.some(
-    val =>
+    (val) =>
       (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" &&
         ((!opts.caseInsensitive && whatToMatch === val) ||

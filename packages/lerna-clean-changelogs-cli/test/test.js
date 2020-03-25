@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mode`,
-  async t => {
+  async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-v"]);
     t.equal(reportedVersion1.stdout, pack.version);
 
@@ -74,7 +74,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`,
-  async t => {
+  async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-h"]);
     t.match(reportedVersion1.stdout, /Usage/);
     t.match(reportedVersion1.stdout, /Options/);
@@ -87,7 +87,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`,
-  async t => {
+  async (t) => {
     // fetch us a random temp folder
     // const tempFolder = "temp";
     const tempFolder = tempy.directory();
@@ -107,7 +107,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file`,
-  async t => {
+  async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -126,11 +126,11 @@ t.test(
             "../"
           )}/cli.js changelog.md`,
           {
-            shell: true
+            shell: true,
           }
         )
       )
-      .then(execasMsg => {
+      .then((execasMsg) => {
         t.match(
           execasMsg.stdout,
           /1 updated/,
@@ -138,10 +138,10 @@ t.test(
         );
         return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
       })
-      .then(received =>
+      .then((received) =>
         execa
           .command(`rm -rf ${tempFolder}`, {
-            shell: true
+            shell: true,
           })
           .then(() => received)
       );
@@ -152,7 +152,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`,
-  async t => {
+  async (t) => {
     // 1. set up in which folder to write:
     // const tempFolder = "temp";
     const tempFolder = tempy.directory();
@@ -164,10 +164,10 @@ t.test(
       "fol1/fol12",
       "fol2/fol21",
       "fol2/fol22",
-      "fol3/fol31"
+      "fol3/fol31",
     ];
 
-    foldersToCreate.forEach(p => {
+    foldersToCreate.forEach((p) => {
       fs.ensureDirSync(path.join(tempFolder, p));
     });
 
@@ -177,11 +177,11 @@ t.test(
       "fol1/fol12/changelog.md",
       "fol2/fol21/changelog.md",
       "fol2/fol22/changelog.md",
-      "fol3/changelog.md"
-    ].map(p => path.join(tempFolder, p));
+      "fol3/changelog.md",
+    ].map((p) => path.join(tempFolder, p));
 
     // 2. asynchronously write test files, all get the same messy changelog:
-    await pMap(testFilePaths, oneOfTestFilePaths =>
+    await pMap(testFilePaths, (oneOfTestFilePaths) =>
       fs.writeFile(oneOfTestFilePaths, changelog1)
     )
       .then(() =>
@@ -194,11 +194,11 @@ t.test(
         execa(
           `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js "**"`,
           {
-            shell: true
+            shell: true,
           }
         )
       )
-      .then(execasMsg =>
+      .then((execasMsg) =>
         t.match(
           execasMsg.stdout,
           /5 updated, 1 skipped/,
@@ -207,6 +207,6 @@ t.test(
       )
       // .then(() => execa.command(`rm -rf ${path.join(__dirname, "../temp")}`))
       .then(() => execa.command(`rm -rf ${tempFolder}`))
-      .catch(err => t.fail(err));
+      .catch((err) => t.fail(err));
   }
 );

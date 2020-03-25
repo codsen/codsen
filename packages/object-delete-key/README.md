@@ -135,11 +135,11 @@ This library returns the `input` with all requested keys/value pairs removed.
 deleteKey(
   {
     a: "b",
-    c: "d"
+    c: "d",
   },
   {
     key: "c",
-    val: "d"
+    val: "d",
   }
 );
 // => {a: 'b'}
@@ -151,11 +151,11 @@ deleteKey(
 deleteKey(
   {
     a: { e: [{ b: ["c", "d"] }] },
-    b: ["c", "d"]
+    b: ["c", "d"],
   },
   {
     key: "b",
-    val: ["c", "d"]
+    val: ["c", "d"],
   }
 );
 // => {}
@@ -169,12 +169,12 @@ Feed options object's key `cleanup: false` if you **don't want** empty arrays/ob
 deleteKey(
   {
     a: { e: [{ b: { c: "d" } }] },
-    b: { c: "d" }
+    b: { c: "d" },
   },
   {
     key: "b",
     val: { c: "d" },
-    cleanup: false
+    cleanup: false,
   }
 );
 // => {a: {e: [{}]}}
@@ -187,10 +187,10 @@ deleteKey(
   {
     a: "a",
     b: "jlfghdjkhkdfhgdf",
-    c: [{ b: "weuhreorhelhgljdhflghd" }]
+    c: [{ b: "weuhreorhelhgljdhflghd" }],
   },
   {
-    key: "b"
+    key: "b",
   }
 );
 // => { a: 'a' }
@@ -203,10 +203,10 @@ deleteKey(
   {
     a: "a",
     skldjfslfl: "x",
-    c: [{ dlfgjdlkjlfgjhfg: "x" }]
+    c: [{ dlfgjdlkjlfgjhfg: "x" }],
   },
   {
-    val: "x"
+    val: "x",
   }
 );
 // => { a: 'a' }
@@ -219,11 +219,11 @@ deleteKey(
   {
     a: "a",
     skldjfslfl: "x",
-    c: [{ dlfgjdlkjlfgjhfg: "x" }]
+    c: [{ dlfgjdlkjlfgjhfg: "x" }],
   },
   {
     val: "x",
-    cleanup: false
+    cleanup: false,
   }
 );
 // => {
@@ -242,11 +242,11 @@ Wildcards can be used in keys and/or values. This library feeds inputs to [ast-m
 const res = deleteKey(
   {
     a: ["beep", "", "c", "boop"],
-    bap: "bap"
+    bap: "bap",
   },
   {
     key: "b*p",
-    only: "array"
+    only: "array",
   }
 );
 console.log(
@@ -287,11 +287,11 @@ deleteKey(
   {
     a: "a",
     b: {
-      c: "d"
-    }
+      c: "d",
+    },
   },
   {
-    key: "c"
+    key: "c",
   }
 );
 // =>
@@ -307,8 +307,8 @@ _.omit(
   {
     a: "a",
     b: {
-      c: "d"
-    }
+      c: "d",
+    },
   },
   "c"
 );

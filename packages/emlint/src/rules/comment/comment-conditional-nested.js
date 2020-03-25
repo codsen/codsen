@@ -9,7 +9,7 @@ import { isObj } from "../../util/util";
 // function commentConditionalNested(context, ...opts) {
 function commentConditionalNested(context) {
   return {
-    ast: function(node) {
+    ast: function (node) {
       console.log(
         `███████████████████████████████████████ commentConditionalNested() ███████████████████████████████████████`
       );
@@ -56,7 +56,7 @@ function commentConditionalNested(context) {
               // the start of the current path - because if it is, it's nested
               // and should be reported
               if (
-                pathsWithOpeningComments.some(pathStr =>
+                pathsWithOpeningComments.some((pathStr) =>
                   innerObj.path.startsWith(pathStr)
                 )
               ) {
@@ -68,7 +68,7 @@ function commentConditionalNested(context) {
                   message: `Don't nest comments.`,
                   idxFrom: current.start,
                   idxTo: current.end,
-                  fix: null
+                  fix: null,
                 });
               }
 
@@ -91,7 +91,7 @@ function commentConditionalNested(context) {
           return current;
         }
       );
-    }
+    },
   };
 }
 

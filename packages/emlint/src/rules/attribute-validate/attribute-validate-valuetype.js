@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateValuetype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValuetype() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateValuetype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateString(
@@ -40,19 +40,19 @@ function attributeValidateValuetype(context, ...opts) {
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["data", "ref", "object"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
-          ).forEach(errorObj => {
+          ).forEach((errorObj) => {
             console.log(`046 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valuetype"
+                ruleId: "attribute-validate-valuetype",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

@@ -6,12 +6,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>.a-b{c}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -19,7 +19,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "rule",
@@ -31,15 +31,15 @@ t.test(
             {
               value: ".a-b",
               selectorStarts: 7,
-              selectorEnds: 11
-            }
-          ]
+              selectorEnds: 11,
+            },
+          ],
         },
         {
           type: "tag",
           start: 14,
-          end: 22
-        }
+          end: 22,
+        },
       ],
       "01.01"
     );
@@ -49,16 +49,16 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(
       `<style>
 .a-b{c}
 </style>`,
       {
-        tagCb: obj => {
+        tagCb: (obj) => {
           gathered.push(obj);
-        }
+        },
       }
     );
     t.match(
@@ -67,12 +67,12 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "text",
           start: 7,
-          end: 8
+          end: 8,
         },
         {
           type: "rule",
@@ -84,20 +84,20 @@ t.test(
             {
               value: ".a-b",
               selectorStarts: 8,
-              selectorEnds: 12
-            }
-          ]
+              selectorEnds: 12,
+            },
+          ],
         },
         {
           type: "text",
           start: 15,
-          end: 16
+          end: 16,
         },
         {
           type: "tag",
           start: 16,
-          end: 24
-        }
+          end: 24,
+        },
       ],
       "01.02"
     );
@@ -107,12 +107,12 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two selectors`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>.a,.b{c}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -120,7 +120,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "rule",
@@ -134,20 +134,20 @@ t.test(
             {
               value: ".a",
               selectorStarts: 7,
-              selectorEnds: 9
+              selectorEnds: 9,
             },
             {
               value: ".b",
               selectorStarts: 10,
-              selectorEnds: 12
-            }
-          ]
+              selectorEnds: 12,
+            },
+          ],
         },
         {
           type: "tag",
           start: 15,
-          end: 23
-        }
+          end: 23,
+        },
       ],
       "01.03"
     );
@@ -157,7 +157,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(
       `<style>
@@ -166,9 +166,9 @@ t.test(
 
 {c}</style>`,
       {
-        tagCb: obj => {
+        tagCb: (obj) => {
           gathered.push(obj);
-        }
+        },
       }
     );
     t.match(
@@ -177,12 +177,12 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "text",
           start: 7,
-          end: 9
+          end: 9,
         },
         {
           type: "rule",
@@ -196,20 +196,20 @@ t.test(
             {
               value: ".a",
               selectorStarts: 9,
-              selectorEnds: 11
+              selectorEnds: 11,
             },
             {
               value: ".b",
               selectorStarts: 14,
-              selectorEnds: 16
-            }
-          ]
+              selectorEnds: 16,
+            },
+          ],
         },
         {
           type: "tag",
           start: 21,
-          end: 29
-        }
+          end: 29,
+        },
       ],
       "01.04"
     );
@@ -219,12 +219,12 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - dangling comma`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>.a,.b,{c}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -232,7 +232,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "rule",
@@ -246,20 +246,20 @@ t.test(
             {
               value: ".a",
               selectorStarts: 7,
-              selectorEnds: 9
+              selectorEnds: 9,
             },
             {
               value: ".b",
               selectorStarts: 10,
-              selectorEnds: 12
-            }
-          ]
+              selectorEnds: 12,
+            },
+          ],
         },
         {
           type: "tag",
           start: 16,
-          end: 24
-        }
+          end: 24,
+        },
       ],
       "01.05"
     );
@@ -267,61 +267,64 @@ t.test(
   }
 );
 
-t.test(`01.06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`, t => {
-  const gathered = [];
-  ct(`<style>.a,,.b{c}</style>`, {
-    tagCb: obj => {
-      gathered.push(obj);
-    }
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 7
+t.test(
+  `01.06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a,,.b{c}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
       },
-      {
-        type: "rule",
-        start: 7,
-        end: 16,
-        openingCurlyAt: 13,
-        closingCurlyAt: 15,
-        selectorsStart: 7,
-        selectorsEnd: 13,
-        selectors: [
-          {
-            value: ".a",
-            selectorStarts: 7,
-            selectorEnds: 9
-          },
-          {
-            value: ".b",
-            selectorStarts: 11,
-            selectorEnds: 13
-          }
-        ]
-      },
-      {
-        type: "tag",
-        start: 16,
-        end: 24
-      }
-    ],
-    "01.06"
-  );
-  t.end();
-});
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7,
+        },
+        {
+          type: "rule",
+          start: 7,
+          end: 16,
+          openingCurlyAt: 13,
+          closingCurlyAt: 15,
+          selectorsStart: 7,
+          selectorsEnd: 13,
+          selectors: [
+            {
+              value: ".a",
+              selectorStarts: 7,
+              selectorEnds: 9,
+            },
+            {
+              value: ".b",
+              selectorStarts: 11,
+              selectorEnds: 13,
+            },
+          ],
+        },
+        {
+          type: "tag",
+          start: 16,
+          end: 24,
+        },
+      ],
+      "01.06"
+    );
+    t.end();
+  }
+);
 
 t.test(
   `01.07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tags can't have curlies`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>.b%{c}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -339,7 +342,7 @@ t.test(
           pureHTML: true,
           esp: [],
           kind: null,
-          attribs: []
+          attribs: [],
         },
         {
           type: "rule",
@@ -353,9 +356,9 @@ t.test(
             {
               value: ".b%",
               selectorStarts: 7,
-              selectorEnds: 10
-            }
-          ]
+              selectorEnds: 10,
+            },
+          ],
         },
         {
           type: "tag",
@@ -370,8 +373,8 @@ t.test(
           pureHTML: true,
           esp: [],
           kind: null,
-          attribs: []
-        }
+          attribs: [],
+        },
       ],
       "01.07"
     );
@@ -381,7 +384,7 @@ t.test(
 
 t.test(
   `01.08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tag false positives`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(
       `<style>
@@ -389,9 +392,9 @@ t.test(
 .b{x}}
 </style>`,
       {
-        tagCb: obj => {
+        tagCb: (obj) => {
           gathered.push(obj);
-        }
+        },
       }
     );
     t.match(
@@ -410,12 +413,12 @@ t.test(
           pureHTML: true,
           esp: [],
           kind: null,
-          attribs: []
+          attribs: [],
         },
         {
           type: "text",
           start: 7,
-          end: 8
+          end: 8,
         },
         {
           type: "rule",
@@ -429,14 +432,14 @@ t.test(
             {
               value: ".a",
               selectorStarts: 8,
-              selectorEnds: 10
-            }
-          ]
+              selectorEnds: 10,
+            },
+          ],
         },
         {
           type: "text",
           start: 13,
-          end: 15
+          end: 15,
         },
         {
           type: "rule",
@@ -450,10 +453,10 @@ t.test(
             {
               value: ".b",
               selectorStarts: 15,
-              selectorEnds: 17
-            }
-          ]
-        }
+              selectorEnds: 17,
+            },
+          ],
+        },
       ],
       "01.08"
     );

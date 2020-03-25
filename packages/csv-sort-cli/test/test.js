@@ -18,14 +18,14 @@ const tempy = require("tempy");
 //                                  *
 //                                  *
 
-t.test("01.01 - there are no usable files at all", async t => {
+t.test("01.01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
   t.rejects(async () => {
     await fs.writeFile(path.join(tempFolder, "file.md"), "zzz");
     return execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js`, {
-      shell: true
+      shell: true,
     });
   });
 
@@ -49,7 +49,7 @@ t.test("01.01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-t.test("01.02 - sorts a file", async t => {
+t.test("01.02 - sorts a file", async (t) => {
   const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
@@ -86,7 +86,7 @@ t.test("01.02 - sorts a file", async t => {
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   t.same(await newlyGeneratedCsvFile, intendedCSV, "01.02.02");
 

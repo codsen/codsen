@@ -12,7 +12,7 @@ const testme = () =>
     `Welcome to Website Name! Company Name, Inc. ('Company Name' or 'Company') recommends that you read the following terms and conditions carefully.`,
     {
       convertApostrophes: 1,
-      convertEntities: 0
+      convertEntities: 0,
     }
   );
 

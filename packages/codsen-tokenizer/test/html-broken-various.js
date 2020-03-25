@@ -7,12 +7,12 @@ const BACKSLASH = "\u005C";
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a < b class="">`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -20,13 +20,13 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 2
+          end: 2,
         },
         {
           type: "tag",
           start: 2,
-          end: 15
-        }
+          end: 15,
+        },
       ],
       "01.01"
     );
@@ -39,12 +39,12 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<br${BACKSLASH}>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -52,8 +52,8 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 5
-        }
+          end: 5,
+        },
       ],
       "02.01"
     );
@@ -63,12 +63,12 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<${BACKSLASH}br${BACKSLASH}>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -76,8 +76,8 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 6
-        }
+          end: 6,
+        },
       ],
       "02.02"
     );
@@ -88,16 +88,16 @@ t.test(
 // 03. Various
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
+t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
   const gathered = [];
   ct(
     `a<!--[if]><z>
 <AAAch>>
 </o:Offict`,
     {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     }
   );
   t.same(
@@ -107,7 +107,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
         type: "text",
         start: 0,
         end: 1,
-        value: "a"
+        value: "a",
       },
       {
         type: "comment",
@@ -115,7 +115,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
         end: 10,
         value: "<!--[if]>",
         kind: "only",
-        closing: false
+        closing: false,
       },
       {
         type: "tag",
@@ -131,14 +131,14 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
         pureHTML: true,
         esp: [],
         kind: null,
-        attribs: []
+        attribs: [],
       },
       {
         type: "text",
         start: 13,
         end: 33,
-        value: "\n<AAAch>>\n</o:Offict"
-      }
+        value: "\n<AAAch>>\n</o:Offict",
+      },
     ],
     "03.01"
   );

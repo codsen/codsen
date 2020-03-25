@@ -1,7 +1,7 @@
 const t = require("tap");
 const isMediaD = require("../dist/is-media-descriptor.umd");
 
-t.test("UMD build works fine", t => {
+t.test("UMD build works fine", (t) => {
   [
     "all",
     "aural",
@@ -13,8 +13,8 @@ t.test("UMD build works fine", t => {
     "screen",
     "speech",
     "tty",
-    "tv"
-  ].forEach(val => {
+    "tv",
+  ].forEach((val) => {
     t.match(isMediaD(val), []);
   });
   t.end();

@@ -5,14 +5,14 @@ const {
   isUppercaseLetter,
   doConvertEntities,
   defaultOpts,
-  isLetter
+  isLetter,
 } = require("../dist/util.cjs");
 
 // -----------------------------------------------------------------------------
 
 t.test(
   "01 - isLowercaseLetter() - detects the case of the given character",
-  t => {
+  (t) => {
     t.equal(isLowercaseLetter("a"), true, "01.01");
     t.equal(isLowercaseLetter("A"), false, "01.02");
     t.equal(isLowercaseLetter("1"), false, "01.03");
@@ -24,7 +24,7 @@ t.test(
 
 t.test(
   "02 - isUppercaseLetter() - detects the case of the given character",
-  t => {
+  (t) => {
     t.equal(isUppercaseLetter("a"), false, "02.01");
     t.equal(isUppercaseLetter("A"), true, "02.02");
     t.equal(isUppercaseLetter("1"), false, "02.03");
@@ -34,7 +34,7 @@ t.test(
   }
 );
 
-t.test("03 - detects is the character a letter", t => {
+t.test("03 - detects is the character a letter", (t) => {
   t.equal(isLetter("a"), true, "03.01");
   t.equal(isLetter("A"), true, "03.02");
   t.equal(isLetter(" "), false, "03.03");
@@ -43,12 +43,12 @@ t.test("03 - detects is the character a letter", t => {
   t.end();
 });
 
-t.test("04 - package exports the options object", t => {
+t.test("04 - package exports the options object", (t) => {
   t.same(opts, defaultOpts, "04");
   t.end();
 });
 
-t.test("05 - doConvertEntities() - converts correctly", t => {
+t.test("05 - doConvertEntities() - converts correctly", (t) => {
   t.equal(doConvertEntities("a"), "a", "05.01");
   t.equal(doConvertEntities("£"), "&pound;", "05.02");
   t.equal(doConvertEntities("'"), "&apos;", "05.03");

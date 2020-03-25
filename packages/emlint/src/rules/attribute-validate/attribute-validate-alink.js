@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateAlink(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAlink() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateAlink(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -41,23 +41,23 @@ function attributeValidateAlink(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
         console.log(
           `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alink"
+              ruleId: "attribute-validate-alink",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

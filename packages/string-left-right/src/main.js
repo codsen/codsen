@@ -9,7 +9,7 @@ function x(something) {
   const res = {
     value: something,
     hungry: false,
-    optional: false
+    optional: false,
   };
   if (
     (res.value.endsWith("?*") || res.value.endsWith("*?")) &&
@@ -379,7 +379,7 @@ function seq(direction, str, idx, opts, args) {
       {
         gaps,
         leftmostChar,
-        rightmostChar
+        rightmostChar,
       },
       null,
       4
@@ -420,7 +420,7 @@ function leftSeq(str, idx, ...args) {
     return left(str, idx);
   }
   const defaults = {
-    i: false
+    i: false,
   };
   let opts;
   if (isObj(args[0])) {
@@ -447,7 +447,7 @@ function rightSeq(str, idx, ...args) {
     return right(str, idx);
   }
   const defaults = {
-    i: false
+    i: false,
   };
   let opts;
   if (isObj(args[0])) {
@@ -830,7 +830,7 @@ function chompLeft(str, idx, ...args) {
   // 2 - aggressively chomp all whitespace except newlines
   // 3 - aggressively chomp all whitespace including newlines
   const defaults = {
-    mode: 0
+    mode: 0,
   };
   // now, the first element within args can be opts.
   // It's a plain object so it's easy to distinguish
@@ -910,7 +910,7 @@ function chompRight(str, idx, ...args) {
   // 2 - aggressively chomp all whitespace except newlines
   // 3 - aggressively chomp all whitespace including newlines
   const defaults = {
-    mode: 0
+    mode: 0,
   };
   // now, the first element within args can be opts.
   // It's a plain object so it's easy to distinguish
@@ -947,5 +947,5 @@ export {
   leftSeq,
   rightSeq,
   chompLeft,
-  chompRight
+  chompRight,
 };

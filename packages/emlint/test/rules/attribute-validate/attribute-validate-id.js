@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no id, error level 0`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 0
-      }
+        "attribute-validate-id": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no id, error level 1`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 1
-      }
+        "attribute-validate-id": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no id, error level 2`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy id`,
-  t => {
+  (t) => {
     const str = `<table id='abc def'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<table id=" w100p">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table id="w100p">`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 12,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[11, 12]]
-        }
-      }
+          ranges: [[11, 12]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<table id="w100p ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table id="w100p">`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 17,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[16, 17]]
-        }
-      }
+          ranges: [[16, 17]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - one id, copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<table id="  w100p  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table id="w100p">`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [11, 13],
-            [18, 20]
-          ]
-        }
-      }
+            [18, 20],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - many ides, copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<table id="  w100p  ha \t fl  \n  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table id="w100p ha fl">`);
     t.match(messages, [
@@ -173,9 +173,9 @@ t.test(
         fix: {
           ranges: [
             [11, 13],
-            [27, 32]
-          ]
-        }
+            [27, 32],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -183,8 +183,8 @@ t.test(
         idxTo: 20,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[19, 20]] // delete only minimal amount, without insertion if possible
-        }
+          ranges: [[19, 20]], // delete only minimal amount, without insertion if possible
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -192,9 +192,9 @@ t.test(
         idxTo: 25,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[23, 25]] // delete only minimal amount, without insertion if possible
-        }
-      }
+          ranges: [[23, 25]], // delete only minimal amount, without insertion if possible
+        },
+      },
     ]);
     t.end();
   }
@@ -202,13 +202,13 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<table id="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -218,8 +218,8 @@ t.test(
         idxFrom: 11,
         idxTo: 14,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -227,13 +227,13 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<table id="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -243,8 +243,8 @@ t.test(
         idxFrom: 11,
         idxTo: 11,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -255,13 +255,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - healthy`,
-  t => {
+  (t) => {
     const str = `<table id='ab cd ef' id='yy aa'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -271,13 +271,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - mix 1`,
-  t => {
+  (t) => {
     const str = `<a id="b c\td\ne\t f \tg\t\th">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<a id="b c d e f g h">`);
@@ -288,8 +288,8 @@ t.test(
         idxTo: 11,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[10, 11, " "]] // replacement with space - notice 3rd arg
-        }
+          ranges: [[10, 11, " "]], // replacement with space - notice 3rd arg
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -297,8 +297,8 @@ t.test(
         idxTo: 13,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[12, 13, " "]] // replacement with space - notice 3rd arg
-        }
+          ranges: [[12, 13, " "]], // replacement with space - notice 3rd arg
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -306,8 +306,8 @@ t.test(
         idxTo: 16,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[14, 15]]
-        }
+          ranges: [[14, 15]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -315,8 +315,8 @@ t.test(
         idxTo: 19,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[18, 19]]
-        }
+          ranges: [[18, 19]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -324,9 +324,9 @@ t.test(
         idxTo: 22,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[20, 22, " "]]
-        }
-      }
+          ranges: [[20, 22, " "]],
+        },
+      },
     ]);
     t.end();
   }
@@ -334,13 +334,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - mix 1`,
-  t => {
+  (t) => {
     const str = `<table id='ab \t3a e.f' id='yy aa'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<table id='ab 3a e.f' id='yy aa'>`);
@@ -351,23 +351,23 @@ t.test(
         idxTo: 15,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[14, 15]]
-        }
+          ranges: [[14, 15]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
         idxFrom: 15,
         idxTo: 17,
         message: `Wrong id name.`,
-        fix: null
+        fix: null,
       },
       {
         ruleId: "attribute-validate-id",
         idxFrom: 18,
         idxTo: 21,
         message: `Wrong id name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -375,13 +375,13 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - starts with dot`,
-  t => {
+  (t) => {
     const str = `<table id=".abc">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -391,8 +391,8 @@ t.test(
         idxFrom: 11,
         idxTo: 15,
         message: `Wrong id name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -400,13 +400,13 @@ t.test(
 
 t.test(
   `03.05 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`,
-  t => {
+  (t) => {
     const str = `<table id=".">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -416,8 +416,8 @@ t.test(
         idxFrom: 11,
         idxTo: 12,
         message: `Wrong id name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -425,7 +425,7 @@ t.test(
 
 t.test(
   `03.06 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`,
-  t => {
+  (t) => {
     const str = `
 <table id="aa bb cc dd">
 <table id="aa bb aa bb cc aa dd \taa">
@@ -434,8 +434,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-id": 2
-      }
+        "attribute-validate-id": 2,
+      },
     });
     // can fix:
     t.equal(
@@ -453,8 +453,8 @@ t.test(
         idxTo: 45,
         message: `Duplicate id "aa".`,
         fix: {
-          ranges: [[43, 46]]
-        }
+          ranges: [[43, 46]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -462,8 +462,8 @@ t.test(
         idxTo: 48,
         message: `Duplicate id "bb".`,
         fix: {
-          ranges: [[46, 49]]
-        }
+          ranges: [[46, 49]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -471,8 +471,8 @@ t.test(
         idxTo: 54,
         message: `Duplicate id "aa".`,
         fix: {
-          ranges: [[52, 55]]
-        }
+          ranges: [[52, 55]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -480,8 +480,8 @@ t.test(
         idxTo: 59,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[58, 59]]
-        }
+          ranges: [[58, 59]],
+        },
       },
       {
         ruleId: "attribute-validate-id",
@@ -489,9 +489,9 @@ t.test(
         idxTo: 61,
         message: `Duplicate id "aa".`,
         fix: {
-          ranges: [[57, 61]]
-        }
-      }
+          ranges: [[57, 61]],
+        },
+      },
     ]);
     t.end();
   }

@@ -143,7 +143,7 @@ What this feature gives you is you can activate it and freely push chunks of str
   ```js
   [
     [5, 6, " "],
-    [1, 10]
+    [1, 10],
   ];
   ```
 

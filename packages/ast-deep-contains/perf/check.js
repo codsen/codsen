@@ -17,7 +17,7 @@ const testme = () => {
     (leftSideVal, rightSideVal) => {
       gathered.push([leftSideVal, rightSideVal]);
     },
-    err => {
+    (err) => {
       errors.push(err);
     }
   );

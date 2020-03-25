@@ -38,28 +38,28 @@ function startsComment(str, i, token) {
       (matchRight(str, i, ["!--"], {
         maxMismatches: 1,
         firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
-        trimBeforeMatching: true
+        trimBeforeMatching: true,
       }) ||
         matchRight(str, i, ["![endif]"], {
           i: true,
           maxMismatches: 2,
-          trimBeforeMatching: true
+          trimBeforeMatching: true,
         })) &&
       !matchRight(str, i, ["![cdata", "<"], {
         i: true,
         maxMismatches: 1,
-        trimBeforeMatching: true
+        trimBeforeMatching: true,
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
       (str[i] === "-" &&
         matchRight(str, i, ["->"], {
-          trimBeforeMatching: true
+          trimBeforeMatching: true,
         }) &&
         (token.type !== "comment" ||
           (!token.closing && token.kind !== "not")) &&
         !matchLeft(str, i, "<", {
           trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"]
+          trimCharsBeforeMatching: ["-", "!"],
         }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );

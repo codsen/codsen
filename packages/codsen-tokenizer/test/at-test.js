@@ -6,12 +6,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(
   `00.01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>@media a {.b{c}}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -19,7 +19,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "rule",
@@ -31,9 +31,9 @@ t.test(
             {
               value: ".b",
               selectorStarts: 17,
-              selectorEnds: 19
-            }
-          ]
+              selectorEnds: 19,
+            },
+          ],
         },
         {
           type: "at",
@@ -46,13 +46,13 @@ t.test(
           queryStartsAt: 14,
           queryEndsAt: 15,
           openingCurlyAt: 16,
-          closingCurlyAt: 22
+          closingCurlyAt: 22,
         },
         {
           type: "tag",
           start: 23,
-          end: 31
-        }
+          end: 31,
+        },
       ],
       "00.01"
     );
@@ -62,12 +62,12 @@ t.test(
 
 t.test(
   `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<style>@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}</style>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
     t.match(
       gathered,
@@ -75,7 +75,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "rule",
@@ -89,9 +89,9 @@ t.test(
             {
               value: ".c",
               selectorStarts: 13,
-              selectorEnds: 15
-            }
-          ]
+              selectorEnds: 15,
+            },
+          ],
         },
         {
           type: "rule",
@@ -105,9 +105,9 @@ t.test(
             {
               value: ".h",
               selectorStarts: 27,
-              selectorEnds: 29
-            }
-          ]
+              selectorEnds: 29,
+            },
+          ],
         },
         {
           type: "at",
@@ -120,7 +120,7 @@ t.test(
           queryStartsAt: 24,
           queryEndsAt: 25,
           openingCurlyAt: 26,
-          closingCurlyAt: 35
+          closingCurlyAt: 35,
         },
         {
           type: "rule",
@@ -134,9 +134,9 @@ t.test(
             {
               value: ".k",
               selectorStarts: 36,
-              selectorEnds: 38
-            }
-          ]
+              selectorEnds: 38,
+            },
+          ],
         },
         {
           type: "at",
@@ -149,13 +149,13 @@ t.test(
           queryStartsAt: 10,
           queryEndsAt: 11,
           openingCurlyAt: 12,
-          closingCurlyAt: 44
+          closingCurlyAt: 44,
         },
         {
           type: "tag",
           start: 45,
-          end: 53
-        }
+          end: 53,
+        },
       ],
       "00.02"
     );
@@ -166,102 +166,20 @@ t.test(
 // 01. simple
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
-  const gathered = [];
-  ct(
-    `<style>
-@media (max-width: 600px) {
-  .xx[z] {a:1;}
-}
-</style>`,
-    {
-      tagCb: obj => {
-        gathered.push(obj);
-      }
-    }
-  );
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 7
-      },
-      {
-        type: "text",
-        start: 7,
-        end: 8
-      },
-      {
-        type: "text",
-        start: 35,
-        end: 38
-      },
-      {
-        type: "rule",
-        start: 38,
-        end: 51,
-        openingCurlyAt: 45,
-        closingCurlyAt: 50,
-        selectorsStart: 38,
-        selectorsEnd: 44,
-        selectors: [
-          {
-            value: ".xx[z]",
-            selectorStarts: 38,
-            selectorEnds: 44
-          }
-        ]
-      },
-      {
-        type: "text",
-        start: 51,
-        end: 52
-      },
-      {
-        type: "at",
-        start: 8,
-        end: 53,
-        identifier: "media",
-        identifierStartsAt: 9,
-        identifierEndsAt: 14,
-        query: "(max-width: 600px)",
-        queryStartsAt: 15,
-        queryEndsAt: 33,
-        openingCurlyAt: 34,
-        closingCurlyAt: 52
-      },
-      {
-        type: "text",
-        start: 53,
-        end: 54
-      },
-      {
-        type: "tag",
-        start: 54,
-        end: 62
-      }
-    ],
-    "01.01"
-  );
-  t.end();
-});
-
 t.test(
-  `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
-  t => {
+  `01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`,
+  (t) => {
     const gathered = [];
     ct(
       `<style>
 @media (max-width: 600px) {
-  zzz
+  .xx[z] {a:1;}
 }
 </style>`,
       {
-        tagCb: obj => {
+        tagCb: (obj) => {
           gathered.push(obj);
-        }
+        },
       }
     );
     t.match(
@@ -270,17 +188,102 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 7
+          end: 7,
         },
         {
           type: "text",
           start: 7,
-          end: 8
+          end: 8,
         },
         {
           type: "text",
           start: 35,
-          end: 38
+          end: 38,
+        },
+        {
+          type: "rule",
+          start: 38,
+          end: 51,
+          openingCurlyAt: 45,
+          closingCurlyAt: 50,
+          selectorsStart: 38,
+          selectorsEnd: 44,
+          selectors: [
+            {
+              value: ".xx[z]",
+              selectorStarts: 38,
+              selectorEnds: 44,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 51,
+          end: 52,
+        },
+        {
+          type: "at",
+          start: 8,
+          end: 53,
+          identifier: "media",
+          identifierStartsAt: 9,
+          identifierEndsAt: 14,
+          query: "(max-width: 600px)",
+          queryStartsAt: 15,
+          queryEndsAt: 33,
+          openingCurlyAt: 34,
+          closingCurlyAt: 52,
+        },
+        {
+          type: "text",
+          start: 53,
+          end: 54,
+        },
+        {
+          type: "tag",
+          start: 54,
+          end: 62,
+        },
+      ],
+      "01.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
+  (t) => {
+    const gathered = [];
+    ct(
+      `<style>
+@media (max-width: 600px) {
+  zzz
+}
+</style>`,
+      {
+        tagCb: (obj) => {
+          gathered.push(obj);
+        },
+      }
+    );
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7,
+        },
+        {
+          type: "text",
+          start: 7,
+          end: 8,
+        },
+        {
+          type: "text",
+          start: 35,
+          end: 38,
         },
         {
           type: "rule",
@@ -292,14 +295,14 @@ t.test(
             {
               value: "zzz",
               selectorStarts: 38,
-              selectorEnds: 41
-            }
-          ]
+              selectorEnds: 41,
+            },
+          ],
         },
         {
           type: "text",
           start: 41,
-          end: 42
+          end: 42,
         },
         {
           type: "at",
@@ -312,18 +315,18 @@ t.test(
           queryStartsAt: 15,
           queryEndsAt: 33,
           openingCurlyAt: 34,
-          closingCurlyAt: 42
+          closingCurlyAt: 42,
         },
         {
           type: "text",
           start: 43,
-          end: 44
+          end: 44,
         },
         {
           type: "tag",
           start: 44,
-          end: 52
-        }
+          end: 52,
+        },
       ],
       "01.02"
     );

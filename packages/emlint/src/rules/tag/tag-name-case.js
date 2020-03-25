@@ -4,7 +4,7 @@
 function tagNameCase(context) {
   const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagNameCase() ███████████████████████████████████████`
       );
@@ -48,8 +48,8 @@ function tagNameCase(context) {
               [
                 node.tagNameStartsAt,
                 node.tagNameEndsAt,
-                node.tagName.toUpperCase()
-              ]
+                node.tagName.toUpperCase(),
+              ],
             ];
 
             context.report({
@@ -57,7 +57,7 @@ function tagNameCase(context) {
               message: "Bad tag name case.",
               idxFrom: node.tagNameStartsAt,
               idxTo: node.tagNameEndsAt,
-              fix: { ranges }
+              fix: { ranges },
             });
           }
           // else - FINE
@@ -67,7 +67,7 @@ function tagNameCase(context) {
         ) {
           console.log(`068 tagNameCase(): wrong tag case!`);
           const ranges = [
-            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]
+            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],
           ];
 
           context.report({
@@ -75,11 +75,11 @@ function tagNameCase(context) {
             message: "Bad tag name case.",
             idxFrom: node.tagNameStartsAt,
             idxTo: node.tagNameEndsAt,
-            fix: { ranges }
+            fix: { ranges },
           });
         }
       }
-    }
+    },
   };
 }
 

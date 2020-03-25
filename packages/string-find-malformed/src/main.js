@@ -61,7 +61,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
   const defaults = {
     stringOffset: 0,
     maxDistance: 1,
-    ignoreWhitespace: true
+    ignoreWhitespace: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -267,29 +267,31 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     }
     console.log(" ");
     console.log(`-----------------------------------`);
-    pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
+    pendingMatchesArr = pendingMatchesArr.filter(
+      (obj) => obj.patienceLeft >= 0
+    );
 
     // out of all objects which deplete pendingToCheck[] to zero length,
     // we pick the one with the smallest "startsAt" value - that's filtering
     // the overlapping values
 
     const tempArr = pendingMatchesArr
-      .filter(obj => obj.pendingToCheck.length === 0)
-      .map(obj => obj.startsAt);
+      .filter((obj) => obj.pendingToCheck.length === 0)
+      .map((obj) => obj.startsAt);
 
     if (Array.isArray(tempArr) && tempArr.length) {
       console.log(
-        `282 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
+        `284 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
           tempArr,
           null,
           4
         )}`
       );
       console.log(
-        `289 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+        `291 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
           {
             idxFrom: Math.min(...tempArr) + opts.stringOffset,
-            idxTo: i + (wasThisLetterMatched ? 1 : 0) + opts.stringOffset
+            idxTo: i + (wasThisLetterMatched ? 1 : 0) + opts.stringOffset,
           },
           null,
           4
@@ -301,32 +303,32 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         // only ping malformed values, don't ping those exactly matching "refStr"
         cb({
           idxFrom: idxFrom + opts.stringOffset,
-          idxTo: idxTo + opts.stringOffset
+          idxTo: idxTo + opts.stringOffset,
         });
       }
 
       // remove pendingMatchesArr[] entries with no characters to check
       pendingMatchesArr = pendingMatchesArr.filter(
-        obj => obj.pendingToCheck.length
+        (obj) => obj.pendingToCheck.length
       );
     }
 
     console.log(
-      `315 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
+      `317 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
     );
     for (let y = 0; y < len2; y++) {
       console.log(
-        `319 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
+        `321 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
       );
 
       if (str[i] === refStr[y]) {
         const whatToPush = {
           startsAt: i,
           patienceLeft: patience - y,
-          pendingToCheck: Array.from(refStr.slice(y + 1))
+          pendingToCheck: Array.from(refStr.slice(y + 1)),
         };
         console.log(
-          `329 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+          `331 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
             whatToPush,
             null,
             4

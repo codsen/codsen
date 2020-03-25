@@ -14,7 +14,7 @@ Author: Roy Revelt, Codsen Ltd
 License: ${pkg.license}
 Homepage: ${pkg.homepage}`;
 
-export default commandLineArgs => {
+export default (commandLineArgs) => {
   const finalConfig = [
     // browser-friendly UMD build
     {
@@ -22,18 +22,18 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "objectFlattenReferencing"
+        name: "objectFlattenReferencing",
       },
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         resolve(),
         commonjs(),
         babel(),
         terser(),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // CommonJS build (for Node)
@@ -45,16 +45,16 @@ export default commandLineArgs => {
         "lodash.clonedeep",
         "lodash.isplainobject",
         "matcher",
-        "str-indexes-of-plus"
+        "str-indexes-of-plus",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         babel(),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // ES module build (for bundlers)
@@ -66,15 +66,15 @@ export default commandLineArgs => {
         "lodash.clonedeep",
         "lodash.isplainobject",
         "matcher",
-        "str-indexes-of-plus"
+        "str-indexes-of-plus",
       ],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 
     // util.js build:
@@ -84,12 +84,12 @@ export default commandLineArgs => {
       external: ["is-string-int", "lodash.clonedeep", "lodash.isplainobject"],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         }),
         resolve(),
-        cleanup({ comments: "istanbul" })
-      ]
-    }
+        cleanup({ comments: "istanbul" }),
+      ],
+    },
   ];
 
   if (commandLineArgs.dev) {

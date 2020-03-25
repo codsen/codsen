@@ -7,15 +7,15 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - off, missing dash`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
   <img src="fallback">
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-mismatching-pair": 0
-      }
+        "comment-mismatching-pair": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.01.01");
     t.same(messages, [], "01.01.02");
@@ -25,7 +25,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are healthy`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
   <img src="fallback"/>
 <!--<![endif]-->`;
@@ -35,8 +35,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-mismatching-pair": 1
-      }
+        "comment-mismatching-pair": 1,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(applyFixes(str, messages), fixed, "01.02.01");
@@ -50,9 +50,9 @@ t.test(
           idxTo: 54,
           message: `Remove "<!--".`,
           fix: {
-            ranges: [[38, 54]]
-          }
-        }
+            ranges: [[38, 54]],
+          },
+        },
       ],
       "01.02.02"
     );
@@ -63,7 +63,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`,
-  t => {
+  (t) => {
     const str = `<!-- [if mso]>
   <img src="fallback"/>
 <!--<![endif]-->`;
@@ -73,8 +73,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 1
-      }
+        all: 1,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(applyFixes(str, messages), fixed, "01.03");
@@ -84,7 +84,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
   <img src="fallback"/>
 <!--<[endif]-->`;
@@ -94,13 +94,13 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     const secondRoundMessages = linter.verify(applyFixes(str, messages), {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(
@@ -114,7 +114,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are also dirty`,
-  t => {
+  (t) => {
     const str = `<!-[if mso]>
   <img src="fallback"/>
 <!--<[endif]-->`;
@@ -124,13 +124,13 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     const secondRoundMessages = linter.verify(applyFixes(str, messages), {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(
@@ -147,7 +147,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`,
-  t => {
+  (t) => {
     const str = `<!--[if !mso]><!-->
   <img src="fallback"/>
 <![endif]-->`;
@@ -157,8 +157,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-mismatching-pair": 2
-      }
+        "comment-mismatching-pair": 2,
+      },
     });
     // turns tails comment tag into "not"-kind
     t.equal(applyFixes(str, messages), fixed, "02.01.01");
@@ -174,9 +174,9 @@ t.test(
           idxFrom: 44,
           idxTo: 56,
           fix: {
-            ranges: [[44, 44, "<!--"]]
-          }
-        }
+            ranges: [[44, 44, "<!--"]],
+          },
+        },
       ],
       "02.01.02"
     );
@@ -186,7 +186,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`,
-  t => {
+  (t) => {
     const str = `<!-[if !mso]><!-->
   <img src="fallback"/>
 <![endif]-->`;
@@ -196,8 +196,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     // turns tails comment tag into "not"-kind
     t.equal(applyFixes(str, messages), fixed, "02.02.01");
@@ -211,9 +211,9 @@ t.test(
           idxTo: 18,
           message: "Malformed opening comment tag.",
           fix: {
-            ranges: [[0, 4, "<!--["]]
+            ranges: [[0, 4, "<!--["]],
           },
-          ruleId: "comment-opening-malformed"
+          ruleId: "comment-opening-malformed",
         },
         {
           line: 3,
@@ -223,9 +223,9 @@ t.test(
           idxFrom: 43,
           idxTo: 55,
           fix: {
-            ranges: [[43, 43, "<!--"]]
-          }
-        }
+            ranges: [[43, 43, "<!--"]],
+          },
+        },
       ],
       "02.02.02"
     );
@@ -236,7 +236,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!-->
   <img src="fallback"/>
 <[endif]-->`;
@@ -246,13 +246,13 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     const secondRoundMessages = linter.verify(applyFixes(str, messages), {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(
@@ -266,7 +266,7 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`,
-  t => {
+  (t) => {
     const str = `<!-[if mso]><!-->
   <img src="fallback"/>
 <[endif]-->`;
@@ -276,13 +276,13 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     const secondRoundMessages = linter.verify(applyFixes(str, messages), {
       rules: {
-        all: 2
-      }
+        all: 2,
+      },
     });
     // turns tails comment tag into "only"-kind
     t.equal(

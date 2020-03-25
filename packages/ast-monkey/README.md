@@ -42,7 +42,7 @@ const {
   info,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 ```
 
@@ -57,7 +57,7 @@ import {
   info,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } from "ast-monkey";
 ```
 
@@ -208,7 +208,7 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = ["a", [["b"], "c"]];
 const key = "b";
@@ -267,12 +267,12 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = {
   a: {
-    b: "c"
-  }
+    b: "c",
+  },
 };
 const index = 2;
 const result = get(input, { index: index });
@@ -324,11 +324,11 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
-  f: { g: ["h"] }
+  f: { g: ["h"] },
 };
 const index = "7";
 const val = "zzz";
@@ -379,11 +379,11 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
-  f: { g: ["h"] }
+  f: { g: ["h"] },
 };
 const index = "8"; // can be integer as well
 const result = drop(input, { index: index });
@@ -452,11 +452,11 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
-  c: { d: ["h"] }
+  c: { d: ["h"] },
 };
 const key = "c";
 const result = del(input, { key: key });
@@ -482,15 +482,15 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 const input = [
   {
-    a: "a"
+    a: "a",
   },
   {
-    b: "b"
-  }
+    b: "b",
+  },
 ];
 const result = arrayFirstOnly(input);
 console.log("result = " + JSON.stringify(result, null, 4));
@@ -533,10 +533,10 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 let ast = [{ a: "a", b: "b" }];
-ast = traverse(ast, function(key, val, innerObj) {
+ast = traverse(ast, function (key, val, innerObj) {
   // use key, val, innerObj
   return val !== undefined ? val : key; // (point #1)
 });
@@ -552,10 +552,10 @@ const {
   drop,
   del,
   arrayFirstOnly,
-  traverse
+  traverse,
 } = require("ast-monkey");
 let ast = [{ a: "a", b: "b" }];
-ast = traverse(ast, function(key, val, innerObj) {
+ast = traverse(ast, function (key, val, innerObj) {
   let current = val !== undefined ? val : key;
   // All action with variable `current` goes here.
   // It's the same name for any array element or any object key's value.

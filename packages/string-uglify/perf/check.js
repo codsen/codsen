@@ -28,7 +28,7 @@ const testme = () =>
     "#id7",
     "#id8",
     "#id9",
-    "#id10"
+    "#id10",
   ]);
 
 // action

@@ -24,7 +24,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     allowWholeValueToBeOnlyHeadsOrTails: true,
     source: "string-find-heads-tails",
     matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
-    relaxedAPI: false
+    relaxedAPI: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -98,7 +98,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       })
     ) {
       if (opts.relaxedAPI) {
-        heads = heads.filter(el => isStr(el) && el.length > 0);
+        heads = heads.filter((el) => isStr(el) && el.length > 0);
         if (heads.length === 0) {
           return [];
         }
@@ -118,7 +118,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       })
     ) {
       if (opts.relaxedAPI) {
-        heads = heads.filter(el => isStr(el) && el.length > 0);
+        heads = heads.filter((el) => isStr(el) && el.length > 0);
         if (heads.length === 0) {
           return [];
         }
@@ -173,7 +173,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       })
     ) {
       if (opts.relaxedAPI) {
-        tails = tails.filter(el => isStr(el) && el.length > 0);
+        tails = tails.filter((el) => isStr(el) && el.length > 0);
         if (tails.length === 0) {
           return [];
         }
@@ -193,7 +193,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       })
     ) {
       if (opts.relaxedAPI) {
-        tails = tails.filter(el => isStr(el) && el.length > 0);
+        tails = tails.filter((el) => isStr(el) && el.length > 0);
         if (tails.length === 0) {
           return [];
         }
@@ -274,7 +274,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   // of their first letters using charCodeAt(0)
   const headsAndTailsFirstCharIndexesRange = heads
     .concat(tails)
-    .map(value => value.charAt(0)) // get first letters
+    .map((value) => value.charAt(0)) // get first letters
     .reduce(
       (res, val) => {
         if (val.charCodeAt(0) > res[1]) {
@@ -287,7 +287,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       },
       [
         heads[0].charCodeAt(0), // base is the 1st char index of 1st el.
-        heads[0].charCodeAt(0)
+        heads[0].charCodeAt(0),
       ]
     );
   console.log(

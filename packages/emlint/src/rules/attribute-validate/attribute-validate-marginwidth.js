@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateMarginwidth(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMarginwidth() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateMarginwidth(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -37,23 +37,23 @@ function attributeValidateMarginwidth(context, ...opts) {
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [], // all units are bad, value is in px which is omitted
-            noUnitsIsFine: true
+            noUnitsIsFine: true,
           }
         );
         console.log(
           `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginwidth"
+              ruleId: "attribute-validate-marginwidth",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

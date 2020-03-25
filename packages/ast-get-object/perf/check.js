@@ -13,15 +13,15 @@ const testme = () =>
       {
         tag: "meta",
         content: "UTF-8",
-        something: "else"
+        something: "else",
       },
       {
         tag: "title",
-        attrs: "Text of the title"
-      }
+        attrs: "Text of the title",
+      },
     ],
     {
-      tag: "meta"
+      tag: "meta",
     }
   );
 

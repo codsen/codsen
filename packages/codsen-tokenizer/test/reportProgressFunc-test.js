@@ -1,13 +1,13 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
 
-t.test(t => {
+t.test((t) => {
   const gathered = [];
   ct("abc", {
     reportProgressFunc: null,
-    tagCb: token => {
+    tagCb: (token) => {
       gathered.push(token);
-    }
+    },
   });
   t.match(
     gathered,
@@ -15,21 +15,21 @@ t.test(t => {
       {
         type: "text",
         start: 0,
-        end: 3
-      }
+        end: 3,
+      },
     ],
     `01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null`
   );
   t.end();
 });
 
-t.test(t => {
+t.test((t) => {
   const gathered = [];
   ct("abc", {
     reportProgressFunc: false,
-    tagCb: token => {
+    tagCb: (token) => {
       gathered.push(token);
-    }
+    },
   });
   t.match(
     gathered,
@@ -37,15 +37,15 @@ t.test(t => {
       {
         type: "text",
         start: 0,
-        end: 3
-      }
+        end: 3,
+      },
     ],
     `01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - false`
   );
   t.end();
 });
 
-t.test(t => {
+t.test((t) => {
   const gathered = [];
   function shouldveBeenCalled(val) {
     throw new Error(val);
@@ -56,9 +56,9 @@ t.test(t => {
     () => {
       ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30), {
         reportProgressFunc: shouldveBeenCalled,
-        tagCb: token => {
+        tagCb: (token) => {
           gathered.push(token);
-        }
+        },
       });
     },
     /50/,
@@ -67,7 +67,7 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test((t) => {
   let counter = 0;
   const countingFunction = () => {
     // const countingFunction = val => {
@@ -79,7 +79,7 @@ t.test(t => {
   // 1. our function will mutate the counter variable:
   t.pass(
     ct(`aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50), {
-      reportProgressFunc: countingFunction
+      reportProgressFunc: countingFunction,
     })
   );
 
@@ -91,7 +91,7 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test((t) => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -102,7 +102,7 @@ t.test(t => {
       ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20), {
         reportProgressFunc: shouldveBeenCalled,
         reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86
+        reportProgressFuncTo: 86,
       });
     },
     /32/g,
@@ -111,9 +111,9 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test((t) => {
   const gather = [];
-  const countingFunction = val => {
+  const countingFunction = (val) => {
     // const countingFunction = val => {
     // console.log(`val received: ${val}`);
     gather.push(val);
@@ -129,7 +129,7 @@ t.test(t => {
       {
         reportProgressFunc: countingFunction,
         reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86
+        reportProgressFuncTo: 86,
       }
     )
   );
@@ -141,7 +141,7 @@ t.test(t => {
   }
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
-  gather.forEach(perc => {
+  gather.forEach((perc) => {
     t.ok(compareTo.includes(perc), String(perc));
   });
   t.equal(gather.length, 86 - 21);

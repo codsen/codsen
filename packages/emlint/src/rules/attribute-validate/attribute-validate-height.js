@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateHeight(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHeight() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateHeight(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -43,23 +43,23 @@ function attributeValidateHeight(context, ...opts) {
             badUnits: ["px"],
             theOnlyGoodUnits: ["%"],
             noUnitsIsFine: true,
-            customGenericValueError: `Should be "pixels|%".`
+            customGenericValueError: `Should be "pixels|%".`,
           }
         );
         console.log(
           `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-height"
+              ruleId: "attribute-validate-height",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

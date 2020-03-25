@@ -78,8 +78,8 @@ const str = "< a>";
 const linter = new Linter();
 const messages = linter.verify(str, {
   rules: {
-    "tag-space-after-opening-bracket": 2
-  }
+    "tag-space-after-opening-bracket": 2,
+  },
 });
 console.log(JSON.stringify(messages, null, 4));
 // =>

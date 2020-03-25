@@ -31,7 +31,7 @@ function yourFunction(input, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
   // 3. type check:
   checkTypes(opts, defaults, {
-    msg: "newLibrary/yourFunction(): [THROW_ID_01]"
+    msg: "newLibrary/yourFunction(): [THROW_ID_01]",
   });
 
   // rest of your app goes here...
@@ -179,7 +179,7 @@ const checkTypes = require("check-types-mini");
 function yourFunction(input, opts) {
   // declare defaults, so we can enforce types later:
   const defaults = {
-    placeholder: false
+    placeholder: false,
   };
   // fill any settings with defaults if missing:
   opts = Object.assign({}, defaults, opts);
@@ -187,7 +187,7 @@ function yourFunction(input, opts) {
   // the check:
   checkTypes(opts, defaults, {
     msg: "newLibrary/yourFunction(): [THROW_ID_01]",
-    optsVarName: "opts"
+    optsVarName: "opts",
   });
   // ...
 }
@@ -208,13 +208,13 @@ checkTypes(
     // < input
     option1: "setting1",
     option2: [true, true],
-    option3: false
+    option3: false,
   },
   {
     // < reference
     option1: "setting1",
     option2: false,
-    option3: false
+    option3: false,
   }
 );
 // => Throws, because reference's `option2` is Boolean ("false") but input `option2` is array ("[true, true]").
@@ -228,15 +228,15 @@ checkTypes(
   {
     option1: "setting1",
     option2: ["setting3", "setting4"],
-    option3: false
+    option3: false,
   },
   {
     option1: "setting1",
     option2: "setting2",
-    option3: false
+    option3: false,
   },
   {
-    acceptArrays: true
+    acceptArrays: true,
   }
 );
 // => Does not throw, because we allow arrays full of a matching type
@@ -265,16 +265,16 @@ const checkTypes = require("check-types-mini");
 checkTypes(
   {
     option1: "setting1",
-    option2: null
+    option2: null,
   },
   {
     option1: "zz",
-    option2: "yy" // << notice, it's given as string in defaults object
+    option2: "yy", // << notice, it's given as string in defaults object
   },
   {
     schema: {
-      option2: ["stRing", null]
-    }
+      option2: ["stRing", null],
+    },
   }
 );
 // => does not throw
@@ -302,18 +302,18 @@ const res = checkTypes(
   {
     // <--- this is object we're checking
     option1: "setting1",
-    option2: true // <--- bad
+    option2: true, // <--- bad
   },
   {
     // <--- this is default reference object
     option1: "zz",
-    option2: null
+    option2: null,
   },
   {
     // <--- opts
     schema: {
-      option2: ["null", "false", "string"]
-    }
+      option2: ["null", "false", "string"],
+    },
   }
 );
 // => throws an error because `option2` should be either false or string, not true

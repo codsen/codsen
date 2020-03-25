@@ -37,7 +37,7 @@ function resolveVars(str, pack, parsedPack) {
     "%ISSUELINK%": `${pack.repository}issues/new?issue[title]=${pack.name}%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0A${pack.name}%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt`,
     "%COMMITLINK%": `https://bitbucket.org/${parsedPack.user}/${parsedPack.project}/commits`,
     "%YEAR%": String(year),
-    "%CONTRIBUTORCOUNT%": String(count)
+    "%CONTRIBUTORCOUNT%": String(count),
   };
   return Object.keys(mappings).reduce(
     (accumulator, mappingsKey) =>
@@ -78,7 +78,8 @@ function removeRecognisedLintingBadges(str, lectrc) {
   // filter out the repeated floated linting badges:
   return theSplit
     .filter(
-      rowsVal => !rowsVal.includes(extractSrc(lectrc.header.rightFloatedBadge))
+      (rowsVal) =>
+        !rowsVal.includes(extractSrc(lectrc.header.rightFloatedBadge))
     )
     .join("\n");
 }
@@ -179,7 +180,7 @@ function assembleRollupInfoTable(pack, lectrc) {
       rollupTable += `\n${
         lectrc.rollup.infoTable.cjsTitle
       } | \`main\`                | \`${pack.main}\` | ${filesize(size, {
-        round: 0
+        round: 0,
       })}`;
     } catch (err) {
       return ""; // because main should always be there
@@ -191,7 +192,7 @@ function assembleRollupInfoTable(pack, lectrc) {
       rollupTable += `\n${
         lectrc.rollup.infoTable.esmTitle
       } | \`module\`              | \`${pack.module}\` | ${filesize(size, {
-        round: 0
+        round: 0,
       })}`;
     } catch (err) {
       objectPath.del(pack, "module");
@@ -203,7 +204,7 @@ function assembleRollupInfoTable(pack, lectrc) {
       rollupTable += `\n${
         lectrc.rollup.infoTable.umdTitle
       } | \`browser\`            | \`${pack.browser}\` | ${filesize(size, {
-        round: 0
+        round: 0,
       })}`;
     } catch (err) {
       objectPath.del(pack, "browser");
@@ -370,7 +371,7 @@ function parseReadme(str) {
   }
 
   // at this moment we have the readme sliced by heading (h1, h2 or h3)
-  return gatheredContent.map(chunk => {
+  return gatheredContent.map((chunk) => {
     const res = chunk.split(/\r?\n/);
     if (
       res.length > 0 &&
@@ -383,7 +384,7 @@ function parseReadme(str) {
         .split(/\r?\n/)
         .filter((el, i) => i !== 0)
         .filter(
-          el =>
+          (el) =>
             !(
               el.replace(/&nbsp;/g, " ").includes("back to top") &&
               el.includes("[")
@@ -406,16 +407,16 @@ function getUserInfo(username) {
     .get({
       url: `https://api.github.com/users/${username}`,
       headers: {
-        "user-agent": "lect"
-      }
+        "user-agent": "lect",
+      },
     })
-    .then(response => {
+    .then((response) => {
       const body = JSON.parse(response.body);
       return {
         login: body.login,
         name: body.name || username,
         avatar_url: body.avatar_url,
-        profile: body.blog || body.html_url
+        profile: body.blog || body.html_url,
       };
     });
   // .catch(() => {})
@@ -445,11 +446,11 @@ function normalisePackageJson(obj, gitHubUser, projName) {
 
   objectPath.set(obj, "repository", {
     type: "git",
-    url: `https://bitbucket.org/${gitHubUser}/${projName}.git`
+    url: `https://bitbucket.org/${gitHubUser}/${projName}.git`,
   });
 
   objectPath.set(obj, "bugs", {
-    url: `https://bitbucket.org/${gitHubUser}/${projName}/issues`
+    url: `https://bitbucket.org/${gitHubUser}/${projName}/issues`,
   });
 
   if (
@@ -482,5 +483,5 @@ module.exports = {
   getUserInfo,
   assembleRollupInfoTable,
   standardiseBools,
-  normalisePackageJson
+  normalisePackageJson,
 };

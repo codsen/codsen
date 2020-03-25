@@ -6,7 +6,7 @@ import db from "mime-db";
 
 function attributeValidateAccept(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAccept() ███████████████████████████████████████`
       );
@@ -29,7 +29,7 @@ function attributeValidateAccept(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -48,11 +48,11 @@ function attributeValidateAccept(context, ...opts) {
               "video/mpeg",
               "text/css",
               "audio/basic",
-              wholeExtensionRegex
+              wholeExtensionRegex,
             ],
             permittedValues: Object.keys(db),
             canBeCommaSeparated: true,
-            noSpaceAfterComma: true
+            noSpaceAfterComma: true,
           }
         );
         console.log(
@@ -66,16 +66,16 @@ function attributeValidateAccept(context, ...opts) {
         // value against all official MIME types, taken from IANA and other sources,
         // https://www.npmjs.com/package/mime-db
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`070 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept"
+              ruleId: "attribute-validate-accept",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

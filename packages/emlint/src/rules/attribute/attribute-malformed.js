@@ -12,7 +12,7 @@ function attributeMalformed(context, ...opts) {
   const blacklist = ["doctype"];
 
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
       );
@@ -52,10 +52,10 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    allHtmlAttribs[i]
-                  ]
-                ]
-              }
+                    allHtmlAttribs[i],
+                  ],
+                ],
+              },
             });
             somethingMatched = true;
             break;
@@ -72,7 +72,7 @@ function attributeMalformed(context, ...opts) {
             message: `Unrecognised attribute "${node.attribName}".`,
             idxFrom: node.attribNameStartsAt,
             idxTo: node.attribNameEndsAt,
-            fix: null
+            fix: null,
           });
         }
       }
@@ -88,7 +88,9 @@ function attributeMalformed(context, ...opts) {
           message: `Equal is missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd, // second elem. from last range
-          fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
+          fix: {
+            ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]],
+          },
         });
       }
 
@@ -98,36 +100,36 @@ function attributeMalformed(context, ...opts) {
         node.attribOpeningQuoteAt === null &&
         node.attribValueStartsAt !== null
       ) {
-        console.log(`101 OPENING QUOTE MISSING`);
+        console.log(`103 OPENING QUOTE MISSING`);
         ranges.push([
           node.attribValueStartsAt,
           node.attribValueStartsAt,
           node.attribClosingQuoteAt === null
             ? `"`
-            : context.str[node.attribClosingQuoteAt]
+            : context.str[node.attribClosingQuoteAt],
         ]);
       }
       if (
         node.attribClosingQuoteAt === null &&
         node.attribValueEndsAt !== null
       ) {
-        console.log(`114 CLOSING QUOTE MISSING`);
+        console.log(`116 CLOSING QUOTE MISSING`);
         ranges.push([
           node.attribValueEndsAt,
           node.attribValueEndsAt,
           node.attribOpeningQuoteAt === null
             ? `"`
-            : context.str[node.attribOpeningQuoteAt]
+            : context.str[node.attribOpeningQuoteAt],
         ]);
       }
       if (ranges.length) {
-        console.log(`124 RAISE ERROR ABOUT QUOTES`);
+        console.log(`126 RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd, // second elem. from last range
-          fix: { ranges }
+          fix: { ranges },
         });
       }
 
@@ -140,7 +142,7 @@ function attributeMalformed(context, ...opts) {
             .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
             .slice(-1)
       ) {
-        console.log(`143 RAISE ERROR ABOUT REPEATED OPENING QUOTES`);
+        console.log(`145 RAISE ERROR ABOUT REPEATED OPENING QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Delete repeated opening quotes.`,
@@ -150,13 +152,13 @@ function attributeMalformed(context, ...opts) {
             ranges: [
               [
                 left(context.str, node.attribOpeningQuoteAt),
-                node.attribOpeningQuoteAt
-              ]
-            ]
-          }
+                node.attribOpeningQuoteAt,
+              ],
+            ],
+          },
         });
       }
-    }
+    },
   };
 }
 

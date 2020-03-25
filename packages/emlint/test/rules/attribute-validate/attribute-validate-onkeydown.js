@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no onkeydown, error level 0`,
-  t => {
+  (t) => {
     const str = `<input class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 0
-      }
+        "attribute-validate-onkeydown": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no onkeydown, error level 1`,
-  t => {
+  (t) => {
     const str = `<input class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 1
-      }
+        "attribute-validate-onkeydown": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no onkeydown, error level 2`,
-  t => {
+  (t) => {
     const str = `<input class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const str = `<input onkeydown='js'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<html onkeydown="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -90,8 +90,8 @@ t.test(
         idxFrom: 6,
         idxTo: 27,
         message: `Tag "html" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -99,13 +99,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz onkeydown="something" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -119,13 +119,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<input onkeydown="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -135,8 +135,8 @@ t.test(
         idxFrom: 18,
         idxTo: 18,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -144,13 +144,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  t => {
+  (t) => {
     const str = `<input onkeydown=" something ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-onkeydown": 2
-      }
+        "attribute-validate-onkeydown": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<input onkeydown="something">`);
     t.match(messages, [
@@ -162,10 +162,10 @@ t.test(
         fix: {
           ranges: [
             [18, 19],
-            [28, 29]
-          ]
-        }
-      }
+            [28, 29],
+          ],
+        },
+      },
     ]);
     t.end();
   }

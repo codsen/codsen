@@ -12,12 +12,12 @@ const testme = () =>
     {
       a: "a",
       b: {
-        c: "c"
-      }
+        c: "c",
+      },
     },
     {
       a: "a",
-      b: undefined
+      b: undefined,
     }
   );
 

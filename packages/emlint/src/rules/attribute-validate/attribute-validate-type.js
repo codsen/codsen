@@ -6,7 +6,7 @@ import db from "mime-db";
 
 function attributeValidateType(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateType() ███████████████████████████████████████`
       );
@@ -35,7 +35,7 @@ function attributeValidateType(context, ...opts) {
             "li",
             "ol",
             "ul",
-            "button"
+            "button",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -43,7 +43,7 @@ function attributeValidateType(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate depending on type
@@ -85,17 +85,17 @@ function attributeValidateType(context, ...opts) {
                   "image/png",
                   "image/jpeg",
                   "image/gif",
-                  "application/vnd.api+json"
+                  "application/vnd.api+json",
                 ],
                 permittedValues: Object.keys(db),
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`095 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -114,17 +114,17 @@ function attributeValidateType(context, ...opts) {
                   "file",
                   "hidden",
                   "image",
-                  "button"
+                  "button",
                 ],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`124 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -141,17 +141,17 @@ function attributeValidateType(context, ...opts) {
                   "a",
                   "A",
                   "i",
-                  "I"
+                  "I",
                 ],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`151 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -163,13 +163,13 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["1", "a", "A", "i", "I"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`169 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -181,13 +181,13 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["disc", "square", "circle"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`187 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -199,20 +199,20 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["button", "submit", "reset"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               console.log(`205 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 

@@ -59,7 +59,7 @@ function sortBySubarray(arr, axis = 0) {
       );
     }
   }
-  const maxLength = Math.max(...arr.map(arr => arr.length));
+  const maxLength = Math.max(...arr.map((arr) => arr.length));
   if (maxLength === 0) {
     return arr;
   }

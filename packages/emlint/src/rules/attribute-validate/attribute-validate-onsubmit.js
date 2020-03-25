@@ -5,7 +5,7 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOnsubmit(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOnsubmit() ███████████████████████████████████████`
       );
@@ -35,7 +35,7 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate the script value
@@ -51,17 +51,17 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             )}`
           );
 
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`055 attributeValidateOnsubmit(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onsubmit"
+                ruleId: "attribute-validate-onsubmit",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

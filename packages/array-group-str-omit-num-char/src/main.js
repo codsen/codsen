@@ -14,7 +14,7 @@ function groupStr(originalArr, originalOpts) {
   let opts;
   const defaults = {
     wildcard: "*",
-    dedupePlease: true
+    dedupePlease: true,
   };
   // deliberate != below, we check for undefined and null:
   if (originalOpts != null) {
@@ -48,7 +48,7 @@ function groupStr(originalArr, originalOpts) {
       // if there were no digits, there's nothing to group, so this string goes
       // straight to output. Just check for duplicates.
       compiledObj[arr[i]] = {
-        count: 1
+        count: 1,
       };
       // notice above doesn't have "elementsWhichWeCanReplaceWithWildcards" key
     } else {
@@ -108,7 +108,7 @@ function groupStr(originalArr, originalOpts) {
       } else {
         compiledObj[wildcarded] = {
           count: 1,
-          elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks)
+          elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks),
         };
         console.log(
           `114 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
@@ -130,7 +130,7 @@ function groupStr(originalArr, originalOpts) {
   );
 
   const resObj = {};
-  Object.keys(compiledObj).forEach(key => {
+  Object.keys(compiledObj).forEach((key) => {
     console.log(
       `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`
     );
@@ -157,7 +157,7 @@ function groupStr(originalArr, originalOpts) {
     if (
       isArr(compiledObj[key].elementsWhichWeCanReplaceWithWildcards) &&
       compiledObj[key].elementsWhichWeCanReplaceWithWildcards.some(
-        val => val !== false
+        (val) => val !== false
       )
     ) {
       console.log(`163 ██ PREP ${key}`);
@@ -192,7 +192,7 @@ function groupStr(originalArr, originalOpts) {
           rangesArr.push([
             nThIndex,
             nThIndex + opts.wildcard.length,
-            compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z]
+            compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z],
           ]);
         }
       }

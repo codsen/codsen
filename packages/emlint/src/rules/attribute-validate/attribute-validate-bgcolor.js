@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateBgcolor(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateBgcolor() ███████████████████████████████████████`
       );
@@ -30,7 +30,7 @@ function attributeValidateBgcolor(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -43,23 +43,23 @@ function attributeValidateBgcolor(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
         console.log(
           `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-bgcolor"
+              ruleId: "attribute-validate-bgcolor",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

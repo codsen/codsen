@@ -18,18 +18,18 @@ const tempy = require("tempy");
 //                                  *
 //                                  *
 
-t.test("01.01 - there are no usable files at all", async t => {
+t.test("01.01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   fs.ensureDirSync(path.resolve(tempFolder));
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "file.md"), "zzz")
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-        shell: true
+        shell: true,
       })
     )
     .then(() => fs.readFile(path.join(tempFolder, "file.md"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
   // confirm that the existing file is intact:
   t.same(await processedFileContents, "zzz");
   t.end();
@@ -51,7 +51,7 @@ t.test("01.01 - there are no usable files at all", async t => {
 
 t.test(
   "01.02 - only changelog present in the root - default (not --loud)",
-  async t => {
+  async (t) => {
     const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -169,11 +169,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
       .then(() =>
         execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-          shell: true
+          shell: true,
         })
       )
       .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-      .catch(err => t.fail(err));
+      .catch((err) => t.fail(err));
 
     t.same(await processedFileContents, intendedChangelog);
     t.end();
@@ -196,7 +196,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 t.test(
   "01.03 - package + changelog in the root - default (not --loud)",
-  async t => {
+  async (t) => {
     const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -309,25 +309,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       scripts: {
         coverage: "nyc report --reporter=text-lcov | coveralls",
         precommit: "npm test",
-        test: "standard && nyc --reporter=html --reporter=text ava"
+        test: "standard && nyc --reporter=html --reporter=text ava",
       },
       repository: {
         type: "git",
-        url: "https://github.com/codsen/correct-lib.git"
+        url: "https://github.com/codsen/correct-lib.git",
       },
       keywords: [],
       author: {
         name: "Roy Revelt",
         email: "roy@codsen.com",
-        url: "codsen.com"
+        url: "codsen.com",
       },
       license: "MIT",
       bugs: {
-        url: "https://github.com/codsen/correct-lib/issues"
+        url: "https://github.com/codsen/correct-lib/issues",
       },
       homepage: "https://github.com/codsen/correct-lib#readme",
       dependencies: {},
-      devDependencies: {}
+      devDependencies: {},
     };
 
     // 1. fetch us an empty, random, temporary folder:
@@ -343,16 +343,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
       .then(() =>
         fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
-          spaces: 2
+          spaces: 2,
         })
       )
       .then(() =>
         execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-          shell: true
+          shell: true,
         })
       )
       .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-      .catch(err => t.fail(err));
+      .catch((err) => t.fail(err));
 
     t.same(await processedFileContents, intendedChangelog);
     t.end();
@@ -373,7 +373,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-t.test("01.04 - only changelog present in the root - loud", async t => {
+t.test("01.04 - only changelog present in the root - loud", async (t) => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -496,7 +496,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   t.same(await processedFileContents, intendedChangelog);
   t.end();
@@ -516,7 +516,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-t.test("01.05 - package + changelog in the root - loud", async t => {
+t.test("01.05 - package + changelog in the root - loud", async (t) => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -629,25 +629,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     scripts: {
       coverage: "nyc report --reporter=text-lcov | coveralls",
       precommit: "npm test",
-      test: "standard && nyc --reporter=html --reporter=text ava"
+      test: "standard && nyc --reporter=html --reporter=text ava",
     },
     repository: {
       type: "git",
-      url: "https://github.com/codsen/correct-lib.git"
+      url: "https://github.com/codsen/correct-lib.git",
     },
     keywords: [],
     author: {
       name: "Roy Revelt",
       email: "roy@codsen.com",
-      url: "codsen.com"
+      url: "codsen.com",
     },
     license: "MIT",
     bugs: {
-      url: "https://github.com/codsen/correct-lib/issues"
+      url: "https://github.com/codsen/correct-lib/issues",
     },
     homepage: "https://github.com/codsen/correct-lib#readme",
     dependencies: {},
-    devDependencies: {}
+    devDependencies: {},
   };
 
   // 1. fetch us an empty, random, temporary folder:
@@ -663,16 +663,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
     .then(() =>
       fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
-        spaces: 2
+        spaces: 2,
       })
     )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -l`, {
-        shell: true
+        shell: true,
       })
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   t.same(await processedFileContents, intendedChangelog);
   t.end();

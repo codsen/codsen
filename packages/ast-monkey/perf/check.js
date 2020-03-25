@@ -13,18 +13,18 @@ const testme = () =>
   find(
     {
       a: {
-        b: "c1"
+        b: "c1",
       },
       k: {
-        b: "c2"
+        b: "c2",
       },
       z: {
-        x: "y"
-      }
+        x: "y",
+      },
     },
     {
       key: null,
-      val: { b: "c*" }
+      val: { b: "c*" },
     }
   );
 

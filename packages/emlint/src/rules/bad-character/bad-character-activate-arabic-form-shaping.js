@@ -6,7 +6,7 @@
 
 function badCharacterActivateArabicFormShaping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8301) {
         context.report({
           ruleId: "bad-character-activate-arabic-form-shaping",
@@ -14,11 +14,11 @@ function badCharacterActivateArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

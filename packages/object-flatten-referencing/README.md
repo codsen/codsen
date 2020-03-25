@@ -72,8 +72,8 @@ For example, you've got a key `a`, whose value is array of object(s):
   a: [
     {
       b: "c",
-      d: "e"
-    }
+      d: "e",
+    },
   ];
 }
 ```
@@ -251,16 +251,16 @@ Now you need to **flatten** the above object, so that the key called `name` has 
 const mergedDataFile = {
   title: "Welcome",
   name: {
-    object: "name"
-  }
+    object: "name",
+  },
 };
 const reference = {
   title: "Welcome",
-  name: "John"
+  name: "John",
 };
 mergedDataFile = ofr(mergedDataFile, reference, {
   wrapHeadsWith: "${",
-  wrapTailsWith: "}"
+  wrapTailsWith: "}",
 });
 console.log(JSON.stringify(mergedDataFile, null, 4));
 // => {

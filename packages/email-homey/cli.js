@@ -35,8 +35,8 @@ const cli = meow(
 `,
   {
     alias: {
-      l: "loud"
-    }
+      l: "loud",
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -104,7 +104,7 @@ function step5() {
   fs.writeFile(
     path.join(path.resolve(state.toDoList[0]), "index.html"),
     finalTemplateString,
-    err => {
+    (err) => {
       if (err) {
         throw err;
       } else {
@@ -178,7 +178,7 @@ if (cli.input.length > 0) {
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
 if (Object.keys(cli.flags).length !== 0) {
   // each non-boolean cli.flags value must be added to the `toDoList`
-  Object.keys(cli.flags).forEach(key => {
+  Object.keys(cli.flags).forEach((key) => {
     if (typeof cli.flags[key] === "string") {
       state.toDoList.push(cli.flags[key]);
     }
@@ -205,17 +205,17 @@ if (state.toDoList.length === 0) {
   const workingPath = path.join(state.toDoList[0], "*");
   // console.log(`\n\u001b[${33}m${`workingPath: ${workingPath}`}\u001b[${39}m\n`);
   globby(workingPath, { onlyDirectories: true })
-    .then(folderPaths => {
+    .then((folderPaths) => {
       // console.log(`209. folderPaths = ${JSON.stringify(folderPaths, null, 4)}`);
       return folderPaths;
     })
-    .then(folderPaths =>
-      folderPaths.map(singlePath => {
+    .then((folderPaths) =>
+      folderPaths.map((singlePath) => {
         const tempArr = singlePath.split(path.sep);
         return tempArr[tempArr.length - 1];
       })
     )
-    .then(folderPaths => {
+    .then((folderPaths) => {
       // console.log(`\nfolderPaths = ${JSON.stringify(folderPaths, null, 4)}`);
       paths = folderPaths;
       step4();

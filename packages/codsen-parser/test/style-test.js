@@ -4,7 +4,7 @@ const cparser = require("../dist/codsen-parser.cjs");
 // 01. basics
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
   t.same(
     cparser(`<style>
 .red{color: red;}
@@ -30,7 +30,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
             type: "text",
             start: 7,
             end: 8,
-            value: "\n"
+            value: "\n",
           },
           {
             type: "rule",
@@ -45,17 +45,17 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
               {
                 value: ".red",
                 selectorStarts: 8,
-                selectorEnds: 12
-              }
-            ]
+                selectorEnds: 12,
+              },
+            ],
           },
           {
             type: "text",
             start: 25,
             end: 26,
-            value: `\n`
-          }
-        ]
+            value: `\n`,
+          },
+        ],
       },
       {
         children: [],
@@ -72,8 +72,8 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
         pureHTML: true,
         esp: [],
         kind: null,
-        attribs: []
-      }
+        attribs: [],
+      },
     ],
     "01.01"
   );
@@ -85,7 +85,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
-  t => {
+  (t) => {
     t.same(
       cparser(`<style>
 @media screen and {
@@ -99,13 +99,13 @@ t.test(
               type: "text",
               start: 7,
               end: 8,
-              value: "\n"
+              value: "\n",
             },
             {
               type: "text",
               start: 27,
               end: 28,
-              value: "\n"
+              value: "\n",
             },
             {
               type: "rule",
@@ -120,20 +120,20 @@ t.test(
                 {
                   value: ".a",
                   selectorStarts: 28,
-                  selectorEnds: 30
+                  selectorEnds: 30,
                 },
                 {
                   value: ".b",
                   selectorStarts: 32,
-                  selectorEnds: 34
-                }
-              ]
+                  selectorEnds: 34,
+                },
+              ],
             },
             {
               type: "text",
               start: 37,
               end: 38,
-              value: "\n"
+              value: "\n",
             },
             {
               type: "at",
@@ -147,14 +147,14 @@ t.test(
               queryStartsAt: 15,
               queryEndsAt: 25,
               openingCurlyAt: 26,
-              closingCurlyAt: 38
+              closingCurlyAt: 38,
             },
             {
               type: "text",
               start: 39,
               end: 40,
-              value: "\n"
-            }
+              value: "\n",
+            },
           ],
           type: "tag",
           start: 0,
@@ -169,7 +169,7 @@ t.test(
           pureHTML: true,
           esp: [],
           kind: null,
-          attribs: []
+          attribs: [],
         },
         {
           children: [],
@@ -186,8 +186,8 @@ t.test(
           pureHTML: true,
           esp: [],
           kind: null,
-          attribs: []
-        }
+          attribs: [],
+        },
       ],
       "02.01"
     );

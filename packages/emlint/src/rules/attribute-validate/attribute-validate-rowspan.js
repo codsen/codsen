@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateRowspan(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRowspan() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateRowspan(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -38,23 +38,23 @@ function attributeValidateRowspan(context, ...opts) {
           {
             type: "integer",
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
         console.log(
           `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rowspan"
+              ruleId: "attribute-validate-rowspan",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

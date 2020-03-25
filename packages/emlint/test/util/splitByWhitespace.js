@@ -6,15 +6,15 @@ import splitByWhitespace from "../../src/util/splitByWhitespace";
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       "abc",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       }
     );
@@ -26,15 +26,15 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       "   ",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       }
     );
@@ -46,26 +46,26 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       "   abc   def  ",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       }
     );
     t.match(gatheredChunks, [
       [3, 6],
-      [9, 12]
+      [9, 12],
     ]);
     t.match(gatheredWhitespace, [
       [0, 3],
       [6, 9],
-      [12, 14]
+      [12, 14],
     ]);
     t.end();
   }
@@ -73,21 +73,21 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       "abc \t  def",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       }
     );
     t.match(gatheredChunks, [
       [0, 3],
-      [7, 10]
+      [7, 10],
     ]);
     t.match(gatheredWhitespace, [[3, 7]]);
     t.end();
@@ -96,26 +96,26 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       " kk  \t ll ",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       }
     );
     t.match(gatheredChunks, [
       [1, 3],
-      [7, 9]
+      [7, 9],
     ]);
     t.match(gatheredWhitespace, [
       [0, 1],
       [3, 7],
-      [9, 10]
+      [9, 10],
     ]);
     t.end();
   }
@@ -126,25 +126,25 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`custom`}\u001b[${39}m`} - crops inside`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
     splitByWhitespace(
       "  abc \t  def   ",
-      valuesArr => {
+      (valuesArr) => {
         gatheredChunks.push(valuesArr);
       },
-      whitespaceArr => {
+      (whitespaceArr) => {
         gatheredWhitespace.push(whitespaceArr);
       },
       {
         from: 3,
-        to: 11
+        to: 11,
       }
     );
     t.match(gatheredChunks, [
       [3, 5],
-      [9, 11]
+      [9, 11],
     ]);
     t.match(gatheredWhitespace, [[5, 9]]);
     t.end();

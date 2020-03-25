@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateDir(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDir() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateDir(context, ...opts) {
             "frameset",
             "iframe",
             "param",
-            "script"
+            "script",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -40,7 +40,7 @@ function attributeValidateDir(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -50,7 +50,7 @@ function attributeValidateDir(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["ltr", "rtl"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -62,16 +62,16 @@ function attributeValidateDir(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`066 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-dir"
+              ruleId: "attribute-validate-dir",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

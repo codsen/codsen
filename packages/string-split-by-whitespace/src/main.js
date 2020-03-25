@@ -14,12 +14,12 @@ function split(str, originalOpts) {
     return [];
   }
   const defaults = {
-    ignoreRanges: []
+    ignoreRanges: [],
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
     opts.ignoreRanges.length > 0 &&
-    !opts.ignoreRanges.every(arr => Array.isArray(arr))
+    !opts.ignoreRanges.every((arr) => Array.isArray(arr))
   ) {
     throw new Error(
       "string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!"
@@ -38,9 +38,9 @@ function split(str, originalOpts) {
         (opts.ignoreRanges.length !== 0 &&
           !within(
             i,
-            opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]),
+            opts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
             {
-              inclusiveRangeEnds: true
+              inclusiveRangeEnds: true,
             }
           )))
     ) {

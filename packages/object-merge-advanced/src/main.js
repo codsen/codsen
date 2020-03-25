@@ -30,7 +30,7 @@ function isObj(something) {
 }
 const isArr = Array.isArray;
 function arrayContainsStr(arr) {
-  return !!arr && arr.some(val => typeof val === "string");
+  return !!arr && arr.some((val) => typeof val === "string");
 }
 function equalOrSubsetKeys(obj1, obj2) {
   return (
@@ -78,7 +78,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     concatInsteadOfMerging: true,
     dedupeStringsInArrayValues: false,
     mergeBoolsUsingOrNotAnd: true,
-    useNullAsExplicitFalse: false
+    useNullAsExplicitFalse: false,
   };
   const opts = Object.assign(clone(defaults), originalOpts);
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
@@ -123,7 +123,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(input1orig, input2orig, null, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : null
       }`}\u001b[${39}m`
@@ -132,7 +132,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(input1orig, input2orig, null, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : null;
   }
@@ -198,7 +198,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
-                    type: infoObj.type
+                    type: infoObj.type,
                   })
                 : currentResult
             }`}\u001b[${39}m`
@@ -207,7 +207,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult;
         }
@@ -219,7 +219,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
-                    type: infoObj.type
+                    type: infoObj.type,
                   })
                 : currentResult
             }`}\u001b[${39}m`
@@ -228,7 +228,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult;
         }
@@ -259,7 +259,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 {
                   path: currPath,
                   key: infoObj.key,
-                  type: [getType(i1), getType(i2)]
+                  type: [getType(i1), getType(i2)],
                 },
                 i1[index],
                 i2[index],
@@ -276,7 +276,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                     {
                       path: currPath,
                       key: infoObj.key,
-                      type: [getType(i1), getType(i2)]
+                      type: [getType(i1), getType(i2)],
                     },
                     i1[0],
                     i2[index],
@@ -286,7 +286,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                     {
                       path: currPath,
                       key: infoObj.key,
-                      type: [getType(i1), getType(i2)]
+                      type: [getType(i1), getType(i2)],
                     },
                     i1[index],
                     i2[0],
@@ -314,7 +314,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           }
         }
         // optionally dedupe:
-        if (opts.dedupeStringsInArrayValues && temp.every(el => isStr(el))) {
+        if (opts.dedupeStringsInArrayValues && temp.every((el) => isStr(el))) {
           temp = uniq(temp).sort();
         }
         i1 = clone(temp);
@@ -327,7 +327,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
-                  type: infoObj.type
+                  type: infoObj.type,
                 })
               : currentResult
           }`}\u001b[${39}m`
@@ -336,7 +336,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult;
       }
@@ -351,7 +351,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
-                  type: infoObj.type
+                  type: infoObj.type,
                 })
               : currentResult
           }`}\u001b[${39}m`
@@ -360,7 +360,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult;
       }
@@ -372,7 +372,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -381,7 +381,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: currPath,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -400,7 +400,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
-                    type: infoObj.type
+                    type: infoObj.type,
                   })
                 : currentResult
             }`}\u001b[${39}m`
@@ -409,7 +409,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult;
         }
@@ -421,7 +421,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
-                  type: infoObj.type
+                  type: infoObj.type,
                 })
               : currentResult
           }`}\u001b[${39}m`
@@ -430,13 +430,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult;
       } else if (isObj(i2)) {
         // case 23
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
-        Object.keys(i2).forEach(key => {
+        Object.keys(i2).forEach((key) => {
           // calculate current path:
           currPath =
             infoObj.path && infoObj.path.length
@@ -459,7 +459,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 {
                   path: currPath,
                   key: key,
-                  type: [getType(i1), getType(i2)]
+                  type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
@@ -477,7 +477,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 {
                   path: currPath,
                   key: key,
-                  type: [getType(i1), getType(i2)]
+                  type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
@@ -493,7 +493,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 {
                   path: currPath,
                   key: key,
-                  type: [getType(i1), getType(i2)]
+                  type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
@@ -508,7 +508,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                   {
                     path: currPath,
                     key: key,
-                    type: [getType(i1), getType(i2)]
+                    type: [getType(i1), getType(i2)],
                   },
                   null,
                   4
@@ -526,7 +526,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 {
                   path: currPath,
                   key: key,
-                  type: [getType(i1), getType(i2)]
+                  type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
@@ -554,7 +554,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -563,7 +563,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -578,7 +578,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -587,7 +587,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -599,7 +599,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -608,7 +608,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   } else if (isStr(i1)) {
@@ -624,7 +624,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
                   key: infoObj.key,
-                  type: infoObj.type
+                  type: infoObj.type,
                 })
               : currentResult
           }`}\u001b[${39}m`
@@ -633,7 +633,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult;
       }
@@ -645,7 +645,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -654,7 +654,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -669,7 +669,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -678,7 +678,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -690,7 +690,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -699,7 +699,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   } else if (isNum(i1)) {
@@ -713,7 +713,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -722,7 +722,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -734,7 +734,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -743,7 +743,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   } else if (isBool(i1)) {
@@ -758,7 +758,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
                   key: infoObj.key,
-                  type: infoObj.type
+                  type: infoObj.type,
                 })
               : currentResult
           }`}\u001b[${39}m`
@@ -767,7 +767,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult;
       }
@@ -778,7 +778,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -787,7 +787,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     } else if (i2 != null) {
@@ -800,7 +800,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -809,7 +809,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -822,7 +822,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -831,7 +831,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   } else if (i1 === null) {
@@ -850,7 +850,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
-                type: infoObj.type
+                type: infoObj.type,
               })
             : currentResult
         }`}\u001b[${39}m`
@@ -859,7 +859,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult;
     }
@@ -871,7 +871,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -880,7 +880,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   } else {
@@ -892,7 +892,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
-              type: infoObj.type
+              type: infoObj.type,
             })
           : currentResult
       }`}\u001b[${39}m`
@@ -901,7 +901,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
-          type: infoObj.type
+          type: infoObj.type,
         })
       : currentResult;
   }
@@ -925,7 +925,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
-            type: infoObj.type
+            type: infoObj.type,
           })
         : currentResult,
       null,
@@ -936,7 +936,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     ? opts.cb(i1, i2, currentResult, {
         path: infoObj.path,
         key: infoObj.key,
-        type: infoObj.type
+        type: infoObj.type,
       })
     : currentResult;
 }

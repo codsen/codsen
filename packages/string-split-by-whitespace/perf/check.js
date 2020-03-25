@@ -12,8 +12,8 @@ const testme = () =>
     ignoreRanges: [
       [17, 25],
       [26, 35],
-      [36, 51]
-    ]
+      [36, 51],
+    ],
   });
 
 // action

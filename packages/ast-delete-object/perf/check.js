@@ -14,13 +14,13 @@ const testme = () =>
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     {
       key2: "val2",
-      key3: "val3"
+      key3: "val3",
     },
     { matchKeysStrictly: true, hungryForWhitespace: false }
   );

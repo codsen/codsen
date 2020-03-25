@@ -26,7 +26,7 @@ class Ranges {
     const defaults = {
       limitToBeAddedWhitespace: false,
       limitLinebreaksCount: 1,
-      mergeType: 1
+      mergeType: 1,
     };
     const opts = Object.assign({}, defaults, originalOpts);
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
@@ -74,8 +74,8 @@ class Ranges {
     } else if (existy(originalFrom) && !existy(originalTo)) {
       if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
-          if (originalFrom.some(el => Array.isArray(el))) {
-            originalFrom.forEach(thing => {
+          if (originalFrom.some((el) => Array.isArray(el))) {
+            originalFrom.forEach((thing) => {
               if (Array.isArray(thing)) {
                 // recursively feed this subarray, hopefully it's an array
                 console.log(
@@ -242,7 +242,7 @@ class Ranges {
                       addVal,
                       this.opts.limitLinebreaksCount
                     )
-                  : addVal
+                  : addVal,
               ]
             : [from, to];
         console.log(
@@ -295,15 +295,15 @@ class Ranges {
     if (this.slices != null) {
       // != is intentional
       this.slices = mergeRanges(this.slices, {
-        mergeType: this.opts.mergeType
+        mergeType: this.opts.mergeType,
       });
       if (this.opts.limitToBeAddedWhitespace) {
-        return this.slices.map(val => {
+        return this.slices.map((val) => {
           if (existy(val[2])) {
             return [
               val[0],
               val[1],
-              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)
+              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount),
             ];
           }
           return val;

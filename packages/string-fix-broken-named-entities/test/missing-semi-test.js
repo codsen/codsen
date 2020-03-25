@@ -3,7 +3,7 @@ const fix = require("../dist/string-fix-broken-named-entities.cjs");
 const {
   decode,
   uncertain,
-  allNamedEntities
+  allNamedEntities,
 } = require("all-named-html-entities");
 // -----------------------------------------------------------------------------
 // programmatic tests
@@ -13,10 +13,11 @@ t.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     Object.keys(allNamedEntities)
       .filter(
-        entity => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
+        (entity) =>
+          entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
       )
       .forEach((singleEntity, i, arr) => {
         //
@@ -24,7 +25,7 @@ t.test(
         //
         t.same(
           fix(`&${singleEntity}`, {
-            cb: obj => obj
+            cb: (obj) => obj,
           }),
           [
             {
@@ -33,8 +34,8 @@ t.test(
               rangeFrom: 0,
               rangeTo: singleEntity.length + 1,
               rangeValEncoded: `&${singleEntity};`,
-              rangeValDecoded: decode(`&${singleEntity};`)
-            }
+              rangeValDecoded: decode(`&${singleEntity};`),
+            },
           ],
           `${singleEntity} - 02; ${i + 1}/${arr.length}`
         );
@@ -43,33 +44,33 @@ t.test(
   }
 );
 
-t.test("02 - single pi", t => {
+t.test("02 - single pi", (t) => {
   t.same(fix("&pi"), [[0, 3, "&pi;"]], "02");
   t.end();
 });
 
-t.test("03 - larger set", t => {
+t.test("03 - larger set", (t) => {
   t.same(
     fix("aaa&pi&piv&pi&pivaaa"),
     [
       [3, 6, "&pi;"],
       [6, 10, "&piv;"],
       [10, 13, "&pi;"],
-      [13, 17, "&piv;"]
+      [13, 17, "&piv;"],
     ],
     "03"
   );
   t.end();
 });
 
-t.test("04 - letters follow tightly", t => {
+t.test("04 - letters follow tightly", (t) => {
   t.same(
     fix("aaa&ang&angst&ang&angstaaa"),
     [
       [3, 7, "&ang;"],
       [7, 13, "&angst;"],
       [13, 17, "&ang;"],
-      [17, 23, "&angst;"]
+      [17, 23, "&angst;"],
     ],
     "04"
   );

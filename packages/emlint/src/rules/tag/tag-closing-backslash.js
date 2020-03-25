@@ -13,7 +13,7 @@ const BACKSLASH = "\u005C";
 
 function tagClosingBackslash(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
       );
@@ -172,7 +172,7 @@ function tagClosingBackslash(context) {
           message,
           idxFrom,
           idxTo: node.end - 1,
-          fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] }
+          fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] },
         });
       }
 
@@ -184,10 +184,10 @@ function tagClosingBackslash(context) {
           message: "Wrong slash - backslash.",
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
-          fix: { ranges }
+          fix: { ranges },
         });
       }
-    }
+    },
   };
 }
 

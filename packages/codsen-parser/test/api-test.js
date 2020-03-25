@@ -62,12 +62,12 @@ t.throws(
   "00.07"
 );
 
-t.test("00.08 - opts.tagCb", t => {
+t.test("00.08 - opts.tagCb", (t) => {
   const gathered = [];
   cparser("  <a>z", {
-    tagCb: obj => {
+    tagCb: (obj) => {
       gathered.push(obj);
-    }
+    },
   });
 
   t.match(
@@ -76,30 +76,30 @@ t.test("00.08 - opts.tagCb", t => {
       {
         type: "text",
         start: 0,
-        end: 2
+        end: 2,
       },
       {
         type: "tag",
         start: 2,
-        end: 5
+        end: 5,
       },
       {
         type: "text",
         start: 5,
-        end: 6
-      }
+        end: 6,
+      },
     ],
     "00.08"
   );
   t.end();
 });
 
-t.test("00.09 - opts.charCb", t => {
+t.test("00.09 - opts.charCb", (t) => {
   const gathered = [];
   cparser("<a>z1", {
-    charCb: obj => {
+    charCb: (obj) => {
       gathered.push(obj);
-    }
+    },
   });
 
   t.match(
@@ -108,28 +108,28 @@ t.test("00.09 - opts.charCb", t => {
       {
         chr: "<",
         i: 0,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: "a",
         i: 1,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: ">",
         i: 2,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: "z",
         i: 3,
-        type: "text"
+        type: "text",
       },
       {
         chr: "1",
         i: 4,
-        type: "text"
-      }
+        type: "text",
+      },
     ],
     "00.09"
   );

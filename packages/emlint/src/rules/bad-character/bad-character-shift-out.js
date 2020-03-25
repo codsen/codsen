@@ -6,7 +6,7 @@
 
 function badCharacterShiftOut(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
@@ -14,11 +14,11 @@ function badCharacterShiftOut(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

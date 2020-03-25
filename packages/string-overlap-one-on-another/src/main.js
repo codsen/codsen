@@ -21,7 +21,7 @@ function overlap(str1, str2, originalOpts) {
   let opts;
   const defaults = {
     offset: 0, // how many characters str2 is to the right? (negative means it's off to the left)
-    offsetFillerCharacter: " " // how many characters str2 is to the right? (negative means it's off to the left)
+    offsetFillerCharacter: " ", // how many characters str2 is to the right? (negative means it's off to the left)
   };
 
   if (!originalOpts) {

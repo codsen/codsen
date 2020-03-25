@@ -5,28 +5,28 @@ const strIndexesOfPlus = require("../dist/str-indexes-of-plus.cjs");
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - throws when there's no input", t => {
+t.test("01.01 - throws when there's no input", (t) => {
   t.throws(() => {
     strIndexesOfPlus();
   }, /inputs missing/);
   t.end();
 });
 
-t.test("01.02 - throws when the first argument is not string", t => {
+t.test("01.02 - throws when the first argument is not string", (t) => {
   t.throws(() => {
     strIndexesOfPlus(1);
   }, /first input argument must be a string/);
   t.end();
 });
 
-t.test("01.03 - throws when the second argument is not string", t => {
+t.test("01.03 - throws when the second argument is not string", (t) => {
   t.throws(() => {
     strIndexesOfPlus("a", 1);
   }, /second input argument/);
   t.end();
 });
 
-t.test("01.04 - throws when the third argument is not natural number", t => {
+t.test("01.04 - throws when the third argument is not natural number", (t) => {
   t.throws(() => {
     strIndexesOfPlus("a", "a", "a");
   }, /third input argument must be a natural number/);
@@ -43,7 +43,7 @@ t.test("01.04 - throws when the third argument is not natural number", t => {
 // 02. normal use, no third arg in the input
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - finds one char", t => {
+t.test("02.01 - finds one char", (t) => {
   t.same(strIndexesOfPlus("a", "a"), [0], "02.01.01");
   t.same(strIndexesOfPlus("ab", "a"), [0], "02.01.02");
   t.same(strIndexesOfPlus("ab", "b"), [1], "02.01.03");
@@ -55,7 +55,7 @@ t.test("02.01 - finds one char", t => {
   t.end();
 });
 
-t.test("02.02 - finds one emoji", t => {
+t.test("02.02 - finds one emoji", (t) => {
   t.same(strIndexesOfPlus("🦄", "🦄"), [0], "02.02.01");
   t.same(strIndexesOfPlus("🦄b", "🦄"), [0], "02.02.02");
   t.same(strIndexesOfPlus("a🦄", "🦄"), [1], "02.02.03");
@@ -65,7 +65,7 @@ t.test("02.02 - finds one emoji", t => {
   t.end();
 });
 
-t.test("02.03 - does not find a char or emoji", t => {
+t.test("02.03 - does not find a char or emoji", (t) => {
   t.same(strIndexesOfPlus("a", "z"), [], "02.03.01");
   t.same(strIndexesOfPlus("abcdef", "z"), [], "02.03.02");
   t.same(strIndexesOfPlus("🦄", "z"), [], "02.03.03");
@@ -74,13 +74,13 @@ t.test("02.03 - does not find a char or emoji", t => {
   t.end();
 });
 
-t.test("02.04 - finds multiple consecutive", t => {
+t.test("02.04 - finds multiple consecutive", (t) => {
   t.same(strIndexesOfPlus("abcabc", "abc"), [0, 3], "02.04.01");
   t.same(strIndexesOfPlus("🦄🐴🐎🦄🐴🐎", "🦄🐴🐎"), [0, 3], "02.04.02");
   t.end();
 });
 
-t.test("02.05 - finds multiple with space in between, first char hit", t => {
+t.test("02.05 - finds multiple with space in between, first char hit", (t) => {
   t.same(strIndexesOfPlus("abczabc", "abc"), [0, 4], "02.05.01");
   t.same(strIndexesOfPlus("🦄🐴🐎z🦄🐴🐎", "🦄🐴🐎"), [0, 4], "02.05.02");
   t.end();
@@ -88,7 +88,7 @@ t.test("02.05 - finds multiple with space in between, first char hit", t => {
 
 t.test(
   "02.06 - finds multiple with space in between, first char is not hit",
-  t => {
+  (t) => {
     t.same(strIndexesOfPlus("zabczabc", "abc"), [1, 5], "02.06.01");
     t.same(strIndexesOfPlus("zabczabcyyyyy", "abc"), [1, 5], "02.06.02");
     t.same(strIndexesOfPlus("z🦄🐴🐎z🦄🐴🐎", "🦄🐴🐎"), [1, 5], "02.06.03");
@@ -105,7 +105,7 @@ t.test(
 // 03. padding offset
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - finds multiple consecutive, text, offset", t => {
+t.test("03.01 - finds multiple consecutive, text, offset", (t) => {
   t.same(strIndexesOfPlus("abcabc", "abc", 0), [0, 3], "03.01.01");
   t.same(strIndexesOfPlus("abcabc", "abc", "0"), [0, 3], "03.01.02");
   t.same(strIndexesOfPlus("abcabc", "abc", 1), [3], "03.01.03");
@@ -115,7 +115,7 @@ t.test("03.01 - finds multiple consecutive, text, offset", t => {
   t.end();
 });
 
-t.test("03.02 - finds multiple consecutive, emoji, offset", t => {
+t.test("03.02 - finds multiple consecutive, emoji, offset", (t) => {
   t.same(strIndexesOfPlus("🦄🐴🐎🦄🐴🐎", "🦄🐴🐎", 0), [0, 3], "03.02.01");
   t.same(strIndexesOfPlus("🦄🐴🐎🦄🐴🐎", "🦄🐴🐎", "0"), [0, 3], "03.02.02");
   t.same(strIndexesOfPlus("🦄🐴🐎🦄🐴🐎", "🦄🐴🐎", 1), [3], "03.02.03");
@@ -127,7 +127,7 @@ t.test("03.02 - finds multiple consecutive, emoji, offset", t => {
 
 t.test(
   "03.03 - finds multiple with space in between, first char hit, offset",
-  t => {
+  (t) => {
     t.same(strIndexesOfPlus("abczabc", "abc", 0), [0, 4], "03.03.01");
     t.same(strIndexesOfPlus("abczabc", "abc", 3), [4], "03.03.02");
     t.same(strIndexesOfPlus("abczabc", "abc", 4), [4], "03.03.03");
@@ -142,7 +142,7 @@ t.test(
 
 t.test(
   "03.04 - finds multiple with space in between, first char is not hit, offset",
-  t => {
+  (t) => {
     t.same(strIndexesOfPlus("zabczabc", "abc", 0), [1, 5], "03.04.01");
     t.same(strIndexesOfPlus("zabczabc", "abc", "0"), [1, 5], "03.04.02");
     t.same(strIndexesOfPlus("zabczabc", "abc", 1), [1, 5], "03.04.03");
@@ -160,7 +160,7 @@ t.test(
 // 04. real text with linebreaks etc
 // -----------------------------------------------------------------------------
 
-t.test("04.01 - finds in real text, no offset", t => {
+t.test("04.01 - finds in real text, no offset", (t) => {
   const text =
     "This is cheeky sentence with a cheeky\nlinebreaks,\ttabs and some <code>HTML</code> tags. Also there's a cheeky emoji 🙊 and cheeky Unicode characters: \u0000\u0001. That's a very cheeky test sentence.";
   t.same(strIndexesOfPlus(text, "cheeky"), [8, 31, 103, 122, 167], "04.01");

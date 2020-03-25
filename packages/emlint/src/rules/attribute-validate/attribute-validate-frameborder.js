@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateFrameborder(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFrameborder() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateFrameborder(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -42,7 +42,7 @@ function attributeValidateFrameborder(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["0", "1"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -54,16 +54,16 @@ function attributeValidateFrameborder(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frameborder"
+              ruleId: "attribute-validate-frameborder",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

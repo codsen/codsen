@@ -30,7 +30,7 @@ function rangesSort(arrOfRanges, originalOptions) {
   // declare defaults, so we can enforce types later:
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
-    progressFn: null
+    progressFn: null,
   };
 
   // fill any settings with defaults if missing:

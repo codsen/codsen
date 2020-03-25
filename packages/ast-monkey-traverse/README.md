@@ -75,7 +75,7 @@ Walk through every single element of an array or key of an object or every strin
 ```js
 const traverse = require("ast-monkey-traverse");
 var ast = [{ a: "a", b: "b" }];
-ast = traverse(ast, function(key, val, innerObj, stop) {
+ast = traverse(ast, function (key, val, innerObj, stop) {
   let current = val !== undefined ? val : key;
   // if you are traversing and "stumbled" upon an object, it will have both "key" and "val"
   // if you are traversing and "stumbled" upon an array, it will have only "key"

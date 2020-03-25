@@ -97,7 +97,7 @@ function compare(b, s, originalOpts) {
     hungryForWhitespace: false,
     matchStrictly: false,
     verboseWhenMismatches: false,
-    useWildcards: false
+    useWildcards: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
@@ -305,7 +305,7 @@ function compare(b, s, originalOpts) {
           return `The given object has key ${sKeys[i]} which the other-one does not have.`;
         } // so wildcards are on and sKeys[i] contains a wildcard
         else if (
-          Object.keys(b).some(bKey =>
+          Object.keys(b).some((bKey) =>
             matcher.isMatch(bKey, sKeys[i], { caseSensitive: true })
           )
         ) {

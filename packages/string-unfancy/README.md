@@ -126,7 +126,7 @@ Then, declare a function somewhere within your `gulpfile.js`:
 
 ```js
 function unfancy(input) {
-  input = input.replace(/alt="[^"]*"/g, el => {
+  input = input.replace(/alt="[^"]*"/g, (el) => {
     return unfancy(el);
   });
   return input;

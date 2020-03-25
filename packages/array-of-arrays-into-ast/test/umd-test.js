@@ -7,16 +7,16 @@ const result = {
     {
       2: [
         {
-          3: [null]
+          3: [null],
         },
-        null
-      ]
-    }
+        null,
+      ],
+    },
   ],
-  5: [null]
+  5: [null],
 };
 
-t.test("UMD build works fine", t => {
+t.test("UMD build works fine", (t) => {
   t.same(a1(source), result);
   t.end();
 });

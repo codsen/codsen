@@ -72,11 +72,11 @@ strFindMalformed(
   "<div><!-something--></div>",
   "<!--",
   // your callback function:
-  obj => {
+  (obj) => {
     gathered.push(obj);
   },
   {
-    maxDistance: 1 // default
+    maxDistance: 1, // default
   }
 );
 console.log(JSON.stringify(gathered, null, 4));
@@ -180,7 +180,7 @@ strFindMalformed(
   // second input argument: what to look for but mangled
   "bde",
   // callback function:
-  obj => {
+  (obj) => {
     gathered.push(obj);
   },
   // empty options object:

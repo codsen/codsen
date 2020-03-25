@@ -133,7 +133,7 @@ const knownHtmlTags = [
   "var",
   "video",
   "wbr",
-  "xml"
+  "xml",
 ];
 
 function isStr(something) {
@@ -157,7 +157,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   const defaults = {
     allowCustomTagNames: false,
-    skipOpeningBracket: false
+    skipOpeningBracket: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -243,7 +243,7 @@ function isOpening(str, idx = 0, originalOpts) {
   const matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"],
   };
 
   console.log(
@@ -269,27 +269,36 @@ function isOpening(str, idx = 0, originalOpts) {
     matchRightIncl(str, idx, knownHtmlTags, {
       cb: isNotLetter,
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: [
+        "<",
+        "/",
+        BACKSLASH,
+        "!",
+        " ",
+        "\t",
+        "\n",
+        "\r",
+      ],
     })
   ) {
-    console.log(`275 outside opts.allowCustomTagNames clauses`);
+    console.log(`284 outside opts.allowCustomTagNames clauses`);
     if (r1.test(whatToTest)) {
-      console.log(`277 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+      console.log(`286 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`280 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      console.log(`289 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r3.test(whatToTest)) {
-      console.log(`283 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+      console.log(`292 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`286 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      console.log(`295 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
       passed = true;
     }
   }
 
   console.log(
-    `292 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `301 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -304,11 +313,11 @@ function isOpening(str, idx = 0, originalOpts) {
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`307 SET passed = true`);
+    console.log(`316 SET passed = true`);
   }
 
   console.log(
-    `311 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `320 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -317,15 +326,16 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `320 ${`\u001b[${33}m${`isNotLetter(str[${idx +
-      1}])`}\u001b[${39}m`} = ${JSON.stringify(
+    `329 ${`\u001b[${33}m${`isNotLetter(str[${
+      idx + 1
+    }])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
       4
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`328 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`338 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

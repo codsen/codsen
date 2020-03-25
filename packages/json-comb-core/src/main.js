@@ -106,7 +106,7 @@ function getKeyset(arrOfPromises, originalOpts) {
     );
   }
   const defaults = {
-    placeholder: false
+    placeholder: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
@@ -122,8 +122,8 @@ function getKeyset(arrOfPromises, originalOpts) {
       {
         msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
         schema: {
-          placeholder: ["null", "number", "string", "boolean", "object"]
-        }
+          placeholder: ["null", "number", "string", "boolean", "object"],
+        },
       },
       null,
       4
@@ -142,7 +142,7 @@ function getKeyset(arrOfPromises, originalOpts) {
         return true;
       }
       return false;
-    }).then(res => {
+    }).then((res) => {
       // truthy option means previous check detected a promise within
       // "arrOfPromises" which doesn't resolve to a plain object
       if (res) {
@@ -161,17 +161,17 @@ function getKeyset(arrOfPromises, originalOpts) {
         (previousValue, currentValue) =>
           mergeAdvanced(
             flattenAllArrays(previousValue, {
-              flattenArraysContainingStringsToBeEmpty: true
+              flattenArraysContainingStringsToBeEmpty: true,
             }),
             flattenAllArrays(currentValue, {
-              flattenArraysContainingStringsToBeEmpty: true
+              flattenArraysContainingStringsToBeEmpty: true,
             }),
             {
-              mergeArraysContainingStringsToBeEmpty: true
+              mergeArraysContainingStringsToBeEmpty: true,
             }
           ), // reducer
         {} // initialValue
-      ).then(res2 => {
+      ).then((res2) => {
         resolve(setAllValuesTo(res2, opts.placeholder));
       });
     });
@@ -209,12 +209,12 @@ function getKeysetSync(arrOriginal, originalOpts) {
   let schemaObj = {};
   const arr = clone(arrOriginal);
   const defaults = {
-    placeholder: false
+    placeholder: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
   const fOpts = {
-    flattenArraysContainingStringsToBeEmpty: true
+    flattenArraysContainingStringsToBeEmpty: true,
   };
 
   arr.forEach((obj, i) => {
@@ -231,7 +231,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
       flattenAllArrays(schemaObj, fOpts),
       flattenAllArrays(obj, fOpts),
       {
-        mergeArraysContainingStringsToBeEmpty: true
+        mergeArraysContainingStringsToBeEmpty: true,
       }
     );
   });
@@ -255,12 +255,14 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
   const defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
-    useNullAsExplicitFalse: true
+    useNullAsExplicitFalse: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
-    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(val => isStr(val))
+    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
+      isStr(val)
+    )
   ) {
     throw new Error(
       `json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
@@ -345,12 +347,14 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   const defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
-    useNullAsExplicitFalse: true
+    useNullAsExplicitFalse: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
-    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(val => isStr(val))
+    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
+      isStr(val)
+    )
   ) {
     throw new Error(
       `json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
@@ -422,7 +426,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
   }
   const defaults = {
     placeholder: false,
-    comments: "__comment__"
+    comments: "__comment__",
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.comments === 1 || opts.comments === "1") {
@@ -446,7 +450,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
   // ---------------------------------------------------------------------------
 
   function removeLeadingDot(something) {
-    return something.map(finding =>
+    return something.map((finding) =>
       finding.charAt(0) === "." ? finding.slice(1) : finding
     );
   }
@@ -462,22 +466,22 @@ function findUnusedSync(arrOriginal, originalOpts) {
       path = "";
     }
     let keySet;
-    if (arr1.every(el => isObj(el))) {
+    if (arr1.every((el) => isObj(el))) {
       keySet = getKeysetSync(arr1);
       //
       // ------ PART 1 ------
       // iterate all objects within given arr1ay, find unused keys
       //
       if (arr1.length > 1) {
-        const unusedKeys = Object.keys(keySet).filter(key =>
+        const unusedKeys = Object.keys(keySet).filter((key) =>
           arr1.every(
-            obj =>
+            (obj) =>
               (obj[key] === opts1.placeholder || obj[key] === undefined) &&
               (!opts1.comments || !includes(key, opts1.comments))
           )
         );
         // console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
-        res = res.concat(unusedKeys.map(el => `${path}.${el}`));
+        res = res.concat(unusedKeys.map((el) => `${path}.${el}`));
         // console.log(`res = ${JSON.stringify(res, null, 4)}`)
       }
       // ------ PART 2 ------
@@ -486,14 +490,14 @@ function findUnusedSync(arrOriginal, originalOpts) {
       //
       const keys = [].concat(
         ...Object.keys(keySet).filter(
-          key => isObj(keySet[key]) || isArr(keySet[key])
+          (key) => isObj(keySet[key]) || isArr(keySet[key])
         )
       );
-      const keysContents = keys.map(key => typ(keySet[key]));
+      const keysContents = keys.map((key) => typ(keySet[key]));
 
       // can't use map() because we want to prevent nulls being written.
       // hence the reduce() contraption
-      const extras = keys.map(el =>
+      const extras = keys.map((el) =>
         [].concat(
           ...arr1.reduce((res1, obj) => {
             if (existy(obj[el]) && obj[el] !== opts1.placeholder) {
@@ -522,7 +526,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
           );
         });
       }
-    } else if (arr1.every(el => isArr(el))) {
+    } else if (arr1.every((el) => isArr(el))) {
       arr1.forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });
@@ -543,5 +547,5 @@ export {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync
+  findUnusedSync,
 };

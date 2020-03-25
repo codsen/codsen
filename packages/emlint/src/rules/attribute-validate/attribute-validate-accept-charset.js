@@ -6,7 +6,7 @@ import { knownCharsets } from "../../util/constants";
 
 function attributeValidateAcceptCharset(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAcceptCharset() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -47,7 +47,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
             canBeCommaSeparated: true,
             noSpaceAfterComma: true,
             quickPermittedValues: ["UNKNOWN"],
-            permittedValues: knownCharsets
+            permittedValues: knownCharsets,
           }
         );
         console.log(
@@ -58,16 +58,16 @@ function attributeValidateAcceptCharset(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`062 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept-charset"
+              ruleId: "attribute-validate-accept-charset",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

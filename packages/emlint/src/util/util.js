@@ -31,12 +31,12 @@ const linkTypes = [
   "start",
   "stylesheet",
   "subsection",
-  "tag"
+  "tag",
 ];
 
 const astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
-  "tag-void-frontal-slash": "Remove frontal slash."
+  "tag-void-frontal-slash": "Remove frontal slash.",
 };
 
 // -----------------------------------------------------------------------------
@@ -151,5 +151,5 @@ export {
   linkTypes,
   pathTwoUp,
   isLetter,
-  isObj
+  isObj,
 };

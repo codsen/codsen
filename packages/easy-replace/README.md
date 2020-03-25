@@ -134,7 +134,7 @@ er(
     searchFor: "x",
     rightMaybe: "",
     rightOutside: "",
-    rightOutsideNot: ""
+    rightOutsideNot: "",
   },
   "🦄"
 );
@@ -157,8 +157,8 @@ er(
     rightOutside: "",
     rightOutsideNot: "",
     i: {
-      searchFor: true
-    }
+      searchFor: true,
+    },
   },
   "🦄"
 );
@@ -187,7 +187,7 @@ er(
     searchFor: "i",
     rightMaybe: ["🐴", "🦄"],
     rightOutside: "",
-    rightOutsideNot: ""
+    rightOutsideNot: "",
   },
   "x"
 );
@@ -212,8 +212,8 @@ er(
     rightOutside: "",
     rightOutsideNot: "",
     i: {
-      leftMaybe: true
-    }
+      leftMaybe: true,
+    },
   },
   "x"
 );
@@ -242,7 +242,7 @@ er(
     searchFor: "🦄",
     rightMaybe: "",
     rightOutside: "",
-    rightOutsideNot: ["c", "d"]
+    rightOutsideNot: ["c", "d"],
   },
   "🐴"
 );
@@ -265,8 +265,8 @@ er(
     rightOutside: "",
     rightOutsideNot: ["c", "d"],
     i: {
-      rightOutsideNot: true
-    }
+      rightOutsideNot: true,
+    },
   },
   "🐴"
 );
@@ -297,7 +297,7 @@ er(
     searchFor: " ", // <- space
     rightMaybe: "",
     rightOutside: "",
-    rightOutsideNot: ""
+    rightOutsideNot: "",
   },
   "" // <- empty string
 );
@@ -328,7 +328,7 @@ er(
     searchFor: "/>",
     rightMaybe: "",
     rightOutside: "",
-    rightOutsideNot: ""
+    rightOutsideNot: "",
   },
   " />"
 );
@@ -357,7 +357,7 @@ er(
     searchFor: "nbsp",
     rightMaybe: ";",
     rightOutside: "",
-    rightOutsideNot: ""
+    rightOutsideNot: "",
   },
   "&nbsp;"
 );
@@ -380,8 +380,8 @@ er(
     rightOutside: "",
     rightOutsideNot: "",
     i: {
-      searchFor: true
-    }
+      searchFor: true,
+    },
   },
   "&nbsp;"
 );

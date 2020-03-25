@@ -6,7 +6,7 @@
 
 function badCharacterInformationSeparatorThree(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 29) {
         context.report({
           ruleId: "bad-character-information-separator-three",
@@ -14,11 +14,11 @@ function badCharacterInformationSeparatorThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

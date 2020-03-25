@@ -61,7 +61,7 @@ let { input } = cli;
 // That's handy for certain types of CLI apps, but not this one, as in our case
 // the flags position does not matter, they don't affect the keywords that follow.
 if (cli.flags) {
-  Object.keys(cli.flags).forEach(flag => {
+  Object.keys(cli.flags).forEach((flag) => {
     if (typeof cli.flags[flag] === "string") {
       input = input.concat(cli.flags[flag]);
     }
@@ -77,7 +77,7 @@ if (cli.flags) {
   function printUpdated() {
     return Object.keys(updatedPackages)
       .sort()
-      .map(n => `${n} ${updatedPackages[n]}`)
+      .map((n) => `${n} ${updatedPackages[n]}`)
       .join("\n");
   }
 
@@ -92,13 +92,13 @@ if (cli.flags) {
   const pathsPromise = await globby([
     "**/package.json",
     "!**/node_modules/**",
-    "!**/test/**"
-  ]).then(paths =>
+    "!**/test/**",
+  ]).then((paths) =>
     pReduce(
       paths,
       (mapReceived, currentPath) =>
         read(currentPath, "utf8")
-          .then(packContentsStr => {
+          .then((packContentsStr) => {
             const parsedContents = JSON.parse(packContentsStr);
             mapReceived.namesList.push(parsedContents.name);
             mapReceived.pathsList.push(currentPath);
@@ -107,7 +107,7 @@ if (cli.flags) {
             mapReceived.contentsObj[currentPath] = parsedContents;
             return mapReceived;
           })
-          .catch(err => {
+          .catch((err) => {
             log(
               `${messagePrefix}${`\u001b[${31}m${`Couldn't read and parse the package.json at "${currentPath}": (${err})`}\u001b[${39}m`}`
             );
@@ -118,7 +118,7 @@ if (cli.flags) {
         pathsList: [],
         pathsByName: {},
         contentsObj: {},
-        contentsStr: {}
+        contentsStr: {},
       }
     )
   );
@@ -126,8 +126,8 @@ if (cli.flags) {
   // we work on array pathsPromise.pathsByName
 
   const allProgressPromise = PProgress.all(
-    pathsPromise.pathsList.map(oneOfPaths =>
-      PProgress.fn(async progress => {
+    pathsPromise.pathsList.map((oneOfPaths) =>
+      PProgress.fn(async (progress) => {
         // call progress() like progress(0.14);
 
         let amended = false;
@@ -168,7 +168,7 @@ if (cli.flags) {
 
         const compiledDepNameVersionPairs = {};
         const allProgressPromise2 = PProgress.all(
-          totalDeps.map(async singleDepName => {
+          totalDeps.map(async (singleDepName) => {
             if (pathsPromise.namesList.includes(singleDepName)) {
               compiledDepNameVersionPairs[singleDepName] =
                 pathsPromise.contentsObj[
@@ -177,7 +177,7 @@ if (cli.flags) {
               return;
             }
             try {
-              await pacote.manifest(singleDepName).then(pkg => {
+              await pacote.manifest(singleDepName).then((pkg) => {
                 if (pkg.version === null) {
                   throw new Error(
                     `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
@@ -192,7 +192,7 @@ if (cli.flags) {
             }
           })
         );
-        allProgressPromise2.onProgress(val => {
+        allProgressPromise2.onProgress((val) => {
           // console.log(
           //   `197 ${`\u001b[${32}m${`CALL PROGRESS():`} ${val *
           //     0.75}\u001b[${39}m`}`
@@ -311,7 +311,7 @@ if (cli.flags) {
           // 1. first, remove deps which if they are in normal dependencies in
           // package.json, that's our value parsedContents.dependencies
           if (isObj(parsedContents.dependencies)) {
-            Object.keys(parsedContents.dependencies).forEach(depName => {
+            Object.keys(parsedContents.dependencies).forEach((depName) => {
               if (keys.includes(depName)) {
                 // 1. delete devdep entry on JSON string
                 stringContents = del(
@@ -320,7 +320,7 @@ if (cli.flags) {
                 );
                 // 2. delete the devdep from parsedContents.devDependencies
                 // key array which will be used to traverse in the loop later
-                keys = keys.filter(val => val !== depName);
+                keys = keys.filter((val) => val !== depName);
                 // 3. set the flag to activate the file write operation later
                 amended = true;
               }
@@ -384,7 +384,7 @@ if (cli.flags) {
     )
   );
 
-  allProgressPromise.onProgress(val =>
+  allProgressPromise.onProgress((val) =>
     diff.write(
       val === 1
         ? `${messagePrefix}${

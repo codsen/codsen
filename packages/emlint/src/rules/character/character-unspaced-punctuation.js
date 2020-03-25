@@ -12,11 +12,11 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
     "33": "exclamationMark",
     "59": "semicolon",
     "187": "rightDoubleAngleQuotMark",
-    "171": "leftDoubleAngleQuotMark"
+    "171": "leftDoubleAngleQuotMark",
   };
 
   return {
-    text: function(node) {
+    text: function (node) {
       console.log(
         `███████████████████████████████████████ characterUnspacedPunctuation() ███████████████████████████████████████`
       );
@@ -38,24 +38,24 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
       const defaults = {
         questionMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         exclamationMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         semicolon: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         rightDoubleAngleQuotMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         leftDoubleAngleQuotMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
-        }
+          whitespaceRight: "always",
+        },
       };
 
       let opts = Object.assign({}, defaults); // default opts above are the default
@@ -111,8 +111,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i,
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[left(context.str, i) + 1, i]]
-              }
+                ranges: [[left(context.str, i) + 1, i]],
+              },
             });
           }
           if (
@@ -130,8 +130,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: right(context.str, i),
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[i + 1, right(context.str, i)]]
-              }
+                ranges: [[i + 1, right(context.str, i)]],
+              },
             });
           }
           if (
@@ -149,8 +149,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i + 1,
               message: "Add a space.",
               fix: {
-                ranges: [[i, i, " "]]
-              }
+                ranges: [[i, i, " "]],
+              },
             });
           }
           if (
@@ -168,15 +168,15 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i + 1,
               message: "Add a space.",
               fix: {
-                ranges: [[i + 1, i + 1, " "]]
-              }
+                ranges: [[i + 1, i + 1, " "]],
+              },
             });
           }
         }
       }
 
       // Add a space.
-    }
+    },
   };
 }
 

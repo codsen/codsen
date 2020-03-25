@@ -12,13 +12,13 @@ const { applyFixes } = require("../../../t-util/util");
 // 1. basic tests
 t.test(
   `01.01 - detects two INTERLINEAR ANNOTATION TERMINATOR characters`,
-  t => {
+  (t) => {
     const str = "\uFFFBdlkgjld\uFFFBj";
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-character-interlinear-annotation-terminator": 2
-      }
+        "bad-character-interlinear-annotation-terminator": 2,
+      },
     });
     t.match(messages, [
       {
@@ -30,8 +30,8 @@ t.test(
         column: 1, // remember columns numbers start from 1, not zero
         message: "Bad character - INTERLINEAR ANNOTATION TERMINATOR.",
         fix: {
-          ranges: [[0, 1]]
-        }
+          ranges: [[0, 1]],
+        },
       },
       {
         ruleId: "bad-character-interlinear-annotation-terminator",
@@ -42,9 +42,9 @@ t.test(
         column: 9, // remember columns numbers start from 1, not zero
         message: "Bad character - INTERLINEAR ANNOTATION TERMINATOR.",
         fix: {
-          ranges: [[8, 9]]
-        }
-      }
+          ranges: [[8, 9]],
+        },
+      },
     ]);
     t.equal(applyFixes(str, messages), "dlkgjldj");
     t.end();

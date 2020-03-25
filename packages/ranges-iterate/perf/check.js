@@ -15,7 +15,7 @@ const testme = () =>
     "abcdefghij",
     [
       [0, 5],
-      [5, 10]
+      [5, 10],
     ],
     ({ i, val }) => {
       pinged += val;

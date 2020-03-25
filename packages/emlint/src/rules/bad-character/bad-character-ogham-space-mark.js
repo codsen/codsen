@@ -6,7 +6,7 @@
 
 function badCharacterOghamSpaceMark(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 5760) {
         context.report({
           ruleId: "bad-character-ogham-space-mark",
@@ -14,11 +14,11 @@ function badCharacterOghamSpaceMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-          }
+            ranges: [[i, i + 1, " "]], // replace with a normal space
+          },
         });
       }
-    }
+    },
   };
 }
 

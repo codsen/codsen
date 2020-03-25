@@ -31,7 +31,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   const defaults = {
     mergeType: 1,
     progressFn: null,
-    joinRangesThatTouchEdges: true
+    joinRangesThatTouchEdges: true,
   };
 
   let opts;
@@ -105,11 +105,11 @@ function mergeRanges(arrOfRanges, originalOpts) {
 
   // two-level-deep array clone:
   const filtered = arrOfRanges
-    .map(subarr => [...subarr])
+    .map((subarr) => [...subarr])
     .filter(
       // filter out futile ranges with identical starting and ending points with
       // nothing to add (no 3rd argument)
-      rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
+      (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
     );
 
   let sortedRanges;
@@ -120,14 +120,14 @@ function mergeRanges(arrOfRanges, originalOpts) {
     // progress already gets reported in [0,100] range, so we just need to
     // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = sortRanges(filtered, {
-      progressFn: percentage => {
+      progressFn: (percentage) => {
         percentageDone = Math.floor(percentage / 5);
         // ensure each percent is passed only once:
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           opts.progressFn(percentageDone);
         }
-      }
+      },
     });
   } else {
     sortedRanges = sortRanges(filtered);
@@ -171,12 +171,14 @@ function mergeRanges(arrOfRanges, originalOpts) {
     ) {
       console.log(`172  sortedRanges[${i}][0] = ${`\u001b[${33}m${
         sortedRanges[i][0]
-      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${i -
-        1}][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
+      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
+        i - 1
+      }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
      sortedRanges[${i}][0] = ${`\u001b[${33}m${
         sortedRanges[i][0]
-      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${i -
-        1}][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
+      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
+        i - 1
+      }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
 `);
       sortedRanges[i - 1][0] = Math.min(
         sortedRanges[i][0],
@@ -187,8 +189,9 @@ function mergeRanges(arrOfRanges, originalOpts) {
         sortedRanges[i - 1][1]
       );
       console.log(
-        `190 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${i -
-          1}][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
+        `192 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
+          i - 1
+        }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
           sortedRanges[i - 1][1]
         }`
       );
@@ -199,7 +202,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
         (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
           sortedRanges[i - 1][1] <= sortedRanges[i][1])
       ) {
-        console.log(`202 inside tend the insert value clauses`);
+        console.log(`205 inside tend the insert value clauses`);
 
         // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
@@ -224,10 +227,10 @@ function mergeRanges(arrOfRanges, originalOpts) {
 
       // get rid of the second element:
       console.log(
-        "227 --------------------------------------------------------"
+        "230 --------------------------------------------------------"
       );
       console.log(
-        `230 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        `233 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
           sortedRanges,
           null,
           4
@@ -235,7 +238,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       );
       sortedRanges.splice(i, 1);
       console.log(
-        `238 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        `241 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
           sortedRanges,
           null,
           4
@@ -244,12 +247,12 @@ function mergeRanges(arrOfRanges, originalOpts) {
       // reset the traversal, start from the end again
       i = sortedRanges.length;
       console.log(
-        `247 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
+        `250 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
       );
     }
   }
   console.log(
-    `252 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
+    `255 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
       sortedRanges,
       null,
       4

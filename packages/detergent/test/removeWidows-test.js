@@ -4,7 +4,7 @@ const {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
-  rawNbsp
+  rawNbsp,
   // rawhairspace,
   // rawEllipsis,
   // rightSingleQuote,
@@ -16,11 +16,11 @@ const {
 // 00 - minimal cases for MVP
 // -----------------------------------------------------------------------------
 
-t.test(`00.01 - minimal samples`, t => {
+t.test(`00.01 - minimal samples`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc ddd`, {
       removeWidows: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
     `00.01 - remove widows - entities, one line string no full stop`
@@ -28,12 +28,12 @@ t.test(`00.01 - minimal samples`, t => {
   t.end();
 });
 
-t.test(`00.02 - ETX processed twice, 2nd time during widow removal`, t => {
+t.test(`00.02 - ETX processed twice, 2nd time during widow removal`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc\u0003ddd`, {
       removeWidows: 1,
       convertEntities: 1,
-      removeLineBreaks: 1
+      removeLineBreaks: 1,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
     `00.02 - remove widows - entities, one line string no full stop`
@@ -46,10 +46,10 @@ t.test(`00.02 - ETX processed twice, 2nd time during widow removal`, t => {
 
 t.test(
   `01.01 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -68,10 +68,10 @@ t.test(
 
 t.test(
   `01.02 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
-      convertEntities: 0
+      convertEntities: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -90,9 +90,9 @@ t.test(
 
 t.test(
   `01.03 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - removeWidows off`,
-  t => {
+  (t) => {
     mixer({
-      removeWidows: 0
+      removeWidows: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -111,13 +111,13 @@ t.test(
 
 t.test(
   `01.04 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
       replaceLineBreaks: 1,
       removeLineBreaks: 0,
-      useXHTML: 1
+      useXHTML: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -131,13 +131,13 @@ t.test(
 
 t.test(
   `01.05 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
       replaceLineBreaks: 1,
       removeLineBreaks: 0,
-      useXHTML: 0
+      useXHTML: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -151,12 +151,12 @@ t.test(
 
 t.test(
   `01.06 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - replaceLineBreaks off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
       replaceLineBreaks: 0,
-      removeLineBreaks: 0
+      removeLineBreaks: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -170,12 +170,12 @@ t.test(
 
 t.test(
   `01.07 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 0,
       replaceLineBreaks: 0,
-      removeLineBreaks: 0
+      removeLineBreaks: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -189,12 +189,12 @@ t.test(
 
 t.test(
   `01.08 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
       replaceLineBreaks: 0,
-      removeLineBreaks: 0
+      removeLineBreaks: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\neee fff ggg hhh.`, opt).res,
@@ -213,13 +213,13 @@ t.test(
 
 t.test(
   `01.09 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with trailing whitespace`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
       replaceLineBreaks: 1,
       removeLineBreaks: 0,
-      useXHTML: 0
+      useXHTML: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd. \n\neee fff ggg hhh`, opt).res,
@@ -233,10 +233,10 @@ t.test(
 
 t.test(
   `01.10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -295,10 +295,10 @@ t.test(
 
 t.test(
   `01.11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
-      convertEntities: 0
+      convertEntities: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -357,10 +357,10 @@ t.test(
 
 t.test(
   `01.12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - removeWidows off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 0,
-      convertEntities: 0
+      convertEntities: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -419,7 +419,7 @@ t.test(
 
 t.test(
   `01.13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
-  t => {
+  (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
         det(
@@ -438,7 +438,7 @@ t.test(
 
 t.test(
   `01.14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
-  t => {
+  (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
         det(
@@ -457,7 +457,7 @@ t.test(
 
 t.test(
   `01.15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
-  t => {
+  (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
         det(
@@ -476,7 +476,7 @@ t.test(
 
 t.test(
   `01.16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
-  t => {
+  (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
         det(
@@ -495,7 +495,7 @@ t.test(
 
 t.test(
   `01.17 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widow removal detects template code (Jinja/Nunjucks)`,
-  t => {
+  (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
         det(t, n, `{% if something %}`, opt).res,
@@ -524,10 +524,10 @@ t.test(
 
 t.test(
   `01.18 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 0,
-      convertDashes: 0
+      convertDashes: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -541,11 +541,11 @@ t.test(
 
 t.test(
   `01.19 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertDashes: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -559,11 +559,11 @@ t.test(
 
 t.test(
   `01.20 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertDashes: 1,
-      convertEntities: 0
+      convertEntities: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -577,11 +577,11 @@ t.test(
 
 t.test(
   `01.21 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 0,
       convertDashes: 1,
-      convertEntities: 1
+      convertEntities: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -595,11 +595,11 @@ t.test(
 
 t.test(
   `01.22 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 0,
       convertDashes: 1,
-      convertEntities: 0
+      convertEntities: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -616,11 +616,11 @@ t.test(
 
 t.test(
   `02.01 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a<a something="whatever" and="here">`, opt).res,
@@ -634,11 +634,11 @@ t.test(
 
 t.test(
   `02.02 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a <a something="whatever" and="here">`, opt).res,
@@ -652,11 +652,11 @@ t.test(
 
 t.test(
   `02.03 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a<a something="whatever" and="here">`, opt).res,
@@ -670,11 +670,11 @@ t.test(
 
 t.test(
   `02.04 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a <a something="whatever" and="here">`, opt).res,
@@ -688,11 +688,11 @@ t.test(
 
 t.test(
   `02.05 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a a<a something="whatever" and="here">`, opt).res,
@@ -706,11 +706,11 @@ t.test(
 
 t.test(
   `02.06 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
-  t => {
+  (t) => {
     mixer({
       removeWidows: 1,
       convertEntities: 1,
-      stripHtml: 0
+      stripHtml: 0,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a a <a something="whatever" and="here">`, opt).res,

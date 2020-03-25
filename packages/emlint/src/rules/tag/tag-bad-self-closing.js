@@ -8,7 +8,7 @@ import { left } from "string-left-right";
 // function tagBadSelfClosing(context, ...opts) {
 function tagBadSelfClosing(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagBadSelfClosing() ███████████████████████████████████████`
       );
@@ -53,10 +53,10 @@ function tagBadSelfClosing(context) {
           message: "Remove the slash.",
           idxFrom,
           idxTo,
-          fix: { ranges: [[idxFrom, idxTo]] }
+          fix: { ranges: [[idxFrom, idxTo]] },
         });
       }
-    }
+    },
   };
 }
 

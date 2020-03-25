@@ -2,7 +2,7 @@ const t = require("tap");
 const {
   patcher,
   defaults,
-  version
+  version,
 } = require("../dist/html-table-patcher.cjs");
 const { crush } = require("html-crush");
 
@@ -10,7 +10,7 @@ function processThis(str, opts) {
   const res =
     crush(patcher(str, opts), {
       lineLengthLimit: 0,
-      removeLineBreaks: true
+      removeLineBreaks: true,
     }).result || "";
   return res.replace(/\s*\n\s*/gm, "");
 }
@@ -18,7 +18,7 @@ function processThis(str, opts) {
 function tiny(something) {
   return crush(something, {
     lineLengthLimit: 0,
-    removeLineBreaks: true
+    removeLineBreaks: true,
   }).result.replace(/\s*\n\s*/gm, "");
 }
 
@@ -28,7 +28,7 @@ function tiny(something) {
 
 t.test(
   `01.01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   zzz
@@ -58,7 +58,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -88,7 +88,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
 <tr>
@@ -128,7 +128,7 @@ zzz
 
 t.test(
   `01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   zzz
@@ -160,7 +160,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -200,7 +200,7 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   xyz
@@ -236,7 +236,7 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
 <tr>
@@ -276,7 +276,7 @@ zzz
 
 t.test(
   `01.08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
 <tr>
@@ -316,7 +316,7 @@ zzz
 
 t.test(
   `01.09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
 <tr><td>a</td></tr>
@@ -340,7 +340,7 @@ t.test(
 
 t.test(
   `01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`,
-  t => {
+  (t) => {
     t.same(
       processThis(
         `<table>
@@ -353,7 +353,7 @@ t.test(
         {
           cssStylesContent:
             "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
+          alwaysCenter: true,
         }
       ),
       tiny(`<table>
@@ -371,7 +371,7 @@ t.test(
 
 t.test(
   `01.11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`,
-  t => {
+  (t) => {
     t.same(
       processThis(
         `<table>
@@ -386,7 +386,7 @@ t.test(
         {
           cssStylesContent:
             "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
+          alwaysCenter: true,
         }
       ),
       tiny(`<table>
@@ -406,7 +406,7 @@ t.test(
 
 t.test(
   `01.12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`,
-  t => {
+  (t) => {
     t.same(
       processThis(
         `<table><tr><td></td></tr>
@@ -419,7 +419,7 @@ t.test(
         {
           cssStylesContent:
             "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
+          alwaysCenter: true,
         }
       ),
       tiny(`<table><tr><td></td></tr>
@@ -437,7 +437,7 @@ t.test(
 
 t.test(
   `01.13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
-  t => {
+  (t) => {
     t.same(
       processThis(
         `<table><tr><td></td></tr>
@@ -450,7 +450,7 @@ t.test(
         {
           cssStylesContent:
             "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
+          alwaysCenter: true,
         }
       ),
       tiny(`<table><tr><td></td></tr>
@@ -468,7 +468,7 @@ t.test(
 
 t.test(
   `01.14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
-  t => {
+  (t) => {
     t.same(
       processThis(
         `<table><tr><td></td></tr>
@@ -485,7 +485,7 @@ t.test(
         {
           cssStylesContent:
             "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
+          alwaysCenter: true,
         }
       ),
       tiny(`<table><tr><td></td></tr>
@@ -510,7 +510,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - first TD after TR`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -540,7 +540,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - colspan=2`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -576,7 +576,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center", one TD`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -606,7 +606,7 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center" on one of two TD's`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -645,7 +645,7 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -683,7 +683,7 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
 <tr>
@@ -722,7 +722,7 @@ z
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - code closing TD and closing TR`}\u001b[${39}m`} - two tags`,
-  t => {
+  (t) => {
     t.same(
       processThis(`<table>
   <tr>
@@ -755,7 +755,7 @@ t.test(
 
 t.test(
   `05.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - various HTML comments`,
-  t => {
+  (t) => {
     const str1 = `<!--zzz--><table><!--zzz-->
   <tr><!--zzz-->
     <td><!--zzz-->
@@ -798,13 +798,19 @@ t.test(
 // 06. checking API bits
 // -----------------------------------------------------------------------------
 
-t.test(`06.01 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
-  t.ok(typeof defaults === "object", "06.01.01");
-  t.ok(Object.keys(defaults).length > 0, "06.01.02");
-  t.end();
-});
+t.test(
+  `06.01 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`,
+  (t) => {
+    t.ok(typeof defaults === "object", "06.01.01");
+    t.ok(Object.keys(defaults).length > 0, "06.01.02");
+    t.end();
+  }
+);
 
-t.test(`06.02 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`, t => {
-  t.match(version, /\d*\.\d*\.\d*/, "06.02.01");
-  t.end();
-});
+t.test(
+  `06.02 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`,
+  (t) => {
+    t.match(version, /\d*\.\d*\.\d*/, "06.02.01");
+    t.end();
+  }
+);

@@ -5,7 +5,7 @@ import validateVoid from "../../util/validateVoid";
 
 function attributeValidateDefer(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDefer() ███████████████████████████████████████`
       );
@@ -21,7 +21,7 @@ function attributeValidateDefer(context, ...originalOpts) {
       );
 
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
 
       // normalize the given opts (array) and turn them
@@ -29,7 +29,7 @@ function attributeValidateDefer(context, ...originalOpts) {
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -43,7 +43,7 @@ function attributeValidateDefer(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate the value (or absence thereof)
@@ -52,24 +52,24 @@ function attributeValidateDefer(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
 
         // finally, report gathered errors:
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`063 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-defer"
+                ruleId: "attribute-validate-defer",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

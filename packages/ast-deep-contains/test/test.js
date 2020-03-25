@@ -6,7 +6,7 @@ const deepContains = require("../dist/ast-deep-contains.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of the first`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -16,7 +16,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -25,7 +25,7 @@ t.test(
       gathered,
       [
         ["1", "1"],
-        ["2", "2"]
+        ["2", "2"],
       ],
       "01.01.01"
     );
@@ -36,7 +36,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the second (error)`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -46,7 +46,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -55,7 +55,7 @@ t.test(
       gathered,
       [
         ["1", "1"],
-        ["2", "2"]
+        ["2", "2"],
       ],
       "01.02.01"
     );
@@ -67,7 +67,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -77,7 +77,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -92,7 +92,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, OK`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -102,7 +102,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -112,7 +112,7 @@ t.test(
       [
         ["1", "4"],
         ["2", "5"],
-        ["3", "6"]
+        ["3", "6"],
       ],
       "01.04.01"
     );
@@ -123,7 +123,7 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, not OK`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -133,7 +133,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -142,7 +142,7 @@ t.test(
       gathered,
       [
         ["1", "4"],
-        ["2", "5"]
+        ["2", "5"],
       ],
       "01.05.01"
     );
@@ -154,7 +154,7 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -164,7 +164,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       }
     );
@@ -172,7 +172,7 @@ t.test(
       gathered,
       [
         ["1", "4"],
-        ["2", "5"]
+        ["2", "5"],
       ],
       "01.06.01"
     );
@@ -183,7 +183,7 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -193,7 +193,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      err => {
+      (err) => {
         errors.push(err);
       },
       { skipContainers: false }
@@ -203,7 +203,7 @@ t.test(
       gathered,
       [
         ["1", "4"], // <---- skipped [{ a: "1" }, { b: "2" }, { c: "3" }] because it's at the root level
-        ["2", "5"]
+        ["2", "5"],
       ],
       "01.07.01"
     );
@@ -217,18 +217,18 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
     deepContains(
       [
         { key1: "a", key2: "b" },
-        { key1: "x", key2: "y" }
+        { key1: "x", key2: "y" },
       ],
       [
         { key1: "x", key2: "y" },
-        { key1: "a", key2: "b" }
+        { key1: "a", key2: "b" },
       ],
       (leftSideVal, rightSideVal) => {
         if (leftSideVal === rightSideVal) {
@@ -247,7 +247,7 @@ t.test(
         ["x", "x"],
         ["y", "y"],
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "02.01.01"
     );
@@ -258,18 +258,18 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
     deepContains(
       [
         { key1: "a", key2: "b" },
-        { key1: "x", key2: "y" }
+        { key1: "x", key2: "y" },
       ],
       [
         { key1: "x", key2: "y" },
-        { key1: "a", key2: "b" }
+        { key1: "a", key2: "b" },
       ],
       (leftSideVal, rightSideVal) => {
         if (leftSideVal === rightSideVal) {
@@ -289,27 +289,27 @@ t.test(
         [
           {
             key1: "a",
-            key2: "b"
+            key2: "b",
           },
           {
             key1: "x",
-            key2: "y"
-          }
+            key2: "y",
+          },
         ],
         ["a", "x"],
         ["b", "y"],
         [
           {
             key1: "x",
-            key2: "y"
+            key2: "y",
           },
           {
             key1: "a",
-            key2: "b"
-          }
+            key2: "b",
+          },
         ],
         ["x", "a"],
-        ["y", "b"]
+        ["y", "b"],
       ],
       "02.02.02"
     );
@@ -319,18 +319,18 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
     deepContains(
       [
         { key1: "a", key2: "b" },
-        { key1: "x", key2: "y" }
+        { key1: "x", key2: "y" },
       ],
       [
         { key1: "x", key2: "y" },
-        { key1: "a", key2: "b" }
+        { key1: "a", key2: "b" },
       ],
       (leftSideVal, rightSideVal) => {
         if (leftSideVal === rightSideVal) {
@@ -349,7 +349,7 @@ t.test(
         ["x", "x"],
         ["y", "y"],
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "02.03.01"
     );
@@ -360,18 +360,18 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
     deepContains(
       [
         { key1: "a", key2: "b" },
-        { key1: "x", key2: "y" }
+        { key1: "x", key2: "y" },
       ],
       [
         { key1: "x", key2: "y" },
-        { key1: "a", key2: "b" }
+        { key1: "a", key2: "b" },
       ],
       (leftSideVal, rightSideVal) => {
         if (leftSideVal === rightSideVal) {
@@ -391,7 +391,7 @@ t.test(
         ["a", "x"],
         ["b", "y"],
         ["x", "a"],
-        ["y", "b"]
+        ["y", "b"],
       ],
       "02.04.02"
     );
@@ -404,7 +404,7 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -412,14 +412,14 @@ t.test(
       {
         a: [
           { key1: "a", key2: "b" },
-          { key1: "x", key2: "y" }
-        ]
+          { key1: "x", key2: "y" },
+        ],
       },
       {
         a: [
           { key1: "x", key2: "y" },
-          { key1: "a", key2: "b" }
-        ]
+          { key1: "a", key2: "b" },
+        ],
       },
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
@@ -435,28 +435,28 @@ t.test(
           [
             {
               key1: "a",
-              key2: "b"
+              key2: "b",
             },
             {
               key1: "x",
-              key2: "y"
-            }
+              key2: "y",
+            },
           ],
           [
             {
               key1: "x",
-              key2: "y"
+              key2: "y",
             },
             {
               key1: "a",
-              key2: "b"
-            }
-          ]
+              key2: "b",
+            },
+          ],
         ],
         ["x", "x"],
         ["y", "y"],
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "03.01.01"
     );
@@ -467,7 +467,7 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -475,14 +475,14 @@ t.test(
       {
         a: [
           { key1: "a", key2: "b" },
-          { key1: "x", key2: "y" }
-        ]
+          { key1: "x", key2: "y" },
+        ],
       },
       {
         a: [
           { key1: "x", key2: "y" },
-          { key1: "a", key2: "b" }
-        ]
+          { key1: "a", key2: "b" },
+        ],
       },
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
@@ -497,7 +497,7 @@ t.test(
         ["x", "x"],
         ["y", "y"],
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "03.02.01"
     );
@@ -508,7 +508,7 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -518,7 +518,7 @@ t.test(
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      errStr => {
+      (errStr) => {
         errors.push(errStr);
       },
       {} // default opts
@@ -528,7 +528,7 @@ t.test(
       gathered,
       [
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "03.03.01"
     );
@@ -539,7 +539,7 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -552,8 +552,8 @@ t.test(
           idxTo: 5,
           message: "Replace backslash with slash.",
           fix: {
-            ranges: [[4, 5, "/"]]
-          }
+            ranges: [[4, 5, "/"]],
+          },
         },
         {
           ruleId: "tag-closing-backslash",
@@ -562,9 +562,9 @@ t.test(
           idxTo: 2,
           message: "Wrong slash - backslash.",
           fix: {
-            ranges: [[1, 2]]
-          }
-        }
+            ranges: [[1, 2]],
+          },
+        },
       ],
       [
         {
@@ -574,8 +574,8 @@ t.test(
           idxTo: 2,
           message: "Wrong slash - backslash.",
           fix: {
-            ranges: [[1, 2]]
-          }
+            ranges: [[1, 2]],
+          },
         },
         {
           ruleId: "tag-closing-backslash",
@@ -584,14 +584,14 @@ t.test(
           idxTo: 5,
           message: "Replace backslash with slash.",
           fix: {
-            ranges: [[4, 5, "/"]]
-          }
-        }
+            ranges: [[4, 5, "/"]],
+          },
+        },
       ],
       (leftSideVal, rightSideVal) => {
         gathered.push([leftSideVal, rightSideVal]);
       },
-      errStr => {
+      (errStr) => {
         errors.push(errStr);
       },
       {} // default opts
@@ -628,7 +628,7 @@ t.test(
         ["Replace backslash with slash.", "Replace backslash with slash."],
         [4, 4],
         [5, 5],
-        ["/", "/"]
+        ["/", "/"],
       ],
       "03.04.01"
     );
@@ -697,7 +697,7 @@ t.test(
 
 t.test(
   `05.01 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - tree 1 has one more than tree 2`,
-  t => {
+  (t) => {
     const gathered = [];
     const errors = [];
 
@@ -705,11 +705,11 @@ t.test(
       [
         { key1: "a", key2: "b" },
         { key1: "k", key2: "l" },
-        { key1: "x", key2: "y" }
+        { key1: "x", key2: "y" },
       ],
       [
         { key1: "x", key2: "y" },
-        { key1: "a", key2: "b" }
+        { key1: "a", key2: "b" },
       ],
       (leftSideVal, rightSideVal) => {
         if (leftSideVal === rightSideVal) {
@@ -728,7 +728,7 @@ t.test(
         ["x", "x"],
         ["y", "y"],
         ["a", "a"],
-        ["b", "b"]
+        ["b", "b"],
       ],
       "05.01.01"
     );

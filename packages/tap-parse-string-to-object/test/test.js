@@ -8,7 +8,7 @@ const path = require("path");
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01 - wrong/missing input = throw", t => {
+t.test("01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     parse();
   }, /THROW_ID_01/g);
@@ -53,7 +53,7 @@ t.test("01 - wrong/missing input = throw", t => {
 //                            |
 //                            |
 
-t.test("02.01 - case 01 - arrayiffy-if-string - all pass", t => {
+t.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
   ok 1 - 01.01.01
@@ -95,7 +95,7 @@ t.test("02.01 - case 01 - arrayiffy-if-string - all pass", t => {
       assertsFailed: 0,
       suitesTotal: 2,
       suitesPassed: 2,
-      suitesFailed: 0
+      suitesFailed: 0,
     },
     "02.01"
   );
@@ -123,7 +123,7 @@ t.test("02.01 - case 01 - arrayiffy-if-string - all pass", t => {
 //                            |
 //                            |
 
-t.test("02.02 - case 01 - arrayiffy-if-string - none pass", t => {
+t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
   const input = `TAP version 13
   not ok 1 - test/test.js # time=229.587ms
     ---
@@ -418,7 +418,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", t => {
       assertsFailed: 8,
       suitesTotal: 2,
       suitesPassed: 0,
-      suitesFailed: 2
+      suitesFailed: 2,
     },
     "02.02"
   );
@@ -446,7 +446,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", t => {
 //                            |
 //                            |
 
-t.test("02.03 - ranges-merge", t => {
+t.test("02.03 - ranges-merge", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=203.828ms {
       # Subtest: 00.00 - does not throw when the first arg is wrong
@@ -647,7 +647,7 @@ t.test("02.03 - ranges-merge", t => {
       assertsFailed: 0,
       suitesTotal: 1,
       suitesPassed: 1,
-      suitesFailed: 0
+      suitesFailed: 0,
     },
     "02.02"
   );
@@ -675,7 +675,7 @@ t.test("02.03 - ranges-merge", t => {
 //                            |
 //                            |
 
-t.test("02.04 - object-set-all-values-to", t => {
+t.test("02.04 - object-set-all-values-to", (t) => {
   const input = `TAP version 13
   # Subtest: test/test.js
       # Subtest: 01.01 - input simple plain object, default
@@ -801,7 +801,7 @@ t.test("02.04 - object-set-all-values-to", t => {
       assertsFailed: 0,
       suitesTotal: 1,
       suitesPassed: 1,
-      suitesFailed: 0
+      suitesFailed: 0,
     },
     "02.04"
   );
@@ -835,7 +835,7 @@ t.test("02.04 - object-set-all-values-to", t => {
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`,
-  async t => {
+  async (t) => {
     const tempFolder = tempy.directory();
     // const tempFolder = "temp";
     fs.ensureDirSync(path.resolve(tempFolder));
@@ -896,7 +896,7 @@ ok 1 - UMD build works fine # time=10.033ms
         assertsFailed: 0,
         suitesTotal: 2,
         suitesPassed: 2,
-        suitesFailed: 0
+        suitesFailed: 0,
       },
       "03.01"
     );

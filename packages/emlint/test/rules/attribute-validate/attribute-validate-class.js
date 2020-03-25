@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no class, error level 0`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 0
-      }
+        "attribute-validate-class": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no class, error level 1`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 1
-      }
+        "attribute-validate-class": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no class, error level 2`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy class`,
-  t => {
+  (t) => {
     const str = `<table class='zz' class='w100p fl ha' id='yy aa'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<table class=" w100p">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table class="w100p">`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 15,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[14, 15]]
-        }
-      }
+          ranges: [[14, 15]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<table class="w100p ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table class="w100p">`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 20,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[19, 20]]
-        }
-      }
+          ranges: [[19, 20]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - one class, copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<table class="  w100p  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table class="w100p">`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [14, 16],
-            [21, 23]
-          ]
-        }
-      }
+            [21, 23],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - many classes, copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<table class="  w100p  ha \t fl  \n  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<table class="w100p ha fl">`);
     t.match(messages, [
@@ -173,9 +173,9 @@ t.test(
         fix: {
           ranges: [
             [14, 16],
-            [30, 35]
-          ]
-        }
+            [30, 35],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -183,8 +183,8 @@ t.test(
         idxTo: 23,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[22, 23]]
-        }
+          ranges: [[22, 23]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -192,9 +192,9 @@ t.test(
         idxTo: 28,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[26, 28]]
-        }
-      }
+          ranges: [[26, 28]],
+        },
+      },
     ]);
     t.end();
   }
@@ -202,13 +202,13 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<table class="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -218,8 +218,8 @@ t.test(
         idxFrom: 14,
         idxTo: 17,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -227,13 +227,13 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<table class="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -243,8 +243,8 @@ t.test(
         idxFrom: 14,
         idxTo: 14,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -255,13 +255,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - healthy`,
-  t => {
+  (t) => {
     const str = `<table class='ab cd ef' id='yy aa'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -271,13 +271,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - mix 1`,
-  t => {
+  (t) => {
     const str = `<a class="b c\td\ne\t f \tg\t\th">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<a class="b c d e f g h">`);
@@ -288,8 +288,8 @@ t.test(
         idxTo: 14,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[13, 14, " "]] // replacement with space - notice 3rd arg
-        }
+          ranges: [[13, 14, " "]], // replacement with space - notice 3rd arg
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -297,8 +297,8 @@ t.test(
         idxTo: 16,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[15, 16, " "]] // replacement with space - notice 3rd arg
-        }
+          ranges: [[15, 16, " "]], // replacement with space - notice 3rd arg
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -306,8 +306,8 @@ t.test(
         idxTo: 19,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[17, 18]]
-        }
+          ranges: [[17, 18]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -315,8 +315,8 @@ t.test(
         idxTo: 22,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[21, 22]]
-        }
+          ranges: [[21, 22]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -324,9 +324,9 @@ t.test(
         idxTo: 25,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[23, 25, " "]]
-        }
-      }
+          ranges: [[23, 25, " "]],
+        },
+      },
     ]);
     t.end();
   }
@@ -334,13 +334,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - mix 1`,
-  t => {
+  (t) => {
     const str = `<table class='ab \t3a e.f' id='yy aa'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<table class='ab 3a e.f' id='yy aa'>`);
@@ -351,23 +351,23 @@ t.test(
         idxTo: 18,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[17, 18]]
-        }
+          ranges: [[17, 18]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
         idxFrom: 18,
         idxTo: 20,
         message: `Wrong class name.`,
-        fix: null
+        fix: null,
       },
       {
         ruleId: "attribute-validate-class",
         idxFrom: 21,
         idxTo: 24,
         message: `Wrong class name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -375,13 +375,13 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - starts with dot`,
-  t => {
+  (t) => {
     const str = `<table class=".abc">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -391,8 +391,8 @@ t.test(
         idxFrom: 14,
         idxTo: 18,
         message: `Wrong class name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -400,13 +400,13 @@ t.test(
 
 t.test(
   `03.05 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - only dot`,
-  t => {
+  (t) => {
     const str = `<table class=".">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -416,8 +416,8 @@ t.test(
         idxFrom: 14,
         idxTo: 15,
         message: `Wrong class name.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -425,7 +425,7 @@ t.test(
 
 t.test(
   `03.06 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - only dot`,
-  t => {
+  (t) => {
     const str = `
 <table class="aa bb cc dd">
 <table class="aa bb aa bb cc aa dd \taa">
@@ -434,8 +434,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-class": 2
-      }
+        "attribute-validate-class": 2,
+      },
     });
     // can fix:
     t.equal(
@@ -453,8 +453,8 @@ t.test(
         idxTo: 51,
         message: `Duplicate class "aa".`,
         fix: {
-          ranges: [[49, 52]]
-        }
+          ranges: [[49, 52]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -462,8 +462,8 @@ t.test(
         idxTo: 54,
         message: `Duplicate class "bb".`,
         fix: {
-          ranges: [[52, 55]]
-        }
+          ranges: [[52, 55]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -471,8 +471,8 @@ t.test(
         idxTo: 60,
         message: `Duplicate class "aa".`,
         fix: {
-          ranges: [[58, 61]]
-        }
+          ranges: [[58, 61]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -480,8 +480,8 @@ t.test(
         idxTo: 65,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[64, 65]]
-        }
+          ranges: [[64, 65]],
+        },
       },
       {
         ruleId: "attribute-validate-class",
@@ -489,9 +489,9 @@ t.test(
         idxTo: 67,
         message: `Duplicate class "aa".`,
         fix: {
-          ranges: [[63, 67]]
-        }
-      }
+          ranges: [[63, 67]],
+        },
+      },
     ]);
     t.end();
   }

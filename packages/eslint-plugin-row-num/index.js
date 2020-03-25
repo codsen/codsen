@@ -7,9 +7,9 @@ module.exports = {
       plugins: ["row-num"],
       rules: {
         "no-console": "off",
-        "row-num/correct-row-num": "error"
-      }
-    }
+        "row-num/correct-row-num": "error",
+      },
+    },
   },
-  rules: importModules(path.resolve(__dirname, "rules"), { camelize: false })
+  rules: importModules(path.resolve(__dirname, "rules"), { camelize: false }),
 };

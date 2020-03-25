@@ -2,7 +2,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
   const defaults = {
     from: 0,
     to: str.length,
-    offset: 0
+    offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -53,16 +53,17 @@ function isSingleSpace(str, originalOpts, errorArr) {
 
     // raise an error about this excessive/wrong whitespace
     console.log(
-      `056 isSingleSpace(): [[${opts.offset + opts.from}, ${opts.offset +
-        opts.to}]]`
+      `056 isSingleSpace(): [[${opts.offset + opts.from}, ${
+        opts.offset + opts.to
+      }]]`
     );
     errorArr.push({
       idxFrom: opts.offset + opts.from,
       idxTo: opts.offset + opts.to,
       message: `Should be a single space.`,
       fix: {
-        ranges
-      }
+        ranges,
+      },
     });
   }
 }

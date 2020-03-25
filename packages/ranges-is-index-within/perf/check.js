@@ -17,10 +17,10 @@ const testme = () =>
       [20, 30],
       [35, 40],
       [45, 50],
-      [55, 60]
+      [55, 60],
     ],
     {
-      returnMatchedRangeInsteadOfTrue: true
+      returnMatchedRangeInsteadOfTrue: true,
     }
   );
 

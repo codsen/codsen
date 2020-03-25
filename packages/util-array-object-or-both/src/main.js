@@ -44,12 +44,12 @@ function arrObjOrBoth(str, originalOpts) {
     "each",
     "whatever",
     "whatevs",
-    "e"
+    "e",
   ];
 
   const defaults = {
     msg: "",
-    optsVarName: "given variable"
+    optsVarName: "given variable",
   };
   const opts = Object.assign({}, defaults, originalOpts);
 

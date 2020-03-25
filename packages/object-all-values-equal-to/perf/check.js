@@ -11,11 +11,11 @@ const testme = () =>
   f(
     [
       {
-        a: false
+        a: false,
       },
       {
-        b: false
-      }
+        b: false,
+      },
     ],
     false
   );

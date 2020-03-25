@@ -140,7 +140,7 @@ const headsAndTails = strFindHeadsTails(
   return acc;
 }, []);
 const res1 = split(input, {
-  ignoreRanges: headsAndTails
+  ignoreRanges: headsAndTails,
 });
 console.log(`res1 = ${JSON.stringify(res1, null, 4)}`);
 // => ['some', 'interesting', 'text', 'and', 'some', 'more', 'text.']
@@ -159,7 +159,7 @@ const wholeVariables = strFindHeadsTails(
   return acc;
 }, []);
 const res2 = split(input, {
-  ignoreRanges: wholeVariables
+  ignoreRanges: wholeVariables,
 });
 // => ['some', 'interesting', 'text.']
 ```

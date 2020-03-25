@@ -136,7 +136,7 @@ const { comb } = require("email-comb");
 const html = '<html>zzz</html><body class="class-1">zzz</body>';
 // Assign a new string to the output of this library:
 const { result } = comb(html, {
-  whitelist: [".class-1", "#id-1", ".module-*"]
+  whitelist: [".class-1", "#id-1", ".module-*"],
 });
 // Log its result:
 console.log("result = " + JSON.stringify(result, null, 4));
@@ -172,7 +172,7 @@ Here are all options in one place in case you need to copy the whole thing:
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
+  reportProgressFuncTo: 100,
 }
 ```
 
@@ -195,7 +195,7 @@ For example, **output** could look like this:
     nonIndentationsWhitespaceLength: 9,
     nonIndentationsTakeUpPercentageOfOriginal: 8,
     commentsLength: 10,
-    commentsTakeUpPercentageOfOriginal: 1
+    commentsTakeUpPercentageOfOriginal: 1,
   },
   result: "<html>...",
   countAfterCleaning: 3,
@@ -203,7 +203,7 @@ For example, **output** could look like this:
   allInHead: allClassesAndIdsWithinHead,
   allInBody: allClassesAndIdsWithinBody,
   deletedFromHead: [".unused1", ".unused2"],
-  deletedFromBody: [".unused1", ".unused1", "#unused1"]
+  deletedFromBody: [".unused1", ".unused1", "#unused1"],
 }
 ```
 
@@ -239,7 +239,7 @@ You will not be using these classes within the `<body>` of your HTML code, so th
 ```js
 var html = "<!DOCTYPE html>...";
 comb(html, {
-  whitelist: ["#outlook", ".ExternalClass", ".ReadMsgBody"]
+  whitelist: ["#outlook", ".ExternalClass", ".ReadMsgBody"],
 });
 ```
 
@@ -248,7 +248,7 @@ You can also use a _wildcard_, for example in order to whitelist classes `module
 ```js
 var html = "<!DOCTYPE html>...";
 comb(html, {
-  whitelist: [".module-*"]
+  whitelist: [".module-*"],
 });
 // => all class names that begin with ".module-" will not be touched by this library.
 ```
@@ -295,13 +295,13 @@ color:  black;
     backend: [
       {
         heads: "{{", // define heads and tails in pairs
-        tails: "}}"
+        tails: "}}",
       },
       {
         heads: "{%", // second pair
-        tails: "%}"
-      }
-    ]
+        tails: "%}",
+      },
+    ],
   }
 ).result; // <------ output of this library is a plain object. String result is in a key "result". We grab it here.
 
@@ -360,14 +360,14 @@ const whitelist = [
   ".yshortcuts",
   ".Mso*",
   "#outlook",
-  ".module*"
+  ".module*",
 ];
 
 gulp.task("build", () => {
   return gulp.src("emails/*.html").pipe(
-    tap(file => {
+    tap((file) => {
       const cleanedHtmlResult = comb(file.contents.toString(), {
-        whitelist
+        whitelist,
       });
       util.log(
         util.colors.green(

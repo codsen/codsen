@@ -35,7 +35,7 @@ npm i gulp-email-remove-unused-css
 var gulp = require("gulp");
 var remove = require("gulp-email-remove-unused-css");
 
-gulp.task("default", function() {
+gulp.task("default", function () {
   return gulp
     .src("src/*.html")
     .pipe(
@@ -47,8 +47,8 @@ gulp.task("default", function() {
           ".Mso*",
           ".maxwidth-apple-mail-fix",
           "#outlook",
-          ".module-*"
-        ]
+          ".module-*",
+        ],
       })
     )
     .pipe(gulp.dest("./dist"));

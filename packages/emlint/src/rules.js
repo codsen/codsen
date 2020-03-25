@@ -1771,13 +1771,13 @@ function normaliseRequestedRules(opts) {
   // first, if there are known group rules such as "bad-character", set
   // them as a foundation:
   if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
-    Object.keys(builtInRules).forEach(ruleName => {
+    Object.keys(builtInRules).forEach((ruleName) => {
       res[ruleName] = opts.all;
     });
   } else {
     let temp;
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (
           ["bad-character", "bad-character*", "bad-character-*"].includes(
             ruleName
@@ -1788,36 +1788,36 @@ function normaliseRequestedRules(opts) {
         }
       })
     ) {
-      allBadCharacterRules.forEach(ruleName => {
+      allBadCharacterRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (["tag", "tag*", "tag-*"].includes(ruleName)) {
           temp = ruleName;
           return true;
         }
       })
     ) {
-      allTagRules.forEach(ruleName => {
+      allTagRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
           temp = ruleName;
           return true;
         }
       })
     ) {
-      allAttribRules.forEach(ruleName => {
+      allAttribRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
-      allBadNamedHTMLEntityRules.forEach(ruleName => {
+      allBadNamedHTMLEntityRules.forEach((ruleName) => {
         // whole group of rules, not necessarily starting with "bad-html-entity"
         // will be added. Currently it's the list:
         //  * bad-named-html-entity-malformed-nbsp
@@ -1833,7 +1833,7 @@ function normaliseRequestedRules(opts) {
     }
 
     // then, a-la Object.assign the rest
-    Object.keys(opts).forEach(ruleName => {
+    Object.keys(opts).forEach((ruleName) => {
       if (
         ![
           "all",
@@ -1847,14 +1847,14 @@ function normaliseRequestedRules(opts) {
           "bad-character",
           "bad-character*",
           "bad-character-*",
-          "bad-html-entity"
+          "bad-html-entity",
         ].includes(ruleName)
       ) {
         // now, it depends is an exact rule name is being queried or is it wildcard
         if (Object.keys(builtInRules).includes(ruleName)) {
           res[ruleName] = clone(opts[ruleName]);
         } else if (ruleName.includes("*")) {
-          Object.keys(builtInRules).forEach(builtInRule => {
+          Object.keys(builtInRules).forEach((builtInRule) => {
             if (matcher.isMatch(builtInRule, ruleName)) {
               res[builtInRule] = clone(opts[ruleName]);
             }

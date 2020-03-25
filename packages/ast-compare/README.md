@@ -77,15 +77,15 @@ var result = compare(
       b: "d",
       c: [],
       e: "f",
-      g: "h"
-    }
+      g: "h",
+    },
   },
   {
     // <- ...contain this nested plain object?
     a: {
       b: "d",
-      c: []
-    }
+      c: [],
+    },
   }
 );
 console.log(result);

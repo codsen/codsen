@@ -7,12 +7,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 attr`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<a>img src="z"/><a>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -21,7 +21,7 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "tag",
@@ -40,15 +40,15 @@ t.test(
           attribs: [
             {
               attribName: "src",
-              attribValue: "z"
-            }
-          ]
+              attribValue: "z",
+            },
+          ],
         },
         {
           type: "tag",
           start: 16,
-          end: 19
-        }
+          end: 19,
+        },
       ],
       "01.01.01"
     );
@@ -59,12 +59,12 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<a>  img src="z"/><a>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -73,23 +73,23 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "text",
           start: 3,
-          end: 5
+          end: 5,
         },
         {
           type: "tag",
           start: 5,
-          end: 18
+          end: 18,
         },
         {
           type: "tag",
           start: 18,
-          end: 21
-        }
+          end: 21,
+        },
       ],
       "01.02.01"
     );
@@ -100,12 +100,12 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<a>bc img src="z"/>de<a>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -114,28 +114,28 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "text",
           start: 3,
-          end: 6
+          end: 6,
         },
         {
           type: "tag",
           start: 6,
-          end: 19
+          end: 19,
         },
         {
           type: "text",
           start: 19,
-          end: 21
+          end: 21,
         },
         {
           type: "tag",
           start: 21,
-          end: 24
-        }
+          end: 24,
+        },
       ],
       "01.03.01"
     );
@@ -146,12 +146,12 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tags`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<a>bc img src="x"/>de img src="y">fg<a>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -160,38 +160,38 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "text",
           start: 3,
-          end: 6
+          end: 6,
         },
         {
           type: "tag",
           start: 6,
-          end: 19
+          end: 19,
         },
         {
           type: "text",
           start: 19,
-          end: 22
+          end: 22,
         },
         {
           type: "tag",
           start: 22,
-          end: 34
+          end: 34,
         },
         {
           type: "text",
           start: 34,
-          end: 36
+          end: 36,
         },
         {
           type: "tag",
           start: 36,
-          end: 39
-        }
+          end: 39,
+        },
       ],
       "01.03.01"
     );
@@ -203,12 +203,12 @@ t.test(
 // 02. two tags
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, t => {
+t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
   const gathered = [];
   ct(`<a>img src="z"/>img src="y"><a>`, {
-    tagCb: obj => {
+    tagCb: (obj) => {
       gathered.push(obj);
-    }
+    },
   });
 
   t.match(
@@ -217,7 +217,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, t => {
       {
         type: "tag",
         start: 0,
-        end: 3
+        end: 3,
       },
       {
         type: "tag",
@@ -236,9 +236,9 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, t => {
         attribs: [
           {
             attribName: "src",
-            attribValue: "z"
-          }
-        ]
+            attribValue: "z",
+          },
+        ],
       },
       {
         type: "tag",
@@ -257,15 +257,15 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, t => {
         attribs: [
           {
             attribName: "src",
-            attribValue: "y"
-          }
-        ]
+            attribValue: "y",
+          },
+        ],
       },
       {
         type: "tag",
         start: 28,
-        end: 31
-      }
+        end: 31,
+      },
     ],
     "02.01.01"
   );

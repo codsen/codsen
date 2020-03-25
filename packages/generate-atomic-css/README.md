@@ -41,7 +41,7 @@ const {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } = require("generate-atomic-css");
 ```
 
@@ -52,7 +52,7 @@ import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 ```
 
@@ -68,7 +68,7 @@ const {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } = generateAtomicCss;
 ```
 
@@ -91,14 +91,14 @@ const {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } = require("generate-atomic-css");
 // or
 import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 ```
 
@@ -124,7 +124,7 @@ import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 const source = `a
 
@@ -142,7 +142,7 @@ tralala
 z`;
 const result = genAtomic(source, {
   includeConfig: false,
-  includeHeadsAndTails: false
+  includeHeadsAndTails: false,
 });
 console.log(`result:\n${result}`);
 // => "a
@@ -218,11 +218,11 @@ import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 const source = `.mt$$$ { margin-top: $$$px; }|3`;
 const { log, result } = genAtomic(source, {
-  includeConfig: true
+  includeConfig: true,
 });
 console.log(`total generated classes and id's: ${log.count}`);
 // => 4
@@ -241,7 +241,7 @@ import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 console.log(`version = v${version}`);
 // => version = v1.0.1
@@ -269,7 +269,7 @@ import {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } from "generate-atomic-css";
 console.log(`headsAndTails.CONTENTTAIL = ${headsAndTails.CONTENTTAIL}`);
 // => headsAndTails.CONTENTTAIL = GENERATE-ATOMIC-CSS-CONTENT-ENDS
@@ -300,7 +300,7 @@ const {
   genAtomic,
   version,
   headsAndTails,
-  extractFromToSource
+  extractFromToSource,
 } = require("generate-atomic-css");
 const input1 = `.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10`;
 const input2 = `.mt$$$ { margin-top: $$$px !important; } | 1`;

@@ -28,14 +28,14 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       "",
       {
         from: null, // <-- implied to process the whole string
-        to: null // <-- implied to process the whole string
+        to: null, // <-- implied to process the whole string
       },
       gatheredChunks,
       gatheredErrors
@@ -50,7 +50,7 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
-  t => {
+  (t) => {
     t.doesNotThrow(() => {
       processCommaSeparated("");
     });
@@ -60,7 +60,7 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
-  t => {
+  (t) => {
     t.throws(() => {
       processCommaSeparated(true);
     }, /THROW_ID_01/);
@@ -73,14 +73,14 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - one chunk`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       "abc",
       {
         from: null, // <-- implied to process the whole string
-        to: null // <-- implied to process the whole string
+        to: null, // <-- implied to process the whole string
       },
       gatheredChunks,
       gatheredErrors
@@ -95,14 +95,14 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - two chunks`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       "abc,def",
       {
         from: null, // <-- implied to process the whole string
-        to: null // <-- implied to process the whole string
+        to: null, // <-- implied to process the whole string
       },
       gatheredChunks,
       gatheredErrors
@@ -112,7 +112,7 @@ t.test(
       gatheredChunks,
       [
         [0, 3],
-        [4, 7]
+        [4, 7],
       ],
       "02.02.01"
     );
@@ -124,14 +124,14 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - space after comma, default`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       `<FRAMESET rows="50%, 50%">`,
       {
         from: 16,
-        to: 24
+        to: 24,
       },
       gatheredChunks,
       gatheredErrors
@@ -141,7 +141,7 @@ t.test(
       gatheredChunks,
       [
         [16, 19],
-        [21, 24]
+        [21, 24],
       ],
       "02.03.01"
     );
@@ -157,7 +157,7 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -165,7 +165,7 @@ t.test(
       {
         from: 16,
         to: 28,
-        separator: "."
+        separator: ".",
       },
       gatheredChunks,
       gatheredErrors
@@ -175,7 +175,7 @@ t.test(
       gatheredChunks,
       [
         [17, 20],
-        [21, 24]
+        [21, 24],
       ],
       "02.04.01"
     );
@@ -185,7 +185,7 @@ t.test(
         { ranges: [[16, 17]], message: "Remove separator.", fixable: true },
         { ranges: [[25, 27]], message: "Remove whitespace.", fixable: true },
         { ranges: [[24, 25]], message: "Remove separator.", fixable: true },
-        { ranges: [[27, 28]], message: "Remove separator.", fixable: true }
+        { ranges: [[27, 28]], message: "Remove separator.", fixable: true },
       ],
       "02.04.02"
     );
@@ -196,7 +196,7 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -204,7 +204,7 @@ t.test(
       {
         from: 16,
         to: 35,
-        separator: ","
+        separator: ",",
       },
       gatheredChunks,
       gatheredErrors
@@ -214,7 +214,7 @@ t.test(
       gatheredChunks,
       [
         [20, 23],
-        [27, 30]
+        [27, 30],
       ],
       "02.05.01"
     );
@@ -230,7 +230,7 @@ t.test(
         { ranges: [[30, 31]], message: "Remove whitespace.", fixable: true },
         { ranges: [[32, 34]], message: "Remove whitespace.", fixable: true },
         { ranges: [[31, 32]], message: "Remove separator.", fixable: true },
-        { ranges: [[34, 35]], message: "Remove separator.", fixable: true }
+        { ranges: [[34, 35]], message: "Remove separator.", fixable: true },
       ],
       "02.05.02"
     );
@@ -241,14 +241,14 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, default`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       `<FRAMESET rows="50%,  50%">`,
       {
         from: 16,
-        to: 25
+        to: 25,
       },
       gatheredChunks,
       gatheredErrors
@@ -258,7 +258,7 @@ t.test(
       gatheredChunks,
       [
         [16, 19],
-        [22, 25]
+        [22, 25],
       ],
       "02.06.01"
     );
@@ -268,8 +268,8 @@ t.test(
         {
           message: "Remove whitespace.",
           ranges: [[20, 22]],
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "02.06.02"
     );
@@ -280,7 +280,7 @@ t.test(
 
 t.test(
   `02.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -288,7 +288,7 @@ t.test(
       {
         from: 16,
         to: 25,
-        oneSpaceAfterCommaOK: true
+        oneSpaceAfterCommaOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -298,7 +298,7 @@ t.test(
       gatheredChunks,
       [
         [16, 19],
-        [22, 25]
+        [22, 25],
       ],
       "02.07.01"
     );
@@ -309,8 +309,8 @@ t.test(
         {
           message: "Remove whitespace.",
           ranges: [[21, 22]],
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "02.07.02"
     );
@@ -321,7 +321,7 @@ t.test(
 
 t.test(
   `02.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -329,7 +329,7 @@ t.test(
       {
         from: 16,
         to: 25,
-        oneSpaceAfterCommaOK: true
+        oneSpaceAfterCommaOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -339,7 +339,7 @@ t.test(
       gatheredChunks,
       [
         [16, 19],
-        [22, 25]
+        [22, 25],
       ],
       "02.08.01"
     );
@@ -350,8 +350,8 @@ t.test(
         {
           message: "Remove whitespace.",
           ranges: [[20, 22, " "]],
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "02.08.02"
     );
@@ -362,7 +362,7 @@ t.test(
 
 t.test(
   `02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -370,7 +370,7 @@ t.test(
       {
         from: 17,
         to: 46,
-        oneSpaceAfterCommaOK: false
+        oneSpaceAfterCommaOK: false,
       },
       gatheredChunks,
       gatheredErrors
@@ -380,7 +380,7 @@ t.test(
       gatheredChunks,
       [
         [18, 35],
-        [37, 44]
+        [37, 44],
       ],
       "02.09.01"
     );
@@ -390,23 +390,23 @@ t.test(
         {
           message: "Remove separator.",
           ranges: [[17, 18]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove whitespace.",
           ranges: [[36, 37]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove whitespace.",
           ranges: [[44, 45]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove separator.",
           ranges: [[45, 46]],
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "02.09.02"
     );
@@ -417,13 +417,13 @@ t.test(
 
 t.test(
   `02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       `,http://codsen.com, tralala ,`,
       {
-        oneSpaceAfterCommaOK: false
+        oneSpaceAfterCommaOK: false,
       },
       gatheredChunks,
       gatheredErrors
@@ -433,7 +433,7 @@ t.test(
       gatheredChunks,
       [
         [1, 18],
-        [20, 27]
+        [20, 27],
       ],
       "02.10.01"
     );
@@ -443,23 +443,23 @@ t.test(
         {
           message: "Remove separator.",
           ranges: [[0, 1]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove whitespace.",
           ranges: [[19, 20]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove whitespace.",
           ranges: [[27, 28]],
-          fixable: true
+          fixable: true,
         },
         {
           message: "Remove separator.",
           ranges: [[28, 29]],
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "02.10.02"
     );
@@ -473,7 +473,7 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - from-to ranges`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -481,7 +481,7 @@ t.test(
       {
         from: 15,
         to: 20,
-        leadingWhitespaceOK: true
+        leadingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -496,13 +496,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       ` .jpg`,
       {
-        leadingWhitespaceOK: true
+        leadingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -517,14 +517,14 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string + offset`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
       ` .jpg`,
       {
         leadingWhitespaceOK: true,
-        offset: 15
+        offset: 15,
       },
       gatheredChunks,
       gatheredErrors
@@ -539,7 +539,7 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -547,7 +547,7 @@ t.test(
       {
         from: 15,
         to: 21,
-        leadingWhitespaceOK: true
+        leadingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -560,8 +560,8 @@ t.test(
         {
           ranges: [[20, 21]],
           message: "Remove whitespace.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "03.04.02"
     );
@@ -572,7 +572,7 @@ t.test(
 
 t.test(
   `03.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -581,7 +581,7 @@ t.test(
         from: 15,
         to: 21,
         leadingWhitespaceOK: true,
-        trailingWhitespaceOK: true
+        trailingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -596,7 +596,7 @@ t.test(
 
 t.test(
   `03.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -604,7 +604,7 @@ t.test(
       {
         from: 15,
         to: 21,
-        trailingWhitespaceOK: true
+        trailingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -617,8 +617,8 @@ t.test(
         {
           ranges: [[15, 16]],
           message: "Remove whitespace.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "03.06.02"
     );
@@ -629,7 +629,7 @@ t.test(
 
 t.test(
   `03.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -637,7 +637,7 @@ t.test(
       {
         from: 15,
         to: 22,
-        leadingWhitespaceOK: true
+        leadingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -650,8 +650,8 @@ t.test(
         {
           ranges: [[20, 22]],
           message: "Remove whitespace.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "03.07.02"
     );
@@ -662,7 +662,7 @@ t.test(
 
 t.test(
   `03.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - more complex`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     const offset = 17;
@@ -673,7 +673,7 @@ t.test(
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         oneSpaceAfterCommaOK: false,
-        innerWhitespaceAllowed: false
+        innerWhitespaceAllowed: false,
       },
       gatheredChunks,
       gatheredErrors
@@ -683,7 +683,7 @@ t.test(
       gatheredChunks,
       [
         [offset + 1, offset + 18],
-        [offset + 20, offset + 27]
+        [offset + 20, offset + 27],
       ],
       "03.08.01"
     );
@@ -693,23 +693,23 @@ t.test(
         {
           ranges: [[offset + 0, offset + 1]],
           message: "Remove separator.",
-          fixable: true
+          fixable: true,
         },
         {
           ranges: [[offset + 19, offset + 20]],
           message: "Remove whitespace.",
-          fixable: true
+          fixable: true,
         },
         {
           ranges: [[offset + 27, offset + 28]],
           message: "Remove whitespace.",
-          fixable: true
+          fixable: true,
         },
         {
           ranges: [[offset + 28, offset + 29]],
           message: "Remove separator.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "03.08.02"
     );
@@ -723,7 +723,7 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -731,7 +731,7 @@ t.test(
       {
         from: 15,
         to: 32,
-        truetrailingWhitespaceOK: true
+        truetrailingWhitespaceOK: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -742,7 +742,7 @@ t.test(
       [
         [15, 18],
         [19, 26],
-        [28, 31]
+        [28, 31],
       ],
       "04.01.01"
     );
@@ -752,13 +752,13 @@ t.test(
         {
           ranges: [[22, 23]],
           message: "Bad whitespace.",
-          fixable: false
+          fixable: false,
         },
         {
           ranges: [[27, 28]],
           message: "Remove whitespace.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "04.01.02"
     );
@@ -769,7 +769,7 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
-  t => {
+  (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
     helper(
@@ -778,7 +778,7 @@ t.test(
         from: 15,
         to: 32,
         truetrailingWhitespaceOK: true,
-        innerWhitespaceAllowed: true
+        innerWhitespaceAllowed: true,
       },
       gatheredChunks,
       gatheredErrors
@@ -789,7 +789,7 @@ t.test(
       [
         [15, 18],
         [19, 26],
-        [28, 31]
+        [28, 31],
       ],
       "04.02.01"
     );
@@ -799,8 +799,8 @@ t.test(
         {
           ranges: [[27, 28]],
           message: "Remove whitespace.",
-          fixable: true
-        }
+          fixable: true,
+        },
       ],
       "04.02.02"
     );

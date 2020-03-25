@@ -19,7 +19,7 @@ function processStr(str, offset, context, mode) {
         ))
     ) {
       let encodedChr = he.encode(str[i], {
-        useNamedReferences: mode === "named"
+        useNamedReferences: mode === "named",
       });
       if (
         Object.keys(notEmailFriendly).includes(
@@ -60,8 +60,8 @@ function processStr(str, offset, context, mode) {
         idxFrom: i + offset,
         idxTo: i + 1 + offset,
         fix: {
-          ranges: [[i + offset, i + 1 + offset, encodedChr]]
-        }
+          ranges: [[i + offset, i + 1 + offset, encodedChr]],
+        },
       });
     }
   }
@@ -102,7 +102,7 @@ function processStr(str, offset, context, mode) {
 
 function characterEncode(context, ...opts) {
   return {
-    text: function(token) {
+    text: function (token) {
       console.log(
         `███████████████████████████████████████ characterEncode() ███████████████████████████████████████`
       );
@@ -128,7 +128,7 @@ function characterEncode(context, ...opts) {
       // ACTION
 
       processStr(token.value, token.start, context, mode);
-    }
+    },
   };
 }
 

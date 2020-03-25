@@ -11,24 +11,24 @@ const testme = () =>
   f(
     {
       aaa: {
-        bbb: "a"
+        bbb: "a",
       },
       ccc: {
-        bbb: "d"
-      }
+        bbb: "d",
+      },
     },
     {
       aaa: {
-        bbb: true
+        bbb: true,
       },
       ccc: {
-        bbb: ""
-      }
+        bbb: "",
+      },
     },
     {
       msg: "msg",
       optsVarName: "OPTS",
-      ignorePaths: ["aaa.bbb"]
+      ignorePaths: ["aaa.bbb"],
     }
   );
 

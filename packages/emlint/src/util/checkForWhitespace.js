@@ -27,7 +27,7 @@ function checkForWhitespace(str, idxOffset) {
         idxFrom: idxOffset, // that is, idxOffset + 0
         idxTo: idxOffset + str.length,
         message: `Missing value.`,
-        fix: null // can't fix - value is missing completely!
+        fix: null, // can't fix - value is missing completely!
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
@@ -60,7 +60,7 @@ function checkForWhitespace(str, idxOffset) {
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
       message: `Remove whitespace.`,
-      fix: { ranges: gatheredRanges } // we can fix - we delete this whitespace!
+      fix: { ranges: gatheredRanges }, // we can fix - we delete this whitespace!
     });
     // reset:
     gatheredRanges = [];

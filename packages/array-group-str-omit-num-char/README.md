@@ -70,7 +70,7 @@ For example, consider this array atomic CSS class names coming from some report 
   "wbr425-padding-top-1",
   "wbr425-padding-top-2",
   "main-title",
-  "wbr425-padding-top-3"
+  "wbr425-padding-top-3",
 ];
 ```
 

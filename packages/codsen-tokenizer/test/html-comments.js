@@ -6,12 +6,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - simple case`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--b-->c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -20,32 +20,32 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
           start: 1,
           end: 5,
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 5,
-          end: 6
+          end: 6,
         },
         {
           type: "comment",
           start: 6,
           end: 9,
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 9,
-          end: 10
-        }
+          end: 10,
+        },
       ],
       "01.01"
     );
@@ -55,12 +55,12 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - broken simple case, with space`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<! --b-- >c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -69,32 +69,32 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
           start: 1,
           end: 6,
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 6,
-          end: 7
+          end: 7,
         },
         {
           type: "comment",
           start: 7,
           end: 11,
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 11,
-          end: 12
-        }
+          end: 12,
+        },
       ],
       "01.02"
     );
@@ -104,12 +104,12 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--b->c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -119,7 +119,7 @@ t.test(
           type: "text",
           start: 0,
           end: 1,
-          value: "a"
+          value: "a",
         },
         {
           type: "comment",
@@ -127,14 +127,14 @@ t.test(
           end: 5,
           value: "<!--",
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 5,
           end: 9,
-          value: "b->c"
-        }
+          value: "b->c",
+        },
       ],
       "01.03"
     );
@@ -144,12 +144,12 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!-b-->c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -159,7 +159,7 @@ t.test(
           type: "text",
           start: 0,
           end: 1,
-          value: "a"
+          value: "a",
         },
         {
           type: "comment",
@@ -167,13 +167,13 @@ t.test(
           end: 4,
           value: "<!-",
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 4,
           end: 5,
-          value: "b"
+          value: "b",
         },
         {
           type: "comment",
@@ -181,14 +181,14 @@ t.test(
           end: 8,
           value: "-->",
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 8,
           end: 9,
-          value: "c"
-        }
+          value: "c",
+        },
       ],
       "01.04"
     );
@@ -198,12 +198,12 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<--b-->c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -213,7 +213,7 @@ t.test(
           type: "text",
           start: 0,
           end: 5,
-          value: "a<--b"
+          value: "a<--b",
         },
         {
           type: "comment",
@@ -221,14 +221,14 @@ t.test(
           end: 8,
           value: "-->",
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 8,
           end: 9,
-          value: "c"
-        }
+          value: "c",
+        },
       ],
       "01.05"
     );
@@ -238,12 +238,12 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--b--!>c`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -253,7 +253,7 @@ t.test(
           type: "text",
           start: 0,
           end: 1,
-          value: "a"
+          value: "a",
         },
         {
           type: "comment",
@@ -261,14 +261,14 @@ t.test(
           end: 5,
           value: "<!--",
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 5,
           end: 11,
-          value: "b--!>c"
-        }
+          value: "b--!>c",
+        },
       ],
       "01.06"
     );
@@ -278,12 +278,12 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!- -z-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -295,13 +295,13 @@ t.test(
           start: 0,
           end: 5,
           value: "<!- -",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 5,
           end: 6,
-          value: "z"
+          value: "z",
         },
         {
           type: "comment",
@@ -309,8 +309,8 @@ t.test(
           end: 9,
           value: "-->",
           kind: "simple",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "01.07"
     );
@@ -323,12 +323,12 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--[if gte mso 9]>x<![endif]-->z`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -337,32 +337,32 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
           start: 1,
           end: 20,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 20,
-          end: 21
+          end: 21,
         },
         {
           type: "comment",
           start: 21,
           end: 33,
           kind: "only",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 33,
-          end: 34
-        }
+          end: 34,
+        },
       ],
       "02.01"
     );
@@ -372,7 +372,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(
       `abc<!--[if gte mso 9]><xml>
@@ -382,9 +382,9 @@ t.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`,
       {
-        tagCb: obj => {
+        tagCb: (obj) => {
           gathered.push(obj);
-        }
+        },
       }
     );
 
@@ -394,46 +394,46 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "comment",
           start: 3,
           end: 22,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "tag",
           start: 22,
           end: 27,
           kind: "xml",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 27,
-          end: 135
+          end: 135,
         },
         {
           type: "tag",
           start: 135,
           end: 141,
           kind: "xml",
-          closing: true
+          closing: true,
         },
         {
           type: "comment",
           start: 141,
           end: 153,
           kind: "only",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 153,
-          end: 156
-        }
+          end: 156,
+        },
       ],
       "02.02"
     );
@@ -443,12 +443,12 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<a><!--[if gte mso 9]><b><![endif]--><i>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -457,32 +457,32 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 3
+          end: 3,
         },
         {
           type: "comment",
           start: 3,
           end: 22,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "tag",
           start: 22,
-          end: 25
+          end: 25,
         },
         {
           type: "comment",
           start: 25,
           end: 37,
           kind: "only",
-          closing: true
+          closing: true,
         },
         {
           type: "tag",
           start: 37,
-          end: 40
-        }
+          end: 40,
+        },
       ],
       "02.03"
     );
@@ -492,12 +492,12 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing excl. mark`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<[endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -509,13 +509,13 @@ t.test(
           end: 19,
           value: "<!--[if gte mso 9]>",
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
           end: 20,
-          value: "x"
+          value: "x",
         },
         {
           type: "comment",
@@ -523,8 +523,8 @@ t.test(
           end: 31,
           value: "<[endif]-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.04"
     );
@@ -534,12 +534,12 @@ t.test(
 
 t.test(
   `02.05 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - empty conditional`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if gte mso 9]><![endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -550,15 +550,15 @@ t.test(
           start: 0,
           end: 19,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "comment",
           start: 19,
           end: 31,
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.05"
     );
@@ -568,12 +568,12 @@ t.test(
 
 t.test(
   `02.06 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - swapped excl. mark`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<[!endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -584,20 +584,20 @@ t.test(
           start: 0,
           end: 19,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
-          end: 20
+          end: 20,
         },
         {
           type: "comment",
           start: 20,
           end: 32,
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.06"
     );
@@ -607,12 +607,12 @@ t.test(
 
 t.test(
   `02.07 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - 1 instead of !`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<1[endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -623,12 +623,12 @@ t.test(
           start: 0,
           end: 19,
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
-          end: 20
+          end: 20,
         },
         {
           type: "comment",
@@ -636,8 +636,8 @@ t.test(
           end: 32,
           value: "<1[endif]-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.07"
     );
@@ -647,12 +647,12 @@ t.test(
 
 t.test(
   `02.08 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing closing bracket`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if !mso><!-->a`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -664,14 +664,14 @@ t.test(
           end: 18,
           value: "<!--[if !mso><!-->",
           kind: "not",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 18,
           end: 19,
-          value: "a"
-        }
+          value: "a",
+        },
       ],
       "02.08"
     );
@@ -681,12 +681,12 @@ t.test(
 
 t.test(
   `02.09 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--if mso]>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -697,8 +697,8 @@ t.test(
           start: 0,
           end: 12,
           kind: "only",
-          closing: false
-        }
+          closing: false,
+        },
       ],
       "02.09"
     );
@@ -708,12 +708,12 @@ t.test(
 
 t.test(
   `02.10 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`zzz<<![endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.same(
@@ -723,7 +723,7 @@ t.test(
           type: "text",
           start: 0,
           end: 4,
-          value: "zzz<"
+          value: "zzz<",
         },
         {
           type: "comment",
@@ -731,8 +731,8 @@ t.test(
           end: 16,
           value: "<![endif]-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.10"
     );
@@ -742,12 +742,12 @@ t.test(
 
 t.test(
   `02.11 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - curly brackets`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--{if gte mso 9}>x<!{endif}-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -759,12 +759,12 @@ t.test(
           end: 19,
           value: "<!--{if gte mso 9}>",
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
-          end: 20
+          end: 20,
         },
         {
           type: "comment",
@@ -772,8 +772,8 @@ t.test(
           end: 32,
           value: "<!{endif}-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.11"
     );
@@ -783,12 +783,12 @@ t.test(
 
 t.test(
   `02.12 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - parentheses`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--(if gte mso 9)>x<!(endif)-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -800,12 +800,12 @@ t.test(
           end: 19,
           value: "<!--(if gte mso 9)>",
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
-          end: 20
+          end: 20,
         },
         {
           type: "comment",
@@ -813,8 +813,8 @@ t.test(
           end: 32,
           value: "<!(endif)-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.12"
     );
@@ -824,13 +824,13 @@ t.test(
 
 t.test(
   `02.13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`,
-  t => {
+  (t) => {
     const gathered = [];
     // ct(`<!--tralala--><![endif]-->`, {
     ct(`<!--[if mso]><!--tralala--><![endif]-->`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -842,7 +842,7 @@ t.test(
           end: 13,
           value: "<!--[if mso]>",
           kind: "only",
-          closing: false
+          closing: false,
         },
         {
           type: "comment",
@@ -850,13 +850,13 @@ t.test(
           end: 17,
           value: "<!--",
           kind: "simple",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 17,
           end: 24,
-          value: "tralala"
+          value: "tralala",
         },
         {
           type: "comment",
@@ -864,7 +864,7 @@ t.test(
           end: 27,
           value: "-->",
           kind: "simple",
-          closing: true
+          closing: true,
         },
         {
           type: "comment",
@@ -872,8 +872,8 @@ t.test(
           end: 39,
           value: "<![endif]-->",
           kind: "only",
-          closing: true
-        }
+          closing: true,
+        },
       ],
       "02.13"
     );
@@ -886,12 +886,12 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--[if !mso]><!-->x<!--<![endif]-->z`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -900,32 +900,32 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
           start: 1,
           end: 20,
           kind: "not",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 20,
-          end: 21
+          end: 21,
         },
         {
           type: "comment",
           start: 21,
           end: 37,
           kind: "not",
-          closing: true
+          closing: true,
         },
         {
           type: "text",
           start: 37,
-          end: 38
-        }
+          end: 38,
+        },
       ],
       "03.01"
     );
@@ -935,12 +935,12 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`a<!--[if !mso]><!->z`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -949,20 +949,20 @@ t.test(
         {
           type: "text",
           start: 0,
-          end: 1
+          end: 1,
         },
         {
           type: "comment",
           start: 1,
           end: 19,
           kind: "not",
-          closing: false
+          closing: false,
         },
         {
           type: "text",
           start: 19,
-          end: 20
-        }
+          end: 20,
+        },
       ],
       "03.02"
     );
@@ -972,12 +972,12 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
-  t => {
+  (t) => {
     const gathered = [];
     ct(`<!--[if !mso]><!--z>`, {
-      tagCb: obj => {
+      tagCb: (obj) => {
         gathered.push(obj);
-      }
+      },
     });
 
     t.match(
@@ -988,8 +988,8 @@ t.test(
           start: 0,
           end: 20,
           kind: "not",
-          closing: false
-        }
+          closing: false,
+        },
       ],
       "03.03"
     );

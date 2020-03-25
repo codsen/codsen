@@ -10,9 +10,9 @@ const ct = require("../");
 const testme = () => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
-    tagCb: obj => {
+    tagCb: (obj) => {
       gathered.push(obj);
-    }
+    },
   });
 };
 

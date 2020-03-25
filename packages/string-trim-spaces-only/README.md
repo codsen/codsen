@@ -72,7 +72,7 @@ const defaultOps = {
   lf: false,
   tab: false,
   space: true,
-  nbsp: false
+  nbsp: false,
 };
 ```
 

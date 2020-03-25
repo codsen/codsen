@@ -16,7 +16,7 @@ function includes(arr, whatToMatch) {
     return false;
   }
   return arr.some(
-    val =>
+    (val) =>
       (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" && whatToMatch === val)
   );
@@ -26,12 +26,12 @@ function isLangCode(str) {
   if (typeof str !== "string") {
     return {
       res: false,
-      message: `Not a string given.`
+      message: `Not a string given.`,
     };
   } else if (!str.trim().length) {
     return {
       res: false,
-      message: `Empty language tag string given.`
+      message: `Empty language tag string given.`,
     };
   }
 
@@ -164,7 +164,7 @@ function isLangCode(str) {
         console.log(`164 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
         return {
           res: false,
-          message: `Ends with private use subtag, "x".`
+          message: `Ends with private use subtag, "x".`,
         };
       }
 
@@ -182,7 +182,7 @@ function isLangCode(str) {
       console.log(`182 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
       return {
         res: false,
-        message: `Two region subtags, "${regionMatched}" and "${split[i]}".`
+        message: `Two region subtags, "${regionMatched}" and "${split[i]}".`,
       };
     }
 
@@ -312,7 +312,7 @@ function isLangCode(str) {
             console.log(`312 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
             return {
               res: false,
-              message: `Repeated variant subtag, "${split[i]}".`
+              message: `Repeated variant subtag, "${split[i]}".`,
             };
           }
         } else {
@@ -417,7 +417,7 @@ function isLangCode(str) {
               );
               return {
                 res: false,
-                message: `Repeated variant subtag, "${split[i]}".`
+                message: `Repeated variant subtag, "${split[i]}".`,
               };
             }
           }
@@ -484,7 +484,7 @@ function isLangCode(str) {
         console.log(`484 starts with singleton!`);
         return {
           res: false,
-          message: `Starts with singleton, "${split[i]}".`
+          message: `Starts with singleton, "${split[i]}".`,
         };
       }
       // ELSE - continue the checks
@@ -493,7 +493,7 @@ function isLangCode(str) {
         console.log(`493 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
         return {
           res: false,
-          message: `Extension must follow at least a primary language subtag.`
+          message: `Extension must follow at least a primary language subtag.`,
         };
       }
       if (!singletonGathered.includes(split[i])) {
@@ -510,7 +510,7 @@ function isLangCode(str) {
         console.log(`510 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
         return {
           res: false,
-          message: `Two extensions with same single-letter prefix "${split[i]}".`
+          message: `Two extensions with same single-letter prefix "${split[i]}".`,
         };
       }
 
@@ -537,14 +537,14 @@ function isLangCode(str) {
             res: false,
             message: `Multiple singleton sequence "${split[i]}", "${
               split[i + 1]
-            }".`
+            }".`,
           };
         }
       } else {
         console.log(`544 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
         return {
           res: false,
-          message: `Ends with singleton, "${split[i]}".`
+          message: `Ends with singleton, "${split[i]}".`,
         };
       }
     }
@@ -565,7 +565,7 @@ function isLangCode(str) {
           console.log(`565 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
           return {
             res: false,
-            message: `Repeated variant subtag, "${split[i]}".`
+            message: `Repeated variant subtag, "${split[i]}".`,
           };
         }
 
@@ -582,8 +582,8 @@ function isLangCode(str) {
         return {
           res: false,
           message: `Variant subtags ${variantGathered
-            .map(val => `"${val}"`)
-            .join(", ")}  not in a sequence.`
+            .map((val) => `"${val}"`)
+            .join(", ")}  not in a sequence.`,
         };
       }
     }
@@ -627,7 +627,7 @@ function isLangCode(str) {
       console.log(`627 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
       return {
         res: false,
-        message: `Unrecognised language subtag, "${split[i]}".`
+        message: `Unrecognised language subtag, "${split[i]}".`,
       };
     }
 

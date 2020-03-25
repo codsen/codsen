@@ -54,7 +54,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   }
   // prep the opts
   const defaults = {
-    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
+    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -74,8 +74,8 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     toDoList = [
       {
         id: 1,
-        val: indexes
-      }
+        val: indexes,
+      },
     ];
   } else {
     // traverse the indexes and compile the sorted list of them, along with their "addresses",
@@ -271,7 +271,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     // we will use the "set" method from ast-monkey, which sets the value by id number:
     res = set(res, {
       index: toDoList[z].id,
-      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val
+      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val,
     });
   }
 

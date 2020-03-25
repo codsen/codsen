@@ -42,7 +42,7 @@ function uglifyArr(arr) {
     w: false,
     x: false,
     y: false,
-    z: false
+    z: false,
   };
   const singleIds = {
     a: false,
@@ -70,7 +70,7 @@ function uglifyArr(arr) {
     w: false,
     x: false,
     y: false,
-    z: false
+    z: false,
   };
   const singleNameonly = {
     a: false,
@@ -98,7 +98,7 @@ function uglifyArr(arr) {
     w: false,
     x: false,
     y: false,
-    z: false
+    z: false,
   };
 
   // final array we'll assemble and eventually return
@@ -171,7 +171,7 @@ function uglifyArr(arr) {
         0
       );
       const magicNumber = Array.from(arr[id])
-        .map(val => tellcp(val))
+        .map((val) => tellcp(val))
         .reduce((accum, curr) => {
           let temp = accum + curr;
           do {

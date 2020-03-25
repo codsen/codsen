@@ -4,19 +4,19 @@ const allValuesEqualTo = require("../dist/object-all-values-equal-to.cjs");
 // 01. B.A.U.
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - nested objects", t => {
+t.test("01.01 - nested objects", (t) => {
   t.same(
     allValuesEqualTo(
       {
         a: false,
         b: [
           {
-            c: false
+            c: false,
           },
           {
-            d: false
-          }
-        ]
+            d: false,
+          },
+        ],
       },
       false
     ),
@@ -29,12 +29,12 @@ t.test("01.01 - nested objects", t => {
         a: false,
         b: [
           {
-            c: "" // <--- because of this
+            c: "", // <--- because of this
           },
           {
-            d: false
-          }
-        ]
+            d: false,
+          },
+        ],
       },
       false
     ),
@@ -44,16 +44,16 @@ t.test("01.01 - nested objects", t => {
   t.end();
 });
 
-t.test("01.02 - nested array", t => {
+t.test("01.02 - nested array", (t) => {
   t.same(
     allValuesEqualTo(
       [
         {
-          a: false
+          a: false,
         },
         {
-          b: false
-        }
+          b: false,
+        },
       ],
       false
     ),
@@ -64,12 +64,12 @@ t.test("01.02 - nested array", t => {
     allValuesEqualTo(
       [
         {
-          a: false
+          a: false,
         },
         {
-          b: false
+          b: false,
         },
-        1
+        1,
       ],
       false
     ),
@@ -81,7 +81,7 @@ t.test("01.02 - nested array", t => {
   t.end();
 });
 
-t.test("01.03 - nulls", t => {
+t.test("01.03 - nulls", (t) => {
   t.same(allValuesEqualTo([null], null), false, "01.03.01");
   t.same(
     allValuesEqualTo([null], null, { arraysMustNotContainPlaceholders: false }),
@@ -91,7 +91,7 @@ t.test("01.03 - nulls", t => {
   t.end();
 });
 
-t.test("01.04 - empty obj/arr", t => {
+t.test("01.04 - empty obj/arr", (t) => {
   t.same(allValuesEqualTo([], false), true, "01.04.01");
   t.same(allValuesEqualTo({}, false), true, "01.04.02");
   t.same(
@@ -105,7 +105,7 @@ t.test("01.04 - empty obj/arr", t => {
 // 02. Throws
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - various throws", t => {
+t.test("02.01 - various throws", (t) => {
   t.throws(() => {
     allValuesEqualTo();
   }, /THROW_ID_01/); // first arg missing - will throw

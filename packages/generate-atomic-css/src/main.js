@@ -5,7 +5,7 @@ import {
   isStr,
   extractFromToSource,
   extractConfig,
-  headsAndTails
+  headsAndTails,
 } from "./util";
 
 function genAtomic(str, originalOpts) {
@@ -37,10 +37,10 @@ function genAtomic(str, originalOpts) {
     configOverride: null,
     reportProgressFunc: null,
     reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100
+    reportProgressFuncTo: 100,
   };
   const generatedCount = {
-    count: 0
+    count: 0,
   };
 
   const opts = Object.assign({}, defaults, originalOpts);
@@ -67,9 +67,9 @@ function genAtomic(str, originalOpts) {
     console.log(`067 quick ending, no $$$ found, returning input str`);
     return {
       log: {
-        count: 0
+        count: 0,
       },
-      result: str
+      result: str,
     };
   }
 
@@ -101,9 +101,9 @@ function genAtomic(str, originalOpts) {
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return {
       log: {
-        count: 0
+        count: 0,
       },
-      result: ""
+      result: "",
     };
   }
 
@@ -401,7 +401,7 @@ ${`\u001b[${36}m${`████████████████████�
 
   return {
     log: { count: generatedCount.count },
-    result: finalRes
+    result: finalRes,
   };
 }
 

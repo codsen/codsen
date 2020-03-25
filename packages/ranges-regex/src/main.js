@@ -60,7 +60,7 @@ function rangesRegex(regx, str, replacement) {
       resRange.push([
         regx.lastIndex - tempArr[0].length,
         regx.lastIndex,
-        replacement
+        replacement,
       ]);
     }
   } else {

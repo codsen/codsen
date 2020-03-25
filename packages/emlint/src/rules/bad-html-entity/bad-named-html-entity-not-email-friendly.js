@@ -8,7 +8,7 @@ import { notEmailFriendly } from "html-entities-not-email-friendly";
 
 function htmlEntitiesNotEmailFriendly(context) {
   return {
-    entity: function({ idxFrom, idxTo }) {
+    entity: function ({ idxFrom, idxTo }) {
       console.log(
         `███████████████████████████████████████ htmlEntitiesNotEmailFriendly() ███████████████████████████████████████`
       );
@@ -30,13 +30,13 @@ function htmlEntitiesNotEmailFriendly(context) {
                 idxTo,
                 `&${
                   notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)]
-                };`
-              ]
-            ]
-          }
+                };`,
+              ],
+            ],
+          },
         });
       }
-    }
+    },
   };
 }
 

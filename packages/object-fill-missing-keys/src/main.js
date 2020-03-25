@@ -43,7 +43,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
   ) {
     if (isObj(schema) && isObj(incomplete)) {
       // traverse the keys on schema and add them onto incomplete
-      Object.keys(schema).forEach(key => {
+      Object.keys(schema).forEach((key) => {
         // calculate the path for current key
         const currentPath = `${path ? `${path}.` : ""}${key}`;
 
@@ -97,7 +97,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
       }
     } else {
       return merge(schema, incomplete, {
-        useNullAsExplicitFalse: opts.useNullAsExplicitFalse
+        useNullAsExplicitFalse: opts.useNullAsExplicitFalse,
       });
     }
   }
@@ -160,7 +160,7 @@ function fillMissingKeysWrapper(
   const defaults = {
     placeholder: false, // value which is being used as a placeholder
     doNotFillThesePathsIfTheyContainPlaceholders: [],
-    useNullAsExplicitFalse: true
+    useNullAsExplicitFalse: true,
   };
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptsWrapper);

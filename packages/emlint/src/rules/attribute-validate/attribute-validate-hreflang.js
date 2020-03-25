@@ -6,7 +6,7 @@ import isLangCode from "is-language-code";
 
 function attributeValidateHreflang(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHreflang() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateHreflang(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -78,20 +78,20 @@ function attributeValidateHreflang(context, ...opts) {
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
             message,
-            fix: null
+            fix: null,
           });
         }
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`086 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hreflang"
+              ruleId: "attribute-validate-hreflang",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

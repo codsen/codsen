@@ -6,7 +6,7 @@
 
 function badCharacterEndOfText(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",
@@ -14,11 +14,11 @@ function badCharacterEndOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, "\n"]] // replace with line break
-          }
+            ranges: [[i, i + 1, "\n"]], // replace with line break
+          },
         });
       }
-    }
+    },
   };
 }
 

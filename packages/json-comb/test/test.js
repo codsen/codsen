@@ -15,17 +15,17 @@ const testFileContents = [
     a: "aaa1",
     c: [
       {
-        x: "xxx1"
+        x: "xxx1",
       },
       {
-        y: "yyy1"
-      }
-    ]
+        y: "yyy1",
+      },
+    ],
   },
   {
     // test1/folder1/file2.json
     b: "bbb2",
-    a: "aaa2"
+    a: "aaa2",
   },
   {
     // test2/file3.json
@@ -33,15 +33,15 @@ const testFileContents = [
       {
         z: "zzz3",
         x: "xxx3",
-        y: "yyy3"
-      }
+        y: "yyy3",
+      },
     ],
-    b: "bbb3"
+    b: "bbb3",
   },
   {
     // file4.json
-    a: "aaa4"
-  }
+    a: "aaa4",
+  },
 ];
 
 const normalisedFileContents = [
@@ -93,20 +93,20 @@ const normalisedFileContents = [
       "z": false
     }
   ]
-}\n`
+}\n`,
 ];
 
 const testFilePaths = [
   "test1/file1.json",
   "test1/folder1/file2.json",
   "test2/file3.json",
-  "file4.json"
+  "file4.json",
 ];
 
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - version output mode", async t => {
+t.test("01.01 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.equal(reportedVersion1.stdout, pack.version);
 
@@ -115,7 +115,7 @@ t.test("01.01 - version output mode", async t => {
   t.end();
 });
 
-t.test("01.02 - help output mode", async t => {
+t.test("01.02 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.match(reportedVersion1.stdout, /Usage/g);
   t.match(reportedVersion1.stdout, /Options/g);
@@ -126,7 +126,7 @@ t.test("01.02 - help output mode", async t => {
   t.end();
 });
 
-t.test("01.03 - no files found in the given directory [ID_1]", async t => {
+t.test("01.03 - no files found in the given directory [ID_1]", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
@@ -139,7 +139,7 @@ t.test("01.03 - no files found in the given directory [ID_1]", async t => {
 
 t.test(
   "01.04 - normalisation, called on the directory with subdirectories",
-  async t => {
+  async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
     // 1.1 For debug purposes, you can temporarily  re-route the test files into
@@ -179,18 +179,18 @@ t.test(
       )
       .then(() => execa("./cli.js", ["-n", tempFolder]))
       .then(() =>
-        pMap(testFilePaths, oneOfPaths =>
+        pMap(testFilePaths, (oneOfPaths) =>
           fs.readFile(path.join(tempFolder, oneOfPaths), "utf8")
         )
       )
-      .catch(err => t.fail(err));
+      .catch((err) => t.fail(err));
 
     t.same(await processedFileContents, normalisedFileContents);
     t.end();
   }
 );
 
-t.test("01.05 - normalisation stops if one file is given [ID_2]", async t => {
+t.test("01.05 - normalisation stops if one file is given [ID_2]", async (t) => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
   // fs.ensureDirSync(path.join(tempFolder));
@@ -199,10 +199,10 @@ t.test("01.05 - normalisation stops if one file is given [ID_2]", async t => {
   const stdOutContents = await fs
     .writeJson(path.join(tempFolder, "data.json"), {
       a: "b",
-      c: "d"
+      c: "d",
     })
     .then(() => execa("./cli.js", ["--normalise", tempFolder]))
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   // CLI will complain no files could be found
   t.match(stdOutContents.stdout, /ID_2/g);

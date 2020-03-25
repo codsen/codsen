@@ -74,13 +74,13 @@ const object = {
   c: [
     {
       b: "b",
-      a: "a"
+      a: "a",
     },
     {
       d: "d",
-      c: "c"
-    }
-  ]
+      c: "c",
+    },
+  ],
 };
 const flattened = flattenAllArrays(object);
 console.log("flattened = " + JSON.stringify(flattened, null, 4));

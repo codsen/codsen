@@ -5,7 +5,7 @@ const flattenAllArrays = require("../dist/object-flatten-all-arrays.cjs");
 // Normal use
 // ==========
 
-t.test("01.01 - simple plain object, one array", t => {
+t.test("01.01 - simple plain object, one array", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -14,13 +14,13 @@ t.test("01.01 - simple plain object, one array", t => {
       c: [
         {
           b: "b",
-          a: "a"
+          a: "a",
         },
         {
           d: "d",
-          c: "c"
-        }
-      ]
+          c: "c",
+        },
+      ],
     }),
     {
       a: "a",
@@ -30,42 +30,42 @@ t.test("01.01 - simple plain object, one array", t => {
           a: "a",
           b: "b",
           c: "c",
-          d: "d"
-        }
+          d: "d",
+        },
       ],
-      d: "d"
+      d: "d",
     },
     "01.01"
   );
   t.end();
 });
 
-t.test("01.02 - simple plain object, two arrays", t => {
+t.test("01.02 - simple plain object, two arrays", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
       b: [
         {
-          b: "b"
+          b: "b",
         },
         {
-          a: "a"
+          a: "a",
         },
         {
-          c: "c"
-        }
+          c: "c",
+        },
       ],
       a: "a",
       c: [
         {
           d: "d",
-          c: "c"
+          c: "c",
         },
         {
           b: "b",
-          a: "a"
-        }
-      ]
+          a: "a",
+        },
+      ],
     }),
     {
       d: "d",
@@ -73,8 +73,8 @@ t.test("01.02 - simple plain object, two arrays", t => {
         {
           a: "a",
           b: "b",
-          c: "c"
-        }
+          c: "c",
+        },
       ],
       a: "a",
       c: [
@@ -82,16 +82,16 @@ t.test("01.02 - simple plain object, two arrays", t => {
           a: "a",
           b: "b",
           c: "c",
-          d: "d"
-        }
-      ]
+          d: "d",
+        },
+      ],
     },
     "01.02"
   );
   t.end();
 });
 
-t.test("01.03 - nested simple plain object, one array", t => {
+t.test("01.03 - nested simple plain object, one array", (t) => {
   t.same(
     flattenAllArrays([
       {
@@ -101,14 +101,14 @@ t.test("01.03 - nested simple plain object, one array", t => {
         c: [
           {
             b: "b",
-            a: "a"
+            a: "a",
           },
           {
             d: "d",
-            c: "c"
-          }
-        ]
-      }
+            c: "c",
+          },
+        ],
+      },
     ]),
     [
       {
@@ -119,30 +119,30 @@ t.test("01.03 - nested simple plain object, one array", t => {
             a: "a",
             b: "b",
             c: "c",
-            d: "d"
-          }
+            d: "d",
+          },
         ],
-        d: "d"
-      }
+        d: "d",
+      },
     ],
     "01.03"
   );
   t.end();
 });
 
-t.test("01.04 - nested objects", t => {
+t.test("01.04 - nested objects", (t) => {
   t.same(
     flattenAllArrays([
       "z1",
       {
         b: "b",
-        a: "a"
+        a: "a",
       },
       {
         d: "d",
-        c: "c"
+        c: "c",
       },
-      "z2"
+      "z2",
     ]),
     [
       "z1",
@@ -150,16 +150,16 @@ t.test("01.04 - nested objects", t => {
         a: "a",
         b: "b",
         c: "c",
-        d: "d"
+        d: "d",
       },
-      "z2"
+      "z2",
     ],
     "01.04"
   );
   t.end();
 });
 
-t.test("01.05 - multiple nested arrays", t => {
+t.test("01.05 - multiple nested arrays", (t) => {
   t.same(
     flattenAllArrays([
       [
@@ -176,21 +176,21 @@ t.test("01.05 - multiple nested arrays", t => {
                       c: [
                         {
                           b: "b",
-                          a: "a"
+                          a: "a",
                         },
                         {
                           d: "d",
-                          c: "c"
-                        }
-                      ]
-                    }
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
+                          c: "c",
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              ],
+            ],
+          ],
+        ],
+      ],
     ]),
     [
       [
@@ -208,25 +208,25 @@ t.test("01.05 - multiple nested arrays", t => {
                           a: "a",
                           b: "b",
                           c: "c",
-                          d: "d"
-                        }
+                          d: "d",
+                        },
                       ],
-                      d: "d"
-                    }
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
+                      d: "d",
+                    },
+                  ],
+                ],
+              ],
+            ],
+          ],
+        ],
+      ],
     ],
     "01.05"
   );
   t.end();
 });
 
-t.test("01.06 - array contents are not of the same type", t => {
+t.test("01.06 - array contents are not of the same type", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -235,14 +235,14 @@ t.test("01.06 - array contents are not of the same type", t => {
       c: [
         {
           b: "b",
-          a: "a"
+          a: "a",
         },
         {
           d: "d",
-          c: "c"
+          c: "c",
         },
-        "z"
-      ]
+        "z",
+      ],
     }),
     {
       d: "d",
@@ -253,10 +253,10 @@ t.test("01.06 - array contents are not of the same type", t => {
           a: "a",
           b: "b",
           c: "c",
-          d: "d"
+          d: "d",
         },
-        "z"
-      ]
+        "z",
+      ],
     },
     "01.06.01 - default"
   );
@@ -269,31 +269,31 @@ t.test("01.06 - array contents are not of the same type", t => {
         c: [
           {
             b: "b",
-            a: "a"
+            a: "a",
           },
           {
             d: "d",
-            c: "c"
+            c: "c",
           },
-          "z"
-        ]
+          "z",
+        ],
       },
       {
-        flattenArraysContainingStringsToBeEmpty: true
+        flattenArraysContainingStringsToBeEmpty: true,
       }
     ),
     {
       d: "d",
       b: "b",
       a: "a",
-      c: []
+      c: [],
     },
     "01.06.02 - opts.flattenArraysContainingStringsToBeEmpty"
   );
   t.end();
 });
 
-t.test("01.07 - multiple types in an array #1", t => {
+t.test("01.07 - multiple types in an array #1", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -303,22 +303,22 @@ t.test("01.07 - multiple types in an array #1", t => {
         [
           "y",
           {
-            z: "z"
+            z: "z",
           },
           {
-            x: "x"
-          }
+            x: "x",
+          },
         ],
         {
           b: "b",
-          a: "a"
+          a: "a",
         },
         {
           d: "d",
-          c: "c"
+          c: "c",
         },
-        "z"
-      ]
+        "z",
+      ],
     }),
     {
       a: "a",
@@ -328,42 +328,42 @@ t.test("01.07 - multiple types in an array #1", t => {
           "y",
           {
             x: "x",
-            z: "z"
-          }
+            z: "z",
+          },
         ],
         {
           a: "a",
           b: "b",
           c: "c",
-          d: "d"
+          d: "d",
         },
-        "z"
+        "z",
       ],
-      d: "d"
+      d: "d",
     },
     "01.07"
   );
   t.end();
 });
 
-t.test("01.08 - multiple types in an array #2", t => {
+t.test("01.08 - multiple types in an array #2", (t) => {
   t.same(
     flattenAllArrays({
       b: [
         {
           e: [
             {
-              f: "fff"
+              f: "fff",
             },
             {
-              g: "ggg"
-            }
+              g: "ggg",
+            },
           ],
           d: "ddd",
-          c: "ccc"
-        }
+          c: "ccc",
+        },
       ],
-      a: "aaa"
+      a: "aaa",
     }),
     {
       b: [
@@ -371,81 +371,81 @@ t.test("01.08 - multiple types in an array #2", t => {
           e: [
             {
               f: "fff",
-              g: "ggg"
-            }
+              g: "ggg",
+            },
           ],
           d: "ddd",
-          c: "ccc"
-        }
+          c: "ccc",
+        },
       ],
-      a: "aaa"
+      a: "aaa",
     },
     "01.08"
   );
   t.end();
 });
 
-t.test("01.09 - simple array, two ojects", t => {
+t.test("01.09 - simple array, two ojects", (t) => {
   t.same(
     flattenAllArrays([
       {
-        a: "a"
+        a: "a",
       },
       {
-        b: "b"
-      }
+        b: "b",
+      },
     ]),
     [
       {
         a: "a",
-        b: "b"
-      }
+        b: "b",
+      },
     ],
     "01.09"
   );
   t.end();
 });
 
-t.test("01.10 - simple array, two nested ojects", t => {
+t.test("01.10 - simple array, two nested ojects", (t) => {
   t.same(
     flattenAllArrays([
       {
-        a: ["a"]
+        a: ["a"],
       },
       {
-        b: { b: "b" }
-      }
+        b: { b: "b" },
+      },
     ]),
     [
       {
         a: ["a"],
-        b: { b: "b" }
-      }
+        b: { b: "b" },
+      },
     ],
     "01.10"
   );
   t.end();
 });
 
-t.test("01.11 - array, mix of ojects, arrays and strings", t => {
+t.test("01.11 - array, mix of ojects, arrays and strings", (t) => {
   t.same(
     flattenAllArrays([
       "zzz",
       {
-        a: ["a"]
+        a: ["a"],
       },
       {
-        b: { b: "b" }
+        b: { b: "b" },
       },
-      ["yyy"]
+      ["yyy"],
     ]),
     [
       "zzz",
       {
         a: ["a"],
-        b: { b: "b" }
+        b: { b: "b" },
       },
-      ["yyy"]
+      ["yyy"],
     ],
     "01.11.01 - default"
   );
@@ -454,15 +454,15 @@ t.test("01.11 - array, mix of ojects, arrays and strings", t => {
       [
         "zzz",
         {
-          a: ["a"]
+          a: ["a"],
         },
         {
-          b: { b: "b" }
+          b: { b: "b" },
         },
-        ["yyy"]
+        ["yyy"],
       ],
       {
-        flattenArraysContainingStringsToBeEmpty: true
+        flattenArraysContainingStringsToBeEmpty: true,
       }
     ),
     [],
@@ -471,17 +471,17 @@ t.test("01.11 - array, mix of ojects, arrays and strings", t => {
   t.end();
 });
 
-t.test("01.12 - arrays within objects, strings as elements", t => {
+t.test("01.12 - arrays within objects, strings as elements", (t) => {
   t.same(
     flattenAllArrays({
       a: {
-        b: ["c", "d"]
-      }
+        b: ["c", "d"],
+      },
     }),
     {
       a: {
-        b: ["c", "d"]
-      }
+        b: ["c", "d"],
+      },
     },
     "01.12.01 - default"
   );
@@ -489,17 +489,17 @@ t.test("01.12 - arrays within objects, strings as elements", t => {
     flattenAllArrays(
       {
         a: {
-          b: ["c", "d"]
-        }
+          b: ["c", "d"],
+        },
       },
       {
-        flattenArraysContainingStringsToBeEmpty: true
+        flattenArraysContainingStringsToBeEmpty: true,
       }
     ),
     {
       a: {
-        b: []
-      }
+        b: [],
+      },
     },
     "01.12.02 - opts"
   );
@@ -510,32 +510,32 @@ t.test("01.12 - arrays within objects, strings as elements", t => {
 // Edge cases
 // ==========
 
-t.test("02.01 - empty object as input", t => {
+t.test("02.01 - empty object as input", (t) => {
   t.same(flattenAllArrays({}), {}, "02.01");
   t.end();
 });
 
-t.test("02.02 - empty array as input", t => {
+t.test("02.02 - empty array as input", (t) => {
   t.same(flattenAllArrays([]), [], "02.02");
   t.end();
 });
 
-t.test("02.03 - empty string as input", t => {
+t.test("02.03 - empty string as input", (t) => {
   t.same(flattenAllArrays(""), "", "02.03");
   t.end();
 });
 
-t.test("02.04 - null as input", t => {
+t.test("02.04 - null as input", (t) => {
   t.same(flattenAllArrays(null), null, "02.04");
   t.end();
 });
 
-t.test("02.05 - undefined as input", t => {
+t.test("02.05 - undefined as input", (t) => {
   t.same(flattenAllArrays(undefined), undefined, "02.05");
   t.end();
 });
 
-t.test("02.06 - nothing in the input", t => {
+t.test("02.06 - nothing in the input", (t) => {
   t.same(flattenAllArrays(), undefined, "02.06");
   t.end();
 });
@@ -544,7 +544,7 @@ t.test("02.06 - nothing in the input", t => {
 // Does not mutate input args
 // ==========================
 
-t.test("03.01 - does not mutate input args", t => {
+t.test("03.01 - does not mutate input args", (t) => {
   const obj = {
     d: "d",
     b: "b",
@@ -552,13 +552,13 @@ t.test("03.01 - does not mutate input args", t => {
     c: [
       {
         b: "b",
-        a: "a"
+        a: "a",
       },
       {
         d: "d",
-        c: "c"
-      }
-    ]
+        c: "c",
+      },
+    ],
   };
   const unneededResult = flattenAllArrays(obj);
   t.pass(unneededResult);
@@ -571,13 +571,13 @@ t.test("03.01 - does not mutate input args", t => {
       c: [
         {
           b: "b",
-          a: "a"
+          a: "a",
         },
         {
           d: "d",
-          c: "c"
-        }
-      ]
+          c: "c",
+        },
+      ],
     },
     "03.01"
   );

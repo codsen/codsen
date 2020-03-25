@@ -88,14 +88,14 @@ console.log(
         c: [
           {
             d: false,
-            e: false
+            e: false,
           },
           {
-            g: false
-          }
-        ]
+            g: false,
+          },
+        ],
       },
-      c: false
+      c: false,
     },
     false
   )
@@ -141,7 +141,7 @@ console.log(res1);
 // => false
 
 let res2 = allValuesEqualTo([null], null, {
-  arraysMustNotContainPlaceholders: false
+  arraysMustNotContainPlaceholders: false,
 });
 console.log(res2);
 // => true

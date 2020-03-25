@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 0`,
-  t => {
+  (t) => {
     const str = `<form><input>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 0
-      }
+        "attribute-validate-checked": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 1`,
-  t => {
+  (t) => {
     const str = `<form><input>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 1
-      }
+        "attribute-validate-checked": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 2`,
-  t => {
+  (t) => {
     const str = `<form><input>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy checked checkbox`,
-  t => {
+  (t) => {
     const str = `<input type="checkbox" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy checked radio`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -87,13 +87,13 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy unchecked checkbox`,
-  t => {
+  (t) => {
     const str = `<input type="checkbox">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -103,13 +103,13 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy unchecked radio`,
-  t => {
+  (t) => {
     const str = `<input type="radio">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -122,13 +122,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -138,8 +138,8 @@ t.test(
         idxFrom: 5,
         idxTo: 12,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -147,13 +147,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz class="z" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -163,8 +163,8 @@ t.test(
         idxFrom: 15,
         idxTo: 22,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -172,13 +172,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div type="radio" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -188,8 +188,8 @@ t.test(
         idxFrom: 18,
         idxTo: 25,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -197,13 +197,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz type="radio" class="z" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -213,8 +213,8 @@ t.test(
         idxFrom: 28,
         idxTo: 35,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -225,13 +225,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked="true">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<input type="radio" checked>`);
@@ -242,9 +242,9 @@ t.test(
         idxTo: 34,
         message: `Should have no value.`,
         fix: {
-          ranges: [[27, 34]]
-        }
-      }
+          ranges: [[27, 34]],
+        },
+      },
     ]);
     t.end();
   }
@@ -252,13 +252,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked=true>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<input type="radio" checked>`);
@@ -269,9 +269,9 @@ t.test(
         idxTo: 32,
         message: `Should have no value.`,
         fix: {
-          ranges: [[27, 32]]
-        }
-      }
+          ranges: [[27, 32]],
+        },
+      },
     ]);
     t.end();
   }
@@ -279,13 +279,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), `<input type="radio" checked>`);
@@ -296,9 +296,9 @@ t.test(
         idxTo: 30,
         message: `Should have no value.`,
         fix: {
-          ranges: [[27, 30]]
-        }
-      }
+          ranges: [[27, 30]],
+        },
+      },
     ]);
     t.end();
   }
@@ -306,13 +306,13 @@ t.test(
 
 t.test(
   `03.04 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal present`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked=>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": 2
-      }
+        "attribute-validate-checked": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), `<input type="radio" checked>`);
@@ -323,48 +323,51 @@ t.test(
         idxTo: 28,
         message: `Should have no value.`,
         fix: {
-          ranges: [[27, 28]]
-        }
-      }
+          ranges: [[27, 28]],
+        },
+      },
     ]);
     t.end();
   }
 );
 
-t.test(`03.05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong type`, t => {
-  const str = `<input type="month" checked>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-checked": 2
-    }
-  });
-  // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-checked",
-      idxFrom: 13,
-      idxTo: 18,
-      message: `Only tags with "checkbox" or "radio" attributes can be checked.`,
-      fix: null
-    }
-  ]);
-  t.end();
-});
+t.test(
+  `03.05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong type`,
+  (t) => {
+    const str = `<input type="month" checked>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-checked": 2,
+      },
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-checked",
+        idxFrom: 13,
+        idxTo: 18,
+        message: `Only tags with "checkbox" or "radio" attributes can be checked.`,
+        fix: null,
+      },
+    ]);
+    t.end();
+  }
+);
 
 // 04. XHTML
 // -----------------------------------------------------------------------------
 
 t.test(
   `04.01 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy checked checkbox, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="checkbox" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     // can fix:
     t.equal(
@@ -378,9 +381,9 @@ t.test(
         idxTo: 30,
         message: `It's XHTML, add value, ="checked".`,
         fix: {
-          ranges: [[30, 30, `="checked"`]]
-        }
-      }
+          ranges: [[30, 30, `="checked"`]],
+        },
+      },
     ]);
     t.end();
   }
@@ -388,13 +391,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy checked radio, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -406,13 +409,13 @@ t.test(
 
 t.test(
   `04.03 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - missing after equal, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked=/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -424,13 +427,13 @@ t.test(
 
 t.test(
   `04.04 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - closing quote and content missing, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked =">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.match(messages[0].fix.ranges, [[27, 30, `="checked"`]]);
     t.equal(
@@ -443,13 +446,13 @@ t.test(
 
 t.test(
   `04.05 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked=""/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -461,13 +464,13 @@ t.test(
 
 t.test(
   `04.06 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked=''/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -479,13 +482,13 @@ t.test(
 
 t.test(
   `04.07 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missing, as HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked='>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -497,13 +500,13 @@ t.test(
 
 t.test(
   `04.08 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked"checked"/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -515,13 +518,13 @@ t.test(
 
 t.test(
   `04.09 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`,
-  t => {
+  (t) => {
     const str = `<input type="radio" checked'checked'/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-checked": [2, "xhtml"]
-      }
+        "attribute-validate-checked": [2, "xhtml"],
+      },
     });
     t.equal(
       applyFixes(str, messages),

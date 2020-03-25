@@ -12,11 +12,11 @@ const testme = () =>
   f(
     "abcabcd.f",
     "abcdef",
-    obj => {
+    (obj) => {
       gathered.push(obj);
     },
     {
-      maxDistance: 2
+      maxDistance: 2,
     }
   );
 

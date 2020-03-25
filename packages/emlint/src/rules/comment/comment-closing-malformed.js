@@ -5,7 +5,7 @@ import validateCommentClosing from "../../util/validateCommentClosing";
 
 function commentClosingMalformed(context, ...opts) {
   return {
-    comment: function(node) {
+    comment: function (node) {
       console.log(
         `███████████████████████████████████████ commentClosingMalformed() ███████████████████████████████████████`
       );
@@ -27,16 +27,16 @@ function commentClosingMalformed(context, ...opts) {
           `027 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`031 commentClosingMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-closing-malformed"
+              ruleId: "comment-closing-malformed",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

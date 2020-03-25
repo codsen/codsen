@@ -37,7 +37,7 @@ const {
   matchLeftIncl,
   matchRightIncl,
   matchLeft,
-  matchRight
+  matchRight,
 } = require("string-match-left-right");
 ```
 
@@ -48,7 +48,7 @@ import {
   matchLeftIncl,
   matchRightIncl,
   matchLeft,
-  matchRight
+  matchRight,
 } from "string-match-left-right";
 ```
 
@@ -64,7 +64,7 @@ const {
   matchLeftIncl,
   matchRightIncl,
   matchLeft,
-  matchRight
+  matchRight,
 } = stringMatchLeftRight;
 ```
 
@@ -150,7 +150,7 @@ const {
   matchLeftIncl,
   matchRightIncl,
   matchLeft,
-  matchRight
+  matchRight,
 } = require("string-match-left-right");
 
 let res1 = matchLeftIncl("abcdefghi", 3, ["bcd"]);
@@ -192,7 +192,7 @@ const {
   matchLeftIncl,
   matchRightIncl,
   matchLeft,
-  matchRight
+  matchRight,
 } = require("string-match-left-right");
 // imagine you looped the string and wanted to catch where does attribute "class" start
 // and end (not to mention to ensure that it's a real attribute, not something ending with this
@@ -277,7 +277,7 @@ const res = matchRightIncl("ab      cdef", 2, "cd", {
     // return "true" if you don't want to affect the result, or do it conditionally,
     // adding extra rules depending on these new variables you've got above.
     return true;
-  }
+  },
 });
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
 ```
@@ -304,7 +304,7 @@ const res1 = matchRight(
   {
     cb: (characterOutside, wholeStringOnThatSide, indexOfCharacterOutside) => {
       return characterOutside === "a";
-    }
+    },
   }
 );
 console.log(res1);
@@ -316,7 +316,7 @@ const res2 = matchRight(
   2, // <--- it's letter "c" at index 2
   "", // <-- notice 3rd argument is empty string. This means we rely on cb only.
   {
-    cb: char => char === "d"
+    cb: (char) => char === "d",
   }
 );
 console.log(res2);
@@ -327,7 +327,7 @@ const res3 = matchRight(
   2, // <--- it's letter "c" at index 2
   "", // <-- notice 3rd argument is empty string. This means we rely on cb only.
   {
-    cb: (char, rest) => rest === "def"
+    cb: (char, rest) => rest === "def",
   }
 );
 console.log(res3);
@@ -338,7 +338,7 @@ const res4 = matchRight(
   2, // <--- it's letter "c" at index 2
   "", // <-- notice 3rd argument is empty string. This means we rely on cb only.
   {
-    cb: (char, rest, index) => index === 3
+    cb: (char, rest, index) => index === 3,
   }
 );
 console.log(res4);
@@ -375,7 +375,7 @@ Consider this example:
 
 ```js
 const res = matchRight("az", 0, ["x", () => "EOL"], {
-  trimCharsBeforeMatching: ["z"]
+  trimCharsBeforeMatching: ["z"],
 });
 console.log(res);
 // => "EOL"

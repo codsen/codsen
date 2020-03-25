@@ -129,10 +129,10 @@ In practice, I use this overriding to perform the specific tests on [Detergent.j
 Here's an AVA test, which uses `objectBooleanCombinations()` to create a combinations array of settings objects, then uses `forEach()` to iterate through them all, testing each:
 
 ```js
-test("encode entities - pound sign", t => {
+test("encode entities - pound sign", (t) => {
   combinations(sampleObj, {
-    convertEntities: true
-  }).forEach(function(elem) {
+    convertEntities: true,
+  }).forEach(function (elem) {
     t.equal(
       detergent("\u00A3", elem),
       "&pound;",

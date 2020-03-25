@@ -6,7 +6,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateValue(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValue() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateValue(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // if parent is OK
@@ -44,12 +44,12 @@ function attributeValidateValue(context, ...opts) {
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
               zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`
-            }).forEach(errorObj => {
+              customPxMessage: `Sequence number should not be in pixels.`,
+            }).forEach((errorObj) => {
               console.log(`049 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value"
+                  ruleId: "attribute-validate-value",
                 })
               );
             });
@@ -60,18 +60,18 @@ function attributeValidateValue(context, ...opts) {
               node.attribValueStartsAt
             );
 
-            errorArr.forEach(errorObj => {
+            errorArr.forEach((errorObj) => {
               console.log(`064 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value"
+                  ruleId: "attribute-validate-value",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 

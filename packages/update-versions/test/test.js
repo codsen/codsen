@@ -49,7 +49,7 @@ const test1FilePaths = [
   "packages/lib1/package.json",
   "packages/lib2/package.json",
   "node_modules/lib3/package.json",
-  "package.json"
+  "package.json",
 ];
 
 const test2FilePaths = ["node_modules/lib3/package.json", "package.json"];
@@ -73,8 +73,8 @@ const packBefore = {
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     husky: "latest", // notice "latest" is not legal in Lerna
-    prettier: "1.16.1" // notice there's no ^
-  }
+    prettier: "1.16.1", // notice there's no ^
+  },
 };
 
 // test1: packages/lib1/package.json
@@ -99,7 +99,7 @@ const test1FileContents = [
   packTest1Lib1,
   packTest1Lib2,
   packTest12Lib3,
-  rootPack
+  rootPack,
 ];
 
 const test2FileContents = [packTest12Lib3, rootPack];
@@ -107,7 +107,7 @@ const test2FileContents = [packTest12Lib3, rootPack];
 // Unit tests
 // -----------------------------------------------------------------------------
 
-t.test("01 - monorepo", async t => {
+t.test("01 - monorepo", async (t) => {
   // const tempFolder = "temp";
   const tempFolder = tempy.directory();
 
@@ -127,10 +127,10 @@ t.test("01 - monorepo", async t => {
   )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
-        shell: true
+        shell: true,
       })
     )
-    .then(received => {
+    .then((received) => {
       if (
         received &&
         received.stdout &&
@@ -140,7 +140,7 @@ t.test("01 - monorepo", async t => {
       }
     })
     .then(() =>
-      pMap(test1FilePaths, oneOfPaths =>
+      pMap(test1FilePaths, (oneOfPaths) =>
         read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
@@ -149,9 +149,9 @@ t.test("01 - monorepo", async t => {
     //     () => received
     //   )
     // )
-    .then(contents => {
+    .then((contents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
-      contents = contents.map(arr => JSON.parse(arr));
+      contents = contents.map((arr) => JSON.parse(arr));
 
       // lib1:
       t.match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
@@ -178,12 +178,12 @@ t.test("01 - monorepo", async t => {
         Number.parseInt(contents[3].dependencies.detergent.slice(1, 2)) >= 4
       );
     })
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   t.end();
 });
 
-t.only("02 - normal repo", async t => {
+t.only("02 - normal repo", async (t) => {
   const tempFolder = tempy.directory();
 
   // 1. create folders:
@@ -199,10 +199,10 @@ t.only("02 - normal repo", async t => {
   )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
-        shell: true
+        shell: true,
       })
     )
-    .then(received => {
+    .then((received) => {
       if (
         received &&
         received.stdout &&
@@ -212,18 +212,18 @@ t.only("02 - normal repo", async t => {
       }
     })
     .then(() =>
-      pMap(test2FilePaths, oneOfPaths =>
+      pMap(test2FilePaths, (oneOfPaths) =>
         read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
-    .then(received =>
+    .then((received) =>
       execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
         () => received
       )
     )
-    .then(contents => {
+    .then((contents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
-      contents = contents.map(arr => JSON.parse(arr));
+      contents = contents.map((arr) => JSON.parse(arr));
 
       // node_modules/lib3/package.json:
       t.equal(contents[0].dependencies["check-types-mini"], "*");
@@ -237,14 +237,14 @@ t.only("02 - normal repo", async t => {
       t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
       t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
     })
-    .catch(err => t.fail(err));
+    .catch((err) => t.fail(err));
 
   t.end();
 });
 
 t.test(
   "03 - deletes deps from devdeps if they are among normal deps",
-  async t => {
+  async (t) => {
     const tempFolder = tempy.directory();
 
     // 0. We need to add redundant deps onto normal deps key in package.json:
@@ -265,10 +265,10 @@ t.test(
     )
       .then(() =>
         execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
-          shell: true
+          shell: true,
         })
       )
-      .then(received => {
+      .then((received) => {
         if (
           received &&
           received.stdout &&
@@ -278,28 +278,28 @@ t.test(
         }
       })
       .then(() =>
-        pMap(test2FilePaths, oneOfPaths =>
+        pMap(test2FilePaths, (oneOfPaths) =>
           read(path.join(tempFolder, oneOfPaths), "utf8")
         )
       )
-      .then(received =>
+      .then((received) =>
         execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
-          shell: true
+          shell: true,
         }).then(() => received)
       )
-      .then(contents => {
+      .then((contents) => {
         // array comes in, but each JSON inside in unparsed and in string format:
-        contents = contents.map(arr => JSON.parse(arr));
+        contents = contents.map((arr) => JSON.parse(arr));
         // root package.json devdeps should not contain the commitizen:
         t.ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
       })
-      .catch(err => t.fail(err));
+      .catch((err) => t.fail(err));
 
     t.end();
   }
 );
 
-t.test("92 - version output mode", async t => {
+t.test("92 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.equal(reportedVersion1.stdout, pack.version);
 
@@ -308,7 +308,7 @@ t.test("92 - version output mode", async t => {
   t.end();
 });
 
-t.test("91 - help output mode", async t => {
+t.test("91 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.match(reportedVersion1.stdout, /Usage/);
   t.match(reportedVersion1.stdout, /Options/);
@@ -320,7 +320,7 @@ t.test("91 - help output mode", async t => {
   t.end();
 });
 
-t.test("93 - no files found in the given directory", async t => {
+t.test("93 - no files found in the given directory", async (t) => {
   const tempFolder = tempy.directory();
   // create folder:
   fs.ensureDirSync(path.resolve(tempFolder));

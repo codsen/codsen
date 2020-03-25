@@ -6,7 +6,7 @@ import db from "mime-db";
 
 function attributeValidateEnctype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateEnctype() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateEnctype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -45,10 +45,10 @@ function attributeValidateEnctype(context, ...opts) {
             quickPermittedValues: [
               "application/x-www-form-urlencoded",
               "multipart/form-data",
-              "text/plain"
+              "text/plain",
             ],
             permittedValues: Object.keys(db),
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -60,16 +60,16 @@ function attributeValidateEnctype(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-enctype"
+              ruleId: "attribute-validate-enctype",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

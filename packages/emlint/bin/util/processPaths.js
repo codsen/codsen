@@ -17,14 +17,14 @@ function readUpdateAndWriteOverFile(receivedPath) {
   );
   console.log(" ");
   readFileAsync(receivedPath, { encoding: "utf8" })
-    .then(contents =>
+    .then((contents) =>
       linter.verify(contents, {
         rules: {
-          all: 1
-        }
+          all: 1,
+        },
       })
     )
-    .then(contents => {
+    .then((contents) => {
       console.log(
         `029 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
           contents,
@@ -34,7 +34,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
       );
       return contents;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(
         `039 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
           err,
@@ -55,7 +55,7 @@ function processPaths(paths) {
   );
   return (
     globby(paths)
-      .then(paths => {
+      .then((paths) => {
         console.log(
           `060 ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
             paths,
@@ -67,12 +67,12 @@ function processPaths(paths) {
           paths,
           (concattedTotal, singleDirOrFilePath) =>
             concattedTotal.concat(
-              isDirectory(path.resolve(singleDirOrFilePath)).then(bool =>
+              isDirectory(path.resolve(singleDirOrFilePath)).then((bool) =>
                 bool
                   ? globby(singleDirOrFilePath, {
                       expandDirectories: {
-                        files: ["*.html", "*.htm"]
-                      }
+                        files: ["*.html", "*.htm"],
+                      },
                     })
                   : [path.resolve(singleDirOrFilePath)]
               )
@@ -81,13 +81,13 @@ function processPaths(paths) {
         );
       })
       // then reduce again, now actually concatenating them all together
-      .then(received =>
+      .then((received) =>
         pReduce(received, (total, single) => total.concat(single), [])
       )
-      .then(pathsArr =>
-        pathsArr.filter(oneOfPaths => !oneOfPaths.includes("node_modules"))
+      .then((pathsArr) =>
+        pathsArr.filter((oneOfPaths) => !oneOfPaths.includes("node_modules"))
       )
-      .then(pathsArr =>
+      .then((pathsArr) =>
         pReduce(
           pathsArr,
           (errorsArr, singlePath) =>

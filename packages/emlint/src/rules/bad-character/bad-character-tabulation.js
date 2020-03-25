@@ -33,7 +33,7 @@ function badCharacterTabulation(context, ...originalOpts) {
   }
 
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
         if (mode === "never") {
           // simple - there can't be any TABs, so raise it straight away
@@ -43,8 +43,8 @@ function badCharacterTabulation(context, ...originalOpts) {
             idxFrom: i,
             idxTo: i + 1,
             fix: {
-              ranges: [[i, i + 1, " "]] // replace with one space
-            }
+              ranges: [[i, i + 1, " "]], // replace with one space
+            },
           });
         } else if (mode === "indentationIsFine") {
           // leftStopAtNewLines() will stop either at first non-whitespace character
@@ -62,13 +62,13 @@ function badCharacterTabulation(context, ...originalOpts) {
               idxFrom: i,
               idxTo: i + 1,
               fix: {
-                ranges: [[i, i + 1, " "]] // replace with one space
-              }
+                ranges: [[i, i + 1, " "]], // replace with one space
+              },
             });
           }
         }
       }
-    }
+    },
   };
 }
 

@@ -12,7 +12,7 @@ import { left } from "string-left-right";
 
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
       );
@@ -61,7 +61,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
           message: "Bad whitespace.",
           idxFrom: leftOfSlashPos + 1,
           idxTo: slashPos,
-          fix: { ranges: [[leftOfSlashPos + 1, slashPos]] }
+          fix: { ranges: [[leftOfSlashPos + 1, slashPos]] },
         });
       } else if (
         mode === "always" &&
@@ -75,10 +75,10 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
           message: "Missing space.",
           idxFrom: slashPos,
           idxTo: slashPos,
-          fix: { ranges: [[slashPos, slashPos, " "]] }
+          fix: { ranges: [[slashPos, slashPos, " "]] },
         });
       }
-    }
+    },
   };
 }
 

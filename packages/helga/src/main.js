@@ -2,7 +2,7 @@ import unescapeJs from "unescape-js";
 import { version } from "../package.json";
 
 const defaults = {
-  targetJSON: false
+  targetJSON: false,
 };
 
 function helga(str, originalOpts) {
@@ -32,7 +32,7 @@ function helga(str, originalOpts) {
   // ---------------------------------------------------------------------------
   return {
     minified,
-    beautified
+    beautified,
   };
 }
 

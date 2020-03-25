@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateMethod(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMethod() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateMethod(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -38,7 +38,7 @@ function attributeValidateMethod(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["get", "post"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -50,16 +50,16 @@ function attributeValidateMethod(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-method"
+              ruleId: "attribute-validate-method",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

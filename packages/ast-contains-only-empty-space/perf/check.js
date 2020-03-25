@@ -13,9 +13,9 @@ const testme = () =>
     {
       key2: "   ",
       key3: "   \n   ",
-      key4: "   \t   "
+      key4: "   \t   ",
     },
-    "\n\n\n\n\n\n   \t   "
+    "\n\n\n\n\n\n   \t   ",
   ]);
 
 // action

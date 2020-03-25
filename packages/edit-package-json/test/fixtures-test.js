@@ -75,7 +75,7 @@ function compare(t, testName, pathToProcess, val) {
 
 t.test(
   "deletes a key from package.json - scenario from update-versions package",
-  t => {
+  (t) => {
     compare(t, "upd", "lect.various.devDependencies.4");
     t.end();
   }
@@ -83,7 +83,7 @@ t.test(
 
 t.test(
   "deletes a key from key which has a value with escaped quotes - minified",
-  t => {
+  (t) => {
     compare(t, "escaped-quotes-minified", "a");
     t.end();
   }
@@ -91,23 +91,23 @@ t.test(
 
 t.test(
   "deletes a key from key which has a value with escaped quotes - normal",
-  t => {
+  (t) => {
     compare(t, "escaped-quotes", "a");
     t.end();
   }
 );
 
-t.test("updates a key 1", t => {
+t.test("updates a key 1", (t) => {
   compare(t, "bug1", "dependencies.yz", "^1.2.17");
   t.end();
 });
 
-t.test("updates a key 2", t => {
+t.test("updates a key 2", (t) => {
   compare(t, "bug2", "gh.yz", "3");
   t.end();
 });
 
-t.test("updates a key 3", t => {
+t.test("updates a key 3", (t) => {
   compare(t, "bug3", "gh.yz", "3");
   t.end();
 });

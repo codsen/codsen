@@ -10,7 +10,7 @@ const f = require("../");
 const testme = () =>
   f("aaa delete me bbb and me too ccc", [
     [4, 14],
-    [18, 29]
+    [18, 29],
   ]);
 
 // action

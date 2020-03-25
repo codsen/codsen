@@ -104,7 +104,7 @@ This program has string-in, string-out type API; the DOM changes capabilities ar
 const { convertOne, convertAll } = require("string-apostrophes");
 const res = convertAll(`In the '60s, rock 'n' roll`, {
   convertApostrophes: 1,
-  convertEntities: 0
+  convertEntities: 0,
 });
 console.log(JSON.stringify(res, null, 4));
 // =>
@@ -242,7 +242,7 @@ function convertAll(str, opts) {
     // define starting index:
     preppedOpts.from = i;
     // offset function:
-    preppedOpts.offsetBy = idx => {
+    preppedOpts.offsetBy = (idx) => {
       i = i + idx;
     };
     // calculate the result:
@@ -253,7 +253,7 @@ function convertAll(str, opts) {
   }
   return {
     result: rangesApply(str, ranges),
-    ranges
+    ranges,
   };
 }
 ```
@@ -284,7 +284,7 @@ const res = convertOne(`test&apos;s`, {
   from: 4,
   to: 10,
   value: "'", // <-------- we insist to program that it's an apostrophe between indexes 4 and 10
-  convertEntities: 0
+  convertEntities: 0,
 });
 console.log(JSON.stringify(res, null, 0));
 // => [[4, 10, "’"]]

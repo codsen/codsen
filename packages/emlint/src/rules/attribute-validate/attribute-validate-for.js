@@ -7,7 +7,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateFor(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFor() ███████████████████████████████████████`
       );
@@ -30,7 +30,7 @@ function attributeValidateFor(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -67,7 +67,7 @@ function attributeValidateFor(context, ...opts) {
             Number.isInteger(charStart) &&
             !classNameRegex.test(extractedValue)
           ) {
-            if (Array.from(extractedValue).some(val => !val.trim().length)) {
+            if (Array.from(extractedValue).some((val) => !val.trim().length)) {
               message = `Should be one value, no spaces.`;
             } else if (extractedValue.includes("#")) {
               message = `Remove hash.`;
@@ -76,9 +76,9 @@ function attributeValidateFor(context, ...opts) {
                 ranges: [
                   [
                     node.attribValueStartsAt + firstHashAt,
-                    node.attribValueStartsAt + firstHashAt + 1
-                  ]
-                ]
+                    node.attribValueStartsAt + firstHashAt + 1,
+                  ],
+                ],
               };
               idxFrom = node.attribValueStartsAt + firstHashAt;
               idxTo = node.attribValueStartsAt + firstHashAt + 1;
@@ -89,7 +89,7 @@ function attributeValidateFor(context, ...opts) {
               idxFrom,
               idxTo,
               message,
-              fix
+              fix,
             });
           }
 
@@ -101,17 +101,17 @@ function attributeValidateFor(context, ...opts) {
             )}`
           );
 
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`105 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-for"
+                ruleId: "attribute-validate-for",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

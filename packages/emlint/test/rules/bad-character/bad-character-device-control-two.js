@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two DEVICE CONTROL TWO characters`, t => {
+t.test(`01.01 - detects two DEVICE CONTROL TWO characters`, (t) => {
   const str = "\u0012dlkgjld\u0012j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-device-control-two": 2
-    }
+      "bad-character-device-control-two": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two DEVICE CONTROL TWO characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - DEVICE CONTROL TWO.",
       fix: {
-        ranges: [[0, 1]]
-      }
+        ranges: [[0, 1]],
+      },
     },
     {
       ruleId: "bad-character-device-control-two",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two DEVICE CONTROL TWO characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - DEVICE CONTROL TWO.",
       fix: {
-        ranges: [[8, 9]]
-      }
-    }
+        ranges: [[8, 9]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), "dlkgjldj");
   t.end();

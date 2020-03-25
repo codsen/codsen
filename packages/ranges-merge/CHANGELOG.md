@@ -79,7 +79,7 @@ Let's say you got these two ranges:
 ```js
 [
   [5, 6, " "],
-  [1, 10]
+  [1, 10],
 ];
 ```
 

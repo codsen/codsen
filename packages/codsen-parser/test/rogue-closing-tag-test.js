@@ -1,13 +1,13 @@
 const t = require("tap");
 const cparser = require("../dist/codsen-parser.cjs");
 
-t.test("01.01 - rogue closing - one tag only", t => {
+t.test("01.01 - rogue closing - one tag only", (t) => {
   const gatheredErr = [];
   t.match(
     cparser("</a>", {
-      errCb: errObj => {
+      errCb: (errObj) => {
         gatheredErr.push(errObj);
-      }
+      },
     }),
     [
       {
@@ -16,8 +16,8 @@ t.test("01.01 - rogue closing - one tag only", t => {
         closing: true,
         start: 0,
         end: 4,
-        children: []
-      }
+        children: [],
+      },
     ],
     "01.01.01"
   );
@@ -27,21 +27,21 @@ t.test("01.01 - rogue closing - one tag only", t => {
       {
         ruleId: "tag-missing-opening",
         idxFrom: 0,
-        idxTo: 4
-      }
+        idxTo: 4,
+      },
     ],
     "01.01.02"
   );
   t.end();
 });
 
-t.test("01.02 - rogue closing - previous token is text-type", t => {
+t.test("01.02 - rogue closing - previous token is text-type", (t) => {
   const gatheredErr = [];
   t.match(
     cparser("<br>z</a>", {
-      errCb: errObj => {
+      errCb: (errObj) => {
         gatheredErr.push(errObj);
-      }
+      },
     }),
     [
       {
@@ -50,12 +50,12 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
         closing: false,
         start: 0,
         end: 4,
-        children: []
+        children: [],
       },
       {
         type: "text",
         start: 4,
-        end: 5
+        end: 5,
       },
       {
         type: "tag",
@@ -63,8 +63,8 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
         closing: true,
         start: 5,
         end: 9,
-        children: []
-      }
+        children: [],
+      },
     ],
     "01.02.01"
   );
@@ -74,21 +74,21 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
       {
         ruleId: "tag-missing-opening",
         idxFrom: 5,
-        idxTo: 9
-      }
+        idxTo: 9,
+      },
     ],
     "01.02.02"
   );
   t.end();
 });
 
-t.test("01.03 - rogue closing - previous token is tag-type", t => {
+t.test("01.03 - rogue closing - previous token is tag-type", (t) => {
   const gatheredErr = [];
   t.match(
     cparser("<br></a>", {
-      errCb: errObj => {
+      errCb: (errObj) => {
         gatheredErr.push(errObj);
-      }
+      },
     }),
     [
       {
@@ -97,7 +97,7 @@ t.test("01.03 - rogue closing - previous token is tag-type", t => {
         closing: false,
         start: 0,
         end: 4,
-        children: []
+        children: [],
       },
       {
         type: "tag",
@@ -105,8 +105,8 @@ t.test("01.03 - rogue closing - previous token is tag-type", t => {
         closing: true,
         start: 4,
         end: 8,
-        children: []
-      }
+        children: [],
+      },
     ],
     "01.03.01"
   );
@@ -116,8 +116,8 @@ t.test("01.03 - rogue closing - previous token is tag-type", t => {
       {
         ruleId: "tag-missing-opening",
         idxFrom: 4,
-        idxTo: 8
-      }
+        idxTo: 8,
+      },
     ],
     "01.03.02"
   );

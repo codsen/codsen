@@ -124,7 +124,7 @@ For example, four fixed `nbsp`'s:
   [6, 11, "&nbsp;"],
   [11, 18, "&nbsp;"],
   [27, 34, "&nbsp;"],
-  [34, 41, "&nbsp;"]
+  [34, 41, "&nbsp;"],
 ];
 ```
 
@@ -182,7 +182,7 @@ For example, to solve the example above, we would do:
 ```js
 const fixEnt = require("string-fix-broken-named-entities");
 const res = fixEnt("zzznbsp;zzznbsp;", {
-  cb: oodles => {
+  cb: (oodles) => {
     // "oodles" or whatever you name it, is a plain object.
     // Grab any content from any of its keys, for example:
     // {
@@ -198,9 +198,9 @@ const res = fixEnt("zzznbsp;zzznbsp;", {
       position:
         oodles.rangeValEncoded != null
           ? [oodles.rangeFrom, oodles.rangeTo, oodles.rangeValEncoded]
-          : [oodles.rangeFrom, oodles.rangeTo]
+          : [oodles.rangeFrom, oodles.rangeTo],
     };
-  }
+  },
 });
 console.log(JSON.stringify(res, null, 4));
 // => [
@@ -247,7 +247,7 @@ Since we give user an option to choose between raw and encoded values, result ca
   [
     [0, 5, "\xA0"],
     [6, 11, "\xA0"],
-    [12, 17, "\xA0"]
+    [12, 17, "\xA0"],
   ];
   ```
 
@@ -258,7 +258,7 @@ Since we give user an option to choose between raw and encoded values, result ca
   [
     [5, 5, ";"],
     [11, 11, ";"],
-    [17, 17, ";"]
+    [17, 17, ";"],
   ];
   ```
 
@@ -272,7 +272,7 @@ If broken entities are pinged to `opts.cb()` callback, all healthy entities are 
 const inp1 = "y &nbsp; z &nsp;";
 const gatheredEntityRanges = [];
 fix(inp1, {
-  entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to])
+  entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
 });
 console.log(
   `${`\u001b[${33}m${`gatheredEntityRanges`}\u001b[${39}m`} = ${JSON.stringify(
@@ -300,11 +300,11 @@ let count = 0;
 const result = fixEnt(
   "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
   {
-    progressFn: percentageDone => {
+    progressFn: (percentageDone) => {
       // console.log(`percentageDone = ${percentageDone}`);
       t.ok(typeof percentageDone === "number");
       count++;
-    }
+    },
   }
 );
 // each time percentage is reported, "count" is incremented

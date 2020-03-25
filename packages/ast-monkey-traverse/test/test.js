@@ -9,17 +9,17 @@ const traverse = require("../dist/ast-monkey-traverse.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse to delete one key from an array`,
-  t => {
+  (t) => {
     const input = [
       {
-        a: "b"
+        a: "b",
       },
       {
-        c: "d"
+        c: "d",
       },
       {
-        e: "f"
-      }
+        e: "f",
+      },
     ];
 
     const actual01 = traverse(input, (key1, val1) => {
@@ -31,11 +31,11 @@ t.test(
     });
     const intended01 = [
       {
-        c: "d"
+        c: "d",
       },
       {
-        e: "f"
-      }
+        e: "f",
+      },
     ];
     t.same(actual01, intended01, "01.01.01");
 
@@ -48,11 +48,11 @@ t.test(
     });
     const intended02 = [
       {
-        a: "b"
+        a: "b",
       },
       {
-        e: "f"
-      }
+        e: "f",
+      },
     ];
     t.same(actual02, intended02, "01.01.02");
 
@@ -65,11 +65,11 @@ t.test(
     });
     const intended03 = [
       {
-        a: "b"
+        a: "b",
       },
       {
-        c: "d"
-      }
+        c: "d",
+      },
     ];
     t.same(actual03, intended03, "01.01.03");
     t.end();
@@ -78,17 +78,17 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arrays`,
-  t => {
+  (t) => {
     const input = [
       {
-        a: "b"
+        a: "b",
       },
       {
-        a: "b"
+        a: "b",
       },
       {
-        c: "d"
-      }
+        c: "d",
+      },
     ];
 
     const actual01 = traverse(input, (key1, val1) => {
@@ -103,8 +103,8 @@ t.test(
     });
     const intended01 = [
       {
-        c: "d"
-      }
+        c: "d",
+      },
     ];
     t.same(actual01, intended01, "01.02");
     t.end();
@@ -113,17 +113,17 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing null, write over values`,
-  t => {
+  (t) => {
     const input = [
       {
-        a: "b"
+        a: "b",
       },
       {
-        a: "b"
+        a: "b",
       },
       {
-        c: "d"
-      }
+        c: "d",
+      },
     ];
 
     const actual01 = traverse(input, (key1, val1) => {
@@ -138,14 +138,14 @@ t.test(
     });
     const intended01 = [
       {
-        a: null
+        a: null,
       },
       {
-        a: null
+        a: null,
       },
       {
-        c: "d"
-      }
+        c: "d",
+      },
     ];
     t.same(actual01, intended01, "01.03");
     t.end();
@@ -154,7 +154,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverse automatically patches up holes in arrays`,
-  t => {
+  (t) => {
     const input = ["a", undefined, "b"];
 
     const actual01 = traverse(input, (key1, val1) => {
@@ -173,11 +173,11 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair from plain object in root`,
-  t => {
+  (t) => {
     const input = {
       a: "a",
       b: "b",
-      c: "c"
+      c: "c",
     };
 
     const actual = traverse(input, (key1, val1) => {
@@ -189,7 +189,7 @@ t.test(
     });
     const intended = {
       b: "b",
-      c: "c"
+      c: "c",
     };
 
     t.same(actual, intended, "01.05");
@@ -199,9 +199,9 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`,
-  t => {
+  (t) => {
     const input = {
-      a: ["1", "2", "3"]
+      a: ["1", "2", "3"],
     };
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
@@ -215,13 +215,13 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`,
-  t => {
+  (t) => {
     const input = {
       a: {
         b: {
           c: "c_val",
           d: "d_val",
-          e: "e_val"
+          e: "e_val",
         },
         f: {
           g: {
@@ -230,13 +230,13 @@ t.test(
               "4",
               "5",
               {
-                j: "k"
-              }
+                j: "k",
+              },
             ],
-            l: ["7", "8", "9"]
-          }
-        }
-      }
+            l: ["7", "8", "9"],
+          },
+        },
+      },
     };
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
@@ -250,7 +250,7 @@ t.test(
 
 t.test(
   `01.08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`,
-  t => {
+  (t) => {
     const input = ["1", "2", { a: "3" }];
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
@@ -267,7 +267,7 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`,
-  t => {
+  (t) => {
     const input = { a: "1", b: { c: "2" } };
     const gathered = [];
     traverse(input, (key1, val1, innerObj) => {
@@ -282,7 +282,7 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`,
-  t => {
+  (t) => {
     const input = { a: "1", b: { c: "2" } };
     const gathered = [];
     traverse(input, (key1, val1, innerObj, stop) => {
@@ -300,7 +300,7 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`,
-  t => {
+  (t) => {
     const input = ["a", ["b", "c"]];
     const gathered = [];
     traverse(input, (key1, val1, innerObj) => {
@@ -315,7 +315,7 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`,
-  t => {
+  (t) => {
     const input = ["a", ["b", "c"]];
     const gathered = [];
     traverse(input, (key1, val1, innerObj, stop) => {

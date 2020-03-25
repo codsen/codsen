@@ -9,7 +9,7 @@ const f2 = () => "yyy";
 // Precautions
 // ===========
 
-t.test("01.01 - both inputs missing", t => {
+t.test("01.01 - both inputs missing", (t) => {
   t.throws(() => {
     compare();
   }, /THROW_ID_01/g);
@@ -19,7 +19,7 @@ t.test("01.01 - both inputs missing", t => {
   t.end();
 });
 
-t.test("01.02 - second input missing", t => {
+t.test("01.02 - second input missing", (t) => {
   t.throws(() => {
     compare({ a: "a" });
   }, /THROW_ID_02/g);
@@ -29,7 +29,7 @@ t.test("01.02 - second input missing", t => {
   t.end();
 });
 
-t.test("01.03 - first input missing", t => {
+t.test("01.03 - first input missing", (t) => {
   t.throws(() => {
     compare(undefined, { a: "a" });
   }, /THROW_ID_01/g);
@@ -39,7 +39,7 @@ t.test("01.03 - first input missing", t => {
   t.end();
 });
 
-t.test("01.04 - null as input", t => {
+t.test("01.04 - null as input", (t) => {
   t.throws(() => {
     compare(undefined, { a: "a" });
   }, /THROW_ID_01/g);
@@ -49,7 +49,7 @@ t.test("01.04 - null as input", t => {
   t.end();
 });
 
-t.test("01.05 - falsey inputs", t => {
+t.test("01.05 - falsey inputs", (t) => {
   t.throws(() => {
     compare(null, undefined);
   }, /THROW_ID_02/g);
@@ -59,18 +59,18 @@ t.test("01.05 - falsey inputs", t => {
   t.end();
 });
 
-t.test("01.06 - undefined in a second-level depth", t => {
+t.test("01.06 - undefined in a second-level depth", (t) => {
   t.throws(() => {
     compare(
       {
         a: "a",
         b: {
-          c: "c"
-        }
+          c: "c",
+        },
       },
       {
         a: "a",
-        b: undefined
+        b: undefined,
       }
     );
   }, /THROW_ID_08/g);
@@ -79,50 +79,50 @@ t.test("01.06 - undefined in a second-level depth", t => {
       {
         a: "a",
         b: {
-          c: "c"
-        }
+          c: "c",
+        },
       },
       {
         a: "a",
-        b: undefined
-      },
-      {
-        hungryForWhitespace: true
-      }
-    );
-  }, /THROW_ID_08/g);
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c"
-        }
-      },
-      {
-        a: "a",
-        b: undefined
-      },
-      {
-        verboseWhenMismatches: true
-      }
-    );
-  }, /THROW_ID_08/g);
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c"
-        }
-      },
-      {
-        a: "a",
-        b: undefined
+        b: undefined,
       },
       {
         hungryForWhitespace: true,
-        verboseWhenMismatches: true
+      }
+    );
+  }, /THROW_ID_08/g);
+  t.throws(() => {
+    compare(
+      {
+        a: "a",
+        b: {
+          c: "c",
+        },
+      },
+      {
+        a: "a",
+        b: undefined,
+      },
+      {
+        verboseWhenMismatches: true,
+      }
+    );
+  }, /THROW_ID_08/g);
+  t.throws(() => {
+    compare(
+      {
+        a: "a",
+        b: {
+          c: "c",
+        },
+      },
+      {
+        a: "a",
+        b: undefined,
+      },
+      {
+        hungryForWhitespace: true,
+        verboseWhenMismatches: true,
       }
     );
   }, /THROW_ID_08/g);
@@ -130,7 +130,7 @@ t.test("01.06 - undefined in a second-level depth", t => {
   t.end();
 });
 
-t.test("01.07 - wrong types of input args", t => {
+t.test("01.07 - wrong types of input args", (t) => {
   t.throws(() => {
     compare(undefined, { a: "a" }, { verboseWhenMismatches: true });
   }, /THROW_ID_01/g);
@@ -145,17 +145,17 @@ t.test("01.07 - wrong types of input args", t => {
 // Obj - Simples
 // =============
 
-t.test("02.01 - plain objects", t => {
+t.test("02.01 - plain objects", (t) => {
   t.same(compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }), true);
   t.end();
 });
 
-t.test("02.02 - plain objects", t => {
+t.test("02.02 - plain objects", (t) => {
   t.same(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }), false);
   t.end();
 });
 
-t.test("02.03 - plain objects", t => {
+t.test("02.03 - plain objects", (t) => {
   t.not(
     compare(
       { a: "1", b: "2" },
@@ -167,7 +167,7 @@ t.test("02.03 - plain objects", t => {
   t.end();
 });
 
-t.test("02.04 - plain objects", t => {
+t.test("02.04 - plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -179,7 +179,7 @@ t.test("02.04 - plain objects", t => {
   t.end();
 });
 
-t.test("02.05 - plain objects", t => {
+t.test("02.05 - plain objects", (t) => {
   t.not(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -191,7 +191,7 @@ t.test("02.05 - plain objects", t => {
   t.end();
 });
 
-t.test("02.06 - plain objects", t => {
+t.test("02.06 - plain objects", (t) => {
   t.same(
     compare({ a: "1", b: "2" }, { a: "1", b: "2" }, { matchStrictly: true }),
     true
@@ -199,7 +199,7 @@ t.test("02.06 - plain objects", t => {
   t.end();
 });
 
-t.test("02.07 - plain objects", t => {
+t.test("02.07 - plain objects", (t) => {
   // matchStrictly trumps hungryForWhitespace if key count does not match
   t.same(
     compare(
@@ -212,7 +212,7 @@ t.test("02.07 - plain objects", t => {
   t.end();
 });
 
-t.test("02.08 - plain objects", t => {
+t.test("02.08 - plain objects", (t) => {
   // matchStrictly trumps hungryForWhitespace if key count does not match
   t.not(
     compare(
@@ -221,14 +221,14 @@ t.test("02.08 - plain objects", t => {
       {
         matchStrictly: true,
         hungryForWhitespace: true,
-        verboseWhenMismatches: true
+        verboseWhenMismatches: true,
       }
     )
   );
   t.end();
 });
 
-t.test("02.09 - plain objects - two whitespaces", t => {
+t.test("02.09 - plain objects - two whitespaces", (t) => {
   // keys match exactly, different white space matched
   t.same(
     compare(
@@ -241,7 +241,7 @@ t.test("02.09 - plain objects - two whitespaces", t => {
   t.end();
 });
 
-t.test("02.10 - plain objects - whitespace vs empty str", t => {
+t.test("02.10 - plain objects - whitespace vs empty str", (t) => {
   // keys match exactly, white space matches to empty string
   t.same(
     compare(
@@ -254,7 +254,7 @@ t.test("02.10 - plain objects - whitespace vs empty str", t => {
   t.end();
 });
 
-t.test("02.11 - plain objects - empty str vs whitespace", t => {
+t.test("02.11 - plain objects - empty str vs whitespace", (t) => {
   // keys match exactly, empty string matches to white space
   t.same(
     compare(
@@ -267,7 +267,7 @@ t.test("02.11 - plain objects - empty str vs whitespace", t => {
   t.end();
 });
 
-t.test("02.12 - plain objects", t => {
+t.test("02.12 - plain objects", (t) => {
   // keys match exactly, string does not match to empty string
   t.same(
     compare(
@@ -280,7 +280,7 @@ t.test("02.12 - plain objects", t => {
   t.end();
 });
 
-t.test("02.13 - plain objects", t => {
+t.test("02.13 - plain objects", (t) => {
   // keys match exactly, string does not match to empty string
   t.not(
     compare(
@@ -289,7 +289,7 @@ t.test("02.13 - plain objects", t => {
       {
         matchStrictly: true,
         hungryForWhitespace: true,
-        verboseWhenMismatches: true
+        verboseWhenMismatches: true,
       }
     ),
     true
@@ -297,7 +297,7 @@ t.test("02.13 - plain objects", t => {
   t.end();
 });
 
-t.test("02.14 - plain objects", t => {
+t.test("02.14 - plain objects", (t) => {
   // keys match exactly, different white space matched
   t.same(
     compare(
@@ -310,7 +310,7 @@ t.test("02.14 - plain objects", t => {
   t.end();
 });
 
-t.test("02.15 - plain objects", t => {
+t.test("02.15 - plain objects", (t) => {
   // keys match exactly, different white space matched
   t.not(
     compare(
@@ -319,7 +319,7 @@ t.test("02.15 - plain objects", t => {
       {
         matchStrictly: true,
         hungryForWhitespace: false,
-        verboseWhenMismatches: true
+        verboseWhenMismatches: true,
       }
     ),
     true
@@ -327,12 +327,12 @@ t.test("02.15 - plain objects", t => {
   t.end();
 });
 
-t.test("02.16 - comparison of empty plain objects", t => {
+t.test("02.16 - comparison of empty plain objects", (t) => {
   t.same(compare({}, { a: "1", b: "2" }), false, "02.02.01");
   t.end();
 });
 
-t.test("02.17 - comparison of empty plain objects", t => {
+t.test("02.17 - comparison of empty plain objects", (t) => {
   t.same(
     compare({}, { a: "1", b: "2" }, { hungryForWhitespace: true }),
     false,
@@ -341,7 +341,7 @@ t.test("02.17 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.18 - comparison of empty plain objects", t => {
+t.test("02.18 - comparison of empty plain objects", (t) => {
   t.same(
     compare({}, { a: "1", b: "2" }, { matchStrictly: true }),
     false,
@@ -350,12 +350,12 @@ t.test("02.18 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.19 - comparison of empty plain objects", t => {
+t.test("02.19 - comparison of empty plain objects", (t) => {
   t.same(compare({ a: "1", b: "2", c: "3" }, {}), false, "02.02.04");
   t.end();
 });
 
-t.test("02.20 - comparison of empty plain objects", t => {
+t.test("02.20 - comparison of empty plain objects", (t) => {
   t.same(
     compare({ a: "1", b: "2", c: "3" }, {}, { hungryForWhitespace: true }),
     false,
@@ -364,7 +364,7 @@ t.test("02.20 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.21 - comparison of empty plain objects", t => {
+t.test("02.21 - comparison of empty plain objects", (t) => {
   t.same(
     compare({ a: "1", b: "2", c: "3" }, {}, { matchStrictly: true }),
     false,
@@ -373,7 +373,7 @@ t.test("02.21 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.22 - comparison of empty plain objects", t => {
+t.test("02.22 - comparison of empty plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -386,12 +386,12 @@ t.test("02.22 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.23 - comparison of empty plain objects", t => {
+t.test("02.23 - comparison of empty plain objects", (t) => {
   t.same(compare({ a: "1", b: "2", c: "3" }, { a: "\n\n\n" }), false);
   t.end();
 });
 
-t.test("02.24 - comparison of empty plain objects", t => {
+t.test("02.24 - comparison of empty plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -403,7 +403,7 @@ t.test("02.24 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.25 - comparison of empty plain objects", t => {
+t.test("02.25 - comparison of empty plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -415,7 +415,7 @@ t.test("02.25 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.26 - comparison of empty plain objects", t => {
+t.test("02.26 - comparison of empty plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -427,7 +427,7 @@ t.test("02.26 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.27 - comparison of empty plain objects", t => {
+t.test("02.27 - comparison of empty plain objects", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: "3" },
@@ -439,12 +439,12 @@ t.test("02.27 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.28 - comparing two empty plain objects", t => {
+t.test("02.28 - comparing two empty plain objects", (t) => {
   t.same(compare({}, {}), true);
   t.end();
 });
 
-t.test("02.29 - comparison of empty plain objects", t => {
+t.test("02.29 - comparison of empty plain objects", (t) => {
   t.same(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: false }),
     true
@@ -452,7 +452,7 @@ t.test("02.29 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.30 - comparison of empty plain objects", t => {
+t.test("02.30 - comparison of empty plain objects", (t) => {
   t.same(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: true }),
     true
@@ -460,7 +460,7 @@ t.test("02.30 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.31 - catching row 199 for 100% coverage", t => {
+t.test("02.31 - catching row 199 for 100% coverage", (t) => {
   t.same(
     compare(
       { a: { b: [] } },
@@ -472,7 +472,7 @@ t.test("02.31 - catching row 199 for 100% coverage", t => {
   t.end();
 });
 
-t.test("02.32 - sneaky similarity", t => {
+t.test("02.32 - sneaky similarity", (t) => {
   t.same(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: ["3"] }),
     false
@@ -480,12 +480,12 @@ t.test("02.32 - sneaky similarity", t => {
   t.end();
 });
 
-t.test("02.33 - comparison of empty plain objects", t => {
+t.test("02.33 - comparison of empty plain objects", (t) => {
   t.same(compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: 3 }), false);
   t.end();
 });
 
-t.test("02.34 - comparison of empty plain objects", t => {
+t.test("02.34 - comparison of empty plain objects", (t) => {
   t.same(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: { d: "3" } }),
     false
@@ -493,26 +493,26 @@ t.test("02.34 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.35 - big object has one element extra", t => {
+t.test("02.35 - big object has one element extra", (t) => {
   t.same(compare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true);
   t.end();
 });
 
-t.test("02.37 - small object has one element extra", t => {
+t.test("02.37 - small object has one element extra", (t) => {
   t.same(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }), false);
   t.end();
 });
 
 t.test(
   "02.38 - object values are arrays, one has a string, another has none",
-  t => {
+  (t) => {
     t.same(
       compare(
         {
-          key: ["a"]
+          key: ["a"],
         },
         {
-          key: []
+          key: [],
         }
       ),
       false
@@ -521,33 +521,33 @@ t.test(
   }
 );
 
-t.test("02.39 - comparison of empty plain objects", t => {
+t.test("02.39 - comparison of empty plain objects", (t) => {
   // relying on default
   t.not(
     compare(
       {
-        key: ["a"]
+        key: ["a"],
       },
       {
-        key: []
+        key: [],
       },
       {
-        verboseWhenMismatches: true
+        verboseWhenMismatches: true,
       }
     )
   );
   t.end();
 });
 
-t.test("02.40 - comparison of empty plain objects", t => {
+t.test("02.40 - comparison of empty plain objects", (t) => {
   // same, default hardcoded
   t.same(
     compare(
       {
-        key: ["a"]
+        key: ["a"],
       },
       {
-        key: []
+        key: [],
       },
       { hungryForWhitespace: false, matchStrictly: false }
     ),
@@ -556,32 +556,35 @@ t.test("02.40 - comparison of empty plain objects", t => {
   t.end();
 });
 
-t.test("02.41 - comparison of empty plain objects - hungryForWhitespace", t => {
-  t.same(
-    compare(
-      {
-        key: ["a"]
-      },
-      {
-        key: []
-      },
-      { hungryForWhitespace: true, matchStrictly: false }
-    ),
-    true
-  );
-  t.end();
-});
-
 t.test(
-  "02.42 - comparison of empty plain objects - same, default hardcoded",
-  t => {
+  "02.41 - comparison of empty plain objects - hungryForWhitespace",
+  (t) => {
     t.same(
       compare(
         {
-          key: ["a"]
+          key: ["a"],
         },
         {
-          key: []
+          key: [],
+        },
+        { hungryForWhitespace: true, matchStrictly: false }
+      ),
+      true
+    );
+    t.end();
+  }
+);
+
+t.test(
+  "02.42 - comparison of empty plain objects - same, default hardcoded",
+  (t) => {
+    t.same(
+      compare(
+        {
+          key: ["a"],
+        },
+        {
+          key: [],
         },
         { hungryForWhitespace: false, matchStrictly: true }
       ),
@@ -593,15 +596,15 @@ t.test(
 
 t.test(
   "02.43 - comparison of empty plain objects - matchStrictly trump hungryForWhitespace",
-  t => {
+  (t) => {
     // matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result
     t.same(
       compare(
         {
-          key: ["a"]
+          key: ["a"],
         },
         {
-          key: []
+          key: [],
         },
         { hungryForWhitespace: true, matchStrictly: true }
       ),
@@ -611,7 +614,7 @@ t.test(
   }
 );
 
-t.test("02.44 - empty object with keys vs object with no keys", t => {
+t.test("02.44 - empty object with keys vs object with no keys", (t) => {
   t.same(
     compare(
       { a: "\n" },
@@ -623,7 +626,7 @@ t.test("02.44 - empty object with keys vs object with no keys", t => {
   t.end();
 });
 
-t.test("02.45 - empty object with keys vs object with no keys", t => {
+t.test("02.45 - empty object with keys vs object with no keys", (t) => {
   t.same(
     compare(
       { a: "\n" },
@@ -635,7 +638,7 @@ t.test("02.45 - empty object with keys vs object with no keys", t => {
   t.end();
 });
 
-t.test("02.46 - empty object with keys vs object with no keys", t => {
+t.test("02.46 - empty object with keys vs object with no keys", (t) => {
   t.same(
     compare(
       { a: "\n" },
@@ -647,7 +650,7 @@ t.test("02.46 - empty object with keys vs object with no keys", t => {
   t.end();
 });
 
-t.test("02.47 - empty object with keys vs object with no keys", t => {
+t.test("02.47 - empty object with keys vs object with no keys", (t) => {
   t.same(
     compare(
       { a: "\n" },
@@ -659,72 +662,78 @@ t.test("02.47 - empty object with keys vs object with no keys", t => {
   t.end();
 });
 
-t.test("02.48 - Boolean and numeric values", t => {
+t.test("02.48 - Boolean and numeric values", (t) => {
   // control - booleans and numbers as obj values
   t.same(compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }), true);
   t.end();
 });
 
-t.test("02.49 - Boolean and numeric values", t => {
+t.test("02.49 - Boolean and numeric values", (t) => {
   t.throws(() => {
     compare({ a: false, b: 2, c: "3" }, f);
   }, /THROW_ID_04/g);
   t.end();
 });
 
-t.test("02.50 - Boolean and numeric values", t => {
+t.test("02.50 - Boolean and numeric values", (t) => {
   t.throws(() => {
     compare(f, { a: false, b: 2, c: "3" });
   }, /THROW_ID_03/g);
   t.end();
 });
 
-t.test("02.51 - Boolean and numeric values", t => {
+t.test("02.51 - Boolean and numeric values", (t) => {
   t.throws(() => {
     compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }, f);
   }, /THROW_ID_05/g);
   t.end();
 });
 
-t.test("02.52 - s is zero length, b is empty - defaults", t => {
+t.test("02.52 - s is zero length, b is empty - defaults", (t) => {
   t.same(compare({ a: "\n\n\n   \t\t\t", b: "2" }, { a: "", b: "2" }), false);
   t.end();
 });
 
-t.test("02.53 - s is zero length, b is empty - opts.hungryForWhitespace", t => {
-  t.same(
-    compare(
-      { a: "\n\n\n   \t\t\t", b: "2" },
-      { a: "", b: "2" },
-      { hungryForWhitespace: true }
-    ),
-    true
-  );
-  t.end();
-});
+t.test(
+  "02.53 - s is zero length, b is empty - opts.hungryForWhitespace",
+  (t) => {
+    t.same(
+      compare(
+        { a: "\n\n\n   \t\t\t", b: "2" },
+        { a: "", b: "2" },
+        { hungryForWhitespace: true }
+      ),
+      true
+    );
+    t.end();
+  }
+);
 
-t.test("02.54 - s is zero length, b is empty - opts.hungryForWhitespace", t => {
-  // no keys array vs array with all empty vales
-  t.same(compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }), true);
-  t.end();
-});
+t.test(
+  "02.54 - s is zero length, b is empty - opts.hungryForWhitespace",
+  (t) => {
+    // no keys array vs array with all empty vales
+    t.same(compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }), true);
+    t.end();
+  }
+);
 
 // 03. matching empty arrays
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - matching empty arrays - blank vs. normal - defaults", t => {
+t.test("03.01 - matching empty arrays - blank vs. normal - defaults", (t) => {
   t.same(compare({ a: "1", b: "2", c: 3 }, {}), false);
   t.end();
 });
 
-t.test("03.02 - matching empty arrays - blank vs. empty - defaults", t => {
+t.test("03.02 - matching empty arrays - blank vs. empty - defaults", (t) => {
   t.same(compare({ a: "\n\n", b: "\t", c: "   " }, {}), false);
   t.end();
 });
 
 t.test(
   "03.03 - matching empty arrays - blank vs. normal - opts.hungryForWhitespace",
-  t => {
+  (t) => {
     t.same(
       compare({ a: "1", b: "2", c: 3 }, {}, { hungryForWhitespace: true }),
       false
@@ -735,7 +744,7 @@ t.test(
 
 t.test(
   "03.04 - matching empty arrays - blank vs. empty - opts.hungryForWhitespace",
-  t => {
+  (t) => {
     t.same(
       compare(
         { a: "\n\n", b: "\t", c: "   " },
@@ -750,7 +759,7 @@ t.test(
 
 t.test(
   "03.05 - matching empty arrays - blank vs. normal - opts.matchStrictly",
-  t => {
+  (t) => {
     t.same(
       compare({ a: "1", b: "2", c: 3 }, {}, { matchStrictly: true }),
       false
@@ -761,7 +770,7 @@ t.test(
 
 t.test(
   "03.06 - matching empty arrays - blank vs. empty - opts.matchStrictly",
-  t => {
+  (t) => {
     t.same(
       compare({ a: "\n\n", b: "\t", c: "   " }, {}, { matchStrictly: true }),
       false,
@@ -771,7 +780,7 @@ t.test(
   }
 );
 
-t.test("03.07 - matching empty arrays - blank vs. normal - both opts", t => {
+t.test("03.07 - matching empty arrays - blank vs. normal - both opts", (t) => {
   t.same(
     compare(
       { a: "1", b: "2", c: 3 },
@@ -783,7 +792,7 @@ t.test("03.07 - matching empty arrays - blank vs. normal - both opts", t => {
   t.end();
 });
 
-t.test("03.08 - matching empty arrays - blank vs. empty - both opts", t => {
+t.test("03.08 - matching empty arrays - blank vs. empty - both opts", (t) => {
   t.same(
     compare(
       { a: "\n\n", b: "\t", c: "   " },
@@ -799,11 +808,11 @@ t.test("03.08 - matching empty arrays - blank vs. empty - both opts", t => {
 // Arr - simples
 // =============
 
-t.test("04.01 - simple arrays with strings", t => {
+t.test("04.01 - simple arrays with strings", (t) => {
   t.same(
     compare(["a", "b", "c"], ["a", "b"], {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     true,
     "04.01.01"
@@ -811,7 +820,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "04.01.02"
@@ -820,7 +829,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b", "c"], ["a", "b"], {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "04.01.03"
@@ -828,7 +837,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "04.01.04"
@@ -837,7 +846,7 @@ t.test("04.01 - simple arrays with strings", t => {
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: false,
       hungryForWhitespace: true,
-      verboseWhenMismatches: true
+      verboseWhenMismatches: true,
     }),
     true,
     "04.01.05"
@@ -846,7 +855,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b", "c"], ["a", "b"], {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "04.01.06"
@@ -854,7 +863,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "04.01.07"
@@ -863,7 +872,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b", "c"], ["a", "b"], {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "04.01.08"
@@ -871,7 +880,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.same(
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "04.01.09"
@@ -880,7 +889,7 @@ t.test("04.01 - simple arrays with strings", t => {
     compare(["a", "b"], ["a", "b", "c"], {
       matchStrictly: true,
       hungryForWhitespace: true,
-      verboseWhenMismatches: true
+      verboseWhenMismatches: true,
     }),
     true,
     "04.01.10"
@@ -888,7 +897,7 @@ t.test("04.01 - simple arrays with strings", t => {
   t.end();
 });
 
-t.test("04.02 - simple arrays with plain objects", t => {
+t.test("04.02 - simple arrays with plain objects", (t) => {
   t.same(
     compare([{ a: "1" }, { b: "2" }, { c: "3" }], [{ a: "1" }, { b: "2" }]),
     true,
@@ -902,7 +911,7 @@ t.test("04.02 - simple arrays with plain objects", t => {
   t.end();
 });
 
-t.test("04.03 - arrays, nested with strings and objects", t => {
+t.test("04.03 - arrays, nested with strings and objects", (t) => {
   t.same(
     compare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
@@ -922,7 +931,7 @@ t.test("04.03 - arrays, nested with strings and objects", t => {
   t.end();
 });
 
-t.test("04.04 - comparing empty arrays (variations)", t => {
+t.test("04.04 - comparing empty arrays (variations)", (t) => {
   t.same(compare([], []), true, "04.04.01");
   t.same(compare([{}], [{}]), true, "04.04.02");
   t.same(compare([{}, {}], [{}]), true, "04.04.03");
@@ -948,16 +957,16 @@ t.test("04.04 - comparing empty arrays (variations)", t => {
   t.end();
 });
 
-t.test("04.05 - empty arrays within obj key values", t => {
+t.test("04.05 - empty arrays within obj key values", (t) => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
         a: {
-          b: "b"
-        }
+          b: "b",
+        },
       }
     ),
     false,
@@ -967,11 +976,11 @@ t.test("04.05 - empty arrays within obj key values", t => {
     compare(
       {
         a: {
-          b: "b"
-        }
+          b: "b",
+        },
       },
       {
-        a: []
+        a: [],
       }
     ),
     false,
@@ -980,12 +989,12 @@ t.test("04.05 - empty arrays within obj key values", t => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
         a: {
-          b: "b"
-        }
+          b: "b",
+        },
       },
       { hungryForWhitespace: true }
     ),
@@ -995,12 +1004,12 @@ t.test("04.05 - empty arrays within obj key values", t => {
   t.not(
     compare(
       {
-        a: []
+        a: [],
       },
       {
         a: {
-          b: "b"
-        }
+          b: "b",
+        },
       },
       { hungryForWhitespace: true, verboseWhenMismatches: true }
     ),
@@ -1011,11 +1020,11 @@ t.test("04.05 - empty arrays within obj key values", t => {
     compare(
       {
         a: {
-          b: "b"
-        }
+          b: "b",
+        },
       },
       {
-        a: []
+        a: [],
       },
       { hungryForWhitespace: true }
     ),
@@ -1025,14 +1034,14 @@ t.test("04.05 - empty arrays within obj key values", t => {
   t.end();
 });
 
-t.test("04.06 - empty arrays vs empty objects", t => {
+t.test("04.06 - empty arrays vs empty objects", (t) => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
-        a: {}
+        a: {},
       }
     ),
     false,
@@ -1041,10 +1050,10 @@ t.test("04.06 - empty arrays vs empty objects", t => {
   t.same(
     compare(
       {
-        a: {}
+        a: {},
       },
       {
-        a: []
+        a: [],
       }
     ),
     false,
@@ -1053,10 +1062,10 @@ t.test("04.06 - empty arrays vs empty objects", t => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
-        a: {}
+        a: {},
       },
       { hungryForWhitespace: true }
     ),
@@ -1066,10 +1075,10 @@ t.test("04.06 - empty arrays vs empty objects", t => {
   t.same(
     compare(
       {
-        a: {}
+        a: {},
       },
       {
-        a: []
+        a: [],
       },
       { hungryForWhitespace: true }
     ),
@@ -1080,15 +1089,15 @@ t.test("04.06 - empty arrays vs empty objects", t => {
     compare(
       {
         a: {
-          b: []
+          b: [],
         },
-        x: "y"
+        x: "y",
       },
       {
         a: {
-          b: {}
+          b: {},
         },
-        x: "y"
+        x: "y",
       },
       { hungryForWhitespace: true }
     ),
@@ -1099,15 +1108,15 @@ t.test("04.06 - empty arrays vs empty objects", t => {
     compare(
       {
         a: {
-          b: {}
+          b: {},
         },
-        x: "y"
+        x: "y",
       },
       {
         a: {
-          b: []
+          b: [],
         },
-        x: "y"
+        x: "y",
       },
       { hungryForWhitespace: true }
     ),
@@ -1117,14 +1126,14 @@ t.test("04.06 - empty arrays vs empty objects", t => {
   t.end();
 });
 
-t.test("04.07 - empty arrays vs empty strings", t => {
+t.test("04.07 - empty arrays vs empty strings", (t) => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
-        a: ""
+        a: "",
       }
     ),
     false,
@@ -1133,10 +1142,10 @@ t.test("04.07 - empty arrays vs empty strings", t => {
   t.same(
     compare(
       {
-        a: ""
+        a: "",
       },
       {
-        a: []
+        a: [],
       }
     ),
     false,
@@ -1145,10 +1154,10 @@ t.test("04.07 - empty arrays vs empty strings", t => {
   t.same(
     compare(
       {
-        a: []
+        a: [],
       },
       {
-        a: ""
+        a: "",
       },
       { hungryForWhitespace: true }
     ),
@@ -1158,10 +1167,10 @@ t.test("04.07 - empty arrays vs empty strings", t => {
   t.same(
     compare(
       {
-        a: ""
+        a: "",
       },
       {
-        a: []
+        a: [],
       },
       { hungryForWhitespace: true }
     ),
@@ -1171,7 +1180,7 @@ t.test("04.07 - empty arrays vs empty strings", t => {
   t.end();
 });
 
-t.test("04.08 - two arrays, matches middle, string within", t => {
+t.test("04.08 - two arrays, matches middle, string within", (t) => {
   t.same(compare(["a", "b", "c", "d", "e"], ["b", "c", "d"]), true, "04.08.01");
   t.same(
     compare(["b", "c", "d"], ["a", "b", "c", "d", "e"]),
@@ -1205,7 +1214,7 @@ t.test("04.08 - two arrays, matches middle, string within", t => {
   t.end();
 });
 
-t.test("04.09 - two arrays, matches middle, objects within", t => {
+t.test("04.09 - two arrays, matches middle, objects within", (t) => {
   t.same(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
@@ -1298,11 +1307,11 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
         { b: "b" },
         { c1: "c1", c2: "c2" },
         { d1: "d1", d2: "d2" },
-        { e: "e" }
+        { e: "e" },
       ],
       [
         { c1: "c1", c2: "c2" },
-        { d1: "d1", d2: "d2" }
+        { d1: "d1", d2: "d2" },
       ]
     ),
     true,
@@ -1315,11 +1324,11 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
         { b: "b" },
         { c1: "c1", c2: "c2" },
         { d1: "d1", d2: "d2" },
-        { e: "e" }
+        { e: "e" },
       ],
       [
         { c2: "c2", c1: "c1" },
-        { d2: "d2", d1: "d1" }
+        { d2: "d2", d1: "d1" },
       ]
     ),
     true,
@@ -1332,11 +1341,11 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
         { b: "b" },
         { c1: "c1", c2: "c2" },
         { d2: "d2" },
-        { e: "e" }
+        { e: "e" },
       ],
       [
         { c2: "c2", c1: "c1" },
-        { d2: "d2", d1: "d1" }
+        { d2: "d2", d1: "d1" },
       ]
     ),
     false,
@@ -1349,7 +1358,7 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
         { b: "b" },
         { c1: "c1", c2: "c2" },
         { d1: "d1", d2: "d2" },
-        { e: "e" }
+        { e: "e" },
       ],
       [{ c1: "c1" }, { d2: "d2" }]
     ),
@@ -1363,7 +1372,7 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
         { b: "b" },
         { c1: "c1", c2: "c2" },
         { d1: "d1", d2: "d2" },
-        { e: "e" }
+        { e: "e" },
       ],
       [{ d2: "d2" }, { c1: "c1" }]
     ),
@@ -1373,7 +1382,7 @@ t.test("04.09 - two arrays, matches middle, objects within", t => {
   t.end();
 });
 
-t.test("04.10 - two arrays, one empty, string within", t => {
+t.test("04.10 - two arrays, one empty, string within", (t) => {
   t.same(compare(["a", "b", "c"], []), false, "04.10.01");
   t.not(
     compare(["a", "b", "c"], [], { verboseWhenMismatches: true }),
@@ -1392,11 +1401,11 @@ t.test("04.10 - two arrays, one empty, string within", t => {
 // Strings
 // =======
 
-t.test("05.01 - simple strings", t => {
+t.test("05.01 - simple strings", (t) => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     true,
     "05.01.01"
@@ -1404,7 +1413,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.01.02"
@@ -1413,7 +1422,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "05.01.03"
@@ -1421,7 +1430,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "05.01.04"
@@ -1430,7 +1439,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     true,
     "05.01.05"
@@ -1438,7 +1447,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.01.06"
@@ -1447,7 +1456,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "05.01.07"
@@ -1455,7 +1464,7 @@ t.test("05.01 - simple strings", t => {
   t.same(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "05.01.08"
@@ -1463,7 +1472,7 @@ t.test("05.01 - simple strings", t => {
   t.end();
 });
 
-t.test("05.02 - strings compared and fails", t => {
+t.test("05.02 - strings compared and fails", (t) => {
   t.same(compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "05.02.01");
   t.not(
     compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"], { verboseWhenMismatches: true }),
@@ -1473,14 +1482,14 @@ t.test("05.02 - strings compared and fails", t => {
   t.end();
 });
 
-t.test("05.03 - strings in arrays compared, positive", t => {
+t.test("05.03 - strings in arrays compared, positive", (t) => {
   t.same(compare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "05.03");
   t.end();
 });
 
 t.test(
   "05.04 - string against empty array or empty string within an array",
-  t => {
+  (t) => {
     t.same(compare(["aaaaa\nbbbbb"], []), false, "05.04.01");
     t.same(
       compare(["aaaaa\nbbbbb"], [], { hungryForWhitespace: true }),
@@ -1494,7 +1503,7 @@ t.test(
     );
     t.same(
       compare(["aaaaa\nbbbbb", "\t\t\t \n\n\n", "   "], ["\n\n\n"], {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }),
       true,
       "05.04.04"
@@ -1503,11 +1512,11 @@ t.test(
   }
 );
 
-t.test("05.05 - string vs empty space", t => {
+t.test("05.05 - string vs empty space", (t) => {
   t.same(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.05.01"
@@ -1515,7 +1524,7 @@ t.test("05.05 - string vs empty space", t => {
   t.same(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "05.05.02"
@@ -1523,7 +1532,7 @@ t.test("05.05 - string vs empty space", t => {
   t.same(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.05.03"
@@ -1531,7 +1540,7 @@ t.test("05.05 - string vs empty space", t => {
   t.same(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     false,
     "05.05.04"
@@ -1539,11 +1548,11 @@ t.test("05.05 - string vs empty space", t => {
   t.end();
 });
 
-t.test("05.06 - empty space vs different empty space", t => {
+t.test("05.06 - empty space vs different empty space", (t) => {
   t.same(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.06.01"
@@ -1551,7 +1560,7 @@ t.test("05.06 - empty space vs different empty space", t => {
   t.same(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "05.06.02"
@@ -1559,7 +1568,7 @@ t.test("05.06 - empty space vs different empty space", t => {
   t.same(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
-      hungryForWhitespace: false
+      hungryForWhitespace: false,
     }),
     false,
     "05.06.03"
@@ -1567,7 +1576,7 @@ t.test("05.06 - empty space vs different empty space", t => {
   t.same(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "05.06.04"
@@ -1575,7 +1584,7 @@ t.test("05.06 - empty space vs different empty space", t => {
   t.end();
 });
 
-t.test("05.07 - two arrays, one empty", t => {
+t.test("05.07 - two arrays, one empty", (t) => {
   t.same(
     compare(["\t\t\t\t\t\t      \n\n\n    \t\t\t"], []),
     false,
@@ -1592,7 +1601,7 @@ t.test("05.07 - two arrays, one empty", t => {
   );
   t.same(
     compare([], ["\t\t\t\t\t\t      \n\n\n    \t\t\t"], {
-      hungryForWhitespace: true
+      hungryForWhitespace: true,
     }),
     true,
     "05.07.03 - in root, defaults, opposite from #2"
@@ -1600,7 +1609,7 @@ t.test("05.07 - two arrays, one empty", t => {
   t.end();
 });
 
-t.test("05.08 - opts.matchStrictly", t => {
+t.test("05.08 - opts.matchStrictly", (t) => {
   t.same(
     compare(
       { a: "a" },
@@ -1626,21 +1635,21 @@ t.test("05.08 - opts.matchStrictly", t => {
 // Random
 // ======
 
-t.test("06.01 - null vs null", t => {
+t.test("06.01 - null vs null", (t) => {
   t.same(compare(null, null), true, "06.01.01");
   t.end();
 });
 
-t.test("06.02 - real-life #1", t => {
+t.test("06.02 - real-life #1", (t) => {
   t.same(
     compare(
       {
         type: "rule",
-        selectors: [".w2"]
+        selectors: [".w2"],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     false,
@@ -1650,11 +1659,11 @@ t.test("06.02 - real-life #1", t => {
     compare(
       {
         type: "rule",
-        selectors: [".w2"]
+        selectors: [".w2"],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       { hungryForWhitespace: true }
     ),
@@ -1665,11 +1674,11 @@ t.test("06.02 - real-life #1", t => {
     compare(
       {
         type: "rule",
-        selectors: [".w2"]
+        selectors: [".w2"],
       },
       {
         type: "rule",
-        selectors: ["\n\n\n     \t\t\t   \n\n\n"]
+        selectors: ["\n\n\n     \t\t\t   \n\n\n"],
       },
       { hungryForWhitespace: true }
     ),
@@ -1679,16 +1688,16 @@ t.test("06.02 - real-life #1", t => {
   t.end();
 });
 
-t.test("06.03 - real-life #2", t => {
+t.test("06.03 - real-life #2", (t) => {
   t.same(
     compare(
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     true,
@@ -1698,14 +1707,14 @@ t.test("06.03 - real-life #2", t => {
     compare(
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
-        hungryForWhitespace: false
+        hungryForWhitespace: false,
       }
     ),
     true,
@@ -1714,36 +1723,36 @@ t.test("06.03 - real-life #2", t => {
   t.end();
 });
 
-t.test("06.05 - function as input", t => {
+t.test("06.05 - function as input", (t) => {
   t.throws(() => {
     compare(f, f);
   }, /THROW_ID_03/g);
   t.end();
 });
 
-t.test("06.06 - sneaky function within object literal", t => {
+t.test("06.06 - sneaky function within object literal", (t) => {
   t.throws(() => {
     compare({ a: f }, { a: f2 });
   }, /THROW_ID_07/g);
   t.end();
 });
 
-t.test("06.07 - another sneaky function within object literal", t => {
+t.test("06.07 - another sneaky function within object literal", (t) => {
   t.throws(() => {
     compare({ a: f2 }, { a: f2 });
   }, /THROW_ID_07/g);
   t.end();
 });
 
-t.test("06.08 - real-life #3", t => {
+t.test("06.08 - real-life #3", (t) => {
   t.same(
     compare(
       {
         type: "stylesheet",
         stylesheet: {
           rules: [],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
         type: "stylesheet",
@@ -1768,37 +1777,37 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 80
+                              column: 80,
                             },
                             end: {
                               line: 1,
-                              column: 106
-                            }
-                          }
-                        }
+                              column: 106,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 61
+                          column: 61,
                         },
                         end: {
                           line: 1,
-                          column: 108
-                        }
-                      }
-                    }
+                          column: 108,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 30
+                      column: 30,
                     },
                     end: {
                       line: 1,
-                      column: 111
-                    }
-                  }
+                      column: 111,
+                    },
+                  },
                 },
                 {
                   type: "media",
@@ -1815,53 +1824,53 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 163
+                              column: 163,
                             },
                             end: {
                               line: 1,
-                              column: 189
-                            }
-                          }
-                        }
+                              column: 189,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 144
+                          column: 144,
                         },
                         end: {
                           line: 1,
-                          column: 191
-                        }
-                      }
-                    }
+                          column: 191,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 113
+                      column: 113,
                     },
                     end: {
                       line: 1,
-                      column: 194
-                    }
-                  }
-                }
+                      column: 194,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 1,
-                  column: 1
+                  column: 1,
                 },
                 end: {
                   line: 1,
-                  column: 195
-                }
-              }
-            }
+                  column: 195,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       }
     ),
     false,
@@ -1892,37 +1901,37 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 80
+                              column: 80,
                             },
                             end: {
                               line: 1,
-                              column: 106
-                            }
-                          }
-                        }
+                              column: 106,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 61
+                          column: 61,
                         },
                         end: {
                           line: 1,
-                          column: 108
-                        }
-                      }
-                    }
+                          column: 108,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 30
+                      column: 30,
                     },
                     end: {
                       line: 1,
-                      column: 111
-                    }
-                  }
+                      column: 111,
+                    },
+                  },
                 },
                 {
                   type: "media",
@@ -1939,60 +1948,60 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 163
+                              column: 163,
                             },
                             end: {
                               line: 1,
-                              column: 189
-                            }
-                          }
-                        }
+                              column: 189,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 144
+                          column: 144,
                         },
                         end: {
                           line: 1,
-                          column: 191
-                        }
-                      }
-                    }
+                          column: 191,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 113
+                      column: 113,
                     },
                     end: {
                       line: 1,
-                      column: 194
-                    }
-                  }
-                }
+                      column: 194,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 1,
-                  column: 1
+                  column: 1,
                 },
                 end: {
                   line: 1,
-                  column: 195
-                }
-              }
-            }
+                  column: 195,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
         type: "stylesheet",
         stylesheet: {
           rules: [],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       { hungryForWhitespace: false }
     ),
@@ -2024,37 +2033,37 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 80
+                              column: 80,
                             },
                             end: {
                               line: 1,
-                              column: 106
-                            }
-                          }
-                        }
+                              column: 106,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 61
+                          column: 61,
                         },
                         end: {
                           line: 1,
-                          column: 108
-                        }
-                      }
-                    }
+                          column: 108,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 30
+                      column: 30,
                     },
                     end: {
                       line: 1,
-                      column: 111
-                    }
-                  }
+                      column: 111,
+                    },
+                  },
                 },
                 {
                   type: "media",
@@ -2071,60 +2080,60 @@ t.test("06.08 - real-life #3", t => {
                           position: {
                             start: {
                               line: 1,
-                              column: 163
+                              column: 163,
                             },
                             end: {
                               line: 1,
-                              column: 189
-                            }
-                          }
-                        }
+                              column: 189,
+                            },
+                          },
+                        },
                       ],
                       position: {
                         start: {
                           line: 1,
-                          column: 144
+                          column: 144,
                         },
                         end: {
                           line: 1,
-                          column: 191
-                        }
-                      }
-                    }
+                          column: 191,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 1,
-                      column: 113
+                      column: 113,
                     },
                     end: {
                       line: 1,
-                      column: 194
-                    }
-                  }
-                }
+                      column: 194,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 1,
-                  column: 1
+                  column: 1,
                 },
                 end: {
                   line: 1,
-                  column: 195
-                }
-              }
-            }
+                  column: 195,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
         type: "stylesheet",
         stylesheet: {
           rules: [],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       { hungryForWhitespace: true }
     ),
@@ -2134,26 +2143,26 @@ t.test("06.08 - real-life #3", t => {
   t.end();
 });
 
-t.test("06.09 - real-life #3 reduced case", t => {
+t.test("06.09 - real-life #3 reduced case", (t) => {
   t.same(
     compare(
       {
         a: "a",
         b: {
           c: [],
-          d: []
-        }
+          d: [],
+        },
       },
       {
         a: "a",
         b: {
           c: [
             {
-              e: "e"
-            }
+              e: "e",
+            },
           ],
-          d: []
-        }
+          d: [],
+        },
       }
     ),
     false,
@@ -2166,18 +2175,18 @@ t.test("06.09 - real-life #3 reduced case", t => {
         b: {
           c: [
             {
-              e: "e"
-            }
+              e: "e",
+            },
           ],
-          d: []
-        }
+          d: [],
+        },
       },
       {
         a: "a",
         b: {
           c: [],
-          d: []
-        }
+          d: [],
+        },
       }
     ),
     false,
@@ -2189,19 +2198,19 @@ t.test("06.09 - real-life #3 reduced case", t => {
         a: "a",
         b: {
           c: [],
-          d: []
-        }
+          d: [],
+        },
       },
       {
         a: "a",
         b: {
           c: [
             {
-              e: "e"
-            }
+              e: "e",
+            },
           ],
-          d: []
-        }
+          d: [],
+        },
       },
       { hungryForWhitespace: true }
     ),
@@ -2215,18 +2224,18 @@ t.test("06.09 - real-life #3 reduced case", t => {
         b: {
           c: [
             {
-              e: "e"
-            }
+              e: "e",
+            },
           ],
-          d: []
-        }
+          d: [],
+        },
       },
       {
         a: "a",
         b: {
           c: [],
-          d: []
-        }
+          d: [],
+        },
       },
       { hungryForWhitespace: true }
     ),
@@ -2236,11 +2245,11 @@ t.test("06.09 - real-life #3 reduced case", t => {
   t.end();
 });
 
-t.test("06.10 - input args of mismatching type - easy win", t => {
+t.test("06.10 - input args of mismatching type - easy win", (t) => {
   t.same(
     compare(
       {
-        a: "a"
+        a: "a",
       },
       "a"
     ),
@@ -2249,7 +2258,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
   );
   t.same(
     compare("a", {
-      a: "a"
+      a: "a",
     }),
     false,
     "06.10.02"
@@ -2257,7 +2266,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
   t.same(
     compare(
       {
-        a: "a"
+        a: "a",
       },
       ["a"]
     ),
@@ -2266,7 +2275,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
   );
   t.same(
     compare(["a"], {
-      a: "a"
+      a: "a",
     }),
     false,
     "06.10.04"
@@ -2274,7 +2283,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
   t.same(
     compare(
       {
-        a: "a"
+        a: "a",
       },
       "a",
       { hungryForWhitespace: true }
@@ -2286,7 +2295,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
     compare(
       "a",
       {
-        a: "a"
+        a: "a",
       },
       { hungryForWhitespace: true }
     ),
@@ -2296,7 +2305,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
   t.same(
     compare(
       {
-        a: "a"
+        a: "a",
       },
       ["a"],
       { hungryForWhitespace: true }
@@ -2308,7 +2317,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
     compare(
       ["a"],
       {
-        a: "a"
+        a: "a",
       },
       { hungryForWhitespace: true }
     ),
@@ -2322,7 +2331,7 @@ t.test("06.10 - input args of mismatching type - easy win", t => {
 // Still works overloading
 // =======================
 
-t.test("07.01 - fourth argument doesn't break anything", t => {
+t.test("07.01 - fourth argument doesn't break anything", (t) => {
   t.same(
     compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }, null, true),
     false,
@@ -2340,16 +2349,16 @@ t.test("07.01 - fourth argument doesn't break anything", t => {
 // Just Loose Mode
 // ===============
 
-t.test("08.01 - hungryForWhitespace, empty strings within arrays", t => {
+t.test("08.01 - hungryForWhitespace, empty strings within arrays", (t) => {
   t.same(
     compare(
       {
         type: "rule",
-        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"]
+        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     false,
@@ -2359,14 +2368,14 @@ t.test("08.01 - hungryForWhitespace, empty strings within arrays", t => {
     compare(
       {
         type: "rule",
-        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"]
+        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"],
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     true,
@@ -2376,11 +2385,11 @@ t.test("08.01 - hungryForWhitespace, empty strings within arrays", t => {
     compare(
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
         type: "rule",
-        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"]
+        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"],
       }
     ),
     false,
@@ -2390,14 +2399,14 @@ t.test("08.01 - hungryForWhitespace, empty strings within arrays", t => {
     compare(
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       },
       {
         type: "rule",
-        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"]
+        selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     true,
@@ -2410,7 +2419,7 @@ t.test("08.01 - hungryForWhitespace, empty strings within arrays", t => {
 // Wildcard matching
 // =================
 
-t.test("09.01 - wildcards against values within object", t => {
+t.test("09.01 - wildcards against values within object", (t) => {
   t.same(
     compare({ a: "1", b: "2a", c: "3" }, { a: "1", b: "2*" }),
     false,
@@ -2483,7 +2492,7 @@ t.test("09.01 - wildcards against values within object", t => {
   t.end();
 });
 
-t.test("09.02 - wildcards against keys within object", t => {
+t.test("09.02 - wildcards against keys within object", (t) => {
   t.same(
     compare({ az: "1", bz: "2a", cz: "3" }, { "a*": "1", "b*": "2*" }),
     false,
@@ -2515,22 +2524,22 @@ t.test("09.02 - wildcards against keys within object", t => {
   t.end();
 });
 
-t.test("09.03 - wildcards in deeper levels", t => {
+t.test("09.03 - wildcards in deeper levels", (t) => {
   t.same(
     compare(
       {
         a: [
           {
-            b: "horn"
-          }
-        ]
+            b: "horn",
+          },
+        ],
       },
       {
         a: [
           {
-            b: "*orn"
-          }
-        ]
+            b: "*orn",
+          },
+        ],
       },
       { useWildcards: false }
     ),
@@ -2542,16 +2551,16 @@ t.test("09.03 - wildcards in deeper levels", t => {
       {
         a: [
           {
-            b: "horn"
-          }
-        ]
+            b: "horn",
+          },
+        ],
       },
       {
         a: [
           {
-            b: "*orn"
-          }
-        ]
+            b: "*orn",
+          },
+        ],
       },
       { useWildcards: true }
     ),
@@ -2561,25 +2570,25 @@ t.test("09.03 - wildcards in deeper levels", t => {
   t.end();
 });
 
-t.test("09.04 - wildcards in deeper levels within arrays", t => {
+t.test("09.04 - wildcards in deeper levels within arrays", (t) => {
   t.same(
     compare(
       {
         a: [
           {
-            z: "zzz"
+            z: "zzz",
           },
           {
-            b: "horn"
-          }
-        ]
+            b: "horn",
+          },
+        ],
       },
       {
         a: [
           {
-            b: "*orn"
-          }
-        ]
+            b: "*orn",
+          },
+        ],
       },
       { useWildcards: false }
     ),
@@ -2591,19 +2600,19 @@ t.test("09.04 - wildcards in deeper levels within arrays", t => {
       {
         a: [
           {
-            z: "zzz"
+            z: "zzz",
           },
           {
-            b: "horn"
-          }
-        ]
+            b: "horn",
+          },
+        ],
       },
       {
         a: [
           {
-            b: "*orn"
-          }
-        ]
+            b: "*orn",
+          },
+        ],
       },
       { useWildcards: true }
     ),
@@ -2615,19 +2624,19 @@ t.test("09.04 - wildcards in deeper levels within arrays", t => {
       {
         a: [
           {
-            z: "zzz"
+            z: "zzz",
           },
           {
-            b: "horn"
-          }
-        ]
+            b: "horn",
+          },
+        ],
       },
       {
         a: [
           {
-            b: "ccc"
-          }
-        ]
+            b: "ccc",
+          },
+        ],
       },
       { useWildcards: true }
     ),
@@ -2639,19 +2648,19 @@ t.test("09.04 - wildcards in deeper levels within arrays", t => {
       {
         a: [
           {
-            z: "zzz"
+            z: "zzz",
           },
           {
-            b: "ccc" // <---- !
-          }
-        ]
+            b: "ccc", // <---- !
+          },
+        ],
       },
       {
         a: [
           {
-            "*": "ccc"
-          }
-        ]
+            "*": "ccc",
+          },
+        ],
       },
       { useWildcards: false }
     ),
@@ -2663,19 +2672,19 @@ t.test("09.04 - wildcards in deeper levels within arrays", t => {
       {
         a: [
           {
-            z: "zzz"
+            z: "zzz",
           },
           {
-            b: "yyy" // <---- !
-          }
-        ]
+            b: "yyy", // <---- !
+          },
+        ],
       },
       {
         a: [
           {
-            "*": "ccc"
-          }
-        ]
+            "*": "ccc",
+          },
+        ],
       },
       { useWildcards: true }
     ),
@@ -2689,7 +2698,7 @@ t.test("09.04 - wildcards in deeper levels within arrays", t => {
 // Obj - Nested
 // ============
 
-t.test("10.01 - simple nested plain objects", t => {
+t.test("10.01 - simple nested plain objects", (t) => {
   t.same(
     compare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true
@@ -2697,7 +2706,7 @@ t.test("10.01 - simple nested plain objects", t => {
   t.end();
 });
 
-t.test("10.02 - simple nested plain objects + array wrapper", t => {
+t.test("10.02 - simple nested plain objects + array wrapper", (t) => {
   t.same(
     compare({ a: [{ d: "4" }], b: "2", c: "3" }, { a: [{ d: "4" }], b: "2" }),
     true
@@ -2705,7 +2714,7 @@ t.test("10.02 - simple nested plain objects + array wrapper", t => {
   t.end();
 });
 
-t.test("10.03 - simple nested plain objects, won't find", t => {
+t.test("10.03 - simple nested plain objects, won't find", (t) => {
   t.same(
     compare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false
@@ -2713,15 +2722,18 @@ t.test("10.03 - simple nested plain objects, won't find", t => {
   t.end();
 });
 
-t.test("10.04 - simple nested plain objects + array wrapper, won't find", t => {
-  t.same(
-    compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
-    false
-  );
-  t.end();
-});
+t.test(
+  "10.04 - simple nested plain objects + array wrapper, won't find",
+  (t) => {
+    t.same(
+      compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
+      false
+    );
+    t.end();
+  }
+);
 
-t.test("10.05 - obj, multiple nested levels, bigObj has more", t => {
+t.test("10.05 - obj, multiple nested levels, bigObj has more", (t) => {
   t.same(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
@@ -2732,7 +2744,7 @@ t.test("10.05 - obj, multiple nested levels, bigObj has more", t => {
   t.end();
 });
 
-t.test("10.06 - obj, multiple nested levels, equal", t => {
+t.test("10.06 - obj, multiple nested levels, equal", (t) => {
   t.same(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
@@ -2743,7 +2755,7 @@ t.test("10.06 - obj, multiple nested levels, equal", t => {
   t.end();
 });
 
-t.test("10.07 - obj, multiple nested levels, smallObj has more", t => {
+t.test("10.07 - obj, multiple nested levels, smallObj has more", (t) => {
   t.same(
     compare(
       { a: { b: { c: { d: [{ e: "1" }] } } } },
@@ -2754,16 +2766,16 @@ t.test("10.07 - obj, multiple nested levels, smallObj has more", t => {
   t.end();
 });
 
-t.test("10.08 - obj, deeper level doesn't match", t => {
+t.test("10.08 - obj, deeper level doesn't match", (t) => {
   t.same(compare({ a: { b: "c" } }, { a: { b: "d" } }), false);
   t.end();
 });
 
-t.test("10.09 - empty string and empty nested object - defaults", t => {
+t.test("10.09 - empty string and empty nested object - defaults", (t) => {
   t.same(
     compare("", {
       key2: [],
-      key3: [""]
+      key3: [""],
     }),
     false
   );
@@ -2772,16 +2784,16 @@ t.test("10.09 - empty string and empty nested object - defaults", t => {
 
 t.test(
   "10.10 - empty string and empty nested object - hungryForWhitespace",
-  t => {
+  (t) => {
     t.same(
       compare(
         "",
         {
           key2: [],
-          key3: [""]
+          key3: [""],
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       true
@@ -2790,16 +2802,16 @@ t.test(
   }
 );
 
-t.test("10.11 - empty string and empty nested object - matchStrictly", t => {
+t.test("10.11 - empty string and empty nested object - matchStrictly", (t) => {
   t.same(
     compare(
       "",
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
-        matchStrictly: true
+        matchStrictly: true,
       }
     ),
     false
@@ -2809,17 +2821,17 @@ t.test("10.11 - empty string and empty nested object - matchStrictly", t => {
 
 t.test(
   "10.12 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
-  t => {
+  (t) => {
     t.same(
       compare(
         "",
         {
           key2: [],
-          key3: [""]
+          key3: [""],
         },
         {
           hungryForWhitespace: true,
-          matchStrictly: true
+          matchStrictly: true,
         }
       ),
       false
@@ -2830,14 +2842,14 @@ t.test(
 
 t.test(
   "10.13 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
-  t => {
+  (t) => {
     t.same(
       compare(
         "",
         {},
         {
           hungryForWhitespace: true,
-          matchStrictly: true
+          matchStrictly: true,
         }
       ),
       true
@@ -2846,17 +2858,17 @@ t.test(
   }
 );
 
-t.test("10.14 - multiple keys", t => {
+t.test("10.14 - multiple keys", (t) => {
   t.same(
     compare(
       {
         key2: "\n\n \t \n \n    ",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       {
         key2: [],
-        key3: []
+        key3: [],
       }
     ),
     false
@@ -2864,20 +2876,20 @@ t.test("10.14 - multiple keys", t => {
   t.end();
 });
 
-t.test("10.15 - multiple keys", t => {
+t.test("10.15 - multiple keys", (t) => {
   t.same(
     compare(
       {
         key2: "\n\n \t \n \n    ",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       {
         key2: [],
-        key3: []
+        key3: [],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     false

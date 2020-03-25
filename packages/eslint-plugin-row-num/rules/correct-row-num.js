@@ -4,12 +4,12 @@ const fixRowNums = require("js-row-num");
 const getDocumentationUrl = require("./utils/get-docs-url");
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
-const create = context => {
+const create = (context) => {
   // console.log(
   //   `009 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
   // );
   return {
-    CallExpression: function(node) {
+    CallExpression: function (node) {
       // console.log(stringify(node, null, 4));
       // console.log(`014 node.callee.type = ${node.callee.type}`);
       if (
@@ -25,7 +25,7 @@ const create = context => {
         Array.isArray(node.arguments) &&
         node.arguments.length
       ) {
-        node.arguments.forEach(arg => {
+        node.arguments.forEach((arg) => {
           // console.log(`029 arg.raw: ${arg.raw}`);
           // console.log(
           //   `031 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
@@ -44,18 +44,18 @@ const create = context => {
               fixRowNums(arg.raw, {
                 overrideRowNum: arg.loc.start.line,
                 returnRangesOnly: false,
-                extractedLogContentsWereGiven: true
+                extractedLogContentsWereGiven: true,
               })
           ) {
             // console.log(`050 we have console.log with single or double quotes`);
             context.report({
               node,
               messageId: "correctRowNum",
-              fix: fixerObj => {
+              fix: (fixerObj) => {
                 const ranges = fixRowNums(arg.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true, // <------ now we request ranges
-                  extractedLogContentsWereGiven: true
+                  extractedLogContentsWereGiven: true,
                 });
                 // console.log(
                 //   `061 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
@@ -74,7 +74,7 @@ const create = context => {
                 // console.log(`074 arg.start = ${arg.start}`);
                 const preppedRanges = [
                   arg.start + ranges[0][0],
-                  arg.start + ranges[0][1]
+                  arg.start + ranges[0][1],
                 ];
                 // console.log(
                 //   `080 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
@@ -84,7 +84,7 @@ const create = context => {
                 //   )}`
                 // );
                 return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
-              }
+              },
             });
           } else if (
             arg.type === "TemplateLiteral" &&
@@ -97,7 +97,7 @@ const create = context => {
               fixRowNums(arg.quasis[0].value.raw, {
                 overrideRowNum: arg.loc.start.line,
                 returnRangesOnly: false,
-                extractedLogContentsWereGiven: true
+                extractedLogContentsWereGiven: true,
               })
           ) {
             // console.log(`103 we have console.log with backticks`);
@@ -112,23 +112,23 @@ const create = context => {
             context.report({
               node,
               messageId: "correctRowNum",
-              fix: fixerObj => {
+              fix: (fixerObj) => {
                 const ranges = fixRowNums(arg.quasis[0].value.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true, // <------ now we request ranges
-                  extractedLogContentsWereGiven: true
+                  extractedLogContentsWereGiven: true,
                 });
                 const preppedRanges = [
                   arg.start + 1 + ranges[0][0],
-                  arg.start + 1 + ranges[0][1]
+                  arg.start + 1 + ranges[0][1],
                 ];
                 return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
-              }
+              },
             });
           }
         });
       }
-    }
+    },
   };
 };
 
@@ -136,12 +136,12 @@ module.exports = {
   create,
   meta: {
     docs: {
-      url: getDocumentationUrl(__filename)
+      url: getDocumentationUrl(__filename),
     },
     type: "suggestion",
     messages: {
-      correctRowNum: "Update the row number."
+      correctRowNum: "Update the row number.",
     },
-    fixable: "code" // or "code" or "whitespace"
-  }
+    fixable: "code", // or "code" or "whitespace"
+  },
 };

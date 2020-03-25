@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept, error level 0`,
-  t => {
+  (t) => {
     const str = `<form>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 0
-      }
+        "attribute-validate-accept": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept, error level 1`,
-  t => {
+  (t) => {
     const str = `<input>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 1
-      }
+        "attribute-validate-accept": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept, error level 2`,
-  t => {
+  (t) => {
     const str = `<input>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`,
-  t => {
+  (t) => {
     const str = `<input accept='image/*'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, file extension`,
-  t => {
+  (t) => {
     const str = `<input accept=".jpg">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -87,13 +87,13 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, spelled out type`,
-  t => {
+  (t) => {
     const str = `<input accept="text/css">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -103,13 +103,13 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the list`,
-  t => {
+  (t) => {
     const str = `<input accept="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -122,13 +122,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<input accept=" .jpg">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<input accept=".jpg">`);
     t.match(messages, [
@@ -138,9 +138,9 @@ t.test(
         idxTo: 16,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[15, 16]]
-        }
-      }
+          ranges: [[15, 16]],
+        },
+      },
     ]);
     t.end();
   }
@@ -148,13 +148,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<input accept=".jpg ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<input accept=".jpg">`);
     t.match(messages, [
@@ -164,9 +164,9 @@ t.test(
         idxTo: 20,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[19, 20]]
-        }
-      }
+          ranges: [[19, 20]],
+        },
+      },
     ]);
     t.end();
   }
@@ -174,13 +174,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<input accept="  .jpg \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<input accept=".jpg">`);
     t.match(messages, [
@@ -192,10 +192,10 @@ t.test(
         fix: {
           ranges: [
             [15, 17],
-            [21, 23]
-          ]
-        }
-      }
+            [21, 23],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -203,13 +203,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<input accept="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -219,8 +219,8 @@ t.test(
         idxFrom: 15,
         idxTo: 18,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -231,13 +231,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - spaces after comma`,
-  t => {
+  (t) => {
     const str = `<input accept=".jpg, .gif, .png">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<input accept=".jpg,.gif,.png">`);
     t.match(messages, [
@@ -247,8 +247,8 @@ t.test(
         idxTo: 21,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[20, 21]]
-        }
+          ranges: [[20, 21]],
+        },
       },
       {
         ruleId: "attribute-validate-accept",
@@ -256,9 +256,9 @@ t.test(
         idxTo: 27,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[26, 27]]
-        }
-      }
+          ranges: [[26, 27]],
+        },
+      },
     ]);
     t.end();
   }
@@ -266,13 +266,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<input accept="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -282,8 +282,8 @@ t.test(
         idxFrom: 15,
         idxTo: 22,
         message: `Unrecognised value: "tralala".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -291,13 +291,13 @@ t.test(
 
 t.test(
   `03.03 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - legit string with extras`,
-  t => {
+  (t) => {
     const str = `<input accept="..jpg">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -307,8 +307,8 @@ t.test(
         idxFrom: 15,
         idxTo: 20,
         message: `Unrecognised value: "..jpg".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -319,13 +319,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div accept=".jpg">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -335,8 +335,8 @@ t.test(
         idxFrom: 5,
         idxTo: 18,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -344,13 +344,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz accept=".jpg" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-accept": 2
-      }
+        "attribute-validate-accept": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -360,8 +360,8 @@ t.test(
         idxFrom: 5,
         idxTo: 18,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

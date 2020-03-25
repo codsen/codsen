@@ -5,7 +5,7 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOnblur(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOnblur() ███████████████████████████████████████`
       );
@@ -33,7 +33,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
             "input",
             "label",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -41,7 +41,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // validate the script value
@@ -57,17 +57,17 @@ function attributeValidateOnblur(context, ...originalOpts) {
             )}`
           );
 
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`061 attributeValidateOnblur(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onblur"
+                ruleId: "attribute-validate-onblur",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

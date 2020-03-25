@@ -17,7 +17,7 @@ function applyFixes(str, messages, offset = 0) {
         const minusOffset = curr.fix.ranges.map(([from, to, toAdd]) => [
           from - offset,
           to - offset,
-          toAdd
+          toAdd,
         ]);
         return acc.concat(minusOffset);
       }

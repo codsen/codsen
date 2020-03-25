@@ -16,18 +16,18 @@ function isStr(something) {
 globby([
   path.resolve("../", "**/package.json"),
   "!**/node_modules/**",
-  "!**/test/**"
+  "!**/test/**",
 ])
-  .then(arr =>
-    pMap(arr, path => {
+  .then((arr) =>
+    pMap(arr, (path) => {
       return fsp
         .readFile(path)
-        .then(contents => (contents ? JSON.parse(contents) : {}));
+        .then((contents) => (contents ? JSON.parse(contents) : {}));
     })
   )
-  .then(objectsArr => {
+  .then((objectsArr) => {
     // console.log(objectsArr.length);
-    t.test("validate the incoming parsed package.json count", t => {
+    t.test("validate the incoming parsed package.json count", (t) => {
       t.ok(
         objectsArr.length,
         `${objectsArr.length} package.json objects are parsed and fed here`
@@ -51,7 +51,7 @@ globby([
         try {
           calculated = JSON.parse(amended);
         } catch (e) {
-          t.test(`failure in set()`, t => {
+          t.test(`failure in set()`, (t) => {
             t.fail(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -65,7 +65,7 @@ globby([
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
         } catch (e) {
-          t.test(`failure in objectPath.set():`, t => {
+          t.test(`failure in objectPath.set():`, (t) => {
             t.fail(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -80,7 +80,7 @@ globby([
           // Object-path won't work while this program will but still we can't compare.
           t.test(
             `${idx} - ${innerObj.path} - our set() is identical to object-path.set()`,
-            t => {
+            (t) => {
               t.same(
                 calculated,
                 editedRefObj,
@@ -97,6 +97,6 @@ globby([
       });
     }
   })
-  .catch(e => {
+  .catch((e) => {
     console.log(`something wrong happened: ${e}`);
   });

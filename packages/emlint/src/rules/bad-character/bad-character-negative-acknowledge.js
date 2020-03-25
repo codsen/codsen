@@ -6,7 +6,7 @@
 
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",
@@ -14,11 +14,11 @@ function badCharacterNegativeAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

@@ -35,11 +35,11 @@ function mixer(ref) {
     Array.isArray(ref.stripHtmlButIgnoreTags) &&
     ref.stripHtmlButIgnoreTags.length
   ) {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.stripHtmlButIgnoreTags = clone(ref.stripHtmlButIgnoreTags);
     });
   } else {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.stripHtmlButIgnoreTags = clone(defaultOpts.stripHtmlButIgnoreTags);
     });
   }
@@ -50,31 +50,31 @@ function mixer(ref) {
     Array.isArray(ref.stripHtmlAddNewLine) &&
     ref.stripHtmlAddNewLine.length
   ) {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.stripHtmlAddNewLine = clone(ref.stripHtmlAddNewLine);
     });
   } else {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.stripHtmlAddNewLine = clone(defaultOpts.stripHtmlAddNewLine);
     });
   }
   // restore keys in eol:
   if (ref && ref.eol) {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.eol = ref.eol;
     });
   } else {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.eol = defaultOpts.eol;
     });
   }
   // restore keys in cb:
   if (ref && ref.cb) {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.cb = ref.cb;
     });
   } else {
-    res.forEach(obj => {
+    res.forEach((obj) => {
       obj.cb = defaultOpts.cb;
     });
   }
@@ -93,7 +93,7 @@ function det(t, n, src, opts = {}) {
   if (!n) {
     const resolvedOpts = Object.assign({}, exportedOptsObj, opts);
     const tempObj = {};
-    Object.keys(resolvedOpts).forEach(key => {
+    Object.keys(resolvedOpts).forEach((key) => {
       if (
         !["stripHtmlButIgnoreTags", "stripHtmlAddNewLine", "cb"].includes(key)
       ) {
@@ -101,7 +101,7 @@ function det(t, n, src, opts = {}) {
       }
     });
 
-    Object.keys(tempObj).forEach(key => {
+    Object.keys(tempObj).forEach((key) => {
       if (key === "eol") {
         //
         //

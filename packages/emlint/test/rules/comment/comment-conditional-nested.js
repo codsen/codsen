@@ -13,13 +13,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!--tralala--><![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.01.01");
     t.match(
@@ -31,7 +31,7 @@ t.test(
           idxFrom: 13,
           idxTo: 17,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -39,8 +39,8 @@ t.test(
           idxFrom: 24,
           idxTo: 27,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.01.02"
     );
@@ -51,15 +51,15 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
     z <!--tralala--> y
 <![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.02.01");
     t.match(
@@ -71,7 +71,7 @@ t.test(
           idxFrom: 20,
           idxTo: 24,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -79,8 +79,8 @@ t.test(
           idxFrom: 31,
           idxTo: 34,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.02.02"
     );
@@ -91,15 +91,15 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
     x <!--tralala--> z <!--tralala--> y
 <![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.03.01");
     t.match(
@@ -111,7 +111,7 @@ t.test(
           idxFrom: 20,
           idxTo: 24,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -119,7 +119,7 @@ t.test(
           idxFrom: 31,
           idxTo: 34,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -127,7 +127,7 @@ t.test(
           idxFrom: 37,
           idxTo: 41,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -135,8 +135,8 @@ t.test(
           idxFrom: 48,
           idxTo: 51,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.03.02"
     );
@@ -147,7 +147,7 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]>
     <img src="fallback"/>
 
@@ -157,8 +157,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "01.04.01");
     t.match(
@@ -170,7 +170,7 @@ t.test(
           idxFrom: 41,
           idxTo: 54,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -178,8 +178,8 @@ t.test(
           idxFrom: 55,
           idxTo: 67,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "01.04.02"
     );
@@ -199,13 +199,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!--><!--tralala--><!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "02.01.01");
     t.match(
@@ -217,7 +217,7 @@ t.test(
           idxFrom: 18,
           idxTo: 22,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -225,8 +225,8 @@ t.test(
           idxFrom: 29,
           idxTo: 32,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "02.01.02"
     );
@@ -237,15 +237,15 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!-->
     z <!--tralala--> y
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "02.02.01");
     t.match(
@@ -257,7 +257,7 @@ t.test(
           idxFrom: 25,
           idxTo: 29,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -265,8 +265,8 @@ t.test(
           idxFrom: 36,
           idxTo: 39,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "02.02.02"
     );
@@ -277,15 +277,15 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!-->
     x <!--tralala--> z <!--tralala--> y
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "02.03.01");
     t.match(
@@ -297,7 +297,7 @@ t.test(
           idxFrom: 25,
           idxTo: 29,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -305,7 +305,7 @@ t.test(
           idxFrom: 36,
           idxTo: 39,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -313,7 +313,7 @@ t.test(
           idxFrom: 42,
           idxTo: 46,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -321,8 +321,8 @@ t.test(
           idxFrom: 53,
           idxTo: 56,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "02.03.02"
     );
@@ -333,7 +333,7 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`,
-  t => {
+  (t) => {
     const str = `<!--[if mso]><!-->
     <img src="fallback"/>
 
@@ -343,8 +343,8 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-conditional-nested": 2
-      }
+        "comment-conditional-nested": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str, "02.04.01");
     t.match(
@@ -356,7 +356,7 @@ t.test(
           idxFrom: 46,
           idxTo: 59,
           message: `Don't nest comments.`,
-          fix: null
+          fix: null,
         },
         {
           ruleId: "comment-conditional-nested",
@@ -364,8 +364,8 @@ t.test(
           idxFrom: 60,
           idxTo: 72,
           message: `Don't nest comments.`,
-          fix: null
-        }
+          fix: null,
+        },
       ],
       "02.04.02"
     );

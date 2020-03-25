@@ -19,7 +19,7 @@ const defaultOpts = {
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"],
-  cb: null
+  cb: null,
 };
 
 const leftSingleQuote = "\u2018";
@@ -391,7 +391,7 @@ const latinAndNonNonLatinRanges = [
   [173824, 177972],
   [177972, 177984],
   [177984, 178205],
-  [178205, 194560]
+  [178205, 194560],
 ];
 
 // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
@@ -409,7 +409,7 @@ const voidTags = [
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ];
 
 // -----------------------------------------------------------------------------
@@ -428,7 +428,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
     );
     // split, check, encode conditionally
     return Array.from(inputString)
-      .map(char => {
+      .map((char) => {
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
         console.log(
@@ -441,18 +441,18 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
         if (
           char.charCodeAt(0) < 880 ||
           latinAndNonNonLatinRanges.some(
-            rangeArr =>
+            (rangeArr) =>
               char.charCodeAt(0) > rangeArr[0] &&
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
           console.log(
             `450 doConvertEntities() - encoding to "${he.encode(char, {
-              useNamedReferences: true
+              useNamedReferences: true,
             })}"`
           );
           return he.encode(char, {
-            useNamedReferences: true
+            useNamedReferences: true,
           });
         }
         return char;
@@ -462,7 +462,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
   console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
   // else, if dontEncodeNonLatin if off, just encode everything:
   return he.encode(inputString, {
-    useNamedReferences: true
+    useNamedReferences: true,
   });
 }
 
@@ -540,5 +540,5 @@ export {
   rawNbsp,
   rawhairspace,
   rawEllipsis,
-  widowRegexTest
+  widowRegexTest,
 };

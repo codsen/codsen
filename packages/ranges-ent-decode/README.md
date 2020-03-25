@@ -92,7 +92,7 @@ If you made more complex tools (like [Detergent](https://www.npmjs.com/package/d
 ```js
 const ranges = [
   [1, 2, "add this"],
-  [3, 5] // <---- will just remove the slice from 3rd to 5th index
+  [3, 5], // <---- will just remove the slice from 3rd to 5th index
 ];
 ```
 

@@ -84,7 +84,7 @@ That's two numbers to put into an array. They mark a _slice_ of string. Let's ad
 ```js
 [
   [10, 15], // <-- delete this string slice range
-  [18, 20, "replace with this"] // <-- delete from 18th to 20th, then insert string there
+  [18, 20, "replace with this"], // <-- delete from 18th to 20th, then insert string there
 ];
 ```
 
@@ -105,7 +105,7 @@ console.log("slice 2: >>>" + str.slice(18, 28) + "<<<\n");
 // then instruct this library to replace each with `zzz` and `yyy`:
 str = apply(str, [
   [4, 13, "zzz"],
-  [18, 28, "yyy"]
+  [18, 28, "yyy"],
 ]);
 console.log("str = " + str);
 // => 'aaa zzz bbb yyy ccc',
@@ -145,7 +145,7 @@ For example,
 ```js
 [
   [10, 15], // <-- deletion
-  [18, 20, "replace with this"] // <-- replacement
+  [18, 20, "replace with this"], // <-- replacement
 ];
 ```
 

@@ -12,33 +12,32 @@ const m = crush;
 const websitesToTest = [
   [
     "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/",
-    "html-crush on GitLab"
+    "html-crush on GitLab",
   ],
   ["https://detergent.io", "Detergent.io website"],
   [
     "https://en.wikipedia.org/wiki/Doughnut",
-    "the Wikipedia page about doughnuts"
+    "the Wikipedia page about doughnuts",
   ],
   ["http://www.muji.eu/", "Muji EU online store"],
   ["https://www.mozilla.org/en-GB/", "Mozilla UK homepage"],
-  ["https://sjhgldgldgjdlfgldgldflkgjd.com", "Non-existent URL"]
+  ["https://sjhgldgldgjdlfgldgldflkgjd.com", "Non-existent URL"],
 ];
 
 t.test(
   `08.01-0${
     websitesToTest.length
   } - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`}`,
-  async t => {
+  async (t) => {
     await pMap(websitesToTest, (websiteArr, rowNum) =>
       fetch(websiteArr[0])
-        .then(res => res.text())
-        .then(sourceStr => {
+        .then((res) => res.text())
+        .then((sourceStr) => {
           t.ok(
             typeof sourceStr === "string" && sourceStr.length > 0,
-            `08.0${rowNum +
-              1}.01 - fetched non-empty, valid HTML source from "${
-              websiteArr[0]
-            }"`
+            `08.0${
+              rowNum + 1
+            }.01 - fetched non-empty, valid HTML source from "${websiteArr[0]}"`
           );
           // test #1 - indentations removed
           // we allow website fetch to fail, but not errors during minification
@@ -46,7 +45,7 @@ t.test(
           try {
             minifiedResult1 = m(sourceStr, {
               removeIndentations: true,
-              removeLineBreaks: false
+              removeLineBreaks: false,
             });
           } catch (error) {
             t.fail(
@@ -61,7 +60,7 @@ t.test(
             }% size savings)`
           );
           console.log(
-            `064 - 0${rowNum + 1}.03 - ${
+            `063 - 0${rowNum + 1}.03 - ${
               websiteArr[1]
             } - only indentations removed: ${
               minifiedResult1.log.percentageReducedOfOriginal
@@ -74,7 +73,7 @@ t.test(
           try {
             minifiedResult2 = m(sourceStr, {
               removeLineBreaks: true,
-              lineLengthLimit: 0
+              lineLengthLimit: 0,
             });
           } catch (error) {
             t.fail(
@@ -89,14 +88,14 @@ t.test(
             }% size savings)`
           );
           console.log(
-            `092 - 0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
+            `091 - 0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
               minifiedResult2.log.percentageReducedOfOriginal
             }% size savings`
           );
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(
-            `099 - 0${rowNum + 1}.xx - ${
+            `098 - 0${rowNum + 1}.xx - ${
               websiteArr[1]
             } - ${`\u001b[${31}m${`could not fetch the web page! Moving on...`}\u001b[${39}m`}`
           );

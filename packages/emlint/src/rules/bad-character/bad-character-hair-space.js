@@ -6,7 +6,7 @@
 
 function badCharacterHairSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8202) {
         context.report({
           ruleId: "bad-character-hair-space",
@@ -14,11 +14,11 @@ function badCharacterHairSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-          }
+            ranges: [[i, i + 1, " "]], // replace with a normal space
+          },
         });
       }
-    }
+    },
   };
 }
 

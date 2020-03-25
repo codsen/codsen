@@ -6,10 +6,10 @@ const cparser = require("../dist/codsen-parser.cjs");
 
 t.test(
   `01.01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`,
-  t => {
+  (t) => {
     const gatheredErr = [];
     const ast = cparser("</br>", {
-      errCb: incoming => gatheredErr.push(incoming)
+      errCb: (incoming) => gatheredErr.push(incoming),
     });
     t.match(
       ast,
@@ -29,8 +29,8 @@ t.test(
           esp: [],
           kind: null,
           attribs: [],
-          children: []
-        }
+          children: [],
+        },
       ],
       "01.01.01"
     );
@@ -43,8 +43,8 @@ t.test(
           ruleId: `tag-void-frontal-slash`,
           idxFrom: 0,
           idxTo: 5,
-          fix: { ranges: [[1, 2]] }
-        }
+          fix: { ranges: [[1, 2]] },
+        },
       ],
       "01.01.03"
     );

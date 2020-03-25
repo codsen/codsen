@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCoords(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCoords() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateCoords(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           console.log(
@@ -43,7 +43,9 @@ function attributeValidateCoords(context, ...opts) {
           if (
             !Array.isArray(node.parent.attribs) ||
             !node.parent.attribs.length ||
-            !node.parent.attribs.some(attrObj => attrObj.attribName === "shape")
+            !node.parent.attribs.some(
+              (attrObj) => attrObj.attribName === "shape"
+            )
           ) {
             // enforce "shape" attribute
             context.report({
@@ -51,15 +53,15 @@ function attributeValidateCoords(context, ...opts) {
               idxFrom: node.parent.start,
               idxTo: node.parent.end,
               message: `Missing "shape" attribute.`,
-              fix: null
+              fix: null,
             });
           } else {
             // extract "shape" attr's value
             const shapeAttr = node.parent.attribs.filter(
-              attrObj => attrObj.attribName === "shape"
+              (attrObj) => attrObj.attribName === "shape"
             )[0];
             console.log(
-              `062 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`shapeAttr`}\u001b[${39}m`} = ${JSON.stringify(
+              `064 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`shapeAttr`}\u001b[${39}m`} = ${JSON.stringify(
                 shapeAttr,
                 null,
                 4
@@ -89,16 +91,16 @@ function attributeValidateCoords(context, ...opts) {
                 canBeCommaSeparated: true,
                 enforceCount,
                 type: "integer",
-                customGenericValueError: "Should be integer, no units."
+                customGenericValueError: "Should be integer, no units.",
               }
             );
 
             if (Array.isArray(errorArr) && errorArr.length) {
-              errorArr.forEach(errorObj => {
-                console.log(`098 RAISE ERROR`);
+              errorArr.forEach((errorObj) => {
+                console.log(`100 RAISE ERROR`);
                 context.report(
                   Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-coords"
+                    ruleId: "attribute-validate-coords",
                   })
                 );
               });
@@ -106,7 +108,7 @@ function attributeValidateCoords(context, ...opts) {
           }
         }
       }
-    }
+    },
   };
 }
 

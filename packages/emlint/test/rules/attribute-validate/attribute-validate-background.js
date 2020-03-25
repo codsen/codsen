@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 0`,
-  t => {
+  (t) => {
     const str = `<body class="z"><div id="u">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 0
-      }
+        "attribute-validate-background": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 1`,
-  t => {
+  (t) => {
     const str = `<body class="z"><div id="u">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 1
-      }
+        "attribute-validate-background": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 2`,
-  t => {
+  (t) => {
     const str = `<body class="z"><div id="u">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
+  (t) => {
     const str = `<body background='https://codsen.com/bg.png'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -90,13 +90,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div background='https://codsen.com/spacer.gif'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -106,8 +106,8 @@ t.test(
         idxFrom: 5,
         idxTo: 47,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -115,13 +115,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz background="https://codsen.com/spacer.gif" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -131,8 +131,8 @@ t.test(
         idxFrom: 5,
         idxTo: 47,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -143,13 +143,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`wrong value`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<body background="zz.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -159,8 +159,8 @@ t.test(
         idxFrom: 18,
         idxTo: 21,
         message: `Should be an URI.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -168,13 +168,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches whitespace on legit URL`,
-  t => {
+  (t) => {
     const str = `<body background=" https://codsen.com/spacer.gif">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     t.equal(
       applyFixes(str, messages),
@@ -187,9 +187,9 @@ t.test(
         idxTo: 19,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[18, 19]]
-        }
-      }
+          ranges: [[18, 19]],
+        },
+      },
     ]);
     t.end();
   }
@@ -197,13 +197,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - not-a-URL and whitespace`,
-  t => {
+  (t) => {
     const str = `<body background=" zz. ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 2
-      }
+        "attribute-validate-background": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<body background="zz.">`);
     t.match(messages, [
@@ -215,17 +215,17 @@ t.test(
         fix: {
           ranges: [
             [18, 19],
-            [22, 23]
-          ]
-        }
+            [22, 23],
+          ],
+        },
       },
       {
         ruleId: "attribute-validate-background",
         idxFrom: 19,
         idxTo: 22,
         message: `Should be an URI.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -236,13 +236,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - baseline - rule off`,
-  t => {
+  (t) => {
     const str = `<body background="spacer.gif">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": 0
-      }
+        "attribute-validate-background": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, []);
@@ -277,13 +277,13 @@ t.test(
 
 t.test(
   `04.03 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK`,
-  t => {
+  (t) => {
     const str = `<body background="spacer.gif">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": [2, "localOK"]
-      }
+        "attribute-validate-background": [2, "localOK"],
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, []);
@@ -293,13 +293,13 @@ t.test(
 
 t.test(
   `04.04 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK, dot missing`,
-  t => {
+  (t) => {
     const str = `<body background="spacergif.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-background": [2, "localOK"]
-      }
+        "attribute-validate-background": [2, "localOK"],
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -309,8 +309,8 @@ t.test(
         idxFrom: 18,
         idxTo: 28,
         message: `Should be an URI.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }

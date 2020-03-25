@@ -33,7 +33,7 @@ Consume via a `require()`:
 const {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength
+  notEmailFriendlyMaxLength,
 } = require("html-entities-not-email-friendly");
 ```
 
@@ -43,7 +43,7 @@ or as an ES Module:
 import {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength
+  notEmailFriendlyMaxLength,
 } from "html-entities-not-email-friendly";
 ```
 
@@ -58,7 +58,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 const {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength
+  notEmailFriendlyMaxLength,
 } = htmlEntitiesNotEmailFriendly;
 ```
 

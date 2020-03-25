@@ -13,8 +13,8 @@ linter.setMaxListeners(Infinity);
 const testme = () =>
   linter.verify(str, {
     rules: {
-      "tag-space-after-opening-bracket": 2
-    }
+      "tag-space-after-opening-bracket": 2,
+    },
   });
 
 // action

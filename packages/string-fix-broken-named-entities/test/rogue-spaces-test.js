@@ -3,7 +3,7 @@ const fix = require("../dist/string-fix-broken-named-entities.cjs");
 const {
   decode,
   uncertain,
-  allNamedEntities
+  allNamedEntities,
 } = require("all-named-html-entities");
 
 // -----------------------------------------------------------------------------
@@ -14,10 +14,11 @@ t.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     Object.keys(allNamedEntities)
       .filter(
-        entity => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
+        (entity) =>
+          entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
       )
       .forEach((singleEntity, i, arr) => {
         //
@@ -41,7 +42,7 @@ t.test(
           // }
           t.same(
             fix(entityWithSpaceInserted, {
-              cb: obj => obj
+              cb: (obj) => obj,
             }),
             [
               {
@@ -50,8 +51,8 @@ t.test(
                 rangeFrom: 0,
                 rangeTo: singleEntity.length + 3,
                 rangeValEncoded: `&${singleEntity};`,
-                rangeValDecoded: decode(`&${singleEntity};`)
-              }
+                rangeValDecoded: decode(`&${singleEntity};`),
+              },
             ],
             `"${entityWithSpaceInserted}" - 03; ${i + 1}/${arr.length}`
           );

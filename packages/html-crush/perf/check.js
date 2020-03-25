@@ -14,7 +14,7 @@ const dummyHTML = fs.readFileSync(
 const { crush } = require("../");
 const testme = () =>
   crush(dummyHTML, {
-    removeLineBreaks: true
+    removeLineBreaks: true,
   });
 
 // action

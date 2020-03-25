@@ -6,7 +6,7 @@ import isMediaD from "is-media-descriptor";
 
 function attributeValidateMedia(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMedia() ███████████████████████████████████████`
       );
@@ -29,7 +29,7 @@ function attributeValidateMedia(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -62,19 +62,19 @@ function attributeValidateMedia(context, ...opts) {
         errorArr
           .concat(
             isMediaD(node.attribValue.slice(charStart, charEnd), {
-              offset: node.attribValueStartsAt
+              offset: node.attribValueStartsAt,
             })
           )
-          .forEach(errorObj => {
+          .forEach((errorObj) => {
             console.log(`069 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-media"
+                ruleId: "attribute-validate-media",
               })
             );
           });
       }
-    }
+    },
   };
 }
 

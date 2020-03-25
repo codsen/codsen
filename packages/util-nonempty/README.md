@@ -85,7 +85,7 @@ nonEmpty({ a: "a" });
 nonEmpty({});
 // => false
 
-var f = function() {
+var f = function () {
   return "z";
 };
 nonEmpty(f);

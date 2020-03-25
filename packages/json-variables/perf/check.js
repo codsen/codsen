@@ -14,12 +14,12 @@ const testme = () =>
         "something",
         "Some text %%_subtitle_%%",
         "%%_submarine_%%",
-        "anything"
+        "anything",
       ],
       title_data: {
         subtitle: "text",
-        submarine: "ship"
-      }
+        submarine: "ship",
+      },
     },
     {
       heads: "%%_",
@@ -30,7 +30,7 @@ const testme = () =>
       wrapTailsWith: "}",
       dontWrapVars: ["*zzz", "*le", "*yyy"],
       preventDoubleWrapping: true,
-      wrapGlobalFlipSwitch: true
+      wrapGlobalFlipSwitch: true,
     }
   );
 

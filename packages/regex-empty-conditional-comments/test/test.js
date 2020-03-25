@@ -29,10 +29,10 @@ const fixture = [
   // non-Outlook-only:
   `<!--[if !mso]><!-- -->
 
-<!--<![endif]-->`
+<!--<![endif]-->`,
 ];
 
-t.test("matches each of comments", t => {
+t.test("matches each of comments", (t) => {
   for (const comment of fixture) {
     t.match(comment, r());
   }
@@ -72,9 +72,9 @@ zzz
   t.end();
 });
 
-t.test("returns comment on match", t => {
+t.test("returns comment on match", (t) => {
   t.same("<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()), [
-    "<!--[if (gte mso 9)|(IE)]><![endif]-->"
+    "<!--[if (gte mso 9)|(IE)]><![endif]-->",
   ]);
   t.same(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
@@ -90,13 +90,13 @@ t.test("returns comment on match", t => {
       "<!--[if !mso]><![endif]-->",
       `<!--[if !mso]><!-- -->
 
-<!--<![endif]-->`
+<!--<![endif]-->`,
     ]
   );
   t.end();
 });
 
-t.test("deletes comments from code", t => {
+t.test("deletes comments from code", (t) => {
   t.equal(
     `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
       r(),

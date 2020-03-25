@@ -103,8 +103,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
     b: {
       key1: "val1",
       key2: "val2",
-      key3: "val3"
-    }
+      key3: "val3",
+    },
   });
   // => {
   //      a: 'some text val2 more text',

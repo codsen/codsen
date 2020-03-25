@@ -4,37 +4,37 @@ const { helga } = require("../dist/helga.cjs");
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - just a single word", t => {
+t.test("01.01 - just a single word", (t) => {
   t.same(
     helga("abc"),
     {
       minified: "abc",
-      beautified: "abc"
+      beautified: "abc",
     },
     "01.01"
   );
   t.end();
 });
 
-t.test("01.02 - converts line breaks - JSON off", t => {
+t.test("01.02 - converts line breaks - JSON off", (t) => {
   t.same(
     helga("abc\ndef", { targetJSON: false }),
     {
       minified: "abc\ndef",
-      beautified: "abc\ndef"
+      beautified: "abc\ndef",
     },
     "01.02"
   );
   t.end();
 });
 
-t.test("01.03 - converts line breaks - JSON on", t => {
+t.test("01.03 - converts line breaks - JSON on", (t) => {
   // beautified as input:
   t.same(
     helga("abc\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
-      beautified: "abc\ndef"
+      beautified: "abc\ndef",
     },
     "01.03.01"
   );
@@ -44,7 +44,7 @@ t.test("01.03 - converts line breaks - JSON on", t => {
     helga("abc\\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
-      beautified: "abc\ndef"
+      beautified: "abc\ndef",
     },
     "01.03.02"
   );

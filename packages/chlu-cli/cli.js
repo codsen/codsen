@@ -30,9 +30,9 @@ const cli = meow(
       loud: {
         type: "boolean",
         alias: "l",
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -81,7 +81,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
   try {
     fs.accessSync("./.git");
     gitData = await git().tags({
-      "--format": "%(creatordate:short)|%(refname:short)"
+      "--format": "%(creatordate:short)|%(refname:short)",
     });
   } catch (e) {
     if (cli.flags.loud) {

@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two POP DIRECTIONAL FORMATTING characters`, t => {
+t.test(`01.01 - detects two POP DIRECTIONAL FORMATTING characters`, (t) => {
   const str = "\u202Cdlkgjld\u202Cj";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-pop-directional-formatting": 2
-    }
+      "bad-character-pop-directional-formatting": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two POP DIRECTIONAL FORMATTING characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - POP DIRECTIONAL FORMATTING.",
       fix: {
-        ranges: [[0, 1]]
-      }
+        ranges: [[0, 1]],
+      },
     },
     {
       ruleId: "bad-character-pop-directional-formatting",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two POP DIRECTIONAL FORMATTING characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - POP DIRECTIONAL FORMATTING.",
       fix: {
-        ranges: [[8, 9]]
-      }
-    }
+        ranges: [[8, 9]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), "dlkgjldj");
   t.end();

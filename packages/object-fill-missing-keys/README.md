@@ -93,13 +93,13 @@ Previously I kept "insurance" function which took a schema reference object and 
 const fillMissingKeys = require("object-fill-missing-keys");
 const result = fillMissingKeys(
   {
-    b: "b" // <---- input plain object that could have come from JSON
+    b: "b", // <---- input plain object that could have come from JSON
   },
   {
     // <---- schema reference object
     a: false,
     b: false,
-    c: false
+    c: false,
   }
 );
 console.log("result = " + JSON.stringify(result, null, 4));
@@ -175,23 +175,23 @@ const res = fillMissingKeys(
     // <---- input
     a: {
       b: false, // <---- we don't want to automatically normalise this key
-      x: "x"
+      x: "x",
     },
-    z: "z"
+    z: "z",
   },
   {
     // <---- reference schema object
     a: {
       b: {
         c: false,
-        d: false
+        d: false,
       },
-      x: false
+      x: false,
     },
-    z: false
+    z: false,
   },
   {
-    doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+    doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
   }
 );
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
@@ -213,22 +213,22 @@ const res = fillMissingKeys(
   {
     a: {
       b: true, // <-- not placeholder but lower in data hierarchy (boolean)
-      x: "x"
+      x: "x",
     },
-    z: "z"
+    z: "z",
   },
   {
     a: {
       b: {
         c: false,
-        d: false
+        d: false,
       },
-      x: false
+      x: false,
     },
-    z: false
+    z: false,
   },
   {
-    doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+    doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
   }
 );
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
@@ -254,29 +254,29 @@ const res = fillMissingKeys(
       b: {
         // <--- this object in "b"'s value will be removed and set to placeholder "false"
         c: false,
-        d: false
+        d: false,
       },
       x: {
         // <--- this too
-        y: false
-      }
+        y: false,
+      },
     },
-    z: "z"
+    z: "z",
   },
   {
     // <--- schema object
     a: {
       b: {
         c: false,
-        d: false
+        d: false,
       },
-      x: false
+      x: false,
     },
-    z: false
+    z: false,
   },
   {
     // <--- settings
-    doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"]
+    doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
   }
 );
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
@@ -301,15 +301,15 @@ For example:
 const res2 = fillMissingKeys(
   {
     // <--- object we're working on
-    a: null
+    a: null,
   },
   {
     // <--- reference schema
-    a: ["z"]
+    a: ["z"],
   },
   {
     // <--- options
-    useNullAsExplicitFalse: true
+    useNullAsExplicitFalse: true,
   }
 );
 console.log(
@@ -326,15 +326,15 @@ But if you turn it off, usual [rules of merging](https://gitlab.com/codsen/codse
 const res1 = fillMissingKeys(
   {
     // <--- object we're working on
-    a: null
+    a: null,
   },
   {
     // <--- reference schema
-    a: ["z"]
+    a: ["z"],
   },
   {
     // <--- options
-    useNullAsExplicitFalse: false
+    useNullAsExplicitFalse: false,
   }
 );
 console.log(

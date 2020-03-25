@@ -11,13 +11,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-html-entity": 2
-      }
+        "bad-html-entity": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
@@ -28,9 +28,9 @@ t.test(
         idxTo: 7,
         message: "Unrecognised named entity.",
         fix: {
-          ranges: []
-        }
-      }
+          ranges: [],
+        },
+      },
     ]);
     t.end();
   }
@@ -38,13 +38,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 1
-      }
+        "bad-named-html-entity-unrecognised": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
@@ -55,9 +55,9 @@ t.test(
         idxTo: 7,
         message: "Unrecognised named entity.",
         fix: {
-          ranges: [] // no fixes
-        }
-      }
+          ranges: [], // no fixes
+        },
+      },
     ]);
     t.end();
   }
@@ -65,13 +65,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 2
-      }
+        "bad-named-html-entity-unrecognised": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
@@ -82,9 +82,9 @@ t.test(
         idxTo: 7,
         message: "Unrecognised named entity.",
         fix: {
-          ranges: [] // no fixes
-        }
-      }
+          ranges: [], // no fixes
+        },
+      },
     ]);
     t.end();
   }
@@ -92,13 +92,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-*": 2
-      }
+        "bad-named-html-entity-*": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
@@ -109,9 +109,9 @@ t.test(
         idxTo: 7,
         message: "Unrecognised named entity.",
         fix: {
-          ranges: [] // no fixes
-        }
-      }
+          ranges: [], // no fixes
+        },
+      },
     ]);
     t.end();
   }
@@ -119,13 +119,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule - off`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-html-entity": 0
-      }
+        "bad-html-entity": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -135,13 +135,13 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 0`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 0
-      }
+        "bad-named-html-entity-unrecognised": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -151,13 +151,13 @@ t.test(
 
 t.test(
   `01.07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard - off`,
-  t => {
+  (t) => {
     const str = `abc&yo;def`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "bad-named-html-entity-*": 0
-      }
+        "bad-named-html-entity-*": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);

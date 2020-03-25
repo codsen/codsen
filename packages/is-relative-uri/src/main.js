@@ -312,7 +312,7 @@ const knownSchemes = [
   "ymsgr",
   "z39.50",
   "z39.50r",
-  "z39.50s"
+  "z39.50s",
 ];
 
 function isRel(str, originalOpts) {
@@ -329,7 +329,7 @@ function isRel(str, originalOpts) {
     );
   }
   const defaults = {
-    flagUpUrisWithSchemes: true
+    flagUpUrisWithSchemes: true,
   };
   let opts;
   if (originalOpts) {
@@ -358,7 +358,7 @@ function isRel(str, originalOpts) {
 
   // ---------------------------------------------------------------------------
 
-  if (str.split("").some(char => !char.trim().length)) {
+  if (str.split("").some((char) => !char.trim().length)) {
     return { res: false, message: `Remove whitespace.` };
   }
   if (str.match(/\/\s*\/\s*\//g)) {
@@ -367,13 +367,13 @@ function isRel(str, originalOpts) {
   if (str.match(/.\/\s*\//g)) {
     return {
       res: false,
-      message: `Character followed by two slashes.`
+      message: `Character followed by two slashes.`,
     };
   }
   if (str.includes("...")) {
     return {
       res: false,
-      message: `Three consecutive dots.`
+      message: `Three consecutive dots.`,
     };
   }
 
@@ -383,98 +383,98 @@ function isRel(str, originalOpts) {
     // character after percentage should be 0-9 or a-f
     return {
       res: false,
-      message: `Unescaped "%" character.`
+      message: `Unescaped "%" character.`,
     };
   }
   if (str.includes("<")) {
     return {
       res: false,
-      message: `Unescaped "<" character.`
+      message: `Unescaped "<" character.`,
     };
   }
   if (str.includes(">")) {
     return {
       res: false,
-      message: `Unescaped ">" character.`
+      message: `Unescaped ">" character.`,
     };
   }
   if (str.includes("[")) {
     return {
       res: false,
-      message: `Unescaped "[" character.`
+      message: `Unescaped "[" character.`,
     };
   }
   if (str.includes("]")) {
     return {
       res: false,
-      message: `Unescaped "]" character.`
+      message: `Unescaped "]" character.`,
     };
   }
   if (str.includes("{")) {
     return {
       res: false,
-      message: `Unescaped "{" character.`
+      message: `Unescaped "{" character.`,
     };
   }
   if (str.includes("}")) {
     return {
       res: false,
-      message: `Unescaped "}" character.`
+      message: `Unescaped "}" character.`,
     };
   }
   if (str.includes("|")) {
     return {
       res: false,
-      message: `Unescaped "|" character.`
+      message: `Unescaped "|" character.`,
     };
   }
   if (str.includes(BACKSLASH)) {
     return {
       res: false,
-      message: `Unescaped backslash (${BACKSLASH}) character.`
+      message: `Unescaped backslash (${BACKSLASH}) character.`,
     };
   }
   if (str.includes("^")) {
     return {
       res: false,
-      message: `Unescaped caret (^) character.`
+      message: `Unescaped caret (^) character.`,
     };
   }
   if (str.endsWith(".") && !str.startsWith(".")) {
     return {
       res: false,
-      message: `Ends with dot, is file extension missing?`
+      message: `Ends with dot, is file extension missing?`,
     };
   }
   if (str.includes("??")) {
     return {
       res: false,
-      message: `Two consecutive question marks.`
+      message: `Two consecutive question marks.`,
     };
   }
   if (str.includes("##")) {
     return {
       res: false,
-      message: `Two consecutive hashes.`
+      message: `Two consecutive hashes.`,
     };
   }
   if (str.endsWith("#")) {
     return {
       res: false,
-      message: `Ends with a hash.`
+      message: `Ends with a hash.`,
     };
   }
   // slice the rest of the string after the first hash
   if (str.includes("#") && str.slice(str.indexOf("#") + 1).includes("/")) {
     return {
       res: false,
-      message: `Slash follows hash.`
+      message: `Slash follows hash.`,
     };
   }
   if (str.match(/\.\.[^/]/g)) {
     return {
       res: false,
-      message: `Two dots should be followed by a slash.`
+      message: `Two dots should be followed by a slash.`,
     };
   }
 
@@ -489,11 +489,11 @@ function isRel(str, originalOpts) {
       str.startsWith(`file:`) ||
       str.startsWith(`data:`) ||
       str.startsWith(`irc:`) ||
-      knownSchemes.some(scheme => str.startsWith(`${scheme}:`)))
+      knownSchemes.some((scheme) => str.startsWith(`${scheme}:`)))
   ) {
     return {
       res: false,
-      message: null
+      message: null,
     };
   }
 
@@ -501,7 +501,7 @@ function isRel(str, originalOpts) {
   console.log(`501 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
-    message: null
+    message: null,
   };
 }
 

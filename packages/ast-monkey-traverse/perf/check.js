@@ -12,7 +12,7 @@ const input = {
     b: {
       c: "c_val",
       d: "d_val",
-      e: "e_val"
+      e: "e_val",
     },
     f: {
       g: {
@@ -21,13 +21,13 @@ const input = {
           "4",
           "5",
           {
-            j: "k"
-          }
+            j: "k",
+          },
         ],
-        l: ["7", "8", "9"]
-      }
-    }
-  }
+        l: ["7", "8", "9"],
+      },
+    },
+  },
 };
 const testme = () =>
   f(input, (key1, val1) => {

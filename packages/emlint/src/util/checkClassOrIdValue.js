@@ -8,7 +8,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     typeName: "class",
     from: 0,
     to: str.length,
-    offset: 0
+    offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
@@ -52,7 +52,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
               idxFrom: charFrom,
               idxTo: charTo,
               message: `Wrong ${opts.typeName} name.`,
-              fix: null
+              fix: null,
             },
             null,
             4
@@ -62,7 +62,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
           idxFrom: charFrom,
           idxTo: charTo,
           message: `Wrong ${opts.typeName} name.`,
-          fix: null
+          fix: null,
         });
       }
 
@@ -89,8 +89,8 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
           idxTo: charTo,
           message: `Duplicate ${opts.typeName} "${extractedName}".`,
           fix: {
-            ranges: [[deleteFrom, deleteTo]]
-          }
+            ranges: [[deleteFrom, deleteTo]],
+          },
         });
       }
     },
@@ -107,7 +107,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
         {
           from: whitespaceFrom,
           to: whitespaceTo,
-          offset: opts.offset
+          offset: opts.offset,
         },
         errorArr
       ),

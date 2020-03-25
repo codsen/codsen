@@ -10,13 +10,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two FIGURE SPACE characters`, t => {
+t.test(`01.01 - detects two FIGURE SPACE characters`, (t) => {
   const str = "\u2007dlkgjld\u2007j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-figure-space": 2
-    }
+      "bad-character-figure-space": 2,
+    },
   });
   t.match(messages, [
     {
@@ -28,8 +28,8 @@ t.test(`01.01 - detects two FIGURE SPACE characters`, t => {
       column: 1, // remember columns numbers start from 1, not zero
       message: "Bad character - FIGURE SPACE.",
       fix: {
-        ranges: [[0, 1, " "]]
-      }
+        ranges: [[0, 1, " "]],
+      },
     },
     {
       ruleId: "bad-character-figure-space",
@@ -40,9 +40,9 @@ t.test(`01.01 - detects two FIGURE SPACE characters`, t => {
       column: 9, // remember columns numbers start from 1, not zero
       message: "Bad character - FIGURE SPACE.",
       fix: {
-        ranges: [[8, 9, " "]]
-      }
-    }
+        ranges: [[8, 9, " "]],
+      },
+    },
   ]);
   t.equal(applyFixes(str, messages), " dlkgjld j");
   t.end();

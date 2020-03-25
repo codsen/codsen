@@ -5,7 +5,7 @@
 
 function tagBold(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
       );
@@ -35,11 +35,11 @@ function tagBold(context, ...opts) {
           idxFrom: node.start,
           idxTo: node.end, // second elem. from last range
           fix: {
-            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
-          }
+            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]],
+          },
         });
       }
-    }
+    },
   };
 }
 

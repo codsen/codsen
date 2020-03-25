@@ -168,7 +168,7 @@ const knownHTMLAttribs = [
   "usemap",
   "value",
   "width",
-  "wrap"
+  "wrap",
 ];
 
 const knownUnits = [
@@ -186,7 +186,7 @@ const knownUnits = [
   "vh",
   "vmin",
   "vmax",
-  "%"
+  "%",
 ];
 
 const knownCharsets = [
@@ -446,7 +446,7 @@ const knownCharsets = [
   "windows-1257",
   "windows-1258",
   "windows-31j",
-  "windows-874"
+  "windows-874",
 ];
 
 // https://www.w3.org/TR/html4/sgml/loosedtd.html#Color
@@ -467,7 +467,7 @@ const basicColorNames = {
   silver: "#c0c0c0",
   teal: "#008080",
   white: "#ffffff",
-  yellow: "#ffff00"
+  yellow: "#ffff00",
 };
 
 // https://www.w3schools.com/colors/colors_names.asp
@@ -620,7 +620,7 @@ const extendedColorNames = {
   white: "#ffffff",
   whitesmoke: "#f5f5f5",
   yellow: "#ffff00",
-  yellowgreen: "#9acd32"
+  yellowgreen: "#9acd32",
 };
 
 const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
@@ -634,5 +634,5 @@ export {
   basicColorNames,
   knownHTMLAttribs,
   extendedColorNames,
-  sixDigitHexColorRegex
+  sixDigitHexColorRegex,
 };

@@ -12,7 +12,7 @@ import { left, right } from "string-left-right";
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       console.log(
         `███████████████████████████████████████ tagSpaceAfterOpeningBracket() ███████████████████████████████████████`
       );
@@ -48,10 +48,10 @@ function tagSpaceAfterOpeningBracket(context) {
           message: "Bad whitespace.",
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1], // second elem. from last range
-          fix: { ranges }
+          fix: { ranges },
         });
       }
-    }
+    },
   };
 }
 

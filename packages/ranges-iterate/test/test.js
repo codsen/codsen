@@ -8,7 +8,7 @@ const i = require("../dist/ranges-iterate.cjs");
 
 t.test(
   `00.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`,
-  t => {
+  (t) => {
     t.throws(() => {
       i(1);
     }, /THROW_ID_01/);
@@ -18,7 +18,7 @@ t.test(
 
 t.test(
   `00.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`,
-  t => {
+  (t) => {
     t.throws(() => {
       i("");
     }, /THROW_ID_02/);
@@ -28,7 +28,7 @@ t.test(
 
 t.test(
   `00.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`,
-  t => {
+  (t) => {
     t.throws(() => {
       i("z", 1);
     }, /THROW_ID_03/);
@@ -38,7 +38,7 @@ t.test(
 
 t.test(
   `00.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`,
-  t => {
+  (t) => {
     t.throws(() => {
       i("z", [[0, 1]]);
     }, /THROW_ID_04/);
@@ -48,7 +48,7 @@ t.test(
 
 t.test(
   `00.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback function`,
-  t => {
+  (t) => {
     t.throws(() => {
       i("z", [[0, 1]], 1);
     }, /THROW_ID_05/);
@@ -62,7 +62,7 @@ t.test(
 
 t.test(
   `01.01 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, middle`,
-  t => {
+  (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
     let pinged = "";
@@ -82,7 +82,7 @@ t.test(
 
 t.test(
   `01.02 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert, middle`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i("abcdefghij", [[2, 2, "xyz"]], ({ i, val }) => {
@@ -100,7 +100,7 @@ t.test(
 
 t.test(
   `01.03 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, start`,
-  t => {
+  (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
     let pinged = "";
@@ -120,7 +120,7 @@ t.test(
 
 t.test(
   `01.04 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert at the end`,
-  t => {
+  (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
     let pinged = "";
@@ -140,7 +140,7 @@ t.test(
 
 t.test(
   `01.05 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined character that is located just after end`,
-  t => {
+  (t) => {
     // still fine
     let pinged = "";
     let index = 0;
@@ -159,7 +159,7 @@ t.test(
 
 t.test(
   `01.06 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string end`,
-  t => {
+  (t) => {
     // not fine, won't be inserted because it's not clear what to put at str[10]
     let pinged = "";
     let index = 0;
@@ -178,14 +178,14 @@ t.test(
 
 t.test(
   `01.07 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i(
       "abcdefghij",
       [
         [2, 7, "xyz"],
-        [9, 10, "_"]
+        [9, 10, "_"],
       ],
       ({ i, val }) => {
         // console.log(
@@ -203,7 +203,7 @@ t.test(
 
 t.test(
   `01.08 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i("abcdefghij", [[0, 10, "xyz"]], ({ i, val }) => {
@@ -221,7 +221,7 @@ t.test(
 
 t.test(
   `01.09 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i("abcdefghij", [[0, 10]], ({ i, val }) => {
@@ -239,7 +239,7 @@ t.test(
 
 t.test(
   `01.10 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i("abcdefghij", [], ({ i, val }) => {
@@ -257,7 +257,7 @@ t.test(
 
 t.test(
   `01.11 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     i("abcdefghij", null, ({ i, val }) => {
@@ -275,7 +275,7 @@ t.test(
 
 t.test(
   `01.12 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete, adding up to everything`,
-  t => {
+  (t) => {
     // this should not happen, two ranges have not been merged, it's not a clean
     // input
     let pinged = "";
@@ -284,7 +284,7 @@ t.test(
       "abcdefghij",
       [
         [0, 5],
-        [5, 10]
+        [5, 10],
       ],
       ({ i, val }) => {
         // console.log(
@@ -302,7 +302,7 @@ t.test(
 
 t.test(
   `01.13 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to delete, adding up to everything`,
-  t => {
+  (t) => {
     // this should not happen, two ranges have not been merged, it's not a clean
     // input
     let pinged = "";
@@ -311,7 +311,7 @@ t.test(
       "abcdefghij",
       [
         [0, 6],
-        [4, 10]
+        [4, 10],
       ],
       ({ i, val }) => {
         // console.log(
@@ -329,12 +329,12 @@ t.test(
 
 t.test(
   `01.14 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`,
-  t => {
+  (t) => {
     i(
       "abcdefghij",
       [
         [0, 5],
-        [6, 10]
+        [6, 10],
       ],
       ({ i, val }) => {
         // console.log(
@@ -350,7 +350,7 @@ t.test(
 
 t.test(
   `01.15 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`,
-  t => {
+  (t) => {
     // not fine, won't be inserted because it's not clear what to put at str[10]
     let pinged = "";
     let index = 0;
@@ -359,7 +359,7 @@ t.test(
       source,
       [
         [0, 0],
-        [1, 1]
+        [1, 1],
       ],
       ({ i, val }) => {
         // console.log(
@@ -377,7 +377,7 @@ t.test(
 
 t.test(
   `01.16 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ranges`,
-  t => {
+  (t) => {
     let pinged = "";
     let index = 0;
     const source = "abcdefghij";
@@ -385,7 +385,7 @@ t.test(
       source,
       [
         [98, 98],
-        [99, 99]
+        [99, 99],
       ],
       ({ i, val }) => {
         // console.log(

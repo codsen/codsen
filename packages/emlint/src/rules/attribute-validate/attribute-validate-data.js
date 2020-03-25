@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateData(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateData() ███████████████████████████████████████`
       );
@@ -28,23 +28,23 @@ function attributeValidateData(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             console.log(`038 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-data"
+                ruleId: "attribute-validate-data",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

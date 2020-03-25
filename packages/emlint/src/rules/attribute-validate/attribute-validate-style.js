@@ -5,7 +5,7 @@ import validateInlineStyle from "../../util/validateInlineStyle";
 
 function attributeValidateStyle(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
       );
@@ -29,7 +29,7 @@ function attributeValidateStyle(context, ...opts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -37,7 +37,7 @@ function attributeValidateStyle(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -50,16 +50,16 @@ function attributeValidateStyle(context, ...opts) {
           `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-style"
+              ruleId: "attribute-validate-style",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

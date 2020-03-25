@@ -13,7 +13,7 @@ const pMap = require("p-map");
 const {
   // getKeysetSync,
   getKeyset,
-  enforceKeyset
+  enforceKeyset,
   // sortAllObjectsSync
   // enforceKeysetSync,
   // noNewKeysSync,
@@ -48,25 +48,25 @@ const cli = meow(
       normalise: {
         type: "boolean",
         alias: "n",
-        default: false
+        default: false,
       },
       ignore: {
         type: "string",
-        alias: "i"
+        alias: "i",
       },
       tabs: {
         type: "boolean",
-        alias: "t"
+        alias: "t",
       },
       version: {
         type: "boolean",
-        alias: "v"
+        alias: "v",
       },
       help: {
         type: "boolean",
-        alias: "h"
-      }
-    }
+        alias: "h",
+      },
+    },
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -97,13 +97,13 @@ if (cli.flags.version) {
 let { input } = cli;
 input = input.concat(
   Object.keys(cli.flags)
-    .filter(flag => {
+    .filter((flag) => {
       if (flag !== "i" && typeof cli.flags[flag] === "string") {
         return true;
       }
       return false;
     })
-    .map(key => cli.flags[key])
+    .map((key) => cli.flags[key])
 );
 
 // console.log(`cli = ${JSON.stringify(cli, null, 4)}`)
@@ -121,18 +121,18 @@ let paths;
 let enforceOpts = {};
 if (cli.flags.ignore) {
   enforceOpts = {
-    doNotFillThesePathsIfTheyContainPlaceholders: cli.flags.ignore
+    doNotFillThesePathsIfTheyContainPlaceholders: cli.flags.ignore,
   };
 }
 
 globby(input)
-  .then(resolvedPathsArray =>
+  .then((resolvedPathsArray) =>
     pReduce(
       resolvedPathsArray, // input
       (concattedTotal, singleDirOrFilePath) =>
         concattedTotal // reducer
           .concat(
-            isDirectory(singleDirOrFilePath).then(bool =>
+            isDirectory(singleDirOrFilePath).then((bool) =>
               bool
                 ? globby(
                     path.join(singleDirOrFilePath, "**/*.json"),
@@ -142,18 +142,18 @@ globby(input)
             )
           ),
       [] // initialValue
-    ).then(received =>
+    ).then((received) =>
       pReduce(received, (total, single) => total.concat(single), [])
     )
   )
-  .then(res =>
+  .then((res) =>
     res.filter(
-      oneOfPaths =>
+      (oneOfPaths) =>
         !oneOfPaths.includes("node_modules") &&
         !oneOfPaths.includes("package-lock.json")
     )
   )
-  .then(finalPathsToProcessArr => {
+  .then((finalPathsToProcessArr) => {
     // At this point, we have an array of paths: "finalPathsToProcessArr".
     // It's a result of a resolved promise.
 
@@ -195,8 +195,8 @@ globby(input)
         );
         process.exit(0);
       }
-      return pMap(paths, oneOfPaths => fs.readJson(oneOfPaths))
-        .then(allJsonValuesArr => {
+      return pMap(paths, (oneOfPaths) => fs.readJson(oneOfPaths))
+        .then((allJsonValuesArr) => {
           // console.log(
           //   `201${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
           //     allJsonValuesArr,
@@ -207,7 +207,7 @@ globby(input)
           allFileContentsArr = allJsonValuesArr;
           return getKeyset(allJsonValuesArr);
         })
-        .then(keyset => {
+        .then((keyset) => {
           // console.log(
           //   `${`\u001b[${33}m${`keyset`}\u001b[${39}m`} = ${JSON.stringify(
           //     keyset,
@@ -221,10 +221,10 @@ globby(input)
               allFileContentsArr[i],
               referenceKeyset,
               enforceOpts
-            ).then(newValue =>
+            ).then((newValue) =>
               fs
                 .writeJson(singlePath, newValue, {
-                  spaces: cli.flags.tabs ? "\t" : 2
+                  spaces: cli.flags.tabs ? "\t" : 2,
                 })
                 .then(() => {
                   log(

@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 0`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 0
-      }
+        "attribute-validate-dir": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 1`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 1
-      }
+        "attribute-validate-dir": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 2`,
-  t => {
+  (t) => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`,
-  t => {
+  (t) => {
     const str = `<td dir='rtl'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -74,13 +74,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<td dir=' rtl'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td dir='rtl'>`);
     t.match(messages, [
@@ -90,9 +90,9 @@ t.test(
         idxTo: 10,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[9, 10]]
-        }
-      }
+          ranges: [[9, 10]],
+        },
+      },
     ]);
     t.end();
   }
@@ -100,13 +100,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<td dir='rtl '>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td dir='rtl'>`);
     t.match(messages, [
@@ -116,9 +116,9 @@ t.test(
         idxTo: 13,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[12, 13]]
-        }
-      }
+          ranges: [[12, 13]],
+        },
+      },
     ]);
     t.end();
   }
@@ -126,13 +126,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<td dir='  rtl  \t'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<td dir='rtl'>`);
     t.match(messages, [
@@ -144,10 +144,10 @@ t.test(
         fix: {
           ranges: [
             [9, 11],
-            [14, 17]
-          ]
-        }
-      }
+            [14, 17],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -155,13 +155,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<td dir="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -171,8 +171,8 @@ t.test(
         idxFrom: 9,
         idxTo: 12,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -183,13 +183,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<script dir="ltr">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -199,8 +199,8 @@ t.test(
         idxFrom: 8,
         idxTo: 17,
         message: `Tag "script" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -211,13 +211,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<td dir="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -227,8 +227,8 @@ t.test(
         idxFrom: 9,
         idxTo: 16,
         message: `Should be "ltr|rtl".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -236,13 +236,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`,
-  t => {
+  (t) => {
     const str = `<div dir="LTR">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-dir": 2
-      }
+        "attribute-validate-dir": 2,
+      },
     });
     // can fix:
     t.equal(applyFixes(str, messages), `<div dir="ltr">`);
@@ -253,9 +253,9 @@ t.test(
         idxTo: 13,
         message: `Should be lowercase.`,
         fix: {
-          ranges: [[10, 13, "ltr"]]
-        }
-      }
+          ranges: [[10, 13, "ltr"]],
+        },
+      },
     ]);
     t.end();
   }

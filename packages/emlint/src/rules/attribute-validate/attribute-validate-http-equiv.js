@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateHttpequiv(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHttpequiv() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateHttpequiv(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -42,7 +42,7 @@ function attributeValidateHttpequiv(context, ...opts) {
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["content-type", "default-style", "refresh"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
 
@@ -54,16 +54,16 @@ function attributeValidateHttpequiv(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-http-equiv"
+              ruleId: "attribute-validate-http-equiv",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

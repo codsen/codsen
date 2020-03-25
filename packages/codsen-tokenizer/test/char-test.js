@@ -4,12 +4,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test((t) => {
   const gathered = [];
   ct("<a>z1", {
-    charCb: obj => {
+    charCb: (obj) => {
       gathered.push(obj);
-    }
+    },
   });
 
   t.same(
@@ -18,28 +18,28 @@ t.test(t => {
       {
         chr: "<",
         i: 0,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: "a",
         i: 1,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: ">",
         i: 2,
-        type: "tag"
+        type: "tag",
       },
       {
         chr: "z",
         i: 3,
-        type: "text"
+        type: "text",
       },
       {
         chr: "1",
         i: 4,
-        type: "text"
-      }
+        type: "text",
+      },
     ],
     "01.01 - tag and text"
   );

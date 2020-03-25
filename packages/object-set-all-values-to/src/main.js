@@ -29,7 +29,7 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
       }
     });
   } else if (isObj(input)) {
-    Object.keys(input).forEach(key => {
+    Object.keys(input).forEach((key) => {
       if (isArr(input[key]) || isObj(input[key])) {
         input[key] = setAllValuesTo(input[key], value);
       } else {

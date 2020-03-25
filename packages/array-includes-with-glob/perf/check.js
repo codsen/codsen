@@ -9,7 +9,7 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 const f = require("../");
 const testme = () =>
   f(["something", "anything", "everything"], ["anything", "zzz"], {
-    arrayVsArrayAllMustBeFound: "any"
+    arrayVsArrayAllMustBeFound: "any",
   });
 
 // action

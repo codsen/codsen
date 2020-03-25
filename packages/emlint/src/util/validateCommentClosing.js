@@ -4,7 +4,7 @@ function validateCommentClosing(token) {
   const reference = {
     simple: "-->",
     only: "<![endif]-->",
-    not: "<!--<![endif]-->"
+    not: "<!--<![endif]-->",
   };
 
   console.log(
@@ -45,8 +45,8 @@ function validateCommentClosing(token) {
         idxTo: token.end,
         message: "Remove whitespace.",
         fix: {
-          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
-        }
+          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]],
+        },
       });
     }
   );
@@ -86,8 +86,8 @@ function validateCommentClosing(token) {
     idxTo: token.end,
     message: "Malformed closing comment tag.",
     fix: {
-      ranges: [[token.start, token.end, reference[token.kind]]]
-    }
+      ranges: [[token.start, token.end, reference[token.kind]]],
+    },
   });
 
   return errorArr;

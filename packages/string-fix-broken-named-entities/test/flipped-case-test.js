@@ -24,9 +24,9 @@ t.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
-  t => {
+  (t) => {
     Object.keys(allNamedEntities)
-      .filter(entity => entity !== "nbsp")
+      .filter((entity) => entity !== "nbsp")
       .forEach((singleEntity, i, arr) => {
         // flip the case of each character, then ensure such entity doesn't
         // exist, then see if it's being fixed
@@ -61,7 +61,7 @@ t.test(
             !Object.keys(allNamedEntities).includes(entityWithFlippedCharacter)
           ) {
             const res = fix(`&${entityWithFlippedCharacter};`, {
-              cb: obj => obj
+              cb: (obj) => obj,
             });
             // if it's not one of ambiguous cases, match it:
             if (
@@ -77,8 +77,8 @@ t.test(
                     rangeFrom: 0,
                     rangeTo: singleEntity.length + 2,
                     rangeValEncoded: `&${singleEntity};`,
-                    rangeValDecoded: decode(`&${singleEntity};`)
-                  }
+                    rangeValDecoded: decode(`&${singleEntity};`),
+                  },
                 ],
                 `"${entityWithFlippedCharacter}" - 04; ${i + 1}/${arr.length}`
               );

@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateRows(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRows() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateRows(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -52,7 +52,7 @@ function attributeValidateRows(context, ...opts) {
               noUnitsIsFine: true,
               canBeCommaSeparated: true,
               type: "rational",
-              customGenericValueError: "Should be: pixels|%|*."
+              customGenericValueError: "Should be: pixels|%|*.",
             }
           );
           console.log(
@@ -70,7 +70,7 @@ function attributeValidateRows(context, ...opts) {
             {
               type: "integer",
               theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units."
+              customGenericValueError: "Should be integer, no units.",
             }
           );
           console.log(
@@ -83,17 +83,17 @@ function attributeValidateRows(context, ...opts) {
         }
 
         if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             console.log(`087 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-rows"
+                ruleId: "attribute-validate-rows",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 

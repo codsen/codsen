@@ -5,7 +5,7 @@ import { validateString, linkTypes } from "../../util/util";
 
 function attributeValidateRev(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRev() ███████████████████████████████████████`
       );
@@ -31,7 +31,7 @@ function attributeValidateRev(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -42,7 +42,7 @@ function attributeValidateRev(context, ...opts) {
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
-            caseInsensitive
+            caseInsensitive,
           }
         );
 
@@ -54,16 +54,16 @@ function attributeValidateRev(context, ...opts) {
           )}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rev"
+              ruleId: "attribute-validate-rev",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

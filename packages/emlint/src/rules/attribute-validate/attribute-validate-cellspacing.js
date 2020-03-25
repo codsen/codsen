@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCellspacing(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCellspacing() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function attributeValidateCellspacing(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
 
@@ -41,23 +41,23 @@ function attributeValidateCellspacing(context, ...opts) {
             theOnlyGoodUnits: ["%"],
             badUnits: ["px"],
             customGenericValueError:
-              "Should be integer, either no units or percentage."
+              "Should be integer, either no units or percentage.",
           }
         );
         console.log(
           `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellspacing"
+              ruleId: "attribute-validate-cellspacing",
             })
           );
         });
       }
-    }
+    },
   };
 }
 

@@ -17,38 +17,38 @@ const encodedMdashJs = "\\u2014";
 const headsAndTailsJinja = [
   {
     heads: "{{",
-    tails: "}}"
+    tails: "}}",
   },
   {
     heads: ["{% if", "{%- if"],
-    tails: ["{% endif", "{%- endif"]
+    tails: ["{% endif", "{%- endif"],
   },
   {
     heads: ["{% for", "{%- for"],
-    tails: ["{% endfor", "{%- endfor"]
+    tails: ["{% endfor", "{%- endfor"],
   },
   {
     heads: ["{%", "{%-"],
-    tails: ["%}", "-%}"]
+    tails: ["%}", "-%}"],
   },
   {
     heads: "{#",
-    tails: "#}"
-  }
+    tails: "#}",
+  },
 ];
 
 const headsAndTailsHugo = [
   {
     heads: "{{",
-    tails: "}}"
-  }
+    tails: "}}",
+  },
 ];
 
 const headsAndTailsHexo = [
   {
     heads: ["<%", "<%=", "<%-"],
-    tails: ["%>", "=%>", "-%>"]
-  }
+    tails: ["%>", "=%>", "-%>"],
+  },
 ];
 
 const knownHTMLTags = [
@@ -165,7 +165,7 @@ const knownHTMLTags = [
   "var",
   "video",
   "wbr",
-  "xml"
+  "xml",
 ];
 
 // finally,
@@ -185,5 +185,5 @@ export {
   headsAndTailsJinja,
   headsAndTailsHugo,
   headsAndTailsHexo,
-  knownHTMLTags
+  knownHTMLTags,
 };

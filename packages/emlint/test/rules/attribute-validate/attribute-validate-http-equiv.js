@@ -7,13 +7,13 @@ const { applyFixes } = require("../../../t-util/util");
 
 t.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 0`,
-  t => {
+  (t) => {
     const str = `<meta>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 0
-      }
+        "attribute-validate-http-equiv": 0,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -23,13 +23,13 @@ t.test(
 
 t.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 1`,
-  t => {
+  (t) => {
     const str = `<meta>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 1
-      }
+        "attribute-validate-http-equiv": 1,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -39,13 +39,13 @@ t.test(
 
 t.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 2`,
-  t => {
+  (t) => {
     const str = `<meta>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -55,13 +55,13 @@ t.test(
 
 t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, content-type`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv='content-type'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -71,13 +71,13 @@ t.test(
 
 t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, default-style`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="default-style">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -87,13 +87,13 @@ t.test(
 
 t.test(
   `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, refresh`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="refresh">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), str);
     t.same(messages, []);
@@ -106,13 +106,13 @@ t.test(
 
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv=' refresh'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<meta http-equiv='refresh'>`);
     t.match(messages, [
@@ -122,9 +122,9 @@ t.test(
         idxTo: 19,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[18, 19]]
-        }
-      }
+          ranges: [[18, 19]],
+        },
+      },
     ]);
     t.end();
   }
@@ -132,13 +132,13 @@ t.test(
 
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="refresh ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<meta http-equiv="refresh">`);
     t.match(messages, [
@@ -148,9 +148,9 @@ t.test(
         idxTo: 26,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[25, 26]]
-        }
-      }
+          ranges: [[25, 26]],
+        },
+      },
     ]);
     t.end();
   }
@@ -158,13 +158,13 @@ t.test(
 
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv='  refresh  \t'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     t.equal(applyFixes(str, messages), `<meta http-equiv='refresh'>`);
     t.match(messages, [
@@ -176,10 +176,10 @@ t.test(
         fix: {
           ranges: [
             [18, 20],
-            [27, 30]
-          ]
-        }
-      }
+            [27, 30],
+          ],
+        },
+      },
     ]);
     t.end();
   }
@@ -187,13 +187,13 @@ t.test(
 
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -203,8 +203,8 @@ t.test(
         idxFrom: 18,
         idxTo: 21,
         message: `Missing value.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -215,13 +215,13 @@ t.test(
 
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  t => {
+  (t) => {
     const str = `<div http-equiv="refresh">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -231,8 +231,8 @@ t.test(
         idxFrom: 5,
         idxTo: 25,
         message: `Tag "div" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -240,13 +240,13 @@ t.test(
 
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  t => {
+  (t) => {
     const str = `<zzz http-equiv="refresh">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -256,8 +256,8 @@ t.test(
         idxFrom: 5,
         idxTo: 25,
         message: `Tag "zzz" can't have this attribute.`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -268,13 +268,13 @@ t.test(
 
 t.test(
   `04.01 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
@@ -284,8 +284,8 @@ t.test(
         idxFrom: 18,
         idxTo: 25,
         message: `Should be "content-type|default-style|refresh".`,
-        fix: null
-      }
+        fix: null,
+      },
     ]);
     t.end();
   }
@@ -293,13 +293,13 @@ t.test(
 
 t.test(
   `04.02 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`,
-  t => {
+  (t) => {
     const str = `<meta http-equiv="REFRESH">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-http-equiv": 2
-      }
+        "attribute-validate-http-equiv": 2,
+      },
     });
     // will fix:
     t.equal(applyFixes(str, messages), `<meta http-equiv="refresh">`);
@@ -310,9 +310,9 @@ t.test(
         idxTo: 25,
         message: `Should be lowercase.`,
         fix: {
-          ranges: [[18, 25, "refresh"]]
-        }
-      }
+          ranges: [[18, 25, "refresh"]],
+        },
+      },
     ]);
     t.end();
   }

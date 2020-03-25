@@ -12,7 +12,7 @@ const testme = () =>
     str: "aaaaaaaaaaaa",
     from: 2,
     to: 5,
-    addSingleSpaceToPreventAccidentalConcatenation: true
+    addSingleSpaceToPreventAccidentalConcatenation: true,
   });
 
 // action

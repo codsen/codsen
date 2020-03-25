@@ -104,20 +104,20 @@ function getTitlesAndFooterLinks(linesArr) {
         linked: existy(linesArr[i].match(versionWithBracketsRegex)),
         content: linesArr[i],
         beforeVersion: linesArr[i].split(firstEncounteredVersion)[0],
-        afterVersion: linesArr[i].split(firstEncounteredVersion)[1]
+        afterVersion: linesArr[i].split(firstEncounteredVersion)[1],
       });
     } else if (isFooterLink(linesArr[i])) {
       temp = linesArr[i].match(versionWithBracketsRegex)[0];
       footerLinks.push({
         version: temp.substring(1, temp.length - 1),
         rowNum: i,
-        content: linesArr[i]
+        content: linesArr[i],
       });
     }
   }
   return {
     titles,
-    footerLinks
+    footerLinks,
   };
 }
 
@@ -152,7 +152,7 @@ function getPreviousVersion(currVers, originalVersionsArr) {
   }
 
   const versionsArr = clone(originalVersionsArr)
-    .map(val => prep(val))
+    .map((val) => prep(val))
     .sort(cmp);
   // first, check if it's the first version from the versions array.
   // in that case, there's no previous version, so we return null:
@@ -353,8 +353,8 @@ function filterDate(someString) {
     rightOutside: "",
     rightOutsideNot: "",
     i: {
-      searchFor: true
-    }
+      searchFor: true,
+    },
   });
   res = res.replace(".", " ");
   res = res.replace(",", " ");
@@ -380,5 +380,5 @@ export {
   getSetFooterLink,
   aContainsB,
   versionSort,
-  filterDate
+  filterDate,
 };

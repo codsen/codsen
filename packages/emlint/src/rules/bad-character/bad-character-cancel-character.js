@@ -6,7 +6,7 @@
 
 function badCharacterCancelCharacter(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 148) {
         context.report({
           ruleId: "bad-character-cancel-character",
@@ -14,11 +14,11 @@ function badCharacterCancelCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

@@ -8,7 +8,7 @@ const deleteObj = require("../dist/ast-delete-object.cjs");
 // Object within an array(s), not strict
 // ==============================
 
-t.test("01.01 - delete one object within an array", t => {
+t.test("01.01 - delete one object within an array", (t) => {
   t.same(
     deleteObj(
       [
@@ -16,13 +16,13 @@ t.test("01.01 - delete one object within an array", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: false, hungryForWhitespace: false }
     ),
@@ -36,13 +36,13 @@ t.test("01.01 - delete one object within an array", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true, hungryForWhitespace: false }
     ),
@@ -51,9 +51,9 @@ t.test("01.01 - delete one object within an array", t => {
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "01.01.02 - strict matching"
   );
@@ -64,13 +64,13 @@ t.test("01.01 - delete one object within an array", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: false, hungryForWhitespace: true }
     ),
@@ -84,13 +84,13 @@ t.test("01.01 - delete one object within an array", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true, hungryForWhitespace: true }
     ),
@@ -99,16 +99,16 @@ t.test("01.01 - delete one object within an array", t => {
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "01.01.04 - hungry for whitespace, strict match"
   );
   t.end();
 });
 
-t.test("01.02 - delete one object, involves white space", t => {
+t.test("01.02 - delete one object, involves white space", (t) => {
   t.same(
     deleteObj(
       [
@@ -116,13 +116,13 @@ t.test("01.02 - delete one object, involves white space", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "   "
+        key3: "   ",
       },
       { matchKeysStrictly: false, hungryForWhitespace: false }
     ),
@@ -131,9 +131,9 @@ t.test("01.02 - delete one object, involves white space", t => {
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "01.02.01 - won't delete because of white space mismatching strictly"
   );
@@ -144,13 +144,13 @@ t.test("01.02 - delete one object, involves white space", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true, hungryForWhitespace: false }
     ),
@@ -159,9 +159,9 @@ t.test("01.02 - delete one object, involves white space", t => {
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "01.02.02 - won't delete because of strict match is on"
   );
@@ -172,13 +172,13 @@ t.test("01.02 - delete one object, involves white space", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: false, hungryForWhitespace: true }
     ),
@@ -192,13 +192,13 @@ t.test("01.02 - delete one object, involves white space", t => {
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true, hungryForWhitespace: true }
     ),
@@ -207,16 +207,16 @@ t.test("01.02 - delete one object, involves white space", t => {
       {
         key2: "val2",
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "01.02.04 - won't delete because of strict match, hungry does not matter"
   );
   t.end();
 });
 
-t.test("01.03 - multiple findings, object within array", t => {
+t.test("01.03 - multiple findings, object within array", (t) => {
   t.same(
     deleteObj(
       [
@@ -224,7 +224,7 @@ t.test("01.03 - multiple findings, object within array", t => {
           key2: "val2",
           key3: "val3",
           yo: "yo",
-          this: "will be deleted too"
+          this: "will be deleted too",
         },
         "elem1",
         {
@@ -236,9 +236,9 @@ t.test("01.03 - multiple findings, object within array", t => {
             "b",
             "c",
             {
-              obj: "obj1"
-            }
-          ]
+              obj: "obj1",
+            },
+          ],
         },
         "elem4",
         {
@@ -247,13 +247,13 @@ t.test("01.03 - multiple findings, object within array", t => {
           and: "this",
           deleted: {
             key2: "val2",
-            key3: "val3"
-          }
-        }
+            key3: "val3",
+          },
+        },
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       }
     ),
     ["elem1", "elem4"],
@@ -266,7 +266,7 @@ t.test("01.03 - multiple findings, object within array", t => {
           key2: "val2",
           key3: "val3",
           yo: "yo",
-          this: "will be deleted too"
+          this: "will be deleted too",
         },
         "elem1",
         {
@@ -278,9 +278,9 @@ t.test("01.03 - multiple findings, object within array", t => {
             "b",
             "c",
             {
-              obj: "obj1"
-            }
-          ]
+              obj: "obj1",
+            },
+          ],
         },
         "elem4",
         {
@@ -289,13 +289,13 @@ t.test("01.03 - multiple findings, object within array", t => {
           and: "this",
           deleted: {
             key2: "val2",
-            key3: "val3"
-          }
-        }
+            key3: "val3",
+          },
+        },
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true }
     ),
@@ -304,7 +304,7 @@ t.test("01.03 - multiple findings, object within array", t => {
         key2: "val2",
         key3: "val3",
         yo: "yo",
-        this: "will be deleted too"
+        this: "will be deleted too",
       },
       "elem1",
       {
@@ -316,16 +316,16 @@ t.test("01.03 - multiple findings, object within array", t => {
           "b",
           "c",
           {
-            obj: "obj1"
-          }
-        ]
+            obj: "obj1",
+          },
+        ],
       },
       "elem4",
       {
         key2: "val2",
         key3: "val3",
-        and: "this"
-      }
+        and: "this",
+      },
     ],
     "01.03.02 - some not deleted because of strict match"
   );
@@ -336,7 +336,7 @@ t.test("01.03 - multiple findings, object within array", t => {
           key2: "val2",
           key3: "val3",
           yo: "yo",
-          this: "will be deleted too"
+          this: "will be deleted too",
         },
         "elem1",
         {
@@ -348,9 +348,9 @@ t.test("01.03 - multiple findings, object within array", t => {
             "b",
             "c",
             {
-              obj: "obj1"
-            }
-          ]
+              obj: "obj1",
+            },
+          ],
         },
         "elem4",
         {
@@ -359,13 +359,13 @@ t.test("01.03 - multiple findings, object within array", t => {
           and: "this",
           deleted: {
             key2: "val2",
-            key3: "val3"
-          }
-        }
+            key3: "val3",
+          },
+        },
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { hungryForWhitespace: true }
     ),
@@ -379,7 +379,7 @@ t.test("01.03 - multiple findings, object within array", t => {
           key2: "val2",
           key3: "val3",
           yo: "yo",
-          this: "will be deleted too"
+          this: "will be deleted too",
         },
         "elem1",
         {
@@ -391,9 +391,9 @@ t.test("01.03 - multiple findings, object within array", t => {
             "b",
             "c",
             {
-              obj: "obj1"
-            }
-          ]
+              obj: "obj1",
+            },
+          ],
         },
         "elem4",
         {
@@ -402,13 +402,13 @@ t.test("01.03 - multiple findings, object within array", t => {
           and: "this",
           deleted: {
             key2: "val2",
-            key3: "val3"
-          }
-        }
+            key3: "val3",
+          },
+        },
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       { matchKeysStrictly: true, hungryForWhitespace: true }
     ),
@@ -417,7 +417,7 @@ t.test("01.03 - multiple findings, object within array", t => {
         key2: "val2",
         key3: "val3",
         yo: "yo",
-        this: "will be deleted too"
+        this: "will be deleted too",
       },
       "elem1",
       {
@@ -429,23 +429,23 @@ t.test("01.03 - multiple findings, object within array", t => {
           "b",
           "c",
           {
-            obj: "obj1"
-          }
-        ]
+            obj: "obj1",
+          },
+        ],
       },
       "elem4",
       {
         key2: "val2",
         key3: "val3",
-        and: "this"
-      }
+        and: "this",
+      },
     ],
     "01.03.04 - some not deleted because of strict match"
   );
   t.end();
 });
 
-t.test("01.04 - delete object within an arrays", t => {
+t.test("01.04 - delete object within an arrays", (t) => {
   t.same(
     deleteObj(
       [
@@ -456,14 +456,14 @@ t.test("01.04 - delete object within an arrays", t => {
             key3: "val3",
             key4: "val4",
             del: "as well",
-            whatnot: "this doesn't matter"
-          }
+            whatnot: "this doesn't matter",
+          },
         ],
-        "elem5"
+        "elem5",
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     ["elem1", ["elem2"], "elem5"],
@@ -479,14 +479,14 @@ t.test("01.04 - delete object within an arrays", t => {
             key3: "val3",
             key4: "val4",
             del: "as well",
-            whatnot: "this doesn't matter"
-          }
+            whatnot: "this doesn't matter",
+          },
         ],
-        "elem5"
+        "elem5",
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       { matchKeysStrictly: true }
     ),
@@ -498,10 +498,10 @@ t.test("01.04 - delete object within an arrays", t => {
           key3: "val3",
           key4: "val4",
           del: "as well",
-          whatnot: "this doesn't matter"
-        }
+          whatnot: "this doesn't matter",
+        },
       ],
-      "elem5"
+      "elem5",
     ],
     "01.04.02"
   );
@@ -515,14 +515,14 @@ t.test("01.04 - delete object within an arrays", t => {
             key3: "val3",
             key4: "val4",
             del: "as well",
-            whatnot: "this doesn't matter"
-          }
+            whatnot: "this doesn't matter",
+          },
         ],
-        "elem5"
+        "elem5",
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       { hungryForWhitespace: true }
     ),
@@ -539,14 +539,14 @@ t.test("01.04 - delete object within an arrays", t => {
             key3: "val3",
             key4: "val4",
             del: "as well",
-            whatnot: "this doesn't matter"
-          }
+            whatnot: "this doesn't matter",
+          },
         ],
-        "elem5"
+        "elem5",
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       { matchKeysStrictly: true, hungryForWhitespace: true }
     ),
@@ -558,10 +558,10 @@ t.test("01.04 - delete object within an arrays", t => {
           key3: "val3",
           key4: "val4",
           del: "as well",
-          whatnot: "this doesn't matter"
-        }
+          whatnot: "this doesn't matter",
+        },
       ],
-      "elem5"
+      "elem5",
     ],
     "01.04.04"
   );
@@ -570,7 +570,7 @@ t.test("01.04 - delete object within an arrays", t => {
 
 t.test(
   "01.05 - delete object within an array, wrong order of keys, pt.1",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -578,18 +578,18 @@ t.test(
           {
             key2: "val2",
             key4: "val4",
-            key3: "val3"
+            key3: "val3",
           },
           {
             key3: "val3",
             key4: "val4",
-            key2: "val2"
+            key2: "val2",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         { matchKeysStrictly: false, hungryForWhitespace: false }
       ),
@@ -603,18 +603,18 @@ t.test(
           {
             key2: "val2",
             key4: "val4",
-            key3: "val3"
+            key3: "val3",
           },
           {
             key3: "val3",
             key4: "val4",
-            key2: "val2"
+            key2: "val2",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         { matchKeysStrictly: true, hungryForWhitespace: false }
       ),
@@ -623,14 +623,14 @@ t.test(
         {
           key2: "val2",
           key4: "val4",
-          key3: "val3"
+          key3: "val3",
         },
         {
           key3: "val3",
           key4: "val4",
-          key2: "val2"
+          key2: "val2",
         },
-        "elem4"
+        "elem4",
       ],
       "01.05.02 - strict match"
     );
@@ -641,18 +641,18 @@ t.test(
           {
             key2: "val2",
             key4: "val4",
-            key3: "val3"
+            key3: "val3",
           },
           {
             key3: "val3",
             key4: "val4",
-            key2: "val2"
+            key2: "val2",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         { matchKeysStrictly: false, hungryForWhitespace: true }
       ),
@@ -666,18 +666,18 @@ t.test(
           {
             key2: "val2",
             key4: "val4",
-            key3: "val3"
+            key3: "val3",
           },
           {
             key3: "val3",
             key4: "val4",
-            key2: "val2"
+            key2: "val2",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         { matchKeysStrictly: true, hungryForWhitespace: true }
       ),
@@ -686,14 +686,14 @@ t.test(
         {
           key2: "val2",
           key4: "val4",
-          key3: "val3"
+          key3: "val3",
         },
         {
           key3: "val3",
           key4: "val4",
-          key2: "val2"
+          key2: "val2",
         },
-        "elem4"
+        "elem4",
       ],
       "01.05.04 - white space hungry with strict match"
     );
@@ -703,18 +703,18 @@ t.test(
           "elem1",
           {
             key3: "val3",
-            key2: "val2"
+            key2: "val2",
           },
           {
             key3: "val3",
             key4: "val4",
-            key2: "val2"
+            key2: "val2",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         { matchKeysStrictly: true, hungryForWhitespace: true }
       ),
@@ -723,9 +723,9 @@ t.test(
         {
           key3: "val3",
           key4: "val4",
-          key2: "val2"
+          key2: "val2",
         },
-        "elem4"
+        "elem4",
       ],
       "01.05.05 - strict match, different input"
     );
@@ -735,7 +735,7 @@ t.test(
 
 t.test(
   "01.06 - delete object within an array, wrong order of keys, pt.2",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -743,7 +743,7 @@ t.test(
             tag: "a",
             attrs: {
               class: "animals",
-              href: "#"
+              href: "#",
             },
             content: [
               "\n    ",
@@ -751,16 +751,16 @@ t.test(
                 tag: "span",
                 attrs: {
                   class: "animals__cat",
-                  style: "background: url(cat.png)"
+                  style: "background: url(cat.png)",
                 },
-                content: ["Cat"]
+                content: ["Cat"],
               },
-              "\n"
-            ]
-          }
+              "\n",
+            ],
+          },
         ],
         {
-          class: "animals"
+          class: "animals",
         }
       ),
       [
@@ -772,13 +772,13 @@ t.test(
               tag: "span",
               attrs: {
                 class: "animals__cat",
-                style: "background: url(cat.png)"
+                style: "background: url(cat.png)",
               },
-              content: ["Cat"]
+              content: ["Cat"],
             },
-            "\n"
-          ]
-        }
+            "\n",
+          ],
+        },
       ],
       "01.06"
     );
@@ -786,44 +786,44 @@ t.test(
   }
 );
 
-t.test("01.07 - special case, not strict", t => {
+t.test("01.07 - special case, not strict", (t) => {
   t.same(
     deleteObj(
       {
-        key: ["a"]
+        key: ["a"],
       },
       {
-        key: []
+        key: [],
       }
     ),
     {
-      key: ["a"]
+      key: ["a"],
     },
     "01.07"
   );
   t.end();
 });
 
-t.test("01.08 - special case, strict", t => {
+t.test("01.08 - special case, strict", (t) => {
   t.same(
     deleteObj(
       {
-        key: ["a"]
+        key: ["a"],
       },
       {
-        key: []
+        key: [],
       },
       { matchKeysStrictly: true }
     ),
     {
-      key: ["a"]
+      key: ["a"],
     },
     "01.08"
   );
   t.end();
 });
 
-t.test("01.09 - real-life situation #1", t => {
+t.test("01.09 - real-life situation #1", (t) => {
   t.same(
     deleteObj(
       {
@@ -832,21 +832,21 @@ t.test("01.09 - real-life situation #1", t => {
             {
               rules: {
                 type: "rule",
-                selectors: []
-              }
+                selectors: [],
+              },
             },
             {
               rules: {
                 type: "rule",
-                selectors: [".w2"]
-              }
-            }
-          ]
-        }
+                selectors: [".w2"],
+              },
+            },
+          ],
+        },
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     {
@@ -856,18 +856,18 @@ t.test("01.09 - real-life situation #1", t => {
           {
             rules: {
               type: "rule",
-              selectors: [".w2"]
-            }
-          }
-        ]
-      }
+              selectors: [".w2"],
+            },
+          },
+        ],
+      },
     },
     "01.09"
   );
   t.end();
 });
 
-t.test("01.10 - real-life situation #2", t => {
+t.test("01.10 - real-life situation #2", (t) => {
   t.same(
     deleteObj(
       {
@@ -889,37 +889,37 @@ t.test("01.10 - real-life situation #2", t => {
                       position: {
                         start: {
                           line: 3,
-                          column: 12
+                          column: 12,
                         },
                         end: {
                           line: 3,
-                          column: 32
-                        }
-                      }
-                    }
+                          column: 32,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 3,
-                      column: 7
+                      column: 7,
                     },
                     end: {
                       line: 3,
-                      column: 34
-                    }
-                  }
-                }
+                      column: 34,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 2,
-                  column: 5
+                  column: 5,
                 },
                 end: {
                   line: 4,
-                  column: 6
-                }
-              }
+                  column: 6,
+                },
+              },
             },
             {
               type: "media",
@@ -936,45 +936,45 @@ t.test("01.10 - real-life situation #2", t => {
                       position: {
                         start: {
                           line: 6,
-                          column: 12
+                          column: 12,
                         },
                         end: {
                           line: 6,
-                          column: 32
-                        }
-                      }
-                    }
+                          column: 32,
+                        },
+                      },
+                    },
                   ],
                   position: {
                     start: {
                       line: 6,
-                      column: 7
+                      column: 7,
                     },
                     end: {
                       line: 6,
-                      column: 34
-                    }
-                  }
-                }
+                      column: 34,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 5,
-                  column: 5
+                  column: 5,
                 },
                 end: {
                   line: 7,
-                  column: 6
-                }
-              }
-            }
+                  column: 6,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     {
@@ -988,13 +988,13 @@ t.test("01.10 - real-life situation #2", t => {
             position: {
               start: {
                 line: 2,
-                column: 5
+                column: 5,
               },
               end: {
                 line: 4,
-                column: 6
-              }
-            }
+                column: 6,
+              },
+            },
           },
           {
             type: "media",
@@ -1011,48 +1011,48 @@ t.test("01.10 - real-life situation #2", t => {
                     position: {
                       start: {
                         line: 6,
-                        column: 12
+                        column: 12,
                       },
                       end: {
                         line: 6,
-                        column: 32
-                      }
-                    }
-                  }
+                        column: 32,
+                      },
+                    },
+                  },
                 ],
                 position: {
                   start: {
                     line: 6,
-                    column: 7
+                    column: 7,
                   },
                   end: {
                     line: 6,
-                    column: 34
-                  }
-                }
-              }
+                    column: 34,
+                  },
+                },
+              },
             ],
             position: {
               start: {
                 line: 5,
-                column: 5
+                column: 5,
               },
               end: {
                 line: 7,
-                column: 6
-              }
-            }
-          }
+                column: 6,
+              },
+            },
+          },
         ],
-        parsingErrors: []
-      }
+        parsingErrors: [],
+      },
     },
     "01.10"
   );
   t.end();
 });
 
-t.test("01.11 - multiple empty values blank arrays #1", t => {
+t.test("01.11 - multiple empty values blank arrays #1", (t) => {
   t.same(
     deleteObj(
       deleteObj(
@@ -1061,32 +1061,32 @@ t.test("01.11 - multiple empty values blank arrays #1", t => {
             {
               type: "rule",
               selectors: [],
-              zzz: "zzzzzz"
+              zzz: "zzzzzz",
             },
             {
               type: "rule",
               selectors: "",
-              zzz: "zzzzzz"
-            }
-          ]
+              zzz: "zzzzzz",
+            },
+          ],
         },
         {
-          selectors: ""
+          selectors: "",
         }
       ),
       {
-        selectors: []
+        selectors: [],
       }
     ),
     {
-      rules: []
+      rules: [],
     },
     "01.11"
   );
   t.end();
 });
 
-t.test("01.12 - multiple empty values blank arrays #2", t => {
+t.test("01.12 - multiple empty values blank arrays #2", (t) => {
   t.same(
     deleteObj(
       deleteObj(
@@ -1095,32 +1095,32 @@ t.test("01.12 - multiple empty values blank arrays #2", t => {
             {
               type: "rule",
               selectors: [],
-              zzz: "zzzzzz"
+              zzz: "zzzzzz",
             },
             {
               type: "rule",
               selectors: "",
-              zzz: "zzzzzz"
-            }
-          ]
+              zzz: "zzzzzz",
+            },
+          ],
         },
         {
-          selectors: []
+          selectors: [],
         }
       ),
       {
-        selectors: ""
+        selectors: "",
       }
     ),
     {
-      rules: []
+      rules: [],
     },
     "01.12"
   );
   t.end();
 });
 
-t.test("01.13 - object's value is a blank array, looking in an array", t => {
+t.test("01.13 - object's value is a blank array, looking in an array", (t) => {
   t.same(
     deleteObj(
       [
@@ -1128,12 +1128,12 @@ t.test("01.13 - object's value is a blank array, looking in an array", t => {
         {
           key2: [],
           key4: "val4",
-          key3: "val3"
+          key3: "val3",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       }
     ),
     ["elem1", "elem4"],
@@ -1142,22 +1142,22 @@ t.test("01.13 - object's value is a blank array, looking in an array", t => {
   t.end();
 });
 
-t.test("01.14 - object's value is a blank array, looking in an object", t => {
+t.test("01.14 - object's value is a blank array, looking in an object", (t) => {
   t.same(
     deleteObj(
       {
         elem1: {
           key2: [],
-          key3: "val3"
+          key3: "val3",
         },
-        elem4: "zz"
+        elem4: "zz",
       },
       {
-        key2: []
+        key2: [],
       }
     ),
     {
-      elem4: "zz"
+      elem4: "zz",
     },
     "01.14"
   );
@@ -1168,7 +1168,7 @@ t.test("01.14 - object's value is a blank array, looking in an object", t => {
 // Object within object, not strict
 // ==============================
 
-t.test("02.01 - delete object within object - simple #1", t => {
+t.test("02.01 - delete object within object - simple #1", (t) => {
   t.same(
     deleteObj(
       [
@@ -1177,26 +1177,26 @@ t.test("02.01 - delete object within object - simple #1", t => {
           key2: {
             key3: "val3",
             key4: "val4",
-            del: "as well"
-          }
-        }
+            del: "as well",
+          },
+        },
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     [
       {
-        key1: "val1"
-      }
+        key1: "val1",
+      },
     ],
     "02.01"
   );
   t.end();
 });
 
-t.test("02.02 - multiple objects to find - simple #1", t => {
+t.test("02.02 - multiple objects to find - simple #1", (t) => {
   t.same(
     deleteObj(
       [
@@ -1204,32 +1204,32 @@ t.test("02.02 - multiple objects to find - simple #1", t => {
           key1: {
             key3: "val3",
             key4: "val4",
-            del: "as well"
+            del: "as well",
           },
           key2: "val2",
           key3: {
             key3: "val3",
             key4: "val4",
-            del: "as well"
-          }
-        }
+            del: "as well",
+          },
+        },
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     [
       {
-        key2: "val2"
-      }
+        key2: "val2",
+      },
     ],
     "02.02"
   );
   t.end();
 });
 
-t.test("02.03 - multiple objects to find within objects", t => {
+t.test("02.03 - multiple objects to find within objects", (t) => {
   t.same(
     deleteObj(
       [
@@ -1240,33 +1240,33 @@ t.test("02.03 - multiple objects to find within objects", t => {
                 key4: {
                   del1: "del1",
                   del2: "del2",
-                  del: "as well"
-                }
-              }
-            }
-          }
-        }
+                  del: "as well",
+                },
+              },
+            },
+          },
+        },
       ],
       {
         del1: "del1",
-        del2: "del2"
+        del2: "del2",
       }
     ),
     [
       {
         key1: {
           key2: {
-            key3: {}
-          }
-        }
-      }
+            key3: {},
+          },
+        },
+      },
     ],
     "02.03"
   );
   t.end();
 });
 
-t.test("02.04 - real-life scenario", t => {
+t.test("02.04 - real-life scenario", (t) => {
   t.same(
     deleteObj(
       [
@@ -1283,25 +1283,25 @@ t.test("02.04 - real-life scenario", t => {
                   position: {
                     start: {
                       line: 3,
-                      column: 13
+                      column: 13,
                     },
                     end: {
                       line: 3,
-                      column: 36
-                    }
-                  }
-                }
+                      column: 36,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 3,
-                  column: 5
+                  column: 5,
                 },
                 end: {
                   line: 3,
-                  column: 38
-                }
-              }
+                  column: 38,
+                },
+              },
             },
             {
               type: "rule",
@@ -1314,32 +1314,32 @@ t.test("02.04 - real-life scenario", t => {
                   position: {
                     start: {
                       line: 7,
-                      column: 23
+                      column: 23,
                     },
                     end: {
                       line: 7,
-                      column: 65
-                    }
-                  }
-                }
+                      column: 65,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 7,
-                  column: 5
+                  column: 5,
                 },
                 end: {
                   line: 7,
-                  column: 67
-                }
-              }
-            }
-          ]
-        }
+                  column: 67,
+                },
+              },
+            },
+          ],
+        },
       ],
       {
         type: "rule",
-        selectors: []
+        selectors: [],
       }
     ),
     [
@@ -1356,35 +1356,35 @@ t.test("02.04 - real-life scenario", t => {
                 position: {
                   start: {
                     line: 3,
-                    column: 13
+                    column: 13,
                   },
                   end: {
                     line: 3,
-                    column: 36
-                  }
-                }
-              }
+                    column: 36,
+                  },
+                },
+              },
             ],
             position: {
               start: {
                 line: 3,
-                column: 5
+                column: 5,
               },
               end: {
                 line: 3,
-                column: 38
-              }
-            }
-          }
-        ]
-      }
+                column: 38,
+              },
+            },
+          },
+        ],
+      },
     ],
     "02.04"
   );
   t.end();
 });
 
-t.test("02.05 - delete object within object - simple #1", t => {
+t.test("02.05 - delete object within object - simple #1", (t) => {
   t.same(
     deleteObj(
       {
@@ -1392,16 +1392,16 @@ t.test("02.05 - delete object within object - simple #1", t => {
         key2: {
           key3: "val3",
           key4: "val4",
-          del: "as well"
-        }
+          del: "as well",
+        },
       },
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     {
-      key1: "val1"
+      key1: "val1",
     },
     "02.05"
   );
@@ -1412,17 +1412,17 @@ t.test("02.05 - delete object within object - simple #1", t => {
 // Edge cases
 // ==============================
 
-t.test("03.01 - the input is the finding", t => {
+t.test("03.01 - the input is the finding", (t) => {
   t.same(
     deleteObj(
       {
         key3: "val3",
         key4: "val4",
-        del: "as well"
+        del: "as well",
       },
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     {},
@@ -1431,11 +1431,11 @@ t.test("03.01 - the input is the finding", t => {
   t.end();
 });
 
-t.test("03.02 - the input is boolean", t => {
+t.test("03.02 - the input is boolean", (t) => {
   t.same(
     deleteObj(true, {
       key3: "val3",
-      key4: "val4"
+      key4: "val4",
     }),
     true,
     "03.02"
@@ -1443,11 +1443,11 @@ t.test("03.02 - the input is boolean", t => {
   t.end();
 });
 
-t.test("03.03 - the input is string", t => {
+t.test("03.03 - the input is string", (t) => {
   t.same(
     deleteObj("yo", {
       key3: "val3",
-      key4: "val4"
+      key4: "val4",
     }),
     "yo",
     "03.03"
@@ -1455,14 +1455,14 @@ t.test("03.03 - the input is string", t => {
   t.end();
 });
 
-t.test("03.04 - no input - throws", t => {
+t.test("03.04 - no input - throws", (t) => {
   t.throws(() => {
     deleteObj();
   });
   t.throws(() => {
     deleteObj(undefined, {
       key3: "val3",
-      key4: "val4"
+      key4: "val4",
     });
   });
   // wrong third argument throws:
@@ -1472,18 +1472,18 @@ t.test("03.04 - no input - throws", t => {
   t.end();
 });
 
-t.test("03.05 - the input is the finding (right within array)", t => {
+t.test("03.05 - the input is the finding (right within array)", (t) => {
   t.same(
     deleteObj(
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       }
     ),
     [],
@@ -1492,14 +1492,14 @@ t.test("03.05 - the input is the finding (right within array)", t => {
   t.end();
 });
 
-t.test("03.06 - pt1. empty object to find", t => {
+t.test("03.06 - pt1. empty object to find", (t) => {
   t.same(
     deleteObj(
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: false }
@@ -1507,8 +1507,8 @@ t.test("03.06 - pt1. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.01"
   );
@@ -1517,8 +1517,8 @@ t.test("03.06 - pt1. empty object to find", t => {
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: true }
@@ -1526,8 +1526,8 @@ t.test("03.06 - pt1. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.02"
   );
@@ -1536,8 +1536,8 @@ t.test("03.06 - pt1. empty object to find", t => {
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: false }
@@ -1545,8 +1545,8 @@ t.test("03.06 - pt1. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.03"
   );
@@ -1555,8 +1555,8 @@ t.test("03.06 - pt1. empty object to find", t => {
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: true }
@@ -1564,8 +1564,8 @@ t.test("03.06 - pt1. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.04"
   );
@@ -1575,17 +1575,17 @@ t.test("03.06 - pt1. empty object to find", t => {
 // searching for an empty plain object, source contains various empty plain objects
 // -----------------------------------------------------------------------------
 
-t.test("03.06 - pt2. empty object to find", t => {
+t.test("03.06 - pt2. empty object to find", (t) => {
   t.same(
     deleteObj(
       [
         {},
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {},
-        {}
+        {},
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: false }
@@ -1593,8 +1593,8 @@ t.test("03.06 - pt2. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.05"
   );
@@ -1604,10 +1604,10 @@ t.test("03.06 - pt2. empty object to find", t => {
         {},
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {},
-        {}
+        {},
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: true }
@@ -1615,8 +1615,8 @@ t.test("03.06 - pt2. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.06 - rare case - both opts on, matching against blank object - will yield positive against other blank objects, disregarding the STRICTLY flag"
   );
@@ -1626,10 +1626,10 @@ t.test("03.06 - pt2. empty object to find", t => {
         {},
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {},
-        {}
+        {},
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: false }
@@ -1637,8 +1637,8 @@ t.test("03.06 - pt2. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.07"
   );
@@ -1648,10 +1648,10 @@ t.test("03.06 - pt2. empty object to find", t => {
         {},
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {},
-        {}
+        {},
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: true }
@@ -1659,8 +1659,8 @@ t.test("03.06 - pt2. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.08"
   );
@@ -1670,17 +1670,17 @@ t.test("03.06 - pt2. empty object to find", t => {
 // searching for an empty array, source includes various empty plain objects
 // -----------------------------------------------------------------------------
 
-t.test("03.06 - pt3. empty object to find", t => {
+t.test("03.06 - pt3. empty object to find", (t) => {
   t.same(
     deleteObj(
       [
         { a: "\n" },
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         { b: "   " },
-        { c: "" }
+        { c: "" },
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: false }
@@ -1689,10 +1689,10 @@ t.test("03.06 - pt3. empty object to find", t => {
       { a: "\n" },
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       { b: "   " },
-      { c: "" }
+      { c: "" },
     ],
     "03.06.09"
   );
@@ -1702,10 +1702,10 @@ t.test("03.06 - pt3. empty object to find", t => {
         { a: "\n" },
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         { b: "   " },
-        { c: "" }
+        { c: "" },
       ],
       {},
       { matchKeysStrictly: false, hungryForWhitespace: true }
@@ -1713,8 +1713,8 @@ t.test("03.06 - pt3. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.10"
   );
@@ -1724,10 +1724,10 @@ t.test("03.06 - pt3. empty object to find", t => {
         { a: "\n" },
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         { b: "   " },
-        { c: "" }
+        { c: "" },
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: false }
@@ -1736,10 +1736,10 @@ t.test("03.06 - pt3. empty object to find", t => {
       { a: "\n" },
       {
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
       { b: "   " },
-      { c: "" }
+      { c: "" },
     ],
     "03.06.11"
   );
@@ -1749,10 +1749,10 @@ t.test("03.06 - pt3. empty object to find", t => {
         { a: "\n" },
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         { b: "   " },
-        { c: "" }
+        { c: "" },
       ],
       {},
       { matchKeysStrictly: true, hungryForWhitespace: true }
@@ -1760,22 +1760,22 @@ t.test("03.06 - pt3. empty object to find", t => {
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.06.12"
   );
   t.end();
 });
 
-t.test("03.07 - to find is undefined - throws", t => {
+t.test("03.07 - to find is undefined - throws", (t) => {
   t.throws(() => {
     deleteObj(
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       undefined
     );
@@ -1783,14 +1783,14 @@ t.test("03.07 - to find is undefined - throws", t => {
   t.end();
 });
 
-t.test("03.08 - to find is null - throws", t => {
+t.test("03.08 - to find is null - throws", (t) => {
   t.throws(() => {
     deleteObj(
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       null
     );
@@ -1798,22 +1798,22 @@ t.test("03.08 - to find is null - throws", t => {
   t.end();
 });
 
-t.test("03.09 - to find is string - returns input", t => {
+t.test("03.09 - to find is string - returns input", (t) => {
   t.same(
     deleteObj(
       [
         {
           key3: "val3",
-          key4: "val4"
-        }
+          key4: "val4",
+        },
       ],
       "yo"
     ),
     [
       {
         key3: "val3",
-        key4: "val4"
-      }
+        key4: "val4",
+      },
     ],
     "03.09"
   );
@@ -1826,7 +1826,7 @@ t.test("03.09 - to find is string - returns input", t => {
 
 t.test(
   "04.01 - won't delete object within an array because of strict mode",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -1834,16 +1834,16 @@ t.test(
           {
             key2: "val2",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         {
-          matchKeysStrictly: true
+          matchKeysStrictly: true,
         }
       ),
       [
@@ -1851,9 +1851,9 @@ t.test(
         {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "04.01"
     );
@@ -1861,7 +1861,7 @@ t.test(
   }
 );
 
-t.test("04.02 - won't find multiple findings because of strict mode", t => {
+t.test("04.02 - won't find multiple findings because of strict mode", (t) => {
   t.same(
     deleteObj(
       [
@@ -1870,16 +1870,16 @@ t.test("04.02 - won't find multiple findings because of strict mode", t => {
           deleted: {
             key2: "val2",
             key3: "val3",
-            key4: "val4"
-          }
-        }
+            key4: "val4",
+          },
+        },
       ],
       {
         key2: "val2",
-        key3: "val3"
+        key3: "val3",
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     [
@@ -1888,9 +1888,9 @@ t.test("04.02 - won't find multiple findings because of strict mode", t => {
         deleted: {
           key2: "val2",
           key3: "val3",
-          key4: "val4"
-        }
-      }
+          key4: "val4",
+        },
+      },
     ],
     "04.02"
   );
@@ -1899,7 +1899,7 @@ t.test("04.02 - won't find multiple findings because of strict mode", t => {
 
 t.test(
   "04.03 - strict mode: deletes some and skips some because of strict mode",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -1907,7 +1907,7 @@ t.test(
             key2: "val2",
             key3: "val3",
             yo: "yo",
-            this: "will be deleted too"
+            this: "will be deleted too",
           },
           "elem1",
           {
@@ -1919,9 +1919,9 @@ t.test(
               "b",
               "c",
               {
-                obj: "obj1"
-              }
-            ]
+                obj: "obj1",
+              },
+            ],
           },
           "elem4",
           {
@@ -1930,16 +1930,16 @@ t.test(
             and: "this",
             deleted: {
               key2: "val2",
-              key3: "val3"
-            }
-          }
+              key3: "val3",
+            },
+          },
         ],
         {
           key2: "val2",
-          key3: "val3"
+          key3: "val3",
         },
         {
-          matchKeysStrictly: true
+          matchKeysStrictly: true,
         }
       ),
       [
@@ -1947,7 +1947,7 @@ t.test(
           key2: "val2",
           key3: "val3",
           yo: "yo",
-          this: "will be deleted too"
+          this: "will be deleted too",
         },
         "elem1",
         {
@@ -1959,16 +1959,16 @@ t.test(
             "b",
             "c",
             {
-              obj: "obj1"
-            }
-          ]
+              obj: "obj1",
+            },
+          ],
         },
         "elem4",
         {
           key2: "val2",
           key3: "val3",
-          and: "this"
-        }
+          and: "this",
+        },
       ],
       "04.03"
     );
@@ -1978,7 +1978,7 @@ t.test(
 
 t.test(
   "04.04 - won't delete object within an arrays because of strict mode",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -1989,17 +1989,17 @@ t.test(
               key3: "val3",
               key4: "val4",
               del: "as well",
-              whatnot: "this doesn't matter"
-            }
+              whatnot: "this doesn't matter",
+            },
           ],
-          "elem5"
+          "elem5",
         ],
         {
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {
-          matchKeysStrictly: true
+          matchKeysStrictly: true,
         }
       ),
       [
@@ -2010,10 +2010,10 @@ t.test(
             key3: "val3",
             key4: "val4",
             del: "as well",
-            whatnot: "this doesn't matter"
-          }
+            whatnot: "this doesn't matter",
+          },
         ],
-        "elem5"
+        "elem5",
       ],
       "04.04"
     );
@@ -2025,61 +2025,64 @@ t.test(
 // Non-strict recognising empty space
 // ==============================
 
-t.test("05.01 - recognises array containing only empty space - default", t => {
-  t.same(
-    deleteObj(
+t.test(
+  "05.01 - recognises array containing only empty space - default",
+  (t) => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    "],
+            key3: "val3",
+            key4: "val4",
+          },
+          "elem4",
+        ],
+        {
+          key2: [],
+        },
+        {
+          hungryForWhitespace: true,
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.01.01"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    "],
+            key3: "val3",
+            key4: "val4",
+          },
+          "elem4",
+        ],
+        {
+          key2: [],
+        },
+        {
+          hungryForWhitespace: false,
+        }
+      ),
       [
         "elem1",
         {
           key2: ["\n\n \t \n \n    "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
-      {
-        key2: []
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.01.01"
-  );
-  t.same(
-    deleteObj(
-      [
-        "elem1",
-        {
-          key2: ["\n\n \t \n \n    "],
-          key3: "val3",
-          key4: "val4"
-        },
-        "elem4"
-      ],
-      {
-        key2: []
-      },
-      {
-        hungryForWhitespace: false
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: ["\n\n \t \n \n    "],
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.01.02"
-  );
-  t.end();
-});
+      "05.01.02"
+    );
+    t.end();
+  }
+);
 
-t.test("05.02 - recognises array containing only empty space - strict", t => {
+t.test("05.02 - recognises array containing only empty space - strict", (t) => {
   t.same(
     deleteObj(
       [
@@ -2087,15 +2090,15 @@ t.test("05.02 - recognises array containing only empty space - strict", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     [
@@ -2103,9 +2106,9 @@ t.test("05.02 - recognises array containing only empty space - strict", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.02.01"
   );
@@ -2116,15 +2119,15 @@ t.test("05.02 - recognises array containing only empty space - strict", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       },
       {
-        matchKeysStrictly: false
+        matchKeysStrictly: false,
       }
     ),
     [
@@ -2132,9 +2135,9 @@ t.test("05.02 - recognises array containing only empty space - strict", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.02.02"
   );
@@ -2143,7 +2146,7 @@ t.test("05.02 - recognises array containing only empty space - strict", t => {
 
 t.test(
   "05.03 - recognises array containing only empty space - not found",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2151,12 +2154,12 @@ t.test(
           {
             key2: ["\n\n \t \n \n  .  "],
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: []
+          key2: [],
         }
       ),
       [
@@ -2164,9 +2167,9 @@ t.test(
         {
           key2: ["\n\n \t \n \n  .  "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.03"
     );
@@ -2174,7 +2177,7 @@ t.test(
   }
 );
 
-t.test("05.04 - two keys in objToDelete - default", t => {
+t.test("05.04 - two keys in objToDelete - default", (t) => {
   t.same(
     deleteObj(
       [
@@ -2182,16 +2185,16 @@ t.test("05.04 - two keys in objToDelete - default", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["elem1", "elem4"],
@@ -2200,7 +2203,7 @@ t.test("05.04 - two keys in objToDelete - default", t => {
   t.end();
 });
 
-t.test("05.05 - two keys in objToDelete - strict, not found", t => {
+t.test("05.05 - two keys in objToDelete - strict, not found", (t) => {
   t.same(
     deleteObj(
       [
@@ -2208,16 +2211,16 @@ t.test("05.05 - two keys in objToDelete - strict, not found", t => {
         {
           key2: ["\n\n \t \n \n   . "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     [
@@ -2225,9 +2228,9 @@ t.test("05.05 - two keys in objToDelete - strict, not found", t => {
       {
         key2: ["\n\n \t \n \n   . "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.05.01"
   );
@@ -2238,13 +2241,13 @@ t.test("05.05 - two keys in objToDelete - strict, not found", t => {
         {
           key2: ["\n\n \t \n \n   . "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       }
     ),
     [
@@ -2252,16 +2255,16 @@ t.test("05.05 - two keys in objToDelete - strict, not found", t => {
       {
         key2: ["\n\n \t \n \n   . "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.05.02"
   );
   t.end();
 });
 
-t.test("05.06 - two keys in objToDelete - strict", t => {
+t.test("05.06 - two keys in objToDelete - strict", (t) => {
   t.same(
     deleteObj(
       [
@@ -2269,13 +2272,13 @@ t.test("05.06 - two keys in objToDelete - strict", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       { matchKeysStrictly: true }
     ),
@@ -2284,16 +2287,16 @@ t.test("05.06 - two keys in objToDelete - strict", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.06"
   );
   t.end();
 });
 
-t.test("05.07 - array with strings containing emptiness - default", t => {
+t.test("05.07 - array with strings containing emptiness - default", (t) => {
   t.same(
     deleteObj(
       [
@@ -2301,12 +2304,12 @@ t.test("05.07 - array with strings containing emptiness - default", t => {
         {
           key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       }
     ),
     [
@@ -2314,9 +2317,9 @@ t.test("05.07 - array with strings containing emptiness - default", t => {
       {
         key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.07.01"
   );
@@ -2327,15 +2330,15 @@ t.test("05.07 - array with strings containing emptiness - default", t => {
         {
           key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["elem1", "elem4"],
@@ -2344,7 +2347,7 @@ t.test("05.07 - array with strings containing emptiness - default", t => {
   t.end();
 });
 
-t.test("05.08 - array with strings containing emptiness - strict", t => {
+t.test("05.08 - array with strings containing emptiness - strict", (t) => {
   t.same(
     deleteObj(
       [
@@ -2352,15 +2355,15 @@ t.test("05.08 - array with strings containing emptiness - strict", t => {
         {
           key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     [
@@ -2368,72 +2371,75 @@ t.test("05.08 - array with strings containing emptiness - strict", t => {
       {
         key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.08"
   );
   t.end();
 });
 
-t.test("05.09 - array with strings containing emptiness - strict found", t => {
-  t.same(
-    deleteObj(
+t.test(
+  "05.09 - array with strings containing emptiness - strict found",
+  (t) => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
+            key3: "val3",
+            key4: "val4",
+          },
+          "elem4",
+        ],
+        {
+          key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
+        },
+        {
+          matchKeysStrictly: true,
+        }
+      ),
       [
         "elem1",
         {
           key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
-      {
-        key2: ["\n\n \t \n \n    ", "\n", "\t", "   "]
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.09.01"
-  );
-  t.same(
-    deleteObj(
-      [
-        "elem1",
+      "05.09.01"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
+            key3: "val3",
+            key4: "val4",
+          },
+          "elem4",
+        ],
         {
           key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
-          key3: "val3",
-          key4: "val4"
         },
-        "elem4"
-      ],
-      {
-        key2: ["\n\n \t \n \n    ", "\n", "\t", "   "]
-      },
-      {
-        matchKeysStrictly: false
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.09.02"
-  );
-  t.end();
-});
+        {
+          matchKeysStrictly: false,
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.09.02"
+    );
+    t.end();
+  }
+);
 
 t.test(
   "05.10 - recognises string containing only empty space (queried array)",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2441,15 +2447,15 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: []
+          key2: [],
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       ["elem1", "elem4"],
@@ -2462,15 +2468,15 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: []
+          key2: [],
         },
         {
-          hungryForWhitespace: false
+          hungryForWhitespace: false,
         }
       ),
       [
@@ -2478,9 +2484,9 @@ t.test(
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.10.02"
     );
@@ -2488,42 +2494,45 @@ t.test(
   }
 );
 
-t.test("05.11 - recognises string containing only empty space - strict", t => {
-  t.same(
-    deleteObj(
+t.test(
+  "05.11 - recognises string containing only empty space - strict",
+  (t) => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4",
+          },
+          "elem4",
+        ],
+        {
+          key2: [],
+        },
+        {
+          matchKeysStrictly: true,
+        }
+      ),
       [
         "elem1",
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
-      {
-        key2: []
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.11"
-  );
-  t.end();
-});
+      "05.11"
+    );
+    t.end();
+  }
+);
 
 t.test(
   "05.12 - recognises string containing only empty space - won't find",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2531,12 +2540,12 @@ t.test(
           {
             key2: "\n\n \t \n \n  .  ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          a: []
+          a: [],
         }
       ),
       [
@@ -2544,9 +2553,9 @@ t.test(
         {
           key2: "\n\n \t \n \n  .  ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.12"
     );
@@ -2556,7 +2565,7 @@ t.test(
 
 t.test(
   "05.13 - recognises string containing only empty space - won't find",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2564,13 +2573,13 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: [],
-          key3: []
+          key3: [],
         }
       ),
       [
@@ -2578,9 +2587,9 @@ t.test(
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.13.01"
     );
@@ -2591,16 +2600,16 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: [],
-          key3: []
+          key3: [],
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       [
@@ -2608,9 +2617,9 @@ t.test(
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.13.02"
     );
@@ -2620,7 +2629,7 @@ t.test(
 
 t.test(
   "05.14 - recognises a string containing only empty space (queried array with empty string)",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2628,15 +2637,15 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: [""]
+          key2: [""],
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       ["elem1", "elem4"],
@@ -2648,7 +2657,7 @@ t.test(
 
 t.test(
   "05.15 - a string containing only empty space (queried array) - strict",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2656,15 +2665,15 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: [""]
+          key2: [""],
         },
         {
-          matchKeysStrictly: true
+          matchKeysStrictly: true,
         }
       ),
       [
@@ -2672,9 +2681,9 @@ t.test(
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.15"
     );
@@ -2684,7 +2693,7 @@ t.test(
 
 t.test(
   "05.16 - a string containing only empty space (queried array) - not found",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2692,13 +2701,13 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
           key2: [""],
-          a: []
+          a: [],
         }
       ),
       [
@@ -2706,9 +2715,9 @@ t.test(
         {
           key2: "\n\n \t \n \n    ",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       "05.16"
     );
@@ -2718,7 +2727,7 @@ t.test(
 
 t.test(
   "05.17 - recognises string containing only empty space string (queried empty string)",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2726,15 +2735,15 @@ t.test(
           {
             key2: "\n\n \t \n \n    ",
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: ""
+          key2: "",
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       ["elem1", "elem4"],
@@ -2744,7 +2753,7 @@ t.test(
   }
 );
 
-t.test("05.18 - multiple string values in objToDelete", t => {
+t.test("05.18 - multiple string values in objToDelete", (t) => {
   t.same(
     deleteObj(
       [
@@ -2752,16 +2761,16 @@ t.test("05.18 - multiple string values in objToDelete", t => {
         {
           key2: "\n\n \t \n \n    ",
           key3: "  ",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "",
-        key3: ""
+        key3: "",
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["elem1", "elem4"],
@@ -2770,7 +2779,7 @@ t.test("05.18 - multiple string values in objToDelete", t => {
   t.end();
 });
 
-t.test("05.19 - multiple string values in objToDelete - not found", t => {
+t.test("05.19 - multiple string values in objToDelete - not found", (t) => {
   t.same(
     deleteObj(
       [
@@ -2778,13 +2787,13 @@ t.test("05.19 - multiple string values in objToDelete - not found", t => {
         {
           key2: "\n\n \t \n \n  .  ",
           key3: "  ",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "",
-        key3: ""
+        key3: "",
       }
     ),
     [
@@ -2792,16 +2801,16 @@ t.test("05.19 - multiple string values in objToDelete - not found", t => {
       {
         key2: "\n\n \t \n \n  .  ",
         key3: "  ",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.19"
   );
   t.end();
 });
 
-t.test("05.20 - multiple string values in objToDelete - strict", t => {
+t.test("05.20 - multiple string values in objToDelete - strict", (t) => {
   t.same(
     deleteObj(
       [
@@ -2809,18 +2818,18 @@ t.test("05.20 - multiple string values in objToDelete - strict", t => {
         {
           key2: "\n\n \t \n \n    ",
           key3: "  ",
-          key4: "val4"
+          key4: "val4",
         },
         {
           key2: "\n\n \t \n \n    ",
           key3: "  ",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
         key2: "",
-        key3: ""
+        key3: "",
       },
       { matchKeysStrictly: true }
     ),
@@ -2829,21 +2838,21 @@ t.test("05.20 - multiple string values in objToDelete - strict", t => {
       {
         key2: "\n\n \t \n \n    ",
         key3: "  ",
-        key4: "val4"
+        key4: "val4",
       },
       {
         key2: "\n\n \t \n \n    ",
         key3: "  ",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.20"
   );
   t.end();
 });
 
-t.test("05.21 - won't find, queried object with empty string value", t => {
+t.test("05.21 - won't find, queried object with empty string value", (t) => {
   t.same(
     deleteObj(
       [
@@ -2851,12 +2860,12 @@ t.test("05.21 - won't find, queried object with empty string value", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        a: ""
+        a: "",
       }
     ),
     [
@@ -2864,9 +2873,9 @@ t.test("05.21 - won't find, queried object with empty string value", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: "val3",
-        key4: "val4"
+        key4: "val4",
       },
-      "elem4"
+      "elem4",
     ],
     "05.21"
   );
@@ -2875,7 +2884,7 @@ t.test("05.21 - won't find, queried object with empty string value", t => {
 
 t.test(
   "05.22 - recognises array of strings each containing only empty space (queried empty string)",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2883,15 +2892,15 @@ t.test(
           {
             key2: ["\n\n \t \n \n    ", "\n\n \n"],
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: ""
+          key2: "",
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       ["elem1", "elem4"],
@@ -2903,7 +2912,7 @@ t.test(
 
 t.test(
   "05.23 - recognises array with multiple strings containing emptiness",
-  t => {
+  (t) => {
     t.same(
       deleteObj(
         [
@@ -2911,15 +2920,15 @@ t.test(
           {
             key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
             key3: "val3",
-            key4: "val4"
+            key4: "val4",
           },
-          "elem4"
+          "elem4",
         ],
         {
-          key2: [""]
+          key2: [""],
         },
         {
-          hungryForWhitespace: true
+          hungryForWhitespace: true,
         }
       ),
       ["elem1", "elem4"],
@@ -2929,7 +2938,7 @@ t.test(
   }
 );
 
-t.test("05.24 - empty array finding empty string", t => {
+t.test("05.24 - empty array finding empty string", (t) => {
   t.same(
     deleteObj(
       [
@@ -2937,20 +2946,20 @@ t.test("05.24 - empty array finding empty string", t => {
         {
           key2: "",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
         {
           key2: "",
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: []
+        key2: [],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["elem1", "elem4"],
@@ -2959,7 +2968,7 @@ t.test("05.24 - empty array finding empty string", t => {
   t.end();
 });
 
-t.test("05.25 - empty string finding empty array", t => {
+t.test("05.25 - empty string finding empty array", (t) => {
   t.same(
     deleteObj(
       [
@@ -2967,15 +2976,15 @@ t.test("05.25 - empty string finding empty array", t => {
         {
           key2: [],
           key3: "val3",
-          key4: "val4"
+          key4: "val4",
         },
-        "elem4"
+        "elem4",
       ],
       {
-        key2: ""
+        key2: "",
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["elem1", "elem4"],
@@ -2984,12 +2993,12 @@ t.test("05.25 - empty string finding empty array", t => {
   t.end();
 });
 
-t.test("05.26 - object deleted from an array, strict mode", t => {
+t.test("05.26 - object deleted from an array, strict mode", (t) => {
   t.same(
     deleteObj(
       [{ a: "a" }],
       {
-        a: "a"
+        a: "a",
       },
       { matchKeysStrictly: true }
     ),
@@ -3003,7 +3012,7 @@ t.test("05.26 - object deleted from an array, strict mode", t => {
 // Other and random tests
 // ==============================
 
-t.test("06.01 - real life situation #1", t => {
+t.test("06.01 - real life situation #1", (t) => {
   t.same(
     deleteObj(
       {
@@ -3011,30 +3020,30 @@ t.test("06.01 - real life situation #1", t => {
           rules: [
             {
               type: "rule",
-              selectors: ""
+              selectors: "",
             },
             {
               type: "rule",
-              selectors: ""
-            }
-          ]
-        }
+              selectors: "",
+            },
+          ],
+        },
       },
       {
-        selectors: ""
+        selectors: "",
       }
     ),
     {
       stylesheet: {
-        rules: []
-      }
+        rules: [],
+      },
     },
     "06.01"
   );
   t.end();
 });
 
-t.test("06.02 - real life situation #2", t => {
+t.test("06.02 - real life situation #2", (t) => {
   t.same(
     deleteObj(
       {
@@ -3042,30 +3051,30 @@ t.test("06.02 - real life situation #2", t => {
           rules: [
             {
               type: "rule",
-              selectors: []
+              selectors: [],
             },
             {
               type: "rule",
-              selectors: []
-            }
-          ]
-        }
+              selectors: [],
+            },
+          ],
+        },
       },
       {
-        selectors: []
+        selectors: [],
       }
     ),
     {
       stylesheet: {
-        rules: []
-      }
+        rules: [],
+      },
     },
     "06.02"
   );
   t.end();
 });
 
-t.test("06.03 - real life situation #3", t => {
+t.test("06.03 - real life situation #3", (t) => {
   t.same(
     deleteObj(
       {
@@ -3083,25 +3092,25 @@ t.test("06.03 - real life situation #3", t => {
                   position: {
                     start: {
                       line: 2,
-                      column: 15
+                      column: 15,
                     },
                     end: {
                       line: 2,
-                      column: 29
-                    }
-                  }
-                }
+                      column: 29,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 2,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 2,
-                  column: 30
-                }
-              }
+                  column: 30,
+                },
+              },
             },
             {
               type: "rule",
@@ -3114,25 +3123,25 @@ t.test("06.03 - real life situation #3", t => {
                   position: {
                     start: {
                       line: 3,
-                      column: 21
+                      column: 21,
                     },
                     end: {
                       line: 3,
-                      column: 36
-                    }
-                  }
-                }
+                      column: 36,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 3,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 3,
-                  column: 37
-                }
-              }
+                  column: 37,
+                },
+              },
             },
             {
               type: "rule",
@@ -3145,25 +3154,25 @@ t.test("06.03 - real life situation #3", t => {
                   position: {
                     start: {
                       line: 4,
-                      column: 23
+                      column: 23,
                     },
                     end: {
                       line: 4,
-                      column: 44
-                    }
-                  }
-                }
+                      column: 44,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 4,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 4,
-                  column: 45
-                }
-              }
+                  column: 45,
+                },
+              },
             },
             {
               type: "rule",
@@ -3176,47 +3185,47 @@ t.test("06.03 - real life situation #3", t => {
                   position: {
                     start: {
                       line: 5,
-                      column: 15
+                      column: 15,
                     },
                     end: {
                       line: 5,
-                      column: 28
-                    }
-                  }
-                }
+                      column: 28,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 5,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 5,
-                  column: 30
-                }
-              }
-            }
+                  column: 30,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
-        selectors: []
+        selectors: [],
       }
     ),
     {
       type: "stylesheet",
       stylesheet: {
         rules: [],
-        parsingErrors: []
-      }
+        parsingErrors: [],
+      },
     },
     "06.03"
   );
   t.end();
 });
 
-t.test("06.04 - real life situation #4", t => {
+t.test("06.04 - real life situation #4", (t) => {
   t.same(
     deleteObj(
       {
@@ -3234,25 +3243,25 @@ t.test("06.04 - real life situation #4", t => {
                   position: {
                     start: {
                       line: 2,
-                      column: 15
+                      column: 15,
                     },
                     end: {
                       line: 2,
-                      column: 29
-                    }
-                  }
-                }
+                      column: 29,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 2,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 2,
-                  column: 30
-                }
-              }
+                  column: 30,
+                },
+              },
             },
             {
               type: "rule",
@@ -3265,25 +3274,25 @@ t.test("06.04 - real life situation #4", t => {
                   position: {
                     start: {
                       line: 3,
-                      column: 21
+                      column: 21,
                     },
                     end: {
                       line: 3,
-                      column: 36
-                    }
-                  }
-                }
+                      column: 36,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 3,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 3,
-                  column: 37
-                }
-              }
+                  column: 37,
+                },
+              },
             },
             {
               type: "rule",
@@ -3296,25 +3305,25 @@ t.test("06.04 - real life situation #4", t => {
                   position: {
                     start: {
                       line: 4,
-                      column: 23
+                      column: 23,
                     },
                     end: {
                       line: 4,
-                      column: 44
-                    }
-                  }
-                }
+                      column: 44,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 4,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 4,
-                  column: 45
-                }
-              }
+                  column: 45,
+                },
+              },
             },
             {
               type: "rule",
@@ -3327,47 +3336,47 @@ t.test("06.04 - real life situation #4", t => {
                   position: {
                     start: {
                       line: 5,
-                      column: 15
+                      column: 15,
                     },
                     end: {
                       line: 5,
-                      column: 28
-                    }
-                  }
-                }
+                      column: 28,
+                    },
+                  },
+                },
               ],
               position: {
                 start: {
                   line: 5,
-                  column: 3
+                  column: 3,
                 },
                 end: {
                   line: 5,
-                  column: 30
-                }
-              }
-            }
+                  column: 30,
+                },
+              },
+            },
           ],
-          parsingErrors: []
-        }
+          parsingErrors: [],
+        },
       },
       {
-        selectors: []
+        selectors: [],
       }
     ),
     {
       type: "stylesheet",
       stylesheet: {
         rules: [],
-        parsingErrors: []
-      }
+        parsingErrors: [],
+      },
     },
     "06.04"
   );
   t.end();
 });
 
-t.test("06.05 - empty strings within arrays", t => {
+t.test("06.05 - empty strings within arrays", (t) => {
   t.same(
     deleteObj(
       [
@@ -3375,13 +3384,13 @@ t.test("06.05 - empty strings within arrays", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        ""
+        "",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       }
     ),
     [
@@ -3389,9 +3398,9 @@ t.test("06.05 - empty strings within arrays", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      ""
+      "",
     ],
     "06.05.01 - defaults"
   );
@@ -3402,16 +3411,16 @@ t.test("06.05 - empty strings within arrays", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        ""
+        "",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     ["", ""], // <<< result
@@ -3424,16 +3433,16 @@ t.test("06.05 - empty strings within arrays", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        ""
+        "",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     [
@@ -3441,9 +3450,9 @@ t.test("06.05 - empty strings within arrays", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      ""
+      "",
     ],
     "06.05.03 - matchKeysStrictly"
   );
@@ -3454,17 +3463,17 @@ t.test("06.05 - empty strings within arrays", t => {
         {
           key2: ["\n\n \t \n \n    "],
           key3: [" ", "\n"],
-          key4: "val4"
+          key4: "val4",
         },
-        ""
+        "",
       ],
       {
         key2: [],
-        key3: [""]
+        key3: [""],
       },
       {
         matchKeysStrictly: true,
-        hungryForWhitespace: true
+        hungryForWhitespace: true,
       }
     ),
     [
@@ -3472,28 +3481,28 @@ t.test("06.05 - empty strings within arrays", t => {
       {
         key2: ["\n\n \t \n \n    "],
         key3: [" ", "\n"],
-        key4: "val4"
+        key4: "val4",
       },
-      ""
+      "",
     ],
     "06.05.04 - matchKeysStrictly + hungryForWhitespace"
   );
   t.end();
 });
 
-t.test("06.06 - strict mode, deletes everything", t => {
+t.test("06.06 - strict mode, deletes everything", (t) => {
   t.same(
     deleteObj(
       {
         a: "a",
-        b: "b"
+        b: "b",
       },
       {
         a: "a",
-        b: "b"
+        b: "b",
       },
       {
-        matchKeysStrictly: true
+        matchKeysStrictly: true,
       }
     ),
     {},
@@ -3503,14 +3512,14 @@ t.test("06.06 - strict mode, deletes everything", t => {
     deleteObj(
       {
         a: "a",
-        b: "b"
+        b: "b",
       },
       {
         a: "a",
-        b: "b"
+        b: "b",
       },
       {
-        matchKeysStrictly: false
+        matchKeysStrictly: false,
       }
     ),
     {},
@@ -3519,10 +3528,10 @@ t.test("06.06 - strict mode, deletes everything", t => {
   t.end();
 });
 
-t.test("06.07 - treats holes in arrays - ast-monkey will fix them", t => {
+t.test("06.07 - treats holes in arrays - ast-monkey will fix them", (t) => {
   t.same(
     deleteObj(["a", undefined, "b"], {
-      x: "y"
+      x: "y",
     }),
     ["a", "b"],
     "06.07"
@@ -3534,10 +3543,10 @@ t.test("06.07 - treats holes in arrays - ast-monkey will fix them", t => {
 // Testing for input arg mutation
 // ==============================
 
-t.test("07.01 - does not mutate input args", t => {
+t.test("07.01 - does not mutate input args", (t) => {
   const obj1 = {
     a: "a",
-    b: "b"
+    b: "b",
   };
   const obj2 = clone(obj1);
   const unneededResult = deleteObj(obj1, obj2, { matchKeysStrictly: true });
@@ -3546,7 +3555,7 @@ t.test("07.01 - does not mutate input args", t => {
     obj1,
     {
       a: "a",
-      b: "b"
+      b: "b",
     },
     "07.01.01"
   ); // real deal
@@ -3554,7 +3563,7 @@ t.test("07.01 - does not mutate input args", t => {
     obj2,
     {
       a: "a",
-      b: "b"
+      b: "b",
     },
     "07.01.02"
   ); // real deal

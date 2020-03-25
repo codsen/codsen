@@ -6,7 +6,7 @@
 
 function badCharacterLeftToRightEmbedding(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8234) {
         context.report({
           ruleId: "bad-character-left-to-right-embedding",
@@ -14,11 +14,11 @@ function badCharacterLeftToRightEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-          }
+            ranges: [[i, i + 1]], // just delete it
+          },
         });
       }
-    }
+    },
   };
 }
 

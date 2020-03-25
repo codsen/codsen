@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateArchive(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       console.log(
         `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
       );
@@ -32,7 +32,7 @@ function attributeValidateArchive(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           // it depends, which tag is this attribute on...
@@ -43,12 +43,12 @@ function attributeValidateArchive(context, ...opts) {
             validateUri(node.attribValue, {
               offset: node.attribValueStartsAt,
               separator: "comma",
-              multipleOK: true
-            }).forEach(errorObj => {
+              multipleOK: true,
+            }).forEach((errorObj) => {
               console.log(`048 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive"
+                  ruleId: "attribute-validate-archive",
                 })
               );
             });
@@ -59,19 +59,19 @@ function attributeValidateArchive(context, ...opts) {
             validateUri(node.attribValue, {
               offset: node.attribValueStartsAt,
               separator: "space", // or "comma"
-              multipleOK: true
-            }).forEach(errorObj => {
+              multipleOK: true,
+            }).forEach((errorObj) => {
               console.log(`064 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive"
+                  ruleId: "attribute-validate-archive",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 

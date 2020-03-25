@@ -17,7 +17,7 @@ const nameStartChar = [
   [12289, 55295], // [#x3001-#xD7FF]
   [63744, 64975], // [#xF900-#xFDCF]
   [65008, 65533], // [#xFDF0-#xFFFD]
-  [65536, 983039] // [#x10000-#xEFFFF]
+  [65536, 983039], // [#x10000-#xEFFFF]
 ];
 
 // https://www.w3.org/TR/REC-xml/#NT-NameChar
@@ -44,16 +44,16 @@ const nameChar = [
   [12289, 55295], // [#x3001-#xD7FF]
   [63744, 64975], // [#xF900-#xFDCF]
   [65008, 65533], // [#xFDF0-#xFFFD]
-  [65536, 983039] // [#x10000-#xEFFFF]
+  [65536, 983039], // [#x10000-#xEFFFF]
 ];
 
 const priorityNameChar = [
-  [97, 122] // [a-z]
+  [97, 122], // [a-z]
 ];
 
 const opts = {
   inclusiveRangeEnds: true,
-  skipIncomingRangeSorting: true
+  skipIncomingRangeSorting: true,
 };
 
 // first checking the letters, then the rest
@@ -75,5 +75,5 @@ export {
   isProduction4,
   isProduction4a,
   isProduction4 as validFirstChar,
-  isProduction4a as validSecondCharOnwards
+  isProduction4a as validSecondCharOnwards,
 };

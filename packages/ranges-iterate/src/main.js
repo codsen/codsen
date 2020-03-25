@@ -55,7 +55,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
       cb({
         i,
         val: str[i],
-        push: received => received
+        push: (received) => received,
       });
     }
   } else {
@@ -93,7 +93,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         // TODO - add push
         cb({
           i: finalIdx,
-          val: str[finalIdx]
+          val: str[finalIdx],
         });
       }
     }
@@ -136,7 +136,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
             );
             cb({
               i: finalIdx,
-              val: rangeArr[2][y]
+              val: rangeArr[2][y],
             });
             finalIdx++;
           }
@@ -145,8 +145,9 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         // 2. skip all characters in the range because those will be deleted
         while (currentIdx < rangeArr[1]) {
           console.log(
-            `148 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${currentIdx +
-              1}\u001b[${39}m`}`
+            `148 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${
+              currentIdx + 1
+            }\u001b[${39}m`}`
           );
 
           currentIdx++;
@@ -158,22 +159,22 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         if (ranges[rangeArrIdx + 1]) {
           loopUntil = ranges[rangeArrIdx + 1][0];
         }
-        console.log(`161 loopUntil = ${loopUntil}`);
+        console.log(`162 loopUntil = ${loopUntil}`);
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
-          console.log(`163 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+          console.log(`164 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
           cb({
             i: finalIdx,
-            val: str[currentIdx]
+            val: str[currentIdx],
           });
         }
 
         console.log("");
         console.log(
-          `172 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+          `173 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
         );
       });
     }
-    console.log(`176 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
+    console.log(`177 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
   }
 }
 

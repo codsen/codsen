@@ -11,7 +11,7 @@ import isMediaD from "is-media-descriptor";
 
 function mediaMalformed(context, ...opts) {
   return {
-    at: function(node) {
+    at: function (node) {
       console.log(
         `███████████████████████████████████████ mediaMalformed() ███████████████████████████████████████`
       );
@@ -28,7 +28,7 @@ function mediaMalformed(context, ...opts) {
 
       if (node.identifier === "media") {
         const errors = isMediaD(node.query, {
-          offset: node.queryStartsAt
+          offset: node.queryStartsAt,
         });
         console.log(
           `034 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
@@ -38,11 +38,11 @@ function mediaMalformed(context, ...opts) {
           )}`
         );
 
-        errors.forEach(errorObj => {
+        errors.forEach((errorObj) => {
           console.log(`042 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "media-malformed"
+              ruleId: "media-malformed",
             })
           );
         });
@@ -60,7 +60,7 @@ function mediaMalformed(context, ...opts) {
       //     }
       //   });
       // }
-    }
+    },
   };
 }
 
