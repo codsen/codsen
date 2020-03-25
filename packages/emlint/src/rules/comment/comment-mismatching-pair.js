@@ -80,21 +80,20 @@ function commentMismatchingPair(context, ...opts) {
                   console.log(
                     `081 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
                   );
-                  // only amend the tails if they are correct currently,
-                  // to prevent fix clashes
-                  let ranges = null;
-                  if (current.value === reference.only) {
-                    ranges = [[current.start, current.start, "<!--"]];
-                  }
 
                   // turn tail into "not"-kind, add front part (<!--)
+
+                  // Out of all raised errors, only one can have "ranges.fix" -
+                  // all other fixes, if any present, will be removed.
+                  // This is to simplify the rule fix clashing.
                   context.report({
                     ruleId: "comment-mismatching-pair",
+                    keepSeparateWhenFixing: true,
                     message: `Add "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges,
+                      ranges: [[current.start, current.start, "<!--"]],
                     },
                   });
                 } else if (
@@ -102,21 +101,22 @@ function commentMismatchingPair(context, ...opts) {
                   current.kind === "not"
                 ) {
                   console.log(
-                    `105 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
+                    `104 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
                   );
-                  let ranges = null;
-                  if (current.value === reference.not) {
-                    ranges = [[current.start, current.end, "<![endif]-->"]];
-                  }
 
                   // turn tail into "only"-kind, remove front part (<!--)
+
+                  // Out of all raised errors, only one can have "ranges.fix" -
+                  // all other fixes, if any present, will be removed.
+                  // This is to simplify the rule fix clashing.
                   context.report({
                     ruleId: "comment-mismatching-pair",
+                    keepSeparateWhenFixing: true,
                     message: `Remove "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges,
+                      ranges: [[current.start, current.end, "<![endif]-->"]],
                     },
                   });
                 }
@@ -126,11 +126,6 @@ function commentMismatchingPair(context, ...opts) {
           return current;
         }
       );
-
-      //   context.report(
-      //     Object.assign({}, errorObj, {
-      //       ruleId: "comment-mismatching-pair"
-      //     })
     },
   };
 }

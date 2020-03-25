@@ -73,11 +73,40 @@ t.test(
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        all: 1,
+        // all: 1,
+        "comment-opening-malformed": 1,
+        "comment-mismatching-pair": 1,
       },
     });
     // turns tails comment tag into "only"-kind
-    t.equal(applyFixes(str, messages), fixed, "01.03");
+    t.match(
+      messages,
+      [
+        {
+          severity: 1,
+          idxFrom: 0,
+          idxTo: 14,
+          message: "Malformed opening comment tag.",
+          fix: {
+            ranges: [[0, 6, "<!--["]],
+          },
+          ruleId: "comment-opening-malformed",
+        },
+        {
+          severity: 1,
+          ruleId: "comment-mismatching-pair",
+          message: 'Remove "<!--".',
+          idxFrom: 39,
+          idxTo: 55,
+          keepSeparateWhenFixing: true,
+          fix: {
+            ranges: [[39, 55, "<![endif]-->"]],
+          },
+        },
+      ],
+      "01.03.01"
+    );
+    t.equal(applyFixes(str, messages), fixed, "01.03.02");
     t.end();
   }
 );
@@ -176,6 +205,7 @@ t.test(
           fix: {
             ranges: [[44, 44, "<!--"]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "02.01.02"

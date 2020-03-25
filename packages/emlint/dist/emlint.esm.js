@@ -187,7 +187,7 @@ function checkForWhitespace(str, idxOffset) {
         idxFrom: idxOffset,
         idxTo: idxOffset + str.length,
         message: `Missing value.`,
-        fix: null
+        fix: null,
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
@@ -204,7 +204,7 @@ function checkForWhitespace(str, idxOffset) {
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
       message: `Remove whitespace.`,
-      fix: { ranges: gatheredRanges }
+      fix: { ranges: gatheredRanges },
     });
     gatheredRanges = [];
     trimmedVal = str.trim();
@@ -217,7 +217,7 @@ function includesWithRegex(arr, whatToMatch, opts = {}) {
     return false;
   }
   return arr.some(
-    val =>
+    (val) =>
       (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" &&
         ((!opts.caseInsensitive && whatToMatch === val) ||
@@ -231,10 +231,10 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
   if (
     !(
       includesWithRegex(opts.quickPermittedValues, extractedValue, {
-        caseInsensitive: opts.caseInsensitive
+        caseInsensitive: opts.caseInsensitive,
       }) ||
       includesWithRegex(opts.permittedValues, extractedValue, {
-        caseInsensitive: opts.caseInsensitive
+        caseInsensitive: opts.caseInsensitive,
       })
     )
   ) {
@@ -253,15 +253,15 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
           [
             charStart + idxOffset,
             charEnd + idxOffset,
-            extractedValue.toLowerCase()
-          ]
-        ]
+            extractedValue.toLowerCase(),
+          ],
+        ],
       };
     } else if (
       Array.isArray(opts.quickPermittedValues) &&
       opts.quickPermittedValues.length &&
       opts.quickPermittedValues.length < 6 &&
-      opts.quickPermittedValues.every(val => typeof val === "string") &&
+      opts.quickPermittedValues.every((val) => typeof val === "string") &&
       (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) &&
       opts.quickPermittedValues.join("|").length < 40
     ) {
@@ -270,7 +270,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       Array.isArray(opts.permittedValues) &&
       opts.permittedValues.length &&
       opts.permittedValues.length < 6 &&
-      opts.permittedValues.every(val => typeof val === "string") &&
+      opts.permittedValues.every((val) => typeof val === "string") &&
       (!Array.isArray(opts.quickPermittedValues) ||
         !opts.quickPermittedValues.length) &&
       opts.permittedValues.join("|").length < 40
@@ -281,7 +281,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       idxFrom: charStart + idxOffset,
       idxTo: charEnd + idxOffset,
       message,
-      fix
+      fix,
     });
   }
 }
@@ -290,7 +290,7 @@ function validateString(str, idxOffset, originalOpts) {
     canBeCommaSeparated: false,
     caseInsensitive: false,
     quickPermittedValues: null,
-    permittedValues: null
+    permittedValues: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
@@ -321,10 +321,10 @@ function validateString(str, idxOffset, originalOpts) {
             idxTo: ranges[ranges.length - 1][1],
             message,
             fix: {
-              ranges
-            }
+              ranges,
+            },
           });
-        }
+        },
       });
     } else {
       const extractedValue = str.slice(charStart, charEnd);
@@ -360,11 +360,11 @@ const linkTypes = [
   "start",
   "stylesheet",
   "subsection",
-  "tag"
+  "tag",
 ];
 const astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
-  "tag-void-frontal-slash": "Remove frontal slash."
+  "tag-void-frontal-slash": "Remove frontal slash.",
 };
 function isLetter(str) {
   return (
@@ -410,7 +410,7 @@ function isAnEnabledRule(config, ruleId) {
 
 function badCharacterNull(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -418,17 +418,17 @@ function badCharacterNull(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStartOfHeading(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 1) {
         context.report({
           ruleId: "bad-character-start-of-heading",
@@ -436,17 +436,17 @@ function badCharacterStartOfHeading(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStartOfText(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 2) {
         context.report({
           ruleId: "bad-character-start-of-text",
@@ -454,17 +454,17 @@ function badCharacterStartOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfText(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",
@@ -472,17 +472,17 @@ function badCharacterEndOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, "\n"]]
-          }
+            ranges: [[i, i + 1, "\n"]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfTransmission(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 4) {
         context.report({
           ruleId: "bad-character-end-of-transmission",
@@ -490,17 +490,17 @@ function badCharacterEndOfTransmission(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEnquiry(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 5) {
         context.report({
           ruleId: "bad-character-enquiry",
@@ -508,17 +508,17 @@ function badCharacterEnquiry(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterAcknowledge(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 6) {
         context.report({
           ruleId: "bad-character-acknowledge",
@@ -526,17 +526,17 @@ function badCharacterAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterBell(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 7) {
         context.report({
           ruleId: "bad-character-bell",
@@ -544,17 +544,17 @@ function badCharacterBell(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterBackspace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8) {
         context.report({
           ruleId: "bad-character-backspace",
@@ -562,11 +562,11 @@ function badCharacterBackspace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
@@ -581,7 +581,7 @@ function badCharacterTabulation(context, ...originalOpts) {
     mode = "indentationIsFine";
   }
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
         if (mode === "never") {
           context.report({
@@ -590,8 +590,8 @@ function badCharacterTabulation(context, ...originalOpts) {
             idxFrom: i,
             idxTo: i + 1,
             fix: {
-              ranges: [[i, i + 1, " "]]
-            }
+              ranges: [[i, i + 1, " "]],
+            },
           });
         } else if (mode === "indentationIsFine") {
           const charTopOnBreaksIdx = leftStopAtNewLines(context.str, i);
@@ -605,19 +605,19 @@ function badCharacterTabulation(context, ...originalOpts) {
               idxFrom: i,
               idxTo: i + 1,
               fix: {
-                ranges: [[i, i + 1, " "]]
-              }
+                ranges: [[i, i + 1, " "]],
+              },
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function badCharacterLineTabulation(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 11) {
         context.report({
           ruleId: "bad-character-line-tabulation",
@@ -625,17 +625,17 @@ function badCharacterLineTabulation(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterFormFeed(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 12) {
         context.report({
           ruleId: "bad-character-form-feed",
@@ -643,17 +643,17 @@ function badCharacterFormFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterShiftOut(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
@@ -661,17 +661,17 @@ function badCharacterShiftOut(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterShiftIn(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 15) {
         context.report({
           ruleId: "bad-character-shift-in",
@@ -679,17 +679,17 @@ function badCharacterShiftIn(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDataLinkEscape(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 16) {
         context.report({
           ruleId: "bad-character-data-link-escape",
@@ -697,17 +697,17 @@ function badCharacterDataLinkEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDeviceControlOne(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 17) {
         context.report({
           ruleId: "bad-character-device-control-one",
@@ -715,17 +715,17 @@ function badCharacterDeviceControlOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDeviceControlTwo(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 18) {
         context.report({
           ruleId: "bad-character-device-control-two",
@@ -733,17 +733,17 @@ function badCharacterDeviceControlTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDeviceControlThree(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 19) {
         context.report({
           ruleId: "bad-character-device-control-three",
@@ -751,17 +751,17 @@ function badCharacterDeviceControlThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDeviceControlFour(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 20) {
         context.report({
           ruleId: "bad-character-device-control-four",
@@ -769,17 +769,17 @@ function badCharacterDeviceControlFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",
@@ -787,17 +787,17 @@ function badCharacterNegativeAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSynchronousIdle(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 22) {
         context.report({
           ruleId: "bad-character-synchronous-idle",
@@ -805,17 +805,17 @@ function badCharacterSynchronousIdle(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfTransmissionBlock(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 23) {
         context.report({
           ruleId: "bad-character-end-of-transmission-block",
@@ -823,17 +823,17 @@ function badCharacterEndOfTransmissionBlock(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterCancel(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 24) {
         context.report({
           ruleId: "bad-character-cancel",
@@ -841,17 +841,17 @@ function badCharacterCancel(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfMedium(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 25) {
         context.report({
           ruleId: "bad-character-end-of-medium",
@@ -859,17 +859,17 @@ function badCharacterEndOfMedium(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSubstitute(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 26) {
         context.report({
           ruleId: "bad-character-substitute",
@@ -877,17 +877,17 @@ function badCharacterSubstitute(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEscape(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 27) {
         context.report({
           ruleId: "bad-character-escape",
@@ -895,17 +895,17 @@ function badCharacterEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInformationSeparatorFour(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 28) {
         context.report({
           ruleId: "bad-character-information-separator-four",
@@ -913,17 +913,17 @@ function badCharacterInformationSeparatorFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInformationSeparatorThree(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 29) {
         context.report({
           ruleId: "bad-character-information-separator-three",
@@ -931,17 +931,17 @@ function badCharacterInformationSeparatorThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInformationSeparatorTwo(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 30) {
         context.report({
           ruleId: "bad-character-information-separator-two",
@@ -949,17 +949,17 @@ function badCharacterInformationSeparatorTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInformationSeparatorTwo$1(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 31) {
         context.report({
           ruleId: "bad-character-information-separator-one",
@@ -967,17 +967,17 @@ function badCharacterInformationSeparatorTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDelete(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 127) {
         context.report({
           ruleId: "bad-character-delete",
@@ -985,17 +985,17 @@ function badCharacterDelete(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterControl0080(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 128) {
         context.report({
           ruleId: "bad-character-control-0080",
@@ -1003,17 +1003,17 @@ function badCharacterControl0080(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterControl0081(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 129) {
         context.report({
           ruleId: "bad-character-control-0081",
@@ -1021,17 +1021,17 @@ function badCharacterControl0081(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterBreakPermittedHere(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 130) {
         context.report({
           ruleId: "bad-character-break-permitted-here",
@@ -1039,17 +1039,17 @@ function badCharacterBreakPermittedHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNoBreakHere(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 131) {
         context.report({
           ruleId: "bad-character-no-break-here",
@@ -1057,17 +1057,17 @@ function badCharacterNoBreakHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterControl0084(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 132) {
         context.report({
           ruleId: "bad-character-control-0084",
@@ -1075,17 +1075,17 @@ function badCharacterControl0084(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNextLine(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 133) {
         context.report({
           ruleId: "bad-character-next-line",
@@ -1093,17 +1093,17 @@ function badCharacterNextLine(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStartOfSelectedArea(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 134) {
         context.report({
           ruleId: "bad-character-start-of-selected-area",
@@ -1111,17 +1111,17 @@ function badCharacterStartOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfSelectedArea(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 135) {
         context.report({
           ruleId: "bad-character-end-of-selected-area",
@@ -1129,17 +1129,17 @@ function badCharacterEndOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterCharacterTabulationSet(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 136) {
         context.report({
           ruleId: "bad-character-character-tabulation-set",
@@ -1147,17 +1147,17 @@ function badCharacterCharacterTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterCharacterTabulationWithJustification(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 137) {
         context.report({
           ruleId: "bad-character-character-tabulation-with-justification",
@@ -1165,17 +1165,17 @@ function badCharacterCharacterTabulationWithJustification(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLineTabulationSet(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 138) {
         context.report({
           ruleId: "bad-character-line-tabulation-set",
@@ -1183,17 +1183,17 @@ function badCharacterLineTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPartialLineForward(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 139) {
         context.report({
           ruleId: "bad-character-partial-line-forward",
@@ -1201,17 +1201,17 @@ function badCharacterPartialLineForward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPartialLineBackward(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 140) {
         context.report({
           ruleId: "bad-character-partial-line-backward",
@@ -1219,17 +1219,17 @@ function badCharacterPartialLineBackward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterReverseLineFeed(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 141) {
         context.report({
           ruleId: "bad-character-reverse-line-feed",
@@ -1237,17 +1237,17 @@ function badCharacterReverseLineFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSingleShiftTwo(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 142) {
         context.report({
           ruleId: "bad-character-single-shift-two",
@@ -1255,17 +1255,17 @@ function badCharacterSingleShiftTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSingleShiftTwo$1(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 143) {
         context.report({
           ruleId: "bad-character-single-shift-three",
@@ -1273,17 +1273,17 @@ function badCharacterSingleShiftTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterDeviceControlString(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 144) {
         context.report({
           ruleId: "bad-character-device-control-string",
@@ -1291,17 +1291,17 @@ function badCharacterDeviceControlString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPrivateUseOne(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 145) {
         context.report({
           ruleId: "bad-character-private-use-1",
@@ -1309,17 +1309,17 @@ function badCharacterPrivateUseOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPrivateUseTwo(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 146) {
         context.report({
           ruleId: "bad-character-private-use-2",
@@ -1327,17 +1327,17 @@ function badCharacterPrivateUseTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSetTransmitState(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 147) {
         context.report({
           ruleId: "bad-character-set-transmit-state",
@@ -1345,17 +1345,17 @@ function badCharacterSetTransmitState(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterCancelCharacter(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 148) {
         context.report({
           ruleId: "bad-character-cancel-character",
@@ -1363,17 +1363,17 @@ function badCharacterCancelCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterMessageWaiting(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 149) {
         context.report({
           ruleId: "bad-character-message-waiting",
@@ -1381,17 +1381,17 @@ function badCharacterMessageWaiting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStartOfProtectedArea(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 150) {
         context.report({
           ruleId: "bad-character-start-of-protected-area",
@@ -1399,17 +1399,17 @@ function badCharacterStartOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEndOfProtectedArea(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 151) {
         context.report({
           ruleId: "bad-character-end-of-protected-area",
@@ -1417,17 +1417,17 @@ function badCharacterEndOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStartOfString(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 152) {
         context.report({
           ruleId: "bad-character-start-of-string",
@@ -1435,17 +1435,17 @@ function badCharacterStartOfString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterControl0099(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 153) {
         context.report({
           ruleId: "bad-character-control-0099",
@@ -1453,17 +1453,17 @@ function badCharacterControl0099(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSingleCharacterIntroducer(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 154) {
         context.report({
           ruleId: "bad-character-single-character-introducer",
@@ -1471,17 +1471,17 @@ function badCharacterSingleCharacterIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterControlSequenceIntroducer(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 155) {
         context.report({
           ruleId: "bad-character-control-sequence-introducer",
@@ -1489,17 +1489,17 @@ function badCharacterControlSequenceIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterStringTerminator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 156) {
         context.report({
           ruleId: "bad-character-string-terminator",
@@ -1507,17 +1507,17 @@ function badCharacterStringTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterOperatingSystemCommand(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 157) {
         context.report({
           ruleId: "bad-character-operating-system-command",
@@ -1525,17 +1525,17 @@ function badCharacterOperatingSystemCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPrivateMessage(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 158) {
         context.report({
           ruleId: "bad-character-private-message",
@@ -1543,17 +1543,17 @@ function badCharacterPrivateMessage(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterApplicationProgramCommand(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 159) {
         context.report({
           ruleId: "bad-character-application-program-command",
@@ -1561,17 +1561,17 @@ function badCharacterApplicationProgramCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSoftHyphen(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 173) {
         context.report({
           ruleId: "bad-character-soft-hyphen",
@@ -1579,17 +1579,17 @@ function badCharacterSoftHyphen(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNonBreakingSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 160) {
         context.report({
           ruleId: "bad-character-non-breaking-space",
@@ -1597,17 +1597,17 @@ function badCharacterNonBreakingSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterOghamSpaceMark(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 5760) {
         context.report({
           ruleId: "bad-character-ogham-space-mark",
@@ -1615,17 +1615,17 @@ function badCharacterOghamSpaceMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEnQuad(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8192) {
         context.report({
           ruleId: "bad-character-en-quad",
@@ -1633,17 +1633,17 @@ function badCharacterEnQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEmQuad(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8193) {
         context.report({
           ruleId: "bad-character-em-quad",
@@ -1651,17 +1651,17 @@ function badCharacterEmQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEnSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8194) {
         context.report({
           ruleId: "bad-character-en-space",
@@ -1669,17 +1669,17 @@ function badCharacterEnSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterEmSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8195) {
         context.report({
           ruleId: "bad-character-em-space",
@@ -1687,17 +1687,17 @@ function badCharacterEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterThreePerEmSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8196) {
         context.report({
           ruleId: "bad-character-three-per-em-space",
@@ -1705,17 +1705,17 @@ function badCharacterThreePerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterFourPerEmSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8197) {
         context.report({
           ruleId: "bad-character-four-per-em-space",
@@ -1723,17 +1723,17 @@ function badCharacterFourPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterSixPerEmSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8198) {
         context.report({
           ruleId: "bad-character-six-per-em-space",
@@ -1741,17 +1741,17 @@ function badCharacterSixPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterFigureSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8199) {
         context.report({
           ruleId: "bad-character-figure-space",
@@ -1759,17 +1759,17 @@ function badCharacterFigureSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPunctuationSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8200) {
         context.report({
           ruleId: "bad-character-punctuation-space",
@@ -1777,17 +1777,17 @@ function badCharacterPunctuationSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterThinSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8201) {
         context.report({
           ruleId: "bad-character-thin-space",
@@ -1795,17 +1795,17 @@ function badCharacterThinSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterHairSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8202) {
         context.report({
           ruleId: "bad-character-hair-space",
@@ -1813,17 +1813,17 @@ function badCharacterHairSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterZeroWidthSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8203) {
         context.report({
           ruleId: "bad-character-zero-width-space",
@@ -1831,17 +1831,17 @@ function badCharacterZeroWidthSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterZeroWidthNonJoiner(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8204) {
         context.report({
           ruleId: "bad-character-zero-width-non-joiner",
@@ -1849,17 +1849,17 @@ function badCharacterZeroWidthNonJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterZeroWidthJoiner(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8205) {
         context.report({
           ruleId: "bad-character-zero-width-joiner",
@@ -1867,17 +1867,17 @@ function badCharacterZeroWidthJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLeftToRightMark(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8206) {
         context.report({
           ruleId: "bad-character-left-to-right-mark",
@@ -1885,17 +1885,17 @@ function badCharacterLeftToRightMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterRightToLeftMark(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8207) {
         context.report({
           ruleId: "bad-character-right-to-left-mark",
@@ -1903,17 +1903,17 @@ function badCharacterRightToLeftMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLeftToRightEmbedding(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8234) {
         context.report({
           ruleId: "bad-character-left-to-right-embedding",
@@ -1921,17 +1921,17 @@ function badCharacterLeftToRightEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterRightToLeftEmbedding(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8235) {
         context.report({
           ruleId: "bad-character-right-to-left-embedding",
@@ -1939,17 +1939,17 @@ function badCharacterRightToLeftEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",
@@ -1957,17 +1957,17 @@ function badCharacterPopDirectionalFormatting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLeftToRightOverride(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8237) {
         context.report({
           ruleId: "bad-character-left-to-right-override",
@@ -1975,17 +1975,17 @@ function badCharacterLeftToRightOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterRightToLeftOverride(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8238) {
         context.report({
           ruleId: "bad-character-right-to-left-override",
@@ -1993,17 +1993,17 @@ function badCharacterRightToLeftOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterWordJoiner(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8288) {
         context.report({
           ruleId: "bad-character-word-joiner",
@@ -2011,17 +2011,17 @@ function badCharacterWordJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterFunctionApplication(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8289) {
         context.report({
           ruleId: "bad-character-function-application",
@@ -2029,17 +2029,17 @@ function badCharacterFunctionApplication(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInvisibleTimes(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8290) {
         context.report({
           ruleId: "bad-character-invisible-times",
@@ -2047,17 +2047,17 @@ function badCharacterInvisibleTimes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInvisibleSeparator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8291) {
         context.report({
           ruleId: "bad-character-invisible-separator",
@@ -2065,17 +2065,17 @@ function badCharacterInvisibleSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInvisiblePlus(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8292) {
         context.report({
           ruleId: "bad-character-invisible-plus",
@@ -2083,17 +2083,17 @@ function badCharacterInvisiblePlus(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLeftToRightIsolate(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8294) {
         context.report({
           ruleId: "bad-character-left-to-right-isolate",
@@ -2101,17 +2101,17 @@ function badCharacterLeftToRightIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterRightToLeftIsolate(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8295) {
         context.report({
           ruleId: "bad-character-right-to-left-isolate",
@@ -2119,17 +2119,17 @@ function badCharacterRightToLeftIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterFirstStrongIsolate(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8296) {
         context.report({
           ruleId: "bad-character-first-strong-isolate",
@@ -2137,17 +2137,17 @@ function badCharacterFirstStrongIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterPopDirectionalIsolate(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8297) {
         context.report({
           ruleId: "bad-character-pop-directional-isolate",
@@ -2155,17 +2155,17 @@ function badCharacterPopDirectionalIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInhibitSymmetricSwapping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8298) {
         context.report({
           ruleId: "bad-character-inhibit-symmetric-swapping",
@@ -2173,17 +2173,17 @@ function badCharacterInhibitSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterActivateSymmetricSwapping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8299) {
         context.report({
           ruleId: "bad-character-activate-symmetric-swapping",
@@ -2191,17 +2191,17 @@ function badCharacterActivateSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInhibitArabicFormShaping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8300) {
         context.report({
           ruleId: "bad-character-inhibit-arabic-form-shaping",
@@ -2209,17 +2209,17 @@ function badCharacterInhibitArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterActivateArabicFormShaping(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8301) {
         context.report({
           ruleId: "bad-character-activate-arabic-form-shaping",
@@ -2227,17 +2227,17 @@ function badCharacterActivateArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNationalDigitShapes(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8302) {
         context.report({
           ruleId: "bad-character-national-digit-shapes",
@@ -2245,17 +2245,17 @@ function badCharacterNationalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNominalDigitShapes(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8303) {
         context.report({
           ruleId: "bad-character-nominal-digit-shapes",
@@ -2263,17 +2263,17 @@ function badCharacterNominalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterZeroWidthNoBreakSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 65279) {
         context.report({
           ruleId: "bad-character-zero-width-no-break-space",
@@ -2281,17 +2281,17 @@ function badCharacterZeroWidthNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInterlinearAnnotationAnchor(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 65529) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-anchor",
@@ -2299,17 +2299,17 @@ function badCharacterInterlinearAnnotationAnchor(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInterlinearAnnotationSeparator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 65530) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-separator",
@@ -2317,17 +2317,17 @@ function badCharacterInterlinearAnnotationSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterInterlinearAnnotationTerminator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 65531) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-terminator",
@@ -2335,17 +2335,17 @@ function badCharacterInterlinearAnnotationTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterLineSeparator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",
@@ -2353,17 +2353,17 @@ function badCharacterLineSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterParagraphSeparator(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8233) {
         context.report({
           ruleId: "bad-character-paragraph-separator",
@@ -2371,17 +2371,17 @@ function badCharacterParagraphSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterNarrowNoBreakSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8239) {
         context.report({
           ruleId: "bad-character-narrow-no-break-space",
@@ -2389,17 +2389,17 @@ function badCharacterNarrowNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterMediumMathematicalSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 8287) {
         context.report({
           ruleId: "bad-character-medium-mathematical-space",
@@ -2407,17 +2407,17 @@ function badCharacterMediumMathematicalSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterIdeographicSpace(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 12288) {
         context.report({
           ruleId: "bad-character-ideographic-space",
@@ -2425,17 +2425,17 @@ function badCharacterIdeographicSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
-          }
+            ranges: [[i, i + 1, " "]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function badCharacterReplacementCharacter(context) {
   return {
-    character: function({ chr, i }) {
+    character: function ({ chr, i }) {
       if (chr.charCodeAt(0) === 65533) {
         context.report({
           ruleId: "bad-character-replacement-character",
@@ -2443,17 +2443,17 @@ function badCharacterReplacementCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
-          }
+            ranges: [[i, i + 1]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       const ranges = [];
       if (
         typeof context.str[node.start + 1] === "string" &&
@@ -2476,16 +2476,16 @@ function tagSpaceAfterOpeningBracket(context) {
           message: "Bad whitespace.",
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
-          fix: { ranges }
+          fix: { ranges },
         });
       }
-    }
+    },
   };
 }
 
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
@@ -2505,7 +2505,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
           message: "Bad whitespace.",
           idxFrom: leftOfSlashPos + 1,
           idxTo: slashPos,
-          fix: { ranges: [[leftOfSlashPos + 1, slashPos]] }
+          fix: { ranges: [[leftOfSlashPos + 1, slashPos]] },
         });
       } else if (
         mode === "always" &&
@@ -2518,16 +2518,16 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
           message: "Missing space.",
           idxFrom: slashPos,
           idxTo: slashPos,
-          fix: { ranges: [[slashPos, slashPos, " "]] }
+          fix: { ranges: [[slashPos, slashPos, " "]] },
         });
       }
-    }
+    },
   };
 }
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       if (
         Number.isInteger(node.end) &&
         context.str[node.end - 1] === ">" &&
@@ -2540,17 +2540,17 @@ function tagSpaceBetweenSlashAndBracket(context) {
           message: "Bad whitespace.",
           idxFrom,
           idxTo: node.end - 1,
-          fix: { ranges: [[idxFrom, node.end - 1]] }
+          fix: { ranges: [[idxFrom, node.end - 1]] },
         });
       }
-    }
+    },
   };
 }
 
 const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       const ranges = [];
       if (
         Number.isInteger(node.start) &&
@@ -2626,7 +2626,7 @@ function tagClosingBackslash(context) {
           message,
           idxFrom,
           idxTo: node.end - 1,
-          fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] }
+          fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] },
         });
       }
       if (ranges.length) {
@@ -2635,17 +2635,17 @@ function tagClosingBackslash(context) {
           message: "Wrong slash - backslash.",
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
-          fix: { ranges }
+          fix: { ranges },
         });
       }
-    }
+    },
   };
 }
 
 const BACKSLASH$1 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       let mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
@@ -2659,7 +2659,7 @@ function tagVoidSlash(context, ...opts) {
           message: "Remove the slash.",
           idxFrom: leftOfSlashPos + 1,
           idxTo: closingBracketPos,
-          fix: { ranges: [[leftOfSlashPos + 1, closingBracketPos]] }
+          fix: { ranges: [[leftOfSlashPos + 1, closingBracketPos]] },
         });
       } else if (
         mode === "always" &&
@@ -2693,7 +2693,7 @@ function tagVoidSlash(context, ...opts) {
               message: "Missing slash.",
               idxFrom: slashPos + 2,
               idxTo: closingBracketPos,
-              fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] }
+              fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] },
             });
           } else {
             context.report({
@@ -2701,7 +2701,7 @@ function tagVoidSlash(context, ...opts) {
               message: "Missing slash.",
               idxFrom: slashPos + 1,
               idxTo: closingBracketPos,
-              fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] }
+              fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] },
             });
           }
         } else if (
@@ -2723,18 +2723,18 @@ function tagVoidSlash(context, ...opts) {
             message: "Missing slash.",
             idxFrom: slashPos + 1,
             idxTo: closingBracketPos,
-            fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] }
+            fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] },
           });
         }
       }
-    }
+    },
   };
 }
 
 function tagNameCase(context) {
   const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
-    tag: function(node) {
+    tag: function (node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (
@@ -2745,15 +2745,15 @@ function tagNameCase(context) {
               [
                 node.tagNameStartsAt,
                 node.tagNameEndsAt,
-                node.tagName.toUpperCase()
-              ]
+                node.tagName.toUpperCase(),
+              ],
             ];
             context.report({
               ruleId: "tag-name-case",
               message: "Bad tag name case.",
               idxFrom: node.tagNameStartsAt,
               idxTo: node.tagNameEndsAt,
-              fix: { ranges }
+              fix: { ranges },
             });
           }
         } else if (
@@ -2761,24 +2761,24 @@ function tagNameCase(context) {
           node.tagName
         ) {
           const ranges = [
-            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]
+            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],
           ];
           context.report({
             ruleId: "tag-name-case",
             message: "Bad tag name case.",
             idxFrom: node.tagNameStartsAt,
             idxTo: node.tagNameEndsAt,
-            fix: { ranges }
+            fix: { ranges },
           });
         }
       }
-    }
+    },
   };
 }
 
 function tagIsPresent(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       if (Array.isArray(opts) && opts.length) {
         const temp = matcher([node.tagName], opts);
         if (matcher([node.tagName], opts).length) {
@@ -2787,17 +2787,17 @@ function tagIsPresent(context, ...opts) {
             message: `${node.tagName} is not allowed.`,
             idxFrom: node.start,
             idxTo: node.end,
-            fix: { ranges: [[node.start, node.end]] }
+            fix: { ranges: [[node.start, node.end]] },
           });
         }
       }
-    }
+    },
   };
 }
 
 function tagBold(context, ...opts) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       let suggested = "strong";
       if (
         Array.isArray(opts) &&
@@ -2813,17 +2813,17 @@ function tagBold(context, ...opts) {
           idxFrom: node.start,
           idxTo: node.end,
           fix: {
-            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
-          }
+            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function tagBadSelfClosing(context) {
   return {
-    tag: function(node) {
+    tag: function (node) {
       if (
         !node.void &&
         node.value.endsWith(">") &&
@@ -2839,10 +2839,10 @@ function tagBadSelfClosing(context) {
           message: "Remove the slash.",
           idxFrom,
           idxTo,
-          fix: { ranges: [[idxFrom, idxTo]] }
+          fix: { ranges: [[idxFrom, idxTo]] },
         });
       }
-    }
+    },
   };
 }
 
@@ -2850,7 +2850,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   const defaults = {
     offset: 0,
     from: 0,
-    to: str.length
+    to: str.length,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   let nameStartsAt = null;
@@ -2866,7 +2866,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       if (typeof cbWhitespace === "function") {
         cbWhitespace([
           whitespaceStartsAt + opts.offset,
-          (str[i].trim().length ? i : i + 1) + opts.offset
+          (str[i].trim().length ? i : i + 1) + opts.offset,
         ]);
       }
       whitespaceStartsAt = null;
@@ -2878,7 +2878,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       if (typeof cbValues === "function") {
         cbValues([
           nameStartsAt + opts.offset,
-          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset
+          (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset,
         ]);
       }
       nameStartsAt = null;
@@ -2889,7 +2889,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
 function attributeDuplicate(context, ...opts) {
   const attributesWhichCanBeMerged = ["id", "class"];
   return {
-    tag: function(node) {
+    tag: function (node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         const attrsGatheredSoFar = [];
         const mergeableAttrsCaught = [];
@@ -2904,7 +2904,7 @@ function attributeDuplicate(context, ...opts) {
               message: `Duplicate attribute "${node.attribs[i].attribName}".`,
               idxFrom: node.attribs[i].attribStart,
               idxTo: node.attribs[i].attribEnd,
-              fix: null
+              fix: null,
             });
           } else if (
             !mergeableAttrsCaught.includes(node.attribs[i].attribName)
@@ -2913,7 +2913,7 @@ function attributeDuplicate(context, ...opts) {
           }
         }
         if (mergeableAttrsCaught.length) {
-          mergeableAttrsCaught.forEach(attrNameBeingMerged => {
+          mergeableAttrsCaught.forEach((attrNameBeingMerged) => {
             const theFirstRange = [];
             const extractedValues = [];
             const allOtherRanges = [];
@@ -2929,7 +2929,7 @@ function attributeDuplicate(context, ...opts) {
                     i
                       ? left(context.str, node.attribs[i].attribStart) + 1
                       : node.attribs[i].attribStart,
-                    node.attribs[i].attribEnd
+                    node.attribs[i].attribEnd,
                   ]);
                 }
                 splitByWhitespace(node.attribs[i].attribValue, ([from, to]) => {
@@ -2946,20 +2946,20 @@ function attributeDuplicate(context, ...opts) {
               idxFrom: node.start,
               idxTo: node.end,
               fix: {
-                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges]
-              }
+                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges],
+              },
             });
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeMalformed(context, ...opts) {
   const blacklist = ["doctype"];
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (
         !node.attribNameRecognised &&
         !node.attribName.startsWith("xmlns:") &&
@@ -2978,10 +2978,10 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    allHtmlAttribs[i]
-                  ]
-                ]
-              }
+                    allHtmlAttribs[i],
+                  ],
+                ],
+              },
             });
             somethingMatched = true;
             break;
@@ -2993,7 +2993,7 @@ function attributeMalformed(context, ...opts) {
             message: `Unrecognised attribute "${node.attribName}".`,
             idxFrom: node.attribNameStartsAt,
             idxTo: node.attribNameEndsAt,
-            fix: null
+            fix: null,
           });
         }
       }
@@ -3006,7 +3006,9 @@ function attributeMalformed(context, ...opts) {
           message: `Equal is missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd,
-          fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
+          fix: {
+            ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]],
+          },
         });
       }
       const ranges = [];
@@ -3019,7 +3021,7 @@ function attributeMalformed(context, ...opts) {
           node.attribValueStartsAt,
           node.attribClosingQuoteAt === null
             ? `"`
-            : context.str[node.attribClosingQuoteAt]
+            : context.str[node.attribClosingQuoteAt],
         ]);
       }
       if (
@@ -3031,7 +3033,7 @@ function attributeMalformed(context, ...opts) {
           node.attribValueEndsAt,
           node.attribOpeningQuoteAt === null
             ? `"`
-            : context.str[node.attribOpeningQuoteAt]
+            : context.str[node.attribOpeningQuoteAt],
         ]);
       }
       if (ranges.length) {
@@ -3040,7 +3042,7 @@ function attributeMalformed(context, ...opts) {
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd,
-          fix: { ranges }
+          fix: { ranges },
         });
       }
       if (
@@ -3060,19 +3062,19 @@ function attributeMalformed(context, ...opts) {
             ranges: [
               [
                 left(context.str, node.attribOpeningQuoteAt),
-                node.attribOpeningQuoteAt
-              ]
-            ]
-          }
+                node.attribOpeningQuoteAt,
+              ],
+            ],
+          },
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateAbbr(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "abbr") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -3080,22 +3082,22 @@ function attributeValidateAbbr(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-abbr"
+              ruleId: "attribute-validate-abbr",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -3114,7 +3116,7 @@ const knownUnits = [
   "vh",
   "vmin",
   "vmax",
-  "%"
+  "%",
 ];
 const knownCharsets = [
   "adobe-standard-encoding",
@@ -3373,7 +3375,7 @@ const knownCharsets = [
   "windows-1257",
   "windows-1258",
   "windows-31j",
-  "windows-874"
+  "windows-874",
 ];
 const basicColorNames = {
   aqua: "#00ffff",
@@ -3391,7 +3393,7 @@ const basicColorNames = {
   silver: "#c0c0c0",
   teal: "#008080",
   white: "#ffffff",
-  yellow: "#ffff00"
+  yellow: "#ffff00",
 };
 const extendedColorNames = {
   aliceblue: "#f0f8ff",
@@ -3541,14 +3543,14 @@ const extendedColorNames = {
   white: "#ffffff",
   whitesmoke: "#f5f5f5",
   yellow: "#ffff00",
-  yellowgreen: "#9acd32"
+  yellowgreen: "#9acd32",
 };
 const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
 const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 
 function attributeValidateAcceptCharset(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "accept-charset") {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
@@ -3556,7 +3558,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -3566,24 +3568,24 @@ function attributeValidateAcceptCharset(context, ...opts) {
             canBeCommaSeparated: true,
             noSpaceAfterComma: true,
             quickPermittedValues: ["UNKNOWN"],
-            permittedValues: knownCharsets
+            permittedValues: knownCharsets,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept-charset"
+              ruleId: "attribute-validate-accept-charset",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateAccept(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "accept") {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -3591,7 +3593,7 @@ function attributeValidateAccept(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -3608,28 +3610,28 @@ function attributeValidateAccept(context, ...opts) {
               "video/mpeg",
               "text/css",
               "audio/basic",
-              wholeExtensionRegex
+              wholeExtensionRegex,
             ],
             permittedValues: Object.keys(db),
             canBeCommaSeparated: true,
-            noSpaceAfterComma: true
+            noSpaceAfterComma: true,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept"
+              ruleId: "attribute-validate-accept",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateAccesskey(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "accesskey") {
         if (
           ![
@@ -3639,7 +3641,7 @@ function attributeValidateAccesskey(context, ...opts) {
             "input",
             "label",
             "legend",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -3647,7 +3649,7 @@ function attributeValidateAccesskey(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
@@ -3663,19 +3665,19 @@ function attributeValidateAccesskey(context, ...opts) {
               idxFrom: node.attribValueStartsAt + charStart,
               idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character (escaped or not).`,
-              fix: null
+              fix: null,
             });
           }
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accesskey"
+              ruleId: "attribute-validate-accesskey",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -3683,7 +3685,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
   const defaults = {
     from: 0,
     to: str.length,
-    offset: 0
+    offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (str.slice(opts.from, opts.to) !== " ") {
@@ -3700,8 +3702,8 @@ function isSingleSpace(str, originalOpts, errorArr) {
       idxTo: opts.offset + opts.to,
       message: `Should be a single space.`,
       fix: {
-        ranges
-      }
+        ranges,
+      },
     });
   }
 }
@@ -3713,20 +3715,20 @@ function validateValue$1(str, originalOpts, errorArr) {
     from: 0,
     to: str.length,
     attribStart: 0,
-    attribEnd: str.length
+    attribEnd: str.length,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const extractedValue = str.slice(opts.from, opts.to);
   const calcultedIsRel = isRel(extractedValue);
-  if (Array.from(extractedValue).some(val => !val.trim().length)) {
+  if (Array.from(extractedValue).some((val) => !val.trim().length)) {
     const ranges = [];
     const foundCharacterRanges = [];
     splitByWhitespace(
       extractedValue,
-      valueRangeArr => {
+      (valueRangeArr) => {
         foundCharacterRanges.push(valueRangeArr);
       },
-      whitespaceRangeArr => {
+      (whitespaceRangeArr) => {
         ranges.push(whitespaceRangeArr);
       },
       originalOpts
@@ -3751,7 +3753,7 @@ function validateValue$1(str, originalOpts, errorArr) {
         idxFrom: opts.from + opts.offset,
         idxTo: opts.to + opts.offset,
         message: `There should be only one URI.`,
-        fix: null
+        fix: null,
       });
     } else {
       errorArr.push({
@@ -3759,8 +3761,8 @@ function validateValue$1(str, originalOpts, errorArr) {
         idxTo: opts.to + opts.offset,
         message: `Remove whitespace.`,
         fix: {
-          ranges
-        }
+          ranges,
+        },
       });
     }
   } else if (
@@ -3783,7 +3785,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       idxFrom,
       idxTo,
       message,
-      fix: null
+      fix: null,
     });
   }
 }
@@ -3794,7 +3796,7 @@ function validateUri(str, originalOpts) {
     separator: "space",
     oneSpaceAfterCommaOK: false,
     leadingWhitespaceOK: false,
-    trailingWhitespaceOK: false
+    trailingWhitespaceOK: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, opts.offset);
@@ -3810,7 +3812,7 @@ function validateUri(str, originalOpts) {
                 idxFrom: opts.offset + charTo - 1,
                 idxTo: opts.offset + charTo,
                 message: `No commas.`,
-                fix: null
+                fix: null,
               });
             } else {
               validateValue$1(
@@ -3820,7 +3822,7 @@ function validateUri(str, originalOpts) {
                   to: charTo,
                   attribStart: charStart,
                   attribEnd: charEnd,
-                  offset: opts.offset
+                  offset: opts.offset,
                 }),
                 errorArr
               );
@@ -3832,13 +3834,13 @@ function validateUri(str, originalOpts) {
               {
                 from: whitespaceFrom,
                 to: whitespaceTo,
-                offset: opts.offset
+                offset: opts.offset,
               },
               errorArr
             ),
           {
             from: charStart,
-            to: charEnd
+            to: charEnd,
           }
         );
       } else {
@@ -3859,14 +3861,14 @@ function validateUri(str, originalOpts) {
                 to: idxTo - opts.offset,
                 attribStart: charStart,
                 attribEnd: charEnd,
-                offset: opts.offset
+                offset: opts.offset,
               }),
               errorArr
             );
           },
           errCb: (ranges, message) => {
             let fix = {
-              ranges
+              ranges,
             };
             if (
               !str[ranges[0][0] - opts.offset].trim().length &&
@@ -3882,9 +3884,9 @@ function validateUri(str, originalOpts) {
               idxFrom: ranges[0][0],
               idxTo: ranges[ranges.length - 1][1],
               message,
-              fix
+              fix,
             });
-          }
+          },
         });
       }
     } else {
@@ -3900,7 +3902,7 @@ function validateUri(str, originalOpts) {
 
 function attributeValidateAction(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "action") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -3908,28 +3910,28 @@ function attributeValidateAction(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-action"
+                ruleId: "attribute-validate-action",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateAlign(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "align") {
         if (
           ![
@@ -3957,7 +3959,7 @@ function attributeValidateAlign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -3965,7 +3967,7 @@ function attributeValidateAlign(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         let errorArr = [];
@@ -3975,7 +3977,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["top", "bottom", "left", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -3988,7 +3990,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["top", "middle", "bottom", "left", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -3999,7 +4001,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -4012,7 +4014,7 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right", "justify"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         } else if (
@@ -4024,7 +4026,7 @@ function attributeValidateAlign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName.toLowerCase())
         ) {
           errorArr = validateString(
@@ -4032,19 +4034,19 @@ function attributeValidateAlign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right", "justify", "char"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
           );
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-align"
+              ruleId: "attribute-validate-align",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -4068,10 +4070,10 @@ function validateColor(str, idxOffset, opts) {
               [
                 idxOffset + charStart,
                 idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
+                extendedColorNames[attrVal.toLowerCase()],
+              ],
+            ],
+          },
         });
       } else if (
         !opts.namedCssLevel2PlusOK &&
@@ -4087,10 +4089,10 @@ function validateColor(str, idxOffset, opts) {
               [
                 idxOffset + charStart,
                 idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
+                extendedColorNames[attrVal.toLowerCase()],
+              ],
+            ],
+          },
         });
       }
     } else if (attrVal.startsWith("#")) {
@@ -4099,21 +4101,21 @@ function validateColor(str, idxOffset, opts) {
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Hex color code should be 6 digits-long.`,
-          fix: null
+          fix: null,
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Unrecognised hex code.`,
-          fix: null
+          fix: null,
         });
       } else if (!opts.hexSixOK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Hex colors not allowed.`,
-          fix: null
+          fix: null,
         });
       }
     } else if (attrVal.startsWith("rgb(")) {
@@ -4121,14 +4123,14 @@ function validateColor(str, idxOffset, opts) {
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: `rgb() is not allowed.`,
-        fix: null
+        fix: null,
       });
     } else {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: `Unrecognised color value.`,
-        fix: null
+        fix: null,
       });
     }
   }
@@ -4137,7 +4139,7 @@ function validateColor(str, idxOffset, opts) {
 
 function attributeValidateAlink(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "alink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -4145,7 +4147,7 @@ function attributeValidateAlink(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -4157,24 +4159,24 @@ function attributeValidateAlink(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alink"
+              ruleId: "attribute-validate-alink",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateAlt(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "alt") {
         if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -4182,28 +4184,28 @@ function attributeValidateAlt(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alt"
+              ruleId: "attribute-validate-alt",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateArchive(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "archive") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4211,18 +4213,18 @@ function attributeValidateArchive(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (node.parent.tagName === "applet") {
             validateUri(node.attribValue, {
               offset: node.attribValueStartsAt,
               separator: "comma",
-              multipleOK: true
-            }).forEach(errorObj => {
+              multipleOK: true,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive"
+                  ruleId: "attribute-validate-archive",
                 })
               );
             });
@@ -4230,24 +4232,24 @@ function attributeValidateArchive(context, ...opts) {
             validateUri(node.attribValue, {
               offset: node.attribValueStartsAt,
               separator: "space",
-              multipleOK: true
-            }).forEach(errorObj => {
+              multipleOK: true,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive"
+                  ruleId: "attribute-validate-archive",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateAxis(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "axis") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -4255,28 +4257,28 @@ function attributeValidateAxis(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-axis"
+              ruleId: "attribute-validate-axis",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateBackground(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "background") {
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -4284,28 +4286,28 @@ function attributeValidateBackground(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-background"
+                ruleId: "attribute-validate-background",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateBgcolor(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "bgcolor") {
         if (
           !["table", "tr", "td", "th", "body"].includes(node.parent.tagName)
@@ -4315,7 +4317,7 @@ function attributeValidateBgcolor(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -4327,18 +4329,18 @@ function attributeValidateBgcolor(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-bgcolor"
+              ruleId: "attribute-validate-bgcolor",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -4350,7 +4352,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Zero not allowed.`,
-          fix: null
+          fix: null,
         });
       }
     } else {
@@ -4359,7 +4361,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
           message: `Number padded with zero.`,
-          fix: null
+          fix: null,
         });
       }
     }
@@ -4382,7 +4384,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
       idxFrom: idxOffset + charStart,
       idxTo: idxOffset + charEnd,
       message,
-      fix: null
+      fix: null,
     });
   } else if (
     "0123456789".includes(str[charStart]) &&
@@ -4398,14 +4400,14 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: opts.customGenericValueError || `Units missing.`,
-        fix: null
+        fix: null,
       });
     } else {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
         message: `Maximum, ${opts.maxValue} exceeded.`,
-        fix: null
+        fix: null,
       });
     }
   } else {
@@ -4434,8 +4436,8 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
               fix: opts.customPxMessage
                 ? null
                 : {
-                    ranges: [[idxOffset + i, idxOffset + charEnd]]
-                  }
+                    ranges: [[idxOffset + i, idxOffset + charEnd]],
+                  },
             });
           } else {
             let message = `Bad unit.`;
@@ -4462,7 +4464,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
               message,
-              fix: null
+              fix: null,
             });
           }
         } else if (!knownUnits.includes(endPart)) {
@@ -4476,7 +4478,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
             idxFrom: idxOffset + i,
             idxTo: idxOffset + charEnd,
             message,
-            fix: null
+            fix: null,
           });
         }
         break;
@@ -4499,7 +4501,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     customGenericValueError: null,
     skipWhitespaceChecks: false,
     customPxMessage: null,
-    maxValue: null
+    maxValue: null,
   };
   const opts = Object.assign({}, defaultOpts, originalOpts);
   let charStart = 0;
@@ -4534,7 +4536,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               charStart: idxFrom - idxOffset,
               charEnd: idxTo - idxOffset,
               idxOffset,
-              errorArr
+              errorArr,
             });
           }
           extractedValues.push(extractedValue);
@@ -4545,10 +4547,10 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             idxTo: ranges[ranges.length - 1][1],
             message,
             fix: {
-              ranges
-            }
+              ranges,
+            },
           });
-        }
+        },
       });
       if (
         Number.isInteger(opts.enforceCount) &&
@@ -4558,7 +4560,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           idxFrom: charStart + idxOffset,
           idxTo: charEnd + idxOffset,
           message: `There should be ${opts.enforceCount} values.`,
-          fix: null
+          fix: null,
         });
       } else if (
         typeof opts.enforceCount === "string" &&
@@ -4574,7 +4576,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             idxFrom: charStart + idxOffset,
             idxTo: charEnd + idxOffset,
             message: `Should be an even number of values but found ${extractedValues.length}.`,
-            fix: null
+            fix: null,
           });
         } else if (
           opts.enforceCount.toLowerCase() !== "even" &&
@@ -4584,7 +4586,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             idxFrom: charStart + idxOffset,
             idxTo: charEnd + idxOffset,
             message: `Should be an odd number of values but found ${extractedValues.length}.`,
-            fix: null
+            fix: null,
           });
         }
       }
@@ -4599,7 +4601,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           charStart,
           charEnd,
           idxOffset,
-          errorArr
+          errorArr,
         });
       }
     }
@@ -4609,7 +4611,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 
 function attributeValidateBorder(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "border") {
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4617,7 +4619,7 @@ function attributeValidateBorder(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -4626,24 +4628,24 @@ function attributeValidateBorder(context, ...opts) {
           {
             type: "integer",
             negativeOK: false,
-            theOnlyGoodUnits: []
+            theOnlyGoodUnits: [],
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-border"
+              ruleId: "attribute-validate-border",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCellpadding(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "cellpadding") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4651,7 +4653,7 @@ function attributeValidateCellpadding(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -4663,24 +4665,24 @@ function attributeValidateCellpadding(context, ...opts) {
             theOnlyGoodUnits: ["%"],
             badUnits: ["px"],
             customGenericValueError:
-              "Should be integer, either no units or percentage."
+              "Should be integer, either no units or percentage.",
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellpadding"
+              ruleId: "attribute-validate-cellpadding",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCellspacing(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "cellspacing") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4688,7 +4690,7 @@ function attributeValidateCellspacing(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -4700,24 +4702,24 @@ function attributeValidateCellspacing(context, ...opts) {
             theOnlyGoodUnits: ["%"],
             badUnits: ["px"],
             customGenericValueError:
-              "Should be integer, either no units or percentage."
+              "Should be integer, either no units or percentage.",
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellspacing"
+              ruleId: "attribute-validate-cellspacing",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateChar(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "char") {
         if (
           ![
@@ -4728,7 +4730,7 @@ function attributeValidateChar(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -4736,7 +4738,7 @@ function attributeValidateChar(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
@@ -4752,25 +4754,25 @@ function attributeValidateChar(context, ...opts) {
               idxFrom: node.attribValueStartsAt + charStart,
               idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character.`,
-              fix: null
+              fix: null,
             });
           }
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-char"
+              ruleId: "attribute-validate-char",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCharoff(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "charoff") {
         if (
           ![
@@ -4781,7 +4783,7 @@ function attributeValidateCharoff(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -4789,7 +4791,7 @@ function attributeValidateCharoff(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -4799,36 +4801,36 @@ function attributeValidateCharoff(context, ...opts) {
             type: "integer",
             negativeOK: true,
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
         if (
           !node.parent.attribs.some(
-            attribObj => attribObj.attribName === "char"
+            (attribObj) => attribObj.attribName === "char"
           )
         ) {
           errorArr.push({
             idxFrom: node.parent.start,
             idxTo: node.parent.end,
             message: `Attribute "char" missing.`,
-            fix: null
+            fix: null,
           });
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charoff"
+              ruleId: "attribute-validate-charoff",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCharset(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "charset") {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
@@ -4836,7 +4838,7 @@ function attributeValidateCharset(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -4846,25 +4848,25 @@ function attributeValidateCharset(context, ...opts) {
             canBeCommaSeparated: false,
             noSpaceAfterComma: false,
             quickPermittedValues: [],
-            permittedValues: knownCharsets
+            permittedValues: knownCharsets,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charset"
+              ruleId: "attribute-validate-charset",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function validateVoid(node, context, errorArr, originalOpts) {
   const defaults = {
     xhtml: false,
-    enforceSiblingAttributes: null
+    enforceSiblingAttributes: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.xhtml) {
@@ -4894,10 +4896,10 @@ function validateVoid(node, context, errorArr, originalOpts) {
             [
               node.attribNameEndsAt,
               node.attribEnd,
-              `=${quotesType}${node.attribName}${quotesType}`
-            ]
-          ]
-        }
+              `=${quotesType}${node.attribName}${quotesType}`,
+            ],
+          ],
+        },
       });
     }
   } else if (node.attribValue !== null) {
@@ -4906,33 +4908,33 @@ function validateVoid(node, context, errorArr, originalOpts) {
       idxTo: node.attribEnd,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndsAt, node.attribEnd]]
-      }
+        ranges: [[node.attribNameEndsAt, node.attribEnd]],
+      },
     });
   }
   if (
     isObj(opts.enforceSiblingAttributes) &&
     Object.keys(opts.enforceSiblingAttributes).length
   ) {
-    Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
+    Object.keys(opts.enforceSiblingAttributes).forEach((siblingAttr) => {
       if (
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(
-          attribObj => attribObj.attribName === siblingAttr
+          (attribObj) => attribObj.attribName === siblingAttr
         )
       ) {
         errorArr.push({
           idxFrom: node.parent.start,
           idxTo: node.parent.end,
           message: `Should have attribute "${siblingAttr}".`,
-          fix: null
+          fix: null,
         });
       } else if (
         opts.enforceSiblingAttributes[siblingAttr] &&
         Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) &&
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(
-          attribObj =>
+          (attribObj) =>
             attribObj.attribName === siblingAttr &&
             opts.enforceSiblingAttributes[siblingAttr].includes(
               attribObj.attribValue
@@ -4952,9 +4954,9 @@ function validateVoid(node, context, errorArr, originalOpts) {
           idxFrom,
           idxTo,
           message: `Only tags with ${opts.enforceSiblingAttributes[siblingAttr]
-            .map(val => `"${val}"`)
+            .map((val) => `"${val}"`)
             .join(" or ")} attributes can be ${node.attribName}.`,
-          fix: null
+          fix: null,
         });
       }
     });
@@ -4964,14 +4966,14 @@ function validateVoid(node, context, errorArr, originalOpts) {
 
 function attributeValidateChecked(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -4982,7 +4984,7 @@ function attributeValidateChecked(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -4991,28 +4993,28 @@ function attributeValidateChecked(context, ...originalOpts) {
             errorArr,
             Object.assign({}, opts, {
               enforceSiblingAttributes: {
-                type: ["checkbox", "radio"]
-              }
+                type: ["checkbox", "radio"],
+              },
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-checked"
+                ruleId: "attribute-validate-checked",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateCite(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "cite") {
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -5020,22 +5022,22 @@ function attributeValidateCite(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cite"
+                ruleId: "attribute-validate-cite",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
@@ -5044,7 +5046,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     typeName: "class",
     from: 0,
     to: str.length,
-    offset: 0
+    offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const listOfUniqueNames = [];
@@ -5057,7 +5059,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
           idxFrom: charFrom,
           idxTo: charTo,
           message: `Wrong ${opts.typeName} name.`,
-          fix: null
+          fix: null,
         });
       }
       if (!listOfUniqueNames.includes(extractedName)) {
@@ -5080,8 +5082,8 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
           idxTo: charTo,
           message: `Duplicate ${opts.typeName} "${extractedName}".`,
           fix: {
-            ranges: [[deleteFrom, deleteTo]]
-          }
+            ranges: [[deleteFrom, deleteTo]],
+          },
         });
       }
     },
@@ -5091,7 +5093,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
         {
           from: whitespaceFrom,
           to: whitespaceTo,
-          offset: opts.offset
+          offset: opts.offset,
         },
         errorArr
       ),
@@ -5101,7 +5103,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
 
 function attributeValidateClass(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "class") {
         if (
           [
@@ -5113,7 +5115,7 @@ function attributeValidateClass(context, ...opts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -5121,7 +5123,7 @@ function attributeValidateClass(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -5134,26 +5136,26 @@ function attributeValidateClass(context, ...opts) {
               typeName: node.attribName,
               from: node.attribValueStartsAt + charStart,
               to: node.attribValueStartsAt + charEnd,
-              offset: 0
+              offset: 0,
             },
             errorArr
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-class"
+                ruleId: "attribute-validate-class",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateClassid(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "classid") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5161,28 +5163,28 @@ function attributeValidateClassid(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-classid"
+                ruleId: "attribute-validate-classid",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateClassid$1(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "clear") {
         if (node.parent.tagName !== "br") {
           context.report({
@@ -5190,7 +5192,7 @@ function attributeValidateClassid$1(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -5209,24 +5211,24 @@ function attributeValidateClassid$1(context, ...opts) {
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
             message: `Should be: left|all|right|none.`,
-            fix: null
+            fix: null,
           });
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-clear"
+              ruleId: "attribute-validate-clear",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCode(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "code") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -5234,28 +5236,28 @@ function attributeValidateCode(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-code"
+              ruleId: "attribute-validate-code",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCodebase(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "codebase") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -5263,28 +5265,28 @@ function attributeValidateCodebase(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-codebase"
+                ruleId: "attribute-validate-codebase",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateCodetype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "codetype") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5292,7 +5294,7 @@ function attributeValidateCodetype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -5328,28 +5330,28 @@ function attributeValidateCodetype(context, ...opts) {
               "image/png",
               "image/jpeg",
               "image/gif",
-              "application/vnd.api+json"
+              "application/vnd.api+json",
             ],
             permittedValues: Object.keys(db),
             canBeCommaSeparated: false,
-            noSpaceAfterComma: false
+            noSpaceAfterComma: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-codetype"
+              ruleId: "attribute-validate-codetype",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateColor(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "color") {
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
@@ -5357,7 +5359,7 @@ function attributeValidateColor(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -5369,24 +5371,24 @@ function attributeValidateColor(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-color"
+              ruleId: "attribute-validate-color",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCols(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "cols") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -5394,7 +5396,7 @@ function attributeValidateCols(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         let errorArr = [];
@@ -5409,7 +5411,7 @@ function attributeValidateCols(context, ...opts) {
               noUnitsIsFine: true,
               canBeCommaSeparated: true,
               type: "rational",
-              customGenericValueError: "Should be: pixels|%|*."
+              customGenericValueError: "Should be: pixels|%|*.",
             }
           );
         } else if (node.parent.tagName === "textarea") {
@@ -5419,27 +5421,27 @@ function attributeValidateCols(context, ...opts) {
             {
               type: "integer",
               theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units."
+              customGenericValueError: "Should be integer, no units.",
             }
           );
         }
         if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cols"
+                ruleId: "attribute-validate-cols",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateColspan(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "colspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -5447,7 +5449,7 @@ function attributeValidateColspan(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -5456,31 +5458,31 @@ function attributeValidateColspan(context, ...opts) {
           {
             type: "integer",
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-colspan"
+              ruleId: "attribute-validate-colspan",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCompact(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -5491,7 +5493,7 @@ function attributeValidateCompact(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -5499,27 +5501,27 @@ function attributeValidateCompact(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-compact"
+                ruleId: "attribute-validate-compact",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateContent(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "content") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -5527,28 +5529,28 @@ function attributeValidateContent(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-content"
+              ruleId: "attribute-validate-content",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateCoords(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "coords") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -5556,24 +5558,26 @@ function attributeValidateCoords(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (
             !Array.isArray(node.parent.attribs) ||
             !node.parent.attribs.length ||
-            !node.parent.attribs.some(attrObj => attrObj.attribName === "shape")
+            !node.parent.attribs.some(
+              (attrObj) => attrObj.attribName === "shape"
+            )
           ) {
             context.report({
               ruleId: "attribute-validate-coords",
               idxFrom: node.parent.start,
               idxTo: node.parent.end,
               message: `Missing "shape" attribute.`,
-              fix: null
+              fix: null,
             });
           } else {
             const shapeAttr = node.parent.attribs.filter(
-              attrObj => attrObj.attribName === "shape"
+              (attrObj) => attrObj.attribName === "shape"
             )[0];
             let enforceCount = null;
             if (shapeAttr.attribValue === "rect") {
@@ -5594,14 +5598,14 @@ function attributeValidateCoords(context, ...opts) {
                 canBeCommaSeparated: true,
                 enforceCount,
                 type: "integer",
-                customGenericValueError: "Should be integer, no units."
+                customGenericValueError: "Should be integer, no units.",
               }
             );
             if (Array.isArray(errorArr) && errorArr.length) {
-              errorArr.forEach(errorObj => {
+              errorArr.forEach((errorObj) => {
                 context.report(
                   Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-coords"
+                    ruleId: "attribute-validate-coords",
                   })
                 );
               });
@@ -5609,13 +5613,13 @@ function attributeValidateCoords(context, ...opts) {
           }
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateData(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "data") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5623,28 +5627,28 @@ function attributeValidateData(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-data"
+                ruleId: "attribute-validate-data",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateDatetime(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "datetime") {
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -5652,7 +5656,7 @@ function attributeValidateDatetime(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -5662,31 +5666,31 @@ function attributeValidateDatetime(context, ...opts) {
             quickPermittedValues: [isoDateRegex],
             permittedValues: null,
             canBeCommaSeparated: false,
-            noSpaceAfterComma: false
+            noSpaceAfterComma: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-datetime"
+              ruleId: "attribute-validate-datetime",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateDeclare(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -5697,7 +5701,7 @@ function attributeValidateDeclare(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -5705,34 +5709,34 @@ function attributeValidateDeclare(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-declare"
+                ruleId: "attribute-validate-declare",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateDefer(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -5743,7 +5747,7 @@ function attributeValidateDefer(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -5751,27 +5755,27 @@ function attributeValidateDefer(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-defer"
+                ruleId: "attribute-validate-defer",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateDir(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "dir") {
         if (
           [
@@ -5783,7 +5787,7 @@ function attributeValidateDir(context, ...opts) {
             "frameset",
             "iframe",
             "param",
-            "script"
+            "script",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -5791,7 +5795,7 @@ function attributeValidateDir(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -5799,31 +5803,31 @@ function attributeValidateDir(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["ltr", "rtl"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-dir"
+              ruleId: "attribute-validate-dir",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateDisabled(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -5836,14 +5840,14 @@ function attributeValidateDisabled(context, ...originalOpts) {
             "optgroup",
             "option",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -5851,27 +5855,27 @@ function attributeValidateDisabled(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-disabled"
+                ruleId: "attribute-validate-disabled",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateEnctype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "enctype") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -5879,7 +5883,7 @@ function attributeValidateEnctype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -5889,27 +5893,27 @@ function attributeValidateEnctype(context, ...opts) {
             quickPermittedValues: [
               "application/x-www-form-urlencoded",
               "multipart/form-data",
-              "text/plain"
+              "text/plain",
             ],
             permittedValues: Object.keys(db),
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-enctype"
+              ruleId: "attribute-validate-enctype",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateFace(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "face") {
         if (node.parent.tagName !== "font") {
           context.report({
@@ -5917,28 +5921,28 @@ function attributeValidateFace(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-face"
+              ruleId: "attribute-validate-face",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateFor(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "for") {
         if (node.parent.tagName !== "label") {
           context.report({
@@ -5946,7 +5950,7 @@ function attributeValidateFor(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -5962,7 +5966,7 @@ function attributeValidateFor(context, ...opts) {
             Number.isInteger(charStart) &&
             !classNameRegex.test(extractedValue)
           ) {
-            if (Array.from(extractedValue).some(val => !val.trim().length)) {
+            if (Array.from(extractedValue).some((val) => !val.trim().length)) {
               message = `Should be one value, no spaces.`;
             } else if (extractedValue.includes("#")) {
               message = `Remove hash.`;
@@ -5971,9 +5975,9 @@ function attributeValidateFor(context, ...opts) {
                 ranges: [
                   [
                     node.attribValueStartsAt + firstHashAt,
-                    node.attribValueStartsAt + firstHashAt + 1
-                  ]
-                ]
+                    node.attribValueStartsAt + firstHashAt + 1,
+                  ],
+                ],
               };
               idxFrom = node.attribValueStartsAt + firstHashAt;
               idxTo = node.attribValueStartsAt + firstHashAt + 1;
@@ -5983,25 +5987,25 @@ function attributeValidateFor(context, ...opts) {
               idxFrom,
               idxTo,
               message,
-              fix
+              fix,
             });
           }
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-for"
+                ruleId: "attribute-validate-for",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateFrame(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "frame") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -6009,7 +6013,7 @@ function attributeValidateFrame(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -6025,26 +6029,26 @@ function attributeValidateFrame(context, ...opts) {
               "rhs",
               "vsides",
               "box",
-              "border"
+              "border",
             ],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frame"
+              ruleId: "attribute-validate-frame",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateFrameborder(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "frameborder") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6052,7 +6056,7 @@ function attributeValidateFrameborder(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -6060,24 +6064,24 @@ function attributeValidateFrameborder(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["0", "1"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frameborder"
+              ruleId: "attribute-validate-frameborder",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateHeaders(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "headers") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -6085,7 +6089,7 @@ function attributeValidateHeaders(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -6098,26 +6102,26 @@ function attributeValidateHeaders(context, ...opts) {
               typeName: "id",
               from: node.attribValueStartsAt + charStart,
               to: node.attribValueStartsAt + charEnd,
-              offset: 0
+              offset: 0,
             },
             errorArr
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-headers"
+                ruleId: "attribute-validate-headers",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateHeight(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "height") {
         if (
           !["iframe", "td", "th", "img", "object", "applet"].includes(
@@ -6129,7 +6133,7 @@ function attributeValidateHeight(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -6139,24 +6143,24 @@ function attributeValidateHeight(context, ...opts) {
             badUnits: ["px"],
             theOnlyGoodUnits: ["%"],
             noUnitsIsFine: true,
-            customGenericValueError: `Should be "pixels|%".`
+            customGenericValueError: `Should be "pixels|%".`,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-height"
+              ruleId: "attribute-validate-height",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateHref(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "href") {
         if (!["a", "area", "link", "base"].includes(node.parent.tagName)) {
           context.report({
@@ -6164,28 +6168,28 @@ function attributeValidateHref(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-href"
+                ruleId: "attribute-validate-href",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateHreflang(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "hreflang") {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6193,7 +6197,7 @@ function attributeValidateHreflang(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -6208,24 +6212,24 @@ function attributeValidateHreflang(context, ...opts) {
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
             message,
-            fix: null
+            fix: null,
           });
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hreflang"
+              ruleId: "attribute-validate-hreflang",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateHspace(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "hspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -6233,7 +6237,7 @@ function attributeValidateHspace(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -6241,24 +6245,24 @@ function attributeValidateHspace(context, ...opts) {
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
-            noUnitsIsFine: true
+            noUnitsIsFine: true,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hspace"
+              ruleId: "attribute-validate-hspace",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateHttpequiv(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "http-equiv") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -6266,7 +6270,7 @@ function attributeValidateHttpequiv(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -6274,24 +6278,24 @@ function attributeValidateHttpequiv(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["content-type", "default-style", "refresh"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-http-equiv"
+              ruleId: "attribute-validate-http-equiv",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateId(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "id") {
         if (
           ["base", "head", "html", "meta", "script", "style", "title"].includes(
@@ -6303,7 +6307,7 @@ function attributeValidateId(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -6316,33 +6320,33 @@ function attributeValidateId(context, ...opts) {
               typeName: node.attribName,
               from: node.attribValueStartsAt + charStart,
               to: node.attribValueStartsAt + charEnd,
-              offset: 0
+              offset: 0,
             },
             errorArr
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-id"
+                ruleId: "attribute-validate-id",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateIsmap(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6353,7 +6357,7 @@ function attributeValidateIsmap(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6361,27 +6365,27 @@ function attributeValidateIsmap(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ismap"
+                ruleId: "attribute-validate-ismap",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateLabel(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "label") {
         if (!["option", "optgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -6389,28 +6393,28 @@ function attributeValidateLabel(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-label"
+              ruleId: "attribute-validate-label",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateLang(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "lang") {
         if (
           ["base", "head", "html", "meta", "script", "style", "title"].includes(
@@ -6422,7 +6426,7 @@ function attributeValidateLang(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -6437,24 +6441,24 @@ function attributeValidateLang(context, ...opts) {
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
             message,
-            fix: null
+            fix: null,
           });
         }
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-lang"
+              ruleId: "attribute-validate-lang",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateLanguage(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "language") {
         if (node.parent.tagName !== "script") {
           context.report({
@@ -6462,28 +6466,28 @@ function attributeValidateLanguage(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-language"
+              ruleId: "attribute-validate-language",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateLink(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "link") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -6491,7 +6495,7 @@ function attributeValidateLink(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -6503,24 +6507,24 @@ function attributeValidateLink(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-link"
+              ruleId: "attribute-validate-link",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateLongdesc(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "longdesc") {
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6528,28 +6532,28 @@ function attributeValidateLongdesc(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-longdesc"
+              ruleId: "attribute-validate-longdesc",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMarginheight(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "marginheight") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6557,7 +6561,7 @@ function attributeValidateMarginheight(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -6565,24 +6569,24 @@ function attributeValidateMarginheight(context, ...opts) {
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
-            noUnitsIsFine: true
+            noUnitsIsFine: true,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginheight"
+              ruleId: "attribute-validate-marginheight",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMarginwidth(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "marginwidth") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6590,7 +6594,7 @@ function attributeValidateMarginwidth(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -6598,24 +6602,24 @@ function attributeValidateMarginwidth(context, ...opts) {
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
-            noUnitsIsFine: true
+            noUnitsIsFine: true,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginwidth"
+              ruleId: "attribute-validate-marginwidth",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMaxlength(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "maxlength") {
         if (node.parent.tagName !== "input") {
           context.report({
@@ -6623,7 +6627,7 @@ function attributeValidateMaxlength(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -6632,24 +6636,24 @@ function attributeValidateMaxlength(context, ...opts) {
           {
             type: "integer",
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-maxlength"
+              ruleId: "attribute-validate-maxlength",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMedia(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "media") {
         if (!["style", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6657,7 +6661,7 @@ function attributeValidateMedia(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
@@ -6667,24 +6671,24 @@ function attributeValidateMedia(context, ...opts) {
         errorArr
           .concat(
             isMediaD(node.attribValue.slice(charStart, charEnd), {
-              offset: node.attribValueStartsAt
+              offset: node.attribValueStartsAt,
             })
           )
-          .forEach(errorObj => {
+          .forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-media"
+                ruleId: "attribute-validate-media",
               })
             );
           });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMethod(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "method") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6692,7 +6696,7 @@ function attributeValidateMethod(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -6700,31 +6704,31 @@ function attributeValidateMethod(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["get", "post"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-method"
+              ruleId: "attribute-validate-method",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateMultiple(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6735,7 +6739,7 @@ function attributeValidateMultiple(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6743,27 +6747,27 @@ function attributeValidateMultiple(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-multiple"
+                ruleId: "attribute-validate-multiple",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateName(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "name") {
         if (
           ![
@@ -6780,7 +6784,7 @@ function attributeValidateName(context, ...opts) {
             "object",
             "map",
             "param",
-            "meta"
+            "meta",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -6788,35 +6792,35 @@ function attributeValidateName(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-name"
+              ruleId: "attribute-validate-name",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateNohref(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6827,7 +6831,7 @@ function attributeValidateNohref(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6835,34 +6839,34 @@ function attributeValidateNohref(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-nohref"
+                ruleId: "attribute-validate-nohref",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateNoresize(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6873,7 +6877,7 @@ function attributeValidateNoresize(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6881,34 +6885,34 @@ function attributeValidateNoresize(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-noresize"
+                ruleId: "attribute-validate-noresize",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateNoshade(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6919,7 +6923,7 @@ function attributeValidateNoshade(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6927,34 +6931,34 @@ function attributeValidateNoshade(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-noshade"
+                ruleId: "attribute-validate-noshade",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateNowrap(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -6965,7 +6969,7 @@ function attributeValidateNowrap(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -6973,27 +6977,27 @@ function attributeValidateNowrap(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-nowrap"
+                ruleId: "attribute-validate-nowrap",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateObject(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "object") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -7001,22 +7005,22 @@ function attributeValidateObject(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-object"
+              ruleId: "attribute-validate-object",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -7027,7 +7031,7 @@ function validateScript(str, idxOffset, opts) {
 
 function attributeValidateOnblur(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onblur") {
         if (
@@ -7038,7 +7042,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
             "input",
             "label",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7046,29 +7050,29 @@ function attributeValidateOnblur(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onblur"
+                ruleId: "attribute-validate-onblur",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnchange(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onchange") {
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
@@ -7077,29 +7081,29 @@ function attributeValidateOnchange(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onchange"
+                ruleId: "attribute-validate-onchange",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnclick(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onclick") {
         if (
@@ -7120,7 +7124,7 @@ function attributeValidateOnclick(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7128,29 +7132,29 @@ function attributeValidateOnclick(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onclick"
+                ruleId: "attribute-validate-onclick",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOndblclick(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "ondblclick") {
         if (
@@ -7171,7 +7175,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7179,29 +7183,29 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ondblclick"
+                ruleId: "attribute-validate-ondblclick",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnfocus(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onfocus") {
         if (
@@ -7212,7 +7216,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             "input",
             "label",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7220,29 +7224,29 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onfocus"
+                ruleId: "attribute-validate-onfocus",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnkeydown(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeydown") {
         if (
@@ -7263,7 +7267,7 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7271,29 +7275,29 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeydown"
+                ruleId: "attribute-validate-onkeydown",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnkeypress(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeypress") {
         if (
@@ -7314,7 +7318,7 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7322,29 +7326,29 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeypress"
+                ruleId: "attribute-validate-onkeypress",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnkeyup(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeyup") {
         if (
@@ -7365,7 +7369,7 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7373,29 +7377,29 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeyup"
+                ruleId: "attribute-validate-onkeyup",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnload(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -7404,29 +7408,29 @@ function attributeValidateOnload(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onload"
+                ruleId: "attribute-validate-onload",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnmousedown(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousedown") {
         if (
@@ -7447,7 +7451,7 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7455,29 +7459,29 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmousedown"
+                ruleId: "attribute-validate-onmousedown",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnmousemove(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousemove") {
         if (
@@ -7498,7 +7502,7 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7506,29 +7510,29 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmousemove"
+                ruleId: "attribute-validate-onmousemove",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnmouseout(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseout") {
         if (
@@ -7549,7 +7553,7 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7557,29 +7561,29 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseout"
+                ruleId: "attribute-validate-onmouseout",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnmouseover(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseover") {
         if (
@@ -7600,7 +7604,7 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7608,29 +7612,29 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseover"
+                ruleId: "attribute-validate-onmouseover",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnmouseup(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseup") {
         if (
@@ -7651,7 +7655,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -7659,29 +7663,29 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseup"
+                ruleId: "attribute-validate-onmouseup",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnreset(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onreset") {
         if (node.parent.tagName !== "form") {
@@ -7690,29 +7694,29 @@ function attributeValidateOnreset(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onreset"
+                ruleId: "attribute-validate-onreset",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnsubmit(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onsubmit") {
         if (node.parent.tagName !== "form") {
@@ -7721,29 +7725,29 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onsubmit"
+                ruleId: "attribute-validate-onsubmit",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnselect(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onselect") {
         if (!["input", "textarea"].includes(node.parent.tagName)) {
@@ -7752,29 +7756,29 @@ function attributeValidateOnselect(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onselect"
+                ruleId: "attribute-validate-onselect",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateOnunload(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onunload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -7783,29 +7787,29 @@ function attributeValidateOnunload(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const errorArr = validateScript(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onunload"
+                ruleId: "attribute-validate-onunload",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateProfile(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "profile") {
         if (node.parent.tagName !== "head") {
           context.report({
@@ -7813,28 +7817,28 @@ function attributeValidateProfile(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: true
-          }).forEach(errorObj => {
+            multipleOK: true,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-profile"
+                ruleId: "attribute-validate-profile",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidatePrompt(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "prompt") {
         if (node.parent.tagName !== "isindex") {
           context.report({
@@ -7842,35 +7846,35 @@ function attributeValidatePrompt(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-prompt"
+              ruleId: "attribute-validate-prompt",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateReadonly(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -7881,7 +7885,7 @@ function attributeValidateReadonly(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -7889,27 +7893,27 @@ function attributeValidateReadonly(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-readonly"
+                ruleId: "attribute-validate-readonly",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateRel(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rel") {
@@ -7919,7 +7923,7 @@ function attributeValidateRel(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -7928,24 +7932,24 @@ function attributeValidateRel(context, ...opts) {
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
-            caseInsensitive
+            caseInsensitive,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rel"
+              ruleId: "attribute-validate-rel",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateRev(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rev") {
@@ -7955,7 +7959,7 @@ function attributeValidateRev(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -7964,24 +7968,24 @@ function attributeValidateRev(context, ...opts) {
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
-            caseInsensitive
+            caseInsensitive,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rev"
+              ruleId: "attribute-validate-rev",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateRows(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "rows") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -7989,7 +7993,7 @@ function attributeValidateRows(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         let errorArr = [];
@@ -8004,7 +8008,7 @@ function attributeValidateRows(context, ...opts) {
               noUnitsIsFine: true,
               canBeCommaSeparated: true,
               type: "rational",
-              customGenericValueError: "Should be: pixels|%|*."
+              customGenericValueError: "Should be: pixels|%|*.",
             }
           );
         } else if (node.parent.tagName === "textarea") {
@@ -8014,27 +8018,27 @@ function attributeValidateRows(context, ...opts) {
             {
               type: "integer",
               theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units."
+              customGenericValueError: "Should be integer, no units.",
             }
           );
         }
         if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-rows"
+                ruleId: "attribute-validate-rows",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateRowspan(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "rowspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -8042,7 +8046,7 @@ function attributeValidateRowspan(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -8051,24 +8055,24 @@ function attributeValidateRowspan(context, ...opts) {
           {
             type: "integer",
             theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units."
+            customGenericValueError: "Should be integer, no units.",
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rowspan"
+              ruleId: "attribute-validate-rowspan",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateRules(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "rules") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -8076,7 +8080,7 @@ function attributeValidateRules(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -8084,24 +8088,24 @@ function attributeValidateRules(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["none", "groups", "rows", "cols", "all"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rules"
+              ruleId: "attribute-validate-rules",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateScheme(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "scheme") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -8109,28 +8113,28 @@ function attributeValidateScheme(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scheme"
+              ruleId: "attribute-validate-scheme",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateScope(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "scope") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -8138,7 +8142,7 @@ function attributeValidateScope(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -8146,24 +8150,24 @@ function attributeValidateScope(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["row", "col", "rowgroup", "colgroup"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scope"
+              ruleId: "attribute-validate-scope",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateScrolling(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "scrolling") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -8171,7 +8175,7 @@ function attributeValidateScrolling(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -8179,31 +8183,31 @@ function attributeValidateScrolling(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["auto", "yes", "no"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scrolling"
+              ruleId: "attribute-validate-scrolling",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateSelected(context, ...originalOpts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       const opts = {
-        xhtml: false
+        xhtml: false,
       };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
-        originalOpts.some(val => val.toLowerCase() === "xhtml")
+        originalOpts.some((val) => val.toLowerCase() === "xhtml")
       ) {
         opts.xhtml = true;
       }
@@ -8214,7 +8218,7 @@ function attributeValidateSelected(context, ...originalOpts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateVoid(
@@ -8222,27 +8226,27 @@ function attributeValidateSelected(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: null
+              enforceSiblingAttributes: null,
             })
           );
         }
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-selected"
+                ruleId: "attribute-validate-selected",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateShape(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "shape") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -8250,7 +8254,7 @@ function attributeValidateShape(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateString(
@@ -8258,24 +8262,24 @@ function attributeValidateShape(context, ...opts) {
           node.attribValueStartsAt,
           {
             permittedValues: ["default", "rect", "circle", "poly"],
-            canBeCommaSeparated: false
+            canBeCommaSeparated: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-shape"
+              ruleId: "attribute-validate-shape",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateSize(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "size") {
         if (
           !["hr", "font", "input", "basefont", "select"].includes(
@@ -8287,17 +8291,17 @@ function attributeValidateSize(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
             node.attribValueStartsAt
           );
-          errorArr.forEach(errorObj => {
+          errorArr.forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-size"
+                ruleId: "attribute-validate-size",
               })
             );
           });
@@ -8311,12 +8315,12 @@ function attributeValidateSize(context, ...opts) {
                   type: "integer",
                   negativeOK: false,
                   theOnlyGoodUnits: [],
-                  skipWhitespaceChecks: true
+                  skipWhitespaceChecks: true,
                 }
-              ).forEach(errorObj => {
+              ).forEach((errorObj) => {
                 context.report(
                   Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-size"
+                    ruleId: "attribute-validate-size",
                   })
                 );
               });
@@ -8330,7 +8334,7 @@ function attributeValidateSize(context, ...opts) {
                     negativeOK: false,
                     theOnlyGoodUnits: [],
                     skipWhitespaceChecks: true,
-                    customGenericValueError: `Should be integer 1-7, plus/minus are optional.`
+                    customGenericValueError: `Should be integer 1-7, plus/minus are optional.`,
                   }
                 );
                 if (!errorArr2.length) {
@@ -8338,13 +8342,13 @@ function attributeValidateSize(context, ...opts) {
                     idxFrom: node.attribValueStartsAt + charStart,
                     idxTo: node.attribValueStartsAt + charEnd,
                     message: `Should be integer 1-7, plus/minus are optional.`,
-                    fix: null
+                    fix: null,
                   });
                 }
-                errorArr2.forEach(errorObj => {
+                errorArr2.forEach((errorObj) => {
                   context.report(
                     Object.assign({}, errorObj, {
-                      ruleId: "attribute-validate-size"
+                      ruleId: "attribute-validate-size",
                     })
                   );
                 });
@@ -8353,13 +8357,13 @@ function attributeValidateSize(context, ...opts) {
           }
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateSpan(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "span") {
         if (!["col", "colgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -8367,7 +8371,7 @@ function attributeValidateSpan(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -8378,24 +8382,24 @@ function attributeValidateSpan(context, ...opts) {
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units.",
             zeroOK: false,
-            customPxMessage: `Columns number is not in pixels.`
+            customPxMessage: `Columns number is not in pixels.`,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-span"
+              ruleId: "attribute-validate-span",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateSrc(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "src") {
         if (
           !["script", "input", "frame", "iframe", "img"].includes(
@@ -8407,28 +8411,28 @@ function attributeValidateSrc(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-src"
+                ruleId: "attribute-validate-src",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateStandby(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "standby") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -8436,28 +8440,28 @@ function attributeValidateStandby(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-standby"
+              ruleId: "attribute-validate-standby",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateStart(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "start") {
         if (node.parent.tagName !== "ol") {
           context.report({
@@ -8465,7 +8469,7 @@ function attributeValidateStart(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -8476,18 +8480,18 @@ function attributeValidateStart(context, ...opts) {
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units.",
             zeroOK: false,
-            customPxMessage: `Starting sequence number is not in pixels.`
+            customPxMessage: `Starting sequence number is not in pixels.`,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-start"
+              ruleId: "attribute-validate-start",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -8498,7 +8502,7 @@ function validateInlineStyle(str, idxOffset, opts) {
 
 function attributeValidateStyle(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "style") {
         if (
           [
@@ -8510,7 +8514,7 @@ function attributeValidateStyle(context, ...opts) {
             "param",
             "script",
             "style",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -8518,27 +8522,27 @@ function attributeValidateStyle(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateInlineStyle(
           node.attribValue,
           node.attribValueStartsAt);
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-style"
+              ruleId: "attribute-validate-style",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateSummary(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "summary") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -8546,28 +8550,28 @@ function attributeValidateSummary(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-summary"
+              ruleId: "attribute-validate-summary",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateTabindex(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "tabindex") {
         if (
           ![
@@ -8577,7 +8581,7 @@ function attributeValidateTabindex(context, ...opts) {
             "input",
             "object",
             "select",
-            "textarea"
+            "textarea",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -8585,7 +8589,7 @@ function attributeValidateTabindex(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -8597,24 +8601,24 @@ function attributeValidateTabindex(context, ...opts) {
             customGenericValueError: "Should be integer, no units.",
             zeroOK: true,
             customPxMessage: `Tabbing order number should not be in pixels.`,
-            maxValue: 32767
+            maxValue: 32767,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-tabindex"
+              ruleId: "attribute-validate-tabindex",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateTarget(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "target") {
         if (
           !["a", "area", "base", "form", "link"].includes(node.parent.tagName)
@@ -8624,28 +8628,28 @@ function attributeValidateTarget(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-target"
+              ruleId: "attribute-validate-target",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateText(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "text") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -8653,7 +8657,7 @@ function attributeValidateText(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -8665,24 +8669,24 @@ function attributeValidateText(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-text"
+              ruleId: "attribute-validate-text",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateTitle(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "title") {
         if (
           [
@@ -8693,7 +8697,7 @@ function attributeValidateTitle(context, ...opts) {
             "meta",
             "param",
             "script",
-            "title"
+            "title",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -8701,28 +8705,28 @@ function attributeValidateTitle(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-title"
+              ruleId: "attribute-validate-title",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateType(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "type") {
         if (
           ![
@@ -8736,7 +8740,7 @@ function attributeValidateType(context, ...opts) {
             "li",
             "ol",
             "ul",
-            "button"
+            "button",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -8744,7 +8748,7 @@ function attributeValidateType(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (
@@ -8785,16 +8789,16 @@ function attributeValidateType(context, ...opts) {
                   "image/png",
                   "image/jpeg",
                   "image/gif",
-                  "application/vnd.api+json"
+                  "application/vnd.api+json",
                 ],
                 permittedValues: Object.keys(db),
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -8813,16 +8817,16 @@ function attributeValidateType(context, ...opts) {
                   "file",
                   "hidden",
                   "image",
-                  "button"
+                  "button",
                 ],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -8839,16 +8843,16 @@ function attributeValidateType(context, ...opts) {
                   "a",
                   "A",
                   "i",
-                  "I"
+                  "I",
                 ],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -8860,12 +8864,12 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["1", "a", "A", "i", "I"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -8877,12 +8881,12 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["disc", "square", "circle"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
@@ -8894,25 +8898,25 @@ function attributeValidateType(context, ...opts) {
                 quickPermittedValues: ["button", "submit", "reset"],
                 permittedValues: null,
                 canBeCommaSeparated: false,
-                noSpaceAfterComma: false
+                noSpaceAfterComma: false,
               }
-            ).forEach(errorObj => {
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type"
+                  ruleId: "attribute-validate-type",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateUsemap(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "usemap") {
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -8920,28 +8924,28 @@ function attributeValidateUsemap(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateUri(node.attribValue, {
             offset: node.attribValueStartsAt,
-            multipleOK: false
-          }).forEach(errorObj => {
+            multipleOK: false,
+          }).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-usemap"
+                ruleId: "attribute-validate-usemap",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateValign(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "valign") {
         if (
           ![
@@ -8952,7 +8956,7 @@ function attributeValidateValign(context, ...opts) {
             "tfoot",
             "th",
             "thead",
-            "tr"
+            "tr",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -8960,7 +8964,7 @@ function attributeValidateValign(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateString(
@@ -8968,24 +8972,24 @@ function attributeValidateValign(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["top", "middle", "bottom", "baseline"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
-          ).forEach(errorObj => {
+          ).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valign"
+                ruleId: "attribute-validate-valign",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateValue(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "value") {
         if (
           !["input", "option", "param", "button", "li"].includes(
@@ -8997,7 +9001,7 @@ function attributeValidateValue(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (node.parent.tagName === "li") {
@@ -9006,11 +9010,11 @@ function attributeValidateValue(context, ...opts) {
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
               zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`
-            }).forEach(errorObj => {
+              customPxMessage: `Sequence number should not be in pixels.`,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value"
+                  ruleId: "attribute-validate-value",
                 })
               );
             });
@@ -9019,23 +9023,23 @@ function attributeValidateValue(context, ...opts) {
               node.attribValue,
               node.attribValueStartsAt
             );
-            errorArr.forEach(errorObj => {
+            errorArr.forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value"
+                  ruleId: "attribute-validate-value",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateValuetype(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "valuetype") {
         if (node.parent.tagName !== "param") {
           context.report({
@@ -9043,7 +9047,7 @@ function attributeValidateValuetype(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           validateString(
@@ -9051,24 +9055,24 @@ function attributeValidateValuetype(context, ...opts) {
             node.attribValueStartsAt,
             {
               permittedValues: ["data", "ref", "object"],
-              canBeCommaSeparated: false
+              canBeCommaSeparated: false,
             }
-          ).forEach(errorObj => {
+          ).forEach((errorObj) => {
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valuetype"
+                ruleId: "attribute-validate-valuetype",
               })
             );
           });
         }
       }
-    }
+    },
   };
 }
 
 function attributeValidateVersion(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "version") {
         if (node.parent.tagName !== "html") {
           context.report({
@@ -9076,28 +9080,28 @@ function attributeValidateVersion(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-version"
+              ruleId: "attribute-validate-version",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateVlink(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "vlink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -9105,7 +9109,7 @@ function attributeValidateVlink(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateColor(
@@ -9117,24 +9121,24 @@ function attributeValidateVlink(context, ...opts) {
             hexThreeOK: false,
             hexFourOK: false,
             hexSixOK: true,
-            hexEightOK: false
+            hexEightOK: false,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vlink"
+              ruleId: "attribute-validate-vlink",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateVspace(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "vspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -9142,7 +9146,7 @@ function attributeValidateVspace(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         }
         const errorArr = validateDigitAndUnit(
@@ -9150,24 +9154,24 @@ function attributeValidateVspace(context, ...opts) {
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
-            noUnitsIsFine: true
+            noUnitsIsFine: true,
           }
         );
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vspace"
+              ruleId: "attribute-validate-vspace",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
 function attributeValidateWidth(context, ...opts) {
   return {
-    attribute: function(node) {
+    attribute: function (node) {
       if (node.attribName === "width") {
         if (
           ![
@@ -9181,7 +9185,7 @@ function attributeValidateWidth(context, ...opts) {
             "applet",
             "col",
             "colgroup",
-            "pre"
+            "pre",
           ].includes(node.parent.tagName)
         ) {
           context.report({
@@ -9189,17 +9193,17 @@ function attributeValidateWidth(context, ...opts) {
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
-            fix: null
+            fix: null,
           });
         } else {
           if (node.parent.tagName === "pre") {
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               theOnlyGoodUnits: [],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
@@ -9207,35 +9211,35 @@ function attributeValidateWidth(context, ...opts) {
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               theOnlyGoodUnits: ["*", "%"],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
           } else {
             validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
-              noUnitsIsFine: true
-            }).forEach(errorObj => {
+              noUnitsIsFine: true,
+            }).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
+                  ruleId: "attribute-validate-width",
                 })
               );
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function htmlEntitiesNotEmailFriendly(context) {
   return {
-    entity: function({ idxFrom, idxTo }) {
+    entity: function ({ idxFrom, idxTo }) {
       if (
         Object.keys(notEmailFriendly).includes(
           context.str.slice(idxFrom + 1, idxTo - 1)
@@ -9253,13 +9257,13 @@ function htmlEntitiesNotEmailFriendly(context) {
                 idxTo,
                 `&${
                   notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)]
-                };`
-              ]
-            ]
-          }
+                };`,
+              ],
+            ],
+          },
         });
       }
-    }
+    },
   };
 }
 
@@ -9276,7 +9280,7 @@ function processStr(str, offset, context, mode) {
         ))
     ) {
       let encodedChr = he.encode(str[i], {
-        useNamedReferences: mode === "named"
+        useNamedReferences: mode === "named",
       });
       if (
         Object.keys(notEmailFriendly).includes(
@@ -9307,21 +9311,21 @@ function processStr(str, offset, context, mode) {
         idxFrom: i + offset,
         idxTo: i + 1 + offset,
         fix: {
-          ranges: [[i + offset, i + 1 + offset, encodedChr]]
-        }
+          ranges: [[i + offset, i + 1 + offset, encodedChr]],
+        },
       });
     }
   }
 }
 function characterEncode(context, ...opts) {
   return {
-    text: function(token) {
+    text: function (token) {
       let mode = "named";
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
       }
       processStr(token.value, token.start, context, mode);
-    }
+    },
   };
 }
 
@@ -9331,31 +9335,31 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
     "33": "exclamationMark",
     "59": "semicolon",
     "187": "rightDoubleAngleQuotMark",
-    "171": "leftDoubleAngleQuotMark"
+    "171": "leftDoubleAngleQuotMark",
   };
   return {
-    text: function(node) {
+    text: function (node) {
       const defaults = {
         questionMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         exclamationMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         semicolon: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         rightDoubleAngleQuotMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
+          whitespaceRight: "always",
         },
         leftDoubleAngleQuotMark: {
           whitespaceLeft: "never",
-          whitespaceRight: "always"
-        }
+          whitespaceRight: "always",
+        },
       };
       let opts = Object.assign({}, defaults);
       if (
@@ -9388,8 +9392,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i,
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[left(context.str, i) + 1, i]]
-              }
+                ranges: [[left(context.str, i) + 1, i]],
+              },
             });
           }
           if (
@@ -9403,8 +9407,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: right(context.str, i),
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[i + 1, right(context.str, i)]]
-              }
+                ranges: [[i + 1, right(context.str, i)]],
+              },
             });
           }
           if (
@@ -9418,8 +9422,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i + 1,
               message: "Add a space.",
               fix: {
-                ranges: [[i, i, " "]]
-              }
+                ranges: [[i, i, " "]],
+              },
             });
           }
           if (
@@ -9433,32 +9437,32 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               idxTo: i + 1,
               message: "Add a space.",
               fix: {
-                ranges: [[i + 1, i + 1, " "]]
-              }
+                ranges: [[i + 1, i + 1, " "]],
+              },
             });
           }
         }
       }
-    }
+    },
   };
 }
 
 function mediaMalformed(context, ...opts) {
   return {
-    at: function(node) {
+    at: function (node) {
       if (node.identifier === "media") {
         const errors = isMediaD(node.query, {
-          offset: node.queryStartsAt
+          offset: node.queryStartsAt,
         });
-        errors.forEach(errorObj => {
+        errors.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "media-malformed"
+              ruleId: "media-malformed",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -9466,7 +9470,7 @@ function validateCommentClosing(token) {
   const reference = {
     simple: "-->",
     only: "<![endif]-->",
-    not: "<!--<![endif]-->"
+    not: "<!--<![endif]-->",
   };
   if (
     (token.kind === "simple" && token.value === "-->") ||
@@ -9492,8 +9496,8 @@ function validateCommentClosing(token) {
         idxTo: token.end,
         message: "Remove whitespace.",
         fix: {
-          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
-        }
+          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]],
+        },
       });
     }
   );
@@ -9509,26 +9513,27 @@ function validateCommentClosing(token) {
     idxTo: token.end,
     message: "Malformed closing comment tag.",
     fix: {
-      ranges: [[token.start, token.end, reference[token.kind]]]
-    }
+      ranges: [[token.start, token.end, reference[token.kind]]],
+    },
   });
   return errorArr;
 }
 
 function commentClosingMalformed(context, ...opts) {
   return {
-    comment: function(node) {
+    comment: function (node) {
       if (node.closing) {
         const errorArr = validateCommentClosing(node) || [];
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-closing-malformed"
+              keepSeparateWhenFixing: true,
+              ruleId: "comment-closing-malformed",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
@@ -9536,7 +9541,7 @@ function validateCommentOpening(token) {
   const reference = {
     simple: /<!--/g,
     only: /<!--\[[^\]]+\]>/g,
-    not: /<!--\[[^\]]+\]><!-->/g
+    not: /<!--\[[^\]]+\]><!-->/g,
   };
   if (
     (token.kind === "simple" && reference.simple.test(token.value)) ||
@@ -9562,8 +9567,10 @@ function validateCommentOpening(token) {
           idxTo: token.end,
           message: "Remove whitespace.",
           fix: {
-            ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
-          }
+            ranges: [
+              [whitespaceFrom + token.start, whitespaceTo + token.start],
+            ],
+          },
         });
       }
     );
@@ -9584,7 +9591,7 @@ function validateCommentOpening(token) {
         if (
           "{(".includes(token.value[idxTo]) &&
           matchRight(token.value, idxTo, "if", {
-            trimBeforeMatching: true
+            trimBeforeMatching: true,
           })
         ) {
           wrongBracketType = true;
@@ -9595,8 +9602,10 @@ function validateCommentOpening(token) {
           idxTo: token.end,
           message: "Malformed opening comment tag.",
           fix: {
-            ranges: [[idxFrom + token.start, finalIdxTo + token.start, "<!--["]]
-          }
+            ranges: [
+              [idxFrom + token.start, finalIdxTo + token.start, "<!--["],
+            ],
+          },
         });
       }
     });
@@ -9615,8 +9624,10 @@ function validateCommentOpening(token) {
         idxTo: token.end,
         message: "Malformed opening comment tag.",
         fix: {
-          ranges: [[finalIdxFrom + token.start, idxTo + token.start, "]><!-->"]]
-        }
+          ranges: [
+            [finalIdxFrom + token.start, idxTo + token.start, "]><!-->"],
+          ],
+        },
       });
     });
   } else if (token.kind === "only") {
@@ -9632,8 +9643,8 @@ function validateCommentOpening(token) {
             idxTo: token.end,
             message: "Malformed opening comment tag.",
             fix: {
-              ranges: [[rangeStart + token.start, token.end, "]>"]]
-            }
+              ranges: [[rangeStart + token.start, token.end, "]>"]],
+            },
           });
         }
         break;
@@ -9645,49 +9656,44 @@ function validateCommentOpening(token) {
 
 function commentOpeningMalformed(context, ...opts) {
   return {
-    text: node => {
+    text: (node) => {
       findMalformed(
         node.value,
         "<!--",
-        errorObj => {
+        (errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
               message: "Malformed opening comment tag.",
               ruleId: "comment-opening-malformed",
               fix: {
-                ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]]
-              }
+                ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]],
+              },
             })
           );
         },
         {
-          stringOffset: node.start
+          stringOffset: node.start,
         }
       );
     },
-    comment: node => {
+    comment: (node) => {
       if (!node.closing) {
         const errorArr = validateCommentOpening(node) || [];
-        errorArr.forEach(errorObj => {
+        errorArr.forEach((errorObj) => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-opening-malformed"
+              ruleId: "comment-opening-malformed",
             })
           );
         });
       }
-    }
+    },
   };
 }
 
-const reference = {
-  simple: "-->",
-  only: "<![endif]-->",
-  not: "<!--<![endif]-->"
-};
 function commentMismatchingPair(context, ...opts) {
   return {
-    ast: function(node) {
+    ast: function (node) {
       traverse(
         node,
         (key, val, innerObj) => {
@@ -9701,35 +9707,29 @@ function commentMismatchingPair(context, ...opts) {
                 !previousToken.closing
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
-                  let ranges = null;
-                  if (current.value === reference.only) {
-                    ranges = [[current.start, current.start, "<!--"]];
-                  }
                   context.report({
                     ruleId: "comment-mismatching-pair",
+                    keepSeparateWhenFixing: true,
                     message: `Add "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges
-                    }
+                      ranges: [[current.start, current.start, "<!--"]],
+                    },
                   });
                 } else if (
                   previousToken.kind === "only" &&
                   current.kind === "not"
                 ) {
-                  let ranges = null;
-                  if (current.value === reference.not) {
-                    ranges = [[current.start, current.end, "<![endif]-->"]];
-                  }
                   context.report({
                     ruleId: "comment-mismatching-pair",
+                    keepSeparateWhenFixing: true,
                     message: `Remove "<!--".`,
                     idxFrom: current.start,
                     idxTo: current.end,
                     fix: {
-                      ranges
-                    }
+                      ranges: [[current.start, current.end, "<![endif]-->"]],
+                    },
                   });
                 }
               }
@@ -9738,13 +9738,13 @@ function commentMismatchingPair(context, ...opts) {
           return current;
         }
       );
-    }
+    },
   };
 }
 
 function commentConditionalNested(context) {
   return {
-    ast: function(node) {
+    ast: function (node) {
       const pathsWithOpeningComments = [];
       traverse(
         node,
@@ -9753,7 +9753,7 @@ function commentConditionalNested(context) {
           if (isObj(current)) {
             if (current.type === "comment") {
               if (
-                pathsWithOpeningComments.some(pathStr =>
+                pathsWithOpeningComments.some((pathStr) =>
                   innerObj.path.startsWith(pathStr)
                 )
               ) {
@@ -9762,7 +9762,7 @@ function commentConditionalNested(context) {
                   message: `Don't nest comments.`,
                   idxFrom: current.start,
                   idxTo: current.end,
-                  fix: null
+                  fix: null,
                 });
               }
               if (!current.closing) {
@@ -9773,7 +9773,7 @@ function commentConditionalNested(context) {
           return current;
         }
       );
-    }
+    },
   };
 }
 
@@ -10970,13 +10970,13 @@ function get(something) {
 function normaliseRequestedRules(opts) {
   const res = {};
   if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
-    Object.keys(builtInRules).forEach(ruleName => {
+    Object.keys(builtInRules).forEach((ruleName) => {
       res[ruleName] = opts.all;
     });
   } else {
     let temp;
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (
           ["bad-character", "bad-character*", "bad-character-*"].includes(
             ruleName
@@ -10987,40 +10987,40 @@ function normaliseRequestedRules(opts) {
         }
       })
     ) {
-      allBadCharacterRules.forEach(ruleName => {
+      allBadCharacterRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (["tag", "tag*", "tag-*"].includes(ruleName)) {
           temp = ruleName;
           return true;
         }
       })
     ) {
-      allTagRules.forEach(ruleName => {
+      allTagRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName => {
+      Object.keys(opts).some((ruleName) => {
         if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
           temp = ruleName;
           return true;
         }
       })
     ) {
-      allAttribRules.forEach(ruleName => {
+      allAttribRules.forEach((ruleName) => {
         res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
-      allBadNamedHTMLEntityRules.forEach(ruleName => {
+      allBadNamedHTMLEntityRules.forEach((ruleName) => {
         res[ruleName] = opts["bad-html-entity"];
       });
     }
-    Object.keys(opts).forEach(ruleName => {
+    Object.keys(opts).forEach((ruleName) => {
       if (
         ![
           "all",
@@ -11034,13 +11034,13 @@ function normaliseRequestedRules(opts) {
           "bad-character",
           "bad-character*",
           "bad-character-*",
-          "bad-html-entity"
+          "bad-html-entity",
         ].includes(ruleName)
       ) {
         if (Object.keys(builtInRules).includes(ruleName)) {
           res[ruleName] = clone(opts[ruleName]);
         } else if (ruleName.includes("*")) {
-          Object.keys(builtInRules).forEach(builtInRule => {
+          Object.keys(builtInRules).forEach((builtInRule) => {
             if (matcher.isMatch(builtInRule, ruleName)) {
               res[builtInRule] = clone(opts[ruleName]);
             }
@@ -11429,6 +11429,7 @@ class Linter extends EventEmitter {
     this.messages = [];
     this.str = str;
     this.config = clone(config);
+    this.hasBeenCalledWithKeepSeparateWhenFixing = false;
     if (config) {
       if (typeof config !== "object") {
         throw new Error(
@@ -11439,7 +11440,7 @@ class Linter extends EventEmitter {
           )}`
         );
       } else if (!Object.keys(config).length) {
-        return this.messages;
+        return [];
       } else if (!config.rules || typeof config.rules !== "object") {
         throw new Error(
           `emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n${JSON.stringify(
@@ -11450,20 +11451,20 @@ class Linter extends EventEmitter {
         );
       }
     } else {
-      return this.messages;
+      return [];
     }
     const processedRulesConfig = normaliseRequestedRules(config.rules);
     this.processedRulesConfig = processedRulesConfig;
     Object.keys(processedRulesConfig)
-      .filter(ruleName => get(ruleName))
-      .filter(ruleName => {
+      .filter((ruleName) => get(ruleName))
+      .filter((ruleName) => {
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
         } else if (Array.isArray(processedRulesConfig[ruleName])) {
           return processedRulesConfig[ruleName][0] > 0;
         }
       })
-      .forEach(rule => {
+      .forEach((rule) => {
         let rulesFunction;
         if (
           Array.isArray(processedRulesConfig[rule]) &&
@@ -11476,7 +11477,7 @@ class Linter extends EventEmitter {
         } else {
           rulesFunction = get(rule)(this);
         }
-        Object.keys(rulesFunction).forEach(consumedNode => {
+        Object.keys(rulesFunction).forEach((consumedNode) => {
           this.on(consumedNode, (...args) => {
             rulesFunction[consumedNode](...args);
           });
@@ -11486,10 +11487,10 @@ class Linter extends EventEmitter {
       "ast",
       traverse(
         parser(str, {
-          charCb: obj => {
+          charCb: (obj) => {
             this.emit("character", obj);
           },
-          errCb: obj => {
+          errCb: (obj) => {
             const currentRulesSeverity = isAnEnabledRule(
               config.rules,
               obj.ruleId
@@ -11507,13 +11508,13 @@ class Linter extends EventEmitter {
                   {
                     message,
                     severity: currentRulesSeverity,
-                    fix: null
+                    fix: null,
                   },
                   obj
                 )
               );
             }
-          }
+          },
         }),
         (key, val) => {
           const current = val !== undefined ? val : key;
@@ -11524,11 +11525,11 @@ class Linter extends EventEmitter {
               Array.isArray(current.attribs) &&
               current.attribs.length
             ) {
-              current.attribs.forEach(attribObj => {
+              current.attribs.forEach((attribObj) => {
                 this.emit(
                   "attribute",
                   Object.assign({}, attribObj, {
-                    parent: Object.assign({}, current)
+                    parent: Object.assign({}, current),
                   })
                 );
               });
@@ -11540,7 +11541,7 @@ class Linter extends EventEmitter {
     );
     if (
       Object.keys(config.rules).some(
-        ruleName =>
+        (ruleName) =>
           (ruleName === "all" ||
           ruleName === "bad-html-entity" ||
             ruleName.startsWith("bad-html-entity") ||
@@ -11554,7 +11555,7 @@ class Linter extends EventEmitter {
       )
     ) {
       stringFixBrokenNamedEntities(str, {
-        cb: obj => {
+        cb: (obj) => {
           let matchedRulesName;
           let severity;
           if (Object.keys(config.rules).includes("bad-html-entity")) {
@@ -11566,7 +11567,7 @@ class Linter extends EventEmitter {
               severity = config.rules["bad-html-entity"];
             }
           } else if (
-            Object.keys(config.rules).some(rulesName => {
+            Object.keys(config.rules).some((rulesName) => {
               if (matcher.isMatch(obj.ruleName, rulesName)) {
                 matchedRulesName = rulesName;
                 return true;
@@ -11607,8 +11608,8 @@ class Linter extends EventEmitter {
               [
                 obj.rangeFrom,
                 obj.rangeTo,
-                obj.rangeValEncoded ? obj.rangeValEncoded : ""
-              ]
+                obj.rangeValEncoded ? obj.rangeValEncoded : "",
+              ],
             ];
             if (obj.ruleName === "bad-named-html-entity-unrecognised") {
               ranges = [];
@@ -11620,18 +11621,18 @@ class Linter extends EventEmitter {
               idxFrom: obj.rangeFrom,
               idxTo: obj.rangeTo,
               fix: {
-                ranges
-              }
+                ranges,
+              },
             });
           }
         },
         entityCatcherCb: (from, to) => {
           this.emit("entity", { idxFrom: from, idxTo: to });
-        }
+        },
       });
     }
     ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(
-      eventName => {
+      (eventName) => {
         this.removeAllListeners(eventName);
       }
     );
@@ -11651,7 +11652,21 @@ class Linter extends EventEmitter {
     ) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
-    this.messages.push(Object.assign({}, { line, column: col, severity }, obj));
+    this.messages.push(
+      Object.assign(
+        { fix: null, keepSeparateWhenFixing: false },
+        { line, column: col, severity },
+        obj,
+        this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}
+      )
+    );
+    if (
+      obj.keepSeparateWhenFixing &&
+      !this.hasBeenCalledWithKeepSeparateWhenFixing &&
+      obj.fix
+    ) {
+      this.hasBeenCalledWithKeepSeparateWhenFixing = true;
+    }
   }
 }
 

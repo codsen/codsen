@@ -8165,6 +8165,7 @@ function commentClosingMalformed(context) {
         var errorArr = validateCommentClosing(node) || [];
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
+            keepSeparateWhenFixing: true,
             ruleId: "comment-closing-malformed"
           }));
         });
@@ -8303,11 +8304,6 @@ function commentOpeningMalformed(context) {
   };
 }
 
-var reference = {
-  simple: "-->",
-  only: "<![endif]-->",
-  not: "<!--<![endif]-->"
-};
 function commentMismatchingPair(context) {
   return {
     ast: function ast(node) {
@@ -8319,31 +8315,25 @@ function commentMismatchingPair(context) {
             var previousToken = op.get(node, astMonkeyUtil.pathPrev(innerObj.path));
             if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
               if (previousToken.kind === "not" && current.kind === "only") {
-                var ranges = null;
-                if (current.value === reference.only) {
-                  ranges = [[current.start, current.start, "<!--"]];
-                }
                 context.report({
                   ruleId: "comment-mismatching-pair",
+                  keepSeparateWhenFixing: true,
                   message: "Add \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
-                    ranges: ranges
+                    ranges: [[current.start, current.start, "<!--"]]
                   }
                 });
               } else if (previousToken.kind === "only" && current.kind === "not") {
-                var _ranges = null;
-                if (current.value === reference.not) {
-                  _ranges = [[current.start, current.end, "<![endif]-->"]];
-                }
                 context.report({
                   ruleId: "comment-mismatching-pair",
+                  keepSeparateWhenFixing: true,
                   message: "Remove \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
-                    ranges: _ranges
+                    ranges: [[current.start, current.end, "<![endif]-->"]]
                   }
                 });
               }
@@ -9531,16 +9521,17 @@ var Linter = function (_EventEmitter) {
       this.messages = [];
       this.str = str;
       this.config = clone(config);
+      this.hasBeenCalledWithKeepSeparateWhenFixing = false;
       if (config) {
         if (_typeof(config) !== "object") {
           throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ".concat(_typeof(config), ". It's equal to:\n").concat(JSON.stringify(config, null, 4)));
         } else if (!Object.keys(config).length) {
-          return this.messages;
+          return [];
         } else if (!config.rules || _typeof(config.rules) !== "object") {
           throw new Error("emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n".concat(JSON.stringify(config, null, 4)));
         }
       } else {
-        return this.messages;
+        return [];
       }
       var processedRulesConfig = normaliseRequestedRules(config.rules);
       this.processedRulesConfig = processedRulesConfig;
@@ -9686,11 +9677,19 @@ var Linter = function (_EventEmitter) {
       } else if (!Number.isInteger(obj.severity) && Array.isArray(this.processedRulesConfig[obj.ruleId])) {
         severity = this.processedRulesConfig[obj.ruleId][0];
       }
-      this.messages.push(Object.assign({}, {
+      this.messages.push(Object.assign({
+        fix: null,
+        keepSeparateWhenFixing: false
+      }, {
         line: line,
         column: col,
         severity: severity
-      }, obj));
+      }, obj, this.hasBeenCalledWithKeepSeparateWhenFixing ? {
+        fix: null
+      } : {}));
+      if (obj.keepSeparateWhenFixing && !this.hasBeenCalledWithKeepSeparateWhenFixing && obj.fix) {
+        this.hasBeenCalledWithKeepSeparateWhenFixing = true;
+      }
     }
   }]);
   return Linter;

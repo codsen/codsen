@@ -47,6 +47,7 @@ t.test(
           fix: {
             ranges: [[5, 7, "-->"]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "01.02.02"
@@ -81,6 +82,7 @@ t.test(
           fix: {
             ranges: [[20, 22, "-->"]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "01.03.02"
@@ -115,6 +117,7 @@ t.test(
           fix: {
             ranges: [[22, 23]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "01.04.02"
@@ -149,6 +152,7 @@ t.test(
           fix: {
             ranges: [[20, 24, "-->"]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "01.05.02"
@@ -183,6 +187,7 @@ t.test(
           fix: {
             ranges: [[20, 24, "-->"]],
           },
+          keepSeparateWhenFixing: true,
         },
       ],
       "01.05.02"

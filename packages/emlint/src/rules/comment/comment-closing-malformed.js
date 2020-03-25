@@ -27,10 +27,14 @@ function commentClosingMalformed(context, ...opts) {
           `027 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
+        // Out of all raised errors, only one can have "ranges.fix" -
+        // all other fixes, if any present, will be removed.
+        // This is to simplify the rule fix clashing.
         errorArr.forEach((errorObj) => {
-          console.log(`031 commentClosingMalformed(): RAISE ERROR`);
+          console.log(`034 commentClosingMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
+              keepSeparateWhenFixing: true,
               ruleId: "comment-closing-malformed",
             })
           );
