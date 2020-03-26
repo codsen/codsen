@@ -40,13 +40,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ast-contains-only-empty-space",
-        "lodash.clonedeep",
-        "lodash.pullall",
-        "matcher",
-        "type-detect",
-      ],
+      external: ["ast-contains-only-empty-space", "matcher", "type-detect"],
       plugins: [
         strip({
           sourceMap: false,
@@ -61,13 +55,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ast-contains-only-empty-space",
-        "lodash.clonedeep",
-        "lodash.pullall",
-        "matcher",
-        "type-detect",
-      ],
+      external: ["ast-contains-only-empty-space", "matcher", "type-detect"],
       plugins: [
         strip({
           sourceMap: false,

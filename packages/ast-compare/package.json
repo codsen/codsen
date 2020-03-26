@@ -120,8 +120,6 @@
   },
   "dependencies": {
     "ast-contains-only-empty-space": "^1.9.1",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.pullall": "^4.2.0",
     "matcher": "^2.1.0",
     "type-detect": "^4.0.8"
   },

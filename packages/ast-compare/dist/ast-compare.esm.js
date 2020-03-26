@@ -7,8 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
  */
 
-import clone from 'lodash.clonedeep';
-import pullAll from 'lodash.pullall';
 import typeDetect from 'type-detect';
 import empty from 'ast-contains-only-empty-space';
 import matcher from 'matcher';
@@ -101,7 +99,7 @@ function compare(b, s, originalOpts) {
     isObj(b) &&
     empty(b) &&
     isObj(s) &&
-    Object.keys(s).length === 0
+    !Object.keys(s).length
   ) {
     return true;
   }
@@ -190,43 +188,38 @@ function compare(b, s, originalOpts) {
       }
     }
   } else if (isObj(b) && isObj(s)) {
-    sKeys = Object.keys(s);
-    bKeys = Object.keys(b);
-    if (opts.matchStrictly && sKeys.length !== bKeys.length) {
+    sKeys = new Set(Object.keys(s));
+    bKeys = new Set(Object.keys(b));
+    if (opts.matchStrictly && sKeys.size !== bKeys.size) {
       if (!opts.verboseWhenMismatches) {
         return false;
       }
-      const uniqueKeysOnS = pullAll(clone(sKeys), clone(bKeys));
-      const sMessage =
-        uniqueKeysOnS.length > 0
-          ? `First object has unique keys: ${JSON.stringify(
-              uniqueKeysOnS,
-              null,
-              4
-            )}.`
-          : "";
-      const uniqueKeysOnB = pullAll(clone(bKeys), clone(sKeys));
-      const bMessage =
-        uniqueKeysOnB.length > 0
-          ? `Second object has unique keys:
+      const uniqueKeysOnS = new Set([...sKeys].filter((x) => !bKeys.has(x)));
+      const sMessage = uniqueKeysOnS.size
+        ? ` First object has unique keys: ${JSON.stringify(
+            uniqueKeysOnS,
+            null,
+            4
+          )}.`
+        : "";
+      const uniqueKeysOnB = new Set([...bKeys].filter((x) => !sKeys.has(x)));
+      const bMessage = uniqueKeysOnB.size
+        ? ` Second object has unique keys:
         ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
-          : "";
-      return `When matching strictly, we found that both objects have different amount of keys. ${sMessage} ${bMessage}`;
+        : "";
+      return `When matching strictly, we found that both objects have different amount of keys.${sMessage}${bMessage}`;
     }
-    for (let i = 0, len = sKeys.length; i < len; i++) {
-      if (!existy(b[sKeys[i]])) {
-        if (
-          !opts.useWildcards ||
-          (opts.useWildcards && !sKeys[i].includes("*"))
-        ) {
+    for (const sKey of sKeys) {
+      if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
+        if (!opts.useWildcards || (opts.useWildcards && !sKey.includes("*"))) {
           if (!opts.verboseWhenMismatches) {
             return false;
           }
-          return `The given object has key ${sKeys[i]} which the other-one does not have.`;
+          return `The given object has key "${sKey}" which the other-one does not have.`;
         }
         else if (
           Object.keys(b).some((bKey) =>
-            matcher.isMatch(bKey, sKeys[i], { caseSensitive: true })
+            matcher.isMatch(bKey, sKey, { caseSensitive: true })
           )
         ) {
           return true;
@@ -234,56 +227,28 @@ function compare(b, s, originalOpts) {
         if (!opts.verboseWhenMismatches) {
           return false;
         }
-        return `The given object has key ${sKeys[i]} which the other-one does not have.`;
-      } else if (b[sKeys[i]] !== undefined && !isTheTypeLegit(b[sKeys[i]])) {
-        throw new TypeError(
-          `ast-compare/compare(): [THROW_ID_07] The input ${JSON.stringify(
-            b,
-            null,
-            4
-          )} contains a value of a wrong type, ${typeDetect(
-            b[sKeys[i]]
-          )} at index ${i}, equal to: ${JSON.stringify(b[sKeys[i]], null, 4)}`
-        );
-      } else if (!isTheTypeLegit(s[sKeys[i]])) {
-        throw new TypeError(
-          `ast-compare/compare(): [THROW_ID_08] The input ${JSON.stringify(
-            s,
-            null,
-            4
-          )} contains a value of a wrong type, ${typeDetect(
-            s[sKeys[i]]
-          )} at index ${i}, equal to: ${JSON.stringify(s[sKeys[i]], null, 4)}`
-        );
+        return `The given object has key "${sKey}" which the other-one does not have.`;
       } else if (
-        existy(b[sKeys[i]]) &&
-        typeDetect(b[sKeys[i]]) !== typeDetect(s[sKeys[i]])
+        existy(b[sKey]) &&
+        typeDetect(b[sKey]) !== typeDetect(s[sKey])
       ) {
-        if (
-          !(
-            empty(b[sKeys[i]]) &&
-            empty(s[sKeys[i]]) &&
-            opts.hungryForWhitespace
-          )
-        ) {
+        if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
           if (!opts.verboseWhenMismatches) {
             return false;
           }
-          return `The given key ${
-            sKeys[i]
-          } is of a different type on both objects. On the first-one, it's ${typeDetect(
-            s[sKeys[i]]
-          )}, on the second-one, it's ${typeDetect(b[sKeys[i]])}`;
+          return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeDetect(
+            s[sKey]
+          )}, on the second-one, it's ${typeDetect(b[sKey])}`;
         }
-      } else if (compare(b[sKeys[i]], s[sKeys[i]], opts) !== true) {
+      } else if (compare(b[sKey], s[sKey], opts) !== true) {
         if (!opts.verboseWhenMismatches) {
           return false;
         }
         return `The given piece ${JSON.stringify(
-          s[sKeys[i]],
+          s[sKey],
           null,
           4
-        )} and ${JSON.stringify(b[sKeys[i]], null, 4)} don't match.`;
+        )} and ${JSON.stringify(b[sKey], null, 4)} don't match.`;
       }
     }
   } else {

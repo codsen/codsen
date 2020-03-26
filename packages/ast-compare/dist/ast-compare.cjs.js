@@ -11,8 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var pullAll = _interopDefault(require('lodash.pullall'));
 var typeDetect = _interopDefault(require('type-detect'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var matcher = _interopDefault(require('matcher'));
@@ -31,6 +29,94 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _createForOfIteratorHelper(o) {
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var it,
+      normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
 }
 
 var isArr = Array.isArray;
@@ -90,7 +176,7 @@ function compare(b, s, originalOpts) {
     useWildcards: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty(b) && isObj(s) && Object.keys(s).length === 0) {
+  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty(b) && isObj(s) && !Object.keys(s).length) {
     return true;
   }
   if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b) && empty(s)) && isObj(b) && Object.keys(b).length !== 0 && isObj(s) && Object.keys(s).length === 0 || typeDetect(b) !== typeDetect(s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b))) {
@@ -142,76 +228,85 @@ function compare(b, s, originalOpts) {
       }
     }
   } else if (isObj(b) && isObj(s)) {
-    sKeys = Object.keys(s);
-    bKeys = Object.keys(b);
-    if (opts.matchStrictly && sKeys.length !== bKeys.length) {
+    sKeys = new Set(Object.keys(s));
+    bKeys = new Set(Object.keys(b));
+    if (opts.matchStrictly && sKeys.size !== bKeys.size) {
       if (!opts.verboseWhenMismatches) {
         return false;
       }
-      var uniqueKeysOnS = pullAll(clone(sKeys), clone(bKeys));
-      var sMessage = uniqueKeysOnS.length > 0 ? "First object has unique keys: ".concat(JSON.stringify(uniqueKeysOnS, null, 4), ".") : "";
-      var uniqueKeysOnB = pullAll(clone(bKeys), clone(sKeys));
-      var bMessage = uniqueKeysOnB.length > 0 ? "Second object has unique keys:\n        ".concat(JSON.stringify(uniqueKeysOnB, null, 4), ".") : "";
-      return "When matching strictly, we found that both objects have different amount of keys. ".concat(sMessage, " ").concat(bMessage);
+      var uniqueKeysOnS = new Set(_toConsumableArray(sKeys).filter(function (x) {
+        return !bKeys.has(x);
+      }));
+      var sMessage = uniqueKeysOnS.size ? " First object has unique keys: ".concat(JSON.stringify(uniqueKeysOnS, null, 4), ".") : "";
+      var uniqueKeysOnB = new Set(_toConsumableArray(bKeys).filter(function (x) {
+        return !sKeys.has(x);
+      }));
+      var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        ".concat(JSON.stringify(uniqueKeysOnB, null, 4), ".") : "";
+      return "When matching strictly, we found that both objects have different amount of keys.".concat(sMessage).concat(bMessage);
     }
-    var _loop = function _loop(len, _i) {
-      if (!existy(b[sKeys[_i]])) {
-        if (!opts.useWildcards || opts.useWildcards && !sKeys[_i].includes("*")) {
+    var _iterator = _createForOfIteratorHelper(sKeys),
+        _step;
+    try {
+      var _loop = function _loop() {
+        var sKey = _step.value;
+        if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
+          if (!opts.useWildcards || opts.useWildcards && !sKey.includes("*")) {
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
+            return {
+              v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
+            };
+          }
+          else if (Object.keys(b).some(function (bKey) {
+              return matcher.isMatch(bKey, sKey, {
+                caseSensitive: true
+              });
+            })) {
+              return {
+                v: true
+              };
+            }
           if (!opts.verboseWhenMismatches) {
             return {
               v: false
             };
           }
           return {
-            v: "The given object has key ".concat(sKeys[_i], " which the other-one does not have.")
+            v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
           };
-        }
-        else if (Object.keys(b).some(function (bKey) {
-            return matcher.isMatch(bKey, sKeys[_i], {
-              caseSensitive: true
-            });
-          })) {
+        } else if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+          if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
             return {
-              v: true
+              v: "The given key ".concat(sKey, " is of a different type on both objects. On the first-one, it's ").concat(typeDetect(s[sKey]), ", on the second-one, it's ").concat(typeDetect(b[sKey]))
             };
           }
-        if (!opts.verboseWhenMismatches) {
-          return {
-            v: false
-          };
-        }
-        return {
-          v: "The given object has key ".concat(sKeys[_i], " which the other-one does not have.")
-        };
-      } else if (b[sKeys[_i]] !== undefined && !isTheTypeLegit(b[sKeys[_i]])) {
-        throw new TypeError("ast-compare/compare(): [THROW_ID_07] The input ".concat(JSON.stringify(b, null, 4), " contains a value of a wrong type, ").concat(typeDetect(b[sKeys[_i]]), " at index ").concat(_i, ", equal to: ").concat(JSON.stringify(b[sKeys[_i]], null, 4)));
-      } else if (!isTheTypeLegit(s[sKeys[_i]])) {
-        throw new TypeError("ast-compare/compare(): [THROW_ID_08] The input ".concat(JSON.stringify(s, null, 4), " contains a value of a wrong type, ").concat(typeDetect(s[sKeys[_i]]), " at index ").concat(_i, ", equal to: ").concat(JSON.stringify(s[sKeys[_i]], null, 4)));
-      } else if (existy(b[sKeys[_i]]) && typeDetect(b[sKeys[_i]]) !== typeDetect(s[sKeys[_i]])) {
-        if (!(empty(b[sKeys[_i]]) && empty(s[sKeys[_i]]) && opts.hungryForWhitespace)) {
+        } else if (compare(b[sKey], s[sKey], opts) !== true) {
           if (!opts.verboseWhenMismatches) {
             return {
               v: false
             };
           }
           return {
-            v: "The given key ".concat(sKeys[_i], " is of a different type on both objects. On the first-one, it's ").concat(typeDetect(s[sKeys[_i]]), ", on the second-one, it's ").concat(typeDetect(b[sKeys[_i]]))
+            v: "The given piece ".concat(JSON.stringify(s[sKey], null, 4), " and ").concat(JSON.stringify(b[sKey], null, 4), " don't match.")
           };
         }
-      } else if (compare(b[sKeys[_i]], s[sKeys[_i]], opts) !== true) {
-        if (!opts.verboseWhenMismatches) {
-          return {
-            v: false
-          };
-        }
-        return {
-          v: "The given piece ".concat(JSON.stringify(s[sKeys[_i]], null, 4), " and ").concat(JSON.stringify(b[sKeys[_i]], null, 4), " don't match.")
-        };
+      };
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var _ret = _loop();
+        if (_typeof(_ret) === "object") return _ret.v;
       }
-    };
-    for (var _i = 0, len = sKeys.length; _i < len; _i++) {
-      var _ret = _loop(len, _i);
-      if (_typeof(_ret) === "object") return _ret.v;
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
   } else {
     if (opts.hungryForWhitespace && empty(b) && empty(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {

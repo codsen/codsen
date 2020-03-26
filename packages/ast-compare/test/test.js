@@ -1,7 +1,6 @@
 const t = require("tap");
 const compare = require("../dist/ast-compare.cjs");
 const f = () => "zzz";
-const f2 = () => "yyy";
 
 // (input, objToDelete, strictOrNot)
 
@@ -56,88 +55,6 @@ t.test("01.05 - falsey inputs", (t) => {
   t.throws(() => {
     compare(null, undefined, { verboseWhenMismatches: true });
   }, /THROW_ID_02/g);
-  t.end();
-});
-
-t.test("01.06 - undefined in a second-level depth", (t) => {
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c",
-        },
-      },
-      {
-        a: "a",
-        b: undefined,
-      }
-    );
-  }, /THROW_ID_08/g);
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c",
-        },
-      },
-      {
-        a: "a",
-        b: undefined,
-      },
-      {
-        hungryForWhitespace: true,
-      }
-    );
-  }, /THROW_ID_08/g);
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c",
-        },
-      },
-      {
-        a: "a",
-        b: undefined,
-      },
-      {
-        verboseWhenMismatches: true,
-      }
-    );
-  }, /THROW_ID_08/g);
-  t.throws(() => {
-    compare(
-      {
-        a: "a",
-        b: {
-          c: "c",
-        },
-      },
-      {
-        a: "a",
-        b: undefined,
-      },
-      {
-        hungryForWhitespace: true,
-        verboseWhenMismatches: true,
-      }
-    );
-  }, /THROW_ID_08/g);
-
-  t.end();
-});
-
-t.test("01.07 - wrong types of input args", (t) => {
-  t.throws(() => {
-    compare(undefined, { a: "a" }, { verboseWhenMismatches: true });
-  }, /THROW_ID_01/g);
-  t.throws(() => {
-    compare({ a: f }, { a: "a" }, { verboseWhenMismatches: true });
-  }, /THROW_ID_07/g);
-
   t.end();
 });
 
@@ -1730,21 +1647,7 @@ t.test("06.05 - function as input", (t) => {
   t.end();
 });
 
-t.test("06.06 - sneaky function within object literal", (t) => {
-  t.throws(() => {
-    compare({ a: f }, { a: f2 });
-  }, /THROW_ID_07/g);
-  t.end();
-});
-
-t.test("06.07 - another sneaky function within object literal", (t) => {
-  t.throws(() => {
-    compare({ a: f2 }, { a: f2 });
-  }, /THROW_ID_07/g);
-  t.end();
-});
-
-t.test("06.08 - real-life #3", (t) => {
+t.test("06.06 - real-life #3", (t) => {
   t.same(
     compare(
       {
@@ -1874,7 +1777,7 @@ t.test("06.08 - real-life #3", (t) => {
       }
     ),
     false,
-    "06.08.01"
+    "06.06.01"
   );
   t.same(
     compare(
@@ -2006,7 +1909,7 @@ t.test("06.08 - real-life #3", (t) => {
       { hungryForWhitespace: false }
     ),
     false,
-    "06.08.02"
+    "06.06.02"
   );
   t.same(
     compare(
@@ -2138,12 +2041,12 @@ t.test("06.08 - real-life #3", (t) => {
       { hungryForWhitespace: true }
     ),
     true,
-    "06.08.03"
+    "06.06.03"
   );
   t.end();
 });
 
-t.test("06.09 - real-life #3 reduced case", (t) => {
+t.test("06.07 - real-life #3 reduced case", (t) => {
   t.same(
     compare(
       {
@@ -2166,7 +2069,7 @@ t.test("06.09 - real-life #3 reduced case", (t) => {
       }
     ),
     false,
-    "06.09.01"
+    "06.07.01"
   );
   t.same(
     compare(
@@ -2190,7 +2093,7 @@ t.test("06.09 - real-life #3 reduced case", (t) => {
       }
     ),
     false,
-    "06.09.02"
+    "06.07.02"
   );
   t.same(
     compare(
@@ -2215,7 +2118,7 @@ t.test("06.09 - real-life #3 reduced case", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.09.03"
+    "06.07.03"
   );
   t.same(
     compare(
@@ -2240,12 +2143,12 @@ t.test("06.09 - real-life #3 reduced case", (t) => {
       { hungryForWhitespace: true }
     ),
     true,
-    "06.09.04"
+    "06.07.04"
   );
   t.end();
 });
 
-t.test("06.10 - input args of mismatching type - easy win", (t) => {
+t.test("06.08 - input args of mismatching type - easy win", (t) => {
   t.same(
     compare(
       {
@@ -2254,14 +2157,14 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       "a"
     ),
     false,
-    "06.10.01"
+    "06.08.01"
   );
   t.same(
     compare("a", {
       a: "a",
     }),
     false,
-    "06.10.02"
+    "06.08.02"
   );
   t.same(
     compare(
@@ -2271,14 +2174,14 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       ["a"]
     ),
     false,
-    "06.10.03"
+    "06.08.03"
   );
   t.same(
     compare(["a"], {
       a: "a",
     }),
     false,
-    "06.10.04"
+    "06.08.04"
   );
   t.same(
     compare(
@@ -2289,7 +2192,7 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.10.05"
+    "06.08.05"
   );
   t.same(
     compare(
@@ -2300,7 +2203,7 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.10.06"
+    "06.08.06"
   );
   t.same(
     compare(
@@ -2311,7 +2214,7 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.10.07"
+    "06.08.07"
   );
   t.same(
     compare(
@@ -2322,7 +2225,7 @@ t.test("06.10 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.10.08"
+    "06.08.08"
   );
   t.end();
 });
