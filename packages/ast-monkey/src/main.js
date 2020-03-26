@@ -8,10 +8,6 @@ import traverse from "ast-monkey-traverse";
 function existy(x) {
   return x != null;
 }
-function notUndef(x) {
-  return x !== undefined;
-}
-// function isStr(x) { return typeof x === 'string' }
 function compareIsEqual(a, b) {
   if (typeof a !== typeof b) {
     return false;
@@ -29,7 +25,7 @@ function isObj(something) {
 function monkey(input, opts) {
   // -----------------------------------
   // precautions
-  if (!existy(input)) {
+  if (!input) {
     throw new Error(
       "ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input"
     );
@@ -49,18 +45,16 @@ function monkey(input, opts) {
 
   let ko = false; // key only
   let vo = false; // value only
-  if (existy(opts.key) && !notUndef(opts.val)) {
+
+  // PS. null is a legit value, although not a key
+  if (opts.key && opts.val === undefined) {
     ko = true;
   }
-  if (!existy(opts.key) && notUndef(opts.val)) {
+  if (!opts.key && opts.val !== undefined) {
     vo = true;
   }
 
-  if (
-    opts.mode === "arrayFirstOnly" &&
-    Array.isArray(input) &&
-    input.length > 0
-  ) {
+  if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length) {
     input = [input[0]];
   }
 
@@ -75,7 +69,7 @@ function monkey(input, opts) {
     data.gatherPath.push(data.count);
     if (opts.mode === "get") {
       if (data.count === opts.index) {
-        if (notUndef(val)) {
+        if (val !== undefined) {
           data.finding = {};
           data.finding[key] = val;
         } else {
@@ -116,9 +110,9 @@ function monkey(input, opts) {
     } else if (opts.mode === "drop" && data.count === opts.index) {
       return NaN;
     } else if (opts.mode === "arrayFirstOnly") {
-      if (notUndef(val) && Array.isArray(val)) {
+      if (val && Array.isArray(val)) {
         return [val[0]];
-      } else if (existy(key) && Array.isArray(key)) {
+      } else if (key && Array.isArray(key)) {
         return [key[0]];
       }
       return val !== undefined ? val : key;
@@ -130,7 +124,7 @@ function monkey(input, opts) {
   if (opts.mode === "get") {
     return data.finding;
   } else if (opts.mode === "find") {
-    return findings.length > 0 ? findings : null;
+    return findings.length ? findings : null;
   }
   return input;
 }
@@ -157,7 +151,7 @@ function find(input, opts) {
     },
     msg: "ast-monkey/get(): [THROW_ID_04*]",
   });
-  if (typeof opts.only === "string" && opts.only.length > 0) {
+  if (typeof opts.only === "string" && opts.only.length) {
     opts.only = arrayObjectOrBoth(opts.only, {
       optsVarName: "opts.only",
       msg: "ast-monkey/find(): [THROW_ID_05*]",
@@ -207,7 +201,7 @@ function set(input, opts) {
       "ast-monkey/main.js/set(): [THROW_ID_13] Please provide the input"
     );
   }
-  if (!existy(opts.key) && !notUndef(opts.val)) {
+  if (!opts.key && opts.val === undefined) {
     throw new Error(
       "ast-monkey/main.js/set(): [THROW_ID_14] Please provide opts.val"
     );
@@ -224,7 +218,7 @@ function set(input, opts) {
       `ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ${opts.index}`
     );
   }
-  if (existy(opts.key) && !notUndef(opts.val)) {
+  if (opts.key && opts.val === undefined) {
     opts.val = opts.key;
   }
   checkTypes(opts, null, {
@@ -275,7 +269,7 @@ function del(input, opts) {
       "ast-monkey/main.js/del(): [THROW_ID_27] Please provide the opts object"
     );
   }
-  if (!existy(opts.key) && !notUndef(opts.val)) {
+  if (!opts.key && opts.val === undefined) {
     throw new Error(
       "ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val"
     );
@@ -288,7 +282,7 @@ function del(input, opts) {
     },
     msg: "ast-monkey/drop(): [THROW_ID_29*]",
   });
-  if (typeof opts.only === "string" && opts.only.length > 0) {
+  if (typeof opts.only === "string" && opts.only.length) {
     opts.only = arrayObjectOrBoth(opts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "opts.only",
@@ -300,7 +294,7 @@ function del(input, opts) {
 }
 
 function arrayFirstOnly(input) {
-  if (!existy(input)) {
+  if (!input) {
     throw new Error(
       "ast-monkey/main.js/arrayFirstOnly(): [THROW_ID_31] Please provide the input"
     );
