@@ -10,7 +10,7 @@
 import clone from 'lodash.clonedeep';
 
 function trimFirstDot(str) {
-  if (typeof str === "string" && str.length && str[0] === ".") {
+  if (typeof str === "string" && str[0] === ".") {
     return str.slice(1);
   }
   return str;
@@ -20,15 +20,13 @@ function isObj(something) {
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function astMonkeyTraverse(tree1, cb1) {
+function astMonkeyTraverseWithLookahead(tree1, cb1) {
   const stop = { now: false };
   function traverseInner(tree, callback, innerObj, stop) {
-    let i;
-    let len;
     innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      for (i = 0, len = tree.length; i < len; i++) {
+      for (let i = 0, len = tree.length; i < len; i++) {
         if (stop.now) {
           break;
         }
@@ -78,4 +76,4 @@ function astMonkeyTraverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop);
 }
 
-export default astMonkeyTraverse;
+export default astMonkeyTraverseWithLookahead;

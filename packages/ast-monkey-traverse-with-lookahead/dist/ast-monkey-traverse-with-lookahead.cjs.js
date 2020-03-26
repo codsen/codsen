@@ -30,7 +30,7 @@ function _typeof(obj) {
 }
 
 function trimFirstDot(str) {
-  if (typeof str === "string" && str.length && str[0] === ".") {
+  if (typeof str === "string" && str[0] === ".") {
     return str.slice(1);
   }
   return str;
@@ -38,20 +38,18 @@ function trimFirstDot(str) {
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
-function astMonkeyTraverse(tree1, cb1) {
+function astMonkeyTraverseWithLookahead(tree1, cb1) {
   var stop = {
     now: false
   };
   function traverseInner(tree, callback, innerObj, stop) {
-    var i;
-    var len;
     innerObj = Object.assign({
       depth: -1,
       path: ""
     }, innerObj);
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      for (i = 0, len = tree.length; i < len; i++) {
+      for (var i = 0, len = tree.length; i < len; i++) {
         if (stop.now) {
           break;
         }
@@ -89,4 +87,4 @@ function astMonkeyTraverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop);
 }
 
-module.exports = astMonkeyTraverse;
+module.exports = astMonkeyTraverseWithLookahead;
