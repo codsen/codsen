@@ -17,20 +17,17 @@ function isObj(something) {
   );
 }
 function deleteObj(originalInput, objToDelete, originalOpts) {
-  function existy(x) {
-    return x != null;
-  }
-  if (!existy(originalInput)) {
+  if (!originalInput) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!"
     );
   }
-  if (!existy(objToDelete)) {
+  if (!objToDelete) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!"
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!"
     );
@@ -55,9 +52,9 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     if (isObj(current)) {
       if (
         isObj(objToDelete) &&
-        Object.keys(objToDelete).length === 0 &&
         isObj(current) &&
-        Object.keys(current).length === 0
+        !Object.keys(objToDelete).length &&
+        !Object.keys(current).length
       ) {
         return NaN;
       } else if (
