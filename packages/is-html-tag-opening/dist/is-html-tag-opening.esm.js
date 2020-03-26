@@ -143,7 +143,7 @@ const knownHtmlTags = [
   "var",
   "video",
   "wbr",
-  "xml"
+  "xml",
 ];
 function isStr(something) {
   return typeof something === "string";
@@ -159,7 +159,7 @@ function isNotLetter(char) {
 function isOpening(str, idx = 0, originalOpts) {
   const defaults = {
     allowCustomTagNames: false,
-    skipOpeningBracket: false
+    skipOpeningBracket: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
@@ -214,7 +214,7 @@ function isOpening(str, idx = 0, originalOpts) {
   const matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"],
   };
   if (opts.allowCustomTagNames) {
     if (r5.test(whatToTest)) {
@@ -230,7 +230,16 @@ function isOpening(str, idx = 0, originalOpts) {
     matchRightIncl(str, idx, knownHtmlTags, {
       cb: isNotLetter,
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: [
+        "<",
+        "/",
+        BACKSLASH,
+        "!",
+        " ",
+        "\t",
+        "\n",
+        "\r",
+      ],
     })
   ) {
     if (r1.test(whatToTest)) {

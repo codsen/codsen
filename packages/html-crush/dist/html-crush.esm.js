@@ -45,7 +45,7 @@ const defaults = {
     "</body",
     "<!--[if",
     "<!--<![endif",
-    "<![endif]"
+    "<![endif]",
   ],
   mindTheInlineTags: [
     "a",
@@ -102,8 +102,8 @@ const defaults = {
     "tt",
     "var",
     "video",
-    "wbr"
-  ]
+    "wbr",
+  ],
 };
 function isStr(something) {
   return typeof something === "string";
@@ -467,7 +467,7 @@ function crush(str, originalOpts) {
           ifLeftSideIncludesThisThenCropTightly:
             DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
           ifRightSideIncludesThisThenCropTightly:
-            DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+            DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
         });
         styleCommentStartedAt = null;
         if (
@@ -596,7 +596,7 @@ function crush(str, originalOpts) {
               if (
                 str[i] === "<" &&
                 matchRight(str, i, opts.mindTheInlineTags, {
-                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar),
                 })
               ) ; else if (
                 (str[whitespaceStartedAt - 1] &&
@@ -786,14 +786,14 @@ function crush(str, originalOpts) {
               !(
                 str[i] === "<" &&
                 matchRight(str, i, opts.mindTheInlineTags, {
-                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar),
                 })
               ) &&
               !(
                 str[i] === "<" &&
                 matchRight(str, i, opts.mindTheInlineTags, {
                   trimCharsBeforeMatching: "/",
-                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar),
                 })
               )
             ) {
@@ -817,7 +817,7 @@ function crush(str, originalOpts) {
                 str[i] === "<" &&
                 matchRight(str, i, opts.mindTheInlineTags, {
                   trimCharsBeforeMatching: "/",
-                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar),
                 })
               )
             ) {
@@ -833,7 +833,7 @@ function crush(str, originalOpts) {
               str[i] === "<" &&
               matchRight(str, i, opts.mindTheInlineTags, {
                 trimCharsBeforeMatching: "/",
-                cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                cb: (nextChar) => !nextChar || !/\w/.test(nextChar),
               })
             )
           ) {
@@ -965,7 +965,7 @@ function crush(str, originalOpts) {
               ifLeftSideIncludesThisThenCropTightly:
                 DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
               ifRightSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
             })
           );
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
@@ -1010,7 +1010,7 @@ function crush(str, originalOpts) {
       const res = applyRanges(
         str,
         finalIndexesToDelete.current(),
-        applyPercDone => {
+        (applyPercDone) => {
           if (opts.reportProgressFunc && len >= 2000) {
             currentPercentageDone = Math.floor(
               startingPercentageDone +
@@ -1035,10 +1035,10 @@ function crush(str, originalOpts) {
           bytesSaved: Math.max(len - resLen, 0),
           percentageReducedOfOriginal: len
             ? Math.round((Math.max(len - resLen, 0) * 100) / len)
-            : 0
+            : 0,
         },
         ranges: rangesCopy,
-        result: res
+        result: res,
       };
     }
   }
@@ -1048,10 +1048,10 @@ function crush(str, originalOpts) {
       originalLength: len,
       cleanedLength: len,
       bytesSaved: 0,
-      percentageReducedOfOriginal: 0
+      percentageReducedOfOriginal: 0,
     },
     ranges: [],
-    result: str
+    result: str,
   };
 }
 

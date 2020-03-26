@@ -31,10 +31,10 @@ function checkTypesMini(
   function pullAllWithGlob(originalInput, toBeRemoved) {
     toBeRemoved = arrayiffyIfString(toBeRemoved);
     return Array.from(originalInput).filter(
-      originalVal =>
-        !toBeRemoved.some(remVal =>
+      (originalVal) =>
+        !toBeRemoved.some((remVal) =>
           matcher.isMatch(originalVal, remVal, {
-            caseSensitive: true
+            caseSensitive: true,
           })
         )
     );
@@ -46,7 +46,7 @@ function checkTypesMini(
     "everything",
     "all",
     "whatever",
-    "whatevs"
+    "whatevs",
   ];
   const isArr = Array.isArray;
   if (!existy(obj)) {
@@ -62,7 +62,7 @@ function checkTypesMini(
     enforceStrictKeyset: true,
     schema: {},
     msg: "check-types-mini",
-    optsVarName: "opts"
+    optsVarName: "opts",
   };
   let opts;
   if (existy(originalOptions) && isObj(originalOptions)) {
@@ -90,7 +90,7 @@ function checkTypesMini(
     opts.msg = opts.msg.slice(0, opts.msg.length - 1).trim();
   }
   if (opts.schema) {
-    Object.keys(opts.schema).forEach(oneKey => {
+    Object.keys(opts.schema).forEach((oneKey) => {
       if (isObj(opts.schema[oneKey])) {
         const tempObj = {};
         traverse(opts.schema[oneKey], (key, val, innerObj) => {
@@ -104,14 +104,14 @@ function checkTypesMini(
         opts.schema = Object.assign(opts.schema, tempObj);
       }
     });
-    Object.keys(opts.schema).forEach(oneKey => {
+    Object.keys(opts.schema).forEach((oneKey) => {
       if (!isArr(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
       }
       opts.schema[oneKey] = opts.schema[oneKey]
         .map(String)
-        .map(el => el.toLowerCase())
-        .map(el => el.trim());
+        .map((el) => el.toLowerCase())
+        .map((el) => el.trim());
     });
   }
   if (!existy(ref)) {
@@ -192,20 +192,20 @@ function checkTypesMini(
     if (
       isArr(ignoredPathsArr) &&
       ignoredPathsArr.length &&
-      ignoredPathsArr.some(path => innerObj.path.startsWith(path))
+      ignoredPathsArr.some((path) => innerObj.path.startsWith(path))
     ) {
       return current;
     }
     if (
       objKey &&
-      opts.ignoreKeys.some(oneOfKeysToIgnore =>
+      opts.ignoreKeys.some((oneOfKeysToIgnore) =>
         matcher.isMatch(objKey, oneOfKeysToIgnore)
       )
     ) {
       return current;
     }
     if (
-      opts.ignorePaths.some(oneOfPathsToIgnore =>
+      opts.ignorePaths.some((oneOfPathsToIgnore) =>
         matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
       )
     ) {
@@ -252,7 +252,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
     } else if (optsSchemaHasThisPathDefined) {
       const currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path])
         .map(String)
-        .map(el => el.toLowerCase());
+        .map((el) => el.toLowerCase());
       objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
       if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
         if (
@@ -310,7 +310,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         !opts.acceptArraysIgnore.includes(key)
       ) {
         const allMatch = current.every(
-          el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
+          (el) => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
         );
         if (!allMatch) {
           throw new TypeError(

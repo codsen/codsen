@@ -109,7 +109,7 @@ function cparser(str, originalOpts) {
     reportProgressFuncTo: 100,
     tagCb: null,
     charCb: null,
-    errCb: null
+    errCb: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const layers = [];
@@ -122,7 +122,7 @@ function cparser(str, originalOpts) {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
-    tagCb: tokenObj => {
+    tagCb: (tokenObj) => {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
@@ -192,10 +192,9 @@ function cparser(str, originalOpts) {
       ) {
         parentsLastChildTokenValue =
           previousTagsToken.children[previousTagsToken.children.length - 1];
-        parentsLastChildTokenPath = `${previousPath}.children.${op.get(
-          res,
-          previousPath
-        ).children.length - 1}`;
+        parentsLastChildTokenPath = `${previousPath}.children.${
+          op.get(res, previousPath).children.length - 1
+        }`;
       }
       let tokenTakenCareOf = false;
       if (
@@ -218,7 +217,7 @@ function cparser(str, originalOpts) {
             path,
             Object.assign({}, tokenObj, {
               end: tokenObj.start + suspiciousEndingStartsAt,
-              value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
+              value: tokenObj.value.slice(0, suspiciousEndingStartsAt),
             })
           );
           if (tokensWithChildren.includes(tokenObj.type)) {
@@ -236,7 +235,7 @@ function cparser(str, originalOpts) {
             suspiciousEndingStartsAt,
             suspiciousEndingEndsAt
           ),
-          children: []
+          children: [],
         });
         if (suspiciousEndingEndsAt < tokenObj.value.length) {
           path = pathNext(path);
@@ -244,7 +243,7 @@ function cparser(str, originalOpts) {
             type: "text",
             start: tokenObj.start + suspiciousEndingEndsAt,
             end: tokenObj.end,
-            value: tokenObj.value.slice(suspiciousEndingEndsAt)
+            value: tokenObj.value.slice(suspiciousEndingEndsAt),
           });
         }
         tokenTakenCareOf = true;
@@ -266,11 +265,11 @@ function cparser(str, originalOpts) {
           strFindMalformed(
             previousTagsToken.value,
             "<!--",
-            obj => {
+            (obj) => {
               capturedMalformedTagRanges.push(obj);
             },
             {
-              maxDistance: 2
+              maxDistance: 2,
             }
           );
           if (
@@ -297,7 +296,7 @@ function cparser(str, originalOpts) {
                 Object.assign({}, tokenObj, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
-                  value: `${previousTagsToken.value}${tokenObj.value}`
+                  value: `${previousTagsToken.value}${tokenObj.value}`,
                 })
               );
               tokenTakenCareOf = true;
@@ -310,7 +309,7 @@ function cparser(str, originalOpts) {
                   value: previousTagsToken.value.slice(
                     0,
                     malformedRange.idxFrom
-                  )
+                  ),
                 })
               );
               if (tokensWithChildren.includes(tokenObj.type)) {
@@ -324,7 +323,7 @@ function cparser(str, originalOpts) {
                   kind: "not",
                   value: `${previousTagsToken.value.slice(
                     malformedRange.idxFrom
-                  )}${tokenObj.value}`
+                  )}${tokenObj.value}`,
                 })
               );
               tokenTakenCareOf = true;
@@ -347,11 +346,11 @@ function cparser(str, originalOpts) {
           strFindMalformed(
             parentsLastChildTokenValue.value,
             "<!--",
-            obj => {
+            (obj) => {
               capturedMalformedTagRanges.push(obj);
             },
             {
-              maxDistance: 2
+              maxDistance: 2,
             }
           );
           if (
@@ -378,13 +377,14 @@ function cparser(str, originalOpts) {
                   start:
                     malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
-                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
+                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`,
                 })
               );
               op.del(
                 res,
-                `${previousPath}.children.${op.get(res, previousPath).children
-                  .length - 1}`
+                `${previousPath}.children.${
+                  op.get(res, previousPath).children.length - 1
+                }`
               );
               tokenTakenCareOf = true;
             } else if (
@@ -401,7 +401,7 @@ function cparser(str, originalOpts) {
                   value: parentsLastChildTokenValue.value.slice(
                     0,
                     malformedRange.idxFrom
-                  )
+                  ),
                 })
               );
               if (tokensWithChildren.includes(tokenObj.type)) {
@@ -416,7 +416,7 @@ function cparser(str, originalOpts) {
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value.slice(
                     malformedRange.idxFrom
-                  )}${tokenObj.value}`
+                  )}${tokenObj.value}`,
                 })
               );
               tokenTakenCareOf = true;
@@ -445,7 +445,7 @@ function cparser(str, originalOpts) {
               ruleId: `tag-void-frontal-slash`,
               idxFrom: tokenObj.start,
               idxTo: tokenObj.end,
-              fix: { ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]] }
+              fix: { ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]] },
             });
           }
         } else {
@@ -455,14 +455,14 @@ function cparser(str, originalOpts) {
                 tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
               }-missing-opening`,
               idxFrom: tokenObj.start,
-              idxTo: tokenObj.end
+              idxTo: tokenObj.end,
             });
           }
         }
       }
       lastProcessedToken = { ...tokenObj };
     },
-    charCb: opts.charCb
+    charCb: opts.charCb,
   });
   return res;
 }

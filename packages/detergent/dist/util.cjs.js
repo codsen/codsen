@@ -22,7 +22,7 @@ const defaultOpts = {
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"],
-  cb: null
+  cb: null,
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";
@@ -391,7 +391,7 @@ const latinAndNonNonLatinRanges = [
   [173824, 177972],
   [177972, 177984],
   [177984, 178205],
-  [178205, 194560]
+  [178205, 194560],
 ];
 const voidTags = [
   "area",
@@ -407,22 +407,22 @@ const voidTags = [
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ];
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
     return Array.from(inputString)
-      .map(char => {
+      .map((char) => {
         if (
           char.charCodeAt(0) < 880 ||
           latinAndNonNonLatinRanges.some(
-            rangeArr =>
+            (rangeArr) =>
               char.charCodeAt(0) > rangeArr[0] &&
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
           return he.encode(char, {
-            useNamedReferences: true
+            useNamedReferences: true,
           });
         }
         return char;
@@ -430,7 +430,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       .join("");
   }
   return he.encode(inputString, {
-    useNamedReferences: true
+    useNamedReferences: true,
   });
 }
 function isNumber(something) {

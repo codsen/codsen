@@ -524,8 +524,9 @@ function main({ str, path, valToInsert, mode }) {
               keyStartedAt,
               null,
               4
-            )}; val = ${(currentlyWithinArray ? valueStartedAt : keyStartedAt) -
-              1}`
+            )}; val = ${
+              (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1
+            }`
           );
           let startingPoint =
             left(

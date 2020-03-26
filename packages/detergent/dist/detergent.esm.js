@@ -41,7 +41,7 @@ const defaultOpts = {
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"],
-  cb: null
+  cb: null,
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";
@@ -408,7 +408,7 @@ const latinAndNonNonLatinRanges = [
   [173824, 177972],
   [177972, 177984],
   [177984, 178205],
-  [178205, 194560]
+  [178205, 194560],
 ];
 const voidTags = [
   "area",
@@ -424,22 +424,22 @@ const voidTags = [
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ];
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
     return Array.from(inputString)
-      .map(char => {
+      .map((char) => {
         if (
           char.charCodeAt(0) < 880 ||
           latinAndNonNonLatinRanges.some(
-            rangeArr =>
+            (rangeArr) =>
               char.charCodeAt(0) > rangeArr[0] &&
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
           return he.encode(char, {
-            useNamedReferences: true
+            useNamedReferences: true,
           });
         }
         return char;
@@ -447,7 +447,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       .join("");
   }
   return he.encode(inputString, {
-    useNamedReferences: true
+    useNamedReferences: true,
   });
 }
 function isNumber(something) {
@@ -557,7 +557,9 @@ function processCharacter(
             !opts.removeLineBreaks &&
             (!brClosingBracketIndexesArr ||
               (Array.isArray(brClosingBracketIndexesArr) &&
-                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+                !brClosingBracketIndexesArr.some(
+                  (idx) => left(str, i) === idx
+                )))
           ) {
             if (opts.replaceLineBreaks) {
               applicableOpts.useXHTML = true;
@@ -579,7 +581,9 @@ function processCharacter(
             opts.replaceLineBreaks &&
             (!brClosingBracketIndexesArr ||
               (Array.isArray(brClosingBracketIndexesArr) &&
-                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+                !brClosingBracketIndexesArr.some(
+                  (idx) => left(str, i) === idx
+                )))
           ) {
             let startingIdx = i;
             if (str[i - 1] === " ") {
@@ -627,7 +631,9 @@ function processCharacter(
             !opts.removeLineBreaks &&
             (!brClosingBracketIndexesArr ||
               (Array.isArray(brClosingBracketIndexesArr) &&
-                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+                !brClosingBracketIndexesArr.some(
+                  (idx) => left(str, i) === idx
+                )))
           ) {
             if (opts.replaceLineBreaks && !opts.removeLineBreaks) {
               applicableOpts.useXHTML = true;
@@ -652,7 +658,9 @@ function processCharacter(
             opts.replaceLineBreaks &&
             (!brClosingBracketIndexesArr ||
               (Array.isArray(brClosingBracketIndexesArr) &&
-                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+                !brClosingBracketIndexesArr.some(
+                  (idx) => left(str, i) === idx
+                )))
           ) {
             let startingIdx = i;
             if (str[i - 1] === " ") {
@@ -725,7 +733,7 @@ function processCharacter(
             from: i,
             convertEntities: opts.convertEntities,
             convertApostrophes: opts.convertApostrophes,
-            offsetBy
+            offsetBy,
           });
           if (tempRes && tempRes.length) {
             rangesArr.push(tempRes);
@@ -735,7 +743,7 @@ function processCharacter(
         } else if (charcode === 38) {
           if (isLetter(str[i + 1])) {
             const temp = Object.keys(allNamedEntities).find(
-              entName =>
+              (entName) =>
                 str.startsWith(entName, i + 1) &&
                 str[i + entName.length + 1] === ";"
             );
@@ -749,7 +757,7 @@ function processCharacter(
                   value: `'`,
                   convertEntities: opts.convertEntities,
                   convertApostrophes: opts.convertApostrophes,
-                  offsetBy
+                  offsetBy,
                 });
                 if (Array.isArray(decodedTempRes) && decodedTempRes.length) {
                   rangesArr.push(decodedTempRes);
@@ -788,7 +796,7 @@ function processCharacter(
               if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
                   const tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
-                    useNamedReferences: true
+                    useNamedReferences: true,
                   });
                   if (tempRes) {
                     rangesArr.push(i, z + 1, tempRes);
@@ -807,7 +815,7 @@ function processCharacter(
           const temp = convertOne(str, {
             from: i,
             convertEntities: true,
-            convertApostrophes: true
+            convertApostrophes: true,
           });
           if (temp.length) {
             applicableOpts.convertApostrophes = true;
@@ -819,7 +827,7 @@ function processCharacter(
                 from: i,
                 convertEntities: opts.convertEntities,
                 convertApostrophes: opts.convertApostrophes,
-                offsetBy
+                offsetBy,
               })
             );
           }
@@ -1123,7 +1131,7 @@ function processCharacter(
           8202,
           8239,
           8287,
-          12288
+          12288,
         ].includes(charcode)
       ) {
         if (!str[y]) {
@@ -1135,7 +1143,7 @@ function processCharacter(
             to: y,
             wipeAllWhitespaceOnLeft: true,
             wipeAllWhitespaceOnRight: true,
-            addSingleSpaceToPreventAccidentalConcatenation: true
+            addSingleSpaceToPreventAccidentalConcatenation: true,
           });
           rangesArr.push(...expandedRange);
         }
@@ -1275,7 +1283,7 @@ function processCharacter(
           from: i,
           to: y,
           convertEntities: true,
-          convertApostrophes: true
+          convertApostrophes: true,
         });
         if (tempRes && tempRes.length) {
           applicableOpts.convertApostrophes = true;
@@ -1283,7 +1291,7 @@ function processCharacter(
             from: i,
             to: y,
             convertEntities: true,
-            convertApostrophes: true
+            convertApostrophes: true,
           });
           if (tempRes) {
             if (opts.convertApostrophes) {
@@ -1295,7 +1303,7 @@ function processCharacter(
                 to: y,
                 convertEntities: opts.convertEntities,
                 convertApostrophes: opts.convertApostrophes,
-                offsetBy
+                offsetBy,
               })
             );
           }
@@ -1415,10 +1423,10 @@ function det(str, inputOpts) {
   Object.keys(defaultOpts)
     .sort()
     .filter(
-      val =>
+      (val) =>
         !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags", "cb"].includes(val)
     )
-    .forEach(singleOption => {
+    .forEach((singleOption) => {
       applicableOpts[singleOption] = false;
     });
   delete applicableOpts.stripHtmlButIgnoreTags;
@@ -1430,7 +1438,7 @@ function det(str, inputOpts) {
   }
   const brClosingBracketIndexesArr = [];
   const finalIndexesToDelete = new Ranges({
-    limitToBeAddedWhitespace: false
+    limitToBeAddedWhitespace: false,
   });
   const skipArr = new Ranges();
   function applyAndWipe() {
@@ -1441,14 +1449,14 @@ function det(str, inputOpts) {
     return Number.isInteger(something);
   }
   const state = {
-    onUrlCurrently: false
+    onUrlCurrently: false,
   };
   str = trimSpaces(str.replace(ansiRegex(), "").replace(/\u200A/g, " "), {
     cr: true,
     lf: true,
     tab: true,
     space: true,
-    nbsp: false
+    nbsp: false,
   }).res;
   let temp = str;
   let lastVal;
@@ -1463,7 +1471,7 @@ function det(str, inputOpts) {
     trimLines: true,
     recogniseHTML: false,
     removeEmptyLines: true,
-    limitConsecutiveEmptyLinesTo: 1
+    limitConsecutiveEmptyLinesTo: 1,
   });
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
@@ -1551,7 +1559,7 @@ function det(str, inputOpts) {
             );
           },
           skipHtmlDecoding: true,
-          returnRangesOnly: true
+          returnRangesOnly: true,
         }),
         str.length
       ).reduce((accumRanges, currRange) => {
@@ -1563,8 +1571,8 @@ function det(str, inputOpts) {
             [
               currRange[0],
               currRange[1],
-              opts.cb(str.slice(currRange[0], currRange[1]))
-            ]
+              opts.cb(str.slice(currRange[0], currRange[1])),
+            ],
           ]);
         }
         return accumRanges;
@@ -1579,7 +1587,7 @@ function det(str, inputOpts) {
       tag,
       deleteFrom,
       deleteTo,
-      proposedReturn
+      proposedReturn,
     }) => {
       if (
         (isNum(tag.lastOpeningBracketAt) &&
@@ -1599,7 +1607,7 @@ function det(str, inputOpts) {
           if (
             opts.stripHtmlAddNewLine.length &&
             opts.stripHtmlAddNewLine.some(
-              tagName =>
+              (tagName) =>
                 (tagName.startsWith("/") &&
                   tag.slashPresent &&
                   tag.name.toLowerCase() === tagName.slice(1)) ||
@@ -1653,7 +1661,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every(char => !char.trim().length || char === "/")
+                .every((char) => !char.trim().length || char === "/")
             ) {
               finalIndexesToDelete.push(
                 tag.lastOpeningBracketAt + 1,
@@ -1739,7 +1747,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every(char => !char.trim().length || char === "/")
+                .every((char) => !char.trim().length || char === "/")
             ) {
               finalIndexesToDelete.push(
                 tag.lastOpeningBracketAt + 1,
@@ -1779,7 +1787,7 @@ function det(str, inputOpts) {
       trimOnlySpaces: true,
       ignoreTags: stripHtml ? opts.stripHtmlButIgnoreTags : [],
       skipHtmlDecoding: true,
-      returnRangesOnly: true
+      returnRangesOnly: true,
     });
   }
   processOutside(
@@ -1810,7 +1818,7 @@ function det(str, inputOpts) {
     targetLanguage: "html",
     UKPostcodes: true,
     hyphens: opts.convertDashes,
-    tagRanges: skipArr.current()
+    tagRanges: skipArr.current(),
   });
   if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
     if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
@@ -1837,11 +1845,11 @@ function det(str, inputOpts) {
   }
   str = collapse(str, {
     trimLines: true,
-    recogniseHTML: false
+    recogniseHTML: false,
   });
   return {
     res: rangesApply(str, finalIndexesToDelete.current()),
-    applicableOpts
+    applicableOpts,
   };
 }
 

@@ -20,7 +20,7 @@ function groupStr(originalArr, originalOpts) {
   let opts;
   const defaults = {
     wildcard: "*",
-    dedupePlease: true
+    dedupePlease: true,
   };
   if (originalOpts != null) {
     opts = Object.assign({}, defaults, originalOpts);
@@ -39,7 +39,7 @@ function groupStr(originalArr, originalOpts) {
     const digitChunks = arr[i].match(/\d+/gm);
     if (!digitChunks) {
       compiledObj[arr[i]] = {
-        count: 1
+        count: 1,
       };
     } else {
       const wildcarded = arr[i].replace(/\d+/gm, opts.wildcard);
@@ -59,18 +59,18 @@ function groupStr(originalArr, originalOpts) {
       } else {
         compiledObj[wildcarded] = {
           count: 1,
-          elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks)
+          elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks),
         };
       }
     }
   }
   const resObj = {};
-  Object.keys(compiledObj).forEach(key => {
+  Object.keys(compiledObj).forEach((key) => {
     let newKey = key;
     if (
       isArr(compiledObj[key].elementsWhichWeCanReplaceWithWildcards) &&
       compiledObj[key].elementsWhichWeCanReplaceWithWildcards.some(
-        val => val !== false
+        (val) => val !== false
       )
     ) {
       const rangesArr = [];
@@ -90,7 +90,7 @@ function groupStr(originalArr, originalOpts) {
           rangesArr.push([
             nThIndex,
             nThIndex + opts.wildcard.length,
-            compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z]
+            compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z],
           ]);
         }
       }

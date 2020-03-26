@@ -18,7 +18,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     return typeof something === "string";
   }
   const defaults = {
-    arrayVsArrayAllMustBeFound: "any"
+    arrayVsArrayAllMustBeFound: "any",
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (arguments.length === 0) {
@@ -56,24 +56,24 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   if (originalInput.length === 0) {
     return false;
   }
-  const input = originalInput.filter(elem => existy(elem));
+  const input = originalInput.filter((elem) => existy(elem));
   if (input.length === 0) {
     return false;
   }
   if (isStr(stringToFind)) {
-    return input.some(val =>
+    return input.some((val) =>
       matcher.isMatch(val, stringToFind, { caseSensitive: true })
     );
   }
   if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(stringToFindVal =>
-      input.some(val =>
+    return stringToFind.some((stringToFindVal) =>
+      input.some((val) =>
         matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
       )
     );
   }
-  return stringToFind.every(stringToFindVal =>
-    input.some(val =>
+  return stringToFind.every((stringToFindVal) =>
+    input.some((val) =>
       matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
     )
   );

@@ -33,7 +33,7 @@ function within(str, originalOpts) {
   }
   const defaults = {
     messageOnly: false,
-    checkLineLength: true
+    checkLineLength: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   let counter = 0;

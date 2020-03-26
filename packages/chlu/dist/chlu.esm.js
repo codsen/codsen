@@ -101,20 +101,20 @@ function getTitlesAndFooterLinks(linesArr) {
         linked: existy(linesArr[i].match(versionWithBracketsRegex)),
         content: linesArr[i],
         beforeVersion: linesArr[i].split(firstEncounteredVersion)[0],
-        afterVersion: linesArr[i].split(firstEncounteredVersion)[1]
+        afterVersion: linesArr[i].split(firstEncounteredVersion)[1],
       });
     } else if (isFooterLink(linesArr[i])) {
       temp = linesArr[i].match(versionWithBracketsRegex)[0];
       footerLinks.push({
         version: temp.substring(1, temp.length - 1),
         rowNum: i,
-        content: linesArr[i]
+        content: linesArr[i],
       });
     }
   }
   return {
     titles,
-    footerLinks
+    footerLinks,
   };
 }
 function getPreviousVersion(currVers, originalVersionsArr) {
@@ -145,7 +145,7 @@ function getPreviousVersion(currVers, originalVersionsArr) {
     );
   }
   const versionsArr = clone(originalVersionsArr)
-    .map(val => prep(val))
+    .map((val) => prep(val))
     .sort(semverCompare);
   if (currVers === versionsArr[0]) {
     return null;
@@ -293,8 +293,8 @@ function filterDate(someString) {
     rightOutside: "",
     rightOutsideNot: "",
     i: {
-      searchFor: true
-    }
+      searchFor: true,
+    },
   });
   res = res.replace(".", " ");
   res = res.replace(",", " ");
@@ -321,7 +321,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     existy$1(gitTags.latest)
   ) {
     processedGitTags = {};
-    processedGitTags.latest = gitTags.latest.split("|").map(val => {
+    processedGitTags.latest = gitTags.latest.split("|").map((val) => {
       if (val[0] === "v") {
         return val.slice(1);
       }
@@ -330,7 +330,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     processedGitTags.all = {};
     processedGitTags.versionsOnly = [];
     if (isArr$1(gitTags.all)) {
-      gitTags.all.sort().forEach(key => {
+      gitTags.all.sort().forEach((key) => {
         processedGitTags.all[key.slice(12)] = key.slice(0, 10);
         processedGitTags.versionsOnly.push(key.slice(12));
       });
@@ -393,7 +393,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     if (
       !existy$1(
         getSetFooterLink(footerLinks[i].content, {
-          mode: "get"
+          mode: "get",
         })
       )
     ) {
@@ -442,22 +442,22 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       });
     }
   }
-  const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
+  const sortedTitlesArray = titles.map((el) => el.version).sort(semverCompare);
   let unusedFooterLinks = footerLinks.filter(
-    link => !titles.map(title => title.version).includes(link.version)
+    (link) => !titles.map((title) => title.version).includes(link.version)
   );
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(
-      link => !titles.map(title => title.version).includes(link.version)
+      (link) => !titles.map((title) => title.version).includes(link.version)
     );
   }
   const missingFooterLinks = [];
   for (let i = 0, len = titles.length; i < len; i++) {
     if (len > 1 && titles[i].version !== sortedTitlesArray[0]) {
       const linkFound = footerLinks.some(
-        el => titles[i].version === el.version
+        (el) => titles[i].version === el.version
       );
       if (!linkFound) {
         missingFooterLinks.push(titles[i]);
@@ -497,25 +497,26 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     (packageJson && packageJson.type && packageJson.type === "github") ||
     assumedPackageJsonType === "github"
   ) {
-    missingFooterLinks.forEach(key => {
+    missingFooterLinks.forEach((key) => {
       temp.push(
-        `[${key.version}]: https://github.com/${assumedPackageUser ||
-          packageJson.user}/${assumedPackageProject ||
-          packageJson.project}/compare/v${getPreviousVersion(
-          key.version,
-          sortedTitlesArray
-        )}...v${key.version}`
+        `[${key.version}]: https://github.com/${
+          assumedPackageUser || packageJson.user
+        }/${
+          assumedPackageProject || packageJson.project
+        }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
+          key.version
+        }`
       );
     });
   } else if (
     (packageJson && packageJson.type && packageJson.type === "bitbucket") ||
     assumedPackageJsonType === "bitbucket"
   ) {
-    missingFooterLinks.forEach(key => {
+    missingFooterLinks.forEach((key) => {
       temp.push(
-        `[${key.version}]: https://bitbucket.org/${assumedPackageUser ||
-          packageJson.user}/${assumedPackageProject ||
-          packageJson.project}/branches/compare/v${
+        `[${key.version}]: https://bitbucket.org/${
+          assumedPackageUser || packageJson.user
+        }/${assumedPackageProject || packageJson.project}/branches/compare/v${
           key.version
         }%0Dv${getPreviousVersion(key.version, sortedTitlesArray)}#diff`
       );
@@ -532,7 +533,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   footerLinks = temp.footerLinks;
   for (let i = 0, len = footerLinks.length; i < len; i++) {
     const extracted = getSetFooterLink(footerLinks[i].content, {
-      mode: "get"
+      mode: "get",
     });
     const finalUser = assumedPackageUser || packageJson.user;
     const finalProject = assumedPackageProject || packageJson.project;
@@ -573,7 +574,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       versAfter: finalVersAfter,
       version: finalVersion,
       type: assumedPackageJsonType || packageJson.type,
-      mode: "set"
+      mode: "set",
     });
     newLinesArr = setRow(
       newLinesArr,
@@ -588,7 +589,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   footerLinks.forEach((footerLink, index) => {
     newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content);
   });
-  const firstRowWithFooterLink = min(footerLinks.map(link => link.rowNum));
+  const firstRowWithFooterLink = min(footerLinks.map((link) => link.rowNum));
   for (
     let i = firstRowWithFooterLink + 1, len = newLinesArr.length;
     i < len;
@@ -616,7 +617,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
   {
-    titles.forEach(title => {
+    titles.forEach((title) => {
       const fixedDate = dd(filterDate(title.afterVersion));
       if (fixedDate !== null) {
         newLinesArr = setRow(

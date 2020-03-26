@@ -29,7 +29,7 @@ function fixRowNums(str, originalOpts) {
     overrideRowNum: null,
     returnRangesOnly: false,
     triggerKeywords: ["console.log"],
-    extractedLogContentsWereGiven: false
+    extractedLogContentsWereGiven: false,
   };
   const opts = Object.assign(defaults, originalOpts);
   if (
@@ -208,7 +208,7 @@ function fixRowNums(str, originalOpts) {
       (isObj(opts) &&
         opts.triggerKeywords &&
         Array.isArray(opts.triggerKeywords) &&
-        opts.triggerKeywords.some(keyw => {
+        opts.triggerKeywords.some((keyw) => {
           if (str.startsWith(keyw, i)) {
             caughtKeyword = keyw;
             return true;
@@ -217,7 +217,7 @@ function fixRowNums(str, originalOpts) {
       (opts.triggerKeywords !== null &&
         (!Array.isArray(opts.triggerKeywords) ||
           !opts.triggerKeywords.length) &&
-        ["console.log"].some(keyw => {
+        ["console.log"].some((keyw) => {
           if (str.startsWith(keyw, i)) {
             caughtKeyword = keyw;
             return true;

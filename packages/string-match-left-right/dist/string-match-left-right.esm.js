@@ -54,7 +54,7 @@ function march(
       (!opts.i && opts.trimCharsBeforeMatching.includes(str[i])) ||
       (opts.i &&
         opts.trimCharsBeforeMatching
-          .map(val => val.toLowerCase())
+          .map((val) => val.toLowerCase())
           .includes(str[i].toLowerCase()))
     ) {
       if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
@@ -173,7 +173,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimCharsBeforeMatching: [],
     maxMismatches: 0,
     firstMustMatch: false,
-    lastMustMatch: false
+    lastMustMatch: false,
   };
   if (
     isObj(originalOpts) &&
@@ -190,7 +190,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   const opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el =>
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map((el) =>
     isStr(el) ? el : String(el)
   );
   if (!isStr(str)) {
@@ -349,7 +349,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       whatToMatchVal,
       opts,
       special,
-      i => (mode[5] === "L" ? i - 1 : i + 1)
+      (i) => (mode[5] === "L" ? i - 1 : i + 1)
     );
     if (
       found &&

@@ -51,7 +51,7 @@ function alts(str, originalOpts) {
   const rangesArr = new Ranges();
   const plausibleWithinQuotesRanges = new Ranges();
   const defaults = {
-    unfancyTheAltContents: true
+    unfancyTheAltContents: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
@@ -267,7 +267,7 @@ function alts(str, originalOpts) {
         rangesArr.add(i, i, '"');
         addSpaceInTheFutureBeforeSlashOrBracket = true;
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach(key => {
+          plausibleWithinQuotesRanges.current().forEach((key) => {
             rangesArr.add(key[0], key[1], key[2]);
           });
         }
@@ -284,7 +284,7 @@ function alts(str, originalOpts) {
           '"'
         );
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach(key => {
+          plausibleWithinQuotesRanges.current().forEach((key) => {
             rangesArr.add(key[0], key[1], key[2]);
           });
         }

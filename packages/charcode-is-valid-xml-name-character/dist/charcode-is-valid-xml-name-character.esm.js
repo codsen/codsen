@@ -24,7 +24,7 @@ const nameStartChar = [
   [12289, 55295],
   [63744, 64975],
   [65008, 65533],
-  [65536, 983039]
+  [65536, 983039],
 ];
 const nameChar = [
   [45, 45],
@@ -47,14 +47,14 @@ const nameChar = [
   [12289, 55295],
   [63744, 64975],
   [65008, 65533],
-  [65536, 983039]
+  [65536, 983039],
 ];
 const priorityNameChar = [
-  [97, 122]
+  [97, 122],
 ];
 const opts = {
   inclusiveRangeEnds: true,
-  skipIncomingRangeSorting: true
+  skipIncomingRangeSorting: true,
 };
 function isProduction4(char) {
   return (

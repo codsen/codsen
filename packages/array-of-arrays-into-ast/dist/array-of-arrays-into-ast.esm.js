@@ -32,15 +32,15 @@ function generateAst(input, opts) {
     return {};
   }
   const defaults = {
-    dedupe: true
+    dedupe: true,
   };
   opts = Object.assign({}, defaults, opts);
   checkTypes(opts, defaults, {
     msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
-    optsVarName: "opts"
+    optsVarName: "opts",
   });
   let res = {};
-  input.forEach(arr => {
+  input.forEach((arr) => {
     let temp = null;
     for (let i = arr.length; i--; ) {
       temp = { [arr[i]]: [temp] };

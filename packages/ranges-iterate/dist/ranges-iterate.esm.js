@@ -49,7 +49,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
       cb({
         i,
         val: str[i],
-        push: received => received
+        push: (received) => received,
       });
     }
   } else {
@@ -63,7 +63,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         }
         cb({
           i: finalIdx,
-          val: str[finalIdx]
+          val: str[finalIdx],
         });
       }
     }
@@ -73,7 +73,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
           for (let y = 0, len = rangeArr[2].length; y < len; y++) {
             cb({
               i: finalIdx,
-              val: rangeArr[2][y]
+              val: rangeArr[2][y],
             });
             finalIdx++;
           }
@@ -88,7 +88,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
           cb({
             i: finalIdx,
-            val: str[currentIdx]
+            val: str[currentIdx],
           });
         }
       });

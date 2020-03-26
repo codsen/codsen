@@ -9050,7 +9050,7 @@ function includes(arr, whatToMatch) {
     return false;
   }
   return arr.some(
-    val =>
+    (val) =>
       (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" && whatToMatch === val)
   );
@@ -9059,12 +9059,12 @@ function isLangCode(str) {
   if (typeof str !== "string") {
     return {
       res: false,
-      message: `Not a string given.`
+      message: `Not a string given.`,
     };
   } else if (!str.trim().length) {
     return {
       res: false,
-      message: `Empty language tag string given.`
+      message: `Empty language tag string given.`,
     };
   }
   const r1 = /^[a-z0-9]{1,8}(-[a-z0-9]{1,8})*$/gi;
@@ -9102,7 +9102,7 @@ function isLangCode(str) {
       if (!split[i + 1]) {
         return {
           res: false,
-          message: `Ends with private use subtag, "x".`
+          message: `Ends with private use subtag, "x".`,
         };
       }
       return { res: true, message: null };
@@ -9110,7 +9110,7 @@ function isLangCode(str) {
     if (regionMatched && region.includes(split[i])) {
       return {
         res: false,
-        message: `Two region subtags, "${regionMatched}" and "${split[i]}".`
+        message: `Two region subtags, "${regionMatched}" and "${split[i]}".`,
       };
     }
     if (i === 0) {
@@ -9139,7 +9139,7 @@ function isLangCode(str) {
           } else {
             return {
               res: false,
-              message: `Repeated variant subtag, "${split[i]}".`
+              message: `Repeated variant subtag, "${split[i]}".`,
             };
           }
         }
@@ -9168,7 +9168,7 @@ function isLangCode(str) {
             } else {
               return {
                 res: false,
-                message: `Repeated variant subtag, "${split[i]}".`
+                message: `Repeated variant subtag, "${split[i]}".`,
               };
             }
           }
@@ -9193,13 +9193,13 @@ function isLangCode(str) {
       if (i === 0) {
         return {
           res: false,
-          message: `Starts with singleton, "${split[i]}".`
+          message: `Starts with singleton, "${split[i]}".`,
         };
       }
       if (!languageMatched) {
         return {
           res: false,
-          message: `Extension must follow at least a primary language subtag.`
+          message: `Extension must follow at least a primary language subtag.`,
         };
       }
       if (!singletonGathered.includes(split[i])) {
@@ -9207,7 +9207,7 @@ function isLangCode(str) {
       } else {
         return {
           res: false,
-          message: `Two extensions with same single-letter prefix "${split[i]}".`
+          message: `Two extensions with same single-letter prefix "${split[i]}".`,
         };
       }
       if (split[i + 1]) {
@@ -9221,13 +9221,13 @@ function isLangCode(str) {
             res: false,
             message: `Multiple singleton sequence "${split[i]}", "${
               split[i + 1]
-            }".`
+            }".`,
           };
         }
       } else {
         return {
           res: false,
-          message: `Ends with singleton, "${split[i]}".`
+          message: `Ends with singleton, "${split[i]}".`,
         };
       }
     }
@@ -9238,7 +9238,7 @@ function isLangCode(str) {
         } else {
           return {
             res: false,
-            message: `Repeated variant subtag, "${split[i]}".`
+            message: `Repeated variant subtag, "${split[i]}".`,
           };
         }
         allOK = true;
@@ -9247,8 +9247,8 @@ function isLangCode(str) {
         return {
           res: false,
           message: `Variant subtags ${variantGathered
-            .map(val => `"${val}"`)
-            .join(", ")}  not in a sequence.`
+            .map((val) => `"${val}"`)
+            .join(", ")}  not in a sequence.`,
         };
       }
     }
@@ -9260,7 +9260,7 @@ function isLangCode(str) {
     if (!allOK) {
       return {
         res: false,
-        message: `Unrecognised language subtag, "${split[i]}".`
+        message: `Unrecognised language subtag, "${split[i]}".`,
       };
     }
   }

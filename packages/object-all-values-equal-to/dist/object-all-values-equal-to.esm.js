@@ -19,7 +19,7 @@ function allValuesEqualTo(input, value, opts) {
     if (
       opts.arraysMustNotContainPlaceholders &&
       input.length > 0 &&
-      input.some(el => isEq(el, value))
+      input.some((el) => isEq(el, value))
     ) {
       return false;
     }
@@ -68,7 +68,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
     );
   }
   const defaults = {
-    arraysMustNotContainPlaceholders: true
+    arraysMustNotContainPlaceholders: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);

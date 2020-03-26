@@ -109,14 +109,14 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
       cb: (char, theRemainderOfTheString, index) => {
         tempFrom = index;
         return true;
-      }
+      },
     }) &&
     matchLeftIncl(str, str.length - 1, tails, {
       trimBeforeMatching: true,
       cb: (char, theRemainderOfTheString, index) => {
         tempTo = index + 1;
         return true;
-      }
+      },
     })
   ) {
     return str.slice(tempFrom, tempTo);
@@ -141,7 +141,7 @@ function wrap(
     isStr(placementValue) &&
     !dontWrapTheseVars &&
     opts.wrapGlobalFlipSwitch &&
-    !opts.dontWrapVars.some(val => matcher.isMatch(oldVarName, val)) &&
+    !opts.dontWrapVars.some((val) => matcher.isMatch(oldVarName, val)) &&
     (!opts.preventDoubleWrapping ||
       (opts.preventDoubleWrapping &&
         isStr(placementValue) &&
@@ -155,7 +155,7 @@ function wrap(
     }
     const tempValue = removeDuplicateHeadsTails(placementValue, {
       heads: opts.wrapHeadsWith,
-      tails: opts.wrapTailsWith
+      tails: opts.wrapTailsWith,
     });
     if (!isStr(tempValue)) {
       return tempValue;
@@ -415,7 +415,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   try {
     foundHeadsAndTails = strFindHeadsTails(string, opts.heads, opts.tails, {
       source: "",
-      throwWhenSomethingWrongIsDetected: false
+      throwWhenSomethingWrongIsDetected: false,
     });
   } catch (error) {
     throw new Error(
@@ -427,7 +427,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     foundHeadsAndTails.length === 1 &&
     rangesApply(string, [
       foundHeadsAndTails[0].headsStartAt,
-      foundHeadsAndTails[0].tailsEndAt
+      foundHeadsAndTails[0].tailsEndAt,
     ]).trim() === ""
   ) {
     wholeValueIsVariable = true;
@@ -458,7 +458,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     foundHeadsAndTails.length === 1 &&
     rangesApply(string, [
       foundHeadsAndTails[0].headsStartAt,
-      foundHeadsAndTails[0].tailsEndAt
+      foundHeadsAndTails[0].tailsEndAt,
     ]).trim() === ""
   ) {
     wholeValueIsVariable = true;
@@ -514,7 +514,7 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
     noSingleMarkers: false,
     resolveToBoolIfAnyValuesContainBool: true,
     resolveToFalseIfAnyValuesContainBool: true,
-    throwWhenNonStringInsertedInString: false
+    throwWhenNonStringInsertedInString: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (!opts.dontWrapVars) {

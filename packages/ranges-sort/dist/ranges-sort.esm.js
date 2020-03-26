@@ -22,7 +22,7 @@ function rangesSort(arrOfRanges, originalOptions) {
   }
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
-    progressFn: null
+    progressFn: null,
   };
   const opts = Object.assign({}, defaults, originalOptions);
   let culpritsIndex;

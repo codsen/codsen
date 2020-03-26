@@ -31,36 +31,36 @@ const encodedMdashJs = "\\u2014";
 const headsAndTailsJinja = [
   {
     heads: "{{",
-    tails: "}}"
+    tails: "}}",
   },
   {
     heads: ["{% if", "{%- if"],
-    tails: ["{% endif", "{%- endif"]
+    tails: ["{% endif", "{%- endif"],
   },
   {
     heads: ["{% for", "{%- for"],
-    tails: ["{% endfor", "{%- endfor"]
+    tails: ["{% endfor", "{%- endfor"],
   },
   {
     heads: ["{%", "{%-"],
-    tails: ["%}", "-%}"]
+    tails: ["%}", "-%}"],
   },
   {
     heads: "{#",
-    tails: "#}"
-  }
+    tails: "#}",
+  },
 ];
 const headsAndTailsHugo = [
   {
     heads: "{{",
-    tails: "}}"
-  }
+    tails: "}}",
+  },
 ];
 const headsAndTailsHexo = [
   {
     heads: ["<%", "<%=", "<%-"],
-    tails: ["%>", "=%>", "-%>"]
-  }
+    tails: ["%>", "=%>", "-%>"],
+  },
 ];
 const knownHTMLTags = [
   "abbr",
@@ -176,7 +176,7 @@ const knownHTMLTags = [
   "var",
   "video",
   "wbr",
-  "xml"
+  "xml",
 ];
 
 const defaultOpts = {
@@ -191,7 +191,7 @@ const defaultOpts = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
-  tagRanges: []
+  tagRanges: [],
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -262,7 +262,7 @@ function removeWidows(str, originalOpts) {
   const opts = Object.assign({}, defaultOpts, originalOpts);
   const whatWasDone = {
     removeWidows: false,
-    convertEntities: false
+    convertEntities: false,
   };
   if (opts.dashes) {
     opts.hyphens = true;
@@ -276,9 +276,9 @@ function removeWidows(str, originalOpts) {
       opts.ignore = opts.ignore.concat(
         headsAndTailsJinja.concat(headsAndTailsHexo)
       );
-    } else if (opts.ignore.some(val => isStr(val))) {
+    } else if (opts.ignore.some((val) => isStr(val))) {
       let temp = [];
-      opts.ignore = opts.ignore.filter(val => {
+      opts.ignore = opts.ignore.filter((val) => {
         if (isStr(val) && val.length) {
           if (
             ["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())
@@ -324,7 +324,7 @@ function removeWidows(str, originalOpts) {
       opts.ignore.some((valObj, y) => {
         if (
           (isArr(valObj.heads) &&
-            valObj.heads.some(oneOfHeads => str.startsWith(oneOfHeads, i))) ||
+            valObj.heads.some((oneOfHeads) => str.startsWith(oneOfHeads, i))) ||
           (isStr(valObj.heads) && str.startsWith(valObj.heads, i))
         ) {
           wordCount++;
@@ -580,7 +580,7 @@ function removeWidows(str, originalOpts) {
       !str.slice(0, left(str, i) + 1).endsWith("hr") &&
       !(
         str[left(str, i)] === "<" &&
-        knownHTMLTags.some(tag => str.startsWith(tag, right(str, i)))
+        knownHTMLTags.some((tag) => str.startsWith(tag, right(str, i)))
       )
     ) {
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
@@ -605,7 +605,7 @@ function removeWidows(str, originalOpts) {
       } else if (
         isArr(doNothingUntil) &&
         (!doNothingUntil.length ||
-          doNothingUntil.some(val => {
+          doNothingUntil.some((val) => {
             if (str.startsWith(val, i)) {
               tempTailFinding = val;
               return true;
@@ -615,7 +615,7 @@ function removeWidows(str, originalOpts) {
         doNothingUntil = undefined;
         i += tempTailFinding.length;
         if (isArr(opts.ignore) && opts.ignore.length && str[i + 1]) {
-          opts.ignore.some(oneOfHeadsTailsObjs => {
+          opts.ignore.some((oneOfHeadsTailsObjs) => {
             return matchRightIncl(str, i, oneOfHeadsTailsObjs.tails, {
               trimBeforeMatching: true,
               cb: (char, theRemainderOfTheString, index) => {
@@ -626,7 +626,7 @@ function removeWidows(str, originalOpts) {
                   }
                 }
                 return true;
-              }
+              },
             });
           });
         }
@@ -639,7 +639,7 @@ function removeWidows(str, originalOpts) {
     if (
       isArr(opts.tagRanges) &&
       opts.tagRanges.length &&
-      opts.tagRanges.some(rangeArr => {
+      opts.tagRanges.some((rangeArr) => {
         if (i >= rangeArr[0] && i <= rangeArr[1] && rangeArr[1] - 1 > i) {
           i = rangeArr[1] - 1;
           return true;
@@ -652,7 +652,7 @@ function removeWidows(str, originalOpts) {
       str,
       rangesArr.current(),
       opts.reportProgressFunc
-        ? incomingPerc => {
+        ? (incomingPerc) => {
             currentPercentageDone = Math.floor(
               (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
                 (1 - leavePercForLastStage) +
@@ -669,9 +669,9 @@ function removeWidows(str, originalOpts) {
     ),
     ranges: rangesArr.current(),
     log: {
-      timeTakenInMiliseconds: Date.now() - start
+      timeTakenInMiliseconds: Date.now() - start,
     },
-    whatWasDone
+    whatWasDone,
   };
 }
 

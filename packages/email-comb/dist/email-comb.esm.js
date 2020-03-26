@@ -34,7 +34,7 @@ const defaults = {
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
+  reportProgressFuncTo: 100,
 };
 function comb(str, opts) {
   const start = Date.now();
@@ -63,7 +63,7 @@ function comb(str, opts) {
       {
         valuesStart: null,
         valueStart: null,
-        nameStart: null
+        nameStart: null,
       },
       initObj
     );
@@ -126,7 +126,7 @@ function comb(str, opts) {
     "viewport",
     "charset",
     "import",
-    "page"
+    "page",
   ];
   const atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
   if (typeof str !== "string") {
@@ -150,7 +150,7 @@ function comb(str, opts) {
   if (isStr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)) {
     if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length) {
       opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [
-        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains
+        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
       ];
     } else {
       opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [];
@@ -172,7 +172,7 @@ function comb(str, opts) {
       )}`
     );
   }
-  if (opts.whitelist.length > 0 && !opts.whitelist.every(el => isStr(el))) {
+  if (opts.whitelist.length > 0 && !opts.whitelist.every((el) => isStr(el))) {
     throw new TypeError(
       `email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(
         opts.whitelist,
@@ -190,7 +190,7 @@ function comb(str, opts) {
       )}`
     );
   }
-  if (opts.backend.length > 0 && opts.backend.some(val => !isObj(val))) {
+  if (opts.backend.length > 0 && opts.backend.some((val) => !isObj(val))) {
     throw new TypeError(
       `email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(
         opts.backend,
@@ -202,7 +202,7 @@ function comb(str, opts) {
   if (
     opts.backend.length > 0 &&
     !opts.backend.every(
-      obj => hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails")
+      (obj) => hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails")
     )
   ) {
     throw new TypeError(
@@ -241,8 +241,8 @@ function comb(str, opts) {
   let allHeads = null;
   let allTails = null;
   if (isArr(opts.backend) && opts.backend.length) {
-    allHeads = opts.backend.map(headsAndTailsObj => headsAndTailsObj.heads);
-    allTails = opts.backend.map(headsAndTailsObj => headsAndTailsObj.tails);
+    allHeads = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.heads);
+    allTails = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.tails);
   }
   const len = str.length;
   const leavePercForLastStage = 0.06;
@@ -283,7 +283,7 @@ function comb(str, opts) {
   const endingsCount = {
     n: 0,
     r: 0,
-    rn: 0
+    rn: 0,
   };
   for (let round = 1; round <= 2; round++) {
     checkingInsideCurlyBraces = false;
@@ -515,7 +515,7 @@ function comb(str, opts) {
                 cb: (char, theRemainderOfTheString, index) => {
                   temp = index;
                   return true;
-                }
+                },
               }))
           ) {
             finalIndexesToDelete.push(
@@ -763,7 +763,7 @@ function comb(str, opts) {
                     cb: (char, theRemainderOfTheString, index) => {
                       tempFindingIndex = index;
                       return true;
-                    }
+                    },
                   })
                 ) {
                   fromIndex = tempFindingIndex + 2;
@@ -774,7 +774,7 @@ function comb(str, opts) {
                   to: toIndex,
                   ifRightSideIncludesThisThenCropTightly: ".#",
                   ifRightSideIncludesThisCropItToo: ",",
-                  extendToOneSide: "right"
+                  extendToOneSide: "right",
                 });
                 finalIndexesToDelete.push(...resToPush);
                 if (opts.uglify) {
@@ -850,7 +850,7 @@ function comb(str, opts) {
               return true;
             }
             return true;
-          }
+          },
         })
       ) {
         for (let y = i; y < len; y++) {
@@ -904,7 +904,7 @@ function comb(str, opts) {
               from: i,
               to: i + 6,
               ifRightSideIncludesThisThenCropTightly: "/>",
-              wipeAllWhitespaceOnLeft: true
+              wipeAllWhitespaceOnLeft: true,
             });
             finalIndexesToDelete.push(...calculatedRange);
           }
@@ -939,7 +939,7 @@ function comb(str, opts) {
                     from: i,
                     to: y - 1,
                     ifRightSideIncludesThisThenCropTightly: "/>",
-                    wipeAllWhitespaceOnLeft: true
+                    wipeAllWhitespaceOnLeft: true,
                   });
                   finalIndexesToDelete.push(...calculatedRange);
                 }
@@ -952,7 +952,7 @@ function comb(str, opts) {
           bodyClass = resetBodyClassOrId({
             valuesStart,
             quoteless,
-            nameStart: i
+            nameStart: i,
           });
           if (round === 1) {
             bodyItsTheFirstClassOrId = true;
@@ -987,7 +987,7 @@ function comb(str, opts) {
               from: i,
               to: i + 3,
               ifRightSideIncludesThisThenCropTightly: "/>",
-              wipeAllWhitespaceOnLeft: true
+              wipeAllWhitespaceOnLeft: true,
             });
             finalIndexesToDelete.push(...calculatedRange);
           }
@@ -1022,7 +1022,7 @@ function comb(str, opts) {
                     from: i,
                     to: y - 1,
                     ifRightSideIncludesThisThenCropTightly: "/>",
-                    wipeAllWhitespaceOnLeft: true
+                    wipeAllWhitespaceOnLeft: true,
                   });
                   finalIndexesToDelete.push(...calculatedRange);
                 }
@@ -1035,7 +1035,7 @@ function comb(str, opts) {
           bodyId = resetBodyClassOrId({
             valuesStart,
             quoteless,
-            nameStart: i
+            nameStart: i,
           });
           if (round === 1) {
             bodyItsTheFirstClassOrId = true;
@@ -1059,7 +1059,7 @@ function comb(str, opts) {
               from: whitespaceStartedAt,
               to: i,
               ifLeftSideIncludesThisThenCropTightly: "\"'",
-              ifRightSideIncludesThisThenCropTightly: "\"'"
+              ifRightSideIncludesThisThenCropTightly: "\"'",
             });
             finalIndexesToDelete.push(...calculatedRange);
             whitespaceStartedAt = null;
@@ -1068,7 +1068,7 @@ function comb(str, opts) {
           }
           const matchedHeads = matchRightIncl(str, i, allHeads);
           const findings = opts.backend.find(
-            headsTailsObj => headsTailsObj.heads === matchedHeads
+            (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           doNothingUntil = findings["tails"];
         } else if (characterSuitableForNames(chr)) {
@@ -1108,7 +1108,7 @@ function comb(str, opts) {
           bodyClass = resetBodyClassOrId();
           const matchedHeads = matchRightIncl(str, i, allHeads);
           const findings = opts.backend.find(
-            headsTailsObj => headsTailsObj.heads === matchedHeads
+            (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           doNothingUntil = findings["tails"];
         } else {
@@ -1131,7 +1131,7 @@ function comb(str, opts) {
                 to: i,
                 ifLeftSideIncludesThisThenCropTightly: `"'`,
                 ifRightSideIncludesThisThenCropTightly: `"'`,
-                wipeAllWhitespaceOnLeft: true
+                wipeAllWhitespaceOnLeft: true,
               });
               let whatToInsert = "";
               if (
@@ -1191,7 +1191,7 @@ function comb(str, opts) {
               from: bodyId.valueStart,
               to: i,
               ifRightSideIncludesThisThenCropTightly: `"'`,
-              wipeAllWhitespaceOnLeft: true
+              wipeAllWhitespaceOnLeft: true,
             });
             if (
               str[expandedRange[0] - 1] &&
@@ -1242,7 +1242,7 @@ function comb(str, opts) {
                 from: bodyClass.nameStart,
                 to: i + 1,
                 ifRightSideIncludesThisThenCropTightly: "/>",
-                wipeAllWhitespaceOnLeft: true
+                wipeAllWhitespaceOnLeft: true,
               })
             );
           }
@@ -1253,7 +1253,7 @@ function comb(str, opts) {
               from: bodyClass.valuesStart - 7,
               to: i + 1,
               ifRightSideIncludesThisThenCropTightly: "/>",
-              wipeAllWhitespaceOnLeft: true
+              wipeAllWhitespaceOnLeft: true,
             });
             let whatToInsert = "";
             if (
@@ -1288,7 +1288,7 @@ function comb(str, opts) {
                 from: bodyId.nameStart,
                 to: i + 1,
                 ifRightSideIncludesThisThenCropTightly: "/>",
-                wipeAllWhitespaceOnLeft: true
+                wipeAllWhitespaceOnLeft: true,
               })
             );
           }
@@ -1299,7 +1299,7 @@ function comb(str, opts) {
               from: bodyId.valuesStart - 4,
               to: i + 1,
               ifRightSideIncludesThisThenCropTightly: "/>",
-              wipeAllWhitespaceOnLeft: true
+              wipeAllWhitespaceOnLeft: true,
             });
             let whatToInsert = "";
             if (
@@ -1334,7 +1334,7 @@ function comb(str, opts) {
               from: whitespaceStartedAt,
               to: i,
               ifLeftSideIncludesThisThenCropTightly: "\"'",
-              ifRightSideIncludesThisThenCropTightly: "\"'"
+              ifRightSideIncludesThisThenCropTightly: "\"'",
             });
             finalIndexesToDelete.push(...calculatedRange);
             whitespaceStartedAt = null;
@@ -1343,7 +1343,7 @@ function comb(str, opts) {
           }
           const matchedHeads = matchRightIncl(str, i, allHeads);
           const findings = opts.backend.find(
-            headsTailsObj => headsTailsObj.heads === matchedHeads
+            (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           doNothingUntil = findings["tails"];
         } else if (characterSuitableForNames(chr)) {
@@ -1383,12 +1383,9 @@ function comb(str, opts) {
             isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(
-              val =>
+              (val) =>
                 val.trim().length &&
-                str
-                  .slice(commentStartedAt, i)
-                  .toLowerCase()
-                  .includes(val)
+                str.slice(commentStartedAt, i).toLowerCase().includes(val)
             )
           ) {
             canDelete = false;
@@ -1402,7 +1399,7 @@ function comb(str, opts) {
               from: commentStartedAt,
               to: i + 1,
               wipeAllWhitespaceOnLeft: true,
-              addSingleSpaceToPreventAccidentalConcatenation: true
+              addSingleSpaceToPreventAccidentalConcatenation: true,
             });
             if (opts.removeHTMLComments && canDelete) {
               finalIndexesToDelete.push(...calculatedRange);
@@ -1416,7 +1413,7 @@ function comb(str, opts) {
               from: commentStartedAt,
               to: i + 1,
               wipeAllWhitespaceOnLeft: true,
-              addSingleSpaceToPreventAccidentalConcatenation: true
+              addSingleSpaceToPreventAccidentalConcatenation: true,
             });
             if (opts.removeHTMLComments && canDelete) {
               finalIndexesToDelete.push(...calculatedRange);
@@ -1443,7 +1440,7 @@ function comb(str, opts) {
             if (
               !matchRight(str, i + 1, "doctype", {
                 i: true,
-                trimBeforeMatching: true
+                trimBeforeMatching: true,
               }) &&
               !(
                 str[i + 2] === "-" &&
@@ -1455,7 +1452,7 @@ function comb(str, opts) {
                   i + 3,
                   opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
                   {
-                    trimBeforeMatching: true
+                    trimBeforeMatching: true,
                   }
                 )
               )
@@ -1517,13 +1514,13 @@ function comb(str, opts) {
           opts.removeHTMLComments &&
           isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
           opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
-          (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(val =>
+          (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) =>
             val.includes("if")
           ) ||
-            opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(val =>
+            opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) =>
               val.includes("mso")
             ) ||
-            opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(val =>
+            opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) =>
               val.includes("ie")
             )) &&
           matchRight(str, i, "<!--", {
@@ -1531,7 +1528,7 @@ function comb(str, opts) {
             cb: (char, theRemainderOfTheString, index) => {
               temp = index;
               return true;
-            }
+            },
           })
         ) {
           if (
@@ -1540,7 +1537,7 @@ function comb(str, opts) {
               cb: (char, theRemainderOfTheString, index) => {
                 temp = index;
                 return true;
-              }
+              },
             })
           ) ;
           i = temp - 1;
@@ -1552,8 +1549,8 @@ function comb(str, opts) {
       allClassesAndIdsWithinBody = uniq(
         bodyClassesArr.concat(bodyIdsArr).sort()
       );
-      headSelectorsArr.forEach(el => {
-        extract(el).forEach(selector => {
+      headSelectorsArr.forEach((el) => {
+        extract(el).forEach((selector) => {
           if (
             Object.prototype.hasOwnProperty.call(headSelectorsCount, selector)
           ) {
@@ -1576,7 +1573,7 @@ function comb(str, opts) {
         if (existy(preppedHeadSelectorsArr[y])) {
           temp = extract(preppedHeadSelectorsArr[y]);
         }
-        if (!temp.every(el => allClassesAndIdsWithinBody.includes(el))) {
+        if (!temp.every((el) => allClassesAndIdsWithinBody.includes(el))) {
           deletedFromHeadArr.push(...extract(preppedHeadSelectorsArr[y]));
           preppedHeadSelectorsArr.splice(y, 1);
           y -= 1;
@@ -1617,22 +1614,22 @@ function comb(str, opts) {
         )
       ).sort();
       bodyClassesToDelete = bodyCssToDelete
-        .filter(s => s.startsWith("."))
-        .map(s => s.slice(1));
+        .filter((s) => s.startsWith("."))
+        .map((s) => s.slice(1));
       bodyIdsToDelete = bodyCssToDelete
-        .filter(s => s.startsWith("#"))
-        .map(s => s.slice(1));
+        .filter((s) => s.startsWith("#"))
+        .map((s) => s.slice(1));
       allClassesAndIdsThatWereCompletelyDeletedFromHead = Object.keys(
         headSelectorsCountClone
-      ).filter(singleSelector => headSelectorsCountClone[singleSelector] < 1);
+      ).filter((singleSelector) => headSelectorsCountClone[singleSelector] < 1);
       bodyClassesToDelete = uniq(
         bodyClassesToDelete.concat(
           intersection(
             pullAllWithGlob(allClassesAndIdsWithinBody, opts.whitelist),
             allClassesAndIdsThatWereCompletelyDeletedFromHead
           )
-            .filter(val => val[0] === ".")
-            .map(val => val.slice(1))
+            .filter((val) => val[0] === ".")
+            .map((val) => val.slice(1))
         )
       );
       const allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(
@@ -1641,8 +1638,8 @@ function comb(str, opts) {
       );
       bodyCssToDelete = uniq(
         bodyCssToDelete.concat(
-          bodyClassesToDelete.map(val => `.${val}`),
-          bodyIdsToDelete.map(val => `#${val}`)
+          bodyClassesToDelete.map((val) => `.${val}`),
+          bodyIdsToDelete.map((val) => `#${val}`)
         )
       ).sort();
       allClassesAndIdsWithinHeadFinal = pullAll(
@@ -1653,7 +1650,7 @@ function comb(str, opts) {
         isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) &&
         allClassesAndIdsWithinBodyThatWereWhitelisted.length
       ) {
-        allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(classOrId => {
+        allClassesAndIdsWithinBodyThatWereWhitelisted.forEach((classOrId) => {
           if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
             allClassesAndIdsWithinHeadFinal.push(classOrId);
           }
@@ -1669,11 +1666,11 @@ function comb(str, opts) {
         ? allClassesAndIdsWithinHeadFinal
             .map((name, id) => [
               name,
-              allClassesAndIdsWithinHeadFinalUglified[id]
+              allClassesAndIdsWithinHeadFinalUglified[id],
             ])
             .filter(
-              arr =>
-                !opts.whitelist.some(whitelistVal =>
+              (arr) =>
+                !opts.whitelist.some((whitelistVal) =>
                   matcher.isMatch(arr[0], whitelistVal)
                 )
             )
@@ -1823,7 +1820,7 @@ function comb(str, opts) {
       commentsLength,
       commentsTakeUpPercentageOfOriginal:
         len && commentsLength ? Math.round((commentsLength * 100) / len) : 0,
-      uglified
+      uglified,
     },
     result: str,
     countAfterCleaning,
@@ -1831,7 +1828,7 @@ function comb(str, opts) {
     allInHead: allClassesAndIdsWithinHead,
     allInBody: allClassesAndIdsWithinBody,
     deletedFromHead: headCssToDelete.sort(),
-    deletedFromBody: bodyCssToDelete.sort()
+    deletedFromBody: bodyCssToDelete.sort(),
   };
 }
 

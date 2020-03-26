@@ -67,9 +67,9 @@ function stringise(incoming) {
     return [""];
   } else if (Array.isArray(incoming)) {
     return incoming
-      .filter(el => existy(el) && typeof el !== "boolean")
-      .map(el => String(el))
-      .filter(el => el.length > 0);
+      .filter((el) => existy(el) && typeof el !== "boolean")
+      .map((el) => String(el))
+      .filter((el) => el.length > 0);
   }
   return [String(incoming)];
 }
@@ -125,8 +125,8 @@ function er(originalSource, options, originalReplacement) {
       searchFor: false,
       rightMaybe: false,
       rightOutside: false,
-      rightOutsideNot: false
-    }
+      rightOutsideNot: false,
+    },
   };
   const opts = Object.assign({}, defaults, options);
   const source = stringise(originalSource);
@@ -146,7 +146,7 @@ function er(originalSource, options, originalReplacement) {
   const replacementRecipe = [];
   let result = "";
   const allResults = astralAwareSearch(source[0], opts.searchFor, {
-    i: opts.i.searchFor
+    i: opts.i.searchFor,
   });
   for (
     let resIndex = 0, resLen = allResults.length;

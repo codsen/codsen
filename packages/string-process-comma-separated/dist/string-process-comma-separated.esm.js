@@ -29,7 +29,7 @@ function processCommaSeparated(str, originalOpts) {
     innerWhitespaceAllowed: false,
     separator: ",",
     cb: null,
-    errCb: null
+    errCb: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (!Number.isInteger(originalOpts.from)) {
@@ -65,7 +65,10 @@ function processCommaSeparated(str, originalOpts) {
             if (orderNumber) {
               opts.errCb(
                 [
-                  [separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]
+                  [
+                    separatorsIdx + opts.offset,
+                    separatorsIdx + 1 + opts.offset,
+                  ],
                 ],
                 "Remove separator.",
                 fixable
@@ -113,8 +116,8 @@ function processCommaSeparated(str, originalOpts) {
             [
               [
                 whitespaceStartsAt + opts.offset,
-                (i + 1 === opts.to ? i + 1 : i) + opts.offset
-              ]
+                (i + 1 === opts.to ? i + 1 : i) + opts.offset,
+              ],
             ],
             "Remove whitespace.",
             fixable
@@ -206,7 +209,7 @@ function processCommaSeparated(str, originalOpts) {
       }
     }
     if (i + 1 === opts.to) {
-      separatorsArr.forEach(separatorsIdx => {
+      separatorsArr.forEach((separatorsIdx) => {
         opts.errCb(
           [[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]],
           "Remove separator.",

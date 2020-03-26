@@ -36,7 +36,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     );
   }
   if (existy(originalOpts) && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every(val => isStr(val))) {
+    if (!arrayiffy(originalOpts.heads).every((val) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!"
       );
@@ -45,7 +45,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     }
   }
   if (existy(originalOpts) && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every(val => isStr(val))) {
+    if (!arrayiffy(originalOpts.tails).every((val) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!"
       );
@@ -60,11 +60,11 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   str = temp;
   const defaults = {
     heads: ["{{"],
-    tails: ["}}"]
+    tails: ["}}"],
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  opts.heads = opts.heads.map(el => el.trim());
-  opts.tails = opts.tails.map(el => el.trim());
+  opts.heads = opts.heads.map((el) => el.trim());
+  opts.tails = opts.tails.map((el) => el.trim());
   let firstNonMarkerChunkFound = false;
   let secondNonMarkerChunkFound = false;
   const realRanges = new Ranges({ limitToBeAddedWhitespace: true });
@@ -80,7 +80,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         noteDownTheIndex = index;
         return true;
       },
-      relaxedApi: true
+      relaxedApi: true,
     });
     if (!resultOfAttemptToMatchHeads) {
       return str1;
@@ -95,7 +95,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (resultOfAttemptToMatchTails) {
@@ -118,7 +118,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (!resultOfAttemptToMatchTails) {
@@ -134,7 +134,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       }
     );
     if (resultOfAttemptToMatchHeads) {
@@ -149,12 +149,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
       trimBeforeMatching: true,
-      relaxedApi: true
+      relaxedApi: true,
     }) ||
     !opts.tails.length ||
     !matchLeftIncl(str, str.length - 1, opts.tails, {
       trimBeforeMatching: true,
-      relaxedApi: true
+      relaxedApi: true,
     })
   ) {
     return trimSpaces(str).res;
@@ -168,7 +168,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = index;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       });
       if (resultOfAttemptToMatchHeads) {
         itsFirstLetter = true;
@@ -186,7 +186,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
               tempIndexUpTo = index;
               return true;
             },
-            relaxedApi: true
+            relaxedApi: true,
           }
         );
         if (resultOfAttemptToMatchTails) {
@@ -218,7 +218,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           noteDownTheIndex = existy(index) ? index : str.length;
           return true;
         },
-        relaxedApi: true
+        relaxedApi: true,
       });
       if (resultOfAttemptToMatchTails) {
         itsFirstLetter = true;

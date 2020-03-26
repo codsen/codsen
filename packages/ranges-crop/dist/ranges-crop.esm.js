@@ -62,8 +62,9 @@ function rangesCrop(arrOfRanges, strLen) {
       );
     }
     throw new TypeError(
-      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex +
-        1}th range (${JSON.stringify(
+      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
+        culpritsIndex + 1
+      }th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -91,11 +92,11 @@ function rangesCrop(arrOfRanges, strLen) {
   }
   const res = mergeRanges(arrOfRanges)
     .filter(
-      singleRangeArr =>
+      (singleRangeArr) =>
         singleRangeArr[0] <= strLen &&
         (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen)
     )
-    .map(singleRangeArr => {
+    .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
         if (singleRangeArr[2] !== undefined) {
           return [singleRangeArr[0], strLen, singleRangeArr[2]];

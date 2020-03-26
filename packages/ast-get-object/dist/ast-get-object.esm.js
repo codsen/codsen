@@ -46,7 +46,7 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
         result.push(ast);
       }
     } else {
-      Object.keys(ast).forEach(key => {
+      Object.keys(ast).forEach((key) => {
         if (Array.isArray(ast[key]) || isObj(ast[key])) {
           if (set) {
             ast[key] = getObj(

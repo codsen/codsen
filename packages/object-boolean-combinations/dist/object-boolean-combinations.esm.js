@@ -57,7 +57,7 @@ function objectBooleanCombinations(
       Object.keys(overrideObject),
       Object.keys(incomingObject)
     );
-    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem));
+    propertiesToBeOverridden.forEach((elem) => pull(propertiesToMix, elem));
   }
   const boolCombinations = combinations(Object.keys(propertiesToMix).length);
   let tempObject = {};
@@ -69,8 +69,8 @@ function objectBooleanCombinations(
     outcomingObjectsArray.push(tempObject);
   });
   if (override) {
-    outcomingObjectsArray.forEach(elem3 =>
-      propertiesToBeOverridden.forEach(elem4 => {
+    outcomingObjectsArray.forEach((elem3) =>
+      propertiesToBeOverridden.forEach((elem4) => {
         elem3[elem4] = overrideObject[elem4];
       })
     );

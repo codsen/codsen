@@ -56,7 +56,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
     arrOfArrays.forEach(([fromIdx, toIdx]) => {
       for (let i = fromIdx; i < toIdx; i++) {
         const charLength = runes(str.slice(i))[0].length;
-        cb(i, i + charLength, offsetValue => {
+        cb(i, i + charLength, (offsetValue) => {
           if (offsetValue != null) {
             i += offsetValue;
           }
@@ -70,7 +70,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
   if (originalRanges && originalRanges.length) {
     const temp = crop(
       invert(skipChecks ? originalRanges : originalRanges, str.length, {
-        skipChecks: !!skipChecks
+        skipChecks: !!skipChecks,
       }),
       str.length
     );

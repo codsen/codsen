@@ -24,7 +24,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   const defaults = {
     mergeType: 1,
     progressFn: null,
-    joinRangesThatTouchEdges: true
+    joinRangesThatTouchEdges: true,
   };
   let opts;
   if (originalOpts) {
@@ -82,22 +82,22 @@ function mergeRanges(arrOfRanges, originalOpts) {
     opts = Object.assign({}, defaults);
   }
   const filtered = arrOfRanges
-    .map(subarr => [...subarr])
+    .map((subarr) => [...subarr])
     .filter(
-      rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
+      (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
     );
   let sortedRanges;
   let lastPercentageDone;
   let percentageDone;
   if (opts.progressFn) {
     sortedRanges = sortRanges(filtered, {
-      progressFn: percentage => {
+      progressFn: (percentage) => {
         percentageDone = Math.floor(percentage / 5);
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           opts.progressFn(percentageDone);
         }
-      }
+      },
     });
   } else {
     sortedRanges = sortRanges(filtered);

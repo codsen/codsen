@@ -23,7 +23,7 @@ function trimSpaces(s, originalOpts) {
     lf: false,
     tab: false,
     space: true,
-    nbsp: false
+    nbsp: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   function check(char) {
@@ -49,7 +49,7 @@ function trimSpaces(s, originalOpts) {
         if (i === s.length - 1) {
           return {
             res: "",
-            ranges: [[0, s.length]]
+            ranges: [[0, s.length]],
           };
         }
       }
@@ -68,29 +68,29 @@ function trimSpaces(s, originalOpts) {
           res: s.slice(newStart, newEnd),
           ranges: [
             [0, newStart],
-            [newEnd, s.length]
-          ]
+            [newEnd, s.length],
+          ],
         };
       }
       return {
         res: s.slice(newStart),
-        ranges: [[0, newStart]]
+        ranges: [[0, newStart]],
       };
     }
     if (newEnd) {
       return {
         res: s.slice(0, newEnd),
-        ranges: [[newEnd, s.length]]
+        ranges: [[newEnd, s.length]],
       };
     }
     return {
       res: s,
-      ranges: []
+      ranges: [],
     };
   }
   return {
     res: "",
-    ranges: []
+    ranges: [],
   };
 }
 

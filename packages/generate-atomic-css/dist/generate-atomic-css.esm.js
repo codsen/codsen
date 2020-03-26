@@ -19,7 +19,7 @@ const headsAndTails = {
   CONFIGHEAD: "GENERATE-ATOMIC-CSS-CONFIG-STARTS",
   CONFIGTAIL: "GENERATE-ATOMIC-CSS-CONFIG-ENDS",
   CONTENTHEAD: "GENERATE-ATOMIC-CSS-CONTENT-STARTS",
-  CONTENTTAIL: "GENERATE-ATOMIC-CSS-CONTENT-ENDS"
+  CONTENTTAIL: "GENERATE-ATOMIC-CSS-CONTENT-ENDS",
 };
 const units = [
   "px",
@@ -35,7 +35,7 @@ const units = [
   "ch",
   "vw",
   "vmin",
-  "vmax"
+  "vmax",
 ];
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 const padLeftIfTheresOnTheLeft = [":"];
@@ -71,9 +71,9 @@ function extractConfig(str) {
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       return {
         log: {
-          count: 0
+          count: 0,
         },
-        result: ""
+        result: "",
       };
     }
   } else if (
@@ -142,7 +142,7 @@ function extractConfig(str) {
       let stopFilteringAndPassAllLines = false;
       extractedConfig = extractedConfig
         .split("\n")
-        .filter(rowStr => {
+        .filter((rowStr) => {
           if (!rowStr.includes("$$$") && !stopFilteringAndPassAllLines) {
             if (!stopFilteringAndPassAllLines) {
               contentInFront.push(rowStr);
@@ -189,7 +189,7 @@ function extractConfig(str) {
     let stopFiltering = false;
     const gatheredLinesAboveTopmostConfigLine = [];
     const gatheredLinesBelowLastConfigLine = [];
-    const configLines = str.split("\n").filter(rowStr => {
+    const configLines = str.split("\n").filter((rowStr) => {
       if (stopFiltering) {
         return true;
       }
@@ -265,22 +265,22 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
     tempArr = str
       .slice(str.lastIndexOf("}") + 1)
       .split("|")
-      .filter(val => val.trim().length)
-      .map(val => val.trim())
-      .filter(val =>
+      .filter((val) => val.trim().length)
+      .map((val) => val.trim())
+      .filter((val) =>
         String(val)
           .split("")
-          .every(char => /\d/g.test(char))
+          .every((char) => /\d/g.test(char))
       );
   } else if (str.includes("|")) {
     tempArr = str
       .split("|")
-      .filter(val => val.trim().length)
-      .map(val => val.trim())
-      .filter(val =>
+      .filter((val) => val.trim().length)
+      .map((val) => val.trim())
+      .filter((val) =>
         String(val)
           .split("")
-          .every(char => /\d/g.test(char))
+          .every((char) => /\d/g.test(char))
       );
   }
   if (isArr(tempArr)) {
@@ -354,7 +354,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
         let unitFound;
         if (
           i === 0 &&
-          units.some(unit => {
+          units.some((unit) => {
             if (restOfStr.startsWith(unit)) {
               unitFound = unit;
               return true;
@@ -373,7 +373,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
           let unitThatFollow;
-          units.some(unit => {
+          units.some((unit) => {
             if (source.slice(y + 1).startsWith(unit)) {
               unitThatFollow = unit;
               return true;
@@ -381,7 +381,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           });
           if (
             !source[y - 3].trim().length ||
-            padLeftIfTheresOnTheLeft.some(val =>
+            padLeftIfTheresOnTheLeft.some((val) =>
               source
                 .slice(startPoint, y - 2)
                 .trim()
@@ -390,7 +390,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           ) {
             let temp = 0;
             if (i === 0) {
-              units.some(unit => {
+              units.some((unit) => {
                 if (`${source.slice(startPoint, y - 2)}`.startsWith(unit)) {
                   temp = unit.length;
                 }
@@ -438,7 +438,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
         const restOfStr = source.slice(startPoint);
         if (
           i === 0 &&
-          units.some(unit => {
+          units.some((unit) => {
             if (restOfStr.startsWith(unit)) {
               unitFound = unit;
               return true;
@@ -524,10 +524,10 @@ function genAtomic(str, originalOpts) {
     configOverride: null,
     reportProgressFunc: null,
     reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100
+    reportProgressFuncTo: 100,
   };
   const generatedCount = {
-    count: 0
+    count: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
@@ -549,9 +549,9 @@ function genAtomic(str, originalOpts) {
   ) {
     return {
       log: {
-        count: 0
+        count: 0,
       },
-      result: str
+      result: str,
     };
   }
   let frontPart = "";
@@ -562,9 +562,9 @@ function genAtomic(str, originalOpts) {
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return {
       log: {
-        count: 0
+        count: 0,
       },
-      result: ""
+      result: "",
     };
   }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
@@ -677,7 +677,7 @@ function genAtomic(str, originalOpts) {
   )}\n`;
   return {
     log: { count: generatedCount.count },
-    result: finalRes
+    result: finalRes,
   };
 }
 

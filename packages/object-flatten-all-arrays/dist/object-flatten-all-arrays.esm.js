@@ -14,10 +14,10 @@ import isObj from 'lodash.isplainobject';
 const isArr = Array.isArray;
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   function arrayContainsStr(arr) {
-    return arr.some(val => typeof val === "string");
+    return arr.some((val) => typeof val === "string");
   }
   const defaults = {
-    flattenArraysContainingStringsToBeEmpty: false
+    flattenArraysContainingStringsToBeEmpty: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const incommingObj = clone(originalIncommingObj);
@@ -51,7 +51,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     }
   }
   if (isObj(incommingObj)) {
-    Object.keys(incommingObj).forEach(key => {
+    Object.keys(incommingObj).forEach((key) => {
       if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
         incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
       }

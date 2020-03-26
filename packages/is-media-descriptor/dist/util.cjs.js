@@ -13,7 +13,7 @@ const recognisedMediaTypes = [
   "screen",
   "speech",
   "tty",
-  "tv"
+  "tv",
 ];
 const recognisedMediaFeatures = [
   "width",
@@ -45,7 +45,7 @@ const recognisedMediaFeatures = [
   "pointer",
   "hover",
   "any-pointer",
-  "any-hover"
+  "any-hover",
 ];
 const lettersOnlyRegex = /^\w+$/g;
 function loop(str, opts, res) {
@@ -75,7 +75,7 @@ function loop(str, opts, res) {
               idxFrom: lastOpening + 1 + opts.offset,
               idxTo: i + opts.offset,
               message: `Unrecognised "${extractedValueWithinBrackets.trim()}".`,
-              fix: null
+              fix: null,
             });
           }
         }
@@ -86,13 +86,13 @@ function loop(str, opts, res) {
       );
       const findings =
         extractedValueWithinBrackets.match(regexFromAllKnownMediaTypes) || [];
-      findings.forEach(mediaTypeFound => {
+      findings.forEach((mediaTypeFound) => {
         const startingIdx = str.indexOf(mediaTypeFound);
         res.push({
           idxFrom: startingIdx + opts.offset,
           idxTo: startingIdx + mediaTypeFound.length + opts.offset,
           message: `Media type "${mediaTypeFound}" inside brackets.`,
-          fix: null
+          fix: null,
         });
       });
     }
@@ -106,8 +106,8 @@ function loop(str, opts, res) {
           idxTo: i + opts.offset,
           message: `Bad whitespace.`,
           fix: {
-            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]]
-          }
+            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]],
+          },
         });
       } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
         let rangesFrom = whitespaceStartsAt + opts.offset;
@@ -130,9 +130,9 @@ function loop(str, opts, res) {
             ranges: [
               rangesInsert
                 ? [rangesFrom, rangesTo, " "]
-                : [rangesFrom, rangesTo]
-            ]
-          }
+                : [rangesFrom, rangesTo],
+            ],
+          },
         });
       }
       whitespaceStartsAt = null;
@@ -156,7 +156,7 @@ function loop(str, opts, res) {
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
             message: `Expected "and", found "${chunk}".`,
-            fix: null
+            fix: null,
           });
         } else if (!str[i]) {
           res.push({
@@ -167,10 +167,10 @@ function loop(str, opts, res) {
               ranges: [
                 [
                   str.slice(0, chunkStartsAt).trimEnd().length + opts.offset,
-                  i + opts.offset
-                ]
-              ]
-            }
+                  i + opts.offset,
+                ],
+              ],
+            },
           });
         }
         nextCanBeAnd = false;
@@ -192,7 +192,7 @@ function loop(str, opts, res) {
               idxFrom: chunkStartsAt + opts.offset,
               idxTo: i + opts.offset,
               message,
-              fix: null
+              fix: null,
             });
           }
         } else {
@@ -215,7 +215,7 @@ function loop(str, opts, res) {
                 idxFrom: chunkStartsAt + opts.offset,
                 idxTo: i + opts.offset,
                 message,
-                fix: null
+                fix: null,
               });
             }
           } else {
@@ -233,17 +233,12 @@ function loop(str, opts, res) {
                   [
                     chunkStartsAt + opts.offset,
                     chunkStartsAt + opts.offset,
-                    "("
+                    "(",
                   ],
-                  [i + opts.offset, i + opts.offset, ")"]
-                ]
+                  [i + opts.offset, i + opts.offset, ")"],
+                ],
               };
-            } else if (
-              str
-                .slice(i)
-                .trim()
-                .startsWith(":")
-            ) {
+            } else if (str.slice(i).trim().startsWith(":")) {
               const valueWithoutColon = chunk.slice(0, i).trim();
               message = `Expected brackets on "${valueWithoutColon}" and its value.`;
               idxTo = chunkStartsAt + valueWithoutColon.length + opts.offset;
@@ -252,7 +247,7 @@ function loop(str, opts, res) {
               idxFrom: chunkStartsAt + opts.offset,
               idxTo,
               message,
-              fix
+              fix,
             });
             break;
           }
@@ -263,7 +258,7 @@ function loop(str, opts, res) {
           idxFrom: chunkStartsAt + opts.offset,
           idxTo: i + opts.offset,
           message: `Unrecognised media type "${str.slice(chunkStartsAt, i)}".`,
-          fix: null
+          fix: null,
         });
       }
       chunkStartsAt = null;

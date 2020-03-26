@@ -21,7 +21,7 @@ const recognisedMediaTypes = [
   "screen",
   "speech",
   "tty",
-  "tv"
+  "tv",
 ];
 const recognisedMediaFeatures = [
   "width",
@@ -53,7 +53,7 @@ const recognisedMediaFeatures = [
   "pointer",
   "hover",
   "any-pointer",
-  "any-hover"
+  "any-hover",
 ];
 const lettersOnlyRegex = /^\w+$/g;
 function loop(str, opts, res) {
@@ -83,7 +83,7 @@ function loop(str, opts, res) {
               idxFrom: lastOpening + 1 + opts.offset,
               idxTo: i + opts.offset,
               message: `Unrecognised "${extractedValueWithinBrackets.trim()}".`,
-              fix: null
+              fix: null,
             });
           }
         }
@@ -94,13 +94,13 @@ function loop(str, opts, res) {
       );
       const findings =
         extractedValueWithinBrackets.match(regexFromAllKnownMediaTypes) || [];
-      findings.forEach(mediaTypeFound => {
+      findings.forEach((mediaTypeFound) => {
         const startingIdx = str.indexOf(mediaTypeFound);
         res.push({
           idxFrom: startingIdx + opts.offset,
           idxTo: startingIdx + mediaTypeFound.length + opts.offset,
           message: `Media type "${mediaTypeFound}" inside brackets.`,
-          fix: null
+          fix: null,
         });
       });
     }
@@ -114,8 +114,8 @@ function loop(str, opts, res) {
           idxTo: i + opts.offset,
           message: `Bad whitespace.`,
           fix: {
-            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]]
-          }
+            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]],
+          },
         });
       } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
         let rangesFrom = whitespaceStartsAt + opts.offset;
@@ -138,9 +138,9 @@ function loop(str, opts, res) {
             ranges: [
               rangesInsert
                 ? [rangesFrom, rangesTo, " "]
-                : [rangesFrom, rangesTo]
-            ]
-          }
+                : [rangesFrom, rangesTo],
+            ],
+          },
         });
       }
       whitespaceStartsAt = null;
@@ -164,7 +164,7 @@ function loop(str, opts, res) {
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
             message: `Expected "and", found "${chunk}".`,
-            fix: null
+            fix: null,
           });
         } else if (!str[i]) {
           res.push({
@@ -175,10 +175,10 @@ function loop(str, opts, res) {
               ranges: [
                 [
                   str.slice(0, chunkStartsAt).trimEnd().length + opts.offset,
-                  i + opts.offset
-                ]
-              ]
-            }
+                  i + opts.offset,
+                ],
+              ],
+            },
           });
         }
         nextCanBeAnd = false;
@@ -200,7 +200,7 @@ function loop(str, opts, res) {
               idxFrom: chunkStartsAt + opts.offset,
               idxTo: i + opts.offset,
               message,
-              fix: null
+              fix: null,
             });
           }
         } else {
@@ -223,7 +223,7 @@ function loop(str, opts, res) {
                 idxFrom: chunkStartsAt + opts.offset,
                 idxTo: i + opts.offset,
                 message,
-                fix: null
+                fix: null,
               });
             }
           } else {
@@ -241,17 +241,12 @@ function loop(str, opts, res) {
                   [
                     chunkStartsAt + opts.offset,
                     chunkStartsAt + opts.offset,
-                    "("
+                    "(",
                   ],
-                  [i + opts.offset, i + opts.offset, ")"]
-                ]
+                  [i + opts.offset, i + opts.offset, ")"],
+                ],
               };
-            } else if (
-              str
-                .slice(i)
-                .trim()
-                .startsWith(":")
-            ) {
+            } else if (str.slice(i).trim().startsWith(":")) {
               const valueWithoutColon = chunk.slice(0, i).trim();
               message = `Expected brackets on "${valueWithoutColon}" and its value.`;
               idxTo = chunkStartsAt + valueWithoutColon.length + opts.offset;
@@ -260,7 +255,7 @@ function loop(str, opts, res) {
               idxFrom: chunkStartsAt + opts.offset,
               idxTo,
               message,
-              fix
+              fix,
             });
             break;
           }
@@ -271,7 +266,7 @@ function loop(str, opts, res) {
           idxFrom: chunkStartsAt + opts.offset,
           idxTo: i + opts.offset,
           message: `Unrecognised media type "${str.slice(chunkStartsAt, i)}".`,
-          fix: null
+          fix: null,
         });
       }
       chunkStartsAt = null;
@@ -293,7 +288,7 @@ function loop(str, opts, res) {
 
 function isMediaD(originalStr, originalOpts) {
   const defaults = {
-    offset: 0
+    offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.offset && !Number.isInteger(opts.offset)) {
@@ -340,8 +335,8 @@ function isMediaD(originalStr, originalOpts) {
       idxTo: ranges[ranges.length - 1][1],
       message: "Remove whitespace.",
       fix: {
-        ranges
-      }
+        ranges,
+      },
     });
   }
   if (recognisedMediaTypes.includes(str)) {
@@ -351,7 +346,7 @@ function isMediaD(originalStr, originalOpts) {
       idxFrom: nonWhitespaceStart + opts.offset,
       idxTo: nonWhitespaceEnd + opts.offset,
       message: `Missing media type or condition.`,
-      fix: null
+      fix: null,
     });
   } else if (
     str.match(lettersOnlyRegex) &&
@@ -369,10 +364,10 @@ function isMediaD(originalStr, originalOpts) {
               [
                 nonWhitespaceStart + opts.offset,
                 nonWhitespaceEnd + opts.offset,
-                recognisedMediaTypes[i]
-              ]
-            ]
-          }
+                recognisedMediaTypes[i],
+              ],
+            ],
+          },
         });
         break;
       }
@@ -381,7 +376,7 @@ function isMediaD(originalStr, originalOpts) {
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
           message: `Unrecognised media type "${str}".`,
-          fix: null
+          fix: null,
         });
       }
     }
@@ -401,7 +396,7 @@ function isMediaD(originalStr, originalOpts) {
             idxFrom: idx + opts.offset,
             idxTo: idx + 1 + opts.offset,
             message: "Semicolon found!",
-            fix: null
+            fix: null,
           });
         }
         return acc;
@@ -413,7 +408,7 @@ function isMediaD(originalStr, originalOpts) {
         idxFrom: nonWhitespaceStart + opts.offset,
         idxTo: nonWhitespaceEnd + opts.offset,
         message: "Some closing brackets are before their opening counterparts.",
-        fix: null
+        fix: null,
       });
     }
     if (openingBracketCount > closingBracketCount) {
@@ -421,14 +416,14 @@ function isMediaD(originalStr, originalOpts) {
         idxFrom: nonWhitespaceStart + opts.offset,
         idxTo: nonWhitespaceEnd + opts.offset,
         message: "More opening brackets than closing.",
-        fix: null
+        fix: null,
       });
     } else if (closingBracketCount > openingBracketCount) {
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
         idxTo: nonWhitespaceEnd + opts.offset,
         message: "More closing brackets than opening.",
-        fix: null
+        fix: null,
       });
     }
     if (!res.length && str.match(/\(\s*\)/g)) {
@@ -444,7 +439,7 @@ function isMediaD(originalStr, originalOpts) {
               idxFrom: lastOpening + opts.offset,
               idxTo: i + 1 + opts.offset,
               message: "Empty bracket pair.",
-              fix: null
+              fix: null,
             });
           } else {
             nonWhitespaceFound = true;
@@ -469,13 +464,13 @@ function isMediaD(originalStr, originalOpts) {
           str,
           Object.assign({}, opts, {
             idxFrom: idxFrom - opts.offset,
-            idxTo: idxTo - opts.offset
+            idxTo: idxTo - opts.offset,
           }),
           res
         );
       },
       errCb: (ranges, message) => {
-      }
+      },
     });
   }
   return res;

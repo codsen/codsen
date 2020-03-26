@@ -23,7 +23,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     );
   }
   const defaults = {
-    mode: 2
+    mode: 2,
   };
   const optsOuter = Object.assign({}, defaults, originalOptsOuter);
   if (
@@ -47,14 +47,14 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     }
     if (isObj(input)) {
       if (isObj(reference)) {
-        Object.keys(input).forEach(key => {
+        Object.keys(input).forEach((key) => {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
             temp = innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key;
             innerVar.res.push(temp);
           } else if (isObj(input[key]) || Array.isArray(input[key])) {
             temp = {
               path: innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key,
-              res: innerVar.res
+              res: innerVar.res,
             };
             innerVar.res = objectNoNewKeysInternal(
               input[key],
@@ -66,7 +66,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
         });
       } else {
         innerVar.res = innerVar.res.concat(
-          Object.keys(input).map(key =>
+          Object.keys(input).map((key) =>
             innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key
           )
         );
@@ -76,7 +76,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
         for (let i = 0, len = input.length; i < len; i++) {
           temp = {
             path: `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`,
-            res: innerVar.res
+            res: innerVar.res,
           };
           if (opts.mode === 2) {
             innerVar.res = objectNoNewKeysInternal(

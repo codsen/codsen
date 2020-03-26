@@ -42,7 +42,7 @@ function remSep(str, originalOpts) {
   const defaults = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
-    forceUKStyle: false
+    forceUKStyle: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const res = trimChars(str.trim(), '"');

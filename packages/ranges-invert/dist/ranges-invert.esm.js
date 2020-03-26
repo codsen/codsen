@@ -40,7 +40,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
-    skipChecks: false
+    skipChecks: false,
   };
   const opts = Object.assign({}, defaults, originalOptions);
   let culpritsIndex;
@@ -94,8 +94,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       );
     }
     throw new TypeError(
-      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex +
-        1}th range (${JSON.stringify(
+      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
+        culpritsIndex + 1
+      }th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -105,10 +106,10 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   let prep;
   if (!opts.skipChecks) {
     prep = mergeRanges(
-      arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1])
+      arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1])
     );
   } else {
-    prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
+    prep = arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1]);
   }
   if (prep.length === 0) {
     if (strLen === 0) {

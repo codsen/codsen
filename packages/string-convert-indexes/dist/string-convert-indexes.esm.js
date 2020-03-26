@@ -55,7 +55,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     );
   }
   const defaults = {
-    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
+    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const data = { id: 0 };
@@ -64,8 +64,8 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     toDoList = [
       {
         id: 1,
-        val: indexes
-      }
+        val: indexes,
+      },
     ];
   } else {
     indexes = traverse(indexes, (key, val) => {
@@ -153,7 +153,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   for (let z = toDoList.length; z--; ) {
     res = set(res, {
       index: toDoList[z].id,
-      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val
+      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val,
     });
   }
   return res;

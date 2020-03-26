@@ -35,7 +35,7 @@ function unfancy(str) {
     "\u2026": "...",
     "\u2212": "-",
     "\uFE49": "-",
-    "\u00A0": " "
+    "\u00A0": " ",
   };
   if (!existy(str)) {
     throw new Error(

@@ -57,7 +57,7 @@ function collapse(str, originalOpts) {
     recogniseHTML: true,
     removeEmptyLines: false,
     returnRangesOnly: false,
-    limitConsecutiveEmptyLinesTo: 0
+    limitConsecutiveEmptyLinesTo: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   let preliminaryIndexesToDelete;
@@ -79,7 +79,7 @@ function collapse(str, originalOpts) {
     equalOnly: 0,
     doubleQuoteOnly: 0,
     spacesBetweenLetterChunks: 0,
-    linebreaks: 0
+    linebreaks: 0,
   });
   let bracketJustFound = false;
   if (opts.recogniseHTML) {
@@ -141,7 +141,7 @@ function collapse(str, originalOpts) {
             ) {
               finalIndexesToDelete.push([
                 i + 1,
-                lastLineBreaksLastCharIndex + 1
+                lastLineBreaksLastCharIndex + 1,
               ]);
             }
           }
@@ -289,30 +289,30 @@ function collapse(str, originalOpts) {
                   ((str[i - 1] === "e" &&
                     matchLeftIncl(str, i, ["area", "textarea"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })) ||
                     (str[i - 1] === "t" &&
                       matchLeftIncl(str, i, ["data", "meta"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     isSpaceOrLeftBracket(str[i - 1]))) ||
                 (str[i] === "b" &&
                   (matchLeftIncl(str, i, ["rb", "sub"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   }) ||
                     isSpaceOrLeftBracket(str[i - 1]))) ||
                 (str[i] === "c" &&
                   matchLeftIncl(str, i, "rtc", {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "d" &&
                   ((str[i - 1] === "a" &&
                     matchLeftIncl(str, i, ["head", "thead"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })) ||
                     matchLeftIncl(
                       str,
@@ -323,12 +323,12 @@ function collapse(str, originalOpts) {
                 (str[i] === "e" &&
                   (matchLeftIncl(str, i, "source", {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   }) ||
                     (str[i - 1] === "d" &&
                       matchLeftIncl(str, i, ["aside", "code"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     (str[i - 1] === "l" &&
                       matchLeftIncl(
@@ -340,12 +340,12 @@ function collapse(str, originalOpts) {
                     (str[i - 1] === "m" &&
                       matchLeftIncl(str, i, ["iframe", "time"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     (str[i - 1] === "r" &&
                       matchLeftIncl(str, i, ["pre", "figure", "picture"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     (str[i - 1] === "t" &&
                       matchLeftIncl(
@@ -356,29 +356,29 @@ function collapse(str, originalOpts) {
                       )) ||
                     matchLeftIncl(str, i, "base", {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     }) ||
                     isSpaceOrLeftBracket(str[i - 1]))) ||
                 (str[i] === "g" &&
                   matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "h" &&
                   matchLeftIncl(str, i, ["th", "math"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "i" &&
                   (matchLeftIncl(str, i, ["bdi", "li"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   }) ||
                     isSpaceOrLeftBracket(str[i - 1]))) ||
                 (str[i] === "k" &&
                   matchLeftIncl(str, i, ["track", "link", "mark"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "l" &&
                   matchLeftIncl(
@@ -390,7 +390,7 @@ function collapse(str, originalOpts) {
                 (str[i] === "m" &&
                   matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "n" &&
                   ((str[i - 1] === "o" &&
@@ -402,7 +402,7 @@ function collapse(str, originalOpts) {
                     )) ||
                     matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })))
               ) {
                 tagMatched = true;
@@ -412,7 +412,7 @@ function collapse(str, originalOpts) {
                 (str[i] === "o" &&
                   matchLeftIncl(str, i, ["bdo", "video", "audio"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "p" &&
                   (isSpaceOrLeftBracket(str[i - 1]) ||
@@ -425,14 +425,14 @@ function collapse(str, originalOpts) {
                       )) ||
                     matchLeftIncl(str, i, ["map", "samp", "rp"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     }))) ||
                 (str[i] === "q" && isSpaceOrLeftBracket(str[i - 1])) ||
                 (str[i] === "r" &&
                   ((str[i - 1] === "e" &&
                     matchLeftIncl(str, i, ["header", "meter", "footer"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })) ||
                     matchLeftIncl(
                       str,
@@ -444,33 +444,33 @@ function collapse(str, originalOpts) {
                   ((str[i - 1] === "s" &&
                     matchLeftIncl(str, i, ["address", "progress"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })) ||
                     matchLeftIncl(str, i, ["canvas", "details", "ins"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     }) ||
                     isSpaceOrLeftBracket(str[i - 1]))) ||
                 (str[i] === "t" &&
                   ((str[i - 1] === "c" &&
                     matchLeftIncl(str, i, ["object", "select"], {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     })) ||
                     (str[i - 1] === "o" &&
                       matchLeftIncl(str, i, ["slot", "tfoot"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     (str[i - 1] === "p" &&
                       matchLeftIncl(str, i, ["script", "noscript"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     (str[i - 1] === "u" &&
                       matchLeftIncl(str, i, ["input", "output"], {
                         cb: isSpaceOrLeftBracket,
-                        i: true
+                        i: true,
                       })) ||
                     matchLeftIncl(
                       str,
@@ -482,17 +482,17 @@ function collapse(str, originalOpts) {
                   (isSpaceOrLeftBracket(str[i - 1]) ||
                     matchLeftIncl(str, i, "menu", {
                       cb: isSpaceOrLeftBracket,
-                      i: true
+                      i: true,
                     }))) ||
                 (str[i] === "v" &&
                   matchLeftIncl(str, i, ["nav", "div"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   })) ||
                 (str[i] === "y" &&
                   matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
                     cb: isSpaceOrLeftBracket,
-                    i: true
+                    i: true,
                   }))
               ) {
                 tagMatched = true;

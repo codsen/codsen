@@ -19,28 +19,28 @@ function startsComment(str, i, token) {
       (matchRight(str, i, ["!--"], {
         maxMismatches: 1,
         firstMustMatch: true,
-        trimBeforeMatching: true
+        trimBeforeMatching: true,
       }) ||
         matchRight(str, i, ["![endif]"], {
           i: true,
           maxMismatches: 2,
-          trimBeforeMatching: true
+          trimBeforeMatching: true,
         })) &&
       !matchRight(str, i, ["![cdata", "<"], {
         i: true,
         maxMismatches: 1,
-        trimBeforeMatching: true
+        trimBeforeMatching: true,
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
       (str[i] === "-" &&
         matchRight(str, i, ["->"], {
-          trimBeforeMatching: true
+          trimBeforeMatching: true,
         }) &&
         (token.type !== "comment" ||
           (!token.closing && token.kind !== "not")) &&
         !matchLeft(str, i, "<", {
           trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"]
+          trimCharsBeforeMatching: ["-", "!"],
         }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
@@ -191,7 +191,7 @@ const allHTMLTagsKnownToHumanity = [
   "var",
   "video",
   "wbr",
-  "xmp"
+  "xmp",
 ];
 const espChars = `{}%-$_()*|`;
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
@@ -257,13 +257,13 @@ function startsTag(str, i, token, layers) {
     !["doctype", "xml"].includes(token.kind) &&
     ((str[i] === "<" &&
       (isTagOpening(str, i, {
-        allowCustomTagNames: true
+        allowCustomTagNames: true,
       }) ||
         str[right(str, i)] === ">" ||
         matchRight(str, i, ["doctype", "xml", "cdata"], {
           i: true,
           trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
         }))) ||
       (isLatinLetter(str[i]) &&
         (!str[i - 1] ||
@@ -271,7 +271,7 @@ function startsTag(str, i, token, layers) {
             !["<", "/", "!", BACKSLASH].includes(str[left(str, i)]))) &&
         isTagOpening(str, i, {
           allowCustomTagNames: false,
-          skipOpeningBracket: true
+          skipOpeningBracket: true,
         }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
@@ -320,7 +320,7 @@ const voidTags = [
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ];
 const charsThatEndCSSChunks = ["{", "}", ","];
 function tokenizer(str, originalOpts) {
@@ -392,7 +392,7 @@ function tokenizer(str, originalOpts) {
     charCb: null,
     reportProgressFunc: null,
     reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100
+    reportProgressFuncTo: 100,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   let currentPercentageDone;
@@ -405,7 +405,7 @@ function tokenizer(str, originalOpts) {
   const tokenDefault = {
     type: null,
     start: null,
-    end: null
+    end: null,
   };
   function tokenReset() {
     token = clone(tokenDefault);
@@ -424,7 +424,7 @@ function tokenizer(str, originalOpts) {
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStart: null,
-    attribEnd: null
+    attribEnd: null,
   };
   function attribReset() {
     attrib = clone(attribDefault);
@@ -491,14 +491,14 @@ function tokenizer(str, originalOpts) {
           ) {
             found++;
             uniqueCharsListFromGuessedClosingLumpArr = uniqueCharsListFromGuessedClosingLumpArr.filter(
-              el => el !== wholeEspTagLump[y]
+              (el) => el !== wholeEspTagLump[y]
             );
           }
         }
       } else if (
         whichLayerToMatch.guessedClosingLump
           .split("")
-          .every(char => wholeEspTagLump.includes(char))
+          .every((char) => wholeEspTagLump.includes(char))
       ) {
         return wholeEspTagLump.length;
       }
@@ -748,7 +748,7 @@ function tokenizer(str, originalOpts) {
             layers.push({
               type: "simple",
               value: str[i],
-              position: i
+              position: i,
             });
           }
         }
@@ -763,7 +763,7 @@ function tokenizer(str, originalOpts) {
             layers.push({
               type: "simple",
               value: str[i],
-              position: i
+              position: i,
             });
           }
         }
@@ -805,7 +805,7 @@ function tokenizer(str, originalOpts) {
       token.openingCurlyAt = i;
       layers.push({
         type: "at",
-        token
+        token,
       });
       const charIdxOnTheRight = right(str, i);
       if (str[charIdxOnTheRight] === "}") {
@@ -856,7 +856,7 @@ function tokenizer(str, originalOpts) {
       token.selectors.push({
         value: str.slice(selectorChunkStartedAt, i),
         selectorStarts: selectorChunkStartedAt,
-        selectorEnds: i
+        selectorEnds: i,
       });
       selectorChunkStartedAt = undefined;
       token.selectorsEnd = i;
@@ -874,21 +874,21 @@ function tokenizer(str, originalOpts) {
         if (
           matchRight(str, i, "doctype", {
             i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
           })
         ) {
           token.kind = "doctype";
         } else if (
           matchRight(str, i, "cdata", {
             i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
           })
         ) {
           token.kind = "cdata";
         } else if (
           matchRight(str, i, "xml", {
             i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
           })
         ) {
           token.kind = "xml";
@@ -904,7 +904,7 @@ function tokenizer(str, originalOpts) {
         } else if (
           matchRightIncl(str, i, ["<![endif]-->"], {
             trimBeforeMatching: true,
-            maxMismatches: 2
+            maxMismatches: 2,
           })
         ) {
           token.closing = true;
@@ -957,7 +957,7 @@ function tokenizer(str, originalOpts) {
               type: "esp",
               openingLump: wholeEspTagLump,
               guessedClosingLump: flipEspTag(wholeEspTagLump),
-              position: i
+              position: i,
             });
             if (
               !(
@@ -1058,26 +1058,26 @@ function tokenizer(str, originalOpts) {
         ((str[token.start] === "<" &&
           str[i] === "-" &&
           (matchLeft(str, i, "!-", {
-            trimBeforeMatching: true
+            trimBeforeMatching: true,
           }) ||
             (matchLeftIncl(str, i, "!-", {
-              trimBeforeMatching: true
+              trimBeforeMatching: true,
             }) &&
               str[i + 1] !== "-"))) ||
           (str[token.start] === "-" &&
             str[i] === ">" &&
             matchLeft(str, i, "--", {
               trimBeforeMatching: true,
-              maxMismatches: 1
+              maxMismatches: 1,
             })))
       ) {
         if (
           str[i] === "-" &&
           (matchRight(str, i, ["[if", "(if", "{if"], {
-            trimBeforeMatching: true
+            trimBeforeMatching: true,
           }) ||
             (matchRight(str, i, ["if"], {
-              trimBeforeMatching: true
+              trimBeforeMatching: true,
             }) &&
               xBeforeYOnTheRight(str, i, "]", ">")))
         ) {
@@ -1086,7 +1086,7 @@ function tokenizer(str, originalOpts) {
           str[token.start] !== "-" &&
           matchRightIncl(str, i, ["-<![endif"], {
             trimBeforeMatching: true,
-            maxMismatches: 2
+            maxMismatches: 2,
           })
         ) {
           token.kind = "not";
@@ -1114,7 +1114,7 @@ function tokenizer(str, originalOpts) {
           matchRight(str, i, ["<!-->"], {
             trimBeforeMatching: true,
             maxMismatches: 1,
-            lastMustMatch: true
+            lastMustMatch: true,
           })
         ) {
           token.kind = "not";
@@ -1164,7 +1164,7 @@ function tokenizer(str, originalOpts) {
               secondPartOfWholeEspTagClosing.length &&
               token.tail
                 .split("")
-                .every(char => firstPartOfWholeEspTagClosing.includes(char))
+                .every((char) => firstPartOfWholeEspTagClosing.includes(char))
             ) {
               token.end = i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
@@ -1289,12 +1289,12 @@ function tokenizer(str, originalOpts) {
           layers.push({
             type: "simple",
             value: str[i],
-            position: i
+            position: i,
           });
         } else if (
           ((attrib.attribOpeningQuoteAt === null ||
             str[attrib.attribOpeningQuoteAt] === str[i]) &&
-            !layers.some(layerObj => layerObj.type === "esp")) ||
+            !layers.some((layerObj) => layerObj.type === "esp")) ||
           (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
             !xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "="))
         ) {
@@ -1376,7 +1376,7 @@ function tokenizer(str, originalOpts) {
         layers.push({
           type: "simple",
           value: null,
-          position: attrib.attribValueStartsAt
+          position: attrib.attribValueStartsAt,
         });
       } else if (`'"`.includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;
@@ -1438,7 +1438,7 @@ function tokenizer(str, originalOpts) {
       pingCharCb({
         type: token.type,
         chr: str[i],
-        i
+        i,
       });
     }
     if (!str[i] && token.start !== null) {

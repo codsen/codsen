@@ -151,7 +151,7 @@ const currencySigns = [
   "₣",
   "﷼",
   "R",
-  "Z$"
+  "Z$",
 ];
 function findtype(something) {
   if (typeof something !== "string") {
@@ -162,7 +162,7 @@ function findtype(something) {
   if (isNumeric(something)) {
     return "numeric";
   } else if (
-    currencySigns.some(singleSign =>
+    currencySigns.some((singleSign) =>
       isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
     )
   ) {
@@ -238,7 +238,7 @@ function csvSort(input) {
     } else {
       if (i === 0) {
         stateHeaderRowPresent = content[i].every(
-          el => findtype(el) === "text" || findtype(el) === "empty"
+          (el) => findtype(el) === "text" || findtype(el) === "empty"
         );
       }
       if (!stateHeaderRowPresent && schema.length !== content[i].length) {
@@ -297,7 +297,7 @@ function csvSort(input) {
     }
   }
   if (nonEmptyColsStartAt !== 0) {
-    content = content.map(arr =>
+    content = content.map((arr) =>
       arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
     );
     schema = schema.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
@@ -529,7 +529,7 @@ function csvSort(input) {
   return {
     res: resContent,
     msgContent,
-    msgType
+    msgType,
   };
 }
 

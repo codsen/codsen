@@ -72,8 +72,9 @@ function expander(originalOpts) {
     throw new Error(
       `string-range-expander: [THROW_ID_06] The given input string, opts.str ("${
         originalOpts.str
-      }") must contain the character at index before "to" ("${originalOpts.to -
-        1}")`
+      }") must contain the character at index before "to" ("${
+        originalOpts.to - 1
+      }")`
     );
   }
   if (originalOpts.from > originalOpts.to) {
@@ -106,7 +107,7 @@ function expander(originalOpts) {
     extendToOneSide: false,
     wipeAllWhitespaceOnLeft: false,
     wipeAllWhitespaceOnRight: false,
-    addSingleSpaceToPreventAccidentalConcatenation: false
+    addSingleSpaceToPreventAccidentalConcatenation: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {

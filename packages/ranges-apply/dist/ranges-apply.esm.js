@@ -115,7 +115,7 @@ function rangesApply(str, rangesArr, progressFn) {
     counter++;
   });
   const workingRanges = rangesMerge(rangesArr, {
-    progressFn: perc => {
+    progressFn: (perc) => {
       if (progressFn) {
         percentageDone = 10 + Math.floor(perc / 10);
         if (percentageDone !== lastPercentageDone) {
@@ -123,7 +123,7 @@ function rangesApply(str, rangesArr, progressFn) {
           progressFn(percentageDone);
         }
       }
-    }
+    },
   });
   const len2 = workingRanges.length;
   if (len2 > 0) {

@@ -29,7 +29,7 @@ function overlap(str1, str2, originalOpts) {
   let opts;
   const defaults = {
     offset: 0,
-    offsetFillerCharacter: " "
+    offsetFillerCharacter: " ",
   };
   if (!originalOpts) {
     opts = defaults;

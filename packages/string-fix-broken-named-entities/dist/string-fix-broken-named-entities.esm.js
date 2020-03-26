@@ -59,7 +59,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       hashesCount,
       othersCount,
       charTrimmed,
-      whitespaceCount
+      whitespaceCount,
     };
   }
   function isNotaLetter(str) {
@@ -125,20 +125,23 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (
         copy.length > 1 &&
         copy.some(
-          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+          (entityObj) =>
+            str[right(str, entityObj.tempRes.rightmostChar)] === ";"
         ) &&
         copy.some(
-          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] !== ";"
+          (entityObj) =>
+            str[right(str, entityObj.tempRes.rightmostChar)] !== ";"
         )
       ) {
         copy = copy.filter(
-          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+          (entityObj) =>
+            str[right(str, entityObj.tempRes.rightmostChar)] === ";"
         );
       }
       if (
         !(
           copy.every(
-            entObj =>
+            (entObj) =>
               !entObj ||
               !entObj.tempRes ||
               !entObj.tempRes.gaps ||
@@ -146,7 +149,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               !entObj.tempRes.gaps.length
           ) ||
           copy.every(
-            entObj =>
+            (entObj) =>
               entObj &&
               entObj.tempRes &&
               entObj.tempRes.gaps &&
@@ -157,7 +160,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       ) {
         return findLongest(
           copy.filter(
-            entObj =>
+            (entObj) =>
               !entObj.tempRes.gaps ||
               !isArr(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
@@ -183,7 +186,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded]
         : [rangeFrom, rangeTo],
     progressFn: null,
-    entityCatcherCb: null
+    entityCatcherCb: null,
   };
   let opts;
   if (originalOpts != null) {
@@ -237,7 +240,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     matchedB: null,
     matchedS: null,
     matchedP: null,
-    matchedSemicol: null
+    matchedSemicol: null,
   };
   let nbsp = clone(nbspDefault);
   const nbspWipe = () => {
@@ -281,8 +284,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       nbsp.matchedN,
       nbsp.matchedB,
       nbsp.matchedS,
-      nbsp.matchedP
-    ].filter(val => val !== null);
+      nbsp.matchedP,
+    ].filter((val) => val !== null);
     smallestCharFromTheSetAt = Math.min(...setOfValues);
     largestCharFromTheSetAt = Math.max(...setOfValues);
     if (
@@ -350,7 +353,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         ? chompedAmpFromLeft
         : nbsp.nameStartsAt;
       if (
-        !falsePositivesArr.some(val =>
+        !falsePositivesArr.some((val) =>
           str.slice(beginningOfTheRange).startsWith(val)
         ) &&
         str.slice(beginningOfTheRange, i) !== "&nbsp;"
@@ -361,7 +364,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeFrom: beginningOfTheRange,
           rangeTo: i,
           rangeValEncoded: "&nbsp;",
-          rangeValDecoded: "\xA0"
+          rangeValDecoded: "\xA0",
         });
       } else {
         if (opts.decode) {
@@ -371,7 +374,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             rangeFrom: beginningOfTheRange,
             rangeTo: i,
             rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0"
+            rangeValDecoded: "\xA0",
           });
         } else if (opts.entityCatcherCb) {
           opts.entityCatcherCb(beginningOfTheRange, i);
@@ -436,7 +439,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 );
                 if (tempRes && oneOfKnownEntities !== "nbsp") {
                   return gatheredSoFar.concat([
-                    { tempEnt: oneOfKnownEntities, tempRes }
+                    { tempEnt: oneOfKnownEntities, tempRes },
                   ]);
                 }
                 return gatheredSoFar;
@@ -465,7 +468,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangeFrom: whatsOnTheLeft,
                 rangeTo: tempRes.rightmostChar + 1,
                 rangeValEncoded: `&${tempEnt};`,
-                rangeValDecoded: decodedEntity
+                rangeValDecoded: decodedEntity,
               });
             }
           }
@@ -502,7 +505,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   )
                 ) {
                   return gatheredSoFar.concat([
-                    { tempEnt: oneOfKnownEntities, tempRes }
+                    { tempEnt: oneOfKnownEntities, tempRes },
                   ]);
                 }
                 return gatheredSoFar;
@@ -529,7 +532,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangeFrom: tempRes.leftmostChar,
                 rangeTo: i + 1,
                 rangeValEncoded: `&${tempEnt};`,
-                rangeValDecoded: decodedEntity
+                rangeValDecoded: decodedEntity,
               });
             }
           } else if (brokenNumericEntityStartAt !== null) {
@@ -539,7 +542,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               rangeFrom: brokenNumericEntityStartAt,
               rangeTo: i + 1,
               rangeValEncoded: null,
-              rangeValDecoded: null
+              rangeValDecoded: null,
             });
             brokenNumericEntityStartAt = null;
           }
@@ -580,7 +583,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
                     rangeValEncoded: null,
-                    rangeValDecoded: null
+                    rangeValDecoded: null,
                   });
                 } else if (opts.decode) {
                   rangesArr2.push({
@@ -589,7 +592,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${situation.charTrimmed};`,
-                    rangeValDecoded: decodedEntitysValue
+                    rangeValDecoded: decodedEntitysValue,
                   });
                 }
               } else {
@@ -599,7 +602,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
                   rangeValEncoded: null,
-                  rangeValDecoded: null
+                  rangeValDecoded: null,
                 });
               }
               if (opts.entityCatcherCb) {
@@ -634,7 +637,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValEncoded: `&${
                     brokenNamedEntities[situation.charTrimmed.toLowerCase()]
                   };`,
-                  rangeValDecoded: decodedEntity
+                  rangeValDecoded: decodedEntity,
                 });
               } else if (
                 Object.prototype.hasOwnProperty.call(
@@ -655,13 +658,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       str,
                       letterSeqStartAt - 1,
                       {
-                        i: true
+                        i: true,
                       },
                       ...oneOfKnownEntities.split("")
                     );
                     if (tempRes && oneOfKnownEntities !== "nbsp") {
                       return gatheredSoFar.concat([
-                        { tempEnt: oneOfKnownEntities, tempRes }
+                        { tempEnt: oneOfKnownEntities, tempRes },
                       ]);
                     }
                     return gatheredSoFar;
@@ -711,7 +714,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     issue = "bad-named-html-entity-malformed";
                     const matchingEntities = Object.keys(
                       allNamedEntities
-                    ).filter(entity =>
+                    ).filter((entity) =>
                       situation.charTrimmed
                         .toLowerCase()
                         .startsWith(entity.toLowerCase())
@@ -737,7 +740,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       if (filterLongest.length === 1) {
                         entitysValue = filterLongest[0];
                       } else {
-                        const missingLetters = filterLongest.map(entity => {
+                        const missingLetters = filterLongest.map((entity) => {
                           let count = 0;
                           for (let z = 0, len = entity.length; z < len; z++) {
                             if (entity[z] !== situation.charTrimmed[z]) {
@@ -748,7 +751,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                         });
                         if (
                           missingLetters.filter(
-                            val => val === Math.min(...missingLetters)
+                            (val) => val === Math.min(...missingLetters)
                           ).length > 1
                         ) {
                           rangesArr2.push({
@@ -760,7 +763,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                                 ? i + 1
                                 : tempRes.rightmostChar + 1,
                             rangeValEncoded: null,
-                            rangeValDecoded: null
+                            rangeValDecoded: null,
                           });
                           issue = false;
                         }
@@ -791,7 +794,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: endingIdx,
                       rangeValEncoded: `&${entitysValue};`,
-                      rangeValDecoded: decodedEntity
+                      rangeValDecoded: decodedEntity,
                     });
                   }
                   if (opts.entityCatcherCb) {
@@ -807,7 +810,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
                     rangeValEncoded: null,
-                    rangeValDecoded: null
+                    rangeValDecoded: null,
                   });
                 }
               }
@@ -833,7 +836,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             rangeFrom: whatsEvenMoreToTheLeft,
             rangeTo: i + 1,
             rangeValEncoded: null,
-            rangeValDecoded: null
+            rangeValDecoded: null,
           });
         }
       }
@@ -885,7 +888,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           ) &&
           entStartsWith[str[firstCharThatFollows]][
             str[secondCharThatFollows]
-          ].some(entity => {
+          ].some((entity) => {
             const matchEntityOnTheRight = rightSeq(
               str,
               toDeleteAllAmpEndHere - 1,
@@ -906,7 +909,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               rangeFrom: whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: `&${matchedTemp};`,
-              rangeValDecoded: decode(`&${matchedTemp};`)
+              rangeValDecoded: decode(`&${matchedTemp};`),
             });
           } else if (whatsOnTheLeft) {
             const rangeFrom = i;
@@ -921,7 +924,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangeValEncoded: `${spaceReplacement}&${matchedTemp};`,
                 rangeValDecoded: `${spaceReplacement}${decode(
                   `&${matchedTemp};`
-                )}`
+                )}`,
               });
             }
           }

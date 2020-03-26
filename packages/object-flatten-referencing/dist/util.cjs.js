@@ -19,13 +19,13 @@ function flattenObject(objOrig, opts) {
   const obj = clone(objOrig);
   let res = [];
   if (isObj(obj)) {
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       if (isObj(obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
       if (isArr(obj[key])) {
         res = res.concat(
-          obj[key].map(el => key + opts.objectKeyAndValueJoinChar + el)
+          obj[key].map((el) => key + opts.objectKeyAndValueJoinChar + el)
         );
       }
       if (isStr(obj[key])) {

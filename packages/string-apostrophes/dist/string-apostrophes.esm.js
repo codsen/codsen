@@ -17,7 +17,7 @@ function convertOne(
     value,
     convertEntities = true,
     convertApostrophes = true,
-    offsetBy
+    offsetBy,
   }
 ) {
   if (!Number.isInteger(to)) {
@@ -97,7 +97,7 @@ function convertOne(
           to + 2,
           convertEntities
             ? "&rsquo;n&rsquo;"
-            : `${rightSingleQuote}n${rightSingleQuote}`
+            : `${rightSingleQuote}n${rightSingleQuote}`,
         ]);
         if (typeof offsetBy === "function") {
           offsetBy(2);
@@ -148,7 +148,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rsquo;" : rightSingleQuote
+          convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -172,7 +172,7 @@ function convertOne(
           rangesArr.push([
             from,
             to,
-            convertEntities ? "&rsquo;" : rightSingleQuote
+            convertEntities ? "&rsquo;" : rightSingleQuote,
           ]);
         } else if (
           !convertApostrophes &&
@@ -204,7 +204,7 @@ function convertOne(
               convertEntities
                 ? "&rsquo;&rdquo;"
                 : `${rightSingleQuote}${rightDoubleQuote}`
-            }`
+            }`,
           ]);
           if (typeof offsetBy === "function") {
             offsetBy(1);
@@ -230,7 +230,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&lsquo;" : leftSingleQuote
+          convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -249,7 +249,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rsquo;" : rightSingleQuote
+          convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -287,7 +287,7 @@ function convertOne(
           rangesArr.push([
             from,
             to,
-            convertEntities ? "&lsquo;" : leftSingleQuote
+            convertEntities ? "&lsquo;" : leftSingleQuote,
           ]);
         } else if (
           str.slice(from, to) !==
@@ -297,7 +297,7 @@ function convertOne(
           rangesArr.push([
             from,
             to,
-            convertEntities ? "&rsquo;" : rightSingleQuote
+            convertEntities ? "&rsquo;" : rightSingleQuote,
           ]);
         }
       } else if (str.slice(from, to) !== "'" && value !== "'") {
@@ -313,7 +313,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&lsquo;" : leftSingleQuote
+          convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -332,7 +332,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rsquo;" : rightSingleQuote
+          convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -351,7 +351,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&lsquo;" : leftSingleQuote
+          convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -370,7 +370,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rsquo;" : rightSingleQuote
+          convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -424,7 +424,7 @@ function convertOne(
           rangesArr.push([
             from,
             to,
-            convertEntities ? "&rdquo;" : rightDoubleQuote
+            convertEntities ? "&rdquo;" : rightDoubleQuote,
           ]);
         } else if (
           !convertApostrophes &&
@@ -454,7 +454,7 @@ function convertOne(
             to + 1,
             convertEntities
               ? "&rdquo;&rsquo;"
-              : `${rightDoubleQuote}${rightSingleQuote}`
+              : `${rightDoubleQuote}${rightSingleQuote}`,
           ]);
           if (typeof offsetBy === "function") {
             offsetBy(1);
@@ -480,7 +480,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&ldquo;" : leftDoubleQuote
+          convertEntities ? "&ldquo;" : leftDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -499,7 +499,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rdquo;" : rightDoubleQuote
+          convertEntities ? "&rdquo;" : rightDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -518,7 +518,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&ldquo;" : leftDoubleQuote
+          convertEntities ? "&ldquo;" : leftDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -540,7 +540,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rdquo;" : rightDoubleQuote
+          convertEntities ? "&rdquo;" : rightDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -559,7 +559,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&ldquo;" : leftDoubleQuote
+          convertEntities ? "&ldquo;" : leftDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -578,7 +578,7 @@ function convertOne(
         rangesArr.push([
           from,
           to,
-          convertEntities ? "&rdquo;" : rightDoubleQuote
+          convertEntities ? "&rdquo;" : rightDoubleQuote,
         ]);
       } else if (
         !convertApostrophes &&
@@ -596,13 +596,13 @@ function convertAll(str, opts) {
   const preppedOpts = Object.assign(
     {
       convertApostrophes: true,
-      convertEntities: false
+      convertEntities: false,
     },
     opts
   );
   for (let i = 0, len = str.length; i < len; i++) {
     preppedOpts.from = i;
-    preppedOpts.offsetBy = idx => {
+    preppedOpts.offsetBy = (idx) => {
       i = i + idx;
     };
     const res = convertOne(str, preppedOpts);
@@ -612,7 +612,7 @@ function convertAll(str, opts) {
   }
   return {
     result: rangesApply(str, ranges),
-    ranges
+    ranges,
   };
 }
 

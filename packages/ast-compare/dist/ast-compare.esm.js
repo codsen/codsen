@@ -92,7 +92,7 @@ function compare(b, s, originalOpts) {
     hungryForWhitespace: false,
     matchStrictly: false,
     verboseWhenMismatches: false,
-    useWildcards: false
+    useWildcards: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
@@ -225,7 +225,7 @@ function compare(b, s, originalOpts) {
           return `The given object has key ${sKeys[i]} which the other-one does not have.`;
         }
         else if (
-          Object.keys(b).some(bKey =>
+          Object.keys(b).some((bKey) =>
             matcher.isMatch(bKey, sKeys[i], { caseSensitive: true })
           )
         ) {

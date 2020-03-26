@@ -14,7 +14,7 @@ function x(something) {
   const res = {
     value: something,
     hungry: false,
-    optional: false
+    optional: false,
   };
   if (
     (res.value.endsWith("?*") || res.value.endsWith("*?")) &&
@@ -202,7 +202,7 @@ function leftSeq(str, idx, ...args) {
     return left(str, idx);
   }
   const defaults = {
-    i: false
+    i: false,
   };
   let opts;
   if (isObj(args[0])) {
@@ -217,7 +217,7 @@ function rightSeq(str, idx, ...args) {
     return right(str, idx);
   }
   const defaults = {
-    i: false
+    i: false,
   };
   let opts;
   if (isObj(args[0])) {
@@ -341,7 +341,7 @@ function chompLeft(str, idx, ...args) {
     return null;
   }
   const defaults = {
-    mode: 0
+    mode: 0,
   };
   if (isObj(args[0])) {
     const opts = Object.assign({}, defaults, clone(args[0]));
@@ -367,7 +367,7 @@ function chompRight(str, idx, ...args) {
     return null;
   }
   const defaults = {
-    mode: 0
+    mode: 0,
   };
   if (isObj(args[0])) {
     const opts = Object.assign({}, defaults, clone(args[0]));

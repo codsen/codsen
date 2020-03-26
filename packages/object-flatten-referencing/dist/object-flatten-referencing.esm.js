@@ -24,13 +24,13 @@ function flattenObject(objOrig, opts) {
   const obj = clone(objOrig);
   let res = [];
   if (isObj(obj)) {
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       if (isObj(obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
       if (isArr(obj[key])) {
         res = res.concat(
-          obj[key].map(el => key + opts.objectKeyAndValueJoinChar + el)
+          obj[key].map((el) => key + opts.objectKeyAndValueJoinChar + el)
         );
       }
       if (isStr(obj[key])) {
@@ -186,7 +186,7 @@ function outer(originalInput1, originalReference1, opts1) {
       whatToDoWhenReferenceIsMissing: 0,
       mergeArraysWithLineBreaks: true,
       mergeWithoutTrailingBrIfLineContainsBr: true,
-      enforceStrictKeyset: true
+      enforceStrictKeyset: true,
     };
     opts = Object.assign({}, defaults, opts);
     opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
@@ -202,7 +202,7 @@ function outer(originalInput1, originalReference1, opts1) {
       wrap = false;
     }
     if (isObj(input)) {
-      Object.keys(input).forEach(key => {
+      Object.keys(input).forEach((key) => {
         const currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
@@ -211,13 +211,14 @@ function outer(originalInput1, originalReference1, opts1) {
             if (opts.dontWrapKeys.length > 0) {
               wrap =
                 wrap &&
-                !opts.dontWrapKeys.some(elem =>
+                !opts.dontWrapKeys.some((elem) =>
                   matcher.isMatch(key, elem, { caseSensitive: true })
                 );
             }
             if (opts.dontWrapPaths.length > 0) {
               wrap =
-                wrap && !opts.dontWrapPaths.some(elem => elem === currentPath);
+                wrap &&
+                !opts.dontWrapPaths.some((elem) => elem === currentPath);
             }
             if (
               opts.preventWrappingIfContains.length > 0 &&
@@ -225,7 +226,7 @@ function outer(originalInput1, originalReference1, opts1) {
             ) {
               wrap =
                 wrap &&
-                !opts.preventWrappingIfContains.some(elem =>
+                !opts.preventWrappingIfContains.some((elem) =>
                   input[key].includes(elem)
                 );
             }
@@ -249,11 +250,11 @@ function outer(originalInput1, originalReference1, opts1) {
               } else {
                 if (
                   input[key].every(
-                    el => typeof el === "string" || Array.isArray(el)
+                    (el) => typeof el === "string" || Array.isArray(el)
                   )
                 ) {
                   let allOK = true;
-                  input[key].forEach(oneOfElements => {
+                  input[key].forEach((oneOfElements) => {
                     if (
                       Array.isArray(oneOfElements) &&
                       !oneOfElements.every(isStr$1)

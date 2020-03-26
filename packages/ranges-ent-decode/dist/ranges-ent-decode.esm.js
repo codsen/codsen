@@ -28,7 +28,7 @@ function decode(str, originalOpts) {
   }
   const defaults = {
     isAttributeValue: false,
-    strict: false
+    strict: false,
   };
   let opts;
   if (!originalOpts) {
@@ -58,7 +58,7 @@ function decode(str, originalOpts) {
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
-        "&"
+        "&",
       ]);
     } else {
       const decoded = he.decode(chomped, opts);
@@ -66,7 +66,7 @@ function decode(str, originalOpts) {
         rangesArr.push([
           entityRegex.lastIndex - array1[0].length,
           entityRegex.lastIndex,
-          decoded
+          decoded,
         ]);
       }
     }

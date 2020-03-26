@@ -12,9 +12,9 @@ function pathNext(str) {
     return str;
   }
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(
-      str.lastIndexOf(".") + 1
-    ) + 1}`;
+    return `${str.slice(0, str.lastIndexOf(".") + 1)}${
+      +str.slice(str.lastIndexOf(".") + 1) + 1
+    }`;
   } else if (/^\d*$/.test(str)) {
     return `${+str + 1}`;
   }
@@ -29,9 +29,9 @@ function pathPrev(str) {
   if (extractedValue === "0") {
     return null;
   } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(
-      str.lastIndexOf(".") + 1
-    ) - 1}`;
+    return `${str.slice(0, str.lastIndexOf(".") + 1)}${
+      +str.slice(str.lastIndexOf(".") + 1) - 1
+    }`;
   } else if (/^\d*$/.test(str)) {
     return `${+str - 1}`;
   }

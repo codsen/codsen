@@ -45,7 +45,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
   const defaults = {
     stringOffset: 0,
     maxDistance: 1,
-    ignoreWhitespace: true
+    ignoreWhitespace: true,
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
@@ -97,21 +97,23 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         }
       }
     }
-    pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
+    pendingMatchesArr = pendingMatchesArr.filter(
+      (obj) => obj.patienceLeft >= 0
+    );
     const tempArr = pendingMatchesArr
-      .filter(obj => obj.pendingToCheck.length === 0)
-      .map(obj => obj.startsAt);
+      .filter((obj) => obj.pendingToCheck.length === 0)
+      .map((obj) => obj.startsAt);
     if (Array.isArray(tempArr) && tempArr.length) {
       const idxFrom = Math.min(...tempArr);
       const idxTo = i + (wasThisLetterMatched ? 1 : 0);
       if (str.slice(idxFrom, idxTo) !== refStr) {
         cb({
           idxFrom: idxFrom + opts.stringOffset,
-          idxTo: idxTo + opts.stringOffset
+          idxTo: idxTo + opts.stringOffset,
         });
       }
       pendingMatchesArr = pendingMatchesArr.filter(
-        obj => obj.pendingToCheck.length
+        (obj) => obj.pendingToCheck.length
       );
     }
     for (let y = 0; y < len2; y++) {
@@ -119,7 +121,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         const whatToPush = {
           startsAt: i,
           patienceLeft: patience - y,
-          pendingToCheck: Array.from(refStr.slice(y + 1))
+          pendingToCheck: Array.from(refStr.slice(y + 1)),
         };
         pendingMatchesArr.push(whatToPush);
         break;

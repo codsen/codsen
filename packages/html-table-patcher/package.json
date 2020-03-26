@@ -138,7 +138,7 @@
     "json-stringify-safe": "^5.0.1",
     "lect": "^0.12.3",
     "object-delete-key": "^1.9.19",
-    "rollup": "^2.1.0",
+    "rollup": "^2.2.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",

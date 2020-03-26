@@ -41,7 +41,7 @@ class Counter {
       assertsFailed: 0,
       suitesTotal: 0,
       suitesPassed: 0,
-      suitesFailed: 0
+      suitesFailed: 0,
     };
   }
   readLine(lineStr) {
@@ -84,12 +84,7 @@ class Counter {
     const magicKeyw = "# Subtest";
     if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
       this.canCount = true;
-      if (
-        lineStr
-          .slice(0, lineStr.indexOf(magicKeyw))
-          .trim()
-          .endsWith("{")
-      ) {
+      if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
         this.total.suitesTotal = this.total.suitesTotal + 1;
         if (this.thereWereFailuresInThisSuite === null) {
           this.thereWereFailuresInThisSuite = false;
@@ -145,11 +140,11 @@ function externalApi(something) {
         assertsFailed: 0,
         suitesTotal: 0,
         suitesPassed: 0,
-        suitesFailed: 0
+        suitesFailed: 0,
       };
     }
     const counter = new Counter();
-    stringPingLineByLine(something, line => {
+    stringPingLineByLine(something, (line) => {
       counter.readLine(line);
     });
     return counter.getTotal();

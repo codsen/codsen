@@ -20,13 +20,13 @@ function isStr(something) {
 const isArr = Array.isArray;
 const defaults = {
   cssStylesContent: "",
-  alwaysCenter: false
+  alwaysCenter: false,
 };
 function traverse(nodes = [], cb) {
   if (!isArr(nodes) || !nodes.length) {
     return;
   }
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     cb(node);
     traverse(node.children, cb);
   });
@@ -43,7 +43,7 @@ function patcher(html, generalOpts) {
     opts.cssStylesContent = undefined;
   }
   const dom = parser(html);
-  traverse(dom, node => {
+  traverse(dom, (node) => {
     if (
       node.type === "text" &&
       node["parent"] &&
@@ -85,12 +85,12 @@ function patcher(html, generalOpts) {
       const replacementTr = {
         type: "tag",
         name: "tr",
-        children: []
+        children: [],
       };
       const replacementTd = {
         type: "tag",
         name: "td",
-        children: [node]
+        children: [node],
       };
       if (colspan && colspan > 1) {
         if (!replacementTd["attribs"]) {
@@ -109,7 +109,7 @@ function patcher(html, generalOpts) {
       }
       const linebreak = {
         type: "text",
-        data: "\n"
+        data: "\n",
       };
       appendChild(replacementTr, replacementTd);
       appendChild(replacementTr, linebreak);
@@ -119,12 +119,12 @@ function patcher(html, generalOpts) {
       node.name === "table" &&
       node.children &&
       node.children.some(
-        node =>
+        (node) =>
           node.type === "tag" &&
           node.name === "tr" &&
           node.children &&
           node.children.some(
-            childNode =>
+            (childNode) =>
               childNode.type === "text" &&
               isStr(childNode.data) &&
               childNode.data.trim().length
@@ -133,7 +133,7 @@ function patcher(html, generalOpts) {
     ) {
       let centered = !!opts.alwaysCenter;
       const newChildren = [];
-      node.children.forEach(oneOfNodes => {
+      node.children.forEach((oneOfNodes) => {
         if (
           oneOfNodes.type === "text" &&
           isStr(oneOfNodes.data) &&
@@ -144,7 +144,7 @@ function patcher(html, generalOpts) {
         if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
           let consecutiveTDs = 0;
           let lastWasTd = false;
-          oneOfNodes.children.forEach(oneOfSubNodes => {
+          oneOfNodes.children.forEach((oneOfSubNodes) => {
             if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
               if (
                 !centered &&
@@ -172,7 +172,7 @@ function patcher(html, generalOpts) {
           });
           lastWasTd = false;
           let staging = [];
-          oneOfNodes.children.forEach(oneOfSubNodes => {
+          oneOfNodes.children.forEach((oneOfSubNodes) => {
             if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
               if (!lastWasTd) {
                 lastWasTd = true;
@@ -190,19 +190,19 @@ function patcher(html, generalOpts) {
                   newChildren.push({
                     type: "tag",
                     name: "tr",
-                    children: Array.from(staging)
+                    children: Array.from(staging),
                   });
                   staging = [];
                 }
                 const replacementTr = {
                   type: "tag",
                   name: "tr",
-                  children: []
+                  children: [],
                 };
                 const replacementTd = {
                   type: "tag",
                   name: "td",
-                  children: [oneOfSubNodes]
+                  children: [oneOfSubNodes],
                 };
                 if (consecutiveTDs > 0) {
                   if (!replacementTd.attribs) {
@@ -231,7 +231,7 @@ function patcher(html, generalOpts) {
               newChildren.push({
                 type: "tag",
                 name: "tr",
-                children: Array.from(staging)
+                children: Array.from(staging),
               });
               staging = [];
               staging.push(oneOfSubNodes);
@@ -241,7 +241,7 @@ function patcher(html, generalOpts) {
             newChildren.push({
               type: "tag",
               name: "tr",
-              children: Array.from(staging)
+              children: Array.from(staging),
             });
             staging = [];
           }

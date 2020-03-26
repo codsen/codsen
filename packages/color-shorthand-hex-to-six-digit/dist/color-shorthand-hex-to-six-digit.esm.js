@@ -32,7 +32,7 @@ function conv(originalInput) {
       input[i] = conv(input[i]);
     }
   } else if (isPlainObject(originalInput)) {
-    Object.keys(input).forEach(key => {
+    Object.keys(input).forEach((key) => {
       input[key] = conv(input[key]);
     });
   } else {
