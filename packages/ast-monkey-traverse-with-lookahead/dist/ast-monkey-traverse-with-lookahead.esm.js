@@ -22,8 +22,7 @@ function isObj(something) {
 }
 function astMonkeyTraverse(tree1, cb1) {
   const stop = { now: false };
-  function traverseInner(treeOriginal, callback, innerObj, stop) {
-    const tree = clone(treeOriginal);
+  function traverseInner(tree, callback, innerObj, stop) {
     let i;
     let len;
     innerObj = Object.assign({ depth: -1, path: "" }, innerObj);

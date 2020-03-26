@@ -42,8 +42,7 @@ function astMonkeyTraverse(tree1, cb1) {
   var stop = {
     now: false
   };
-  function traverseInner(treeOriginal, callback, innerObj, stop) {
-    var tree = clone(treeOriginal);
+  function traverseInner(tree, callback, innerObj, stop) {
     var i;
     var len;
     innerObj = Object.assign({
