@@ -68,7 +68,7 @@
         "leven": 2,
         "line-column": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 23,
+        "lodash.clonedeep": 22,
         "lodash.deburr": 1,
         "lodash.includes": 3,
         "lodash.intersection": 3,
@@ -79,7 +79,7 @@
         "lodash.min": 1,
         "lodash.partition": 1,
         "lodash.pull": 2,
-        "lodash.pullall": 5,
+        "lodash.pullall": 4,
         "lodash.trim": 4,
         "lodash.uniq": 7,
         "lodash.without": 1,
@@ -209,7 +209,7 @@
             "lodash.isplainobject": 30
         },
         {
-            "lodash.clonedeep": 23
+            "lodash.clonedeep": 22
         },
         {
             "meow": 13

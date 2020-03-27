@@ -4,25 +4,7 @@
 
 The aim of Codsen is to help people.
 
-We don't need billions of dollars to produce great programs.
-
-It's not about the money.
-
-We code courageosly, swiftly and aim big (feature-wise). There are no strings attached: stakeholders, meetings, approvals or whatever.
-
-Just a plain TDD JavaScript.
-
-The passion, the idea, _the drive_ comes from _above_, from outside of a person.
-
-We're just funneling what has been given to us from _above_.
-
-If you abuse what's given to you, if you _take_ rather than _give_, you lose the stream.
-
-But if you keep giving, the stream, the drive from above never ends.
-
-So, use these programs, profit from them, use them as ingredients to make even greater projects.
-
-We're all in the same boat.
+Use these programs, profit from them, use them as ingredients to make even greater projects.
 
 🍻
 
@@ -305,6 +287,6 @@ The npm script within each package's `package.json` "`dev`", the `"dev": "rollup
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 **[⬆ back to top](#codsen)**

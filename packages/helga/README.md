@@ -51,7 +51,7 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/helga.cjs.js` | 1003 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/helga.esm.js` | 730 B  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/helga.esm.js` | 732 B  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/helga.umd.js` | 2 KB   |
 
 **[⬆ back to top](#)**

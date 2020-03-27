@@ -36,7 +36,7 @@
     },
     {
         "name": "ast-compare",
-        "size": 8716,
+        "size": 7670,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -57,7 +57,7 @@
     },
     {
         "name": "ast-delete-object",
-        "size": 2056,
+        "size": 1973,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse"
@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 41353,
+        "size": 41171,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -252,7 +252,7 @@
     },
     {
         "name": "emlint",
-        "size": 313655,
+        "size": 313656,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -439,7 +439,7 @@
     },
     {
         "name": "object-delete-key",
-        "size": 2355,
+        "size": 2184,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
