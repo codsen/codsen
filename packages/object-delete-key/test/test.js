@@ -1005,7 +1005,7 @@ t.test("07.01 - does not mutate input args", (t) => {
 // Tests on arrays
 // ===============
 
-t.only("08.01 - delete a value which is empty string", (t) => {
+t.test("08.01 - delete a value which is empty string", (t) => {
   const actual = deleteKey(
     {
       a: ["b", "", "c"],
