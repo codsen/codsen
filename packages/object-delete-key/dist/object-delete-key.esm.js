@@ -21,11 +21,6 @@ function deleteKey(originalInput, originalOpts) {
       "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon."
     );
   }
-  if (arguments.length > 2) {
-    throw new Error(
-      "object-delete-key/deleteKey(): [THROW_ID_02] Third argument detected! Computer does not like this..."
-    );
-  }
   const defaults = {
     key: null,
     val: undefined,

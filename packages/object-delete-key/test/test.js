@@ -4,15 +4,12 @@ const t = require("tap");
 const parser = require("posthtml-parser");
 const deleteKey = require("../dist/object-delete-key.cjs");
 
-let actual;
-let intended;
-
 // ==============================
 // One-level plain objects
 // ==============================
 
 t.test("01.01 - delete a value which is string", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: "a",
       b: "b",
@@ -22,17 +19,16 @@ t.test("01.01 - delete a value which is string", (t) => {
       val: "b",
     }
   );
-  intended = {
+  const intended = {
     a: "a",
   };
 
   t.same(actual, intended, "01.01");
-
   t.end();
 });
 
 t.test("01.02 - delete a value which is plain object", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: "a",
       b: { c: "d" },
@@ -42,17 +38,16 @@ t.test("01.02 - delete a value which is plain object", (t) => {
       val: { c: "d" },
     }
   );
-  intended = {
+  const intended = {
     a: "a",
   };
 
   t.same(actual, intended, "01.02");
-
   t.end();
 });
 
 t.test("01.03 - delete two values, plain objects, cleanup=false", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
       b: { c: "d" },
@@ -63,17 +58,16 @@ t.test("01.03 - delete two values, plain objects, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  intended = {
+  const intended = {
     a: { e: [{}] },
   };
 
   t.same(actual, intended, "01.03");
-
   t.end();
 });
 
 t.test("01.04 - delete two values, plain objects, cleanup=true", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
       b: { c: "d" },
@@ -84,7 +78,7 @@ t.test("01.04 - delete two values, plain objects, cleanup=true", (t) => {
       cleanup: true,
     }
   );
-  intended = {};
+  const intended = {};
 
   t.same(actual, intended, "01.04");
   t.end();
@@ -93,7 +87,7 @@ t.test("01.04 - delete two values, plain objects, cleanup=true", (t) => {
 t.test(
   "01.05 - delete two values which are plain objects (on default)",
   (t) => {
-    actual = deleteKey(
+    const actual = deleteKey(
       {
         a: { e: [{ b: { c: "d" } }] },
         b: { c: "d" },
@@ -103,7 +97,7 @@ t.test(
         val: { c: "d" },
       }
     );
-    intended = {};
+    const intended = {};
 
     t.same(actual, intended, "01.05");
     t.end();
@@ -111,7 +105,7 @@ t.test(
 );
 
 t.test("01.06 - delete a value which is an array", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: "a",
       b: ["c", "d"],
@@ -121,7 +115,7 @@ t.test("01.06 - delete a value which is an array", (t) => {
       val: ["c", "d"],
     }
   );
-  intended = {
+  const intended = {
     a: "a",
   };
 
@@ -130,7 +124,7 @@ t.test("01.06 - delete a value which is an array", (t) => {
 });
 
 t.test("01.07 - delete two values which are arrays, cleanup=false", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
       b: ["c", "d"],
@@ -141,7 +135,7 @@ t.test("01.07 - delete two values which are arrays, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  intended = {
+  const intended = {
     a: { e: [{}] },
   };
 
@@ -150,7 +144,7 @@ t.test("01.07 - delete two values which are arrays, cleanup=false", (t) => {
 });
 
 t.test("01.08 - delete two values which are arrays, cleanup=default", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
       b: ["c", "d"],
@@ -160,7 +154,7 @@ t.test("01.08 - delete two values which are arrays, cleanup=default", (t) => {
       val: ["c", "d"],
     }
   );
-  intended = {};
+  const intended = {};
 
   t.same(actual, intended, "01.08");
   t.end();
@@ -171,51 +165,35 @@ t.test("01.08 - delete two values which are arrays, cleanup=default", (t) => {
 // ==============================
 
 t.test("02.01 - simple plain object, couple instances found", (t) => {
+  const source = {
+    a: "a",
+    b: "whatever",
+    c: [{ b: "whatever as well" }],
+  };
   t.same(
-    deleteKey(
-      {
-        a: "a",
-        b: "whatever",
-        c: [{ b: "whatever as well" }],
-      },
-      {
-        key: "b",
-      }
-    ),
+    deleteKey(source, {
+      key: "b",
+    }),
     {
       a: "a",
     },
     "02.01.01 - no settings"
   );
   t.same(
-    deleteKey(
-      {
-        a: "a",
-        b: "whatever",
-        c: [{ b: "whatever as well" }],
-      },
-      {
-        key: "b",
-        only: "o", // object
-      }
-    ),
+    deleteKey(source, {
+      key: "b",
+      only: "o", // object
+    }),
     {
       a: "a",
     },
     "02.01.02 - objects only (same outcome as 2.1.1)"
   );
   t.same(
-    deleteKey(
-      {
-        a: "a",
-        b: "whatever",
-        c: [{ b: "whatever as well" }],
-      },
-      {
-        key: "b",
-        only: "a", // array
-      }
-    ),
+    deleteKey(source, {
+      key: "b",
+      only: "a", // array
+    }),
     {
       a: "a",
       b: "whatever",
@@ -224,22 +202,26 @@ t.test("02.01 - simple plain object, couple instances found", (t) => {
     "02.01.03 - arrays only (none found)"
   );
   t.same(
-    deleteKey(
-      {
-        a: "a",
-        b: "whatever",
-        c: [{ b: "whatever as well" }],
-      },
-      {
-        key: "b",
-        only: "any", // same behaviour as defaults
-      }
-    ),
+    deleteKey(source, {
+      key: "b",
+      only: "any", // same behaviour as defaults
+    }),
     {
       a: "a",
     },
     "02.01.04 - only=any"
   );
+
+  // ensure no mutation happened:
+  t.same(source, {
+    a: "a",
+    b: "whatever",
+    c: [{ b: "whatever as well" }],
+  });
+  t.end();
+});
+
+t.test("02.02 - simple plain object, cleanup", (t) => {
   t.same(
     deleteKey(
       {
@@ -256,7 +238,7 @@ t.test("02.01 - simple plain object, couple instances found", (t) => {
       a: "a",
       b: "whatever",
     },
-    '02.01.05 - does not touch key within object; cleanup will remove up to and including key "c"'
+    '02.02.01 - does not touch key within object; cleanup will remove up to and including key "c"'
   );
   t.same(
     deleteKey(
@@ -274,7 +256,7 @@ t.test("02.01 - simple plain object, couple instances found", (t) => {
       b: "whatever",
       c: ["a"],
     },
-    "02.01.06 - does not touch key within array"
+    "02.02.02 - does not touch key within array"
   );
   t.same(
     deleteKey(
@@ -292,7 +274,7 @@ t.test("02.01 - simple plain object, couple instances found", (t) => {
       a: "apples",
       b: "whatever",
     },
-    "02.01.06 - does not touch key within array"
+    "02.02.03 - does not touch key within array"
   );
   t.same(
     deleteKey(
@@ -312,12 +294,12 @@ t.test("02.01 - simple plain object, couple instances found", (t) => {
       b: "whatever",
       c: [],
     },
-    "02.01.07 - same as #06 but without cleanup"
+    "02.02.04 - same as #06 but without cleanup"
   );
   t.end();
 });
 
-t.test("02.02 - nested array/plain objects, multiple instances found", (t) => {
+t.test("02.03 - nested array/plain objects, multiple instances found", (t) => {
   t.same(
     deleteKey(
       [
@@ -336,7 +318,7 @@ t.test("02.02 - nested array/plain objects, multiple instances found", (t) => {
       }
     ),
     [{ a: "a" }],
-    "02.02.01, default cleanup"
+    "02.03.01, default cleanup"
   );
   t.same(
     deleteKey(
@@ -357,7 +339,7 @@ t.test("02.02 - nested array/plain objects, multiple instances found", (t) => {
       }
     ),
     [{ a: "a" }],
-    "02.02.02, only=object (same)"
+    "02.03.02, only=object (same)"
   );
   t.same(
     deleteKey(
@@ -388,13 +370,13 @@ t.test("02.02 - nested array/plain objects, multiple instances found", (t) => {
         d: { e: { f: { g: { b: "and this, no matter how deep-nested" } } } },
       },
     ],
-    "02.02.03, only=array (nothing done)"
+    "02.03.03, only=array (nothing done)"
   );
   t.end();
 });
 
 t.test(
-  "02.03 - nested array/plain objects, multiple instances found, false",
+  "02.04 - nested array/plain objects, multiple instances found, false",
   (t) => {
     t.same(
       deleteKey(
@@ -425,13 +407,13 @@ t.test(
           d: { e: { f: { g: {} } } },
         },
       ],
-      "02.03 - cleanup=false"
+      "02.04 - cleanup=false"
     );
     t.end();
   }
 );
 
-t.test("02.04 - mixed array and object findings", (t) => {
+t.test("02.05 - mixed array and object findings", (t) => {
   t.same(
     deleteKey(
       [
@@ -454,7 +436,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
       }
     ),
     [{ a: "a" }],
-    "02.04.01, default cleanup"
+    "02.05.01, default cleanup"
   );
   t.same(
     deleteKey(
@@ -479,7 +461,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
       }
     ),
     [{ a: "a" }],
-    "02.04.02, only=any"
+    "02.05.02, only=any"
   );
   t.same(
     deleteKey(
@@ -501,7 +483,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
         c: ["b", "b"],
       },
     ],
-    "02.04.03, only=object, mini case"
+    "02.05.03, only=object, mini case"
   );
   t.same(
     deleteKey(
@@ -536,7 +518,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
         d: { e: { f: { g: [{ b: "and this, no matter how deep-nested" }] } } },
       },
     ],
-    "02.04.04, only=arrays"
+    "02.05.04, only=arrays"
   );
   t.same(
     deleteKey(
@@ -569,7 +551,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
         d: { e: { f: { g: ["b"] } } },
       },
     ],
-    "02.04.05, only=object, bigger example"
+    "02.05.05, only=object, bigger example"
   );
   t.end();
 });
@@ -579,7 +561,7 @@ t.test("02.04 - mixed array and object findings", (t) => {
 // ==============================
 
 t.test("03.01 - targets all keys by value, cleanup=true", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: "a",
       b: "whatever",
@@ -589,7 +571,7 @@ t.test("03.01 - targets all keys by value, cleanup=true", (t) => {
       val: "whatever",
     }
   );
-  intended = {
+  const intended = {
     a: "a",
   };
 
@@ -598,7 +580,7 @@ t.test("03.01 - targets all keys by value, cleanup=true", (t) => {
 });
 
 t.test("03.02 - targets all keys by value, cleanup=false", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: "a",
       b: "whatever",
@@ -609,7 +591,7 @@ t.test("03.02 - targets all keys by value, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  intended = {
+  const intended = {
     a: "a",
     c: [{}],
   };
@@ -629,7 +611,7 @@ t.test("03.02 - targets all keys by value, cleanup=false", (t) => {
 t.test(
   '04.01 - deletion limited to level where non-empty "uncles" exist',
   (t) => {
-    actual = deleteKey(
+    const actual = deleteKey(
       {
         a: "a",
         b: [[{}]],
@@ -644,7 +626,7 @@ t.test(
         cleanup: true,
       }
     );
-    intended = {
+    const intended = {
       a: "a",
       b: [[{}]],
       c: "c",
@@ -656,7 +638,7 @@ t.test(
 );
 
 t.test("04.02 - deletion of empty things is limited in arrays too", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     [
       [
         {
@@ -675,7 +657,7 @@ t.test("04.02 - deletion of empty things is limited in arrays too", (t) => {
       cleanup: true,
     }
   );
-  intended = [
+  const intended = [
     {},
     {
       b: "b",
@@ -753,14 +735,6 @@ t.test("05.06 - wrong input args - throws", (t) => {
   t.end();
 });
 
-t.test("05.07 - wrong input args - throws", (t) => {
-  const error1 = t.throws(() => {
-    deleteKey({ a: "a" }, { key: 1 }, "third arg");
-  });
-  t.match(error1.message, /THROW_ID_02/);
-  t.end();
-});
-
 // ==============================
 // Tests on real HTML
 // ==============================
@@ -783,12 +757,12 @@ t.test("06.01 - deletes from real parsed HTML", (t) => {
 </body>
 </html>
 `;
-  actual = deleteKey(parser(html), {
+  const actual = deleteKey(parser(html), {
     key: "class",
     val: "",
     cleanup: true,
   });
-  intended = parser(`
+  const intended = parser(`
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -810,7 +784,7 @@ t.test("06.01 - deletes from real parsed HTML", (t) => {
 });
 
 t.test("06.02 - real parsed HTML #1", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     [
       "<!DOCTYPE html>",
       {
@@ -871,7 +845,7 @@ t.test("06.02 - real parsed HTML #1", (t) => {
       val: "",
     }
   );
-  intended = [
+  const intended = [
     "<!DOCTYPE html>",
     {
       tag: "html",
@@ -927,7 +901,7 @@ t.test("06.02 - real parsed HTML #1", (t) => {
 });
 
 t.test("06.03 - real parsed HTML #2", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     [
       {
         tag: "table",
@@ -942,7 +916,7 @@ t.test("06.03 - real parsed HTML #2", (t) => {
       val: "",
     }
   );
-  intended = [
+  const intended = [
     {
       tag: "table",
       attrs: {
@@ -955,7 +929,7 @@ t.test("06.03 - real parsed HTML #2", (t) => {
 });
 
 t.test("06.04 - real parsed HTML #3", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: {
         b: "",
@@ -969,7 +943,7 @@ t.test("06.04 - real parsed HTML #3", (t) => {
       cleanup: false,
     }
   );
-  intended = {
+  const intended = {
     a: {
       c: "d",
       e: "f",
@@ -980,7 +954,7 @@ t.test("06.04 - real parsed HTML #3", (t) => {
 });
 
 t.test("06.05 - real parsed HTML #4", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: {
         b: "",
@@ -993,7 +967,7 @@ t.test("06.05 - real parsed HTML #4", (t) => {
       cleanup: true,
     }
   );
-  intended = {
+  const intended = {
     a: {
       c: "d",
     },
@@ -1031,8 +1005,8 @@ t.test("07.01 - does not mutate input args", (t) => {
 // Tests on arrays
 // ===============
 
-t.test("08.01 - delete a value which is empty string", (t) => {
-  actual = deleteKey(
+t.only("08.01 - delete a value which is empty string", (t) => {
+  const actual = deleteKey(
     {
       a: ["b", "", "c"],
     },
@@ -1040,7 +1014,7 @@ t.test("08.01 - delete a value which is empty string", (t) => {
       key: "",
     }
   );
-  intended = {
+  const intended = {
     a: ["b", "c"],
   };
 
@@ -1049,7 +1023,7 @@ t.test("08.01 - delete a value which is empty string", (t) => {
 });
 
 t.test("08.02 - delete a value which is non-empty string", (t) => {
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: ["b", "", "c", "b"],
     },
@@ -1057,7 +1031,7 @@ t.test("08.02 - delete a value which is non-empty string", (t) => {
       key: "b",
     }
   );
-  intended = {
+  const intended = {
     a: ["", "c"],
   };
 
@@ -1068,7 +1042,7 @@ t.test("08.02 - delete a value which is non-empty string", (t) => {
 t.test(
   "08.03 - delete a value which is non-empty string, with wildcards",
   (t) => {
-    actual = deleteKey(
+    const actual = deleteKey(
       {
         a: ["beep", "", "c", "boop"],
       },
@@ -1076,7 +1050,7 @@ t.test(
         key: "b*p",
       }
     );
-    intended = {
+    const intended = {
       a: ["", "c"],
     };
 
@@ -1088,7 +1062,7 @@ t.test(
 t.test(
   "08.04 - delete a value which is a non-empty string, with wildcards, only on arrays",
   (t) => {
-    actual = deleteKey(
+    const actual = deleteKey(
       {
         a: ["beep", "", "c", "boop"],
         bap: "bap",
@@ -1098,7 +1072,7 @@ t.test(
         only: "array",
       }
     );
-    intended = {
+    const intended = {
       a: ["", "c"],
       bap: "bap",
     };
@@ -1115,7 +1089,7 @@ t.test(
 t.test("09.01 - wildcard deletes two keys have string values", (t) => {
   // by key
 
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       axx: "xxxx",
       ayy: "yyyy",
@@ -1125,16 +1099,19 @@ t.test("09.01 - wildcard deletes two keys have string values", (t) => {
       key: "a*",
     }
   );
-  intended = {
+  const intended = {
     b: "b",
   };
 
   t.same(actual, intended, "09.01.02");
+  t.end();
+});
 
+t.test("09.01 - wildcard deletes two keys have string values", (t) => {
   // by value
   // ---------------------------------------------------------------------------
 
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       axx: "xxxx",
       ayy: "yyyy",
@@ -1144,7 +1121,7 @@ t.test("09.01 - wildcard deletes two keys have string values", (t) => {
       key: "*xx",
     }
   );
-  intended = {
+  const intended = {
     ayy: "yyyy",
     b: "b",
   };
@@ -1153,8 +1130,11 @@ t.test("09.01 - wildcard deletes two keys have string values", (t) => {
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
+  t.end();
+});
 
-  actual = deleteKey(
+t.test("09.01 - wildcard deletes two keys have string values", (t) => {
+  const actual = deleteKey(
     {
       axx: "yyy x",
       notmatching_key: "yyy x",
@@ -1167,7 +1147,7 @@ t.test("09.01 - wildcard deletes two keys have string values", (t) => {
       val: "*x",
     }
   );
-  intended = {
+  const intended = {
     notmatching_key: "yyy x",
     azz: "not matching value",
     b: "b",
@@ -1180,7 +1160,7 @@ t.test("09.01 - wildcard deletes two keys have string values", (t) => {
 t.test(
   "09.02 - wildcard deletes keys with plain object values, by key",
   (t) => {
-    actual = deleteKey(
+    const actual = deleteKey(
       {
         apples: "a",
         brambles: { c: "d" },
@@ -1190,7 +1170,7 @@ t.test(
         key: "*les",
       }
     );
-    intended = {
+    const intended = {
       crawls: "e",
     };
 
@@ -1204,7 +1184,7 @@ t.test("09.03 - wildcard delete two values, plain objects", (t) => {
   // cleanup=false
   // ---------------------------------------------------------------------------
 
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ brunch: { c: "d" } }] },
       brother: { c: "d" },
@@ -1215,17 +1195,20 @@ t.test("09.03 - wildcard delete two values, plain objects", (t) => {
       cleanup: false,
     }
   );
-  intended = {
+  const intended = {
     a: { e: [{}] },
   };
 
   t.same(actual, intended, "09.03.01");
+  t.end();
+});
 
+t.test("09.03 - wildcard delete two values, plain objects", (t) => {
   //
   // cleanup=true
   // ---------------------------------------------------------------------------
 
-  actual = deleteKey(
+  const actual = deleteKey(
     {
       a: { e: [{ brunch: { c: "d" } }] },
       brother: { c: "d" },
@@ -1236,7 +1219,7 @@ t.test("09.03 - wildcard delete two values, plain objects", (t) => {
       cleanup: true,
     }
   );
-  intended = {};
+  const intended = {};
 
   t.same(actual, intended, "09.03.02");
   t.end();
