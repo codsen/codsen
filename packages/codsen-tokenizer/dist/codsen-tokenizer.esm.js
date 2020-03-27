@@ -466,32 +466,25 @@ function tokenizer(str, originalOpts) {
         if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
           return wholeEspTagLump.length - whichLayerToMatch.openingLump.length;
         }
-        let uniqueCharsListFromGuessedClosingLumpArr = whichLayerToMatch.guessedClosingLump
-          .split("")
-          .reduce((acc, curr) => {
-            if (!acc.includes(curr)) {
-              return acc.concat([curr]);
-            }
-            return acc;
-          }, []);
+        let uniqueCharsListFromGuessedClosingLumpArr = new Set(
+          whichLayerToMatch.guessedClosingLump
+        );
         let found = 0;
         for (let y = 0, len2 = wholeEspTagLump.length; y < len2; y++) {
           if (
-            !uniqueCharsListFromGuessedClosingLumpArr.includes(
-              wholeEspTagLump[y]
-            ) &&
+            !uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y]) &&
             found > 1
           ) {
             return y;
           }
           if (
-            uniqueCharsListFromGuessedClosingLumpArr.includes(
-              wholeEspTagLump[y]
-            )
+            uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])
           ) {
             found++;
-            uniqueCharsListFromGuessedClosingLumpArr = uniqueCharsListFromGuessedClosingLumpArr.filter(
-              (el) => el !== wholeEspTagLump[y]
+            uniqueCharsListFromGuessedClosingLumpArr = new Set(
+              [...uniqueCharsListFromGuessedClosingLumpArr].filter(
+                (el) => el !== wholeEspTagLump[y]
+              )
             );
           }
         }
