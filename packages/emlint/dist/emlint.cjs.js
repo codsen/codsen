@@ -4653,7 +4653,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     offset: 0
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  var listOfUniqueNames = [];
+  var listOfUniqueNames = new Set();
   splitByWhitespace(
   str,
   function (_ref) {
@@ -4669,8 +4669,8 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
         fix: null
       });
     }
-    if (!listOfUniqueNames.includes(extractedName)) {
-      listOfUniqueNames.push(extractedName);
+    if (!listOfUniqueNames.has(extractedName)) {
+      listOfUniqueNames.add(extractedName);
     } else {
       var deleteFrom = charFrom;
       var deleteTo = charTo;

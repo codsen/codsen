@@ -22,7 +22,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     `022 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
   );
 
-  const listOfUniqueNames = [];
+  const listOfUniqueNames = new Set();
 
   splitByWhitespace(
     //
@@ -67,8 +67,8 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
       }
 
       // check for unique-ness
-      if (!listOfUniqueNames.includes(extractedName)) {
-        listOfUniqueNames.push(extractedName);
+      if (!listOfUniqueNames.has(extractedName)) {
+        listOfUniqueNames.add(extractedName);
       } else {
         let deleteFrom = charFrom;
         let deleteTo = charTo;

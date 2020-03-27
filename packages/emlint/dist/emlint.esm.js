@@ -5049,7 +5049,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     offset: 0,
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  const listOfUniqueNames = [];
+  const listOfUniqueNames = new Set();
   splitByWhitespace(
     str,
     ([charFrom, charTo]) => {
@@ -5062,8 +5062,8 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
           fix: null,
         });
       }
-      if (!listOfUniqueNames.includes(extractedName)) {
-        listOfUniqueNames.push(extractedName);
+      if (!listOfUniqueNames.has(extractedName)) {
+        listOfUniqueNames.add(extractedName);
       } else {
         let deleteFrom = charFrom;
         let deleteTo = charTo;
