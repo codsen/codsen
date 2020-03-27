@@ -20,8 +20,9 @@ function isObj(something) {
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function astMonkeyTraverseWithLookahead(tree1, cb1) {
+function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
   const stop = { now: false };
+  const stash = [];
   function traverseInner(tree, callback, innerObj, stop) {
     innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
     innerObj.depth += 1;
@@ -73,7 +74,32 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
     }
     return tree;
   }
-  return traverseInner(tree1, cb1, {}, stop);
+  function reportFirstFromStash() {
+    const currentElem = stash.shift();
+    currentElem[2].next = [];
+    for (let i = 0; i < lookahead; i++) {
+      if (stash[i]) {
+        currentElem[2].next.push(
+          clone([stash[i][0], stash[i][1], stash[i][2]])
+        );
+      } else {
+        break;
+      }
+    }
+    cb1(...currentElem);
+  }
+  function intermediary(...incoming) {
+    stash.push([...incoming]);
+    if (stash.length > lookahead) {
+      reportFirstFromStash();
+    }
+  }
+  traverseInner(tree1, intermediary, {}, stop);
+  if (stash.length) {
+    for (let i = 0, len = stash.length; i < len; i++) {
+      reportFirstFromStash();
+    }
+  }
 }
 
 export default astMonkeyTraverseWithLookahead;

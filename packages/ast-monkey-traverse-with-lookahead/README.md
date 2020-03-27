@@ -19,7 +19,9 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
+- [Looking into the future](#looking-into-the-future)
 - [Stopping](#stopping)
+- [Why this program is read-only](#why-this-program-is-read-only)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -58,15 +60,15 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                             | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey-traverse-with-lookahead.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey-traverse-with-lookahead.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey-traverse-with-lookahead.umd.js` | 10 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey-traverse-with-lookahead.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey-traverse-with-lookahead.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey-traverse-with-lookahead.umd.js` | 11 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-Original `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/)) had means to edit the AST and couldn't give you the next few values that's coming up. It only "saw" the current thing it traversed.
+Original `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/)) had means to edit the AST and couldn't give you the next few values that are coming up. It only "saw" the current thing it traversed.
 
 While working on `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)), I found that: A) I don't need AST editing functionality (perf win) and B) I need to see what nodes are coming next.
 
@@ -114,15 +116,211 @@ you get four variables:
 If `traverse2()` is currently traversing a plain object, going each key/value pair, `key` will be the object's current key and `val` will be the value.
 If `traverse2()` is currently traversing an array, going through all elements, a `key` will be the current element and `val` will be `null`.
 
-| `innerObj` object's key | Type                                                  | Description                                                                                                                                                                                                                                                                                                                                     |
-| ----------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{`                     |                                                       |
-| `depth`                 | Integer number                                        | Zero is root, topmost level. Every level deeper increments `depth` by `1`.                                                                                                                                                                                                                                                                      |
-| `path`                  | String                                                | The path to the current value. The path uses exactly the same notation as the popular [object-path](https://www.npmjs.com/package/object-path) package. For example, `a.1.b` would be: input object's key `a` > value is array, take `1`st index (second element in a row, since indexes start from zero) > value is object, take it's key `b`. |
-| `topmostKey`            | String                                                | When you are very deep, this is the topmost parent's key.                                                                                                                                                                                                                                                                                       |
-| `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                      |
-| `parentType`            | String                                                | Either `array` if parent is array or `object` if parent is **a plain object** (not the "object" type, which includes functions, arrays etc.).                                                                                                                                                                                                   |
-| `}`                     |                                                       |
+| `innerObj` object's key | Type                                                      | Description                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{`                     |                                                           |
+| `depth`                 | Integer number                                            | Zero is the root, topmost level. Every level deeper increments `depth` by `1`.                                                                                                                                                                                                                                                                        |
+| `path`                  | String                                                    | The path to the current value. The path uses exactly the same notation as the popular [object-path](https://www.npmjs.com/package/object-path) package. For example, `a.1.b` would be: input object's key `a` > value is an array, take `1`st index (second element in a row, since indexes start from zero) > value is an object, take it's key `b`. |
+| `topmostKey`            | String                                                    | When you are very deep, this is the topmost parent's key.                                                                                                                                                                                                                                                                                             |
+| `parent`                | Type of the parent of the current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                            |
+| `parentType`            | String                                                    | Either `array` if parent is array or `object` if parent is **a plain object** (not the "object" type, which includes functions, arrays etc.).                                                                                                                                                                                                         |
+| `next`                  | Array                                                     | Zero or more arrays, each representing a set of callback call arguments that will be reported next.                                                                                                                                                                                                                                                   |
+| `}`                     |                                                           |
+
+**[⬆ back to top](#)**
+
+## Looking into the future
+
+The whole point of this program is being able to "see" the future. Otherwise, you're be using vanilla `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/)).
+
+You can request how many sets from the future you want to have reported using the third argument, for example:
+
+```js
+const gathered = [];
+traverse(
+  input,
+  (key1, val1, innerObj) => {
+    gathered.push([key1, val1, innerObj]);
+  },
+  2 // <---------------- ! lookahead
+);
+```
+
+Now, the `innerObj.next` array will be populated with that many upcoming sets of values.
+
+For example, consider this AST:
+
+```js
+const ast = [
+  {
+    a: "b",
+  },
+  {
+    c: "d",
+  },
+  {
+    e: "f",
+  },
+];
+```
+
+If you didn't request lookahead, if it's default zero, and you traversed it simply pushing all inputs into an array:
+
+```js
+const gathered = [];
+traverse(
+  input,
+  (key1, val1, innerObj) => {
+    gathered.push([key1, val1, innerObj]);
+  },
+  0 // <--- hardcoded lookahead, zero sets requested from the future, but it can be omitted
+);
+```
+
+You'd get `gathered` populated with:
+
+```
+[
+  // ===================
+  [
+    {
+      a: "b",
+    },
+    null,
+    {
+      depth: 0,
+      path: "0",
+      parent: [
+        {
+          a: "b",
+        },
+        {
+          c: "d",
+        },
+        {
+          e: "f",
+        },
+      ],
+      parentType: "array",
+      next: [],
+    },
+  ],
+  // ===================
+  [
+    "a",
+    "b",
+    {
+      depth: 1,
+      path: "0.a",
+      parent: {
+        a: "b",
+      },
+      parentType: "object",
+      next: [],
+    },
+  ],
+  // ===================
+  ...
+```
+
+Notice above, `next: []` is empty. No future sets are reported.
+
+But, if you request the next set to be reported:
+
+```js
+const gathered = [];
+traverse(
+  input,
+  (key1, val1, innerObj) => {
+    gathered.push([key1, val1, innerObj]);
+  },
+  1 // <---------------- ! lookahead
+);
+```
+
+You'd get `gathered` populated with:
+
+```
+[
+  // ===================
+  [
+    {
+      a: "b",
+    },
+    null,
+    {
+      depth: 0,
+      path: "0",
+      parent: [
+        {
+          a: "b",
+        },
+        {
+          c: "d",
+        },
+        {
+          e: "f",
+        },
+      ],
+      parentType: "array",
+      next: [
+        [
+          "a",
+          "b",
+          {
+            depth: 1,
+            path: "0.a",
+            parent: {
+              a: "b",
+            },
+            parentType: "object",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    "a",
+    "b",
+    {
+      depth: 1,
+      path: "0.a",
+      parent: {
+        a: "b",
+      },
+      parentType: "object",
+      next: [
+        [
+          {
+            c: "d",
+          },
+          null,
+          {
+            depth: 0,
+            path: "1",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  ...
+```
+
+Notice how `innerObj.next` is reporting one set from the future, as you requested.
 
 **[⬆ back to top](#)**
 
@@ -165,6 +363,18 @@ console.log(gathered);
 
 Notice how there were no more gathered paths after "b", only `["a", "b"]`.
 
+Stopping is not affected by lookahead, it does not matter how many sets from the future you request, a stopping will happen in the right place.
+
+**[⬆ back to top](#)**
+
+## Why this program is read-only
+
+This program is aimed at AST traversal, for example, to be used in `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)), to enable the parser to patch up AST errors. When parser sees something wrong, it needs to see the next AST node to make a decision: is it something missing or is it something rogue what should be skipped?
+
+Normally, people don't mutate the AST - if you do need to delete something from it, note the path and perform the operation outside of the traversal.
+
+On the other hand, the deletion feature impacts performance. That's why we made this program read-only.
+
 **[⬆ back to top](#)**
 
 ## Contributing
@@ -188,7 +398,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead
-[cov-img]: https://img.shields.io/badge/coverage-94.87%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-85.51%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey-traverse-with-lookahead

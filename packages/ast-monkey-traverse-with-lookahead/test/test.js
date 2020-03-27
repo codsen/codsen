@@ -8,7 +8,7 @@ const traverse = require("../dist/ast-monkey-traverse-with-lookahead.cjs");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverses array of objects`,
+  `01.01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 0`,
   (t) => {
     const input = [
       {
@@ -58,6 +58,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -71,6 +72,7 @@ t.test(
               a: "b",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -94,6 +96,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -107,6 +110,7 @@ t.test(
               c: "d",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -130,6 +134,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -143,11 +148,562 @@ t.test(
               e: "f",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
       ],
       "01.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 1`,
+  (t) => {
+    const input = [
+      {
+        a: "b",
+      },
+      {
+        c: "d",
+      },
+      {
+        e: "f",
+      },
+    ];
+    const gathered = [];
+
+    traverse(
+      input,
+      (key1, val1, innerObj) => {
+        gathered.push([key1, val1, innerObj]);
+      },
+      1 // <---------------- ! lookahead
+    );
+    // console.log(
+    //   `- 01.02 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
+    //     gathered,
+    //     null,
+    //     4
+    //   )}`
+    // );
+
+    t.same(
+      gathered,
+      [
+        // ===================
+        [
+          {
+            a: "b",
+          },
+          null,
+          {
+            depth: 0,
+            path: "0",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "a",
+                "b",
+                {
+                  depth: 1,
+                  path: "0.a",
+                  parent: {
+                    a: "b",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "a",
+          "b",
+          {
+            depth: 1,
+            path: "0.a",
+            parent: {
+              a: "b",
+            },
+            parentType: "object",
+            next: [
+              [
+                {
+                  c: "d",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "1",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          {
+            c: "d",
+          },
+          null,
+          {
+            depth: 0,
+            path: "1",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "c",
+                "d",
+                {
+                  depth: 1,
+                  path: "1.c",
+                  parent: {
+                    c: "d",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "c",
+          "d",
+          {
+            depth: 1,
+            path: "1.c",
+            parent: {
+              c: "d",
+            },
+            parentType: "object",
+            next: [
+              [
+                {
+                  e: "f",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "2",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          {
+            e: "f",
+          },
+          null,
+          {
+            depth: 0,
+            path: "2",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "e",
+                "f",
+                {
+                  depth: 1,
+                  path: "2.e",
+                  parent: {
+                    e: "f",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "e",
+          "f",
+          {
+            depth: 1,
+            path: "2.e",
+            parent: {
+              e: "f",
+            },
+            parentType: "object",
+            next: [],
+          },
+        ],
+        // ===================
+      ],
+      "01.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 2`,
+  (t) => {
+    const input = [
+      {
+        a: "b",
+      },
+      {
+        c: "d",
+      },
+      {
+        e: "f",
+      },
+    ];
+    const gathered = [];
+
+    traverse(
+      input,
+      (key1, val1, innerObj) => {
+        gathered.push([key1, val1, innerObj]);
+      },
+      2 // <---------------- ! lookahead
+    );
+    // console.log(
+    //   `- 01.03 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
+    //     gathered,
+    //     null,
+    //     4
+    //   )}`
+    // );
+
+    t.same(
+      gathered,
+      [
+        // ===================
+        [
+          {
+            a: "b",
+          },
+          null,
+          {
+            depth: 0,
+            path: "0",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "a",
+                "b",
+                {
+                  depth: 1,
+                  path: "0.a",
+                  parent: {
+                    a: "b",
+                  },
+                  parentType: "object",
+                },
+              ],
+              [
+                {
+                  c: "d",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "1",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "a",
+          "b",
+          {
+            depth: 1,
+            path: "0.a",
+            parent: {
+              a: "b",
+            },
+            parentType: "object",
+            next: [
+              [
+                {
+                  c: "d",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "1",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+              [
+                "c",
+                "d",
+                {
+                  depth: 1,
+                  path: "1.c",
+                  parent: {
+                    c: "d",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          {
+            c: "d",
+          },
+          null,
+          {
+            depth: 0,
+            path: "1",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "c",
+                "d",
+                {
+                  depth: 1,
+                  path: "1.c",
+                  parent: {
+                    c: "d",
+                  },
+                  parentType: "object",
+                },
+              ],
+              [
+                {
+                  e: "f",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "2",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "c",
+          "d",
+          {
+            depth: 1,
+            path: "1.c",
+            parent: {
+              c: "d",
+            },
+            parentType: "object",
+            next: [
+              [
+                {
+                  e: "f",
+                },
+                null,
+                {
+                  depth: 0,
+                  path: "2",
+                  parent: [
+                    {
+                      a: "b",
+                    },
+                    {
+                      c: "d",
+                    },
+                    {
+                      e: "f",
+                    },
+                  ],
+                  parentType: "array",
+                },
+              ],
+              [
+                "e",
+                "f",
+                {
+                  depth: 1,
+                  path: "2.e",
+                  parent: {
+                    e: "f",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          {
+            e: "f",
+          },
+          null,
+          {
+            depth: 0,
+            path: "2",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+            next: [
+              [
+                "e",
+                "f",
+                {
+                  depth: 1,
+                  path: "2.e",
+                  parent: {
+                    e: "f",
+                  },
+                  parentType: "object",
+                },
+              ],
+            ],
+          },
+        ],
+        // ===================
+        [
+          "e",
+          "f",
+          {
+            depth: 1,
+            path: "2.e",
+            parent: {
+              e: "f",
+            },
+            parentType: "object",
+            next: [],
+          },
+        ],
+        // ===================
+      ],
+      "01.03"
     );
     t.end();
   }
@@ -181,6 +737,7 @@ t.test(
             path: "0",
             parent: ["a", undefined, "b"],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -191,6 +748,7 @@ t.test(
             path: "1",
             parent: ["a", undefined, "b"],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -201,6 +759,7 @@ t.test(
             path: "2",
             parent: ["a", null, "b"],
             parentType: "array",
+            next: [],
           },
         ],
       ],
@@ -248,6 +807,7 @@ t.test(
               c: "m",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -264,6 +824,7 @@ t.test(
               c: "m",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -280,6 +841,7 @@ t.test(
               c: "m",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -323,6 +885,7 @@ t.test(
               a: ["1", "2", "3"],
             },
             parentType: "object",
+            next: [],
           },
         ],
         [
@@ -334,6 +897,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -345,6 +909,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -356,6 +921,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
       ],
@@ -455,6 +1021,7 @@ t.test(
               },
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -490,6 +1057,7 @@ t.test(
               },
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -506,6 +1074,7 @@ t.test(
               e: "e_val",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -522,6 +1091,7 @@ t.test(
               e: "e_val",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -538,6 +1108,7 @@ t.test(
               e: "e_val",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -581,6 +1152,7 @@ t.test(
               },
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -615,6 +1187,7 @@ t.test(
               },
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -637,6 +1210,7 @@ t.test(
               l: ["7", "8", "9"],
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -649,6 +1223,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -661,6 +1236,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -673,6 +1249,7 @@ t.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -701,6 +1278,7 @@ t.test(
               l: ["7", "8", "9"],
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -719,6 +1297,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -737,6 +1316,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -757,6 +1337,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -771,6 +1352,7 @@ t.test(
               j: "k",
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -793,6 +1375,7 @@ t.test(
               l: ["7", "8", "9"],
             },
             parentType: "object",
+            next: [],
           },
         ],
         // ===================
@@ -805,6 +1388,7 @@ t.test(
             topmostKey: "a",
             parent: ["7", "8", "9"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -817,6 +1401,7 @@ t.test(
             topmostKey: "a",
             parent: ["7", "8", "9"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -829,6 +1414,7 @@ t.test(
             topmostKey: "a",
             parent: ["7", "8", "9"],
             parentType: "array",
+            next: [],
           },
         ],
         // ===================
@@ -872,6 +1458,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -888,6 +1475,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -906,6 +1494,7 @@ t.test(
               },
             ],
             parentType: "array",
+            next: [],
           },
         ],
         [
@@ -918,6 +1507,7 @@ t.test(
               a: "3",
             },
             parentType: "object",
+            next: [],
           },
         ],
       ],

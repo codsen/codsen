@@ -29,6 +29,39 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
 function trimFirstDot(str) {
   if (typeof str === "string" && str[0] === ".") {
     return str.slice(1);
@@ -39,9 +72,11 @@ function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function astMonkeyTraverseWithLookahead(tree1, cb1) {
+  var lookahead = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   var stop = {
     now: false
   };
+  var stash = [];
   function traverseInner(tree, callback, innerObj, stop) {
     innerObj = Object.assign({
       depth: -1,
@@ -84,7 +119,33 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
     }
     return tree;
   }
-  return traverseInner(tree1, cb1, {}, stop);
+  function reportFirstFromStash() {
+    var currentElem = stash.shift();
+    currentElem[2].next = [];
+    for (var i = 0; i < lookahead; i++) {
+      if (stash[i]) {
+        currentElem[2].next.push(clone([stash[i][0], stash[i][1], stash[i][2]]));
+      } else {
+        break;
+      }
+    }
+    cb1.apply(void 0, _toConsumableArray(currentElem));
+  }
+  function intermediary() {
+    for (var _len = arguments.length, incoming = new Array(_len), _key = 0; _key < _len; _key++) {
+      incoming[_key] = arguments[_key];
+    }
+    stash.push([].concat(incoming));
+    if (stash.length > lookahead) {
+      reportFirstFromStash();
+    }
+  }
+  traverseInner(tree1, intermediary, {}, stop);
+  if (stash.length) {
+    for (var i = 0, len = stash.length; i < len; i++) {
+      reportFirstFromStash();
+    }
+  }
 }
 
 module.exports = astMonkeyTraverseWithLookahead;
