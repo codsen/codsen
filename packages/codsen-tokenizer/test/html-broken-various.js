@@ -108,6 +108,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         start: 0,
         end: 1,
         value: "a",
+        next: [],
       },
       {
         type: "comment",
@@ -116,6 +117,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         value: "<!--[if]>",
         kind: "only",
         closing: false,
+        next: [],
       },
       {
         type: "tag",
@@ -132,12 +134,14 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
       {
         type: "text",
         start: 13,
         end: 33,
         value: "\n<AAAch>>\n</o:Offict",
+        next: [],
       },
     ],
     "03.01"

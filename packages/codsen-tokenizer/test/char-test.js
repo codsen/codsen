@@ -1,47 +1,686 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
 
-// 01. healthy html, no tricks
+// 01. character-based tokens
 // -----------------------------------------------------------------------------
 
-t.test((t) => {
-  const gathered = [];
-  ct("<a>z1", {
-    charCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
+t.test(
+  `01.01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
 
-  t.same(
-    gathered,
-    [
-      {
-        chr: "<",
-        i: 0,
-        type: "tag",
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookahead`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
       },
-      {
-        chr: "a",
-        i: 1,
-        type: "tag",
+      charCbLookahead: 0,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
       },
-      {
-        chr: ">",
-        i: 2,
-        type: "tag",
+      charCbLookahead: 1,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
       },
-      {
-        chr: "z",
-        i: 3,
-        type: "text",
+      charCbLookahead: 2,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
       },
-      {
-        chr: "1",
-        i: 4,
-        type: "text",
+      charCbLookahead: 3,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.05"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
       },
-    ],
-    "01.01 - tag and text"
-  );
-  t.end();
-});
+      charCbLookahead: 4,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.06"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
+      },
+      charCbLookahead: 5,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.07"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
+      },
+      charCbLookahead: 99,
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+          next: [
+            {
+              chr: "a",
+              i: 1,
+              type: "tag",
+            },
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+          next: [
+            {
+              chr: ">",
+              i: 2,
+              type: "tag",
+            },
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+          next: [
+            {
+              chr: "z",
+              i: 3,
+              type: "text",
+            },
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+          next: [
+            {
+              chr: "1",
+              i: 4,
+              type: "text",
+            },
+          ],
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+          next: [],
+        },
+      ],
+      "01.08"
+    );
+    t.end();
+  }
+);

@@ -1369,6 +1369,7 @@ t.test(
               attribEnd: 17,
             },
           ],
+          next: [],
         },
         {
           type: "tag",
@@ -1399,6 +1400,7 @@ t.test(
               attribEnd: 35,
             },
           ],
+          next: [],
         },
       ],
       "07.02"
@@ -1461,6 +1463,7 @@ t.test(
               attribEnd: 37,
             },
           ],
+          next: [],
         },
       ],
       "07.03"
@@ -1510,6 +1513,7 @@ t.test(
               attribEnd: 17,
             },
           ],
+          next: [],
         },
         {
           type: "tag",
@@ -1540,6 +1544,7 @@ t.test(
               attribEnd: 35,
             },
           ],
+          next: [],
         },
       ],
       "07.03"
@@ -1602,6 +1607,7 @@ t.test(
               attribEnd: 27,
             },
           ],
+          next: [],
         },
         {
           type: "tag",
@@ -1618,6 +1624,7 @@ t.test(
           esp: [],
           kind: null,
           attribs: [],
+          next: [],
         },
       ],
       "07.04"
@@ -1667,6 +1674,7 @@ t.test(
               attribEnd: 17,
             },
           ],
+          next: [],
         },
         {
           type: "tag",
@@ -1697,6 +1705,7 @@ t.test(
               attribEnd: 35,
             },
           ],
+          next: [],
         },
       ],
       "07.05"
@@ -1751,12 +1760,14 @@ t.test(
               attribEnd: 19,
             },
           ],
+          next: [],
         },
         {
           type: "text",
           start: 20,
           end: 27,
           value: "\n  zzz\n",
+          next: [],
         },
         {
           type: "tag",
@@ -1773,6 +1784,7 @@ t.test(
           esp: [],
           kind: null,
           attribs: [],
+          next: [],
         },
       ],
       "07.06"

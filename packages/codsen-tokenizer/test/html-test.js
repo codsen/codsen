@@ -52,6 +52,7 @@ t.test("01.02 - text only", (t) => {
         start: 0,
         end: 2,
         value: "  ",
+        next: [],
       },
     ],
     "01.02"
@@ -84,6 +85,7 @@ t.test("01.03 - opening tag only", (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
     ],
     "01.03"
@@ -116,6 +118,7 @@ t.test("01.04 - closing tag only", (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
     ],
     "01.04"
@@ -665,12 +668,14 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
             attribEnd: 7,
           },
         ],
+        next: [],
       },
       {
         type: "text",
         start: 8,
         end: 9,
         value: " ",
+        next: [],
       },
       {
         type: "tag",
@@ -687,6 +692,7 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
     ],
     "01.21"
@@ -734,6 +740,7 @@ t.test("01.22 - closing tag with attributes", (t) => {
             attribValueEndsAt: 12,
           },
         ],
+        next: [],
       },
     ],
     "01.22"
@@ -1128,6 +1135,7 @@ t.test("04.01 - unrecognised tag name", (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
     ],
     "04.01"
@@ -1160,6 +1168,7 @@ t.test("04.02 - unrecognised tag name with dash", (t) => {
         esp: [],
         kind: null,
         attribs: [],
+        next: [],
       },
     ],
     "04.01"
