@@ -13,6 +13,7 @@
 [![MIT License][license-img]][license-url]
 
 - Check out the parent library which does even more: `ast-monkey` ([npm](https://www.npmjs.com/package/ast-monkey)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/))
+- If you need read-only traversal with ability to see future nodes upon each iteration, check out `ast-monkey-traverse-with-lookahead` ([npm](https://www.npmjs.com/package/ast-monkey-traverse-with-lookahead)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead/))
 
 ## Table of Contents
 
@@ -162,6 +163,18 @@ console.log(gathered);
 ```
 
 Notice how there were no more gathered paths after "b", only `["a", "b"]`.
+
+**[⬆ back to top](#)**
+
+## Compared to `ast-monkey-traverse-with-lookahead`
+
+`ast-monkey-traverse` can amend AST (it matters what you return within a callback)
+`ast-monkey-traverse-with-lookahead` is read-only, it can't amend AST it reads
+
+`ast-monkey-traverse` does not "see" future nodes, it just reports what it has just traversed
+`ast-monkey-traverse-with-lookahead` can report as many nodes "from the future", upon request
+
+Personally, in the context of [linting](https://www.npmjs.com/package/emlint), [parsing](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/) and other [tooling](https://www.npmjs.com/package/codsen-tokenizer), we're going to use `ast-monkey-traverse-with-lookahead` because we don't need to mutate the AST, yet we need to "see" what's next in order to patch AST tree errors.
 
 **[⬆ back to top](#)**
 
