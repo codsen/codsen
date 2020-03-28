@@ -4,7 +4,7 @@ const cparser = require("../dist/codsen-parser.cjs");
 // 00. no error
 // -----------------------------------------------------------------------------
 
-t.test(
+t.todo(
   `00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
     t.same(cparser(`<div></div>`), [], "00.01");
@@ -12,7 +12,7 @@ t.test(
   }
 );
 
-t.test(
+t.todo(
   `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     t.same(cparser(`<style>\n\n</style>`), [], "00.02");
@@ -20,7 +20,7 @@ t.test(
   }
 );
 
-t.test(
+t.todo(
   `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     t.same(cparser(`<div>\n\n</div>`), [], "00.03");
@@ -31,7 +31,7 @@ t.test(
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(
+t.todo(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -100,7 +100,7 @@ t.test(
   }
 );
 
-t.test(
+t.todo(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -169,7 +169,7 @@ t.test(
   }
 );
 
-t.test(
+t.todo(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
   (t) => {
     const gatheredErr = [];

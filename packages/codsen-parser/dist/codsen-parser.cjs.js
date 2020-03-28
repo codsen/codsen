@@ -86,7 +86,12 @@ function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function layerPending(layers, tokenObj) {
-  return tokenObj.closing && layers.length && layers[layers.length - 1].type === tokenObj.type && layers[layers.length - 1].closing === false;
+  return (
+    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && layers[layers.length - 1].closing === false ||
+    tokenObj.type === "comment" && layers.some(function (layerObjToken) {
+      return Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing;
+    }))
+  );
 }
 function cparser(str, originalOpts) {
   if (typeof str !== "string") {
@@ -130,6 +135,7 @@ function cparser(str, originalOpts) {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
+    tagCbLookahead: 2,
     tagCb: function tagCb(tokenObj) {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
@@ -154,11 +160,9 @@ function cparser(str, originalOpts) {
       } else {
         path = astMonkeyUtil.pathNext(path);
       }
-      if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
+      if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
         nestNext = true;
-        if (tokenObj.type === "comment") {
-          layers.push(tokenObj);
-        }
+        layers.push(tokenObj);
       }
       var previousPath = astMonkeyUtil.pathPrev(path);
       var parentPath = astMonkeyUtil.pathUp(path);
@@ -178,7 +182,7 @@ function cparser(str, originalOpts) {
         parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(op.get(res, previousPath).children.length - 1);
       }
       var tokenTakenCareOf = false;
-      if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+      if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
         var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
         var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
         if (suspiciousEndingStartsAt > 0) {

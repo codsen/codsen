@@ -22,8 +22,14 @@ function layerPending(layers, tokenObj) {
   return (
     tokenObj.closing &&
     layers.length &&
-    layers[layers.length - 1].type === tokenObj.type &&
-    layers[layers.length - 1].closing === false
+    ((layers[layers.length - 1].type === tokenObj.type &&
+      layers[layers.length - 1].closing === false) ||
+      (tokenObj.type === "comment" &&
+        layers.some(
+          (layerObjToken) =>
+            Object.prototype.hasOwnProperty.call(layerObjToken, "closing") &&
+            !layerObjToken.closing
+        )))
   );
 }
 function cparser(str, originalOpts) {
@@ -122,6 +128,7 @@ function cparser(str, originalOpts) {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
+    tagCbLookahead: 2,
     tagCb: (tokenObj) => {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
@@ -164,12 +171,11 @@ function cparser(str, originalOpts) {
       if (
         tokensWithChildren.includes(tokenObj.type) &&
         !tokenObj.void &&
+        Object.prototype.hasOwnProperty.call(tokenObj, "closing") &&
         !tokenObj.closing
       ) {
         nestNext = true;
-        if (tokenObj.type === "comment") {
-          layers.push(tokenObj);
-        }
+        layers.push(tokenObj);
       }
       const previousPath = pathPrev(path);
       const parentPath = pathUp(path);
@@ -202,6 +208,7 @@ function cparser(str, originalOpts) {
         isObj(parentTagsToken) &&
         parentTagsToken.type === "comment" &&
         parentTagsToken.kind === "simple" &&
+        !parentTagsToken.closing &&
         suspiciousCommentTagEndingRegExp.test(tokenObj.value)
       ) {
         const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
