@@ -1175,3 +1175,216 @@ t.test("04.02 - unrecognised tag name with dash", (t) => {
   );
   t.end();
 });
+
+// 05. lookaheads
+// -----------------------------------------------------------------------------
+
+t.test(`06.01 - lookaheads - tag followed by brackets`, (t) => {
+  const gathered = [];
+  ct(`<a>"something"<span>'here'</span></a>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+    tagCbLookahead: 3,
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        tagName: "a",
+        closing: false,
+        void: false,
+        start: 0,
+        end: 3,
+        next: [
+          {
+            type: "text",
+            start: 3,
+            end: 14,
+          },
+          {
+            type: "tag",
+            tagName: "span",
+            closing: false,
+            void: false,
+            start: 14,
+            end: 20,
+          },
+          {
+            type: "text",
+            start: 20,
+            end: 26,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 3,
+        end: 14,
+        next: [
+          {
+            type: "tag",
+            tagName: "span",
+            closing: false,
+            void: false,
+            start: 14,
+            end: 20,
+          },
+          {
+            type: "text",
+            start: 20,
+            end: 26,
+          },
+          {
+            type: "tag",
+            tagName: "span",
+            closing: true,
+            void: false,
+            start: 26,
+            end: 33,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: false,
+        void: false,
+        start: 14,
+        end: 20,
+        next: [
+          {
+            type: "text",
+            start: 20,
+            end: 26,
+          },
+          {
+            type: "tag",
+            tagName: "span",
+            closing: true,
+            void: false,
+            start: 26,
+            end: 33,
+          },
+          {
+            type: "tag",
+            tagName: "a",
+            closing: true,
+            void: false,
+            start: 33,
+            end: 37,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 20,
+        end: 26,
+        next: [
+          {
+            type: "tag",
+            tagName: "span",
+            closing: true,
+            void: false,
+            start: 26,
+            end: 33,
+          },
+          {
+            type: "tag",
+            tagName: "a",
+            closing: true,
+            void: false,
+            start: 33,
+            end: 37,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: true,
+        void: false,
+        start: 26,
+        end: 33,
+        next: [
+          {
+            type: "tag",
+            tagName: "a",
+            closing: true,
+            void: false,
+            start: 33,
+            end: 37,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        tagName: "a",
+        closing: true,
+        void: false,
+        start: 33,
+        end: 37,
+        next: [],
+      },
+    ],
+    "01.10"
+  );
+  t.is(gathered.length, 6);
+  t.end();
+});
+
+t.test(`06.02 - lookaheads - html5 doctype`, (t) => {
+  const gathered = [];
+  ct("a<!DOCTYPE html>b", {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+    tagCbLookahead: 5,
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        next: [
+          {
+            type: "tag",
+            start: 1,
+            end: 16,
+            kind: "doctype",
+          },
+          {
+            type: "text",
+            start: 16,
+            end: 17,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 1,
+        end: 16,
+        kind: "doctype",
+        next: [
+          {
+            type: "text",
+            start: 16,
+            end: 17,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 16,
+        end: 17,
+        next: [],
+      },
+    ],
+    "06.02"
+  );
+  t.is(gathered.length, 3);
+  t.end();
+});

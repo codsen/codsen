@@ -165,6 +165,60 @@ t.test(
   }
 );
 
+t.test(
+  `01.05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="c" d='e'>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+      tagCbLookahead: 3,
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 15,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 7,
+              attribValue: "c",
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 7,
+              attribStart: 3,
+              attribEnd: 8,
+            },
+            {
+              attribName: "d",
+              attribNameStartsAt: 9,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 13,
+              attribValue: "e",
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 13,
+              attribStart: 9,
+              attribEnd: 14,
+            },
+          ],
+          next: [],
+        },
+      ],
+      "01.05.01"
+    );
+    t.same(gathered.length, 1, "01.05.02");
+    t.end();
+  }
+);
+
 // TODO
 // t.test(`01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditional class`, t => {
 //   const gathered = [];
