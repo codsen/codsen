@@ -21,31 +21,26 @@ t.test(
           chr: "<",
           i: 0,
           type: "tag",
-          next: [],
         },
         {
           chr: "a",
           i: 1,
           type: "tag",
-          next: [],
         },
         {
           chr: ">",
           i: 2,
           type: "tag",
-          next: [],
         },
         {
           chr: "z",
           i: 3,
           type: "text",
-          next: [],
         },
         {
           chr: "1",
           i: 4,
           type: "text",
-          next: [],
         },
       ],
       "01.01"
@@ -59,8 +54,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 0,
     });
@@ -110,8 +109,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 1,
     });
@@ -185,8 +188,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 2,
     });
@@ -275,8 +282,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 3,
     });
@@ -375,8 +386,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 4,
     });
@@ -480,8 +495,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 5,
     });
@@ -585,8 +604,12 @@ t.test(
   (t) => {
     const gathered = [];
     ct("<a>z1", {
-      charCb: (obj) => {
-        gathered.push(obj);
+      charCb: (obj, next) => {
+        gathered.push(
+          Object.assign({}, obj, {
+            next,
+          })
+        );
       },
       charCbLookahead: 99,
     });
@@ -680,6 +703,55 @@ t.test(
         },
       ],
       "01.08"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.09 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99 - doesn't push next`,
+  (t) => {
+    const gathered = [];
+    ct("<a>z1", {
+      charCb: (obj) => {
+        gathered.push(obj);
+      },
+      charCbLookahead: 99,
+    });
+    gathered.forEach((obj) => {
+      // eslint-disable-next-line no-prototype-builtins
+      t.false(obj.hasOwnProperty("next"));
+    });
+    t.same(
+      gathered,
+      [
+        {
+          chr: "<",
+          i: 0,
+          type: "tag",
+        },
+        {
+          chr: "a",
+          i: 1,
+          type: "tag",
+        },
+        {
+          chr: ">",
+          i: 2,
+          type: "tag",
+        },
+        {
+          chr: "z",
+          i: 3,
+          type: "text",
+        },
+        {
+          chr: "1",
+          i: 4,
+          type: "text",
+        },
+      ],
+      "01.09"
     );
     t.end();
   }

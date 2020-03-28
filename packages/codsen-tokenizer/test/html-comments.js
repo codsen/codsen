@@ -724,7 +724,6 @@ t.test(
           start: 0,
           end: 4,
           value: "zzz<",
-          next: [],
         },
         {
           type: "comment",
@@ -733,7 +732,6 @@ t.test(
           value: "<![endif]-->",
           kind: "only",
           closing: true,
-          next: [],
         },
       ],
       "02.10"

@@ -52,7 +52,6 @@ t.test("01.02 - text only", (t) => {
         start: 0,
         end: 2,
         value: "  ",
-        next: [],
       },
     ],
     "01.02"
@@ -85,7 +84,6 @@ t.test("01.03 - opening tag only", (t) => {
         esp: [],
         kind: null,
         attribs: [],
-        next: [],
       },
     ],
     "01.03"
@@ -118,7 +116,6 @@ t.test("01.04 - closing tag only", (t) => {
         esp: [],
         kind: null,
         attribs: [],
-        next: [],
       },
     ],
     "01.04"
@@ -255,8 +252,12 @@ t.test("01.09 - bracket as text", (t) => {
 t.test("01.10 - tag followed by brackets", (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
+    tagCb: (obj, next) => {
+      gathered.push(
+        Object.assign({}, obj, {
+          next,
+        })
+      );
     },
   });
   t.match(
@@ -668,14 +669,12 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
             attribEnd: 7,
           },
         ],
-        next: [],
       },
       {
         type: "text",
         start: 8,
         end: 9,
         value: " ",
-        next: [],
       },
       {
         type: "tag",
@@ -692,7 +691,6 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
         esp: [],
         kind: null,
         attribs: [],
-        next: [],
       },
     ],
     "01.21"
@@ -740,7 +738,6 @@ t.test("01.22 - closing tag with attributes", (t) => {
             attribValueEndsAt: 12,
           },
         ],
-        next: [],
       },
     ],
     "01.22"
@@ -1135,7 +1132,6 @@ t.test("04.01 - unrecognised tag name", (t) => {
         esp: [],
         kind: null,
         attribs: [],
-        next: [],
       },
     ],
     "04.01"
@@ -1168,7 +1164,6 @@ t.test("04.02 - unrecognised tag name with dash", (t) => {
         esp: [],
         kind: null,
         attribs: [],
-        next: [],
       },
     ],
     "04.01"
@@ -1179,11 +1174,79 @@ t.test("04.02 - unrecognised tag name with dash", (t) => {
 // 05. lookaheads
 // -----------------------------------------------------------------------------
 
-t.test(`06.01 - lookaheads - tag followed by brackets`, (t) => {
+t.test(`06.01 - lookaheads - tag followed by brackets - without next`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj) => {
       gathered.push(obj);
+    },
+    tagCbLookahead: 3,
+  });
+  gathered.forEach((obj) => {
+    // eslint-disable-next-line no-prototype-builtins
+    t.false(obj.hasOwnProperty("next"));
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        tagName: "a",
+        closing: false,
+        void: false,
+        start: 0,
+        end: 3,
+      },
+      {
+        type: "text",
+        start: 3,
+        end: 14,
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: false,
+        void: false,
+        start: 14,
+        end: 20,
+      },
+      {
+        type: "text",
+        start: 20,
+        end: 26,
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: true,
+        void: false,
+        start: 26,
+        end: 33,
+      },
+      {
+        type: "tag",
+        tagName: "a",
+        closing: true,
+        void: false,
+        start: 33,
+        end: 37,
+      },
+    ],
+    "01.10"
+  );
+  t.is(gathered.length, 6);
+  t.end();
+});
+
+t.test(`06.02 - lookaheads - tag followed by brackets - with next`, (t) => {
+  const gathered = [];
+  ct(`<a>"something"<span>'here'</span></a>`, {
+    tagCb: (obj, next) => {
+      gathered.push(
+        Object.assign({}, obj, {
+          next,
+        })
+      );
     },
     tagCbLookahead: 3,
   });
@@ -1325,7 +1388,6 @@ t.test(`06.01 - lookaheads - tag followed by brackets`, (t) => {
         void: false,
         start: 33,
         end: 37,
-        next: [],
       },
     ],
     "01.10"
@@ -1337,8 +1399,12 @@ t.test(`06.01 - lookaheads - tag followed by brackets`, (t) => {
 t.test(`06.02 - lookaheads - html5 doctype`, (t) => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
-    tagCb: (obj) => {
-      gathered.push(obj);
+    tagCb: (obj, next) => {
+      gathered.push(
+        Object.assign({}, obj, {
+          next,
+        })
+      );
     },
     tagCbLookahead: 5,
   });
@@ -1380,7 +1446,6 @@ t.test(`06.02 - lookaheads - html5 doctype`, (t) => {
         type: "text",
         start: 16,
         end: 17,
-        next: [],
       },
     ],
     "06.02"

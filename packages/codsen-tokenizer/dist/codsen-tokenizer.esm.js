@@ -506,15 +506,15 @@ function tokenizer(str, originalOpts) {
   }
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     const currentElem = stash.shift();
-    currentElem.next = [];
+    const next = [];
     for (let i = 0; i < lookaheadLength; i++) {
       if (stash[i]) {
-        currentElem.next.push(clone(stash[i]));
+        next.push(clone(stash[i]));
       } else {
         break;
       }
     }
-    cb(currentElem);
+    cb(currentElem, next);
   }
   function pingCharCb(incomingToken) {
     if (opts.charCb) {

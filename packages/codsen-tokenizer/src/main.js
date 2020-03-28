@@ -416,14 +416,14 @@ function tokenizer(str, originalOpts) {
     // now we need the "future" nodes, as many as "lookahead" of them
 
     // that's the container where they'll sit:
-    currentElem.next = [];
+    const next = [];
 
     for (let i = 0; i < lookaheadLength; i++) {
       console.log(`i = ${i}`);
       // we want as many as "lookaheadLength" from stash but there might be
       // not enough there
       if (stash[i]) {
-        currentElem.next.push(clone(stash[i]));
+        next.push(clone(stash[i]));
         console.log(
           `428 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
             currentElem[2].next,
@@ -447,7 +447,7 @@ function tokenizer(str, originalOpts) {
         4
       )}`
     );
-    cb(currentElem);
+    cb(currentElem, next);
   }
 
   function pingCharCb(incomingToken) {

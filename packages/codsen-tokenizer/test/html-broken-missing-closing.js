@@ -32,14 +32,12 @@ t.test(
           type: "tag",
           kind: null,
           attribs: [],
-          next: [],
         },
         {
           type: "text",
           start: 2,
           end: 3,
           value: "\n",
-          next: [],
         },
         {
           type: "tag",
@@ -56,7 +54,6 @@ t.test(
           esp: [],
           kind: null,
           attribs: [],
-          next: [],
         },
       ],
       "01.01"
@@ -106,14 +103,12 @@ t.test(
               attribEnd: 11,
             },
           ],
-          next: [],
         },
         {
           type: "text",
           start: 12,
           end: 22,
           value: "click here",
-          next: [],
         },
         {
           type: "tag",
@@ -130,7 +125,6 @@ t.test(
           esp: [],
           kind: null,
           attribs: [],
-          next: [],
         },
       ],
       "01.02"
@@ -368,7 +362,6 @@ t.test(
           type: "tag",
           kind: null,
           attribs: [],
-          next: [],
         },
       ],
       "04.01"
