@@ -31,7 +31,7 @@ t.todo(
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.todo(
+t.test(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
   (t) => {
     const gatheredErr = [];

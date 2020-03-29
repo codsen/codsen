@@ -162,7 +162,7 @@ function cparser(str, originalOpts) {
       }
       if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
         nestNext = true;
-        layers.push(tokenObj);
+        layers.push(Object.assign({}, tokenObj));
       }
       var previousPath = astMonkeyUtil.pathPrev(path);
       var parentPath = astMonkeyUtil.pathUp(path);
@@ -321,6 +321,17 @@ function cparser(str, originalOpts) {
     },
     charCb: opts.charCb
   });
+  if (layers.length) {
+    layers.forEach(function (tokenObj) {
+      if (opts.errCb) {
+        opts.errCb({
+          ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-closing"),
+          idxFrom: tokenObj.start,
+          idxTo: tokenObj.end
+        });
+      }
+    });
+  }
   return res;
 }
 

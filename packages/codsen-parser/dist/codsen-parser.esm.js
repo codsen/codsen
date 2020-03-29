@@ -175,7 +175,7 @@ function cparser(str, originalOpts) {
         !tokenObj.closing
       ) {
         nestNext = true;
-        layers.push(tokenObj);
+        layers.push(Object.assign({}, tokenObj));
       }
       const previousPath = pathPrev(path);
       const parentPath = pathUp(path);
@@ -471,6 +471,19 @@ function cparser(str, originalOpts) {
     },
     charCb: opts.charCb,
   });
+  if (layers.length) {
+    layers.forEach((tokenObj) => {
+      if (opts.errCb) {
+        opts.errCb({
+          ruleId: `${tokenObj.type}${
+            tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+          }-missing-closing`,
+          idxFrom: tokenObj.start,
+          idxTo: tokenObj.end,
+        });
+      }
+    });
+  }
   return res;
 }
 

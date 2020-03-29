@@ -325,7 +325,7 @@ function cparser(str, originalOpts) {
           `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
         );
 
-        layers.push(tokenObj);
+        layers.push(Object.assign({}, tokenObj));
         console.log(
           `330 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
             layers,
@@ -918,9 +918,7 @@ function cparser(str, originalOpts) {
           );
           if (opts.errCb) {
             console.log(
-              `921 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
-                tokenObj.type === "comment" ? tokenObj.kind : ""
-              }-missing-opening`}\u001b[${39}m`}`
+              `921 ${`\u001b[${31}m${`██ RAISE ERROR tag-void-frontal-slash`}\u001b[${39}m`}`
             );
             opts.errCb({
               ruleId: `tag-void-frontal-slash`,
@@ -930,12 +928,14 @@ function cparser(str, originalOpts) {
             });
           }
         } else {
-          console.log(`933 it's an unpaired tag`);
+          console.log(`931 it's an unpaired tag`);
           if (opts.errCb) {
             console.log(
-              `936 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
-                tokenObj.type === "comment" ? tokenObj.kind : ""
-              }-missing-opening`}\u001b[${39}m`}`
+              `934 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
+                tokenObj.type
+              }${
+                tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+              }-missing-opening`
             );
             opts.errCb({
               ruleId: `${tokenObj.type}${
@@ -984,7 +984,36 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `987 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `987 FIY, ENDING ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+      layers,
+      null,
+      4
+    )}`
+  );
+  // if there are some unclosed layer tokens, raise errors about them all:
+  if (layers.length) {
+    layers.forEach((tokenObj) => {
+      if (opts.errCb) {
+        console.log(
+          `998 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
+            tokenObj.type
+          }${
+            tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+          }-missing-closing`
+        );
+        opts.errCb({
+          ruleId: `${tokenObj.type}${
+            tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+          }-missing-closing`,
+          idxFrom: tokenObj.start,
+          idxTo: tokenObj.end,
+        });
+      }
+    });
+  }
+
+  console.log(
+    `1016 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4
