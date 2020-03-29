@@ -4,26 +4,38 @@ const cparser = require("../dist/codsen-parser.cjs");
 // 00. no error
 // -----------------------------------------------------------------------------
 
-t.todo(
+t.test(
   `00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
-    t.same(cparser(`<div></div>`), [], "00.01");
+    const gatheredErr = [];
+    cparser(`<div></div>`, {
+      errCb: (errObj) => gatheredErr.push(errObj),
+    });
+    t.same(gatheredErr, [], "00.01");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
-    t.same(cparser(`<style>\n\n</style>`), [], "00.02");
+    const gatheredErr = [];
+    cparser(`<style>\n\n</style>`, {
+      errCb: (errObj) => gatheredErr.push(errObj),
+    });
+    t.same(gatheredErr, [], "00.02");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
-    t.same(cparser(`<div>\n\n</div>`), [], "00.03");
+    const gatheredErr = [];
+    cparser(`<div>\n\n</div>`, {
+      errCb: (errObj) => gatheredErr.push(errObj),
+    });
+    t.same(gatheredErr, [], "00.03");
     t.end();
   }
 );
@@ -158,7 +170,7 @@ t.todo(
       gatheredErr,
       [
         {
-          ruleId: "tag-missing-opening",
+          ruleId: "tag-missing-closing",
           idxFrom: 7,
           idxTo: 11,
         },
@@ -227,7 +239,7 @@ t.todo(
       gatheredErr,
       [
         {
-          ruleId: "tag-missing-opening",
+          ruleId: "tag-missing-closing",
           idxFrom: 19,
           idxTo: 25,
         },

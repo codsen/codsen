@@ -311,6 +311,13 @@ function cparser(str, originalOpts) {
         // "1.children.3" -> "1.children.4"
         console.log(`312 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
         path = pathNext(path);
+
+        if (layerPending(layers, tokenObj)) {
+          layers.pop();
+          console.log(
+            `318 POP layers, now equals to: ${JSON.stringify(layers, null, 4)}`
+          );
+        }
       }
 
       // activate the nestNext
@@ -322,12 +329,12 @@ function cparser(str, originalOpts) {
       ) {
         nestNext = true;
         console.log(
-          `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
+          `332 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
         );
 
         layers.push(Object.assign({}, tokenObj));
         console.log(
-          `330 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
+          `337 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
             layers,
             null,
             4
@@ -336,7 +343,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `339 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+        `346 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
       );
 
       // check, does this closing tag have an
@@ -351,7 +358,7 @@ function cparser(str, originalOpts) {
       // );
       const parentPath = pathUp(path);
       console.log(
-        `354 ${`\u001b[${33}m${`parentPath`}\u001b[${39}m`} = ${JSON.stringify(
+        `361 ${`\u001b[${33}m${`parentPath`}\u001b[${39}m`} = ${JSON.stringify(
           parentPath,
           null,
           4
@@ -363,7 +370,7 @@ function cparser(str, originalOpts) {
         parentTagsToken = op.get(res, parentPath);
       }
       console.log(
-        `366 ${`\u001b[${33}m${`parentTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${parentPath}\u001b[${39}m`}" - ${JSON.stringify(
+        `373 ${`\u001b[${33}m${`parentTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${parentPath}\u001b[${39}m`}" - ${JSON.stringify(
           parentTagsToken
             ? Object.assign({}, parentTagsToken, {
                 children: "...",
@@ -379,14 +386,14 @@ function cparser(str, originalOpts) {
         previousTagsToken = op.get(res, previousPath);
       }
       console.log(
-        `382 NOW ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${previousPath}\u001b[${39}m`}" - ${JSON.stringify(
+        `389 NOW ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${previousPath}\u001b[${39}m`}" - ${JSON.stringify(
           previousTagsToken,
           null,
           4
         )}`
       );
       console.log(
-        `389 FIY, ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
+        `396 FIY, ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
           tokenObj.closing,
           null,
           4
@@ -400,7 +407,7 @@ function cparser(str, originalOpts) {
       //
 
       console.log(
-        `403 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        `410 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
           res,
           null,
           4
@@ -436,7 +443,7 @@ function cparser(str, originalOpts) {
         suspiciousCommentTagEndingRegExp.test(tokenObj.value)
       ) {
         console.log(
-          `439 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+          `446 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
         );
         const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
           tokenObj.value
@@ -446,7 +453,7 @@ function cparser(str, originalOpts) {
           tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
           1;
         console.log(
-          `449 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `456 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             suspiciousEndingStartsAt,
             null,
             4
@@ -465,10 +472,10 @@ function cparser(str, originalOpts) {
         // at this level, under this path:
         if (suspiciousEndingStartsAt > 0) {
           console.log(
-            `468 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
+            `475 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
           );
           console.log(
-            `471 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+            `478 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
               res,
               null,
               4
@@ -486,7 +493,7 @@ function cparser(str, originalOpts) {
             tokenObj.children = [];
           }
           console.log(
-            `489 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `496 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
@@ -497,11 +504,11 @@ function cparser(str, originalOpts) {
         // part 2.
         // further, the "->" goes as closing token at parent level
         console.log(
-          `500 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `507 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         path = pathNext(pathUp(path));
         console.log(
-          `504 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `511 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         op.set(res, path, {
           type: "comment",
@@ -516,7 +523,7 @@ function cparser(str, originalOpts) {
           children: [],
         });
         console.log(
-          `519 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+          `526 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
             res,
             null,
             4
@@ -527,11 +534,11 @@ function cparser(str, originalOpts) {
         // if any text follows "->" add that after
         if (suspiciousEndingEndsAt < tokenObj.value.length) {
           console.log(
-            `530 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `537 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           path = pathNext(path);
           console.log(
-            `534 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `541 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           op.set(res, path, {
             type: "text",
@@ -540,7 +547,7 @@ function cparser(str, originalOpts) {
             value: tokenObj.value.slice(suspiciousEndingEndsAt),
           });
           console.log(
-            `543 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `550 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
@@ -576,7 +583,7 @@ function cparser(str, originalOpts) {
           //       ^
           //      excl. mark missing on the first part ("<!--")
           console.log(
-            `579 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+            `586 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
           );
           // strFindMalformed
           const capturedMalformedTagRanges = [];
@@ -596,7 +603,7 @@ function cparser(str, originalOpts) {
             }
           );
           console.log(
-            `599 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
+            `606 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
               capturedMalformedTagRanges,
               null,
               4
@@ -610,13 +617,13 @@ function cparser(str, originalOpts) {
                 .idxTo - 1
             )
           ) {
-            console.log(`613 picking the last malformed range`);
+            console.log(`620 picking the last malformed range`);
             // pick the last
             // imagine, there were multiple malformed opening comments:
             // <img/><1--<1--<1--<1--<![endif]-->
             const malformedRange = capturedMalformedTagRanges.pop();
             console.log(
-              `619 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `626 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
                 malformedRange,
                 null,
                 4
@@ -632,7 +639,7 @@ function cparser(str, originalOpts) {
               previousPath &&
               isObj(previousTagsToken)
             ) {
-              console.log(`635 whole token is malformed <!--`);
+              console.log(`642 whole token is malformed <!--`);
               // if there are no whitespace characters to the left of "from" index
               // of the malformed "<!--", this means whole token is a malformed
               // value and needs to be merged into current "comment" type token
@@ -655,7 +662,7 @@ function cparser(str, originalOpts) {
               // stop token from being pushed in the ELSE clauses below
               tokenTakenCareOf = true;
             } else if (previousPath && isObj(previousTagsToken)) {
-              console.log(`658 there are characters in front of <!--`);
+              console.log(`665 there are characters in front of <!--`);
               // if there are text characters which are not part of "<!--",
               // shorten the text token, push a new comment token
 
@@ -710,7 +717,7 @@ function cparser(str, originalOpts) {
           // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
           //
           console.log(
-            `713 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+            `720 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
           );
           // strFindMalformed
           const capturedMalformedTagRanges = [];
@@ -730,7 +737,7 @@ function cparser(str, originalOpts) {
             }
           );
           console.log(
-            `733 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
+            `740 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
               capturedMalformedTagRanges,
               null,
               4
@@ -744,13 +751,13 @@ function cparser(str, originalOpts) {
                 .idxTo - 1
             )
           ) {
-            console.log(`747 picking the last malformed range`);
+            console.log(`754 picking the last malformed range`);
             // pick the last
             // imagine, there were multiple malformed opening comments:
             // <!--[if !mso]><!--><img src="gif"/>!--!--!--!--<![endif]-->
             const malformedRange = capturedMalformedTagRanges.pop();
             console.log(
-              `753 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `760 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
                 malformedRange,
                 null,
                 4
@@ -766,7 +773,7 @@ function cparser(str, originalOpts) {
               previousPath &&
               isObj(parentsLastChildTokenValue)
             ) {
-              console.log(`769 whole token is malformed <!--`);
+              console.log(`776 whole token is malformed <!--`);
               // if there are no whitespace characters to the left of "from" index
               // of the malformed "<!--", this means whole token is a malformed
               // value and needs to be merged into current "comment" type token
@@ -790,14 +797,14 @@ function cparser(str, originalOpts) {
 
               // 2. Delete the text node.
               console.log(
-                `793 ██ ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
+                `800 ██ ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
                   previousPath,
                   null,
                   4
                 )}`
               );
               console.log(
-                `800 DELETING TEXT NODE - RES BEFORE: ${JSON.stringify(
+                `807 DELETING TEXT NODE - RES BEFORE: ${JSON.stringify(
                   res,
                   null,
                   4
@@ -810,7 +817,7 @@ function cparser(str, originalOpts) {
                 }`
               );
               console.log(
-                `813 DELETING TEXT NODE - RES AFTER: ${JSON.stringify(
+                `820 DELETING TEXT NODE - RES AFTER: ${JSON.stringify(
                   res,
                   null,
                   4
@@ -824,12 +831,12 @@ function cparser(str, originalOpts) {
               isObj(parentsLastChildTokenValue) &&
               parentsLastChildTokenPath
             ) {
-              console.log(`827 there are characters preceding <!--`);
+              console.log(`834 there are characters preceding <!--`);
               // if there are text characters which are not part of "<!--",
               // shorten the text token, push a new comment token
 
               console.log(
-                `832 FIY, ${`\u001b[${33}m${`parentsLastChildTokenPath`}\u001b[${39}m`} = ${JSON.stringify(
+                `839 FIY, ${`\u001b[${33}m${`parentsLastChildTokenPath`}\u001b[${39}m`} = ${JSON.stringify(
                   parentsLastChildTokenPath,
                   null,
                   4
@@ -876,7 +883,7 @@ function cparser(str, originalOpts) {
 
       // if token was not pushed yet, push it
       if (!tokenTakenCareOf) {
-        console.log(`879 setting as usual`);
+        console.log(`886 setting as usual`);
         if (tokensWithChildren.includes(tokenObj.type)) {
           tokenObj.children = [];
         }
@@ -884,7 +891,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `887 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `894 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -892,7 +899,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `895 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `902 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -914,11 +921,11 @@ function cparser(str, originalOpts) {
       ) {
         if (tokenObj.void) {
           console.log(
-            `917 frontal slash must be removed because it's a void tag`
+            `924 frontal slash must be removed because it's a void tag`
           );
           if (opts.errCb) {
             console.log(
-              `921 ${`\u001b[${31}m${`██ RAISE ERROR tag-void-frontal-slash`}\u001b[${39}m`}`
+              `928 ${`\u001b[${31}m${`██ RAISE ERROR tag-void-frontal-slash`}\u001b[${39}m`}`
             );
             opts.errCb({
               ruleId: `tag-void-frontal-slash`,
@@ -928,10 +935,10 @@ function cparser(str, originalOpts) {
             });
           }
         } else {
-          console.log(`931 it's an unpaired tag`);
+          console.log(`938 it's an unpaired tag`);
           if (opts.errCb) {
             console.log(
-              `934 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
+              `941 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
                 tokenObj.type
               }${
                 tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
@@ -984,7 +991,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `987 FIY, ENDING ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+    `994 FIY, ENDING ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
       layers,
       null,
       4
@@ -995,7 +1002,7 @@ function cparser(str, originalOpts) {
     layers.forEach((tokenObj) => {
       if (opts.errCb) {
         console.log(
-          `998 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
+          `1005 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
             tokenObj.type
           }${
             tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
@@ -1013,7 +1020,7 @@ function cparser(str, originalOpts) {
   }
 
   console.log(
-    `1016 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `1023 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

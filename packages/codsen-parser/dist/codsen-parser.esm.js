@@ -167,6 +167,9 @@ function cparser(str, originalOpts) {
         path = "0";
       } else {
         path = pathNext(path);
+        if (layerPending(layers, tokenObj)) {
+          layers.pop();
+        }
       }
       if (
         tokensWithChildren.includes(tokenObj.type) &&

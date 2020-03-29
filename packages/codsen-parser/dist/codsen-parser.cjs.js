@@ -159,6 +159,9 @@ function cparser(str, originalOpts) {
         path = "0";
       } else {
         path = astMonkeyUtil.pathNext(path);
+        if (layerPending(layers, tokenObj)) {
+          layers.pop();
+        }
       }
       if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
         nestNext = true;
