@@ -166,6 +166,13 @@ function cparser(str, originalOpts) {
       ) {
         path = pathNext(pathUp(path));
         if (layerPending(layers, tokenObj)) {
+          while (
+            layers.length &&
+            layers[layers.length - 1].type !== tokenObj.type &&
+            layers[layers.length - 1].kind !== tokenObj.kind
+          ) {
+            layers.pop();
+          }
           layers.pop();
           nestNext = false;
         } else {
@@ -183,6 +190,42 @@ function cparser(str, originalOpts) {
                     ? `-${lastLayersToken.kind}`
                     : ""
                 }-missing-closing`,
+                idxFrom: lastLayersToken.start,
+                idxTo: lastLayersToken.end,
+                tokenObj: lastLayersToken,
+              });
+            }
+            layers.pop();
+            layers.pop();
+          } else if (
+            layers.length > 2 &&
+            layers[layers.length - 3].type === tokenObj.type &&
+            layers[layers.length - 3].type === tokenObj.type &&
+            layers[layers.length - 3].tagName === tokenObj.tagName
+          ) {
+            path = pathNext(pathUp(path));
+            if (opts.errCb) {
+              const lastLayersToken = layers[layers.length - 1];
+              opts.errCb({
+                ruleId: `tag-rogue`,
+                idxFrom: lastLayersToken.start,
+                idxTo: lastLayersToken.end,
+                tokenObj: lastLayersToken,
+              });
+            }
+            layers.pop();
+            layers.pop();
+            layers.pop();
+          } else if (
+            layers.length > 1 &&
+            layers[layers.length - 2].type === tokenObj.type &&
+            layers[layers.length - 2].type === tokenObj.type &&
+            layers[layers.length - 2].tagName === tokenObj.tagName
+          ) {
+            if (opts.errCb) {
+              const lastLayersToken = layers[layers.length - 1];
+              opts.errCb({
+                ruleId: `tag-rogue`,
                 idxFrom: lastLayersToken.start,
                 idxTo: lastLayersToken.end,
                 tokenObj: lastLayersToken,
@@ -212,7 +255,7 @@ function cparser(str, originalOpts) {
       const previousPath = pathPrev(path);
       const parentPath = pathUp(path);
       let parentTagsToken;
-      if (parentPath) {
+      if (parentPath && path.includes(".")) {
         parentTagsToken = op.get(res, parentPath);
       }
       let previousTagsToken;

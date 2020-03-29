@@ -152,6 +152,9 @@ function cparser(str, originalOpts) {
       !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
         path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
         if (layerPending(layers, tokenObj)) {
+          while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
+            layers.pop();
+          }
           layers.pop();
           nestNext = false;
         } else {
@@ -164,6 +167,34 @@ function cparser(str, originalOpts) {
                 idxFrom: lastLayersToken.start,
                 idxTo: lastLayersToken.end,
                 tokenObj: lastLayersToken
+              });
+            }
+            layers.pop();
+            layers.pop();
+          } else if (
+          layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
+            path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
+            if (opts.errCb) {
+              var _lastLayersToken = layers[layers.length - 1];
+              opts.errCb({
+                ruleId: "tag-rogue",
+                idxFrom: _lastLayersToken.start,
+                idxTo: _lastLayersToken.end,
+                tokenObj: _lastLayersToken
+              });
+            }
+            layers.pop();
+            layers.pop();
+            layers.pop();
+          } else if (
+          layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
+            if (opts.errCb) {
+              var _lastLayersToken2 = layers[layers.length - 1];
+              opts.errCb({
+                ruleId: "tag-rogue",
+                idxFrom: _lastLayersToken2.start,
+                idxTo: _lastLayersToken2.end,
+                tokenObj: _lastLayersToken2
               });
             }
             layers.pop();
@@ -185,7 +216,7 @@ function cparser(str, originalOpts) {
       var previousPath = astMonkeyUtil.pathPrev(path);
       var parentPath = astMonkeyUtil.pathUp(path);
       var parentTagsToken;
-      if (parentPath) {
+      if (parentPath && path.includes(".")) {
         parentTagsToken = op.get(res, parentPath);
       }
       var previousTagsToken;
