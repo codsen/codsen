@@ -117,7 +117,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${34}m${`pathUp`}\u001b[${39}m`} - empty str`,
   (t) => {
-    t.same(pathUp(""), null, "03.01");
+    t.same(pathUp(""), "0", "03.01");
     t.end();
   }
 );
@@ -125,7 +125,7 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${34}m${`pathUp`}\u001b[${39}m`} - upon first element`,
   (t) => {
-    t.same(pathUp("0"), null, "03.02");
+    t.same(pathUp("0"), "0", "03.02");
     t.end();
   }
 );
@@ -133,7 +133,7 @@ t.test(
 t.test(
   `03.03 - ${`\u001b[${34}m${`pathUp`}\u001b[${39}m`} - upon second element`,
   (t) => {
-    t.same(pathUp("1"), null, "03.03");
+    t.same(pathUp("1"), "0", "03.03");
     t.end();
   }
 );
@@ -141,7 +141,7 @@ t.test(
 t.test(
   `03.04 - ${`\u001b[${34}m${`pathUp`}\u001b[${39}m`} - non-numeric`,
   (t) => {
-    t.same(pathUp("1.z"), null, "03.04");
+    t.same(pathUp("1.z"), "0", "03.04");
     t.end();
   }
 );

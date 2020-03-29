@@ -41,7 +41,7 @@ function pathPrev(str) {
 function pathUp(str) {
   if (typeof str === "string") {
     if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-      return null;
+      return "0";
     }
     let dotsCount = 0;
     for (let i = str.length; i--; ) {
