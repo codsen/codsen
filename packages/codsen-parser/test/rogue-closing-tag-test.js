@@ -21,7 +21,7 @@ t.test("01.01 - rogue closing - one tag only", (t) => {
     ],
     "01.01.01"
   );
-  t.same(
+  t.match(
     gatheredErr,
     [
       {
@@ -32,6 +32,7 @@ t.test("01.01 - rogue closing - one tag only", (t) => {
     ],
     "01.01.02"
   );
+  t.is(gatheredErr.length, 1, "01.02.03");
   t.end();
 });
 
@@ -68,7 +69,7 @@ t.test("01.02 - rogue closing - previous token is text-type", (t) => {
     ],
     "01.02.01"
   );
-  t.same(
+  t.match(
     gatheredErr,
     [
       {
@@ -79,6 +80,7 @@ t.test("01.02 - rogue closing - previous token is text-type", (t) => {
     ],
     "01.02.02"
   );
+  t.is(gatheredErr.length, 1, "01.02.03");
   t.end();
 });
 
@@ -110,7 +112,7 @@ t.test("01.03 - rogue closing - previous token is tag-type", (t) => {
     ],
     "01.03.01"
   );
-  t.same(
+  t.match(
     gatheredErr,
     [
       {
@@ -121,5 +123,6 @@ t.test("01.03 - rogue closing - previous token is tag-type", (t) => {
     ],
     "01.03.02"
   );
+  t.is(gatheredErr.length, 1, "01.03.03");
   t.end();
 });

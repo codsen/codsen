@@ -87,7 +87,7 @@ function isObj(something) {
 }
 function layerPending(layers, tokenObj) {
   return (
-    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && layers[layers.length - 1].closing === false ||
+    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false ||
     tokenObj.type === "comment" && layers.some(function (layerObjToken) {
       return Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing;
     }))
@@ -136,7 +136,7 @@ function cparser(str, originalOpts) {
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
     tagCbLookahead: 2,
-    tagCb: function tagCb(tokenObj) {
+    tagCb: function tagCb(tokenObj, next) {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
@@ -154,6 +154,21 @@ function cparser(str, originalOpts) {
         if (layerPending(layers, tokenObj)) {
           layers.pop();
           nestNext = false;
+        } else {
+          if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
+            path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
+            if (opts.errCb) {
+              var lastLayersToken = layers[layers.length - 1];
+              opts.errCb({
+                ruleId: "".concat(lastLayersToken.type).concat(lastLayersToken.type === "comment" ? "-".concat(lastLayersToken.kind) : "", "-missing-closing"),
+                idxFrom: lastLayersToken.start,
+                idxTo: lastLayersToken.end,
+                tokenObj: lastLayersToken
+              });
+            }
+            layers.pop();
+            layers.pop();
+          }
         }
       } else if (!path) {
         path = "0";
@@ -307,7 +322,8 @@ function cparser(str, originalOpts) {
               idxTo: tokenObj.end,
               fix: {
                 ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
-              }
+              },
+              tokenObj: tokenObj
             });
           }
         } else {
@@ -315,7 +331,8 @@ function cparser(str, originalOpts) {
             opts.errCb({
               ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
               idxFrom: tokenObj.start,
-              idxTo: tokenObj.end
+              idxTo: tokenObj.end,
+              tokenObj: tokenObj
             });
           }
         }
@@ -330,7 +347,8 @@ function cparser(str, originalOpts) {
         opts.errCb({
           ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-closing"),
           idxFrom: tokenObj.start,
-          idxTo: tokenObj.end
+          idxTo: tokenObj.end,
+          tokenObj: tokenObj
         });
       }
     });

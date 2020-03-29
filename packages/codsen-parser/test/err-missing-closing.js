@@ -108,11 +108,12 @@ t.test(
       ],
       "01.01.02"
     );
+    t.is(gatheredErr.length, 1, "01.01.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -177,11 +178,12 @@ t.todo(
       ],
       "01.02.02"
     );
+    t.is(gatheredErr.length, 1, "01.02.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -240,12 +242,13 @@ t.todo(
       [
         {
           ruleId: "tag-missing-closing",
-          idxFrom: 19,
-          idxTo: 25,
+          idxFrom: 11,
+          idxTo: 15,
         },
       ],
       "01.03.02"
     );
+    t.is(gatheredErr.length, 1, "01.03.03");
     t.end();
   }
 );
