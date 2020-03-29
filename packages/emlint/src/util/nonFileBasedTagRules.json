@@ -1,5 +1,6 @@
 [
   "tag-missing-opening",
   "tag-missing-closing",
-  "tag-void-frontal-slash"
+  "tag-void-frontal-slash",
+  "tag-rogue"
 ]

@@ -154,6 +154,7 @@ var allTagRules = [
 	"tag-missing-closing",
 	"tag-missing-opening",
 	"tag-name-case",
+	"tag-rogue",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
