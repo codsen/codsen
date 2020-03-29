@@ -21,6 +21,7 @@
 - [Idea](#idea)
 - [API](#api)
 - [Stopping](#stopping)
+- [Compared to `ast-monkey-traverse-with-lookahead`](#compared-to-ast-monkey-traverse-with-lookahead)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

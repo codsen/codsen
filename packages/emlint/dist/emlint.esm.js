@@ -151,6 +151,7 @@ var allTagRules = [
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
+	"tag-missing-closing",
 	"tag-missing-opening",
 	"tag-name-case",
 	"tag-space-after-opening-bracket",
@@ -364,6 +365,7 @@ const linkTypes = [
 ];
 const astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
+  "tag-missing-closing": "Closing tag is missing.",
   "tag-void-frontal-slash": "Remove frontal slash.",
 };
 function isLetter(str) {

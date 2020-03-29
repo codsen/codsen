@@ -150,7 +150,7 @@
     "lect": "^0.12.3",
     "node-fetch": "^2.6.0",
     "p-map": "^4.0.0",
-    "rollup": "^2.2.0",
+    "rollup": "^2.3.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",

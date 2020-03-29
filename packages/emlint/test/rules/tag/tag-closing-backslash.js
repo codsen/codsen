@@ -621,6 +621,14 @@ t.test(
     t.equal(applyFixes(str, messages), "<div>");
     t.match(messages, [
       {
+        ruleId: "tag-missing-closing",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 6,
+        message: "Closing tag is missing.",
+        fix: null,
+      },
+      {
         ruleId: "tag-closing-backslash",
         severity: 2,
         idxFrom: 4,

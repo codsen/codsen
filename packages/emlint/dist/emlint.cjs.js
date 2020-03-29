@@ -344,6 +344,7 @@ var allTagRules = [
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
+	"tag-missing-closing",
 	"tag-missing-opening",
 	"tag-name-case",
 	"tag-space-after-opening-bracket",
@@ -502,6 +503,7 @@ var fontSizeRegex = /^[+-]?[1-7]$/;
 var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
 var astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
+  "tag-missing-closing": "Closing tag is missing.",
   "tag-void-frontal-slash": "Remove frontal slash."
 };
 function isLetter(str) {
