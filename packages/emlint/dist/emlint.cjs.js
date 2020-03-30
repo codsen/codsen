@@ -501,7 +501,7 @@ function validateString(str, idxOffset, originalOpts) {
 var wholeExtensionRegex = /^\.\w+$/g;
 var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 var fontSizeRegex = /^[+-]?[1-7]$/;
-var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
+var linkTypes = ["alternate", "archives", "appendix", "author", "bookmark", "canonical", "chapter", "contents", "copyright", "dns-prefetch", "external", "first", "glossary", "help", "icon", "import", "index", "last", "license", "manifest", "modulepreload", "next", "nofollow", "noopener", "noreferrer", "opener", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "shortlink", "section", "sidebar", "start", "stylesheet", "subsection", "tag", "up"];
 var astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
   "tag-missing-closing": "Closing tag is missing.",

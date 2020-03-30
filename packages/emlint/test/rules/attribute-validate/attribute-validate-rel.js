@@ -85,6 +85,22 @@ t.test(
   }
 );
 
+t.test(
+  `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, link`,
+  (t) => {
+    const str = `<link rel="icon" href="https://www.codsen.com/favicon.ico" type="image/x-icon"/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-rel": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 

@@ -10,28 +10,46 @@ const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 const fontSizeRegex = /^[+-]?[1-7]$/;
 const linkTypes = [
   "alternate",
+  "archives",
   "appendix",
   "author",
   "bookmark",
+  "canonical",
   "chapter",
   "contents",
   "copyright",
+  "dns-prefetch",
   "external",
+  "first",
   "glossary",
   "help",
+  "icon",
+  "import",
   "index",
+  "last",
   "license",
+  "manifest",
+  "modulepreload",
   "next",
   "nofollow",
   "noopener",
   "noreferrer",
+  "opener",
+  "pingback",
+  "preconnect",
+  "prefetch",
+  "preload",
+  "prerender",
   "prev",
   "search",
+  "shortlink",
   "section",
+  "sidebar",
   "start",
   "stylesheet",
   "subsection",
   "tag",
+  "up",
 ];
 
 const astErrMessages = {
@@ -96,14 +114,14 @@ function isObj(something) {
 
 function isAnEnabledRule(config, ruleId) {
   console.log(
-    `099 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+    `117 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
       config,
       null,
       4
     )}`
   );
   console.log(
-    `106 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+    `124 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
       ruleId,
       null,
       4
@@ -111,7 +129,7 @@ function isAnEnabledRule(config, ruleId) {
   );
 
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
-    console.log(`114 RETURN ${config[ruleId]}`);
+    console.log(`132 RETURN ${config[ruleId]}`);
     return config[ruleId];
   } else if (
     ruleId.includes("-") &&
@@ -122,7 +140,7 @@ function isAnEnabledRule(config, ruleId) {
     isObj(config) &&
     Object.prototype.hasOwnProperty.call(config, "all")
   ) {
-    console.log(`125 RETURN ${config.all}`);
+    console.log(`143 RETURN ${config.all}`);
     return config.all;
   }
 
