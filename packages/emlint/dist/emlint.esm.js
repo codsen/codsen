@@ -6282,8 +6282,14 @@ function attributeValidateHttpequiv(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt,
           {
-            permittedValues: ["content-type", "default-style", "refresh"],
+            permittedValues: [
+              "content-type",
+              "default-style",
+              "refresh",
+              "X-UA-Compatible",
+            ],
             canBeCommaSeparated: false,
+            caseInsensitive: true,
           }
         );
         errorArr.forEach((errorObj) => {

@@ -5675,8 +5675,9 @@ function attributeValidateHttpequiv(context) {
         var errorArr = validateString(node.attribValue,
         node.attribValueStartsAt,
         {
-          permittedValues: ["content-type", "default-style", "refresh"],
-          canBeCommaSeparated: false
+          permittedValues: ["content-type", "default-style", "refresh", "X-UA-Compatible"],
+          canBeCommaSeparated: false,
+          caseInsensitive: true
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {

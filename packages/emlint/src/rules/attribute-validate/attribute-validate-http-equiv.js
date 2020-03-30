@@ -41,13 +41,19 @@ function attributeValidateHttpequiv(context, ...opts) {
           node.attribValue, // value
           node.attribValueStartsAt, // offset
           {
-            permittedValues: ["content-type", "default-style", "refresh"],
+            permittedValues: [
+              "content-type",
+              "default-style",
+              "refresh",
+              "X-UA-Compatible",
+            ],
             canBeCommaSeparated: false,
+            caseInsensitive: true,
           }
         );
 
         console.log(
-          `050 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `056 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
@@ -55,7 +61,7 @@ function attributeValidateHttpequiv(context, ...opts) {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`058 RAISE ERROR`);
+          console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-http-equiv",

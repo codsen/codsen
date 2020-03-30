@@ -101,6 +101,22 @@ t.test(
   }
 );
 
+t.test(
+  `01.07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, content-type, first cap`,
+  (t) => {
+    const str = `<meta http-equiv="Content-Type">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-http-equiv": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
@@ -281,35 +297,8 @@ t.test(
         ruleId: "attribute-validate-http-equiv",
         idxFrom: 18,
         idxTo: 25,
-        message: `Should be "content-type|default-style|refresh".`,
+        message: `Unrecognised value: "tralala".`,
         fix: null,
-      },
-    ]);
-    t.end();
-  }
-);
-
-t.test(
-  `04.02 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`,
-  (t) => {
-    const str = `<meta http-equiv="REFRESH">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-http-equiv": 2,
-      },
-    });
-    // will fix:
-    t.equal(applyFixes(str, messages), `<meta http-equiv="refresh">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-http-equiv",
-        idxFrom: 18,
-        idxTo: 25,
-        message: `Should be lowercase.`,
-        fix: {
-          ranges: [[18, 25, "refresh"]],
-        },
       },
     ]);
     t.end();
