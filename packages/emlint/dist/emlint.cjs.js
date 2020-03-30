@@ -3007,7 +3007,8 @@ function tagVoidSlash(context) {
 }
 
 function tagNameCase(context) {
-  var knownUpperCaseTags = ["DOCTYPE", "CDATA"];
+  var knownUpperCaseTags = ["CDATA"];
+  var variableCaseTagNames = ["doctype"];
   return {
     tag: function tag(node) {
       if (node.tagName && node.recognised === true) {
@@ -3024,7 +3025,7 @@ function tagNameCase(context) {
               }
             });
           }
-        } else if (context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !== node.tagName) {
+        } else if (context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !== node.tagName && !variableCaseTagNames.includes(node.tagName.toLowerCase())) {
           var _ranges = [[node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]];
           context.report({
             ruleId: "tag-name-case",

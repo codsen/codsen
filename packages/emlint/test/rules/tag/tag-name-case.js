@@ -174,19 +174,8 @@ t.test(
         "tag-name-case": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<!DOCTYPE html>");
-    t.match(messages, [
-      {
-        ruleId: "tag-name-case",
-        severity: 2,
-        idxFrom: 2,
-        idxTo: 9,
-        message: "Bad tag name case.",
-        fix: {
-          ranges: [[2, 9, "DOCTYPE"]],
-        },
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
     t.end();
   }
 );
@@ -219,23 +208,8 @@ t.test(
         "tag-name-case": 2,
       },
     });
-    t.equal(
-      applyFixes(str, messages),
-      `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">`
-    );
-    t.match(messages, [
-      {
-        ruleId: "tag-name-case",
-        severity: 2,
-        idxFrom: 2,
-        idxTo: 9,
-        message: "Bad tag name case.",
-        fix: {
-          ranges: [[2, 9, "DOCTYPE"]],
-        },
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
     t.end();
   }
 );

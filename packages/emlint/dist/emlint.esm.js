@@ -2735,7 +2735,8 @@ function tagVoidSlash(context, ...opts) {
 }
 
 function tagNameCase(context) {
-  const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
+  const knownUpperCaseTags = ["CDATA"];
+  const variableCaseTagNames = ["doctype"];
   return {
     tag: function (node) {
       if (node.tagName && node.recognised === true) {
@@ -2761,7 +2762,8 @@ function tagNameCase(context) {
           }
         } else if (
           context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
-          node.tagName
+            node.tagName &&
+          !variableCaseTagNames.includes(node.tagName.toLowerCase())
         ) {
           const ranges = [
             [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],

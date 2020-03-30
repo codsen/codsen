@@ -2,7 +2,8 @@
 // -----------------------------------------------------------------------------
 
 function tagNameCase(context) {
-  const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
+  const knownUpperCaseTags = ["CDATA"];
+  const variableCaseTagNames = ["doctype"];
   return {
     tag: function (node) {
       console.log(
@@ -19,17 +20,17 @@ function tagNameCase(context) {
       );
 
       if (node.tagName && node.recognised === true) {
-        console.log(`022 tagNameCase(): recognised tag`);
+        console.log(`023 tagNameCase(): recognised tag`);
 
         console.log(
-          `025 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
+          `026 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
             knownUpperCaseTags.includes(node.tagName.toUpperCase()),
             null,
             4
           )}`
         );
         console.log(
-          `032 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
+          `033 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
             node.tagName,
             null,
             4
@@ -43,7 +44,7 @@ function tagNameCase(context) {
             context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
             node.tagName.toUpperCase()
           ) {
-            console.log(`046 tagNameCase(): wrong tag case!`);
+            console.log(`047 tagNameCase(): wrong tag case!`);
             const ranges = [
               [
                 node.tagNameStartsAt,
@@ -63,9 +64,10 @@ function tagNameCase(context) {
           // else - FINE
         } else if (
           context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
-          node.tagName
+            node.tagName &&
+          !variableCaseTagNames.includes(node.tagName.toLowerCase())
         ) {
-          console.log(`068 tagNameCase(): wrong tag case!`);
+          console.log(`070 tagNameCase(): wrong tag case!`);
           const ranges = [
             [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],
           ];
