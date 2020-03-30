@@ -89,7 +89,6 @@ t.test(
         ruleId: "attribute-validate-onmousemove",
         idxFrom: 6,
         idxTo: 29,
-        message: `Tag "html" can't have this attribute.`,
         fix: null,
       },
     ]);

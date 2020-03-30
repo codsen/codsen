@@ -3288,7 +3288,7 @@ function attributeValidateAbbr(context) {
             ruleId: "attribute-validate-abbr",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3486,7 +3486,7 @@ function attributeValidateAcceptCharset(context) {
             ruleId: "attribute-validate-accept-charset",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3515,7 +3515,7 @@ function attributeValidateAccept(context) {
             ruleId: "attribute-validate-accept",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3546,7 +3546,7 @@ function attributeValidateAccesskey(context) {
             ruleId: "attribute-validate-accesskey",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3779,7 +3779,7 @@ function attributeValidateAction(context) {
             ruleId: "attribute-validate-action",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -3806,7 +3806,7 @@ function attributeValidateAlign(context) {
             ruleId: "attribute-validate-align",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3935,7 +3935,7 @@ function attributeValidateAlink(context) {
             ruleId: "attribute-validate-alink",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3966,7 +3966,7 @@ function attributeValidateAlt(context) {
             ruleId: "attribute-validate-alt",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -3991,7 +3991,7 @@ function attributeValidateArchive(context) {
             ruleId: "attribute-validate-archive",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4031,7 +4031,7 @@ function attributeValidateAxis(context) {
             ruleId: "attribute-validate-axis",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4056,7 +4056,7 @@ function attributeValidateBackground(context) {
             ruleId: "attribute-validate-background",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4083,7 +4083,7 @@ function attributeValidateBgcolor(context) {
             ruleId: "attribute-validate-bgcolor",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4325,7 +4325,7 @@ function attributeValidateBorder(context) {
             ruleId: "attribute-validate-border",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4353,7 +4353,7 @@ function attributeValidateCellpadding(context) {
             ruleId: "attribute-validate-cellpadding",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4383,7 +4383,7 @@ function attributeValidateCellspacing(context) {
             ruleId: "attribute-validate-cellspacing",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4413,7 +4413,7 @@ function attributeValidateChar(context) {
             ruleId: "attribute-validate-char",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4451,7 +4451,7 @@ function attributeValidateCharoff(context) {
             ruleId: "attribute-validate-charoff",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4490,7 +4490,7 @@ function attributeValidateCharset(context) {
             ruleId: "attribute-validate-charset",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4600,7 +4600,7 @@ function attributeValidateChecked(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4631,7 +4631,7 @@ function attributeValidateCite(context) {
             ruleId: "attribute-validate-cite",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4717,7 +4717,7 @@ function attributeValidateClass(context) {
             ruleId: "attribute-validate-class",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4752,7 +4752,7 @@ function attributeValidateClassid(context) {
             ruleId: "attribute-validate-classid",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4779,7 +4779,7 @@ function attributeValidateClassid$1(context) {
             ruleId: "attribute-validate-clear",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4814,7 +4814,7 @@ function attributeValidateCode(context) {
             ruleId: "attribute-validate-code",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4841,7 +4841,7 @@ function attributeValidateCodebase(context) {
             ruleId: "attribute-validate-codebase",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -4868,7 +4868,7 @@ function attributeValidateCodetype(context) {
             ruleId: "attribute-validate-codetype",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4899,7 +4899,7 @@ function attributeValidateColor(context) {
             ruleId: "attribute-validate-color",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4930,7 +4930,7 @@ function attributeValidateCols(context) {
             ruleId: "attribute-validate-cols",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -4973,7 +4973,7 @@ function attributeValidateColspan(context) {
             ruleId: "attribute-validate-colspan",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5012,7 +5012,7 @@ function attributeValidateCompact(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5041,7 +5041,7 @@ function attributeValidateContent(context) {
             ruleId: "attribute-validate-content",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5068,7 +5068,7 @@ function attributeValidateCoords(context) {
             ruleId: "attribute-validate-coords",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5127,7 +5127,7 @@ function attributeValidateData(context) {
             ruleId: "attribute-validate-data",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5154,7 +5154,7 @@ function attributeValidateDatetime(context) {
             ruleId: "attribute-validate-datetime",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5196,7 +5196,7 @@ function attributeValidateDeclare(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5236,7 +5236,7 @@ function attributeValidateDefer(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5265,7 +5265,7 @@ function attributeValidateDir(context) {
             ruleId: "attribute-validate-dir",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5305,7 +5305,7 @@ function attributeValidateDisabled(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5334,7 +5334,7 @@ function attributeValidateEnctype(context) {
             ruleId: "attribute-validate-enctype",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5364,7 +5364,7 @@ function attributeValidateFace(context) {
             ruleId: "attribute-validate-face",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5391,7 +5391,7 @@ function attributeValidateFor(context) {
             ruleId: "attribute-validate-for",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5446,7 +5446,7 @@ function attributeValidateFrame(context) {
             ruleId: "attribute-validate-frame",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5484,7 +5484,7 @@ function attributeValidateFrameborder(context) {
             ruleId: "attribute-validate-frameborder",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5513,7 +5513,7 @@ function attributeValidateHeaders(context) {
             ruleId: "attribute-validate-headers",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5548,7 +5548,7 @@ function attributeValidateHeight(context) {
             ruleId: "attribute-validate-height",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5577,7 +5577,7 @@ function attributeValidateHref(context) {
             ruleId: "attribute-validate-href",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5604,7 +5604,7 @@ function attributeValidateHreflang(context) {
             ruleId: "attribute-validate-hreflang",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5641,7 +5641,7 @@ function attributeValidateHspace(context) {
             ruleId: "attribute-validate-hspace",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5668,7 +5668,7 @@ function attributeValidateHttpequiv(context) {
             ruleId: "attribute-validate-http-equiv",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5697,7 +5697,7 @@ function attributeValidateId(context) {
             ruleId: "attribute-validate-id",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5743,7 +5743,7 @@ function attributeValidateIsmap(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -5772,7 +5772,7 @@ function attributeValidateLabel(context) {
             ruleId: "attribute-validate-label",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5792,12 +5792,12 @@ function attributeValidateLang(context) {
   return {
     attribute: function attribute(node) {
       if (node.attribName === "lang") {
-        if (["base", "head", "html", "meta", "script", "style", "title"].includes(node.parent.tagName)) {
+        if (["applet", "base", "basefont", "br", "frame", "frameset", "iframe", "param", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-lang",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5834,7 +5834,7 @@ function attributeValidateLanguage(context) {
             ruleId: "attribute-validate-language",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5859,7 +5859,7 @@ function attributeValidateLink(context) {
             ruleId: "attribute-validate-link",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5890,7 +5890,7 @@ function attributeValidateLongdesc(context) {
             ruleId: "attribute-validate-longdesc",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5915,7 +5915,7 @@ function attributeValidateMarginheight(context) {
             ruleId: "attribute-validate-marginheight",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5942,7 +5942,7 @@ function attributeValidateMarginwidth(context) {
             ruleId: "attribute-validate-marginwidth",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5969,7 +5969,7 @@ function attributeValidateMaxlength(context) {
             ruleId: "attribute-validate-maxlength",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -5997,7 +5997,7 @@ function attributeValidateMedia(context) {
             ruleId: "attribute-validate-media",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6026,7 +6026,7 @@ function attributeValidateMethod(context) {
             ruleId: "attribute-validate-method",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6066,7 +6066,7 @@ function attributeValidateMultiple(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6095,7 +6095,7 @@ function attributeValidateName(context) {
             ruleId: "attribute-validate-name",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6131,7 +6131,7 @@ function attributeValidateNohref(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6171,7 +6171,7 @@ function attributeValidateNoresize(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6211,7 +6211,7 @@ function attributeValidateNoshade(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6251,7 +6251,7 @@ function attributeValidateNowrap(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6280,7 +6280,7 @@ function attributeValidateObject(context) {
             ruleId: "attribute-validate-object",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6315,7 +6315,7 @@ function attributeValidateOnblur(context) {
             ruleId: "attribute-validate-onblur",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6344,7 +6344,7 @@ function attributeValidateOnchange(context) {
             ruleId: "attribute-validate-onchange",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6373,7 +6373,7 @@ function attributeValidateOnclick(context) {
             ruleId: "attribute-validate-onclick",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6402,7 +6402,7 @@ function attributeValidateOndblclick(context) {
             ruleId: "attribute-validate-ondblclick",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6431,7 +6431,7 @@ function attributeValidateOnfocus(context) {
             ruleId: "attribute-validate-onfocus",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6460,7 +6460,7 @@ function attributeValidateOnkeydown(context) {
             ruleId: "attribute-validate-onkeydown",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6489,7 +6489,7 @@ function attributeValidateOnkeypress(context) {
             ruleId: "attribute-validate-onkeypress",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6518,7 +6518,7 @@ function attributeValidateOnkeyup(context) {
             ruleId: "attribute-validate-onkeyup",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6547,7 +6547,7 @@ function attributeValidateOnload(context) {
             ruleId: "attribute-validate-onload",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6576,7 +6576,7 @@ function attributeValidateOnmousedown(context) {
             ruleId: "attribute-validate-onmousedown",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6605,7 +6605,7 @@ function attributeValidateOnmousemove(context) {
             ruleId: "attribute-validate-onmousemove",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6634,7 +6634,7 @@ function attributeValidateOnmouseout(context) {
             ruleId: "attribute-validate-onmouseout",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6663,7 +6663,7 @@ function attributeValidateOnmouseover(context) {
             ruleId: "attribute-validate-onmouseover",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6692,7 +6692,7 @@ function attributeValidateOnmouseup(context) {
             ruleId: "attribute-validate-onmouseup",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6721,7 +6721,7 @@ function attributeValidateOnreset(context) {
             ruleId: "attribute-validate-onreset",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6750,7 +6750,7 @@ function attributeValidateOnsubmit(context) {
             ruleId: "attribute-validate-onsubmit",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6779,7 +6779,7 @@ function attributeValidateOnselect(context) {
             ruleId: "attribute-validate-onselect",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6808,7 +6808,7 @@ function attributeValidateOnunload(context) {
             ruleId: "attribute-validate-onunload",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6833,7 +6833,7 @@ function attributeValidateProfile(context) {
             ruleId: "attribute-validate-profile",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6860,7 +6860,7 @@ function attributeValidatePrompt(context) {
             ruleId: "attribute-validate-prompt",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6896,7 +6896,7 @@ function attributeValidateReadonly(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -6929,7 +6929,7 @@ function attributeValidateRel(context) {
             ruleId: "attribute-validate-rel",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6963,7 +6963,7 @@ function attributeValidateRev(context) {
             ruleId: "attribute-validate-rev",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -6993,7 +6993,7 @@ function attributeValidateRows(context) {
             ruleId: "attribute-validate-rows",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7036,7 +7036,7 @@ function attributeValidateRowspan(context) {
             ruleId: "attribute-validate-rowspan",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7064,7 +7064,7 @@ function attributeValidateRules(context) {
             ruleId: "attribute-validate-rules",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7093,7 +7093,7 @@ function attributeValidateScheme(context) {
             ruleId: "attribute-validate-scheme",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7118,7 +7118,7 @@ function attributeValidateScope(context) {
             ruleId: "attribute-validate-scope",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7147,7 +7147,7 @@ function attributeValidateScrolling(context) {
             ruleId: "attribute-validate-scrolling",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7187,7 +7187,7 @@ function attributeValidateSelected(context) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7216,7 +7216,7 @@ function attributeValidateShape(context) {
             ruleId: "attribute-validate-shape",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7245,7 +7245,7 @@ function attributeValidateSize(context) {
             ruleId: "attribute-validate-size",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7311,7 +7311,7 @@ function attributeValidateSpan(context) {
             ruleId: "attribute-validate-span",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7341,7 +7341,7 @@ function attributeValidateSrc(context) {
             ruleId: "attribute-validate-src",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7368,7 +7368,7 @@ function attributeValidateStandby(context) {
             ruleId: "attribute-validate-standby",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7393,7 +7393,7 @@ function attributeValidateStart(context) {
             ruleId: "attribute-validate-start",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7429,7 +7429,7 @@ function attributeValidateStyle(context) {
             ruleId: "attribute-validate-style",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7453,7 +7453,7 @@ function attributeValidateSummary(context) {
             ruleId: "attribute-validate-summary",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7478,7 +7478,7 @@ function attributeValidateTabindex(context) {
             ruleId: "attribute-validate-tabindex",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7509,7 +7509,7 @@ function attributeValidateTarget(context) {
             ruleId: "attribute-validate-target",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7534,7 +7534,7 @@ function attributeValidateText(context) {
             ruleId: "attribute-validate-text",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7565,7 +7565,7 @@ function attributeValidateTitle(context) {
             ruleId: "attribute-validate-title",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7590,7 +7590,7 @@ function attributeValidateType(context) {
             ruleId: "attribute-validate-type",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7688,7 +7688,7 @@ function attributeValidateUsemap(context) {
             ruleId: "attribute-validate-usemap",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7715,7 +7715,7 @@ function attributeValidateValign(context) {
             ruleId: "attribute-validate-valign",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7744,7 +7744,7 @@ function attributeValidateValue(context) {
             ruleId: "attribute-validate-value",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7784,7 +7784,7 @@ function attributeValidateValuetype(context) {
             ruleId: "attribute-validate-valuetype",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {
@@ -7813,7 +7813,7 @@ function attributeValidateVersion(context) {
             ruleId: "attribute-validate-version",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7838,7 +7838,7 @@ function attributeValidateVlink(context) {
             ruleId: "attribute-validate-vlink",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7869,7 +7869,7 @@ function attributeValidateVspace(context) {
             ruleId: "attribute-validate-vspace",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         }
@@ -7896,7 +7896,7 @@ function attributeValidateWidth(context) {
             ruleId: "attribute-validate-width",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
         } else {

@@ -34,7 +34,7 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             ruleId: "attribute-validate-onsubmit",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         } else {

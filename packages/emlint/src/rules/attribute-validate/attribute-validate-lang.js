@@ -24,15 +24,23 @@ function attributeValidateLang(context, ...opts) {
       if (node.attribName === "lang") {
         // validate the parent
         if (
-          ["base", "head", "html", "meta", "script", "style", "title"].includes(
-            node.parent.tagName
-          )
+          [
+            "applet",
+            "base",
+            "basefont",
+            "br",
+            "frame",
+            "frameset",
+            "iframe",
+            "param",
+            "script",
+          ].includes(node.parent.tagName)
         ) {
           context.report({
             ruleId: "attribute-validate-lang",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
@@ -45,7 +53,7 @@ function attributeValidateLang(context, ...opts) {
           node.attribValueStartsAt
         );
         console.log(
-          `048 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+          `056 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
             charStart,
             null,
             4
@@ -56,7 +64,7 @@ function attributeValidateLang(context, ...opts) {
           )}`
         );
         console.log(
-          `059 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `067 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
@@ -67,7 +75,7 @@ function attributeValidateLang(context, ...opts) {
           node.attribValue.slice(charStart, charEnd)
         );
         console.log(
-          `070 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+          `078 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
             message,
             null,
             4
@@ -83,7 +91,7 @@ function attributeValidateLang(context, ...opts) {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`086 RAISE ERROR`);
+          console.log(`094 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-lang",

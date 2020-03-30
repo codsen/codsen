@@ -397,7 +397,6 @@ t.test(
         ruleId: "attribute-validate-marginheight",
         idxFrom: 4,
         idxTo: 22,
-        message: `Tag "br" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -422,7 +421,6 @@ t.test(
         ruleId: "attribute-validate-marginheight",
         idxFrom: 5,
         idxTo: 23,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

@@ -91,13 +91,15 @@ t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const badParentTags = [
+      "applet",
       "base",
-      "head",
-      "html",
-      "meta",
+      "basefont",
+      "br",
+      "frame",
+      "frameset",
+      "iframe",
+      "param",
       "script",
-      "style",
-      "title",
     ];
     const linter = new Linter();
     badParentTags.forEach((badParentTag) => {
@@ -114,7 +116,7 @@ t.test(
           ruleId: "attribute-validate-lang",
           idxFrom: badParentTag.length + 2,
           idxTo: badParentTag.length + 2 + 9,
-          message: `Tag "${badParentTag}" can't have this attribute.`,
+
           fix: null,
         },
       ]);
@@ -140,7 +142,6 @@ t.test(
         ruleId: "attribute-validate-lang",
         idxFrom: 8,
         idxTo: 17,
-        message: `Tag "script" can't have this attribute.`,
         fix: null,
       },
     ]);

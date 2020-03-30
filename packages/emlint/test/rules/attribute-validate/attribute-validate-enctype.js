@@ -214,7 +214,6 @@ t.test(
         ruleId: "attribute-validate-enctype",
         idxFrom: 5,
         idxTo: 25,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -239,7 +238,6 @@ t.test(
         ruleId: "attribute-validate-enctype",
         idxFrom: 5,
         idxTo: 25,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

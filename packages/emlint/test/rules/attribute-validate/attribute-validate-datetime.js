@@ -242,7 +242,6 @@ t.test(
         ruleId: "attribute-validate-datetime",
         idxFrom: 5,
         idxTo: 36,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -267,7 +266,6 @@ t.test(
         ruleId: "attribute-validate-datetime",
         idxFrom: 5,
         idxTo: 36,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

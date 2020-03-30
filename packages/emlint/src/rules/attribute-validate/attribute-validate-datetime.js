@@ -31,7 +31,7 @@ function attributeValidateDatetime(context, ...opts) {
             ruleId: "attribute-validate-datetime",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
-            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }

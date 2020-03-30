@@ -198,7 +198,6 @@ t.test(
         ruleId: "attribute-validate-style",
         idxFrom: 6,
         idxTo: 30,
-        message: `Tag "html" can't have this attribute.`,
         fix: null,
       },
     ]);

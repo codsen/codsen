@@ -89,7 +89,6 @@ t.test(
         ruleId: "attribute-validate-onclick",
         idxFrom: 6,
         idxTo: 25,
-        message: `Tag "html" can't have this attribute.`,
         fix: null,
       },
     ]);

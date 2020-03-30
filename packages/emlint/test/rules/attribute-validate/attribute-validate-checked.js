@@ -137,7 +137,6 @@ t.test(
         ruleId: "attribute-validate-checked",
         idxFrom: 5,
         idxTo: 12,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -162,7 +161,6 @@ t.test(
         ruleId: "attribute-validate-checked",
         idxFrom: 15,
         idxTo: 22,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -187,7 +185,6 @@ t.test(
         ruleId: "attribute-validate-checked",
         idxFrom: 18,
         idxTo: 25,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -212,7 +209,6 @@ t.test(
         ruleId: "attribute-validate-checked",
         idxFrom: 28,
         idxTo: 35,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

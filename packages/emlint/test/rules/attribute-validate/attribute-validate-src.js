@@ -153,7 +153,6 @@ t.test(
         ruleId: "attribute-validate-src",
         idxFrom: 5,
         idxTo: 29,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -178,7 +177,6 @@ t.test(
         ruleId: "attribute-validate-src",
         idxFrom: 5,
         idxTo: 29,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

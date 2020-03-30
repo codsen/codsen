@@ -89,7 +89,6 @@ t.test(
         ruleId: "attribute-validate-content",
         idxFrom: 26,
         idxTo: 65,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -114,7 +113,6 @@ t.test(
         ruleId: "attribute-validate-content",
         idxFrom: 26,
         idxTo: 65,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

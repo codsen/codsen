@@ -89,7 +89,6 @@ t.test(
         ruleId: "attribute-validate-onmouseup",
         idxFrom: 6,
         idxTo: 27,
-        message: `Tag "html" can't have this attribute.`,
         fix: null,
       },
     ]);

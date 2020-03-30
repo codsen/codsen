@@ -105,7 +105,6 @@ t.test(
         ruleId: "attribute-validate-label",
         idxFrom: 5,
         idxTo: 22,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -130,7 +129,6 @@ t.test(
         ruleId: "attribute-validate-label",
         idxFrom: 5,
         idxTo: 22,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

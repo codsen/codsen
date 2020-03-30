@@ -319,7 +319,6 @@ t.test(
         ruleId: "attribute-validate-maxlength",
         idxFrom: 5,
         idxTo: 18,
-        message: `Tag "div" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -344,7 +343,6 @@ t.test(
         ruleId: "attribute-validate-maxlength",
         idxFrom: 5,
         idxTo: 18,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);

@@ -198,7 +198,6 @@ t.test(
         ruleId: "attribute-validate-dir",
         idxFrom: 8,
         idxTo: 17,
-        message: `Tag "script" can't have this attribute.`,
         fix: null,
       },
     ]);

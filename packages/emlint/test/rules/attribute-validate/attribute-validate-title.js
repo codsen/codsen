@@ -89,7 +89,6 @@ t.test(
         ruleId: "attribute-validate-title",
         idxFrom: 7,
         idxTo: 24,
-        message: `Tag "title" can't have this attribute.`,
         fix: null,
       },
     ]);

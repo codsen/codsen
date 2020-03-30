@@ -442,7 +442,6 @@ t.test(
         ruleId: "attribute-validate-width",
         idxFrom: 4,
         idxTo: 15,
-        message: `Tag "br" can't have this attribute.`,
         fix: null,
       },
     ]);
@@ -467,7 +466,6 @@ t.test(
         ruleId: "attribute-validate-width",
         idxFrom: 5,
         idxTo: 16,
-        message: `Tag "zzz" can't have this attribute.`,
         fix: null,
       },
     ]);
