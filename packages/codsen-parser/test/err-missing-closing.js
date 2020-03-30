@@ -253,4 +253,17 @@ t.test(
   }
 );
 
-// 02.
+// 02. false alerts
+// -----------------------------------------------------------------------------
+
+t.only(
+  `02.01 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
+  (t) => {
+    const gatheredErr = [];
+    cparser(`<!doctype html>`, {
+      errCb: (errObj) => gatheredErr.push(errObj),
+    });
+    t.same(gatheredErr, [], "02.01");
+    t.end();
+  }
+);
