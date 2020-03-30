@@ -256,7 +256,7 @@ t.test(
 // 02. false alerts
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `02.01 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
   (t) => {
     const gatheredErr = [];
