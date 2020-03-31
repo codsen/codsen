@@ -1,11 +1,11 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
 
-// 01. regular comments
+// 01. simple-kind comments
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - simple case`,
+  `01.01 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - simple case`,
   (t) => {
     const gathered = [];
     ct(`a<!--b-->c`, {
@@ -54,7 +54,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - broken simple case, with space`,
+  `01.02 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - broken simple case, with space`,
   (t) => {
     const gathered = [];
     ct(`a<! --b-- >c`, {
@@ -103,7 +103,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  `01.03 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
     ct(`a<!--b->c`, {
@@ -143,7 +143,7 @@ t.test(
 );
 
 t.test(
-  `01.04 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  `01.04 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
     ct(`a<!-b-->c`, {
@@ -197,7 +197,7 @@ t.test(
 );
 
 t.test(
-  `01.05 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  `01.05 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
     ct(`a<--b-->c`, {
@@ -237,7 +237,7 @@ t.test(
 );
 
 t.test(
-  `01.06 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  `01.06 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
     ct(`a<!--b--!>c`, {
@@ -277,7 +277,7 @@ t.test(
 );
 
 t.test(
-  `01.07 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  `01.07 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
     ct(`<!- -z-->`, {
@@ -922,6 +922,60 @@ t.test(
   }
 );
 
+t.test(
+  `02.15 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`,
+  (t) => {
+    const gathered = [];
+    ct(`x<!--[if !mso]>abc<!-->y`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+          value: "x",
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 15,
+          value: "<!--[if !mso]>",
+          kind: "only",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 15,
+          end: 18,
+          value: "abc",
+        },
+        {
+          type: "comment",
+          start: 18,
+          end: 23,
+          value: "<!-->",
+          kind: "simplet",
+          closing: null,
+        },
+        {
+          type: "text",
+          start: 23,
+          end: 24,
+          value: "y",
+        },
+      ],
+      "02.15"
+    );
+    t.end();
+  }
+);
+
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 
@@ -1195,6 +1249,294 @@ t.test(
         },
       ],
       "03.07"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.08 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`,
+  (t) => {
+    const gathered = [];
+    ct(`x<!--[if !mso]><!--><!-->y`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+          value: "x",
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 20,
+          value: "<!--[if !mso]><!-->",
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "comment",
+          start: 20,
+          end: 25,
+          value: `<!-->`,
+          kind: "simplet",
+          closing: null,
+        },
+        {
+          type: "text",
+          start: 25,
+          end: 26,
+          value: "y",
+        },
+      ],
+      "03.08"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.09 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, full`,
+  (t) => {
+    const gathered = [];
+    ct(
+      `<!--[if !mso]><!--><!-->
+  <img src="gif"/>
+<!--<![endif]-->`,
+      {
+        tagCb: (obj) => {
+          gathered.push(obj);
+        },
+      }
+    );
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--[if !mso]><!-->",
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "comment",
+          start: 19,
+          end: 24,
+          value: `<!-->`,
+          kind: "simplet",
+          closing: null,
+        },
+        {
+          type: "text",
+          start: 24,
+          end: 27,
+          value: "\n  ",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 43,
+          value: '<img src="gif"/>',
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 31,
+          tagName: "img",
+          recognised: true,
+          closing: false,
+          void: true,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "src",
+              attribNameRecognised: true,
+              attribNameStartsAt: 32,
+              attribNameEndsAt: 35,
+              attribOpeningQuoteAt: 36,
+              attribClosingQuoteAt: 40,
+              attribValue: "gif",
+              attribValueStartsAt: 37,
+              attribValueEndsAt: 40,
+              attribStart: 32,
+              attribEnd: 41,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 43,
+          end: 44,
+          value: "\n",
+        },
+        {
+          type: "comment",
+          start: 44,
+          end: 60,
+          value: "<!--<![endif]-->",
+          kind: "not",
+          closing: true,
+        },
+      ],
+      "03.09"
+    );
+    t.end();
+  }
+);
+
+// 04. simplet-kind comments
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`,
+  (t) => {
+    const gathered = [];
+    ct(`<!-->`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 5,
+          value: `<!-->`,
+          kind: "simplet",
+          closing: null,
+        },
+      ],
+      "04.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`,
+  (t) => {
+    const gathered = [];
+    ct(`<!--><!-- ><!--  >`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 5,
+          value: `<!-->`,
+          kind: "simplet",
+          closing: null,
+        },
+        {
+          type: "comment",
+          start: 5,
+          end: 11,
+          value: `<!-- >`,
+          kind: "simplet",
+          closing: null,
+        },
+        {
+          type: "comment",
+          start: 11,
+          end: 18,
+          value: `<!--  >`,
+          kind: "simplet",
+          closing: null,
+        },
+      ],
+      "04.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.03 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance`,
+  (t) => {
+    const gathered = [];
+    ct(`x<!-->y`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 6,
+          kind: "simplet",
+        },
+        {
+          type: "text",
+          start: 6,
+          end: 7,
+        },
+      ],
+      "04.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.04 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - three instances`,
+  (t) => {
+    const gathered = [];
+    ct(`<!--><!--><!-->`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 5,
+          kind: "simplet",
+        },
+        {
+          type: "comment",
+          start: 5,
+          end: 10,
+          kind: "simplet",
+        },
+        {
+          type: "comment",
+          start: 10,
+          end: 15,
+          kind: "simplet",
+        },
+      ],
+      "04.04"
     );
     t.end();
   }

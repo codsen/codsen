@@ -9,42 +9,9 @@
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-match-left-right';
-import { right, left } from 'string-left-right';
-import isTagOpening from 'is-html-tag-opening';
 import clone from 'lodash.clonedeep';
-
-function startsComment(str, i, token) {
-  return (
-    ((str[i] === "<" &&
-      (matchRight(str, i, ["!--"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
-        trimBeforeMatching: true,
-      }) ||
-        matchRight(str, i, ["![endif]"], {
-          i: true,
-          maxMismatches: 2,
-          trimBeforeMatching: true,
-        })) &&
-      !matchRight(str, i, ["![cdata", "<"], {
-        i: true,
-        maxMismatches: 1,
-        trimBeforeMatching: true,
-      }) &&
-      (token.type !== "comment" || token.kind !== "not")) ||
-      (str[i] === "-" &&
-        matchRight(str, i, ["->"], {
-          trimBeforeMatching: true,
-        }) &&
-        (token.type !== "comment" ||
-          (!token.closing && token.kind !== "not")) &&
-        !matchLeft(str, i, "<", {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"],
-        }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
-  );
-}
+import { left, right } from 'string-left-right';
+import isTagOpening from 'is-html-tag-opening';
 
 const allHTMLTagsKnownToHumanity = [
   "a",
@@ -248,6 +215,30 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   return false;
 }
 
+function startsEsp(str, i, token, layers, styleStarts) {
+  return (
+    espChars.includes(str[i]) &&
+    str[i + 1] &&
+    espChars.includes(str[i + 1]) &&
+    token.type !== "rule" &&
+    token.type !== "at" &&
+    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
+    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
+    !(
+      (
+        "0123456789".includes(str[left(str, i)]) &&
+        (!str[i + 2] ||
+          [`"`, `'`, ";"].includes(str[i + 2]) ||
+          !str[i + 2].trim().length)
+      )
+    ) &&
+    !(
+      styleStarts &&
+      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+    )
+  );
+}
+
 const BACKSLASH = "\u005C";
 function startsTag(str, i, token, layers) {
   return (
@@ -277,27 +268,36 @@ function startsTag(str, i, token, layers) {
   );
 }
 
-function startsEsp(str, i, token, layers, styleStarts) {
+function startsComment(str, i, token) {
   return (
-    espChars.includes(str[i]) &&
-    str[i + 1] &&
-    espChars.includes(str[i + 1]) &&
-    token.type !== "rule" &&
-    token.type !== "at" &&
-    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
-    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
-    !(
-      (
-        "0123456789".includes(str[left(str, i)]) &&
-        (!str[i + 2] ||
-          [`"`, `'`, ";"].includes(str[i + 2]) ||
-          !str[i + 2].trim().length)
-      )
-    ) &&
-    !(
-      styleStarts &&
-      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
-    )
+    ((str[i] === "<" &&
+      (matchRight(str, i, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true,
+      }) ||
+        matchRight(str, i, ["![endif]"], {
+          i: true,
+          maxMismatches: 2,
+          trimBeforeMatching: true,
+        })) &&
+      !matchRight(str, i, ["![cdata", "<"], {
+        i: true,
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+      }) &&
+      (token.type !== "comment" || token.kind !== "not")) ||
+      (str[i] === "-" &&
+        matchRight(str, i, ["->"], {
+          trimBeforeMatching: true,
+        }) &&
+        (token.type !== "comment" ||
+          (!token.closing && token.kind !== "not")) &&
+        !matchLeft(str, i, "<", {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["-", "!"],
+        }))) &&
+    (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
 
@@ -1117,6 +1117,14 @@ function tokenizer(str, originalOpts) {
         ) {
           token.kind = "not";
           token.closing = true;
+        } else if (
+          token.kind === "simple" &&
+          !token.closing &&
+          str[right(str, i)] === ">"
+        ) {
+          token.end = right(str, i) + 1;
+          token.kind = "simplet";
+          token.closing = null;
         } else {
           token.end = i + 1;
           if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
@@ -1137,6 +1145,7 @@ function tokenizer(str, originalOpts) {
           layers.pop();
         }
         if (
+          !["simplet", "not"].includes(token.kind) &&
           matchRight(str, i, ["<!-->", "<!---->"], {
             trimBeforeMatching: true,
             maxMismatches: 1,

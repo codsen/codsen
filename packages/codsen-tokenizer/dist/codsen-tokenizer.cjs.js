@@ -13,9 +13,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
+var clone = _interopDefault(require('lodash.clonedeep'));
 var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
-var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -66,29 +66,6 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-function startsComment(str, i, token) {
-  return (
-    (str[i] === "<" && (stringMatchLeftRight.matchRight(str, i, ["!--"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
-      trimBeforeMatching: true
-    }) || stringMatchLeftRight.matchRight(str, i, ["![endif]"], {
-      i: true,
-      maxMismatches: 2,
-      trimBeforeMatching: true
-    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "<"], {
-      i: true,
-      maxMismatches: 1,
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !stringMatchLeftRight.matchLeft(str, i, "<", {
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["-", "!"]
-    })) && (token.type !== "esp" || token.tail.includes(str[i]))
-  );
-}
-
 var allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
 var espChars = "{}%-$_()*|";
 var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
@@ -133,6 +110,11 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   return false;
 }
 
+function startsEsp(str, i, token, layers, styleStarts) {
+  return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(
+  "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[stringLeftRight.right(str, i)])));
+}
+
 var BACKSLASH = "\\";
 function startsTag(str, i, token, layers) {
   return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isTagOpening(str, i, {
@@ -148,9 +130,27 @@ function startsTag(str, i, token, layers) {
   token.type !== "esp" || token.tail.includes(str[i]));
 }
 
-function startsEsp(str, i, token, layers, styleStarts) {
-  return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(
-  "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[stringLeftRight.right(str, i)])));
+function startsComment(str, i, token) {
+  return (
+    (str[i] === "<" && (stringMatchLeftRight.matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
+      trimBeforeMatching: true
+    }) || stringMatchLeftRight.matchRight(str, i, ["![endif]"], {
+      i: true,
+      maxMismatches: 2,
+      trimBeforeMatching: true
+    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "<"], {
+      i: true,
+      maxMismatches: 1,
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !stringMatchLeftRight.matchLeft(str, i, "<", {
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["-", "!"]
+    })) && (token.type !== "esp" || token.tail.includes(str[i]))
+  );
 }
 
 function isObj(something) {
@@ -749,6 +749,10 @@ function tokenizer(str, originalOpts) {
         })) {
           token.kind = "not";
           token.closing = true;
+        } else if (token.kind === "simple" && !token.closing && str[stringLeftRight.right(str, i)] === ">") {
+          token.end = stringLeftRight.right(str, i) + 1;
+          token.kind = "simplet";
+          token.closing = null;
         } else {
           token.end = i + 1;
           if (str[stringLeftRight.left(str, i)] === "!" && str[stringLeftRight.right(str, i)] === "-") {
@@ -760,7 +764,7 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
           layers.pop();
         }
-        if (stringMatchLeftRight.matchRight(str, i, ["<!-->", "<!---->"], {
+        if (!["simplet", "not"].includes(token.kind) && stringMatchLeftRight.matchRight(str, i, ["<!-->", "<!---->"], {
           trimBeforeMatching: true,
           maxMismatches: 1,
           lastMustMatch: true
