@@ -501,7 +501,7 @@ function validateString(str, idxOffset, originalOpts) {
 var wholeExtensionRegex = /^\.\w+$/g;
 var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 var fontSizeRegex = /^[+-]?[1-7]$/;
-var linkTypes = ["alternate", "archives", "appendix", "author", "bookmark", "canonical", "chapter", "contents", "copyright", "dns-prefetch", "external", "first", "glossary", "help", "icon", "import", "index", "last", "license", "manifest", "modulepreload", "next", "nofollow", "noopener", "noreferrer", "opener", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "shortlink", "section", "sidebar", "start", "stylesheet", "subsection", "tag", "up"];
+var linkTypes = ["apple-touch-icon", "apple-touch-startup-image", "alternate", "archives", "appendix", "author", "bookmark", "canonical", "chapter", "contents", "copyright", "dns-prefetch", "external", "first", "glossary", "help", "icon", "import", "index", "last", "license", "manifest", "modulepreload", "next", "nofollow", "noopener", "noreferrer", "opener", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "shortlink", "section", "sidebar", "start", "stylesheet", "subsection", "tag", "up"];
 var astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
   "tag-missing-closing": "Closing tag is missing.",
@@ -3652,7 +3652,7 @@ function validateValue$1(str, originalOpts, errorArr) {
         }
       });
     }
-  } else if (!(urlRegex({
+  } else if (!extractedValue.startsWith("tel:") && !(urlRegex({
     exact: true
   }).test(extractedValue) || calcultedIsRel.res)) {
     var message = "Should be an URI.";

@@ -340,6 +340,8 @@ const wholeExtensionRegex = /^\.\w+$/g;
 const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 const fontSizeRegex = /^[+-]?[1-7]$/;
 const linkTypes = [
+  "apple-touch-icon",
+  "apple-touch-startup-image",
   "alternate",
   "archives",
   "appendix",
@@ -3789,6 +3791,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       });
     }
   } else if (
+    !extractedValue.startsWith("tel:") &&
     !(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)
   ) {
     let message = `Should be an URI.`;

@@ -139,9 +139,10 @@ function validateValue(str, originalOpts, errorArr) {
       });
     }
   } else if (
+    !extractedValue.startsWith("tel:") &&
     !(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)
   ) {
-    console.log(`144 validateUri/validateValue(): ██ inside not-URL clauses`);
+    console.log(`145 validateUri/validateValue(): ██ inside not-URL clauses`);
 
     // message:
     // Should be ${opts.separator}-separated list of URI's.
@@ -154,7 +155,7 @@ function validateValue(str, originalOpts, errorArr) {
 
     const whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex());
     console.log(
-      `157 validateUri/validateValue(): ${`\u001b[${33}m${`whatCouldBeExtractedAtAllFromRegex`}\u001b[${39}m`} = ${JSON.stringify(
+      `158 validateUri/validateValue(): ${`\u001b[${33}m${`whatCouldBeExtractedAtAllFromRegex`}\u001b[${39}m`} = ${JSON.stringify(
         whatCouldBeExtractedAtAllFromRegex,
         null,
         4
@@ -173,7 +174,7 @@ function validateValue(str, originalOpts, errorArr) {
     }
 
     console.log(
-      `176 validateUri/validateValue(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [[${idxFrom}, ${idxTo}]]; message = "${message}"`
+      `177 validateUri/validateValue(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [[${idxFrom}, ${idxTo}]]; message = "${message}"`
     );
     errorArr.push({
       idxFrom,
@@ -186,7 +187,7 @@ function validateValue(str, originalOpts, errorArr) {
 
 function validateUri(str, originalOpts) {
   console.log(
-    `189 incoming originalOpts = ${JSON.stringify(originalOpts, null, 4)}`
+    `190 incoming originalOpts = ${JSON.stringify(originalOpts, null, 4)}`
   );
   const defaults = {
     offset: 0,
@@ -198,7 +199,7 @@ function validateUri(str, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
-    `201 validateUri(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `202 validateUri(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -209,13 +210,13 @@ function validateUri(str, originalOpts) {
   // first last non-whitespace character; nulls otherwise
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, opts.offset);
   console.log(
-    `212 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}`
+    `213 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}`
   );
   console.log(
-    `215 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd}`
+    `216 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd}`
   );
   console.log(
-    `218 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+    `219 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
       errorArr,
       null,
       4
@@ -226,7 +227,7 @@ function validateUri(str, originalOpts) {
 
   if (Number.isInteger(charStart)) {
     console.log(
-      `229 validateUri: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      `230 validateUri: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
         opts,
         null,
         4
@@ -235,16 +236,16 @@ function validateUri(str, originalOpts) {
     if (opts.multipleOK) {
       // depends, is it comma or space-separated format
       if (opts.separator === "space") {
-        console.log(`238 validateUri: use splitByWhitespace()`);
+        console.log(`239 validateUri: use splitByWhitespace()`);
         splitByWhitespace(
           str,
           ([charFrom, charTo]) => {
             console.log(
-              `243 validateUri: charFrom = ${charFrom}; charTo = ${charTo}`
+              `244 validateUri: charFrom = ${charFrom}; charTo = ${charTo}`
             );
             const extractedName = str.slice(charFrom, charTo);
             console.log(
-              `247 validateUri: ${`\u001b[${33}m${`extractedName`}\u001b[${39}m`} = ${JSON.stringify(
+              `248 validateUri: ${`\u001b[${33}m${`extractedName`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedName,
                 null,
                 4
@@ -254,7 +255,7 @@ function validateUri(str, originalOpts) {
             // <object archive="https://codsen.com, https://detergent.io">
             if (extractedName.endsWith(",") && extractedName.length > 1) {
               console.log(
-                `257 validateUri: PUSH [${opts.offset + charTo - 1}, ${
+                `258 validateUri: PUSH [${opts.offset + charTo - 1}, ${
                   opts.offset + charTo
                 }]`
               );
@@ -295,7 +296,7 @@ function validateUri(str, originalOpts) {
           }
         );
       } else {
-        console.log(`298 validateUri: use processCommaSeparated()`);
+        console.log(`299 validateUri: use processCommaSeparated()`);
         processCommaSeparated(str, {
           offset: opts.offset,
           oneSpaceAfterCommaOK: false,
@@ -303,7 +304,7 @@ function validateUri(str, originalOpts) {
           trailingWhitespaceOK: true,
           cb: (idxFrom, idxTo) => {
             console.log(
-              `306 validateUri: ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+              `307 validateUri: ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
             );
 
             const extractedValue = str.slice(
@@ -311,7 +312,7 @@ function validateUri(str, originalOpts) {
               idxTo - opts.offset
             );
             console.log(
-              `314 validateUri: ██ EXTRACTED VALUE: ${JSON.stringify(
+              `315 validateUri: ██ EXTRACTED VALUE: ${JSON.stringify(
                 extractedValue,
                 null,
                 0
@@ -336,7 +337,7 @@ function validateUri(str, originalOpts) {
           },
           errCb: (ranges, message) => {
             console.log(
-              `339 validateUri: ${`\u001b[${32}m${`INCOMING errCb`}\u001b[${39}m`} ranges = ${JSON.stringify(
+              `340 validateUri: ${`\u001b[${32}m${`INCOMING errCb`}\u001b[${39}m`} ranges = ${JSON.stringify(
                 ranges,
                 null,
                 4
@@ -359,7 +360,7 @@ function validateUri(str, originalOpts) {
             ) {
               // if it's not outer whitespace, skip the fix
               console.log(
-                `362 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} fix = null`
+                `363 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} fix = null`
               );
               fix = null;
             }
@@ -371,7 +372,7 @@ function validateUri(str, originalOpts) {
               fix,
             });
             console.log(
-              `374 validateUri: after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              `375 validateUri: after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
                 errorArr,
                 null,
                 4
@@ -381,7 +382,7 @@ function validateUri(str, originalOpts) {
         });
       }
     } else {
-      console.log(`384 validateUri: the whole attribute should be validated`);
+      console.log(`385 validateUri: the whole attribute should be validated`);
       // we pass whole value to validateValue(), "cropping" the whitespace:
       validateValue(
         str,

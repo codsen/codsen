@@ -117,6 +117,22 @@ t.test(
   }
 );
 
+t.test(
+  `01.08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy tel`,
+  (t) => {
+    const str = `<a href="tel:1-408-555-5555">Call me</a>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-href": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
