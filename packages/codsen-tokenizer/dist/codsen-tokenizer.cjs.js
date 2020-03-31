@@ -754,7 +754,7 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
           layers.pop();
         }
-        if (stringMatchLeftRight.matchRight(str, i, ["<!-->"], {
+        if (stringMatchLeftRight.matchRight(str, i, ["<!-->", "<!---->"], {
           trimBeforeMatching: true,
           maxMismatches: 1,
           lastMustMatch: true

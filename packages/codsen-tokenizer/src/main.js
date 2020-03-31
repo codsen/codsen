@@ -2027,14 +2027,14 @@ function tokenizer(str, originalOpts) {
         // the difference between opening Outlook conditional comment "only"
         // and conditional "only not" is that <!--> follows
         if (
-          matchRight(str, i, ["<!-->"], {
+          matchRight(str, i, ["<!-->", "<!---->"], {
             trimBeforeMatching: true,
             maxMismatches: 1,
             lastMustMatch: true,
           })
         ) {
           console.log(
-            `2037 that's end of opening type="comment", kind="only" comment`
+            `2037 that's kind="not" comment and it continues on the right`
           );
           token.kind = "not";
           console.log(
@@ -2044,7 +2044,7 @@ function tokenizer(str, originalOpts) {
           );
         } else {
           console.log(
-            `2047 that's end of opening type="comment", kind="not" comment`
+            `2047 that's the end of opening type="comment" kind="only" comment`
           );
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);

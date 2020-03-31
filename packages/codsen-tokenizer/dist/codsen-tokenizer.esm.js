@@ -1130,7 +1130,7 @@ function tokenizer(str, originalOpts) {
           layers.pop();
         }
         if (
-          matchRight(str, i, ["<!-->"], {
+          matchRight(str, i, ["<!-->", "<!---->"], {
             trimBeforeMatching: true,
             maxMismatches: 1,
             lastMustMatch: true,

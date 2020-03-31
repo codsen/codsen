@@ -997,6 +997,70 @@ t.test(
   }
 );
 
+t.test(
+  `03.04 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, no space`,
+  (t) => {
+    const gathered = [];
+    ct(`<!--[if !mso]><!---->z`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 21,
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 21,
+          end: 22,
+        },
+      ],
+      "03.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.05 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, with space`,
+  (t) => {
+    const gathered = [];
+    ct(`<!--[if !mso]><!-- -->z`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 22,
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 22,
+          end: 23,
+        },
+      ],
+      "03.05"
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 
 // For a reference:
