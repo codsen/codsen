@@ -921,6 +921,7 @@ function tokenizer(str, originalOpts) {
           token.closing = true;
         } else if (
           matchRightIncl(str, i, ["<![endif]-->"], {
+            i: true,
             trimBeforeMatching: true,
             maxMismatches: 2,
           })
@@ -1093,17 +1094,23 @@ function tokenizer(str, originalOpts) {
         if (
           str[i] === "-" &&
           (matchRight(str, i, ["[if", "(if", "{if"], {
+            i: true,
             trimBeforeMatching: true,
           }) ||
             (matchRight(str, i, ["if"], {
+              i: true,
               trimBeforeMatching: true,
             }) &&
-              xBeforeYOnTheRight(str, i, "]", ">")))
+              (xBeforeYOnTheRight(str, i, "]", ">") ||
+                (str.includes("mso", i) &&
+                  !str.slice(i, str.indexOf("mso")).includes("<") &&
+                  !str.slice(i, str.indexOf("mso")).includes(">")))))
         ) {
           token.kind = "only";
         } else if (
           str[token.start] !== "-" &&
           matchRightIncl(str, i, ["-<![endif"], {
+            i: true,
             trimBeforeMatching: true,
             maxMismatches: 2,
           })

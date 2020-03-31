@@ -826,7 +826,6 @@ t.test(
   `02.13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`,
   (t) => {
     const gathered = [];
-    // ct(`<!--tralala--><![endif]-->`, {
     ct(`<!--[if mso]><!--tralala--><![endif]-->`, {
       tagCb: (obj) => {
         gathered.push(obj);
@@ -876,6 +875,48 @@ t.test(
         },
       ],
       "02.13"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.14 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - no brackets`,
+  (t) => {
+    const gathered = [];
+    ct(`<!--if mso>_<!endif-->`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 11,
+          value: "<!--if mso>",
+          kind: "only",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 11,
+          end: 12,
+          value: "_",
+        },
+        {
+          type: "comment",
+          start: 12,
+          end: 22,
+          value: "<!endif-->",
+          kind: "only",
+          closing: true,
+        },
+      ],
+      "02.14"
     );
     t.end();
   }
@@ -1056,6 +1097,104 @@ t.test(
         },
       ],
       "03.05"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.06 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing`,
+  (t) => {
+    const gathered = [];
+    ct(`_<!--if !mso><!-->_<!--<!endif-->_`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 18,
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 18,
+          end: 19,
+        },
+        {
+          type: "comment",
+          start: 19,
+          end: 33,
+          kind: "not",
+          closing: true,
+        },
+        {
+          type: "text",
+          start: 33,
+          end: 34,
+        },
+      ],
+      "03.06"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.07 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing, spaced notation`,
+  (t) => {
+    const gathered = [];
+    ct(`_<!--if !mso><!-- -->_<!--<!endif-->_`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 21,
+          kind: "not",
+          closing: false,
+        },
+        {
+          type: "text",
+          start: 21,
+          end: 22,
+        },
+        {
+          type: "comment",
+          start: 22,
+          end: 36,
+          kind: "not",
+          closing: true,
+        },
+        {
+          type: "text",
+          start: 36,
+          end: 37,
+        },
+      ],
+      "03.07"
     );
     t.end();
   }
