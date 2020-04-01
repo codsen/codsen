@@ -699,7 +699,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `03.11 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
   (t) => {
     const str = `<!--if !mso><!-->
@@ -737,7 +737,7 @@ t.todo(
 );
 
 t.todo(
-  `03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is full empty comment`,
+  `03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`,
   (t) => {
     const str = `<!--[if !mso]><!---->
   <img src="gif"/>
@@ -750,6 +750,42 @@ t.todo(
     });
     t.equal(applyFixes(str, messages), str, "03.13.01");
     t.match(messages, [], "03.13.02");
+    t.end();
+  }
+);
+
+t.todo(
+  `03.14 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`,
+  (t) => {
+    const str = `<!--[if !mso]><!-- -->
+  <img src="gif"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str, "03.14.01");
+    t.match(messages, [], "03.14.02");
+    t.end();
+  }
+);
+
+t.todo(
+  `03.15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`,
+  (t) => {
+    const str = `<!--[if !mso]><!--\t -->
+  <img src="gif"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str, "03.15.01");
+    t.match(messages, [], "03.15.02");
     t.end();
   }
 );
