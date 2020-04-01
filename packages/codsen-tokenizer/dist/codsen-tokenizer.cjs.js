@@ -943,12 +943,22 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim().length) {
       if (str[i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, i)]) && !espChars.includes(str[stringLeftRight.right(str, i)])
       ) {
-          attrib.attribValueStartsAt = stringLeftRight.right(str, i);
-          layers.push({
-            type: "simple",
-            value: null,
-            position: attrib.attribValueStartsAt
-          });
+          var firstCharOnTheRight = stringLeftRight.right(str, i);
+          if (
+          firstCharOnTheRight &&
+          str.slice(firstCharOnTheRight).includes("=") &&
+          htmlAllKnownAttributes.allHtmlAttribs.includes(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
+            attrib.attribEnd = i + 1;
+            token.attribs.push(clone(attrib));
+            attribReset();
+          } else {
+            attrib.attribValueStartsAt = firstCharOnTheRight;
+            layers.push({
+              type: "simple",
+              value: null,
+              position: attrib.attribValueStartsAt
+            });
+          }
         } else if ("'\"".includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;
         if (str[i + 1]) {
