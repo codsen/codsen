@@ -903,6 +903,10 @@ function tokenizer(str, originalOpts) {
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
+        if (str[i] === ">") {
+          token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
+        }
       } else if (str[i] === "=" && "'\"".includes(str[stringLeftRight.right(str, i)])) {
         var whitespaceFound = void 0;
         var attribClosingQuoteAt = void 0;

@@ -1358,6 +1358,10 @@ function tokenizer(str, originalOpts) {
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
+        if (str[i] === ">") {
+          token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
+        }
       } else if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
         let whitespaceFound;
         let attribClosingQuoteAt;

@@ -1883,7 +1883,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `07.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
   (t) => {
     const gathered = [];
@@ -1897,12 +1897,69 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.08");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 20,
+          value: '<span width="" 100\'>',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: 18,
+              attribValue: " 100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 18,
+              attribStart: 6,
+              attribEnd: 19,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 20,
+          end: 27,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 34,
+          value: "</span>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 33,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.08"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `07.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
   (t) => {
     const gathered = [];
@@ -1916,12 +1973,69 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.09");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 20,
+          value: "<span width='' 100'>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: 18,
+              attribValue: " 100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 18,
+              attribStart: 6,
+              attribEnd: 19,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 20,
+          end: 27,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 34,
+          value: "</span>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 33,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.09"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `07.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
   (t) => {
     const gathered = [];
@@ -1935,12 +2049,69 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.10");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 19,
+          value: "<span width=  100'>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 17,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 6,
+              attribEnd: 18,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 26,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 33,
+          value: "</span>",
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 32,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.10"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `07.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
   (t) => {
     const gathered = [];
@@ -1954,7 +2125,64 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.11");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: "<span width=  100>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 6,
+              attribEnd: 17,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 18,
+          end: 25,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 25,
+          end: 32,
+          value: "</span>",
+          tagNameStartsAt: 27,
+          tagNameEndsAt: 31,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.11"
+    );
     t.end();
   }
 );
