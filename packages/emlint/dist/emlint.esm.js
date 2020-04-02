@@ -4371,6 +4371,9 @@ function attributeValidateBgcolor(context, ...opts) {
 }
 
 function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
+  if (typeof str !== "string" || !str.length) {
+    return;
+  }
   if (str[charStart] === "0") {
     if (charEnd === charStart + 1) {
       if (!opts.zeroOK) {
@@ -4513,6 +4516,9 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
   }
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
+  if (typeof str !== "string" || !str.length) {
+    return [];
+  }
   const defaultOpts = {
     type: "integer",
     whitelistValues: [],
