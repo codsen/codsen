@@ -2608,8 +2608,6 @@ t.test(
   }
 );
 
-// as long as there are no code errors in the tag, we assume user really
-// intended to put equals and value in an attribute
 t.test(
   `07.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, quoteless attr inside`,
   (t) => {
@@ -2648,11 +2646,24 @@ t.test(
               attribNameStartsAt: 6,
               attribNameEndsAt: 11,
               attribOpeningQuoteAt: 12,
-              attribClosingQuoteAt: 23,
-              attribValue: "height=100",
-              attribValueStartsAt: 13,
-              attribValueEndsAt: 23,
+              attribClosingQuoteAt: null,
+              attribValue: null,
+              attribValueStartsAt: null,
+              attribValueEndsAt: null,
               attribStart: 6,
+              attribEnd: 13,
+            },
+            {
+              attribName: "height",
+              attribNameRecognised: true,
+              attribNameStartsAt: 13,
+              attribNameEndsAt: 19,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 23,
+              attribValue: "100",
+              attribValueStartsAt: 20,
+              attribValueEndsAt: 23,
+              attribStart: 13,
               attribEnd: 24,
             },
           ],
@@ -2668,16 +2679,6 @@ t.test(
           start: 32,
           end: 39,
           value: "</span>",
-          tagNameStartsAt: 34,
-          tagNameEndsAt: 38,
-          tagName: "span",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          esp: [],
-          kind: null,
-          attribs: [],
         },
       ],
       "07.17"
@@ -2687,7 +2688,73 @@ t.test(
 );
 
 t.test(
-  `07.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`,
+  `07.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised text - equal - value`,
+  (t) => {
+    const gathered = [];
+    ct(
+      `<span width="tralala=100">
+  zzz
+</span>`,
+      {
+        tagCb: (obj) => {
+          gathered.push(obj);
+        },
+      }
+    );
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 26,
+          value: '<span width="tralala=100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: 24,
+              attribValue: "tralala=100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 24,
+              attribStart: 6,
+              attribEnd: 25,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 26,
+          end: 33,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 33,
+          end: 40,
+          value: "</span>",
+        },
+      ],
+      "07.18"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`,
   (t) => {
     const gathered = [];
     ct(
@@ -2769,14 +2836,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.18"
+      "07.19"
     );
     t.end();
   }
 );
 
-t.todo(
-  `07.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
+t.test(
+  `07.20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   (t) => {
     const gathered = [];
     ct(
@@ -2789,13 +2856,73 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.19");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 23,
+          value: "<span width=height=100>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: null,
+              attribValueStartsAt: null,
+              attribValueEndsAt: null,
+              attribStart: 6,
+              attribEnd: 12,
+            },
+            {
+              attribName: "height",
+              attribNameRecognised: true,
+              attribNameStartsAt: 12,
+              attribNameEndsAt: 18,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 19,
+              attribValueEndsAt: 22,
+              attribStart: 12,
+              attribEnd: 22,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 23,
+          end: 30,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 30,
+          end: 37,
+          value: "</span>",
+        },
+      ],
+      "07.20"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
+t.test(
+  `07.21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
   (t) => {
     const gathered = [];
     ct(
@@ -2808,55 +2935,337 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.20");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 25,
+          value: '<span width= height=100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: null,
+              attribValueStartsAt: null,
+              attribValueEndsAt: null,
+              attribStart: 6,
+              attribEnd: 12,
+            },
+            {
+              attribName: "height",
+              attribNameRecognised: true,
+              attribNameStartsAt: 13,
+              attribNameEndsAt: 19,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 23,
+              attribValue: "100",
+              attribValueStartsAt: 20,
+              attribValueEndsAt: 23,
+              attribStart: 13,
+              attribEnd: 24,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 25,
+          end: 32,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 32,
+          end: 39,
+          value: "</span>",
+        },
+      ],
+      "07.21"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
-  (t) => {
-    const gathered = [];
-    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.match(gathered, [], "07.21");
-    t.end();
-  }
-);
-
-t.todo(
+t.test(
   `07.22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
-    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
+    ct(`<table width=100 border=1 cellpadding=2 cellspacing=3>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "07.22");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 54,
+          value: "<table width=100 border=1 cellpadding=2 cellspacing=3>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 6,
+          tagName: "table",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 7,
+              attribEnd: 16,
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 17,
+              attribNameEndsAt: 23,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "1",
+              attribValueStartsAt: 24,
+              attribValueEndsAt: 25,
+              attribStart: 17,
+              attribEnd: 25,
+            },
+            {
+              attribName: "cellpadding",
+              attribNameRecognised: true,
+              attribNameStartsAt: 26,
+              attribNameEndsAt: 37,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "2",
+              attribValueStartsAt: 38,
+              attribValueEndsAt: 39,
+              attribStart: 26,
+              attribEnd: 39,
+            },
+            {
+              attribName: "cellspacing",
+              attribNameRecognised: true,
+              attribNameStartsAt: 40,
+              attribNameEndsAt: 51,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "3",
+              attribValueStartsAt: 52,
+              attribValueEndsAt: 53,
+              attribStart: 40,
+              attribEnd: 53,
+            },
+          ],
+        },
+      ],
+      "07.22"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
+t.test(
+  `07.23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
-    ct(`<table width='100 border='0 cellpadding='0 cellspacing='0>`, {
+    ct(`<table width=100 border=z cellpadding= cellspacing=0>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "07.23");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 53,
+          value: "<table width=100 border=z cellpadding= cellspacing=0>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 6,
+          tagName: "table",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 7,
+              attribEnd: 16,
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 17,
+              attribNameEndsAt: 23,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "z",
+              attribValueStartsAt: 24,
+              attribValueEndsAt: 25,
+              attribStart: 17,
+              attribEnd: 25,
+            },
+            {
+              attribName: "cellpadding",
+              attribNameRecognised: true,
+              attribNameStartsAt: 26,
+              attribNameEndsAt: 37,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: null,
+              attribValueStartsAt: null,
+              attribValueEndsAt: null,
+              attribStart: 26,
+              attribEnd: 38,
+            },
+            {
+              attribName: "cellspacing",
+              attribNameRecognised: true,
+              attribNameStartsAt: 39,
+              attribNameEndsAt: 50,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "0",
+              attribValueStartsAt: 51,
+              attribValueEndsAt: 52,
+              attribStart: 39,
+              attribEnd: 52,
+            },
+          ],
+        },
+      ],
+      "07.23"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
+t.test(
+  `07.24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
+  (t) => {
+    const gathered = [];
+    ct(`<table width='100 border='1 cellpadding='2 cellspacing='3>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 58,
+          value: "<table width='100 border='1 cellpadding='2 cellspacing='3>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 6,
+          tagName: "table",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 7,
+              attribEnd: 17,
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 18,
+              attribNameEndsAt: 24,
+              attribOpeningQuoteAt: 25,
+              attribClosingQuoteAt: null,
+              attribValue: "1",
+              attribValueStartsAt: 26,
+              attribValueEndsAt: 27,
+              attribStart: 18,
+              attribEnd: 27,
+            },
+            {
+              attribName: "cellpadding",
+              attribNameRecognised: true,
+              attribNameStartsAt: 28,
+              attribNameEndsAt: 39,
+              attribOpeningQuoteAt: 40,
+              attribClosingQuoteAt: null,
+              attribValue: "2",
+              attribValueStartsAt: 41,
+              attribValueEndsAt: 42,
+              attribStart: 28,
+              attribEnd: 42,
+            },
+            {
+              attribName: "cellspacing",
+              attribNameRecognised: true,
+              attribNameStartsAt: 43,
+              attribNameEndsAt: 54,
+              attribOpeningQuoteAt: 55,
+              attribClosingQuoteAt: null,
+              attribValue: "3",
+              attribValueStartsAt: 56,
+              attribValueEndsAt: 57,
+              attribStart: 43,
+              attribEnd: 57,
+            },
+          ],
+        },
+      ],
+      "07.24"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
   (t) => {
     const gathered = [];
     ct(`<table width=100' border=0' cellpadding=0' cellspacing=0'>`, {
@@ -2864,13 +3273,175 @@ t.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "07.24");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 58,
+          value: "<table width=100' border=0' cellpadding=0' cellspacing=0'>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 6,
+          tagName: "table",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 16,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 7,
+              attribEnd: 17,
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 18,
+              attribNameEndsAt: 24,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 26,
+              attribValue: "0",
+              attribValueStartsAt: 25,
+              attribValueEndsAt: 26,
+              attribStart: 18,
+              attribEnd: 27,
+            },
+            {
+              attribName: "cellpadding",
+              attribNameRecognised: true,
+              attribNameStartsAt: 28,
+              attribNameEndsAt: 39,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 41,
+              attribValue: "0",
+              attribValueStartsAt: 40,
+              attribValueEndsAt: 41,
+              attribStart: 28,
+              attribEnd: 42,
+            },
+            {
+              attribName: "cellspacing",
+              attribNameRecognised: true,
+              attribNameStartsAt: 43,
+              attribNameEndsAt: 54,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 56,
+              attribValue: "0",
+              attribValueStartsAt: 55,
+              attribValueEndsAt: 56,
+              attribStart: 43,
+              attribEnd: 57,
+            },
+          ],
+        },
+      ],
+      "07.25"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`,
+t.test(
+  `07.26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/outer combo`,
+  (t) => {
+    const gathered = [];
+    ct(`<table width="100 border='0 cellpadding=0' cellspacing=0">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 58,
+          value: `<table width="100 border='0 cellpadding=0' cellspacing=0">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 6,
+          tagName: "table",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: null,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 7,
+              attribEnd: 17,
+            },
+            {
+              attribName: "border",
+              attribNameRecognised: true,
+              attribNameStartsAt: 18,
+              attribNameEndsAt: 24,
+              attribOpeningQuoteAt: 25,
+              attribClosingQuoteAt: null,
+              attribValue: "0",
+              attribValueStartsAt: 26,
+              attribValueEndsAt: 27,
+              attribStart: 18,
+              attribEnd: 27,
+            },
+            {
+              attribName: "cellpadding",
+              attribNameRecognised: true,
+              attribNameStartsAt: 28,
+              attribNameEndsAt: 39,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 41,
+              attribValue: "0",
+              attribValueStartsAt: 40,
+              attribValueEndsAt: 41,
+              attribStart: 28,
+              attribEnd: 42,
+            },
+            {
+              attribName: "cellspacing",
+              attribNameRecognised: true,
+              attribNameStartsAt: 43,
+              attribNameEndsAt: 54,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 56,
+              attribValue: "0",
+              attribValueStartsAt: 55,
+              attribValueEndsAt: 56,
+              attribStart: 43,
+              attribEnd: 57,
+            },
+          ],
+        },
+      ],
+      "07.26"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`,
   (t) => {
     const gathered = [];
     ct(
@@ -2883,13 +3454,60 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.25");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 19,
+          value: '<span width=\'"100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: 17,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 6,
+              attribEnd: 18,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 26,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 33,
+          value: "</span>",
+        },
+      ],
+      "07.27"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
+t.test(
+  `07.28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
   (t) => {
     const gathered = [];
     ct(
@@ -2902,13 +3520,70 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.26");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 20,
+          value: `<span width="'100'">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: 18,
+              attribValue: `'100'`,
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 18,
+              attribStart: 6,
+              attribEnd: 19,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 20,
+          end: 27,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 34,
+          value: "</span>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 33,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.28"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
+t.test(
+  `07.29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
     ct(
@@ -2921,13 +3596,136 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.27");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 19,
+          value: '<span width=."100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 13,
+              attribClosingQuoteAt: 17,
+              attribValue: "100",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 6,
+              attribEnd: 18,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 26,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 33,
+          value: "</span>",
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 32,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.29"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
+t.test(
+  `07.30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
+  (t) => {
+    const gathered = [];
+    ct(
+      `<span width....=....."100">
+  zzz
+</span>`,
+      {
+        tagCb: (obj) => {
+          gathered.push(obj);
+        },
+      }
+    );
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 27,
+          value: '<span width....=....."100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 21,
+              attribClosingQuoteAt: 25,
+              attribValue: "100",
+              attribValueStartsAt: 22,
+              attribValueEndsAt: 25,
+              attribStart: 6,
+              attribEnd: 26,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 27,
+          end: 34,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 34,
+          end: 41,
+          value: "</span>",
+        },
+      ],
+      "07.30"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
   (t) => {
     const gathered = [];
     ct(
@@ -2940,13 +3738,70 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.28");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 24,
+          value: '< span width = " 100 " >',
+          tagNameStartsAt: 2,
+          tagNameEndsAt: 6,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 7,
+              attribNameEndsAt: 12,
+              attribOpeningQuoteAt: 15,
+              attribClosingQuoteAt: 21,
+              attribValue: " 100 ",
+              attribValueStartsAt: 16,
+              attribValueEndsAt: 21,
+              attribStart: 7,
+              attribEnd: 22,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 24,
+          end: 31,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 31,
+          end: 41,
+          value: "< / span >",
+          tagNameStartsAt: 35,
+          tagNameEndsAt: 39,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.31"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+t.test(
+  `07.32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(
@@ -2959,13 +3814,70 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.29");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 19,
+          value: "<span width=  zzz/>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: null,
+              attribValue: "zzz",
+              attribValueStartsAt: 14,
+              attribValueEndsAt: 17,
+              attribStart: 6,
+              attribEnd: 17,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 26,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 33,
+          value: "</span>",
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 32,
+          tagName: "span",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07.32"
+    );
     t.end();
   }
 );
 
-t.todo(
-  `07.30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
+t.test(
+  `07.33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
   (t) => {
     const gathered = [];
     ct(
@@ -2978,7 +3890,54 @@ t.todo(
         },
       }
     );
-    t.match(gathered, [], "07.30");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value: '<span width=100">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 15,
+              attribValue: "100",
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 15,
+              attribStart: 6,
+              attribEnd: 16,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 17,
+          end: 24,
+          value: "\n  zzz\n",
+        },
+        {
+          type: "tag",
+          start: 24,
+          end: 31,
+          value: "</span>",
+        },
+      ],
+      "07.33"
+    );
     t.end();
   }
 );

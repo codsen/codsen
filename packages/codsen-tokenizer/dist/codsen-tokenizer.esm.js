@@ -1362,7 +1362,11 @@ function tokenizer(str, originalOpts) {
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+      } else if (
+        str[i] === "=" &&
+        (`'"`.includes(str[right(str, i)]) ||
+          (str[i - 1] && isLatinLetter(str[i - 1])))
+      ) {
         let whitespaceFound;
         let attribClosingQuoteAt;
         for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
@@ -1395,7 +1399,13 @@ function tokenizer(str, originalOpts) {
           attribReset();
           i = attribClosingQuoteAt - 1;
           continue;
-        } else if (attrib.attribOpeningQuoteAt) {
+        } else if (
+          attrib.attribOpeningQuoteAt &&
+          (`'"`.includes(str[right(str, i)]) ||
+            allHtmlAttribs.includes(
+              str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()
+            ))
+        ) {
           i = attrib.attribOpeningQuoteAt;
           attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
@@ -1421,6 +1431,17 @@ function tokenizer(str, originalOpts) {
         !espChars.includes(str[right(str, i)])
       ) {
         const firstCharOnTheRight = right(str, i);
+        const firstQuoteOnTheRightIdx = [
+          str.indexOf(`'`, firstCharOnTheRight),
+          str.indexOf(`"`, firstCharOnTheRight),
+        ].filter((val) => val > 0).length
+          ? Math.min(
+              ...[
+                str.indexOf(`'`, firstCharOnTheRight),
+                str.indexOf(`"`, firstCharOnTheRight),
+              ].filter((val) => val > 0)
+            )
+          : undefined;
         if (
           firstCharOnTheRight &&
           str.slice(firstCharOnTheRight).includes("=") &&
@@ -1438,7 +1459,25 @@ function tokenizer(str, originalOpts) {
           attrib.attribEnd = i + 1;
           token.attribs.push(clone(attrib));
           attribReset();
-        } else {
+        } else if (
+          !firstQuoteOnTheRightIdx ||
+          str
+            .slice(firstCharOnTheRight, firstQuoteOnTheRightIdx)
+            .includes("=") ||
+          !str.includes(
+            str[firstQuoteOnTheRightIdx],
+            firstQuoteOnTheRightIdx + 1
+          ) ||
+          Array.from(
+            str.slice(
+              firstQuoteOnTheRightIdx + 1,
+              str.indexOf(
+                str[firstQuoteOnTheRightIdx],
+                firstQuoteOnTheRightIdx + 1
+              )
+            )
+          ).some((char) => `<>=`.includes(char))
+        ) {
           attrib.attribValueStartsAt = firstCharOnTheRight;
           layers.push({
             type: "simple",
@@ -1447,9 +1486,29 @@ function tokenizer(str, originalOpts) {
           });
         }
       } else if (`'"`.includes(str[i])) {
-        attrib.attribOpeningQuoteAt = i;
-        if (str[i + 1]) {
-          attrib.attribValueStartsAt = i + 1;
+        const nextCharIdx = right(str, i);
+        if (
+          nextCharIdx &&
+          `'"`.includes(str[nextCharIdx]) &&
+          str[i] !== str[nextCharIdx] &&
+          str.length > nextCharIdx + 2 &&
+          str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) &&
+          (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) ||
+            !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) ||
+            str[i] !==
+              str[
+                right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))
+              ]) &&
+          !Array.from(
+            str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))
+          ).some((char) => `<>=${str[i]}`.includes(char))
+        ) {
+          layers.pop();
+        } else {
+          attrib.attribOpeningQuoteAt = i;
+          if (str[i + 1]) {
+            attrib.attribValueStartsAt = i + 1;
+          }
         }
       }
     }
