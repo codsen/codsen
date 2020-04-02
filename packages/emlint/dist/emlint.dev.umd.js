@@ -15490,6 +15490,7 @@
   var default_1 = leven;
   leven_1.default = default_1;
 
+  // rule: attribute-malformed
   // -----------------------------------------------------------------------------
   // it flags up malformed HTML attributes
 
@@ -15530,20 +15531,41 @@
               fix: null
             });
           }
-        } // equal missing
+        } // context.str[node.attribNameEndsAt] !== "="
+        // equal missing or something's wrong around it
 
 
-        if (node.attribValueStartsAt !== null && context.str[node.attribNameEndsAt] !== "=") {
-          context.report({
-            ruleId: "attribute-malformed",
-            message: "Equal is missing.",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
-            // second elem. from last range
-            fix: {
-              ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]]
+        if (node.attribNameEndsAt && node.attribValueStartsAt) {
+          if ( // if opening quotes are present, let's use their location
+          node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {
+            var message = "Malformed around equal.";
+
+            if (!context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt).includes("=")) {
+              message = "Equal is missing.";
+            } else if ( // rogue quotes after equals
+            ["=\"", "='"].includes(context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt))) {
+              message = "Delete repeated opening quotes.";
             }
-          });
+
+            var fromRange = node.attribNameEndsAt;
+            var toRange = node.attribOpeningQuoteAt;
+            var whatToAdd = "="; // if equals is in a correct place, don't replace it
+
+            if (context.str[fromRange] === "=") {
+              fromRange++;
+              whatToAdd = undefined;
+            }
+
+            context.report({
+              ruleId: "attribute-malformed",
+              message: message,
+              idxFrom: node.attribStart,
+              idxTo: node.attribEnd,
+              fix: {
+                ranges: whatToAdd ? [[fromRange, toRange, "="]] : [[fromRange, toRange]]
+              }
+            });
+          }
         } // opening quotes missing
 
 
@@ -15566,19 +15588,6 @@
             // second elem. from last range
             fix: {
               ranges: ranges
-            }
-          });
-        } // repeated opening
-
-
-        if (node.attribOpeningQuoteAt !== null && node.attribNameEndsAt !== null && context.str[node.attribOpeningQuoteAt] === context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt).slice(-1)) {
-          context.report({
-            ruleId: "attribute-malformed",
-            message: "Delete repeated opening quotes.",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
-            fix: {
-              ranges: [[left(context.str, node.attribOpeningQuoteAt), node.attribOpeningQuoteAt]]
             }
           });
         }
@@ -43942,7 +43951,7 @@
             token.end = i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[i - 1] && isLatinLetter(str[i - 1]))) {
           let whitespaceFound;
           let attribClosingQuoteAt;
 
@@ -43981,6 +43990,14 @@
             attribReset();
             i = attribClosingQuoteAt - 1;
             continue;
+          } else if (attrib.attribOpeningQuoteAt && (`'"`.includes(str[right(str, i)]) || allHtmlAttribs.includes(str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()))) {
+            i = attrib.attribOpeningQuoteAt;
+            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+            attrib.attribValueStartsAt = null;
+            layers.pop();
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+            continue;
           }
         }
       }
@@ -43988,12 +44005,13 @@
       if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim().length) {
         if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
           const firstCharOnTheRight = right(str, i);
+          const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
 
           if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.includes(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
             attrib.attribEnd = i + 1;
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
-          } else {
+          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(char => `<>=`.includes(char))) {
             attrib.attribValueStartsAt = firstCharOnTheRight;
             layers.push({
               type: "simple",
@@ -44002,10 +44020,16 @@
             });
           }
         } else if (`'"`.includes(str[i])) {
-          attrib.attribOpeningQuoteAt = i;
+          const nextCharIdx = right(str, i);
 
-          if (str[i + 1]) {
-            attrib.attribValueStartsAt = i + 1;
+          if (nextCharIdx && `'"`.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
+            layers.pop();
+          } else {
+            attrib.attribOpeningQuoteAt = i;
+
+            if (str[i + 1]) {
+              attrib.attribValueStartsAt = i + 1;
+            }
           }
         }
       }

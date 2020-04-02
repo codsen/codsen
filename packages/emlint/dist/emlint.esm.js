@@ -3022,19 +3022,50 @@ function attributeMalformed(context, ...opts) {
           });
         }
       }
-      if (
-        node.attribValueStartsAt !== null &&
-        context.str[node.attribNameEndsAt] !== "="
-      ) {
-        context.report({
-          ruleId: "attribute-malformed",
-          message: `Equal is missing.`,
-          idxFrom: node.attribStart,
-          idxTo: node.attribEnd,
-          fix: {
-            ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]],
-          },
-        });
+      if (node.attribNameEndsAt && node.attribValueStartsAt) {
+        if (
+          node.attribOpeningQuoteAt !== null &&
+          context.str.slice(
+            node.attribNameEndsAt,
+            node.attribOpeningQuoteAt
+          ) !== "="
+        ) {
+          let message = `Malformed around equal.`;
+          if (
+            !context.str
+              .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
+              .includes("=")
+          ) {
+            message = `Equal is missing.`;
+          } else if (
+            [`="`, `='`].includes(
+              context.str.slice(
+                node.attribNameEndsAt,
+                node.attribOpeningQuoteAt
+              )
+            )
+          ) {
+            message = `Delete repeated opening quotes.`;
+          }
+          let fromRange = node.attribNameEndsAt;
+          const toRange = node.attribOpeningQuoteAt;
+          let whatToAdd = "=";
+          if (context.str[fromRange] === "=") {
+            fromRange++;
+            whatToAdd = undefined;
+          }
+          context.report({
+            ruleId: "attribute-malformed",
+            message,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: whatToAdd
+                ? [[fromRange, toRange, "="]]
+                : [[fromRange, toRange]],
+            },
+          });
+        }
       }
       const ranges = [];
       if (
@@ -3068,29 +3099,6 @@ function attributeMalformed(context, ...opts) {
           idxFrom: node.attribStart,
           idxTo: node.attribEnd,
           fix: { ranges },
-        });
-      }
-      if (
-        node.attribOpeningQuoteAt !== null &&
-        node.attribNameEndsAt !== null &&
-        context.str[node.attribOpeningQuoteAt] ===
-          context.str
-            .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
-            .slice(-1)
-      ) {
-        context.report({
-          ruleId: "attribute-malformed",
-          message: `Delete repeated opening quotes.`,
-          idxFrom: node.attribStart,
-          idxTo: node.attribEnd,
-          fix: {
-            ranges: [
-              [
-                left(context.str, node.attribOpeningQuoteAt),
-                node.attribOpeningQuoteAt,
-              ],
-            ],
-          },
         });
       }
     },

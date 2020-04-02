@@ -1,6 +1,6 @@
 import { allHtmlAttribs } from "html-all-known-attributes";
 import leven from "leven";
-import { left } from "string-left-right";
+// import { left } from "string-left-right";
 
 // rule: attribute-malformed
 // -----------------------------------------------------------------------------
@@ -77,21 +77,61 @@ function attributeMalformed(context, ...opts) {
         }
       }
 
-      // equal missing
-      if (
-        node.attribValueStartsAt !== null &&
-        context.str[node.attribNameEndsAt] !== "="
-      ) {
-        console.log(`085 RAISE ERROR ABOUT EQUALS SIGN`);
-        context.report({
-          ruleId: "attribute-malformed",
-          message: `Equal is missing.`,
-          idxFrom: node.attribStart,
-          idxTo: node.attribEnd, // second elem. from last range
-          fix: {
-            ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]],
-          },
-        });
+      // context.str[node.attribNameEndsAt] !== "="
+      // equal missing or something's wrong around it
+      if (node.attribNameEndsAt && node.attribValueStartsAt) {
+        if (
+          // if opening quotes are present, let's use their location
+          node.attribOpeningQuoteAt !== null &&
+          context.str.slice(
+            node.attribNameEndsAt,
+            node.attribOpeningQuoteAt
+          ) !== "="
+        ) {
+          let message = `Malformed around equal.`;
+          if (
+            !context.str
+              .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
+              .includes("=")
+          ) {
+            console.log(`097 equal is missing`);
+            message = `Equal is missing.`;
+          } else if (
+            // rogue quotes after equals
+            [`="`, `='`].includes(
+              context.str.slice(
+                node.attribNameEndsAt,
+                node.attribOpeningQuoteAt
+              )
+            )
+          ) {
+            console.log(`108 rogue quotes after equals`);
+            message = `Delete repeated opening quotes.`;
+          }
+
+          let fromRange = node.attribNameEndsAt;
+          const toRange = node.attribOpeningQuoteAt;
+          let whatToAdd = "=";
+
+          // if equals is in a correct place, don't replace it
+          if (context.str[fromRange] === "=") {
+            fromRange++;
+            whatToAdd = undefined;
+          }
+
+          console.log(`122 RAISE ERROR ABOUT EQUALS SIGN`);
+          context.report({
+            ruleId: "attribute-malformed",
+            message,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: whatToAdd
+                ? [[fromRange, toRange, "="]]
+                : [[fromRange, toRange]],
+            },
+          });
+        }
       }
 
       // opening quotes missing
@@ -100,7 +140,7 @@ function attributeMalformed(context, ...opts) {
         node.attribOpeningQuoteAt === null &&
         node.attribValueStartsAt !== null
       ) {
-        console.log(`103 OPENING QUOTE MISSING`);
+        console.log(`143 OPENING QUOTE MISSING`);
         ranges.push([
           node.attribValueStartsAt,
           node.attribValueStartsAt,
@@ -113,7 +153,7 @@ function attributeMalformed(context, ...opts) {
         node.attribClosingQuoteAt === null &&
         node.attribValueEndsAt !== null
       ) {
-        console.log(`116 CLOSING QUOTE MISSING`);
+        console.log(`156 CLOSING QUOTE MISSING`);
         ranges.push([
           node.attribValueEndsAt,
           node.attribValueEndsAt,
@@ -123,39 +163,13 @@ function attributeMalformed(context, ...opts) {
         ]);
       }
       if (ranges.length) {
-        console.log(`126 RAISE ERROR ABOUT QUOTES`);
+        console.log(`166 RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd, // second elem. from last range
           fix: { ranges },
-        });
-      }
-
-      // repeated opening
-      if (
-        node.attribOpeningQuoteAt !== null &&
-        node.attribNameEndsAt !== null &&
-        context.str[node.attribOpeningQuoteAt] ===
-          context.str
-            .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
-            .slice(-1)
-      ) {
-        console.log(`145 RAISE ERROR ABOUT REPEATED OPENING QUOTES`);
-        context.report({
-          ruleId: "attribute-malformed",
-          message: `Delete repeated opening quotes.`,
-          idxFrom: node.attribStart,
-          idxTo: node.attribEnd,
-          fix: {
-            ranges: [
-              [
-                left(context.str, node.attribOpeningQuoteAt),
-                node.attribOpeningQuoteAt,
-              ],
-            ],
-          },
         });
       }
     },

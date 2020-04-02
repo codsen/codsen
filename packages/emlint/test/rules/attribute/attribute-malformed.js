@@ -312,4 +312,59 @@ t.test(
   }
 );
 
+// 04. rogue quotes
 // -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue single`,
+  (t) => {
+    const str = `<table width='"100">zzz</table>`;
+    const fixed = `<table width="100">zzz</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue double`,
+  (t) => {
+    const str = `<table width="'100'>zzz</table>`;
+    const fixed = `<table width='100'>zzz</table>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);
+
+// 05. rogue characters
+// -----------------------------------------------------------------------------
+
+t.test(
+  `05.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue characters around equal`,
+  (t) => {
+    const str = `<span width...=....."100"></span>`;
+    const fixed = `<span width="100"></span>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);
