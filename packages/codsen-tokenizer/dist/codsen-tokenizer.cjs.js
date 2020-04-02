@@ -937,6 +937,14 @@ function tokenizer(str, originalOpts) {
           attribReset();
           i = attribClosingQuoteAt - 1;
           continue;
+        } else if (attrib.attribOpeningQuoteAt) {
+          i = attrib.attribOpeningQuoteAt;
+          attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+          attrib.attribValueStartsAt = null;
+          layers.pop();
+          token.attribs.push(clone(attrib));
+          attribReset();
+          continue;
         }
       }
     }

@@ -4019,6 +4019,26 @@
 
             i = attribClosingQuoteAt - 1;
             continue;
+          } else if (attrib.attribOpeningQuoteAt) {
+            // worst case scenario:
+            // <span width="height="100">
+            //
+            // traversing back from second "=" we hit only the beginning of an
+            // attribute, there was nothing to salvage.
+            // In this case, reset the attribute's calculation, go backwards to "h".
+            // 1. pull back the index, go backwards, read this new attribute again
+            i = attrib.attribOpeningQuoteAt; // 2. end the attribute
+
+            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
+
+            attrib.attribValueStartsAt = null; // 4. pop the opening quotes layer
+
+            layers.pop(); // 5. push and wipe
+
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset(); // 6. continue
+
+            continue;
           }
         }
       } // Catch the start of a tag attribute's value:
