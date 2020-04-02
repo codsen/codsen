@@ -333,55 +333,16 @@ async function step14(receivedPack) {
 // 13. generate Rollup config file
 
 function step13() {
-  function extractImports(str) {
-    const contentWithinQuotes = /["'][^"']*["']/;
-    return str
-      .split("\n")
-      .filter(
-        (row) =>
-          row.startsWith("import") ||
-          (row.startsWith("const") && row.includes("require("))
-      )
-      .map(
-        (row) =>
-          row.match(contentWithinQuotes) ? row.match(contentWithinQuotes) : [] // can come null
-      );
-  }
-
   // if Rollup is not used, skip to next step:
   if (isSpecial || !objectPath.has(pack, "devDependencies.rollup")) {
     step14(pack);
     return;
   }
 
-  let allFilesInSrc;
   let entryPoint = "main.js";
 
-  if (isSpecial) {
-    const entry =
-      objectPath.get(pack, "lect.various.rollupEntryPoint") || "main.js";
-    allFilesInSrc = [entry];
-    entryPoint = entry;
-  } else {
-    // /src/ might not exist, for example, in CLI apps that don't need/use transpiling
-    try {
-      allFilesInSrc = fs
-        .readdirSync("src")
-        .filter((file) => {
-          return (
-            fs.statSync(path.join("src", file)).isFile() &&
-            (!objectPath.get(pack, "lect.various.rollupIgnoreFilesForDist") ||
-              (isArr(pack.lect.various.rollupIgnoreFilesForDist) &&
-                !pack.lect.various.rollupIgnoreFilesForDist.includes(file)) ||
-              (isStr(pack.lect.various.rollupIgnoreFilesForDist) &&
-                pack.lect.various.rollupIgnoreFilesForDist !== file))
-          );
-        })
-        .filter((file) => file !== "main.js" && file.endsWith(".js"));
-    } catch (err) {
-      step14(pack);
-      return;
-    }
+  if (isSpecial && objectPath.get(pack, "lect.various.rollupEntryPoint")) {
+    entryPoint = objectPath.get(pack, "lect.various.rollupEntryPoint");
   }
 
   // console.log(`addon:\n-------\n` + addon + `\n-------`);
@@ -401,57 +362,6 @@ function step13() {
       .map((val) => trim(val, " ,"))
       .join(",\n        ")},`;
   }
-
-  if (!isArr(allFilesInSrc)) {
-    step14(pack);
-    return;
-  }
-  const addon = allFilesInSrc.reduce((acc, currVal) => {
-    const calculatedExternalImports = extractImports(
-      fs.readFileSync(`./src/${currVal}`, "utf8")
-    )
-      .sort()
-      .map((val) => {
-        if (String(val).startsWith(`"./`)) {
-          return `"${String(val).slice(3)}`;
-        }
-        return val;
-      })
-      .join(",\n        ");
-    return `${acc},
-
-    // ${currVal} build:
-    {
-      input: "src/${currVal}",
-      output: [
-        { file: "dist/${path.parse(currVal).name}.cjs.js", format: "cjs" },
-      ],
-      external: [
-        ${calculatedExternalImports}
-      ],
-      plugins: [
-        strip({
-          sourceMap: false
-        })${
-          rollupPluginsStrToInsert
-            ? `,\n        ${rollupPluginsStrToInsert}`
-            : ""
-        }${
-      pack.devDependencies["rollup-plugin-node-builtins"]
-        ? ",\n        builtins()"
-        : ""
-    }${
-      pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    },
-        resolve()${
-          pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
-        },
-        cleanup({ comments: "istanbul" })
-      ]
-    }`;
-  }, "");
 
   let defaultUmdBit = "";
   if (objectPath.has(pack, "browser")) {
@@ -482,6 +392,41 @@ function step13() {
         commonjs(),
         babel(),
         terser(),
+        banner(licensePiece)
+      ]
+    },
+`;
+  }
+
+  // notice terser() is absent:
+  let defaultDevUmdBit = "";
+  if (objectPath.has(pack, "browser")) {
+    defaultDevUmdBit = `
+    // browser-friendly UMD build, non-minified, for dev purposes
+    {
+      input: "src/${entryPoint}",
+      output: {
+        file: \`dist/\${pkg.name}.dev.umd.js\`,
+        format: "umd",
+        name: "${camelCase(pack.name)}"
+      },
+      plugins: [
+        strip({
+          sourceMap: false
+        })${rollupPluginsStrToInsert}${
+      pack.devDependencies["rollup-plugin-node-builtins"]
+        ? ",\n        builtins()"
+        : ""
+    }${
+      pack.devDependencies["rollup-plugin-node-globals"]
+        ? ",\n        globals()"
+        : ""
+    },
+        resolve()${
+          pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
+        },
+        commonjs(),
+        babel(),
         banner(licensePiece)
       ]
     },
@@ -593,7 +538,7 @@ License: \${pkg.license}
 Homepage: \${pkg.homepage}\`;
 
 export default commandLineArgs => {
-  const finalConfig = [${defaultUmdBit}${defaultCommonJSBit}${defaultESMBit}${addon}
+  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}
   ];
 
   if (commandLineArgs.dev) {
@@ -1062,7 +1007,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1065 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1010 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1702,7 +1647,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1705 clause #3`);
+        console.log(`1650 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

@@ -38,6 +38,26 @@ export default (commandLineArgs) => {
       ],
     },
 
+    // browser-friendly UMD build, non-minified, for dev purposes
+    {
+      input: "src/main.js",
+      output: {
+        file: `dist/${pkg.name}.dev.umd.js`,
+        format: "umd",
+        name: "stringRemoveWidows",
+      },
+      plugins: [
+        strip({
+          sourceMap: false,
+        }),
+        resolve(),
+        json(),
+        commonjs(),
+        babel(),
+        banner(licensePiece),
+      ],
+    },
+
     // CommonJS build (for Node)
     {
       input: "src/main.js",
@@ -80,21 +100,6 @@ export default (commandLineArgs) => {
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
-      ],
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
-      external: [],
-      plugins: [
-        strip({
-          sourceMap: false,
-        }),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" }),
       ],
     },
   ];

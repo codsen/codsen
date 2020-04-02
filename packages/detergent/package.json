@@ -116,7 +116,6 @@
         "@rollup/plugin-json",
         "rollup-plugin-node-builtins"
       ],
-      "rollupIgnoreFilesForDist": "processCharacter.js",
       "travisVersionsOverride": []
     }
   },

@@ -53,12 +53,6 @@ const ofr = objectFlattenReferencing;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-flatten-referencing.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-flatten-referencing.esm.js` | 11 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 17 KB |
-
 **[⬆ back to top](#)**
 
 ## Idea

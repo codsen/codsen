@@ -7,7 +7,7 @@ const {
   flattenArr,
   arrayiffyString,
   reclaimIntegerString,
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // -----------------------------------------------------------------------------
 // 01. various throws

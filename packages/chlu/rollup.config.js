@@ -40,6 +40,27 @@ export default (commandLineArgs) => {
       ],
     },
 
+    // browser-friendly UMD build, non-minified, for dev purposes
+    {
+      input: "src/main.js",
+      output: {
+        file: `dist/${pkg.name}.dev.umd.js`,
+        format: "umd",
+        name: "chlu",
+      },
+      plugins: [
+        strip({
+          sourceMap: false,
+        }),
+        builtins(),
+        resolve(),
+        json(),
+        commonjs(),
+        babel(),
+        banner(licensePiece),
+      ],
+    },
+
     // CommonJS build (for Node)
     {
       input: "src/main.js",
@@ -92,28 +113,6 @@ export default (commandLineArgs) => {
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
-      ],
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
-      external: [
-        "easy-replace",
-        "emoji-regex",
-        "lodash.clonedeep",
-        "lodash.trim",
-        "semver-compare",
-      ],
-      plugins: [
-        strip({
-          sourceMap: false,
-        }),
-        builtins(),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" }),
       ],
     },
   ];

@@ -36,6 +36,25 @@ export default (commandLineArgs) => {
       ],
     },
 
+    // browser-friendly UMD build, non-minified, for dev purposes
+    {
+      input: "src/main.js",
+      output: {
+        file: `dist/${pkg.name}.dev.umd.js`,
+        format: "umd",
+        name: "stringCharacterIsAstralSurrogate",
+      },
+      plugins: [
+        strip({
+          sourceMap: false,
+        }),
+        resolve(),
+        commonjs(),
+        babel(),
+        banner(licensePiece),
+      ],
+    },
+
     // CommonJS build (for Node)
     {
       input: "src/main.js",

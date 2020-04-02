@@ -42,6 +42,28 @@ export default (commandLineArgs) => {
       ],
     },
 
+    // browser-friendly UMD build, non-minified, for dev purposes
+    {
+      input: "src/main.js",
+      output: {
+        file: `dist/${pkg.name}.dev.umd.js`,
+        format: "umd",
+        name: "htmlTablePatcher",
+      },
+      plugins: [
+        strip({
+          sourceMap: false,
+        }),
+        builtins(),
+        globals(),
+        resolve(),
+        json(),
+        commonjs(),
+        babel(),
+        banner(licensePiece),
+      ],
+    },
+
     // CommonJS build (for Node)
     {
       input: "src/main.js",

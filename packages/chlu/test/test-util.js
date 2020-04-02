@@ -7,7 +7,7 @@ const {
   getSetFooterLink,
   getRow,
   filterDate,
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // 01. isTitle
 // -------

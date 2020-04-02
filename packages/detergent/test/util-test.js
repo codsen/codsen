@@ -6,7 +6,7 @@ const {
   doConvertEntities,
   defaultOpts,
   isLetter,
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // -----------------------------------------------------------------------------
 

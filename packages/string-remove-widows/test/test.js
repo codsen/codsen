@@ -13,7 +13,7 @@ const {
   // encodedMdashHtml,
   // encodedMdashCss,
   // encodedMdashJs
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 const languages = ["html`, `css`, `js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
