@@ -241,7 +241,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
         children: [
@@ -257,7 +257,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
             closing: false,
             void: false,
             pureHTML: true,
-            esp: [],
+
             kind: null,
             attribs: [],
             children: [
@@ -273,7 +273,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
                 closing: false,
                 void: false,
                 pureHTML: true,
-                esp: [],
+
                 kind: null,
                 attribs: [],
                 children: [],
@@ -290,7 +290,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
                 closing: true,
                 void: false,
                 pureHTML: true,
-                esp: [],
+
                 kind: null,
                 attribs: [],
                 children: [],
@@ -309,7 +309,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
             closing: true,
             void: false,
             pureHTML: true,
-            esp: [],
+
             kind: null,
             attribs: [],
             children: [],
@@ -328,7 +328,7 @@ t.test("01.07 - basics - three nested pairs, empty", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
         children: [],

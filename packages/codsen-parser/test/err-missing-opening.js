@@ -23,7 +23,7 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -40,7 +40,7 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -77,7 +77,7 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -94,7 +94,7 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -131,7 +131,7 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -148,7 +148,7 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },

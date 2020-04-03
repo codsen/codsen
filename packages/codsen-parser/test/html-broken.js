@@ -26,7 +26,7 @@ t.test(
           closing: true,
           void: true,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
           children: [],

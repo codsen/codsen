@@ -22,7 +22,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
         children: [
@@ -70,7 +70,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -167,7 +167,7 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },
@@ -184,7 +184,7 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [],
         },

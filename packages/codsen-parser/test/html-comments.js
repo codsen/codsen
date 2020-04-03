@@ -589,7 +589,7 @@ t.test(
               closing: false,
               void: true,
               pureHTML: true,
-              esp: [],
+
               kind: null,
               attribs: [
                 {
@@ -657,7 +657,7 @@ t.test(
               closing: false,
               void: true,
               pureHTML: true,
-              esp: [],
+
               kind: null,
               attribs: [
                 {
@@ -725,7 +725,7 @@ t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
             closing: false,
             void: true,
             pureHTML: true,
-            esp: [],
+
             kind: null,
             attribs: [
               {
