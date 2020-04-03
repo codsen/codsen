@@ -3588,14 +3588,6 @@
                 position: _i2
               }); // also, if it's a standalone ESP token, terminate the previous token
               // and start recording a new-one
-              // TODO - DELETE COMMENT BELOW:
-              // !(
-              //   token.type === "tag" &&
-              //   (token.kind === "comment" ||
-              //     // it's attribute's contents:
-              //     (Number.isInteger(attrib.attribStart) &&
-              //       !Number.isInteger(attrib.attribEnd)))
-              // )
 
               if (token.start !== null) {
                 // it means token has already being recorded, we need to tackle it -
