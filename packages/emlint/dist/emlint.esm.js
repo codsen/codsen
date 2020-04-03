@@ -4379,7 +4379,7 @@ function attributeValidateBgcolor(context, ...opts) {
 }
 
 function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return;
   }
   if (str[charStart] === "0") {
@@ -4524,7 +4524,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
   }
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return [];
   }
   const defaultOpts = {

@@ -4118,7 +4118,7 @@ function validateValue$2(_ref) {
       charEnd = _ref.charEnd,
       idxOffset = _ref.idxOffset,
       errorArr = _ref.errorArr;
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return;
   }
   if (str[charStart] === "0") {
@@ -4226,7 +4226,7 @@ function validateValue$2(_ref) {
   }
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return [];
   }
   var defaultOpts = {

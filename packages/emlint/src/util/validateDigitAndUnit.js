@@ -26,7 +26,7 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
   );
 
   // insurance
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return;
   }
 
@@ -251,7 +251,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     )}`
   );
 
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     console.log(
       `256 ${`\u001b[${35}m${`validateDigitAndUnit() called`}\u001b[${39}m`} quick return, no content in the input`
     );

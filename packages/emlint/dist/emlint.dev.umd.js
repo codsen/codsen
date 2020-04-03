@@ -27176,7 +27176,7 @@
     // the rule is for pattern digit(s) + unit, so start from checking, does it
     // start with a digit
     // insurance
-    if (typeof str !== "string" || !str.length) {
+    if (typeof str !== "string") {
       return;
     } // applies to rational and integer types
 
@@ -27325,7 +27325,7 @@
 
 
   function validateDigitAndUnit(str, idxOffset, originalOpts) {
-    if (typeof str !== "string" || !str.length) {
+    if (typeof str !== "string") {
       return [];
     }
 
