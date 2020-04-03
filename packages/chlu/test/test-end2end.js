@@ -52,7 +52,7 @@ t.test("00. if no input, will silently return indefined", (t) => {
   t.end();
 });
 
-t.only("01. ascending order, with wrong package names", (t) => {
+t.test("01. ascending order, with wrong package names", (t) => {
   compare(t, "01_asc_order_wrong_package");
   t.end();
 });

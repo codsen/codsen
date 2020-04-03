@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy img`,
   (t) => {
     const str = `<area nohref>`;

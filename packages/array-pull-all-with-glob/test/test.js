@@ -273,7 +273,7 @@ t.test('3.7 - 1st arg, "originalInput" is an empty array', (t) => {
   t.end();
 });
 
-t.only('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', (t) => {
+t.test('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', (t) => {
   t.same(pull(["apples", "oranges"], ""), ["apples", "oranges"], "3.8.1");
   t.end();
 });

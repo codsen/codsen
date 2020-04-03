@@ -145,7 +145,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.04 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in front`,
   (t) => {
     const str = `<div  />`;

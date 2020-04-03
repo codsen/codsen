@@ -183,7 +183,7 @@ t.test("01 - monorepo", async (t) => {
   t.end();
 });
 
-t.only("02 - normal repo", async (t) => {
+t.test("02 - normal repo", async (t) => {
   const tempFolder = tempy.directory();
 
   // 1. create folders:

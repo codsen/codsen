@@ -7,7 +7,7 @@ const { comb } = require("../dist/email-comb.cjs");
 // testing basic class/id removal
 // ==============================
 
-t.only("01.01 - mvp #1", (t) => {
+t.test("01.01 - mvp #1", (t) => {
   const source = `<head>
 <style type="text/css">
   .unused1[z] {a:1;}

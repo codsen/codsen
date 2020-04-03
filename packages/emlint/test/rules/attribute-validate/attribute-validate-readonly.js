@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy, input`,
   (t) => {
     const str = `<input readonly>`;
@@ -69,7 +69,7 @@ t.only(
   }
 );
 
-t.only(
+t.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy, textarea`,
   (t) => {
     const str = `<textarea readonly>`;

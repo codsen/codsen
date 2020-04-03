@@ -514,7 +514,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `02.12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
   (t) => {
     const str = `screen `;

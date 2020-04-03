@@ -244,7 +244,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   (t) => {
     // notice wrong tag name case:
