@@ -2749,6 +2749,30 @@
     //
     //
     // ---------------------------------------------------------------------------
+
+    var parentTokenToWrapAround; // We use it for nested ESP tags - for example, <td{% z %}>
+    // The esp tag {% z %} is nested among the tag's attributes:
+    // {
+    //   type: "tag",
+    //   start: 0,
+    //   end: 11,
+    //   value: `<td{% z %}>`,
+    //   attribs: [
+    //     {
+    //       type: "esp",
+    //       start: 3,
+    //       end: 10,
+    //       value: "{% z %}",
+    //       head: "{%",
+    //       tail: "%}",
+    //       kind: null,
+    //     },
+    //   ],
+    // }
+    //
+    // to allow this, we have to save the current, parent token, in case above,
+    // <td...> and then initiate the ESP token, which later will get nested
+    // ---------------------------------------------------------------------------
     //
     //
     //
@@ -3063,7 +3087,6 @@
         token["void"] = false;
         token.pureHTML = true; // meaning there are no esp bits
 
-        token.esp = [];
         token.kind = null;
         token.attribs = [];
       } else if (type === "comment") {
@@ -3507,9 +3530,33 @@
                 if (!Number.isInteger(token.end)) {
                   token.end = _i2 + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
+                } // it depends will we ping it as a standalone token or will we
+                // nest inside the parent tag among attributes
+
+
+                if (parentTokenToWrapAround) {
+                  // push token to parent, to be among its attributes
+                  // 1. ensure key "attribs" exist (thinking about comment tokens etc)
+                  if (!Array.isArray(parentTokenToWrapAround.attribs)) {
+                    parentTokenToWrapAround.attribs = [];
+                  } // 2. push
+
+
+                  parentTokenToWrapAround.attribs.push(lodash_clonedeep(token)); // 3. parentTokenToWrapAround becomes token
+
+                  token = lodash_clonedeep(parentTokenToWrapAround); // 4. reset "parentTokenToWrapAround"
+
+                  parentTokenToWrapAround = undefined; // 5. continue to prevent resets
+                  // 6. pop layers, remove the opening ESP tag record
+
+                  layers.pop(); // 7. finally, continue, bypassing the rest of the code in this loop
+
+                  i = _i2;
+                  return "continue";
+                } else {
+                  dumpCurrentToken(token, _i2);
                 }
 
-                dumpCurrentToken(token, _i2);
                 tokenReset();
               } // pop the recorded layers, at this moment record of ESP chunk
               // will be lost:
@@ -3541,14 +3588,41 @@
                 position: _i2
               }); // also, if it's a standalone ESP token, terminate the previous token
               // and start recording a new-one
+              // TODO - DELETE COMMENT BELOW:
+              // !(
+              //   token.type === "tag" &&
+              //   (token.kind === "comment" ||
+              //     // it's attribute's contents:
+              //     (Number.isInteger(attrib.attribStart) &&
+              //       !Number.isInteger(attrib.attribEnd)))
+              // )
 
-              if (!(token.type === "tag" && (token.kind === "comment" || // it's attribute's contents:
-              Number.isInteger(attrib.attribStart) && !Number.isInteger(attrib.attribEnd)))) {
-                dumpCurrentToken(token, _i2);
-                initToken("esp", _i2);
-                token.tail = flipEspTag(wholeEspTagLump);
-                token.head = wholeEspTagLump;
-              }
+              if (token.start !== null) {
+                // it means token has already being recorded, we need to tackle it -
+                // the new, ESP token is incoming!
+                // we nest ESP tokens inside "tag" type attributes
+                if ( // if a tag has been started up to now
+                token.type === "tag") {
+                  // instead of dumping the tag token and starting a new-one,
+                  // save the parent token, then nest all ESP tags among attributes
+                  if (!token.tagName || !token.tagNameEndsAt) {
+                    token.tagNameEndsAt = _i2;
+                    token.tagName = str.slice(token.tagNameStartsAt, _i2);
+                    token.recognised = isTagNameRecognised(token.tagName);
+                  }
+
+                  parentTokenToWrapAround = lodash_clonedeep(token);
+                } else {
+                  dumpCurrentToken(token, _i2);
+                }
+              } // now, either way, if parent tag was stashed in "parentTokenToWrapAround"
+              // or if this is a new ESP token and there's nothing to nest,
+              // let's initiate it:
+
+
+              initToken("esp", _i2);
+              token.tail = flipEspTag(wholeEspTagLump);
+              token.head = wholeEspTagLump;
             } // do nothing for the second and following characters from the lump
 
 
@@ -3593,7 +3667,10 @@
           } else if (str[_i2]) {
             // finally, the last, default token type is "text"
             // if token were not reassigned, the reset woudln't work:
-            token = tokenReset();
+            if (_i2) {
+              token = tokenReset();
+            }
+
             initToken("text", _i2);
           }
         } else if (token.type === "text" && styleStarts && str[_i2] && str[_i2].trim().length && !"{},".includes(str[_i2])) {

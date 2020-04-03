@@ -81,7 +81,7 @@ t.test("01.03 - opening tag only", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -113,7 +113,7 @@ t.test("01.04 - closing tag only", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -652,7 +652,7 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [
           {
@@ -688,7 +688,7 @@ t.test("01.21 - exact match, tag pair with whitespace", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -721,7 +721,7 @@ t.test("01.22 - closing tag with attributes", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [
           {
@@ -820,7 +820,7 @@ t.test("01.24 - line break", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -1129,7 +1129,7 @@ t.test("04.01 - unrecognised tag name", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },
@@ -1161,7 +1161,7 @@ t.test("04.02 - unrecognised tag name with dash", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },

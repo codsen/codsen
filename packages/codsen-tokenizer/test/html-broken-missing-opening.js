@@ -35,7 +35,7 @@ t.test(
           closing: false,
           void: true,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [
             {
@@ -231,7 +231,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
         closing: false,
         void: true,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [
           {
@@ -252,7 +252,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
         closing: false,
         void: true,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [
           {

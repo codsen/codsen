@@ -227,6 +227,7 @@ function tokenizer(str, originalOpts) {
   tokenReset();
   attribReset();
   var selectorChunkStartedAt;
+  var parentTokenToWrapAround;
   var layers = [];
   function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
@@ -392,7 +393,6 @@ function tokenizer(str, originalOpts) {
       token.closing = false;
       token["void"] = false;
       token.pureHTML = true;
-      token.esp = [];
       token.kind = null;
       token.attribs = [];
     } else if (type === "comment") {
@@ -638,7 +638,19 @@ function tokenizer(str, originalOpts) {
                 token.end = _i2 + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
-              dumpCurrentToken(token, _i2);
+              if (parentTokenToWrapAround) {
+                if (!Array.isArray(parentTokenToWrapAround.attribs)) {
+                  parentTokenToWrapAround.attribs = [];
+                }
+                parentTokenToWrapAround.attribs.push(clone(token));
+                token = clone(parentTokenToWrapAround);
+                parentTokenToWrapAround = undefined;
+                layers.pop();
+                i = _i2;
+                return "continue";
+              } else {
+                dumpCurrentToken(token, _i2);
+              }
               tokenReset();
             }
             layers.pop();
@@ -660,13 +672,22 @@ function tokenizer(str, originalOpts) {
               guessedClosingLump: flipEspTag(wholeEspTagLump),
               position: _i2
             });
-            if (!(token.type === "tag" && (token.kind === "comment" ||
-            Number.isInteger(attrib.attribStart) && !Number.isInteger(attrib.attribEnd)))) {
-              dumpCurrentToken(token, _i2);
-              initToken("esp", _i2);
-              token.tail = flipEspTag(wholeEspTagLump);
-              token.head = wholeEspTagLump;
+            if (token.start !== null) {
+              if (
+              token.type === "tag") {
+                if (!token.tagName || !token.tagNameEndsAt) {
+                  token.tagNameEndsAt = _i2;
+                  token.tagName = str.slice(token.tagNameStartsAt, _i2);
+                  token.recognised = isTagNameRecognised(token.tagName);
+                }
+                parentTokenToWrapAround = clone(token);
+              } else {
+                dumpCurrentToken(token, _i2);
+              }
             }
+            initToken("esp", _i2);
+            token.tail = flipEspTag(wholeEspTagLump);
+            token.head = wholeEspTagLump;
           }
           doNothing = _i2 + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
         }
@@ -697,7 +718,9 @@ function tokenizer(str, originalOpts) {
             }
           }
         } else if (str[_i2]) {
-          token = tokenReset();
+          if (_i2) {
+            token = tokenReset();
+          }
           initToken("text", _i2);
         }
       } else if (token.type === "text" && styleStarts && str[_i2] && str[_i2].trim().length && !"{},".includes(str[_i2])) {

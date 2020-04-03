@@ -129,7 +129,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        esp: [],
+
         kind: null,
         attribs: [],
       },

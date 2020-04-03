@@ -1354,7 +1354,7 @@ t.test(
           closing: false,
           void: true,
           pureHTML: true,
-          esp: [],
+
           kind: null,
           attribs: [
             {
