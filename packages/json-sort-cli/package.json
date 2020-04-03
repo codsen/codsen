@@ -112,7 +112,7 @@
   },
   "dependencies": {
     "ast-monkey-traverse": "^1.12.6",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "format-package": "^5.2.0",
     "fs-extra": "^9.0.0",
     "globby": "^11.0.0",

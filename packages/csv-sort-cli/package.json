@@ -116,7 +116,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "csv-sort": "^3.0.51",
     "globby": "^11.0.0",
     "inquirer": "^7.1.0",

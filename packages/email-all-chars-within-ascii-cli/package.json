@@ -112,7 +112,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "email-all-chars-within-ascii": "^2.9.56",
     "fs-extra": "^9.0.0",
     "globby": "^11.0.0",

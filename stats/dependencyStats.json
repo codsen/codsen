@@ -176,7 +176,6 @@
         "fs-extra": 3,
         "html-crush": 1,
         "is-ci": 1,
-        "js-row-num-cli": 14,
         "json-stringify-safe": 1,
         "lect": 111,
         "lodash.clonedeep": 5,

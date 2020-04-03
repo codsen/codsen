@@ -111,7 +111,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "globby": "^11.0.0",
     "lodash.uniq": "^4.5.0",
     "log-symbols": "^3.0.0",
