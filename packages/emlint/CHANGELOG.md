@@ -3,28 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.16.0](https://gitlab.com/codsen/codsen/compare/emlint@2.15.0...emlint@2.16.0) (2020-04-04)
-
+## 2.16.0 (2020-04-04)
 
 ### Bug Fixes
 
-* don't raise alerts on doctype case in rule `tag-name-case` ([4d5c2a7](https://gitlab.com/codsen/codsen/commit/4d5c2a7fb7e31245e178352bccf83168404a7719))
-* fix few premature exiting functions ([f8ad307](https://gitlab.com/codsen/codsen/commit/f8ad3075e850e8622bd831d3f33c511ac9985f78))
-* stop validateDigitAndUnit() breaking on falsey inputs, thanks to dev UMD build ([ad1fb8f](https://gitlab.com/codsen/codsen/commit/ad1fb8f2cf684c43e971844298e0e472fb2501b3))
-* support `tel:*` for `href` value ([fa9d649](https://gitlab.com/codsen/codsen/commit/fa9d6497829754a71f8c6837a7c7266b1e82a24b))
-
+- don't raise alerts on doctype case in rule `tag-name-case` ([4d5c2a7](https://gitlab.com/codsen/codsen/commit/4d5c2a7fb7e31245e178352bccf83168404a7719))
+- fix few premature exiting functions ([f8ad307](https://gitlab.com/codsen/codsen/commit/f8ad3075e850e8622bd831d3f33c511ac9985f78))
+- stop validateDigitAndUnit() breaking on falsey inputs, thanks to dev UMD build ([ad1fb8f](https://gitlab.com/codsen/codsen/commit/ad1fb8f2cf684c43e971844298e0e472fb2501b3))
+- support `tel:*` for `href` value ([fa9d649](https://gitlab.com/codsen/codsen/commit/fa9d6497829754a71f8c6837a7c7266b1e82a24b))
 
 ### Features
 
-* add Apple-specific link types ([5148bf8](https://gitlab.com/codsen/codsen/commit/5148bf8fdf0ef1a2a4037a4c909af724d6f0b978))
-* add more known link types such as `rel="icon"` ([0756ad0](https://gitlab.com/codsen/codsen/commit/0756ad0c68dd93139d7c46ba41ccef7c5b65bdbe))
-* introduce new key in reported messages, `keepSeparateWhenFixing` ([f27a756](https://gitlab.com/codsen/codsen/commit/f27a756475158b7ff97f7be251c7f0af11ce2611))
-* mention attribute's name in `attribute-validate-*` error messages ([6801b6e](https://gitlab.com/codsen/codsen/commit/6801b6eebf084949c97f5e67517b686a3294bf73))
-* recognise IE attribute in `attribute-validate-http-equiv` ([a85496c](https://gitlab.com/codsen/codsen/commit/a85496cd7ec98537c5631cfd4aae2509ad139704))
-
-
-
-
+- add Apple-specific link types ([5148bf8](https://gitlab.com/codsen/codsen/commit/5148bf8fdf0ef1a2a4037a4c909af724d6f0b978))
+- add more known link types such as `rel="icon"` ([0756ad0](https://gitlab.com/codsen/codsen/commit/0756ad0c68dd93139d7c46ba41ccef7c5b65bdbe))
+- introduce new key in reported messages, `keepSeparateWhenFixing` ([f27a756](https://gitlab.com/codsen/codsen/commit/f27a756475158b7ff97f7be251c7f0af11ce2611))
+- mention attribute's name in `attribute-validate-*` error messages ([6801b6e](https://gitlab.com/codsen/codsen/commit/6801b6eebf084949c97f5e67517b686a3294bf73))
+- recognise IE attribute in `attribute-validate-http-equiv` ([a85496c](https://gitlab.com/codsen/codsen/commit/a85496cd7ec98537c5631cfd4aae2509ad139704))
 
 ## 2.15.0 (2020-03-24)
 

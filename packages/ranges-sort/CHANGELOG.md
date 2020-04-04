@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.11.1](https://gitlab.com/codsen/codsen/compare/ranges-sort@3.11.0...ranges-sort@3.11.1) (2020-04-04)
-
-**Note:** Version bump only for package ranges-sort
-
-
-
-
-
 ## 3.11.0 (2020-02-01)
 
 ### Features

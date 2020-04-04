@@ -3,24 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.11.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.10.0...codsen-tokenizer@2.11.0) (2020-04-04)
-
+## 2.11.0 (2020-04-04)
 
 ### Features
 
-* `opts.tagCbLookahead` and `opts.charCbLookahead` ([4b88c33](https://gitlab.com/codsen/codsen/commit/4b88c3348a84d46377fdcddc39435869042d2817))
-* complete the correction for missing closing of an attribute ([34aa959](https://gitlab.com/codsen/codsen/commit/34aa9594bafb6f798c2b51d543b4aef05ffd7908))
-* move lookahead contents from baked into node to separate input argument ([be27d8e](https://gitlab.com/codsen/codsen/commit/be27d8ed369e6d840c8cd2f7a752b7bd6ed20e84))
-* new comment kind, simplet (`<!-->`) ([0734054](https://gitlab.com/codsen/codsen/commit/07340546b450bb2f16076e14f68b773d93284782))
-* recognise broken pattern "attribute name - equal - attribute name - equal" ([9966e6c](https://gitlab.com/codsen/codsen/commit/9966e6cbf8f85fac97f921a049233e3e1aee1d66))
-* recognise conditional comments (both kinds) without brackets as long as mso exists ([1afe369](https://gitlab.com/codsen/codsen/commit/1afe369fd23939c5f08872e17e2ad1f5811e5a20))
-* recognise expanded notation outlook conditional kind="not" comments ([ffa4a0d](https://gitlab.com/codsen/codsen/commit/ffa4a0dc801371479350dc0b397f2393a0f048f1))
-* recognise quoteless attribute tag endings ([1a38f1d](https://gitlab.com/codsen/codsen/commit/1a38f1dbf297b864bbe77003616a0dd5d16d08c8))
-* support ESP tokens inside HTML tags - nest them among attributes ([114193c](https://gitlab.com/codsen/codsen/commit/114193c14a79f24caea9b45f8b470cbb096cea09))
-
-
-
-
+- `opts.tagCbLookahead` and `opts.charCbLookahead` ([4b88c33](https://gitlab.com/codsen/codsen/commit/4b88c3348a84d46377fdcddc39435869042d2817))
+- complete the correction for missing closing of an attribute ([34aa959](https://gitlab.com/codsen/codsen/commit/34aa9594bafb6f798c2b51d543b4aef05ffd7908))
+- move lookahead contents from baked into node to separate input argument ([be27d8e](https://gitlab.com/codsen/codsen/commit/be27d8ed369e6d840c8cd2f7a752b7bd6ed20e84))
+- new comment kind, simplet (`<!-->`) ([0734054](https://gitlab.com/codsen/codsen/commit/07340546b450bb2f16076e14f68b773d93284782))
+- recognise broken pattern "attribute name - equal - attribute name - equal" ([9966e6c](https://gitlab.com/codsen/codsen/commit/9966e6cbf8f85fac97f921a049233e3e1aee1d66))
+- recognise conditional comments (both kinds) without brackets as long as mso exists ([1afe369](https://gitlab.com/codsen/codsen/commit/1afe369fd23939c5f08872e17e2ad1f5811e5a20))
+- recognise expanded notation outlook conditional kind="not" comments ([ffa4a0d](https://gitlab.com/codsen/codsen/commit/ffa4a0dc801371479350dc0b397f2393a0f048f1))
+- recognise quoteless attribute tag endings ([1a38f1d](https://gitlab.com/codsen/codsen/commit/1a38f1dbf297b864bbe77003616a0dd5d16d08c8))
+- support ESP tokens inside HTML tags - nest them among attributes ([114193c](https://gitlab.com/codsen/codsen/commit/114193c14a79f24caea9b45f8b470cbb096cea09))
 
 ## 2.10.0 (2020-03-24)
 

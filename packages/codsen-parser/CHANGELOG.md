@@ -3,25 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.5.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.4.0...codsen-parser@0.5.0) (2020-04-04)
-
+## 0.5.0 (2020-04-04)
 
 ### Bug Fixes
 
-* tend the layer endings properly ([c563d2a](https://gitlab.com/codsen/codsen/commit/c563d2a73955a5d45ec4af54b34a2de36ae72ce5))
-
+- tend the layer endings properly ([c563d2a](https://gitlab.com/codsen/codsen/commit/c563d2a73955a5d45ec4af54b34a2de36ae72ce5))
 
 ### Features
 
-* algorithm improvements to tackle cases of rogue tag being in place of another tag ([6dde396](https://gitlab.com/codsen/codsen/commit/6dde3963d2c745f6270b0d4f005ae2f426cae886))
-* don't put tag names that dont have closings into layers ([58f528c](https://gitlab.com/codsen/codsen/commit/58f528c69bde19885ec6eb44d7bbc59782fc80ea))
-* first case of missing closing tag, `<table><tr><td>x</td></tr>` ([ce439f0](https://gitlab.com/codsen/codsen/commit/ce439f09d815c1ad9c94ce806030f5020fec44f9))
-* improve the algorithm to recognise missing closing tag ([c56363f](https://gitlab.com/codsen/codsen/commit/c56363f7b78d38dde8e76c4c73bb2af755392bcb))
-* push all kinds of opening tokens into layers, not just comment-type ([2dc552d](https://gitlab.com/codsen/codsen/commit/2dc552de19d720841463f3aec585532015726c4d))
-
-
-
-
+- algorithm improvements to tackle cases of rogue tag being in place of another tag ([6dde396](https://gitlab.com/codsen/codsen/commit/6dde3963d2c745f6270b0d4f005ae2f426cae886))
+- don't put tag names that dont have closings into layers ([58f528c](https://gitlab.com/codsen/codsen/commit/58f528c69bde19885ec6eb44d7bbc59782fc80ea))
+- first case of missing closing tag, `<table><tr><td>x</td></tr>` ([ce439f0](https://gitlab.com/codsen/codsen/commit/ce439f09d815c1ad9c94ce806030f5020fec44f9))
+- improve the algorithm to recognise missing closing tag ([c56363f](https://gitlab.com/codsen/codsen/commit/c56363f7b78d38dde8e76c4c73bb2af755392bcb))
+- push all kinds of opening tokens into layers, not just comment-type ([2dc552d](https://gitlab.com/codsen/codsen/commit/2dc552de19d720841463f3aec585532015726c4d))
 
 ## 0.4.0 (2020-03-24)
 
