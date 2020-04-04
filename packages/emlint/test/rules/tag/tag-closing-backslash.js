@@ -750,28 +750,6 @@ t.test(
       },
     });
     t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
-        },
-      },
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[4, 5, "/"]],
-        },
-      },
-    ]);
     t.end();
   }
 );

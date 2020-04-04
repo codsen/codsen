@@ -349,6 +349,7 @@ var allTagRules = [
 	"tag-name-case",
 	"tag-rogue",
 	"tag-space-after-opening-bracket",
+	"tag-space-before-closing-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
 	"tag-void-frontal-slash",
@@ -2822,6 +2823,32 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
+var BACKSLASH = "\\";
+function tagSpaceBeforeClosingBracket(context) {
+  return {
+    tag: function tag(node) {
+      var ranges = [];
+      if (
+      context.str[node.end - 1] === ">" &&
+      !context.str[node.end - 2].trim().length &&
+      !"".concat(BACKSLASH, "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1)])) {
+        ranges.push([stringLeftRight.left(context.str, node.end - 1) + 1, node.end - 1]);
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Bad whitespace.",
+          idxFrom: ranges[0][0],
+          idxTo: ranges[ranges.length - 1][1],
+          fix: {
+            ranges: ranges
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceBeforeClosingSlash(context) {
   for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     opts[_key - 1] = arguments[_key];
@@ -2881,20 +2908,20 @@ function tagSpaceBetweenSlashAndBracket(context) {
   };
 }
 
-var BACKSLASH = "\\";
+var BACKSLASH$1 = "\\";
 function tagClosingBackslash(context) {
   return {
     tag: function tag(node) {
       var ranges = [];
-      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)) {
+      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$1)) {
         for (var i = node.start; i < node.tagNameStartsAt; i++) {
-          if (context.str[i] === BACKSLASH) {
+          if (context.str[i] === BACKSLASH$1) {
             ranges.push([i, i + 1]);
           }
         }
       }
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
-      context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH) {
+      context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH$1) {
         var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
         var backSlashPos = stringLeftRight.left(context.str, node.end - 1);
         var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
@@ -2942,7 +2969,7 @@ function tagClosingBackslash(context) {
   };
 }
 
-var BACKSLASH$1 = "\\";
+var BACKSLASH$2 = "\\";
 function tagVoidSlash(context) {
   for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     opts[_key - 1] = arguments[_key];
@@ -2967,7 +2994,7 @@ function tagVoidSlash(context) {
           }
         });
       } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && (
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
             context.report({
@@ -8733,6 +8760,9 @@ defineLazyProp(builtInRules, "bad-character-replacement-character", function () 
 });
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;
+});
+defineLazyProp(builtInRules, "tag-space-before-closing-bracket", function () {
+  return tagSpaceBeforeClosingBracket;
 });
 defineLazyProp(builtInRules, "tag-space-before-closing-slash", function () {
   return tagSpaceBeforeClosingSlash;

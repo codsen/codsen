@@ -11255,6 +11255,7 @@
   	"tag-name-case",
   	"tag-rogue",
   	"tag-space-after-opening-bracket",
+  	"tag-space-before-closing-bracket",
   	"tag-space-before-closing-slash",
   	"tag-space-between-slash-and-bracket",
   	"tag-void-frontal-slash",
@@ -14854,6 +14855,45 @@
     };
   }
 
+  // rule: tag-space-before-closing-bracket
+  var BACKSLASH = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+  // tag name letter:
+  //
+  // < table>
+  // <   a href="">
+  // <\n\nspan>
+
+  function tagSpaceBeforeClosingBracket(context) {
+    return {
+      tag: function tag(node) {
+        var ranges = []; // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
+        // 1. if there's whitespace before the closing bracket
+
+        if ( // tag ends with a bracket:
+        context.str[node.end - 1] === ">" && // and there's a whitespace on the left of it:
+        !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
+        // any kind (we don't want to step into rule's
+        // "tag-space-between-slash-and-bracket" turf)
+        !"".concat(BACKSLASH, "/").includes(context.str[left(context.str, node.end - 1)])) {
+          ranges.push([left(context.str, node.end - 1) + 1, node.end - 1]);
+        }
+
+        if (ranges.length) {
+          context.report({
+            ruleId: "tag-space-before-closing-bracket",
+            message: "Bad whitespace.",
+            idxFrom: ranges[0][0],
+            idxTo: ranges[ranges.length - 1][1],
+            // second elem. from last range
+            fix: {
+              ranges: ranges
+            }
+          });
+        }
+      }
+    };
+  }
+
   // rule: tag-space-before-closing-slash
 
   function tagSpaceBeforeClosingSlash(context) {
@@ -14927,7 +14967,7 @@
   }
 
   // rule: tag-closing-backslash
-  var BACKSLASH = "\\";
+  var BACKSLASH$1 = "\\";
 
   function tagClosingBackslash(context) {
     return {
@@ -14942,10 +14982,10 @@
         //
         //
 
-        if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)) {
+        if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$1)) {
           for (var i = node.start; i < node.tagNameStartsAt; i++) {
             // fish-out all backslashes
-            if (context.str[i] === BACKSLASH) {
+            if (context.str[i] === BACKSLASH$1) {
               // just delete the backslash because it doesn't belong here
               // if there's a need for closing (left) slash, it will be added
               // by 3rd level rules which can "see" the surrounding tag layout.
@@ -14962,7 +15002,7 @@
 
 
         if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
-        context.str[left(context.str, node.end - 1)] === BACKSLASH) {
+        context.str[left(context.str, node.end - 1)] === BACKSLASH$1) {
           var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
           var backSlashPos = left(context.str, node.end - 1); // So we confirmed there's left slash.
           // Is it completely rogue or is it meant to be self-closing tag's closing?
@@ -15025,7 +15065,7 @@
   }
 
   // rule: tag-void-slash
-  var BACKSLASH$1 = "\\";
+  var BACKSLASH$2 = "\\";
 
   function tagVoidSlash(context) {
     for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -15061,7 +15101,7 @@
             }
           });
         } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
-        !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+        !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
           // if slashes are requested on void tags, situation is more complex,
           // because we need to take into the account the rule
           // "tag-space-before-closing-slash"
@@ -26170,7 +26210,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
    */
-  const BACKSLASH$2 = "\u005C";
+  const BACKSLASH$3 = "\u005C";
   const knownSchemes = ["aaa", "aaas", "about", "acap", "acct", "acd", "acr", "adiumxtra", "adt", "afp", "afs", "aim", "amss", "android", "appdata", "apt", "ark", "attachment", "aw", "barion", "beshare", "bitcoin", "bitcoincash", "blob", "bolo", "browserext", "calculator", "callto", "cap", "cast", "casts", "chrome", "chrome-extension", "cid", "coap", "coap+tcp", "coap+ws", "coaps", "coaps+tcp", "coaps+ws", "com-eventbrite-attendee", "content", "conti", "crid", "cvs", "dab", "dav", "diaspora", "dict", "did", "dis", "dlna-playcontainer", "dlna-playsingle", "dns", "dntp", "dpp", "drm", "drop", "dtn", "dvb", "ed2k", "elsi", "example", "facetime", "fax", "feed", "feedready", "filesystem", "finger", "first-run-pen-experience", "fish", "fm", "fuchsia-pkg", "geo", "gg", "git", "gizmoproject", "go", "gopher", "graph", "gtalk", "h323", "ham", "hcap", "hcp", "hxxp", "hxxps", "hydrazone", "iax", "icap", "icon", "im", "imap", "info", "iotdisco", "ipn", "ipp", "ipps", "irc6", "ircs", "iris", "iris.beep", "iris.lwz", "iris.xpc", "iris.xpcs", "isostore", "itms", "jabber", "jar", "jms", "keyparc", "lastfm", "ldap", "ldaps", "leaptofrogans", "lorawan", "lvlt", "magnet", "mailserver", "maps", "market", "message", "microsoft.windows.camera", "microsoft.windows.camera.multipicker", "microsoft.windows.camera.picker", "mid", "mms", "modem", "mongodb", "moz", "ms-access", "ms-browser-extension", "ms-calculator", "ms-drive-to", "ms-enrollment", "ms-excel", "ms-eyecontrolspeech", "ms-gamebarservices", "ms-gamingoverlay", "ms-getoffice", "ms-help", "ms-infopath", "ms-inputapp", "ms-lockscreencomponent-config", "ms-media-stream-id", "ms-mixedrealitycapture", "ms-mobileplans", "ms-officeapp", "ms-people", "ms-project", "ms-powerpoint", "ms-publisher", "ms-restoretabcompanion", "ms-screenclip", "ms-screensketch", "ms-search", "ms-search-repair", "ms-secondary-screen-controller", "ms-secondary-screen-setup", "ms-settings", "ms-settings-airplanemode", "ms-settings-bluetooth", "ms-settings-camera", "ms-settings-cellular", "ms-settings-cloudstorage", "ms-settings-connectabledevices", "ms-settings-displays-topology", "ms-settings-emailandaccounts", "ms-settings-language", "ms-settings-location", "ms-settings-lock", "ms-settings-nfctransactions", "ms-settings-notifications", "ms-settings-power", "ms-settings-privacy", "ms-settings-proximity", "ms-settings-screenrotation", "ms-settings-wifi", "ms-settings-workplace", "ms-spd", "ms-sttoverlay", "ms-transit-to", "ms-useractivityset", "ms-virtualtouchpad", "ms-visio", "ms-walk-to", "ms-whiteboard", "ms-whiteboard-cmd", "ms-word", "msnim", "msrp", "msrps", "mss", "mtqp", "mumble", "mupdate", "mvn", "news", "nfs", "ni", "nih", "nntp", "notes", "ocf", "oid", "onenote", "onenote-cmd", "opaquelocktoken", "openpgp4fpr", "pack", "palm", "paparazzi", "payment", "payto", "pkcs11", "platform", "pop", "pres", "prospero", "proxy", "pwid", "psyc", "pttp", "qb", "query", "quic-transport", "redis", "rediss", "reload", "res", "resource", "rmi", "rsync", "rtmfp", "rtmp", "rtsp", "rtsps", "rtspu", "secondlife", "service", "session", "sftp", "sgn", "shttp", "sieve", "simpleledger", "sip", "sips", "skype", "smb", "sms", "smtp", "snews", "snmp", "soap.beep", "soap.beeps", "soldat", "spiffe", "spotify", "ssh", "steam", "stun", "stuns", "submit", "svn", "tag", "teamspeak", "tel", "teliaeid", "telnet", "tftp", "things", "thismessage", "tip", "tn3270", "tool", "turn", "turns", "tv", "udp", "unreal", "urn", "ut2004", "v-event", "vemmi", "ventrilo", "videotex", "vnc", "view-source", "wais", "webcal", "wpid", "ws", "wss", "wtai", "wyciwyg", "xcon", "xcon-userid", "xfire", "xmlrpc.beep", "xmlrpc.beeps", "xmpp", "xri", "ymsgr", "z39.50", "z39.50r", "z39.50s"];
 
   function isRel(str, originalOpts) {
@@ -26285,10 +26325,10 @@
       };
     }
 
-    if (str.includes(BACKSLASH$2)) {
+    if (str.includes(BACKSLASH$3)) {
       return {
         res: false,
-        message: `Unescaped backslash (${BACKSLASH$2}) character.`
+        message: `Unescaped backslash (${BACKSLASH$3}) character.`
       };
     }
 
@@ -42271,6 +42311,9 @@
   defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
     return tagSpaceAfterOpeningBracket;
   });
+  defineLazyProp(builtInRules, "tag-space-before-closing-bracket", function () {
+    return tagSpaceBeforeClosingBracket;
+  });
   defineLazyProp(builtInRules, "tag-space-before-closing-slash", function () {
     return tagSpaceBeforeClosingSlash;
   });
@@ -42953,7 +42996,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
    */
-  const BACKSLASH$3 = "\u005C";
+  const BACKSLASH$4 = "\u005C";
   const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
   function isStr$3(something) {
@@ -42985,7 +43028,7 @@
     const matchingOptions = {
       cb: isNotLetter,
       i: true,
-      trimCharsBeforeMatching: ["/", BACKSLASH$3, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["/", BACKSLASH$4, "!", " ", "\t", "\n", "\r"]
     };
 
     if (opts.allowCustomTagNames) {
@@ -43001,7 +43044,7 @@
     } else if (matchRightIncl(str, idx, knownHtmlTags, {
       cb: isNotLetter,
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH$3, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$4, "!", " ", "\t", "\n", "\r"]
     })) {
       if (r1.test(whatToTest)) {
         passed = true;
@@ -43088,7 +43131,7 @@
     return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !("0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
   }
 
-  const BACKSLASH$4 = "\u005C";
+  const BACKSLASH$5 = "\u005C";
 
   function startsTag(str, i, token, layers) {
     return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
@@ -43097,7 +43140,7 @@
       i: true,
       trimBeforeMatching: true,
       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-    })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$4].includes(str[left(str, i)])) && isOpening(str, i, {
+    })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$5].includes(str[left(str, i)])) && isOpening(str, i, {
       allowCustomTagNames: false,
       skipOpeningBracket: true
     })) && (token.type !== "esp" || token.tail.includes(str[i]));

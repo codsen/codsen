@@ -156,6 +156,7 @@ var allTagRules = [
 	"tag-name-case",
 	"tag-rogue",
 	"tag-space-after-opening-bracket",
+	"tag-space-before-closing-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
 	"tag-void-frontal-slash",
@@ -2506,6 +2507,31 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
+const BACKSLASH = "\u005C";
+function tagSpaceBeforeClosingBracket(context) {
+  return {
+    tag: function (node) {
+      const ranges = [];
+      if (
+        context.str[node.end - 1] === ">" &&
+        !context.str[node.end - 2].trim().length &&
+        !`${BACKSLASH}/`.includes(context.str[left(context.str, node.end - 1)])
+      ) {
+        ranges.push([left(context.str, node.end - 1) + 1, node.end - 1]);
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Bad whitespace.",
+          idxFrom: ranges[0][0],
+          idxTo: ranges[ranges.length - 1][1],
+          fix: { ranges },
+        });
+      }
+    },
+  };
+}
+
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
     tag: function (node) {
@@ -2570,7 +2596,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
   };
 }
 
-const BACKSLASH = "\u005C";
+const BACKSLASH$1 = "\u005C";
 function tagClosingBackslash(context) {
   return {
     tag: function (node) {
@@ -2578,10 +2604,10 @@ function tagClosingBackslash(context) {
       if (
         Number.isInteger(node.start) &&
         Number.isInteger(node.tagNameStartsAt) &&
-        context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
+        context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$1)
       ) {
         for (let i = node.start; i < node.tagNameStartsAt; i++) {
-          if (context.str[i] === BACKSLASH) {
+          if (context.str[i] === BACKSLASH$1) {
             ranges.push([i, i + 1]);
           }
         }
@@ -2589,7 +2615,7 @@ function tagClosingBackslash(context) {
       if (
         Number.isInteger(node.end) &&
         context.str[node.end - 1] === ">" &&
-        context.str[left(context.str, node.end - 1)] === BACKSLASH
+        context.str[left(context.str, node.end - 1)] === BACKSLASH$1
       ) {
         let message = node.void
           ? "Replace backslash with slash."
@@ -2665,7 +2691,7 @@ function tagClosingBackslash(context) {
   };
 }
 
-const BACKSLASH$1 = "\u005C";
+const BACKSLASH$2 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
     tag: function (node) {
@@ -2690,7 +2716,7 @@ function tagVoidSlash(context, ...opts) {
         context.str[slashPos] !== "/" &&
         (!context.processedRulesConfig["tag-closing-backslash"] ||
           !(
-            context.str[slashPos] === BACKSLASH$1 &&
+            context.str[slashPos] === BACKSLASH$2 &&
             ((Number.isInteger(
               context.processedRulesConfig["tag-closing-backslash"]
             ) &&
@@ -10368,6 +10394,11 @@ defineLazyProp(
   builtInRules,
   "tag-space-after-opening-bracket",
   () => tagSpaceAfterOpeningBracket
+);
+defineLazyProp(
+  builtInRules,
+  "tag-space-before-closing-bracket",
+  () => tagSpaceBeforeClosingBracket
 );
 defineLazyProp(
   builtInRules,
