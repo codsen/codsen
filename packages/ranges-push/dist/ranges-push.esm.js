@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Manage the array of ranges referencing the index ranges within the string
- * Version: 3.7.2
+ * Version: 3.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push

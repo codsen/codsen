@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://gitlab.com/codsen/codsen/compare/lerna-link-dep@1.1.18...lerna-link-dep@1.1.19) (2020-04-04)
+
+**Note:** Version bump only for package lerna-link-dep
+
+
+
+
+
 ## 1.1.9 (2019-11-20)
 
 ### Bug Fixes

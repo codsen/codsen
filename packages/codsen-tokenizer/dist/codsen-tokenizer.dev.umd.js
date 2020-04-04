@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS
- * Version: 2.10.0
+ * Version: 2.11.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -65,7 +65,7 @@
   /**
    * html-all-known-attributes
    * All HTML attributes known to the humanity
-   * Version: 1.3.1
+   * Version: 1.3.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -75,7 +75,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.27
+   * Version: 3.11.28
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -95,7 +95,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.1
+   * Version: 4.0.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -2284,7 +2284,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.17
+   * Version: 2.3.18
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -2431,7 +2431,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.1
+   * Version: 1.7.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening

@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Perform a regex search on string and get a ranges array of findings (or null)
- * Version: 2.0.47
+ * Version: 2.0.48
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex

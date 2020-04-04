@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST's (like parsed HTML or anything nested)
- * Version: 7.11.3
+ * Version: 7.11.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
@@ -983,7 +983,7 @@
   /**
    * util-array-object-or-both
    * Validate and normalise user choice: array, object or both?
-   * Version: 2.7.55
+   * Version: 2.7.56
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
@@ -3518,7 +3518,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.6
+   * Version: 1.12.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -4745,7 +4745,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.27
+   * Version: 3.11.28
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -5159,7 +5159,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.57
+   * Version: 5.7.58
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
@@ -5373,7 +5373,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-contains-only-empty-space
    * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.1
+   * Version: 1.9.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
@@ -5403,7 +5403,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.1
+   * Version: 1.13.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare

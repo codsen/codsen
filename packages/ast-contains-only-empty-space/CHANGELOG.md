@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://gitlab.com/codsen/codsen/compare/ast-contains-only-empty-space@1.9.1...ast-contains-only-empty-space@1.9.2) (2020-04-04)
+
+**Note:** Version bump only for package ast-contains-only-empty-space
+
+
+
+
+
 ## 1.9.0 (2020-01-26)
 
 ### Bug Fixes

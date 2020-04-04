@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 10.11.14
+ * Version: 10.11.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
@@ -1963,7 +1963,7 @@
   /**
    * array-includes-with-glob
    * like _.includes but with wildcards
-   * Version: 2.12.31
+   * Version: 2.12.32
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
@@ -3757,7 +3757,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.27
+   * Version: 3.11.28
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -3923,7 +3923,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.54
+   * Version: 2.9.55
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
