@@ -56,6 +56,12 @@ const { removeWidows, defaultOpts, version } = stringRemoveWidows;
 
 This package has three builds in `dist/` folder:
 
+| Type                                                                                                    | Key in `package.json` | Path                               | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-widows.cjs.js` | 17 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-widows.esm.js` | 17 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 33 KB |
+
 **[⬆ back to top](#)**
 
 ## Idea
@@ -402,7 +408,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
-[cov-img]: https://img.shields.io/badge/coverage-90.3%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-89.64%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-remove-widows
