@@ -24,7 +24,6 @@
 ```bash
 npm i object-all-values-equal-to
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`allValuesEqualToWrapper`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -52,11 +51,11 @@ const allValuesEqualToWrapper = objectAllValuesEqualTo;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-all-values-equal-to.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-all-values-equal-to.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-all-values-equal-to.umd.js` | 12 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-all-values-equal-to.cjs.js` | 3 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-all-values-equal-to.esm.js` | 2 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-all-values-equal-to.umd.js` | 12 KB
 
 **[⬆ back to top](#)**
 

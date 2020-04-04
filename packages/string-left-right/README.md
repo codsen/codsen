@@ -29,35 +29,16 @@
 ```bash
 npm i string-left-right
 ```
-
 Consume via a `require()`:
 
 ```js
-const {
-  left,
-  right,
-  leftSeq,
-  rightSeq,
-  chompLeft,
-  chompRight,
-  leftStopAtNewLines,
-  rightStopAtNewLines,
-} = require("string-left-right");
+const { left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines } = require("string-left-right");
 ```
 
 or as an ES Module:
 
 ```js
-import {
-  left,
-  right,
-  leftSeq,
-  rightSeq,
-  chompLeft,
-  chompRight,
-  leftStopAtNewLines,
-  rightStopAtNewLines,
-} from "string-left-right";
+import { left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines } from "string-left-right";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -68,25 +49,16 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "stringLeftRight" which you consume like this:
-const {
-  left,
-  right,
-  leftSeq,
-  rightSeq,
-  chompLeft,
-  chompRight,
-  leftStopAtNewLines,
-  rightStopAtNewLines,
-} = stringLeftRight;
+const { left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines } = stringLeftRight;
 ```
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 13 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 11 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-left-right.umd.js` | 16 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-left-right.cjs.js` | 13 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-left-right.esm.js` | 11 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-left-right.umd.js` | 16 KB
 
 **[⬆ back to top](#)**
 

@@ -26,7 +26,6 @@
 ```bash
 npm i is-language-code
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`isLangCode`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -54,11 +53,11 @@ const isLangCode = isLanguageCode;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                           | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-language-code.cjs.js` | 77 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-language-code.esm.js` | 77 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-language-code.umd.js` | 56 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/is-language-code.cjs.js` | 77 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/is-language-code.esm.js` | 77 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/is-language-code.umd.js` | 56 KB
 
 **[⬆ back to top](#)**
 

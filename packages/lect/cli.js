@@ -372,11 +372,11 @@ function step13() {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "${camelCase(pack.name)}"
+        name: "${camelCase(pack.name)}",
       },
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         })${rollupPluginsStrToInsert}${
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
@@ -392,8 +392,8 @@ function step13() {
         commonjs(),
         babel(),
         terser(),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 `;
   }
@@ -408,11 +408,11 @@ function step13() {
       output: {
         file: \`dist/\${pkg.name}.dev.umd.js\`,
         format: "umd",
-        name: "${camelCase(pack.name)}"
+        name: "${camelCase(pack.name)}",
       },
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         })${rollupPluginsStrToInsert}${
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
@@ -427,8 +427,8 @@ function step13() {
         },
         commonjs(),
         babel(),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 `;
   }
@@ -440,16 +440,18 @@ function step13() {
     {
       input: "src/${entryPoint}",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "${
-          isObj(pack) && pack.dependencies
-            ? Object.keys(pack.dependencies).join('",\n        "')
-            : ""
-        }"
-      ],
+      external: [${
+        isObj(pack) &&
+        pack.dependencies &&
+        Object.keys(pack.dependencies).length
+          ? `\n        "${Object.keys(pack.dependencies).join(
+              '",\n        "'
+            )}",\n      `
+          : ""
+      }],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         })${
           isObj(pack) &&
           pack.devDependencies &&
@@ -467,8 +469,8 @@ function step13() {
     },
         babel(),
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
+        banner(licensePiece),
+      ],
     },
 `;
   }
@@ -480,16 +482,18 @@ function step13() {
     {
       input: "src/${entryPoint}",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "${
-          isObj(pack) && pack.dependencies
-            ? Object.keys(pack.dependencies).join('",\n        "')
-            : ""
-        }"
-      ],
+      external: [${
+        isObj(pack) &&
+        pack.dependencies &&
+        Object.keys(pack.dependencies).length
+          ? `\n        "${Object.keys(pack.dependencies).join(
+              '",\n        "'
+            )}",\n      `
+          : ""
+      }],
       plugins: [
         strip({
-          sourceMap: false
+          sourceMap: false,
         })${
           pack.devDependencies["rollup-plugin-node-builtins"]
             ? ",\n        builtins()"
@@ -502,9 +506,9 @@ function step13() {
       rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""
     },
         cleanup({ comments: "istanbul" }),
-        banner(licensePiece)
-      ]
-    }`;
+        banner(licensePiece),
+      ],
+    },`;
   }
 
   const newRollupConfig = `${
@@ -537,7 +541,7 @@ Author: Roy Revelt, Codsen Ltd
 License: \${pkg.license}
 Homepage: \${pkg.homepage}\`;
 
-export default commandLineArgs => {
+export default (commandLineArgs) => {
   const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}
   ];
 
@@ -549,6 +553,10 @@ export default commandLineArgs => {
     });
     // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
     delete commandLineArgs.dev;
+
+    // don't build UMD's in dev, it takes too long
+    finalConfig.shift();
+    finalConfig.shift();
   }
   return finalConfig;
 };
@@ -1007,7 +1015,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1010 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1018 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1647,7 +1655,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1650 clause #3`);
+        console.log(`1658 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

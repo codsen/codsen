@@ -24,27 +24,16 @@
 ```bash
 npm i charcode-is-valid-xml-name-character
 ```
-
 Consume via a `require()`:
 
 ```js
-const {
-  isProduction4,
-  isProduction4a,
-  validFirstChar,
-  validSecondCharOnwards,
-} = require("charcode-is-valid-xml-name-character");
+const { isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards } = require("charcode-is-valid-xml-name-character");
 ```
 
 or as an ES Module:
 
 ```js
-import {
-  isProduction4,
-  isProduction4a,
-  validFirstChar,
-  validSecondCharOnwards,
-} from "charcode-is-valid-xml-name-character";
+import { isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards } from "charcode-is-valid-xml-name-character";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -55,21 +44,16 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "charcodeIsValidXmlNameCharacter" which you consume like this:
-const {
-  isProduction4,
-  isProduction4a,
-  validFirstChar,
-  validSecondCharOnwards,
-} = charcodeIsValidXmlNameCharacter;
+const { isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards } = charcodeIsValidXmlNameCharacter;
 ```
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                               | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 2 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 2 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/charcode-is-valid-xml-name-character.umd.js` | 2 KB
 
 **[⬆ back to top](#)**
 

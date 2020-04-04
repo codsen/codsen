@@ -1,6 +1,6 @@
 # codsen-tokenizer
 
-> Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS
+> HTML Lexer aimed at erroneous code
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

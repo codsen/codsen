@@ -24,23 +24,16 @@
 ```bash
 npm i string-character-is-astral-surrogate
 ```
-
 Consume via a `require()`:
 
 ```js
-const {
-  isHighSurrogate,
-  isLowSurrogate,
-} = require("string-character-is-astral-surrogate");
+const { isHighSurrogate, isLowSurrogate } = require("string-character-is-astral-surrogate");
 ```
 
 or as an ES Module:
 
 ```js
-import {
-  isHighSurrogate,
-  isLowSurrogate,
-} from "string-character-is-astral-surrogate";
+import { isHighSurrogate, isLowSurrogate } from "string-character-is-astral-surrogate";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -56,11 +49,11 @@ const { isHighSurrogate, isLowSurrogate } = stringCharacterIsAstralSurrogate;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                               | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-character-is-astral-surrogate.umd.js` | 1 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-character-is-astral-surrogate.umd.js` | 1 KB
 
 **[⬆ back to top](#)**
 

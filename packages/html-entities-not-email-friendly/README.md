@@ -26,14 +26,13 @@
 ```bash
 npm i html-entities-not-email-friendly
 ```
-
 Consume via a `require()`:
 
 ```js
 const {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength,
+  notEmailFriendlyMaxLength
 } = require("html-entities-not-email-friendly");
 ```
 
@@ -43,7 +42,7 @@ or as an ES Module:
 import {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength,
+  notEmailFriendlyMaxLength
 } from "html-entities-not-email-friendly";
 ```
 
@@ -58,17 +57,17 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 const {
   notEmailFriendly,
   notEmailFriendlyMinLength,
-  notEmailFriendlyMaxLength,
+  notEmailFriendlyMaxLength
 } = htmlEntitiesNotEmailFriendly;
 ```
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-entities-not-email-friendly.cjs.js` | 78 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-entities-not-email-friendly.esm.js` | 77 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-entities-not-email-friendly.umd.js` | 31 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-entities-not-email-friendly.cjs.js` | 78 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-entities-not-email-friendly.esm.js` | 77 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-entities-not-email-friendly.umd.js` | 31 KB
 
 **[⬆ back to top](#)**
 

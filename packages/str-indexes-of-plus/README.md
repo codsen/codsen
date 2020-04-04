@@ -25,7 +25,6 @@
 ```bash
 npm i str-indexes-of-plus
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`indx`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -53,11 +52,11 @@ const indx = strIndexesOfPlus;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                              | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/str-indexes-of-plus.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/str-indexes-of-plus.esm.js` | 2 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/str-indexes-of-plus.umd.js` | 2 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/str-indexes-of-plus.cjs.js` | 3 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/str-indexes-of-plus.esm.js` | 2 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/str-indexes-of-plus.umd.js` | 2 KB
 
 **[⬆ back to top](#)**
 

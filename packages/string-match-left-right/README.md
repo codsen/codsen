@@ -29,27 +29,16 @@
 ```bash
 npm i string-match-left-right
 ```
-
 Consume via a `require()`:
 
 ```js
-const {
-  matchLeftIncl,
-  matchRightIncl,
-  matchLeft,
-  matchRight,
-} = require("string-match-left-right");
+const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require("string-match-left-right");
 ```
 
 or as an ES Module:
 
 ```js
-import {
-  matchLeftIncl,
-  matchRightIncl,
-  matchLeft,
-  matchRight,
-} from "string-match-left-right";
+import { matchLeftIncl, matchRightIncl, matchLeft, matchRight } from "string-match-left-right";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -60,21 +49,16 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "stringMatchLeftRight" which you consume like this:
-const {
-  matchLeftIncl,
-  matchRightIncl,
-  matchLeft,
-  matchRight,
-} = stringMatchLeftRight;
+const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = stringMatchLeftRight;
 ```
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                  | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-match-left-right.cjs.js` | 13 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 13 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 6 KB  |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 13 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 13 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 6 KB
 
 **[⬆ back to top](#)**
 

@@ -59,7 +59,10 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ranges-crop", "ranges-merge"],
+      external: [
+        "ranges-crop",
+        "ranges-merge",
+      ],
       plugins: [
         strip({
           sourceMap: false,
@@ -74,7 +77,10 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ranges-crop", "ranges-merge"],
+      external: [
+        "ranges-crop",
+        "ranges-merge",
+      ],
       plugins: [
         strip({
           sourceMap: false,
@@ -93,6 +99,10 @@ export default (commandLineArgs) => {
     });
     // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
     delete commandLineArgs.dev;
+
+    // don't build UMD's in dev, it takes too long
+    finalConfig.shift();
+    finalConfig.shift();
   }
   return finalConfig;
 };

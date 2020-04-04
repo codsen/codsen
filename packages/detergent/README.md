@@ -30,7 +30,6 @@
 ```bash
 npm i detergent
 ```
-
 Consume via a `require()`:
 
 ```js
@@ -56,11 +55,11 @@ const { det, opts, version } = detergent;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                    | Size   |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 49 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 53 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 390 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/detergent.cjs.js` | 49 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/detergent.esm.js` | 53 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/detergent.umd.js` | 390 KB
 
 **[⬆ back to top](#)**
 
@@ -310,6 +309,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
+
 
 Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
 

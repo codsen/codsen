@@ -24,7 +24,6 @@
 ```bash
 npm i object-set-all-values-to
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`setAllValuesTo`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -52,11 +51,11 @@ const setAllValuesTo = objectSetAllValuesTo;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-set-all-values-to.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-set-all-values-to.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-set-all-values-to.umd.js` | 10 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-set-all-values-to.cjs.js` | 1 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-set-all-values-to.esm.js` | 1 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-set-all-values-to.umd.js` | 10 KB
 
 **[⬆ back to top](#)**
 

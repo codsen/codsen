@@ -25,7 +25,6 @@
 ```bash
 npm i is-html-tag-opening
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`isOpening`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -53,11 +52,11 @@ const isOpening = isHtmlTagOpening;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                              | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-tag-opening.cjs.js` | 5 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-tag-opening.esm.js` | 5 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-html-tag-opening.umd.js` | 8 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/is-html-tag-opening.cjs.js` | 5 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/is-html-tag-opening.esm.js` | 5 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/is-html-tag-opening.umd.js` | 8 KB
 
 **[⬆ back to top](#)**
 
