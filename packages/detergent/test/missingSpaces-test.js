@@ -2,7 +2,7 @@ const t = require("tap");
 // const detergent = require("../dist/detergent.cjs");
 // const det1 = detergent.det;
 const { det, mixer, allCombinations } = require("../t-util/util");
-const { rawNDash } = require("../dist/util.cjs");
+const { rawNDash } = require("../src/util.js");
 
 // -----------------------------------------------------------------------------
 

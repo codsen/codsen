@@ -423,21 +423,21 @@ const voidTags = [
  */
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
-    console.log(
-      `427 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
-    );
+    // console.log(
+    //   `427 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
+    // );
     // split, check, encode conditionally
     return Array.from(inputString)
       .map((char) => {
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
-        console.log(
-          `435 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
-            char.charCodeAt(0),
-            null,
-            4
-          )}`
-        );
+        // console.log(
+        //   `435 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
+        //     char.charCodeAt(0),
+        //     null,
+        //     4
+        //   )}`
+        // );
         if (
           char.charCodeAt(0) < 880 ||
           latinAndNonNonLatinRanges.some(
@@ -446,11 +446,11 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
-          console.log(
-            `450 doConvertEntities() - encoding to "${he.encode(char, {
-              useNamedReferences: true,
-            })}"`
-          );
+          // console.log(
+          //   `450 doConvertEntities() - encoding to "${he.encode(char, {
+          //     useNamedReferences: true,
+          //   })}"`
+          // );
           return he.encode(char, {
             useNamedReferences: true,
           });
@@ -459,7 +459,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       })
       .join("");
   }
-  console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
+  // console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
   // else, if dontEncodeNonLatin if off, just encode everything:
   return he.encode(inputString, {
     useNamedReferences: true,

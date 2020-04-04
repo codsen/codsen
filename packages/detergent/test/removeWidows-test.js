@@ -11,7 +11,7 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // 00 - minimal cases for MVP
 // -----------------------------------------------------------------------------

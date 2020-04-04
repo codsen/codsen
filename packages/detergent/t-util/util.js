@@ -1,6 +1,6 @@
 const obc = require("object-boolean-combinations");
 const clone = require("lodash.clonedeep");
-const { defaultOpts } = require("../dist/util.cjs");
+const { defaultOpts } = require("../src/util.js");
 const detergent = require("../dist/detergent.cjs");
 const det1 = detergent.det;
 const exportedOptsObj = detergent.opts;

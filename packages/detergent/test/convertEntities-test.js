@@ -11,7 +11,7 @@ const {
   rawhairspace,
   rawMDash,
   rawNbsp,
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // 01. opts.convertEntities
 // -----------------------------------------------------------------------------

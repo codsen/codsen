@@ -16,7 +16,7 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // -----------------------------------------------------------------------------
 

@@ -16,7 +16,7 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 t.test(`00 - empty string input`, (t) => {
   t.equal(det(t, 0, "").res, "");

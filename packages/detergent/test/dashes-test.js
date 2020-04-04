@@ -13,7 +13,7 @@ const {
   rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
-} = require("../dist/util.cjs");
+} = require("../src/util.js");
 
 // -----------------------------------------------------------------------------
 
