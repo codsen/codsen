@@ -3939,11 +3939,12 @@
         attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName); // maybe there's a space in front of equal, <div class= "">
 
         if (str[_i2] && !str[_i2].trim().length && str[right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim().length || str[_i2] === ">" || str[_i2] === "/" && str[right(str, _i2)] === ">") {
-          // a value-less attribute
-          attrib.attribEnd = _i2; // push and wipe
+          if ("'\"".includes(str[right(str, _i2)])) ; else {
+            attrib.attribEnd = _i2; // push and wipe
 
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
         }
       } // catch the start of a tag attribute's name
       // -------------------------------------------------------------------------

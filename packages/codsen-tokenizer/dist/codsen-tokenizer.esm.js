@@ -1285,9 +1285,11 @@ function tokenizer(str, originalOpts) {
         str[i] === ">" ||
         (str[i] === "/" && str[right(str, i)] === ">")
       ) {
-        attrib.attribEnd = i;
-        token.attribs.push(clone(attrib));
-        attribReset();
+        if (`'"`.includes(str[right(str, i)])) ; else {
+          attrib.attribEnd = i;
+          token.attribs.push(clone(attrib));
+          attribReset();
+        }
       }
     }
     if (

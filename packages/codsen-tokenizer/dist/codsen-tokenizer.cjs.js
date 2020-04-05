@@ -866,9 +866,11 @@ function tokenizer(str, originalOpts) {
       attrib.attribName = str.slice(attrib.attribNameStartsAt, _i2);
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.includes(attrib.attribName);
       if (str[_i2] && !str[_i2].trim().length && str[stringLeftRight.right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim().length || str[_i2] === ">" || str[_i2] === "/" && str[stringLeftRight.right(str, _i2)] === ">") {
-        attrib.attribEnd = _i2;
-        token.attribs.push(clone(attrib));
-        attribReset();
+        if ("'\"".includes(str[stringLeftRight.right(str, _i2)])) ; else {
+          attrib.attribEnd = _i2;
+          token.attribs.push(clone(attrib));
+          attribReset();
+        }
       }
     }
     if (!doNothing && str[_i2] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && _i2 > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i2])) {

@@ -119,7 +119,6 @@ t.test(
         closing: true,
         void: false,
         pureHTML: true,
-
         type: "tag",
         start: 0,
         end: 5,
@@ -152,7 +151,6 @@ t.test(
         closing: true,
         void: false,
         pureHTML: true,
-
         type: "tag",
         start: 0,
         end: 6,
@@ -291,7 +289,6 @@ t.test(
         closing: false,
         void: false,
         pureHTML: true,
-
         kind: null,
         attribs: [
           {
@@ -393,7 +390,6 @@ t.test(
         closing: false,
         void: false,
         pureHTML: true,
-
         type: "tag",
         start: 0,
         end: 15,
@@ -438,7 +434,6 @@ t.test(
         closing: false,
         void: false,
         pureHTML: true,
-
         type: "tag",
         start: 0,
         end: 20,
@@ -456,6 +451,77 @@ t.test(
             attribValueEndsAt: 18,
             attribStart: 6,
             attribEnd: 19,
+          },
+        ],
+      },
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `02.06 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - space instead of equal`,
+  (t) => {
+    const gathered = [];
+    ct(`<a class "c" id 'e' href "www">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.match(gathered, [
+      {
+        type: "tag",
+        start: 0,
+        end: 31,
+        value: `<a class "c" id 'e' href "www">`,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "class",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 11,
+            attribValue: "c",
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 11,
+            attribStart: 3,
+            attribEnd: 12,
+          },
+          {
+            attribName: "id",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 15,
+            attribOpeningQuoteAt: 16,
+            attribClosingQuoteAt: 18,
+            attribValue: "e",
+            attribValueStartsAt: 17,
+            attribValueEndsAt: 18,
+            attribStart: 13,
+            attribEnd: 19,
+          },
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartsAt: 20,
+            attribNameEndsAt: 24,
+            attribOpeningQuoteAt: 25,
+            attribClosingQuoteAt: 29,
+            attribValue: "www",
+            attribValueStartsAt: 26,
+            attribValueEndsAt: 29,
+            attribStart: 20,
+            attribEnd: 30,
           },
         ],
       },
@@ -484,7 +550,6 @@ t.test(`03.01`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 11,
@@ -526,7 +591,6 @@ t.test(`03.02 - slash in the end`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 12,
@@ -568,7 +632,6 @@ t.test(`03.03 - slash in front`, (t) => {
       closing: true,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 12,
@@ -610,7 +673,6 @@ t.test(`03.04 - now crazier`, (t) => {
       closing: true,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 19,
@@ -676,7 +738,6 @@ t.test(`03.05 - unrecognised tag`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 32,
@@ -732,7 +793,6 @@ t.test(`04.01 - attr value without quotes`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 20,
@@ -786,7 +846,6 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 12,
@@ -828,7 +887,6 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       type: "tag",
       start: 0,
       end: 11,
@@ -910,7 +968,6 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       start: 0,
       end: 11,
       kind: null,
@@ -943,7 +1000,6 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       start: 16,
       end: 31,
       kind: null,
@@ -991,7 +1047,6 @@ t.test(
         closing: false,
         void: false,
         pureHTML: true,
-
         start: 0,
         end: 10,
         kind: null,
@@ -1040,7 +1095,6 @@ t.test(
         closing: false,
         void: true,
         pureHTML: true,
-
         start: 0,
         end: 31,
         kind: null,
@@ -1096,7 +1150,6 @@ t.test(
         closing: false,
         void: true,
         pureHTML: true,
-
         start: 0,
         end: 31,
         kind: null,
@@ -1157,7 +1210,6 @@ t.test(`05.05 - two asterisks as an attribute's value`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       start: 0,
       end: 20,
       kind: null,
@@ -1198,7 +1250,6 @@ t.test(`05.06 - many asterisks as an attribute's value`, (t) => {
       closing: false,
       void: false,
       pureHTML: true,
-
       start: 0,
       end: 24,
       kind: null,
@@ -1290,7 +1341,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1326,7 +1376,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -1361,7 +1410,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1391,7 +1439,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1440,7 +1487,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1502,7 +1548,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1532,7 +1577,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1581,7 +1625,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1624,7 +1667,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -1659,7 +1701,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1689,7 +1730,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1743,7 +1783,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1779,7 +1818,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -1814,7 +1852,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1868,7 +1905,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1904,7 +1940,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -1944,7 +1979,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -1980,7 +2014,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2020,7 +2053,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2056,7 +2088,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2096,7 +2127,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2132,7 +2162,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2172,7 +2201,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2208,7 +2236,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2248,7 +2275,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2297,7 +2323,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2337,7 +2362,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2386,7 +2410,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2421,7 +2444,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2464,7 +2486,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2504,7 +2525,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2553,7 +2573,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2593,7 +2612,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2672,7 +2690,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2738,7 +2755,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2787,7 +2803,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -2827,7 +2842,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2906,7 +2920,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -2980,7 +2993,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3068,7 +3080,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3156,7 +3167,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3244,7 +3254,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3332,7 +3341,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3425,7 +3433,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3491,7 +3498,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3527,7 +3533,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -3567,7 +3572,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3603,7 +3607,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -3643,7 +3646,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3709,7 +3711,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3745,7 +3746,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -3785,7 +3785,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3821,7 +3820,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -3861,7 +3859,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3925,7 +3922,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
@@ -3961,7 +3957,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -3996,7 +3991,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {
