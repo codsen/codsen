@@ -171,7 +171,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-
 Icons mapping in util.js/`defaultTypes` taken from [all-contributors-cli](https://github.com/jfmengels/all-contributors-cli). MIT Licence.
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square

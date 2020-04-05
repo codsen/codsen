@@ -99,7 +99,6 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-
 uses adapted p-progress, MIT Licence, Copyright (c) Sindre Sorhus https://github.com/sindresorhus/p-progress/blob/master/license
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square

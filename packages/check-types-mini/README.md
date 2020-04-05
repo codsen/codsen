@@ -51,6 +51,7 @@ let res = yourFunction(1, { placeholderEnabled: "zzz" }); // <---  notice opts k
 ```bash
 npm i check-types-mini
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`checkTypes`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -78,11 +79,11 @@ const checkTypes = checkTypesMini;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/check-types-mini.cjs.js` | 10 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/check-types-mini.esm.js` | 11 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/check-types-mini.umd.js` | 27 KB
+| Type                                                                                                    | Key in `package.json` | Path                           | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/check-types-mini.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 11 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 27 KB |
 
 **[⬆ back to top](#)**
 

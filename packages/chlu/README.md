@@ -25,6 +25,7 @@ Other siblings of this package:
 ```bash
 npm i chlu
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`chluLib`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -52,11 +53,11 @@ const chluLib = chlu;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/chlu.cjs.js` | 19 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/chlu.esm.js` | 19 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/chlu.umd.js` | 57 KB
+| Type                                                                                                    | Key in `package.json` | Path               | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/chlu.cjs.js` | 19 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/chlu.esm.js` | 19 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/chlu.umd.js` | 57 KB |
 
 **[⬆ back to top](#)**
 
@@ -78,7 +79,6 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
-
 
 Unit test #13 - uses changelog of **giu 0.13.4** to test automated error fixing, released under MIT License (MIT) Copyright © 2016-2018 Guillermo Grau Panea
 Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated error fixing, released under MIT License (MIT) Copyright © 2016 Jed Watson

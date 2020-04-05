@@ -15,6 +15,7 @@
 ```bash
 npm i ranges-invert
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`invert`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -42,11 +43,11 @@ const invert = rangesInvert;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-invert.cjs.js` | 4 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-invert.esm.js` | 4 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-invert.umd.js` | 8 KB
+| Type                                                                                                    | Key in `package.json` | Path                        | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-invert.cjs.js` | 4 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-invert.esm.js` | 4 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-invert.umd.js` | 8 KB |
 
 **[⬆ back to top](#)**
 

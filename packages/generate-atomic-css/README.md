@@ -33,16 +33,27 @@ Other siblings of this package:
 ```bash
 npm i generate-atomic-css
 ```
+
 Consume via a `require()`:
 
 ```js
-const { genAtomic, version, headsAndTails, extractFromToSource } = require("generate-atomic-css");
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource,
+} = require("generate-atomic-css");
 ```
 
 or as an ES Module:
 
 ```js
-import { genAtomic, version, headsAndTails, extractFromToSource } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource,
+} from "generate-atomic-css";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -53,16 +64,21 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "generateAtomicCss" which you consume like this:
-const { genAtomic, version, headsAndTails, extractFromToSource } = generateAtomicCss;
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource,
+} = generateAtomicCss;
 ```
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/generate-atomic-css.cjs.js` | 23 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/generate-atomic-css.esm.js` | 20 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/generate-atomic-css.umd.js` | 22 KB
+| Type                                                                                                    | Key in `package.json` | Path                              | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 23 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 20 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 22 KB |
 
 **[⬆ back to top](#)**
 

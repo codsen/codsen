@@ -43067,7 +43067,7 @@
 
   /**
    * codsen-tokenizer
-   * Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS
+   * HTML Lexer aimed at erroneous code
    * Version: 2.11.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT

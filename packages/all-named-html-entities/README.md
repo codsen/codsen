@@ -24,6 +24,7 @@
 ```bash
 npm i all-named-html-entities
 ```
+
 Consume via a `require()`:
 
 ```js
@@ -37,7 +38,7 @@ const {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } = require("all-named-html-entities");
 ```
 
@@ -54,7 +55,7 @@ import {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } from "all-named-html-entities";
 ```
 
@@ -76,17 +77,17 @@ const {
   decode,
   minLength,
   maxLength,
-  uncertain
+  uncertain,
 } = allNamedHtmlEntities;
 ```
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/all-named-html-entities.cjs.js` | 227 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/all-named-html-entities.esm.js` | 227 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/all-named-html-entities.umd.js` | 129 KB
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/all-named-html-entities.cjs.js` | 227 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/all-named-html-entities.esm.js` | 227 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/all-named-html-entities.umd.js` | 129 KB |
 
 **[⬆ back to top](#)**
 

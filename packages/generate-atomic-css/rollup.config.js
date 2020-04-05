@@ -62,10 +62,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ranges-apply",
-        "string-left-right",
-      ],
+      external: ["ranges-apply", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false,
@@ -81,10 +78,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ranges-apply",
-        "string-left-right",
-      ],
+      external: ["ranges-apply", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false,

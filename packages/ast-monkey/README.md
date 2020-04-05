@@ -30,16 +30,35 @@
 ```bash
 npm i ast-monkey
 ```
+
 Consume via a `require()`:
 
 ```js
-const { find, get, set, drop, info, del, arrayFirstOnly, traverse } = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse,
+} = require("ast-monkey");
 ```
 
 or as an ES Module:
 
 ```js
-import { find, get, set, drop, info, del, arrayFirstOnly, traverse } from "ast-monkey";
+import {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse,
+} from "ast-monkey";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -55,11 +74,11 @@ const { find, get, set, drop, info, del, arrayFirstOnly, traverse } = astMonkey;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ast-monkey.cjs.js` | 10 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-monkey.esm.js` | 8 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-monkey.umd.js` | 40 KB
+| Type                                                                                                    | Key in `package.json` | Path                     | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey.umd.js` | 40 KB |
 
 **[⬆ back to top](#)**
 

@@ -125,7 +125,7 @@
     "ansi-diff-stream": "^1.2.1",
     "edit-package-json": "^0.1.21",
     "globby": "^11.0.0",
-    "is-online": "^8.2.1",
+    "is-online": "^8.2.2",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^4.0.0",
     "meow": "^6.1.0",

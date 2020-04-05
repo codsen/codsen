@@ -59,11 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ranges-crop",
-        "ranges-invert",
-        "runes",
-      ],
+      external: ["ranges-crop", "ranges-invert", "runes"],
       plugins: [
         strip({
           sourceMap: false,
@@ -78,11 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ranges-crop",
-        "ranges-invert",
-        "runes",
-      ],
+      external: ["ranges-crop", "ranges-invert", "runes"],
       plugins: [
         strip({
           sourceMap: false,

@@ -1,6 +1,5 @@
 ![idea](https://glcdn.githack.com/codsen/codsen/raw/master/packages/chlu-cli/media/0_idea.png)
 
-
 # chlu-cli
 
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file

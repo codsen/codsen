@@ -59,10 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "lodash.isequal",
-        "lodash.isplainobject",
-      ],
+      external: ["lodash.isequal", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,
@@ -77,10 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "lodash.isequal",
-        "lodash.isplainobject",
-      ],
+      external: ["lodash.isequal", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,

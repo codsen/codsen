@@ -25,6 +25,7 @@
 ```bash
 npm i string-trim-spaces-only
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`trimSpaces`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -52,11 +53,11 @@ const trimSpaces = stringTrimSpacesOnly;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-trim-spaces-only.cjs.js` | 2 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-trim-spaces-only.esm.js` | 2 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-trim-spaces-only.umd.js` | 1 KB
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-trim-spaces-only.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 1 KB |
 
 **[⬆ back to top](#)**
 

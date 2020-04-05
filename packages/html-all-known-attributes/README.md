@@ -24,6 +24,7 @@
 ```bash
 npm i html-all-known-attributes
 ```
+
 Consume via a `require()`:
 
 ```js
@@ -49,11 +50,11 @@ const { allHtmlAttribs } = htmlAllKnownAttributes;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-all-known-attributes.cjs.js` | 14 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-all-known-attributes.esm.js` | 14 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-all-known-attributes.umd.js` | 13 KB
+| Type                                                                                                    | Key in `package.json` | Path                                    | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-all-known-attributes.cjs.js` | 14 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-all-known-attributes.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-all-known-attributes.umd.js` | 13 KB |
 
 **[⬆ back to top](#)**
 

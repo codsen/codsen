@@ -26,6 +26,7 @@
 ```bash
 npm i object-no-new-keys
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`nnk`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -53,11 +54,11 @@ const nnk = objectNoNewKeys;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-no-new-keys.cjs.js` | 4 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-no-new-keys.esm.js` | 3 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-no-new-keys.umd.js` | 2 KB
+| Type                                                                                                    | Key in `package.json` | Path                             | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-no-new-keys.cjs.js` | 4 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-no-new-keys.esm.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-no-new-keys.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
 
