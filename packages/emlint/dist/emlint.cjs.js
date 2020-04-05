@@ -369,7 +369,17 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
-function checkForWhitespace(str, idxOffset) {
+function checkForWhitespace() {
+  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  var idxOffset = arguments.length > 1 ? arguments[1] : undefined;
+  if (typeof str !== "string" || !str.length) {
+    return {
+      charStart: 0,
+      charEnd: 0,
+      errorArr: [],
+      trimmedVal: ""
+    };
+  }
   var charStart = 0;
   var charEnd = str.length;
   var trimmedVal;
@@ -380,8 +390,8 @@ function checkForWhitespace(str, idxOffset) {
     if (!str.length || charStart === null) {
       charEnd = null;
       errorArr.push({
-        idxFrom: idxOffset,
-        idxTo: idxOffset + str.length,
+        idxFrom: +idxOffset,
+        idxTo: +idxOffset + str.length,
         message: "Missing value.",
         fix: null
       });
@@ -3307,6 +3317,29 @@ function attributeMalformed(context) {
             ranges: ranges
           }
         });
+      }
+      if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null && context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt]) {
+        if (!node.attribValue.includes("\"")) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "".concat(context.str[node.attribClosingQuoteAt] === "\"" ? "Opening" : "Closing", " quote should be double."),
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [context.str[node.attribClosingQuoteAt] === "\"" ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
+            }
+          });
+        } else if (!node.attribValue.includes("'")) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "".concat(context.str[node.attribClosingQuoteAt] === "'" ? "Opening" : "Closing", " quote should be single."),
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [context.str[node.attribClosingQuoteAt] === "'" ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "'"] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "'"]]
+            }
+          });
+        }
       }
     }
   };

@@ -15,8 +15,8 @@ t.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "00.01.01");
+    t.same(messages, [], "00.01.02");
     t.end();
   }
 );
@@ -31,8 +31,8 @@ t.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "00.02.01");
+    t.same(messages, [], "00.02.02");
     t.end();
   }
 );
@@ -47,8 +47,8 @@ t.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "00.03.01");
+    t.same(messages, [], "00.03.02");
     t.end();
   }
 );
@@ -63,8 +63,8 @@ t.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "00.04.01");
+    t.same(messages, [], "00.04.02");
     t.end();
   }
 );
@@ -79,8 +79,8 @@ t.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "00.05.01");
+    t.same(messages, [], "00.05.02");
     t.end();
   }
 );
@@ -96,8 +96,8 @@ t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
       "attribute-malformed": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str, "01.01.01");
+  t.same(messages, [], "01.01.02");
   t.end();
 });
 
@@ -109,29 +109,33 @@ t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
       "attribute-malformed": 1,
     },
   });
-  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`);
-  t.match(messages, [
-    {
-      ruleId: "attribute-malformed",
-      severity: 1,
-      idxFrom: 3,
-      idxTo: 11,
-      message: `Equal is missing.`,
-      fix: {
-        ranges: [[8, 8, "="]],
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "01.02.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        severity: 1,
+        idxFrom: 3,
+        idxTo: 11,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[8, 8, "="]],
+        },
       },
-    },
-    {
-      ruleId: "attribute-malformed",
-      severity: 1,
-      idxFrom: 12,
-      idxTo: 17,
-      message: `Equal is missing.`,
-      fix: {
-        ranges: [[14, 14, "="]],
+      {
+        ruleId: "attribute-malformed",
+        severity: 1,
+        idxFrom: 12,
+        idxTo: 17,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[14, 14, "="]],
+        },
       },
-    },
-  ]);
+    ],
+    "01.02.02"
+  );
   t.end();
 });
 
@@ -143,33 +147,35 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`);
-  t.match(messages, [
-    {
-      ruleId: "attribute-malformed",
-      severity: 2,
-      idxFrom: 3,
-      idxTo: 11,
-      message: `Equal is missing.`,
-      fix: {
-        ranges: [[8, 8, "="]],
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "01.03.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 3,
+        idxTo: 11,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[8, 8, "="]],
+        },
       },
-    },
-    {
-      ruleId: "attribute-malformed",
-      severity: 2,
-      idxFrom: 12,
-      idxTo: 17,
-      message: `Equal is missing.`,
-      fix: {
-        ranges: [[14, 14, "="]],
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 12,
+        idxTo: 17,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[14, 14, "="]],
+        },
       },
-    },
-  ]);
+    ],
+    "01.03.02"
+  );
   t.end();
 });
-
-// TODO - both mismatching quote types and equal missing
 
 // 02. mis-typed
 // -----------------------------------------------------------------------------
@@ -182,18 +188,22 @@ t.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), `<td class="w100p">`);
-  t.match(messages, [
-    {
-      ruleId: "attribute-malformed",
-      idxFrom: 4,
-      idxTo: 8,
-      message: `Probably meant "class".`,
-      fix: {
-        ranges: [[4, 8, "class"]],
+  t.equal(applyFixes(str, messages), `<td class="w100p">`, "02.01.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        idxFrom: 4,
+        idxTo: 8,
+        message: `Probably meant "class".`,
+        fix: {
+          ranges: [[4, 8, "class"]],
+        },
       },
-    },
-  ]);
+    ],
+    "02.01.02"
+  );
   t.end();
 });
 
@@ -206,16 +216,20 @@ t.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-malformed",
-      idxFrom: 4,
-      idxTo: 8,
-      message: `Unrecognised attribute "zzzz".`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "02.02.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        idxFrom: 4,
+        idxTo: 8,
+        message: `Unrecognised attribute "zzzz".`,
+        fix: null,
+      },
+    ],
+    "02.02.02"
+  );
   t.end();
 });
 
@@ -234,18 +248,22 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
-    t.match(messages, [
-      {
-        ruleId: "attribute-malformed",
-        idxFrom: 7,
-        idxTo: 19,
-        message: `Delete repeated opening quotes.`,
-        fix: {
-          ranges: [[13, 14]],
+    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          idxFrom: 7,
+          idxTo: 19,
+          message: `Delete repeated opening quotes.`,
+          fix: {
+            ranges: [[13, 14]],
+          },
         },
-      },
-    ]);
+      ],
+      "03.01.02"
+    );
     t.end();
   }
 );
@@ -262,18 +280,22 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
-    t.match(messages, [
-      {
-        ruleId: "attribute-malformed",
-        idxFrom: 7,
-        idxTo: 19,
-        message: `Delete repeated opening quotes.`,
-        fix: {
-          ranges: [[13, 14]],
+    t.equal(applyFixes(str, messages), fixed, "03.02.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          idxFrom: 7,
+          idxTo: 19,
+          message: `Delete repeated opening quotes.`,
+          fix: {
+            ranges: [[13, 14]],
+          },
         },
-      },
-    ]);
+      ],
+      "03.02.02"
+    );
     t.end();
   }
 );
@@ -290,7 +312,7 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
+    t.equal(applyFixes(str, messages), fixed, "03.03");
     t.end();
   }
 );
@@ -307,7 +329,7 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
+    t.equal(applyFixes(str, messages), fixed, "03.04");
     t.end();
   }
 );
@@ -327,7 +349,7 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
+    t.equal(applyFixes(str, messages), fixed, "04.01");
     t.end();
   }
 );
@@ -344,7 +366,7 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
+    t.equal(applyFixes(str, messages), fixed, "04.02");
     t.end();
   }
 );
@@ -364,7 +386,285 @@ t.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed);
+    t.equal(applyFixes(str, messages), fixed, "05.01");
+    t.end();
+  }
+);
+
+// 06. equal missing
+// -----------------------------------------------------------------------------
+
+t.test(
+  `06.01 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
+  (t) => {
+    const str = `<a bbb"c" ddd'e'>`;
+    const fixed = `<a bbb="c" ddd='e'>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "06.01");
+    t.end();
+  }
+);
+
+t.test(
+  `06.02 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - space instead of equal, recognised attr names followed by quoted value`,
+  (t) => {
+    const str = `<a class "c" id 'e' href "www">`;
+    const fixed = `<a class="c" id='e' href="www">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "06.02");
+    t.end();
+  }
+);
+
+t.test(
+  `06.03 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
+  (t) => {
+    const str = `<a bbb"c' ddd"e'>`;
+    const fixed = `<a bbb="c" ddd="e">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "06.03");
+    t.end();
+  }
+);
+
+t.test(
+  `06.04 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
+  (t) => {
+    const str = `<a bbb"c' ddd'e">`;
+    const fixed = `<a bbb="c" ddd="e">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "06.04");
+    t.end();
+  }
+);
+
+// 07. mismatching quotes
+// -----------------------------------------------------------------------------
+
+t.only(
+  `07.01 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
+  (t) => {
+    const str = `<div class="c'>.</div>`;
+    const fixed = `<div class="c">.</div>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 14,
+          message: `Closing quote should be double.`,
+          fix: {
+            ranges: [[13, 14, `"`]],
+          },
+        },
+      ],
+      "07.01.02"
+    );
+    t.equal(messages.length, 1, "07.01.03");
+    t.end();
+  }
+);
+
+t.test(
+  `07.02 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
+  (t) => {
+    const str = `<div class='c">.</div>`;
+    const fixed = `<div class="c">.</div>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.02.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 14,
+          message: `Opening quote should be double.`,
+          fix: {
+            ranges: [[11, 12, `"`]],
+          },
+        },
+      ],
+      "07.02.02"
+    );
+    t.equal(messages.length, 1, "07.02.03");
+    t.end();
+  }
+);
+
+t.test(
+  `07.03 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B`,
+  (t) => {
+    const str = `<img alt='so-called "artists"!"/>`;
+    const fixed = `<img alt='so-called "artists"!'/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.03.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 31,
+          message: `Closing quote should be single.`,
+          fix: {
+            ranges: [[30, 31, `'`]],
+          },
+        },
+      ],
+      "07.03.02"
+    );
+    t.equal(messages.length, 1, "07.03.03");
+    t.end();
+  }
+);
+
+t.test(
+  `07.04 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
+  (t) => {
+    const str = `<img alt="so-called "artists"!'/>`;
+    const fixed = `<img alt='so-called "artists"!'/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.04.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 31,
+          message: `Opening quote should be single.`,
+          fix: {
+            ranges: [[9, 10, `'`]],
+          },
+        },
+      ],
+      "07.04.02"
+    );
+    t.equal(messages.length, 1, "07.04.03");
+    t.end();
+  }
+);
+
+t.test(
+  `07.05 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
+  (t) => {
+    const str = `<img alt="Deal is your's!'/>`;
+    const fixed = `<img alt="Deal is your's!"/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 26,
+          message: `Closing quote should be double.`,
+          fix: {
+            ranges: [[25, 26, `"`]],
+          },
+        },
+      ],
+      "07.05.02"
+    );
+    t.equal(messages.length, 1, "07.05.03");
+    t.end();
+  }
+);
+
+t.test(
+  `07.06 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
+  (t) => {
+    const str = `<img alt='Deal is your's!"/>`;
+    const fixed = `<img alt="Deal is your's!"/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "07.06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 26,
+          message: `Opening quote should be double.`,
+          fix: {
+            ranges: [[9, 10, `"`]],
+          },
+        },
+      ],
+      "07.06.02"
+    );
+    t.equal(messages.length, 1, "07.06.03");
     t.end();
   }
 );

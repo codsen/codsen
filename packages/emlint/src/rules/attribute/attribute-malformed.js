@@ -94,7 +94,9 @@ function attributeMalformed(context, ...opts) {
               .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
               .includes("=")
           ) {
-            console.log(`097 equal is missing`);
+            console.log(
+              `098 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
+            );
             message = `Equal is missing.`;
           } else if (
             // rogue quotes after equals
@@ -105,7 +107,9 @@ function attributeMalformed(context, ...opts) {
               )
             )
           ) {
-            console.log(`108 rogue quotes after equals`);
+            console.log(
+              `111 ${`\u001b[${31}m${`ROGUE QUOTES AFTER EQUALS`}\u001b[${39}m`}`
+            );
             message = `Delete repeated opening quotes.`;
           }
 
@@ -119,7 +123,9 @@ function attributeMalformed(context, ...opts) {
             whatToAdd = undefined;
           }
 
-          console.log(`122 RAISE ERROR ABOUT EQUALS SIGN`);
+          console.log(
+            `127 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
+          );
           context.report({
             ruleId: "attribute-malformed",
             message,
@@ -134,13 +140,15 @@ function attributeMalformed(context, ...opts) {
         }
       }
 
-      // opening quotes missing
+      // maybe some quotes are missing?
       const ranges = [];
       if (
         node.attribOpeningQuoteAt === null &&
         node.attribValueStartsAt !== null
       ) {
-        console.log(`143 OPENING QUOTE MISSING`);
+        console.log(
+          `150 ${`\u001b[${31}m${`OPENING QUOTE MISSING`}\u001b[${39}m`}`
+        );
         ranges.push([
           node.attribValueStartsAt,
           node.attribValueStartsAt,
@@ -153,7 +161,9 @@ function attributeMalformed(context, ...opts) {
         node.attribClosingQuoteAt === null &&
         node.attribValueEndsAt !== null
       ) {
-        console.log(`156 CLOSING QUOTE MISSING`);
+        console.log(
+          `165 ${`\u001b[${31}m${`CLOSING QUOTE MISSING`}\u001b[${39}m`}`
+        );
         ranges.push([
           node.attribValueEndsAt,
           node.attribValueEndsAt,
@@ -163,14 +173,85 @@ function attributeMalformed(context, ...opts) {
         ]);
       }
       if (ranges.length) {
-        console.log(`166 RAISE ERROR ABOUT QUOTES`);
+        console.log(`176 RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
           idxFrom: node.attribStart,
-          idxTo: node.attribEnd, // second elem. from last range
+          idxTo: node.attribEnd,
           fix: { ranges },
         });
+      }
+
+      // maybe quotes are mismatching?
+      if (
+        node.attribOpeningQuoteAt !== null &&
+        node.attribClosingQuoteAt !== null &&
+        context.str[node.attribOpeningQuoteAt] !==
+          context.str[node.attribClosingQuoteAt]
+      ) {
+        console.log(
+          `194 ${`\u001b[${31}m${`MISMATCHING QUOTES`}\u001b[${39}m`}`
+        );
+        // default is double quotes; if content doesn't have them, that's what
+        // we're going to use
+        if (!node.attribValue.includes(`"`)) {
+          console.log(`199 attr value doesn't have double quotes`);
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `${
+              context.str[node.attribClosingQuoteAt] === `"`
+                ? "Opening"
+                : "Closing"
+            } quote should be double.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                context.str[node.attribClosingQuoteAt] === `"`
+                  ? [
+                      node.attribOpeningQuoteAt,
+                      node.attribOpeningQuoteAt + 1,
+                      `"`,
+                    ]
+                  : [
+                      node.attribClosingQuoteAt,
+                      node.attribClosingQuoteAt + 1,
+                      `"`,
+                    ],
+              ],
+            },
+          });
+        } else if (!node.attribValue.includes(`'`)) {
+          console.log(`226 attr value has double quote but not single`);
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `${
+              context.str[node.attribClosingQuoteAt] === `'`
+                ? "Opening"
+                : "Closing"
+            } quote should be single.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                context.str[node.attribClosingQuoteAt] === `'`
+                  ? [
+                      node.attribOpeningQuoteAt,
+                      node.attribOpeningQuoteAt + 1,
+                      `'`,
+                    ]
+                  : [
+                      node.attribClosingQuoteAt,
+                      node.attribClosingQuoteAt + 1,
+                      `'`,
+                    ],
+              ],
+            },
+          });
+        } else {
+          console.log(`253 attr value has both double and single quotes`);
+        }
       }
     },
   };

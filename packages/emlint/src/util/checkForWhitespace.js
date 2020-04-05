@@ -1,6 +1,6 @@
 import { left, right } from "string-left-right";
 
-function checkForWhitespace(str, idxOffset) {
+function checkForWhitespace(str = "", idxOffset) {
   console.log(
     `005 ${`\u001b[${35}m${`checkForWhitespace() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
@@ -8,6 +8,11 @@ function checkForWhitespace(str, idxOffset) {
       4
     )}`
   );
+
+  // insurance
+  if (typeof str !== "string" || !str.length) {
+    return { charStart: 0, charEnd: 0, errorArr: [], trimmedVal: "" };
+  }
 
   // We'll catch surrounding whitespace and validate the value in one go. This means, we need to know where non-whitespace value is:
   let charStart = 0; // defaults
@@ -24,8 +29,8 @@ function checkForWhitespace(str, idxOffset) {
       // it's just whitespace here
       charEnd = null;
       errorArr.push({
-        idxFrom: idxOffset, // that is, idxOffset + 0
-        idxTo: idxOffset + str.length,
+        idxFrom: +idxOffset, // that is, idxOffset + 0
+        idxTo: +idxOffset + str.length,
         message: `Missing value.`,
         fix: null, // can't fix - value is missing completely!
       });
@@ -37,7 +42,7 @@ function checkForWhitespace(str, idxOffset) {
   if (charEnd && !str[str.length - 1].trim().length) {
     charEnd = left(str, str.length - 1) + 1;
     console.log(
-      `040 ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+      `045 ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
         charEnd,
         null,
         4
@@ -46,7 +51,7 @@ function checkForWhitespace(str, idxOffset) {
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
   console.log(
-    `049 ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `054 ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
       gatheredRanges,
       null,
       4
@@ -66,7 +71,7 @@ function checkForWhitespace(str, idxOffset) {
     gatheredRanges = [];
     trimmedVal = str.trim();
   }
-  console.log(`069`);
+  console.log(`074`);
 
   return { charStart, charEnd, errorArr, trimmedVal };
 }

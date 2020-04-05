@@ -176,7 +176,10 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
-function checkForWhitespace(str, idxOffset) {
+function checkForWhitespace(str = "", idxOffset) {
+  if (typeof str !== "string" || !str.length) {
+    return { charStart: 0, charEnd: 0, errorArr: [], trimmedVal: "" };
+  }
   let charStart = 0;
   let charEnd = str.length;
   let trimmedVal;
@@ -187,8 +190,8 @@ function checkForWhitespace(str, idxOffset) {
     if (!str.length || charStart === null) {
       charEnd = null;
       errorArr.push({
-        idxFrom: idxOffset,
-        idxTo: idxOffset + str.length,
+        idxFrom: +idxOffset,
+        idxTo: +idxOffset + str.length,
         message: `Missing value.`,
         fix: null,
       });
@@ -3126,6 +3129,66 @@ function attributeMalformed(context, ...opts) {
           idxTo: node.attribEnd,
           fix: { ranges },
         });
+      }
+      if (
+        node.attribOpeningQuoteAt !== null &&
+        node.attribClosingQuoteAt !== null &&
+        context.str[node.attribOpeningQuoteAt] !==
+          context.str[node.attribClosingQuoteAt]
+      ) {
+        if (!node.attribValue.includes(`"`)) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `${
+              context.str[node.attribClosingQuoteAt] === `"`
+                ? "Opening"
+                : "Closing"
+            } quote should be double.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                context.str[node.attribClosingQuoteAt] === `"`
+                  ? [
+                      node.attribOpeningQuoteAt,
+                      node.attribOpeningQuoteAt + 1,
+                      `"`,
+                    ]
+                  : [
+                      node.attribClosingQuoteAt,
+                      node.attribClosingQuoteAt + 1,
+                      `"`,
+                    ],
+              ],
+            },
+          });
+        } else if (!node.attribValue.includes(`'`)) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `${
+              context.str[node.attribClosingQuoteAt] === `'`
+                ? "Opening"
+                : "Closing"
+            } quote should be single.`,
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            fix: {
+              ranges: [
+                context.str[node.attribClosingQuoteAt] === `'`
+                  ? [
+                      node.attribOpeningQuoteAt,
+                      node.attribOpeningQuoteAt + 1,
+                      `'`,
+                    ]
+                  : [
+                      node.attribClosingQuoteAt,
+                      node.attribClosingQuoteAt + 1,
+                      `'`,
+                    ],
+              ],
+            },
+          });
+        }
       }
     },
   };
