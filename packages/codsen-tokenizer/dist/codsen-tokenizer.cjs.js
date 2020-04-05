@@ -923,7 +923,9 @@ function tokenizer(str, originalOpts) {
             position: _i2
           });
         } else if (
-        (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[_i2]) && !layers.some(function (layerObj) {
+        (attrib.attribOpeningQuoteAt === null ||
+        str[attrib.attribOpeningQuoteAt] === str[_i2]) &&
+        !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         }) ||
         "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") ||

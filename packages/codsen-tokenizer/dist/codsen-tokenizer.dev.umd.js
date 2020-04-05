@@ -4021,10 +4021,25 @@
               value: str[_i2],
               position: _i2
             });
-          } else if ( // if matching pair of quotes
-          (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[_i2]) && !layers.some(function (layerObj) {
+          } else if ( //
+          //
+          //      A) if matching pair of quotes
+          //
+          //
+          // the opening quote was missing - happy days, nothing to match against
+          (attrib.attribOpeningQuoteAt === null || // OR,
+          // it is a quote and it is matching opening-one
+          str[attrib.attribOpeningQuoteAt] === str[_i2]) && // we're not inside some ESP tag - ESP layers are not pending:
+          !layers.some(function (layerObj) {
             return layerObj.type === "esp";
-          }) || // OR if mismatching pair of quotes
+          }) || //
+          //
+          // OR
+          //
+          //
+          //      B) if mismatching pair of quotes
+          //
+          //
           "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") || // if when we traverse right within tag, stop at first quote,
           // there are even count of quotes (counting the one where we stopped)
           //
