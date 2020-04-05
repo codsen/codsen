@@ -174,12 +174,26 @@ function startsComment(str, i, token) {
   );
 }
 
+function attributeEnds(str, i, attrib) {
+  return attrib.attribOpeningQuoteAt === null ||
+  str[attrib.attribOpeningQuoteAt] === str[i] ||
+  "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") ||
+  str.includes(">", i) &&
+  Array.from(str.slice(i + 1, str.indexOf(">"))).reduce(function (acc, curr) {
+    return acc + ("'\"".includes(curr) ? 1 : 0);
+  }, 0) % 2 == 0 &&
+  attrib.attribOpeningQuoteAt + 1 < i && str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length && (
+  ensureXIsNotPresentBeforeOneOfY(str, i, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) ||
+  ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])));
+}
+
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var charsThatEndCSSChunks = ["{", "}", ","];
 function tokenizer(str, originalOpts) {
+  var start = Date.now();
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
@@ -347,7 +361,7 @@ function tokenizer(str, originalOpts) {
     if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim().length || str[i] === "<")) {
       token.end = stringLeftRight.left(str, i) + 1;
       token.value = str.slice(token.start, token.end);
-      if (token.type === "tag" && str[token.end - 1] !== ">") {
+      if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
         var cutOffIndex = token.tagNameEndsAt || i;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (var _i = 0, _len = token.attribs.length; _i < _len; _i++) {
@@ -923,20 +937,9 @@ function tokenizer(str, originalOpts) {
             position: _i2
           });
         } else if (
-        (attrib.attribOpeningQuoteAt === null ||
-        str[attrib.attribOpeningQuoteAt] === str[_i2]) &&
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
-        }) ||
-        "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") ||
-        str.includes(">", _i2) &&
-        Array.from(str.slice(_i2 + 1, str.indexOf(">"))).reduce(function (acc, curr) {
-          i = _i2;
-          return acc + ("'\"".includes(curr) ? 1 : 0);
-        }, 0) % 2 == 0 &&
-        attrib.attribOpeningQuoteAt + 1 < _i2 && str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim().length && (
-        ensureXIsNotPresentBeforeOneOfY(str, _i2, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) ||
-        ensureXIsNotPresentBeforeOneOfY(str, _i2, "=", [">"])))) {
+        }) && attributeEnds(str, _i2, attrib)) {
           attrib.attribClosingQuoteAt = _i2;
           attrib.attribValueEndsAt = _i2;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
@@ -1120,6 +1123,9 @@ function tokenizer(str, originalOpts) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
   }
+  return {
+    timeTakenInMilliseconds: Date.now() - start
+  };
 }
 
 module.exports = tokenizer;

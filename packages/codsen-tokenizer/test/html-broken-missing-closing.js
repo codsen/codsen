@@ -332,6 +332,159 @@ t.test(
   }
 );
 
+t.test(
+  `03.02 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
+  (t) => {
+    const gathered = [];
+    ct(`<br<div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 3,
+          value: "<br",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "br",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+        {
+          type: "tag",
+          start: 3,
+          end: 8,
+          value: "<div>",
+          tagNameStartsAt: 4,
+          tagNameEndsAt: 7,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "03.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
+  (t) => {
+    const gathered = [];
+    ct(`<br/<div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 4,
+          value: "<br/",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "br",
+          recognised: true,
+          closing: false,
+          void: true,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+        {
+          type: "tag",
+          start: 4,
+          end: 9,
+          value: "<div>",
+          tagNameStartsAt: 5,
+          tagNameEndsAt: 8,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "03.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`,
+  (t) => {
+    const gathered = [];
+    ct(`<br/    <div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 4,
+          value: "<br/",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "br",
+          recognised: true,
+          closing: false,
+          void: true,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+        {
+          type: "text",
+          start: 4,
+          end: 8,
+          value: "    ",
+        },
+        {
+          type: "tag",
+          start: 8,
+          end: 13,
+          value: "<div>",
+          tagNameStartsAt: 9,
+          tagNameEndsAt: 12,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "03.04"
+    );
+    t.end();
+  }
+);
+
 // 04. EOL ends the input and tag abruptly ends
 // -----------------------------------------------------------------------------
 

@@ -2632,6 +2632,84 @@
     );
   }
 
+  // which has been started ("attrib" object), end at index "i".
+  // For example, given string
+  // <img alt='so-called "artists"!'/>,
+  //
+  // by reaching the double quote before "artists", we have "attrib" object:
+  // {
+  //   "attribName": "alt",
+  //   "attribNameRecognised": true,
+  //   "attribNameStartsAt": 5,
+  //   "attribNameEndsAt": 8,
+  //   "attribOpeningQuoteAt": 9,
+  //   "attribClosingQuoteAt": null,
+  //   "attribValue": null,
+  //   "attribValueStartsAt": 10,
+  //   "attribValueEndsAt": null,
+  //   "attribStart": 5,
+  //   "attribEnd": null
+  // }
+  //
+  // This function takes the source string, index we question and attrib object
+
+  function attributeEnds(str, i, attrib) {
+    //
+    //
+    //      A) if matching pair of quotes
+    //
+    //
+    // the opening quote was missing - happy days, nothing to match against
+    return attrib.attribOpeningQuoteAt === null || // OR,
+    // it is a quote and it is matching opening-one
+    str[attrib.attribOpeningQuoteAt] === str[i] || //
+    //
+    // OR
+    //
+    //
+    //      B) if mismatching pair of quotes
+    //
+    //
+    "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") || // if when we traverse right within tag, stop at first quote,
+    // there are even count of quotes (counting the one where we stopped)
+    //
+    // for example: <a bbb="c' ddd="e'>
+    //                       ^
+    //                   we're here
+    //
+    // if you look right, yep, there are even number of quotes on the right
+    //
+    // now, false positive:
+    // <a bbb="someone' s=">
+    //                ^
+    //           we're here - odd count of quotes (1) on the right!
+    //
+    // <a bbb="someone' s=" ccc='zzz'>
+    //                ^
+    //           we're here - odd count of quotes (3) on the right!
+    // if the remaining piece of string (from where we are now)
+    // contains closing bracket:
+    str.includes(">", i) && // and that remaining chunk has an even count of quotes, counting
+    // single and double-ones
+    Array.from(str.slice(i + 1, str.indexOf(">"))).reduce(function (acc, curr) {
+      return acc + ("'\"".includes(curr) ? 1 : 0);
+    }, 0) % 2 == 0 && // we need more insurance, for example:
+    // <span abc="Someone's" xyz="Someone's">
+    //                   ^
+    //              we're here - also even count of quotes (4) on the right!
+    // plan - let's traverse until "equal-quote" OR closing bracket,
+    // then ensure this range we traversed didn't include the
+    // opening quote of the current attribute
+    //
+    // ensure the value of this messed up attribute has some content:
+    attrib.attribOpeningQuoteAt + 1 < i && str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length && ( //
+    // plus, opening quote does not appear before closing bracket
+    // or "equal-quote" of another attribute
+    ensureXIsNotPresentBeforeOneOfY(str, i, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) || // there are no equal characters and we have messy attributes
+    // onwards
+    ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])));
+  }
+
   function isObj$1(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
   } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
@@ -2646,7 +2724,7 @@
   // const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
 
   function tokenizer(str, originalOpts) {
-    //
+    var start = Date.now(); //
     //
     //
     //
@@ -2655,6 +2733,7 @@
     //
     // INSURANCE
     // ---------------------------------------------------------------------------
+
     if (!isStr$1(str)) {
       if (str === undefined) {
         throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
@@ -3004,7 +3083,7 @@
         token.end = left(str, i) + 1;
         token.value = str.slice(token.start, token.end);
 
-        if (token.type === "tag" && str[token.end - 1] !== ">") {
+        if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
           // we need to potentially shift the token.end left, imagine:
           // <a href="z" click here</a>
           //                       ^
@@ -4021,64 +4100,10 @@
               value: str[_i2],
               position: _i2
             });
-          } else if ( //
-          //
-          //      A) if matching pair of quotes
-          //
-          //
-          // the opening quote was missing - happy days, nothing to match against
-          (attrib.attribOpeningQuoteAt === null || // OR,
-          // it is a quote and it is matching opening-one
-          str[attrib.attribOpeningQuoteAt] === str[_i2]) && // we're not inside some ESP tag - ESP layers are not pending:
+          } else if ( // we're not inside some ESP tag - ESP layers are not pending:
           !layers.some(function (layerObj) {
             return layerObj.type === "esp";
-          }) || //
-          //
-          // OR
-          //
-          //
-          //      B) if mismatching pair of quotes
-          //
-          //
-          "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") || // if when we traverse right within tag, stop at first quote,
-          // there are even count of quotes (counting the one where we stopped)
-          //
-          // for example: <a bbb="c' ddd="e'>
-          //                       ^
-          //                   we're here
-          //
-          // if you look right, yep, there are even number of quotes on the right
-          //
-          // now, false positive:
-          // <a bbb="someone' s=">
-          //                ^
-          //           we're here - odd count of quotes (1) on the right!
-          //
-          // <a bbb="someone' s=" ccc='zzz'>
-          //                ^
-          //           we're here - odd count of quotes (3) on the right!
-          // if the remaining piece of string (from where we are now)
-          // contains closing bracket:
-          str.includes(">", _i2) && // and that remaining chunk has an even count of quotes, counting
-          // single and double-ones
-          Array.from(str.slice(_i2 + 1, str.indexOf(">"))).reduce(function (acc, curr) {
-            i = _i2;
-            return acc + ("'\"".includes(curr) ? 1 : 0);
-          }, 0) % 2 == 0 && // we need more insurance, for example:
-          // <span abc="Someone's" xyz="Someone's">
-          //                   ^
-          //              we're here - also even count of quotes (4) on the right!
-          // plan - let's traverse until "equal-quote" OR closing bracket,
-          // then ensure this range we traversed didn't include the
-          // opening quote of the current attribute
-          //
-          // ensure the value of this messed up attribute has some content:
-          attrib.attribOpeningQuoteAt + 1 < _i2 && str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim().length && ( //
-          // plus, opening quote does not appear before closing bracket
-          // or "equal-quote" of another attribute
-          ensureXIsNotPresentBeforeOneOfY(str, _i2, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) || // there are no equal characters and we have messy attributes
-          // onwards
-          ensureXIsNotPresentBeforeOneOfY(str, _i2, "=", [">"])))) {
+          }) && attributeEnds(str, _i2, attrib)) {
             attrib.attribClosingQuoteAt = _i2;
             attrib.attribValueEndsAt = _i2;
 
@@ -4422,7 +4447,12 @@
       for (var _i4 = 0, _len3 = tagStash.length; _i4 < _len3; _i4++) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
       }
-    }
+    } // return stats
+
+
+    return {
+      timeTakenInMilliseconds: Date.now() - start
+    };
   } // -----------------------------------------------------------------------------
 
   return tokenizer;

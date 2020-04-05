@@ -311,6 +311,30 @@ function startsComment(str, i, token) {
   );
 }
 
+function attributeEnds(str, i, attrib) {
+  return (
+    attrib.attribOpeningQuoteAt === null ||
+    str[attrib.attribOpeningQuoteAt] === str[i] ||
+    (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
+      (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") ||
+        (str.includes(">", i) &&
+          Array.from(str.slice(i + 1, str.indexOf(">"))).reduce((acc, curr) => {
+            return acc + (`'"`.includes(curr) ? 1 : 0);
+          }, 0) %
+            2 ==
+            0 &&
+          attrib.attribOpeningQuoteAt + 1 < i &&
+          str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length &&
+          (ensureXIsNotPresentBeforeOneOfY(
+            str,
+            i,
+            str[attrib.attribOpeningQuoteAt],
+            [">", `="`, `='`]
+          ) ||
+            ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])))))
+  );
+}
+
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -334,6 +358,7 @@ const voidTags = [
 ];
 const charsThatEndCSSChunks = ["{", "}", ","];
 function tokenizer(str, originalOpts) {
+  const start = Date.now();
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
@@ -552,7 +577,7 @@ function tokenizer(str, originalOpts) {
     ) {
       token.end = left(str, i) + 1;
       token.value = str.slice(token.start, token.end);
-      if (token.type === "tag" && str[token.end - 1] !== ">") {
+      if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
         let cutOffIndex = token.tagNameEndsAt || i;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (let i = 0, len = token.attribs.length; i < len; i++) {
@@ -1356,34 +1381,8 @@ function tokenizer(str, originalOpts) {
             position: i,
           });
         } else if (
-          ((attrib.attribOpeningQuoteAt === null ||
-            str[attrib.attribOpeningQuoteAt] === str[i]) &&
-            !layers.some((layerObj) => layerObj.type === "esp")) ||
-          (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
-            (!xBeforeYOnTheRight(
-              str,
-              i,
-              str[attrib.attribOpeningQuoteAt],
-              "="
-            ) ||
-              (str.includes(">", i) &&
-                Array.from(str.slice(i + 1, str.indexOf(">"))).reduce(
-                  (acc, curr) => {
-                    return acc + (`'"`.includes(curr) ? 1 : 0);
-                  },
-                  0
-                ) %
-                  2 ==
-                  0 &&
-                attrib.attribOpeningQuoteAt + 1 < i &&
-                str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length &&
-                (ensureXIsNotPresentBeforeOneOfY(
-                  str,
-                  i,
-                  str[attrib.attribOpeningQuoteAt],
-                  [">", `="`, `='`]
-                ) ||
-                  ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])))))
+          !layers.some((layerObj) => layerObj.type === "esp") &&
+          attributeEnds(str, i, attrib)
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
@@ -1637,6 +1636,9 @@ function tokenizer(str, originalOpts) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
   }
+  return {
+    timeTakenInMilliseconds: Date.now() - start,
+  };
 }
 
 export default tokenizer;
