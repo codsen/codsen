@@ -2684,6 +2684,18 @@
     return false;
   }
 
+  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
+    for (let i = startingIdx, len = str.length; i < len; i++) {
+      if (y.some(oneOfStr => str.startsWith(oneOfStr, i))) {
+        return true;
+      } else if (str[i] === x) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   function startsEsp(str, i, token, layers, styleStarts) {
     return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !("0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
   }
@@ -2724,6 +2736,12 @@
     })) && (token.type !== "esp" || token.tail.includes(str[i]));
   }
 
+  function attributeEnds(str, i, attrib) {
+    return attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i] || `'"`.includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") || str.includes(">", i) && Array.from(str.slice(i + 1, str.indexOf(">"))).reduce((acc, curr) => {
+      return acc + (`'"`.includes(curr) ? 1 : 0);
+    }, 0) % 2 == 0 && attrib.attribOpeningQuoteAt + 1 < i && str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length && (ensureXIsNotPresentBeforeOneOfY(str, i, str[attrib.attribOpeningQuoteAt], [">", `="`, `='`]) || ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])));
+  }
+
   function isObj$2(something) {
     return something && typeof something === "object" && !Array.isArray(something);
   }
@@ -2732,6 +2750,8 @@
   const charsThatEndCSSChunks = ["{", "}", ","];
 
   function tokenizer(str, originalOpts) {
+    const start = Date.now();
+
     if (!isStr$3(str)) {
       if (str === undefined) {
         throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
@@ -2905,7 +2925,7 @@
         token.end = left(str, i) + 1;
         token.value = str.slice(token.start, token.end);
 
-        if (token.type === "tag" && str[token.end - 1] !== ">") {
+        if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
           let cutOffIndex = token.tagNameEndsAt || i;
 
           if (Array.isArray(token.attribs) && token.attribs.length) {
@@ -3515,9 +3535,11 @@
         attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
         attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName);
         if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim().length || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
-          attrib.attribEnd = i;
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
+          if (`'"`.includes(str[right(str, i)])) ;else {
+            attrib.attribEnd = i;
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
         }
       }
 
@@ -3548,7 +3570,7 @@
               value: str[i],
               position: i
             });
-          } else if ((attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i]) && !layers.some(layerObj => layerObj.type === "esp") || `'"`.includes(str[attrib.attribOpeningQuoteAt]) && !xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=")) {
+          } else if (!layers.some(layerObj => layerObj.type === "esp") && attributeEnds(str, i, attrib)) {
             attrib.attribClosingQuoteAt = i;
             attrib.attribValueEndsAt = i;
 
@@ -3730,6 +3752,10 @@
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
       }
     }
+
+    return {
+      timeTakenInMilliseconds: Date.now() - start
+    };
   }
 
   var objectPath = createCommonjsModule(function (module) {
