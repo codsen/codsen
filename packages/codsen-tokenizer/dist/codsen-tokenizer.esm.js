@@ -214,6 +214,16 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   }
   return false;
 }
+function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
+      return true;
+    } else if (str[i] === x) {
+      return false;
+    }
+  }
+  return true;
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return (
@@ -1350,7 +1360,30 @@ function tokenizer(str, originalOpts) {
             str[attrib.attribOpeningQuoteAt] === str[i]) &&
             !layers.some((layerObj) => layerObj.type === "esp")) ||
           (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
-            !xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "="))
+            (!xBeforeYOnTheRight(
+              str,
+              i,
+              str[attrib.attribOpeningQuoteAt],
+              "="
+            ) ||
+              (str.includes(">", i) &&
+                Array.from(str.slice(i + 1, str.indexOf(">"))).reduce(
+                  (acc, curr) => {
+                    return acc + (`'"`.includes(curr) ? 1 : 0);
+                  },
+                  0
+                ) %
+                  2 ==
+                  0 &&
+                attrib.attribOpeningQuoteAt + 1 < i &&
+                str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length &&
+                (ensureXIsNotPresentBeforeOneOfY(
+                  str,
+                  i,
+                  str[attrib.attribOpeningQuoteAt],
+                  [">", `="`, `='`]
+                ) ||
+                  ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])))))
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;

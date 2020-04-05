@@ -1525,7 +1525,7 @@ t.test(
 );
 
 t.test(
-  `07.03 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, the other way`,
+  `07.04 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, the other way`,
   (t) => {
     const gathered = [];
     ct(`<span width="100'><span width="100'>`, {
@@ -1595,14 +1595,14 @@ t.test(
           ],
         },
       ],
-      "07.03"
+      "07.04"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.04 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attribute should not affect tag that follows`,
+  `07.05 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attribute should not affect tag that follows`,
   (t) => {
     const gathered = [];
     ct(`<table width=100 border="0"><tr>`, {
@@ -1671,14 +1671,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.04"
+      "07.05"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.05 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, opposite pairs`,
+  `07.06 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, opposite pairs`,
   (t) => {
     const gathered = [];
     ct(`<span width="100'><span width='100">`, {
@@ -1748,14 +1748,14 @@ t.test(
           ],
         },
       ],
-      "07.05"
+      "07.06"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.06 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote repeated`,
+  `07.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote repeated`,
   (t) => {
     const gathered = [];
     ct(
@@ -1822,14 +1822,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.06"
+      "07.07"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
+  `07.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
   (t) => {
     const gathered = [];
     ct(`<span width="${doubleQuotes} 100">`, {
@@ -1870,14 +1870,14 @@ t.test(
           ],
         },
       ],
-      "07.07"
+      "07.08"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
+  `07.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
   (t) => {
     const gathered = [];
     ct(
@@ -1944,14 +1944,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.08"
+      "07.09"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
+  `07.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
   (t) => {
     const gathered = [];
     ct(
@@ -2018,14 +2018,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.09"
+      "07.10"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
+  `07.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
   (t) => {
     const gathered = [];
     ct(
@@ -2092,14 +2092,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.10"
+      "07.11"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
+  `07.12 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
   (t) => {
     const gathered = [];
     ct(
@@ -2166,14 +2166,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.11"
+      "07.12"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.12 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`,
+  `07.13 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`,
   (t) => {
     const gathered = [];
     ct(
@@ -2240,14 +2240,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.12"
+      "07.13"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.13 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `07.14 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(
@@ -2327,14 +2327,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.13"
+      "07.14"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.14 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `07.15 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(
@@ -2414,14 +2414,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.14"
+      "07.15"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.15 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `07.16 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(`<span width=zzz height=yyy></span>`, {
@@ -2490,14 +2490,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.15"
+      "07.16"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.16 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
+  `07.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   (t) => {
     const gathered = [];
     ct(
@@ -2577,14 +2577,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.16"
+      "07.17"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, quoteless attr inside`,
+  `07.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, quoteless attr inside`,
   (t) => {
     const gathered = [];
     ct(
@@ -2655,14 +2655,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.17"
+      "07.18"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised text - equal - value`,
+  `07.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised text - equal - value`,
   (t) => {
     const gathered = [];
     ct(
@@ -2720,14 +2720,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.18"
+      "07.19"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`,
+  `07.20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`,
   (t) => {
     const gathered = [];
     ct(
@@ -2807,14 +2807,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.19"
+      "07.20"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
+  `07.21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   (t) => {
     const gathered = [];
     ct(
@@ -2885,14 +2885,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.20"
+      "07.21"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
+  `07.22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
   (t) => {
     const gathered = [];
     ct(
@@ -2963,14 +2963,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.21"
+      "07.22"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
+  `07.23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
     ct(`<table width=100 border=1 cellpadding=2 cellspacing=3>`, {
@@ -3050,14 +3050,14 @@ t.test(
           ],
         },
       ],
-      "07.22"
+      "07.23"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
+  `07.24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
     ct(`<table width=100 border=z cellpadding= cellspacing=0>`, {
@@ -3137,14 +3137,14 @@ t.test(
           ],
         },
       ],
-      "07.23"
+      "07.24"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
+  `07.25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
   (t) => {
     const gathered = [];
     ct(`<table width='100 border='1 cellpadding='2 cellspacing='3>`, {
@@ -3224,14 +3224,14 @@ t.test(
           ],
         },
       ],
-      "07.24"
+      "07.25"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
+  `07.26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
   (t) => {
     const gathered = [];
     ct(`<table width=100' border=0' cellpadding=0' cellspacing=0'>`, {
@@ -3311,14 +3311,14 @@ t.test(
           ],
         },
       ],
-      "07.25"
+      "07.26"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/outer combo`,
+  `07.27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/outer combo`,
   (t) => {
     const gathered = [];
     ct(`<table width="100 border='0 cellpadding=0' cellspacing=0">`, {
@@ -3398,14 +3398,14 @@ t.test(
           ],
         },
       ],
-      "07.26"
+      "07.27"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`,
+  `07.28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`,
   (t) => {
     const gathered = [];
     ct(
@@ -3463,14 +3463,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.27"
+      "07.28"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
+  `07.29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
   (t) => {
     const gathered = [];
     ct(
@@ -3537,14 +3537,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.28"
+      "07.29"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
+  `07.30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
     ct(
@@ -3611,14 +3611,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.29"
+      "07.30"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
+  `07.31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
   (t) => {
     const gathered = [];
     ct(
@@ -3676,14 +3676,14 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.30"
+      "07.31"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
+  `07.32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
   (t) => {
     const gathered = [];
     ct(
@@ -3750,14 +3750,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.31"
+      "07.32"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `07.33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(
@@ -3824,14 +3824,14 @@ t.test(
           attribs: [],
         },
       ],
-      "07.32"
+      "07.33"
     );
     t.end();
   }
 );
 
 t.test(
-  `07.33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
+  `07.34 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
   (t) => {
     const gathered = [];
     ct(
@@ -3889,7 +3889,68 @@ t.test(
           value: "</span>",
         },
       ],
-      "07.33"
+      "07.34"
+    );
+    t.end();
+  }
+);
+
+t.only(
+  `07.35 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes and equal missing`,
+  (t) => {
+    const gathered = [];
+    ct(`<a class"c' id"e'>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: `<a class"c' id"e'>`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "class",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 8,
+              attribClosingQuoteAt: 10,
+              attribValue: "c",
+              attribValueStartsAt: 9,
+              attribValueEndsAt: 10,
+              attribStart: 3,
+              attribEnd: 11,
+            },
+            {
+              attribName: "id",
+              attribNameRecognised: true,
+              attribNameStartsAt: 12,
+              attribNameEndsAt: 14,
+              attribOpeningQuoteAt: 14,
+              attribClosingQuoteAt: 16,
+              attribValue: "e",
+              attribValueStartsAt: 15,
+              attribValueEndsAt: 16,
+              attribStart: 12,
+              attribEnd: 17,
+            },
+          ],
+        },
+      ],
+      "07.35"
     );
     t.end();
   }

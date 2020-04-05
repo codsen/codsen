@@ -2420,6 +2420,36 @@
     return false;
   }
 
+  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
+    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+    var _loop = function _loop(i, len) {
+      if (y.some(function (oneOfStr) {
+        return str.startsWith(oneOfStr, i);
+      })) {
+        // it's escape clause, bracket or whatever was reached and yet,
+        // "x" hasn't been encountered yet
+        return {
+          v: true
+        };
+      } else if (str[i] === x) {
+        // if "x" was found, that's it - falsey result
+        return {
+          v: false
+        };
+      }
+    };
+
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      var _ret = _loop(i);
+
+      if (_typeof(_ret) === "object") return _ret.v;
+    } // default result
+
+
+    return true;
+  }
+
   // starts. Previously it sat within if() clauses but became unwieldy and
   // so we extracted into a function.
 
@@ -3995,7 +4025,45 @@
           (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[_i2]) && !layers.some(function (layerObj) {
             return layerObj.type === "esp";
           }) || // OR if mismatching pair of quotes
-          "'\"".includes(str[attrib.attribOpeningQuoteAt]) && !xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=")) {
+          "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") || // if when we traverse right within tag, stop at first quote,
+          // there are even count of quotes (counting the one where we stopped)
+          //
+          // for example: <a bbb="c' ddd="e'>
+          //                       ^
+          //                   we're here
+          //
+          // if you look right, yep, there are even number of quotes on the right
+          //
+          // now, false positive:
+          // <a bbb="someone' s=">
+          //                ^
+          //           we're here - odd count of quotes (1) on the right!
+          //
+          // <a bbb="someone' s=" ccc='zzz'>
+          //                ^
+          //           we're here - odd count of quotes (3) on the right!
+          // if the remaining piece of string (from where we are now)
+          // contains closing bracket:
+          str.includes(">", _i2) && // and that remaining chunk has an even count of quotes, counting
+          // single and double-ones
+          Array.from(str.slice(_i2 + 1, str.indexOf(">"))).reduce(function (acc, curr) {
+            i = _i2;
+            return acc + ("'\"".includes(curr) ? 1 : 0);
+          }, 0) % 2 == 0 && // we need more insurance, for example:
+          // <span abc="Someone's" xyz="Someone's">
+          //                   ^
+          //              we're here - also even count of quotes (4) on the right!
+          // plan - let's traverse until "equal-quote" OR closing bracket,
+          // then ensure this range we traversed didn't include the
+          // opening quote of the current attribute
+          //
+          // ensure the value of this messed up attribute has some content:
+          attrib.attribOpeningQuoteAt + 1 < _i2 && str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim().length && ( //
+          // plus, opening quote does not appear before closing bracket
+          // or "equal-quote" of another attribute
+          ensureXIsNotPresentBeforeOneOfY(str, _i2, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) || // there are no equal characters and we have messy attributes
+          // onwards
+          ensureXIsNotPresentBeforeOneOfY(str, _i2, "=", [">"])))) {
             attrib.attribClosingQuoteAt = _i2;
             attrib.attribValueEndsAt = _i2;
 

@@ -109,6 +109,27 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   }
   return false;
 }
+function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
+  var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  var _loop = function _loop(i, len) {
+    if (y.some(function (oneOfStr) {
+      return str.startsWith(oneOfStr, i);
+    })) {
+      return {
+        v: true
+      };
+    } else if (str[i] === x) {
+      return {
+        v: false
+      };
+    }
+  };
+  for (var i = startingIdx, len = str.length; i < len; i++) {
+    var _ret = _loop(i);
+    if (_typeof(_ret) === "object") return _ret.v;
+  }
+  return true;
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(
@@ -905,7 +926,15 @@ function tokenizer(str, originalOpts) {
         (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[_i2]) && !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         }) ||
-        "'\"".includes(str[attrib.attribOpeningQuoteAt]) && !xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=")) {
+        "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, _i2, str[attrib.attribOpeningQuoteAt], "=") ||
+        str.includes(">", _i2) &&
+        Array.from(str.slice(_i2 + 1, str.indexOf(">"))).reduce(function (acc, curr) {
+          i = _i2;
+          return acc + ("'\"".includes(curr) ? 1 : 0);
+        }, 0) % 2 == 0 &&
+        attrib.attribOpeningQuoteAt + 1 < _i2 && str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim().length && (
+        ensureXIsNotPresentBeforeOneOfY(str, _i2, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) ||
+        ensureXIsNotPresentBeforeOneOfY(str, _i2, "=", [">"])))) {
           attrib.attribClosingQuoteAt = _i2;
           attrib.attribValueEndsAt = _i2;
           if (Number.isInteger(attrib.attribValueStartsAt)) {

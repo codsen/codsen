@@ -284,7 +284,23 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   return false;
 }
 
+function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
+      // it's escape clause, bracket or whatever was reached and yet,
+      // "x" hasn't been encountered yet
+      return true;
+    } else if (str[i] === x) {
+      // if "x" was found, that's it - falsey result
+      return false;
+    }
+  }
+  // default result
+  return true;
+}
+
 export {
+  ensureXIsNotPresentBeforeOneOfY,
   charSuitableForHTMLAttrName,
   allHTMLTagsKnownToHumanity,
   charSuitableForTagName,
