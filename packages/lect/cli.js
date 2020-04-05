@@ -554,8 +554,7 @@ export default (commandLineArgs) => {
     // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
     delete commandLineArgs.dev;
 
-    // don't build UMD's in dev, it takes too long
-    finalConfig.shift();
+    // don't build minified UMD in dev, it takes too long
     finalConfig.shift();
   }
   return finalConfig;
@@ -1015,7 +1014,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1018 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1017 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1655,7 +1654,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1658 clause #3`);
+        console.log(`1657 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

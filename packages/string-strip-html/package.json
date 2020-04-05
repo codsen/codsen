@@ -1,7 +1,7 @@
 {
   "name": "string-strip-html",
   "version": "4.3.19",
-  "description": "Strips HTML tags from strings. Detects legit unencoded brackets.",
+  "description": "Strips HTML tags from strings. Scannerless parser algorithm.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html",
@@ -21,7 +21,9 @@
     "separators",
     "string",
     "thousand",
-    "thousands"
+    "thousands",
+    "scanerless",
+    "parser"
   ],
   "main": "dist/string-strip-html.cjs.js",
   "module": "dist/string-strip-html.esm.js",

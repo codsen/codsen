@@ -86,10 +86,10 @@ This library only detects and removes HTML tags from strings (text, in other wor
 
 ## Features
 
-- Can be used to generate Email Text versions. Any URL links can be extracted and put after a previously linked element.
+- Can be used to generate Email Text versions. Optionally, any URL links can be extracted and put after a previously-linked element.
 - Works when opening or closing tag bracket is missing on some tags.
 - It can detect and skip false positives, for example, `a < b and c > d`.
-- Works on dirty code - duplicate brackets, whitespace after opening bracket, messed up closing slashes — you name it, we will aim to tackle them.
+- Works on dirty code - duplicate brackets, whitespace after opening bracket, messed up closing slashes — you name it — everything will be stripped.
 - Adds spaces or line breaks to prevent concatenation. Except where punctuation characters follow.
 - Can remove tags with all the content between opening and closing tag, for example `<style>...</style>` or `<script>...</script>`
 - Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn the decoding off via `opts.skipHtmlDecoding`)
@@ -394,6 +394,30 @@ In September 2017, [string.js](https://www.npmjs.com/package/string) which origi
 I was able to quickly replace all functions that Detergent was consuming from `string.js` except **HTML-stripping**.
 
 This library is the last missing piece of a puzzle to get rid of `string.js`.
+
+**[⬆ back to top](#)**
+
+## Algorithm
+
+This program does not use AST's because we want to strip badly broken HTML which throws parsers. It does not use a parser, it works from lexer-level. Lexer or tokenizer is a standalone program or part of a program, responsible for character chunk identification.
+
+Good read on a subject: https://tomassetti.me/parsing-in-javascript/
+
+**[⬆ back to top](#)**
+
+## Quality dependencies
+
+We use only our own or top-quality dependencies from the Elders of the npm (no sarcasm): [`ent`](https://www.npmjs.com/package/ent) is by [substack](https://www.npmjs.com/~substack) himself and [`lodash`] is, well, The Lodash. All other dependencies are our own:
+
+```
+"ent": "^2.2.0",
+"lodash.isplainobject": "^4.0.6",
+"lodash.trim": "^4.5.1",
+"lodash.without": "^4.4.0",
+"ranges-apply": "^3.1.3",
+"ranges-push": "^3.7.3",
+"string-left-right": "^2.3.18"
+```
 
 **[⬆ back to top](#)**
 
