@@ -115,7 +115,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs`,
+  `01.03 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
   (t) => {
     const str = `<a href="zzz" target="_blank" style="color: black;">`;
     // 1. starting at the opening of "href":
@@ -141,6 +141,39 @@ t.test(
     t.false(is(str, 36, 28), "01.03.16");
     t.false(is(str, 36, 36), "01.03.17");
     t.true(is(str, 36, 50), "01.03.18");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `01.04 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, single quotes`,
+  (t) => {
+    const str = `<a href='zzz' target='_blank' style='color: black;'>`;
+    // 1. starting at the opening of "href":
+    t.false(is(str, 8, 8), "01.04.01");
+    t.true(is(str, 8, 12), "01.04.02");
+    t.false(is(str, 8, 21), "01.04.03");
+    t.false(is(str, 8, 28), "01.04.04");
+    t.false(is(str, 8, 36), "01.04.05");
+    t.false(is(str, 8, 50), "01.04.06");
+
+    // 2. starting at the opening of "target":
+    t.false(is(str, 21, 8), "01.04.07");
+    t.false(is(str, 21, 12), "01.04.08");
+    t.false(is(str, 21, 21), "01.04.09");
+    t.true(is(str, 21, 28), "01.04.10");
+    t.false(is(str, 21, 36), "01.04.11");
+    t.false(is(str, 21, 50), "01.04.12");
+
+    // 3. starting at the opening of "style":
+    t.false(is(str, 36, 8), "01.04.13");
+    t.false(is(str, 36, 12), "01.04.14");
+    t.false(is(str, 36, 21), "01.04.15");
+    t.false(is(str, 36, 28), "01.04.16");
+    t.false(is(str, 36, 36), "01.04.17");
+    t.true(is(str, 36, 50), "01.04.18");
 
     // fin.
     t.end();
