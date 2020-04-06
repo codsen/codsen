@@ -6,7 +6,7 @@ const is = require("../dist/is-html-attribute-closing.cjs");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `00.01 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - no input`,
+  `00.01 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no input`,
   (t) => {
     t.false(is(), "00.01");
     t.end();
@@ -14,7 +14,7 @@ t.test(
 );
 
 t.test(
-  `00.02 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - input is not a string`,
+  `00.02 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is not a string`,
   (t) => {
     t.false(is(2), "00.02");
     t.end();
@@ -22,7 +22,7 @@ t.test(
 );
 
 t.test(
-  `00.03 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - input is empty string`,
+  `00.03 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is empty string`,
   (t) => {
     t.false(is(""), "00.03");
     t.end();
@@ -30,7 +30,7 @@ t.test(
 );
 
 t.test(
-  `00.04 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - 2nd arg is missing`,
+  `00.04 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 2nd arg is missing`,
   (t) => {
     t.false(is("a"), "00.04");
     t.end();
@@ -38,7 +38,7 @@ t.test(
 );
 
 t.test(
-  `00.05 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - 2nd arg is not integer`,
+  `00.05 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 2nd arg is not integer`,
   (t) => {
     t.false(is("a", "a"), "00.05");
     t.end();
@@ -46,7 +46,7 @@ t.test(
 );
 
 t.test(
-  `00.06 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - 3rd arg is missing`,
+  `00.06 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd arg is missing`,
   (t) => {
     t.false(is("a", 0), "00.06");
     t.end();
@@ -54,7 +54,7 @@ t.test(
 );
 
 t.test(
-  `00.07 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - 3rd arg is not integer`,
+  `00.07 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd arg is not integer`,
   (t) => {
     t.false(is("a", 0, "a"), "00.07");
     t.end();
@@ -62,7 +62,7 @@ t.test(
 );
 
 t.test(
-  `00.08 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 2nd arg`,
+  `00.08 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 2nd arg`,
   (t) => {
     t.false(is("a", 99, 100), "00.08");
     t.end();
@@ -70,7 +70,7 @@ t.test(
 );
 
 t.test(
-  `00.09 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 3rd arg`,
+  `00.09 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 3rd arg`,
   (t) => {
     t.false(is("a", 0, 100), "00.09");
     t.end();
@@ -78,7 +78,7 @@ t.test(
 );
 
 t.test(
-  `00.10 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - indexes equal`,
+  `00.10 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - indexes equal`,
   (t) => {
     t.false(is("abcde", 2, 2), "00.10");
     t.end();
@@ -86,7 +86,7 @@ t.test(
 );
 
 t.test(
-  `00.11 - ${`\u001b[${32}m${`weird cases`}\u001b[${39}m`} - 3rd > 2nd`,
+  `00.11 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd > 2nd`,
   (t) => {
     t.false(is("abcde", 2, 1), "00.11");
     t.end();
@@ -97,7 +97,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, double quotes`,
+  `01.01 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, double quotes`,
   (t) => {
     const str = `<a href="zzz">`;
     t.true(is(str, 8, 12), "01.01");
@@ -106,7 +106,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, single quotes`,
+  `01.02 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, single quotes`,
   (t) => {
     const str = `<a href='zzz'>`;
     t.true(is(str, 8, 12), "01.02");
@@ -115,7 +115,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
+  `01.03 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
   (t) => {
     const str = `<a href="zzz" target="_blank" style="color: black;">`;
     // 1. starting at the opening of "href":
@@ -148,7 +148,7 @@ t.test(
 );
 
 t.test(
-  `01.04 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, single quotes`,
+  `01.04 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, single quotes`,
   (t) => {
     const str = `<a href='zzz' target='_blank' style='color: black;'>`;
     // 1. starting at the opening of "href":
@@ -180,12 +180,20 @@ t.test(
   }
 );
 
+t.todo(`deleteme`, (t) => {
+  const str = `<img alt='so-called "artists"!" class='yo'/>`;
+
+  // alt opening at 9
+  t.false(is(str, 9, 20), "02.13.02");
+  t.end();
+});
+
 t.test(
-  `01.05 - ${`\u001b[${32}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
+  `01.05 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
   (t) => {
     const str = `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`;
     // 0. warmup
-    t.false(is(str, 9, 20), "01.05.00");
+    t.true(is(str, 9, 20), "01.05.00");
 
     // 1. the bizness
     t.false(is(str, 26, 9), "01.05.01");
@@ -214,36 +222,45 @@ t.test(
 //
 //   LEGEND: S means single, D means double
 //
-//   For example S-D means single - double (meaning in that order)
+//   For example \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m means single - double (meaning in that order)
 //
 //
 //
 //
 
 t.test(
-  `02.01 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - basic, D-S`,
+  `02.01 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - basic, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
-    const str = `<div class="c'>.</div>`;
-    t.true(is(str, 11, 13), "02.01.01");
+    const str = `<img alt="so-called "artists"!' class='yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str, 9, 28), "02.17.03");
 
     // fin.
     t.end();
   }
 );
 
-t.test(
-  `02.02 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - basic, S-D`,
+t.only(
+  `02.02 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - basic, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
-    const str = `<div class='c">.</div>`;
-    t.true(is(str, 11, 13), "02.02.01");
+    const str = `<img src="xyz" alt="="/>`;
+    t.true(is(str, 19, 21), "03.01.08"); // <--
 
     // fin.
     t.end();
   }
 );
 
+// t.todo(`deleteme`, (t) => {
+//   const str = `<div class="c' id="x'>.</div>`;
+//   t.true(is(str, 11, 13), "02.03.02"); // <--
+//   // fin.
+//   t.end();
+// });
+
 t.test(
-  `02.03 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, D-S D-S`,
+  `02.03 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class="c' id="x'>.</div>`;
 
@@ -265,7 +282,7 @@ t.test(
 );
 
 t.test(
-  `02.04 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, D-S D-S`,
+  `02.04 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class='c" id='x">.</div>`;
 
@@ -287,7 +304,7 @@ t.test(
 );
 
 t.test(
-  `02.05 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, D-S D-S S-D`,
+  `02.05 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<div class="c' id="x' style='c">.</div>`;
 
@@ -321,7 +338,7 @@ t.test(
 );
 
 t.test(
-  `02.06 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, S-D S-D D-S`,
+  `02.06 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class='c" id='x" style="c'>.</div>`;
 
@@ -355,25 +372,9 @@ t.test(
 );
 
 t.test(
-  `02.06 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, S-D-D-S`,
+  `02.07 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt='so-called "artists"!'/>`;
-
-    // alt opening at 9
-    t.false(is(str, 9, 9), "02.06.01");
-    t.false(is(str, 9, 20), "02.06.02");
-    t.false(is(str, 9, 28), "02.06.03");
-    t.true(is(str, 9, 30), "02.06.04"); // <--
-
-    // fin.
-    t.end();
-  }
-);
-
-t.test(
-  `02.07 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, S-D-D-S`,
-  (t) => {
-    const str = `<img alt="so-called 'artists'!"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.07.01");
@@ -386,30 +387,28 @@ t.test(
   }
 );
 
-// S - D - D - S
-
 t.test(
-  `02.08 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-S, S-S follows`,
+  `02.08 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
-    const str = `<img alt='so-called "artists"!' class='yo'/>`;
+    const str = `<img alt="so-called 'artists'!"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.08.01");
     t.false(is(str, 9, 20), "02.08.02");
     t.false(is(str, 9, 28), "02.08.03");
     t.true(is(str, 9, 30), "02.08.04"); // <--
-    t.false(is(str, 9, 38), "02.08.05");
-    t.false(is(str, 9, 41), "02.08.06");
 
     // fin.
     t.end();
   }
 );
 
+// S - D - D - S
+
 t.test(
-  `02.09 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-S, S-D follows`,
+  `02.09 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt='so-called "artists"!' class='yo"/>`;
+    const str = `<img alt='so-called "artists"!' class='yo'/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.09.01");
@@ -425,9 +424,9 @@ t.test(
 );
 
 t.test(
-  `02.10 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-S, D-S follows`,
+  `02.10 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt='so-called "artists"!' class="yo'/>`;
+    const str = `<img alt='so-called "artists"!' class='yo"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.10.01");
@@ -443,9 +442,9 @@ t.test(
 );
 
 t.test(
-  `02.11 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-S, D-D follows`,
+  `02.11 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt='so-called "artists"!' class="yo"/>`;
+    const str = `<img alt='so-called "artists"!' class="yo'/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.11.01");
@@ -454,6 +453,24 @@ t.test(
     t.true(is(str, 9, 30), "02.11.04"); // <--
     t.false(is(str, 9, 38), "02.11.05");
     t.false(is(str, 9, 41), "02.11.06");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.12 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
+  (t) => {
+    const str = `<img alt='so-called "artists"!' class="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str, 9, 9), "02.12.01");
+    t.false(is(str, 9, 20), "02.12.02");
+    t.false(is(str, 9, 28), "02.12.03");
+    t.true(is(str, 9, 30), "02.12.04"); // <--
+    t.false(is(str, 9, 38), "02.12.05");
+    t.false(is(str, 9, 41), "02.12.06");
 
     // fin.
     t.end();
@@ -477,27 +494,9 @@ t.test(
 // S - D - D - D
 
 t.test(
-  `02.12 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-D, S-S follows`,
+  `02.13 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!" class='yo'/>`;
-
-    // alt opening at 9
-    t.false(is(str, 9, 9), "02.12.01");
-    t.false(is(str, 9, 20), "02.12.02");
-    t.false(is(str, 9, 28), "02.12.03");
-    t.true(is(str, 9, 30), "02.12.04"); // <--
-    t.false(is(str, 9, 38), "02.12.05");
-    t.false(is(str, 9, 41), "02.12.06");
-
-    // fin.
-    t.end();
-  }
-);
-
-t.test(
-  `02.13 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-D, S-D follows`,
-  (t) => {
-    const str = `<img alt='so-called "artists"!" class='yo"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.13.01");
@@ -513,9 +512,9 @@ t.test(
 );
 
 t.test(
-  `02.14 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-D, D-S follows`,
+  `02.14 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt='so-called "artists"!" class="yo'/>`;
+    const str = `<img alt='so-called "artists"!" class='yo"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.14.01");
@@ -531,9 +530,9 @@ t.test(
 );
 
 t.test(
-  `02.15 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy S-D-D-D, D-D follows`,
+  `02.15 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt='so-called "artists"!" class="yo"/>`;
+    const str = `<img alt='so-called "artists"!" class="yo'/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.15.01");
@@ -548,12 +547,10 @@ t.test(
   }
 );
 
-// D - D - D - S
-
 t.test(
-  `02.16 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy D-D-D-S, S-S follows`,
+  `02.16 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt="so-called "artists"!' class='yo'/>`;
+    const str = `<img alt='so-called "artists"!" class="yo"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.16.01");
@@ -568,10 +565,12 @@ t.test(
   }
 );
 
+// D - D - D - S
+
 t.test(
-  `02.17 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy D-D-D-S, S-D follows`,
+  `02.17 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt="so-called "artists"!' class='yo"/>`;
+    const str = `<img alt="so-called "artists"!' class='yo'/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.17.01");
@@ -587,17 +586,16 @@ t.test(
 );
 
 t.test(
-  `02.18 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy D-D-D-S, D-S follows`,
+  `02.18 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - false positive of 02.18.*`,
   (t) => {
-    const str = `<img alt="so-called "artists"!' class="yo'/>`;
+    const str = `<img alt="so-called "artists"class='yo'/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.18.01");
     t.false(is(str, 9, 20), "02.18.02");
-    t.false(is(str, 9, 28), "02.18.03");
-    t.true(is(str, 9, 30), "02.18.04"); // <--
+    t.true(is(str, 9, 28), "02.18.03"); // <--
+    t.false(is(str, 9, 35), "02.18.04");
     t.false(is(str, 9, 38), "02.18.05");
-    t.false(is(str, 9, 41), "02.18.06");
 
     // fin.
     t.end();
@@ -605,9 +603,9 @@ t.test(
 );
 
 t.test(
-  `02.19 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy D-D-D-S, D-D follows`,
+  `02.19 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
-    const str = `<img alt="so-called "artists"!' class="yo"/>`;
+    const str = `<img alt="so-called "artists"!' class='yo"/>`;
 
     // alt opening at 9
     t.false(is(str, 9, 9), "02.19.01");
@@ -616,6 +614,42 @@ t.test(
     t.true(is(str, 9, 30), "02.19.04"); // <--
     t.false(is(str, 9, 38), "02.19.05");
     t.false(is(str, 9, 41), "02.19.06");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.20 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
+  (t) => {
+    const str = `<img alt="so-called "artists"!' class="yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str, 9, 9), "02.20.01");
+    t.false(is(str, 9, 20), "02.20.02");
+    t.false(is(str, 9, 28), "02.20.03");
+    t.true(is(str, 9, 30), "02.20.04"); // <--
+    t.false(is(str, 9, 38), "02.20.05");
+    t.false(is(str, 9, 41), "02.20.06");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.21 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
+  (t) => {
+    const str = `<img alt="so-called "artists"!' class="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str, 9, 9), "02.21.01");
+    t.false(is(str, 9, 20), "02.21.02");
+    t.false(is(str, 9, 28), "02.21.03");
+    t.true(is(str, 9, 30), "02.21.04"); // <--
+    t.false(is(str, 9, 38), "02.21.05");
+    t.false(is(str, 9, 41), "02.21.06");
 
     // fin.
     t.end();
@@ -641,14 +675,14 @@ t.test(
 //
 
 t.test(
-  `02.20 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside D-S-S`,
+  `02.22 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt="Deal is your's!'/>`;
 
     // alt opening at 9
-    t.false(is(str, 9, 9), "02.20.01");
-    t.false(is(str, 9, 22), "02.20.02");
-    t.true(is(str, 9, 25), "02.20.03"); // <--
+    t.false(is(str, 9, 9), "02.22.01");
+    t.false(is(str, 9, 22), "02.22.02");
+    t.true(is(str, 9, 25), "02.22.03"); // <--
 
     // fin.
     t.end();
@@ -656,18 +690,349 @@ t.test(
 );
 
 t.test(
-  `02.21 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside D-S-S`,
+  `02.23 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt='Deal is your's!"/>`;
 
     // alt opening at 9
-    t.false(is(str, 9, 9), "02.21.01");
-    t.false(is(str, 9, 22), "02.21.02");
-    t.true(is(str, 9, 25), "02.21.03"); // <--
+    t.false(is(str, 9, 9), "02.23.01");
+    t.false(is(str, 9, 22), "02.23.02");
+    t.true(is(str, 9, 25), "02.23.03"); // <--
 
     // fin.
     t.end();
   }
 );
 
+// 03. cheeky cases
 // -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt="="/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.01.01");
+    t.true(is(str, 9, 13), "03.01.02"); // <--
+    t.false(is(str, 9, 19), "03.01.03");
+    t.false(is(str, 9, 21), "03.01.04");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.01.05");
+    t.false(is(str, 19, 13), "03.01.06");
+    t.false(is(str, 19, 19), "03.01.07");
+    t.true(is(str, 19, 21), "03.01.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='='/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.02.01");
+    t.true(is(str, 9, 13), "03.02.02"); // <--
+    t.false(is(str, 9, 19), "03.02.03");
+    t.false(is(str, 9, 21), "03.02.04");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.02.05");
+    t.false(is(str, 19, 13), "03.02.06");
+    t.false(is(str, 19, 19), "03.02.07");
+    t.true(is(str, 19, 21), "03.02.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt="='/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.03.01");
+    t.true(is(str, 9, 13), "03.03.02"); // <--
+    t.false(is(str, 9, 19), "03.03.03");
+    t.false(is(str, 9, 21), "03.03.04");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.03.05");
+    t.false(is(str, 19, 13), "03.03.06");
+    t.false(is(str, 19, 19), "03.03.07");
+    t.true(is(str, 19, 21), "03.03.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='="/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.04.01");
+    t.true(is(str, 9, 13), "03.04.02"); // <--
+    t.false(is(str, 9, 19), "03.04.03");
+    t.false(is(str, 9, 21), "03.04.04");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.04.05");
+    t.false(is(str, 19, 13), "03.04.06");
+    t.false(is(str, 19, 19), "03.04.07");
+    t.true(is(str, 19, 21), "03.04.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+//
+//                               three attributes
+//
+
+t.test(
+  `03.05 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt="=" class="klm"/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.05.01");
+    t.true(is(str, 9, 13), "03.05.02"); // <--
+    t.false(is(str, 9, 19), "03.05.03");
+    t.false(is(str, 9, 21), "03.05.04");
+    t.false(is(str, 9, 29), "03.05.05");
+    t.false(is(str, 9, 33), "03.05.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.05.05");
+    t.false(is(str, 19, 13), "03.05.06");
+    t.false(is(str, 19, 19), "03.05.07");
+    t.true(is(str, 19, 21), "03.05.08"); // <--
+    t.false(is(str, 19, 29), "03.05.05");
+    t.false(is(str, 19, 33), "03.05.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.05.07");
+    t.false(is(str, 29, 13), "03.05.08");
+    t.false(is(str, 29, 19), "03.05.09");
+    t.false(is(str, 29, 21), "03.05.10");
+    t.false(is(str, 29, 29), "03.05.11");
+    t.true(is(str, 29, 33), "03.05.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.06 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=' class="klm'/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.06.01");
+    t.true(is(str, 9, 13), "03.06.02"); // <--
+    t.false(is(str, 9, 19), "03.06.03");
+    t.false(is(str, 9, 21), "03.06.04");
+    t.false(is(str, 9, 29), "03.06.05");
+    t.false(is(str, 9, 33), "03.06.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.06.05");
+    t.false(is(str, 19, 13), "03.06.06");
+    t.false(is(str, 19, 19), "03.06.07");
+    t.true(is(str, 19, 21), "03.06.08"); // <--
+    t.false(is(str, 19, 29), "03.06.05");
+    t.false(is(str, 19, 33), "03.06.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.06.07");
+    t.false(is(str, 29, 13), "03.06.08");
+    t.false(is(str, 29, 19), "03.06.09");
+    t.false(is(str, 29, 21), "03.06.10");
+    t.false(is(str, 29, 29), "03.06.11");
+    t.true(is(str, 29, 33), "03.06.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.07 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=' class='klm"/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.07.01");
+    t.true(is(str, 9, 13), "03.07.02"); // <--
+    t.false(is(str, 9, 19), "03.07.03");
+    t.false(is(str, 9, 21), "03.07.04");
+    t.false(is(str, 9, 29), "03.07.05");
+    t.false(is(str, 9, 33), "03.07.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.07.05");
+    t.false(is(str, 19, 13), "03.07.06");
+    t.false(is(str, 19, 19), "03.07.07");
+    t.true(is(str, 19, 21), "03.07.08"); // <--
+    t.false(is(str, 19, 29), "03.07.05");
+    t.false(is(str, 19, 33), "03.07.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.07.07");
+    t.false(is(str, 29, 13), "03.07.08");
+    t.false(is(str, 29, 19), "03.07.09");
+    t.false(is(str, 29, 21), "03.07.10");
+    t.false(is(str, 29, 29), "03.07.11");
+    t.true(is(str, 29, 33), "03.07.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.08 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=" class="klm"/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.08.01");
+    t.true(is(str, 9, 13), "03.08.02"); // <--
+    t.false(is(str, 9, 19), "03.08.03");
+    t.false(is(str, 9, 21), "03.08.04");
+    t.false(is(str, 9, 29), "03.08.05");
+    t.false(is(str, 9, 33), "03.08.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.08.05");
+    t.false(is(str, 19, 13), "03.08.06");
+    t.false(is(str, 19, 19), "03.08.07");
+    t.true(is(str, 19, 21), "03.08.08"); // <--
+    t.false(is(str, 19, 29), "03.08.05");
+    t.false(is(str, 19, 33), "03.08.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.08.07");
+    t.false(is(str, 29, 13), "03.08.08");
+    t.false(is(str, 29, 19), "03.08.09");
+    t.false(is(str, 29, 21), "03.08.10");
+    t.false(is(str, 29, 29), "03.08.11");
+    t.true(is(str, 29, 33), "03.08.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.09 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=" class="klm'/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.09.01");
+    t.true(is(str, 9, 13), "03.09.02"); // <--
+    t.false(is(str, 9, 19), "03.09.03");
+    t.false(is(str, 9, 21), "03.09.04");
+    t.false(is(str, 9, 29), "03.09.05");
+    t.false(is(str, 9, 33), "03.09.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.09.05");
+    t.false(is(str, 19, 13), "03.09.06");
+    t.false(is(str, 19, 19), "03.09.07");
+    t.true(is(str, 19, 21), "03.09.08"); // <--
+    t.false(is(str, 19, 29), "03.09.05");
+    t.false(is(str, 19, 33), "03.09.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.09.07");
+    t.false(is(str, 29, 13), "03.09.08");
+    t.false(is(str, 29, 19), "03.09.09");
+    t.false(is(str, 29, 21), "03.09.10");
+    t.false(is(str, 29, 29), "03.09.11");
+    t.true(is(str, 29, 33), "03.09.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.10 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=" class='klm"/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.10.01");
+    t.true(is(str, 9, 13), "03.10.02"); // <--
+    t.false(is(str, 9, 19), "03.10.03");
+    t.false(is(str, 9, 21), "03.10.04");
+    t.false(is(str, 9, 29), "03.10.05");
+    t.false(is(str, 9, 33), "03.10.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.10.05");
+    t.false(is(str, 19, 13), "03.10.06");
+    t.false(is(str, 19, 19), "03.10.07");
+    t.true(is(str, 19, 21), "03.10.08"); // <--
+    t.false(is(str, 19, 29), "03.10.05");
+    t.false(is(str, 19, 33), "03.10.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.10.07");
+    t.false(is(str, 29, 13), "03.10.08");
+    t.false(is(str, 29, 19), "03.10.09");
+    t.false(is(str, 29, 21), "03.10.10");
+    t.false(is(str, 29, 29), "03.10.11");
+    t.true(is(str, 29, 33), "03.10.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `03.11 - ${`\u001b[${36}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img src="xyz" alt='=" class='klm'/>`;
+
+    // src opening at 9
+    t.false(is(str, 9, 9), "03.11.01");
+    t.true(is(str, 9, 13), "03.11.02"); // <--
+    t.false(is(str, 9, 19), "03.11.03");
+    t.false(is(str, 9, 21), "03.11.04");
+    t.false(is(str, 9, 29), "03.11.05");
+    t.false(is(str, 9, 33), "03.11.06");
+
+    // alt opening at 19
+    t.false(is(str, 19, 9), "03.11.05");
+    t.false(is(str, 19, 13), "03.11.06");
+    t.false(is(str, 19, 19), "03.11.07");
+    t.true(is(str, 19, 21), "03.11.08"); // <--
+    t.false(is(str, 19, 29), "03.11.05");
+    t.false(is(str, 19, 33), "03.11.06");
+
+    // class opening at 29
+    t.false(is(str, 29, 9), "03.11.07");
+    t.false(is(str, 29, 13), "03.11.08");
+    t.false(is(str, 29, 19), "03.11.09");
+    t.false(is(str, 29, 21), "03.11.10");
+    t.false(is(str, 29, 29), "03.11.11");
+    t.true(is(str, 29, 33), "03.11.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);

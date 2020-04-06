@@ -7,6 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
  */
 
+import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
+import { right, left } from 'string-left-right';
+
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (
     typeof str !== "string" ||
@@ -22,13 +25,48 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   const openingQuote = `'"`.includes(str[idxOfAttrOpening])
     ? str[idxOfAttrOpening]
     : null;
-  for (let i = idxOfAttrOpening; i < isThisClosingIdx; i++) {
-    if (str[i] === "=" && `'"`.includes(str[i + 1])) {
-      return false;
-    }
+  let oppositeToOpeningQuote = null;
+  if (openingQuote) {
+    oppositeToOpeningQuote = openingQuote === `"` ? `'` : `"`;
   }
-  if (openingQuote && str[isThisClosingIdx] === str[isThisClosingIdx]) {
-    return true;
+  let attrStartsAt;
+  for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
+    if (i > isThisClosingIdx) {
+      if (str[i].trim().length && !attrStartsAt) {
+        if (charSuitableForHTMLAttrName(str[i])) {
+          attrStartsAt = i;
+        }
+        else if (str[i] === "/" || str[i] === ">") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      if (openingQuote && str[idxOfAttrOpening] === str[i]) {
+        return false;
+      }
+      if (
+        openingQuote &&
+        str[isThisClosingIdx] === oppositeToOpeningQuote &&
+        str[i] === oppositeToOpeningQuote
+      ) {
+        return false;
+      }
+      if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+        return true;
+      }
+    } else {
+      if (
+        str[i] === "=" &&
+        right(str, i) &&
+        right(str, right(str, i)) &&
+        `'"`.includes(str[right(str, i)]) &&
+        !`/>`.includes(str[right(str, right(str, i))]) &&
+        charSuitableForHTMLAttrName(str[left(str, i)])
+      ) {
+        return false;
+      }
+    }
   }
   return false;
 }
