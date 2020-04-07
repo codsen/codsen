@@ -1966,6 +1966,7 @@
 
   function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+      console.log("015 ".concat("\x1B[".concat(31, "m", "WRONG INPUTS, RETURN FALSE", "\x1B[", 39, "m")));
       return false;
     }
 
@@ -1976,6 +1977,7 @@
       oppositeToOpeningQuote = openingQuote === "\"" ? "'" : "\"";
     }
 
+    console.log("028 ".concat("\x1B[".concat(33, "m", "openingQuote", "\x1B[", 39, "m"), ": ", "\x1B[".concat(35, "m", openingQuote, "\x1B[", 39, "m"), "   ", "\x1B[".concat(33, "m", "oppositeToOpeningQuote", "\x1B[", 39, "m"), ": ", "\x1B[".concat(35, "m", oppositeToOpeningQuote, "\x1B[", 39, "m")));
     var attrStartsAt; // let's traverse from opening to the end of the string, then in happy
     // path scenarios, let's exit way earlier, upon closing quote
 
@@ -1983,19 +1985,24 @@
       //
       // Logging:
       // -------------------------------------------------------------------------
-      // when index "isThisClosingIdx" has been passed...
+      console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 4)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n"));
+      console.log(i === isThisClosingIdx ? "                 \u2588\u2588 isThisClosingIdx met at ".concat(i, " \u2588\u2588") : ""); // when index "isThisClosingIdx" has been passed...
+
       if (i > isThisClosingIdx) {
-        // catch the first character past the questioned attribute
+        console.log("055 i > isThisClosingIdx"); // catch the first character past the questioned attribute
         // closing.
         // imagine
         // <img alt="so-called "artists"!' class='yo'/>
         //          ^                  ^
         //        opening          suspected closing
+
         if (str[i].trim().length && !attrStartsAt) {
           // <img alt="so-called "artists"!' class='yo'/>
           //                              ^
           //                         we land here, on excl. mark
           if (charSuitableForHTMLAttrName(str[i])) {
+            console.log("070 ".concat("\x1B[".concat(32, "m", "\u2588\u2588 new attribute name starts", "\x1B[", 39, "m")));
+            console.log("073 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "attrStartsAt", "\x1B[", 39, "m"), " = ", JSON.stringify(attrStartsAt, null, 4)));
             attrStartsAt = i;
           } // if the tag closing was met, that's fine, imagine:
           // <div class='c">.</div>
@@ -2003,16 +2010,19 @@
           //        we went past this suspected closing quote
           //        and reached the tag ending...
           else if (str[i] === "/" || str[i] === ">") {
+              console.log("088 closing bracket caught first - ".concat("\x1B[".concat(32, "m", "RETURN TRUE", "\x1B[", 39, "m")));
               return true;
             } else {
               // in example above, that exclamation mark is not
               // suitable to be within attribute's name
+              console.log("095 character is not suitable for attr name - ".concat("\x1B[".concat(31, "m", "RETURN FALSE", "\x1B[", 39, "m")));
               return false;
             }
         } // if suspected closing quote's index is reached
 
 
         if (openingQuote && str[idxOfAttrOpening] === str[i]) {
+          console.log("104 happy path, opening quote matched - ".concat("\x1B[".concat(31, "m", "RETURN FALSE", "\x1B[", 39, "m")));
           return false;
         } // if we have passed the suspected closing quote
         // and we meet another quote of the same kind,
@@ -2030,6 +2040,7 @@
         // suspected closing quote is of the
         // opposite kind (single-double, double-single)
         str[i] === oppositeToOpeningQuote) {
+          console.log("128 another quote same as suspected was met - ".concat("\x1B[".concat(31, "m", "RETURN FALSE", "\x1B[", 39, "m")));
           return false;
         } // if the true attribute ending was met passing
         // past the suspected one, this means that
@@ -2038,10 +2049,11 @@
 
 
         if (str[i] === "=" && "'\"".includes(str[right(str, i)])) {
+          console.log("139 new attribute starts - ".concat("\x1B[".concat(32, "m", "RETURN TRUE", "\x1B[", 39, "m")));
           return true;
         }
       } else {
-        // this clause is meant to catch the suspected quotes
+        console.log("144 i <= isThisClosingIdx"); // this clause is meant to catch the suspected quotes
         // which don't belong to the tag, it's where quotes
         // in question are way beyond the actual attribute's ending.
         // For example, consider
@@ -2063,6 +2075,7 @@
         // for example, this will also catch:
         // <img src="xyz" alt="=   "/>
         //
+
         if (str[i] === "=" && right(str, i) && right(str, right(str, i)) && "'\"".includes(str[right(str, i)]) && // ensure it's not tag ending on the right
         // before freaking out:
         !"/>".includes(str[right(str, right(str, i))]) && // ensure it's a character suitable for attribute
@@ -2070,15 +2083,19 @@
         // attribute name its name characters must pass
         // the charSuitableForHTMLAttrName()...)
         charSuitableForHTMLAttrName(str[left(str, i)])) {
+          console.log("184 new attribute starts - ".concat("\x1B[".concat(31, "m", "RETURN FALSE", "\x1B[", 39, "m")));
           return false;
         }
       } // logging
       // -----------------------------------------------------------------------------
 
+
+      console.log("".concat("\x1B[".concat(90, "m", "\u2588\u2588 attrStartsAt = ".concat(attrStartsAt), "\x1B[", 39, "m")));
     } // if this point was reached and loop didn't exit...
     // default is false
 
 
+    console.log("199 ".concat("\x1B[".concat(31, "m", "RETURN DEFAULT FALSE", "\x1B[", 39, "m")));
     return false;
   }
 

@@ -241,7 +241,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `02.02 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - basic, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt="="/>`;
@@ -251,13 +251,6 @@ t.only(
     t.end();
   }
 );
-
-// t.todo(`deleteme`, (t) => {
-//   const str = `<div class="c' id="x'>.</div>`;
-//   t.true(is(str, 11, 13), "02.03.02"); // <--
-//   // fin.
-//   t.end();
-// });
 
 t.test(
   `02.03 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
@@ -1031,6 +1024,61 @@ t.test(
     t.false(is(str, 29, 21), "03.11.10");
     t.false(is(str, 29, 29), "03.11.11");
     t.true(is(str, 29, 33), "03.11.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// 04. unclosed tags
+// -----------------------------------------------------------------------------
+
+t.only(
+  `04.01 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href="z" click here</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.01");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href="z' click here</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.02");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.03 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href='z" click here</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.03");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.04 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href='z' click here</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.04");
 
     // fin.
     t.end();
