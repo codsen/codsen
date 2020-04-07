@@ -180,14 +180,6 @@ t.test(
   }
 );
 
-t.todo(`deleteme`, (t) => {
-  const str = `<img alt='so-called "artists"!" class='yo'/>`;
-
-  // alt opening at 9
-  t.false(is(str, 9, 20), "02.13.02");
-  t.end();
-});
-
 t.test(
   `01.05 - ${`\u001b[${33}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
   (t) => {
@@ -1033,7 +1025,7 @@ t.test(
 // 04. unclosed tags
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `04.01 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z" click here</a>`;
@@ -1079,6 +1071,58 @@ t.test(
 
     // src opening at 9
     t.true(is(str, 8, 10), "04.04");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.05 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href="z"</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.05");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.06 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href="z'</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.06");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.07 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href='z"</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.07");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.08 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a href='z'</a>`;
+
+    // src opening at 9
+    t.true(is(str, 8, 10), "04.08");
 
     // fin.
     t.end();
