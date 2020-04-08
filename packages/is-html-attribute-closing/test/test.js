@@ -1026,11 +1026,9 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `04.01 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.01 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z" click here</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.01");
 
     // fin.
@@ -1042,8 +1040,6 @@ t.test(
   `04.02 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z' click here</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.02");
 
     // fin.
@@ -1055,8 +1051,6 @@ t.test(
   `04.03 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z" click here</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.03");
 
     // fin.
@@ -1068,8 +1062,6 @@ t.test(
   `04.04 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z' click here</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.04");
 
     // fin.
@@ -1081,8 +1073,6 @@ t.test(
   `04.05 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z"</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.05");
 
     // fin.
@@ -1094,8 +1084,6 @@ t.test(
   `04.06 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z'</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.06");
 
     // fin.
@@ -1107,8 +1095,6 @@ t.test(
   `04.07 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z"</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.07");
 
     // fin.
@@ -1120,9 +1106,22 @@ t.test(
   `04.08 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z'</a>`;
-
-    // src opening at 9
     t.true(is(str, 8, 10), "04.08");
+
+    // fin.
+    t.end();
+  }
+);
+
+// 05. attribute starts without a quote
+// -----------------------------------------------------------------------------
+
+t.test(
+  `05.01 - ${`\u001b[${31}m${`no starting quote`}\u001b[${39}m`} - one tag, one attr`,
+  (t) => {
+    const str = `<a href=z">click here</a>`;
+
+    t.true(is(str, 8, 9), "05.01");
 
     // fin.
     t.end();
