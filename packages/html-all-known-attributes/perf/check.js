@@ -7,7 +7,7 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 
 // setup
 const { allHtmlAttribs } = require("../");
-const testme = () => Object.keys(allHtmlAttribs).length;
+const testme = () => allHtmlAttribs.size;
 
 // action
 runPerf(testme, callerDir);

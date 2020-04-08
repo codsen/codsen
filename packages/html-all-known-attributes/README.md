@@ -1,6 +1,6 @@
 # html-all-known-attributes
 
-> All HTML attributes known to the humanity
+> All HTML attributes known to the Humanity
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -16,6 +16,7 @@
 - [Idea](#idea)
 - [API](#api)
 - [Example](#example)
+- [Why Set not Array and not JSON?](#why-set-not-array-and-not-json)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -52,8 +53,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                    | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-all-known-attributes.cjs.js` | 14 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-all-known-attributes.esm.js` | 14 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-all-known-attributes.cjs.js` | 13 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-all-known-attributes.esm.js` | 15 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-all-known-attributes.umd.js` | 13 KB |
 
 **[⬆ back to top](#)**
@@ -68,24 +69,44 @@ This includes deprecated attributes, Microsoft-proprietary-ones that email templ
 
 ## API
 
-This package exports a plain object with a single key, `allHtmlAttribs`. Its value is an array of 702 strings, all known attributes.
+This package exports a plain object with a single key, `allHtmlAttribs`. Its value is a [Set](https://exploringjs.com/impatient-js/ch_sets.html) of 702 strings — all HTML attribute names known to the Humanity.
+
+**[⬆ back to top](#)**
 
 ## Example
 
 ```js
 const { allHtmlAttribs } = require("html-all-known-attributes");
 
-// allHtmlAttribs is an array of strings
-console.log(allHtmlAttribs[0]);
-// => abbr
+console.log(allHtmlAttribs.has("href"));
+// => true
 
-console.log(JSON.stringify(allHtmlAttribs, null, 4));
-// => [
-//      "abbr",
-//      "accept",
-//      "accept-charset",
-//      ...
+console.log(allHtmlAttribs.size); // not size()
+// => 702
+
+// iterating:
+for (const x of allHtmlAttribs) {
+  console.log(x);
+}
+// => "abbr",
+//    "accept",
+//    "accept-charset",
+//    ...
 ```
+
+**[⬆ back to top](#)**
+
+## Why Set not Array and not JSON?
+
+Because of performance reasons.
+
+Previously, we `import()`ed JSON and exported it as an object value.
+
+Now, we export hardcoded Set, in an object value.
+
+Size evaluation speed is 3187251.38% faster according our built-in perf tests (see `perf/` folder in the root of each package in this monorepo):
+
+![matching algorithm](https://glcdn.githack.com/codsen/codsen/raw/master/packages/html-all-known-attributes/media/perf_set_vs_array_from_json.png)
 
 **[⬆ back to top](#)**
 
