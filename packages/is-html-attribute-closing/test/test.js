@@ -1037,7 +1037,7 @@ t.test(
 );
 
 t.test(
-  `04.02 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.02 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z' click here</a>`;
     t.true(is(str, 8, 10), "04.02");
@@ -1048,7 +1048,7 @@ t.test(
 );
 
 t.test(
-  `04.03 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.03 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z" click here</a>`;
     t.true(is(str, 8, 10), "04.03");
@@ -1059,7 +1059,7 @@ t.test(
 );
 
 t.test(
-  `04.04 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.04 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z' click here</a>`;
     t.true(is(str, 8, 10), "04.04");
@@ -1070,7 +1070,7 @@ t.test(
 );
 
 t.test(
-  `04.05 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.05 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z"</a>`;
     t.true(is(str, 8, 10), "04.05");
@@ -1081,7 +1081,7 @@ t.test(
 );
 
 t.test(
-  `04.06 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.06 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z'</a>`;
     t.true(is(str, 8, 10), "04.06");
@@ -1092,7 +1092,7 @@ t.test(
 );
 
 t.test(
-  `04.07 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.07 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z"</a>`;
     t.true(is(str, 8, 10), "04.07");
@@ -1103,7 +1103,7 @@ t.test(
 );
 
 t.test(
-  `04.08 - ${`\u001b[${36}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.08 - ${`\u001b[${34}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z'</a>`;
     t.true(is(str, 8, 10), "04.08");
@@ -1122,6 +1122,75 @@ t.test(
     const str = `<a href=z">click here</a>`;
 
     t.true(is(str, 8, 9), "05.01");
+
+    // fin.
+    t.end();
+  }
+);
+
+// 06. repeated equals
+// -----------------------------------------------------------------------------
+
+t.test(
+  `05.01 - ${`\u001b[${31}m${`no starting quote`}\u001b[${39}m`} - one tag, one attr`,
+  (t) => {
+    const str = `<a b=="c" d=='e'>`;
+
+    // b opening at 6
+    t.false(is(str, 6, 6), "05.01.01");
+    t.true(is(str, 6, 8), "05.01.02"); // <--
+    t.false(is(str, 6, 13), "05.01.03");
+    t.false(is(str, 6, 15), "05.01.04");
+
+    // d opening at 13
+    t.false(is(str, 13, 6), "05.01.05");
+    t.false(is(str, 13, 8), "05.01.06");
+    t.false(is(str, 13, 13), "05.01.07");
+    t.true(is(str, 13, 15), "05.01.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `05.02 - ${`\u001b[${31}m${`no starting quote`}\u001b[${39}m`} - one tag, one attr, three equals`,
+  (t) => {
+    const str = `<a b==="c" d==='e'>`;
+
+    // b opening at 7
+    t.false(is(str, 7, 7), "05.02.01");
+    t.true(is(str, 7, 9), "05.02.02"); // <--
+    t.false(is(str, 7, 15), "05.02.03");
+    t.false(is(str, 7, 17), "05.02.04");
+
+    // d opening at 15
+    t.false(is(str, 15, 7), "05.02.05");
+    t.false(is(str, 15, 9), "05.02.06");
+    t.false(is(str, 15, 15), "05.02.07");
+    t.true(is(str, 15, 17), "05.02.08"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `05.03 - ${`\u001b[${31}m${`no starting quote`}\u001b[${39}m`} - one tag, one attr, three spaced equals`,
+  (t) => {
+    const str = `<a b = = = "c" d = = = 'e'>`;
+
+    // b opening at 11
+    t.false(is(str, 11, 11), "05.03.01");
+    t.true(is(str, 11, 13), "05.03.02"); // <--
+    t.false(is(str, 11, 23), "05.03.03");
+    t.false(is(str, 11, 25), "05.03.04");
+
+    // d opening at 23
+    t.false(is(str, 23, 11), "05.03.05");
+    t.false(is(str, 23, 13), "05.03.06");
+    t.false(is(str, 23, 23), "05.03.07");
+    t.true(is(str, 23, 25), "05.03.08"); // <--
 
     // fin.
     t.end();

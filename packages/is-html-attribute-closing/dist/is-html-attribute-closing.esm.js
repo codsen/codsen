@@ -8,7 +8,7 @@
  */
 
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
-import { right, left } from 'string-left-right';
+import { matchRight } from 'string-match-left-right';
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (
@@ -38,7 +38,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
         else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
           return true;
-        } else {
+        } else if (str[i] !== "=") {
           return false;
         }
       } else if (attrStartsAt && !charSuitableForHTMLAttrName(str[i])) {
@@ -54,17 +54,35 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       ) {
         return false;
       }
-      if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+      if (
+        str[i] === "=" &&
+        matchRight(str, i, [`'`, `"`], {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="],
+        })
+      ) {
         return true;
       }
     } else {
+      let firstNonWhitespaceCharOnTheLeft;
+      if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+        firstNonWhitespaceCharOnTheLeft = i - 1;
+      } else {
+        for (let y = i; y--; ) {
+          if (str[y].trim().length && str[y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = y;
+            break;
+          }
+        }
+      }
       if (
         str[i] === "=" &&
-        right(str, i) &&
-        right(str, right(str, i)) &&
-        `'"`.includes(str[right(str, i)]) &&
-        !`/>`.includes(str[right(str, right(str, i))]) &&
-        charSuitableForHTMLAttrName(str[left(str, i)])
+        matchRight(str, i, [`'`, `"`], {
+          cb: (char) => !`/>`.includes(char),
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="],
+        }) &&
+        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
       ) {
         return false;
       }

@@ -59,7 +59,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["is-char-suitable-for-html-attr-name", "string-left-right"],
+      external: [
+        "is-char-suitable-for-html-attr-name",
+        "string-left-right",
+        "string-match-left-right",
+      ],
       plugins: [
         strip({
           sourceMap: false,
@@ -74,7 +78,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["is-char-suitable-for-html-attr-name", "string-left-right"],
+      external: [
+        "is-char-suitable-for-html-attr-name",
+        "string-left-right",
+        "string-match-left-right",
+      ],
       plugins: [
         strip({
           sourceMap: false,

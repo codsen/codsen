@@ -1,5 +1,6 @@
 import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
-import { left, right } from "string-left-right";
+// import { right } from "string-left-right";
+import { matchRight } from "string-match-left-right";
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (
@@ -12,7 +13,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     idxOfAttrOpening >= isThisClosingIdx
   ) {
     console.log(
-      `015 ${`\u001b[${31}m${`WRONG INPUTS, RETURN FALSE`}\u001b[${39}m`}`
+      `016 ${`\u001b[${31}m${`WRONG INPUTS, RETURN FALSE`}\u001b[${39}m`}`
     );
     return false;
   }
@@ -25,7 +26,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     oppositeToOpeningQuote = openingQuote === `"` ? `'` : `"`;
   }
   console.log(
-    `028 ${`\u001b[${33}m${`openingQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${openingQuote}\u001b[${39}m`}   ${`\u001b[${33}m${`oppositeToOpeningQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${oppositeToOpeningQuote}\u001b[${39}m`}`
+    `029 ${`\u001b[${33}m${`openingQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${openingQuote}\u001b[${39}m`}   ${`\u001b[${33}m${`oppositeToOpeningQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${oppositeToOpeningQuote}\u001b[${39}m`}`
   );
 
   let attrStartsAt;
@@ -52,7 +53,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
     // when index "isThisClosingIdx" has been passed...
     if (i > isThisClosingIdx) {
-      console.log(`055 i > isThisClosingIdx`);
+      console.log(`056 i > isThisClosingIdx`);
 
       // catch the first character past the questioned attribute
       // closing.
@@ -67,11 +68,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         //                         we land here, on excl. mark
         if (charSuitableForHTMLAttrName(str[i])) {
           console.log(
-            `070 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
+            `071 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
           );
           attrStartsAt = i;
           console.log(
-            `074 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `075 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
               attrStartsAt,
               null,
               4
@@ -85,29 +86,29 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         //        and reached the tag ending...
         else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
           console.log(
-            `088 closing bracket caught first - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
+            `089 closing bracket caught first - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
           );
           return true;
-        } else {
+        } else if (str[i] !== "=") {
           // in example above, that exclamation mark is not
           // suitable to be within attribute's name
           console.log(
-            `095 character is not suitable for attr name - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+            `096 character is not suitable for attr name - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
           );
           return false;
         }
       } else if (attrStartsAt && !charSuitableForHTMLAttrName(str[i])) {
         // ending of an attr name chunk
-        console.log(`101 ending of an attr. chunk`);
+        console.log(`102 ending of an attr. chunk`);
         console.log(
-          `103 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
+          `104 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
             attrStartsAt,
             i
           )}"`
         );
 
         console.log(
-          `110 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`}`
+          `111 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`}`
         );
         attrStartsAt = null;
       }
@@ -115,7 +116,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // if suspected closing quote's index is reached
       if (openingQuote && str[idxOfAttrOpening] === str[i]) {
         console.log(
-          `118 happy path, opening quote matched - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `119 happy path, opening quote matched - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
@@ -139,7 +140,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         str[i] === oppositeToOpeningQuote
       ) {
         console.log(
-          `142 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `143 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
@@ -148,14 +149,22 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // past the suspected one, this means that
       // suspected one was a false guess. Correct ending
       // is at this index "i"
-      if (str[i] === "=" && `'"`.includes(str[right(str, i)])) {
+
+      console.log(`153 @`);
+      if (
+        str[i] === "=" &&
+        matchRight(str, i, [`'`, `"`], {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="],
+        })
+      ) {
         console.log(
-          `153 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
+          `162 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
         );
         return true;
       }
     } else {
-      console.log(`158 i <= isThisClosingIdx`);
+      console.log(`167 i <= isThisClosingIdx`);
       // this clause is meant to catch the suspected quotes
       // which don't belong to the tag, it's where quotes
       // in question are way beyond the actual attribute's ending.
@@ -180,22 +189,59 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // for example, this will also catch:
       // <img src="xyz" alt="=   "/>
       //
+      console.log(`192 *`);
+      let firstNonWhitespaceCharOnTheLeft;
+      if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+        // happy path
+        firstNonWhitespaceCharOnTheLeft = i - 1;
+      } else {
+        console.log(`198 traverse backwards`);
+        for (let y = i; y--; ) {
+          console.log(
+            `201 ${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
+              str[y],
+              null,
+              4
+            )}`
+          );
+          if (str[y].trim().length && str[y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = y;
+            console.log(
+              `210 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+                firstNonWhitespaceCharOnTheLeft,
+                null,
+                4
+              )}; BREAK`
+            );
+            break;
+          }
+        }
+      }
+      console.log(
+        `221 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+          firstNonWhitespaceCharOnTheLeft,
+          null,
+          4
+        )}`
+      );
+
       if (
         str[i] === "=" &&
-        right(str, i) &&
-        right(str, right(str, i)) &&
-        `'"`.includes(str[right(str, i)]) &&
-        // ensure it's not tag ending on the right
-        // before freaking out:
-        !`/>`.includes(str[right(str, right(str, i))]) &&
+        matchRight(str, i, [`'`, `"`], {
+          // ensure it's not tag ending on the right
+          // before freaking out:
+          cb: (char) => !`/>`.includes(char),
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="],
+        }) &&
         // ensure it's a character suitable for attribute
         // name on the left of equal (if it's a real
         // attribute name its name characters must pass
         // the charSuitableForHTMLAttrName()...)
-        charSuitableForHTMLAttrName(str[left(str, i)])
+        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
       ) {
         console.log(
-          `198 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `244 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
@@ -210,7 +256,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
   // if this point was reached and loop didn't exit...
   // default is false
-  console.log(`213 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
+  console.log(`259 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
   return false;
 }
 

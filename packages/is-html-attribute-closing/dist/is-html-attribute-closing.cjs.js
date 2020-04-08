@@ -12,7 +12,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
-var stringLeftRight = require('string-left-right');
+var stringMatchLeftRight = require('string-match-left-right');
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
@@ -32,7 +32,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
         else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
             return true;
-          } else {
+          } else if (str[i] !== "=") {
             return false;
           }
       } else if (attrStartsAt && !charSuitableForHTMLAttrName(str[i])) {
@@ -47,13 +47,32 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       str[i] === oppositeToOpeningQuote) {
         return false;
       }
-      if (str[i] === "=" && "'\"".includes(str[stringLeftRight.right(str, i)])) {
+      if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
+        trimBeforeMatching: true,
+        trimCharsBeforeMatching: ["="]
+      })) {
         return true;
       }
     } else {
-      if (str[i] === "=" && stringLeftRight.right(str, i) && stringLeftRight.right(str, stringLeftRight.right(str, i)) && "'\"".includes(str[stringLeftRight.right(str, i)]) &&
-      !"/>".includes(str[stringLeftRight.right(str, stringLeftRight.right(str, i))]) &&
-      charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)])) {
+      var firstNonWhitespaceCharOnTheLeft = void 0;
+      if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+        firstNonWhitespaceCharOnTheLeft = i - 1;
+      } else {
+        for (var y = i; y--;) {
+          if (str[y].trim().length && str[y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = y;
+            break;
+          }
+        }
+      }
+      if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
+        cb: function cb(_char) {
+          return !"/>".includes(_char);
+        },
+        trimBeforeMatching: true,
+        trimCharsBeforeMatching: ["="]
+      }) &&
+      charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
         return false;
       }
     }

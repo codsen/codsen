@@ -119,7 +119,8 @@
   },
   "dependencies": {
     "is-char-suitable-for-html-attr-name": "^1.0.0",
-    "string-left-right": "^2.3.18"
+    "string-left-right": "^2.3.18",
+    "string-match-left-right": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
