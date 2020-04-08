@@ -1,3 +1,4 @@
+import { allHtmlAttribs } from "html-all-known-attributes";
 import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
 // import { right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
@@ -13,7 +14,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     idxOfAttrOpening >= isThisClosingIdx
   ) {
     console.log(
-      `016 ${`\u001b[${31}m${`WRONG INPUTS, RETURN FALSE`}\u001b[${39}m`}`
+      `017 ${`\u001b[${31}m${`WRONG INPUTS, RETURN FALSE`}\u001b[${39}m`}`
     );
     return false;
   }
@@ -26,10 +27,18 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     oppositeToOpeningQuote = openingQuote === `"` ? `'` : `"`;
   }
   console.log(
-    `029 ${`\u001b[${33}m${`openingQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${openingQuote}\u001b[${39}m`}   ${`\u001b[${33}m${`oppositeToOpeningQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${oppositeToOpeningQuote}\u001b[${39}m`}`
+    `030 ${`\u001b[${33}m${`openingQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${openingQuote}\u001b[${39}m`}   ${`\u001b[${33}m${`oppositeToOpeningQuote`}\u001b[${39}m`}: ${`\u001b[${35}m${oppositeToOpeningQuote}\u001b[${39}m`}`
   );
 
-  let attrStartsAt;
+  let chunkStartsAt;
+  const quotesCount = new Map().set(`'`, 0).set(`"`, 0);
+
+  // when suspected attribute name chunks end, we wipe them, but here
+  // we store the last extracted chunk - then later, for example, when we
+  // traverse further and meet opening quote (even with equal missing),
+  // we can evaluate that chunk, was it a known attribute name (idea being,
+  // known attribute name followed by quote is probably legit attribute starting)
+  let lastCapturedChunk;
 
   // let's traverse from opening to the end of the string, then in happy
   // path scenarios, let's exit way earlier, upon closing quote
@@ -51,72 +60,97 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         : ""
     );
 
+    // catch quotes
+    if (`'"`.includes(str[i])) {
+      quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
+    }
+
+    // before and after the suspected index, all the way while traversing the
+    // string from known, starting quotes (or in their absence, starting of
+    // the attribute's value, the second input argument "idxOfAttrOpening")
+    // all the way until the end, we catch the first character past the
+    // questioned attribute closing.
+
+    // imagine
+    // <img alt="so-called "artists"!' class='yo'/>
+    //          ^                  ^
+    //        opening          suspected closing
+
+    if (str[i].trim().length && !chunkStartsAt) {
+      console.log(`080 inside the attr name START catching clauses`);
+      // <img alt="so-called "artists"!' class='yo'/>
+      //                              ^
+      //                         we land here, on excl. mark
+      if (charSuitableForHTMLAttrName(str[i])) {
+        console.log(
+          `086 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
+        );
+        chunkStartsAt = i;
+        console.log(
+          `090 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            chunkStartsAt,
+            null,
+            4
+          )}`
+        );
+      }
+    } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+      console.log(`098 inside the attr name END catching clauses`);
+
+      // ending of an attr name chunk
+      console.log(
+        `102 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
+          chunkStartsAt,
+          i
+        )}"`
+      );
+      lastCapturedChunk = str.slice(chunkStartsAt, i);
+
+      console.log(
+        `110 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
+      );
+      chunkStartsAt = null;
+    }
+
+    // catching new attributes that follow after suspected quote.
+    // Imagine
+    // <a class "c" id 'e' href "www">
+    //                 ^            ^
+    //        known start at 16     suspected ending at 29
+    if (
+      // if we're currently on some quote:
+      `'"`.includes(str[i]) &&
+      // and if either quote count is an even number (the "!" checking is it zero)
+      (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) &&
+      // and sum of quotes is odd, for example,
+      // <a class "c" id 'e' href "www">
+      //                          ^
+      //                   reusing example above, let's say we're here
+      //
+      // in this situation, both single quotes around "e" add up to 2, then
+      // current opening quote of "www" adds up to 3.
+      //
+      // In human language, this means, we check, was there a complete
+      // set of quotes recorded by now, plus is current chunk a known
+      // attribute name - this allows us to catch an attribute with equal missing
+      (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 &&
+      // last chunk is not falsey (thus a string)
+      lastCapturedChunk &&
+      // and finally, perf resource-taxing evaluation, is it recognised:
+      allHtmlAttribs.has(lastCapturedChunk)
+    ) {
+      console.log(`142 RETURN ${i > isThisClosingIdx}`);
+      return i > isThisClosingIdx;
+    }
+
     // when index "isThisClosingIdx" has been passed...
     if (i > isThisClosingIdx) {
-      console.log(`056 i > isThisClosingIdx`);
-
-      // catch the first character past the questioned attribute
-      // closing.
-      // imagine
-      // <img alt="so-called "artists"!' class='yo'/>
-      //          ^                  ^
-      //        opening          suspected closing
-
-      if (str[i].trim().length && !attrStartsAt) {
-        // <img alt="so-called "artists"!' class='yo'/>
-        //                              ^
-        //                         we land here, on excl. mark
-        if (charSuitableForHTMLAttrName(str[i])) {
-          console.log(
-            `071 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
-          );
-          attrStartsAt = i;
-          console.log(
-            `075 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-              attrStartsAt,
-              null,
-              4
-            )}`
-          );
-        }
-        // if the tag closing was met, that's fine, imagine:
-        // <div class='c">.</div>
-        //              ^
-        //        we went past this suspected closing quote
-        //        and reached the tag ending...
-        else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-          console.log(
-            `089 closing bracket caught first - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
-          );
-          return true;
-        } else if (str[i] !== "=") {
-          // in example above, that exclamation mark is not
-          // suitable to be within attribute's name
-          console.log(
-            `096 character is not suitable for attr name - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
-          );
-          return false;
-        }
-      } else if (attrStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        // ending of an attr name chunk
-        console.log(`102 ending of an attr. chunk`);
-        console.log(
-          `104 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
-            attrStartsAt,
-            i
-          )}"`
-        );
-
-        console.log(
-          `111 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrStartsAt`}\u001b[${39}m`}`
-        );
-        attrStartsAt = null;
-      }
+      console.log(`148 i > isThisClosingIdx`);
 
       // if suspected closing quote's index is reached
       if (openingQuote && str[idxOfAttrOpening] === str[i]) {
         console.log(
-          `119 happy path, opening quote matched - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `153 happy path, opening quote matched - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
@@ -140,9 +174,19 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         str[i] === oppositeToOpeningQuote
       ) {
         console.log(
-          `143 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `177 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
+      } // if the tag closing was met, that's fine, imagine:
+      // <div class='c">.</div>
+      //              ^
+      //        we went past this suspected closing quote
+      //        and reached the tag ending...
+      else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+        console.log(
+          `187 closing bracket caught first - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
+        );
+        return true;
       }
 
       // if the true attribute ending was met passing
@@ -150,7 +194,6 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // suspected one was a false guess. Correct ending
       // is at this index "i"
 
-      console.log(`153 @`);
       if (
         str[i] === "=" &&
         matchRight(str, i, [`'`, `"`], {
@@ -159,12 +202,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         })
       ) {
         console.log(
-          `162 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
+          `205 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
         );
         return true;
       }
     } else {
-      console.log(`167 i <= isThisClosingIdx`);
+      console.log(`210 i <= isThisClosingIdx`);
       // this clause is meant to catch the suspected quotes
       // which don't belong to the tag, it's where quotes
       // in question are way beyond the actual attribute's ending.
@@ -189,16 +232,16 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // for example, this will also catch:
       // <img src="xyz" alt="=   "/>
       //
-      console.log(`192 *`);
+      console.log(`235 *`);
       let firstNonWhitespaceCharOnTheLeft;
       if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
         // happy path
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
-        console.log(`198 traverse backwards`);
+        console.log(`241 traverse backwards`);
         for (let y = i; y--; ) {
           console.log(
-            `201 ${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
+            `244 ${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
               str[y],
               null,
               4
@@ -207,7 +250,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           if (str[y].trim().length && str[y] !== "=") {
             firstNonWhitespaceCharOnTheLeft = y;
             console.log(
-              `210 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+              `253 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 firstNonWhitespaceCharOnTheLeft,
                 null,
                 4
@@ -218,7 +261,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
       }
       console.log(
-        `221 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+        `264 SET ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
           firstNonWhitespaceCharOnTheLeft,
           null,
           4
@@ -241,7 +284,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
       ) {
         console.log(
-          `244 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `287 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
@@ -250,13 +293,21 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     // logging
     // -----------------------------------------------------------------------------
     console.log(
-      `${`\u001b[${90}m${`██ attrStartsAt = ${attrStartsAt}`}\u001b[${39}m`}`
+      `${`\u001b[${90}m${`██ chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`██ lastCapturedChunk: ${lastCapturedChunk}`}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`██ quotesCount: ' - ${quotesCount.get(
+        `'`
+      )}; " - ${quotesCount.get(`"`)}`}\u001b[${39}m`}`
     );
   }
 
   // if this point was reached and loop didn't exit...
   // default is false
-  console.log(`259 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
+  console.log(`310 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
   return false;
 }
 

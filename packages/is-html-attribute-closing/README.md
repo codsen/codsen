@@ -55,15 +55,15 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                    | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-attribute-closing.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-attribute-closing.esm.js` | 3 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-attribute-closing.cjs.js` | 6 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-attribute-closing.esm.js` | 6 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-html-attribute-closing.umd.js` | 6 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-Detect, is an character at given index in a given string a closing of an attribute?
+Detect, is a character at a given index in a given string being a closing of an attribute?
 
 In happy path scenarios, the closing is closing quote of an attribute:
 
@@ -81,16 +81,41 @@ const str = `<a href="zzz" target="_blank" style="color: black;">`;
 
 const res = is(
   str, // reference string
-  21, // known index of a starting quote (or in absence of it, start of an attribute)
+  21, // known opening (or in absence of a quote, a start of a value)
   28 // we question, is this a closing on the attribute?
 );
 console.log(res);
 // => true - it is indeed closing of an attribute
 ```
 
-But this program detects all the crazy cases of realistic and unrealistic HTML attribute endings.
+But this program detects all the crazy cases of realistic and unrealistic HTML attribute endings:
 
-Think, the algorithm must be complex-enough to separate it into a standalone program!
+```js
+const isAttrClosing = require("is-html-attribute-closing");
+const res1 = is(
+  `<a href="z' click here</a>`,
+  //         ^
+  //         |
+  //         L________________________
+  //                                 |
+  8, // known opening               |
+  10 // is this an attribute closing at index 10?
+);
+console.log(res1);
+// => true - it is indeed closing of an attribute
+
+const res2 = is(
+  `<a b = = = "c" d = = = 'e'>`,
+  //            ^
+  //            |
+  //            L___________________________
+  //                                       |
+  11, // known opening                     |
+  13 // is this an attribute closing at index 13?
+);
+console.log(res2);
+// => true - it is indeed closing of an attribute
+```
 
 **[⬆ back to top](#)**
 
@@ -106,7 +131,9 @@ Think, the algorithm must be complex-enough to separate it into a standalone pro
 
 This program does not throw. It just returns `false`.
 
-If anything is wrong with the input arguments, program returns false. It never throws. That's because it's to be used inside other programs. Idea is, proper algorithms that will use this program will "care" only about truthy case: does the given quote pass as a closing-one. Crappy input arguments yields `false`, happy days, consuming algorithms continue whatever dodgy journeys they have been making. We don't throw.
+If anything is wrong with the input arguments, the program returns **false**. It never throws. That's because it's to be used inside other programs. Idea is, proper algorithms that will use this program will "care" only about the truthy case: does the given quote pass as a closing-one. Crappy input arguments yields `false`, happy days, consuming algorithms continue whatever dodgy journeys they have been making.
+
+We don't throw errors in this program.
 
 **[⬆ back to top](#)**
 
@@ -118,9 +145,9 @@ Boolean, `true` or `false`. Erroneous input arguments will yield `false` as well
 
 This program will drive `codsen-tokenizer` ([npm](https://www.npmjs.com/package/codsen-tokenizer)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/)).
 
-There's already similar program from yours truly, `is-html-tag-opening` ([npm](https://www.npmjs.com/package/is-html-tag-opening)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/)) which tells, is given opening bracket a start of a tag.
+There's already a similar program from yours truly, `is-html-tag-opening` ([npm](https://www.npmjs.com/package/is-html-tag-opening)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/)) which tells, is given opening bracket a start of a tag.
 
-Same situation - program with its unit tests became too big to even be placed in `src/utils/` folder, we separated it into a standalone package...
+The same situation - program with its unit tests became too big to even be placed in `src/utils/` folder, so we separated it into a standalone package...
 
 **[⬆ back to top](#)**
 
@@ -145,7 +172,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
-[cov-img]: https://img.shields.io/badge/coverage-97.44%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-67.16%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/is-html-attribute-closing

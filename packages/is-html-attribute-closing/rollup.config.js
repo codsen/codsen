@@ -63,6 +63,7 @@ export default (commandLineArgs) => {
         "is-char-suitable-for-html-attr-name",
         "string-left-right",
         "string-match-left-right",
+        "html-all-known-attributes",
       ],
       plugins: [
         strip({
@@ -82,6 +83,7 @@ export default (commandLineArgs) => {
         "is-char-suitable-for-html-attr-name",
         "string-left-right",
         "string-match-left-right",
+        "html-all-known-attributes",
       ],
       plugins: [
         strip({

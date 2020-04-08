@@ -11,6 +11,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var htmlAllKnownAttributes = require('html-all-known-attributes');
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
 var stringMatchLeftRight = require('string-match-left-right');
 
@@ -23,21 +24,30 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (openingQuote) {
     oppositeToOpeningQuote = openingQuote === "\"" ? "'" : "\"";
   }
-  var attrStartsAt;
+  var chunkStartsAt;
+  var quotesCount = new Map().set("'", 0).set("\"", 0);
+  var lastCapturedChunk;
   for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
-    if (i > isThisClosingIdx) {
-      if (str[i].trim().length && !attrStartsAt) {
-        if (charSuitableForHTMLAttrName(str[i])) {
-          attrStartsAt = i;
-        }
-        else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-            return true;
-          } else if (str[i] !== "=") {
-            return false;
-          }
-      } else if (attrStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        attrStartsAt = null;
+    if ("'\"".includes(str[i])) {
+      quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
+    }
+    if (str[i].trim().length && !chunkStartsAt) {
+      if (charSuitableForHTMLAttrName(str[i])) {
+        chunkStartsAt = i;
       }
+    } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+      lastCapturedChunk = str.slice(chunkStartsAt, i);
+      chunkStartsAt = null;
+    }
+    if (
+    "'\"".includes(str[i]) && (
+    !(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) &&
+    (quotesCount.get("\"") + quotesCount.get("'")) % 2 &&
+    lastCapturedChunk &&
+    htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
+      return i > isThisClosingIdx;
+    }
+    if (i > isThisClosingIdx) {
       if (openingQuote && str[idxOfAttrOpening] === str[i]) {
         return false;
       }
@@ -47,6 +57,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       str[i] === oppositeToOpeningQuote) {
         return false;
       }
+      else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+          return true;
+        }
       if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]
