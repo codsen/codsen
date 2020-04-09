@@ -220,12 +220,6 @@ t.test(
 //
 //
 
-t.only(`deleteme`, (t) => {
-  const str = `<img class="so-called "alt"!' border='10'/>`;
-  t.true(is(str, 11, 22), "02.02.01");
-  t.end();
-});
-
 t.test(
   `02.01 - ${`\u001b[${35}m${`mismatching quotes`}\u001b[${39}m`} - a trap`,
   (t) => {
