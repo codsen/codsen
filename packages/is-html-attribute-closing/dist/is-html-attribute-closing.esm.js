@@ -33,6 +33,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   let chunkStartsAt;
   const quotesCount = new Map().set(`'`, 0).set(`"`, 0);
   let lastCapturedChunk;
+  let lastChunkWasCapturedAfterSuspectedClosing = false;
   for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
     if (`'"`.includes(str[i])) {
       quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
@@ -43,6 +44,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
+      lastChunkWasCapturedAfterSuspectedClosing =
+        chunkStartsAt >= isThisClosingIdx;
       chunkStartsAt = null;
     }
     if (
@@ -100,6 +103,19 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       ) {
         return false;
       }
+    }
+    if (
+      `'"`.includes(str[i]) &&
+      i > isThisClosingIdx
+    ) {
+      if (
+        !lastChunkWasCapturedAfterSuspectedClosing ||
+        !lastCapturedChunk ||
+        !allHtmlAttribs.has(lastCapturedChunk)
+      ) {
+        return false;
+      }
+      return true;
     }
   }
   return false;

@@ -60,10 +60,10 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "html-all-known-attributes",
         "is-char-suitable-for-html-attr-name",
         "string-left-right",
         "string-match-left-right",
-        "html-all-known-attributes",
       ],
       plugins: [
         strip({
@@ -80,10 +80,10 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "html-all-known-attributes",
         "is-char-suitable-for-html-attr-name",
         "string-left-right",
         "string-match-left-right",
-        "html-all-known-attributes",
       ],
       plugins: [
         strip({

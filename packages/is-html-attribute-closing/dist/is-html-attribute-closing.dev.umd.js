@@ -381,17 +381,74 @@
     // we can evaluate that chunk, was it a known attribute name (idea being,
     // known attribute name followed by quote is probably legit attribute starting)
 
-    var lastCapturedChunk; // let's traverse from opening to the end of the string, then in happy
+    var lastCapturedChunk; // this boolean flag signifies, was the last chunk captured after passing
+    // "isThisClosingIdx":
+    // idea being, if you pass suspected quotes, then encounter new-ones and
+    // in-between does not resemble an attribute name, it's falsey result:
+    // <img alt="so-called "artists"!' class='yo'/>
+    //          ^                  ^
+    //        start             suspected
+    //
+    // that exclamation mark above doesn't resemble an attribute name,
+    // so single quote that follows it is not a starting of its value
+
+    var lastChunkWasCapturedAfterSuspectedClosing = false; // let's traverse from opening to the end of the string, then in happy
     // path scenarios, let's exit way earlier, upon closing quote
 
     for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //                                THE TOP
+      //                                ███████
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
       //
       // Logging:
       // -------------------------------------------------------------------------
       // catch quotes
       if ("'\"".includes(str[i])) {
         quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
-      } // before and after the suspected index, all the way while traversing the
+      } //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //                               MIDDLE
+      //                               ██████
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      // before and after the suspected index, all the way while traversing the
       // string from known, starting quotes (or in their absence, starting of
       // the attribute's value, the second input argument "idxOfAttrOpening")
       // all the way until the end, we catch the first character past the
@@ -412,6 +469,7 @@
       } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
         // ending of an attr name chunk
         lastCapturedChunk = str.slice(chunkStartsAt, i);
+        lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
         chunkStartsAt = null;
       } // catching new attributes that follow after suspected quote.
       // Imagine
@@ -532,6 +590,46 @@
         charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
           return false;
         }
+      } //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //                               BOTTOM
+      //                               ██████
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      // catch quotes again - these clauses are specifically at the bottom
+      // because they're depdendent on "lastCapturedChunk" which is calculated
+      // after quote catching at the top
+
+
+      if ("'\"".includes(str[i]) && // if these quotes are after "isThisClosingIdx", a suspected closing
+      i > isThisClosingIdx) {
+        // if these quotes are after "isThisClosingIdx", if there
+        // was no chunk recorded after it until now,
+        // ("lastChunkWasCapturedAfterSuspectedClosing" flag)
+        // or there was but it's not recognised, that's falsey result
+        if ( // if there was no chunk recorded after it until now
+        !lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || // or there was but lastCapturedChunk is not recognised
+        !allHtmlAttribs.has(lastCapturedChunk)) {
+          return false;
+        } // ELSE - it does match, so it seems legit
+
+
+        return true;
       } // logging
       // -----------------------------------------------------------------------------
 

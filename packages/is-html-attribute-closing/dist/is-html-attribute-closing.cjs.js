@@ -27,6 +27,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   var chunkStartsAt;
   var quotesCount = new Map().set("'", 0).set("\"", 0);
   var lastCapturedChunk;
+  var lastChunkWasCapturedAfterSuspectedClosing = false;
   for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
     if ("'\"".includes(str[i])) {
       quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
@@ -37,6 +38,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
+      lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
       chunkStartsAt = null;
     }
     if (
@@ -88,6 +90,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
         return false;
       }
+    }
+    if ("'\"".includes(str[i]) &&
+    i > isThisClosingIdx) {
+      if (
+      !lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk ||
+      !htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
+        return false;
+      }
+      return true;
     }
   }
   return false;
