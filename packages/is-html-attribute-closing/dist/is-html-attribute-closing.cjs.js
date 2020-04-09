@@ -13,6 +13,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
+var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
@@ -45,6 +46,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     "'\"".includes(str[i]) && (
     !(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) &&
     (quotesCount.get("\"") + quotesCount.get("'")) % 2 &&
+    lastCapturedChunk &&
+    htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
+      return i > isThisClosingIdx;
+    } else if (
+    (str[i] === "=" ||
+    !str[i].length &&
+    str[stringLeftRight.right(str, i)] === "=") &&
     lastCapturedChunk &&
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
       return i > isThisClosingIdx;

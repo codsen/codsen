@@ -9,6 +9,7 @@
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
+import { right } from 'string-left-right';
 import { matchRight } from 'string-match-left-right';
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
@@ -52,6 +53,14 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       `'"`.includes(str[i]) &&
       (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) &&
       (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 &&
+      lastCapturedChunk &&
+      allHtmlAttribs.has(lastCapturedChunk)
+    ) {
+      return i > isThisClosingIdx;
+    } else if (
+      (str[i] === "=" ||
+        (!str[i].length &&
+          str[right(str, i)] === "=")) &&
       lastCapturedChunk &&
       allHtmlAttribs.has(lastCapturedChunk)
     ) {
