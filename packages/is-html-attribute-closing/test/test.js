@@ -735,6 +735,16 @@ t.test(
     t.false(is(str, 9, 22), "02.25.02");
     t.true(is(str, 9, 25), "02.25.03"); // <--
 
+    // more tags follow
+    const str2 = `<img alt='Deal is your's!"/><span class="h'>zzz</span>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 9), "02.25.04");
+    t.false(is(str2, 9, 22), "02.25.05");
+    t.true(is(str2, 9, 25), "02.25.06"); // <--
+    t.false(is(str2, 9, 40), "02.25.07");
+    t.false(is(str2, 9, 42), "02.25.08");
+
     // fin.
     t.end();
   }
@@ -1585,7 +1595,7 @@ t.test(
 // 08. missing equal, tight
 // -----------------------------------------------------------------------------
 
-t.only(`deleteme`, (t) => {
+t.todo(`deleteme`, (t) => {
   const str = `<img alt='Deal is your's!"/>`;
   t.false(is(str, 9, 22), "02.25.02");
   t.end();
@@ -1948,14 +1958,25 @@ t.test(
 t.test(
   `08.15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
-    const str = `<img alt="somethin' fishy going on' class">z<a class="y">`;
+    // no closing slash on img
+    const str1 = `<img alt="somethin' fishy going on' class">z<a class="y">`;
 
     // alt opening at 9
-    t.false(is(str, 9, 18), "08.15.01"); // <--
-    t.true(is(str, 9, 34), "08.15.02");
-    t.false(is(str, 9, 41), "08.15.03");
-    t.false(is(str, 9, 53), "08.15.04");
-    t.false(is(str, 9, 55), "08.15.05");
+    t.false(is(str1, 9, 18), "08.15.01");
+    t.true(is(str1, 9, 34), "08.15.02"); // <--
+    t.false(is(str1, 9, 41), "08.15.03");
+    t.false(is(str1, 9, 53), "08.15.04");
+    t.false(is(str1, 9, 55), "08.15.05");
+
+    // closing slash on img present
+    const str2 = `<img alt="somethin' fishy going on' class"/>z<a class="y">`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 18), "08.15.06");
+    t.true(is(str2, 9, 34), "08.15.07"); // <--
+    t.false(is(str2, 9, 41), "08.15.08");
+    t.false(is(str2, 9, 54), "08.15.09");
+    t.false(is(str2, 9, 56), "08.15.10");
 
     // fin.
     t.end();
@@ -1966,7 +1987,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `09.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
+  `09.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - control`,
   (t) => {
     const str = `<a href="www" class=e'>`;
 
@@ -1983,18 +2004,535 @@ t.test(
   }
 );
 
+//              finally, the bizness
+
 t.test(
   `09.02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
   (t) => {
-    const str = `<a href=www" class=e'>`;
+    // D-D
+    const str1 = `<a href=www" class=e">`;
 
     // href opening at 8
-    t.true(is(str, 8, 11), "09.02.01"); // <--
-    t.false(is(str, 8, 20), "09.02.02");
+    t.true(is(str1, 8, 11), "09.02.01"); // <--
+    t.false(is(str1, 8, 20), "09.02.02");
 
     // class opening at 19
-    t.false(is(str, 19, 11), "09.02.03");
-    t.true(is(str, 19, 20), "09.02.04"); // <--
+    t.false(is(str1, 19, 11), "09.02.03");
+    t.true(is(str1, 19, 20), "09.02.04"); // <--
+
+    // D-S
+    const str2 = `<a href=www" class=e'>`;
+
+    // href opening at 8
+    t.true(is(str2, 8, 11), "09.02.05"); // <--
+    t.false(is(str2, 8, 20), "09.02.06");
+
+    // class opening at 19
+    t.false(is(str2, 19, 11), "09.02.07");
+    t.true(is(str2, 19, 20), "09.02.08"); // <--
+
+    // S-D
+    const str3 = `<a href=www' class=e">`;
+
+    // href opening at 8
+    t.true(is(str3, 8, 11), "09.02.09"); // <--
+    t.false(is(str3, 8, 20), "09.02.10");
+
+    // class opening at 19
+    t.false(is(str3, 19, 11), "09.02.11");
+    t.true(is(str3, 19, 20), "09.02.12"); // <--
+
+    // S-S
+    const str4 = `<a href=www' class=e'>`;
+
+    // href opening at 8
+    t.true(is(str4, 8, 11), "09.02.13"); // <--
+    t.false(is(str4, 8, 20), "09.02.14");
+
+    // class opening at 19
+    t.false(is(str4, 19, 11), "09.02.15");
+    t.true(is(str4, 19, 20), "09.02.16"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// "X" meaning absent
+t.test(
+  `09.03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-D + X-D`,
+  (t) => {
+    // X-D + X-D + D-D
+    const str1 = `<a href=www" class=e" id="f">`;
+
+    // href opening at 8
+    t.true(is(str1, 8, 11), "09.03.01"); // <--
+    t.false(is(str1, 8, 20), "09.03.02");
+    t.false(is(str1, 8, 25), "09.03.03");
+    t.false(is(str1, 8, 27), "09.03.04");
+
+    // class opening at 19
+    t.false(is(str1, 19, 11), "09.03.05");
+    t.true(is(str1, 19, 20), "09.03.06"); // <--
+    t.false(is(str1, 19, 25), "09.03.07");
+    t.false(is(str1, 19, 27), "09.03.08");
+
+    // X-D + X-D + D-S
+    const str2 = `<a href=www" class=e" id="f'>`;
+
+    // href opening at 8
+    t.true(is(str2, 8, 11), "09.03.09"); // <--
+    t.false(is(str2, 8, 20), "09.03.10");
+    t.false(is(str2, 8, 25), "09.03.11");
+    t.false(is(str2, 8, 27), "09.03.12");
+
+    // class opening at 19
+    t.false(is(str2, 19, 11), "09.03.13");
+    t.true(is(str2, 19, 20), "09.03.14"); // <--
+    t.false(is(str2, 19, 25), "09.03.15");
+    t.false(is(str2, 19, 27), "09.03.16");
+
+    // X-D + X-D + S-D
+    const str3 = `<a href=www" class=e" id='f">`;
+
+    // href opening at 8
+    t.true(is(str3, 8, 11), "09.03.17"); // <--
+    t.false(is(str3, 8, 20), "09.03.18");
+    t.false(is(str3, 8, 25), "09.03.19");
+    t.false(is(str3, 8, 27), "09.03.20");
+
+    // class opening at 19
+    t.false(is(str3, 19, 11), "09.03.21");
+    t.true(is(str3, 19, 20), "09.03.22"); // <--
+    t.false(is(str3, 19, 25), "09.03.23");
+    t.false(is(str3, 19, 27), "09.03.24");
+
+    // X-D + X-D + S-S
+    const str4 = `<a href=www" class=e" id='f'>`;
+
+    // href opening at 8
+    t.true(is(str4, 8, 11), "09.03.25"); // <--
+    t.false(is(str4, 8, 20), "09.03.26");
+    t.false(is(str4, 8, 25), "09.03.27");
+    t.false(is(str4, 8, 27), "09.03.28");
+
+    // class opening at 19
+    t.false(is(str4, 19, 11), "09.03.29");
+    t.true(is(str4, 19, 20), "09.03.30"); // <--
+    t.false(is(str4, 19, 25), "09.03.31");
+    t.false(is(str4, 19, 27), "09.03.32");
+
+    // X-D + X-D + S-X
+    const str5 = `<a href=www" class=e" id='f>`;
+
+    // href opening at 8
+    t.true(is(str5, 8, 11), "09.03.33"); // <--
+    t.false(is(str5, 8, 20), "09.03.34");
+    t.false(is(str5, 8, 25), "09.03.35");
+
+    // class opening at 19
+    t.false(is(str5, 19, 11), "09.03.36");
+    t.true(is(str5, 19, 20), "09.03.37"); // <--
+    t.false(is(str5, 19, 25), "09.03.38");
+
+    // X-D + X-D + D-X
+    const str6 = `<a href=www" class=e" id="f>`;
+
+    // href opening at 8
+    t.true(is(str6, 8, 11), "09.03.39"); // <--
+    t.false(is(str6, 8, 20), "09.03.40");
+    t.false(is(str6, 8, 25), "09.03.41");
+
+    // class opening at 19
+    t.false(is(str6, 19, 11), "09.03.42");
+    t.true(is(str6, 19, 20), "09.03.43"); // <--
+    t.false(is(str6, 19, 25), "09.03.44");
+
+    // X-D + X-D + X-S
+    const str7 = `<a href=www" class=e" id=f'>`;
+
+    // href opening at 8
+    t.true(is(str7, 8, 11), "09.03.45"); // <--
+    t.false(is(str7, 8, 20), "09.03.46");
+    t.false(is(str7, 8, 26), "09.03.47");
+
+    // class opening at 19
+    t.false(is(str7, 19, 11), "09.03.48");
+    t.true(is(str7, 19, 20), "09.03.49"); // <--
+    t.false(is(str7, 19, 26), "09.03.50");
+
+    // X-D + X-D + X-D
+    const str8 = `<a href=www" class=e" id=f">`;
+
+    // href opening at 8
+    t.true(is(str8, 8, 11), "09.03.51"); // <--
+    t.false(is(str8, 8, 20), "09.03.52");
+    t.false(is(str8, 8, 26), "09.03.53");
+
+    // class opening at 19
+    t.false(is(str8, 19, 11), "09.03.54");
+    t.true(is(str8, 19, 20), "09.03.55"); // <--
+    t.false(is(str8, 19, 26), "09.03.56");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `09.04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-D + X-S`,
+  (t) => {
+    // X-D + X-S + D-D
+    const str1 = `<a href=www" class=e' id="f">`;
+
+    // href opening at 8
+    t.true(is(str1, 8, 11), "09.04.01"); // <--
+    t.false(is(str1, 8, 20), "09.04.02");
+    t.false(is(str1, 8, 25), "09.04.03");
+    t.false(is(str1, 8, 27), "09.04.04");
+
+    // class opening at 19
+    t.false(is(str1, 19, 11), "09.04.05");
+    t.true(is(str1, 19, 20), "09.04.06"); // <--
+    t.false(is(str1, 19, 25), "09.04.07");
+    t.false(is(str1, 19, 27), "09.04.08");
+
+    // X-D + X-S + D-S
+    const str2 = `<a href=www" class=e' id="f'>`;
+
+    // href opening at 8
+    t.true(is(str2, 8, 11), "09.04.09"); // <--
+    t.false(is(str2, 8, 20), "09.04.10");
+    t.false(is(str2, 8, 25), "09.04.11");
+    t.false(is(str2, 8, 27), "09.04.12");
+
+    // class opening at 19
+    t.false(is(str2, 19, 11), "09.04.13");
+    t.true(is(str2, 19, 20), "09.04.14"); // <--
+    t.false(is(str2, 19, 25), "09.04.15");
+    t.false(is(str2, 19, 27), "09.04.16");
+
+    // X-D + X-S + S-D
+    const str3 = `<a href=www" class=e' id='f">`;
+
+    // href opening at 8
+    t.true(is(str3, 8, 11), "09.04.17"); // <--
+    t.false(is(str3, 8, 20), "09.04.18");
+    t.false(is(str3, 8, 25), "09.04.19");
+    t.false(is(str3, 8, 27), "09.04.20");
+
+    // class opening at 19
+    t.false(is(str3, 19, 11), "09.04.21");
+    t.true(is(str3, 19, 20), "09.04.22"); // <--
+    t.false(is(str3, 19, 25), "09.04.23");
+    t.false(is(str3, 19, 27), "09.04.24");
+
+    // X-D + X-S + S-S
+    const str4 = `<a href=www" class=e' id='f'>`;
+
+    // href opening at 8
+    t.true(is(str4, 8, 11), "09.04.25"); // <--
+    t.false(is(str4, 8, 20), "09.04.26");
+    t.false(is(str4, 8, 25), "09.04.27");
+    t.false(is(str4, 8, 27), "09.04.28");
+
+    // class opening at 19
+    t.false(is(str4, 19, 11), "09.04.29");
+    t.true(is(str4, 19, 20), "09.04.30"); // <--
+    t.false(is(str4, 19, 25), "09.04.31");
+    t.false(is(str4, 19, 27), "09.04.32");
+
+    // X-D + X-S + S-X
+    const str5 = `<a href=www" class=e' id='f>`;
+
+    // href opening at 8
+    t.true(is(str5, 8, 11), "09.04.33"); // <--
+    t.false(is(str5, 8, 20), "09.04.34");
+    t.false(is(str5, 8, 25), "09.04.35");
+
+    // class opening at 19
+    t.false(is(str5, 19, 11), "09.04.36");
+    t.true(is(str5, 19, 20), "09.04.37"); // <--
+    t.false(is(str5, 19, 25), "09.04.38");
+
+    // X-D + X-S + D-X
+    const str6 = `<a href=www" class=e' id="f>`;
+
+    // href opening at 8
+    t.true(is(str6, 8, 11), "09.04.39"); // <--
+    t.false(is(str6, 8, 20), "09.04.40");
+    t.false(is(str6, 8, 25), "09.04.41");
+
+    // class opening at 19
+    t.false(is(str6, 19, 11), "09.04.42");
+    t.true(is(str6, 19, 20), "09.04.43"); // <--
+    t.false(is(str6, 19, 25), "09.04.44");
+
+    // X-D + X-S + X-S
+    const str7 = `<a href=www" class=e' id=f'>`;
+
+    // href opening at 8
+    t.true(is(str7, 8, 11), "09.04.45"); // <--
+    t.false(is(str7, 8, 20), "09.04.46");
+    t.false(is(str7, 8, 26), "09.04.47");
+
+    // class opening at 19
+    t.false(is(str7, 19, 11), "09.04.48");
+    t.true(is(str7, 19, 20), "09.04.49"); // <--
+    t.false(is(str7, 19, 26), "09.04.50");
+
+    // X-D + X-S + X-D
+    const str8 = `<a href=www" class=e' id=f">`;
+
+    // href opening at 8
+    t.true(is(str8, 8, 11), "09.04.51"); // <--
+    t.false(is(str8, 8, 20), "09.04.52");
+    t.false(is(str8, 8, 26), "09.04.53");
+
+    // class opening at 19
+    t.false(is(str8, 19, 11), "09.04.54");
+    t.true(is(str8, 19, 20), "09.04.55"); // <--
+    t.false(is(str8, 19, 26), "09.04.56");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `09.05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-S + X-D`,
+  (t) => {
+    // X-S + X-D + D-D
+    const str1 = `<a href=www' class=e" id="f">`;
+
+    // href opening at 8
+    t.true(is(str1, 8, 11), "09.05.01"); // <--
+    t.false(is(str1, 8, 20), "09.05.02");
+    t.false(is(str1, 8, 25), "09.05.03");
+    t.false(is(str1, 8, 27), "09.05.04");
+
+    // class opening at 19
+    t.false(is(str1, 19, 11), "09.05.05");
+    t.true(is(str1, 19, 20), "09.05.06"); // <--
+    t.false(is(str1, 19, 25), "09.05.07");
+    t.false(is(str1, 19, 27), "09.05.08");
+
+    // X-S + X-D + D-S
+    const str2 = `<a href=www' class=e" id="f'>`;
+
+    // href opening at 8
+    t.true(is(str2, 8, 11), "09.05.09"); // <--
+    t.false(is(str2, 8, 20), "09.05.10");
+    t.false(is(str2, 8, 25), "09.05.11");
+    t.false(is(str2, 8, 27), "09.05.12");
+
+    // class opening at 19
+    t.false(is(str2, 19, 11), "09.05.13");
+    t.true(is(str2, 19, 20), "09.05.14"); // <--
+    t.false(is(str2, 19, 25), "09.05.15");
+    t.false(is(str2, 19, 27), "09.05.16");
+
+    // X-S + X-D + S-D
+    const str3 = `<a href=www' class=e" id='f">`;
+
+    // href opening at 8
+    t.true(is(str3, 8, 11), "09.05.17"); // <--
+    t.false(is(str3, 8, 20), "09.05.18");
+    t.false(is(str3, 8, 25), "09.05.19");
+    t.false(is(str3, 8, 27), "09.05.20");
+
+    // class opening at 19
+    t.false(is(str3, 19, 11), "09.05.21");
+    t.true(is(str3, 19, 20), "09.05.22"); // <--
+    t.false(is(str3, 19, 25), "09.05.23");
+    t.false(is(str3, 19, 27), "09.05.24");
+
+    // X-S + X-D + S-S
+    const str4 = `<a href=www' class=e" id='f'>`;
+
+    // href opening at 8
+    t.true(is(str4, 8, 11), "09.05.25"); // <--
+    t.false(is(str4, 8, 20), "09.05.26");
+    t.false(is(str4, 8, 25), "09.05.27");
+    t.false(is(str4, 8, 27), "09.05.28");
+
+    // class opening at 19
+    t.false(is(str4, 19, 11), "09.05.29");
+    t.true(is(str4, 19, 20), "09.05.30"); // <--
+    t.false(is(str4, 19, 25), "09.05.31");
+    t.false(is(str4, 19, 27), "09.05.32");
+
+    // X-S + X-D + S-X
+    const str5 = `<a href=www' class=e" id='f>`;
+
+    // href opening at 8
+    t.true(is(str5, 8, 11), "09.05.33"); // <--
+    t.false(is(str5, 8, 20), "09.05.34");
+    t.false(is(str5, 8, 25), "09.05.35");
+
+    // class opening at 19
+    t.false(is(str5, 19, 11), "09.05.36");
+    t.true(is(str5, 19, 20), "09.05.37"); // <--
+    t.false(is(str5, 19, 25), "09.05.38");
+
+    // X-S + X-D + D-X
+    const str6 = `<a href=www' class=e" id="f>`;
+
+    // href opening at 8
+    t.true(is(str6, 8, 11), "09.05.39"); // <--
+    t.false(is(str6, 8, 20), "09.05.40");
+    t.false(is(str6, 8, 25), "09.05.41");
+
+    // class opening at 19
+    t.false(is(str6, 19, 11), "09.05.42");
+    t.true(is(str6, 19, 20), "09.05.43"); // <--
+    t.false(is(str6, 19, 25), "09.05.44");
+
+    // X-S + X-D + X-S
+    const str7 = `<a href=www' class=e" id=f'>`;
+
+    // href opening at 8
+    t.true(is(str7, 8, 11), "09.05.45"); // <--
+    t.false(is(str7, 8, 20), "09.05.46");
+    t.false(is(str7, 8, 26), "09.05.47");
+
+    // class opening at 19
+    t.false(is(str7, 19, 11), "09.05.48");
+    t.true(is(str7, 19, 20), "09.05.49"); // <--
+    t.false(is(str7, 19, 26), "09.05.50");
+
+    // X-S + X-D + X-D
+    const str8 = `<a href=www' class=e" id=f">`;
+
+    // href opening at 8
+    t.true(is(str8, 8, 11), "09.05.51"); // <--
+    t.false(is(str8, 8, 20), "09.05.52");
+    t.false(is(str8, 8, 26), "09.05.53");
+
+    // class opening at 19
+    t.false(is(str8, 19, 11), "09.05.54");
+    t.true(is(str8, 19, 20), "09.05.55"); // <--
+    t.false(is(str8, 19, 26), "09.05.56");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `09.06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-S + X-S`,
+  (t) => {
+    // X-S + X-S + D-D
+    const str1 = `<a href=www' class=e' id="f">`;
+
+    // href opening at 8
+    t.true(is(str1, 8, 11), "09.06.01"); // <--
+    t.false(is(str1, 8, 20), "09.06.02");
+    t.false(is(str1, 8, 25), "09.06.03");
+    t.false(is(str1, 8, 27), "09.06.04");
+
+    // class opening at 19
+    t.false(is(str1, 19, 11), "09.06.05");
+    t.true(is(str1, 19, 20), "09.06.06"); // <--
+    t.false(is(str1, 19, 25), "09.06.07");
+    t.false(is(str1, 19, 27), "09.06.08");
+
+    // X-S + X-S + D-S
+    const str2 = `<a href=www' class=e' id="f'>`;
+
+    // href opening at 8
+    t.true(is(str2, 8, 11), "09.06.09"); // <--
+    t.false(is(str2, 8, 20), "09.06.10");
+    t.false(is(str2, 8, 25), "09.06.11");
+    t.false(is(str2, 8, 27), "09.06.12");
+
+    // class opening at 19
+    t.false(is(str2, 19, 11), "09.06.13");
+    t.true(is(str2, 19, 20), "09.06.14"); // <--
+    t.false(is(str2, 19, 25), "09.06.15");
+    t.false(is(str2, 19, 27), "09.06.16");
+
+    // X-S + X-S + S-D
+    const str3 = `<a href=www' class=e' id='f">`;
+
+    // href opening at 8
+    t.true(is(str3, 8, 11), "09.06.17"); // <--
+    t.false(is(str3, 8, 20), "09.06.18");
+    t.false(is(str3, 8, 25), "09.06.19");
+    t.false(is(str3, 8, 27), "09.06.20");
+
+    // class opening at 19
+    t.false(is(str3, 19, 11), "09.06.21");
+    t.true(is(str3, 19, 20), "09.06.22"); // <--
+    t.false(is(str3, 19, 25), "09.06.23");
+    t.false(is(str3, 19, 27), "09.06.24");
+
+    // X-S + X-S + S-S
+    const str4 = `<a href=www' class=e' id='f'>`;
+
+    // href opening at 8
+    t.true(is(str4, 8, 11), "09.06.25"); // <--
+    t.false(is(str4, 8, 20), "09.06.26");
+    t.false(is(str4, 8, 25), "09.06.27");
+    t.false(is(str4, 8, 27), "09.06.28");
+
+    // class opening at 19
+    t.false(is(str4, 19, 11), "09.06.29");
+    t.true(is(str4, 19, 20), "09.06.30"); // <--
+    t.false(is(str4, 19, 25), "09.06.31");
+    t.false(is(str4, 19, 27), "09.06.32");
+
+    // X-S + X-S + S-X
+    const str5 = `<a href=www' class=e' id='f>`;
+
+    // href opening at 8
+    t.true(is(str5, 8, 11), "09.06.33"); // <--
+    t.false(is(str5, 8, 20), "09.06.34");
+    t.false(is(str5, 8, 25), "09.06.35");
+
+    // class opening at 19
+    t.false(is(str5, 19, 11), "09.06.36");
+    t.true(is(str5, 19, 20), "09.06.37"); // <--
+    t.false(is(str5, 19, 25), "09.06.38");
+
+    // X-S + X-S + D-X
+    const str6 = `<a href=www' class=e' id="f>`;
+
+    // href opening at 8
+    t.true(is(str6, 8, 11), "09.06.39"); // <--
+    t.false(is(str6, 8, 20), "09.06.40");
+    t.false(is(str6, 8, 25), "09.06.41");
+
+    // class opening at 19
+    t.false(is(str6, 19, 11), "09.06.42");
+    t.true(is(str6, 19, 20), "09.06.43"); // <--
+    t.false(is(str6, 19, 25), "09.06.44");
+
+    // X-S + X-S + X-S
+    const str7 = `<a href=www' class=e' id=f'>`;
+
+    // href opening at 8
+    t.true(is(str7, 8, 11), "09.06.45"); // <--
+    t.false(is(str7, 8, 20), "09.06.46");
+    t.false(is(str7, 8, 26), "09.06.47");
+
+    // class opening at 19
+    t.false(is(str7, 19, 11), "09.06.48");
+    t.true(is(str7, 19, 20), "09.06.49"); // <--
+    t.false(is(str7, 19, 26), "09.06.50");
+
+    // X-S + X-S + X-D
+    const str8 = `<a href=www' class=e' id=f">`;
+
+    // href opening at 8
+    t.true(is(str8, 8, 11), "09.06.51"); // <--
+    t.false(is(str8, 8, 20), "09.06.52");
+    t.false(is(str8, 8, 26), "09.06.53");
+
+    // class opening at 19
+    t.false(is(str8, 19, 11), "09.06.54");
+    t.true(is(str8, 19, 20), "09.06.55"); // <--
+    t.false(is(str8, 19, 26), "09.06.56");
 
     // fin.
     t.end();
