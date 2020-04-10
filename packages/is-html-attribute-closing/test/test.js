@@ -410,6 +410,14 @@ t.test(
     t.false(is(str, 9, 28), "02.09.03");
     t.true(is(str, 9, 30), "02.09.04"); // <--
 
+    // two pairs of doubles inside a pair of singles - all healthy:
+    const str2 = `<img alt='so-called "artists" and "critics"!'/>`;
+    t.false(is(str2, 9, 20), "02.09.05");
+    t.false(is(str2, 9, 28), "02.09.06");
+    t.false(is(str2, 9, 34), "02.09.07");
+    t.false(is(str2, 9, 42), "02.09.08");
+    t.true(is(str2, 9, 44), "02.09.09"); // <--
+
     // fin.
     t.end();
   }
@@ -1281,8 +1289,8 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.only(`deleteme`, (t) => {
-  const str = `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`;
-  t.false(is(str, 26, 31), "01.05.08");
+  const str = `<img alt='so-called "artists"!" class='yo'/>`;
+  t.true(is(str, 9, 30), "02.15.04"); // <--
   t.end();
 });
 

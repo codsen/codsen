@@ -40,6 +40,13 @@ function plausibleAttrStartsAtX(str, start) {
   const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
   return regex.test(str.slice(start));
 }
+function guaranteedAttrStartsAtX(str, start) {
+  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+    return false;
+  }
+  const regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
+  return regex.test(str.slice(start));
+}
 
 function makeTheQuoteOpposite(quoteChar) {
   return quoteChar === `'` ? `"` : `'`;
@@ -138,7 +145,6 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing =
         chunkStartsAt >= isThisClosingIdx;
-      chunkStartsAt = null;
       if (
         `'"`.includes(str[i]) &&
         quotesCount.get(`matchedPairs`) === 0 &&
@@ -173,25 +179,21 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       ((lastCapturedChunk &&
         allHtmlAttribs.has(lastCapturedChunk)) ||
         (i > isThisClosingIdx + 1 &&
-          Array.from(str.slice(isThisClosingIdx + 1, i).trim()).every((char) =>
-            charSuitableForHTMLAttrName(char)
-          )))
+          allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())))
     ) {
+      const R0 = i > isThisClosingIdx;
       const R1 = !!openingQuote;
       const R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-      const R3 = Array.from(
+      const R3 = allHtmlAttribs.has(
         str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()
-      ).every((char) => charSuitableForHTMLAttrName(char));
+      );
       const R4 = !xBeforeYOnTheRight(
         str,
         i + 1,
         str[isThisClosingIdx],
         makeTheQuoteOpposite(str[isThisClosingIdx])
       );
-      return (
-        i > isThisClosingIdx &&
-        !(R1 && R2 && R3 && R4)
-      );
+      return R0 && !(R1 && R2 && R3 && R4);
     } else if (
       (str[i] === "=" ||
         (!str[i].length &&
@@ -202,16 +204,17 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       const W1 = i > isThisClosingIdx;
       const W2 =
         !(
-          (
-            !(
-              lastQuoteWasMatched &&
-              lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
-              lastMatchedQuotesPairsEndIsAt === isThisClosingIdx
-            ) &&
-            lastQuoteWasMatched &&
-            lastMatchedQuotesPairsStartIsAt &&
-            lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
-          )
+          !(
+            (
+              (lastQuoteWasMatched &&
+                lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
+                lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) ||
+              guaranteedAttrStartsAtX(str, chunkStartsAt)
+            )
+          ) &&
+          lastQuoteWasMatched &&
+          lastMatchedQuotesPairsStartIsAt &&
+          lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
         );
       return W1 && W2;
     }
@@ -235,6 +238,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return false;
       }
       else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+        const R0 =
+          str[idxOfAttrOpening] === str[isThisClosingIdx] &&
+          lastQuoteAt === isThisClosingIdx &&
+          !str
+            .slice(idxOfAttrOpening + 1, isThisClosingIdx)
+            .includes(str[idxOfAttrOpening]);
         const R1 = quotesCount.get(`matchedPairs`) < 2;
         const R2 =
           totalQuotesCount < 3 ||
@@ -268,12 +277,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           `="`,
         ]);
         return (
-          R1 &&
-          R2 &&
-          (R31 ||
-            R32 ||
-            R33 ||
-            R34)
+          R0 ||
+          (R1 &&
+            R2 &&
+            (R31 ||
+              R32 ||
+              R33 ||
+              R34))
         );
       }
       if (
@@ -324,6 +334,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     }
     if (`'"`.includes(str[i])) {
       lastQuoteAt = i;
+    }
+    if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+      chunkStartsAt = null;
     }
   }
   return false;

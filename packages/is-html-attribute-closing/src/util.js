@@ -48,8 +48,21 @@ function plausibleAttrStartsAtX(str, start) {
   return regex.test(str.slice(start));
 }
 
+// difference is equal is required
+function guaranteedAttrStartsAtX(str, start) {
+  console.log(
+    `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+  );
+  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+    return false;
+  }
+  const regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
+  return regex.test(str.slice(start));
+}
+
 export {
   ensureXIsNotPresentBeforeOneOfY,
   xBeforeYOnTheRight,
   plausibleAttrStartsAtX,
+  guaranteedAttrStartsAtX,
 };

@@ -71,6 +71,13 @@ function plausibleAttrStartsAtX(str, start) {
   var regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
   return regex.test(str.slice(start));
 }
+function guaranteedAttrStartsAtX(str, start) {
+  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+    return false;
+  }
+  var regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
+  return regex.test(str.slice(start));
+}
 
 function makeTheQuoteOpposite(quoteChar) {
   return quoteChar === "'" ? "\"" : "'";
@@ -149,7 +156,6 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-      chunkStartsAt = null;
       if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
         var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
@@ -174,19 +180,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (
     lastCapturedChunk &&
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) ||
-    i > isThisClosingIdx + 1 && Array.from(str.slice(isThisClosingIdx + 1, i).trim()).every(function (_char2) {
-      return charSuitableForHTMLAttrName(_char2);
-    }))) {
+    i > isThisClosingIdx + 1 && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+      var R0 = i > isThisClosingIdx;
       var R1 = !!openingQuote;
       var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-      var R3 = Array.from(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()).every(function (_char3) {
-        return charSuitableForHTMLAttrName(_char3);
-      });
+      var R3 = htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
       var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
-      return (
-        i > isThisClosingIdx &&
-        !(R1 && R2 && R3 && R4)
-      );
+      return R0 && !(R1 && R2 && R3 && R4);
     } else if (
     (str[i] === "=" ||
     !str[i].length &&
@@ -195,8 +195,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
       var W1 = i > isThisClosingIdx;
       var W2 =
-      !(
-      !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) &&
+      !(!(
+      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx ||
+      guaranteedAttrStartsAtX(str, chunkStartsAt)) &&
       lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
       return W1 && W2;
     }
@@ -218,18 +219,23 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return false;
       }
       else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-          var _R = quotesCount.get("matchedPairs") < 2;
-          var _R2 = totalQuotesCount < 3 ||
+          var _R =
+          str[idxOfAttrOpening] === str[isThisClosingIdx] &&
+          lastQuoteAt === isThisClosingIdx &&
+          !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
+          var _R2 = quotesCount.get("matchedPairs") < 2;
+          var _R3 = totalQuotesCount < 3 ||
           quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
-          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char4) {
-            return charSuitableForHTMLAttrName(_char4);
+          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
+            return charSuitableForHTMLAttrName(_char2);
           }) && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
           var R32 = !stringLeftRight.right(str, i) && totalQuotesCount % 2 === 0;
           var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
           var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
           return (
-            _R &&
-            _R2 && (
+            _R ||
+            _R2 &&
+            _R3 && (
             R31 ||
             R32 ||
             R33 ||
@@ -255,8 +261,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
       }
       if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
-        cb: function cb(_char5) {
-          return !"/>".includes(_char5);
+        cb: function cb(_char3) {
+          return !"/>".includes(_char3);
         },
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]
@@ -276,6 +282,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     }
     if ("'\"".includes(str[i])) {
       lastQuoteAt = i;
+    }
+    if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+      chunkStartsAt = null;
     }
   }
   return false;
