@@ -2558,7 +2558,7 @@
         // <img class="so-called "alt"!' border='10'/>
         //                           ^
         //
-        var E1 = i !== isThisClosingIdx; // ███████████████████████████████████████ E2
+        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, isThisClosingIdx + 1); // ███████████████████████████████████████ E2
         //
         //
         // ensure it's not a triplet of quotes:
@@ -2575,14 +2575,14 @@
         //       start              suspected and currently on
         //
         // plus one because we're on a quote
-        plausibleAttrStartsAtX(str, i + 1);
+        plausibleAttrStartsAtX(str, i + 1) && // we must be past the suspected closing, the "isThisClosingIdx"
+        i < isThisClosingIdx;
         var E23 = // or the last chunk is a known attribute name:
         // <img class="so-called "alt"!' border='10'/>
         //            ^          ^
         //         start      suspected/we're currently on
         //
-        chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        var E24 = // imagine:
+        chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim()); // imagine:
         // <z bbb"c" ddd"e'>
         //       ^ ^
         //      /  \
@@ -2596,17 +2596,19 @@
         // some, as long as they resemble valid attribute names. We just
         // validate each character and drop in more rules into the bag,
         // like requiring whitespace to be in front and opening/closing to match
-        // IF...
         // there's a whitespace in front of last chunk ("ddd" in example above)
-        chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && // and whole chunk is plausible for attribute
+
+        var E24 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && // and whole chunk is plausible for attribute
         Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
           return charSuitableForHTMLAttrName(_char);
         }) && // known opening and suspected closing are both singles or doubles
         str[idxOfAttrOpening] === str[isThisClosingIdx]; // ███████████████████████████████████████ E3
 
-        var E3 = // either it's a tag ending
-        "/>".includes(str[right(str, i)]) || // or next character is suitable for a tag name:
-        charSuitableForHTMLAttrName(str[right(str, i)]) || // or in case of:
+        var E31 = // either it's a tag ending and we're at the suspected quote
+        "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
+        var E32 = // or next character is suitable for a tag name:
+        charSuitableForHTMLAttrName(str[right(str, i)]);
+        var E33 = // or in case of:
         // <img class="so-called "alt"!' border='10'/>
         //            ^          ^
         //          start      suspected
@@ -2615,8 +2617,8 @@
         // <img class="so-called "alt"!' border='10'/>
         //                           ^
         //                          here
-        lastQuoteWasMatched;
-        return E1 && (E21 || E22 || E23 || E24) && E3;
+        lastQuoteWasMatched && i !== isThisClosingIdx;
+        return E1 && (E21 || E22 || E23 || E24) && (E31 || E32 || E33);
       } // catch quotes
 
 

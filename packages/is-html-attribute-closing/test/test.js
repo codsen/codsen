@@ -740,6 +740,102 @@ t.test(
   }
 );
 
+t.test(
+  `02.26 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m - more follows`,
+  (t) => {
+    // D-D follows
+    const str1 = `<img alt="Deal is your's!' class="tralala"/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 9), "02.26.01");
+    t.false(is(str1, 9, 22), "02.26.02");
+    t.true(is(str1, 9, 25), "02.26.03"); // <--
+    t.false(is(str1, 9, 33), "02.26.04");
+    t.false(is(str1, 9, 41), "02.26.05");
+
+    // D-S follows
+    const str2 = `<img alt="Deal is your's!' class="tralala'/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 9), "02.26.06");
+    t.false(is(str2, 9, 22), "02.26.07");
+    t.true(is(str2, 9, 25), "02.26.08"); // <--
+    t.false(is(str2, 9, 33), "02.26.09");
+    t.false(is(str2, 9, 41), "02.26.10");
+
+    // S-D follows
+    const str3 = `<img alt="Deal is your's!' class='tralala"/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 9), "02.26.11");
+    t.false(is(str3, 9, 22), "02.26.12");
+    t.true(is(str3, 9, 25), "02.26.13"); // <--
+    t.false(is(str3, 9, 33), "02.26.14");
+    t.false(is(str3, 9, 41), "02.26.15");
+
+    // S-S follows
+    const str4 = `<img alt="Deal is your's!' class='tralala'/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 9), "02.26.16");
+    t.false(is(str4, 9, 22), "02.26.17");
+    t.true(is(str4, 9, 25), "02.26.18"); // <--
+    t.false(is(str4, 9, 33), "02.26.19");
+    t.false(is(str4, 9, 41), "02.26.20");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.27 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m - more follows`,
+  (t) => {
+    // D-D follows
+    const str1 = `<img alt='Deal is your's!" class="tralala"/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 9), "02.27.01");
+    t.false(is(str1, 9, 22), "02.27.02");
+    t.true(is(str1, 9, 25), "02.27.03"); // <--
+    t.false(is(str1, 9, 33), "02.27.04");
+    t.false(is(str1, 9, 41), "02.27.05");
+
+    // D-S follows
+    const str2 = `<img alt='Deal is your's!" class="tralala'/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 9), "02.27.06");
+    t.false(is(str2, 9, 22), "02.27.07");
+    t.true(is(str2, 9, 25), "02.27.08"); // <--
+    t.false(is(str2, 9, 33), "02.27.09");
+    t.false(is(str2, 9, 41), "02.27.10");
+
+    // S-D follows
+    const str3 = `<img alt='Deal is your's!" class='tralala"/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 9), "02.27.11");
+    t.false(is(str3, 9, 22), "02.27.12");
+    t.true(is(str3, 9, 25), "02.27.13"); // <--
+    t.false(is(str3, 9, 33), "02.27.14");
+    t.false(is(str3, 9, 41), "02.27.15");
+
+    // S-S follows
+    const str4 = `<img alt='Deal is your's!" class='tralala'/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 9), "02.27.16");
+    t.false(is(str4, 9, 22), "02.27.17");
+    t.true(is(str4, 9, 25), "02.27.18"); // <--
+    t.false(is(str4, 9, 33), "02.27.19");
+    t.false(is(str4, 9, 41), "02.27.20");
+
+    // fin.
+    t.end();
+  }
+);
+
 // 03. cheeky cases
 // -----------------------------------------------------------------------------
 
@@ -1120,11 +1216,143 @@ t.test(
   }
 );
 
+// -----------------------------------------------------------------------------
+
 t.test(
-  `04.05 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.05 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    // D-D follows
+    const str1 = `<a href="z" class="yo" click here</a>`;
+    t.true(is(str1, 8, 10), "04.05.01");
+    t.false(is(str1, 8, 18), "04.05.02");
+    t.false(is(str1, 8, 21), "04.05.03");
+
+    // D-S follows
+    const str2 = `<a href="z" class="yo' click here</a>`;
+    t.true(is(str2, 8, 10), "04.05.04");
+    t.false(is(str2, 8, 18), "04.05.05");
+    t.false(is(str2, 8, 21), "04.05.06");
+
+    // S-D follows
+    const str3 = `<a href="z" class='yo" click here</a>`;
+    t.true(is(str3, 8, 10), "04.05.07");
+    t.false(is(str3, 8, 18), "04.05.08");
+    t.false(is(str3, 8, 21), "04.05.09");
+
+    // S-S follows
+    const str4 = `<a href="z" class='yo' click here</a>`;
+    t.true(is(str4, 8, 10), "04.05.10");
+    t.false(is(str4, 8, 18), "04.05.11");
+    t.false(is(str4, 8, 21), "04.05.12");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.06 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    // D-D follows
+    const str1 = `<a href="z' class="yo" click here</a>`;
+    t.true(is(str1, 8, 10), "04.06.01");
+    t.false(is(str1, 8, 18), "04.06.02");
+    t.false(is(str1, 8, 21), "04.06.03");
+
+    // D-S follows
+    const str2 = `<a href="z' class="yo' click here</a>`;
+    t.true(is(str2, 8, 10), "04.06.04");
+    t.false(is(str2, 8, 18), "04.06.05");
+    t.false(is(str2, 8, 21), "04.06.06");
+
+    // S-D follows
+    const str3 = `<a href="z' class='yo" click here</a>`;
+    t.true(is(str3, 8, 10), "04.06.07");
+    t.false(is(str3, 8, 18), "04.06.08");
+    t.false(is(str3, 8, 21), "04.06.09");
+
+    // S-S follows
+    const str4 = `<a href="z' class='yo' click here</a>`;
+    t.true(is(str4, 8, 10), "04.06.10");
+    t.false(is(str4, 8, 18), "04.06.11");
+    t.false(is(str4, 8, 21), "04.06.12");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.07 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    // D-D follows
+    const str1 = `<a href='z" class="yo" click here</a>`;
+    t.true(is(str1, 8, 10), "04.07.01");
+    t.false(is(str1, 8, 18), "04.07.02");
+    t.false(is(str1, 8, 21), "04.07.03");
+
+    // D-S follows
+    const str2 = `<a href='z" class="yo' click here</a>`;
+    t.true(is(str2, 8, 10), "04.07.04");
+    t.false(is(str2, 8, 18), "04.07.05");
+    t.false(is(str2, 8, 21), "04.07.06");
+
+    // S-D follows
+    const str3 = `<a href='z" class='yo" click here</a>`;
+    t.true(is(str3, 8, 10), "04.07.07");
+    t.false(is(str3, 8, 18), "04.07.08");
+    t.false(is(str3, 8, 21), "04.07.09");
+
+    // S-S follows
+    const str4 = `<a href='z" class='yo' click here</a>`;
+    t.true(is(str4, 8, 10), "04.07.10");
+    t.false(is(str4, 8, 18), "04.07.11");
+    t.false(is(str4, 8, 21), "04.07.12");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `04.08 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    // D-D follows
+    const str1 = `<a href='z' class="yo" click here</a>`;
+    t.true(is(str1, 8, 10), "04.08.01");
+    t.false(is(str1, 8, 18), "04.08.02");
+    t.false(is(str1, 8, 21), "04.08.03");
+
+    // D-S follows
+    const str2 = `<a href='z' class="yo' click here</a>`;
+    t.true(is(str2, 8, 10), "04.08.04");
+    t.false(is(str2, 8, 18), "04.08.05");
+    t.false(is(str2, 8, 21), "04.08.06");
+
+    // S-D follows
+    const str3 = `<a href='z' class='yo" click here</a>`;
+    t.true(is(str3, 8, 10), "04.08.07");
+    t.false(is(str3, 8, 18), "04.08.08");
+    t.false(is(str3, 8, 21), "04.08.09");
+
+    // S-S follows
+    const str4 = `<a href='z' class='yo' click here</a>`;
+    t.true(is(str4, 8, 10), "04.08.10");
+    t.false(is(str4, 8, 18), "04.08.11");
+    t.false(is(str4, 8, 21), "04.08.12");
+
+    // fin.
+    t.end();
+  }
+);
+
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.09 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z"</a>`;
-    t.true(is(str, 8, 10), "04.05");
+    t.true(is(str, 8, 10), "04.09");
 
     // fin.
     t.end();
@@ -1132,10 +1360,10 @@ t.test(
 );
 
 t.test(
-  `04.06 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.10 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z'</a>`;
-    t.true(is(str, 8, 10), "04.06");
+    t.true(is(str, 8, 10), "04.10");
 
     // fin.
     t.end();
@@ -1143,10 +1371,10 @@ t.test(
 );
 
 t.test(
-  `04.07 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  `04.11 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z"</a>`;
-    t.true(is(str, 8, 10), "04.07");
+    t.true(is(str, 8, 10), "04.11");
 
     // fin.
     t.end();
@@ -1154,10 +1382,10 @@ t.test(
 );
 
 t.test(
-  `04.08 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  `04.12 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z'</a>`;
-    t.true(is(str, 8, 10), "04.08");
+    t.true(is(str, 8, 10), "04.12");
 
     // fin.
     t.end();
@@ -1168,11 +1396,80 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `05.01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag, one attr`,
+  `05.01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, one attr`,
   (t) => {
     const str = `<a href=z">click here</a>`;
 
     t.true(is(str, 8, 9), "05.01");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `05.02 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, another attr follows`,
+  (t) => {
+    // D-D follows
+    const str1 = `<a href=z" class="yo">click here</a>`;
+
+    t.true(is(str1, 8, 9), "05.01.01");
+    t.false(is(str1, 8, 17), "05.01.02");
+    t.false(is(str1, 8, 20), "05.01.03");
+
+    // D-S follows
+    const str2 = `<a href=z" class="yo'>click here</a>`;
+
+    t.true(is(str2, 8, 9), "05.01.04");
+    t.false(is(str2, 8, 17), "05.01.05");
+    t.false(is(str2, 8, 20), "05.01.06");
+
+    //          off-tangent a little bit...
+    const str2_1 = `<a href=z" class="yo' id='ey">click here</a>`;
+
+    t.true(is(str2_1, 8, 9), "05.01.07");
+    t.false(is(str2_1, 8, 17), "05.01.08");
+    t.false(is(str2_1, 8, 20), "05.01.09");
+    t.false(is(str2_1, 8, 25), "05.01.10");
+    t.false(is(str2_1, 8, 28), "05.01.11");
+
+    const str2_2 = `<a href=z" class="yo' id='ey>click here</a>`;
+
+    t.true(is(str2_2, 8, 9), "05.01.12");
+    t.false(is(str2_2, 8, 17), "05.01.13");
+    t.false(is(str2_2, 8, 20), "05.01.14");
+    t.false(is(str2_2, 8, 25), "05.01.15");
+
+    // S-D follows
+    const str3 = `<a href=z" class='yo">click here</a>`;
+
+    t.true(is(str3, 8, 9), "05.01.16");
+    t.false(is(str3, 8, 17), "05.01.17");
+    t.false(is(str3, 8, 20), "05.01.18");
+
+    const str3_1 = `<a href=z" class='yo" id="ey'>click here</a>`;
+
+    t.true(is(str3_1, 8, 9), "05.01.19");
+    t.false(is(str3_1, 8, 17), "05.01.20");
+    t.false(is(str3_1, 8, 20), "05.01.21");
+    t.false(is(str2_2, 8, 25), "05.01.22");
+    t.false(is(str2_2, 8, 28), "05.01.23");
+
+    // S-S follows
+    const str4 = `<a href=z" class='yo'>click here</a>`;
+
+    t.true(is(str4, 8, 9), "05.01.24");
+    t.false(is(str4, 8, 17), "05.01.25");
+    t.false(is(str4, 8, 20), "05.01.26");
+
+    //                a provocation...
+    const str4_1 = `<a href=z" class='yo' id='ey">click here</a>`;
+
+    t.true(is(str4_1, 8, 9), "05.01.27");
+    t.false(is(str4_1, 8, 17), "05.01.28");
+    t.false(is(str4_1, 8, 20), "05.01.29");
+    t.false(is(str4_1, 8, 25), "05.01.30");
+    t.false(is(str4_1, 8, 28), "05.01.31");
 
     // fin.
     t.end();
@@ -1288,9 +1585,9 @@ t.test(
 // 08. missing equal, tight
 // -----------------------------------------------------------------------------
 
-t.todo(`deleteme`, (t) => {
-  const str = `<img alt='so-called "artists"!" class='yo"/>`;
-  t.true(is(str, 9, 30), "02.16.04");
+t.only(`deleteme`, (t) => {
+  const str = `<img alt='Deal is your's!"/>`;
+  t.false(is(str, 9, 22), "02.25.02");
   t.end();
 });
 
