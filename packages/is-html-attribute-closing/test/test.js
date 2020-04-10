@@ -1281,8 +1281,8 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.only(`deleteme`, (t) => {
-  const str = `<a href="zzz" target="_blank" style="color: black;">`;
-  t.true(is(str, 8, 12), "01.03.02"); // <--
+  const str = `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`;
+  t.false(is(str, 26, 31), "01.05.08");
   t.end();
 });
 

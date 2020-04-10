@@ -217,13 +217,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     }
     if (i > isThisClosingIdx) {
       if (openingQuote && str[i] === openingQuote) {
-        return (
-          lastQuoteAt &&
-          lastQuoteAt === isThisClosingIdx &&
-          split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
-            allHtmlAttribs.has(chunk)
-          )
+        const Y1 = !!lastQuoteAt;
+        const Y2 = lastQuoteAt === isThisClosingIdx;
+        const Y3 =
+          lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+        const Y4 = split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
+          allHtmlAttribs.has(chunk)
         );
+        const Y5 = i >= isThisClosingIdx;
+        return Y1 && Y2 && Y3 && Y4 && Y5;
       }
       if (
         openingQuote &&

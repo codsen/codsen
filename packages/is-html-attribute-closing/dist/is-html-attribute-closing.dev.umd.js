@@ -2822,9 +2822,15 @@
           // <img alt="somethin' fishy going on' class">z<a class="y">
           //          ^                        ^      ^
           //         start            suspected       we're here
-          return lastQuoteAt && lastQuoteAt === isThisClosingIdx && split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+          var Y1 = !!lastQuoteAt;
+          var Y2 = lastQuoteAt === isThisClosingIdx; // ensure there's some content between suspected and "here":
+
+          var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+          var Y4 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
+          var Y5 = i >= isThisClosingIdx;
+          return Y1 && Y2 && Y3 && Y4 && Y5;
         } // if we have passed the suspected closing quote
         // and we meet another quote of the same kind,
         // it's false result. Imagine code:
