@@ -86,9 +86,9 @@ console.log(isAttrNameChar("$"));
 
 This program does not throw. It just returns `false`.
 
-If input string is longer than `1`, its first character is used.
+If the input string is longer than `1`, its first character is used.
 
-Zero length string yields `false`, same like non-string type values.
+Zero-length string yields `false`, same like non-string type values.
 
 **[⬆ back to top](#)**
 

@@ -125,7 +125,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -137,7 +137,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.9",
     "lect": "^0.12.4",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.4",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"
   }

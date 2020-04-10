@@ -39,12 +39,13 @@ function attributeMalformed(context, ...opts) {
         );
 
         let somethingMatched = false;
-        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
-          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
-            console.log(`044 RAISE ERROR`);
+
+        for (const oneOfKnownAttribs of allHtmlAttribs) {
+          if (leven(oneOfKnownAttribs, node.attribName) === 1) {
+            console.log(`045 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${allHtmlAttribs[i]}".`,
+              message: `Probably meant "${oneOfKnownAttribs}".`,
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt, // second elem. from last range
               fix: {
@@ -52,7 +53,7 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    allHtmlAttribs[i],
+                    oneOfKnownAttribs,
                   ],
                 ],
               },
@@ -65,7 +66,7 @@ function attributeMalformed(context, ...opts) {
         if (!somethingMatched) {
           // the attribute was not recognised
           console.log(
-            `068 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+            `069 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -95,7 +96,7 @@ function attributeMalformed(context, ...opts) {
               .includes("=")
           ) {
             console.log(
-              `098 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
+              `099 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
             );
             message = `Equal is missing.`;
           } else if (
@@ -108,7 +109,7 @@ function attributeMalformed(context, ...opts) {
             )
           ) {
             console.log(
-              `111 ${`\u001b[${31}m${`ROGUE QUOTES AFTER EQUALS`}\u001b[${39}m`}`
+              `112 ${`\u001b[${31}m${`ROGUE QUOTES AFTER EQUALS`}\u001b[${39}m`}`
             );
             message = `Delete repeated opening quotes.`;
           }
@@ -124,7 +125,7 @@ function attributeMalformed(context, ...opts) {
           }
 
           console.log(
-            `127 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
+            `128 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -147,7 +148,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueStartsAt !== null
       ) {
         console.log(
-          `150 ${`\u001b[${31}m${`OPENING QUOTE MISSING`}\u001b[${39}m`}`
+          `151 ${`\u001b[${31}m${`OPENING QUOTE MISSING`}\u001b[${39}m`}`
         );
         ranges.push([
           node.attribValueStartsAt,
@@ -162,7 +163,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueEndsAt !== null
       ) {
         console.log(
-          `165 ${`\u001b[${31}m${`CLOSING QUOTE MISSING`}\u001b[${39}m`}`
+          `166 ${`\u001b[${31}m${`CLOSING QUOTE MISSING`}\u001b[${39}m`}`
         );
         ranges.push([
           node.attribValueEndsAt,
@@ -173,7 +174,7 @@ function attributeMalformed(context, ...opts) {
         ]);
       }
       if (ranges.length) {
-        console.log(`176 RAISE ERROR ABOUT QUOTES`);
+        console.log(`177 RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
@@ -191,12 +192,12 @@ function attributeMalformed(context, ...opts) {
           context.str[node.attribClosingQuoteAt]
       ) {
         console.log(
-          `194 ${`\u001b[${31}m${`MISMATCHING QUOTES`}\u001b[${39}m`}`
+          `195 ${`\u001b[${31}m${`MISMATCHING QUOTES`}\u001b[${39}m`}`
         );
         // default is double quotes; if content doesn't have them, that's what
         // we're going to use
         if (!node.attribValue.includes(`"`)) {
-          console.log(`199 attr value doesn't have double quotes`);
+          console.log(`200 attr value doesn't have double quotes`);
           context.report({
             ruleId: "attribute-malformed",
             message: `${
@@ -223,7 +224,7 @@ function attributeMalformed(context, ...opts) {
             },
           });
         } else if (!node.attribValue.includes(`'`)) {
-          console.log(`226 attr value has double quote but not single`);
+          console.log(`227 attr value has double quote but not single`);
           context.report({
             ruleId: "attribute-malformed",
             message: `${
@@ -250,7 +251,7 @@ function attributeMalformed(context, ...opts) {
             },
           });
         } else {
-          console.log(`253 attr value has both double and single quotes`);
+          console.log(`254 attr value has both double and single quotes`);
         }
       }
     },

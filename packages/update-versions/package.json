@@ -125,7 +125,7 @@
     "ansi-diff-stream": "^1.2.1",
     "edit-package-json": "^0.1.21",
     "globby": "^11.0.0",
-    "is-online": "^8.2.2",
+    "is-online": "^8.3.0",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^4.0.0",
     "meow": "^6.1.0",
@@ -139,7 +139,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -154,7 +154,7 @@
     "fs-extra": "^9.0.0",
     "lect": "^0.12.4",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.4",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"
   }

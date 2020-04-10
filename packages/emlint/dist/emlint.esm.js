@@ -3020,11 +3020,11 @@ function attributeMalformed(context, ...opts) {
         !blacklist.includes(node.parent.tagName)
       ) {
         let somethingMatched = false;
-        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
-          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
+        for (const oneOfKnownAttribs of allHtmlAttribs) {
+          if (leven(oneOfKnownAttribs, node.attribName) === 1) {
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${allHtmlAttribs[i]}".`,
+              message: `Probably meant "${oneOfKnownAttribs}".`,
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt,
               fix: {
@@ -3032,7 +3032,7 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    allHtmlAttribs[i],
+                    oneOfKnownAttribs,
                   ],
                 ],
               },

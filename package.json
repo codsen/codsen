@@ -46,7 +46,7 @@
   "dependencies": {},
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "commitizen": "^4.0.3",
+    "commitizen": "^4.0.4",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
@@ -59,7 +59,7 @@
     "lerna": "^3.20.2",
     "lerna-clean-changelogs-cli": "^1.2.52",
     "npm-watch": "^0.6.0",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.4",
     "tap-parse-string-to-object": "^1.2.7"
   }
 }

@@ -156,9 +156,11 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 46689,
+        "size": 46644,
         "imports": [
             "html-all-known-attributes",
+            "is-char-suitable-for-html-attr-name",
+            "is-html-attribute-closing",
             "is-html-tag-opening",
             "string-left-right",
             "string-match-left-right"
@@ -252,7 +254,7 @@
     },
     {
         "name": "emlint",
-        "size": 316731,
+        "size": 319704,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -300,7 +302,7 @@
     },
     {
         "name": "html-all-known-attributes",
-        "size": 14393,
+        "size": 15107,
         "imports": []
     },
     {
@@ -327,6 +329,21 @@
             "ranges-apply",
             "ranges-push",
             "string-unfancy"
+        ]
+    },
+    {
+        "name": "is-char-suitable-for-html-attr-name",
+        "size": 653,
+        "imports": []
+    },
+    {
+        "name": "is-html-attribute-closing",
+        "size": 3958,
+        "imports": [
+            "html-all-known-attributes",
+            "is-char-suitable-for-html-attr-name",
+            "string-left-right",
+            "string-match-left-right"
         ]
     },
     {
@@ -410,7 +427,7 @@
     },
     {
         "name": "lect",
-        "size": 73855,
+        "size": 74126,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

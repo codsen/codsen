@@ -224,6 +224,61 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function _createForOfIteratorHelper(o) {
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var it,
+      normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
 var allBadCharacterRules = [
 	"bad-character-acknowledge",
 	"bad-character-activate-arabic-form-shaping",
@@ -3247,20 +3302,29 @@ function attributeMalformed(context) {
     attribute: function attribute(node) {
       if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         var somethingMatched = false;
-        for (var i = 0, len = htmlAllKnownAttributes.allHtmlAttribs.length; i < len; i++) {
-          if (leven(htmlAllKnownAttributes.allHtmlAttribs[i], node.attribName) === 1) {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Probably meant \"".concat(htmlAllKnownAttributes.allHtmlAttribs[i], "\"."),
-              idxFrom: node.attribNameStartsAt,
-              idxTo: node.attribNameEndsAt,
-              fix: {
-                ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, htmlAllKnownAttributes.allHtmlAttribs[i]]]
-              }
-            });
-            somethingMatched = true;
-            break;
+        var _iterator = _createForOfIteratorHelper(htmlAllKnownAttributes.allHtmlAttribs),
+            _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var oneOfKnownAttribs = _step.value;
+            if (leven(oneOfKnownAttribs, node.attribName) === 1) {
+              context.report({
+                ruleId: "attribute-malformed",
+                message: "Probably meant \"".concat(oneOfKnownAttribs, "\"."),
+                idxFrom: node.attribNameStartsAt,
+                idxTo: node.attribNameEndsAt,
+                fix: {
+                  ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, oneOfKnownAttribs]]
+                }
+              });
+              somethingMatched = true;
+              break;
+            }
           }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
         }
         if (!somethingMatched) {
           context.report({

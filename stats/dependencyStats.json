@@ -46,13 +46,15 @@
         "globby": 10,
         "he": 4,
         "hex-color-regex": 1,
-        "html-all-known-attributes": 2,
+        "html-all-known-attributes": 3,
         "html-comment-regex": 1,
         "html-dom-parser": 1,
         "html-entities-not-email-friendly": 2,
         "import-modules": 1,
         "inquirer": 3,
+        "is-char-suitable-for-html-attr-name": 2,
         "is-d": 5,
+        "is-html-attribute-closing": 1,
         "is-html-tag-opening": 1,
         "is-language-code": 1,
         "is-media-descriptor": 1,
@@ -131,8 +133,8 @@
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 13,
-        "string-match-left-right": 10,
+        "string-left-right": 14,
+        "string-match-left-right": 11,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
@@ -154,17 +156,17 @@
         "write-json-file": 1
     },
     "devDependencies": {
-        "@babel/core": 111,
+        "@babel/core": 113,
         "@babel/polyfill": 1,
-        "@babel/preset-env": 111,
-        "@rollup/plugin-commonjs": 111,
+        "@babel/preset-env": 113,
+        "@rollup/plugin-commonjs": 113,
         "@rollup/plugin-json": 32,
-        "@rollup/plugin-node-resolve": 111,
-        "@rollup/plugin-strip": 111,
+        "@rollup/plugin-node-resolve": 113,
+        "@rollup/plugin-strip": 113,
         "array-shuffle": 1,
         "ast-deep-contains": 1,
         "ast-monkey-traverse": 1,
-        "benchmark": 99,
+        "benchmark": 101,
         "deep-equal": 1,
         "eslint": 15,
         "eslint-config-prettier": 14,
@@ -177,7 +179,7 @@
         "html-crush": 1,
         "is-ci": 1,
         "json-stringify-safe": 1,
-        "lect": 111,
+        "lect": 113,
         "lodash.clonedeep": 5,
         "lodash.isequal": 3,
         "map-stream": 1,
@@ -190,16 +192,16 @@
         "prettier": 14,
         "ranges-apply": 6,
         "ranges-merge": 1,
-        "rollup": 98,
-        "rollup-plugin-ascii": 98,
-        "rollup-plugin-babel": 98,
-        "rollup-plugin-banner": 98,
-        "rollup-plugin-cleanup": 98,
+        "rollup": 100,
+        "rollup-plugin-ascii": 100,
+        "rollup-plugin-babel": 100,
+        "rollup-plugin-banner": 100,
+        "rollup-plugin-cleanup": 100,
         "rollup-plugin-node-builtins": 9,
         "rollup-plugin-node-globals": 1,
-        "rollup-plugin-terser": 98,
+        "rollup-plugin-terser": 100,
         "string-find-heads-tails": 1,
-        "tap": 111,
+        "tap": 113,
         "tempy": 12,
         "vinyl-string": 1
     },
@@ -240,16 +242,16 @@
             "ranges-apply": 15
         },
         {
-            "string-left-right": 13
+            "string-left-right": 14
+        },
+        {
+            "string-match-left-right": 11
         },
         {
             "ast-monkey-traverse": 10
         },
         {
             "arrayiffy-if-string": 10
-        },
-        {
-            "string-match-left-right": 10
         },
         {
             "ranges-push": 10

@@ -28264,7 +28264,7 @@
 
   /**
    * string-strip-html
-   * Strips HTML tags from strings. Detects legit unencoded brackets.
+   * Strips HTML tags from strings. Scannerless parser algorithm.
    * Version: 4.3.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT

@@ -52,13 +52,18 @@ const lernaLibsList = [
 ];
 const htmlLibsList = [
   "emlint",
+  "html-crush",
   "string-strip-html",
   "detect-is-it-html-or-xhtml",
   "html-table-patcher",
   "is-html-tag-opening",
+  "is-html-attribute-closing",
   "is-language-code",
+  "html-img-alt",
   "is-media-descriptor",
   "is-relative-uri",
+  "is-char-suitable-for-html-attr-name",
+  "html-entities-not-email-friendly",
 ];
 
 // note for future self - use package.json "private" key instead:
