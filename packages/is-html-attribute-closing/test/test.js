@@ -1160,7 +1160,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `05.01 - ${`\u001b[${35}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr`,
+  `05.01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag, one attr`,
   (t) => {
     const str = `<a href=z">click here</a>`;
 
@@ -1277,21 +1277,27 @@ t.test(
   }
 );
 
-// 08. starting index is not on a quote
+// 08. missing equal, tight
 // -----------------------------------------------------------------------------
 
+// S-S follows
+
 t.test(
-  `08.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
+  `08.01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
-    const str = `<a href="www" class=e'>`;
+    const str = `<z bbb"c" ddd'e'>`;
 
-    // href opening at 8
-    t.true(is(str, 8, 12), "08.01.01"); // <--
-    t.false(is(str, 8, 21), "08.01.02");
+    // bbb opening at 6
+    t.false(is(str, 6, 6), "08.01.01");
+    t.true(is(str, 6, 8), "08.01.02"); // <--
+    t.false(is(str, 6, 13), "08.01.03");
+    t.false(is(str, 6, 15), "08.01.04");
 
-    // class opening at 20
-    t.false(is(str, 20, 12), "08.01.03");
-    t.true(is(str, 20, 21), "08.01.04"); // <--
+    // ddd opening at 13
+    t.false(is(str, 13, 6), "08.01.07");
+    t.false(is(str, 13, 8), "08.01.08");
+    t.false(is(str, 13, 13), "08.01.09");
+    t.true(is(str, 13, 15), "08.01.10"); // <--
 
     // fin.
     t.end();
@@ -1299,17 +1305,324 @@ t.test(
 );
 
 t.test(
-  `08.02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
+  `08.02 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a class"c" id'e'>`;
+
+    // bbb opening at 8
+    t.false(is(str, 8, 8), "08.02.01");
+    t.true(is(str, 8, 10), "08.02.02"); // <--
+    t.false(is(str, 8, 14), "08.02.03");
+    t.false(is(str, 8, 16), "08.02.04");
+
+    // ddd opening at 14
+    t.false(is(str, 14, 8), "08.02.07");
+    t.false(is(str, 14, 10), "08.02.08");
+    t.false(is(str, 14, 14), "08.02.09");
+    t.true(is(str, 14, 16), "08.02.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// S-D follows
+
+t.test(
+  `08.03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-D`,
+  (t) => {
+    const str = `<z bbb"c" ddd'e">`;
+
+    // bbb opening at 6
+    t.false(is(str, 6, 6), "08.03.01");
+    t.true(is(str, 6, 8), "08.03.02"); // <--
+    t.false(is(str, 6, 13), "08.03.03");
+    t.false(is(str, 6, 15), "08.03.04");
+
+    // ddd opening at 13
+    t.false(is(str, 13, 6), "08.03.07");
+    t.false(is(str, 13, 8), "08.03.08");
+    t.false(is(str, 13, 13), "08.03.09");
+    t.true(is(str, 13, 15), "08.03.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-D`,
+  (t) => {
+    const str = `<a class"c" id'e">`;
+
+    // bbb opening at 8
+    t.false(is(str, 8, 8), "08.04.01");
+    t.true(is(str, 8, 10), "08.04.02"); // <--
+    t.false(is(str, 8, 14), "08.04.03");
+    t.false(is(str, 8, 16), "08.04.04");
+
+    // ddd opening at 14
+    t.false(is(str, 14, 8), "08.04.07");
+    t.false(is(str, 14, 10), "08.04.08");
+    t.false(is(str, 14, 14), "08.04.09");
+    t.true(is(str, 14, 16), "08.04.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// D-S follows
+
+t.test(
+  `08.05 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c" ddd"e'>`;
+
+    // bbb opening at 6
+    t.false(is(str, 6, 6), "08.05.01");
+    t.true(is(str, 6, 8), "08.05.02"); // <--
+    t.false(is(str, 6, 13), "08.05.03");
+    t.false(is(str, 6, 15), "08.05.04");
+
+    // ddd opening at 13
+    t.false(is(str, 13, 6), "08.05.07");
+    t.false(is(str, 13, 8), "08.05.08");
+    t.false(is(str, 13, 13), "08.05.09");
+    t.true(is(str, 13, 15), "08.05.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.06 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a class"c" id"e'>`;
+
+    // bbb opening at 8
+    t.false(is(str, 8, 8), "08.06.01");
+    t.true(is(str, 8, 10), "08.06.02"); // <--
+    t.false(is(str, 8, 14), "08.06.03");
+    t.false(is(str, 8, 16), "08.06.04");
+
+    // ddd opening at 14
+    t.false(is(str, 14, 8), "08.06.07");
+    t.false(is(str, 14, 10), "08.06.08");
+    t.false(is(str, 14, 14), "08.06.09");
+    t.true(is(str, 14, 16), "08.06.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// D-D follows
+
+t.test(
+  `08.07 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c" ddd"e">`;
+
+    // bbb opening at 6
+    t.false(is(str, 6, 6), "08.07.01");
+    t.true(is(str, 6, 8), "08.07.02"); // <--
+    t.false(is(str, 6, 13), "08.07.03");
+    t.false(is(str, 6, 15), "08.07.04");
+
+    // ddd opening at 13
+    t.false(is(str, 13, 6), "08.07.07");
+    t.false(is(str, 13, 8), "08.07.08");
+    t.false(is(str, 13, 13), "08.07.09");
+    t.true(is(str, 13, 15), "08.07.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.08 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<a class"c" id"e">`;
+
+    // bbb opening at 8
+    t.false(is(str, 8, 8), "08.08.01");
+    t.true(is(str, 8, 10), "08.08.02"); // <--
+    t.false(is(str, 8, 14), "08.08.03");
+    t.false(is(str, 8, 16), "08.08.04");
+
+    // ddd opening at 14
+    t.false(is(str, 14, 8), "08.08.07");
+    t.false(is(str, 14, 10), "08.08.08");
+    t.false(is(str, 14, 14), "08.08.09");
+    t.true(is(str, 14, 16), "08.08.10"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+// counter-cases, false positives
+
+t.test(
+  `08.09 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c" ddd'e>`;
+
+    // algorithm picks the 13 because it is matching and 13 is unmatched
+
+    // bbb opening at 6
+    t.true(is(str, 6, 8), "08.09.01"); // <--
+    t.false(is(str, 6, 13), "08.09.02");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c' ddd"e>`;
+
+    // but if 13 is mismatching, it will jump to 13 because count of doubles is
+    // an even number
+
+    // basically, "outermost quotes count being even number" takes priority
+    // over any character or character chunk qualities (like recognised attr name)
+
+    // bbb opening at 6
+    t.false(is(str, 6, 8), "08.10.01");
+    t.true(is(str, 6, 13), "08.10.02"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.11 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c' href"e>`;
+
+    // but if 13 is mismatching, it will jump to 13 because count of doubles is
+    // an even number
+
+    // basically, "outermost quotes count being even number" takes priority
+    // over any character or character chunk qualities (like recognised attr name)
+
+    // bbb opening at 6
+    t.true(is(str, 6, 8), "08.11.01"); // <--
+    t.false(is(str, 6, 14), "08.11.02");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.12 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c' z href"e>`;
+
+    // z ruins everything, if it's not a known void attribute name
+
+    // bbb opening at 6
+    t.false(is(str, 6, 8), "08.12.01");
+    t.true(is(str, 6, 16), "08.12.02"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.13 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z bbb"c' nowrap href"e>`;
+
+    // nowrap is recognised void attribute
+
+    // bbb opening at 6
+    t.true(is(str, 6, 8), "08.13.01"); // <--
+    t.false(is(str, 6, 21), "08.13.02");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.14 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<z href"href' href href"href>`;
+
+    // program perceives it as:
+    // <z href"href' href href" href>
+    // as in
+    // <img alt="somethin' fishy going on" class>
+
+    // bbb opening at 6
+    t.true(is(str, 6, 8), "08.13.01"); // <--
+    t.false(is(str, 6, 21), "08.13.02");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `08.15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
+  (t) => {
+    const str = `<img alt="somethin' fishy going on' class">z<a class="y">`;
+
+    // alt opening at 9
+    t.false(is(str, 9, 18), "08.13.01"); // <--
+    t.true(is(str, 6, 34), "08.13.02");
+    t.false(is(str, 6, 41), "08.13.03");
+    t.false(is(str, 6, 53), "08.13.04");
+    t.false(is(str, 6, 55), "08.13.05");
+
+    // fin.
+    t.end();
+  }
+);
+
+// 09. starting index is not on a quote
+// -----------------------------------------------------------------------------
+
+t.test(
+  `09.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
+  (t) => {
+    const str = `<a href="www" class=e'>`;
+
+    // href opening at 8
+    t.true(is(str, 8, 12), "09.01.01"); // <--
+    t.false(is(str, 8, 21), "09.01.02");
+
+    // class opening at 20
+    t.false(is(str, 20, 12), "09.01.03");
+    t.true(is(str, 20, 21), "09.01.04"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `09.02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
   (t) => {
     const str = `<a href=www" class=e'>`;
 
     // href opening at 8
-    t.true(is(str, 8, 11), "08.02.01"); // <--
-    t.false(is(str, 8, 20), "08.02.02");
+    t.true(is(str, 8, 11), "09.02.01"); // <--
+    t.false(is(str, 8, 20), "09.02.02");
 
     // class opening at 19
-    t.false(is(str, 19, 11), "08.02.03");
-    t.true(is(str, 19, 20), "08.02.04"); // <--
+    t.false(is(str, 19, 11), "09.02.03");
+    t.true(is(str, 19, 20), "09.02.04"); // <--
 
     // fin.
     t.end();
