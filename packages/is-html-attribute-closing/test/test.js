@@ -1288,9 +1288,9 @@ t.test(
 // 08. missing equal, tight
 // -----------------------------------------------------------------------------
 
-t.only(`deleteme`, (t) => {
-  const str = `<img alt='so-called "artists"!" class='yo'/>`;
-  t.true(is(str, 9, 30), "02.15.04"); // <--
+t.todo(`deleteme`, (t) => {
+  const str = `<img alt='so-called "artists"!" class='yo"/>`;
+  t.true(is(str, 9, 30), "02.16.04");
   t.end();
 });
 

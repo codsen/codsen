@@ -75,7 +75,7 @@ function guaranteedAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  var regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
+  var regex = /^[a-zA-Z0-9:-]*=?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
 
