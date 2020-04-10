@@ -234,14 +234,6 @@ function charSuitableForTagName(char) {
   return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
 }
 
-function charSuitableForHTMLAttrName(char) {
-  return (
-    isLatinLetter(char) ||
-    (char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57) ||
-    [":", "-"].includes(char)
-  );
-}
-
 // it flips all brackets backwards and puts characters in the opposite order
 function flipEspTag(str) {
   let res = "";
@@ -301,7 +293,6 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
 
 export {
   ensureXIsNotPresentBeforeOneOfY,
-  charSuitableForHTMLAttrName,
   allHTMLTagsKnownToHumanity,
   charSuitableForTagName,
   isTagNameRecognised,

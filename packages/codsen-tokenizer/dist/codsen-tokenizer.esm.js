@@ -12,6 +12,8 @@ import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-mat
 import clone from 'lodash.clonedeep';
 import { left, right } from 'string-left-right';
 import isTagOpening from 'is-html-tag-opening';
+import attributeEnds from 'is-html-attribute-closing';
+import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
 
 const allHTMLTagsKnownToHumanity = [
   "a",
@@ -176,13 +178,6 @@ function isLatinLetter(char) {
 function charSuitableForTagName(char) {
   return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
 }
-function charSuitableForHTMLAttrName(char) {
-  return (
-    isLatinLetter(char) ||
-    (char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57) ||
-    [":", "-"].includes(char)
-  );
-}
 function flipEspTag(str) {
   let res = "";
   for (let i = 0, len = str.length; i < len; i++) {
@@ -213,16 +208,6 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     }
   }
   return false;
-}
-function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
-  for (let i = startingIdx, len = str.length; i < len; i++) {
-    if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
-      return true;
-    } else if (str[i] === x) {
-      return false;
-    }
-  }
-  return true;
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {
@@ -308,30 +293,6 @@ function startsComment(str, i, token) {
           trimCharsBeforeMatching: ["-", "!"],
         }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
-  );
-}
-
-function attributeEnds(str, i, attrib) {
-  return (
-    attrib.attribOpeningQuoteAt === null ||
-    str[attrib.attribOpeningQuoteAt] === str[i] ||
-    (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
-      (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") ||
-        (str.includes(">", i) &&
-          Array.from(str.slice(i + 1, str.indexOf(">"))).reduce((acc, curr) => {
-            return acc + (`'"`.includes(curr) ? 1 : 0);
-          }, 0) %
-            2 ==
-            0 &&
-          attrib.attribOpeningQuoteAt + 1 < i &&
-          str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length &&
-          (ensureXIsNotPresentBeforeOneOfY(
-            str,
-            i,
-            str[attrib.attribOpeningQuoteAt],
-            [">", `="`, `='`]
-          ) ||
-            ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])))))
   );
 }
 
@@ -1314,7 +1275,7 @@ function tokenizer(str, originalOpts) {
     ) {
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
-      attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName);
+      attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
       if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") ; else if (
         (str[i] && !str[i].trim().length) ||
         str[i] === ">" ||
@@ -1382,7 +1343,11 @@ function tokenizer(str, originalOpts) {
           });
         } else if (
           !layers.some((layerObj) => layerObj.type === "esp") &&
-          attributeEnds(str, i, attrib)
+          attributeEnds(
+            str,
+            attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+            i
+          )
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
@@ -1453,7 +1418,7 @@ function tokenizer(str, originalOpts) {
         } else if (
           attrib.attribOpeningQuoteAt &&
           (`'"`.includes(str[right(str, i)]) ||
-            allHtmlAttribs.includes(
+            allHtmlAttribs.has(
               str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()
             ))
         ) {
@@ -1496,7 +1461,7 @@ function tokenizer(str, originalOpts) {
         if (
           firstCharOnTheRight &&
           str.slice(firstCharOnTheRight).includes("=") &&
-          allHtmlAttribs.includes(
+          allHtmlAttribs.has(
             str
               .slice(
                 firstCharOnTheRight,

@@ -61,6 +61,8 @@ export default (commandLineArgs) => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "html-all-known-attributes",
+        "is-char-suitable-for-html-attr-name",
+        "is-html-attribute-closing",
         "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",
@@ -83,6 +85,8 @@ export default (commandLineArgs) => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "html-all-known-attributes",
+        "is-char-suitable-for-html-attr-name",
+        "is-html-attribute-closing",
         "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",

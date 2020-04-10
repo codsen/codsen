@@ -239,7 +239,7 @@ t.test(
   `02.01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`,
   (t) => {
     const gathered = [];
-    ct(`<a b"c" d'e'>`, {
+    ct(`<a href"www" class'e'>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -251,31 +251,42 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 13,
+          end: 22,
+          value: `<a href"www" class'e'>`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
           attribs: [
             {
-              attribName: "b",
+              attribName: "href",
+              attribNameRecognised: true,
               attribNameStartsAt: 3,
-              attribNameEndsAt: 4,
-              attribOpeningQuoteAt: 4,
-              attribClosingQuoteAt: 6,
-              attribValue: "c",
-              attribValueStartsAt: 5,
-              attribValueEndsAt: 6,
+              attribNameEndsAt: 7,
+              attribOpeningQuoteAt: 7,
+              attribClosingQuoteAt: 11,
+              attribValue: "www",
+              attribValueStartsAt: 8,
+              attribValueEndsAt: 11,
               attribStart: 3,
-              attribEnd: 7,
+              attribEnd: 12,
             },
             {
-              attribName: "d",
-              attribNameStartsAt: 8,
-              attribNameEndsAt: 9,
-              attribOpeningQuoteAt: 9,
-              attribClosingQuoteAt: 11,
+              attribName: "class",
+              attribNameRecognised: true,
+              attribNameStartsAt: 13,
+              attribNameEndsAt: 18,
+              attribOpeningQuoteAt: 18,
+              attribClosingQuoteAt: 20,
               attribValue: "e",
-              attribValueStartsAt: 10,
-              attribValueEndsAt: 11,
-              attribStart: 8,
-              attribEnd: 12,
+              attribValueStartsAt: 19,
+              attribValueEndsAt: 20,
+              attribStart: 13,
+              attribEnd: 21,
             },
           ],
         },
@@ -290,7 +301,7 @@ t.test(
   `02.02 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no opening quotes but equals present`,
   (t) => {
     const gathered = [];
-    ct(`<a b=c" d=e'>`, {
+    ct(`<a href=www" class=e'>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -302,8 +313,8 @@ t.test(
         {
           type: "tag",
           start: 0,
-          end: 13,
-          value: "<a b=c\" d=e'>",
+          end: 22,
+          value: `<a href=www" class=e'>`,
           tagNameStartsAt: 1,
           tagNameEndsAt: 2,
           tagName: "a",
@@ -314,30 +325,30 @@ t.test(
           kind: null,
           attribs: [
             {
-              attribName: "b",
-              attribNameRecognised: false,
+              attribName: "href",
+              attribNameRecognised: true,
               attribNameStartsAt: 3,
-              attribNameEndsAt: 4,
-              attribOpeningQuoteAt: null,
-              attribClosingQuoteAt: 6,
-              attribValue: "c",
-              attribValueStartsAt: 5,
-              attribValueEndsAt: 6,
-              attribStart: 3,
-              attribEnd: 7,
-            },
-            {
-              attribName: "d",
-              attribNameRecognised: false,
-              attribNameStartsAt: 8,
-              attribNameEndsAt: 9,
+              attribNameEndsAt: 7,
               attribOpeningQuoteAt: null,
               attribClosingQuoteAt: 11,
-              attribValue: "e",
-              attribValueStartsAt: 10,
+              attribValue: "www",
+              attribValueStartsAt: 8,
               attribValueEndsAt: 11,
-              attribStart: 8,
+              attribStart: 3,
               attribEnd: 12,
+            },
+            {
+              attribName: "class",
+              attribNameRecognised: true,
+              attribNameStartsAt: 13,
+              attribNameEndsAt: 18,
+              attribOpeningQuoteAt: null,
+              attribClosingQuoteAt: 20,
+              attribValue: "e",
+              attribValueStartsAt: 19,
+              attribValueEndsAt: 20,
+              attribStart: 13,
+              attribEnd: 21,
             },
           ],
         },
@@ -1125,7 +1136,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `05.03 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. end of tag follows`,
   (t) => {
     const gathered = [];

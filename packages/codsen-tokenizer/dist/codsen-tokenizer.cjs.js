@@ -16,6 +16,8 @@ var stringMatchLeftRight = require('string-match-left-right');
 var clone = _interopDefault(require('lodash.clonedeep'));
 var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
+var attributeEnds = _interopDefault(require('is-html-attribute-closing'));
+var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -78,9 +80,6 @@ function isLatinLetter(_char4) {
 function charSuitableForTagName(_char5) {
   return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(_char5);
 }
-function charSuitableForHTMLAttrName(_char6) {
-  return isLatinLetter(_char6) || _char6.charCodeAt(0) >= 48 && _char6.charCodeAt(0) <= 57 || [":", "-"].includes(_char6);
-}
 function flipEspTag(str) {
   var res = "";
   for (var i = 0, len = str.length; i < len; i++) {
@@ -108,27 +107,6 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     }
   }
   return false;
-}
-function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
-  var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-  var _loop = function _loop(i, len) {
-    if (y.some(function (oneOfStr) {
-      return str.startsWith(oneOfStr, i);
-    })) {
-      return {
-        v: true
-      };
-    } else if (str[i] === x) {
-      return {
-        v: false
-      };
-    }
-  };
-  for (var i = startingIdx, len = str.length; i < len; i++) {
-    var _ret = _loop(i);
-    if (_typeof(_ret) === "object") return _ret.v;
-  }
-  return true;
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {
@@ -172,19 +150,6 @@ function startsComment(str, i, token) {
       trimCharsBeforeMatching: ["-", "!"]
     })) && (token.type !== "esp" || token.tail.includes(str[i]))
   );
-}
-
-function attributeEnds(str, i, attrib) {
-  return attrib.attribOpeningQuoteAt === null ||
-  str[attrib.attribOpeningQuoteAt] === str[i] ||
-  "'\"".includes(str[attrib.attribOpeningQuoteAt]) && (!xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=") ||
-  str.includes(">", i) &&
-  Array.from(str.slice(i + 1, str.indexOf(">"))).reduce(function (acc, curr) {
-    return acc + ("'\"".includes(curr) ? 1 : 0);
-  }, 0) % 2 == 0 &&
-  attrib.attribOpeningQuoteAt + 1 < i && str.slice(attrib.attribOpeningQuoteAt + 1, i).trim().length && (
-  ensureXIsNotPresentBeforeOneOfY(str, i, str[attrib.attribOpeningQuoteAt], [">", "=\"", "='"]) ||
-  ensureXIsNotPresentBeforeOneOfY(str, i, "=", [">"])));
 }
 
 function isObj(something) {
@@ -899,7 +864,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && _i2 > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i2])) {
       attrib.attribNameEndsAt = _i2;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, _i2);
-      attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.includes(attrib.attribName);
+      attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.has(attrib.attribName);
       if (str[_i2] && !str[_i2].trim().length && str[stringLeftRight.right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim().length || str[_i2] === ">" || str[_i2] === "/" && str[stringLeftRight.right(str, _i2)] === ">") {
         if ("'\"".includes(str[stringLeftRight.right(str, _i2)])) ; else {
           attrib.attribEnd = _i2;
@@ -939,7 +904,8 @@ function tokenizer(str, originalOpts) {
         } else if (
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
-        }) && attributeEnds(str, _i2, attrib)) {
+        }) &&
+        attributeEnds(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i2)) {
           attrib.attribClosingQuoteAt = _i2;
           attrib.attribValueEndsAt = _i2;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
@@ -995,7 +961,7 @@ function tokenizer(str, originalOpts) {
           _i2 = attribClosingQuoteAt - 1;
           i = _i2;
           return "continue";
-        } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[stringLeftRight.right(str, _i2)]) || htmlAllKnownAttributes.allHtmlAttribs.includes(str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim()))) {
+        } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[stringLeftRight.right(str, _i2)]) || htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim()))) {
           _i2 = attrib.attribOpeningQuoteAt;
           attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
@@ -1019,7 +985,7 @@ function tokenizer(str, originalOpts) {
           if (
           firstCharOnTheRight &&
           str.slice(firstCharOnTheRight).includes("=") &&
-          htmlAllKnownAttributes.allHtmlAttribs.includes(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
+          htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
             attrib.attribEnd = _i2 + 1;
             token.attribs.push(clone(attrib));
             attribReset();
