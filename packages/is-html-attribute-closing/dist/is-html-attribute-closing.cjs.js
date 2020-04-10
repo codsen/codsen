@@ -193,8 +193,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     str[stringLeftRight.right(str, i)] === "=") &&
     lastCapturedChunk &&
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
-      return i > isThisClosingIdx &&
-      !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+      var W1 = i > isThisClosingIdx;
+      var W2 =
+      !(
+      !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) &&
+      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+      return W1 && W2;
     }
     if (i > isThisClosingIdx) {
       if (openingQuote && str[i] === openingQuote) {

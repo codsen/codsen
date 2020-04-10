@@ -199,14 +199,21 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       lastCapturedChunk &&
       allHtmlAttribs.has(lastCapturedChunk)
     ) {
-      return (
-        i > isThisClosingIdx &&
+      const W1 = i > isThisClosingIdx;
+      const W2 =
         !(
-          lastQuoteWasMatched &&
-          lastMatchedQuotesPairsStartIsAt &&
-          lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
-        )
-      );
+          (
+            !(
+              lastQuoteWasMatched &&
+              lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
+              lastMatchedQuotesPairsEndIsAt === isThisClosingIdx
+            ) &&
+            lastQuoteWasMatched &&
+            lastMatchedQuotesPairsStartIsAt &&
+            lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
+          )
+        );
+      return W1 && W2;
     }
     if (i > isThisClosingIdx) {
       if (openingQuote && str[i] === openingQuote) {

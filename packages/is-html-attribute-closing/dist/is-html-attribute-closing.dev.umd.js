@@ -2789,11 +2789,25 @@
       lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
       allHtmlAttribs.has(lastCapturedChunk)) {
         // definitely that's new attribute starting
-        return i > isThisClosingIdx && // insurance against:
+        var W1 = i > isThisClosingIdx;
+        var W2 = // insurance against:
         // <z alt"href' www' id=z"/>
         //       ^         ^
         //     start      suspected ending
-        !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+        //
+        // <z alt"href' www' id=z"/>
+        //                       ^
+        //                    we're here currently
+        !( //
+        // first, rule out healthy code scenarios,
+        // <a href="zzz" target="_blank" style="color: black;">
+        //         ^   ^       ^
+        //        /    |        \
+        //   start   suspected   we're here
+        !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) && //
+        // continuing with catch clauses of the insurance case:
+        lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+        return W1 && W2;
       } // when index "isThisClosingIdx" has been passed...
 
 
