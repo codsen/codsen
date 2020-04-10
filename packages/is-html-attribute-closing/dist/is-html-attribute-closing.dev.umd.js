@@ -1945,6 +1945,91 @@
   }
 
   /**
+   * ranges-is-index-within
+   * Efficiently checks if index is within any of the given ranges
+   * Version: 1.14.31
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
+   */
+  const isArr = Array.isArray;
+
+  function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
+    const defaults = {
+      inclusiveRangeEnds: false,
+      returnMatchedRangeInsteadOfTrue: false
+    };
+    const opts = Object.assign(Object.assign({}, defaults), originalOpts);
+
+    if (!isArr(rangesArr)) {
+      return false;
+    }
+
+    if (opts.returnMatchedRangeInsteadOfTrue) {
+      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
+    }
+
+    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
+  }
+
+  /**
+   * string-split-by-whitespace
+   * Split string into array by chunks of whitespace
+   * Version: 1.6.59
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
+   */
+
+  function split(str, originalOpts) {
+    if (str === undefined) {
+      throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
+    }
+
+    if (typeof str !== "string") {
+      return str;
+    }
+
+    if (str.trim() === "") {
+      return [];
+    }
+
+    const defaults = {
+      ignoreRanges: []
+    };
+    const opts = Object.assign({}, defaults, originalOpts);
+
+    if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
+      throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
+    }
+
+    let nonWhitespaceSubStringStartsAt = null;
+    const res = [];
+
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
+        inclusiveRangeEnds: true
+      }))) {
+        nonWhitespaceSubStringStartsAt = i;
+      }
+
+      if (nonWhitespaceSubStringStartsAt !== null) {
+        if (str[i].trim() === "") {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
+          nonWhitespaceSubStringStartsAt = null;
+        } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
+          nonWhitespaceSubStringStartsAt = null;
+        } else if (str[i + 1] === undefined) {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
+        }
+      }
+    }
+
+    return res;
+  }
+
+  /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
    * Version: 3.11.28
@@ -2271,6 +2356,88 @@
     return main("matchRight", str, position, whatToMatch, opts);
   }
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
+    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+    var _loop = function _loop(i, len) {
+      if (y.some(function (oneOfStr) {
+        return str.startsWith(oneOfStr, i);
+      })) {
+        // it's escape clause, bracket or whatever was reached and yet,
+        // "x" hasn't been encountered yet
+        return {
+          v: true
+        };
+      } else if (str[i] === x) {
+        // if "x" was found, that's it - falsey result
+        return {
+          v: false
+        };
+      }
+    };
+
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      var _ret = _loop(i);
+
+      if (_typeof(_ret) === "object") return _ret.v;
+    } // default result
+
+
+    return true;
+  } // Tells, if substring x goes before substring y on the right
+  // side of "str", starting at index "startingIdx".
+  // Used to troubleshoot dirty broken code.
+
+
+  function xBeforeYOnTheRight(str, startingIdx, x, y) {
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      if (str.startsWith(x, i)) {
+        // if x was first, Bob's your uncle, that's truthy result
+        return true;
+      } else if (str.startsWith(y, i)) {
+        // since we're in this clause, x failed, so if y matched,
+        // this means y precedes x
+        return false;
+      }
+    } // default result
+
+
+    return false;
+  } // Tells, is this a clean plausible attribute starting at given index
+  // <img alt="so-called "artists"class='yo'/>
+  //                              ^
+  //                            start
+
+
+  function plausibleAttrStartsAtX(str, start) {
+    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+      return false;
+    }
+
+    var regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+    return regex.test(str.slice(start));
+  }
+
+  function makeTheQuoteOpposite(quoteChar) {
+    return quoteChar === "'" ? "\"" : "'";
+  }
+
   function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
       return false;
@@ -2280,11 +2447,16 @@
     var oppositeToOpeningQuote = null;
 
     if (openingQuote) {
-      oppositeToOpeningQuote = openingQuote === "\"" ? "'" : "\"";
+      oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
     }
 
     var chunkStartsAt;
-    var quotesCount = new Map().set("'", 0).set("\"", 0); // when suspected attribute name chunks end, we wipe them, but here
+    var quotesCount = new Map().set("'", 0).set("\"", 0).set("matchedPairs", 0);
+    var lastQuoteAt = null;
+    var totalQuotesCount = 0;
+    var lastQuoteWasMatched = false;
+    var lastMatchedQuotesPairsStartIsAt = false;
+    var lastMatchedQuotesPairsEndIsAt = false; // when suspected attribute name chunks end, we wipe them, but here
     // we store the last extracted chunk - then later, for example, when we
     // traverse further and meet opening quote (even with equal missing),
     // we can evaluate that chunk, was it a known attribute name (idea being,
@@ -2301,7 +2473,10 @@
     // that exclamation mark above doesn't resemble an attribute name,
     // so single quote that follows it is not a starting of its value
 
-    var lastChunkWasCapturedAfterSuspectedClosing = false; // let's traverse from opening to the end of the string, then in happy
+    var lastChunkWasCapturedAfterSuspectedClosing = false; // does what it says on the tin - flips on the first instance
+
+    var closingBracketMet = false;
+    var openingBracketMet = false; // let's traverse from opening to the end of the string, then in happy
     // path scenarios, let's exit way earlier, upon closing quote
 
     for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
@@ -2331,9 +2506,146 @@
       //
       // Logging:
       // -------------------------------------------------------------------------
-      // catch quotes
+      if ( // Imagine we're here:
+      // <z bbb"c" ddd'e>
+      //       ^      ^
+      //   start     suspected closing
+      //
+      // this single quote at 13 is preceded by fully matched pair of quotes
+      // there's also attribute-name-like chunk preceding in front.
+      // Let's catch such case.
+      //
+      // 1. we're on a quote
+      "'\"".includes(str[i]) && // 2. we ensure that a pair of quotes was catched so far
+      lastQuoteWasMatched && // 3. lastMatchedQuotesPairsStartIsAt is our known opening
+      lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && // 4. lastMatchedQuotesPairsEndIsAt is the last matched pair's closing:
+      // <z bbb"c" ddd'e>
+      //         ^
+      //        this if to reuse the example..
+      //
+      lastMatchedQuotesPairsEndIsAt < i && // rule must not trigger before the suspected quote index
+      i >= isThisClosingIdx) {
+        // ███████████████████████████████████████ E1
+        //
+        // consider WHERE WE ARE AT THE MOMENT in relation to
+        // the INDEX THAT'S QUESTIONED FOR BEING A CLOSING-ONE
+        // FALSEY result:
+        // <z bbb"c" ddd'e'>.<z fff"g">
+        //       ^      ^
+        //     start   suspected
+        //
+        // <z bbb"c" ddd'e'>.<z fff"g">
+        //              ^
+        //            we're here
+        // TRUTHY result:
+        // <img class="so-called "alt"!' border='10'/>
+        //            ^          ^
+        //          start      suspected
+        //
+        // where we're at:
+        // <img class="so-called "alt"!' border='10'/>
+        //                           ^
+        //
+        var E1 = i !== isThisClosingIdx; // ███████████████████████████████████████ E2
+        //
+        //
+        // ensure it's not a triplet of quotes:
+        // <img alt="so-called "artists"!' class='yo'/>
+        //          ^          ^       ^
+        //       start      suspected  |
+        //                             current index
+        //
+
+        var E21 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i]);
+        var E22 = // or a proper recognised attribute follows:
+        // <img alt="so-called "artists"class='yo'/>
+        //          ^                  ^
+        //       start              suspected and currently on
+        //
+        // plus one because we're on a quote
+        plausibleAttrStartsAtX(str, i + 1);
+        var E23 = // or the last chunk is a known attribute name:
+        // <img class="so-called "alt"!' border='10'/>
+        //            ^          ^
+        //         start      suspected/we're currently on
+        //
+        chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+        var E24 = // imagine:
+        // <z bbb"c" ddd"e'>
+        //       ^ ^
+        //      /  \
+        //  start  suspected
+        //
+        // <z bbb"c" ddd"e'>
+        //              ^
+        //          currently on
+        // E23, recognised attribute name is very weighty argument; however
+        // in light of unrecognised attributes, we might still try to salvage
+        // some, as long as they resemble valid attribute names. We just
+        // validate each character and drop in more rules into the bag,
+        // like requiring whitespace to be in front and opening/closing to match
+        // IF...
+        // there's a whitespace in front of last chunk ("ddd" in example above)
+        chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && // and whole chunk is plausible for attribute
+        Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
+          return charSuitableForHTMLAttrName(_char);
+        }) && // known opening and suspected closing are both singles or doubles
+        str[idxOfAttrOpening] === str[isThisClosingIdx]; // ███████████████████████████████████████ E3
+
+        var E3 = // either it's a tag ending
+        "/>".includes(str[right(str, i)]) || // or next character is suitable for a tag name:
+        charSuitableForHTMLAttrName(str[right(str, i)]) || // or in case of:
+        // <img class="so-called "alt"!' border='10'/>
+        //            ^          ^
+        //          start      suspected
+        //
+        // where we're at:
+        // <img class="so-called "alt"!' border='10'/>
+        //                           ^
+        //                          here
+        lastQuoteWasMatched;
+        return E1 && (E21 || E22 || E23 || E24) && E3;
+      } // catch quotes
+
+
       if ("'\"".includes(str[i])) {
+        // catch the non-overlapping matched pairs of quotes
+        // for example that's three pairs in total below:
+        // <z bbb"c" ddd'e'>.<z fff"g">
+        if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
+          quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
+          lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
+          lastMatchedQuotesPairsEndIsAt = i;
+          lastQuoteAt = null;
+          lastQuoteWasMatched = true;
+        } else {
+          lastQuoteWasMatched = false;
+        } // bump total counts:
+
+
         quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
+        totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'"); // lastQuoteAt = i;
+        // console.log(
+        //   `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+        //     lastQuoteAt,
+        //     null,
+        //     4
+        //   )}`
+        // );
+      } // catch closing brackets
+
+
+      if (str[i] === ">" && !closingBracketMet) {
+        closingBracketMet = true;
+      } // catch opening brackets
+
+
+      if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+        openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
+
+        if (i > isThisClosingIdx) {
+          return false;
+        }
       } //
       //
       //
@@ -2379,7 +2691,35 @@
         // ending of an attr name chunk
         lastCapturedChunk = str.slice(chunkStartsAt, i);
         lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-        chunkStartsAt = null;
+        chunkStartsAt = null; // imagine:
+        // <z bbb"c' href"e>
+        //       ^ ^
+        //   start suspected ending
+        //
+        // we're here:
+        // <z bbb"c' href"e>
+        //               ^
+
+        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
+          var A1 = i > isThisClosingIdx; //
+          // ensure that all continuous chunks since the last quote are
+          // recognised attribute names
+
+          var A21 = !lastQuoteAt;
+          var A22 = lastQuoteAt + 1 >= i;
+          var A23 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
+          var B1 = i === isThisClosingIdx;
+          var B21 = totalQuotesCount < 3;
+          var B22 = !!lastQuoteWasMatched;
+          var B23 = !lastQuoteAt;
+          var B24 = lastQuoteAt + 1 >= i;
+          var B25 = !split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
+          return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+        }
       } // catching new attributes that follow after suspected quote.
       // Imagine
       // <a class "c" id 'e' href "www">
@@ -2400,10 +2740,43 @@
       // In human language, this means, we check, was there a complete
       // set of quotes recorded by now, plus is current chunk a known
       // attribute name - this allows us to catch an attribute with equal missing
-      (quotesCount.get("\"") + quotesCount.get("'")) % 2 && // last chunk is not falsey (thus a string)
+      (quotesCount.get("\"") + quotesCount.get("'")) % 2 && ( //
+      // last chunk is not falsey (thus a string):
       lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
-      allHtmlAttribs.has(lastCapturedChunk)) {
-        return i > isThisClosingIdx;
+      allHtmlAttribs.has(lastCapturedChunk) || // imagine
+      // <z bbb"c" ddd'e'>
+      //         ^
+      //        a suspected closing
+      //
+      // alternatively, check the count of remaining quotes, ensure that
+      // leading up to closing bracket, everything's neat (not overlapping
+      // at least and opened and closed)
+      // this catch is for the following attributes, for example,
+      // <z bbb"c" ddd'e'>
+      //       ^      ^
+      //     start   suspected ending
+      i > isThisClosingIdx + 1 && Array.from(str.slice(isThisClosingIdx + 1, i).trim()).every(function (_char2) {
+        return charSuitableForHTMLAttrName(_char2);
+      }))) {
+        // rules:
+        var R1 = !!openingQuote;
+        var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
+        var R3 = Array.from(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()).every(function (_char3) {
+          return charSuitableForHTMLAttrName(_char3);
+        }); // that quote we suspected as closing, is from an opening-closing
+        // set on another attribute:
+
+        var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
+        return (// before suspected index this pattern is falsey, after - truthy
+          i > isThisClosingIdx && // consider:
+          // <z alt"href' www'/>
+          //       ^    ^
+          //    start   suspected ending
+          // let's rule out the case where whole (suspected) attribute's value is
+          // a known attribute value, plus quotes mismatch plus that closing quote
+          // is on the right, before the its opposite kind
+          !(R1 && R2 && R3 && R4)
+        );
       } else if ( // imagine
       // <a href=www" class=e'>
       //         ^  ^
@@ -2416,14 +2789,28 @@
       lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
       allHtmlAttribs.has(lastCapturedChunk)) {
         // definitely that's new attribute starting
-        return i > isThisClosingIdx;
+        return i > isThisClosingIdx && // insurance against:
+        // <z alt"href' www' id=z"/>
+        //       ^         ^
+        //     start      suspected ending
+        !(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
       } // when index "isThisClosingIdx" has been passed...
 
 
       if (i > isThisClosingIdx) {
-        // if suspected closing quote's index is reached
-        if (openingQuote && str[idxOfAttrOpening] === str[i]) {
-          return false;
+        // if current quote matches the opening
+        if (openingQuote && str[i] === openingQuote) {
+          // we want to return false as default...
+          // except if we're able to extract a clean recognised attribute name
+          // in front of here and prove that it's actually a new attribute starting
+          // here, then it's true
+          // imagine
+          // <img alt="somethin' fishy going on' class">z<a class="y">
+          //          ^                        ^      ^
+          //         start            suspected       we're here
+          return lastQuoteAt && lastQuoteAt === isThisClosingIdx && split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
         } // if we have passed the suspected closing quote
         // and we meet another quote of the same kind,
         // it's false result. Imagine code:
@@ -2447,7 +2834,59 @@
         //        we went past this suspected closing quote
         //        and reached the tag ending...
         else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-            return true;
+            // Not more than one pair of non-overlapping quotes should have been matched.
+            var _R = quotesCount.get("matchedPairs") < 2;
+
+            var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
+            quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+
+            var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char4) {
+              return charSuitableForHTMLAttrName(_char4);
+            }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
+            var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+            var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+            var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
+            return (// The match pair count total has not reach or exceed two
+              // because we're talking about fully matched opening-closing quote
+              // pairs.
+              //
+              // Let me remind you the question algorithm is answering:
+              // Is quote at index y closing quote, considering opening is at x?
+              //
+              // Now, imagine we went past index y, reached index z, and up to
+              // this point two sets of quotes were caught, as in:
+              // <z bbb"c" ddd"e">
+              //       ^        ^
+              //     start     we're here, quote in question
+              //
+              // above, that's falsey result, it can't be fourth caught quote!
+              _R && // besides that,
+              // We need to account for mismatching quote pair. If a pair is
+              // mismatching, "matchedPairs" might not get bumped to two thus
+              // leading to a mistake.
+              // When pair is mismatching, we can tell it's so because total count
+              // minus matched count times two would be equal to two - two
+              // quotes left unmatched.
+              // Mind you, it's not more because algorithm would exit by the time
+              // we would reach 4 let's say...
+              // either there's not more than one pair:
+              _R2 && ( // also, protection against cases like:
+              // <z bbb"c" ddd'e>
+              //       ^      ^
+              //   start     suspected
+              //
+              // in case above, all the clauses up until now pass
+              //
+              // we need to check against "lastQuoteWasMatched" flag
+              //
+              //
+              // or last pair was matched:
+              R31 || // either this closing bracket is the last:
+              R32 || // or char before starting is equal and char before that
+              // satisfies attribute name requirements
+              R33 || // or it seems like it's outside rather inside a tag:
+              R34)
+            );
           } // if the true attribute ending was met passing
         // past the suspected one, this means that
         // suspected one was a false guess. Correct ending
@@ -2500,8 +2939,8 @@
         if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
           // ensure it's not tag ending on the right
           // before freaking out:
-          cb: function cb(_char) {
-            return !"/>".includes(_char);
+          cb: function cb(_char5) {
+            return !"/>".includes(_char5);
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
@@ -2552,6 +2991,11 @@
 
 
         return true;
+      } // PART II of catch quotes
+
+
+      if ("'\"".includes(str[i])) {
+        lastQuoteAt = i;
       } // logging
       // -----------------------------------------------------------------------------
 

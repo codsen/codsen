@@ -1280,24 +1280,34 @@ t.test(
 // 08. missing equal, tight
 // -----------------------------------------------------------------------------
 
+t.only(`deleteme`, (t) => {
+  const str = `<img alt="somethin' fishy going on' class">z<a class="y">`;
+  t.true(is(str, 9, 34), "08.15.02");
+  t.end();
+});
+
 // S-S follows
 
 t.test(
   `08.01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
-    const str = `<z bbb"c" ddd'e'>`;
+    const str = `<z bbb"c" ddd'e'>.<z fff"g">`;
 
     // bbb opening at 6
     t.false(is(str, 6, 6), "08.01.01");
     t.true(is(str, 6, 8), "08.01.02"); // <--
     t.false(is(str, 6, 13), "08.01.03");
     t.false(is(str, 6, 15), "08.01.04");
+    t.false(is(str, 6, 24), "08.01.05");
+    t.false(is(str, 6, 26), "08.01.06");
 
     // ddd opening at 13
     t.false(is(str, 13, 6), "08.01.07");
     t.false(is(str, 13, 8), "08.01.08");
     t.false(is(str, 13, 13), "08.01.09");
     t.true(is(str, 13, 15), "08.01.10"); // <--
+    t.false(is(str, 13, 24), "08.01.11");
+    t.false(is(str, 13, 26), "08.01.12");
 
     // fin.
     t.end();
@@ -1329,9 +1339,11 @@ t.test(
 // S-D follows
 
 t.test(
-  `08.03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-D`,
+  `08.03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c" ddd'e">`;
+
+    // 1. the bracket that follows is the last non-whitespace character in string:
 
     // bbb opening at 6
     t.false(is(str, 6, 6), "08.03.01");
@@ -1345,13 +1357,21 @@ t.test(
     t.false(is(str, 13, 13), "08.03.09");
     t.true(is(str, 13, 15), "08.03.10"); // <--
 
+    // 2. even if more tags follow, result's the same:
+
+    const str2 = `<z bbb"c" ddd'e">something's here<z id='x'>`;
+    t.true(is(str2, 13, 15), "08.03.11"); // <--
+    t.false(is(str2, 13, 26), "08.03.12");
+    t.false(is(str2, 13, 39), "08.03.13");
+    t.false(is(str2, 13, 41), "08.03.14");
+
     // fin.
     t.end();
   }
 );
 
 t.test(
-  `08.04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-D`,
+  `08.04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a class"c" id'e">`;
 
@@ -1469,13 +1489,60 @@ t.test(
 t.test(
   `08.09 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
-    const str = `<z bbb"c" ddd'e>`;
+    const str1 = `<z bbb"c" ddd'e>`;
 
     // algorithm picks the 13 because it is matching and 13 is unmatched
 
     // bbb opening at 6
-    t.true(is(str, 6, 8), "08.09.01"); // <--
-    t.false(is(str, 6, 13), "08.09.02");
+    t.true(is(str1, 6, 8), "08.09.01"); // <--
+    t.false(is(str1, 6, 13), "08.09.02");
+
+    // also,
+
+    const str2 = `<z bbb"c" ddd'e'>`;
+
+    // bbb opening at 6
+    t.true(is(str2, 6, 8), "08.09.03"); // <--
+    t.false(is(str2, 6, 13), "08.09.04");
+    t.false(is(str2, 6, 15), "08.09.05");
+
+    // also, even though href is suspicious, it's wrapped with a matching
+    // quote pair so we take it as value, not attribute name
+
+    const str3 = `<z alt"href" www'/>`;
+
+    // bbb opening at 6
+    t.true(is(str3, 6, 11), "08.09.06"); // <--
+    t.false(is(str3, 6, 16), "08.09.07");
+
+    // but it's enough to mismatch the pair and it becomes...
+
+    const str4 = `<z alt"href' www'/>`;
+    // Algorithm sees this as:
+    // <z alt="" href=' ddd'/>
+
+    // bbb opening at 6
+    t.false(is(str4, 6, 11), "08.09.08"); // <--
+    // even though it's mismatching:
+    t.false(is(str4, 6, 16), "08.09.09");
+
+    // but doubles in front:
+    const str5 = `<z alt""href' www'/>`;
+    t.true(is(str5, 6, 7), "08.09.10"); // <--
+    t.false(is(str5, 6, 12), "08.09.11");
+    t.false(is(str5, 6, 17), "08.09.12");
+
+    // even doubles can follow,
+
+    const str6 = `<z alt"href' www' id=z"/>`;
+    // Algorithm sees this as:
+    // <z alt="" href=' ddd'/>
+
+    // bbb opening at 6
+    t.false(is(str6, 6, 11), "08.09.13"); // <--
+    // even though it's mismatching:
+    t.false(is(str6, 6, 16), "08.09.14");
+    t.false(is(str6, 6, 22), "08.09.15");
 
     // fin.
     t.end();
@@ -1564,9 +1631,9 @@ t.test(
     // as in
     // <img alt="somethin' fishy going on" class>
 
-    // bbb opening at 6
-    t.true(is(str, 6, 8), "08.13.01"); // <--
-    t.false(is(str, 6, 21), "08.13.02");
+    // bbb opening at 7
+    t.true(is(str, 7, 12), "08.14.01"); // <--
+    t.false(is(str, 7, 23), "08.14.02");
 
     // fin.
     t.end();
@@ -1579,11 +1646,11 @@ t.test(
     const str = `<img alt="somethin' fishy going on' class">z<a class="y">`;
 
     // alt opening at 9
-    t.false(is(str, 9, 18), "08.13.01"); // <--
-    t.true(is(str, 6, 34), "08.13.02");
-    t.false(is(str, 6, 41), "08.13.03");
-    t.false(is(str, 6, 53), "08.13.04");
-    t.false(is(str, 6, 55), "08.13.05");
+    t.false(is(str, 9, 18), "08.15.01"); // <--
+    t.true(is(str, 9, 34), "08.15.02");
+    t.false(is(str, 9, 41), "08.15.03");
+    t.false(is(str, 9, 53), "08.15.04");
+    t.false(is(str, 9, 55), "08.15.05");
 
     // fin.
     t.end();
