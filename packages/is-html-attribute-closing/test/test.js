@@ -1601,12 +1601,6 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.todo(`deleteme`, (t) => {
-  const str = `<img class="so-called "alt"!' border='10'/>`;
-  t.true(is(str, 11, 22), "02.02.01");
-  t.end();
-});
-
 // S-S follows
 
 t.test(
@@ -2545,3 +2539,9 @@ t.test(
     t.end();
   }
 );
+
+t.todo(`deleteme`, (t) => {
+  const str = `<img class="so-called "alt '!' border 10'/>`;
+  t.true(is(str, 11, 22), "02.03.01");
+  t.end();
+});

@@ -68,14 +68,14 @@ function plausibleAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  var regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+  var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
 function guaranteedAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  var regex = /^[a-zA-Z0-9:-]*=?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
 
@@ -113,8 +113,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] &&
       plausibleAttrStartsAtX(str, i + 1));
       var E31 =
-      plausibleAttrStartsAtX(str, i + 1) &&
-      i < isThisClosingIdx;
+      i === isThisClosingIdx &&
+      plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
       var E32 =
       chunkStartsAt && chunkStartsAt < i && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length &&
@@ -175,6 +175,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+      } else if (
+      lastCapturedChunk && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+        return true;
       }
     }
     if (
@@ -272,6 +275,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }) &&
       charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
         return false;
+      }
+      if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
+        return true;
       }
     }
     if ("'\"".includes(str[i]) &&

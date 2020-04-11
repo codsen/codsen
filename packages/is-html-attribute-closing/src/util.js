@@ -44,21 +44,22 @@ function plausibleAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+  // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+  const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
 
 // difference is equal is required
 function guaranteedAttrStartsAtX(str, start) {
   console.log(
-    `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+    `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
   );
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
   // either quotes match or does not match but tag closing follows
-  // const regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
-  const regex = /^[a-zA-Z0-9:-]*=?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
 

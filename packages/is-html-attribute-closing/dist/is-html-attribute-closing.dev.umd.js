@@ -2428,9 +2428,10 @@
   function plausibleAttrStartsAtX(str, start) {
     if (!charSuitableForHTMLAttrName(str[start]) || !start) {
       return false;
-    }
+    } // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
 
-    var regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+
+    var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
     return regex.test(str.slice(start));
   } // difference is equal is required
 
@@ -2439,10 +2440,10 @@
     if (!charSuitableForHTMLAttrName(str[start]) || !start) {
       return false;
     } // either quotes match or does not match but tag closing follows
-    // const regex = /^[a-zA-Z0-9:-]*=?((?:'[^']*')|(?:"[^"]*"))/;
+    // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
 
 
-    var regex = /^[a-zA-Z0-9:-]*=?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+    var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
     return regex.test(str.slice(start));
   }
 
@@ -2573,15 +2574,16 @@
         //            ^          ^   ^
         //        start          |    \
         //           suspected end    currently on
-        plausibleAttrStartsAtX(str, i + 1));
+        plausibleAttrStartsAtX(str, i + 1)); // ███████████████████████████████████████ E3
+
         var E31 = // or a proper recognised attribute follows:
         // <img alt="so-called "artists"class='yo'/>
         //          ^                  ^
         //       start              suspected and currently on
         //
-        // plus one because we're on a quote
-        plausibleAttrStartsAtX(str, i + 1) && // we must be past the suspected closing, the "isThisClosingIdx"
-        i < isThisClosingIdx;
+        // we're on a suspected quote
+        i === isThisClosingIdx && // plus one because we're on a quote
+        plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
         var E32 = // or the last chunk is a known attribute name:
         // <img class="so-called "alt"!' border='10'/>
         //            ^          ^
@@ -2603,11 +2605,11 @@
         // like requiring whitespace to be in front and opening/closing to match
         // there's a whitespace in front of last chunk ("ddd" in example above)
 
-        var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && // and whole chunk is plausible for attribute
+        var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && // and whole chunk is a plausible attribute name
         Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
           return charSuitableForHTMLAttrName(_char);
         }) && // known opening and suspected closing are both singles or doubles
-        str[idxOfAttrOpening] === str[isThisClosingIdx]; // ███████████████████████████████████████ E3
+        str[idxOfAttrOpening] === str[isThisClosingIdx]; // ███████████████████████████████████████ E4
 
         var E41 = // either it's a tag ending and we're at the suspected quote
         "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
@@ -2741,6 +2743,9 @@
             return allHtmlAttribs.has(chunk);
           });
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+        } else if ( // this is a recognised attribute
+        lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+          return true;
         }
       } // catching new attributes that follow after suspected quote.
       // Imagine
@@ -3004,6 +3009,10 @@
         // the charSuitableForHTMLAttrName()...)
         charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
           return false;
+        }
+
+        if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
+          return true;
         }
       } //
       //

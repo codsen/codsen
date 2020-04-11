@@ -37,14 +37,14 @@ function plausibleAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+  const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
 function guaranteedAttrStartsAtX(str, start) {
   if (!charSuitableForHTMLAttrName(str[start]) || !start) {
     return false;
   }
-  const regex = /^[a-zA-Z0-9:-]*=?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
 
@@ -99,8 +99,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         plausibleAttrStartsAtX(str, i + 1)
       );
       const E31 =
-        plausibleAttrStartsAtX(str, i + 1) &&
-        i < isThisClosingIdx;
+        i === isThisClosingIdx &&
+        plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
       const E32 =
         chunkStartsAt &&
         chunkStartsAt < i &&
@@ -177,6 +177,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           (A1 && (A21 || A22 || A23)) ||
           (B1 && (B21 || B22 || B23 || B24 || B25))
         );
+      } else if (
+        lastCapturedChunk &&
+        allHtmlAttribs.has(lastCapturedChunk) &&
+        lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
+        lastMatchedQuotesPairsEndIsAt === isThisClosingIdx
+      ) {
+        return true;
       }
     }
     if (
@@ -324,6 +331,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
       ) {
         return false;
+      }
+      if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
+        return true;
       }
     }
     if (
