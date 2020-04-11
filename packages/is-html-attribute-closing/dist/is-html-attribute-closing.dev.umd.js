@@ -1944,6 +1944,36 @@
     return rightMain(str, idx, false);
   }
 
+  function leftMain(str, idx, stopAtNewlines) {
+    if (typeof str !== "string" || !str.length) {
+      return null;
+    }
+
+    if (!idx || typeof idx !== "number") {
+      idx = 0;
+    }
+
+    if (idx < 1) {
+      return null;
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+      return idx - 1;
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+      return idx - 2;
+    }
+
+    for (let i = idx; i--;) {
+      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+        return i;
+      }
+    }
+
+    return null;
+  }
+
+  function left(str, idx) {
+    return leftMain(str, idx, false);
+  }
+
   /**
    * ranges-is-index-within
    * Efficiently checks if index is within any of the given ranges
@@ -2559,7 +2589,7 @@
         // <img class="so-called "alt"!' border='10'/>
         //                           ^
         //
-        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, isThisClosingIdx + 1); // ███████████████████████████████████████ E2
+        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, isThisClosingIdx + 1) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
         //
         //
         // ensure it's not a triplet of quotes:
@@ -2609,7 +2639,14 @@
         Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
           return charSuitableForHTMLAttrName(_char);
         }) && // known opening and suspected closing are both singles or doubles
-        str[idxOfAttrOpening] === str[isThisClosingIdx]; // ███████████████████████████████████████ E4
+        str[idxOfAttrOpening] === str[isThisClosingIdx]; // anti-rule - it's fine if we're on suspected ending and to the left
+        // it's not an attribute start
+        // <img alt='Deal is your's!"/>
+        //          ^               ^
+        //       start            suspected/current
+
+        var E34 = // we're on suspected
+        i === isThisClosingIdx && !charSuitableForHTMLAttrName(str[left(str, i)]); // ███████████████████████████████████████ E4
 
         var E41 = // either it's a tag ending and we're at the suspected quote
         "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
@@ -2625,7 +2662,7 @@
         //                           ^
         //                          here
         lastQuoteWasMatched && i !== isThisClosingIdx;
-        return E1 && E2 && (E31 || E32 || E33) && (E41 || E42 || E43);
+        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
       } // catch quotes
 
 

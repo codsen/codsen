@@ -2541,7 +2541,7 @@ t.test(
 );
 
 t.todo(`deleteme`, (t) => {
-  const str = `<img class="so-called "alt '!' border 10'/>`;
-  t.true(is(str, 11, 22), "02.03.01");
+  const str = `<img alt='Deal is your's!"/>`;
+  t.true(is(str, 9, 25), "02.25.03");
   t.end();
 });

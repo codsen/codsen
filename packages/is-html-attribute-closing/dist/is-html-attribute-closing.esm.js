@@ -9,7 +9,7 @@
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
-import { right } from 'string-left-right';
+import { right, left } from 'string-left-right';
 import split from 'string-split-by-whitespace';
 import { matchRight } from 'string-match-left-right';
 
@@ -91,7 +91,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     ) {
       const E1 =
         i !== isThisClosingIdx ||
-        guaranteedAttrStartsAtX(str, isThisClosingIdx + 1);
+        guaranteedAttrStartsAtX(str, isThisClosingIdx + 1) ||
+        `/>`.includes(str[right(str, i)]);
       const E2 = !(
         i > isThisClosingIdx &&
         str[idxOfAttrOpening] === str[isThisClosingIdx] &&
@@ -114,13 +115,16 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           charSuitableForHTMLAttrName(char)
         ) &&
         str[idxOfAttrOpening] === str[isThisClosingIdx];
+      const E34 =
+        i === isThisClosingIdx &&
+        !charSuitableForHTMLAttrName(str[left(str, i)]);
       const E41 =
         `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
       const E42 =
         charSuitableForHTMLAttrName(str[right(str, i)]);
       const E43 =
         lastQuoteWasMatched && i !== isThisClosingIdx;
-      return E1 && E2 && (E31 || E32 || E33) && (E41 || E42 || E43);
+      return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
     }
     if (`'"`.includes(str[i])) {
       if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
