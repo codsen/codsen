@@ -212,7 +212,7 @@ t.test(
 //
 //
 //
-//   LEGEND: S means single, D means double
+//   LEGEND: S means single, D means double, X means absent
 //
 //   For example \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m means single - double (meaning in that order)
 //
@@ -848,6 +848,7 @@ t.test(
 
 // 03. cheeky cases
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
   `03.01 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
@@ -1181,6 +1182,7 @@ t.test(
 
 // 04. unclosed tags
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
   `04.01 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
@@ -1404,6 +1406,7 @@ t.test(
 
 // 05. attribute starts without a quote
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
   `05.01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, one attr`,
@@ -1488,23 +1491,24 @@ t.test(
 
 // 06. repeated equals
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
-  `05.01 - ${`\u001b[${34}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr`,
+  `06.01 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr`,
   (t) => {
     const str = `<a b=="c" d=='e'>`;
 
     // b opening at 6
-    t.false(is(str, 6, 6), "05.01.01");
-    t.true(is(str, 6, 8), "05.01.02"); // <--
-    t.false(is(str, 6, 13), "05.01.03");
-    t.false(is(str, 6, 15), "05.01.04");
+    t.false(is(str, 6, 6), "06.01.01");
+    t.true(is(str, 6, 8), "06.01.02"); // <--
+    t.false(is(str, 6, 13), "06.01.03");
+    t.false(is(str, 6, 15), "06.01.04");
 
     // d opening at 13
-    t.false(is(str, 13, 6), "05.01.05");
-    t.false(is(str, 13, 8), "05.01.06");
-    t.false(is(str, 13, 13), "05.01.07");
-    t.true(is(str, 13, 15), "05.01.08"); // <--
+    t.false(is(str, 13, 6), "06.01.05");
+    t.false(is(str, 13, 8), "06.01.06");
+    t.false(is(str, 13, 13), "06.01.07");
+    t.true(is(str, 13, 15), "06.01.08"); // <--
 
     // fin.
     t.end();
@@ -1512,21 +1516,21 @@ t.test(
 );
 
 t.test(
-  `05.02 - ${`\u001b[${34}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three equals`,
+  `06.02 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three equals`,
   (t) => {
     const str = `<a b==="c" d==='e'>`;
 
     // b opening at 7
-    t.false(is(str, 7, 7), "05.02.01");
-    t.true(is(str, 7, 9), "05.02.02"); // <--
-    t.false(is(str, 7, 15), "05.02.03");
-    t.false(is(str, 7, 17), "05.02.04");
+    t.false(is(str, 7, 7), "06.02.01");
+    t.true(is(str, 7, 9), "06.02.02"); // <--
+    t.false(is(str, 7, 15), "06.02.03");
+    t.false(is(str, 7, 17), "06.02.04");
 
     // d opening at 15
-    t.false(is(str, 15, 7), "05.02.05");
-    t.false(is(str, 15, 9), "05.02.06");
-    t.false(is(str, 15, 15), "05.02.07");
-    t.true(is(str, 15, 17), "05.02.08"); // <--
+    t.false(is(str, 15, 7), "06.02.05");
+    t.false(is(str, 15, 9), "06.02.06");
+    t.false(is(str, 15, 15), "06.02.07");
+    t.true(is(str, 15, 17), "06.02.08"); // <--
 
     // fin.
     t.end();
@@ -1534,21 +1538,21 @@ t.test(
 );
 
 t.test(
-  `05.03 - ${`\u001b[${34}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three spaced equals`,
+  `06.03 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three spaced equals`,
   (t) => {
     const str = `<a b = = = "c" d = = = 'e'>`;
 
     // b opening at 11
-    t.false(is(str, 11, 11), "05.03.01");
-    t.true(is(str, 11, 13), "05.03.02"); // <--
-    t.false(is(str, 11, 23), "05.03.03");
-    t.false(is(str, 11, 25), "05.03.04");
+    t.false(is(str, 11, 11), "06.03.01");
+    t.true(is(str, 11, 13), "06.03.02"); // <--
+    t.false(is(str, 11, 23), "06.03.03");
+    t.false(is(str, 11, 25), "06.03.04");
 
     // d opening at 23
-    t.false(is(str, 23, 11), "05.03.05");
-    t.false(is(str, 23, 13), "05.03.06");
-    t.false(is(str, 23, 23), "05.03.07");
-    t.true(is(str, 23, 25), "05.03.08"); // <--
+    t.false(is(str, 23, 11), "06.03.05");
+    t.false(is(str, 23, 13), "06.03.06");
+    t.false(is(str, 23, 23), "06.03.07");
+    t.true(is(str, 23, 25), "06.03.08"); // <--
 
     // fin.
     t.end();
@@ -1557,6 +1561,7 @@ t.test(
 
 // 07. equals is replaced with whitespace
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
   `07.01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - one tag, three attrs`,
@@ -1594,10 +1599,11 @@ t.test(
 
 // 08. missing equal, tight
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.todo(`deleteme`, (t) => {
-  const str = `<img alt='Deal is your's!"/>`;
-  t.false(is(str, 9, 22), "02.25.02");
+  const str = `<img class="so-called "alt"!' border='10'/>`;
+  t.true(is(str, 11, 22), "02.02.01");
   t.end();
 });
 
@@ -1985,6 +1991,7 @@ t.test(
 
 // 09. starting index is not on a quote
 // -----------------------------------------------------------------------------
+//   LEGEND: S means single, D means double, X means absent
 
 t.test(
   `09.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - control`,
@@ -2060,7 +2067,7 @@ t.test(
 
 // "X" meaning absent
 t.test(
-  `09.03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-D + X-D`,
+  `09.03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // X-D + X-D + D-D
     const str1 = `<a href=www" class=e" id="f">`;
@@ -2180,7 +2187,7 @@ t.test(
 );
 
 t.test(
-  `09.04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-D + X-S`,
+  `09.04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // X-D + X-S + D-D
     const str1 = `<a href=www" class=e' id="f">`;
@@ -2300,7 +2307,7 @@ t.test(
 );
 
 t.test(
-  `09.05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-S + X-D`,
+  `09.05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // X-S + X-D + D-D
     const str1 = `<a href=www' class=e" id="f">`;
@@ -2420,7 +2427,7 @@ t.test(
 );
 
 t.test(
-  `09.06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - X-S + X-S`,
+  `09.06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // X-S + X-S + D-D
     const str1 = `<a href=www' class=e' id="f">`;

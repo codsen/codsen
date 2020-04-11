@@ -92,19 +92,20 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       const E1 =
         i !== isThisClosingIdx ||
         guaranteedAttrStartsAtX(str, isThisClosingIdx + 1);
-      const E21 = !(
+      const E2 = !(
         i > isThisClosingIdx &&
         str[idxOfAttrOpening] === str[isThisClosingIdx] &&
-        str[idxOfAttrOpening] === str[i]
+        str[idxOfAttrOpening] === str[i] &&
+        plausibleAttrStartsAtX(str, i + 1)
       );
-      const E22 =
+      const E31 =
         plausibleAttrStartsAtX(str, i + 1) &&
         i < isThisClosingIdx;
-      const E23 =
+      const E32 =
         chunkStartsAt &&
         chunkStartsAt < i &&
         allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-      const E24 =
+      const E33 =
         chunkStartsAt &&
         chunkStartsAt < i &&
         str[chunkStartsAt - 1] &&
@@ -113,13 +114,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           charSuitableForHTMLAttrName(char)
         ) &&
         str[idxOfAttrOpening] === str[isThisClosingIdx];
-      const E31 =
+      const E41 =
         `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
-      const E32 =
+      const E42 =
         charSuitableForHTMLAttrName(str[right(str, i)]);
-      const E33 =
+      const E43 =
         lastQuoteWasMatched && i !== isThisClosingIdx;
-      return E1 && (E21 || E22 || E23 || E24) && (E31 || E32 || E33);
+      return E1 && E2 && (E31 || E32 || E33) && (E41 || E42 || E43);
     }
     if (`'"`.includes(str[i])) {
       if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
