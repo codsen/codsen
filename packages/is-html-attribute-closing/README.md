@@ -65,7 +65,7 @@ This package has three builds in `dist/` folder:
 
 Detect, is a character at a given index in a given string being a closing of an attribute?
 
-In happy path scenarios, the closing is closing quote of an attribute:
+In happy path scenarios, the closing is a closing quote of an attribute:
 
 ```js
 const isAttrClosing = require("is-html-attribute-closing");
@@ -85,7 +85,7 @@ const res = is(
   28 // we question, is this a closing on the attribute?
 );
 console.log(res);
-// => true - it is indeed closing of an attribute
+// => true - it is indeed a closing of an attribute
 ```
 
 But this program detects all the crazy cases of realistic and unrealistic HTML attribute endings:
@@ -94,27 +94,46 @@ But this program detects all the crazy cases of realistic and unrealistic HTML a
 const isAttrClosing = require("is-html-attribute-closing");
 const res1 = is(
   `<a href="z' click here</a>`,
-  //         ^
-  //         |
-  //         L________________________
-  //                                 |
-  8, // known opening               |
+  //       ^ ^
+  //       | \
+  //       |  \_________________________________
+  //       |                                   |
+  8, // known opening                          |
   10 // is this an attribute closing at index 10?
 );
 console.log(res1);
-// => true - it is indeed closing of an attribute
+// => true - yes, indeed a closing of an attribute
+
+// -----------------------------------------------------------------------------
 
 const res2 = is(
   `<a b = = = "c" d = = = 'e'>`,
-  //            ^
-  //            |
-  //            L___________________________
-  //                                       |
-  11, // known opening                     |
+  //          ^ ^
+  //          | |
+  //          | L_______________________________
+  //          |                                |
+  11, // known opening                         |
   13 // is this an attribute closing at index 13?
 );
 console.log(res2);
-// => true - it is indeed closing of an attribute
+// => true - indeed a closing of an attribute
+
+// -----------------------------------------------------------------------------
+
+// imagine a healthy tag:
+// <img class="so-called" alt="!" border='10'/>
+// now let's mess it up a little bit:
+const str = `<img class="so-called "alt !' border 10'/>`;
+
+// all targetting the class opening at 11
+console.log(is(str, 11, 22));
+// => true - indeed a closing of an attribute
+
+console.log(is(str, 11, 28));
+// => false
+
+console.log(is(str, 11, 28));
+// => false
 ```
 
 **[⬆ back to top](#)**
@@ -131,7 +150,7 @@ console.log(res2);
 
 This program does not throw. It just returns `false`.
 
-If anything is wrong with the input arguments, the program returns **false**. It never throws. That's because it's to be used inside other programs. Idea is, proper algorithms that will use this program will "care" only about the truthy case: does the given quote pass as a closing-one. Crappy input arguments yields `false`, happy days, consuming algorithms continue whatever dodgy journeys they have been making.
+If anything is wrong with the input arguments, the program returns **false**. It never throws. That's because it's to be used inside other programs. Idea is, proper algorithms that will use this program will "care" only about the **truthy** case: does the given quote pass as a closing-one. Crappy input arguments yields `false`, happy days, consuming algorithms continue whatever dodgy journeys they have been making.
 
 We don't throw errors in this program.
 

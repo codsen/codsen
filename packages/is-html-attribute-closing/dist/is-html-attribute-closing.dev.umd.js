@@ -2477,6 +2477,18 @@
     return regex.test(str.slice(start));
   }
 
+  function findAttrNameCharsChunkOnTheLeft(str, i) {
+    if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
+      return;
+    }
+
+    for (var y = i; y--;) {
+      if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+        return str.slice(y + 1, i);
+      }
+    }
+  }
+
   function makeTheQuoteOpposite(quoteChar) {
     return quoteChar === "'" ? "\"" : "'";
   }
@@ -2651,13 +2663,8 @@
 
         var attrNameCharsChunkOnTheLeft = void 0;
 
-        if (i === isThisClosingIdx && charSuitableForHTMLAttrName(str[left(str, i)])) {
-          for (var y = i; y--;) {
-            if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
-              attrNameCharsChunkOnTheLeft = str.slice(y + 1, i);
-              break;
-            }
-          }
+        if (i === isThisClosingIdx) {
+          attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
         }
 
         var E34 = // we're on suspected
@@ -2712,16 +2719,22 @@
 
 
       if (str[i] === ">" && !closingBracketMet) {
-        closingBracketMet = true;
+        closingBracketMet = true; // if all pairs of quotes were met, that's a good indicator, imagine
+        // <z bbb"c" ddd'e'>
+        //                 ^
+
+        if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && // we haven't reached the suspected quote and tag's already ending
+        i < isThisClosingIdx) {
+          return false;
+        }
       } // catch opening brackets
 
 
       if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
         openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
+        // if (i > isThisClosingIdx) {
 
-        if (i > isThisClosingIdx) {
-          return false;
-        }
+        return false; // }
       } //
       //
       //
@@ -2945,9 +2958,18 @@
             !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]); // Not more than one pair of non-overlapping quotes should have been matched.
 
 
-            var _R2 = quotesCount.get("matchedPairs") < 2;
+            var R11 = quotesCount.get("matchedPairs") < 2; // at least it's not a recognised attribute name on the left:
 
-            var _R3 = totalQuotesCount < 3 || // there's only two quotes mismatching:
+            var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+
+            var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && !( // avoid cases where multiple pairs of mismatching quotes were matched
+            // we're past suspected closing:
+            i > isThisClosingIdx && // and there were some single quotes recorded so far
+            quotesCount.get("'") && // and doubles too
+            quotesCount.get("\"") && // and there were few quote pairs matched
+            quotesCount.get("matchedPairs") > 1);
+
+            var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
             quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
 
             var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
@@ -2974,7 +2996,7 @@
               //     start     we're here, quote in question
               //
               // above, that's falsey result, it can't be fourth caught quote!
-              _R2 && // besides that,
+              (R11 || R12) && // besides that,
               // We need to account for mismatching quote pair. If a pair is
               // mismatching, "matchedPairs" might not get bumped to two thus
               // leading to a mistake.
@@ -2984,7 +3006,7 @@
               // Mind you, it's not more because algorithm would exit by the time
               // we would reach 4 let's say...
               // either there's not more than one pair:
-              _R3 && ( // also, protection against cases like:
+              _R2 && ( // also, protection against cases like:
               // <z bbb"c" ddd'e>
               //       ^      ^
               //   start     suspected
@@ -3042,9 +3064,9 @@
           // happy path
           firstNonWhitespaceCharOnTheLeft = i - 1;
         } else {
-          for (var _y = i; _y--;) {
-            if (str[_y].trim().length && str[_y] !== "=") {
-              firstNonWhitespaceCharOnTheLeft = _y;
+          for (var y = i; y--;) {
+            if (str[y].trim().length && str[y] !== "=") {
+              firstNonWhitespaceCharOnTheLeft = y;
               break;
             }
           }

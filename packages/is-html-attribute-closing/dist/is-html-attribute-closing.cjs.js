@@ -78,6 +78,16 @@ function guaranteedAttrStartsAtX(str, start) {
   var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
+function findAttrNameCharsChunkOnTheLeft(str, i) {
+  if (!charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)])) {
+    return;
+  }
+  for (var y = i; y--;) {
+    if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+      return str.slice(y + 1, i);
+    }
+  }
+}
 
 function makeTheQuoteOpposite(quoteChar) {
   return quoteChar === "'" ? "\"" : "'";
@@ -123,13 +133,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }) &&
       str[idxOfAttrOpening] === str[isThisClosingIdx];
       var attrNameCharsChunkOnTheLeft = void 0;
-      if (i === isThisClosingIdx && charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)])) {
-        for (var y = i; y--;) {
-          if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
-            attrNameCharsChunkOnTheLeft = str.slice(y + 1, i);
-            break;
-          }
-        }
+      if (i === isThisClosingIdx) {
+        attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
       var E34 =
       i === isThisClosingIdx && (
@@ -159,12 +164,14 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     }
     if (str[i] === ">" && !closingBracketMet) {
       closingBracketMet = true;
+      if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 &&
+      i < isThisClosingIdx) {
+        return false;
+      }
     }
     if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true;
-      if (i > isThisClosingIdx) {
-        return false;
-      }
+      return false;
     }
     if (str[i].trim().length && !chunkStartsAt) {
       if (charSuitableForHTMLAttrName(str[i])) {
@@ -243,8 +250,14 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           str[idxOfAttrOpening] === str[isThisClosingIdx] &&
           lastQuoteAt === isThisClosingIdx &&
           !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
-          var _R2 = quotesCount.get("matchedPairs") < 2;
-          var _R3 = totalQuotesCount < 3 ||
+          var R11 = quotesCount.get("matchedPairs") < 2;
+          var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+          var R12 = (!_attrNameCharsChunkOnTheLeft || !htmlAllKnownAttributes.allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && !(
+          i > isThisClosingIdx &&
+          quotesCount.get("'") &&
+          quotesCount.get("\"") &&
+          quotesCount.get("matchedPairs") > 1);
+          var _R2 = totalQuotesCount < 3 ||
           quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
           var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
             return charSuitableForHTMLAttrName(_char2);
@@ -254,8 +267,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
           return (
             _R ||
-            _R2 &&
-            _R3 && (
+            (R11 || R12) &&
+            _R2 && (
             R31 ||
             R32 ||
             R33 ||
@@ -273,9 +286,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
-        for (var _y = i; _y--;) {
-          if (str[_y].trim().length && str[_y] !== "=") {
-            firstNonWhitespaceCharOnTheLeft = _y;
+        for (var y = i; y--;) {
+          if (str[y].trim().length && str[y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = y;
             break;
           }
         }

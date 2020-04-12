@@ -1,4 +1,5 @@
 import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
+import { left } from "string-left-right";
 
 function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
@@ -63,9 +64,28 @@ function guaranteedAttrStartsAtX(str, start) {
   return regex.test(str.slice(start));
 }
 
+function findAttrNameCharsChunkOnTheLeft(str, i) {
+  if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
+    return;
+  }
+  for (let y = i; y--; ) {
+    console.log(
+      `073 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+        str[y],
+        null,
+        4
+      )}`
+    );
+    if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+      return str.slice(y + 1, i);
+    }
+  }
+}
+
 export {
   ensureXIsNotPresentBeforeOneOfY,
   xBeforeYOnTheRight,
   plausibleAttrStartsAtX,
   guaranteedAttrStartsAtX,
+  findAttrNameCharsChunkOnTheLeft,
 };

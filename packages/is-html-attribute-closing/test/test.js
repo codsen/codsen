@@ -860,6 +860,238 @@ t.test(
   }
 );
 
+t.test(
+  `02.28 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap`,
+  (t) => {
+    // D-D-D-D
+    const str1 = `<img alt="so-called "artists"!"/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 20), "02.28.01");
+    t.false(is(str1, 9, 28), "02.28.02");
+    t.true(is(str1, 9, 30), "02.28.03"); // <--
+
+    // S-D-D-D
+    const str2 = `<img alt='so-called "artists"!"/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 20), "02.28.04");
+    t.false(is(str2, 9, 28), "02.28.05");
+    t.true(is(str2, 9, 30), "02.28.06"); // <--
+
+    // D-D-D-S
+    const str3 = `<img alt="so-called "artists"!'/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 20), "02.28.07");
+    t.false(is(str3, 9, 28), "02.28.08");
+    t.true(is(str3, 9, 30), "02.28.09"); // <--
+
+    // S-D-D-S
+    const str4 = `<img alt='so-called "artists"!'/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 20), "02.28.10");
+    t.false(is(str4, 9, 28), "02.28.11");
+    t.true(is(str4, 9, 30), "02.28.12"); // <--
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.29 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, D-D`,
+  (t) => {
+    // D-D-D-D
+    const str1 = `<img alt="so-called "artists"!" id="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 20), "02.29.01");
+    t.false(is(str1, 9, 28), "02.29.02");
+    t.true(is(str1, 9, 30), "02.29.03"); // <--
+    t.false(is(str1, 9, 35), "02.29.04");
+    t.false(is(str1, 9, 38), "02.29.05");
+
+    // S-D-D-D
+    const str2 = `<img alt='so-called "artists"!" id="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 20), "02.29.06");
+    t.false(is(str2, 9, 28), "02.29.07");
+    t.true(is(str2, 9, 30), "02.29.08"); // <--
+    t.false(is(str1, 9, 35), "02.29.09");
+    t.false(is(str1, 9, 38), "02.29.10");
+
+    // D-D-D-S
+    const str3 = `<img alt="so-called "artists"!' id="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 20), "02.29.11");
+    t.false(is(str3, 9, 28), "02.29.12");
+    t.true(is(str3, 9, 30), "02.29.13"); // <--
+    t.false(is(str1, 9, 35), "02.29.14");
+    t.false(is(str1, 9, 38), "02.29.15");
+
+    // S-D-D-S
+    const str4 = `<img alt='so-called "artists"!' id="yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 20), "02.29.16");
+    t.false(is(str4, 9, 28), "02.29.17");
+    t.true(is(str4, 9, 30), "02.29.18"); // <--
+    t.false(is(str1, 9, 35), "02.29.19");
+    t.false(is(str1, 9, 38), "02.29.20");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.30 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, D-S`,
+  (t) => {
+    // D-D-D-D
+    const str1 = `<img alt="so-called "artists"!" id="yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 20), "02.30.01");
+    t.false(is(str1, 9, 28), "02.30.02");
+    t.true(is(str1, 9, 30), "02.30.03"); // <--
+    t.false(is(str1, 9, 35), "02.30.04");
+    t.false(is(str1, 9, 38), "02.30.05");
+
+    // S-D-D-D
+    const str2 = `<img alt='so-called "artists"!" id="yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 20), "02.30.06");
+    t.false(is(str2, 9, 28), "02.30.07");
+    t.true(is(str2, 9, 30), "02.30.08"); // <--
+    t.false(is(str1, 9, 35), "02.30.09");
+    t.false(is(str1, 9, 38), "02.30.10");
+
+    // D-D-D-S
+    const str3 = `<img alt="so-called "artists"!' id="yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 20), "02.30.11");
+    t.false(is(str3, 9, 28), "02.30.12");
+    t.true(is(str3, 9, 30), "02.30.13"); // <--
+    t.false(is(str1, 9, 35), "02.30.14");
+    t.false(is(str1, 9, 38), "02.30.15");
+
+    // S-D-D-S
+    const str4 = `<img alt='so-called "artists"!' id="yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 20), "02.30.16");
+    t.false(is(str4, 9, 28), "02.30.17");
+    t.true(is(str4, 9, 30), "02.30.18"); // <--
+    t.false(is(str1, 9, 35), "02.30.19");
+    t.false(is(str1, 9, 38), "02.30.20");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.31 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, S-D`,
+  (t) => {
+    // D-D-D-D
+    const str1 = `<img alt="so-called "artists"!" id='yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 20), "02.31.01");
+    t.false(is(str1, 9, 28), "02.31.02");
+    t.true(is(str1, 9, 30), "02.31.03"); // <--
+    t.false(is(str1, 9, 35), "02.31.04");
+    t.false(is(str1, 9, 38), "02.31.05");
+
+    // S-D-D-D
+    const str2 = `<img alt='so-called "artists"!" id='yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 20), "02.31.06");
+    t.false(is(str2, 9, 28), "02.31.07");
+    t.true(is(str2, 9, 30), "02.31.08"); // <--
+    t.false(is(str1, 9, 35), "02.31.09");
+    t.false(is(str1, 9, 38), "02.31.10");
+
+    // D-D-D-S
+    const str3 = `<img alt="so-called "artists"!' id='yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 20), "02.31.11");
+    t.false(is(str3, 9, 28), "02.31.12");
+    t.true(is(str3, 9, 30), "02.31.13"); // <--
+    t.false(is(str1, 9, 35), "02.31.14");
+    t.false(is(str1, 9, 38), "02.31.15");
+
+    // S-D-D-S
+    const str4 = `<img alt='so-called "artists"!' id='yo"/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 20), "02.31.16");
+    t.false(is(str4, 9, 28), "02.31.17");
+    t.true(is(str4, 9, 30), "02.31.18"); // <--
+    t.false(is(str1, 9, 35), "02.31.19");
+    t.false(is(str1, 9, 38), "02.31.20");
+
+    // fin.
+    t.end();
+  }
+);
+
+t.test(
+  `02.32 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, S-S`,
+  (t) => {
+    // D-D-D-D
+    const str1 = `<img alt="so-called "artists"!" id='yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str1, 9, 20), "02.32.01");
+    t.false(is(str1, 9, 28), "02.32.02");
+    t.true(is(str1, 9, 30), "02.32.03"); // <--
+    t.false(is(str1, 9, 35), "02.32.04");
+    t.false(is(str1, 9, 38), "02.32.05");
+
+    // S-D-D-D
+    const str2 = `<img alt='so-called "artists"!" id='yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str2, 9, 20), "02.32.06");
+    t.false(is(str2, 9, 28), "02.32.07");
+    t.true(is(str2, 9, 30), "02.32.08"); // <--
+    t.false(is(str1, 9, 35), "02.32.09");
+    t.false(is(str1, 9, 38), "02.32.10");
+
+    // D-D-D-S
+    const str3 = `<img alt="so-called "artists"!' id='yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str3, 9, 20), "02.32.11");
+    t.false(is(str3, 9, 28), "02.32.12");
+    t.true(is(str3, 9, 30), "02.32.13"); // <--
+    t.false(is(str1, 9, 35), "02.32.14");
+    t.false(is(str1, 9, 38), "02.32.15");
+
+    // S-D-D-S
+    const str4 = `<img alt='so-called "artists"!' id='yo'/>`;
+
+    // alt opening at 9
+    t.false(is(str4, 9, 20), "02.32.16");
+    t.false(is(str4, 9, 28), "02.32.17");
+    t.true(is(str4, 9, 30), "02.32.18"); // <--
+    t.false(is(str1, 9, 35), "02.32.19");
+    t.false(is(str1, 9, 38), "02.32.20");
+
+    // fin.
+    t.end();
+  }
+);
+
 // 03. cheeky cases
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
@@ -1846,14 +2078,14 @@ t.test(
 
     // but it's enough to mismatch the pair and it becomes...
 
-    const str4 = `<z alt"href' www'/>`;
+    const str4 = `<z alt"href=' www'/>`;
     // Algorithm sees this as:
     // <z alt="" href=' ddd'/>
 
     // bbb opening at 6
-    t.false(is(str4, 6, 11), "08.09.08"); // <--
+    t.false(is(str4, 6, 12), "08.09.08"); // <--
     // even though it's mismatching:
-    t.false(is(str4, 6, 16), "08.09.09");
+    t.false(is(str4, 6, 17), "08.09.09");
 
     // but doubles in front:
     const str5 = `<z alt""href' www'/>`;
@@ -2553,3 +2785,9 @@ t.test(
     t.end();
   }
 );
+
+t.todo(`deleteme`, (t) => {
+  const str = `<z bbb"c" ddd'e'>.<z fff"g">`;
+  t.false(is(str, 6, 15), "08.01.04");
+  t.end();
+});
