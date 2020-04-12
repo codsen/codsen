@@ -394,7 +394,7 @@ t.test(
 // 06. equal missing
 // -----------------------------------------------------------------------------
 
-t.test(
+t.only(
   `06.01 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
   (t) => {
     const str = `<a bbb"c" ddd'e'>`;
@@ -465,7 +465,7 @@ t.test(
 // 07. mismatching quotes
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `07.01 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
   (t) => {
     const str = `<div class="c'>.</div>`;

@@ -254,7 +254,7 @@
     },
     {
         "name": "emlint",
-        "size": 319704,
+        "size": 319693,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -338,12 +338,13 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 3958,
+        "size": 12932,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
             "string-left-right",
-            "string-match-left-right"
+            "string-match-left-right",
+            "string-split-by-whitespace"
         ]
     },
     {
@@ -708,7 +709,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33962,
+        "size": 33958,
         "imports": [
             "ranges-apply",
             "ranges-push",

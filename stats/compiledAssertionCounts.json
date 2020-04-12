@@ -38,7 +38,7 @@
         "email-all-chars-within-ascii-cli": 11,
         "email-comb": 370,
         "email-homey": 9,
-        "emlint": 4158,
+        "emlint": 4154,
         "eslint-plugin-row-num": 11,
         "generate-atomic-css": 233,
         "generate-atomic-css-cli": 4,
@@ -50,7 +50,7 @@
         "html-img-alt": 201,
         "html-table-patcher": 27,
         "is-char-suitable-for-html-attr-name": 37,
-        "is-html-attribute-closing": 450,
+        "is-html-attribute-closing": 916,
         "is-html-tag-opening": 181,
         "is-language-code": 779,
         "is-media-descriptor": 132,
@@ -115,12 +115,12 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 113,
-    "totalAssertsCount": 810522,
+    "totalAssertsCount": 810984,
     "minAssertsCount": 3,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 746763,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 50,
-    "assertsCountArithmeticMean": 7173,
+    "assertsCountArithmeticMean": 7177,
     "assertsCountGeometricMean": 63
 }
