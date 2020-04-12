@@ -2555,7 +2555,7 @@ t.test(
 );
 
 t.todo(`deleteme`, (t) => {
-  const str3 = `<img alt='Deal is your's"/>`;
-  t.true(is(str3, 9, 24), "02.25.09");
+  const str1 = `<img alt='Deal is your's!" class="tralala"/>`;
+  t.true(is(str1, 9, 25), "02.27.03");
   t.end();
 });

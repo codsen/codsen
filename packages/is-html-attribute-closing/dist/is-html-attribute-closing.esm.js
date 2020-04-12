@@ -91,7 +91,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     ) {
       const E1 =
         i !== isThisClosingIdx ||
-        guaranteedAttrStartsAtX(str, isThisClosingIdx + 1) ||
+        guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) ||
         `/>`.includes(str[right(str, i)]);
       const E2 = !(
         i > isThisClosingIdx &&
@@ -115,9 +115,23 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           charSuitableForHTMLAttrName(char)
         ) &&
         str[idxOfAttrOpening] === str[isThisClosingIdx];
+      let attrNameCharsChunkOnTheLeft;
+      if (
+        i === isThisClosingIdx &&
+        charSuitableForHTMLAttrName(str[left(str, i)])
+      ) {
+        for (let y = i; y--; ) {
+          if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+            attrNameCharsChunkOnTheLeft = str.slice(y + 1, i);
+            break;
+          }
+        }
+      }
       const E34 =
         i === isThisClosingIdx &&
-        !charSuitableForHTMLAttrName(str[left(str, i)]) &&
+        (!charSuitableForHTMLAttrName(str[left(str, i)]) ||
+          (attrNameCharsChunkOnTheLeft &&
+            !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft))) &&
         str[left(str, i)] !== "=";
       const E41 =
         `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;

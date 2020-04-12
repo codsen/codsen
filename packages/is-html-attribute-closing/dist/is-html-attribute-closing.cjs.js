@@ -109,7 +109,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
     lastMatchedQuotesPairsEndIsAt < i &&
     i >= isThisClosingIdx) {
-      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, isThisClosingIdx + 1) || "/>".includes(str[stringLeftRight.right(str, i)]);
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, stringLeftRight.right(str, isThisClosingIdx)) || "/>".includes(str[stringLeftRight.right(str, i)]);
       var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] &&
       plausibleAttrStartsAtX(str, i + 1));
       var E31 =
@@ -122,8 +122,20 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return charSuitableForHTMLAttrName(_char);
       }) &&
       str[idxOfAttrOpening] === str[isThisClosingIdx];
+      var attrNameCharsChunkOnTheLeft = void 0;
+      if (i === isThisClosingIdx && charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)])) {
+        for (var y = i; y--;) {
+          if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+            attrNameCharsChunkOnTheLeft = str.slice(y + 1, i);
+            break;
+          }
+        }
+      }
       var E34 =
-      i === isThisClosingIdx && !charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)]) && str[stringLeftRight.left(str, i)] !== "=";
+      i === isThisClosingIdx && (
+      !charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)]) ||
+      attrNameCharsChunkOnTheLeft && !htmlAllKnownAttributes.allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
+      str[stringLeftRight.left(str, i)] !== "=";
       var E41 =
       "/>".includes(str[stringLeftRight.right(str, i)]) && i === isThisClosingIdx;
       var E42 =
@@ -261,9 +273,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
-        for (var y = i; y--;) {
-          if (str[y].trim().length && str[y] !== "=") {
-            firstNonWhitespaceCharOnTheLeft = y;
+        for (var _y = i; _y--;) {
+          if (str[_y].trim().length && str[_y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = _y;
             break;
           }
         }

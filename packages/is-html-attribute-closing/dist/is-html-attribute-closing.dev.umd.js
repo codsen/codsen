@@ -2589,7 +2589,7 @@
         // <img class="so-called "alt"!' border='10'/>
         //                           ^
         //
-        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, isThisClosingIdx + 1) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
+        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
         //
         //
         // ensure it's not a triplet of quotes:
@@ -2644,9 +2644,27 @@
         // <img alt='Deal is your's!"/>
         //          ^               ^
         //       start            suspected/current
+        // extract attr name characters chunk on the left, "s" in the case below
+        // <img alt='Deal is your's"/>
+        //                         ^
+        //                       start
+
+        var attrNameCharsChunkOnTheLeft = void 0;
+
+        if (i === isThisClosingIdx && charSuitableForHTMLAttrName(str[left(str, i)])) {
+          for (var y = i; y--;) {
+            if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+              attrNameCharsChunkOnTheLeft = str.slice(y + 1, i);
+              break;
+            }
+          }
+        }
 
         var E34 = // we're on suspected
-        i === isThisClosingIdx && !charSuitableForHTMLAttrName(str[left(str, i)]) && str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
+        i === isThisClosingIdx && ( // it's not a character suitable for attr name,
+        !charSuitableForHTMLAttrName(str[left(str, i)]) || // or it is, but whatever we extracted is not recognised attr name
+        attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && // rule out equal
+        str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
 
         var E41 = // either it's a tag ending and we're at the suspected quote
         "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
@@ -3024,9 +3042,9 @@
           // happy path
           firstNonWhitespaceCharOnTheLeft = i - 1;
         } else {
-          for (var y = i; y--;) {
-            if (str[y].trim().length && str[y] !== "=") {
-              firstNonWhitespaceCharOnTheLeft = y;
+          for (var _y = i; _y--;) {
+            if (str[_y].trim().length && str[_y] !== "=") {
+              firstNonWhitespaceCharOnTheLeft = _y;
               break;
             }
           }
