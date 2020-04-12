@@ -293,6 +293,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
         return true;
       }
+      if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[stringLeftRight.left(str, idxOfAttrOpening)] && str[stringLeftRight.left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
+        return false;
+      }
     }
     if ("'\"".includes(str[i]) &&
     i > isThisClosingIdx) {

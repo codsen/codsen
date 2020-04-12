@@ -1973,24 +1973,24 @@ t.test(
   `08.15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // no closing slash on img
-    const str1 = `<img alt="somethin' fishy going on' class">z<a class="y">`;
+    const str1 = `<img alt="somethin' fishy going on' class=">z<a class="y">`;
 
     // alt opening at 9
     t.false(is(str1, 9, 18), "08.15.01");
     t.true(is(str1, 9, 34), "08.15.02"); // <--
-    t.false(is(str1, 9, 41), "08.15.03");
-    t.false(is(str1, 9, 53), "08.15.04");
-    t.false(is(str1, 9, 55), "08.15.05");
+    t.false(is(str1, 9, 42), "08.15.03");
+    t.false(is(str1, 9, 54), "08.15.04");
+    t.false(is(str1, 9, 56), "08.15.05");
 
     // closing slash on img present
-    const str2 = `<img alt="somethin' fishy going on' class"/>z<a class="y">`;
+    const str2 = `<img alt="somethin' fishy going on' class="/>z<a class="y">`;
 
     // alt opening at 9
     t.false(is(str2, 9, 18), "08.15.06");
     t.true(is(str2, 9, 34), "08.15.07"); // <--
-    t.false(is(str2, 9, 41), "08.15.08");
-    t.false(is(str2, 9, 54), "08.15.09");
-    t.false(is(str2, 9, 56), "08.15.10");
+    t.false(is(str2, 9, 42), "08.15.08");
+    t.false(is(str2, 9, 55), "08.15.09");
+    t.false(is(str2, 9, 57), "08.15.10");
 
     // fin.
     t.end();
@@ -2553,9 +2553,3 @@ t.test(
     t.end();
   }
 );
-
-t.todo(`deleteme`, (t) => {
-  const str1 = `<img alt='Deal is your's!" class="tralala"/>`;
-  t.true(is(str1, 9, 25), "02.27.03");
-  t.end();
-});

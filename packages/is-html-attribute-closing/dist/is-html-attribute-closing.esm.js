@@ -354,6 +354,17 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
         return true;
       }
+      if (
+        i < isThisClosingIdx &&
+        `'"`.includes(str[i]) &&
+        lastCapturedChunk &&
+        str[left(str, idxOfAttrOpening)] &&
+        str[left(str, idxOfAttrOpening)] !== "=" &&
+        lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
+        allHtmlAttribs.has(lastCapturedChunk)
+      ) {
+        return false;
+      }
     }
     if (
       `'"`.includes(str[i]) &&

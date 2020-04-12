@@ -3068,6 +3068,19 @@
 
         if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
           return true;
+        } // also some insurance for crazier patterns like:
+        // <z alt"href" www'/>
+        //        ^   |    ^
+        //    start   |    suspected
+        //            |
+        //          currently on
+        //
+        // catch this pattern where initial equal to the left of start is missing
+        // and this pattern implies equals will be missing further
+
+
+        if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
+          return false;
         }
       } //
       //
