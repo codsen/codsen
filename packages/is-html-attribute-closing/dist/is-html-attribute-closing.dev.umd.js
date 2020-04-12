@@ -2646,7 +2646,7 @@
         //       start            suspected/current
 
         var E34 = // we're on suspected
-        i === isThisClosingIdx && !charSuitableForHTMLAttrName(str[left(str, i)]); // ███████████████████████████████████████ E4
+        i === isThisClosingIdx && !charSuitableForHTMLAttrName(str[left(str, i)]) && str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
 
         var E41 = // either it's a tag ending and we're at the suspected quote
         "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;

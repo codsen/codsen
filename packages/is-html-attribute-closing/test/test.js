@@ -745,6 +745,20 @@ t.test(
     t.false(is(str2, 9, 40), "02.25.07");
     t.false(is(str2, 9, 42), "02.25.08");
 
+    const str3 = `<img alt='Deal is your's"/>`;
+    t.true(is(str3, 9, 24), "02.25.09");
+
+    // anti-pattern
+    const str4 = `<img alt='Deal is your'class""/>`;
+    t.true(is(str4, 9, 22), "02.25.10");
+    t.false(is(str4, 9, 28), "02.25.11");
+    t.false(is(str4, 9, 29), "02.25.12");
+
+    // anti-pattern
+    const str5 = `<img alt='Deal is your'class="/>`;
+    t.true(is(str5, 9, 22), "02.25.10");
+    t.false(is(str5, 9, 29), "02.25.11");
+
     // fin.
     t.end();
   }
@@ -2541,7 +2555,7 @@ t.test(
 );
 
 t.todo(`deleteme`, (t) => {
-  const str = `<img alt='Deal is your's!"/>`;
-  t.true(is(str, 9, 25), "02.25.03");
+  const str3 = `<img alt='Deal is your's"/>`;
+  t.true(is(str3, 9, 24), "02.25.09");
   t.end();
 });

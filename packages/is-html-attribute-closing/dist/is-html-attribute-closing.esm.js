@@ -117,7 +117,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         str[idxOfAttrOpening] === str[isThisClosingIdx];
       const E34 =
         i === isThisClosingIdx &&
-        !charSuitableForHTMLAttrName(str[left(str, i)]);
+        !charSuitableForHTMLAttrName(str[left(str, i)]) &&
+        str[left(str, i)] !== "=";
       const E41 =
         `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
       const E42 =
