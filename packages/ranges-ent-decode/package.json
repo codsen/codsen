@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "2.0.48",
+  "version": "2.0.49",
   "description": "Decode HTML entities recursively, get string index ranges of what needs to be replaced where",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -119,7 +119,7 @@
   "dependencies": {
     "he": "^1.2.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.3.2"
+    "ranges-merge": "^4.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -129,7 +129,7 @@
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.4",
+    "lect": "^0.12.5",
     "rollup": "^2.6.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",

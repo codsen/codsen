@@ -1,7 +1,7 @@
 /**
  * object-boolean-combinations
  * Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
- * Version: 2.11.55
+ * Version: 2.11.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations

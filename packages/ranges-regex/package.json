@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "2.0.48",
+  "version": "2.0.49",
   "description": "Perform a regex search on string and get a ranges array of findings (or null)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -119,7 +119,7 @@
   },
   "dependencies": {
     "lodash.isregexp": "^4.0.1",
-    "ranges-merge": "^4.3.2"
+    "ranges-merge": "^4.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -128,8 +128,8 @@
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.4",
-    "ranges-apply": "^3.1.3",
+    "lect": "^0.12.5",
+    "ranges-apply": "^3.1.4",
     "rollup": "^2.6.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",

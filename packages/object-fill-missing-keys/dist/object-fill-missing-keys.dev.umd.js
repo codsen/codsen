@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 7.10.13
+ * Version: 7.10.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
@@ -1963,7 +1963,7 @@
   /**
    * array-includes-with-glob
    * like _.includes but with wildcards
-   * Version: 2.12.32
+   * Version: 2.12.33
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
@@ -3757,7 +3757,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.28
+   * Version: 3.11.29
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -3923,7 +3923,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.55
+   * Version: 2.9.56
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
@@ -3993,7 +3993,7 @@
   /**
    * object-merge-advanced
    * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.15
+   * Version: 10.11.16
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
@@ -6322,7 +6322,7 @@
   /**
    * object-all-values-equal-to
    * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
-   * Version: 1.8.12
+   * Version: 1.8.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to

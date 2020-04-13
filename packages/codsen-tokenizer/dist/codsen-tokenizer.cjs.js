@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML Lexer aimed at erroneous code
- * Version: 2.11.0
+ * Version: 2.12.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer

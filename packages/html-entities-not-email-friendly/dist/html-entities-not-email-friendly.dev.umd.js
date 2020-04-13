@@ -1,7 +1,7 @@
 /**
  * html-entities-not-email-friendly
  * All HTML entities which are not email template friendly
- * Version: 0.1.14
+ * Version: 0.1.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities

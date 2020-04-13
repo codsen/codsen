@@ -1,7 +1,7 @@
 /**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
- * Version: 1.10.1
+ * Version: 1.10.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty

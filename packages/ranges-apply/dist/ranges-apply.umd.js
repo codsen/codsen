@@ -1,7 +1,7 @@
 /**
  * ranges-apply
  * Take an array of string slice ranges, delete/replace the string according to them
- * Version: 3.1.3
+ * Version: 3.1.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
