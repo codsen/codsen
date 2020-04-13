@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add more tests and finally fix the dashes in front of tag names ([2a36483](https://gitlab.com/codsen/codsen/commit/2a364831c4ba9c4ab86955d00ee0a458826eb04d))
 - make the requirements more strict for when opening bracket is missing ([a672d99](https://gitlab.com/codsen/codsen/commit/a672d9966d28c65cb17c2d50bcd49e398982d967))
-- opts.skipOpeningBracket ([6238e92](https://gitlab.com/codsen/codsen/commit/6238e923ddc1ca3e67d099134ffb1e3ca775d899))
+- `opts.skipOpeningBracket` ([6238e92](https://gitlab.com/codsen/codsen/commit/6238e923ddc1ca3e67d099134ffb1e3ca775d899))
 - require that tag names matched if !opts.allowCustomTagNames ([0638865](https://gitlab.com/codsen/codsen/commit/0638865efe5c27429820e2cf4a64faee2ba35077))
 - require that tag names would not start with a dash (messes up broken comment tag logic) ([e0ff061](https://gitlab.com/codsen/codsen/commit/e0ff061531e3e9de6ca86aa3055b255edb085b17))
 
@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- opts.allowCustomTagNames ([1771e43](https://gitlab.com/codsen/codsen/commit/1771e431a356f96a745befdbfc7cdd5a9329b296))
+- `opts.allowCustomTagNames` ([1771e43](https://gitlab.com/codsen/codsen/commit/1771e431a356f96a745befdbfc7cdd5a9329b296))
 
 ## 1.5.0 (2019-12-27)
 

@@ -160,7 +160,6 @@ export default (commandLineArgs) => {
 
     // don't build UMD's in dev, it takes too long
     finalConfig.shift();
-    finalConfig.shift();
   }
   return finalConfig;
 };
