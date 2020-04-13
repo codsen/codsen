@@ -28264,7 +28264,7 @@
 
   /**
    * string-strip-html
-   * Strips HTML tags from strings. Scannerless parser algorithm.
+   * Strips HTML tags from strings. No parser, accepts mixed sources.
    * Version: 4.3.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
