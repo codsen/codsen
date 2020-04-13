@@ -122,8 +122,7 @@ export default (commandLineArgs) => {
     // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
     delete commandLineArgs.dev;
 
-    // don't build UMD's in dev, it takes too long
-    finalConfig.shift();
+    // don't build minified UMD in dev, it takes too long
     finalConfig.shift();
   }
   return finalConfig;

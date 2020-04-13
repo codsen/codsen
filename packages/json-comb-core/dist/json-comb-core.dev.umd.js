@@ -9027,8 +9027,8 @@
 
   var pReduce_1 = pReduce; // TODO: Remove this for the next major release
 
-  var default_1 = pReduce;
-  pReduce_1.default = default_1;
+  var _default = pReduce;
+  pReduce_1.default = _default;
 
   var typeDetect = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
@@ -9496,8 +9496,8 @@
 
   var pMap_1 = pMap; // TODO: Remove this for the next major release
 
-  var default_1$1 = pMap;
-  pMap_1.default = default_1$1;
+  var _default$1 = pMap;
+  pMap_1.default = _default$1;
 
   class EndError extends Error {}
 
@@ -9525,8 +9525,8 @@
   };
 
   var pOne_1 = pOne;
-  var default_1$2 = pOne;
-  pOne_1.default = default_1$2;
+  var _default$2 = pOne;
+  pOne_1.default = _default$2;
 
   function existy$1(x) {
     return x != null;

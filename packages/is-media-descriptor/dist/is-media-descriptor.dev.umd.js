@@ -158,8 +158,8 @@
 
   var leven_1 = leven; // TODO: Remove this for the next major release
 
-  var default_1 = leven;
-  leven_1.default = default_1;
+  var _default = leven;
+  leven_1.default = _default;
 
   var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"]; // eslint-disable-next-line no-unused-vars
 

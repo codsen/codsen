@@ -1,6 +1,6 @@
 # string-strip-html
 
-> Strips HTML tags from strings. Detects legit unencoded brackets.
+> Strips HTML tags from strings. Scannerless parser algorithm.
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -75,6 +75,8 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 - [Options](#options)
 - [Not assuming anything](#not-assuming-anything)
 - [A bigger picture](#a-bigger-picture)
+- [Algorithm](#algorithm)
+- [Quality dependencies](#quality-dependencies)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

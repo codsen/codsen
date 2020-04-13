@@ -16,7 +16,7 @@
 - [Idea](#idea)
 - [API - Input](#api-input)
 - [API - Output](#api-output)
-- [Bigger picture](#bigger-picture)
+- [PS.](#ps)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -80,9 +80,9 @@ console.log(isAttrNameChar("$"));
 
 **isAttrNameChar(str)** — in other words, function which takes one string argument:
 
-| Input argument     | Key value's type       | Obligatory? | Description                                             |
-| ------------------ | ---------------------- | ----------- | ------------------------------------------------------- |
-| `str`              | String                 | yes         | The character to evaluate. |
+| Input argument | Key value's type | Obligatory? | Description                |
+| -------------- | ---------------- | ----------- | -------------------------- |
+| `str`          | String           | yes         | The character to evaluate. |
 
 This program does not throw. It just returns `false`.
 
@@ -95,8 +95,6 @@ Zero-length string yields `false`, same like non-string type values.
 ## API - Output
 
 Boolean, `true` or `false`. Erroneous input arguments will yield `false` as well.
-
-**[⬆ back to top](#)**
 
 ## PS.
 
