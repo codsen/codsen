@@ -1,7 +1,7 @@
 {
   "name": "string-strip-html",
   "version": "4.3.19",
-  "description": "Strips HTML tags from strings. Scannerless parser algorithm.",
+  "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html",

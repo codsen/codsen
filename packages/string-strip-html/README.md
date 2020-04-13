@@ -1,6 +1,6 @@
 # string-strip-html
 
-> Strips HTML tags from strings. Scannerless parser algorithm.
+> Strips HTML tags from strings. No parser, accepts mixed sources.
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

@@ -254,7 +254,7 @@
     },
     {
         "name": "emlint",
-        "size": 319693,
+        "size": 319673,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -338,7 +338,7 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 12932,
+        "size": 13689,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
