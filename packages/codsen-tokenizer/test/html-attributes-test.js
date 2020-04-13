@@ -1185,7 +1185,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `05.04 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. another attribute follows`,
   (t) => {
     const gathered = [];
@@ -1247,7 +1247,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.only(
   `05.05 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B. end of tag follows`,
   (t) => {
     const gathered = [];
@@ -1296,7 +1296,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.test(
   `05.06 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B, attr follows`,
   (t) => {
     const gathered = [];
@@ -1358,7 +1358,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.test(
   `05.07 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
   (t) => {
     const gathered = [];
@@ -1407,7 +1407,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.test(
   `05.08 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
   (t) => {
     const gathered = [];
@@ -1456,7 +1456,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.test(
   `05.09 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
   (t) => {
     const gathered = [];
