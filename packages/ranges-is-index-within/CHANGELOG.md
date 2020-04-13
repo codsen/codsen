@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.14.32](https://gitlab.com/codsen/codsen/compare/ranges-is-index-within@1.14.31...ranges-is-index-within@1.14.32) (2020-04-13)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-
-
-
-
 ## 1.14.0 (2019-06-01)
 
 ### Features

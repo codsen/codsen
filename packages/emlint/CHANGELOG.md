@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.17.0](https://gitlab.com/codsen/codsen/compare/emlint@2.16.0...emlint@2.17.0) (2020-04-13)
-
+## 2.17.0 (2020-04-13)
 
 ### Bug Fixes
 
-* make all unit tests pass ([767d78b](https://gitlab.com/codsen/codsen/commit/767d78b26ef1d4b8e0f5715ad119e79f445a9c37))
-
+- make all unit tests pass ([767d78b](https://gitlab.com/codsen/codsen/commit/767d78b26ef1d4b8e0f5715ad119e79f445a9c37))
 
 ### Features
 
-* new rule, `tag-space-before-closing-bracket` ([77dc417](https://gitlab.com/codsen/codsen/commit/77dc417ff9597264791044e6f4a78ef01942269a))
-
-
-
-
+- new rule, `tag-space-before-closing-bracket` ([77dc417](https://gitlab.com/codsen/codsen/commit/77dc417ff9597264791044e6f4a78ef01942269a))
 
 ## 2.16.0 (2020-04-04)
 

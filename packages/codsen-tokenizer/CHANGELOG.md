@@ -3,18 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.12.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.11.0...codsen-tokenizer@2.12.0) (2020-04-13)
-
+## 2.12.0 (2020-04-13)
 
 ### Features
 
-* detect when HTML attribute's equal is missing and there's whitespace instead ([cd74106](https://gitlab.com/codsen/codsen/commit/cd74106581699127eada0f47c723c91c9254a64b))
-* extract new packages `is-char-suitable-for-html-attr-name` and `is-html-attribute-closing` ([deafd48](https://gitlab.com/codsen/codsen/commit/deafd488e9487ea96a04b51cafa271cd019cfafa))
-* recognise HTML attributes with mismatching quotes and missing equal ([7dedba1](https://gitlab.com/codsen/codsen/commit/7dedba18d8b49f4991056635f1cfc481a9069502))
-
-
-
-
+- detect when HTML attribute's equal is missing and there's whitespace instead ([cd74106](https://gitlab.com/codsen/codsen/commit/cd74106581699127eada0f47c723c91c9254a64b))
+- extract new packages `is-char-suitable-for-html-attr-name` and `is-html-attribute-closing` ([deafd48](https://gitlab.com/codsen/codsen/commit/deafd488e9487ea96a04b51cafa271cd019cfafa))
+- recognise HTML attributes with mismatching quotes and missing equal ([7dedba1](https://gitlab.com/codsen/codsen/commit/7dedba18d8b49f4991056635f1cfc481a9069502))
 
 ## 2.11.0 (2020-04-04)
 

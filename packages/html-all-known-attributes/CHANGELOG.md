@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.0.0](https://gitlab.com/codsen/codsen/compare/html-all-known-attributes@1.3.2...html-all-known-attributes@2.0.0) (2020-04-13)
-
+## 2.0.0 (2020-04-13)
 
 ### Features
 
-* export Set instead of Array and remove JSON source file ([d09e5b7](https://gitlab.com/codsen/codsen/commit/d09e5b7a592ef7b2bd5faef0eef0f7a78038a74f))
-
+- export Set instead of Array and remove JSON source file ([d09e5b7](https://gitlab.com/codsen/codsen/commit/d09e5b7a592ef7b2bd5faef0eef0f7a78038a74f))
 
 ### BREAKING CHANGES
 
-* For perf reasons, export Set instead of Array and remove JSON source file
-
-
-
-
+- For perf reasons, export Set instead of Array and remove JSON source file
 
 ## 1.3.0 (2020-01-05)
 
