@@ -2962,12 +2962,16 @@
 
             var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
 
-            var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && !( // avoid cases where multiple pairs of mismatching quotes were matched
+            var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && ( // avoid cases where multiple pairs of mismatching quotes were matched
             // we're past suspected closing:
-            i > isThisClosingIdx && // and there were some single quotes recorded so far
+            !(i > isThisClosingIdx && // and there were some single quotes recorded so far
             quotesCount.get("'") && // and doubles too
             quotesCount.get("\"") && // and there were few quote pairs matched
-            quotesCount.get("matchedPairs") > 1);
+            quotesCount.get("matchedPairs") > 1) || // but add escape latch for when tag closing follows:
+            // <img alt='so-called "artists"!"/>
+            //          ^                    ^^
+            //        start         suspected  currently we're on slash
+            "/>".includes(str[right(str, i)]));
 
             var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
             quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;

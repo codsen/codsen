@@ -293,14 +293,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const R12 =
           (!attrNameCharsChunkOnTheLeft ||
             !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
-          !(
+          (!(
             (
               i > isThisClosingIdx &&
               quotesCount.get(`'`) &&
               quotesCount.get(`"`) &&
               quotesCount.get(`matchedPairs`) > 1
             )
-          );
+          ) ||
+            `/>`.includes(str[right(str, i)]));
         const R2 =
           totalQuotesCount < 3 ||
           quotesCount.get(`"`) +

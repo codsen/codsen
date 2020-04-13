@@ -252,11 +252,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
           var R11 = quotesCount.get("matchedPairs") < 2;
           var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-          var R12 = (!_attrNameCharsChunkOnTheLeft || !htmlAllKnownAttributes.allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && !(
-          i > isThisClosingIdx &&
+          var R12 = (!_attrNameCharsChunkOnTheLeft || !htmlAllKnownAttributes.allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (
+          !(i > isThisClosingIdx &&
           quotesCount.get("'") &&
           quotesCount.get("\"") &&
-          quotesCount.get("matchedPairs") > 1);
+          quotesCount.get("matchedPairs") > 1) ||
+          "/>".includes(str[stringLeftRight.right(str, i)]));
           var _R2 = totalQuotesCount < 3 ||
           quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
           var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {

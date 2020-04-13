@@ -2010,7 +2010,7 @@ t.test(
     t.false(is(str, 6, 6), "08.07.01");
     t.true(is(str, 6, 8), "08.07.02"); // <--
     t.false(is(str, 6, 13), "08.07.03");
-    t.false(is(str, 6, 15), "08.07.04");
+    t.true(is(str, 6, 15), "08.07.04"); // <-- ! also here
 
     // ddd opening at 13
     t.false(is(str, 13, 6), "08.07.07");
@@ -2780,14 +2780,13 @@ t.test(
     t.false(is(str8, 19, 11), "09.06.54");
     t.true(is(str8, 19, 20), "09.06.55"); // <--
     t.false(is(str8, 19, 26), "09.06.56");
-
     // fin.
     t.end();
   }
 );
 
 t.todo(`deleteme`, (t) => {
-  const str = `<z bbb"c" ddd'e'>.<z fff"g">`;
-  t.false(is(str, 6, 15), "08.01.04");
+  const str2 = `<img alt='so-called "artists"!"/>`;
+  t.true(is(str2, 9, 30), "02.28.06");
   t.end();
 });
