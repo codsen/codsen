@@ -1247,7 +1247,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `05.05 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B. end of tag follows`,
   (t) => {
     const gathered = [];
