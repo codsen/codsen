@@ -394,11 +394,11 @@ t.test(
 // 06. equal missing
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `06.01 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
   (t) => {
-    const str = `<a bbb"c" ddd'e'>`;
-    const fixed = `<a bbb="c" ddd='e'>`;
+    const str = `<a class"c" id'e'>`;
+    const fixed = `<a class="c" id='e'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -431,8 +431,8 @@ t.test(
 t.test(
   `06.03 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
   (t) => {
-    const str = `<a bbb"c' ddd"e'>`;
-    const fixed = `<a bbb="c" ddd="e">`;
+    const str = `<a class"c' id"e'>`;
+    const fixed = `<a class="c" id="e">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -448,8 +448,8 @@ t.test(
 t.test(
   `06.04 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
   (t) => {
-    const str = `<a bbb"c' ddd'e">`;
-    const fixed = `<a bbb="c" ddd="e">`;
+    const str = `<a class"c' id'e">`;
+    const fixed = `<a class="c" id="e">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {

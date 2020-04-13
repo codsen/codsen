@@ -176,8 +176,8 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
-function checkForWhitespace(str = "", idxOffset) {
-  if (typeof str !== "string" || !str.length) {
+function checkForWhitespace(str, idxOffset) {
+  if (typeof str !== "string") {
     return { charStart: 0, charEnd: 0, errorArr: [], trimmedVal: "" };
   }
   let charStart = 0;

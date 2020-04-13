@@ -1,6 +1,6 @@
 import { left, right } from "string-left-right";
 
-function checkForWhitespace(str = "", idxOffset) {
+function checkForWhitespace(str, idxOffset) {
   console.log(
     `005 ${`\u001b[${35}m${`checkForWhitespace() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
@@ -10,7 +10,7 @@ function checkForWhitespace(str = "", idxOffset) {
   );
 
   // insurance
-  if (typeof str !== "string" || !str.length) {
+  if (typeof str !== "string") {
     return { charStart: 0, charEnd: 0, errorArr: [], trimmedVal: "" };
   }
 
@@ -25,9 +25,21 @@ function checkForWhitespace(str = "", idxOffset) {
   // ...left side:
   if (!str.length || !str[0].trim().length) {
     charStart = right(str); // returns digit or null - index of next non whitespace char on the right
+    console.log(
+      `029 checkForWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+        charStart,
+        null,
+        4
+      )}`
+    );
     if (!str.length || charStart === null) {
       // it's just whitespace here
       charEnd = null;
+      console.log(
+        `039 checkForWhitespace(): PUSH "Missing value." error on [${+idxOffset}, ${
+          +idxOffset + str.length
+        }]`
+      );
       errorArr.push({
         idxFrom: +idxOffset, // that is, idxOffset + 0
         idxTo: +idxOffset + str.length,
@@ -35,6 +47,11 @@ function checkForWhitespace(str = "", idxOffset) {
         fix: null, // can't fix - value is missing completely!
       });
     } else {
+      console.log(
+        `051 checkForWhitespace(): PUSH [${idxOffset}, ${
+          idxOffset + charStart
+        }]`
+      );
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
     }
   }
@@ -42,7 +59,7 @@ function checkForWhitespace(str = "", idxOffset) {
   if (charEnd && !str[str.length - 1].trim().length) {
     charEnd = left(str, str.length - 1) + 1;
     console.log(
-      `045 ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+      `062 checkForWhitespace(): SET ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
         charEnd,
         null,
         4
@@ -51,7 +68,7 @@ function checkForWhitespace(str = "", idxOffset) {
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
   console.log(
-    `054 ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `071 checkForWhitespace(): FIY, ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
       gatheredRanges,
       null,
       4
@@ -71,7 +88,7 @@ function checkForWhitespace(str = "", idxOffset) {
     gatheredRanges = [];
     trimmedVal = str.trim();
   }
-  console.log(`074`);
+  console.log(`091 checkForWhitespace(): END`);
 
   return { charStart, charEnd, errorArr, trimmedVal };
 }
