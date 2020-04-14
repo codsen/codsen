@@ -1,7 +1,6 @@
 /* eslint no-param-reassign:0 */
 
 import remSep from "string-remove-thousand-separators";
-import isObj from "lodash.isplainobject";
 
 function splitEasy(str, originalOpts) {
   // traverse the string and push each column into array
@@ -14,7 +13,7 @@ function splitEasy(str, originalOpts) {
   let thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
   // flip it to `false` on each line
 
-  if (originalOpts !== undefined && !isObj(originalOpts)) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new Error(
       `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof originalOpts} equal to:\n${JSON.stringify(
         originalOpts,

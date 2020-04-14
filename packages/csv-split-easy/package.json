@@ -118,7 +118,6 @@
     "timeout": 0
   },
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6",
     "string-remove-thousand-separators": "^3.0.53"
   },
   "devDependencies": {

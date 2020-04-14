@@ -1345,7 +1345,7 @@
     var thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
     // flip it to `false` on each line
 
-    if (originalOpts !== undefined && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && _typeof(originalOpts) !== "object") {
       throw new Error("csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ".concat(_typeof(originalOpts), " equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     } // prep opts
 

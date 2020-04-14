@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var remSep = _interopDefault(require('string-remove-thousand-separators'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -37,7 +36,7 @@ function splitEasy(str, originalOpts) {
   var resArray = [];
   var ignoreCommasThatFollow = false;
   var thisRowContainsOnlyEmptySpace = true;
-  if (originalOpts !== undefined && !isObj(originalOpts)) {
+  if (originalOpts && _typeof(originalOpts) !== "object") {
     throw new Error("csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ".concat(_typeof(originalOpts), " equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {

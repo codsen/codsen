@@ -8,7 +8,6 @@
  */
 
 import remSep from 'string-remove-thousand-separators';
-import isObj from 'lodash.isplainobject';
 
 function splitEasy(str, originalOpts) {
   let colStarts = 0;
@@ -17,7 +16,7 @@ function splitEasy(str, originalOpts) {
   const resArray = [];
   let ignoreCommasThatFollow = false;
   let thisRowContainsOnlyEmptySpace = true;
-  if (originalOpts !== undefined && !isObj(originalOpts)) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new Error(
       `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof originalOpts} equal to:\n${JSON.stringify(
         originalOpts,

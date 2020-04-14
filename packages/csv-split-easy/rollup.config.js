@@ -59,7 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["lodash.isplainobject", "string-remove-thousand-separators"],
+      external: ["string-remove-thousand-separators"],
       plugins: [
         strip({
           sourceMap: false,
@@ -74,7 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["lodash.isplainobject", "string-remove-thousand-separators"],
+      external: ["string-remove-thousand-separators"],
       plugins: [
         strip({
           sourceMap: false,
