@@ -26,7 +26,6 @@ var collapse = _interopDefault(require('string-collapse-white-space'));
 var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
 var stripHtml = _interopDefault(require('string-strip-html'));
 var invertRanges = _interopDefault(require('ranges-invert'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var rangesApply = _interopDefault(require('ranges-apply'));
 var ansiRegex = _interopDefault(require('ansi-regex'));
 var Ranges = _interopDefault(require('ranges-push'));
@@ -728,10 +727,10 @@ function det(str, inputOpts) {
   if (typeof str !== "string") {
     throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
   }
-  if (inputOpts && !isObj(inputOpts)) {
+  if (inputOpts && _typeof(inputOpts) !== "object") {
     throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
   }
-  if (isObj(inputOpts) && !!inputOpts.cb && typeof inputOpts.cb !== "function") {
+  if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
     throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
   }
   var opts = Object.assign({}, defaultOpts, inputOpts);

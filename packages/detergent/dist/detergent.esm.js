@@ -20,7 +20,6 @@ import collapse from 'string-collapse-white-space';
 import trimSpaces from 'string-trim-spaces-only';
 import stripHtml from 'string-strip-html';
 import invertRanges from 'ranges-invert';
-import isObj from 'lodash.isplainobject';
 import rangesApply from 'ranges-apply';
 import ansiRegex from 'ansi-regex';
 import Ranges from 'ranges-push';
@@ -1397,16 +1396,12 @@ function det(str, inputOpts) {
       `detergent(): [THROW_ID_01] the first input argument must be of a string type, not ${typeof str}`
     );
   }
-  if (inputOpts && !isObj(inputOpts)) {
+  if (inputOpts && typeof inputOpts !== "object") {
     throw new Error(
       `detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof inputOpts}`
     );
   }
-  if (
-    isObj(inputOpts) &&
-    !!inputOpts.cb &&
-    typeof inputOpts.cb !== "function"
-  ) {
+  if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
     throw new Error(
       `detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ${typeof inputOpts.cb} (value was given as:\n${JSON.stringify(
         inputOpts.cb,

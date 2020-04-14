@@ -64,17 +64,7 @@ t.test(
 );
 
 t.test(
-  `00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`,
-  (t) => {
-    t.throws(() => {
-      det(t, 0, `zzz`, ["zzz"]);
-    }, /THROW_ID_02/gm);
-    t.end();
-  }
-);
-
-t.test(
-  `00.04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`,
+  `00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`,
   (t) => {
     t.ok(Object.keys(exportedOptsObj).length > 10);
     t.end();
@@ -82,7 +72,7 @@ t.test(
 );
 
 t.test(
-  `00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`,
+  `00.04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`,
   (t) => {
     t.match(version, /\d+\.\d+\.\d+/g);
     t.end();
@@ -90,7 +80,7 @@ t.test(
 );
 
 t.test(
-  `00.06 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`,
+  `00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`,
   (t) => {
     t.throws(() => {
       det(t, 0, `zzz`, { cb: true });
@@ -100,7 +90,7 @@ t.test(
 );
 
 t.test(
-  `00.07 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - not throws when opts.cb is falsey`,
+  `00.06 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - not throws when opts.cb is falsey`,
   (t) => {
     // original function det1():
     t.doesNotThrow(() => {

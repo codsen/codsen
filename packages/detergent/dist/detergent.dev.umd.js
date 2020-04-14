@@ -28982,11 +28982,11 @@
       throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
     }
 
-    if (inputOpts && !lodash_isplainobject(inputOpts)) {
+    if (inputOpts && _typeof(inputOpts) !== "object") {
       throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
     }
 
-    if (lodash_isplainobject(inputOpts) && !!inputOpts.cb && typeof inputOpts.cb !== "function") {
+    if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
       throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
     }
 
