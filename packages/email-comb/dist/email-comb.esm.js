@@ -52,9 +52,6 @@ function comb(str, opts) {
   function hasOwnProp(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
-  function existy(x) {
-    return x != null;
-  }
   function isStr(something) {
     return typeof something === "string";
   }
@@ -401,7 +398,7 @@ function comb(str, opts) {
         if (
           doNothingUntil === null ||
           typeof doNothingUntil !== "string" ||
-          (typeof doNothingUntil === "string" && doNothingUntil.length === 0)
+          (typeof doNothingUntil === "string" && !doNothingUntil)
         ) {
           doNothing = false;
         } else if (matchRightIncl(str, i, doNothingUntil)) {
@@ -509,7 +506,7 @@ function comb(str, opts) {
           if (
             str[i + matchedAtTagsName.length + 1] === ";" ||
             (str[i + matchedAtTagsName.length + 1] &&
-              !str[i + matchedAtTagsName.length + 1].trim().length &&
+              !str[i + matchedAtTagsName.length + 1].trim() &&
               matchRight(str, i + matchedAtTagsName.length + 1, ";", {
                 trimBeforeMatching: true,
                 cb: (char, theRemainderOfTheString, index) => {
@@ -643,7 +640,7 @@ function comb(str, opts) {
               singleSelectorStartedAt = right(str, i);
               singleSelectorType = "#";
             }
-          } else if (chr.trim().length !== 0) {
+          } else if (chr.trim()) {
             if (chr === "}") {
               ruleChunkStartedAt = i + 1;
               currentChunk = null;
@@ -705,7 +702,7 @@ function comb(str, opts) {
         }
         if (selectorChunkStartedAt === null) {
           if (
-            chr.trim().length !== 0 &&
+            chr.trim() &&
             chr !== "}" &&
             chr !== ";" &&
             !(str[i] === "/" && str[i + 1] === "*")
@@ -741,18 +738,18 @@ function comb(str, opts) {
                 ) {
                   for (let y = selectorChunkStartedAt; y--; ) {
                     totalCounter++;
-                    if (str[y].trim().length !== 0 && str[y] !== ",") {
+                    if (str[y].trim() && str[y] !== ",") {
                       fromIndex = y + 1;
                       break;
                     }
                   }
-                  if (str[i - 1].trim().length === 0) {
+                  if (!str[i - 1].trim()) {
                     toIndex = i - 1;
                   }
-                } else if (chr === "," && str[i + 1].trim().length === 0) {
+                } else if (chr === "," && !str[i + 1].trim()) {
                   for (let y = i + 1; y < len; y++) {
                     totalCounter++;
-                    if (str[y].trim().length !== 0) {
+                    if (str[y].trim()) {
                       toIndex = y;
                       break;
                     }
@@ -908,7 +905,7 @@ function comb(str, opts) {
             });
             finalIndexesToDelete.push(...calculatedRange);
           }
-        } else if (str[i + 5].trim().length === 0) {
+        } else if (!str[i + 5].trim()) {
           for (let y = i + 5; y < len; y++) {
             totalCounter++;
             if (str[y].trim().length) {
@@ -918,7 +915,7 @@ function comb(str, opts) {
                 }
                 if ((str[y + 1] === '"' || str[y + 1] === "'") && str[y + 2]) {
                   valuesStart = y + 2;
-                } else if (str[y + 1] && str[y + 1].trim().length === 0) {
+                } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
                     totalCounter++;
                     if (str[z].trim().length) {
@@ -991,7 +988,7 @@ function comb(str, opts) {
             });
             finalIndexesToDelete.push(...calculatedRange);
           }
-        } else if (str[i + 2].trim().length === 0) {
+        } else if (!str[i + 2].trim()) {
           for (let y = i + 2; y < len; y++) {
             totalCounter++;
             if (str[y].trim().length) {
@@ -1001,7 +998,7 @@ function comb(str, opts) {
                 }
                 if ((str[y + 1] === '"' || str[y + 1] === "'") && str[y + 2]) {
                   valuesStart = y + 2;
-                } else if (str[y + 1] && str[y + 1].trim().length === 0) {
+                } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
                     totalCounter++;
                     if (str[z].trim().length) {
@@ -1080,7 +1077,7 @@ function comb(str, opts) {
             if (
               bodyItsTheFirstClassOrId &&
               bodyClass.valuesStart !== null &&
-              str.slice(bodyClass.valuesStart, i).trim().length === 0 &&
+              !str.slice(bodyClass.valuesStart, i).trim() &&
               bodyClass.valuesStart < i
             ) {
               finalIndexesToDelete.push(bodyClass.valuesStart, i);
@@ -1355,7 +1352,7 @@ function comb(str, opts) {
             if (
               bodyItsTheFirstClassOrId &&
               bodyId.valuesStart !== null &&
-              str.slice(bodyId.valuesStart, i).trim().length === 0 &&
+              !str.slice(bodyId.valuesStart, i).trim() &&
               bodyId.valuesStart < i
             ) {
               finalIndexesToDelete.push(bodyId.valuesStart, i);
@@ -1570,7 +1567,7 @@ function comb(str, opts) {
       for (let y = 0, len2 = preppedHeadSelectorsArr.length; y < len2; y++) {
         totalCounter++;
         let temp;
-        if (existy(preppedHeadSelectorsArr[y])) {
+        if (preppedHeadSelectorsArr[y] != null) {
           temp = extract(preppedHeadSelectorsArr[y]);
         }
         if (!temp.every((el) => allClassesAndIdsWithinBody.includes(el))) {

@@ -6071,10 +6071,6 @@
       return Object.prototype.hasOwnProperty.call(obj, prop);
     }
 
-    function existy(x) {
-      return x != null;
-    }
-
     function isStr(something) {
       return typeof something === "string";
     }
@@ -6509,7 +6505,7 @@
 
 
         if (doNothing) {
-          if (doNothingUntil === null || typeof doNothingUntil !== "string" || typeof doNothingUntil === "string" && doNothingUntil.length === 0) {
+          if (doNothingUntil === null || typeof doNothingUntil !== "string" || typeof doNothingUntil === "string" && !doNothingUntil) {
             // it's some bad case scenario/bug, just turn off the "doNothing"
             doNothing = false; // just turn it off and move on.
           } else if (matchRightIncl(str, i, doNothingUntil)) {
@@ -6620,7 +6616,7 @@
             var temp = void 0; // rare case when semicolon follows the at-tag - in that
             // case, we remove the at-rule because it's broken
 
-            if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim().length && matchRight(str, i + matchedAtTagsName.length + 1, ";", {
+            if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim() && matchRight(str, i + matchedAtTagsName.length + 1, ";", {
               trimBeforeMatching: true,
               cb: function cb(_char3, theRemainderOfTheString, index) {
                 temp = index;
@@ -6764,7 +6760,7 @@
                 singleSelectorStartedAt = right(str, i);
                 singleSelectorType = "#";
               }
-            } else if (chr.trim().length !== 0) {
+            } else if (chr.trim()) {
               // logging:
               if (chr === "}") {
                 ruleChunkStartedAt = i + 1;
@@ -6825,7 +6821,7 @@
           if (selectorChunkStartedAt === null) {
             // catch the start of a chunk
             // if (chr === "." || chr === "#") {
-            if (chr.trim().length !== 0 && chr !== "}" && chr !== ";" && !(str[i] === "/" && str[i + 1] === "*")) {
+            if (chr.trim() && chr !== "}" && chr !== ";" && !(str[i] === "/" && str[i + 1] === "*")) {
               // reset the deletion flag:
               selectorChunkCanBeDeleted = false; // set the chunk's starting marker:
 
@@ -6870,7 +6866,7 @@
                     for (var _y2 = selectorChunkStartedAt; _y2--;) {
                       totalCounter++;
 
-                      if (str[_y2].trim().length !== 0 && str[_y2] !== ",") {
+                      if (str[_y2].trim() && str[_y2] !== ",") {
                         fromIndex = _y2 + 1;
                         break;
                       }
@@ -6880,14 +6876,14 @@
                     // Otherwise, we'd crop tightly up to curly which would be wrong.
 
 
-                    if (str[i - 1].trim().length === 0) {
+                    if (!str[i - 1].trim()) {
                       toIndex = i - 1;
                     }
-                  } else if (chr === "," && str[i + 1].trim().length === 0) {
+                  } else if (chr === "," && !str[i + 1].trim()) {
                     for (var _y3 = i + 1; _y3 < len; _y3++) {
                       totalCounter++;
 
-                      if (str[_y3].trim().length !== 0) {
+                      if (str[_y3].trim()) {
                         toIndex = _y3;
                         break;
                       }
@@ -7054,7 +7050,7 @@
                 });
                 finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
               }
-            } else if (str[i + 5].trim().length === 0) {
+            } else if (!str[i + 5].trim()) {
               // loop forward:
               for (var _y6 = i + 5; _y6 < len; _y6++) {
                 totalCounter++;
@@ -7071,7 +7067,7 @@
                     if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
                       // 1-2-1. we found where values start:
                       valuesStart = _y6 + 2;
-                    } else if (str[_y6 + 1] && str[_y6 + 1].trim().length === 0) {
+                    } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
                       // 1-2-2. traverse even more forward:
                       for (var _z = _y6 + 1; _z < len; _z++) {
                         totalCounter++;
@@ -7153,7 +7149,7 @@
 
                 finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
               }
-            } else if (str[i + 2].trim().length === 0) {
+            } else if (!str[i + 2].trim()) {
               // loop forward:
               for (var _y7 = i + 2; _y7 < len; _y7++) {
                 totalCounter++;
@@ -7170,7 +7166,7 @@
                     if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
                       // 1-2-1. we found where values start:
                       _valuesStart = _y7 + 2;
-                    } else if (str[_y7 + 1] && str[_y7 + 1].trim().length === 0) {
+                    } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
                       // 1-2-2. traverse even more forward:
                       for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
                         totalCounter++;
@@ -7271,7 +7267,7 @@
               } //
 
 
-              if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && str.slice(bodyClass.valuesStart, i).trim().length === 0 && bodyClass.valuesStart < i) {
+              if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && !str.slice(bodyClass.valuesStart, i).trim() && bodyClass.valuesStart < i) {
                 // 1. submit the whitespace characters in the range for deletion:
                 finalIndexesToDelete.push(bodyClass.valuesStart, i);
                 nonIndentationsWhitespaceLength += i - bodyClass.valuesStart; // 2. disable bodyItsTheFirstClassOrId flag so we won't waste resources on
@@ -7546,7 +7542,7 @@
               } //
 
 
-              if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && str.slice(bodyId.valuesStart, i).trim().length === 0 && bodyId.valuesStart < i) {
+              if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && !str.slice(bodyId.valuesStart, i).trim() && bodyId.valuesStart < i) {
                 // 1. submit the whitespace characters in the range for deletion:
                 finalIndexesToDelete.push(bodyId.valuesStart, i);
                 nonIndentationsWhitespaceLength += i - bodyId.valuesStart; // 2. disable bodyItsTheFirstClassOrId flag so we won't waste resources on
@@ -7777,14 +7773,6 @@
             continue;
           }
         } // LOGGING:
-        // logging:
-        // console.log(
-        //   `3207 ${
-        //     existy(doNothingUntil)
-        //       ? `ended with ${`\u001b[${31}m${doNothingUntil}\u001b[${39}m`}`
-        //       : ""
-        //   }`
-        // );
 
       } //
       //
@@ -7849,9 +7837,10 @@
         for (var _y8 = 0, len2 = preppedHeadSelectorsArr.length; _y8 < len2; _y8++) {
           totalCounter++;
 
-          var _temp3 = void 0;
+          var _temp3 = void 0; // intentional loose comparison !=, that's existy():
 
-          if (existy(preppedHeadSelectorsArr[_y8])) {
+
+          if (preppedHeadSelectorsArr[_y8] != null) {
             _temp3 = stringExtractClassNames(preppedHeadSelectorsArr[_y8]);
           }
 
