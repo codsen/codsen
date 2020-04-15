@@ -2,8 +2,8 @@ import traverse from "ast-monkey-traverse";
 
 function containsOnlyEmptySpace(input) {
   if (typeof input === "string") {
-    console.log(`005 return ${!input.trim().length}`);
-    return !input.trim().length;
+    console.log(`005 return ${!input.trim()}`);
+    return !input.trim();
   } else if (!["object", "string"].includes(typeof input) || !input) {
     console.log(`008 return false`);
     return false;
@@ -12,7 +12,7 @@ function containsOnlyEmptySpace(input) {
   console.log(`012 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
   input = traverse(input, (key, val, innerObj, stop) => {
     const current = val !== undefined ? val : key;
-    if (typeof current === "string" && current.trim().length) {
+    if (typeof current === "string" && current.trim()) {
       found = false;
       console.log(
         `018 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
