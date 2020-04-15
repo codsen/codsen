@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var replaceSlicesArr = _interopDefault(require('ranges-apply'));
 var rangesMerge = _interopDefault(require('ranges-merge'));
 var stringMatchLeftRight = require('string-match-left-right');
@@ -89,25 +88,21 @@ function _nonIterableRest() {
 }
 
 function collapse(str, originalOpts) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
   function isSpaceOrLeftBracket(character) {
-    return isStr(character) && (character === "<" || character.trim() === "");
+    return typeof character === "string" && (character === "<" || !character.trim());
   }
   if (typeof str !== "string") {
     throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+  if (originalOpts && _typeof(originalOpts) !== "object") {
     throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
-  if (str.length === 0) {
+  if (!str.length) {
     return "";
   }
-  var isNum = Number.isInteger;
   var finalIndexesToDelete = [];
   var defaults = {
     trimStart: true,
@@ -187,7 +182,7 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
         var sliceFrom = i + 1;
         var sliceTo = void 0;
-        if (isNum(lastLineBreaksLastCharIndex)) {
+        if (Number.isInteger(lastLineBreaksLastCharIndex)) {
           sliceTo = lastLineBreaksLastCharIndex + 1;
           if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
             if (consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {

@@ -7,20 +7,18 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
  */
 
-import isObj from 'lodash.isplainobject';
 import replaceSlicesArr from 'ranges-apply';
 import rangesMerge from 'ranges-merge';
 import { matchLeftIncl } from 'string-match-left-right';
 
 function collapse(str, originalOpts) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
   function isSpaceOrLeftBracket(character) {
-    return isStr(character) && (character === "<" || character.trim() === "");
+    return (
+      typeof character === "string" && (character === "<" || !character.trim())
+    );
   }
   if (typeof str !== "string") {
     throw new Error(
@@ -31,11 +29,7 @@ function collapse(str, originalOpts) {
       )}`
     );
   }
-  if (
-    originalOpts !== undefined &&
-    originalOpts !== null &&
-    !isObj(originalOpts)
-  ) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new Error(
       `string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(
         originalOpts,
@@ -44,10 +38,9 @@ function collapse(str, originalOpts) {
       )}`
     );
   }
-  if (str.length === 0) {
+  if (!str.length) {
     return "";
   }
-  const isNum = Number.isInteger;
   const finalIndexesToDelete = [];
   const defaults = {
     trimStart: true,
@@ -128,7 +121,7 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
         const sliceFrom = i + 1;
         let sliceTo;
-        if (isNum(lastLineBreaksLastCharIndex)) {
+        if (Number.isInteger(lastLineBreaksLastCharIndex)) {
           sliceTo = lastLineBreaksLastCharIndex + 1;
           if (
             opts.removeEmptyLines &&

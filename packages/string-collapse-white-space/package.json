@@ -111,7 +111,6 @@
     "timeout": 0
   },
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.1.4",
     "ranges-merge": "^4.3.3",
     "string-match-left-right": "^4.0.3"
