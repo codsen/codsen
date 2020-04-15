@@ -32,7 +32,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function existy(x) {
   return x != null;
 }
@@ -49,7 +48,7 @@ function findtype(something) {
     );
   })) {
     return "numeric";
-  } else if (something.trim().length === 0) {
+  } else if (!something.trim()) {
     return "empty";
   }
   return "text";
@@ -63,15 +62,15 @@ function csvSort(input) {
       return [[""]];
     }
     content = split(input);
-  } else if (isArr(input)) {
+  } else if (Array.isArray(input)) {
     var culpritVal;
     var culpritIndex;
     if (!input.every(function (val, index) {
-      if (!isArr(val)) {
+      if (!Array.isArray(val)) {
         culpritVal = val;
         culpritIndex = index;
       }
-      return isArr(val);
+      return Array.isArray(val);
     })) {
       throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the element at index ".concat(culpritIndex, " is not array but: ").concat(_typeof(culpritVal), ", equal to:\n").concat(JSON.stringify(culpritVal, null, 4)));
     }
@@ -116,7 +115,7 @@ function csvSort(input) {
         }
         if (findtype(content[i][_y].trim()) !== schema[_y] && !stateHeaderRowPresent) {
           var toAdd = findtype(content[i][_y].trim());
-          if (isArr(schema[_y])) {
+          if (Array.isArray(schema[_y])) {
             if (!schema[_y].includes(toAdd)) {
               schema[_y].push(findtype(content[i][_y].trim()));
             }
@@ -208,7 +207,7 @@ function csvSort(input) {
     throw new Error("csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it.");
   }
   var potentialCreditDebitColumns = pull.apply(void 0, [Array.from(schema.reduce(function (result, el, index) {
-    if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
+    if (typeof el === "string" && el === "numeric" || Array.isArray(el) && el.includes("numeric")) {
       result.push(index);
     }
     return result;

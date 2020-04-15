@@ -1351,7 +1351,7 @@
     let ignoreCommasThatFollow = false;
     let thisRowContainsOnlyEmptySpace = true;
 
-    if (originalOpts !== undefined && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && typeof originalOpts !== "object") {
       throw new Error(`csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof originalOpts} equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
     }
 
@@ -2032,11 +2032,10 @@
     }
   };
 
-  var isArr = Array.isArray;
-
   function existy$2(x) {
     return x != null;
   }
+
   var currencySigns = ["د.إ", "؋", "L", "֏", "ƒ", "Kz", "$", "ƒ", "₼", "KM", "৳", "лв", ".د.ب", "FBu", "$b", "R$", "฿", "Nu.", "P", "p.", "BZ$", "FC", "CHF", "¥", "₡", "₱", "Kč", "Fdj", "kr", "RD$", "دج", "kr", "Nfk", "Br", "Ξ", "€", "₾", "₵", "GH₵", "D", "FG", "Q", "L", "kn", "G", "Ft", "Rp", "₪", "₹", "ع.د", "﷼", "kr", "J$", "JD", "¥", "KSh", "лв", "៛", "CF", "₩", "₩", "KD", "лв", "₭", "₨", "M", "Ł", "Lt", "Ls", "LD", "MAD", "lei", "Ar", "ден", "K", "₮", "MOP$", "UM", "₨", "Rf", "MK", "RM", "MT", "₦", "C$", "kr", "₨", "﷼", "B/.", "S/.", "K", "₱", "₨", "zł", "Gs", "﷼", "￥", "lei", "Дин.", "₽", "R₣", "﷼", "₨", "ج.س.", "kr", "£", "Le", "S", "Db", "E", "฿", "SM", "T", "د.ت", "T$", "₤", "₺", "TT$", "NT$", "TSh", "₴", "USh", "$U", "лв", "Bs", "₫", "VT", "WS$", "FCFA", "Ƀ", "CFA", "₣", "﷼", "R", "Z$"];
 
   function findtype(something) {
@@ -2053,7 +2052,7 @@
       );
     })) {
       return "numeric";
-    } else if (something.trim().length === 0) {
+    } else if (!something.trim()) {
       return "empty";
     }
 
@@ -2073,17 +2072,17 @@
       }
 
       content = splitEasy(input);
-    } else if (isArr(input)) {
+    } else if (Array.isArray(input)) {
       var culpritVal;
       var culpritIndex;
 
       if (!input.every(function (val, index) {
-        if (!isArr(val)) {
+        if (!Array.isArray(val)) {
           culpritVal = val;
           culpritIndex = index;
         }
 
-        return isArr(val);
+        return Array.isArray(val);
       })) {
         throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the element at index ".concat(culpritIndex, " is not array but: ").concat(_typeof(culpritVal), ", equal to:\n").concat(JSON.stringify(culpritVal, null, 4)));
       }
@@ -2155,7 +2154,7 @@
           if (findtype(content[i][_y].trim()) !== schema[_y] && !stateHeaderRowPresent) {
             var toAdd = findtype(content[i][_y].trim());
 
-            if (isArr(schema[_y])) {
+            if (Array.isArray(schema[_y])) {
               if (!schema[_y].includes(toAdd)) {
                 schema[_y].push(findtype(content[i][_y].trim()));
               }
@@ -2342,7 +2341,7 @@
 
 
     var potentialCreditDebitColumns = lodash_pull.apply(void 0, [Array.from(schema.reduce(function (result, el, index) {
-      if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
+      if (typeof el === "string" && el === "numeric" || Array.isArray(el) && el.includes("numeric")) {
         result.push(index);
       }
 

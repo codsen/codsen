@@ -12,7 +12,6 @@ import pull from 'lodash.pull';
 import currency from 'currency.js';
 import isNumeric from 'is-numeric';
 
-const isArr = Array.isArray;
 function existy(x) {
   return x != null;
 }
@@ -167,7 +166,7 @@ function findtype(something) {
     )
   ) {
     return "numeric";
-  } else if (something.trim().length === 0) {
+  } else if (!something.trim()) {
     return "empty";
   }
   return "text";
@@ -181,16 +180,16 @@ function csvSort(input) {
       return [[""]];
     }
     content = split(input);
-  } else if (isArr(input)) {
+  } else if (Array.isArray(input)) {
     let culpritVal;
     let culpritIndex;
     if (
       !input.every((val, index) => {
-        if (!isArr(val)) {
+        if (!Array.isArray(val)) {
           culpritVal = val;
           culpritIndex = index;
         }
-        return isArr(val);
+        return Array.isArray(val);
       })
     ) {
       throw new TypeError(
@@ -263,7 +262,7 @@ function csvSort(input) {
           !stateHeaderRowPresent
         ) {
           const toAdd = findtype(content[i][y].trim());
-          if (isArr(schema[y])) {
+          if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
               schema[y].push(findtype(content[i][y].trim()));
             }
@@ -391,7 +390,7 @@ function csvSort(input) {
       schema.reduce((result, el, index) => {
         if (
           (typeof el === "string" && el === "numeric") ||
-          (isArr(el) && el.includes("numeric"))
+          (Array.isArray(el) && el.includes("numeric"))
         ) {
           result.push(index);
         }
