@@ -47,7 +47,7 @@ function convertOne(
   function isLetter(str) {
     return (
       typeof str === "string" &&
-      str.length === 1 &&
+      str.length &&
       str.toUpperCase() !== str.toLowerCase()
     );
   }
@@ -116,7 +116,7 @@ function convertOne(
       (str[to] &&
         str[to].toLowerCase() === "t" &&
         (!str[to + 1] ||
-          str[to + 1].trim().length === 0 ||
+          !str[to + 1].trim() ||
           str[to + 1].toLowerCase() === "i")) ||
       (str[to] &&
         str[to + 2] &&
@@ -162,7 +162,7 @@ function convertOne(
       str[to] &&
       punctuationChars.includes(str[from - 1])
     ) {
-      if (str[to].trim().length === 0) {
+      if (!str[to].trim()) {
         if (
           convertApostrophes &&
           str.slice(from, to) !==
@@ -184,7 +184,7 @@ function convertOne(
       } else if (
         str[to].charCodeAt(0) === 34 &&
         str[to + 1] &&
-        str[to + 1].trim().length === 0
+        !str[to + 1].trim()
       ) {
         if (
           convertApostrophes &&
@@ -341,7 +341,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `'`]);
       }
-    } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+    } else if (str[from - 1] && !str[from - 1].trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -360,7 +360,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `'`]);
       }
-    } else if (str[to] && str[to].trim().length === 0) {
+    } else if (str[to] && !str[to].trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -414,7 +414,7 @@ function convertOne(
       str[to] &&
       punctuationChars.includes(str[from - 1])
     ) {
-      if (str[to].trim().length === 0) {
+      if (!str[to].trim()) {
         if (
           convertApostrophes &&
           str.slice(from, to) !==
@@ -436,7 +436,7 @@ function convertOne(
       } else if (
         str[to].charCodeAt(0) === 39 &&
         str[to + 1] &&
-        str[to + 1].trim().length === 0
+        !str[to + 1].trim()
       ) {
         if (
           convertApostrophes &&
@@ -549,7 +549,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `"`]);
       }
-    } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+    } else if (str[from - 1] && !str[from - 1].trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -568,7 +568,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `"`]);
       }
-    } else if (str[to] && str[to].trim().length === 0) {
+    } else if (str[to] && !str[to].trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==

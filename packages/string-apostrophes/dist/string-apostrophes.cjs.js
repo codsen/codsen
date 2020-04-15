@@ -43,7 +43,7 @@ function convertOne(str, _ref) {
     return typeof str === "string" && str.charCodeAt(0) >= 48 && str.charCodeAt(0) <= 57;
   }
   function isLetter(str) {
-    return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
+    return typeof str === "string" && str.length && str.toUpperCase() !== str.toLowerCase();
   }
   if (["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && ["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
     if (str[from - 1] && str[to] && isNumber(str[from - 1]) && !isLetter(str[to])) {
@@ -65,21 +65,21 @@ function convertOne(str, _ref) {
             offsetBy(2);
           }
         }
-      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || str[to + 1].trim().length === 0 || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
+      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-      if (str[to].trim().length === 0) {
+      if (!str[to].trim()) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
       } else if (str[to].charCodeAt(0) === 34 &&
-      str[to + 1] && str[to + 1].trim().length === 0
+      str[to + 1] && !str[to + 1].trim()
       ) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote)) && value !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))) {
             rangesArr.push([from, to + 1, "".concat(convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))]);
@@ -127,13 +127,13 @@ function convertOne(str, _ref) {
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+    } else if (str[from - 1] && !str[from - 1].trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (str[to] && str[to].trim().length === 0) {
+    } else if (str[to] && !str[to].trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -148,14 +148,14 @@ function convertOne(str, _ref) {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-      if (str[to].trim().length === 0) {
+      if (!str[to].trim()) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
       } else if (str[to].charCodeAt(0) === 39 &&
-      str[to + 1] && str[to + 1].trim().length === 0) {
+      str[to + 1] && !str[to + 1].trim()) {
         if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)) && value !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote))) {
           rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)]);
           if (typeof offsetBy === "function") {
@@ -192,13 +192,13 @@ function convertOne(str, _ref) {
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
-    } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+    } else if (str[from - 1] && !str[from - 1].trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
-    } else if (str[to] && str[to].trim().length === 0) {
+    } else if (str[to] && !str[to].trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {

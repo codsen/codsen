@@ -321,8 +321,6 @@
     return str;
   }
 
-  /* eslint prefer-const: 0 */
-
   function convertOne(str, _ref) {
     var from = _ref.from,
         to = _ref.to,
@@ -362,7 +360,7 @@
     }
 
     function isLetter(str) {
-      return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
+      return typeof str === "string" && str.length && str.toUpperCase() !== str.toLowerCase();
     } // The following section detects apostrophes, with aim to convert them to
     // curlie right single quote or similar.
     // However, we also need to tackle cases where wrong-side apostrophe is put,
@@ -394,7 +392,7 @@
               offsetBy(2);
             }
           }
-        } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || str[to + 1].trim().length === 0 || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
+        } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           // first, take care of 'tis, 'twas, 'twere, 'twould and so on
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
@@ -403,14 +401,14 @@
         }
       } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
         // if there's punctuation on the left and something on the right:
-        if (str[to].trim().length === 0) {
+        if (!str[to].trim()) {
           if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
             rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
           } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
             rangesArr.push([from, to, "'"]);
           }
         } else if (str[to].charCodeAt(0) === 34 && // double quote follows
-        str[to + 1] && str[to + 1].trim().length === 0 // and whitespace after
+        str[to + 1] && !str[to + 1].trim() // and whitespace after
         ) {
             if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote)) && value !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))) {
               rangesArr.push([from, to + 1, "".concat(convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))]);
@@ -472,14 +470,14 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+      } else if (str[from - 1] && !str[from - 1].trim()) {
         // whitespace in front
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[to] && str[to].trim().length === 0) {
+      } else if (str[to] && !str[to].trim()) {
         // whitespace after
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
@@ -498,14 +496,14 @@
         }
       } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
         // 1. if there's punctuation on the left and space/quote on the right:
-        if (str[to].trim().length === 0) {
+        if (!str[to].trim()) {
           if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
             rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
           } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
             rangesArr.push([from, to, "\""]);
           }
         } else if (str[to].charCodeAt(0) === 39 && // single quote follows
-        str[to + 1] && str[to + 1].trim().length === 0) {
+        str[to + 1] && !str[to + 1].trim()) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)) && value !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote))) {
             rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)]);
 
@@ -550,14 +548,14 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+      } else if (str[from - 1] && !str[from - 1].trim()) {
         // 6. whitespace in front
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[to] && str[to].trim().length === 0) {
+      } else if (str[to] && !str[to].trim()) {
         // 7. whitespace after
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
