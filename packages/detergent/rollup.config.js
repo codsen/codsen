@@ -68,7 +68,6 @@ export default (commandLineArgs) => {
       external: [
         "all-named-html-entities",
         "ansi-regex",
-        "ast-deep-contains",
         "he",
         "html-entities-not-email-friendly",
         "ranges-apply",
@@ -103,7 +102,6 @@ export default (commandLineArgs) => {
       external: [
         "all-named-html-entities",
         "ansi-regex",
-        "ast-deep-contains",
         "he",
         "html-entities-not-email-friendly",
         "ranges-apply",
