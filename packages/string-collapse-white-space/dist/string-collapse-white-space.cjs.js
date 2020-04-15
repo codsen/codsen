@@ -127,20 +127,18 @@ function collapse(str, originalOpts) {
   var whiteSpaceWithinTagEndsAt = null;
   var tagMatched = false;
   var tagCanEndHere = false;
-  var count;
+  var count = {};
   var bail = false;
-  var resetCounts = function resetCounts() {
-    return {
-      equalDoubleQuoteCombo: 0,
-      equalOnly: 0,
-      doubleQuoteOnly: 0,
-      spacesBetweenLetterChunks: 0,
-      linebreaks: 0
-    };
+  var resetCounts = function resetCounts(obj) {
+    obj.equalDoubleQuoteCombo = 0;
+    obj.equalOnly = 0;
+    obj.doubleQuoteOnly = 0;
+    obj.spacesBetweenLetterChunks = 0;
+    obj.linebreaks = 0;
   };
   var bracketJustFound = false;
   if (opts.recogniseHTML) {
-    count = resetCounts();
+    resetCounts(count);
   }
   var lastLineBreaksLastCharIndex;
   var consecutiveLineBreakCount = 0;
@@ -262,7 +260,7 @@ function collapse(str, originalOpts) {
           whiteSpaceWithinTagEndsAt = null;
         }
         if (str[i] === ">") {
-          count = resetCounts();
+          resetCounts(count);
           bracketJustFound = true;
           if (stateWithinTag) {
             preliminaryIndexesToDelete = [];
@@ -295,7 +293,7 @@ function collapse(str, originalOpts) {
             }
             tagMatched = false;
           }
-          count = resetCounts();
+          resetCounts(count);
         } else if (stateWithinTag && str[i] === "/") {
           whiteSpaceWithinTagEndsAt = i;
         } else if (stateWithinTag && !tagMatched) {

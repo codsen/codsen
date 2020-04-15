@@ -779,24 +779,22 @@
     var whiteSpaceWithinTagEndsAt = null;
     var tagMatched = false;
     var tagCanEndHere = false;
-    var count;
+    var count = {};
     var bail = false; // bool flag to notify when false positive detected, used in HTML detection
 
-    var resetCounts = function resetCounts() {
-      return {
-        equalDoubleQuoteCombo: 0,
-        equalOnly: 0,
-        doubleQuoteOnly: 0,
-        spacesBetweenLetterChunks: 0,
-        linebreaks: 0
-      };
+    var resetCounts = function resetCounts(obj) {
+      obj.equalDoubleQuoteCombo = 0;
+      obj.equalOnly = 0;
+      obj.doubleQuoteOnly = 0;
+      obj.spacesBetweenLetterChunks = 0;
+      obj.linebreaks = 0;
     };
 
     var bracketJustFound = false; // dumb state switch, activated by > and terminated by
     // first non-whitespace char
 
     if (opts.recogniseHTML) {
-      count = resetCounts(); // initiates the count object, assigning all keys to zero
+      resetCounts(count); // initiates the count object, assigning all keys to zero
     }
 
     var lastLineBreaksLastCharIndex;
@@ -980,7 +978,7 @@
 
           if (str[i] === ">") {
             // first, reset the count obj.
-            count = resetCounts(); // set dumb bracket flag to on
+            resetCounts(count); // set dumb bracket flag to on
 
             bracketJustFound = true; // two cases:
 
@@ -1030,7 +1028,7 @@
             } // finally, reset the count obj.
 
 
-            count = resetCounts();
+            resetCounts(count);
           } else if (stateWithinTag && str[i] === "/") {
             whiteSpaceWithinTagEndsAt = i;
           } else if (stateWithinTag && !tagMatched) {

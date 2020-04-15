@@ -65,18 +65,18 @@ function collapse(str, originalOpts) {
   let whiteSpaceWithinTagEndsAt = null;
   let tagMatched = false;
   let tagCanEndHere = false;
-  let count;
+  const count = {};
   let bail = false;
-  const resetCounts = () => ({
-    equalDoubleQuoteCombo: 0,
-    equalOnly: 0,
-    doubleQuoteOnly: 0,
-    spacesBetweenLetterChunks: 0,
-    linebreaks: 0,
-  });
+  const resetCounts = (obj) => {
+    obj.equalDoubleQuoteCombo = 0;
+    obj.equalOnly = 0;
+    obj.doubleQuoteOnly = 0;
+    obj.spacesBetweenLetterChunks = 0;
+    obj.linebreaks = 0;
+  };
   let bracketJustFound = false;
   if (opts.recogniseHTML) {
-    count = resetCounts();
+    resetCounts(count);
   }
   let lastLineBreaksLastCharIndex;
   let consecutiveLineBreakCount = 0;
@@ -233,7 +233,7 @@ function collapse(str, originalOpts) {
           whiteSpaceWithinTagEndsAt = null;
         }
         if (str[i] === ">") {
-          count = resetCounts();
+          resetCounts(count);
           bracketJustFound = true;
           if (stateWithinTag) {
             preliminaryIndexesToDelete = [];
@@ -270,7 +270,7 @@ function collapse(str, originalOpts) {
             }
             tagMatched = false;
           }
-          count = resetCounts();
+          resetCounts(count);
         } else if (stateWithinTag && str[i] === "/") {
           whiteSpaceWithinTagEndsAt = i;
         } else if (stateWithinTag && !tagMatched) {

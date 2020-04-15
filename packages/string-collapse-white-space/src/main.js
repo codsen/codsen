@@ -74,20 +74,20 @@ function collapse(str, originalOpts) {
   let whiteSpaceWithinTagEndsAt = null;
   let tagMatched = false;
   let tagCanEndHere = false;
-  let count;
+  const count = {};
   let bail = false; // bool flag to notify when false positive detected, used in HTML detection
-  const resetCounts = () => ({
-    equalDoubleQuoteCombo: 0,
-    equalOnly: 0,
-    doubleQuoteOnly: 0,
-    spacesBetweenLetterChunks: 0,
-    linebreaks: 0,
-  });
+  const resetCounts = (obj) => {
+    obj.equalDoubleQuoteCombo = 0;
+    obj.equalOnly = 0;
+    obj.doubleQuoteOnly = 0;
+    obj.spacesBetweenLetterChunks = 0;
+    obj.linebreaks = 0;
+  };
   let bracketJustFound = false; // dumb state switch, activated by > and terminated by
   // first non-whitespace char
 
   if (opts.recogniseHTML) {
-    count = resetCounts(); // initiates the count object, assigning all keys to zero
+    resetCounts(count); // initiates the count object, assigning all keys to zero
   }
 
   let lastLineBreaksLastCharIndex;
@@ -459,7 +459,7 @@ function collapse(str, originalOpts) {
         // mind you, we're iterating backwards, so tag starts with ">"
         if (str[i] === ">") {
           // first, reset the count obj.
-          count = resetCounts(count);
+          resetCounts(count);
           console.log(
             `464 REST COUNT: NOW, count = ${JSON.stringify(count, null, 0)}`
           );
@@ -543,7 +543,7 @@ function collapse(str, originalOpts) {
             );
           }
           // finally, reset the count obj.
-          count = resetCounts(count);
+          resetCounts(count);
           console.log(
             `548 SET ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
               count,
