@@ -4136,7 +4136,6 @@
     return str.trim();
   }
 
-  var isArr$1 = Array.isArray;
   var has = Object.prototype.hasOwnProperty; // -----------------------------------------------------------------------------
   //                       H E L P E R   F U N C T I O N S
   // -----------------------------------------------------------------------------
@@ -4155,6 +4154,10 @@
 
   function isNull(something) {
     return something === null;
+  }
+
+  function isObj$3(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function existy$3(x) {
@@ -4214,7 +4217,7 @@
   }
 
   function containsHeadsOrTails(str, opts) {
-    if (typeof str !== "string" || str.trim().length === 0) {
+    if (typeof str !== "string" || !str.trim()) {
       return false;
     }
 
@@ -4300,7 +4303,7 @@
         // 1.1.1. first check data store
         var gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
 
-        if (lodash_isplainobject(gotPath) && objectPath.get(gotPath, varName)) {
+        if (isObj$3(gotPath) && objectPath.get(gotPath, varName)) {
           resolveValue = objectPath.get(gotPath, varName);
           handBrakeOff = false;
         }
@@ -4319,7 +4322,7 @@
           // 1.1.1. first check data store
           var _gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
 
-          if (lodash_isplainobject(_gotPath) && objectPath.get(_gotPath, varName)) {
+          if (isObj$3(_gotPath) && objectPath.get(_gotPath, varName)) {
             resolveValue = objectPath.get(_gotPath, varName);
             handBrakeOff = false;
           }
@@ -4329,7 +4332,7 @@
           // 1.1.2. second check for key straight in parent level
           var _gotPath2 = objectPath.get(input, currentPath);
 
-          if (lodash_isplainobject(_gotPath2) && objectPath.get(_gotPath2, varName)) {
+          if (isObj$3(_gotPath2) && objectPath.get(_gotPath2, varName)) {
             resolveValue = objectPath.get(_gotPath2, varName);
             handBrakeOff = false;
           }
@@ -4369,7 +4372,7 @@
             } else if (isNum$1(gotPathArr[y].val)) {
               resolveValue = String(gotPathArr[y].val);
               break;
-            } else if (isArr$1(gotPathArr[y].val)) {
+            } else if (Array.isArray(gotPathArr[y].val)) {
               resolveValue = gotPathArr[y].val.join("");
               break;
             } else {
@@ -4429,7 +4432,7 @@
     var secretResolvedVarsStash = {}; // 0. Add current path into breadCrumbPath
     // =======================================
 
-    var breadCrumbPath = lodash_clonedeep(incomingBreadCrumbPath);
+    var breadCrumbPath = Array.from(incomingBreadCrumbPath);
     breadCrumbPath.push(path); // 1. First, extract all vars
     // ==========================
 
@@ -4481,7 +4484,7 @@
           } else if (isNull(resolvedValue) && wholeValueIsVariable) {
             finalRangesArr = undefined;
             return resolvedValue;
-          } else if (isArr$1(resolvedValue)) {
+          } else if (Array.isArray(resolvedValue)) {
             resolvedValue = String(resolvedValue.join(""));
           } else if (isNull(resolvedValue)) {
             resolvedValue = "";
@@ -4590,22 +4593,21 @@
   // -----------------------------------------------------------------------------
 
 
-  function jsonVariables(inputOriginal) {
+  function jsonVariables(input) {
     var originalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    if (arguments.length === 0) {
+    if (!arguments.length) {
       throw new Error("json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!");
     }
 
-    if (!lodash_isplainobject(inputOriginal)) {
-      throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ".concat(Array.isArray(inputOriginal) ? "array" : _typeof(inputOriginal)));
+    if (!isObj$3(input)) {
+      throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ".concat(Array.isArray(input) ? "array" : _typeof(input)));
     }
 
-    if (!lodash_isplainobject(originalOpts)) {
+    if (!isObj$3(originalOpts)) {
       throw new TypeError("json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ".concat(Array.isArray(originalOpts) ? "array" : _typeof(originalOpts)));
     }
 
-    var input = lodash_clonedeep(inputOriginal);
     var defaults = {
       heads: "%%_",
       tails: "_%%",
@@ -4635,7 +4637,7 @@
 
     if (!opts.dontWrapVars) {
       opts.dontWrapVars = [];
-    } else if (!isArr$1(opts.dontWrapVars)) {
+    } else if (!Array.isArray(opts.dontWrapVars)) {
       opts.dontWrapVars = arrayiffyString(opts.dontWrapVars);
     }
 

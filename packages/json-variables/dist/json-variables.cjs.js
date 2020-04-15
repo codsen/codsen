@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var clone = _interopDefault(require('lodash.clonedeep'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 var matcher = _interopDefault(require('matcher'));
 var objectPath = _interopDefault(require('object-path'));
@@ -20,7 +19,6 @@ var strFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
 var get = _interopDefault(require('ast-get-values-by-key'));
 var Ranges = _interopDefault(require('ranges-push'));
 var rangesApply = _interopDefault(require('ranges-apply'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var removeDuplicateHeadsTails = _interopDefault(require('string-remove-duplicate-heads-tails'));
 var stringMatchLeftRight = require('string-match-left-right');
 
@@ -40,7 +38,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 var has = Object.prototype.hasOwnProperty;
 function isStr(something) {
   return typeof something === "string";
@@ -53,6 +50,9 @@ function isBool(something) {
 }
 function isNull(something) {
   return something === null;
+}
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function existy(x) {
   return x != null;
@@ -101,7 +101,7 @@ function getLastKey(str) {
   return str;
 }
 function containsHeadsOrTails(str, opts) {
-  if (typeof str !== "string" || str.trim().length === 0) {
+  if (typeof str !== "string" || !str.trim()) {
     return false;
   }
   if (str.includes(opts.heads) || str.includes(opts.tails) || isStr(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
@@ -208,7 +208,7 @@ function findValues(input, varName, path, opts) {
           } else if (isNum(gotPathArr[y].val)) {
             resolveValue = String(gotPathArr[y].val);
             break;
-          } else if (isArr(gotPathArr[y].val)) {
+          } else if (Array.isArray(gotPathArr[y].val)) {
             resolveValue = gotPathArr[y].val.join("");
             break;
           } else {
@@ -244,7 +244,7 @@ function resolveString(input, string, path, opts) {
     throw new Error("json-variables/resolveString(): [THROW_ID_19] While trying to resolve: \"".concat(string, "\" at path \"").concat(path, "\", we encountered a closed loop, the key is referencing itself.\"").concat(extra));
   }
   var secretResolvedVarsStash = {};
-  var breadCrumbPath = clone(incomingBreadCrumbPath);
+  var breadCrumbPath = Array.from(incomingBreadCrumbPath);
   breadCrumbPath.push(path);
   var finalRangesArr = new Ranges();
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
@@ -284,7 +284,7 @@ function resolveString(input, string, path, opts) {
         } else if (isNull(resolvedValue) && wholeValueIsVariable) {
           finalRangesArr = undefined;
           return resolvedValue;
-        } else if (isArr(resolvedValue)) {
+        } else if (Array.isArray(resolvedValue)) {
           resolvedValue = String(resolvedValue.join(""));
         } else if (isNull(resolvedValue)) {
           resolvedValue = "";
@@ -354,18 +354,17 @@ function resolveString(input, string, path, opts) {
   }
   return string;
 }
-function jsonVariables(inputOriginal) {
+function jsonVariables(input) {
   var originalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  if (arguments.length === 0) {
+  if (!arguments.length) {
     throw new Error("json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!");
   }
-  if (!isObj(inputOriginal)) {
-    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ".concat(Array.isArray(inputOriginal) ? "array" : _typeof(inputOriginal)));
+  if (!isObj(input)) {
+    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ".concat(Array.isArray(input) ? "array" : _typeof(input)));
   }
   if (!isObj(originalOpts)) {
     throw new TypeError("json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ".concat(Array.isArray(originalOpts) ? "array" : _typeof(originalOpts)));
   }
-  var input = clone(inputOriginal);
   var defaults = {
     heads: "%%_",
     tails: "_%%",
@@ -386,7 +385,7 @@ function jsonVariables(inputOriginal) {
   var opts = Object.assign({}, defaults, originalOpts);
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
-  } else if (!isArr(opts.dontWrapVars)) {
+  } else if (!Array.isArray(opts.dontWrapVars)) {
     opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
   }
   var culpritVal;

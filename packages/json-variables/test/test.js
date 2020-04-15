@@ -219,16 +219,14 @@ t.test(
     t.match(err1.message, /THROW_ID_18/);
 
     // since v.7 the value will be found if such key exists anywhere
+    const input1 = {
+      a: "some text %%_var1_%% more text",
+      a_data: {
+        var1: "something",
+      },
+    };
     t.same(
-      jv(
-        {
-          a: "some text %%_var1_%% more text",
-          a_data: {
-            var1: "something",
-          },
-        },
-        { lookForDataContainers: false }
-      ),
+      jv(input1, { lookForDataContainers: false }),
       {
         a: "some text something more text",
         a_data: {
@@ -237,6 +235,13 @@ t.test(
       },
       "data store is off, so empty opts.dataContainerIdentifierTails is fine"
     );
+    // check against input argument mutation:
+    t.same(input1, {
+      a: "some text %%_var1_%% more text",
+      a_data: {
+        var1: "something",
+      },
+    });
 
     // now, the data stores (keys with _data) are used only to give preference
     // when the value is resolved - they will be checked first, before doing global
@@ -252,21 +257,19 @@ t.test(
     // route, when algorithm will go from "c" up to root.
 
     // At root level, it will find "var1" and therefore will resolve "c" to "222".
-    t.same(
-      jv(
-        {
-          a: {
-            b: {
-              c: "some text %%_var1_%% more text",
-            },
-            b_data: {
-              var1: "111",
-            },
-          },
-          var1: "222",
+    const input2 = {
+      a: {
+        b: {
+          c: "some text %%_var1_%% more text",
         },
-        { lookForDataContainers: false }
-      ),
+        b_data: {
+          var1: "111",
+        },
+      },
+      var1: "222",
+    };
+    t.same(
+      jv(input2, { lookForDataContainers: false }),
       {
         a: {
           b: {
@@ -280,24 +283,34 @@ t.test(
       },
       "resolves to topmost root level key because data store is off"
     );
+    // mutation check:
+    t.same(input2, {
+      a: {
+        b: {
+          c: "some text %%_var1_%% more text",
+        },
+        b_data: {
+          var1: "111",
+        },
+      },
+      var1: "222",
+    });
 
     // now if we enable data stores, "c" will resolve to "111" because data store
     // path will be checked when bubbling up to root level, where var1: '222' is.
-    t.same(
-      jv(
-        {
-          a: {
-            b: {
-              c: "some text %%_var1_%% more text",
-            },
-            b_data: {
-              var1: "111",
-            },
-          },
-          var1: "222",
+    const input3 = {
+      a: {
+        b: {
+          c: "some text %%_var1_%% more text",
         },
-        { lookForDataContainers: true }
-      ),
+        b_data: {
+          var1: "111",
+        },
+      },
+      var1: "222",
+    };
+    t.same(
+      jv(input3, { lookForDataContainers: true }),
       {
         a: {
           b: {
@@ -311,6 +324,18 @@ t.test(
       },
       "resolves to datastore, not using value at the root"
     );
+    // mutation check:
+    t.same(input3, {
+      a: {
+        b: {
+          c: "some text %%_var1_%% more text",
+        },
+        b_data: {
+          var1: "111",
+        },
+      },
+      var1: "222",
+    });
     t.end();
   }
 );
@@ -1560,18 +1585,19 @@ t.test("02.22 - fetching variables from parent node's level", (t) => {
 });
 
 t.test("02.23 - fetching variables from two levels above", (t) => {
-  t.same(
-    jv({
-      a: {
-        b: {
-          c: {
-            d: "text %%_var1_%% text %%-var2-%% text",
-          },
+  const input = {
+    a: {
+      b: {
+        c: {
+          d: "text %%_var1_%% text %%-var2-%% text",
         },
-        var1: "zzz",
-        var2: "yyy",
       },
-    }),
+      var1: "zzz",
+      var2: "yyy",
+    },
+  };
+  t.same(
+    jv(input),
     {
       a: {
         b: {
@@ -1585,22 +1611,35 @@ t.test("02.23 - fetching variables from two levels above", (t) => {
     },
     "02.23 - defaults"
   );
+  // mutation didn't happen:
+  t.same(input, {
+    a: {
+      b: {
+        c: {
+          d: "text %%_var1_%% text %%-var2-%% text",
+        },
+      },
+      var1: "zzz",
+      var2: "yyy",
+    },
+  });
   t.end();
 });
 
 t.test("02.24 - fetching variables from root, three levels above", (t) => {
-  t.same(
-    jv({
-      a: {
-        b: {
-          c: {
-            d: "text %%_var1.z_%% text %%-var2-%% text",
-          },
+  const input = {
+    a: {
+      b: {
+        c: {
+          d: "text %%_var1.z_%% text %%-var2-%% text",
         },
       },
-      var1: { z: "zzz" },
-      var2: "yyy",
-    }),
+    },
+    var1: { z: "zzz" },
+    var2: "yyy",
+  };
+  t.same(
+    jv(input),
     {
       a: {
         b: {
@@ -1614,6 +1653,18 @@ t.test("02.24 - fetching variables from root, three levels above", (t) => {
     },
     "02.24 - defaults"
   );
+  // input argument was not mutated:
+  t.same(input, {
+    a: {
+      b: {
+        c: {
+          d: "text %%_var1.z_%% text %%-var2-%% text",
+        },
+      },
+    },
+    var1: { z: "zzz" },
+    var2: "yyy",
+  });
   t.end();
 });
 

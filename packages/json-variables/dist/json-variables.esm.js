@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
  */
 
-import clone from 'lodash.clonedeep';
 import traverse from 'ast-monkey-traverse';
 import matcher from 'matcher';
 import objectPath from 'object-path';
@@ -16,11 +15,9 @@ import strFindHeadsTails from 'string-find-heads-tails';
 import get from 'ast-get-values-by-key';
 import Ranges from 'ranges-push';
 import rangesApply from 'ranges-apply';
-import isObj from 'lodash.isplainobject';
 import removeDuplicateHeadsTails from 'string-remove-duplicate-heads-tails';
 import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 
-const isArr = Array.isArray;
 const has = Object.prototype.hasOwnProperty;
 function isStr(something) {
   return typeof something === "string";
@@ -33,6 +30,11 @@ function isBool(something) {
 }
 function isNull(something) {
   return something === null;
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function existy(x) {
   return x != null;
@@ -81,7 +83,7 @@ function getLastKey(str) {
   return str;
 }
 function containsHeadsOrTails(str, opts) {
-  if (typeof str !== "string" || str.trim().length === 0) {
+  if (typeof str !== "string" || !str.trim()) {
     return false;
   }
   if (
@@ -242,7 +244,7 @@ function findValues(input, varName, path, opts) {
           } else if (isNum(gotPathArr[y].val)) {
             resolveValue = String(gotPathArr[y].val);
             break;
-          } else if (isArr(gotPathArr[y].val)) {
+          } else if (Array.isArray(gotPathArr[y].val)) {
             resolveValue = gotPathArr[y].val.join("");
             break;
           } else {
@@ -293,7 +295,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     );
   }
   const secretResolvedVarsStash = {};
-  const breadCrumbPath = clone(incomingBreadCrumbPath);
+  const breadCrumbPath = Array.from(incomingBreadCrumbPath);
   breadCrumbPath.push(path);
   let finalRangesArr = new Ranges();
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
@@ -357,7 +359,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
         } else if (isNull(resolvedValue) && wholeValueIsVariable) {
           finalRangesArr = undefined;
           return resolvedValue;
-        } else if (isArr(resolvedValue)) {
+        } else if (Array.isArray(resolvedValue)) {
           resolvedValue = String(resolvedValue.join(""));
         } else if (isNull(resolvedValue)) {
           resolvedValue = "";
@@ -478,16 +480,16 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   }
   return string;
 }
-function jsonVariables(inputOriginal, originalOpts = {}) {
-  if (arguments.length === 0) {
+function jsonVariables(input, originalOpts = {}) {
+  if (!arguments.length) {
     throw new Error(
       "json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!"
     );
   }
-  if (!isObj(inputOriginal)) {
+  if (!isObj(input)) {
     throw new TypeError(
       `json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ${
-        Array.isArray(inputOriginal) ? "array" : typeof inputOriginal
+        Array.isArray(input) ? "array" : typeof input
       }`
     );
   }
@@ -498,7 +500,6 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
       }`
     );
   }
-  const input = clone(inputOriginal);
   const defaults = {
     heads: "%%_",
     tails: "_%%",
@@ -519,7 +520,7 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
   const opts = Object.assign({}, defaults, originalOpts);
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
-  } else if (!isArr(opts.dontWrapVars)) {
+  } else if (!Array.isArray(opts.dontWrapVars)) {
     opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
   }
   let culpritVal;
