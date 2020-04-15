@@ -1,16 +1,7 @@
 import { set, traverse } from "ast-monkey";
-import clone from "lodash.clonedeep";
 
-function existy(x) {
-  return x != null;
-}
 function isStr(something) {
   return typeof something === "string";
-}
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
 }
 function mandatory(i) {
   throw new Error(
@@ -47,7 +38,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new TypeError(
       `string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${originalOpts}`
     );
@@ -120,7 +111,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`
     );
     console.log(
-      `123 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
+      `114 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
     );
     //
     //    PART 1. Bean-counting
@@ -140,11 +131,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       if (surrogateDetected !== true) {
         unicodeIndex += 1;
         console.log(
-          `143 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+          `134 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
         );
         surrogateDetected = true;
         console.log(
-          `147 ! surrogateDetected now ${JSON.stringify(
+          `138 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -156,7 +147,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
         // but reset the flag, because astral symbols come in pairs
         surrogateDetected = false;
         console.log(
-          `159 ! surrogateDetected now ${JSON.stringify(
+          `150 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -169,13 +160,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       // bump the counter:
       unicodeIndex += 1;
       console.log(
-        `172 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+        `163 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
       );
       // reset the flag:
       if (surrogateDetected === true) {
         surrogateDetected = false;
         console.log(
-          `178 ! surrogateDetected now ${JSON.stringify(
+          `169 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -257,14 +248,19 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   //       ==============
 
   console.log("\n\n\n");
-  console.log(`260 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
+  console.log(`251 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
   if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
 
   // The result's base is original indexes from the input. Clone it.
-  let res = clone(indexes);
+  console.log(
+    `259 ███████████████████████████████████████ CLONING indexes = ${indexes}, typeof ${
+      Array.isArray(indexes) ? "array" : `${typeof indexes}`
+    }`
+  );
+  let res = Array.from(indexes);
 
   // backwards-loop the toDoList for efficiency, mutate the res on each step:
   for (let z = toDoList.length; z--; ) {

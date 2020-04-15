@@ -8,18 +8,9 @@
  */
 
 import { traverse, set } from 'ast-monkey';
-import clone from 'lodash.clonedeep';
 
-function existy(x) {
-  return x != null;
-}
 function isStr(something) {
   return typeof something === "string";
-}
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
 }
 function mandatory(i) {
   throw new Error(
@@ -49,7 +40,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new TypeError(
       `string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${originalOpts}`
     );
@@ -149,7 +140,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
-  let res = clone(indexes);
+  let res = Array.from(indexes);
   for (let z = toDoList.length; z--; ) {
     res = set(res, {
       index: toDoList[z].id,

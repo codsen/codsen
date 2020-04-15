@@ -11,10 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var astMonkey = require('ast-monkey');
-var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -81,14 +78,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-function existy(x) {
-  return x != null;
-}
 function isStr(something) {
   return typeof something === "string";
-}
-function isObj(something) {
-  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function mandatory(i) {
   throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
@@ -114,7 +105,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   if (!isStr(str) || str.length === 0) {
     throw new TypeError("string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(str));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && _typeof(originalOpts) !== "object") {
     throw new TypeError("string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(originalOpts));
   }
   var defaults = {
@@ -190,7 +181,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   if (Number.isInteger(indexes) && indexes >= 0 || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
-  var res = clone(indexes);
+  var res = Array.from(indexes);
   for (var z = toDoList.length; z--;) {
     res = astMonkey.set(res, {
       index: toDoList[z].id,

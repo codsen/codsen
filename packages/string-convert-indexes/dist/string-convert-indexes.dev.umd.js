@@ -4832,16 +4832,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     }));
   }
 
-  function existy$2(x) {
-    return x != null;
-  }
-
   function isStr$1(something) {
     return typeof something === "string";
-  }
-
-  function isObj$3(something) {
-    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function mandatory(i) {
@@ -4880,7 +4872,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       throw new TypeError("string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(str));
     }
 
-    if (existy$2(originalOpts) && !isObj$3(originalOpts)) {
+    if (originalOpts && _typeof(originalOpts) !== "object") {
       throw new TypeError("string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(originalOpts));
     } // prep the opts
 
@@ -5023,7 +5015,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     } // The result's base is original indexes from the input. Clone it.
 
 
-    var res = lodash_clonedeep(indexes); // backwards-loop the toDoList for efficiency, mutate the res on each step:
+    var res = Array.from(indexes); // backwards-loop the toDoList for efficiency, mutate the res on each step:
 
     for (var z = toDoList.length; z--;) {
       // we will use the "set" method from ast-monkey, which sets the value by id number:

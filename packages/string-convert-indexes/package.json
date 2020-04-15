@@ -113,8 +113,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey": "^7.11.5",
-    "lodash.clonedeep": "^4.5.0"
+    "ast-monkey": "^7.11.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
