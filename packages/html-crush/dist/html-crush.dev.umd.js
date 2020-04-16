@@ -566,7 +566,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -630,7 +630,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -649,7 +649,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -1064,7 +1064,7 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
     }
 
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim().length) {
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
         let firstCharOutsideIndex;
         let startingPosition = position;
@@ -1077,7 +1077,7 @@
           for (let y = startingPosition; y--;) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -1086,7 +1086,7 @@
           for (let y = startingPosition; y < str.length; y++) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -1191,8 +1191,6 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
    */
-  const isArr = Array.isArray;
-
   function expander(originalOpts) {
     const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
@@ -1201,14 +1199,14 @@
         return false;
       }
 
-      return char.trim().length === 0;
+      return !char.trim();
     }
 
     function isStr(something) {
       return typeof something === "string";
     }
 
-    if (!lodash_isplainobject(originalOpts)) {
+    if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
       let supplementalString;
 
       if (originalOpts === undefined) {
@@ -1220,8 +1218,8 @@
       }
 
       throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
-    } else if (lodash_isplainobject(originalOpts) && Object.keys(originalOpts).length === 0) {
-      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys and computer doesn't know what to expand.`);
+    } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
     }
 
     if (typeof originalOpts.from !== "number") {
@@ -1263,7 +1261,7 @@
     };
     const opts = Object.assign({}, defaults, originalOpts);
 
-    if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
       let culpritsIndex;
       let culpritsValue;
 
@@ -1289,7 +1287,7 @@
     if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
       for (let i = from; i--;) {
         if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-          if (str[i].trim().length) {
+          if (str[i].trim()) {
             if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
               from = i + 1;
             } else {
@@ -1312,7 +1310,7 @@
 
     if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
       for (let i = to, len = str.length; i < len; i++) {
-        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim().length || str[i] === undefined)) {
+        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
           if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
             to = i;
           } else {
@@ -1324,7 +1322,7 @@
       }
     }
 
-    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly.length && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly.length && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
+    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
       if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
         from--;
       }
@@ -1334,7 +1332,7 @@
       }
     }
 
-    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
+    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
       return [from, to, " "];
     }
 
@@ -3212,14 +3210,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -3242,14 +3240,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -3261,7 +3259,7 @@
     return leftMain(str, idx, false);
   }
 
-  var isArr$1 = Array.isArray;
+  var isArr = Array.isArray;
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true
   });
@@ -3303,7 +3301,7 @@
       throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    if (originalOpts && isArr$1(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
+    if (originalOpts && isArr(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
       for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
         if (!isStr$3(originalOpts.breakToTheLeftOf[z])) {
           throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ".concat(z, " is of a type \"").concat(_typeof(originalOpts.breakToTheLeftOf[z]), "\" and is equal to:\n").concat(JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)));
@@ -3324,13 +3322,11 @@
       opts.breakToTheLeftOf = [];
     }
 
-    var breakToTheLeftOfFirstLetters = "";
+    var breakToTheLeftOfFirstLetters = new Set();
 
-    if (isArr$1(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+    if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
       for (var i = 0, _len2 = opts.breakToTheLeftOf.length; i < _len2; i++) {
-        if (opts.breakToTheLeftOf[i].length && !breakToTheLeftOfFirstLetters.includes(opts.breakToTheLeftOf[i][0])) {
-          breakToTheLeftOfFirstLetters += opts.breakToTheLeftOf[i][0];
-        }
+        breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
       }
     } // console.log(
     //   `0187 ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3527,10 +3523,10 @@
           // delete that chunk of whitespace.
           // Basically, traverse backwards from "<" of "</script>", stop either
           // at first line break or non-whitespace character.
-          if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim().length) {
+          if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim()) {
             // march backwards
             for (var _y2 = _i; _y2--;) {
-              if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim().length) {
+              if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim()) {
                 if (_y2 + 1 < _i) {
                   finalIndexesToDelete.push(_y2 + 1, _i);
                 }
@@ -3601,11 +3597,11 @@
         ) {
             tagName = str.slice(tagNameStartsAt, _i); // check for inner tag whitespace
 
-            if (str[right(str, _i - 1)] === ">" && !str[_i].trim().length) {
+            if (str[right(str, _i - 1)] === ">" && !str[_i].trim()) {
               finalIndexesToDelete.push(_i, right(str, _i));
             } else if (str[right(str, _i - 1)] === "/" && str[right(str, right(str, _i - 1))] === ">") {
               // if there's a space in front of "/>"
-              if (!str[_i].trim().length) {
+              if (!str[_i].trim()) {
                 finalIndexesToDelete.push(_i, right(str, _i));
               } // if there's space between slash and bracket
 
@@ -3687,7 +3683,7 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !str[_i].trim().length) {
+        if (!doNothing && !str[_i].trim()) {
           // if whitespace
           if (whitespaceStartedAt === null) {
             whitespaceStartedAt = _i;
@@ -3735,7 +3731,7 @@
               if (opts.removeLineBreaks || withinInlineStyle) {
                 //
                 // ██ CASE 2-1 - special break points from opts.breakToTheLeftOf
-                if (breakToTheLeftOfFirstLetters.length && breakToTheLeftOfFirstLetters.includes(str[_i]) && matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
+                if (breakToTheLeftOfFirstLetters.size && breakToTheLeftOfFirstLetters.has(str[_i]) && matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
                   // maybe there was just single line break?
                   if (!(str[_i - 1] === "\n" && whitespaceStartedAt === _i - 1)) {
                     finalIndexesToDelete.push(whitespaceStartedAt, _i, "\n");
@@ -3791,7 +3787,7 @@
                   // 2-2: Line-length limiting is on (not that easy)
                   // maybe we are already beyond the limit?
                   if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
-                    if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim().length && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
+                    if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
                       whatToAdd = "\n";
                       countCharactersPerLine = 1;
                     } // replace the whitespace only in two cases:
@@ -3849,8 +3845,8 @@
         } // catch the characters, suitable for a break
 
 
-        if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) && !matchRightIncl(str, _i, "</a")) {
-          if (breakToTheLeftOfFirstLetters.length && matchRightIncl(str, _i, opts.breakToTheLeftOf) && left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !matchLeft(str, _i, "<!--"))) {
+        if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !matchRightIncl(str, _i, "</a")) {
+          if (breakToTheLeftOfFirstLetters.size && matchRightIncl(str, _i, opts.breakToTheLeftOf) && left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !matchLeft(str, _i, "<!--"))) {
             finalIndexesToDelete.push(_i, _i, "\n");
             stageFrom = null;
             stageTo = null;
@@ -3858,7 +3854,7 @@
             countCharactersPerLine = 1;
             continue;
           } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
-            if (!str[_i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) || !str[_i].trim().length) {
+            if (!str[_i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) || !str[_i].trim()) {
               // 1. release stage contents - now they'll be definitely deleted
               // =============================================================
               if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
@@ -3866,7 +3862,7 @@
                 // amended into linebreak because otherwise we'll exceed the
                 // character limit
 
-                if (str[_i].trim().length && str[_i + 1] && str[_i + 1].trim().length && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
+                if (str[_i].trim() && str[_i + 1] && str[_i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
                   _whatToAdd = "\n";
                 } // if line is beyond the line length limit or whitespace is not
                 // a single space, staged to be replaced with single space,
@@ -3885,7 +3881,7 @@
               // =============================================================
 
 
-              if (str[_i].trim().length && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              if (str[_i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
                 } // not a letter
@@ -3900,7 +3896,7 @@
                 stageFrom = _i;
                 stageTo = _i;
                 stageAdd = null;
-              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !isArr$1(opts.mindTheInlineTags) || isArr$1(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || isArr$1(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !isArr(opts.mindTheInlineTags) || isArr(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
                 trimCharsBeforeMatching: "/",
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
@@ -3965,7 +3961,7 @@
                 finalIndexesToDelete.push(_i, _i, "\n");
                 countCharactersPerLine = 0;
               }
-            } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr$3(tagName) && isArr$1(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+            } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr$3(tagName) && isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
               // ██ 2.
               //
               if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ; else {
@@ -3973,7 +3969,7 @@
                 finalIndexesToDelete.push(_i + 1, _i + 1, "\n");
                 countCharactersPerLine = 0;
               }
-            } else if (!str[_i].trim().length) ; else if (!str[_i + 1]) {
+            } else if (!str[_i].trim()) ; else if (!str[_i + 1]) {
               // ██ 4.
               //
               // if we reached the end of string, check what's in stage
@@ -3989,17 +3985,17 @@
           // two possible cases:
           // 1. we hit the line length limit and we can break afterwards
           // 2. we can't break afterwards, and there might be stage present
-          if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim().length)) {
+          if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim())) {
             //
             var _whatToAdd2 = "\n";
 
-            if (str[_i + 1] && !str[_i + 1].trim().length && countCharactersPerLine === opts.lineLengthLimit) {
+            if (str[_i + 1] && !str[_i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
               _whatToAdd2 = stageAdd;
             } // final correction - we might need to extend stageFrom to include
             // all whitespace on the left if whatToAdd is a line break
 
 
-            if (_whatToAdd2 === "\n" && !str[stageFrom - 1].trim().length) {
+            if (_whatToAdd2 === "\n" && !str[stageFrom - 1].trim()) {
               stageFrom = left(str, stageFrom) + 1;
             }
 

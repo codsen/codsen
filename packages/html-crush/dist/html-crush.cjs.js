@@ -156,12 +156,10 @@ function crush(str, originalOpts) {
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
-  var breakToTheLeftOfFirstLetters = "";
+  var breakToTheLeftOfFirstLetters = new Set();
   if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     for (var i = 0, _len2 = opts.breakToTheLeftOf.length; i < _len2; i++) {
-      if (opts.breakToTheLeftOf[i].length && !breakToTheLeftOfFirstLetters.includes(opts.breakToTheLeftOf[i][0])) {
-        breakToTheLeftOfFirstLetters += opts.breakToTheLeftOf[i][0];
-      }
+      breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
     }
   }
   var lastLinebreak = null;
@@ -267,9 +265,9 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
       }
       if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t" && !isLetter(str[_i + 8])) {
-        if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim().length) {
+        if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim()) {
           for (var _y2 = _i; _y2--;) {
-            if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim().length) {
+            if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim()) {
               if (_y2 + 1 < _i) {
                 finalIndexesToDelete.push(_y2 + 1, _i);
               }
@@ -304,10 +302,10 @@ function crush(str, originalOpts) {
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
       ) {
           tagName = str.slice(tagNameStartsAt, _i);
-          if (str[stringLeftRight.right(str, _i - 1)] === ">" && !str[_i].trim().length) {
+          if (str[stringLeftRight.right(str, _i - 1)] === ">" && !str[_i].trim()) {
             finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
           } else if (str[stringLeftRight.right(str, _i - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, _i - 1))] === ">") {
-            if (!str[_i].trim().length) {
+            if (!str[_i].trim()) {
               finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
             }
             if (str[stringLeftRight.right(str, _i - 1) + 1] !== ">") {
@@ -357,7 +355,7 @@ function crush(str, originalOpts) {
       if (!doNothing && !withinInlineStyle && "\"'".includes(str[_i]) && str[_i - 1] === "=" && str[_i - 2] === "e" && str[_i - 3] === "l" && str[_i - 4] === "y" && str[_i - 5] === "t" && str[_i - 6] === "s") {
         withinInlineStyle = _i;
       }
-      if (!doNothing && !str[_i].trim().length) {
+      if (!doNothing && !str[_i].trim()) {
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = _i;
         }
@@ -386,7 +384,7 @@ function crush(str, originalOpts) {
               }
             }
             if (opts.removeLineBreaks || withinInlineStyle) {
-              if (breakToTheLeftOfFirstLetters.length && breakToTheLeftOfFirstLetters.includes(str[_i]) && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
+              if (breakToTheLeftOfFirstLetters.size && breakToTheLeftOfFirstLetters.has(str[_i]) && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
                 if (!(str[_i - 1] === "\n" && whitespaceStartedAt === _i - 1)) {
                   finalIndexesToDelete.push(whitespaceStartedAt, _i, "\n");
                 }
@@ -421,7 +419,7 @@ function crush(str, originalOpts) {
                 }
               } else {
                 if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
-                  if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim().length && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
+                  if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
                     whatToAdd = "\n";
                     countCharactersPerLine = 1;
                   }
@@ -455,8 +453,8 @@ function crush(str, originalOpts) {
           nonWhitespaceCharMet = true;
         }
       }
-      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
-        if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !stringMatchLeftRight.matchLeft(str, _i, "<!--"))) {
+      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
+        if (breakToTheLeftOfFirstLetters.size && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !stringMatchLeftRight.matchLeft(str, _i, "<!--"))) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;
           stageTo = null;
@@ -464,10 +462,10 @@ function crush(str, originalOpts) {
           countCharactersPerLine = 1;
           continue;
         } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
-          if (!str[_i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) || !str[_i].trim().length) {
+          if (!str[_i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) || !str[_i].trim()) {
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
               var _whatToAdd = stageAdd;
-              if (str[_i].trim().length && str[_i + 1] && str[_i + 1].trim().length && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
+              if (str[_i].trim() && str[_i + 1] && str[_i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
                 _whatToAdd = "\n";
               }
               if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
@@ -478,7 +476,7 @@ function crush(str, originalOpts) {
                 countCharactersPerLine -= lastLinebreak;
               }
             }
-            if (str[_i].trim().length && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
+            if (str[_i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
               }
@@ -530,7 +528,7 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(_i + 1, _i + 1, "\n");
               countCharactersPerLine = 0;
             }
-          } else if (!str[_i].trim().length) ; else if (!str[_i + 1]) {
+          } else if (!str[_i].trim()) ; else if (!str[_i + 1]) {
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
               finalIndexesToDelete.push(stageFrom, stageTo, "\n");
             }
@@ -538,12 +536,12 @@ function crush(str, originalOpts) {
         }
       }
       if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !"/".includes(str[_i])) {
-        if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim().length)) {
+        if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim())) {
           var _whatToAdd2 = "\n";
-          if (str[_i + 1] && !str[_i + 1].trim().length && countCharactersPerLine === opts.lineLengthLimit) {
+          if (str[_i + 1] && !str[_i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
             _whatToAdd2 = stageAdd;
           }
-          if (_whatToAdd2 === "\n" && !str[stageFrom - 1].trim().length) {
+          if (_whatToAdd2 === "\n" && !str[stageFrom - 1].trim()) {
             stageFrom = stringLeftRight.left(str, stageFrom) + 1;
           }
           finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd2);

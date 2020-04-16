@@ -165,15 +165,10 @@ function crush(str, originalOpts) {
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
-  let breakToTheLeftOfFirstLetters = "";
+  const breakToTheLeftOfFirstLetters = new Set();
   if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     for (let i = 0, len = opts.breakToTheLeftOf.length; i < len; i++) {
-      if (
-        opts.breakToTheLeftOf[i].length &&
-        !breakToTheLeftOfFirstLetters.includes(opts.breakToTheLeftOf[i][0])
-      ) {
-        breakToTheLeftOfFirstLetters += opts.breakToTheLeftOf[i][0];
-      }
+      breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
     }
   }
   let lastLinebreak = null;
@@ -361,10 +356,10 @@ function crush(str, originalOpts) {
           (opts.removeIndentations || opts.removeLineBreaks) &&
           i > 0 &&
           str[i - 1] &&
-          !str[i - 1].trim().length
+          !str[i - 1].trim()
         ) {
           for (let y = i; y--; ) {
-            if (str[y] === "\n" || str[y] === "\r" || str[y].trim().length) {
+            if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
               if (y + 1 < i) {
                 finalIndexesToDelete.push(y + 1, i);
               }
@@ -420,13 +415,13 @@ function crush(str, originalOpts) {
         !/\w/.test(str[i])
       ) {
         tagName = str.slice(tagNameStartsAt, i);
-        if (str[right(str, i - 1)] === ">" && !str[i].trim().length) {
+        if (str[right(str, i - 1)] === ">" && !str[i].trim()) {
           finalIndexesToDelete.push(i, right(str, i));
         } else if (
           str[right(str, i - 1)] === "/" &&
           str[right(str, right(str, i - 1))] === ">"
         ) {
-          if (!str[i].trim().length) {
+          if (!str[i].trim()) {
             finalIndexesToDelete.push(i, right(str, i));
           }
           if (str[right(str, i - 1) + 1] !== ">") {
@@ -538,7 +533,7 @@ function crush(str, originalOpts) {
       ) {
         withinInlineStyle = i;
       }
-      if (!doNothing && !str[i].trim().length) {
+      if (!doNothing && !str[i].trim()) {
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = i;
         }
@@ -578,8 +573,8 @@ function crush(str, originalOpts) {
             }
             if (opts.removeLineBreaks || withinInlineStyle) {
               if (
-                breakToTheLeftOfFirstLetters.length &&
-                breakToTheLeftOfFirstLetters.includes(str[i]) &&
+                breakToTheLeftOfFirstLetters.size &&
+                breakToTheLeftOfFirstLetters.has(str[i]) &&
                 matchRightIncl(str, i, opts.breakToTheLeftOf)
               ) {
                 if (!(str[i - 1] === "\n" && whitespaceStartedAt === i - 1)) {
@@ -671,7 +666,7 @@ function crush(str, originalOpts) {
                     countCharactersPerLine > opts.lineLengthLimit ||
                     (countCharactersPerLine === opts.lineLengthLimit &&
                       str[i + 1] &&
-                      str[i + 1].trim().length &&
+                      str[i + 1].trim() &&
                       !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) &&
                       !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1]))
                   ) {
@@ -723,11 +718,11 @@ function crush(str, originalOpts) {
         !beginningOfAFile &&
         i !== 0 &&
         opts.removeLineBreaks &&
-        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) &&
+        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) &&
         !matchRightIncl(str, i, "</a")
       ) {
         if (
-          breakToTheLeftOfFirstLetters.length &&
+          breakToTheLeftOfFirstLetters.size &&
           matchRightIncl(str, i, opts.breakToTheLeftOf) &&
           left(str, i) !== null &&
           (!str.slice(i).startsWith("<![endif]") || !matchLeft(str, i, "<!--"))
@@ -747,7 +742,7 @@ function crush(str, originalOpts) {
             (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
               !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
             CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
-            !str[i].trim().length
+            !str[i].trim()
           ) {
             if (
               stageFrom !== null &&
@@ -756,9 +751,9 @@ function crush(str, originalOpts) {
             ) {
               let whatToAdd = stageAdd;
               if (
-                str[i].trim().length &&
+                str[i].trim() &&
                 str[i + 1] &&
-                str[i + 1].trim().length &&
+                str[i + 1].trim() &&
                 countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
                   opts.lineLengthLimit
               ) {
@@ -777,7 +772,7 @@ function crush(str, originalOpts) {
               }
             }
             if (
-              str[i].trim().length &&
+              str[i].trim() &&
               (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
                 (str[i - 1] &&
                   CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
@@ -884,7 +879,7 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(i + 1, i + 1, "\n");
               countCharactersPerLine = 0;
             }
-          } else if (!str[i].trim().length) ; else if (!str[i + 1]) {
+          } else if (!str[i].trim()) ; else if (!str[i + 1]) {
             if (
               stageFrom !== null &&
               stageTo !== null &&
@@ -911,18 +906,18 @@ function crush(str, originalOpts) {
           !(
             countCharactersPerLine === opts.lineLengthLimit &&
             str[i + 1] &&
-            !str[i + 1].trim().length
+            !str[i + 1].trim()
           )
         ) {
           let whatToAdd = "\n";
           if (
             str[i + 1] &&
-            !str[i + 1].trim().length &&
+            !str[i + 1].trim() &&
             countCharactersPerLine === opts.lineLengthLimit
           ) {
             whatToAdd = stageAdd;
           }
-          if (whatToAdd === "\n" && !str[stageFrom - 1].trim().length) {
+          if (whatToAdd === "\n" && !str[stageFrom - 1].trim()) {
             stageFrom = left(str, stageFrom) + 1;
           }
           finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
