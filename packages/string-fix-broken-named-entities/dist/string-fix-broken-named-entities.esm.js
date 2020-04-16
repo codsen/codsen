@@ -7,12 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
 
-import isObj from 'lodash.isplainobject';
-import clone from 'lodash.clonedeep';
 import { entStartsWith, decode, uncertain, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
-const isArr = Array.isArray;
 function stringFixBrokenNamedEntities(str, originalOpts) {
   function resemblesNumericEntity(str, from, to) {
     let lettersCount = 0;
@@ -105,7 +102,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     return true;
   }
   function findLongest(temp1) {
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       if (temp1.length === 1) {
         return temp1[0];
       }
@@ -120,7 +117,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   function removeGappedFromMixedCases(temp1) {
     let copy;
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       copy = Array.from(temp1);
       if (
         copy.length > 1 &&
@@ -145,7 +142,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               !entObj ||
               !entObj.tempRes ||
               !entObj.tempRes.gaps ||
-              !isArr(entObj.tempRes.gaps) ||
+              !Array.isArray(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
           ) ||
           copy.every(
@@ -153,7 +150,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               entObj &&
               entObj.tempRes &&
               entObj.tempRes.gaps &&
-              isArr(entObj.tempRes.gaps) &&
+              Array.isArray(entObj.tempRes.gaps) &&
               entObj.tempRes.gaps.length
           )
         )
@@ -162,7 +159,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           copy.filter(
             (entObj) =>
               !entObj.tempRes.gaps ||
-              !isArr(entObj.tempRes.gaps) ||
+              !Array.isArray(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
           )
         );
@@ -190,7 +187,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   };
   let opts;
   if (originalOpts != null) {
-    if (!isObj(originalOpts)) {
+    if (originalOpts && typeof originalOpts !== "object") {
       throw new Error(
         `string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(
           originalOpts,
@@ -232,20 +229,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     );
   }
   let state_AmpersandNotNeeded = false;
-  const nbspDefault = {
-    nameStartsAt: null,
-    ampersandNecessary: null,
-    patience: 1,
-    matchedN: null,
-    matchedB: null,
-    matchedS: null,
-    matchedP: null,
-    matchedSemicol: null,
+  const nbsp = {};
+  const nbspWipe = (nbsp) => {
+    nbsp.nameStartsAt = null;
+    nbsp.ampersandNecessary = null;
+    nbsp.patience = 1;
+    nbsp.matchedN = null;
+    nbsp.matchedB = null;
+    nbsp.matchedS = null;
+    nbsp.matchedP = null;
+    nbsp.matchedSemicol = null;
   };
-  let nbsp = clone(nbspDefault);
-  const nbspWipe = () => {
-    nbsp = clone(nbspDefault);
-  };
+  nbspWipe(nbsp);
   const rangesArr2 = [];
   let smallestCharFromTheSetAt;
   let largestCharFromTheSetAt;
@@ -380,7 +375,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           opts.entityCatcherCb(beginningOfTheRange, i);
         }
       }
-      nbspWipe();
+      nbspWipe(nbsp);
       counter++;
       if (str[i] === "&" && str[i + 1] !== "&") {
         nbsp.nameStartsAt = i;
@@ -395,7 +390,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       str[i] !== ";" &&
       matchedLettersCount > 0
     ) {
-      nbspWipe();
+      nbspWipe(nbsp);
       counter++;
       continue outerloop;
     }
@@ -937,7 +932,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         nbsp.nameStartsAt < i &&
         (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)
       ) {
-        nbspWipe();
+        nbspWipe(nbsp);
       }
       nbsp.nameStartsAt = i;
       nbsp.ampersandNecessary = false;
@@ -949,7 +944,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         str[i + 1] &&
         str[i + 1].toLowerCase() === "s"
       ) {
-        nbspWipe();
+        nbspWipe(nbsp);
         counter++;
         continue outerloop;
       }
@@ -980,7 +975,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.ampersandNecessary = false;
         }
       } else {
-        nbspWipe();
+        nbspWipe(nbsp);
         counter++;
         continue outerloop;
       }
@@ -1000,14 +995,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.ampersandNecessary = false;
         }
       } else {
-        nbspWipe();
+        nbspWipe(nbsp);
         counter++;
         continue outerloop;
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
       if (leftSeq(str, i, "t", "h", "i", "n", "s")) {
-        nbspWipe();
+        nbspWipe(nbsp);
       } else if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedP === null) {
           nbsp.matchedP = i;
@@ -1022,7 +1017,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.ampersandNecessary = false;
         }
       } else {
-        nbspWipe();
+        nbspWipe(nbsp);
         counter++;
         continue outerloop;
       }
@@ -1045,7 +1040,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             !nbsp.matchedP) ||
           (!nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP)
         ) {
-          nbspWipe();
+          nbspWipe(nbsp);
         }
       }
     }
@@ -1074,7 +1069,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
       } else {
-        nbspWipe();
+        nbspWipe(nbsp);
         counter++;
         continue outerloop;
       }
