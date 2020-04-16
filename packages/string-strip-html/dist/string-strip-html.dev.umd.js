@@ -8606,12 +8606,12 @@
     // constants
     // ===========================================================================
     var isArr = Array.isArray;
-    var definitelyTagNames = ["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
-    var singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
-    var punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]; // \u00BB is &raquo; - guillemet - right angled quote
+    var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
+    var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+    var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]); // \u00BB is &raquo; - guillemet - right angled quote
     // \u2026 is &hellip; - ellipsis
 
-    var stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"]; // variables
+    var stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]); // variables
     // ===========================================================================
     // records the info about the suspected tag:
 
@@ -8742,7 +8742,7 @@
               // around tags.
               // 1. add range without caring about surrounding whitespace around
               // the range
-              if (punctuation.includes(str[i])) {
+              if (punctuation.has(str[i])) {
                 opts.cb({
                   tag: tag,
                   deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
@@ -8803,10 +8803,9 @@
         } else {
           strToEvaluateForLineBreaks += temp;
         }
-      } // if (!punctuation.includes(str[currCharIdx - 1])) {
+      }
 
-
-      if (!punctuation.includes(str[currCharIdx]) && // str[tag.leftOuterWhitespace - 1] !== ">" &&
+      if (!punctuation.has(str[currCharIdx]) && // str[tag.leftOuterWhitespace - 1] !== ">" &&
       str[currCharIdx] !== "!" // &&
       // str[currCharIdx] !== "<"
       ) {
@@ -8862,7 +8861,7 @@
       } else if (isArr(something)) {
         // leave only the strings:
         return something.filter(function (val) {
-          return isStr(val) && val.trim().length > 0;
+          return isStr(val) && val.trim();
         });
       } else if (isStr(something)) {
         if (something.length) {
@@ -8892,7 +8891,7 @@
     var defaults = {
       ignoreTags: [],
       onlyStripTags: [],
-      stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
+      stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
       skipHtmlDecoding: false,
       returnRangesOnly: false,
       trimOnlySpaces: false,
@@ -8960,7 +8959,7 @@
 
     var somethingCaught = {};
 
-    if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length > 0 && !opts.stripTogetherWithTheirContents.every(function (el, i) {
+    if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
       if (!(typeof el === "string")) {
         somethingCaught.el = el;
         somethingCaught.i = i;
@@ -9036,9 +9035,9 @@
                 // but single letter names can be plausible: "a > b" in math.
 
                 if (str !== "<".concat(lodash_trim(culprit.trim(), "/>"), ">") && // recursion prevention
-                definitelyTagNames.some(function (val) {
+                _toConsumableArray(definitelyTagNames).some(function (val) {
                   return lodash_trim(culprit.trim().split(" ").filter(function (val) {
-                    return val.trim().length !== 0;
+                    return val.trim();
                   }).filter(function (val, i) {
                     return i === 0;
                   }), "/>").toLowerCase() === val;
@@ -9046,14 +9045,14 @@
                   var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
                   var deleteUpTo = i + 1;
 
-                  if (str[deleteUpTo] !== undefined && str[deleteUpTo].trim().length === 0) {
+                  if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
                     for (var z = deleteUpTo; z < len; z++) {
-                      if (str[z].trim().length !== 0) {
+                      if (str[z].trim()) {
                         deleteUpTo = z;
                         break;
                       }
 
-                      if (str[z + 1] === undefined) {
+                      if (!str[z + 1]) {
                         deleteUpTo = z + 1;
                         break;
                       }
@@ -9081,13 +9080,13 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && tag.lastOpeningBracketAt !== undefined && tag.lastClosingBracketAt === undefined) {
+      if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
         tag.slashPresent = i;
       } // catch punctuation, present after alleged tag start:
       // -------------------------------------------------------------------------
 
 
-      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.includes(str[i]) && !attrObj.equalsAt && tag.attributes && tag.attributes.length === 0 && !tag.lastClosingBracketAt // still within a tag
+      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt // still within a tag
       ) {
           tag = {};
           tag.attributes = [];
@@ -9134,14 +9133,14 @@
       // -------------------------------------------------------------------------
 
 
-      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || !characterSuitableForNames(str[i]))) {
+      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
         // 1. mark the name ending
         tag.nameEnds = i; // 2. extract the full name string
 
         tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)); // if we caught "----" from "<----" or "---->", bail:
 
         if (str[tag.nameStarts - 1] !== "!" && // protection against <!--
-        tag.name.replace(/-/g, "").length === 0) {
+        !tag.name.replace(/-/g, "").length) {
           tag = {};
           continue;
         }
@@ -9192,7 +9191,7 @@
       // < article class = " something " / >
 
 
-      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim().length !== 0 && str[i] !== "=") {
+      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
         // if (!tag.attributes) {
         //   tag.attributes = [];
         // }
@@ -9203,7 +9202,7 @@
 
 
       if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-        if (str[i].trim().length === 0) {
+        if (!str[i].trim()) {
           attrObj.nameEnds = i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         } else if (str[i] === "=") {
@@ -9235,7 +9234,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
         if (isValidAttributeCharacter("".concat(str[i]).concat(str[i + 1])) && str[i] !== "<") {
           attrObj.nameStarts = i;
         } else if (tag.onlyPlausible && str[i] !== "<") {
@@ -9258,7 +9257,7 @@
       ) {
           // 1. identify, is it definite or just plausible tag
           if (tag.onlyPlausible === undefined) {
-            if ((str[i].trim().length === 0 || str[i] === "<") && !tag.slashPresent) {
+            if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
               tag.onlyPlausible = true;
             } else {
               tag.onlyPlausible = false;
@@ -9267,7 +9266,7 @@
           // and also known (X)HTML tags:
 
 
-          if (str[i].trim().length !== 0 && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
+          if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
             tag.nameStarts = i;
             tag.nameContainsLetters = false;
           }
@@ -9314,7 +9313,7 @@
             // if (str[i + 1] === undefined) {
             tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase(); // if it's an ignored tag or just plausible and unrecognised, bail:
 
-            if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.includes(tag.name)) {
+            if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
               tag = {};
               attrObj = {};
               continue;
@@ -9322,7 +9321,7 @@
             // recognised tags, leave it as it is:
 
 
-            if (definitelyTagNames.concat(singleLetterTags).includes(tag.name) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+            if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
               calculateHrefToBeInserted();
 
               var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
@@ -9345,7 +9344,7 @@
             // }
 
           }
-        } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
+        } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
           // case 2. closing bracket HAS BEEN met
           // we'll look for a non-whitespace character and delete up to it
           // BUT, we'll wipe the tag object only if that non-whitespace character
@@ -9374,7 +9373,7 @@
             tag = {};
             attrObj = {}; // continue;
           } else if (!tag.onlyPlausible || // tag name is recognised and there are no attributes:
-          tag.attributes.length === 0 && tag.name && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) || // OR there is at least one equals that follow the attribute's name:
+          tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || // OR there is at least one equals that follow the attribute's name:
           tag.attributes && tag.attributes.some(function (attrObj) {
             return attrObj.equalsAt;
           })) {
@@ -9399,7 +9398,7 @@
             } // shorten multiple space values-to-add to a single space
 
 
-            if (insert && insert.length > 1 && !insert.trim().length && !insert.includes("\n") && !insert.includes("\r")) {
+            if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
               insert = " ";
             } // pass the range onto the callback function, be it default or user's
 
@@ -9454,7 +9453,7 @@
 
               tag = {};
               attrObj = {};
-            } else if (tag.onlyPlausible && !definitelyTagNames.concat(singleLetterTags).includes(tag.name) && !(tag.attributes && tag.attributes.length)) {
+            } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
               tag = {};
               attrObj = {};
             }
@@ -9504,10 +9503,10 @@
                   closingFoundAt = _y;
                 }
 
-                if (closingFoundAt && (closingFoundAt < _y && str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
+                if (closingFoundAt && (closingFoundAt < _y && str[_y].trim() || str[_y + 1] === undefined)) {
                   var rangeEnd = _y;
 
-                  if (str[_y + 1] === undefined && str[_y].trim().length === 0 || str[_y] === ">") {
+                  if (str[_y + 1] === undefined && !str[_y].trim() || str[_y] === ">") {
                     rangeEnd += 1;
                   }
 

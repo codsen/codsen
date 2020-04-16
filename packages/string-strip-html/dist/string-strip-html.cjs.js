@@ -70,10 +70,10 @@ function _nonIterableSpread() {
 
 function stripHtml(str, originalOpts) {
   var isArr = Array.isArray;
-  var definitelyTagNames = ["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
-  var singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
-  var punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\xBB"];
-  var stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
+  var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
+  var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+  var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]);
+  var stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]);
   var tag = {
     attributes: []
   };
@@ -153,7 +153,7 @@ function stripHtml(str, originalOpts) {
       })) {
         for (var y = rangedOpeningTags.length; y--;) {
           if (rangedOpeningTags[y].name === tag.name) {
-            if (punctuation.includes(str[i])) {
+            if (punctuation.has(str[i])) {
               opts.cb({
                 tag: tag,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
@@ -200,7 +200,7 @@ function stripHtml(str, originalOpts) {
         strToEvaluateForLineBreaks += temp;
       }
     }
-    if (!punctuation.includes(str[currCharIdx]) &&
+    if (!punctuation.has(str[currCharIdx]) &&
     str[currCharIdx] !== "!"
     ) {
         var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
@@ -239,7 +239,7 @@ function stripHtml(str, originalOpts) {
       return [];
     } else if (isArr(something)) {
       return something.filter(function (val) {
-        return isStr(val) && val.trim().length > 0;
+        return isStr(val) && val.trim();
       });
     } else if (isStr(something)) {
       if (something.length) {
@@ -262,7 +262,7 @@ function stripHtml(str, originalOpts) {
   var defaults = {
     ignoreTags: [],
     onlyStripTags: [],
-    stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
+    stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
     skipHtmlDecoding: false,
     returnRangesOnly: false,
     trimOnlySpaces: false,
@@ -311,7 +311,7 @@ function stripHtml(str, originalOpts) {
     opts.stripTogetherWithTheirContents = [];
   }
   var somethingCaught = {};
-  if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length > 0 && !opts.stripTogetherWithTheirContents.every(function (el, i) {
+  if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
     if (!(typeof el === "string")) {
       somethingCaught.el = el;
       somethingCaught.i = i;
@@ -355,22 +355,22 @@ function stripHtml(str, originalOpts) {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
               var culprit = str.slice(startingPoint, i + 1);
               if (str !== "<".concat(trim(culprit.trim(), "/>"), ">") &&
-              definitelyTagNames.some(function (val) {
+              _toConsumableArray(definitelyTagNames).some(function (val) {
                 return trim(culprit.trim().split(" ").filter(function (val) {
-                  return val.trim().length !== 0;
+                  return val.trim();
                 }).filter(function (val, i) {
                   return i === 0;
                 }), "/>").toLowerCase() === val;
               }) && stripHtml("<".concat(culprit.trim(), ">"), opts) === "") {
                 var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
                 var deleteUpTo = i + 1;
-                if (str[deleteUpTo] !== undefined && str[deleteUpTo].trim().length === 0) {
+                if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
                   for (var z = deleteUpTo; z < len; z++) {
-                    if (str[z].trim().length !== 0) {
+                    if (str[z].trim()) {
                       deleteUpTo = z;
                       break;
                     }
-                    if (str[z + 1] === undefined) {
+                    if (!str[z + 1]) {
                       deleteUpTo = z + 1;
                       break;
                     }
@@ -392,10 +392,10 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && tag.lastOpeningBracketAt !== undefined && tag.lastClosingBracketAt === undefined) {
+    if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
       tag.slashPresent = i;
     }
-    if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.includes(str[i]) && !attrObj.equalsAt && tag.attributes && tag.attributes.length === 0 && !tag.lastClosingBracketAt
+    if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt
     ) {
         tag = {};
         tag.attributes = [];
@@ -429,11 +429,11 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || !characterSuitableForNames(str[i]))) {
+    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
       if (str[tag.nameStarts - 1] !== "!" &&
-      tag.name.replace(/-/g, "").length === 0) {
+      !tag.name.replace(/-/g, "").length) {
         tag = {};
         continue;
       }
@@ -462,12 +462,12 @@ function stripHtml(str, originalOpts) {
         attrObj.equalsAt = i;
       }
     }
-    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim().length !== 0 && str[i] !== "=") {
+    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
       tag.attributes.push(attrObj);
       attrObj = {};
     }
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-      if (str[i].trim().length === 0) {
+      if (!str[i].trim()) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
@@ -488,7 +488,7 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
       }
     }
-    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
       if (isValidAttributeCharacter("".concat(str[i]).concat(str[i + 1])) && str[i] !== "<") {
         attrObj.nameStarts = i;
       } else if (tag.onlyPlausible && str[i] !== "<") {
@@ -501,13 +501,13 @@ function stripHtml(str, originalOpts) {
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/"
     ) {
         if (tag.onlyPlausible === undefined) {
-          if ((str[i].trim().length === 0 || str[i] === "<") && !tag.slashPresent) {
+          if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
             tag.onlyPlausible = true;
           } else {
             tag.onlyPlausible = false;
           }
         }
-        if (str[i].trim().length !== 0 && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
+        if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
           tag.nameStarts = i;
           tag.nameContainsLetters = false;
         }
@@ -533,12 +533,12 @@ function stripHtml(str, originalOpts) {
         if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (
         str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
           tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
-          if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.includes(tag.name)) {
+          if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
             continue;
           }
-          if (definitelyTagNames.concat(singleLetterTags).includes(tag.name) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+          if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
             calculateHrefToBeInserted();
             var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
             opts.cb({
@@ -553,7 +553,7 @@ function stripHtml(str, originalOpts) {
             treatRangedTags(i);
           }
         }
-      } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
+      } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
         var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
         if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
           endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
@@ -570,7 +570,7 @@ function stripHtml(str, originalOpts) {
           tag = {};
           attrObj = {};
         } else if (!tag.onlyPlausible ||
-        tag.attributes.length === 0 && tag.name && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) ||
+        tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) ||
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
         })) {
@@ -587,7 +587,7 @@ function stripHtml(str, originalOpts) {
           if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, endingRangeIndex - 1)) {
             insert = "";
           }
-          if (insert && insert.length > 1 && !insert.trim().length && !insert.includes("\n") && !insert.includes("\r")) {
+          if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
             insert = " ";
           }
           opts.cb({
@@ -626,7 +626,7 @@ function stripHtml(str, originalOpts) {
             treatRangedTags(i);
             tag = {};
             attrObj = {};
-          } else if (tag.onlyPlausible && !definitelyTagNames.concat(singleLetterTags).includes(tag.name) && !(tag.attributes && tag.attributes.length)) {
+          } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
             tag = {};
             attrObj = {};
           }
@@ -656,9 +656,9 @@ function stripHtml(str, originalOpts) {
               if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
                 closingFoundAt = _y;
               }
-              if (closingFoundAt && (closingFoundAt < _y && str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
+              if (closingFoundAt && (closingFoundAt < _y && str[_y].trim() || str[_y + 1] === undefined)) {
                 var rangeEnd = _y;
-                if (str[_y + 1] === undefined && str[_y].trim().length === 0 || str[_y] === ">") {
+                if (str[_y + 1] === undefined && !str[_y].trim() || str[_y] === ">") {
                   rangeEnd += 1;
                 }
                 var _whiteSpaceCompensation4 = calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);

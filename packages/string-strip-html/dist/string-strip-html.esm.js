@@ -17,7 +17,7 @@ import { right } from 'string-left-right';
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
-  const definitelyTagNames = [
+  const definitelyTagNames = new Set([
     "!doctype",
     "abbr",
     "address",
@@ -132,10 +132,23 @@ function stripHtml(str, originalOpts) {
     "video",
     "wbr",
     "xml",
-  ];
-  const singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
-  const punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"];
-  const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
+  ]);
+  const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+  const punctuation = new Set([
+    ".",
+    ",",
+    "?",
+    ";",
+    ")",
+    "\u2026",
+    '"',
+    "\u00BB",
+  ]);
+  const stripTogetherWithTheirContentsDefaults = new Set([
+    "script",
+    "style",
+    "xml",
+  ]);
   let tag = { attributes: [] };
   let chunkOfWhitespaceStartsAt = null;
   let chunkOfSpacesStartsAt = null;
@@ -216,7 +229,7 @@ function stripHtml(str, originalOpts) {
       ) {
         for (let y = rangedOpeningTags.length; y--; ) {
           if (rangedOpeningTags[y].name === tag.name) {
-            if (punctuation.includes(str[i])) {
+            if (punctuation.has(str[i])) {
               opts.cb({
                 tag,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
@@ -273,7 +286,7 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (
-      !punctuation.includes(str[currCharIdx]) &&
+      !punctuation.has(str[currCharIdx]) &&
       str[currCharIdx] !== "!"
     ) {
       const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
@@ -335,7 +348,7 @@ function stripHtml(str, originalOpts) {
     if (!something) {
       return [];
     } else if (isArr(something)) {
-      return something.filter((val) => isStr(val) && val.trim().length > 0);
+      return something.filter((val) => isStr(val) && val.trim());
     } else if (isStr(something)) {
       if (something.length) {
         return [something];
@@ -359,7 +372,7 @@ function stripHtml(str, originalOpts) {
   const defaults = {
     ignoreTags: [],
     onlyStripTags: [],
-    stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
+    stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
     skipHtmlDecoding: false,
     returnRangesOnly: false,
     trimOnlySpaces: false,
@@ -435,7 +448,7 @@ function stripHtml(str, originalOpts) {
   if (
     opts.stripTogetherWithTheirContents &&
     isArr(opts.stripTogetherWithTheirContents) &&
-    opts.stripTogetherWithTheirContents.length > 0 &&
+    opts.stripTogetherWithTheirContents.length &&
     !opts.stripTogetherWithTheirContents.every((el, i) => {
       if (!(typeof el === "string")) {
         somethingCaught.el = el;
@@ -491,13 +504,13 @@ function stripHtml(str, originalOpts) {
             const culprit = str.slice(startingPoint, i + 1);
             if (
               str !== `<${trim(culprit.trim(), "/>")}>` &&
-              definitelyTagNames.some(
+              [...definitelyTagNames].some(
                 (val) =>
                   trim(
                     culprit
                       .trim()
                       .split(" ")
-                      .filter((val) => val.trim().length !== 0)
+                      .filter((val) => val.trim())
                       .filter((val, i) => i === 0),
                     "/>"
                   ).toLowerCase() === val
@@ -513,16 +526,13 @@ function stripHtml(str, originalOpts) {
                 i + 1
               );
               let deleteUpTo = i + 1;
-              if (
-                str[deleteUpTo] !== undefined &&
-                str[deleteUpTo].trim().length === 0
-              ) {
+              if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
                 for (let z = deleteUpTo; z < len; z++) {
-                  if (str[z].trim().length !== 0) {
+                  if (str[z].trim()) {
                     deleteUpTo = z;
                     break;
                   }
-                  if (str[z + 1] === undefined) {
+                  if (!str[z + 1]) {
                     deleteUpTo = z + 1;
                     break;
                   }
@@ -549,8 +559,8 @@ function stripHtml(str, originalOpts) {
     if (
       str[i] === "/" &&
       !(tag.quotes && tag.quotes.value) &&
-      tag.lastOpeningBracketAt !== undefined &&
-      tag.lastClosingBracketAt === undefined
+      Number.isInteger(tag.lastOpeningBracketAt) &&
+      !Number.isInteger(tag.lastClosingBracketAt)
     ) {
       tag.slashPresent = i;
     }
@@ -558,10 +568,10 @@ function stripHtml(str, originalOpts) {
       tag.nameStarts &&
       tag.nameStarts < i &&
       !tag.quotes &&
-      punctuation.includes(str[i]) &&
+      punctuation.has(str[i]) &&
       !attrObj.equalsAt &&
       tag.attributes &&
-      tag.attributes.length === 0 &&
+      !tag.attributes.length &&
       !tag.lastClosingBracketAt
     ) {
       tag = {};
@@ -615,7 +625,7 @@ function stripHtml(str, originalOpts) {
     if (
       tag.nameStarts !== undefined &&
       tag.nameEnds === undefined &&
-      (str[i].trim().length === 0 || !characterSuitableForNames(str[i]))
+      (!str[i].trim() || !characterSuitableForNames(str[i]))
     ) {
       tag.nameEnds = i;
       tag.name = str.slice(
@@ -625,7 +635,7 @@ function stripHtml(str, originalOpts) {
       );
       if (
         str[tag.nameStarts - 1] !== "!" &&
-        tag.name.replace(/-/g, "").length === 0
+        !tag.name.replace(/-/g, "").length
       ) {
         tag = {};
         continue;
@@ -684,14 +694,14 @@ function stripHtml(str, originalOpts) {
       attrObj.nameStarts &&
       attrObj.nameEnds &&
       !attrObj.valueStarts &&
-      str[i].trim().length !== 0 &&
+      str[i].trim() &&
       str[i] !== "="
     ) {
       tag.attributes.push(attrObj);
       attrObj = {};
     }
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-      if (str[i].trim().length === 0) {
+      if (!str[i].trim()) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
@@ -718,8 +728,8 @@ function stripHtml(str, originalOpts) {
       str[i] !== ">" &&
       str[i] !== "/" &&
       str[i] !== "!" &&
-      str[i - 1].trim().length === 0 &&
-      str[i].trim().length !== 0 &&
+      !str[i - 1].trim() &&
+      str[i].trim() &&
       !attrObj.nameStarts &&
       !tag.lastClosingBracketAt
     ) {
@@ -746,17 +756,14 @@ function stripHtml(str, originalOpts) {
       str[i] !== "/"
     ) {
       if (tag.onlyPlausible === undefined) {
-        if (
-          (str[i].trim().length === 0 || str[i] === "<") &&
-          !tag.slashPresent
-        ) {
+        if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
           tag.onlyPlausible = true;
         } else {
           tag.onlyPlausible = false;
         }
       }
       if (
-        str[i].trim().length !== 0 &&
+        str[i].trim() &&
         tag.nameStarts === undefined &&
         str[i] !== "<" &&
         str[i] !== "/" &&
@@ -804,14 +811,15 @@ function stripHtml(str, originalOpts) {
             .toLowerCase();
           if (
             opts.ignoreTags.includes(tag.name) ||
-            (tag.onlyPlausible && !definitelyTagNames.includes(tag.name))
+            (tag.onlyPlausible && !definitelyTagNames.has(tag.name))
           ) {
             tag = {};
             attrObj = {};
             continue;
           }
           if (
-            (definitelyTagNames.concat(singleLetterTags).includes(tag.name) &&
+            ((definitelyTagNames.has(tag.name) ||
+              singleLetterTags.has(tag.name)) &&
               (tag.onlyPlausible === false ||
                 (tag.onlyPlausible === true && tag.attributes.length))) ||
             str[i + 1] === undefined
@@ -842,7 +850,7 @@ function stripHtml(str, originalOpts) {
           }
         }
       } else if (
-        (i > tag.lastClosingBracketAt && str[i].trim().length !== 0) ||
+        (i > tag.lastClosingBracketAt && str[i].trim()) ||
         str[i + 1] === undefined
       ) {
         let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
@@ -872,9 +880,8 @@ function stripHtml(str, originalOpts) {
           !tag.onlyPlausible ||
           (tag.attributes.length === 0 &&
             tag.name &&
-            definitelyTagNames
-              .concat(singleLetterTags)
-              .includes(tag.name.toLowerCase())) ||
+            (definitelyTagNames.has(tag.name.toLowerCase()) ||
+              singleLetterTags.has(tag.name.toLowerCase()))) ||
           (tag.attributes && tag.attributes.some((attrObj) => attrObj.equalsAt))
         ) {
           const whiteSpaceCompensation = calculateWhitespaceToInsert(
@@ -905,7 +912,7 @@ function stripHtml(str, originalOpts) {
           if (
             insert &&
             insert.length > 1 &&
-            !insert.trim().length &&
+            !insert.trim() &&
             !insert.includes("\n") &&
             !insert.includes("\r")
           ) {
@@ -965,7 +972,8 @@ function stripHtml(str, originalOpts) {
             attrObj = {};
           } else if (
             tag.onlyPlausible &&
-            !definitelyTagNames.concat(singleLetterTags).includes(tag.name) &&
+            !definitelyTagNames.has(tag.name) &&
+            !singleLetterTags.has(tag.name) &&
             !(tag.attributes && tag.attributes.length)
           ) {
             tag = {};
@@ -1017,12 +1025,12 @@ function stripHtml(str, originalOpts) {
               }
               if (
                 closingFoundAt &&
-                ((closingFoundAt < y && str[y].trim().length !== 0) ||
+                ((closingFoundAt < y && str[y].trim()) ||
                   str[y + 1] === undefined)
               ) {
                 let rangeEnd = y;
                 if (
-                  (str[y + 1] === undefined && str[y].trim().length === 0) ||
+                  (str[y + 1] === undefined && !str[y].trim()) ||
                   str[y] === ">"
                 ) {
                   rangeEnd += 1;
