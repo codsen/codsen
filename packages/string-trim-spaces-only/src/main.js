@@ -22,7 +22,7 @@ function trimSpaces(s, originalOpts) {
 
   function check(char) {
     return (
-      (opts.classicTrim && char.trim().length === 0) ||
+      (opts.classicTrim && !char.trim()) ||
       (!opts.classicTrim &&
         ((opts.space && char === " ") ||
           (opts.cr && char === "\r") ||
@@ -36,7 +36,7 @@ function trimSpaces(s, originalOpts) {
   let newStart;
   let newEnd;
   console.log("038 about to check the length");
-  if (s.length > 0) {
+  if (s.length) {
     if (check(s[0])) {
       console.log(
         `042 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`

@@ -28,7 +28,7 @@ function trimSpaces(s, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
   function check(char) {
     return (
-      (opts.classicTrim && char.trim().length === 0) ||
+      (opts.classicTrim && !char.trim()) ||
       (!opts.classicTrim &&
         ((opts.space && char === " ") ||
           (opts.cr && char === "\r") ||
@@ -39,7 +39,7 @@ function trimSpaces(s, originalOpts) {
   }
   let newStart;
   let newEnd;
-  if (s.length > 0) {
+  if (s.length) {
     if (check(s[0])) {
       for (let i = 0, len = s.length; i < len; i++) {
         if (!check(s[i])) {

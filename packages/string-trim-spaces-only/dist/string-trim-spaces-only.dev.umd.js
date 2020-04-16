@@ -47,14 +47,14 @@
     var opts = Object.assign({}, defaults, originalOpts);
 
     function check(_char) {
-      return opts.classicTrim && _char.trim().length === 0 || !opts.classicTrim && (opts.space && _char === " " || opts.cr && _char === "\r" || opts.lf && _char === "\n" || opts.tab && _char === "\t" || opts.nbsp && _char === "\xA0");
+      return opts.classicTrim && !_char.trim() || !opts.classicTrim && (opts.space && _char === " " || opts.cr && _char === "\r" || opts.lf && _char === "\n" || opts.tab && _char === "\t" || opts.nbsp && _char === "\xA0");
     } // action:
 
 
     var newStart;
     var newEnd;
 
-    if (s.length > 0) {
+    if (s.length) {
       if (check(s[0])) {
         for (var i = 0, len = s.length; i < len; i++) {
           if (!check(s[i])) {
