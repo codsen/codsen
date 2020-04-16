@@ -528,12 +528,16 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
           opts // opts
         );
         if (resolvedValue === undefined) {
-          throw new Error(
-            `json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ${string.slice(
-              obj.headsEndAt,
-              obj.tailsStartAt
-            )}. We're at path: "${path}".`
-          );
+          if (opts.allowUnresolved) {
+            resolvedValue = "";
+          } else {
+            throw new Error(
+              `json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ${string.slice(
+                obj.headsEndAt,
+                obj.tailsStartAt
+              )}. We're at path: "${path}".`
+            );
+          }
         }
         if (
           !wholeValueIsVariable &&
@@ -792,6 +796,7 @@ function jsonVariables(input, originalOpts = {}) {
     // even if some values contain Boolean true. Otherwise, the whole value will
     // resolve to the first encountered Boolean.
     throwWhenNonStringInsertedInString: false,
+    allowUnresolved: false, // Allow value to not have a resolved variable
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
