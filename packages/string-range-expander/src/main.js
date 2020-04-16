@@ -1,6 +1,3 @@
-import isObj from "lodash.isplainobject";
-const isArr = Array.isArray;
-
 function expander(originalOpts) {
   const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
@@ -11,7 +8,7 @@ function expander(originalOpts) {
     if (!char || typeof char !== "string") {
       return false;
     }
-    return char.trim().length === 0;
+    return !char.trim();
   }
   function isStr(something) {
     return typeof something === "string";
@@ -20,7 +17,11 @@ function expander(originalOpts) {
   // Sanitise the inputs
   // ---------------------------------------------------------------------------
 
-  if (!isObj(originalOpts)) {
+  if (
+    !originalOpts ||
+    typeof originalOpts !== "object" ||
+    Array.isArray(originalOpts)
+  ) {
     let supplementalString;
     if (originalOpts === undefined) {
       supplementalString = "but it is missing completely.";
@@ -36,9 +37,14 @@ function expander(originalOpts) {
     throw new Error(
       `string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`
     );
-  } else if (isObj(originalOpts) && Object.keys(originalOpts).length === 0) {
+  } else if (
+    typeof originalOpts === "object" &&
+    originalOpts !== null &&
+    !Array.isArray(originalOpts) &&
+    !Object.keys(originalOpts).length
+  ) {
     throw new Error(
-      `string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys and computer doesn't know what to expand.`
+      `string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`
     );
   }
   if (typeof originalOpts.from !== "number") {
@@ -113,7 +119,7 @@ function expander(originalOpts) {
     addSingleSpaceToPreventAccidentalConcatenation: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+  if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
     if (
@@ -152,7 +158,7 @@ function expander(originalOpts) {
   let to = opts.to;
 
   console.log(
-    `155 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `161 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
   );
 
   // 1. expand the given range outwards and leave a single space or
@@ -167,11 +173,11 @@ function expander(originalOpts) {
       (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`170 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`176 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-        if (str[i].trim().length) {
+        if (str[i].trim()) {
           if (
             opts.wipeAllWhitespaceOnLeft ||
             opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
@@ -181,7 +187,7 @@ function expander(originalOpts) {
             from = i + 2;
           }
           console.log(
-            `184 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+            `190 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
           );
           break;
         } else if (i === 0) {
@@ -191,7 +197,7 @@ function expander(originalOpts) {
             from = 1;
           }
           console.log(
-            `194 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+            `200 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
           );
           break;
         }
@@ -207,12 +213,12 @@ function expander(originalOpts) {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`210 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`216 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
         !opts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
-        ((str[i] && str[i].trim().length) || str[i] === undefined)
+        ((str[i] && str[i].trim()) || str[i] === undefined)
       ) {
         if (
           opts.wipeAllWhitespaceOnRight ||
@@ -223,7 +229,7 @@ function expander(originalOpts) {
           to = i - 1;
         }
         console.log(
-          `226 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `232 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -234,7 +240,7 @@ function expander(originalOpts) {
   if (
     (opts.extendToOneSide !== "right" &&
       isStr(opts.ifLeftSideIncludesThisThenCropTightly) &&
-      opts.ifLeftSideIncludesThisThenCropTightly.length &&
+      opts.ifLeftSideIncludesThisThenCropTightly &&
       ((str[from - 2] &&
         opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2])) ||
         (str[from - 1] &&
@@ -243,13 +249,13 @@ function expander(originalOpts) {
           )))) ||
     (opts.extendToOneSide !== "left" &&
       isStr(opts.ifRightSideIncludesThisThenCropTightly) &&
-      opts.ifRightSideIncludesThisThenCropTightly.length &&
+      opts.ifRightSideIncludesThisThenCropTightly &&
       ((str[to + 1] &&
         opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1])) ||
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("252");
+    console.log("258");
     if (
       opts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -271,9 +277,9 @@ function expander(originalOpts) {
   if (
     opts.addSingleSpaceToPreventAccidentalConcatenation &&
     str[from - 1] &&
-    str[from - 1].trim().length &&
+    str[from - 1].trim() &&
     str[to] &&
-    str[to].trim().length &&
+    str[to].trim() &&
     ((!opts.ifLeftSideIncludesThisThenCropTightly &&
       !opts.ifRightSideIncludesThisThenCropTightly) ||
       !(
@@ -285,10 +291,10 @@ function expander(originalOpts) {
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
-    console.log(`288 RETURN: [${from}, ${to}, " "]`);
+    console.log(`294 RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  console.log(`291 RETURN: [${from}, ${to}]`);
+  console.log(`297 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

@@ -7,21 +7,22 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
  */
 
-import isObj from 'lodash.isplainobject';
-
-const isArr = Array.isArray;
 function expander(originalOpts) {
   const letterOrDigit = /^[0-9a-zA-Z]+$/;
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
       return false;
     }
-    return char.trim().length === 0;
+    return !char.trim();
   }
   function isStr(something) {
     return typeof something === "string";
   }
-  if (!isObj(originalOpts)) {
+  if (
+    !originalOpts ||
+    typeof originalOpts !== "object" ||
+    Array.isArray(originalOpts)
+  ) {
     let supplementalString;
     if (originalOpts === undefined) {
       supplementalString = "but it is missing completely.";
@@ -37,9 +38,14 @@ function expander(originalOpts) {
     throw new Error(
       `string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`
     );
-  } else if (isObj(originalOpts) && Object.keys(originalOpts).length === 0) {
+  } else if (
+    typeof originalOpts === "object" &&
+    originalOpts !== null &&
+    !Array.isArray(originalOpts) &&
+    !Object.keys(originalOpts).length
+  ) {
     throw new Error(
-      `string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys and computer doesn't know what to expand.`
+      `string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`
     );
   }
   if (typeof originalOpts.from !== "number") {
@@ -110,7 +116,7 @@ function expander(originalOpts) {
     addSingleSpaceToPreventAccidentalConcatenation: false,
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+  if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
     if (
@@ -154,7 +160,7 @@ function expander(originalOpts) {
   ) {
     for (let i = from; i--; ) {
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-        if (str[i].trim().length) {
+        if (str[i].trim()) {
           if (
             opts.wipeAllWhitespaceOnLeft ||
             opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
@@ -184,7 +190,7 @@ function expander(originalOpts) {
     for (let i = to, len = str.length; i < len; i++) {
       if (
         !opts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
-        ((str[i] && str[i].trim().length) || str[i] === undefined)
+        ((str[i] && str[i].trim()) || str[i] === undefined)
       ) {
         if (
           opts.wipeAllWhitespaceOnRight ||
@@ -201,7 +207,7 @@ function expander(originalOpts) {
   if (
     (opts.extendToOneSide !== "right" &&
       isStr(opts.ifLeftSideIncludesThisThenCropTightly) &&
-      opts.ifLeftSideIncludesThisThenCropTightly.length &&
+      opts.ifLeftSideIncludesThisThenCropTightly &&
       ((str[from - 2] &&
         opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2])) ||
         (str[from - 1] &&
@@ -210,7 +216,7 @@ function expander(originalOpts) {
           )))) ||
     (opts.extendToOneSide !== "left" &&
       isStr(opts.ifRightSideIncludesThisThenCropTightly) &&
-      opts.ifRightSideIncludesThisThenCropTightly.length &&
+      opts.ifRightSideIncludesThisThenCropTightly &&
       ((str[to + 1] &&
         opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1])) ||
         (str[to] &&
@@ -234,9 +240,9 @@ function expander(originalOpts) {
   if (
     opts.addSingleSpaceToPreventAccidentalConcatenation &&
     str[from - 1] &&
-    str[from - 1].trim().length &&
+    str[from - 1].trim() &&
     str[to] &&
-    str[to].trim().length &&
+    str[to].trim() &&
     ((!opts.ifLeftSideIncludesThisThenCropTightly &&
       !opts.ifRightSideIncludesThisThenCropTightly) ||
       !(

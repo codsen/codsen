@@ -32,7 +32,7 @@ t.test("00.03 - throws on string input", (t) => {
   t.end();
 });
 
-t.test("00.04 - throws on empty plain object", (t) => {
+t.only("00.04 - throws on empty plain object", (t) => {
   t.throws(() => {
     e({});
   }, /THROW_ID_02/);

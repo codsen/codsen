@@ -9,10 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isObj = _interopDefault(require('lodash.isplainobject'));
-
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -29,19 +25,18 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function expander(originalOpts) {
   var letterOrDigit = /^[0-9a-zA-Z]+$/;
   function isWhitespace(_char) {
     if (!_char || typeof _char !== "string") {
       return false;
     }
-    return _char.trim().length === 0;
+    return !_char.trim();
   }
   function isStr(something) {
     return typeof something === "string";
   }
-  if (!isObj(originalOpts)) {
+  if (!originalOpts || _typeof(originalOpts) !== "object" || Array.isArray(originalOpts)) {
     var supplementalString;
     if (originalOpts === undefined) {
       supplementalString = "but it is missing completely.";
@@ -51,8 +46,8 @@ function expander(originalOpts) {
       supplementalString = "but it was given as ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4), ".");
     }
     throw new Error("string-range-expander: [THROW_ID_01] Input must be a plain object ".concat(supplementalString));
-  } else if (isObj(originalOpts) && Object.keys(originalOpts).length === 0) {
-    throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys and computer doesn't know what to expand.");
+  } else if (_typeof(originalOpts) === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+    throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.");
   }
   if (typeof originalOpts.from !== "number") {
     throw new Error("string-range-expander: [THROW_ID_03] The input's \"from\" value opts.from, is not a number! Currently it's given as ".concat(_typeof(originalOpts.from), ", equal to ").concat(JSON.stringify(originalOpts.from, null, 0)));
@@ -86,7 +81,7 @@ function expander(originalOpts) {
     addSingleSpaceToPreventAccidentalConcatenation: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+  if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     var culpritsIndex;
     var culpritsValue;
     if (opts.ifLeftSideIncludesThisThenCropTightly.every(function (val, i) {
@@ -108,7 +103,7 @@ function expander(originalOpts) {
   if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
     for (var i = from; i--;) {
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-        if (str[i].trim().length) {
+        if (str[i].trim()) {
           if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
             from = i + 1;
           } else {
@@ -128,7 +123,7 @@ function expander(originalOpts) {
   }
   if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
     for (var _i = to, len = str.length; _i < len; _i++) {
-      if (!opts.ifRightSideIncludesThisCropItToo.includes(str[_i]) && (str[_i] && str[_i].trim().length || str[_i] === undefined)) {
+      if (!opts.ifRightSideIncludesThisCropItToo.includes(str[_i]) && (str[_i] && str[_i].trim() || str[_i] === undefined)) {
         if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[_i - 1])) {
           to = _i;
         } else {
@@ -138,7 +133,7 @@ function expander(originalOpts) {
       }
     }
   }
-  if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly.length && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly.length && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
+  if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
     if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
       from--;
     }
@@ -146,7 +141,7 @@ function expander(originalOpts) {
       to++;
     }
   }
-  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
+  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
     return [from, to, " "];
   }
   return [from, to];
