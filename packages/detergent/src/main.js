@@ -276,10 +276,10 @@ function det(str, inputOpts) {
       } else if (
         str[i - 2] &&
         isLowercaseLetter(str[i - 2]) &&
-        !str[i - 1].trim().length &&
+        !str[i - 1].trim() &&
         str[i + 2] &&
         isLowercaseLetter(str[i + 2]) &&
-        !str[i + 1].trim().length
+        !str[i + 1].trim()
       ) {
         // we don't encode here, no matter if opts.convertEntities is on:
         finalIndexesToDelete.push(i, i + 1, rawMDash);
@@ -596,7 +596,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every((char) => !char.trim().length || char === "/")
+                .every((char) => !char.trim() || char === "/")
             ) {
               console.log(
                 `602 remove whitespace/slashes ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -763,7 +763,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every((char) => !char.trim().length || char === "/")
+                .every((char) => !char.trim() || char === "/")
             ) {
               // if there is mix of whitespace and closing slashes, all this
               // goes and replaced with single slash.
@@ -799,7 +799,7 @@ function det(str, inputOpts) {
           ["ul", "li"].includes(tag.name.toLowerCase()) &&
           !opts.removeLineBreaks &&
           str[tag.lastOpeningBracketAt - 1] &&
-          !str[tag.lastOpeningBracketAt - 1].trim().length
+          !str[tag.lastOpeningBracketAt - 1].trim()
         ) {
           console.log(`804 - ul/li prep`);
           // if there's whitespace in front,
@@ -817,7 +817,7 @@ function det(str, inputOpts) {
         // 12. remove whitespace before closing bracket
         if (
           str[tag.lastClosingBracketAt - 1] &&
-          !str[tag.lastClosingBracketAt - 1].trim().length
+          !str[tag.lastClosingBracketAt - 1].trim()
         ) {
           finalIndexesToDelete.push(
             left(str, tag.lastClosingBracketAt) + 1,

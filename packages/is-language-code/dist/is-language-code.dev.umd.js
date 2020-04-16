@@ -9068,7 +9068,7 @@
           res: false,
           message: "Not a string given."
         };
-      } else if (!str.trim().length) {
+      } else if (!str.trim()) {
         return {
           res: false,
           message: "Empty language tag string given."

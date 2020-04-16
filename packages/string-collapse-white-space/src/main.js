@@ -112,7 +112,7 @@ function collapse(str, originalOpts) {
       console.log(
         `113 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
       );
-    } else if (str[i].trim().length) {
+    } else if (str[i].trim()) {
       consecutiveLineBreakCount = 0;
       console.log(
         `118 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`

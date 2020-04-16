@@ -309,7 +309,7 @@ function isOpening(str, idx = 0, originalOpts) {
     !passed &&
     !opts.skipOpeningBracket &&
     str[idx] === "<" &&
-    str[idx + 1].trim().length &&
+    str[idx + 1].trim() &&
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;

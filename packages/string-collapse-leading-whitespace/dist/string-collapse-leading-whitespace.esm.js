@@ -10,7 +10,7 @@
 const rawNbsp = "\u00A0";
 function push(arr, leftSide = true, charToPush) {
   if (
-    !charToPush.trim().length &&
+    !charToPush.trim() &&
     (!arr.length ||
       charToPush === "\n" ||
       charToPush === rawNbsp ||
@@ -85,7 +85,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     limit = limitLinebreaksCount;
     if (str[0].trim() === "") {
       for (let i = 0, len = str.length; i < len; i++) {
-        if (str[i].trim().length !== 0) {
+        if (str[i].trim()) {
           break;
         } else {
           if (str[i] !== "\n" || limit) {
@@ -101,7 +101,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     limit = limitLinebreaksCount;
     if (str.slice(-1).trim() === "") {
       for (let i = str.length; i--; ) {
-        if (str[i].trim().length !== 0) {
+        if (str[i].trim()) {
           break;
         } else {
           if (str[i] !== "\n" || limit) {

@@ -33,18 +33,19 @@
   "browser": "dist/is-language-code.umd.js",
   "scripts": {
     "build": "rollup -c",
+    "ciunittest": "npm run lint && npm run tap -- --no-only --no-coverage --reporter=silent --output-file=testStats.md && npm run format",
     "dev": "rollup -c --dev",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
     "perf": "node perf/check",
     "prepare": "npm run build",
-    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run perf",
     "version": "npm run build && git add ."
   },
   "husky": {
@@ -118,13 +119,16 @@
     }
   },
   "tap": {
-    "coverage-report": "json-summary",
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
     "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
-    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",

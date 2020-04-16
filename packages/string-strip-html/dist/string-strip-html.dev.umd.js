@@ -381,7 +381,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -445,7 +445,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -464,7 +464,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -8583,14 +8583,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }

@@ -259,7 +259,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
       isStr(whatToMatch[0]) &&
-      !whatToMatch[0].trim().length)
+      !whatToMatch[0].trim())
   ) {
     if (typeof opts.cb === "function") {
       let firstCharOutsideIndex;
@@ -274,7 +274,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
-                currentChar.trim().length)) &&
+                currentChar.trim())) &&
             (!opts.trimCharsBeforeMatching.length ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
@@ -288,7 +288,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           const currentChar = str[y];
           if (
             (!opts.trimBeforeMatching ||
-              (opts.trimBeforeMatching && currentChar.trim().length)) &&
+              (opts.trimBeforeMatching && currentChar.trim())) &&
             (!opts.trimCharsBeforeMatching.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {

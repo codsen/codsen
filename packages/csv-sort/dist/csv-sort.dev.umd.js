@@ -348,7 +348,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -412,7 +412,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -431,7 +431,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {

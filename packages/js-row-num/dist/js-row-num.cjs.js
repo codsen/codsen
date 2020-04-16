@@ -32,7 +32,7 @@ function _typeof(obj) {
 
 var BACKSLASH = "\\";
 function fixRowNums(str, originalOpts) {
-  if (typeof str !== "string" || str.length === 0) {
+  if (typeof str !== "string" || !str.length) {
     return str;
   }
   function isDigit(something) {
@@ -42,7 +42,7 @@ function fixRowNums(str, originalOpts) {
     return /[A-Za-z]/.test(something);
   }
   function isObj(something) {
-    return _typeof(something) === "object" && something !== null;
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
   var defaults = {
     padStart: 3,
@@ -78,7 +78,7 @@ function fixRowNums(str, originalOpts) {
       digitStartsAt = null;
       wasLetterDetected = false;
     }
-    if (quotes === null && (opts.extractedLogContentsWereGiven || consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i) && str[i].trim().length) {
+    if (quotes === null && (opts.extractedLogContentsWereGiven || consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i) && str[i].trim()) {
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
         quotes.start = i;
@@ -93,7 +93,7 @@ function fixRowNums(str, originalOpts) {
         } else {
           break;
         }
-      } else if (str[i].trim().length && str[i] !== "/" && !opts.extractedLogContentsWereGiven) {
+      } else if (str[i].trim() && str[i] !== "/" && !opts.extractedLogContentsWereGiven) {
         consoleStartsAt = null;
         bracketOpensAt = null;
         digitStartsAt = null;
@@ -141,7 +141,7 @@ function fixRowNums(str, originalOpts) {
       }
       wasLetterDetected = true;
     }
-    if (!bracketOpensAt && str[i].trim().length && consoleStartsAt && consoleStartsAt <= i) {
+    if (!bracketOpensAt && str[i].trim() && consoleStartsAt && consoleStartsAt <= i) {
       if (str[i] === "(") {
         bracketOpensAt = i;
       } else {

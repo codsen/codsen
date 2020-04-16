@@ -11612,12 +11612,12 @@
         idxTo: gatheredRanges[gatheredRanges.length - 1][1],
         message: "Remove whitespace.",
         fix: {
-          ranges: gatheredRanges
+          ranges: lodash_clonedeep(gatheredRanges)
         } // we can fix - we delete this whitespace!
 
       }); // reset:
 
-      gatheredRanges = [];
+      gatheredRanges.length = 0;
       trimmedVal = str.trim();
     }
 

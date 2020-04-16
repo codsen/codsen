@@ -13,7 +13,7 @@ function push(arr, leftSide = true, charToPush) {
   );
   if (
     // 1. it's \n or nbsp or space or some other whitespace char which would end up as space
-    !charToPush.trim().length &&
+    !charToPush.trim() &&
     // 2. don't let sequences of spaces - \n or nbsp sequences are fine
     (!arr.length ||
       charToPush === "\n" ||
@@ -151,7 +151,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
             4
           )}`}\u001b[${39}m`}`
         );
-        if (str[i].trim().length !== 0) {
+        if (str[i].trim()) {
           console.log(`155 break`);
           break;
         } else {
@@ -192,7 +192,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
             4
           )}`}\u001b[${39}m`}`
         );
-        if (str[i].trim().length !== 0) {
+        if (str[i].trim()) {
           console.log(`196 break`);
           break;
         } else {

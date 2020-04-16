@@ -267,7 +267,7 @@ function cparser(str, originalOpts) {
         }
         tokenTakenCareOf = true;
       } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj(previousTagsToken)) {
-        if (previousTagsToken.type === "text" && previousTagsToken.value.trim().length && "<!-".includes(previousTagsToken.value[stringLeftRight.left(previousTagsToken.value, previousTagsToken.value.length)])) {
+        if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[stringLeftRight.left(previousTagsToken.value, previousTagsToken.value.length)])) {
           var capturedMalformedTagRanges = [];
           strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
             capturedMalformedTagRanges.push(obj);
@@ -303,7 +303,7 @@ function cparser(str, originalOpts) {
               tokenTakenCareOf = true;
             }
           }
-        } else if (isObj(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim().length && "<!-".includes(parentsLastChildTokenValue.value[stringLeftRight.left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+        } else if (isObj(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[stringLeftRight.left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
           var _capturedMalformedTagRanges = [];
           strFindMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
             _capturedMalformedTagRanges.push(obj);

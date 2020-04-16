@@ -12,7 +12,7 @@ import apply from 'ranges-apply';
 
 const BACKSLASH = `\u005C`;
 function fixRowNums(str, originalOpts) {
-  if (typeof str !== "string" || str.length === 0) {
+  if (typeof str !== "string" || !str.length) {
     return str;
   }
   function isDigit(something) {
@@ -22,7 +22,9 @@ function fixRowNums(str, originalOpts) {
     return /[A-Za-z]/.test(something);
   }
   function isObj(something) {
-    return typeof something === "object" && something !== null;
+    return (
+      something && typeof something === "object" && !Array.isArray(something)
+    );
   }
   const defaults = {
     padStart: 3,
@@ -77,7 +79,7 @@ function fixRowNums(str, originalOpts) {
           consoleStartsAt < i &&
           bracketOpensAt &&
           bracketOpensAt < i)) &&
-      str[i].trim().length
+      str[i].trim()
     ) {
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
@@ -94,7 +96,7 @@ function fixRowNums(str, originalOpts) {
           break;
         }
       } else if (
-        str[i].trim().length &&
+        str[i].trim() &&
         str[i] !== "/" &&
         !opts.extractedLogContentsWereGiven
       ) {
@@ -192,7 +194,7 @@ function fixRowNums(str, originalOpts) {
     }
     if (
       !bracketOpensAt &&
-      str[i].trim().length &&
+      str[i].trim() &&
       consoleStartsAt &&
       consoleStartsAt <= i
     ) {

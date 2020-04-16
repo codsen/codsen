@@ -54,7 +54,7 @@ function c(changelogContents) {
         linesArr[i].startsWith("**Note:** Version bump only") ||
         linesArr[i].toLowerCase().includes("wip")
       ) {
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
           i--;
         }
         if (
@@ -64,10 +64,10 @@ function c(changelogContents) {
         ) {
           i--;
         }
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
           i--;
         }
-      } else if (!linesArr[i].trim().length) {
+      } else if (!linesArr[i].trim()) {
         if (!lastLineWasEmpty) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
@@ -79,7 +79,7 @@ function c(changelogContents) {
           newLinesArr.unshift(linesArr[i]);
         }
       }
-      if (linesArr[i].trim().length) {
+      if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
       }
     }

@@ -308,7 +308,7 @@
 
     if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
     Array.isArray(whatToMatch) && !whatToMatch.length || // []
-    Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length // [""]
+    Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
     ) {
         if (typeof opts.cb === "function") {
           var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -324,7 +324,7 @@
               // assemble the value of the current character
               var currentChar = str[y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
 
-              if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
                 firstCharOutsideIndex = y;
                 break;
               }
@@ -334,7 +334,7 @@
               // assemble the value of the current character
               var _currentChar = str[_y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
 
-              if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+              if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
                 firstCharOutsideIndex = _y;
                 break;
               }

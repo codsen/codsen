@@ -519,11 +519,11 @@
     let fixable = true;
 
     for (let i = opts.from; i < opts.to; i++) {
-      if (str[i].trim().length && str[i] !== opts.separator) {
+      if (str[i].trim() && str[i] !== opts.separator) {
         lastNonWhitespaceCharAt = i;
       }
 
-      if (chunkStartsAt === null && str[i].trim().length && (!opts.separator || str[i] !== opts.separator)) {
+      if (chunkStartsAt === null && str[i].trim() && (!opts.separator || str[i] !== opts.separator)) {
         if (!firstNonwhitespaceNonseparatorCharFound) {
           firstNonwhitespaceNonseparatorCharFound = true;
         }
@@ -544,33 +544,33 @@
       }
 
       if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i);
+        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
 
         if (typeof opts.cb === "function") {
-          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
+          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
         }
 
         chunkStartsAt = null;
       }
 
-      if (!str[i].trim().length && whitespaceStartsAt === null) {
+      if (!str[i].trim() && whitespaceStartsAt === null) {
         whitespaceStartsAt = i;
       }
 
-      if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (whitespaceStartsAt !== null && (str[i].trim() || i + 1 === opts.to)) {
         if (whitespaceStartsAt === opts.from) {
           if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
           }
-        } else if (!str[i].trim().length && i + 1 === opts.to) {
+        } else if (!str[i].trim() && i + 1 === opts.to) {
           if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
           }
-        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
+        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
           let startingIdx = whitespaceStartsAt;
           let endingIdx = i;
 
-          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim().length) {
+          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
             endingIdx++;
           }
 
@@ -586,7 +586,7 @@
 
           let message = "Remove whitespace.";
 
-          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
+          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
             fixable = false;
             message = "Bad whitespace.";
           }
@@ -640,7 +640,7 @@
 
     if (typeof originalStr !== "string") {
       return [];
-    } else if (!originalStr.trim().length) {
+    } else if (!originalStr.trim()) {
       return [];
     }
 
@@ -664,9 +664,9 @@
     if (originalStr !== originalStr.trim()) {
       var ranges = [];
 
-      if (!originalStr[0].trim().length) {
+      if (!originalStr[0].trim()) {
         for (var i = 0, len = originalStr.length; i < len; i++) {
-          if (originalStr[i].trim().length) {
+          if (originalStr[i].trim()) {
             ranges.push([0 + opts.offset, i + opts.offset]);
             nonWhitespaceStart = i;
             break;
@@ -674,9 +674,9 @@
         }
       }
 
-      if (!originalStr[originalStr.length - 1].trim().length) {
+      if (!originalStr[originalStr.length - 1].trim()) {
         for (var _i = originalStr.length; _i--;) {
-          if (originalStr[_i].trim().length) {
+          if (originalStr[_i].trim()) {
             ranges.push([_i + 1 + opts.offset, originalStr.length + opts.offset]);
             nonWhitespaceEnd = _i + 1;
             break;
@@ -863,7 +863,7 @@
             } else {
               nonWhitespaceFound = true;
             }
-          } else if (str[_i3].trim().length) {
+          } else if (str[_i3].trim()) {
             nonWhitespaceFound = true;
           }
         }

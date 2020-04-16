@@ -30,7 +30,7 @@ function isMediaD(originalStr, originalOpts) {
       `030 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
-  } else if (!originalStr.trim().length) {
+  } else if (!originalStr.trim()) {
     console.log(
       `035 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
@@ -69,20 +69,20 @@ function isMediaD(originalStr, originalOpts) {
 
   if (originalStr !== originalStr.trim()) {
     const ranges = [];
-    if (!originalStr[0].trim().length) {
+    if (!originalStr[0].trim()) {
       console.log(`073 traverse forward`);
       for (let i = 0, len = originalStr.length; i < len; i++) {
-        if (originalStr[i].trim().length) {
+        if (originalStr[i].trim()) {
           ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
       }
     }
-    if (!originalStr[originalStr.length - 1].trim().length) {
+    if (!originalStr[originalStr.length - 1].trim()) {
       console.log(`083 traverse backwards from the end`);
       for (let i = originalStr.length; i--; ) {
-        if (originalStr[i].trim().length) {
+        if (originalStr[i].trim()) {
           ranges.push([i + 1 + opts.offset, originalStr.length + opts.offset]);
           nonWhitespaceEnd = i + 1;
           break;
@@ -345,7 +345,7 @@ function isMediaD(originalStr, originalOpts) {
           } else {
             nonWhitespaceFound = true;
           }
-        } else if (str[i].trim().length) {
+        } else if (str[i].trim()) {
           nonWhitespaceFound = true;
         }
       }

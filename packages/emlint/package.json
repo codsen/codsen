@@ -127,7 +127,10 @@
     }
   },
   "tap": {
-    "coverage-report": "json-summary",
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
     "timeout": 0
   },
   "dependencies": {

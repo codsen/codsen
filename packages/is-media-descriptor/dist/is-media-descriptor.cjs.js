@@ -286,7 +286,7 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (typeof originalStr !== "string") {
     return [];
-  } else if (!originalStr.trim().length) {
+  } else if (!originalStr.trim()) {
     return [];
   }
   var res = [];
@@ -295,18 +295,18 @@ function isMediaD(originalStr, originalOpts) {
   var str = originalStr.trim();
   if (originalStr !== originalStr.trim()) {
     var ranges = [];
-    if (!originalStr[0].trim().length) {
+    if (!originalStr[0].trim()) {
       for (var i = 0, len = originalStr.length; i < len; i++) {
-        if (originalStr[i].trim().length) {
+        if (originalStr[i].trim()) {
           ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
       }
     }
-    if (!originalStr[originalStr.length - 1].trim().length) {
+    if (!originalStr[originalStr.length - 1].trim()) {
       for (var _i = originalStr.length; _i--;) {
-        if (originalStr[_i].trim().length) {
+        if (originalStr[_i].trim()) {
           ranges.push([_i + 1 + opts.offset, originalStr.length + opts.offset]);
           nonWhitespaceEnd = _i + 1;
           break;
@@ -417,7 +417,7 @@ function isMediaD(originalStr, originalOpts) {
           } else {
             nonWhitespaceFound = true;
           }
-        } else if (str[_i3].trim().length) {
+        } else if (str[_i3].trim()) {
           nonWhitespaceFound = true;
         }
       }

@@ -69,7 +69,7 @@
 
 
     if (str.split("").some(function (_char) {
-      return !_char.trim().length;
+      return !_char.trim();
     })) {
       return {
         res: false,

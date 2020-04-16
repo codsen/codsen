@@ -93,7 +93,7 @@ function makeTheQuoteOpposite(quoteChar) {
   return quoteChar === "'" ? "\"" : "'";
 }
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
-  if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+  if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
     return false;
   }
   var openingQuote = "'\"".includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
@@ -127,7 +127,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
       var E32 =
       chunkStartsAt && chunkStartsAt < i && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-      var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length &&
+      var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
         return charSuitableForHTMLAttrName(_char);
       }) &&
@@ -173,7 +173,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       openingBracketMet = true;
       return false;
     }
-    if (str[i].trim().length && !chunkStartsAt) {
+    if (str[i].trim() && !chunkStartsAt) {
       if (charSuitableForHTMLAttrName(str[i])) {
         chunkStartsAt = i;
       }
@@ -232,7 +232,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (openingQuote && str[i] === openingQuote) {
         var Y1 = !!lastQuoteAt;
         var Y2 = lastQuoteAt === isThisClosingIdx;
-        var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+        var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
         var Y4 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
@@ -284,11 +284,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     } else {
       var firstNonWhitespaceCharOnTheLeft = void 0;
-      if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+      if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
         for (var y = i; y--;) {
-          if (str[y].trim().length && str[y] !== "=") {
+          if (str[y].trim() && str[y] !== "=") {
             firstNonWhitespaceCharOnTheLeft = y;
             break;
           }

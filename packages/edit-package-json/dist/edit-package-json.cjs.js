@@ -107,7 +107,7 @@ function main(_ref) {
   reset();
   var currentPath = [];
   for (i = 0; i < len; i++) {
-    log("\n\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n"));
+    log("\n\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n"));
     if (!isNum(withinQuotesSince) && str[i - 1] === "[") {
       currentlyWithinArray = true;
       if (str[i] !== "]") {
@@ -164,7 +164,7 @@ function main(_ref) {
         currentlyWithinObject = true;
       }
     }
-    if (currentlyWithinArray && stringifyPath(path) === currentPath.join(".") && !replaceThisValue && str[i].trim().length
+    if (currentlyWithinArray && stringifyPath(path) === currentPath.join(".") && !replaceThisValue && str[i].trim()
     ) {
         replaceThisValue = true;
         log();
@@ -183,7 +183,7 @@ function main(_ref) {
         itsTheFirstElem = false;
         log();
       }
-    if (!replaceThisValue && !valueStartedAt && str[i].trim().length && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName)) {
+    if (!replaceThisValue && !valueStartedAt && str[i].trim() && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName)) {
       log();
       valueStartedAt = i;
       log();
@@ -197,7 +197,7 @@ function main(_ref) {
         }
       }
     }
-    if (!replaceThisValue && !isNum(withinQuotesSince) && (currentlyWithinArray || !currentlyWithinArray && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
+    if (!replaceThisValue && !isNum(withinQuotesSince) && (currentlyWithinArray || !currentlyWithinArray && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim() || ["}", ","].includes(str[i]))) {
       log();
       keyValue = str.slice(valueStartedAt, str[valueStartedAt] === "\"" ? i + 1 : i);
       log();
@@ -224,7 +224,7 @@ function main(_ref) {
       currentPath.pop();
       log("535 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
     }
-    if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[stringLeftRight.left(str, i)]) && ["}", "]"].includes(str[i]) || str[i] === "}" && str[stringLeftRight.left(str, i)] === "{") && str[i].trim().length) {
+    if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[stringLeftRight.left(str, i)]) && ["}", "]"].includes(str[i]) || str[i] === "}" && str[stringLeftRight.left(str, i)] === "{") && str[i].trim()) {
       log();
       if (str[i] === "," && !["}", "]"].includes(str[stringLeftRight.right(str, i)])) {
         log();
@@ -249,7 +249,7 @@ function main(_ref) {
       log();
       reset();
     }
-    if (str[i].trim().length && replaceThisValue && !valueStartedAt && i > keyEndedAt && ![":"].includes(str[i])) {
+    if (str[i].trim() && replaceThisValue && !valueStartedAt && i > keyEndedAt && ![":"].includes(str[i])) {
       valueStartedAt = i;
       log();
     }
@@ -279,16 +279,16 @@ function main(_ref) {
     }
     if (replaceThisValue && isArr(skipUntilTheFollowingIsMet) && !skipUntilTheFollowingIsMet.length && valueStartedAt && i > valueStartedAt) {
       log();
-      if (!withinQuotesSince && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || !["[", "{", "\""].includes(str[valueStartedAt]) && str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1)))
+      if (!withinQuotesSince && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || !["[", "{", "\""].includes(str[valueStartedAt]) && str[valueStartedAt].trim() && (!str[i].trim() || badChars.includes(str[i]) && isNotEscape(str, i - 1)))
       ) {
           log("780 INSIDE CATCH-END CLAUSES currently ".concat("\x1B[".concat(33, "m", "str[valueStartedAt=".concat(valueStartedAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[valueStartedAt], null, 4)));
           if (mode === "set") {
             log();
             var extraLineBreak = "";
-            if (str.slice(valueStartedAt, i + (str[i].trim().length ? 1 : 0)).includes("\n") && str[i + (str[i].trim().length ? 1 : 0)] !== "\n") {
+            if (str.slice(valueStartedAt, i + (str[i].trim() ? 1 : 0)).includes("\n") && str[i + (str[i].trim() ? 1 : 0)] !== "\n") {
               extraLineBreak = "\n";
             }
-            var endingPartsBeginning = i + (str[i].trim().length ? 1 : 0);
+            var endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
             if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt]) && str[stringLeftRight.right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== "\"") {
               endingPartsBeginning = endingPartsBeginning - 1;
             }
@@ -301,7 +301,7 @@ function main(_ref) {
             log("851 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
             var startingPoint = stringLeftRight.left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1) + 1;
             log();
-            var endingPoint = i + (str[i].trim().length ? 1 : 0);
+            var endingPoint = i + (str[i].trim() ? 1 : 0);
             if (str[startingPoint - 1] === "," && ["}", "]"].includes(str[stringLeftRight.right(str, endingPoint - 1)])) {
               startingPoint--;
               log();

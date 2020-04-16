@@ -288,7 +288,7 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
     }
 
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length) {
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
         let firstCharOutsideIndex;
         let startingPosition = position;
@@ -301,7 +301,7 @@
           for (let y = startingPosition; y--;) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -310,7 +310,7 @@
           for (let y = startingPosition; y < str.length; y++) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -2301,14 +2301,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2331,14 +2331,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2493,7 +2493,7 @@
       }
     }
 
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim().length && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
       passed = true;
     }
 
@@ -2763,7 +2763,7 @@
   }
 
   function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
-    if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+    if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
       return false;
     }
 
@@ -2792,7 +2792,7 @@
         const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
         const E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
         const E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
+        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
         let attrNameCharsChunkOnTheLeft;
 
         if (i === isThisClosingIdx) {
@@ -2834,7 +2834,7 @@
         return false;
       }
 
-      if (str[i].trim().length && !chunkStartsAt) {
+      if (str[i].trim() && !chunkStartsAt) {
         if (charSuitableForHTMLAttrName(str[i])) {
           chunkStartsAt = i;
         }
@@ -2876,7 +2876,7 @@
         if (openingQuote && str[i] === openingQuote) {
           const Y1 = !!lastQuoteAt;
           const Y2 = lastQuoteAt === isThisClosingIdx;
-          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
           const Y4 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
           const Y5 = i >= isThisClosingIdx;
           return Y1 && Y2 && Y3 && Y4 && Y5;
@@ -2906,11 +2906,11 @@
       } else {
         let firstNonWhitespaceCharOnTheLeft;
 
-        if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+        if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
           firstNonWhitespaceCharOnTheLeft = i - 1;
         } else {
           for (let y = i; y--;) {
-            if (str[y].trim().length && str[y] !== "=") {
+            if (str[y].trim() && str[y] !== "=") {
               firstNonWhitespaceCharOnTheLeft = y;
               break;
             }
@@ -3317,7 +3317,7 @@
       // the time to separate it and report it as a standalone token.
       // Also, the following clause will catch the unclosed tags like
       // <a href="z" click here</a>
-      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim().length || str[i] === "<")) {
+      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
         // this ending is definitely a token ending. Now the question is,
         // maybe we need to split all gathered token contents into two:
         // maybe it's a tag and a whitespace? or an unclosed tag?
@@ -3355,7 +3355,7 @@
                 // unless the whitespace is bigger than 1:
                 // <a href="z"   click here</a>
 
-                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim().length && str[cutOffIndex + 1].trim().length) {
+                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                   cutOffIndex++;
                 }
               } else {
@@ -3397,7 +3397,7 @@
           pingTagCb(token);
           token = tokenReset(); // if there was whitespace after token's end:
 
-          if (str[i - 1] && !str[i - 1].trim().length) {
+          if (str[i - 1] && !str[i - 1].trim()) {
             initToken("text", left(str, i) + 1);
           }
         }
@@ -3574,7 +3574,7 @@
 
             doNothing = _i2 + 1;
           }
-        } else if (token.type === "text" && str[_i2] && str[_i2].trim().length) {
+        } else if (token.type === "text" && str[_i2] && str[_i2].trim()) {
           // terminate the text token, all the non-whitespace characters comprise
           // rules because we're inside the at-token, it's CSS!
           token.end = _i2;
@@ -3654,7 +3654,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && _i2 >= token.start && !Number.isInteger(token.identifierStartsAt) && str[_i2] && str[_i2].trim().length && str[_i2] !== "@") {
+      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && _i2 >= token.start && !Number.isInteger(token.identifierStartsAt) && str[_i2] && str[_i2].trim() && str[_i2] !== "@") {
         // the media identifier's "entry" requirements are deliberately loose
         // because we want to catch errors there, imagine somebody mistakenly
         // adds a comma, @,media
@@ -3665,7 +3665,7 @@
 
 
       if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[_i2])) {
-        if (str[_i2 - 1] && str[_i2 - 1].trim().length) {
+        if (str[_i2 - 1] && str[_i2 - 1].trim()) {
           token.queryEndsAt = _i2;
         } else {
           // trim the trailing whitespace:
@@ -3730,13 +3730,13 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "at" && token.identifier && str[_i2] && str[_i2].trim().length && !Number.isInteger(token.queryStartsAt)) {
+      if (!doNothing && token.type === "at" && token.identifier && str[_i2] && str[_i2].trim() && !Number.isInteger(token.queryStartsAt)) {
         token.queryStartsAt = _i2;
       } // catch the end of at rule's identifierStartsAt
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && _i2 >= token.start && str[_i2] && (!str[_i2].trim().length || "()".includes(str[_i2])) && !Number.isInteger(token.identifierEndsAt)) {
+      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && _i2 >= token.start && str[_i2] && (!str[_i2].trim() || "()".includes(str[_i2])) && !Number.isInteger(token.identifierEndsAt)) {
         token.identifierEndsAt = _i2;
         token.identifier = str.slice(token.identifierStartsAt, _i2);
       } // catch the end of a CSS chunk
@@ -3744,7 +3744,7 @@
       // charsThatEndCSSChunks:  } , {
 
 
-      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[_i2]) || str[_i2] && !str[_i2].trim().length && charsThatEndCSSChunks.includes(str[right(str, _i2)]))) {
+      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[_i2]) || str[_i2] && !str[_i2].trim() && charsThatEndCSSChunks.includes(str[right(str, _i2)]))) {
         token.selectors.push({
           value: str.slice(selectorChunkStartedAt, _i2),
           selectorStarts: selectorChunkStartedAt,
@@ -3977,7 +3977,7 @@
         } else if (token.start === null || token.end === _i2) {
           if (styleStarts) {
             // 1. if there's whitespace, ping it as text
-            if (str[_i2] && !str[_i2].trim().length) {
+            if (str[_i2] && !str[_i2].trim()) {
               tokenReset();
               initToken("text", _i2);
               token.end = right(str, _i2) || str.length;
@@ -3992,7 +3992,7 @@
                 var idxOnTheRight = right(str, _i2);
                 initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight); // jump over the whitespace if such follows
 
-                if (str[_i2 + 1] && !str[_i2 + 1].trim().length) {
+                if (str[_i2 + 1] && !str[_i2 + 1].trim()) {
                   doNothing = right(str, _i2);
                 }
               }
@@ -4018,7 +4018,7 @@
 
             initToken("text", _i2);
           }
-        } else if (token.type === "text" && styleStarts && str[_i2] && str[_i2].trim().length && !"{},".includes(str[_i2])) {
+        } else if (token.type === "text" && styleStarts && str[_i2] && str[_i2].trim() && !"{},".includes(str[_i2])) {
           // Text token inside styles can be either whitespace chunk
           // or rogue characters. In either case, inside styles, when
           // "styleStarts" is on, non-whitespace character terminates
@@ -4032,7 +4032,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && str[_i2] && str[_i2].trim().length && !"{}".includes(str[_i2]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
+      if (!doNothing && token.type === "rule" && str[_i2] && str[_i2].trim() && !"{}".includes(str[_i2]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
         if (!",".includes(str[_i2])) {
           selectorChunkStartedAt = _i2;
 
@@ -4291,7 +4291,7 @@
         attrib.attribName = str.slice(attrib.attribNameStartsAt, _i2);
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName); // maybe there's a space in front of equal, <div class= "">
 
-        if (str[_i2] && !str[_i2].trim().length && str[right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim().length || str[_i2] === ">" || str[_i2] === "/" && str[right(str, _i2)] === ">") {
+        if (str[_i2] && !str[_i2].trim() && str[right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim() || str[_i2] === ">" || str[_i2] === "/" && str[right(str, _i2)] === ">") {
           if ("'\"".includes(str[right(str, _i2)])) ; else {
             attrib.attribEnd = _i2; // push and wipe
 
@@ -4327,7 +4327,7 @@
       if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && _i2 >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
         if ("'\"".includes(str[_i2])) {
           //
-          if (str[left(str, _i2)] === str[_i2] && // str[i + 1].trim().length &&
+          if (str[left(str, _i2)] === str[_i2] && // str[i + 1].trim() &&
           !"/>".concat(espChars).includes(str[right(str, _i2)]) && !xBeforeYOnTheRight(str, _i2, "=", "\"") && !xBeforeYOnTheRight(str, _i2, "=", "'") && (xBeforeYOnTheRight(str, _i2, "\"", ">") || xBeforeYOnTheRight(str, _i2, "'", ">")) && ( // and either "<" doesn't follow:
           !str.slice(_i2 + 1).includes("<") || // or there's no equal leading up to it:
           !str.slice(0, str.indexOf("<")).includes("="))) {
@@ -4378,7 +4378,7 @@
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
           }
-        } else if (attrib.attribOpeningQuoteAt === null && (str[_i2] && !str[_i2].trim().length || ["/", ">"].includes(str[_i2]) || espChars.includes(str[_i2]) && espChars.includes(str[_i2 + 1]))) {
+        } else if (attrib.attribOpeningQuoteAt === null && (str[_i2] && !str[_i2].trim() || ["/", ">"].includes(str[_i2]) || espChars.includes(str[_i2]) && espChars.includes(str[_i2 + 1]))) {
           // ^ either whitespace or tag's closing or ESP literal's start ends
           // the attribute's value if there are no quotes
           attrib.attribValueEndsAt = _i2;
@@ -4406,7 +4406,7 @@
 
           for (var _y3 = left(str, _i2); _y3 >= attrib.attribValueStartsAt; _y3--) {
             // catch where whitespace starts
-            if (!whitespaceFound && str[_y3] && !str[_y3].trim().length) {
+            if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
               whitespaceFound = true;
 
               if (attribClosingQuoteAt) {
@@ -4422,7 +4422,7 @@
             //         to here
 
 
-            if (whitespaceFound && str[_y3] && str[_y3].trim().length) {
+            if (whitespaceFound && str[_y3] && str[_y3].trim()) {
               whitespaceFound = false;
 
               if (!attribClosingQuoteAt) {
@@ -4479,7 +4479,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i2 && str[_i2] && str[_i2].trim().length) {
+      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i2 && str[_i2] && str[_i2].trim()) {
         if (str[_i2] === "=" && !"'\"=".includes(str[right(str, _i2)]) && !espChars.includes(str[right(str, _i2)]) // it might be an ESP literal
         ) {
             var firstCharOnTheRight = right(str, _i2); // find the index of the next quote, single or double
@@ -4616,7 +4616,7 @@
           token.value = str.slice(token.start, token.end); // set and push the attribute's records, just closing quote will be
           // null and possibly value too
 
-          if (Number.isInteger(attrib.attribValueStartsAt) && _i2 && attrib.attribValueStartsAt < _i2 && str.slice(attrib.attribValueStartsAt, _i2).trim().length) {
+          if (Number.isInteger(attrib.attribValueStartsAt) && _i2 && attrib.attribValueStartsAt < _i2 && str.slice(attrib.attribValueStartsAt, _i2).trim()) {
             attrib.attribValueEndsAt = _i2;
             attrib.attribValue = str.slice(attrib.attribValueStartsAt, _i2); // otherwise, nulls stay
           } else {

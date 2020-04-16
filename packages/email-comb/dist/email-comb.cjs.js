@@ -626,7 +626,7 @@ function comb(str, opts) {
                 var deleteUpTo = lastKeptChunksCommaAt + 1;
                 if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
                   for (var _y4 = lastKeptChunksCommaAt + 1; _y4 < len; _y4++) {
-                    if (str[_y4].trim().length) {
+                    if (str[_y4].trim()) {
                       deleteUpTo = _y4;
                       break;
                     }
@@ -689,7 +689,7 @@ function comb(str, opts) {
             } else if (characterSuitableForNames(str[i + 6])) {
               valuesStart = i + 6;
               quoteless = true;
-            } else if (str[i + 6] && (!str[i + 6].trim().length || "/>".includes(str[i + 6]))) {
+            } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
               var calculatedRange = expander({
                 str: str,
                 from: i,
@@ -702,7 +702,7 @@ function comb(str, opts) {
           } else if (!str[i + 5].trim()) {
             for (var _y6 = i + 5; _y6 < len; _y6++) {
               totalCounter++;
-              if (str[_y6].trim().length) {
+              if (str[_y6].trim()) {
                 if (str[_y6] === "=") {
                   if (_y6 > i + 5 && round === 1) {
                     finalIndexesToDelete.push(i + 5, _y6);
@@ -712,7 +712,7 @@ function comb(str, opts) {
                   } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
                     for (var _z = _y6 + 1; _z < len; _z++) {
                       totalCounter++;
-                      if (str[_z].trim().length) {
+                      if (str[_z].trim()) {
                         if (_z > _y6 + 1 && round === 1) {
                           finalIndexesToDelete.push(_y6 + 1, _z);
                         }
@@ -762,7 +762,7 @@ function comb(str, opts) {
             } else if (characterSuitableForNames(str[i + 3])) {
               _valuesStart = i + 3;
               _quoteless = true;
-            } else if (str[i + 3] && (!str[i + 3].trim().length || "/>".includes(str[i + 3]))) {
+            } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
               var _calculatedRange2 = expander({
                 str: str,
                 from: i,
@@ -775,7 +775,7 @@ function comb(str, opts) {
           } else if (!str[i + 2].trim()) {
             for (var _y7 = i + 2; _y7 < len; _y7++) {
               totalCounter++;
-              if (str[_y7].trim().length) {
+              if (str[_y7].trim()) {
                 if (str[_y7] === "=") {
                   if (_y7 > i + 2 && round === 1) {
                     finalIndexesToDelete.push(i + 2, _y7);
@@ -785,7 +785,7 @@ function comb(str, opts) {
                   } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
                     for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
                       totalCounter++;
-                      if (str[_z2].trim().length) {
+                      if (str[_z2].trim()) {
                         if (_z2 > _y7 + 1 && round === 1) {
                           finalIndexesToDelete.push(_y7 + 1, _z2);
                         }
@@ -897,7 +897,7 @@ function comb(str, opts) {
                 wipeAllWhitespaceOnLeft: true
               });
               var whatToInsert = "";
-              if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
+              if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim() && str[expandedRange[1]] && str[expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
                 whatToInsert = " ";
               }
               finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
@@ -929,7 +929,7 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "\"'",
               wipeAllWhitespaceOnLeft: true
             });
-            if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim().length && str[_expandedRange[1]] && str[_expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange[1], allHeads))) {
+            if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim() && str[_expandedRange[1]] && str[_expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange[1], allHeads))) {
               _expandedRange[0] += 1;
             }
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange));
@@ -963,7 +963,7 @@ function comb(str, opts) {
               wipeAllWhitespaceOnLeft: true
             });
             var _whatToInsert = "";
-            if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim().length && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim().length && !"/>".includes(str[_expandedRange2[1]])
+            if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim() && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim() && !"/>".includes(str[_expandedRange2[1]])
             ) {
                 _whatToInsert = " ";
               }
@@ -996,7 +996,7 @@ function comb(str, opts) {
               wipeAllWhitespaceOnLeft: true
             });
             var _whatToInsert2 = "";
-            if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim().length && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim().length && !"/>".includes(str[_expandedRange3[1]])
+            if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim() && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim() && !"/>".includes(str[_expandedRange3[1]])
             ) {
                 _whatToInsert2 = " ";
               }
@@ -1052,7 +1052,7 @@ function comb(str, opts) {
       if (!doNothing && round === 1) {
         if (commentStartedAt !== null && commentStartedAt < i && str[i] === ">" && !usedOnce) {
           if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
-            return val.trim().length && str.slice(commentStartedAt, i).toLowerCase().includes(val);
+            return val.trim() && str.slice(commentStartedAt, i).toLowerCase().includes(val);
           })) {
             canDelete = false;
           }
@@ -1122,7 +1122,7 @@ function comb(str, opts) {
         }
       }
       if (!doNothing) {
-        if (!str[i].trim().length) {
+        if (!str[i].trim()) {
           if (whitespaceStartedAt === null) {
             whitespaceStartedAt = i;
           }
@@ -1338,8 +1338,8 @@ function comb(str, opts) {
     }
   }
   if (str.length) {
-    if ((!str[0].trim().length || !str[str.length - 1].trim().length) && str.length !== str.trim().length) {
-      nonIndentationsWhitespaceLength += str.length - str.trim().length;
+    if ((!str[0].trim() || !str[str.length - 1].trim()) && str.length !== str.trim()) {
+      nonIndentationsWhitespaceLength += str.length - str.trim();
     }
     str = "".concat(str.trim()).concat(prevailingEOL);
   }

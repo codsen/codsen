@@ -22,7 +22,7 @@
     // character has to be line break, space or non-breaking space - nothing
     // else is considered
     if ( // 1. it's \n or nbsp or space or some other whitespace char which would end up as space
-    !charToPush.trim().length && ( // 2. don't let sequences of spaces - \n or nbsp sequences are fine
+    !charToPush.trim() && ( // 2. don't let sequences of spaces - \n or nbsp sequences are fine
     !arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && ( // 3. line trimming - only other linebreaks or nbsp's can follow linebreaks (per-line trim)
     !arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp) // this last clause is line trimming
     ) {
@@ -103,7 +103,7 @@
 
       if (str[0].trim() === "") {
         for (var i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -124,7 +124,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (var _i = str.length; _i--;) {
-          if (str[_i].trim().length !== 0) {
+          if (str[_i].trim()) {
             break;
           } else {
             if (str[_i] !== "\n" || limit) {

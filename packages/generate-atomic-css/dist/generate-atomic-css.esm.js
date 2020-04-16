@@ -559,7 +559,7 @@ function genAtomic(str, originalOpts) {
   let [extractedConfig, rawContentAbove, rawContentBelow] = extractConfig(
     opts.configOverride ? opts.configOverride : str
   );
-  if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
+  if (!isStr(extractedConfig) || !extractedConfig.trim()) {
     return {
       log: {
         count: 0,
@@ -656,7 +656,7 @@ function genAtomic(str, originalOpts) {
       if (
         isStr(rawContentBelow) &&
         rawContentBelow[0] &&
-        !rawContentBelow[0].trim().length
+        !rawContentBelow[0].trim()
       ) {
         frontPart = rawContentBelow.slice(0, right(rawContentBelow, 0));
       }

@@ -424,7 +424,7 @@
               }
             }
           }
-      } else if (from === 0 && str.slice(to).trim().length) {
+      } else if (from === 0 && str.slice(to).trim()) {
         // TODO - replace hard zero lookup with with left() - will allow more variations!
         // if it's the beginning of a string
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
@@ -432,7 +432,7 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (!str[to] && str.slice(0, from).trim().length) {
+      } else if (!str[to] && str.slice(0, from).trim()) {
         //
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           // 3. if it's the ending of a string
@@ -518,14 +518,14 @@
             }
           }
         }
-      } else if (from === 0 && str[to] && str.slice(to).trim().length) {
+      } else if (from === 0 && str[to] && str.slice(to).trim()) {
         // 2. if it's the beginning of a string
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (!str[to] && str.slice(0, from).trim().length) {
+      } else if (!str[to] && str.slice(0, from).trim()) {
         // 3. if it's the beginning of a string
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);

@@ -76,12 +76,12 @@
 
     for (var i = opts.from; i < opts.to; i++) {
       // catch the last nonwhitespace char
-      if (str[i].trim().length && str[i] !== opts.separator) {
+      if (str[i].trim() && str[i] !== opts.separator) {
         lastNonWhitespaceCharAt = i;
       } // catch the beginning of a chunk
 
 
-      if (chunkStartsAt === null && str[i].trim().length && (!opts.separator || str[i] !== opts.separator)) {
+      if (chunkStartsAt === null && str[i].trim() && (!opts.separator || str[i] !== opts.separator)) {
         if (!firstNonwhitespaceNonseparatorCharFound) {
           firstNonwhitespaceNonseparatorCharFound = true;
         } // if there was only one separator up to now, wipe it
@@ -104,10 +104,10 @@
 
 
       if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-        var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i); // ping the cb
+        var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i); // ping the cb
 
         if (typeof opts.cb === "function") {
-          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
+          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
         } // reset
 
 
@@ -115,34 +115,34 @@
       } // catch the beginning of a whitespace
 
 
-      if (!str[i].trim().length && whitespaceStartsAt === null) {
+      if (!str[i].trim() && whitespaceStartsAt === null) {
         whitespaceStartsAt = i;
       } // catch the ending of a whitespace
 
 
-      if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (whitespaceStartsAt !== null && (str[i].trim() || i + 1 === opts.to)) {
         if (whitespaceStartsAt === opts.from) {
           if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
           } // else - fine
 
-        } else if (!str[i].trim().length && i + 1 === opts.to) {
+        } else if (!str[i].trim() && i + 1 === opts.to) {
           // if it's trailing whitespace, we're on the last character
           // (right before opts.to)
           if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
           } // else - fine
 
-        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
+        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
           // exclude single space after a comma, with condition that something
           // non-whitespacey follows
           // maybe opts.oneSpaceAfterCommaOK is on?
           var startingIdx = whitespaceStartsAt;
           var endingIdx = i;
 
-          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim().length) {
+          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
             endingIdx++;
-          } // i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length
+          } // i + 1 === opts.to && str[i] !== opts.separator && str[i].trim()
           //   ? i + 1
           //   : i;
 
@@ -166,7 +166,7 @@
           //                     here.
           // We identify it by checking, is there a separator in front.
 
-          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
+          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
             fixable = false;
             message = "Bad whitespace.";
           }

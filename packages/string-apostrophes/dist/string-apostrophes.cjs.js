@@ -93,13 +93,13 @@ function convertOne(str, _ref) {
             }
           }
         }
-    } else if (from === 0 && str.slice(to).trim().length) {
+    } else if (from === 0 && str.slice(to).trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -168,13 +168,13 @@ function convertOne(str, _ref) {
           }
         }
       }
-    } else if (from === 0 && str[to] && str.slice(to).trim().length) {
+    } else if (from === 0 && str[to] && str.slice(to).trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {

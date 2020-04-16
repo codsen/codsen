@@ -87,7 +87,7 @@ function c(changelogContents) {
         linesArr[i].toLowerCase().includes("wip")
       ) {
         // delete all the blank lines above the culprit:
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
           i--;
         }
         // after that, delete the title, but only if there were no other entries:
@@ -99,10 +99,10 @@ function c(changelogContents) {
           i--;
         }
         // delete all the blank lines above the culprit:
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
           i--;
         }
-      } else if (!linesArr[i].trim().length) {
+      } else if (!linesArr[i].trim()) {
         // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
         if (!lastLineWasEmpty) {
           // we push trimmed lines to prevent accidental whitespace characters
@@ -123,7 +123,7 @@ function c(changelogContents) {
       }
 
       // reset:
-      if (linesArr[i].trim().length) {
+      if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
           `129 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`

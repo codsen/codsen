@@ -245,7 +245,7 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
     }
 
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length) {
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
         let firstCharOutsideIndex;
         let startingPosition = position;
@@ -258,7 +258,7 @@
           for (let y = startingPosition; y--;) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -267,7 +267,7 @@
           for (let y = startingPosition; y < str.length; y++) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -2373,14 +2373,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2403,14 +2403,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2435,7 +2435,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -2499,7 +2499,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -2518,7 +2518,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -3295,12 +3295,12 @@
       } // catch the end of whitespace (must be at the top)
 
 
-      if (!doNothingUntil && _i && str[_i] && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
+      if (!doNothingUntil && _i && str[_i] && str[_i].trim() && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim())) {
         // 1. mark the ending
         lastWhitespaceEndedAt = _i;
       }
 
-      if (!doNothingUntil && str[_i] && str[_i].trim().length) {
+      if (!doNothingUntil && str[_i] && str[_i].trim()) {
         charCount++;
       } //
       //
@@ -3322,8 +3322,8 @@
       // catch dashes
 
 
-      if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim().length || str[_i] === "&")) {
-        if (str[_i - 1] && !str[_i - 1].trim().length && str[left(str, _i)]) {
+      if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
+        if (str[_i - 1] && !str[_i - 1].trim() && str[left(str, _i)]) {
           push(left(str, _i) + 1, _i); // report what was done:
 
           whatWasDone.removeWidows = true;
@@ -3336,7 +3336,7 @@
         lastEncodedNbspEndedAt = _i + 6; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
 
-        if (str[_i + 6] && str[_i + 6].trim().length) {
+        if (str[_i + 6] && str[_i + 6].trim()) {
           bumpWordCountAt = _i + 6;
         } // if it opts.convertEntities is off, replace it right away
 
@@ -3356,7 +3356,7 @@
         lastEncodedNbspEndedAt = _i + 5; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
 
-        if (str[_i + 5] && str[_i + 5].trim().length) {
+        if (str[_i + 5] && str[_i + 5].trim()) {
           bumpWordCountAt = _i + 5;
         } // if it opts.convertEntities is off, replace it right away
 
@@ -3376,7 +3376,7 @@
         lastEncodedNbspEndedAt = _i + 6; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
 
-        if (str[_i + 6] && str[_i + 6].trim().length) {
+        if (str[_i + 6] && str[_i + 6].trim()) {
           bumpWordCountAt = _i + 6;
         } // if it opts.convertEntities is off, replace it right away
 
@@ -3394,7 +3394,7 @@
         lastEncodedNbspEndedAt = _i + 1; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
 
-        if (str[_i + 2] && str[_i + 2].trim().length) {
+        if (str[_i + 2] && str[_i + 2].trim()) {
           bumpWordCountAt = _i + 2;
         } // if it opts.convertEntities is off, replace it right away
 
@@ -3405,7 +3405,7 @@
       } // catch the first letter of the first word
 
 
-      if (!doNothingUntil && str[_i] && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
+      if (!doNothingUntil && str[_i] && str[_i].trim() && (!str[_i - 1] || !str[_i - 1].trim())) {
         // 1. bump the word counter
         wordCount++;
       } // catch the ending of paragraphs or the EOL - here's where the action happens
@@ -3464,7 +3464,7 @@
       // postcodeRegexFront, postcodeRegexEnd
 
 
-      if (opts.UKPostcodes && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[right(str, _i)] && postcodeRegexEnd.test(str.slice(right(str, _i)))) {
+      if (opts.UKPostcodes && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && postcodeRegexFront.test(str.slice(0, _i)) && str[right(str, _i)] && postcodeRegexEnd.test(str.slice(right(str, _i)))) {
         push(_i, right(str, _i));
         whatWasDone.removeWidows = true;
       } //
@@ -3491,7 +3491,7 @@
       // old whitespace record and it's the first character of new whitespace chunk
 
 
-      if (!doNothingUntil && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[right(str, _i)]) && !str.slice(0, left(str, _i) + 1).endsWith("br") && !str.slice(0, left(str, _i) + 1).endsWith("hr") && !(str[left(str, _i)] === "<" && knownHTMLTags.some(function (tag) {
+      if (!doNothingUntil && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, _i)]) && !str.slice(0, left(str, _i) + 1).endsWith("br") && !str.slice(0, left(str, _i) + 1).endsWith("hr") && !(str[left(str, _i)] === "<" && knownHTMLTags.some(function (tag) {
         return str.startsWith(tag, right(str, _i));
       }))) {
         // 1. current value becomes second-to-last
@@ -3546,7 +3546,7 @@
                   if (index) {
                     _i = index - 1;
 
-                    if (str[_i + 1] && str[_i + 1].trim().length) {
+                    if (str[_i + 1] && str[_i + 1].trim()) {
                       wordCount++;
                     }
                   }

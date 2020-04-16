@@ -33,15 +33,16 @@
     "linkdep": "cli.js"
   },
   "scripts": {
+    "ciunittest": "npm run tap -- -no-cov --no-only --reporter=silent --output-file=testStats.md && npm run format",
     "dev": "echo\"\"",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
-    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md"
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md"
   },
   "husky": {
     "hooks": {
@@ -113,7 +114,10 @@
     }
   },
   "tap": {
-    "coverage-report": "json-summary",
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
     "timeout": 0
   },
   "dependencies": {

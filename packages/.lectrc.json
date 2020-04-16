@@ -256,7 +256,7 @@
 			"@rollup/plugin-strip": "^1.3.2",
 			"tap": "^14.10.7",
 			"benchmark": "^2.1.4",
-			"lect": "^0.12.4",
+			"lect": "^0.12.5",
 			"rollup": "^2.6.1",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-babel": "^4.4.0",
@@ -302,29 +302,31 @@
 	"scripts": {
 		"cli": {
 			"dev": "echo\"\"",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
-			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
-			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
 			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md"
+			"ciunittest": "npm run tap -- -no-cov --no-only --reporter=silent --output-file=testStats.md && npm run format",
+			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md"
 		},
 		"rollup": {
 			"build": "rollup -c",
 			"dev": "rollup -c --dev",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
-			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
+			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
 			"perf": "node perf/check",
 			"prepare": "npm run build",
 			"pretest": "npm run build",
-			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
 			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md && npm run perf",
+			"ciunittest": "npm run lint && npm run tap -- --no-only --no-coverage --reporter=silent --output-file=testStats.md && npm run format",
+			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run perf",
 			"version": "npm run build && git add ."
 		}
 	},

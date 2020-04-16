@@ -492,7 +492,7 @@ function genAtomic(str, originalOpts) {
       extractedConfig = _extractConfig2[0],
       rawContentAbove = _extractConfig2[1],
       rawContentBelow = _extractConfig2[2];
-  if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
+  if (!isStr(extractedConfig) || !extractedConfig.trim()) {
     return {
       log: {
         count: 0
@@ -556,7 +556,7 @@ function genAtomic(str, originalOpts) {
   if (isStr(rawContentBelow)) {
     if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
       var _frontPart = "";
-      if (isStr(rawContentBelow) && rawContentBelow[0] && !rawContentBelow[0].trim().length) {
+      if (isStr(rawContentBelow) && rawContentBelow[0] && !rawContentBelow[0].trim()) {
         _frontPart = rawContentBelow.slice(0, stringLeftRight.right(rawContentBelow, 0));
       }
       rawContentBelow = "".concat(_frontPart, "/* ").concat(rawContentBelow.trim());

@@ -294,7 +294,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0 && str.slice(to).trim().length) {
+    } else if (from === 0 && str.slice(to).trim()) {
       // TODO - replace hard zero lookup with with left() - will allow more variations!
       // if it's the beginning of a string
       console.log(`300 the beginning of a string clauses`);
@@ -324,7 +324,7 @@ function convertOne(
           `324 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ']`
         );
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       console.log(`328 ending of a string clauses`);
       //
       if (
@@ -665,7 +665,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0 && str[to] && str.slice(to).trim().length) {
+    } else if (from === 0 && str[to] && str.slice(to).trim()) {
       // 2. if it's the beginning of a string
       if (
         convertApostrophes &&
@@ -693,7 +693,7 @@ function convertOne(
           `693 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       // 3. if it's the beginning of a string
       if (
         convertApostrophes &&

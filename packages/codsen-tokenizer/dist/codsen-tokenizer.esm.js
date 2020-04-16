@@ -534,7 +534,7 @@ function tokenizer(str, originalOpts) {
       !["text", "esp"].includes(token.type) &&
       token.start !== null &&
       token.start < i &&
-      ((str[i - 1] && !str[i - 1].trim().length) || str[i] === "<")
+      ((str[i - 1] && !str[i - 1].trim()) || str[i] === "<")
     ) {
       token.end = left(str, i) + 1;
       token.value = str.slice(token.start, token.end);
@@ -547,8 +547,8 @@ function tokenizer(str, originalOpts) {
               if (
                 str[cutOffIndex] &&
                 str[cutOffIndex + 1] &&
-                !str[cutOffIndex].trim().length &&
-                str[cutOffIndex + 1].trim().length
+                !str[cutOffIndex].trim() &&
+                str[cutOffIndex + 1].trim()
               ) {
                 cutOffIndex++;
               }
@@ -581,7 +581,7 @@ function tokenizer(str, originalOpts) {
       } else {
         pingTagCb(token);
         token = tokenReset();
-        if (str[i - 1] && !str[i - 1].trim().length) {
+        if (str[i - 1] && !str[i - 1].trim()) {
           initToken("text", left(str, i) + 1);
         }
       }
@@ -726,7 +726,7 @@ function tokenizer(str, originalOpts) {
           token = tokenReset();
           doNothing = i + 1;
         }
-      } else if (token.type === "text" && str[i] && str[i].trim().length) {
+      } else if (token.type === "text" && str[i] && str[i].trim()) {
         token.end = i;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
@@ -788,7 +788,7 @@ function tokenizer(str, originalOpts) {
       i >= token.start &&
       !Number.isInteger(token.identifierStartsAt) &&
       str[i] &&
-      str[i].trim().length &&
+      str[i].trim() &&
       str[i] !== "@"
     ) {
       token.identifierStartsAt = i;
@@ -800,7 +800,7 @@ function tokenizer(str, originalOpts) {
       !Number.isInteger(token.queryEndsAt) &&
       "{};".includes(str[i])
     ) {
-      if (str[i - 1] && str[i - 1].trim().length) {
+      if (str[i - 1] && str[i - 1].trim()) {
         token.queryEndsAt = i;
       } else {
         token.queryEndsAt = left(str, i) + 1;
@@ -842,7 +842,7 @@ function tokenizer(str, originalOpts) {
       token.type === "at" &&
       token.identifier &&
       str[i] &&
-      str[i].trim().length &&
+      str[i].trim() &&
       !Number.isInteger(token.queryStartsAt)
     ) {
       token.queryStartsAt = i;
@@ -853,7 +853,7 @@ function tokenizer(str, originalOpts) {
       Number.isInteger(token.identifierStartsAt) &&
       i >= token.start &&
       str[i] &&
-      (!str[i].trim().length || "()".includes(str[i])) &&
+      (!str[i].trim() || "()".includes(str[i])) &&
       !Number.isInteger(token.identifierEndsAt)
     ) {
       token.identifierEndsAt = i;
@@ -864,7 +864,7 @@ function tokenizer(str, originalOpts) {
       Number.isInteger(selectorChunkStartedAt) &&
       (charsThatEndCSSChunks.includes(str[i]) ||
         (str[i] &&
-          !str[i].trim().length &&
+          !str[i].trim() &&
           charsThatEndCSSChunks.includes(str[right(str, i)])))
     ) {
       token.selectors.push({
@@ -1011,7 +1011,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
-          if (str[i] && !str[i].trim().length) {
+          if (str[i] && !str[i].trim()) {
             tokenReset();
             initToken("text", i);
             token.end = right(str, i) || str.length;
@@ -1028,7 +1028,7 @@ function tokenizer(str, originalOpts) {
                 str[idxOnTheRight] === "@" ? "at" : "rule",
                 idxOnTheRight
               );
-              if (str[i + 1] && !str[i + 1].trim().length) {
+              if (str[i + 1] && !str[i + 1].trim()) {
                 doNothing = right(str, i);
               }
             }
@@ -1051,7 +1051,7 @@ function tokenizer(str, originalOpts) {
         token.type === "text" &&
         styleStarts &&
         str[i] &&
-        str[i].trim().length &&
+        str[i].trim() &&
         !"{},".includes(str[i])
       ) {
         dumpCurrentToken(token, i);
@@ -1063,7 +1063,7 @@ function tokenizer(str, originalOpts) {
       !doNothing &&
       token.type === "rule" &&
       str[i] &&
-      str[i].trim().length &&
+      str[i].trim() &&
       !"{}".includes(str[i]) &&
       !Number.isInteger(selectorChunkStartedAt) &&
       !Number.isInteger(token.openingCurlyAt)
@@ -1276,8 +1276,8 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
-      if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") ; else if (
-        (str[i] && !str[i].trim().length) ||
+      if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ; else if (
+        (str[i] && !str[i].trim()) ||
         str[i] === ">" ||
         (str[i] === "/" && str[right(str, i)] === ">")
       ) {
@@ -1364,7 +1364,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         attrib.attribOpeningQuoteAt === null &&
-        ((str[i] && !str[i].trim().length) ||
+        ((str[i] && !str[i].trim()) ||
           ["/", ">"].includes(str[i]) ||
           (espChars.includes(str[i]) && espChars.includes(str[i + 1])))
       ) {
@@ -1386,13 +1386,13 @@ function tokenizer(str, originalOpts) {
         let whitespaceFound;
         let attribClosingQuoteAt;
         for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
-          if (!whitespaceFound && str[y] && !str[y].trim().length) {
+          if (!whitespaceFound && str[y] && !str[y].trim()) {
             whitespaceFound = true;
             if (attribClosingQuoteAt) {
               const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
             }
           }
-          if (whitespaceFound && str[y] && str[y].trim().length) {
+          if (whitespaceFound && str[y] && str[y].trim()) {
             whitespaceFound = false;
             if (!attribClosingQuoteAt) {
               attribClosingQuoteAt = y + 1;
@@ -1439,7 +1439,7 @@ function tokenizer(str, originalOpts) {
       Number.isInteger(attrib.attribNameEndsAt) &&
       attrib.attribNameEndsAt <= i &&
       str[i] &&
-      str[i].trim().length
+      str[i].trim()
     ) {
       if (
         str[i] === "=" &&
@@ -1566,7 +1566,7 @@ function tokenizer(str, originalOpts) {
           Number.isInteger(attrib.attribValueStartsAt) &&
           i &&
           attrib.attribValueStartsAt < i &&
-          str.slice(attrib.attribValueStartsAt, i).trim().length
+          str.slice(attrib.attribValueStartsAt, i).trim()
         ) {
           attrib.attribValueEndsAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);

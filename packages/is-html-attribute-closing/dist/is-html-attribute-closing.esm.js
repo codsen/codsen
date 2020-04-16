@@ -64,7 +64,7 @@ function makeTheQuoteOpposite(quoteChar) {
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (
     typeof str !== "string" ||
-    !str.trim().length ||
+    !str.trim() ||
     !Number.isInteger(idxOfAttrOpening) ||
     !Number.isInteger(isThisClosingIdx) ||
     !str[idxOfAttrOpening] ||
@@ -120,7 +120,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         chunkStartsAt &&
         chunkStartsAt < i &&
         str[chunkStartsAt - 1] &&
-        !str[chunkStartsAt - 1].trim().length &&
+        !str[chunkStartsAt - 1].trim() &&
         Array.from(str.slice(chunkStartsAt, i).trim()).every((char) =>
           charSuitableForHTMLAttrName(char)
         ) &&
@@ -171,7 +171,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       openingBracketMet = true;
       return false;
     }
-    if (str[i].trim().length && !chunkStartsAt) {
+    if (str[i].trim() && !chunkStartsAt) {
       if (charSuitableForHTMLAttrName(str[i])) {
         chunkStartsAt = i;
       }
@@ -263,8 +263,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (openingQuote && str[i] === openingQuote) {
         const Y1 = !!lastQuoteAt;
         const Y2 = lastQuoteAt === isThisClosingIdx;
-        const Y3 =
-          lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+        const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
         const Y4 = split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
           allHtmlAttribs.has(chunk)
         );
@@ -354,11 +353,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     } else {
       let firstNonWhitespaceCharOnTheLeft;
-      if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+      if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
         for (let y = i; y--; ) {
-          if (str[y].trim().length && str[y] !== "=") {
+          if (str[y].trim() && str[y] !== "=") {
             firstNonWhitespaceCharOnTheLeft = y;
             break;
           }

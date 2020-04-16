@@ -80,17 +80,17 @@ function rightMain(str, idx, stopAtNewlines) {
     return null;
   } else if (
     str[idx + 1] &&
-    ((!stopAtNewlines && str[idx + 1].trim().length) ||
+    ((!stopAtNewlines && str[idx + 1].trim()) ||
       (stopAtNewlines &&
-        (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1]))))
+        (str[idx + 1].trim() || "\n\r".includes(str[idx + 1]))))
   ) {
     // best case scenario - next character is non-whitespace:
     return idx + 1;
   } else if (
     str[idx + 2] &&
-    ((!stopAtNewlines && str[idx + 2].trim().length) ||
+    ((!stopAtNewlines && str[idx + 2].trim()) ||
       (stopAtNewlines &&
-        (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2]))))
+        (str[idx + 2].trim() || "\n\r".includes(str[idx + 2]))))
   ) {
     // second best case scenario - second next character is non-whitespace:
     return idx + 2;
@@ -99,8 +99,8 @@ function rightMain(str, idx, stopAtNewlines) {
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (
       str[i] &&
-      ((!stopAtNewlines && str[i].trim().length) ||
-        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+      ((!stopAtNewlines && str[i].trim()) ||
+        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
     ) {
       return i;
     }
@@ -149,17 +149,17 @@ function leftMain(str, idx, stopAtNewlines) {
     return null;
   } else if (
     str[idx - 1] &&
-    ((!stopAtNewlines && str[idx - 1].trim().length) ||
+    ((!stopAtNewlines && str[idx - 1].trim()) ||
       (stopAtNewlines &&
-        (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1]))))
+        (str[idx - 1].trim() || "\n\r".includes(str[idx - 1]))))
   ) {
     // best case scenario - next character is non-whitespace:
     return idx - 1;
   } else if (
     str[idx - 2] &&
-    ((!stopAtNewlines && str[idx - 2].trim().length) ||
+    ((!stopAtNewlines && str[idx - 2].trim()) ||
       (stopAtNewlines &&
-        (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2]))))
+        (str[idx - 2].trim() || "\n\r".includes(str[idx - 2]))))
   ) {
     // second best case scenario - second next character is non-whitespace:
     return idx - 2;
@@ -168,8 +168,8 @@ function leftMain(str, idx, stopAtNewlines) {
   for (let i = idx; i--; ) {
     if (
       str[i] &&
-      ((!stopAtNewlines && str[i].trim().length) ||
-        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+      ((!stopAtNewlines && str[i].trim()) ||
+        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
     ) {
       return i;
     }
@@ -600,7 +600,7 @@ function chomp(direction, str, idx, opts, args) {
     //
 
     // quick ending - no whitespace on the right at all:
-    if (str[lastIdx] && str[lastIdx].trim().length) {
+    if (str[lastIdx] && str[lastIdx].trim()) {
       // if the character follows tightly right after,
       console.log(`605 RETURN ${lastIdx}`);
       return lastIdx;
@@ -620,7 +620,7 @@ function chomp(direction, str, idx, opts, args) {
         );
         return lastIdx;
       } else if (
-        str.slice(lastIdx, whatsOnTheRight || str.length).trim().length ||
+        str.slice(lastIdx, whatsOnTheRight || str.length).trim() ||
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") ||
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")
       ) {
@@ -656,13 +656,13 @@ function chomp(direction, str, idx, opts, args) {
         )}`
       );
       if (
-        remainderString.trim().length ||
+        remainderString.trim() ||
         remainderString.includes("\n") ||
         remainderString.includes("\r")
       ) {
         // if there are line breaks, we need to loop to chomp up to them but not further
         for (let y = lastIdx, len = str.length; y < len; y++) {
-          if (str[y].trim().length || `\n\r`.includes(str[y])) {
+          if (str[y].trim() || `\n\r`.includes(str[y])) {
             console.log(`666 RETURN ${y}`);
             return y;
           }
@@ -695,7 +695,7 @@ function chomp(direction, str, idx, opts, args) {
   //
 
   // quick ending - no whitespace on the left at all:
-  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
+  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
     // if the non-whitespace character is on the left
     console.log(`700 RETURN ${lastIdx}`);
     return lastIdx;
@@ -714,7 +714,7 @@ function chomp(direction, str, idx, opts, args) {
       console.log(`714 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${lastIdx}`);
       return lastIdx;
     } else if (
-      str.slice(0, lastIdx).trim().length ||
+      str.slice(0, lastIdx).trim() ||
       str.slice(0, lastIdx).includes("\n") ||
       str.slice(0, lastIdx).includes("\r")
     ) {
@@ -731,9 +731,9 @@ function chomp(direction, str, idx, opts, args) {
             0
           )}`}\u001b[${39}m`}`
         );
-        if (`\n\r`.includes(str[y]) || str[y].trim().length) {
-          console.log(`735 RETURN ${y + 1 + (str[y].trim().length ? 1 : 0)}`);
-          return y + 1 + (str[y].trim().length ? 1 : 0);
+        if (`\n\r`.includes(str[y]) || str[y].trim()) {
+          console.log(`735 RETURN ${y + 1 + (str[y].trim() ? 1 : 0)}`);
+          return y + 1 + (str[y].trim() ? 1 : 0);
         }
       }
     }
@@ -748,13 +748,13 @@ function chomp(direction, str, idx, opts, args) {
     // mode 2 hungrily chomps all whitespace except newlines
     const remainderString = str.slice(0, lastIdx);
     if (
-      remainderString.trim().length ||
+      remainderString.trim() ||
       remainderString.includes("\n") ||
       remainderString.includes("\r")
     ) {
       // if there are line breaks, we need to loop to chomp up to them but not further
       for (let y = lastIdx; y--; ) {
-        if (str[y].trim().length || `\n\r`.includes(str[y])) {
+        if (str[y].trim() || `\n\r`.includes(str[y])) {
           console.log(`758 RETURN ${y + 1}`);
           return y + 1;
         }

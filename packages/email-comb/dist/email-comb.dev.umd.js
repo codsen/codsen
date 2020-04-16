@@ -278,7 +278,7 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
     }
 
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length) {
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
         let firstCharOutsideIndex;
         let startingPosition = position;
@@ -291,7 +291,7 @@
           for (let y = startingPosition; y--;) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -300,7 +300,7 @@
           for (let y = startingPosition; y < str.length; y++) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -569,143 +569,16 @@
    * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
    * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
    */
-
-  /** `Object#toString` result references. */
-  var objectTag = '[object Object]';
-  /**
-   * Checks if `value` is a host object in IE < 9.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-   */
-
-  function isHostObject(value) {
-    // Many host objects are `Object` objects that can coerce to strings
-    // despite having improperly defined `toString` methods.
-    var result = false;
-
-    if (value != null && typeof value.toString != 'function') {
-      try {
-        result = !!(value + '');
-      } catch (e) {}
-    }
-
-    return result;
-  }
-  /**
-   * Creates a unary function that invokes `func` with its argument transformed.
-   *
-   * @private
-   * @param {Function} func The function to wrap.
-   * @param {Function} transform The argument transform.
-   * @returns {Function} Returns the new function.
-   */
-
-
-  function overArg(func, transform) {
-    return function (arg) {
-      return func(transform(arg));
-    };
-  }
   /** Used for built-in method references. */
 
 
-  var funcProto = Function.prototype,
-      objectProto = Object.prototype;
+  var funcProto = Function.prototype;
   /** Used to resolve the decompiled source of functions. */
 
   var funcToString = funcProto.toString;
-  /** Used to check objects for own properties. */
-
-  var hasOwnProperty = objectProto.hasOwnProperty;
   /** Used to infer the `Object` constructor. */
 
   var objectCtorString = funcToString.call(Object);
-  /**
-   * Used to resolve the
-   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-   * of values.
-   */
-
-  var objectToString = objectProto.toString;
-  /** Built-in value references. */
-
-  var getPrototype = overArg(Object.getPrototypeOf, Object);
-  /**
-   * Checks if `value` is object-like. A value is object-like if it's not `null`
-   * and has a `typeof` result of "object".
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-   * @example
-   *
-   * _.isObjectLike({});
-   * // => true
-   *
-   * _.isObjectLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isObjectLike(_.noop);
-   * // => false
-   *
-   * _.isObjectLike(null);
-   * // => false
-   */
-
-  function isObjectLike(value) {
-    return !!value && typeof value == 'object';
-  }
-  /**
-   * Checks if `value` is a plain object, that is, an object created by the
-   * `Object` constructor or one with a `[[Prototype]]` of `null`.
-   *
-   * @static
-   * @memberOf _
-   * @since 0.8.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-   * @example
-   *
-   * function Foo() {
-   *   this.a = 1;
-   * }
-   *
-   * _.isPlainObject(new Foo);
-   * // => false
-   *
-   * _.isPlainObject([1, 2, 3]);
-   * // => false
-   *
-   * _.isPlainObject({ 'x': 0, 'y': 0 });
-   * // => true
-   *
-   * _.isPlainObject(Object.create(null));
-   * // => true
-   */
-
-
-  function isPlainObject(value) {
-    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
-      return false;
-    }
-
-    var proto = getPrototype(value);
-
-    if (proto === null) {
-      return true;
-    }
-
-    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-  }
-
-  var lodash_isplainobject = isPlainObject;
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2578,14 +2451,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2608,14 +2481,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2641,9 +2514,7 @@
       return x != null;
     }
 
-    if (input === undefined) {
-      throw new Error(`string-extract-class-names: [THROW_ID_01] input must not be undefined!`);
-    } else if (typeof input !== "string") {
+    if (typeof input !== "string") {
       throw new TypeError(`string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(input, null, 4)}`);
     }
 
@@ -2657,14 +2528,14 @@
     let stateCurrentlyIs;
 
     function isLatinLetter(char) {
-      return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+      return typeof char === "string" && char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
     }
 
     let selectorStartsAt = null;
     const result = [];
 
     for (let i = 0, len = input.length; i < len; i++) {
-      if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
+      if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || !input[i].trim())) {
         if (i > selectorStartsAt + 1) {
           if (returnRangesInstead) {
             result.push([selectorStartsAt, i]);
@@ -2958,7 +2829,7 @@
    */
 
 
-  function isHostObject$1(value) {
+  function isHostObject(value) {
     // Many host objects are `Object` objects that can coerce to strings
     // despite having improperly defined `toString` methods.
     var result = false;
@@ -2976,7 +2847,7 @@
 
   var arrayProto = Array.prototype,
       funcProto$1 = Function.prototype,
-      objectProto$1 = Object.prototype;
+      objectProto = Object.prototype;
   /** Used to detect overreaching core-js shims. */
 
   var coreJsData = root['__core-js_shared__'];
@@ -2992,17 +2863,17 @@
   var funcToString$1 = funcProto$1.toString;
   /** Used to check objects for own properties. */
 
-  var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+  var hasOwnProperty = objectProto.hasOwnProperty;
   /**
    * Used to resolve the
    * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
    * of values.
    */
 
-  var objectToString$1 = objectProto$1.toString;
+  var objectToString = objectProto.toString;
   /** Used to detect if a method is native. */
 
-  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
   /** Built-in value references. */
 
   var splice = arrayProto.splice;
@@ -3078,7 +2949,7 @@
       return result === HASH_UNDEFINED ? undefined : result;
     }
 
-    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+    return hasOwnProperty.call(data, key) ? data[key] : undefined;
   }
   /**
    * Checks if a hash value for `key` exists.
@@ -3093,7 +2964,7 @@
 
   function hashHas(key) {
     var data = this.__data__;
-    return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+    return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
   }
   /**
    * Sets the hash `key` to `value`.
@@ -3488,7 +3359,7 @@
       return false;
     }
 
-    var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+    var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
     return pattern.test(toSource(value));
   }
   /**
@@ -3728,7 +3599,7 @@
 
 
   function isArrayLikeObject(value) {
-    return isObjectLike$1(value) && isArrayLike(value);
+    return isObjectLike(value) && isArrayLike(value);
   }
   /**
    * Checks if `value` is classified as a `Function` object.
@@ -3752,7 +3623,7 @@
   function isFunction(value) {
     // The use of `Object#toString` avoids issues with the `typeof` operator
     // in Safari 8-9 which returns 'object' for typed array and other constructors.
-    var tag = isObject(value) ? objectToString$1.call(value) : '';
+    var tag = isObject(value) ? objectToString.call(value) : '';
     return tag == funcTag || tag == genTag;
   }
   /**
@@ -3843,7 +3714,7 @@
    */
 
 
-  function isObjectLike$1(value) {
+  function isObjectLike(value) {
     return !!value && typeof value == 'object';
   }
 
@@ -3857,8 +3728,6 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
    */
-  const isArr = Array.isArray;
-
   function expander(originalOpts) {
     const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
@@ -3867,14 +3736,14 @@
         return false;
       }
 
-      return char.trim().length === 0;
+      return !char.trim();
     }
 
     function isStr(something) {
       return typeof something === "string";
     }
 
-    if (!lodash_isplainobject(originalOpts)) {
+    if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
       let supplementalString;
 
       if (originalOpts === undefined) {
@@ -3886,8 +3755,8 @@
       }
 
       throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
-    } else if (lodash_isplainobject(originalOpts) && Object.keys(originalOpts).length === 0) {
-      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys and computer doesn't know what to expand.`);
+    } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
     }
 
     if (typeof originalOpts.from !== "number") {
@@ -3929,7 +3798,7 @@
     };
     const opts = Object.assign({}, defaults, originalOpts);
 
-    if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
       let culpritsIndex;
       let culpritsValue;
 
@@ -3955,7 +3824,7 @@
     if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
       for (let i = from; i--;) {
         if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-          if (str[i].trim().length) {
+          if (str[i].trim()) {
             if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
               from = i + 1;
             } else {
@@ -3978,7 +3847,7 @@
 
     if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
       for (let i = to, len = str.length; i < len; i++) {
-        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim().length || str[i] === undefined)) {
+        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
           if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
             to = i;
           } else {
@@ -3990,7 +3859,7 @@
       }
     }
 
-    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly.length && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly.length && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
+    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
       if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
         from--;
       }
@@ -4000,7 +3869,7 @@
       }
     }
 
-    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
+    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
       return [from, to, " "];
     }
 
@@ -4015,7 +3884,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
    */
-  const isArr$1 = Array.isArray;
+  const isArr = Array.isArray;
 
   function tellcp(str, idNum) {
     return str.codePointAt(idNum);
@@ -4110,7 +3979,7 @@
     };
     const res = [];
 
-    if (!isArr$1(arr) || !arr.length) {
+    if (!isArr(arr) || !arr.length) {
       return arr;
     }
 
@@ -4810,7 +4679,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -4874,7 +4743,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -4893,7 +4762,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -5266,7 +5135,7 @@
    */
 
 
-  function isHostObject$2(value) {
+  function isHostObject$1(value) {
     // Many host objects are `Object` objects that can coerce to strings
     // despite having improperly defined `toString` methods.
     var result = false;
@@ -5301,7 +5170,7 @@
 
   var arrayProto$2 = Array.prototype,
       funcProto$2 = Function.prototype,
-      objectProto$2 = Object.prototype;
+      objectProto$1 = Object.prototype;
   /** Used to detect overreaching core-js shims. */
 
   var coreJsData$1 = root$1['__core-js_shared__'];
@@ -5317,17 +5186,17 @@
   var funcToString$2 = funcProto$2.toString;
   /** Used to check objects for own properties. */
 
-  var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
+  var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
   /**
    * Used to resolve the
    * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
    * of values.
    */
 
-  var objectToString$2 = objectProto$2.toString;
+  var objectToString$1 = objectProto$1.toString;
   /** Used to detect if a method is native. */
 
-  var reIsNative$1 = RegExp('^' + funcToString$2.call(hasOwnProperty$2).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  var reIsNative$1 = RegExp('^' + funcToString$2.call(hasOwnProperty$1).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
   /** Built-in value references. */
 
   var splice$2 = arrayProto$2.splice;
@@ -5400,7 +5269,7 @@
       return result === HASH_UNDEFINED$1 ? undefined : result;
     }
 
-    return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
+    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
   }
   /**
    * Checks if a hash value for `key` exists.
@@ -5415,7 +5284,7 @@
 
   function hashHas$1(key) {
     var data = this.__data__;
-    return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$2.call(data, key);
+    return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
   }
   /**
    * Sets the hash `key` to `value`.
@@ -5748,7 +5617,7 @@
       return false;
     }
 
-    var pattern = isFunction$1(value) || isHostObject$2(value) ? reIsNative$1 : reIsHostCtor$1;
+    var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative$1 : reIsHostCtor$1;
     return pattern.test(toSource$1(value));
   }
   /**
@@ -5984,7 +5853,7 @@
   function isFunction$1(value) {
     // The use of `Object#toString` avoids issues with the `typeof` operator
     // in Safari 8-9 which returns 'object' for typed array and other constructors.
-    var tag = isObject$1(value) ? objectToString$2.call(value) : '';
+    var tag = isObject$1(value) ? objectToString$1.call(value) : '';
     return tag == funcTag$1 || tag == genTag$1;
   }
   /**
@@ -6037,7 +5906,7 @@
 
   var lodash_uniq = uniq;
 
-  var isArr$2 = Array.isArray;
+  var isArr$1 = Array.isArray;
   var defaults = {
     whitelist: [],
     backend: [],
@@ -6245,7 +6114,7 @@
     } // throws:
 
 
-    if (!isArr$2(opts.whitelist)) {
+    if (!isArr$1(opts.whitelist)) {
       throw new TypeError("email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.whitelist, null, 4)));
     }
 
@@ -6255,7 +6124,7 @@
       throw new TypeError("email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n".concat(JSON.stringify(opts.whitelist, null, 4)));
     }
 
-    if (!isArr$2(opts.backend)) {
+    if (!isArr$1(opts.backend)) {
       throw new TypeError("email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.backend, null, 4)));
     }
 
@@ -6286,7 +6155,7 @@
     var allHeads = null;
     var allTails = null;
 
-    if (isArr$2(opts.backend) && opts.backend.length) {
+    if (isArr$1(opts.backend) && opts.backend.length) {
       allHeads = opts.backend.map(function (headsAndTailsObj) {
         return headsAndTailsObj.heads;
       });
@@ -6795,7 +6664,7 @@
                 onlyDeletedChunksFollow = true;
               } else if (round === 2 && !selectorChunkCanBeDeleted) {
                 // 1. uglify part
-                if (opts.uglify && (!isArr$2(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
+                if (opts.uglify && (!isArr$1(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
                   currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
                 } // 2. tend trailing comma issue (lastKeptChunksCommaAt and
                 // onlyDeletedChunksFollow):
@@ -6948,7 +6817,7 @@
 
                   if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
                     for (var _y4 = lastKeptChunksCommaAt + 1; _y4 < len; _y4++) {
-                      if (str[_y4].trim().length) {
+                      if (str[_y4].trim()) {
                         deleteUpTo = _y4;
                         break;
                       }
@@ -7040,7 +6909,7 @@
               } else if (characterSuitableForNames(str[i + 6])) {
                 valuesStart = i + 6;
                 quoteless = true;
-              } else if (str[i + 6] && (!str[i + 6].trim().length || "/>".includes(str[i + 6]))) {
+              } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
                 var calculatedRange = expander({
                   str: str,
                   from: i,
@@ -7055,7 +6924,7 @@
               for (var _y6 = i + 5; _y6 < len; _y6++) {
                 totalCounter++;
 
-                if (str[_y6].trim().length) {
+                if (str[_y6].trim()) {
                   // 1. is it the "equals" character?
                   if (str[_y6] === "=") {
                     // 1-1. remove this gap:
@@ -7072,7 +6941,7 @@
                       for (var _z = _y6 + 1; _z < len; _z++) {
                         totalCounter++;
 
-                        if (str[_z].trim().length) {
+                        if (str[_z].trim()) {
                           if (_z > _y6 + 1 && round === 1) {
                             finalIndexesToDelete.push(_y6 + 1, _z);
                           }
@@ -7138,7 +7007,7 @@
               } else if (characterSuitableForNames(str[i + 3])) {
                 _valuesStart = i + 3;
                 _quoteless = true;
-              } else if (str[i + 3] && (!str[i + 3].trim().length || "/>".includes(str[i + 3]))) {
+              } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
                 var _calculatedRange2 = expander({
                   str: str,
                   from: i,
@@ -7154,7 +7023,7 @@
               for (var _y7 = i + 2; _y7 < len; _y7++) {
                 totalCounter++;
 
-                if (str[_y7].trim().length) {
+                if (str[_y7].trim()) {
                   // 1. is it the "equals" character?
                   if (str[_y7] === "=") {
                     // 1-1. remove this gap:
@@ -7171,7 +7040,7 @@
                       for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
                         totalCounter++;
 
-                        if (str[_z2].trim().length) {
+                        if (str[_z2].trim()) {
                           if (_z2 > _y7 + 1 && round === 1) {
                             finalIndexesToDelete.push(_y7 + 1, _z2);
                           }
@@ -7331,7 +7200,7 @@
 
                 var whatToInsert = "";
 
-                if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && matchLeft(str, expandedRange[0], allTails) || allTails && matchRightIncl(str, expandedRange[1], allHeads))) {
+                if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim() && str[expandedRange[1]] && str[expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && matchLeft(str, expandedRange[0], allTails) || allTails && matchRightIncl(str, expandedRange[1], allHeads))) {
                   whatToInsert = " ";
                 }
 
@@ -7340,7 +7209,7 @@
                 // 1. turn off the bodyClassOrIdCanBeDeleted
                 bodyClassOrIdCanBeDeleted = false; // 2. uglify?
 
-                if (opts.uglify && !(isArr$2(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+                if (opts.uglify && !(isArr$1(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
                   finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
                 }
               }
@@ -7376,7 +7245,7 @@
               }); // precaution against too tight crop when backend markers are involved
 
 
-              if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim().length && str[_expandedRange[1]] && str[_expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && matchLeft(str, _expandedRange[0], allTails) || allTails && matchRightIncl(str, _expandedRange[1], allHeads))) {
+              if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim() && str[_expandedRange[1]] && str[_expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && matchLeft(str, _expandedRange[0], allTails) || allTails && matchRightIncl(str, _expandedRange[1], allHeads))) {
                 _expandedRange[0] += 1;
               }
 
@@ -7385,7 +7254,7 @@
               // 1. turn off the bodyClassOrIdCanBeDeleted
               bodyClassOrIdCanBeDeleted = false; // 2. uglify?
 
-              if (opts.uglify && !(isArr$2(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
+              if (opts.uglify && !(isArr$1(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
                 finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
               }
             }
@@ -7426,7 +7295,7 @@
 
               var _whatToInsert = "";
 
-              if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim().length && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim().length && !"/>".includes(str[_expandedRange2[1]]) // (allHeads || allTails) &&
+              if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim() && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim() && !"/>".includes(str[_expandedRange2[1]]) // (allHeads || allTails) &&
               // ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
               //   (allTails && matchRightIncl(str, expandedRange[1], allTails)))
               ) {
@@ -7478,7 +7347,7 @@
 
               var _whatToInsert2 = "";
 
-              if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim().length && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim().length && !"/>".includes(str[_expandedRange3[1]]) // (allHeads || allTails) &&
+              if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim() && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim() && !"/>".includes(str[_expandedRange3[1]]) // (allHeads || allTails) &&
               // ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
               //   (allTails && matchRightIncl(str, expandedRange[1], allTails)))
               ) {
@@ -7566,8 +7435,8 @@
           // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)
           // ==================================
           if (commentStartedAt !== null && commentStartedAt < i && str[i] === ">" && !usedOnce) {
-            if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr$2(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
-              return val.trim().length && str.slice(commentStartedAt, i).toLowerCase().includes(val);
+            if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+              return val.trim() && str.slice(commentStartedAt, i).toLowerCase().includes(val);
             })) {
               canDelete = false;
             }
@@ -7622,13 +7491,13 @@
 
 
           if (opts.removeHTMLComments && commentStartedAt === null && str[i] === "<" && str[i + 1] === "!") {
-            if ((!allHeads || isArr$2(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || isArr$2(allTails) && allTails.length && !allTails.includes("<!"))) {
+            if ((!allHeads || isArr$1(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || isArr$1(allTails) && allTails.length && !allTails.includes("<!"))) {
               // 3.1. if there's no DOCTYPE on the right, mark the comment's start,
               // except in cases when it's been whitelisted (Outlook conditionals for example):
               if (!matchRight(str, i + 1, "doctype", {
                 i: true,
                 trimBeforeMatching: true
-              }) && !(str[i + 2] === "-" && str[i + 3] === "-" && isArr$2(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
+              }) && !(str[i + 2] === "-" && str[i + 3] === "-" && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
                 trimBeforeMatching: true
               }))) {
                 commentStartedAt = i;
@@ -7694,7 +7563,7 @@
 
 
         if (!doNothing) {
-          if (!str[i].trim().length) {
+          if (!str[i].trim()) {
             if (whitespaceStartedAt === null) {
               whitespaceStartedAt = i; // console.log(
               //   `2974 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}`
@@ -7711,7 +7580,7 @@
         // in round 1.
 
 
-        if (!doNothing && round === 2 && isArr$2(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
+        if (!doNothing && round === 2 && isArr$1(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
           // offset index, essentially "jumping over" what was submitted for deletion in round 1
           var _temp = round1RangesClone.shift();
 
@@ -7748,7 +7617,7 @@
 
           var _temp2 = void 0;
 
-          if (opts.removeHTMLComments && isArr$2(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          if (opts.removeHTMLComments && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
             return val.includes("if");
           }) || opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
             return val.includes("mso");
@@ -7911,7 +7780,7 @@
         }))).sort();
         allClassesAndIdsWithinHeadFinal = lodash_pullall(lodash_pullall(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
 
-        if (isArr$2(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
+        if (isArr$1(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
           allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
             if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
               allClassesAndIdsWithinHeadFinal.push(classOrId);
@@ -8112,8 +7981,8 @@
     }
 
     if (str.length) {
-      if ((!str[0].trim().length || !str[str.length - 1].trim().length) && str.length !== str.trim().length) {
-        nonIndentationsWhitespaceLength += str.length - str.trim().length;
+      if ((!str[0].trim() || !str[str.length - 1].trim()) && str.length !== str.trim()) {
+        nonIndentationsWhitespaceLength += str.length - str.trim();
       }
 
       str = "".concat(str.trim()).concat(prevailingEOL);

@@ -183,7 +183,7 @@ function checkForWhitespace(str, idxOffset) {
   let charStart = 0;
   let charEnd = str.length;
   let trimmedVal;
-  let gatheredRanges = [];
+  const gatheredRanges = [];
   const errorArr = [];
   if (!str.length || !str[0].trim().length) {
     charStart = right(str);
@@ -210,9 +210,9 @@ function checkForWhitespace(str, idxOffset) {
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
       message: `Remove whitespace.`,
-      fix: { ranges: gatheredRanges },
+      fix: { ranges: clone(gatheredRanges) },
     });
-    gatheredRanges = [];
+    gatheredRanges.length = 0;
     trimmedVal = str.trim();
   }
   return { charStart, charEnd, errorArr, trimmedVal };

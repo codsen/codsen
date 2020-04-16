@@ -14,7 +14,7 @@ function push(arr) {
   var leftSide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var charToPush = arguments.length > 2 ? arguments[2] : undefined;
   if (
-  !charToPush.trim().length && (
+  !charToPush.trim() && (
   !arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (
   !arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)
   ) {
@@ -69,7 +69,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     limit = limitLinebreaksCount;
     if (str[0].trim() === "") {
       for (var i = 0, len = str.length; i < len; i++) {
-        if (str[i].trim().length !== 0) {
+        if (str[i].trim()) {
           break;
         } else {
           if (str[i] !== "\n" || limit) {
@@ -85,7 +85,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     limit = limitLinebreaksCount;
     if (str.slice(-1).trim() === "") {
       for (var _i = str.length; _i--;) {
-        if (str[_i].trim().length !== 0) {
+        if (str[_i].trim()) {
           break;
         } else {
           if (str[_i] !== "\n" || limit) {

@@ -2137,17 +2137,17 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       // best case scenario - next character is non-whitespace:
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       // second best case scenario - second next character is non-whitespace:
       return idx + 2;
     } // worst case scenario - traverse forwards
 
 
     for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2195,17 +2195,17 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       // best case scenario - next character is non-whitespace:
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       // second best case scenario - second next character is non-whitespace:
       return idx - 2;
     } // worst case scenario - traverse backwards
 
 
     for (var i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2515,7 +2515,7 @@
       //
       //
       // quick ending - no whitespace on the right at all:
-      if (str[lastIdx] && str[lastIdx].trim().length) {
+      if (str[lastIdx] && str[lastIdx].trim()) {
         // if the character follows tightly right after,
         return lastIdx;
       } // Default, 0 is leave single space if possible or chomp up to nearest line
@@ -2529,7 +2529,7 @@
           // if there's one whitespace character, Bob's your uncle here's
           // the final result
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim().length || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           // if there are line break characters between current "lastIdx" we're on
           // and the first non-whitespace character on the right
           for (var y = lastIdx, len = str.length; y < len; y++) {
@@ -2547,10 +2547,10 @@
         // mode 2 hungrily chomps all whitespace except newlines
         var remainderString = str.slice(lastIdx);
 
-        if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+        if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
           // if there are line breaks, we need to loop to chomp up to them but not further
           for (var _y = lastIdx, _len3 = str.length; _y < _len3; _y++) {
-            if (str[_y].trim().length || "\n\r".includes(str[_y])) {
+            if (str[_y].trim() || "\n\r".includes(str[_y])) {
               return _y;
             }
           }
@@ -2579,7 +2579,7 @@
     // quick ending - no whitespace on the left at all:
 
 
-    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
+    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
       // if the non-whitespace character is on the left
       return lastIdx;
     } // Default, 0 is leave single space if possible or chomp up to nearest line
@@ -2593,12 +2593,12 @@
         // if there's one whitespace character between here and next real character, Bob's your uncle here's
         // the final result
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim().length || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         // if there are line break characters between current "lastIdx" we're on
         // and the first non-whitespace character on the right
         for (var _y2 = lastIdx; _y2--;) {
-          if ("\n\r".includes(str[_y2]) || str[_y2].trim().length) {
-            return _y2 + 1 + (str[_y2].trim().length ? 1 : 0);
+          if ("\n\r".includes(str[_y2]) || str[_y2].trim()) {
+            return _y2 + 1 + (str[_y2].trim() ? 1 : 0);
           }
         }
       } // ELSE
@@ -2612,10 +2612,10 @@
       // mode 2 hungrily chomps all whitespace except newlines
       var _remainderString = str.slice(0, lastIdx);
 
-      if (_remainderString.trim().length || _remainderString.includes("\n") || _remainderString.includes("\r")) {
+      if (_remainderString.trim() || _remainderString.includes("\n") || _remainderString.includes("\r")) {
         // if there are line breaks, we need to loop to chomp up to them but not further
         for (var _y3 = lastIdx; _y3--;) {
-          if (str[_y3].trim().length || "\n\r".includes(str[_y3])) {
+          if (str[_y3].trim() || "\n\r".includes(str[_y3])) {
             return _y3 + 1;
           }
         }

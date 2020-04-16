@@ -64,7 +64,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
   const patience = opts.maxDistance;
   let wasThisLetterMatched;
   for (let i = 0; i < len; i++) {
-    if (opts.ignoreWhitespace && !str[i].trim().length) {
+    if (opts.ignoreWhitespace && !str[i].trim()) {
       continue;
     }
     for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {

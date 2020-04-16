@@ -31,7 +31,7 @@ function patcher(html, generalOpts) {
   const opts = Object.assign({}, defaults, generalOpts);
   if (
     opts.cssStylesContent &&
-    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)
+    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())
   ) {
     opts.cssStylesContent = undefined;
   }
@@ -44,7 +44,7 @@ function patcher(html, generalOpts) {
       node["parent"].type === "tag" &&
       node["parent"].name === "table" &&
       isStr(node.data) &&
-      node.data.trim().length
+      node.data.trim()
     ) {
       let colspan = 1;
       let centered = !!opts.alwaysCenter;
@@ -107,7 +107,7 @@ function patcher(html, generalOpts) {
         }
         replacementTd["attribs"].align = "center";
       }
-      if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+      if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
         replacementTd["attribs"].style = opts.cssStylesContent;
       }
       const linebreak = {
@@ -130,7 +130,7 @@ function patcher(html, generalOpts) {
             (childNode) =>
               childNode.type === "text" &&
               isStr(childNode.data) &&
-              childNode.data.trim().length
+              childNode.data.trim()
           )
       )
     ) {
@@ -146,7 +146,7 @@ function patcher(html, generalOpts) {
         if (
           oneOfNodes.type === "text" &&
           isStr(oneOfNodes.data) &&
-          !oneOfNodes.data.trim().length
+          !oneOfNodes.data.trim()
         ) {
           newChildren.push(oneOfNodes);
         }
@@ -217,7 +217,7 @@ function patcher(html, generalOpts) {
             } else if (
               lastWasTd &&
               (oneOfSubNodes.type !== "text" ||
-                (isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim().length))
+                (isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim()))
             ) {
               lastWasTd = false;
             }
@@ -250,7 +250,7 @@ function patcher(html, generalOpts) {
               oneOfSubNodes.type === "text" &&
               isStr(oneOfSubNodes.data)
             ) {
-              if (!oneOfSubNodes.data.trim().length) {
+              if (!oneOfSubNodes.data.trim()) {
                 // if it's whitespace, stage it
                 staging.push(oneOfSubNodes);
               } else {
@@ -290,7 +290,7 @@ function patcher(html, generalOpts) {
                 }
                 if (
                   isStr(opts.cssStylesContent) &&
-                  opts.cssStylesContent.trim().length
+                  opts.cssStylesContent.trim()
                 ) {
                   replacementTd["attribs"].style = opts.cssStylesContent;
                 }

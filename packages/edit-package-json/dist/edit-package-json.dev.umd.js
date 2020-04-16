@@ -2076,14 +2076,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2106,14 +2106,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -2282,7 +2282,7 @@
     }
 
     if (direction === "right") {
-      if (str[lastIdx] && str[lastIdx].trim().length) {
+      if (str[lastIdx] && str[lastIdx].trim()) {
         return lastIdx;
       }
 
@@ -2291,7 +2291,7 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim().length || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -2305,9 +2305,9 @@
       } else if (opts.mode === 2) {
         const remainderString = str.slice(lastIdx);
 
-        if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+        if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (str[y].trim().length || `\n\r`.includes(str[y])) {
+            if (str[y].trim() || `\n\r`.includes(str[y])) {
               return y;
             }
           }
@@ -2319,7 +2319,7 @@
       return whatsOnTheRight ? whatsOnTheRight : str.length;
     }
 
-    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
+    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
       return lastIdx;
     }
 
@@ -2328,10 +2328,10 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim().length || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
-          if (`\n\r`.includes(str[y]) || str[y].trim().length) {
-            return y + 1 + (str[y].trim().length ? 1 : 0);
+          if (`\n\r`.includes(str[y]) || str[y].trim()) {
+            return y + 1 + (str[y].trim() ? 1 : 0);
           }
         }
       }
@@ -2342,9 +2342,9 @@
     } else if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
-      if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+      if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
         for (let y = lastIdx; y--;) {
-          if (str[y].trim().length || `\n\r`.includes(str[y])) {
+          if (str[y].trim() || `\n\r`.includes(str[y])) {
             return y + 1;
           }
         }
@@ -2755,8 +2755,8 @@
     var i;
 
     function log(something) {
-      // if (i > 80 && str[i] && str[i].trim().length) {
-      // if (str[i] && str[i].trim().length) {
+      // if (i > 80 && str[i] && str[i].trim()) {
+      // if (str[i] && str[i].trim()) {
       if (str[i] !== " ") ;
     }
 
@@ -2823,7 +2823,7 @@
       //
       // Logging:
       // ███████████████████████████████████████
-      log("\n\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n")); // "within X" stage toggles
+      log("\n\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n")); // "within X" stage toggles
       // openings are easy:
 
       if (!isNum$1(withinQuotesSince) && str[i - 1] === "[") {
@@ -2901,7 +2901,7 @@
       } // for arrays, this is the beginning of what to replace
 
 
-      if (currentlyWithinArray && stringifyPath(path) === currentPath.join(".") && !replaceThisValue && str[i].trim().length // (stringifyPath(path) === currentPath.join(".") ||
+      if (currentlyWithinArray && stringifyPath(path) === currentPath.join(".") && !replaceThisValue && str[i].trim() // (stringifyPath(path) === currentPath.join(".") ||
       //   currentPath.join(".").endsWith(`.${stringifyPath(path)}`))
       ) {
           replaceThisValue = true;
@@ -2953,7 +2953,7 @@
       // by the time we'd reach its end, we'd have new keys and values recorded.
 
 
-      if (!replaceThisValue && !valueStartedAt && str[i].trim().length && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName)) {
+      if (!replaceThisValue && !valueStartedAt && str[i].trim() && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName)) {
         log();
         valueStartedAt = i;
         log(); // calculate the path on arrays
@@ -2970,7 +2970,7 @@
       } // catch the end of a value
 
 
-      if (!replaceThisValue && !isNum$1(withinQuotesSince) && (currentlyWithinArray || !currentlyWithinArray && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
+      if (!replaceThisValue && !isNum$1(withinQuotesSince) && (currentlyWithinArray || !currentlyWithinArray && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim() || ["}", ","].includes(str[i]))) {
         log();
         keyValue = str.slice(valueStartedAt, str[valueStartedAt] === "\"" ? i + 1 : i);
         log();
@@ -3011,7 +3011,7 @@
         log("535 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
       }
 
-      if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[left(str, i)]) && ["}", "]"].includes(str[i]) || str[i] === "}" && str[left(str, i)] === "{") && str[i].trim().length) {
+      if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[left(str, i)]) && ["}", "]"].includes(str[i]) || str[i] === "}" && str[left(str, i)] === "{") && str[i].trim()) {
         log();
 
         if (str[i] === "," && !["}", "]"].includes(str[right(str, i)])) {
@@ -3068,7 +3068,7 @@
       } // catch the start of the value when replaceThisValue is on
 
 
-      if (str[i].trim().length && replaceThisValue && !valueStartedAt && i > keyEndedAt && ![":"].includes(str[i])) {
+      if (str[i].trim() && replaceThisValue && !valueStartedAt && i > keyEndedAt && ![":"].includes(str[i])) {
         valueStartedAt = i;
         log();
       } // enable withinQuotesSince
@@ -3130,7 +3130,7 @@
       if (replaceThisValue && isArr(skipUntilTheFollowingIsMet) && !skipUntilTheFollowingIsMet.length && valueStartedAt && i > valueStartedAt) {
         log();
 
-        if (!withinQuotesSince && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || !["[", "{", "\""].includes(str[valueStartedAt]) && str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1))) // cover numeric, bool, null etc, without quotes
+        if (!withinQuotesSince && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || !["[", "{", "\""].includes(str[valueStartedAt]) && str[valueStartedAt].trim() && (!str[i].trim() || badChars.includes(str[i]) && isNotEscape(str, i - 1))) // cover numeric, bool, null etc, without quotes
         ) {
             log("780 INSIDE CATCH-END CLAUSES currently ".concat("\x1B[".concat(33, "m", "str[valueStartedAt=".concat(valueStartedAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[valueStartedAt], null, 4)));
 
@@ -3139,11 +3139,11 @@
               log();
               var extraLineBreak = "";
 
-              if (str.slice(valueStartedAt, i + (str[i].trim().length ? 1 : 0)).includes("\n") && str[i + (str[i].trim().length ? 1 : 0)] !== "\n") {
+              if (str.slice(valueStartedAt, i + (str[i].trim() ? 1 : 0)).includes("\n") && str[i + (str[i].trim() ? 1 : 0)] !== "\n") {
                 extraLineBreak = "\n";
               }
 
-              var endingPartsBeginning = i + (str[i].trim().length ? 1 : 0);
+              var endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
 
               if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt]) && str[right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== "\"") {
                 endingPartsBeginning = endingPartsBeginning - 1;
@@ -3160,7 +3160,7 @@
               log("851 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
               var startingPoint = left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1) + 1;
               log();
-              var endingPoint = i + (str[i].trim().length ? 1 : 0);
+              var endingPoint = i + (str[i].trim() ? 1 : 0);
 
               if (str[startingPoint - 1] === "," && ["}", "]"].includes(str[right(str, endingPoint - 1)])) {
                 startingPoint--;

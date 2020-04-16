@@ -220,7 +220,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0 && str.slice(to).trim().length) {
+    } else if (from === 0 && str.slice(to).trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -239,7 +239,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `'`]);
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -470,7 +470,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0 && str[to] && str.slice(to).trim().length) {
+    } else if (from === 0 && str[to] && str.slice(to).trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -489,7 +489,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `"`]);
       }
-    } else if (!str[to] && str.slice(0, from).trim().length) {
+    } else if (!str[to] && str.slice(0, from).trim()) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==

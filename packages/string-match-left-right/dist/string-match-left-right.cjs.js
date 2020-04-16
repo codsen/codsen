@@ -190,7 +190,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   if (!whatToMatch || !Array.isArray(whatToMatch) ||
   Array.isArray(whatToMatch) && !whatToMatch.length ||
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex;
@@ -201,7 +201,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         if (mode[5] === "L") {
           for (var y = startingPosition; y--;) {
             var currentChar = str[y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -209,7 +209,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         } else if (mode.startsWith("matchRight")) {
           for (var _y = startingPosition; _y < str.length; _y++) {
             var _currentChar = str[_y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
               firstCharOutsideIndex = _y;
               break;
             }

@@ -1989,7 +1989,7 @@
 
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
-      return !input.trim().length;
+      return !input.trim();
     } else if (!["object", "string"].includes(typeof input) || !input) {
       return false;
     }
@@ -1998,7 +1998,7 @@
     input = astMonkeyTraverse(input, (key, val, innerObj, stop) => {
       const current = val !== undefined ? val : key;
 
-      if (typeof current === "string" && current.trim().length) {
+      if (typeof current === "string" && current.trim()) {
         found = false;
         stop.now = true;
       }

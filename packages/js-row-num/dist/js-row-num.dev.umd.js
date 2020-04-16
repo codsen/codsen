@@ -40,7 +40,7 @@
   const rawNbsp = "\u00A0";
 
   function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim().length && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
           while (arr.length && arr[arr.length - 1] === " ") {
@@ -104,7 +104,7 @@
 
       if (str[0].trim() === "") {
         for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -123,7 +123,7 @@
 
       if (str.slice(-1).trim() === "") {
         for (let i = str.length; i--;) {
-          if (str[i].trim().length !== 0) {
+          if (str[i].trim()) {
             break;
           } else {
             if (str[i] !== "\n" || limit) {
@@ -631,7 +631,7 @@
   var BACKSLASH = "\\";
 
   function fixRowNums(str, originalOpts) {
-    if (typeof str !== "string" || str.length === 0) {
+    if (typeof str !== "string" || !str.length) {
       return str;
     }
 
@@ -644,7 +644,7 @@
     }
 
     function isObj(something) {
-      return _typeof(something) === "object" && something !== null;
+      return something && _typeof(something) === "object" && !Array.isArray(something);
     }
 
     var defaults = {
@@ -690,7 +690,7 @@
       } // catch opening quotes console.log( -----> ' <------ ')
 
 
-      if (quotes === null && (opts.extractedLogContentsWereGiven || consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i) && str[i].trim().length) {
+      if (quotes === null && (opts.extractedLogContentsWereGiven || consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i) && str[i].trim()) {
         if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
           quotes = {};
           quotes.start = i;
@@ -709,7 +709,7 @@
           } else {
             break;
           }
-        } else if (str[i].trim().length && str[i] !== "/" && !opts.extractedLogContentsWereGiven) {
+        } else if (str[i].trim() && str[i] !== "/" && !opts.extractedLogContentsWereGiven) {
           // wipe
           consoleStartsAt = null;
           bracketOpensAt = null;
@@ -810,7 +810,7 @@
       } // catch the opening bracket of console.log ---->(<----- )
 
 
-      if (!bracketOpensAt && str[i].trim().length && consoleStartsAt && consoleStartsAt <= i) {
+      if (!bracketOpensAt && str[i].trim() && consoleStartsAt && consoleStartsAt <= i) {
         if (str[i] === "(") {
           bracketOpensAt = i;
         } else {

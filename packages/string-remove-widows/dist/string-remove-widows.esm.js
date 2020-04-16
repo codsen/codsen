@@ -349,12 +349,12 @@ function removeWidows(str, originalOpts) {
       !doNothingUntil &&
       i &&
       str[i] &&
-      str[i].trim().length &&
-      (!str[i - 1] || (str[i - 1] && !str[i - 1].trim().length))
+      str[i].trim() &&
+      (!str[i - 1] || (str[i - 1] && !str[i - 1].trim()))
     ) {
       lastWhitespaceEndedAt = i;
     }
-    if (!doNothingUntil && str[i] && str[i].trim().length) {
+    if (!doNothingUntil && str[i] && str[i].trim()) {
       charCount++;
     }
     if (
@@ -370,9 +370,9 @@ function removeWidows(str, originalOpts) {
         str.slice(i).startsWith(encodedMdashCss) ||
         str.slice(i).startsWith(encodedMdashJs)) &&
       str[i + 1] &&
-      (!str[i + 1].trim().length || str[i] === "&")
+      (!str[i + 1].trim() || str[i] === "&")
     ) {
-      if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
+      if (str[i - 1] && !str[i - 1].trim() && str[left(str, i)]) {
         push(left(str, i) + 1, i);
         whatWasDone.removeWidows = true;
       }
@@ -394,7 +394,7 @@ function removeWidows(str, originalOpts) {
     ) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
-      if (str[i + 6] && str[i + 6].trim().length) {
+      if (str[i + 6] && str[i + 6].trim()) {
         bumpWordCountAt = i + 6;
       }
       if (!opts.convertEntities) {
@@ -423,7 +423,7 @@ function removeWidows(str, originalOpts) {
     ) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 5;
-      if (str[i + 5] && str[i + 5].trim().length) {
+      if (str[i + 5] && str[i + 5].trim()) {
         bumpWordCountAt = i + 5;
       }
       if (!opts.convertEntities) {
@@ -454,7 +454,7 @@ function removeWidows(str, originalOpts) {
     ) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
-      if (str[i + 6] && str[i + 6].trim().length) {
+      if (str[i + 6] && str[i + 6].trim()) {
         bumpWordCountAt = i + 6;
       }
       if (!opts.convertEntities) {
@@ -473,7 +473,7 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[i] === rawnbsp) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 1;
-      if (str[i + 2] && str[i + 2].trim().length) {
+      if (str[i + 2] && str[i + 2].trim()) {
         bumpWordCountAt = i + 2;
       }
       if (opts.convertEntities) {
@@ -491,8 +491,8 @@ function removeWidows(str, originalOpts) {
     if (
       !doNothingUntil &&
       str[i] &&
-      str[i].trim().length &&
-      (!str[i - 1] || !str[i - 1].trim().length)
+      str[i].trim() &&
+      (!str[i - 1] || !str[i - 1].trim())
     ) {
       wordCount++;
     }
@@ -556,9 +556,9 @@ function removeWidows(str, originalOpts) {
     if (
       opts.UKPostcodes &&
       str[i] &&
-      !str[i].trim().length &&
+      !str[i].trim() &&
       str[i - 1] &&
-      str[i - 1].trim().length &&
+      str[i - 1].trim() &&
       postcodeRegexFront.test(str.slice(0, i)) &&
       str[right(str, i)] &&
       postcodeRegexEnd.test(str.slice(right(str, i)))
@@ -569,12 +569,12 @@ function removeWidows(str, originalOpts) {
     if (
       !doNothingUntil &&
       str[i] &&
-      !str[i].trim().length &&
+      !str[i].trim() &&
       str[i - 1] &&
-      str[i - 1].trim().length &&
+      str[i - 1].trim() &&
       (lastWhitespaceStartedAt === undefined ||
         (str[lastWhitespaceStartedAt - 1] &&
-          str[lastWhitespaceStartedAt - 1].trim().length)) &&
+          str[lastWhitespaceStartedAt - 1].trim())) &&
       !"/>".includes(str[right(str, i)]) &&
       !str.slice(0, left(str, i) + 1).endsWith("br") &&
       !str.slice(0, left(str, i) + 1).endsWith("hr") &&
@@ -621,7 +621,7 @@ function removeWidows(str, originalOpts) {
               cb: (char, theRemainderOfTheString, index) => {
                 if (index) {
                   i = index - 1;
-                  if (str[i + 1] && str[i + 1].trim().length) {
+                  if (str[i + 1] && str[i + 1].trim()) {
                     wordCount++;
                   }
                 }

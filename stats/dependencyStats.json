@@ -9,7 +9,6 @@
         "arrayiffy-if-string": 10,
         "ast-compare": 3,
         "ast-contains-only-empty-space": 3,
-        "ast-deep-contains": 1,
         "ast-get-values-by-key": 1,
         "ast-is-empty": 2,
         "ast-monkey": 2,
@@ -70,12 +69,12 @@
         "leven": 2,
         "line-column": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 22,
+        "lodash.clonedeep": 20,
         "lodash.deburr": 1,
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 30,
+        "lodash.isplainobject": 25,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
@@ -208,10 +207,10 @@
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 30
+            "lodash.isplainobject": 25
         },
         {
-            "lodash.clonedeep": 22
+            "lodash.clonedeep": 20
         },
         {
             "meow": 13

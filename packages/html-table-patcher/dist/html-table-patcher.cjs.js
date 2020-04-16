@@ -47,12 +47,12 @@ function patcher(html, generalOpts) {
     return html;
   }
   var opts = Object.assign({}, defaults, generalOpts);
-  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)) {
+  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())) {
     opts.cssStylesContent = undefined;
   }
   var dom = parser(html);
   traverse(dom, function (node) {
-    if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim().length) {
+    if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim()) {
       (function () {
         var colspan = 1;
         var centered = !!opts.alwaysCenter;
@@ -98,7 +98,7 @@ function patcher(html, generalOpts) {
           }
           replacementTd["attribs"].align = "center";
         }
-        if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+        if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
           replacementTd["attribs"].style = opts.cssStylesContent;
         }
         var linebreak = {
@@ -111,13 +111,13 @@ function patcher(html, generalOpts) {
       })();
     } else if (node.type === "tag" && node.name === "table" && node.children && node.children.some(function (node) {
       return node.type === "tag" && node.name === "tr" && node.children && node.children.some(function (childNode) {
-        return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim().length;
+        return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim();
       });
     })) {
       var centered = !!opts.alwaysCenter;
       var newChildren = [];
       node.children.forEach(function (oneOfNodes) {
-        if (oneOfNodes.type === "text" && isStr(oneOfNodes.data) && !oneOfNodes.data.trim().length) {
+        if (oneOfNodes.type === "text" && isStr(oneOfNodes.data) && !oneOfNodes.data.trim()) {
           newChildren.push(oneOfNodes);
         }
         if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
@@ -133,7 +133,7 @@ function patcher(html, generalOpts) {
               } else {
                 consecutiveTDs++;
               }
-            } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim().length)) {
+            } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim())) {
               lastWasTd = false;
             }
           });
@@ -146,7 +146,7 @@ function patcher(html, generalOpts) {
               }
               staging.push(oneOfSubNodes);
             } else if (oneOfSubNodes.type === "text" && isStr(oneOfSubNodes.data)) {
-              if (!oneOfSubNodes.data.trim().length) {
+              if (!oneOfSubNodes.data.trim()) {
                 staging.push(oneOfSubNodes);
               } else {
                 lastWasTd = false;
@@ -180,7 +180,7 @@ function patcher(html, generalOpts) {
                   }
                   replacementTd["attribs"].align = "center";
                 }
-                if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+                if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
                   replacementTd["attribs"].style = opts.cssStylesContent;
                 }
                 appendChild(replacementTr, replacementTd);

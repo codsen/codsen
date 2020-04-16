@@ -339,7 +339,7 @@ function cparser(str, originalOpts) {
       ) {
         if (
           previousTagsToken.type === "text" &&
-          previousTagsToken.value.trim().length &&
+          previousTagsToken.value.trim() &&
           "<!-".includes(
             previousTagsToken.value[
               left(previousTagsToken.value, previousTagsToken.value.length)
@@ -417,7 +417,7 @@ function cparser(str, originalOpts) {
         } else if (
           isObj(parentsLastChildTokenValue) &&
           parentsLastChildTokenValue.type === "text" &&
-          parentsLastChildTokenValue.value.trim().length &&
+          parentsLastChildTokenValue.value.trim() &&
           "<!-".includes(
             parentsLastChildTokenValue.value[
               left(

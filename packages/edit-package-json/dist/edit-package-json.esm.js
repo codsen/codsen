@@ -93,9 +93,7 @@ function main({ str, path, valToInsert, mode }) {
   for (i = 0; i < len; i++) {
     log(
       `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-        str[i] && str[i].trim().length
-          ? str[i]
-          : JSON.stringify(str[i], null, 0)
+        str[i] && str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
       }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
     );
     if (!isNum(withinQuotesSince) && str[i - 1] === "[") {
@@ -207,7 +205,7 @@ function main({ str, path, valToInsert, mode }) {
       currentlyWithinArray &&
       stringifyPath(path) === currentPath.join(".") &&
       !replaceThisValue &&
-      str[i].trim().length
+      str[i].trim()
     ) {
       replaceThisValue = true;
       log();
@@ -250,7 +248,7 @@ function main({ str, path, valToInsert, mode }) {
     if (
       !replaceThisValue &&
       !valueStartedAt &&
-      str[i].trim().length &&
+      str[i].trim() &&
       !badChars.includes(str[i]) &&
       (currentlyWithinArray || (!currentlyWithinArray && keyName))
     ) {
@@ -276,7 +274,7 @@ function main({ str, path, valToInsert, mode }) {
       valueStartedAt < i &&
       !valueEndedAt &&
       ((str[valueStartedAt] === `"` && str[i] === `"` && str[i - 1] !== `\\`) ||
-        (str[valueStartedAt] !== `"` && !str[i].trim().length) ||
+        (str[valueStartedAt] !== `"` && !str[i].trim()) ||
         ["}", ","].includes(str[i]))
     ) {
       log();
@@ -344,7 +342,7 @@ function main({ str, path, valToInsert, mode }) {
         (["}", "]"].includes(str[left(str, i)]) &&
           ["}", "]"].includes(str[i])) ||
         (str[i] === "}" && str[left(str, i)] === "{")) &&
-      str[i].trim().length
+      str[i].trim()
     ) {
       log();
       if (str[i] === "," && !["}", "]"].includes(str[right(str, i)])) {
@@ -388,7 +386,7 @@ function main({ str, path, valToInsert, mode }) {
       reset();
     }
     if (
-      str[i].trim().length &&
+      str[i].trim() &&
       replaceThisValue &&
       !valueStartedAt &&
       i > keyEndedAt &&
@@ -479,8 +477,8 @@ function main({ str, path, valToInsert, mode }) {
           (str[valueStartedAt] === "{" && str[i] === "}") ||
           (str[valueStartedAt] === `"` && str[i] === `"`) ||
           (!["[", "{", `"`].includes(str[valueStartedAt]) &&
-            str[valueStartedAt].trim().length &&
-            (!str[i].trim().length ||
+            str[valueStartedAt].trim() &&
+            (!str[i].trim() ||
               (badChars.includes(str[i]) && isNotEscape(str, i - 1)))))
       ) {
         log(
@@ -495,13 +493,13 @@ function main({ str, path, valToInsert, mode }) {
           let extraLineBreak = "";
           if (
             str
-              .slice(valueStartedAt, i + (str[i].trim().length ? 1 : 0))
+              .slice(valueStartedAt, i + (str[i].trim() ? 1 : 0))
               .includes("\n") &&
-            str[i + (str[i].trim().length ? 1 : 0)] !== "\n"
+            str[i + (str[i].trim() ? 1 : 0)] !== "\n"
           ) {
             extraLineBreak = "\n";
           }
-          let endingPartsBeginning = i + (str[i].trim().length ? 1 : 0);
+          let endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
           if (
             (currentlyWithinArray &&
               ![`"`, `[`, `{`].includes(str[valueStartedAt]) &&
@@ -534,7 +532,7 @@ function main({ str, path, valToInsert, mode }) {
               (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1
             ) + 1;
           log();
-          let endingPoint = i + (str[i].trim().length ? 1 : 0);
+          let endingPoint = i + (str[i].trim() ? 1 : 0);
           if (
             str[startingPoint - 1] === "," &&
             ["}", "]"].includes(str[right(str, endingPoint - 1)])

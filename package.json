@@ -30,7 +30,7 @@
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
-    "test": "FORCE_COLOR=1 lerna run test && npm run readme:generate && npm run info",
+    "test": "FORCE_COLOR=1 lerna run ciunittest && npm run readme:generate && npm run info",
     "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
     "wipe": "rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
@@ -52,14 +52,14 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-no-unsanitized": "^3.1.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.9",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-row-num": "^1.1.10",
     "husky": "^4.2.5",
-    "lect": "^0.12.4",
+    "lect": "^0.12.5",
     "lerna": "^3.20.2",
-    "lerna-clean-changelogs-cli": "^1.2.52",
+    "lerna-clean-changelogs-cli": "^1.2.53",
     "npm-watch": "^0.6.0",
     "prettier": "^2.0.4",
-    "tap-parse-string-to-object": "^1.2.7"
+    "tap-parse-string-to-object": "^1.2.8"
   }
 }

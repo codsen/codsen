@@ -43,7 +43,7 @@
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 849,
+        "size": 835,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -146,7 +146,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 18599,
+        "size": 18585,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 46644,
+        "size": 46497,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -168,7 +168,7 @@
     },
     {
         "name": "csv-sort",
-        "size": 14144,
+        "size": 14143,
         "imports": [
             "csv-split-easy"
         ]
@@ -182,17 +182,16 @@
     },
     {
         "name": "csv-split-easy",
-        "size": 4952,
+        "size": 4908,
         "imports": [
             "string-remove-thousand-separators"
         ]
     },
     {
         "name": "detergent",
-        "size": 54472,
+        "size": 54417,
         "imports": [
             "all-named-html-entities",
-            "ast-deep-contains",
             "html-entities-not-email-friendly",
             "ranges-apply",
             "ranges-invert",
@@ -215,7 +214,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 18225,
+        "size": 18121,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -230,14 +229,14 @@
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 6763,
+        "size": 6726,
         "imports": [
             "email-all-chars-within-ascii"
         ]
     },
     {
         "name": "email-comb",
-        "size": 62380,
+        "size": 62017,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -254,7 +253,7 @@
     },
     {
         "name": "emlint",
-        "size": 319673,
+        "size": 319688,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -280,7 +279,7 @@
     },
     {
         "name": "generate-atomic-css",
-        "size": 20710,
+        "size": 20696,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -307,7 +306,7 @@
     },
     {
         "name": "html-crush",
-        "size": 32721,
+        "size": 32473,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -338,7 +337,7 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 13689,
+        "size": 13637,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -349,31 +348,31 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 4855,
+        "size": 4848,
         "imports": [
             "string-match-left-right"
         ]
     },
     {
         "name": "is-language-code",
-        "size": 79048,
+        "size": 79041,
         "imports": []
     },
     {
         "name": "is-media-descriptor",
-        "size": 14370,
+        "size": 14328,
         "imports": [
             "string-process-comma-separated"
         ]
     },
     {
         "name": "is-relative-uri",
-        "size": 8394,
+        "size": 8387,
         "imports": []
     },
     {
         "name": "js-row-num",
-        "size": 6695,
+        "size": 6703,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -414,7 +413,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20303,
+        "size": 20258,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -440,7 +439,7 @@
     },
     {
         "name": "lerna-clean-changelogs",
-        "size": 2926,
+        "size": 2898,
         "imports": []
     },
     {
@@ -586,7 +585,7 @@
     },
     {
         "name": "string-apostrophes",
-        "size": 18095,
+        "size": 17953,
         "imports": [
             "ranges-apply"
         ]
@@ -598,12 +597,12 @@
     },
     {
         "name": "string-collapse-leading-whitespace",
-        "size": 3399,
+        "size": 3366,
         "imports": []
     },
     {
         "name": "string-collapse-white-space",
-        "size": 18341,
+        "size": 18190,
         "imports": [
             "ranges-apply",
             "ranges-merge",
@@ -612,14 +611,14 @@
     },
     {
         "name": "string-convert-indexes",
-        "size": 5241,
+        "size": 5047,
         "imports": [
             "ast-monkey"
         ]
     },
     {
         "name": "string-extract-class-names",
-        "size": 3735,
+        "size": 3574,
         "imports": [
             "string-left-right"
         ]
@@ -634,7 +633,7 @@
     },
     {
         "name": "string-find-malformed",
-        "size": 4684,
+        "size": 4677,
         "imports": [
             "string-left-right"
         ]
@@ -649,12 +648,12 @@
     },
     {
         "name": "string-left-right",
-        "size": 10998,
+        "size": 10844,
         "imports": []
     },
     {
         "name": "string-match-left-right",
-        "size": 13231,
+        "size": 13210,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -662,12 +661,12 @@
     },
     {
         "name": "string-process-comma-separated",
-        "size": 6452,
+        "size": 6297,
         "imports": []
     },
     {
         "name": "string-range-expander",
-        "size": 8442,
+        "size": 8444,
         "imports": []
     },
     {
@@ -691,7 +690,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17884,
+        "size": 17765,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -709,7 +708,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33962,
+        "size": 33792,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -718,7 +717,7 @@
     },
     {
         "name": "string-trim-spaces-only",
-        "size": 2140,
+        "size": 2124,
         "imports": []
     },
     {

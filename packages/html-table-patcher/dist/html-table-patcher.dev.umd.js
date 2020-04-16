@@ -19481,13 +19481,13 @@
 
 	  var opts = Object.assign({}, defaults, generalOpts);
 
-	  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)) {
+	  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())) {
 	    opts.cssStylesContent = undefined;
 	  }
 
 	  var dom = htmlDomParser(html);
 	  traverse(dom, function (node) {
-	    if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim().length) {
+	    if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim()) {
 	      (function () {
 	        var colspan = 1;
 	        var centered = !!opts.alwaysCenter; // 1. calculate the colspan (if needed at all, that is, colspan > 1)
@@ -19549,7 +19549,7 @@
 	          replacementTd["attribs"].align = "center";
 	        }
 
-	        if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+	        if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
 	          replacementTd["attribs"].style = opts.cssStylesContent;
 	        }
 
@@ -19563,7 +19563,7 @@
 	      })();
 	    } else if (node.type === "tag" && node.name === "table" && node.children && node.children.some(function (node) {
 	      return node.type === "tag" && node.name === "tr" && node.children && node.children.some(function (childNode) {
-	        return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim().length;
+	        return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim();
 	      });
 	    })) {
 	      // type 2 - <tr>zzz<td>... ; ...</td>zzz<td>... - content around TD tags
@@ -19573,7 +19573,7 @@
 	      var newChildren = [];
 	      node.children.forEach(function (oneOfNodes) {
 	        // 1. if it's whitespace text node, let it pass:
-	        if (oneOfNodes.type === "text" && isStr(oneOfNodes.data) && !oneOfNodes.data.trim().length) {
+	        if (oneOfNodes.type === "text" && isStr(oneOfNodes.data) && !oneOfNodes.data.trim()) {
 	          newChildren.push(oneOfNodes);
 	        } // 2. if it's TR, process its children and push separate TR for each
 	        // text node
@@ -19628,7 +19628,7 @@
 	              } else {
 	                consecutiveTDs++;
 	              }
-	            } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim().length)) {
+	            } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim())) {
 	              lastWasTd = false;
 	            }
 	          }); // PART 2-2.
@@ -19652,7 +19652,7 @@
 
 	              staging.push(oneOfSubNodes);
 	            } else if (oneOfSubNodes.type === "text" && isStr(oneOfSubNodes.data)) {
-	              if (!oneOfSubNodes.data.trim().length) {
+	              if (!oneOfSubNodes.data.trim()) {
 	                // if it's whitespace, stage it
 	                staging.push(oneOfSubNodes);
 	              } else {
@@ -19695,7 +19695,7 @@
 	                  replacementTd["attribs"].align = "center";
 	                }
 
-	                if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+	                if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
 	                  replacementTd["attribs"].style = opts.cssStylesContent;
 	                }
 

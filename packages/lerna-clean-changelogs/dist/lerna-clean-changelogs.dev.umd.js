@@ -91,7 +91,7 @@
       for (var i = linesArr.length; i--;) {
         if (linesArr[i].startsWith("**Note:** Version bump only") || linesArr[i].toLowerCase().includes("wip")) {
           // delete all the blank lines above the culprit:
-          while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+          while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
             i--;
           } // after that, delete the title, but only if there were no other entries:
 
@@ -101,10 +101,10 @@
           } // delete all the blank lines above the culprit:
 
 
-          while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
+          while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
             i--;
           }
-        } else if (!linesArr[i].trim().length) {
+        } else if (!linesArr[i].trim()) {
           // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
           if (!lastLineWasEmpty) {
             // we push trimmed lines to prevent accidental whitespace characters
@@ -122,7 +122,7 @@
         } // reset:
 
 
-        if (linesArr[i].trim().length) {
+        if (linesArr[i].trim()) {
           lastLineWasEmpty = false;
         }
       }

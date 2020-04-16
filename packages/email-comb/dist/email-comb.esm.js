@@ -803,7 +803,7 @@ function comb(str, opts) {
                 let deleteUpTo = lastKeptChunksCommaAt + 1;
                 if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
                   for (let y = lastKeptChunksCommaAt + 1; y < len; y++) {
-                    if (str[y].trim().length) {
+                    if (str[y].trim()) {
                       deleteUpTo = y;
                       break;
                     }
@@ -894,7 +894,7 @@ function comb(str, opts) {
             quoteless = true;
           } else if (
             str[i + 6] &&
-            (!str[i + 6].trim().length || "/>".includes(str[i + 6]))
+            (!str[i + 6].trim() || "/>".includes(str[i + 6]))
           ) {
             const calculatedRange = expander({
               str,
@@ -908,7 +908,7 @@ function comb(str, opts) {
         } else if (!str[i + 5].trim()) {
           for (let y = i + 5; y < len; y++) {
             totalCounter++;
-            if (str[y].trim().length) {
+            if (str[y].trim()) {
               if (str[y] === "=") {
                 if (y > i + 5 && round === 1) {
                   finalIndexesToDelete.push(i + 5, y);
@@ -918,7 +918,7 @@ function comb(str, opts) {
                 } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
                     totalCounter++;
-                    if (str[z].trim().length) {
+                    if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
                         finalIndexesToDelete.push(y + 1, z);
                       }
@@ -977,7 +977,7 @@ function comb(str, opts) {
             quoteless = true;
           } else if (
             str[i + 3] &&
-            (!str[i + 3].trim().length || "/>".includes(str[i + 3]))
+            (!str[i + 3].trim() || "/>".includes(str[i + 3]))
           ) {
             const calculatedRange = expander({
               str,
@@ -991,7 +991,7 @@ function comb(str, opts) {
         } else if (!str[i + 2].trim()) {
           for (let y = i + 2; y < len; y++) {
             totalCounter++;
-            if (str[y].trim().length) {
+            if (str[y].trim()) {
               if (str[y] === "=") {
                 if (y > i + 2 && round === 1) {
                   finalIndexesToDelete.push(i + 2, y);
@@ -1001,7 +1001,7 @@ function comb(str, opts) {
                 } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
                     totalCounter++;
-                    if (str[z].trim().length) {
+                    if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
                         finalIndexesToDelete.push(y + 1, z);
                       }
@@ -1133,9 +1133,9 @@ function comb(str, opts) {
               let whatToInsert = "";
               if (
                 str[expandedRange[0] - 1] &&
-                str[expandedRange[0] - 1].trim().length &&
+                str[expandedRange[0] - 1].trim() &&
                 str[expandedRange[1]] &&
-                str[expandedRange[1]].trim().length &&
+                str[expandedRange[1]].trim() &&
                 (allHeads || allTails) &&
                 ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
                   (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
@@ -1192,9 +1192,9 @@ function comb(str, opts) {
             });
             if (
               str[expandedRange[0] - 1] &&
-              str[expandedRange[0] - 1].trim().length &&
+              str[expandedRange[0] - 1].trim() &&
               str[expandedRange[1]] &&
-              str[expandedRange[1]].trim().length &&
+              str[expandedRange[1]].trim() &&
               (allHeads || allTails) &&
               ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
                 (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
@@ -1255,9 +1255,9 @@ function comb(str, opts) {
             let whatToInsert = "";
             if (
               str[expandedRange[0] - 1] &&
-              str[expandedRange[0] - 1].trim().length &&
+              str[expandedRange[0] - 1].trim() &&
               str[expandedRange[1]] &&
-              str[expandedRange[1]].trim().length &&
+              str[expandedRange[1]].trim() &&
               !"/>".includes(str[expandedRange[1]])
             ) {
               whatToInsert = " ";
@@ -1301,9 +1301,9 @@ function comb(str, opts) {
             let whatToInsert = "";
             if (
               str[expandedRange[0] - 1] &&
-              str[expandedRange[0] - 1].trim().length &&
+              str[expandedRange[0] - 1].trim() &&
               str[expandedRange[1]] &&
-              str[expandedRange[1]].trim().length &&
+              str[expandedRange[1]].trim() &&
               !"/>".includes(str[expandedRange[1]])
             ) {
               whatToInsert = " ";
@@ -1381,7 +1381,7 @@ function comb(str, opts) {
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(
               (val) =>
-                val.trim().length &&
+                val.trim() &&
                 str.slice(commentStartedAt, i).toLowerCase().includes(val)
             )
           ) {
@@ -1483,7 +1483,7 @@ function comb(str, opts) {
         }
       }
       if (!doNothing) {
-        if (!str[i].trim().length) {
+        if (!str[i].trim()) {
           if (whitespaceStartedAt === null) {
             whitespaceStartedAt = i;
           }
@@ -1779,10 +1779,10 @@ function comb(str, opts) {
   }
   if (str.length) {
     if (
-      (!str[0].trim().length || !str[str.length - 1].trim().length) &&
-      str.length !== str.trim().length
+      (!str[0].trim() || !str[str.length - 1].trim()) &&
+      str.length !== str.trim()
     ) {
-      nonIndentationsWhitespaceLength += str.length - str.trim().length;
+      nonIndentationsWhitespaceLength += str.length - str.trim();
     }
     str = `${str.trim()}${prevailingEOL}`;
   }

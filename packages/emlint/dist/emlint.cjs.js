@@ -464,10 +464,10 @@ function checkForWhitespace(str, idxOffset) {
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
       message: "Remove whitespace.",
       fix: {
-        ranges: gatheredRanges
+        ranges: clone(gatheredRanges)
       }
     });
-    gatheredRanges = [];
+    gatheredRanges.length = 0;
     trimmedVal = str.trim();
   }
   return {

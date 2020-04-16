@@ -145,7 +145,7 @@ function collapse(str, originalOpts) {
   for (var i = str.length; i--;) {
     if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
       consecutiveLineBreakCount++;
-    } else if (str[i].trim().length) {
+    } else if (str[i].trim()) {
       consecutiveLineBreakCount = 0;
     }
     if (str[i] === " ") {

@@ -1075,7 +1075,7 @@ t.test("08.03  -  opts.limitLinebreaksCount #3 - hardcoded defaults", (t) => {
   t.end();
 });
 
-t.test("08.04  -  opts.limitLinebreaksCount #4 - hardcoded defaults", (t) => {
+t.only("08.04  -  opts.limitLinebreaksCount #4 - hardcoded defaults", (t) => {
   const ranges = new Ranges({
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2,

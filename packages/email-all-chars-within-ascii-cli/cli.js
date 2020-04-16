@@ -45,7 +45,7 @@ function isStr(something) {
 
 function offerAListOfFilesToPickFrom() {
   const allFilesHere = globby.sync("./*.*");
-  if (allFilesHere.length === 0) {
+  if (!allFilesHere.length) {
     log(
       chalk.hex("#888888")(
         "\nemail-all-chars-within-ascii-cli: [THROW_ID_01] "
@@ -82,12 +82,12 @@ if (cli.flags.v) {
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
 
-if (cli.input.length > 0) {
+if (cli.input.length) {
   state.toDoList = cli.input;
 }
 
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
-if (Object.keys(cli.flags).length !== 0) {
+if (Object.keys(cli.flags).length) {
   // each non-boolean cli.flags value must be added to the `toDoList`
   Object.keys(cli.flags).forEach((key) => {
     if (typeof cli.flags[key] !== "boolean") {
@@ -107,13 +107,13 @@ if (Object.keys(cli.flags).length !== 0) {
 // depending on was the acceptable file passed via args or queries afterwards.
 // -----------------------------------------------------------------------------
 let thePromise;
-if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
+if (!state.toDoList.length && !Object.keys(cli.flags).length) {
   // ---------------------------------  1  -------------------------------------
   // if no arguments were given, offer a list:
   thePromise = offerAListOfFilesToPickFrom(state);
 } else if (
   state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
-    .length > 0
+    .length
 ) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
@@ -123,7 +123,7 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
-  if (erroneous.length > 0) {
+  if (erroneous.length) {
     log(
       chalk.hex("#888888")(
         "\nemail-all-chars-within-ascii-cli: [THROW_ID_02] "
@@ -165,7 +165,7 @@ thePromise
     receivedState.toDoList.forEach((requestedPath) => {
       let filesContents = "";
       let fileNameInfo = "";
-      if (receivedState.toDoList.length > 0) {
+      if (receivedState.toDoList.length) {
         fileNameInfo = `${path.basename(requestedPath)} `;
       }
       try {

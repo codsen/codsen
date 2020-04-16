@@ -49,24 +49,24 @@ function rightMain(str, idx, stopAtNewlines) {
     return null;
   } else if (
     str[idx + 1] &&
-    ((!stopAtNewlines && str[idx + 1].trim().length) ||
+    ((!stopAtNewlines && str[idx + 1].trim()) ||
       (stopAtNewlines &&
-        (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1]))))
+        (str[idx + 1].trim() || "\n\r".includes(str[idx + 1]))))
   ) {
     return idx + 1;
   } else if (
     str[idx + 2] &&
-    ((!stopAtNewlines && str[idx + 2].trim().length) ||
+    ((!stopAtNewlines && str[idx + 2].trim()) ||
       (stopAtNewlines &&
-        (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2]))))
+        (str[idx + 2].trim() || "\n\r".includes(str[idx + 2]))))
   ) {
     return idx + 2;
   }
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (
       str[i] &&
-      ((!stopAtNewlines && str[i].trim().length) ||
-        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+      ((!stopAtNewlines && str[i].trim()) ||
+        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
     ) {
       return i;
     }
@@ -90,24 +90,24 @@ function leftMain(str, idx, stopAtNewlines) {
     return null;
   } else if (
     str[idx - 1] &&
-    ((!stopAtNewlines && str[idx - 1].trim().length) ||
+    ((!stopAtNewlines && str[idx - 1].trim()) ||
       (stopAtNewlines &&
-        (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1]))))
+        (str[idx - 1].trim() || "\n\r".includes(str[idx - 1]))))
   ) {
     return idx - 1;
   } else if (
     str[idx - 2] &&
-    ((!stopAtNewlines && str[idx - 2].trim().length) ||
+    ((!stopAtNewlines && str[idx - 2].trim()) ||
       (stopAtNewlines &&
-        (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2]))))
+        (str[idx - 2].trim() || "\n\r".includes(str[idx - 2]))))
   ) {
     return idx - 2;
   }
   for (let i = idx; i--; ) {
     if (
       str[i] &&
-      ((!stopAtNewlines && str[i].trim().length) ||
-        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+      ((!stopAtNewlines && str[i].trim()) ||
+        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
     ) {
       return i;
     }
@@ -259,7 +259,7 @@ function chomp(direction, str, idx, opts, args) {
     return null;
   }
   if (direction === "right") {
-    if (str[lastIdx] && str[lastIdx].trim().length) {
+    if (str[lastIdx] && str[lastIdx].trim()) {
       return lastIdx;
     }
     const whatsOnTheRight = right(str, lastIdx);
@@ -267,7 +267,7 @@ function chomp(direction, str, idx, opts, args) {
       if (whatsOnTheRight === lastIdx + 1) {
         return lastIdx;
       } else if (
-        str.slice(lastIdx, whatsOnTheRight || str.length).trim().length ||
+        str.slice(lastIdx, whatsOnTheRight || str.length).trim() ||
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") ||
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")
       ) {
@@ -284,12 +284,12 @@ function chomp(direction, str, idx, opts, args) {
     } else if (opts.mode === 2) {
       const remainderString = str.slice(lastIdx);
       if (
-        remainderString.trim().length ||
+        remainderString.trim() ||
         remainderString.includes("\n") ||
         remainderString.includes("\r")
       ) {
         for (let y = lastIdx, len = str.length; y < len; y++) {
-          if (str[y].trim().length || `\n\r`.includes(str[y])) {
+          if (str[y].trim() || `\n\r`.includes(str[y])) {
             return y;
           }
         }
@@ -298,7 +298,7 @@ function chomp(direction, str, idx, opts, args) {
     }
     return whatsOnTheRight ? whatsOnTheRight : str.length;
   }
-  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
+  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
     return lastIdx;
   }
   const whatsOnTheLeft = left(str, lastIdx);
@@ -306,13 +306,13 @@ function chomp(direction, str, idx, opts, args) {
     if (whatsOnTheLeft === lastIdx - 2) {
       return lastIdx;
     } else if (
-      str.slice(0, lastIdx).trim().length ||
+      str.slice(0, lastIdx).trim() ||
       str.slice(0, lastIdx).includes("\n") ||
       str.slice(0, lastIdx).includes("\r")
     ) {
       for (let y = lastIdx; y--; ) {
-        if (`\n\r`.includes(str[y]) || str[y].trim().length) {
-          return y + 1 + (str[y].trim().length ? 1 : 0);
+        if (`\n\r`.includes(str[y]) || str[y].trim()) {
+          return y + 1 + (str[y].trim() ? 1 : 0);
         }
       }
     }
@@ -322,12 +322,12 @@ function chomp(direction, str, idx, opts, args) {
   } else if (opts.mode === 2) {
     const remainderString = str.slice(0, lastIdx);
     if (
-      remainderString.trim().length ||
+      remainderString.trim() ||
       remainderString.includes("\n") ||
       remainderString.includes("\r")
     ) {
       for (let y = lastIdx; y--; ) {
-        if (str[y].trim().length || `\n\r`.includes(str[y])) {
+        if (str[y].trim() || `\n\r`.includes(str[y])) {
           return y + 1;
         }
       }

@@ -70,7 +70,7 @@ function isOpening(str) {
       passed = true;
     }
   }
-  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions)) {
     passed = true;
   }
   var res = isStr(str) && idx < str.length && passed;

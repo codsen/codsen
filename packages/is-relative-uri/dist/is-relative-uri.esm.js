@@ -347,7 +347,7 @@ function isRel(str, originalOpts) {
   if (!opts.offset) {
     opts.offset = 0;
   }
-  if (str.split("").some((char) => !char.trim().length)) {
+  if (str.split("").some((char) => !char.trim())) {
     return { res: false, message: `Remove whitespace.` };
   }
   if (str.match(/\/\s*\/\s*\//g)) {

@@ -71,7 +71,7 @@ function alts(str, originalOpts) {
     const charcode = str[i].charCodeAt(0);
     console.log(
       `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-        str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
+        str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
       }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`
     );
 

@@ -50,7 +50,7 @@ function isRel(str, originalOpts) {
     opts.offset = 0;
   }
   if (str.split("").some(function (_char) {
-    return !_char.trim().length;
+    return !_char.trim();
   })) {
     return {
       res: false,
