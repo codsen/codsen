@@ -1776,7 +1776,7 @@ t.test("03.07 - old bracket notation - empty values", (t) => {
 t.test("04.01 - no params", (t) => {
   t.throws(() => {
     e(undefined);
-  }, /THROW_ID_01/g);
+  }, /THROW_ID_02/g);
   t.end();
 });
 

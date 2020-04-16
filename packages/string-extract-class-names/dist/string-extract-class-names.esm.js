@@ -13,11 +13,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;
   }
-  if (input === undefined) {
-    throw new Error(
-      `string-extract-class-names: [THROW_ID_01] input must not be undefined!`
-    );
-  } else if (typeof input !== "string") {
+  if (typeof input !== "string") {
     throw new TypeError(
       `string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(
         input,
@@ -42,7 +38,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
   function isLatinLetter(char) {
     return (
       typeof char === "string" &&
-      char.length === 1 &&
+      char.length &&
       ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
         (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
     );
@@ -53,7 +49,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
     if (
       selectorStartsAt !== null &&
       i >= selectorStartsAt &&
-      (badChars.includes(input[i]) || input[i].trim().length === 0)
+      (badChars.includes(input[i]) || !input[i].trim())
     ) {
       if (i > selectorStartsAt + 1) {
         if (returnRangesInstead) {

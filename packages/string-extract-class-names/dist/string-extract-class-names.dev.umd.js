@@ -1985,9 +1985,7 @@
       return x != null;
     }
 
-    if (input === undefined) {
-      throw new Error("string-extract-class-names: [THROW_ID_01] input must not be undefined!");
-    } else if (typeof input !== "string") {
+    if (typeof input !== "string") {
       throw new TypeError("string-extract-class-names: [THROW_ID_02] first input should be string, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
     }
 
@@ -2004,7 +2002,7 @@
 
     function isLatinLetter(_char) {
       // we mean Latin letters A-Z, a-z
-      return typeof _char === "string" && _char.length === 1 && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
+      return typeof _char === "string" && _char.length && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
     } // action
     // ======
 
@@ -2014,7 +2012,7 @@
 
     for (var i = 0, len = input.length; i < len; i++) {
       // catch the ending of a selector's name:
-      if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
+      if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || !input[i].trim())) {
         // if selector is more than dot or hash:
         if (i > selectorStartsAt + 1) {
           // If we reached the last character and selector's beginning has not been

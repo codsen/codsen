@@ -31,9 +31,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;
   }
-  if (input === undefined) {
-    throw new Error("string-extract-class-names: [THROW_ID_01] input must not be undefined!");
-  } else if (typeof input !== "string") {
+  if (typeof input !== "string") {
     throw new TypeError("string-extract-class-names: [THROW_ID_02] first input should be string, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
   }
   if (!existy(returnRangesInstead) || !returnRangesInstead) {
@@ -44,12 +42,12 @@ function stringExtractClassNames(input, returnRangesInstead) {
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
   var stateCurrentlyIs;
   function isLatinLetter(_char) {
-    return typeof _char === "string" && _char.length === 1 && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
+    return typeof _char === "string" && _char.length && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
   }
   var selectorStartsAt = null;
   var result = [];
   for (var i = 0, len = input.length; i < len; i++) {
-    if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
+    if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || !input[i].trim())) {
       if (i > selectorStartsAt + 1) {
         if (returnRangesInstead) {
           result.push([selectorStartsAt, i]);
