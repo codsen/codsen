@@ -100,7 +100,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "{\n  notEmailFriendly,\n  notEmailFriendlyMinLength,\n  notEmailFriendlyMaxLength\n}",
+    "req": "{\n  notEmailFriendly,\n  notEmailFriendlySetOnly,\n  notEmailFriendlyLowercaseSetOnly,\n  notEmailFriendlyMinLength,\n  notEmailFriendlyMaxLength\n}",
     "various": {
       "back_to_top": {
         "enabled": true,

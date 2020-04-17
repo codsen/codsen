@@ -13,11 +13,13 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Idea](#idea)
+- [Idea / TLDR](#idea--tldr)
+- [Plain object `notEmailFriendly`](#plain-object-notemailfriendly)
+- [Set `notEmailFriendlySetOnly`](#set-notemailfriendlysetonly)
+- [Set `notEmailFriendlyLowercaseSetOnly`](#set-notemailfriendlylowercasesetonly)
+- [Constants `notEmailFriendlyMinLength` and `notEmailFriendlyMaxLength`](#constants-notemailfriendlyminlength-and-notemailfriendlymaxlength)
 - [API](#api)
-- [API - `notEmailFriendly`](#api-notemailfriendly)
-- [API - `notEmailFriendlyMinLength`](#api-notemailfriendlyminlength)
-- [API — `notEmailFriendlyMaxLength`](#api--notemailfriendlymaxlength)
+- [In practice](#in-practice)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -32,6 +34,8 @@ Consume via a `require()`:
 ```js
 const {
   notEmailFriendly,
+  notEmailFriendlySetOnly,
+  notEmailFriendlyLowercaseSetOnly,
   notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
 } = require("html-entities-not-email-friendly");
@@ -42,6 +46,8 @@ or as an ES Module:
 ```js
 import {
   notEmailFriendly,
+  notEmailFriendlySetOnly,
+  notEmailFriendlyLowercaseSetOnly,
   notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
 } from "html-entities-not-email-friendly";
@@ -57,6 +63,8 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 // in which case you get a global variable "htmlEntitiesNotEmailFriendly" which you consume like this:
 const {
   notEmailFriendly,
+  notEmailFriendlySetOnly,
+  notEmailFriendlyLowercaseSetOnly,
   notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
 } = htmlEntitiesNotEmailFriendly;
@@ -66,90 +74,147 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-entities-not-email-friendly.cjs.js` | 78 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-entities-not-email-friendly.esm.js` | 77 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-entities-not-email-friendly.umd.js` | 31 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-entities-not-email-friendly.cjs.js` | 75 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-entities-not-email-friendly.esm.js` | 82 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-entities-not-email-friendly.umd.js` | 65 KB |
 
 **[⬆ back to top](#)**
 
-## Idea
+## Idea / TLDR
 
-We're talking about email template HTML, not web page HTML here. Some named HTML entities are not shown correctly in Windows desktop Outlook.
+Web pages are in UTF8 normally and don't need to be HTML-encoded.
 
-This package tells which ones exactly.
+Email templates are sent over SMTP and normally need to be HTML encoded.
 
-It exports a JSON file, here are a few lines of it:
+HTML encoding can be done three ways: decimal (`&#163;`), hexadecimal (`&#xA3;`) and named forms (`&pound;`).
 
-```json
-{
-  "AMP": "amp",
-  "Abreve": "#x102",
-  "Acy": "#x410"
-}
+The named entities can be memorised or recognised more easily than numeric-ones. When we check the template's text, `&pound;` is more informative than `&#163;`. If somebody mistakenly put `&#164;` you would not tell easily, but `&pund;` stands out instantly!
+
+The only problem is, **not all named entities are supported well across all email clients**, in particular, in Windows desktop Outlooks.
+
+This package tells **which entities exactly and not supported widely** and tells you what to convert them to.
+
+This program exports few different lists:
+
+- `notEmailFriendly` — a plain object, key value pairs are like `AMP: "amp"` — total keys: 1841
+- `notEmailFriendlySetOnly` — a [Set](https://exploringjs.com/impatient-js/ch_sets.html) of only entity names (in correct letter case) — total size: 1841
+- `notEmailFriendlyLowercaseSetOnly` — an alphabetically sorted [Set](https://exploringjs.com/impatient-js/ch_sets.html) of lowercase entity names — total size: 1534
+
+**[⬆ back to top](#)**
+
+## Plain object `notEmailFriendly`
+
+```js
+const { notEmailFriendly } = require("html-entities-not-email-friendly");
+// it's a plain object of key-value pairs where key is entity name, value is
+// decoded numeric entity analogue of it
+console.log(Object.keys(notEmailFriendly).length);
+// => 1841
 ```
 
-Ampersands and semicolons are missing in the exported object. For example, "bad" named HTML entity would be `&Abreve;` and its correct version would be `&#x102;`.
+The point of plain object `notEmailFriendly` is to decode the entities.
+
+For example, among the keys you can see:
+
+```json
+And: "#x2A53",
+```
+
+This means, named HTML entity `&And;` is not email friendly and should be put as `&#x2A53;`.
+
+As you noticed, ampersands and semicolons are missing in keys and values (but they're obligatory in HTML code so add them yourself).
+
+**[⬆ back to top](#)**
+
+## Set `notEmailFriendlySetOnly`
+
+[Sets](https://exploringjs.com/impatient-js/ch_sets.html) are awesome because they're fast.
+
+When you import `notEmailFriendlySetOnly`, it's a Set of only the key names:
+
+```js
+const { notEmailFriendlySetOnly } = require("html-entities-not-email-friendly");
+for (const entitysName of notEmailFriendlySetOnly) {
+  console.log(entitysName);
+}
+// => "AMP",
+//    "Abreve",
+//    ...
+
+// another example: check is given entity a valid HTML named entity string?
+console.log(notEmailFriendlySetOnly.has("tralala"));
+// => false - no "tralala" (if put fully, &tralala;) is not a recognised named HTML entity's name
+
+console.log(notEmailFriendlySetOnly.has("Aogon"));
+// => true - yes "Aogon" (if put fully, &Aogon;) is a recognised named HTML entity's name
+```
+
+You must use Set methods: `has`, `size` etc on `notEmailFriendlySetOnly`. It's not an array, it's a set.
+
+**[⬆ back to top](#)**
+
+## Set `notEmailFriendlyLowercaseSetOnly`
+
+`notEmailFriendlyLowercaseSetOnly` is also a Set but all values are lowercase and sorted.
+
+The idea is that if you have a named HTML entity and suspect that its letter case might be messed up, you lowercase it and match against this Set. Now, if something is found, do actions matching against plain object keys in `notEmailFriendly` (aiming to decode to numeric entities), OR matching against a Set with exact case, `notEmailFriendlySetOnly` (if value is not found, letter case in your entity is messed up).
+
+```js
+const { notEmailFriendlySetOnly } = require("html-entities-not-email-friendly");
+for (const entitysName of notEmailFriendlySetOnly) {
+  console.log(entitysName);
+}
+// => "AMP",
+//    "Abreve",
+//    ...
+```
+
+**[⬆ back to top](#)**
+
+## Constants `notEmailFriendlyMinLength` and `notEmailFriendlyMaxLength`
+
+Their point is to give you guidance how long or short entities can be:
+
+```js
+const {
+  notEmailFriendlyMinLength,
+  notEmailFriendlyMaxLength,
+} = require("html-entities-not-email-friendly");
+console.log(
+  `The shortest length in the set is: ${notEmailFriendlyMinLength} and longest is ${notEmailFriendlyMaxLength}.`
+);
+// => The shortest length in the set is: 2 and longest is 31.
+```
+
+Keep in mind, `length` here does not count ampersand and semicolon. For example, `Abreve` length is 6 characters but in the HTML, it is 8: `&Abreve;`,
 
 **[⬆ back to top](#)**
 
 ## API
 
-This package exports a plain object with three keys:
+This package exports a plain object with five keys:
 
-notEmailFriendly,
-notEmailFriendlyMinLength,
-notEmailFriendlyMaxLength
+- `notEmailFriendly`
+- `notEmailFriendlySetOnly`
+- `notEmailFriendlyLowercaseSetOnly`
+- `notEmailFriendlyMinLength`
+- `notEmailFriendlyMaxLength`
 
-| Key's name                  | Key's value's type | Purpose                                                                                             |
-| --------------------------- | ------------------ | --------------------------------------------------------------------------------------------------- |
-| `notEmailFriendly`          | plain object       | all named HTML entities, the key is an entity's name; value is a raw decoded entity. 2125 in total. |
-| `notEmailFriendlyMinLength` | natural number     | the string length of the shortest of all entities                                                   |
-| `notEmailFriendlyMaxLength` | natural number     | the string length of the longest of all entities                                                    |
-
-**[⬆ back to top](#)**
-
-## API - `notEmailFriendly`
-
-Exported `notEmailFriendly` is a plain object looks like this:
-
-```js
-{
-  "AMP":"amp",
-  "Abreve":"#x102",
-  "Acy":"#x410"
-}
-```
-
-The key is named after the HTML entity's name; the value is what value should be used instead (decoded or numeric HTML entity).
-
-For example, below we log all the entities:
-
-```js
-// consume:
-const { notEmailFriendly } = require("all-named-html-entities");
-// list them all:
-Object.keys(notEmailFriendly).forEach((entName, i) => {
-  console.log(`${i} entity: &${entName};`);
-});
-```
+| Key's name                         | Key's value's type | Purpose                                                                                                             |
+| ---------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `notEmailFriendly`                 | plain object       | Plain object of all named HTML entities. The key is an entity's name; value is a raw decoded entity. 1841 in total. |
+| `notEmailFriendlySetOnly`          | set                | A set of all entity names, in correct case, unsorted. 1841 in total.                                                |
+| `notEmailFriendlyLowercaseSetOnly` | set                | A set of all entity names, in lowercase, sorted. 1534 in total (because we have `AMP` and `amp` for example).       |
+| `notEmailFriendlyMinLength`        | natural number     | the string length of the shortest of all entities, currently hardcoded to `2`                                       |
+| `notEmailFriendlyMaxLength`        | natural number     | the string length of the longest of all entities, currently hardcoded to `31`                                       |
 
 **[⬆ back to top](#)**
 
-## API - `notEmailFriendlyMinLength`
+## In practice
 
-Returns natural number `2` — the length of the shortest entity names in the list. For example, `&LT;`, `&GT;` or `&Re;` (two-letter names).
+This program allows [Detergent](https://detergent.io) to automatically switch between named and numeric HTML entities, prioritising on named, if they're supported (acccording this program).
 
-We are not counting ampersand `&` and semicolon `;`.
-
-These lengths can help to optimise some algorithms — if you know that there have to be at least two letters, you can rule out single-letter strings right away.
-
-**[⬆ back to top](#)**
-
-## API — `notEmailFriendlyMaxLength`
-
-Returns a natural number `31` — the length of the longest entities in the list. For example, `&CounterClockwiseContourIntegral;` has a length of `31`.
-
-We are not counting ampersand `&` and semicolon `;`.
+Detergent's competitor, [Email on Acid Character Converter](https://app.emailonacid.com/character-converter/) only uses numeric entities and therefore is an inferior product.
 
 **[⬆ back to top](#)**
 
