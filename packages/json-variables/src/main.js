@@ -727,7 +727,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     return temp2;
   }
 
-  console.log(`726 temp2 = ${JSON.stringify(temp2, null, 4)}`);
+  console.log(`730 temp2 = ${JSON.stringify(temp2, null, 4)}`);
 
   // 3. Then, work the finalRangesArr list
   // ================================
@@ -911,7 +911,7 @@ function jsonVariables(input, originalOpts = {}) {
     // to mutate it, we return "current". If we want to mutate it, we return a new
     // value (which will get written onto that node, previously equal to "current").
 
-    console.log(`909 current = ${JSON.stringify(current, null, 4)}`);
+    console.log(`914 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Instantly skip empty strings:

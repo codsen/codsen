@@ -201,6 +201,51 @@ t.test("01.08 - throws when data is missing", (t) => {
     });
   });
   t.match(err2.message, /THROW_ID_18/);
+
+  // however, it does not throw when opts.allowUnresolved is on
+  t.same(
+    jv(
+      {
+        a: "some text %%_var1_%% more text",
+        b: "something",
+        a_data: "zzz",
+      },
+      {
+        allowUnresolved: true,
+      }
+    ),
+    {
+      a: "some text  more text",
+      b: "something",
+      a_data: "zzz",
+    },
+    "01.08.03"
+  );
+
+  // also, consider the cases when only some variables can't be resolved
+  t.same(
+    jv(
+      {
+        a: "some text %%_var1_%% more text%%_var2_%%",
+        b: "something",
+        a_data: {
+          var2: "zzz",
+        },
+      },
+      {
+        allowUnresolved: true,
+      }
+    ),
+    {
+      a: "some text  more textzzz",
+      b: "something",
+      a_data: {
+        var2: "zzz",
+      },
+    },
+    "01.08.04"
+  );
+
   t.end();
 });
 

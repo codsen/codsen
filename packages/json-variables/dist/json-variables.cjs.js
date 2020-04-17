@@ -267,7 +267,11 @@ function resolveString(input, string, path, opts) {
         opts
         );
         if (resolvedValue === undefined) {
-          throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
+          if (opts.allowUnresolved) {
+            resolvedValue = "";
+          } else {
+            throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
+          }
         }
         if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr(resolvedValue)) {
           throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), " at path ").concat(path, ", it resolved into a non-string value, ").concat(JSON.stringify(resolvedValue, null, 4), ". This is happening because options setting \"throwWhenNonStringInsertedInString\" is active (set to \"true\")."));
@@ -380,7 +384,8 @@ function jsonVariables(input) {
     noSingleMarkers: false,
     resolveToBoolIfAnyValuesContainBool: true,
     resolveToFalseIfAnyValuesContainBool: true,
-    throwWhenNonStringInsertedInString: false
+    throwWhenNonStringInsertedInString: false,
+    allowUnresolved: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   if (!opts.dontWrapVars) {

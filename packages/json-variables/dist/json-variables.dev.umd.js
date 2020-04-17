@@ -4462,7 +4462,11 @@
           );
 
           if (resolvedValue === undefined) {
-            throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
+            if (opts.allowUnresolved) {
+              resolvedValue = "";
+            } else {
+              throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
+            }
           }
 
           if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr$5(resolvedValue)) {
@@ -4631,7 +4635,9 @@
       // resolve whole value to false,
       // even if some values contain Boolean true. Otherwise, the whole value will
       // resolve to the first encountered Boolean.
-      throwWhenNonStringInsertedInString: false
+      throwWhenNonStringInsertedInString: false,
+      allowUnresolved: false // Allow value to not have a resolved variable
+
     };
     var opts = Object.assign({}, defaults, originalOpts);
 

@@ -55,7 +55,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 19 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 20 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 20 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 50 KB |
 
@@ -140,6 +140,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 | `resolveToBoolIfAnyValuesContainBool`  | Boolean                    | no          | `true`  | The very first moment Boolean is merged into a string value, it turns the whole value to its value. Permanently. Nothing else matters. When `false` and there's a mix of Strings and Booleans, Boolean is resolved into empty string. When the value is just a reference marker, upon resolving it will be intact Boolean. This setting is relevant when there's mixing of strings and Booleans - what to do in those cases. |
 | `resolveToFalseIfAnyValuesContainBool` | Boolean                    | no          | `true`  | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.                                                                                                                                                                                                                                         |
 | `throwWhenNonStringInsertedInString`   | Boolean                    | no          | `false` | By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.                                                                                                                                                                                     |
+| `allowUnresolved`   | Boolean                    | no          | `false` | Normally, if a variable can't be resolved, proram throws an error. If you prefer it to insert empty string instead and continue, turn this on. |
 | }                                      |                            |             |         |
 
 **Defaults**:
@@ -161,6 +162,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
   resolveToBoolIfAnyValuesContainBool: true,
   resolveToFalseIfAnyValuesContainBool: true,
   throwWhenNonStringInsertedInString: false
+  allowUnresolved: false
 }
 ```
 
@@ -580,7 +582,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
-[cov-img]: https://img.shields.io/badge/coverage-95.2%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-95.24%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-variables
