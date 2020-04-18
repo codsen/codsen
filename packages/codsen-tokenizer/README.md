@@ -1,6 +1,6 @@
 # codsen-tokenizer
 
-> HTML Lexer aimed at erroneous code
+> HTML and CSS Lexer aimed at code with fatal errors
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

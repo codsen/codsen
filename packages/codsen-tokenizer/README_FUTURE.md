@@ -61,76 +61,125 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## Purpose
+
+The purpose of this tokenizer is to split code-as-string into chunks (tokens), plain objects.
+
+It's up to you what you are going to do with those tokens — for example, `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) will build AST's from tokens and `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) will traverse the AST using `ast-monkey` ([npm](https://www.npmjs.com/package/ast-monkey)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/)) searching for code errors.
+
+**[⬆ back to top](#)**
+
 ## Highlights
 
 This tokenizer is aimed at processing **broken code**, HTML mixed with other languages.
 
-- Aimed at broken code — you won't surprise the parser — tokenizer will surprise _you_
-- Finds boundaries between mixed code: html, css, esp tags, EOL characters etc
-- Heuristical ESP (Email Service Provider) and templating tag recognition, including all major ESP's on the market tested extra
+- Can recognise **fatal** HTML/CSS errors — you won't surprise the tokenizer — the tokenizer will surprise _you_
+- Aimed at **HTML** and **CSS** mixed with anything.
+- Parses email _shadow code_ — commented-out code structures
+- Heuristically recognises ESP (Email Service Provider) templating tags (for example, `*|customer.name|*` or `{% if purchase.total < 100 %}` — notice the bracket)
 
 **[⬆ back to top](#)**
 
-## Versus competition
+## Versus the competition
 
-Here are all the common parsers/tokenizers in the market currently:
+Let's take an example of a `div` with a **fatal error** — a missing opening bracket: `div class="zz">`
 
-- Angular
-- HTMLParser2
-- Hyntax
-- Parse5
-- PostHTML-parser
-- svelte
-- vue
+All the common parsers/tokenizers in the market currently: Angular parser, HTMLParser2, Hyntax, Parse5, PostHTML-parser, svelte parser, vue parser **will not see it as a tag**, same way like the browser will not see it as a tag.
 
-Some of them promise to be resilient to code errors but that's only promises. In real life neither one of the above can properly tackle the simplest example:
+This means, tools based on such parsers can't be used to detect FATAL ERRORS in the code.
 
-```
-<div> div class="zz"></div></div>
-```
+**This is the reason why the current HTML linters in the market are so primitive**.
 
-Try yourself in https://astexplorer.net/
+Here's where `codsen-tokenizer` comes in.
 
-If human programmer looked at the snippet above, what would they see?
+Reusing our example of fatal error div, `div class="zz">`. Here's the plan:
 
-Well, an opening div, a div with missing opening bracket and two closing divs.
+**FIRST STEP.**
 
-That's what this parser will ping to a given callback, four tokens:
+`codsen-tokenizer` correctly recognises `div class="zz">` _as a tag_, yielding:
 
 ```
-{
-    "type": "html",
-    "start": 0,
-    "end": 5,
-    ...
-},
-{
-    "type": "text",
-    "start": 5,
-    "end": 21,
-    ...
-},
-{
-    "type": "html",
-    "start": 21,
-    "end": 27,
-    ...
-},
-{
-    "type": "html",
-    "start": 27,
-    "end": 33,
-    ...
-}
+[
+    {
+        "type": "tag",
+        "start": 0,
+        "end": 15,
+        "value": "div class=\"zz\">",
+        ...
+        "attribs": [
+            {
+                "attribName": "class",
+                ...
+                "attribStart": 4,
+                "attribEnd": 14
+            }
+        ]
+    }
+]
 ```
 
-The purpose of this tokenizer is to find boundaries between text, html, css and unknown templating language chunks/tokens. It's up to you what you are going to do with that info — `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) for example, will use it to flag up code errors.
+**SECOND STEP**
+
+the parser such as `codsen-parser` can assemble the correct AST
+
+**THIRD STEP**
+
+linters such as `emlint` can check, does the token's `start` index fall upon an opening bracket. It does not in this case — but we can automatically fix this issue because we know where the bracket is missing.
+
+**FOURTH STEP**
+
+after our tooling restores the opening bracket, the other tooling — browsers, inferior parsers etc. — can operate correctly.
 
 **[⬆ back to top](#)**
 
 ## API
 
 It will be published once the API stabilises.
+
+**[⬆ back to top](#)**
+
+## More thoughts
+
+Conceptually, good tooling should be user-oriented. For example, if you make a code checker which says "The parser got fatal error", this is not a user-oriented program. Me, as a user, I don't care about innards of your program — its parser especially. Tell me what _I_ did wrong and _how to fix it_ — don't tell me cryptic meaningless messages.
+
+For example, humanity is pouring money into OpenJS Foundation. People work on it full-time. But ESLint is still based on a parser — if your code error manages to break the parser, it won't tell you where the error is, only that you broke the parser!
+
+For example, it is possible to omit the semicolon in ESLint causing a fatal parser error and you won't find where it is omitted. Good luck trawling 1000 lines of code!
+
+In order to find the fatal code errors, the tokenizer has to be by magnitude more lenient than the code spec (in this case ECMA standard).
+
+In other words, if an error is fatal and breaks parser, tooling running on such parser will never be able to correctly identify such error.
+
+**[⬆ back to top](#)**
+
+## Perf
+
+I admit, the more we beef up the algorithms the more the performance drops. A stupid, fragile parser which only follows the spec will be faster than a smart parser which calculates a hundred types of possible errors.
+
+For example, when a lexer (tokenizer) traverses the HTML attribute and meets the quote which matches the first opening quote, does it call it a day?
+
+```
+<img src='test.png' alt='Freakin' error!"/>
+                                |       |
+                                |       |
+                          is this    or this?
+                  the attribute's
+                          ending?
+```
+
+Notice the double whammy error — mismatching quote pair and unencoded quote within an attribute's value!
+
+If lexer does call it a day when it meets the first matching quote, it will be faster but won't cope with quote-mismatch errors.
+
+If lexer does not call it a day and looks around, it impacts the perf but it can cope with quote-mismatch errors.
+
+Former is the approach of parsers in the market. Latter is the approach of `codsen-tokenizer`.
+
+Does Humanity deserve to have tooling which recognises errors THAT FATAL?
+
+I believe it does.
+
+**[⬆ back to top](#)**
 
 ## Contributing
 
