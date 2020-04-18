@@ -67,7 +67,7 @@ Do you know [SASS variables](https://sass-lang.com/documentation/variables)? You
 
 We did the same for JSON.
 
-`json-variables` turns DRY file with special markers `%%_` (which are customiseable):
+`json-variables` is a JSON preprocessor which turns DRY file with special markers `%%_` (which are customiseable):
 
 ```json
 {
@@ -81,9 +81,9 @@ into "normal" JSON:
 
 ```json
 {
-  "firstName": "{{ customer.firstName }}",
-  "message": "Hi {{ customer.firstName }}",
-  "preheader": "{{ customer.firstName }}, look what's inside"
+  "firstName": "customer.firstName",
+  "message": "Hi customer.firstName",
+  "preheader": "customer.firstName, look what's inside"
 }
 ```
 
@@ -91,11 +91,21 @@ It's like SASS variables, but for JSON.
 
 This program is used in production — we use it to DRY the JSON files which hold the transactional email templates' content.
 
+`json-variables` also allows you to automatically wrap the resolved values with chosen heads and tails:
+
+```json
+{
+  "firstName": "customer.firstName",
+  "message": "Hi {{ customer.firstName }}",
+  "preheader": "{{ customer.firstName }}, look what's inside"
+}
+```
+
 **[⬆ back to top](#)**
 
 ## Features
 
-- [`object-path`](https://www.npmjs.com/package/object-path) notation
+- [`object-path`](https://www.npmjs.com/package/object-path) notation (arrays use dots too: `data.array.1` instead of `data.array[1]`)
 - `*_data` keys to dump the data nearby (customiseable naming pattern)
 - [Detects](https://github.com/codsen/string-find-heads-tails) existing heads tails and won't wrap twice
 - Battle-tested, used in production to manage email templates

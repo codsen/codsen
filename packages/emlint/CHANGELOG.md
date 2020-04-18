@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - don't raise alerts on doctype case in rule `tag-name-case` ([4d5c2a7](https://gitlab.com/codsen/codsen/commit/4d5c2a7fb7e31245e178352bccf83168404a7719))
-- fix few premature exiting functions ([f8ad307](https://gitlab.com/codsen/codsen/commit/f8ad3075e850e8622bd831d3f33c511ac9985f78))
+- fix a few premature exiting functions ([f8ad307](https://gitlab.com/codsen/codsen/commit/f8ad3075e850e8622bd831d3f33c511ac9985f78))
 - stop validateDigitAndUnit() breaking on falsey inputs, thanks to dev UMD build ([ad1fb8f](https://gitlab.com/codsen/codsen/commit/ad1fb8f2cf684c43e971844298e0e472fb2501b3))
 - support `tel:*` for `href` value ([fa9d649](https://gitlab.com/codsen/codsen/commit/fa9d6497829754a71f8c6837a7c7266b1e82a24b))
 
