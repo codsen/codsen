@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.4](https://gitlab.com/codsen/codsen/compare/string-match-left-right@4.0.3...string-match-left-right@4.0.4) (2020-04-18)
-
-**Note:** Version bump only for package string-match-left-right
-
-
-
-
-
 ## 4.0.1 (2020-03-24)
 
 ### Bug Fixes
