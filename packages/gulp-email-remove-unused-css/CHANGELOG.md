@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.77](https://gitlab.com/codsen/codsen/compare/gulp-email-remove-unused-css@3.6.76...gulp-email-remove-unused-css@3.6.77) (2020-04-18)
+
+**Note:** Version bump only for package gulp-email-remove-unused-css
+
+
+
+
+
 ## 3.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

@@ -1,7 +1,7 @@
 /**
  * csv-sort
  * Sorts double-entry bookkeeping CSV coming from internet banking
- * Version: 3.0.53
+ * Version: 3.0.54
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
@@ -340,7 +340,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.15
+   * Version: 2.0.16
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -458,7 +458,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.4
+   * Version: 3.7.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -1232,7 +1232,7 @@
   /**
    * string-remove-thousand-separators
    * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
-   * Version: 3.0.53
+   * Version: 3.0.54
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
@@ -1337,7 +1337,7 @@
   /**
    * csv-split-easy
    * Splits the CSV string into array of arrays, each representing a row of columns
-   * Version: 3.0.53
+   * Version: 3.0.54
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy

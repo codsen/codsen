@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://gitlab.com/codsen/codsen/compare/string-range-expander@1.10.58...string-range-expander@1.11.0) (2020-04-18)
+
+
+### Features
+
+* refactor, remove all dependencies (there was only one) ([6e49b8b](https://gitlab.com/codsen/codsen/commit/6e49b8b7c5a031f650f779d68480d91891aea66d))
+
+
+
+
+
 ## 1.10.45 (2019-10-02)
 
 ### Performance Improvements

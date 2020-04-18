@@ -1,7 +1,7 @@
 /**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
- * Version: 3.7.61
+ * Version: 3.7.62
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
@@ -3651,7 +3651,7 @@
   /**
    * ast-contains-only-empty-space
    * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.3
+   * Version: 1.9.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space

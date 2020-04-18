@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.0
+ * Version: 2.17.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -10013,7 +10013,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.19
+   * Version: 2.3.20
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -10060,14 +10060,14 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim().length || stopAtNewlines && (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1])))) {
+    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim().length || stopAtNewlines && (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2])))) {
+    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
     for (let i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -10090,14 +10090,14 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim().length || stopAtNewlines && (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1])))) {
+    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim().length || stopAtNewlines && (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2])))) {
+    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
     for (let i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim().length || stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i])))) {
+      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
     }
@@ -10270,7 +10270,7 @@
     }
 
     if (direction === "right") {
-      if (str[lastIdx] && str[lastIdx].trim().length) {
+      if (str[lastIdx] && str[lastIdx].trim()) {
         return lastIdx;
       }
 
@@ -10279,7 +10279,7 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim().length || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -10293,9 +10293,9 @@
       } else if (opts.mode === 2) {
         const remainderString = str.slice(lastIdx);
 
-        if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+        if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (str[y].trim().length || `\n\r`.includes(str[y])) {
+            if (str[y].trim() || `\n\r`.includes(str[y])) {
               return y;
             }
           }
@@ -10307,7 +10307,7 @@
       return whatsOnTheRight ? whatsOnTheRight : str.length;
     }
 
-    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
+    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
       return lastIdx;
     }
 
@@ -10316,10 +10316,10 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim().length || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
-          if (`\n\r`.includes(str[y]) || str[y].trim().length) {
-            return y + 1 + (str[y].trim().length ? 1 : 0);
+          if (`\n\r`.includes(str[y]) || str[y].trim()) {
+            return y + 1 + (str[y].trim() ? 1 : 0);
           }
         }
       }
@@ -10330,9 +10330,9 @@
     } else if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
-      if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+      if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
         for (let y = lastIdx; y--;) {
-          if (str[y].trim().length || `\n\r`.includes(str[y])) {
+          if (str[y].trim() || `\n\r`.includes(str[y])) {
             return y + 1;
           }
         }
@@ -10375,7 +10375,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 2.5.12
+   * Version: 2.5.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -11413,7 +11413,7 @@
   /**
    * string-process-comma-separated
    * Extracts chunks from possibly comma or whatever-separated string
-   * Version: 1.2.4
+   * Version: 1.2.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
@@ -11459,11 +11459,11 @@
     let fixable = true;
 
     for (let i = opts.from; i < opts.to; i++) {
-      if (str[i].trim().length && str[i] !== opts.separator) {
+      if (str[i].trim() && str[i] !== opts.separator) {
         lastNonWhitespaceCharAt = i;
       }
 
-      if (chunkStartsAt === null && str[i].trim().length && (!opts.separator || str[i] !== opts.separator)) {
+      if (chunkStartsAt === null && str[i].trim() && (!opts.separator || str[i] !== opts.separator)) {
         if (!firstNonwhitespaceNonseparatorCharFound) {
           firstNonwhitespaceNonseparatorCharFound = true;
         }
@@ -11484,33 +11484,33 @@
       }
 
       if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i);
+        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
 
         if (typeof opts.cb === "function") {
-          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
+          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
         }
 
         chunkStartsAt = null;
       }
 
-      if (!str[i].trim().length && whitespaceStartsAt === null) {
+      if (!str[i].trim() && whitespaceStartsAt === null) {
         whitespaceStartsAt = i;
       }
 
-      if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (whitespaceStartsAt !== null && (str[i].trim() || i + 1 === opts.to)) {
         if (whitespaceStartsAt === opts.from) {
           if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
           }
-        } else if (!str[i].trim().length && i + 1 === opts.to) {
+        } else if (!str[i].trim() && i + 1 === opts.to) {
           if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
             opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
           }
-        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
+        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
           let startingIdx = whitespaceStartsAt;
           let endingIdx = i;
 
-          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim().length) {
+          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
             endingIdx++;
           }
 
@@ -11526,7 +11526,7 @@
 
           let message = "Remove whitespace.";
 
-          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
+          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
             fixable = false;
             message = "Bad whitespace.";
           }
@@ -26307,7 +26307,7 @@
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.6
+   * Version: 1.0.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -26343,7 +26343,7 @@
       opts.offset = 0;
     }
 
-    if (str.split("").some(char => !char.trim().length)) {
+    if (str.split("").some(char => !char.trim())) {
       return {
         res: false,
         message: `Remove whitespace.`
@@ -29154,7 +29154,7 @@
   /**
    * is-language-code
    * Is given string a language code (as per IANA)
-   * Version: 1.0.3
+   * Version: 1.0.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code
@@ -29184,7 +29184,7 @@
         res: false,
         message: `Not a string given.`
       };
-    } else if (!str.trim().length) {
+    } else if (!str.trim()) {
       return {
         res: false,
         message: `Empty language tag string given.`
@@ -29916,7 +29916,7 @@
   /**
    * is-media-descriptor
    * Is given string a valid media descriptor (including media query)?
-   * Version: 1.2.5
+   * Version: 1.2.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -30147,7 +30147,7 @@
 
     if (typeof originalStr !== "string") {
       return [];
-    } else if (!originalStr.trim().length) {
+    } else if (!originalStr.trim()) {
       return [];
     }
 
@@ -30159,9 +30159,9 @@
     if (originalStr !== originalStr.trim()) {
       const ranges = [];
 
-      if (!originalStr[0].trim().length) {
+      if (!originalStr[0].trim()) {
         for (let i = 0, len = originalStr.length; i < len; i++) {
-          if (originalStr[i].trim().length) {
+          if (originalStr[i].trim()) {
             ranges.push([0 + opts.offset, i + opts.offset]);
             nonWhitespaceStart = i;
             break;
@@ -30169,9 +30169,9 @@
         }
       }
 
-      if (!originalStr[originalStr.length - 1].trim().length) {
+      if (!originalStr[originalStr.length - 1].trim()) {
         for (let i = originalStr.length; i--;) {
-          if (originalStr[i].trim().length) {
+          if (originalStr[i].trim()) {
             ranges.push([i + 1 + opts.offset, originalStr.length + opts.offset]);
             nonWhitespaceEnd = i + 1;
             break;
@@ -30288,7 +30288,7 @@
             } else {
               nonWhitespaceFound = true;
             }
-          } else if (str[i].trim().length) {
+          } else if (str[i].trim()) {
             nonWhitespaceFound = true;
           }
         }
@@ -32705,3692 +32705,1853 @@
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.1.15
+   * Version: 0.2.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
    */
-  var AMP$1 = "amp";
-  var Abreve$1 = "#x102";
-  var Acy$1 = "#x410";
-  var Afr$1 = "#x1D504";
-  var Amacr$1 = "#x100";
-  var And$2 = "#x2A53";
-  var Aogon$1 = "#x104";
-  var Aopf$1 = "#x1D538";
-  var ApplyFunction$1 = "#x2061";
-  var Ascr$2 = "#x1D49C";
-  var Assign$2 = "#x2254";
-  var Backslash$2 = "#x2216";
-  var Barv$1 = "#x2AE7";
-  var Barwed$1 = "#x2306";
-  var Bcy$1 = "#x411";
-  var Because$2 = "#x2235";
-  var Bernoullis$2 = "#x212C";
-  var Bfr$1 = "#x1D505";
-  var Bopf$1 = "#x1D539";
-  var Breve$1 = "#x2D8";
-  var Bscr$1 = "#x212C";
-  var Bumpeq$1 = "#x224E";
-  var CHcy$1 = "#x427";
-  var COPY$2 = "copy";
-  var Cacute$1 = "#x106";
-  var Cap$2 = "#x22D2";
-  var CapitalDifferentialD$1 = "#x2145";
-  var Cayleys$1 = "#x212D";
-  var Ccaron$1 = "#x10C";
-  var Ccirc$1 = "#x108";
-  var Cconint$1 = "#x2230";
-  var Cdot$1 = "#x10A";
-  var Cedilla$2 = "cedil";
-  var CenterDot$1 = "middot";
-  var Cfr$1 = "#x212D";
-  var CircleDot$1 = "#x2299";
-  var CircleMinus$1 = "#x2296";
-  var CirclePlus$1 = "oplus";
-  var CircleTimes$1 = "otimes";
-  var ClockwiseContourIntegral$1 = "#x2232";
-  var CloseCurlyDoubleQuote$1 = "rdquo";
-  var CloseCurlyQuote$1 = "rsquo";
-  var Colon$2 = "#x2237";
-  var Colone$2 = "#x2A74";
-  var Congruent$2 = "equiv";
-  var Conint$1 = "#x222F";
-  var ContourIntegral$1 = "#x222E";
-  var Copf$1 = "#x2102";
-  var Coproduct$1 = "#x2210";
-  var CounterClockwiseContourIntegral$1 = "#x2233";
-  var Cross$2 = "#x2A2F";
-  var Cscr$1 = "#x1D49E";
-  var Cup$2 = "#x22D3";
-  var CupCap$1 = "#x224D";
-  var DD$2 = "#x2145";
-  var DDotrahd$1 = "#x2911";
-  var DJcy$1 = "#x402";
-  var DScy$1 = "#x405";
-  var DZcy$1 = "#x40F";
-  var Darr$1 = "#x21A1";
-  var Dashv$1 = "#x2AE4";
-  var Dcaron$1 = "#x10E";
-  var Dcy$1 = "#x414";
-  var Del$2 = "#x2207";
-  var Dfr$1 = "#x1D507";
-  var DiacriticalAcute$1 = "acute";
-  var DiacriticalDot$1 = "#x2D9";
-  var DiacriticalDoubleAcute$1 = "#x2DD";
-  var DiacriticalGrave$1 = "#x60";
-  var DiacriticalTilde$1 = "tilde";
-  var Diamond$2 = "#x22C4";
-  var DifferentialD$1 = "#x2146";
-  var Dopf$1 = "#x1D53B";
-  var Dot$2 = "#xA8";
-  var DotDot$1 = "#x20DC";
-  var DotEqual$1 = "#x2250";
-  var DoubleContourIntegral$1 = "#x222F";
-  var DoubleDot$1 = "#xA8";
-  var DoubleDownArrow$1 = "dArr";
-  var DoubleLeftArrow$1 = "lArr";
-  var DoubleLeftRightArrow$1 = "#x21D4";
-  var DoubleLeftTee$1 = "#x2AE4";
-  var DoubleLongLeftArrow$1 = "#x27F8";
-  var DoubleLongLeftRightArrow$1 = "#x27FA";
-  var DoubleLongRightArrow$1 = "#x27F9";
-  var DoubleRightArrow$1 = "rArr";
-  var DoubleRightTee$1 = "#x22A8";
-  var DoubleUpArrow$1 = "uArr";
-  var DoubleUpDownArrow$1 = "#x21D5";
-  var DoubleVerticalBar$1 = "#x2225";
-  var DownArrow$1 = "darr";
-  var DownArrowBar$1 = "#x2913";
-  var DownArrowUpArrow$1 = "#x21F5";
-  var DownBreve$1 = "#x311";
-  var DownLeftRightVector$1 = "#x2950";
-  var DownLeftTeeVector$1 = "#x295E";
-  var DownLeftVector$1 = "#x21BD";
-  var DownLeftVectorBar$1 = "#x2956";
-  var DownRightTeeVector$1 = "#x295F";
-  var DownRightVector$1 = "#x21C1";
-  var DownRightVectorBar$1 = "#x2957";
-  var DownTee$1 = "#x22A4";
-  var DownTeeArrow$1 = "#x21A7";
-  var Downarrow$1 = "dArr";
-  var Dscr$1 = "#x1D49F";
-  var Dstrok$1 = "#x110";
-  var ENG$2 = "#x14A";
-  var Ecaron$1 = "#x11A";
-  var Ecy$1 = "#x42D";
-  var Edot$1 = "#x116";
-  var Efr$1 = "#x1D508";
-  var Element$1 = "#x2208";
-  var Emacr$1 = "#x112";
-  var EmptySmallSquare$1 = "#x25FB";
-  var EmptyVerySmallSquare$1 = "#x25AB";
-  var Eogon$1 = "#x118";
-  var Eopf$1 = "#x1D53C";
-  var Equal$2 = "#x2A75";
-  var EqualTilde$1 = "#x2242";
-  var Equilibrium$2 = "#x21CC";
-  var Escr$1 = "#x2130";
-  var Esim$1 = "#x2A73";
-  var Exists$2 = "exist";
-  var ExponentialE$1 = "#x2147";
-  var Fcy$1 = "#x424";
-  var Ffr$1 = "#x1D509";
-  var FilledSmallSquare$1 = "#x25FC";
-  var FilledVerySmallSquare$1 = "#x25AA";
-  var Fopf$1 = "#x1D53D";
-  var ForAll$1 = "forall";
-  var Fouriertrf$1 = "#x2131";
-  var Fscr$1 = "#x2131";
-  var GJcy$1 = "#x403";
-  var GT$2 = "gt";
-  var Gammad$1 = "#x3DC";
-  var Gbreve$1 = "#x11E";
-  var Gcedil$1 = "#x122";
-  var Gcirc$1 = "#x11C";
-  var Gcy$1 = "#x413";
-  var Gdot$1 = "#x120";
-  var Gfr$1 = "#x1D50A";
-  var Gg$1 = "#x22D9";
-  var Gopf$1 = "#x1D53E";
-  var GreaterEqual$1 = "ge";
-  var GreaterEqualLess$1 = "#x22DB";
-  var GreaterFullEqual$1 = "#x2267";
-  var GreaterGreater$1 = "#x2AA2";
-  var GreaterLess$1 = "#x2277";
-  var GreaterSlantEqual$1 = "#x2A7E";
-  var GreaterTilde$1 = "#x2273";
-  var Gscr$1 = "#x1D4A2";
-  var Gt$1 = "#x226B";
-  var HARDcy$1 = "#x42A";
-  var Hacek$1 = "#x2C7";
-  var Hcirc$1 = "#x124";
-  var Hfr$1 = "#x210C";
-  var HilbertSpace$1 = "#x210B";
-  var Hopf$1 = "#x210D";
-  var HorizontalLine$1 = "#x2500";
-  var Hscr$1 = "#x210B";
-  var Hstrok$1 = "#x126";
-  var HumpDownHump$1 = "#x224E";
-  var HumpEqual$1 = "#x224F";
-  var IEcy$1 = "#x415";
-  var IJlig$1 = "#x132";
-  var IOcy$1 = "#x401";
-  var Icy$1 = "#x418";
-  var Idot$1 = "#x130";
-  var Ifr$1 = "#x2111";
-  var Im$1 = "#x2111";
-  var Imacr$1 = "#x12A";
-  var ImaginaryI$1 = "#x2148";
-  var Implies$1 = "rArr";
-  var Int$1 = "#x222C";
-  var Integral$1 = "int";
-  var Intersection$1 = "#x22C2";
-  var InvisibleComma$1 = "#x2063";
-  var InvisibleTimes$1 = "#x2062";
-  var Iogon$1 = "#x12E";
-  var Iopf$1 = "#x1D540";
-  var Iscr$1 = "#x2110";
-  var Itilde$1 = "#x128";
-  var Iukcy$1 = "#x406";
-  var Jcirc$1 = "#x134";
-  var Jcy$1 = "#x419";
-  var Jfr$1 = "#x1D50D";
-  var Jopf$1 = "#x1D541";
-  var Jscr$1 = "#x1D4A5";
-  var Jsercy$1 = "#x408";
-  var Jukcy$1 = "#x404";
-  var KHcy$1 = "#x425";
-  var KJcy$1 = "#x40C";
-  var Kcedil$1 = "#x136";
-  var Kcy$1 = "#x41A";
-  var Kfr$1 = "#x1D50E";
-  var Kopf$1 = "#x1D542";
-  var Kscr$1 = "#x1D4A6";
-  var LJcy$1 = "#x409";
-  var LT$2 = "lt";
-  var Lacute$1 = "#x139";
-  var Lang$1 = "#x27EA";
-  var Laplacetrf$1 = "#x2112";
-  var Larr$1 = "#x219E";
-  var Lcaron$1 = "#x13D";
-  var Lcedil$1 = "#x13B";
-  var Lcy$1 = "#x41B";
-  var LeftAngleBracket$1 = "lang";
-  var LeftArrow$1 = "larr";
-  var LeftArrowBar$1 = "#x21E4";
-  var LeftArrowRightArrow$1 = "#x21C6";
-  var LeftCeiling$1 = "lceil";
-  var LeftDoubleBracket$1 = "#x27E6";
-  var LeftDownTeeVector$1 = "#x2961";
-  var LeftDownVector$1 = "#x21C3";
-  var LeftDownVectorBar$1 = "#x2959";
-  var LeftFloor$1 = "lfloor";
-  var LeftRightArrow$1 = "harr";
-  var LeftRightVector$1 = "#x294E";
-  var LeftTee$1 = "#x22A3";
-  var LeftTeeArrow$1 = "#x21A4";
-  var LeftTeeVector$1 = "#x295A";
-  var LeftTriangle$1 = "#x22B2";
-  var LeftTriangleBar$1 = "#x29CF";
-  var LeftTriangleEqual$1 = "#x22B4";
-  var LeftUpDownVector$1 = "#x2951";
-  var LeftUpTeeVector$1 = "#x2960";
-  var LeftUpVector$1 = "#x21BF";
-  var LeftUpVectorBar$1 = "#x2958";
-  var LeftVector$1 = "#x21BC";
-  var LeftVectorBar$1 = "#x2952";
-  var Leftarrow$1 = "lArr";
-  var Leftrightarrow$1 = "#x21D4";
-  var LessEqualGreater$1 = "#x22DA";
-  var LessFullEqual$1 = "#x2266";
-  var LessGreater$1 = "#x2276";
-  var LessLess$1 = "#x2AA1";
-  var LessSlantEqual$1 = "#x2A7D";
-  var LessTilde$1 = "#x2272";
-  var Lfr$1 = "#x1D50F";
-  var Ll$1 = "#x22D8";
-  var Lleftarrow$1 = "#x21DA";
-  var Lmidot$1 = "#x13F";
-  var LongLeftArrow$1 = "#x27F5";
-  var LongLeftRightArrow$1 = "#x27F7";
-  var LongRightArrow$1 = "#x27F6";
-  var Longleftarrow$1 = "#x27F8";
-  var Longleftrightarrow$1 = "#x27FA";
-  var Longrightarrow$1 = "#x27F9";
-  var Lopf$1 = "#x1D543";
-  var LowerLeftArrow$1 = "#x2199";
-  var LowerRightArrow$1 = "#x2198";
-  var Lscr$1 = "#x2112";
-  var Lsh$1 = "#x21B0";
-  var Lstrok$1 = "#x141";
-  var Lt$1 = "#x226A";
-  var Mcy$1 = "#x41C";
-  var MediumSpace$1 = "#x205F";
-  var Mellintrf$1 = "#x2133";
-  var Mfr$1 = "#x1D510";
-  var MinusPlus$1 = "#x2213";
-  var Mopf$1 = "#x1D544";
-  var Mscr$1 = "#x2133";
-  var NJcy$1 = "#x40A";
-  var Nacute$1 = "#x143";
-  var Ncaron$1 = "#x147";
-  var Ncedil$1 = "#x145";
-  var Ncy$1 = "#x41D";
-  var NegativeMediumSpace$1 = "#x200B";
-  var NegativeThickSpace$1 = "#x200B";
-  var NegativeThinSpace$1 = "#x200B";
-  var NegativeVeryThinSpace$1 = "#x200B";
-  var NestedGreaterGreater$1 = "#x226B";
-  var NestedLessLess$1 = "#x226A";
-  var Nfr$1 = "#x1D511";
-  var NoBreak$1 = "#x2060";
-  var NonBreakingSpace$1 = "nbsp";
-  var Nopf$1 = "#x2115";
-  var Not$2 = "#x2AEC";
-  var NotCongruent$1 = "#x2262";
-  var NotCupCap$1 = "#x226D";
-  var NotDoubleVerticalBar$1 = "#x2226";
-  var NotElement$1 = "notin";
-  var NotEqual$1 = "ne";
-  var NotEqualTilde$1 = "#x2242;&#x338";
-  var NotExists$1 = "#x2204";
-  var NotGreater$1 = "#x226F";
-  var NotGreaterEqual$1 = "#x2271";
-  var NotGreaterFullEqual$1 = "#x2267;&#x338";
-  var NotGreaterGreater$1 = "#x226B;&#x338";
-  var NotGreaterLess$1 = "#x2279";
-  var NotGreaterSlantEqual$1 = "#x2A7E;&#x338";
-  var NotGreaterTilde$1 = "#x2275";
-  var NotHumpDownHump$1 = "#x224E;&#x338";
-  var NotHumpEqual$1 = "#x224F;&#x338";
-  var NotLeftTriangle$1 = "#x22EA";
-  var NotLeftTriangleBar$1 = "#x29CF;&#x338";
-  var NotLeftTriangleEqual$1 = "#x22EC";
-  var NotLess$1 = "#x226E";
-  var NotLessEqual$1 = "#x2270";
-  var NotLessGreater$1 = "#x2278";
-  var NotLessLess$1 = "#x226A;&#x338";
-  var NotLessSlantEqual$1 = "#x2A7D;&#x338";
-  var NotLessTilde$1 = "#x2274";
-  var NotNestedGreaterGreater$1 = "#x2AA2;&#x338";
-  var NotNestedLessLess$1 = "#x2AA1;&#x338";
-  var NotPrecedes$1 = "#x2280";
-  var NotPrecedesEqual$1 = "#x2AAF;&#x338";
-  var NotPrecedesSlantEqual$1 = "#x22E0";
-  var NotReverseElement$1 = "#x220C";
-  var NotRightTriangle$1 = "#x22EB";
-  var NotRightTriangleBar$1 = "#x29D0;&#x338";
-  var NotRightTriangleEqual$1 = "#x22ED";
-  var NotSquareSubset$1 = "#x228F;&#x338";
-  var NotSquareSubsetEqual$1 = "#x22E2";
-  var NotSquareSuperset$1 = "#x2290;&#x338";
-  var NotSquareSupersetEqual$1 = "#x22E3";
-  var NotSubset$1 = "#x2282;&#x20D2";
-  var NotSubsetEqual$1 = "#x2288";
-  var NotSucceeds$1 = "#x2281";
-  var NotSucceedsEqual$1 = "#x2AB0;&#x338";
-  var NotSucceedsSlantEqual$1 = "#x22E1";
-  var NotSucceedsTilde$1 = "#x227F;&#x338";
-  var NotSuperset$1 = "#x2283;&#x20D2";
-  var NotSupersetEqual$1 = "#x2289";
-  var NotTilde$1 = "#x2241";
-  var NotTildeEqual$1 = "#x2244";
-  var NotTildeFullEqual$1 = "#x2247";
-  var NotTildeTilde$1 = "#x2249";
-  var NotVerticalBar$1 = "#x2224";
-  var Nscr$1 = "#x1D4A9";
-  var Ocy$1 = "#x41E";
-  var Odblac$1 = "#x150";
-  var Ofr$1 = "#x1D512";
-  var Omacr$1 = "#x14C";
-  var Oopf$1 = "#x1D546";
-  var OpenCurlyDoubleQuote$1 = "ldquo";
-  var OpenCurlyQuote$1 = "lsquo";
-  var Or$1 = "#x2A54";
-  var Oscr$1 = "#x1D4AA";
-  var Otimes$1 = "#x2A37";
-  var OverBar$1 = "oline";
-  var OverBrace$1 = "#x23DE";
-  var OverBracket$1 = "#x23B4";
-  var OverParenthesis$1 = "#x23DC";
-  var PartialD$1 = "part";
-  var Pcy$1 = "#x41F";
-  var Pfr$1 = "#x1D513";
-  var PlusMinus$1 = "#xB1";
-  var Poincareplane$1 = "#x210C";
-  var Popf$1 = "#x2119";
-  var Pr$1 = "#x2ABB";
-  var Precedes$1 = "#x227A";
-  var PrecedesEqual$1 = "#x2AAF";
-  var PrecedesSlantEqual$1 = "#x227C";
-  var PrecedesTilde$1 = "#x227E";
-  var Product$2 = "prod";
-  var Proportion$2 = "#x2237";
-  var Proportional$2 = "prop";
-  var Pscr$1 = "#x1D4AB";
-  var QUOT$2 = "quot";
-  var Qfr$1 = "#x1D514";
-  var Qopf$1 = "#x211A";
-  var Qscr$1 = "#x1D4AC";
-  var RBarr$1 = "#x2910";
-  var REG$2 = "reg";
-  var Racute$1 = "#x154";
-  var Rang$1 = "#x27EB";
-  var Rarr$1 = "#x21A0";
-  var Rarrtl$1 = "#x2916";
-  var Rcaron$1 = "#x158";
-  var Rcedil$1 = "#x156";
-  var Rcy$1 = "#x420";
-  var Re$2 = "#x211C";
-  var ReverseElement$1 = "ni";
-  var ReverseEquilibrium$1 = "#x21CB";
-  var ReverseUpEquilibrium$1 = "#x296F";
-  var Rfr$1 = "#x211C";
-  var RightAngleBracket$1 = "rang";
-  var RightArrow$1 = "rarr";
-  var RightArrowBar$1 = "#x21E5";
-  var RightArrowLeftArrow$1 = "#x21C4";
-  var RightCeiling$1 = "rceil";
-  var RightDoubleBracket$1 = "#x27E7";
-  var RightDownTeeVector$1 = "#x295D";
-  var RightDownVector$1 = "#x21C2";
-  var RightDownVectorBar$1 = "#x2955";
-  var RightFloor$1 = "rfloor";
-  var RightTee$1 = "#x22A2";
-  var RightTeeArrow$1 = "#x21A6";
-  var RightTeeVector$1 = "#x295B";
-  var RightTriangle$1 = "#x22B3";
-  var RightTriangleBar$1 = "#x29D0";
-  var RightTriangleEqual$1 = "#x22B5";
-  var RightUpDownVector$1 = "#x294F";
-  var RightUpTeeVector$1 = "#x295C";
-  var RightUpVector$1 = "#x21BE";
-  var RightUpVectorBar$1 = "#x2954";
-  var RightVector$1 = "#x21C0";
-  var RightVectorBar$1 = "#x2953";
-  var Rightarrow$1 = "rArr";
-  var Ropf$1 = "#x211D";
-  var RoundImplies$1 = "#x2970";
-  var Rrightarrow$1 = "#x21DB";
-  var Rscr$1 = "#x211B";
-  var Rsh$1 = "#x21B1";
-  var RuleDelayed$1 = "#x29F4";
-  var SHCHcy$1 = "#x429";
-  var SHcy$1 = "#x428";
-  var SOFTcy$1 = "#x42C";
-  var Sacute$1 = "#x15A";
-  var Sc$1 = "#x2ABC";
-  var Scedil$1 = "#x15E";
-  var Scirc$1 = "#x15C";
-  var Scy$1 = "#x421";
-  var Sfr$1 = "#x1D516";
-  var ShortDownArrow$1 = "darr";
-  var ShortLeftArrow$1 = "larr";
-  var ShortRightArrow$1 = "rarr";
-  var ShortUpArrow$1 = "uarr";
-  var SmallCircle$1 = "#x2218";
-  var Sopf$1 = "#x1D54A";
-  var Sqrt$1 = "#x221A";
-  var Square$1 = "#x25A1";
-  var SquareIntersection$1 = "#x2293";
-  var SquareSubset$1 = "#x228F";
-  var SquareSubsetEqual$1 = "#x2291";
-  var SquareSuperset$1 = "#x2290";
-  var SquareSupersetEqual$1 = "#x2292";
-  var SquareUnion$1 = "#x2294";
-  var Sscr$1 = "#x1D4AE";
-  var Star$2 = "#x22C6";
-  var Sub$2 = "#x22D0";
-  var Subset$1 = "#x22D0";
-  var SubsetEqual$1 = "sube";
-  var Succeeds$1 = "#x227B";
-  var SucceedsEqual$1 = "#x2AB0";
-  var SucceedsSlantEqual$1 = "#x227D";
-  var SucceedsTilde$1 = "#x227F";
-  var SuchThat$1 = "ni";
-  var Sum$2 = "sum";
-  var Sup$1 = "#x22D1";
-  var Superset$1 = "sup";
-  var SupersetEqual$1 = "supe";
-  var Supset$1 = "#x22D1";
-  var TRADE$2 = "trade";
-  var TSHcy$1 = "#x40B";
-  var TScy$1 = "#x426";
-  var Tab$2 = "#x9";
-  var Tcaron$1 = "#x164";
-  var Tcedil$1 = "#x162";
-  var Tcy$1 = "#x422";
-  var Tfr$1 = "#x1D517";
-  var Therefore$1 = "there4";
-  var ThickSpace$1 = "#x205F;&#x200A";
-  var ThinSpace$1 = "thinsp";
-  var Tilde$2 = "sim";
-  var TildeEqual$1 = "#x2243";
-  var TildeFullEqual$1 = "cong";
-  var TildeTilde$1 = "#x2248";
-  var Topf$1 = "#x1D54B";
-  var TripleDot$1 = "#x20DB";
-  var Tscr$1 = "#x1D4AF";
-  var Tstrok$1 = "#x166";
-  var Uarr$1 = "#x219F";
-  var Uarrocir$1 = "#x2949";
-  var Ubrcy$1 = "#x40E";
-  var Ubreve$1 = "#x16C";
-  var Ucy$1 = "#x423";
-  var Udblac$1 = "#x170";
-  var Ufr$1 = "#x1D518";
-  var Umacr$1 = "#x16A";
-  var UnderBrace$1 = "#x23DF";
-  var UnderBracket$1 = "#x23B5";
-  var UnderParenthesis$1 = "#x23DD";
-  var Union$2 = "#x22C3";
-  var UnionPlus$1 = "#x228E";
-  var Uogon$1 = "#x172";
-  var Uopf$1 = "#x1D54C";
-  var UpArrow$1 = "uarr";
-  var UpArrowBar$1 = "#x2912";
-  var UpArrowDownArrow$1 = "#x21C5";
-  var UpDownArrow$1 = "#x2195";
-  var UpEquilibrium$1 = "#x296E";
-  var UpTee$1 = "#x22A5";
-  var UpTeeArrow$1 = "#x21A5";
-  var Uparrow$1 = "uArr";
-  var Updownarrow$1 = "#x21D5";
-  var UpperLeftArrow$1 = "#x2196";
-  var UpperRightArrow$1 = "#x2197";
-  var Upsi$2 = "#x3D2";
-  var Uring$1 = "#x16E";
-  var Uscr$1 = "#x1D4B0";
-  var Utilde$1 = "#x168";
-  var VDash$1 = "#x22AB";
-  var Vbar$1 = "#x2AEB";
-  var Vcy$1 = "#x412";
-  var Vdash$1 = "#x22A9";
-  var Vdashl$1 = "#x2AE6";
-  var Vee$1 = "#x22C1";
-  var Verbar$1 = "#x2016";
-  var Vert$2 = "#x2016";
-  var VerticalBar$1 = "#x2223";
-  var VerticalSeparator$1 = "#x2758";
-  var VerticalTilde$1 = "#x2240";
-  var VeryThinSpace$1 = "#x200A";
-  var Vfr$1 = "#x1D519";
-  var Vopf$1 = "#x1D54D";
-  var Vscr$1 = "#x1D4B1";
-  var Vvdash$1 = "#x22AA";
-  var Wcirc$1 = "#x174";
-  var Wedge$2 = "#x22C0";
-  var Wfr$1 = "#x1D51A";
-  var Wopf$1 = "#x1D54E";
-  var Wscr$1 = "#x1D4B2";
-  var Xfr$1 = "#x1D51B";
-  var Xopf$1 = "#x1D54F";
-  var Xscr$1 = "#x1D4B3";
-  var YAcy$1 = "#x42F";
-  var YIcy$1 = "#x407";
-  var YUcy$1 = "#x42E";
-  var Ycirc$2 = "#x176";
-  var Ycy$1 = "#x42B";
-  var Yfr$1 = "#x1D51C";
-  var Yopf$1 = "#x1D550";
-  var Yscr$1 = "#x1D4B4";
-  var ZHcy$1 = "#x416";
-  var Zacute$2 = "#x179";
-  var Zcaron$1 = "#x17D";
-  var Zcy$1 = "#x417";
-  var Zdot$1 = "#x17B";
-  var ZeroWidthSpace$1 = "#x200B";
-  var Zfr$1 = "#x2128";
-  var Zopf$1 = "#x2124";
-  var Zscr$1 = "#x1D4B5";
-  var abreve$1 = "#x103";
-  var ac$2 = "#x223E";
-  var acE$1 = "#x223E;&#x333";
-  var acd$1 = "#x223F";
-  var acy$1 = "#x430";
-  var af$1 = "#x2061";
-  var afr$1 = "#x1D51E";
-  var aleph$1 = "#x2135";
-  var amacr$1 = "#x101";
-  var amalg$1 = "#x2A3F";
-  var andand$1 = "#x2A55";
-  var andd$1 = "#x2A5C";
-  var andslope$1 = "#x2A58";
-  var andv$1 = "#x2A5A";
-  var ange$2 = "#x29A4";
-  var angle$2 = "ang";
-  var angmsd$1 = "#x2221";
-  var angmsdaa$1 = "#x29A8";
-  var angmsdab$1 = "#x29A9";
-  var angmsdac$1 = "#x29AA";
-  var angmsdad$1 = "#x29AB";
-  var angmsdae$1 = "#x29AC";
-  var angmsdaf$1 = "#x29AD";
-  var angmsdag$1 = "#x29AE";
-  var angmsdah$1 = "#x29AF";
-  var angrt$1 = "#x221F";
-  var angrtvb$1 = "#x22BE";
-  var angrtvbd$1 = "#x299D";
-  var angsph$1 = "#x2222";
-  var angst$2 = "#xC5";
-  var angzarr$1 = "#x237C";
-  var aogon$1 = "#x105";
-  var aopf$1 = "#x1D552";
-  var ap$2 = "#x2248";
-  var apE$1 = "#x2A70";
-  var apacir$1 = "#x2A6F";
-  var ape$2 = "#x224A";
-  var apid$1 = "#x224B";
-  var approx$2 = "#x2248";
-  var approxeq$1 = "#x224A";
-  var ascr$2 = "#x1D4B6";
-  var asympeq$1 = "#x224D";
-  var awconint$1 = "#x2233";
-  var awint$1 = "#x2A11";
-  var bNot$1 = "#x2AED";
-  var backcong$1 = "#x224C";
-  var backepsilon$1 = "#x3F6";
-  var backprime$1 = "#x2035";
-  var backsim$1 = "#x223D";
-  var backsimeq$1 = "#x22CD";
-  var barvee$1 = "#x22BD";
-  var barwed$1 = "#x2305";
-  var barwedge$2 = "#x2305";
-  var bbrk$1 = "#x23B5";
-  var bbrktbrk$1 = "#x23B6";
-  var bcong$1 = "#x224C";
-  var bcy$1 = "#x431";
-  var becaus$2 = "#x2235";
-  var because$2 = "#x2235";
-  var bemptyv$1 = "#x29B0";
-  var bepsi$2 = "#x3F6";
-  var bernou$1 = "#x212C";
-  var beth$2 = "#x2136";
-  var between$2 = "#x226C";
-  var bfr$1 = "#x1D51F";
-  var bigcap$1 = "#x22C2";
-  var bigcirc$1 = "#x25EF";
-  var bigcup$1 = "#x22C3";
-  var bigodot$1 = "#x2A00";
-  var bigoplus$1 = "#x2A01";
-  var bigotimes$1 = "#x2A02";
-  var bigsqcup$1 = "#x2A06";
-  var bigstar$1 = "#x2605";
-  var bigtriangledown$1 = "#x25BD";
-  var bigtriangleup$1 = "#x25B3";
-  var biguplus$1 = "#x2A04";
-  var bigvee$1 = "#x22C1";
-  var bigwedge$1 = "#x22C0";
-  var bkarow$1 = "#x290D";
-  var blacklozenge$1 = "#x29EB";
-  var blacksquare$1 = "#x25AA";
-  var blacktriangle$1 = "#x25B4";
-  var blacktriangledown$1 = "#x25BE";
-  var blacktriangleleft$1 = "#x25C2";
-  var blacktriangleright$1 = "#x25B8";
-  var blank$2 = "#x2423";
-  var blk12$1 = "#x2592";
-  var blk14$1 = "#x2591";
-  var blk34$1 = "#x2593";
-  var block$2 = "#x2588";
-  var bne$1 = "&#x20E5";
-  var bnequiv$1 = "#x2261;&#x20E5";
-  var bnot$1 = "#x2310";
-  var bopf$1 = "#x1D553";
-  var bot$2 = "#x22A5";
-  var bottom$2 = "#x22A5";
-  var bowtie$2 = "#x22C8";
-  var boxDL$1 = "#x2557";
-  var boxDR$1 = "#x2554";
-  var boxDl$1 = "#x2556";
-  var boxDr$1 = "#x2553";
-  var boxH$1 = "#x2550";
-  var boxHD$1 = "#x2566";
-  var boxHU$1 = "#x2569";
-  var boxHd$1 = "#x2564";
-  var boxHu$1 = "#x2567";
-  var boxUL$1 = "#x255D";
-  var boxUR$1 = "#x255A";
-  var boxUl$1 = "#x255C";
-  var boxUr$1 = "#x2559";
-  var boxV$1 = "#x2551";
-  var boxVH$1 = "#x256C";
-  var boxVL$1 = "#x2563";
-  var boxVR$1 = "#x2560";
-  var boxVh$1 = "#x256B";
-  var boxVl$1 = "#x2562";
-  var boxVr$1 = "#x255F";
-  var boxbox$1 = "#x29C9";
-  var boxdL$1 = "#x2555";
-  var boxdR$1 = "#x2552";
-  var boxdl$1 = "#x2510";
-  var boxdr$1 = "#x250C";
-  var boxh$1 = "#x2500";
-  var boxhD$1 = "#x2565";
-  var boxhU$1 = "#x2568";
-  var boxhd$1 = "#x252C";
-  var boxhu$1 = "#x2534";
-  var boxminus$1 = "#x229F";
-  var boxplus$1 = "#x229E";
-  var boxtimes$1 = "#x22A0";
-  var boxuL$1 = "#x255B";
-  var boxuR$1 = "#x2558";
-  var boxul$1 = "#x2518";
-  var boxur$1 = "#x2514";
-  var boxv$1 = "#x2502";
-  var boxvH$1 = "#x256A";
-  var boxvL$1 = "#x2561";
-  var boxvR$1 = "#x255E";
-  var boxvh$1 = "#x253C";
-  var boxvl$1 = "#x2524";
-  var boxvr$1 = "#x251C";
-  var bprime$1 = "#x2035";
-  var breve$2 = "#x2D8";
-  var bscr$1 = "#x1D4B7";
-  var bsemi$1 = "#x204F";
-  var bsim$1 = "#x223D";
-  var bsime$1 = "#x22CD";
-  var bsolb$1 = "#x29C5";
-  var bsolhsub$1 = "#x27C8";
-  var bullet$2 = "bull";
-  var bump$2 = "#x224E";
-  var bumpE$1 = "#x2AAE";
-  var bumpe$1 = "#x224F";
-  var bumpeq$1 = "#x224F";
-  var cacute$2 = "#x107";
-  var capand$2 = "#x2A44";
-  var capbrcup$1 = "#x2A49";
-  var capcap$1 = "#x2A4B";
-  var capcup$1 = "#x2A47";
-  var capdot$1 = "#x2A40";
-  var caps$2 = "#x2229;&#xFE00";
-  var caret$2 = "#x2041";
-  var caron$2 = "#x2C7";
-  var ccaps$1 = "#x2A4D";
-  var ccaron$1 = "#x10D";
-  var ccirc$1 = "#x109";
-  var ccups$1 = "#x2A4C";
-  var ccupssm$1 = "#x2A50";
-  var cdot$1 = "#x10B";
-  var cemptyv$1 = "#x29B2";
-  var centerdot$1 = "middot";
-  var cfr$1 = "#x1D520";
-  var chcy$1 = "#x447";
-  var check$2 = "#x2713";
-  var checkmark$2 = "#x2713";
-  var cir$2 = "#x25CB";
-  var cirE$1 = "#x29C3";
-  var circeq$1 = "#x2257";
-  var circlearrowleft$1 = "#x21BA";
-  var circlearrowright$1 = "#x21BB";
-  var circledR$1 = "reg";
-  var circledS$1 = "#x24C8";
-  var circledast$1 = "#x229B";
-  var circledcirc$1 = "#x229A";
-  var circleddash$1 = "#x229D";
-  var cire$1 = "#x2257";
-  var cirfnint$1 = "#x2A10";
-  var cirmid$1 = "#x2AEF";
-  var cirscir$1 = "#x29C2";
-  var clubsuit$2 = "clubs";
-  var colone$2 = "#x2254";
-  var coloneq$1 = "#x2254";
-  var comp$2 = "#x2201";
-  var compfn$1 = "#x2218";
-  var complement$2 = "#x2201";
-  var complexes$2 = "#x2102";
-  var congdot$1 = "#x2A6D";
-  var conint$2 = "#x222E";
-  var copf$2 = "#x1D554";
-  var coprod$2 = "#x2210";
-  var copysr$1 = "#x2117";
-  var cross$2 = "#x2717";
-  var cscr$1 = "#x1D4B8";
-  var csub$1 = "#x2ACF";
-  var csube$1 = "#x2AD1";
-  var csup$1 = "#x2AD0";
-  var csupe$1 = "#x2AD2";
-  var ctdot$1 = "#x22EF";
-  var cudarrl$1 = "#x2938";
-  var cudarrr$1 = "#x2935";
-  var cuepr$1 = "#x22DE";
-  var cuesc$1 = "#x22DF";
-  var cularr$1 = "#x21B6";
-  var cularrp$1 = "#x293D";
-  var cupbrcap$1 = "#x2A48";
-  var cupcap$1 = "#x2A46";
-  var cupcup$1 = "#x2A4A";
-  var cupdot$1 = "#x228D";
-  var cupor$1 = "#x2A45";
-  var cups$2 = "#x222A;&#xFE00";
-  var curarr$1 = "#x21B7";
-  var curarrm$1 = "#x293C";
-  var curlyeqprec$1 = "#x22DE";
-  var curlyeqsucc$1 = "#x22DF";
-  var curlyvee$1 = "#x22CE";
-  var curlywedge$1 = "#x22CF";
-  var curvearrowleft$1 = "#x21B6";
-  var curvearrowright$1 = "#x21B7";
-  var cuvee$1 = "#x22CE";
-  var cuwed$1 = "#x22CF";
-  var cwconint$1 = "#x2232";
-  var cwint$1 = "#x2231";
-  var cylcty$1 = "#x232D";
-  var dHar$1 = "#x2965";
-  var daleth$2 = "#x2138";
-  var dash$2 = "#x2010";
-  var dashv$1 = "#x22A3";
-  var dbkarow$1 = "#x290F";
-  var dblac$1 = "#x2DD";
-  var dcaron$1 = "#x10F";
-  var dcy$1 = "#x434";
-  var dd$2 = "#x2146";
-  var ddagger$1 = "Dagger";
-  var ddarr$1 = "#x21CA";
-  var ddotseq$1 = "#x2A77";
-  var demptyv$1 = "#x29B1";
-  var dfisht$1 = "#x297F";
-  var dfr$1 = "#x1D521";
-  var dharl$1 = "#x21C3";
-  var dharr$2 = "#x21C2";
-  var diam$2 = "#x22C4";
-  var diamond$2 = "#x22C4";
-  var diamondsuit$1 = "diams";
-  var die$2 = "#xA8";
-  var digamma$2 = "#x3DD";
-  var disin$2 = "#x22F2";
-  var div$2 = "#xF7";
-  var divideontimes$1 = "#x22C7";
-  var divonx$1 = "#x22C7";
-  var djcy$1 = "#x452";
-  var dlcorn$1 = "#x231E";
-  var dlcrop$1 = "#x230D";
-  var dopf$2 = "#x1D555";
-  var dot$2 = "#x2D9";
-  var doteq$1 = "#x2250";
-  var doteqdot$1 = "#x2251";
-  var dotminus$1 = "#x2238";
-  var dotplus$1 = "#x2214";
-  var dotsquare$1 = "#x22A1";
-  var doublebarwedge$1 = "#x2306";
-  var downarrow$1 = "darr";
-  var downdownarrows$1 = "#x21CA";
-  var downharpoonleft$1 = "#x21C3";
-  var downharpoonright$1 = "#x21C2";
-  var drbkarow$1 = "#x2910";
-  var drcorn$1 = "#x231F";
-  var drcrop$1 = "#x230C";
-  var dscr$1 = "#x1D4B9";
-  var dscy$1 = "#x455";
-  var dsol$2 = "#x29F6";
-  var dstrok$1 = "#x111";
-  var dtdot$1 = "#x22F1";
-  var dtri$2 = "#x25BF";
-  var dtrif$1 = "#x25BE";
-  var duarr$1 = "#x21F5";
-  var duhar$1 = "#x296F";
-  var dwangle$1 = "#x29A6";
-  var dzcy$1 = "#x45F";
-  var dzigrarr$1 = "#x27FF";
-  var eDDot$1 = "#x2A77";
-  var eDot$1 = "#x2251";
-  var easter$2 = "#x2A6E";
-  var ecaron$1 = "#x11B";
-  var ecir$2 = "#x2256";
-  var ecolon$2 = "#x2255";
-  var ecy$2 = "#x44D";
-  var edot$2 = "#x117";
-  var ee$2 = "#x2147";
-  var efDot$1 = "#x2252";
-  var efr$2 = "#x1D522";
-  var eg$2 = "#x2A9A";
-  var egs$2 = "#x2A96";
-  var egsdot$1 = "#x2A98";
-  var el$2 = "#x2A99";
-  var elinters$1 = "#x23E7";
-  var ell$2 = "#x2113";
-  var els$2 = "#x2A95";
-  var elsdot$1 = "#x2A97";
-  var emacr$1 = "#x113";
-  var emptyset$1 = "empty";
-  var emptyv$1 = "empty";
-  var emsp13$1 = "#x2004";
-  var emsp14$1 = "#x2005";
-  var eng$2 = "#x14B";
-  var eogon$1 = "#x119";
-  var eopf$1 = "#x1D556";
-  var epar$1 = "#x22D5";
-  var eparsl$1 = "#x29E3";
-  var eplus$1 = "#x2A71";
-  var epsi$2 = "#x3B5";
-  var epsiv$1 = "#x3F5";
-  var eqcirc$1 = "#x2256";
-  var eqcolon$1 = "#x2255";
-  var eqsim$1 = "#x2242";
-  var eqslantgtr$1 = "#x2A96";
-  var eqslantless$1 = "#x2A95";
-  var equest$2 = "#x225F";
-  var equivDD$1 = "#x2A78";
-  var eqvparsl$1 = "#x29E5";
-  var erDot$1 = "#x2253";
-  var erarr$1 = "#x2971";
-  var escr$2 = "#x212F";
-  var esdot$1 = "#x2250";
-  var esim$2 = "#x2242";
-  var expectation$2 = "#x2130";
-  var exponentiale$1 = "#x2147";
-  var fallingdotseq$1 = "#x2252";
-  var fcy$1 = "#x444";
-  var female$2 = "#x2640";
-  var ffilig$1 = "#xFB03";
-  var fflig$1 = "#xFB00";
-  var ffllig$1 = "#xFB04";
-  var ffr$1 = "#x1D523";
-  var filig$1 = "#xFB01";
-  var flat$2 = "#x266D";
-  var fllig$1 = "#xFB02";
-  var fltns$1 = "#x25B1";
-  var fopf$1 = "#x1D557";
-  var fork$2 = "#x22D4";
-  var forkv$1 = "#x2AD9";
-  var fpartint$1 = "#x2A0D";
-  var frac13$1 = "#x2153";
-  var frac15$1 = "#x2155";
-  var frac16$1 = "#x2159";
-  var frac18$1 = "#x215B";
-  var frac23$1 = "#x2154";
-  var frac25$1 = "#x2156";
-  var frac35$1 = "#x2157";
-  var frac38$1 = "#x215C";
-  var frac45$1 = "#x2158";
-  var frac56$1 = "#x215A";
-  var frac58$1 = "#x215D";
-  var frac78$1 = "#x215E";
-  var frown$2 = "#x2322";
-  var fscr$1 = "#x1D4BB";
-  var gE$1 = "#x2267";
-  var gEl$1 = "#x2A8C";
-  var gacute$1 = "#x1F5";
-  var gammad$1 = "#x3DD";
-  var gap$2 = "#x2A86";
-  var gbreve$1 = "#x11F";
-  var gcirc$1 = "#x11D";
-  var gcy$2 = "#x433";
-  var gdot$1 = "#x121";
-  var gel$2 = "#x22DB";
-  var geq$2 = "ge";
-  var geqq$1 = "#x2267";
-  var geqslant$1 = "#x2A7E";
-  var ges$2 = "#x2A7E";
-  var gescc$1 = "#x2AA9";
-  var gesdot$1 = "#x2A80";
-  var gesdoto$1 = "#x2A82";
-  var gesdotol$1 = "#x2A84";
-  var gesl$2 = "#x22DB;&#xFE00";
-  var gesles$1 = "#x2A94";
-  var gfr$1 = "#x1D524";
-  var gg$2 = "#x226B";
-  var ggg$1 = "#x22D9";
-  var gimel$1 = "#x2137";
-  var gjcy$1 = "#x453";
-  var gl$2 = "#x2277";
-  var glE$1 = "#x2A92";
-  var gla$2 = "#x2AA5";
-  var glj$1 = "#x2AA4";
-  var gnE$1 = "#x2269";
-  var gnap$1 = "#x2A8A";
-  var gnapprox$1 = "#x2A8A";
-  var gne$2 = "#x2A88";
-  var gneq$1 = "#x2A88";
-  var gneqq$1 = "#x2269";
-  var gnsim$1 = "#x22E7";
-  var gopf$1 = "#x1D558";
-  var grave$2 = "#x60";
-  var gscr$1 = "#x210A";
-  var gsim$1 = "#x2273";
-  var gsime$1 = "#x2A8E";
-  var gsiml$1 = "#x2A90";
-  var gtcc$1 = "#x2AA7";
-  var gtcir$1 = "#x2A7A";
-  var gtdot$1 = "#x22D7";
-  var gtlPar$1 = "#x2995";
-  var gtquest$1 = "#x2A7C";
-  var gtrapprox$1 = "#x2A86";
-  var gtrarr$1 = "#x2978";
-  var gtrdot$1 = "#x22D7";
-  var gtreqless$1 = "#x22DB";
-  var gtreqqless$1 = "#x2A8C";
-  var gtrless$1 = "#x2277";
-  var gtrsim$1 = "#x2273";
-  var gvertneqq$1 = "#x2269;&#xFE00";
-  var gvnE$1 = "#x2269;&#xFE00";
-  var hairsp$1 = "#x200A";
-  var half$2 = "#xBD";
-  var hamilt$1 = "#x210B";
-  var hardcy$1 = "#x44A";
-  var harrcir$1 = "#x2948";
-  var harrw$1 = "#x21AD";
-  var hbar$1 = "#x210F";
-  var hcirc$1 = "#x125";
-  var heartsuit$1 = "hearts";
-  var hercon$1 = "#x22B9";
-  var hfr$1 = "#x1D525";
-  var hksearow$1 = "#x2925";
-  var hkswarow$1 = "#x2926";
-  var hoarr$1 = "#x21FF";
-  var homtht$1 = "#x223B";
-  var hookleftarrow$1 = "#x21A9";
-  var hookrightarrow$1 = "#x21AA";
-  var hopf$2 = "#x1D559";
-  var horbar$1 = "#x2015";
-  var hscr$1 = "#x1D4BD";
-  var hslash$1 = "#x210F";
-  var hstrok$1 = "#x127";
-  var hybull$1 = "#x2043";
-  var hyphen$2 = "#x2010";
-  var ic$2 = "#x2063";
-  var icy$2 = "#x438";
-  var iecy$1 = "#x435";
-  var iff$2 = "#x21D4";
-  var ifr$1 = "#x1D526";
-  var ii$2 = "#x2148";
-  var iiiint$1 = "#x2A0C";
-  var iiint$1 = "#x222D";
-  var iinfin$1 = "#x29DC";
-  var iiota$1 = "#x2129";
-  var ijlig$1 = "#x133";
-  var imacr$1 = "#x12B";
-  var imagline$1 = "#x2110";
-  var imagpart$1 = "#x2111";
-  var imath$1 = "#x131";
-  var imof$1 = "#x22B7";
-  var imped$2 = "#x1B5";
-  var incare$1 = "#x2105";
-  var infintie$1 = "#x29DD";
-  var inodot$1 = "#x131";
-  var intcal$1 = "#x22BA";
-  var integers$2 = "#x2124";
-  var intercal$1 = "#x22BA";
-  var intlarhk$1 = "#x2A17";
-  var intprod$1 = "#x2A3C";
-  var iocy$2 = "#x451";
-  var iogon$2 = "#x12F";
-  var iopf$1 = "#x1D55A";
-  var iprod$1 = "#x2A3C";
-  var iscr$1 = "#x1D4BE";
-  var isinE$1 = "#x22F9";
-  var isindot$1 = "#x22F5";
-  var isins$1 = "#x22F4";
-  var isinsv$1 = "#x22F3";
-  var isinv$1 = "#x2208";
-  var it$2 = "#x2062";
-  var itilde$1 = "#x129";
-  var iukcy$1 = "#x456";
-  var jcirc$1 = "#x135";
-  var jcy$1 = "#x439";
-  var jfr$1 = "#x1D527";
-  var jmath$1 = "#x237";
-  var jopf$1 = "#x1D55B";
-  var jscr$1 = "#x1D4BF";
-  var jsercy$1 = "#x458";
-  var jukcy$1 = "#x454";
-  var kappav$1 = "#x3F0";
-  var kcedil$1 = "#x137";
-  var kcy$1 = "#x43A";
-  var kfr$1 = "#x1D528";
-  var kgreen$1 = "#x138";
-  var khcy$1 = "#x445";
-  var kjcy$1 = "#x45C";
-  var kopf$2 = "#x1D55C";
-  var kscr$1 = "#x1D4C0";
-  var lAarr$1 = "#x21DA";
-  var lAtail$1 = "#x291B";
-  var lBarr$1 = "#x290E";
-  var lE$1 = "#x2266";
-  var lEg$1 = "#x2A8B";
-  var lHar$1 = "#x2962";
-  var lacute$1 = "#x13A";
-  var laemptyv$1 = "#x29B4";
-  var lagran$1 = "#x2112";
-  var langd$1 = "#x2991";
-  var langle$1 = "lang";
-  var lap$2 = "#x2A85";
-  var larrb$1 = "#x21E4";
-  var larrbfs$1 = "#x291F";
-  var larrfs$1 = "#x291D";
-  var larrhk$1 = "#x21A9";
-  var larrlp$1 = "#x21AB";
-  var larrpl$1 = "#x2939";
-  var larrsim$1 = "#x2973";
-  var larrtl$1 = "#x21A2";
-  var lat$2 = "#x2AAB";
-  var latail$1 = "#x2919";
-  var late$2 = "#x2AAD";
-  var lates$2 = "#x2AAD;&#xFE00";
-  var lbarr$1 = "#x290C";
-  var lbbrk$1 = "#x2772";
-  var lbrace$1 = "{";
-  var lbrack$1 = "[";
-  var lbrke$1 = "#x298B";
-  var lbrksld$1 = "#x298F";
-  var lbrkslu$1 = "#x298D";
-  var lcaron$1 = "#x13E";
-  var lcedil$1 = "#x13C";
-  var lcub$1 = "{";
-  var lcy$1 = "#x43B";
-  var ldca$1 = "#x2936";
-  var ldquor$1 = "bdquo";
-  var ldrdhar$1 = "#x2967";
-  var ldrushar$1 = "#x294B";
-  var ldsh$1 = "#x21B2";
-  var leftarrow$1 = "larr";
-  var leftarrowtail$1 = "#x21A2";
-  var leftharpoondown$1 = "#x21BD";
-  var leftharpoonup$1 = "#x21BC";
-  var leftleftarrows$1 = "#x21C7";
-  var leftrightarrow$1 = "harr";
-  var leftrightarrows$1 = "#x21C6";
-  var leftrightharpoons$1 = "#x21CB";
-  var leftrightsquigarrow$1 = "#x21AD";
-  var leftthreetimes$1 = "#x22CB";
-  var leg$2 = "#x22DA";
-  var leq$2 = "le";
-  var leqq$1 = "#x2266";
-  var leqslant$1 = "#x2A7D";
-  var les$2 = "#x2A7D";
-  var lescc$1 = "#x2AA8";
-  var lesdot$1 = "#x2A7F";
-  var lesdoto$1 = "#x2A81";
-  var lesdotor$1 = "#x2A83";
-  var lesg$1 = "#x22DA;&#xFE00";
-  var lesges$1 = "#x2A93";
-  var lessapprox$1 = "#x2A85";
-  var lessdot$1 = "#x22D6";
-  var lesseqgtr$1 = "#x22DA";
-  var lesseqqgtr$1 = "#x2A8B";
-  var lessgtr$1 = "#x2276";
-  var lesssim$1 = "#x2272";
-  var lfisht$1 = "#x297C";
-  var lfr$1 = "#x1D529";
-  var lg$2 = "#x2276";
-  var lgE$1 = "#x2A91";
-  var lhard$1 = "#x21BD";
-  var lharu$1 = "#x21BC";
-  var lharul$1 = "#x296A";
-  var lhblk$1 = "#x2584";
-  var ljcy$1 = "#x459";
-  var ll$2 = "#x226A";
-  var llarr$1 = "#x21C7";
-  var llcorner$1 = "#x231E";
-  var llhard$1 = "#x296B";
-  var lltri$1 = "#x25FA";
-  var lmidot$1 = "#x140";
-  var lmoust$1 = "#x23B0";
-  var lmoustache$1 = "#x23B0";
-  var lnE$1 = "#x2268";
-  var lnap$1 = "#x2A89";
-  var lnapprox$1 = "#x2A89";
-  var lne$2 = "#x2A87";
-  var lneq$1 = "#x2A87";
-  var lneqq$1 = "#x2268";
-  var lnsim$1 = "#x22E6";
-  var loang$1 = "#x27EC";
-  var loarr$1 = "#x21FD";
-  var lobrk$1 = "#x27E6";
-  var longleftarrow$1 = "#x27F5";
-  var longleftrightarrow$1 = "#x27F7";
-  var longmapsto$1 = "#x27FC";
-  var longrightarrow$1 = "#x27F6";
-  var looparrowleft$1 = "#x21AB";
-  var looparrowright$1 = "#x21AC";
-  var lopar$1 = "#x2985";
-  var lopf$1 = "#x1D55D";
-  var loplus$1 = "#x2A2D";
-  var lotimes$1 = "#x2A34";
-  var lozenge$2 = "loz";
-  var lozf$1 = "#x29EB";
-  var lparlt$1 = "#x2993";
-  var lrarr$1 = "#x21C6";
-  var lrcorner$1 = "#x231F";
-  var lrhar$1 = "#x21CB";
-  var lrhard$1 = "#x296D";
-  var lrtri$1 = "#x22BF";
-  var lscr$1 = "#x1D4C1";
-  var lsh$2 = "#x21B0";
-  var lsim$1 = "#x2272";
-  var lsime$1 = "#x2A8D";
-  var lsimg$1 = "#x2A8F";
-  var lsquor$1 = "sbquo";
-  var lstrok$1 = "#x142";
-  var ltcc$1 = "#x2AA6";
-  var ltcir$1 = "#x2A79";
-  var ltdot$1 = "#x22D6";
-  var lthree$1 = "#x22CB";
-  var ltimes$2 = "#x22C9";
-  var ltlarr$1 = "#x2976";
-  var ltquest$1 = "#x2A7B";
-  var ltrPar$1 = "#x2996";
-  var ltri$1 = "#x25C3";
-  var ltrie$1 = "#x22B4";
-  var ltrif$1 = "#x25C2";
-  var lurdshar$1 = "#x294A";
-  var luruhar$1 = "#x2966";
-  var lvertneqq$1 = "#x2268;&#xFE00";
-  var lvnE$1 = "#x2268;&#xFE00";
-  var mDDot$1 = "#x223A";
-  var male$2 = "#x2642";
-  var malt$2 = "#x2720";
-  var maltese$1 = "#x2720";
-  var map$2 = "#x21A6";
-  var mapsto$1 = "#x21A6";
-  var mapstodown$1 = "#x21A7";
-  var mapstoleft$1 = "#x21A4";
-  var mapstoup$1 = "#x21A5";
-  var marker$2 = "#x25AE";
-  var mcomma$1 = "#x2A29";
-  var mcy$1 = "#x43C";
-  var measuredangle$1 = "#x2221";
-  var mfr$1 = "#x1D52A";
-  var mho$1 = "#x2127";
-  var mid$2 = "#x2223";
-  var midcir$1 = "#x2AF0";
-  var minusb$1 = "#x229F";
-  var minusd$1 = "#x2238";
-  var minusdu$1 = "#x2A2A";
-  var mlcp$1 = "#x2ADB";
-  var mldr$1 = "#x2026";
-  var mnplus$1 = "#x2213";
-  var models$2 = "#x22A7";
-  var mopf$1 = "#x1D55E";
-  var mp$2 = "#x2213";
-  var mscr$1 = "#x1D4C2";
-  var mstpos$1 = "#x223E";
-  var multimap$1 = "#x22B8";
-  var mumap$1 = "#x22B8";
-  var nGg$1 = "#x22D9;&#x338";
-  var nGt$1 = "#x226B;&#x20D2";
-  var nGtv$1 = "#x226B;&#x338";
-  var nLeftarrow$1 = "#x21CD";
-  var nLeftrightarrow$1 = "#x21CE";
-  var nLl$1 = "#x22D8;&#x338";
-  var nLt$1 = "#x226A;&#x20D2";
-  var nLtv$1 = "#x226A;&#x338";
-  var nRightarrow$1 = "#x21CF";
-  var nVDash$1 = "#x22AF";
-  var nVdash$1 = "#x22AE";
-  var nacute$1 = "#x144";
-  var nang$2 = "#x2220;&#x20D2";
-  var nap$2 = "#x2249";
-  var napE$1 = "#x2A70;&#x338";
-  var napid$1 = "#x224B;&#x338";
-  var napos$1 = "#x149";
-  var napprox$1 = "#x2249";
-  var natur$1 = "#x266E";
-  var natural$2 = "#x266E";
-  var naturals$2 = "#x2115";
-  var nbump$1 = "#x224E;&#x338";
-  var nbumpe$1 = "#x224F;&#x338";
-  var ncap$1 = "#x2A43";
-  var ncaron$1 = "#x148";
-  var ncedil$1 = "#x146";
-  var ncong$1 = "#x2247";
-  var ncongdot$1 = "#x2A6D;&#x338";
-  var ncup$1 = "#x2A42";
-  var ncy$2 = "#x43D";
-  var neArr$1 = "#x21D7";
-  var nearhk$1 = "#x2924";
-  var nearr$1 = "#x2197";
-  var nearrow$1 = "#x2197";
-  var nedot$1 = "#x2250;&#x338";
-  var nequiv$1 = "#x2262";
-  var nesear$1 = "#x2928";
-  var nesim$1 = "#x2242;&#x338";
-  var nexist$1 = "#x2204";
-  var nexists$1 = "#x2204";
-  var nfr$1 = "#x1D52B";
-  var ngE$1 = "#x2267;&#x338";
-  var nge$2 = "#x2271";
-  var ngeq$1 = "#x2271";
-  var ngeqq$1 = "#x2267;&#x338";
-  var ngeqslant$1 = "#x2A7E;&#x338";
-  var nges$1 = "#x2A7E;&#x338";
-  var ngsim$1 = "#x2275";
-  var ngt$2 = "#x226F";
-  var ngtr$1 = "#x226F";
-  var nhArr$1 = "#x21CE";
-  var nharr$1 = "#x21AE";
-  var nhpar$1 = "#x2AF2";
-  var nis$2 = "#x22FC";
-  var nisd$1 = "#x22FA";
-  var niv$1 = "ni";
-  var njcy$1 = "#x45A";
-  var nlArr$1 = "#x21CD";
-  var nlE$1 = "#x2266;&#x338";
-  var nlarr$1 = "#x219A";
-  var nldr$1 = "#x2025";
-  var nle$2 = "#x2270";
-  var nleftarrow$1 = "#x219A";
-  var nleftrightarrow$1 = "#x21AE";
-  var nleq$1 = "#x2270";
-  var nleqq$1 = "#x2266;&#x338";
-  var nleqslant$1 = "#x2A7D;&#x338";
-  var nles$2 = "#x2A7D;&#x338";
-  var nless$2 = "#x226E";
-  var nlsim$1 = "#x2274";
-  var nlt$2 = "#x226E";
-  var nltri$1 = "#x22EA";
-  var nltrie$1 = "#x22EC";
-  var nmid$1 = "#x2224";
-  var nopf$2 = "#x1D55F";
-  var notinE$1 = "#x22F9;&#x338";
-  var notindot$1 = "#x22F5;&#x338";
-  var notinva$1 = "notin";
-  var notinvb$1 = "#x22F7";
-  var notinvc$1 = "#x22F6";
-  var notni$1 = "#x220C";
-  var notniva$1 = "#x220C";
-  var notnivb$1 = "#x22FE";
-  var notnivc$1 = "#x22FD";
-  var npar$1 = "#x2226";
-  var nparallel$1 = "#x2226";
-  var nparsl$1 = "#x2AFD;&#x20E5";
-  var npart$1 = "#x2202;&#x338";
-  var npolint$1 = "#x2A14";
-  var npr$1 = "#x2280";
-  var nprcue$1 = "#x22E0";
-  var npre$1 = "#x2AAF;&#x338";
-  var nprec$1 = "#x2280";
-  var npreceq$1 = "#x2AAF;&#x338";
-  var nrArr$1 = "#x21CF";
-  var nrarr$1 = "#x219B";
-  var nrarrc$1 = "#x2933;&#x338";
-  var nrarrw$1 = "#x219D;&#x338";
-  var nrightarrow$1 = "#x219B";
-  var nrtri$1 = "#x22EB";
-  var nrtrie$1 = "#x22ED";
-  var nsc$2 = "#x2281";
-  var nsccue$1 = "#x22E1";
-  var nsce$2 = "#x2AB0;&#x338";
-  var nscr$1 = "#x1D4C3";
-  var nshortmid$1 = "#x2224";
-  var nshortparallel$1 = "#x2226";
-  var nsim$1 = "#x2241";
-  var nsime$1 = "#x2244";
-  var nsimeq$1 = "#x2244";
-  var nsmid$1 = "#x2224";
-  var nspar$1 = "#x2226";
-  var nsqsube$1 = "#x22E2";
-  var nsqsupe$1 = "#x22E3";
-  var nsubE$1 = "#x2AC5;&#x338";
-  var nsube$1 = "#x2288";
-  var nsubset$1 = "#x2282;&#x20D2";
-  var nsubseteq$1 = "#x2288";
-  var nsubseteqq$1 = "#x2AC5;&#x338";
-  var nsucc$1 = "#x2281";
-  var nsucceq$1 = "#x2AB0;&#x338";
-  var nsup$1 = "#x2285";
-  var nsupE$1 = "#x2AC6;&#x338";
-  var nsupe$1 = "#x2289";
-  var nsupset$1 = "#x2283;&#x20D2";
-  var nsupseteq$1 = "#x2289";
-  var nsupseteqq$1 = "#x2AC6;&#x338";
-  var ntgl$1 = "#x2279";
-  var ntlg$1 = "#x2278";
-  var ntriangleleft$1 = "#x22EA";
-  var ntrianglelefteq$1 = "#x22EC";
-  var ntriangleright$1 = "#x22EB";
-  var ntrianglerighteq$1 = "#x22ED";
-  var numero$1 = "#x2116";
-  var numsp$1 = "#x2007";
-  var nvDash$1 = "#x22AD";
-  var nvHarr$1 = "#x2904";
-  var nvap$1 = "#x224D;&#x20D2";
-  var nvdash$1 = "#x22AC";
-  var nvge$1 = "#x2265;&#x20D2";
-  var nvgt$1 = "#x3E;&#x20D2";
-  var nvinfin$1 = "#x29DE";
-  var nvlArr$1 = "#x2902";
-  var nvle$1 = "#x2264;&#x20D2";
-  var nvlt$1 = "#x3C;&#x20D2";
-  var nvltrie$1 = "#x22B4;&#x20D2";
-  var nvrArr$1 = "#x2903";
-  var nvrtrie$1 = "#x22B5;&#x20D2";
-  var nvsim$1 = "#x223C;&#x20D2";
-  var nwArr$1 = "#x21D6";
-  var nwarhk$1 = "#x2923";
-  var nwarr$1 = "#x2196";
-  var nwarrow$1 = "#x2196";
-  var nwnear$1 = "#x2927";
-  var oS$1 = "#x24C8";
-  var oast$1 = "#x229B";
-  var ocir$1 = "#x229A";
-  var ocy$1 = "#x43E";
-  var odash$1 = "#x229D";
-  var odblac$1 = "#x151";
-  var odiv$1 = "#x2A38";
-  var odot$1 = "#x2299";
-  var odsold$1 = "#x29BC";
-  var ofcir$1 = "#x29BF";
-  var ofr$1 = "#x1D52C";
-  var ogon$1 = "#x2DB";
-  var ogt$2 = "#x29C1";
-  var ohbar$1 = "#x29B5";
-  var ohm$2 = "#x3A9";
-  var oint$1 = "#x222E";
-  var olarr$1 = "#x21BA";
-  var olcir$1 = "#x29BE";
-  var olcross$1 = "#x29BB";
-  var olt$2 = "#x29C0";
-  var omacr$1 = "#x14D";
-  var omid$1 = "#x29B6";
-  var ominus$1 = "#x2296";
-  var oopf$2 = "#x1D560";
-  var opar$2 = "#x29B7";
-  var operp$1 = "#x29B9";
-  var orarr$1 = "#x21BB";
-  var ord$1 = "#x2A5D";
-  var order$2 = "#x2134";
-  var orderof$1 = "#x2134";
-  var origof$1 = "#x22B6";
-  var oror$2 = "#x2A56";
-  var orslope$1 = "#x2A57";
-  var orv$2 = "#x2A5B";
-  var oscr$1 = "#x2134";
-  var osol$2 = "#x2298";
-  var otimesas$1 = "#x2A36";
-  var ovbar$1 = "#x233D";
-  var par$2 = "#x2225";
-  var parallel$2 = "#x2225";
-  var parsim$1 = "#x2AF3";
-  var parsl$1 = "#x2AFD";
-  var pcy$1 = "#x43F";
-  var pertenk$1 = "#x2031";
-  var pfr$1 = "#x1D52D";
-  var phiv$1 = "#x3D5";
-  var phmmat$1 = "#x2133";
-  var phone$2 = "#x260E";
-  var pitchfork$2 = "#x22D4";
-  var planck$1 = "#x210F";
-  var planckh$1 = "#x210E";
-  var plankv$1 = "#x210F";
-  var plusacir$1 = "#x2A23";
-  var plusb$1 = "#x229E";
-  var pluscir$1 = "#x2A22";
-  var plusdo$1 = "#x2214";
-  var plusdu$1 = "#x2A25";
-  var pluse$1 = "#x2A72";
-  var plussim$1 = "#x2A26";
-  var plustwo$1 = "#x2A27";
-  var pm$2 = "#xB1";
-  var pointint$1 = "#x2A15";
-  var popf$2 = "#x1D561";
-  var pr$2 = "#x227A";
-  var prE$1 = "#x2AB3";
-  var prap$1 = "#x2AB7";
-  var prcue$1 = "#x227C";
-  var pre$1 = "#x2AAF";
-  var prec$1 = "#x227A";
-  var precapprox$1 = "#x2AB7";
-  var preccurlyeq$1 = "#x227C";
-  var preceq$1 = "#x2AAF";
-  var precnapprox$1 = "#x2AB9";
-  var precneqq$1 = "#x2AB5";
-  var precnsim$1 = "#x22E8";
-  var precsim$1 = "#x227E";
-  var primes$2 = "#x2119";
-  var prnE$1 = "#x2AB5";
-  var prnap$1 = "#x2AB9";
-  var prnsim$1 = "#x22E8";
-  var profalar$1 = "#x232E";
-  var profline$1 = "#x2312";
-  var profsurf$1 = "#x2313";
-  var propto$1 = "prop";
-  var prsim$1 = "#x227E";
-  var prurel$1 = "#x22B0";
-  var pscr$1 = "#x1D4C5";
-  var puncsp$1 = "#x2008";
-  var qfr$1 = "#x1D52E";
-  var qint$1 = "#x2A0C";
-  var qopf$1 = "#x1D562";
-  var qprime$1 = "#x2057";
-  var qscr$1 = "#x1D4C6";
-  var quaternions$1 = "#x210D";
-  var quatint$1 = "#x2A16";
-  var questeq$1 = "#x225F";
-  var rAarr$1 = "#x21DB";
-  var rAtail$1 = "#x291C";
-  var rBarr$1 = "#x290F";
-  var rHar$1 = "#x2964";
-  var race$2 = "#x223D;&#x331";
-  var racute$1 = "#x155";
-  var raemptyv$1 = "#x29B3";
-  var rangd$1 = "#x2992";
-  var range$2 = "#x29A5";
-  var rangle$1 = "rang";
-  var rarrap$1 = "#x2975";
-  var rarrb$1 = "#x21E5";
-  var rarrbfs$1 = "#x2920";
-  var rarrc$1 = "#x2933";
-  var rarrfs$1 = "#x291E";
-  var rarrhk$1 = "#x21AA";
-  var rarrlp$1 = "#x21AC";
-  var rarrpl$1 = "#x2945";
-  var rarrsim$1 = "#x2974";
-  var rarrtl$1 = "#x21A3";
-  var rarrw$1 = "#x219D";
-  var ratail$1 = "#x291A";
-  var ratio$2 = "#x2236";
-  var rationals$1 = "#x211A";
-  var rbarr$1 = "#x290D";
-  var rbbrk$1 = "#x2773";
-  var rbrke$1 = "#x298C";
-  var rbrksld$1 = "#x298E";
-  var rbrkslu$1 = "#x2990";
-  var rcaron$1 = "#x159";
-  var rcedil$1 = "#x157";
-  var rcy$1 = "#x440";
-  var rdca$1 = "#x2937";
-  var rdldhar$1 = "#x2969";
-  var rdquor$1 = "rdquo";
-  var rdsh$1 = "#x21B3";
-  var realine$1 = "#x211B";
-  var realpart$1 = "#x211C";
-  var reals$2 = "#x211D";
-  var rect$2 = "#x25AD";
-  var rfisht$1 = "#x297D";
-  var rfr$1 = "#x1D52F";
-  var rhard$1 = "#x21C1";
-  var rharu$1 = "#x21C0";
-  var rharul$1 = "#x296C";
-  var rhov$1 = "#x3F1";
-  var rightarrow$1 = "rarr";
-  var rightarrowtail$1 = "#x21A3";
-  var rightharpoondown$1 = "#x21C1";
-  var rightharpoonup$1 = "#x21C0";
-  var rightleftarrows$1 = "#x21C4";
-  var rightleftharpoons$1 = "#x21CC";
-  var rightrightarrows$1 = "#x21C9";
-  var rightsquigarrow$1 = "#x219D";
-  var rightthreetimes$1 = "#x22CC";
-  var ring$2 = "#x2DA";
-  var risingdotseq$1 = "#x2253";
-  var rlarr$1 = "#x21C4";
-  var rlhar$1 = "#x21CC";
-  var rmoust$1 = "#x23B1";
-  var rmoustache$1 = "#x23B1";
-  var rnmid$1 = "#x2AEE";
-  var roang$1 = "#x27ED";
-  var roarr$1 = "#x21FE";
-  var robrk$1 = "#x27E7";
-  var ropar$1 = "#x2986";
-  var ropf$1 = "#x1D563";
-  var roplus$1 = "#x2A2E";
-  var rotimes$1 = "#x2A35";
-  var rpargt$1 = "#x2994";
-  var rppolint$1 = "#x2A12";
-  var rrarr$1 = "#x21C9";
-  var rscr$1 = "#x1D4C7";
-  var rsh$2 = "#x21B1";
-  var rsquor$1 = "rsquo";
-  var rthree$1 = "#x22CC";
-  var rtimes$1 = "#x22CA";
-  var rtri$1 = "#x25B9";
-  var rtrie$1 = "#x22B5";
-  var rtrif$1 = "#x25B8";
-  var rtriltri$1 = "#x29CE";
-  var ruluhar$1 = "#x2968";
-  var rx$1 = "#x211E";
-  var sacute$1 = "#x15B";
-  var sc$2 = "#x227B";
-  var scE$1 = "#x2AB4";
-  var scap$2 = "#x2AB8";
-  var sccue$1 = "#x227D";
-  var sce$2 = "#x2AB0";
-  var scedil$1 = "#x15F";
-  var scirc$1 = "#x15D";
-  var scnE$1 = "#x2AB6";
-  var scnap$1 = "#x2ABA";
-  var scnsim$1 = "#x22E9";
-  var scpolint$1 = "#x2A13";
-  var scsim$1 = "#x227F";
-  var scy$2 = "#x441";
-  var sdotb$1 = "#x22A1";
-  var sdote$1 = "#x2A66";
-  var seArr$1 = "#x21D8";
-  var searhk$1 = "#x2925";
-  var searr$1 = "#x2198";
-  var searrow$1 = "#x2198";
-  var seswar$1 = "#x2929";
-  var setminus$1 = "#x2216";
-  var setmn$1 = "#x2216";
-  var sext$1 = "#x2736";
-  var sfr$1 = "#x1D530";
-  var sfrown$1 = "#x2322";
-  var sharp$2 = "#x266F";
-  var shchcy$1 = "#x449";
-  var shcy$1 = "#x448";
-  var shortmid$1 = "#x2223";
-  var shortparallel$1 = "#x2225";
-  var sigmav$1 = "sigmaf";
-  var simdot$1 = "#x2A6A";
-  var sime$1 = "#x2243";
-  var simeq$1 = "#x2243";
-  var simg$1 = "#x2A9E";
-  var simgE$1 = "#x2AA0";
-  var siml$1 = "#x2A9D";
-  var simlE$1 = "#x2A9F";
-  var simne$1 = "#x2246";
-  var simplus$1 = "#x2A24";
-  var simrarr$1 = "#x2972";
-  var slarr$1 = "larr";
-  var smallsetminus$1 = "#x2216";
-  var smashp$1 = "#x2A33";
-  var smeparsl$1 = "#x29E4";
-  var smid$1 = "#x2223";
-  var smile$1 = "#x2323";
-  var smt$1 = "#x2AAA";
-  var smte$1 = "#x2AAC";
-  var smtes$1 = "#x2AAC;&#xFE00";
-  var softcy$1 = "#x44C";
-  var solb$1 = "#x29C4";
-  var solbar$1 = "#x233F";
-  var sopf$1 = "#x1D564";
-  var spadesuit$1 = "spades";
-  var spar$1 = "#x2225";
-  var sqcap$1 = "#x2293";
-  var sqcaps$1 = "#x2293;&#xFE00";
-  var sqcup$1 = "#x2294";
-  var sqcups$1 = "#x2294;&#xFE00";
-  var sqsub$1 = "#x228F";
-  var sqsube$1 = "#x2291";
-  var sqsubset$1 = "#x228F";
-  var sqsubseteq$1 = "#x2291";
-  var sqsup$1 = "#x2290";
-  var sqsupe$1 = "#x2292";
-  var sqsupset$1 = "#x2290";
-  var sqsupseteq$1 = "#x2292";
-  var squ$1 = "#x25A1";
-  var square$2 = "#x25A1";
-  var squarf$1 = "#x25AA";
-  var squf$1 = "#x25AA";
-  var srarr$1 = "rarr";
-  var sscr$1 = "#x1D4C8";
-  var ssetmn$1 = "#x2216";
-  var ssmile$1 = "#x2323";
-  var sstarf$1 = "#x22C6";
-  var star$2 = "#x2606";
-  var starf$1 = "#x2605";
-  var straightepsilon$1 = "#x3F5";
-  var straightphi$1 = "#x3D5";
-  var strns$1 = "macr";
-  var subE$1 = "#x2AC5";
-  var subdot$1 = "#x2ABD";
-  var subedot$1 = "#x2AC3";
-  var submult$1 = "#x2AC1";
-  var subnE$1 = "#x2ACB";
-  var subne$1 = "#x228A";
-  var subplus$1 = "#x2ABF";
-  var subrarr$1 = "#x2979";
-  var subset$1 = "sub";
-  var subseteq$1 = "sube";
-  var subseteqq$1 = "#x2AC5";
-  var subsetneq$1 = "#x228A";
-  var subsetneqq$1 = "#x2ACB";
-  var subsim$1 = "#x2AC7";
-  var subsub$1 = "#x2AD5";
-  var subsup$1 = "#x2AD3";
-  var succ$1 = "#x227B";
-  var succapprox$1 = "#x2AB8";
-  var succcurlyeq$1 = "#x227D";
-  var succeq$1 = "#x2AB0";
-  var succnapprox$1 = "#x2ABA";
-  var succneqq$1 = "#x2AB6";
-  var succnsim$1 = "#x22E9";
-  var succsim$1 = "#x227F";
-  var sung$1 = "#x266A";
-  var supE$1 = "#x2AC6";
-  var supdot$1 = "#x2ABE";
-  var supdsub$1 = "#x2AD8";
-  var supedot$1 = "#x2AC4";
-  var suphsol$1 = "#x27C9";
-  var suphsub$1 = "#x2AD7";
-  var suplarr$1 = "#x297B";
-  var supmult$1 = "#x2AC2";
-  var supnE$1 = "#x2ACC";
-  var supne$1 = "#x228B";
-  var supplus$1 = "#x2AC0";
-  var supset$1 = "sup";
-  var supseteq$1 = "supe";
-  var supseteqq$1 = "#x2AC6";
-  var supsetneq$1 = "#x228B";
-  var supsetneqq$1 = "#x2ACC";
-  var supsim$1 = "#x2AC8";
-  var supsub$1 = "#x2AD4";
-  var supsup$1 = "#x2AD6";
-  var swArr$1 = "#x21D9";
-  var swarhk$1 = "#x2926";
-  var swarr$1 = "#x2199";
-  var swarrow$1 = "#x2199";
-  var swnwar$1 = "#x292A";
-  var target$2 = "#x2316";
-  var tbrk$1 = "#x23B4";
-  var tcaron$1 = "#x165";
-  var tcedil$1 = "#x163";
-  var tcy$1 = "#x442";
-  var tdot$1 = "#x20DB";
-  var telrec$1 = "#x2315";
-  var tfr$1 = "#x1D531";
-  var therefore$2 = "there4";
-  var thetav$1 = "#x3D1";
-  var thickapprox$1 = "#x2248";
-  var thicksim$1 = "sim";
-  var thkap$1 = "#x2248";
-  var thksim$1 = "sim";
-  var timesb$1 = "#x22A0";
-  var timesbar$1 = "#x2A31";
-  var timesd$1 = "#x2A30";
-  var tint$2 = "#x222D";
-  var toea$1 = "#x2928";
-  var top$2 = "#x22A4";
-  var topbot$1 = "#x2336";
-  var topcir$1 = "#x2AF1";
-  var topf$1 = "#x1D565";
-  var topfork$1 = "#x2ADA";
-  var tosa$2 = "#x2929";
-  var tprime$1 = "#x2034";
-  var triangle$2 = "#x25B5";
-  var triangledown$1 = "#x25BF";
-  var triangleleft$1 = "#x25C3";
-  var trianglelefteq$1 = "#x22B4";
-  var triangleq$1 = "#x225C";
-  var triangleright$1 = "#x25B9";
-  var trianglerighteq$1 = "#x22B5";
-  var tridot$1 = "#x25EC";
-  var trie$2 = "#x225C";
-  var triminus$1 = "#x2A3A";
-  var triplus$1 = "#x2A39";
-  var trisb$1 = "#x29CD";
-  var tritime$1 = "#x2A3B";
-  var trpezium$1 = "#x23E2";
-  var tscr$1 = "#x1D4C9";
-  var tscy$1 = "#x446";
-  var tshcy$1 = "#x45B";
-  var tstrok$1 = "#x167";
-  var twixt$1 = "#x226C";
-  var twoheadleftarrow$1 = "#x219E";
-  var twoheadrightarrow$1 = "#x21A0";
-  var uHar$1 = "#x2963";
-  var ubrcy$1 = "#x45E";
-  var ubreve$1 = "#x16D";
-  var ucy$2 = "#x443";
-  var udarr$1 = "#x21C5";
-  var udblac$1 = "#x171";
-  var udhar$1 = "#x296E";
-  var ufisht$1 = "#x297E";
-  var ufr$1 = "#x1D532";
-  var uharl$1 = "#x21BF";
-  var uharr$1 = "#x21BE";
-  var uhblk$1 = "#x2580";
-  var ulcorn$1 = "#x231C";
-  var ulcorner$1 = "#x231C";
-  var ulcrop$1 = "#x230F";
-  var ultri$1 = "#x25F8";
-  var umacr$1 = "#x16B";
-  var uogon$1 = "#x173";
-  var uopf$1 = "#x1D566";
-  var uparrow$1 = "uarr";
-  var updownarrow$1 = "#x2195";
-  var upharpoonleft$1 = "#x21BF";
-  var upharpoonright$1 = "#x21BE";
-  var uplus$2 = "#x228E";
-  var upsi$2 = "#x3C5";
-  var upuparrows$1 = "#x21C8";
-  var urcorn$1 = "#x231D";
-  var urcorner$1 = "#x231D";
-  var urcrop$1 = "#x230E";
-  var uring$2 = "#x16F";
-  var urtri$1 = "#x25F9";
-  var uscr$1 = "#x1D4CA";
-  var utdot$1 = "#x22F0";
-  var utilde$1 = "#x169";
-  var utri$1 = "#x25B5";
-  var utrif$1 = "#x25B4";
-  var uuarr$1 = "#x21C8";
-  var uwangle$1 = "#x29A7";
-  var vArr$1 = "#x21D5";
-  var vBar$1 = "#x2AE8";
-  var vBarv$1 = "#x2AE9";
-  var vDash$1 = "#x22A8";
-  var vangrt$1 = "#x299C";
-  var varepsilon$1 = "#x3F5";
-  var varkappa$1 = "#x3F0";
-  var varnothing$1 = "empty";
-  var varphi$1 = "#x3D5";
-  var varpi$1 = "piv";
-  var varpropto$1 = "prop";
-  var varr$1 = "#x2195";
-  var varrho$1 = "#x3F1";
-  var varsigma$1 = "sigmaf";
-  var varsubsetneq$1 = "#x228A;&#xFE00";
-  var varsubsetneqq$1 = "#x2ACB;&#xFE00";
-  var varsupsetneq$1 = "#x228B;&#xFE00";
-  var varsupsetneqq$1 = "#x2ACC;&#xFE00";
-  var vartheta$1 = "#x3D1";
-  var vartriangleleft$1 = "#x22B2";
-  var vartriangleright$1 = "#x22B3";
-  var vcy$1 = "#x432";
-  var vdash$1 = "#x22A2";
-  var vee$2 = "or";
-  var veebar$1 = "#x22BB";
-  var veeeq$1 = "#x225A";
-  var vellip$1 = "#x22EE";
-  var vfr$1 = "#x1D533";
-  var vltri$1 = "#x22B2";
-  var vnsub$1 = "#x2282;&#x20D2";
-  var vnsup$1 = "#x2283;&#x20D2";
-  var vopf$1 = "#x1D567";
-  var vprop$1 = "prop";
-  var vrtri$1 = "#x22B3";
-  var vscr$1 = "#x1D4CB";
-  var vsubnE$1 = "#x2ACB;&#xFE00";
-  var vsubne$1 = "#x228A;&#xFE00";
-  var vsupnE$1 = "#x2ACC;&#xFE00";
-  var vsupne$1 = "#x228B;&#xFE00";
-  var vzigzag$1 = "#x299A";
-  var wcirc$1 = "#x175";
-  var wedbar$1 = "#x2A5F";
-  var wedge$2 = "and";
-  var wedgeq$1 = "#x2259";
-  var wfr$1 = "#x1D534";
-  var wopf$1 = "#x1D568";
-  var wp$1 = "#x2118";
-  var wr$1 = "#x2240";
-  var wreath$2 = "#x2240";
-  var wscr$1 = "#x1D4CC";
-  var xcap$1 = "#x22C2";
-  var xcirc$1 = "#x25EF";
-  var xcup$1 = "#x22C3";
-  var xdtri$1 = "#x25BD";
-  var xfr$1 = "#x1D535";
-  var xhArr$1 = "#x27FA";
-  var xharr$1 = "#x27F7";
-  var xlArr$1 = "#x27F8";
-  var xlarr$1 = "#x27F5";
-  var xmap$1 = "#x27FC";
-  var xnis$1 = "#x22FB";
-  var xodot$1 = "#x2A00";
-  var xopf$1 = "#x1D569";
-  var xoplus$1 = "#x2A01";
-  var xotime$1 = "#x2A02";
-  var xrArr$1 = "#x27F9";
-  var xrarr$1 = "#x27F6";
-  var xscr$1 = "#x1D4CD";
-  var xsqcup$1 = "#x2A06";
-  var xuplus$1 = "#x2A04";
-  var xutri$1 = "#x25B3";
-  var xvee$1 = "#x22C1";
-  var xwedge$1 = "#x22C0";
-  var yacy$1 = "#x44F";
-  var ycirc$2 = "#x177";
-  var ycy$2 = "#x44B";
-  var yfr$1 = "#x1D536";
-  var yicy$1 = "#x457";
-  var yopf$1 = "#x1D56A";
-  var yscr$1 = "#x1D4CE";
-  var yucy$1 = "#x44E";
-  var zacute$2 = "#x17A";
-  var zcaron$1 = "#x17E";
-  var zcy$1 = "#x437";
-  var zdot$1 = "#x17C";
-  var zeetrf$1 = "#x2128";
-  var zfr$1 = "#x1D537";
-  var zhcy$1 = "#x436";
-  var zigrarr$1 = "#x21DD";
-  var zopf$1 = "#x1D56B";
-  var zscr$1 = "#x1D4CF";
-  var notEmailFriendly = {
-    AMP: AMP$1,
-    Abreve: Abreve$1,
-    Acy: Acy$1,
-    Afr: Afr$1,
-    Amacr: Amacr$1,
-    And: And$2,
-    Aogon: Aogon$1,
-    Aopf: Aopf$1,
-    ApplyFunction: ApplyFunction$1,
-    Ascr: Ascr$2,
-    Assign: Assign$2,
-    Backslash: Backslash$2,
-    Barv: Barv$1,
-    Barwed: Barwed$1,
-    Bcy: Bcy$1,
-    Because: Because$2,
-    Bernoullis: Bernoullis$2,
-    Bfr: Bfr$1,
-    Bopf: Bopf$1,
-    Breve: Breve$1,
-    Bscr: Bscr$1,
-    Bumpeq: Bumpeq$1,
-    CHcy: CHcy$1,
-    COPY: COPY$2,
-    Cacute: Cacute$1,
-    Cap: Cap$2,
-    CapitalDifferentialD: CapitalDifferentialD$1,
-    Cayleys: Cayleys$1,
-    Ccaron: Ccaron$1,
-    Ccirc: Ccirc$1,
-    Cconint: Cconint$1,
-    Cdot: Cdot$1,
-    Cedilla: Cedilla$2,
-    CenterDot: CenterDot$1,
-    Cfr: Cfr$1,
-    CircleDot: CircleDot$1,
-    CircleMinus: CircleMinus$1,
-    CirclePlus: CirclePlus$1,
-    CircleTimes: CircleTimes$1,
-    ClockwiseContourIntegral: ClockwiseContourIntegral$1,
-    CloseCurlyDoubleQuote: CloseCurlyDoubleQuote$1,
-    CloseCurlyQuote: CloseCurlyQuote$1,
-    Colon: Colon$2,
-    Colone: Colone$2,
-    Congruent: Congruent$2,
-    Conint: Conint$1,
-    ContourIntegral: ContourIntegral$1,
-    Copf: Copf$1,
-    Coproduct: Coproduct$1,
-    CounterClockwiseContourIntegral: CounterClockwiseContourIntegral$1,
-    Cross: Cross$2,
-    Cscr: Cscr$1,
-    Cup: Cup$2,
-    CupCap: CupCap$1,
-    DD: DD$2,
-    DDotrahd: DDotrahd$1,
-    DJcy: DJcy$1,
-    DScy: DScy$1,
-    DZcy: DZcy$1,
-    Darr: Darr$1,
-    Dashv: Dashv$1,
-    Dcaron: Dcaron$1,
-    Dcy: Dcy$1,
-    Del: Del$2,
-    Dfr: Dfr$1,
-    DiacriticalAcute: DiacriticalAcute$1,
-    DiacriticalDot: DiacriticalDot$1,
-    DiacriticalDoubleAcute: DiacriticalDoubleAcute$1,
-    DiacriticalGrave: DiacriticalGrave$1,
-    DiacriticalTilde: DiacriticalTilde$1,
-    Diamond: Diamond$2,
-    DifferentialD: DifferentialD$1,
-    Dopf: Dopf$1,
-    Dot: Dot$2,
-    DotDot: DotDot$1,
-    DotEqual: DotEqual$1,
-    DoubleContourIntegral: DoubleContourIntegral$1,
-    DoubleDot: DoubleDot$1,
-    DoubleDownArrow: DoubleDownArrow$1,
-    DoubleLeftArrow: DoubleLeftArrow$1,
-    DoubleLeftRightArrow: DoubleLeftRightArrow$1,
-    DoubleLeftTee: DoubleLeftTee$1,
-    DoubleLongLeftArrow: DoubleLongLeftArrow$1,
-    DoubleLongLeftRightArrow: DoubleLongLeftRightArrow$1,
-    DoubleLongRightArrow: DoubleLongRightArrow$1,
-    DoubleRightArrow: DoubleRightArrow$1,
-    DoubleRightTee: DoubleRightTee$1,
-    DoubleUpArrow: DoubleUpArrow$1,
-    DoubleUpDownArrow: DoubleUpDownArrow$1,
-    DoubleVerticalBar: DoubleVerticalBar$1,
-    DownArrow: DownArrow$1,
-    DownArrowBar: DownArrowBar$1,
-    DownArrowUpArrow: DownArrowUpArrow$1,
-    DownBreve: DownBreve$1,
-    DownLeftRightVector: DownLeftRightVector$1,
-    DownLeftTeeVector: DownLeftTeeVector$1,
-    DownLeftVector: DownLeftVector$1,
-    DownLeftVectorBar: DownLeftVectorBar$1,
-    DownRightTeeVector: DownRightTeeVector$1,
-    DownRightVector: DownRightVector$1,
-    DownRightVectorBar: DownRightVectorBar$1,
-    DownTee: DownTee$1,
-    DownTeeArrow: DownTeeArrow$1,
-    Downarrow: Downarrow$1,
-    Dscr: Dscr$1,
-    Dstrok: Dstrok$1,
-    ENG: ENG$2,
-    Ecaron: Ecaron$1,
-    Ecy: Ecy$1,
-    Edot: Edot$1,
-    Efr: Efr$1,
-    Element: Element$1,
-    Emacr: Emacr$1,
-    EmptySmallSquare: EmptySmallSquare$1,
-    EmptyVerySmallSquare: EmptyVerySmallSquare$1,
-    Eogon: Eogon$1,
-    Eopf: Eopf$1,
-    Equal: Equal$2,
-    EqualTilde: EqualTilde$1,
-    Equilibrium: Equilibrium$2,
-    Escr: Escr$1,
-    Esim: Esim$1,
-    Exists: Exists$2,
-    ExponentialE: ExponentialE$1,
-    Fcy: Fcy$1,
-    Ffr: Ffr$1,
-    FilledSmallSquare: FilledSmallSquare$1,
-    FilledVerySmallSquare: FilledVerySmallSquare$1,
-    Fopf: Fopf$1,
-    ForAll: ForAll$1,
-    Fouriertrf: Fouriertrf$1,
-    Fscr: Fscr$1,
-    GJcy: GJcy$1,
-    GT: GT$2,
-    Gammad: Gammad$1,
-    Gbreve: Gbreve$1,
-    Gcedil: Gcedil$1,
-    Gcirc: Gcirc$1,
-    Gcy: Gcy$1,
-    Gdot: Gdot$1,
-    Gfr: Gfr$1,
-    Gg: Gg$1,
-    Gopf: Gopf$1,
-    GreaterEqual: GreaterEqual$1,
-    GreaterEqualLess: GreaterEqualLess$1,
-    GreaterFullEqual: GreaterFullEqual$1,
-    GreaterGreater: GreaterGreater$1,
-    GreaterLess: GreaterLess$1,
-    GreaterSlantEqual: GreaterSlantEqual$1,
-    GreaterTilde: GreaterTilde$1,
-    Gscr: Gscr$1,
-    Gt: Gt$1,
-    HARDcy: HARDcy$1,
-    Hacek: Hacek$1,
-    Hcirc: Hcirc$1,
-    Hfr: Hfr$1,
-    HilbertSpace: HilbertSpace$1,
-    Hopf: Hopf$1,
-    HorizontalLine: HorizontalLine$1,
-    Hscr: Hscr$1,
-    Hstrok: Hstrok$1,
-    HumpDownHump: HumpDownHump$1,
-    HumpEqual: HumpEqual$1,
-    IEcy: IEcy$1,
-    IJlig: IJlig$1,
-    IOcy: IOcy$1,
-    Icy: Icy$1,
-    Idot: Idot$1,
-    Ifr: Ifr$1,
-    Im: Im$1,
-    Imacr: Imacr$1,
-    ImaginaryI: ImaginaryI$1,
-    Implies: Implies$1,
-    Int: Int$1,
-    Integral: Integral$1,
-    Intersection: Intersection$1,
-    InvisibleComma: InvisibleComma$1,
-    InvisibleTimes: InvisibleTimes$1,
-    Iogon: Iogon$1,
-    Iopf: Iopf$1,
-    Iscr: Iscr$1,
-    Itilde: Itilde$1,
-    Iukcy: Iukcy$1,
-    Jcirc: Jcirc$1,
-    Jcy: Jcy$1,
-    Jfr: Jfr$1,
-    Jopf: Jopf$1,
-    Jscr: Jscr$1,
-    Jsercy: Jsercy$1,
-    Jukcy: Jukcy$1,
-    KHcy: KHcy$1,
-    KJcy: KJcy$1,
-    Kcedil: Kcedil$1,
-    Kcy: Kcy$1,
-    Kfr: Kfr$1,
-    Kopf: Kopf$1,
-    Kscr: Kscr$1,
-    LJcy: LJcy$1,
-    LT: LT$2,
-    Lacute: Lacute$1,
-    Lang: Lang$1,
-    Laplacetrf: Laplacetrf$1,
-    Larr: Larr$1,
-    Lcaron: Lcaron$1,
-    Lcedil: Lcedil$1,
-    Lcy: Lcy$1,
-    LeftAngleBracket: LeftAngleBracket$1,
-    LeftArrow: LeftArrow$1,
-    LeftArrowBar: LeftArrowBar$1,
-    LeftArrowRightArrow: LeftArrowRightArrow$1,
-    LeftCeiling: LeftCeiling$1,
-    LeftDoubleBracket: LeftDoubleBracket$1,
-    LeftDownTeeVector: LeftDownTeeVector$1,
-    LeftDownVector: LeftDownVector$1,
-    LeftDownVectorBar: LeftDownVectorBar$1,
-    LeftFloor: LeftFloor$1,
-    LeftRightArrow: LeftRightArrow$1,
-    LeftRightVector: LeftRightVector$1,
-    LeftTee: LeftTee$1,
-    LeftTeeArrow: LeftTeeArrow$1,
-    LeftTeeVector: LeftTeeVector$1,
-    LeftTriangle: LeftTriangle$1,
-    LeftTriangleBar: LeftTriangleBar$1,
-    LeftTriangleEqual: LeftTriangleEqual$1,
-    LeftUpDownVector: LeftUpDownVector$1,
-    LeftUpTeeVector: LeftUpTeeVector$1,
-    LeftUpVector: LeftUpVector$1,
-    LeftUpVectorBar: LeftUpVectorBar$1,
-    LeftVector: LeftVector$1,
-    LeftVectorBar: LeftVectorBar$1,
-    Leftarrow: Leftarrow$1,
-    Leftrightarrow: Leftrightarrow$1,
-    LessEqualGreater: LessEqualGreater$1,
-    LessFullEqual: LessFullEqual$1,
-    LessGreater: LessGreater$1,
-    LessLess: LessLess$1,
-    LessSlantEqual: LessSlantEqual$1,
-    LessTilde: LessTilde$1,
-    Lfr: Lfr$1,
-    Ll: Ll$1,
-    Lleftarrow: Lleftarrow$1,
-    Lmidot: Lmidot$1,
-    LongLeftArrow: LongLeftArrow$1,
-    LongLeftRightArrow: LongLeftRightArrow$1,
-    LongRightArrow: LongRightArrow$1,
-    Longleftarrow: Longleftarrow$1,
-    Longleftrightarrow: Longleftrightarrow$1,
-    Longrightarrow: Longrightarrow$1,
-    Lopf: Lopf$1,
-    LowerLeftArrow: LowerLeftArrow$1,
-    LowerRightArrow: LowerRightArrow$1,
-    Lscr: Lscr$1,
-    Lsh: Lsh$1,
-    Lstrok: Lstrok$1,
-    Lt: Lt$1,
-    "Map": "#x2905",
-    Mcy: Mcy$1,
-    MediumSpace: MediumSpace$1,
-    Mellintrf: Mellintrf$1,
-    Mfr: Mfr$1,
-    MinusPlus: MinusPlus$1,
-    Mopf: Mopf$1,
-    Mscr: Mscr$1,
-    NJcy: NJcy$1,
-    Nacute: Nacute$1,
-    Ncaron: Ncaron$1,
-    Ncedil: Ncedil$1,
-    Ncy: Ncy$1,
-    NegativeMediumSpace: NegativeMediumSpace$1,
-    NegativeThickSpace: NegativeThickSpace$1,
-    NegativeThinSpace: NegativeThinSpace$1,
-    NegativeVeryThinSpace: NegativeVeryThinSpace$1,
-    NestedGreaterGreater: NestedGreaterGreater$1,
-    NestedLessLess: NestedLessLess$1,
-    Nfr: Nfr$1,
-    NoBreak: NoBreak$1,
-    NonBreakingSpace: NonBreakingSpace$1,
-    Nopf: Nopf$1,
-    Not: Not$2,
-    NotCongruent: NotCongruent$1,
-    NotCupCap: NotCupCap$1,
-    NotDoubleVerticalBar: NotDoubleVerticalBar$1,
-    NotElement: NotElement$1,
-    NotEqual: NotEqual$1,
-    NotEqualTilde: NotEqualTilde$1,
-    NotExists: NotExists$1,
-    NotGreater: NotGreater$1,
-    NotGreaterEqual: NotGreaterEqual$1,
-    NotGreaterFullEqual: NotGreaterFullEqual$1,
-    NotGreaterGreater: NotGreaterGreater$1,
-    NotGreaterLess: NotGreaterLess$1,
-    NotGreaterSlantEqual: NotGreaterSlantEqual$1,
-    NotGreaterTilde: NotGreaterTilde$1,
-    NotHumpDownHump: NotHumpDownHump$1,
-    NotHumpEqual: NotHumpEqual$1,
-    NotLeftTriangle: NotLeftTriangle$1,
-    NotLeftTriangleBar: NotLeftTriangleBar$1,
-    NotLeftTriangleEqual: NotLeftTriangleEqual$1,
-    NotLess: NotLess$1,
-    NotLessEqual: NotLessEqual$1,
-    NotLessGreater: NotLessGreater$1,
-    NotLessLess: NotLessLess$1,
-    NotLessSlantEqual: NotLessSlantEqual$1,
-    NotLessTilde: NotLessTilde$1,
-    NotNestedGreaterGreater: NotNestedGreaterGreater$1,
-    NotNestedLessLess: NotNestedLessLess$1,
-    NotPrecedes: NotPrecedes$1,
-    NotPrecedesEqual: NotPrecedesEqual$1,
-    NotPrecedesSlantEqual: NotPrecedesSlantEqual$1,
-    NotReverseElement: NotReverseElement$1,
-    NotRightTriangle: NotRightTriangle$1,
-    NotRightTriangleBar: NotRightTriangleBar$1,
-    NotRightTriangleEqual: NotRightTriangleEqual$1,
-    NotSquareSubset: NotSquareSubset$1,
-    NotSquareSubsetEqual: NotSquareSubsetEqual$1,
-    NotSquareSuperset: NotSquareSuperset$1,
-    NotSquareSupersetEqual: NotSquareSupersetEqual$1,
-    NotSubset: NotSubset$1,
-    NotSubsetEqual: NotSubsetEqual$1,
-    NotSucceeds: NotSucceeds$1,
-    NotSucceedsEqual: NotSucceedsEqual$1,
-    NotSucceedsSlantEqual: NotSucceedsSlantEqual$1,
-    NotSucceedsTilde: NotSucceedsTilde$1,
-    NotSuperset: NotSuperset$1,
-    NotSupersetEqual: NotSupersetEqual$1,
-    NotTilde: NotTilde$1,
-    NotTildeEqual: NotTildeEqual$1,
-    NotTildeFullEqual: NotTildeFullEqual$1,
-    NotTildeTilde: NotTildeTilde$1,
-    NotVerticalBar: NotVerticalBar$1,
-    Nscr: Nscr$1,
-    Ocy: Ocy$1,
-    Odblac: Odblac$1,
-    Ofr: Ofr$1,
-    Omacr: Omacr$1,
-    Oopf: Oopf$1,
-    OpenCurlyDoubleQuote: OpenCurlyDoubleQuote$1,
-    OpenCurlyQuote: OpenCurlyQuote$1,
-    Or: Or$1,
-    Oscr: Oscr$1,
-    Otimes: Otimes$1,
-    OverBar: OverBar$1,
-    OverBrace: OverBrace$1,
-    OverBracket: OverBracket$1,
-    OverParenthesis: OverParenthesis$1,
-    PartialD: PartialD$1,
-    Pcy: Pcy$1,
-    Pfr: Pfr$1,
-    PlusMinus: PlusMinus$1,
-    Poincareplane: Poincareplane$1,
-    Popf: Popf$1,
-    Pr: Pr$1,
-    Precedes: Precedes$1,
-    PrecedesEqual: PrecedesEqual$1,
-    PrecedesSlantEqual: PrecedesSlantEqual$1,
-    PrecedesTilde: PrecedesTilde$1,
-    Product: Product$2,
-    Proportion: Proportion$2,
-    Proportional: Proportional$2,
-    Pscr: Pscr$1,
-    QUOT: QUOT$2,
-    Qfr: Qfr$1,
-    Qopf: Qopf$1,
-    Qscr: Qscr$1,
-    RBarr: RBarr$1,
-    REG: REG$2,
-    Racute: Racute$1,
-    Rang: Rang$1,
-    Rarr: Rarr$1,
-    Rarrtl: Rarrtl$1,
-    Rcaron: Rcaron$1,
-    Rcedil: Rcedil$1,
-    Rcy: Rcy$1,
-    Re: Re$2,
-    ReverseElement: ReverseElement$1,
-    ReverseEquilibrium: ReverseEquilibrium$1,
-    ReverseUpEquilibrium: ReverseUpEquilibrium$1,
-    Rfr: Rfr$1,
-    RightAngleBracket: RightAngleBracket$1,
-    RightArrow: RightArrow$1,
-    RightArrowBar: RightArrowBar$1,
-    RightArrowLeftArrow: RightArrowLeftArrow$1,
-    RightCeiling: RightCeiling$1,
-    RightDoubleBracket: RightDoubleBracket$1,
-    RightDownTeeVector: RightDownTeeVector$1,
-    RightDownVector: RightDownVector$1,
-    RightDownVectorBar: RightDownVectorBar$1,
-    RightFloor: RightFloor$1,
-    RightTee: RightTee$1,
-    RightTeeArrow: RightTeeArrow$1,
-    RightTeeVector: RightTeeVector$1,
-    RightTriangle: RightTriangle$1,
-    RightTriangleBar: RightTriangleBar$1,
-    RightTriangleEqual: RightTriangleEqual$1,
-    RightUpDownVector: RightUpDownVector$1,
-    RightUpTeeVector: RightUpTeeVector$1,
-    RightUpVector: RightUpVector$1,
-    RightUpVectorBar: RightUpVectorBar$1,
-    RightVector: RightVector$1,
-    RightVectorBar: RightVectorBar$1,
-    Rightarrow: Rightarrow$1,
-    Ropf: Ropf$1,
-    RoundImplies: RoundImplies$1,
-    Rrightarrow: Rrightarrow$1,
-    Rscr: Rscr$1,
-    Rsh: Rsh$1,
-    RuleDelayed: RuleDelayed$1,
-    SHCHcy: SHCHcy$1,
-    SHcy: SHcy$1,
-    SOFTcy: SOFTcy$1,
-    Sacute: Sacute$1,
-    Sc: Sc$1,
-    Scedil: Scedil$1,
-    Scirc: Scirc$1,
-    Scy: Scy$1,
-    Sfr: Sfr$1,
-    ShortDownArrow: ShortDownArrow$1,
-    ShortLeftArrow: ShortLeftArrow$1,
-    ShortRightArrow: ShortRightArrow$1,
-    ShortUpArrow: ShortUpArrow$1,
-    SmallCircle: SmallCircle$1,
-    Sopf: Sopf$1,
-    Sqrt: Sqrt$1,
-    Square: Square$1,
-    SquareIntersection: SquareIntersection$1,
-    SquareSubset: SquareSubset$1,
-    SquareSubsetEqual: SquareSubsetEqual$1,
-    SquareSuperset: SquareSuperset$1,
-    SquareSupersetEqual: SquareSupersetEqual$1,
-    SquareUnion: SquareUnion$1,
-    Sscr: Sscr$1,
-    Star: Star$2,
-    Sub: Sub$2,
-    Subset: Subset$1,
-    SubsetEqual: SubsetEqual$1,
-    Succeeds: Succeeds$1,
-    SucceedsEqual: SucceedsEqual$1,
-    SucceedsSlantEqual: SucceedsSlantEqual$1,
-    SucceedsTilde: SucceedsTilde$1,
-    SuchThat: SuchThat$1,
-    Sum: Sum$2,
-    Sup: Sup$1,
-    Superset: Superset$1,
-    SupersetEqual: SupersetEqual$1,
-    Supset: Supset$1,
-    TRADE: TRADE$2,
-    TSHcy: TSHcy$1,
-    TScy: TScy$1,
-    Tab: Tab$2,
-    Tcaron: Tcaron$1,
-    Tcedil: Tcedil$1,
-    Tcy: Tcy$1,
-    Tfr: Tfr$1,
-    Therefore: Therefore$1,
-    ThickSpace: ThickSpace$1,
-    ThinSpace: ThinSpace$1,
-    Tilde: Tilde$2,
-    TildeEqual: TildeEqual$1,
-    TildeFullEqual: TildeFullEqual$1,
-    TildeTilde: TildeTilde$1,
-    Topf: Topf$1,
-    TripleDot: TripleDot$1,
-    Tscr: Tscr$1,
-    Tstrok: Tstrok$1,
-    Uarr: Uarr$1,
-    Uarrocir: Uarrocir$1,
-    Ubrcy: Ubrcy$1,
-    Ubreve: Ubreve$1,
-    Ucy: Ucy$1,
-    Udblac: Udblac$1,
-    Ufr: Ufr$1,
-    Umacr: Umacr$1,
-    UnderBrace: UnderBrace$1,
-    UnderBracket: UnderBracket$1,
-    UnderParenthesis: UnderParenthesis$1,
-    Union: Union$2,
-    UnionPlus: UnionPlus$1,
-    Uogon: Uogon$1,
-    Uopf: Uopf$1,
-    UpArrow: UpArrow$1,
-    UpArrowBar: UpArrowBar$1,
-    UpArrowDownArrow: UpArrowDownArrow$1,
-    UpDownArrow: UpDownArrow$1,
-    UpEquilibrium: UpEquilibrium$1,
-    UpTee: UpTee$1,
-    UpTeeArrow: UpTeeArrow$1,
-    Uparrow: Uparrow$1,
-    Updownarrow: Updownarrow$1,
-    UpperLeftArrow: UpperLeftArrow$1,
-    UpperRightArrow: UpperRightArrow$1,
-    Upsi: Upsi$2,
-    Uring: Uring$1,
-    Uscr: Uscr$1,
-    Utilde: Utilde$1,
-    VDash: VDash$1,
-    Vbar: Vbar$1,
-    Vcy: Vcy$1,
-    Vdash: Vdash$1,
-    Vdashl: Vdashl$1,
-    Vee: Vee$1,
-    Verbar: Verbar$1,
-    Vert: Vert$2,
-    VerticalBar: VerticalBar$1,
-    VerticalSeparator: VerticalSeparator$1,
-    VerticalTilde: VerticalTilde$1,
-    VeryThinSpace: VeryThinSpace$1,
-    Vfr: Vfr$1,
-    Vopf: Vopf$1,
-    Vscr: Vscr$1,
-    Vvdash: Vvdash$1,
-    Wcirc: Wcirc$1,
-    Wedge: Wedge$2,
-    Wfr: Wfr$1,
-    Wopf: Wopf$1,
-    Wscr: Wscr$1,
-    Xfr: Xfr$1,
-    Xopf: Xopf$1,
-    Xscr: Xscr$1,
-    YAcy: YAcy$1,
-    YIcy: YIcy$1,
-    YUcy: YUcy$1,
-    Ycirc: Ycirc$2,
-    Ycy: Ycy$1,
-    Yfr: Yfr$1,
-    Yopf: Yopf$1,
-    Yscr: Yscr$1,
-    ZHcy: ZHcy$1,
-    Zacute: Zacute$2,
-    Zcaron: Zcaron$1,
-    Zcy: Zcy$1,
-    Zdot: Zdot$1,
-    ZeroWidthSpace: ZeroWidthSpace$1,
-    Zfr: Zfr$1,
-    Zopf: Zopf$1,
-    Zscr: Zscr$1,
-    abreve: abreve$1,
-    ac: ac$2,
-    acE: acE$1,
-    acd: acd$1,
-    acy: acy$1,
-    af: af$1,
-    afr: afr$1,
-    aleph: aleph$1,
-    amacr: amacr$1,
-    amalg: amalg$1,
-    andand: andand$1,
-    andd: andd$1,
-    andslope: andslope$1,
-    andv: andv$1,
-    ange: ange$2,
-    angle: angle$2,
-    angmsd: angmsd$1,
-    angmsdaa: angmsdaa$1,
-    angmsdab: angmsdab$1,
-    angmsdac: angmsdac$1,
-    angmsdad: angmsdad$1,
-    angmsdae: angmsdae$1,
-    angmsdaf: angmsdaf$1,
-    angmsdag: angmsdag$1,
-    angmsdah: angmsdah$1,
-    angrt: angrt$1,
-    angrtvb: angrtvb$1,
-    angrtvbd: angrtvbd$1,
-    angsph: angsph$1,
-    angst: angst$2,
-    angzarr: angzarr$1,
-    aogon: aogon$1,
-    aopf: aopf$1,
-    ap: ap$2,
-    apE: apE$1,
-    apacir: apacir$1,
-    ape: ape$2,
-    apid: apid$1,
-    approx: approx$2,
-    approxeq: approxeq$1,
-    ascr: ascr$2,
-    asympeq: asympeq$1,
-    awconint: awconint$1,
-    awint: awint$1,
-    bNot: bNot$1,
-    backcong: backcong$1,
-    backepsilon: backepsilon$1,
-    backprime: backprime$1,
-    backsim: backsim$1,
-    backsimeq: backsimeq$1,
-    barvee: barvee$1,
-    barwed: barwed$1,
-    barwedge: barwedge$2,
-    bbrk: bbrk$1,
-    bbrktbrk: bbrktbrk$1,
-    bcong: bcong$1,
-    bcy: bcy$1,
-    becaus: becaus$2,
-    because: because$2,
-    bemptyv: bemptyv$1,
-    bepsi: bepsi$2,
-    bernou: bernou$1,
-    beth: beth$2,
-    between: between$2,
-    bfr: bfr$1,
-    bigcap: bigcap$1,
-    bigcirc: bigcirc$1,
-    bigcup: bigcup$1,
-    bigodot: bigodot$1,
-    bigoplus: bigoplus$1,
-    bigotimes: bigotimes$1,
-    bigsqcup: bigsqcup$1,
-    bigstar: bigstar$1,
-    bigtriangledown: bigtriangledown$1,
-    bigtriangleup: bigtriangleup$1,
-    biguplus: biguplus$1,
-    bigvee: bigvee$1,
-    bigwedge: bigwedge$1,
-    bkarow: bkarow$1,
-    blacklozenge: blacklozenge$1,
-    blacksquare: blacksquare$1,
-    blacktriangle: blacktriangle$1,
-    blacktriangledown: blacktriangledown$1,
-    blacktriangleleft: blacktriangleleft$1,
-    blacktriangleright: blacktriangleright$1,
-    blank: blank$2,
-    blk12: blk12$1,
-    blk14: blk14$1,
-    blk34: blk34$1,
-    block: block$2,
-    bne: bne$1,
-    bnequiv: bnequiv$1,
-    bnot: bnot$1,
-    bopf: bopf$1,
-    bot: bot$2,
-    bottom: bottom$2,
-    bowtie: bowtie$2,
-    boxDL: boxDL$1,
-    boxDR: boxDR$1,
-    boxDl: boxDl$1,
-    boxDr: boxDr$1,
-    boxH: boxH$1,
-    boxHD: boxHD$1,
-    boxHU: boxHU$1,
-    boxHd: boxHd$1,
-    boxHu: boxHu$1,
-    boxUL: boxUL$1,
-    boxUR: boxUR$1,
-    boxUl: boxUl$1,
-    boxUr: boxUr$1,
-    boxV: boxV$1,
-    boxVH: boxVH$1,
-    boxVL: boxVL$1,
-    boxVR: boxVR$1,
-    boxVh: boxVh$1,
-    boxVl: boxVl$1,
-    boxVr: boxVr$1,
-    boxbox: boxbox$1,
-    boxdL: boxdL$1,
-    boxdR: boxdR$1,
-    boxdl: boxdl$1,
-    boxdr: boxdr$1,
-    boxh: boxh$1,
-    boxhD: boxhD$1,
-    boxhU: boxhU$1,
-    boxhd: boxhd$1,
-    boxhu: boxhu$1,
-    boxminus: boxminus$1,
-    boxplus: boxplus$1,
-    boxtimes: boxtimes$1,
-    boxuL: boxuL$1,
-    boxuR: boxuR$1,
-    boxul: boxul$1,
-    boxur: boxur$1,
-    boxv: boxv$1,
-    boxvH: boxvH$1,
-    boxvL: boxvL$1,
-    boxvR: boxvR$1,
-    boxvh: boxvh$1,
-    boxvl: boxvl$1,
-    boxvr: boxvr$1,
-    bprime: bprime$1,
-    breve: breve$2,
-    bscr: bscr$1,
-    bsemi: bsemi$1,
-    bsim: bsim$1,
-    bsime: bsime$1,
-    bsolb: bsolb$1,
-    bsolhsub: bsolhsub$1,
-    bullet: bullet$2,
-    bump: bump$2,
-    bumpE: bumpE$1,
-    bumpe: bumpe$1,
-    bumpeq: bumpeq$1,
-    cacute: cacute$2,
-    capand: capand$2,
-    capbrcup: capbrcup$1,
-    capcap: capcap$1,
-    capcup: capcup$1,
-    capdot: capdot$1,
-    caps: caps$2,
-    caret: caret$2,
-    caron: caron$2,
-    ccaps: ccaps$1,
-    ccaron: ccaron$1,
-    ccirc: ccirc$1,
-    ccups: ccups$1,
-    ccupssm: ccupssm$1,
-    cdot: cdot$1,
-    cemptyv: cemptyv$1,
-    centerdot: centerdot$1,
-    cfr: cfr$1,
-    chcy: chcy$1,
-    check: check$2,
-    checkmark: checkmark$2,
-    cir: cir$2,
-    cirE: cirE$1,
-    circeq: circeq$1,
-    circlearrowleft: circlearrowleft$1,
-    circlearrowright: circlearrowright$1,
-    circledR: circledR$1,
-    circledS: circledS$1,
-    circledast: circledast$1,
-    circledcirc: circledcirc$1,
-    circleddash: circleddash$1,
-    cire: cire$1,
-    cirfnint: cirfnint$1,
-    cirmid: cirmid$1,
-    cirscir: cirscir$1,
-    clubsuit: clubsuit$2,
-    colone: colone$2,
-    coloneq: coloneq$1,
-    comp: comp$2,
-    compfn: compfn$1,
-    complement: complement$2,
-    complexes: complexes$2,
-    congdot: congdot$1,
-    conint: conint$2,
-    copf: copf$2,
-    coprod: coprod$2,
-    copysr: copysr$1,
-    cross: cross$2,
-    cscr: cscr$1,
-    csub: csub$1,
-    csube: csube$1,
-    csup: csup$1,
-    csupe: csupe$1,
-    ctdot: ctdot$1,
-    cudarrl: cudarrl$1,
-    cudarrr: cudarrr$1,
-    cuepr: cuepr$1,
-    cuesc: cuesc$1,
-    cularr: cularr$1,
-    cularrp: cularrp$1,
-    cupbrcap: cupbrcap$1,
-    cupcap: cupcap$1,
-    cupcup: cupcup$1,
-    cupdot: cupdot$1,
-    cupor: cupor$1,
-    cups: cups$2,
-    curarr: curarr$1,
-    curarrm: curarrm$1,
-    curlyeqprec: curlyeqprec$1,
-    curlyeqsucc: curlyeqsucc$1,
-    curlyvee: curlyvee$1,
-    curlywedge: curlywedge$1,
-    curvearrowleft: curvearrowleft$1,
-    curvearrowright: curvearrowright$1,
-    cuvee: cuvee$1,
-    cuwed: cuwed$1,
-    cwconint: cwconint$1,
-    cwint: cwint$1,
-    cylcty: cylcty$1,
-    dHar: dHar$1,
-    daleth: daleth$2,
-    dash: dash$2,
-    dashv: dashv$1,
-    dbkarow: dbkarow$1,
-    dblac: dblac$1,
-    dcaron: dcaron$1,
-    dcy: dcy$1,
-    dd: dd$2,
-    ddagger: ddagger$1,
-    ddarr: ddarr$1,
-    ddotseq: ddotseq$1,
-    demptyv: demptyv$1,
-    dfisht: dfisht$1,
-    dfr: dfr$1,
-    dharl: dharl$1,
-    dharr: dharr$2,
-    diam: diam$2,
-    diamond: diamond$2,
-    diamondsuit: diamondsuit$1,
-    die: die$2,
-    digamma: digamma$2,
-    disin: disin$2,
-    div: div$2,
-    divideontimes: divideontimes$1,
-    divonx: divonx$1,
-    djcy: djcy$1,
-    dlcorn: dlcorn$1,
-    dlcrop: dlcrop$1,
-    dopf: dopf$2,
-    dot: dot$2,
-    doteq: doteq$1,
-    doteqdot: doteqdot$1,
-    dotminus: dotminus$1,
-    dotplus: dotplus$1,
-    dotsquare: dotsquare$1,
-    doublebarwedge: doublebarwedge$1,
-    downarrow: downarrow$1,
-    downdownarrows: downdownarrows$1,
-    downharpoonleft: downharpoonleft$1,
-    downharpoonright: downharpoonright$1,
-    drbkarow: drbkarow$1,
-    drcorn: drcorn$1,
-    drcrop: drcrop$1,
-    dscr: dscr$1,
-    dscy: dscy$1,
-    dsol: dsol$2,
-    dstrok: dstrok$1,
-    dtdot: dtdot$1,
-    dtri: dtri$2,
-    dtrif: dtrif$1,
-    duarr: duarr$1,
-    duhar: duhar$1,
-    dwangle: dwangle$1,
-    dzcy: dzcy$1,
-    dzigrarr: dzigrarr$1,
-    eDDot: eDDot$1,
-    eDot: eDot$1,
-    easter: easter$2,
-    ecaron: ecaron$1,
-    ecir: ecir$2,
-    ecolon: ecolon$2,
-    ecy: ecy$2,
-    edot: edot$2,
-    ee: ee$2,
-    efDot: efDot$1,
-    efr: efr$2,
-    eg: eg$2,
-    egs: egs$2,
-    egsdot: egsdot$1,
-    el: el$2,
-    elinters: elinters$1,
-    ell: ell$2,
-    els: els$2,
-    elsdot: elsdot$1,
-    emacr: emacr$1,
-    emptyset: emptyset$1,
-    emptyv: emptyv$1,
-    emsp13: emsp13$1,
-    emsp14: emsp14$1,
-    eng: eng$2,
-    eogon: eogon$1,
-    eopf: eopf$1,
-    epar: epar$1,
-    eparsl: eparsl$1,
-    eplus: eplus$1,
-    epsi: epsi$2,
-    epsiv: epsiv$1,
-    eqcirc: eqcirc$1,
-    eqcolon: eqcolon$1,
-    eqsim: eqsim$1,
-    eqslantgtr: eqslantgtr$1,
-    eqslantless: eqslantless$1,
-    equest: equest$2,
-    equivDD: equivDD$1,
-    eqvparsl: eqvparsl$1,
-    erDot: erDot$1,
-    erarr: erarr$1,
-    escr: escr$2,
-    esdot: esdot$1,
-    esim: esim$2,
-    expectation: expectation$2,
-    exponentiale: exponentiale$1,
-    fallingdotseq: fallingdotseq$1,
-    fcy: fcy$1,
-    female: female$2,
-    ffilig: ffilig$1,
-    fflig: fflig$1,
-    ffllig: ffllig$1,
-    ffr: ffr$1,
-    filig: filig$1,
-    flat: flat$2,
-    fllig: fllig$1,
-    fltns: fltns$1,
-    fopf: fopf$1,
-    fork: fork$2,
-    forkv: forkv$1,
-    fpartint: fpartint$1,
-    frac13: frac13$1,
-    frac15: frac15$1,
-    frac16: frac16$1,
-    frac18: frac18$1,
-    frac23: frac23$1,
-    frac25: frac25$1,
-    frac35: frac35$1,
-    frac38: frac38$1,
-    frac45: frac45$1,
-    frac56: frac56$1,
-    frac58: frac58$1,
-    frac78: frac78$1,
-    frown: frown$2,
-    fscr: fscr$1,
-    gE: gE$1,
-    gEl: gEl$1,
-    gacute: gacute$1,
-    gammad: gammad$1,
-    gap: gap$2,
-    gbreve: gbreve$1,
-    gcirc: gcirc$1,
-    gcy: gcy$2,
-    gdot: gdot$1,
-    gel: gel$2,
-    geq: geq$2,
-    geqq: geqq$1,
-    geqslant: geqslant$1,
-    ges: ges$2,
-    gescc: gescc$1,
-    gesdot: gesdot$1,
-    gesdoto: gesdoto$1,
-    gesdotol: gesdotol$1,
-    gesl: gesl$2,
-    gesles: gesles$1,
-    gfr: gfr$1,
-    gg: gg$2,
-    ggg: ggg$1,
-    gimel: gimel$1,
-    gjcy: gjcy$1,
-    gl: gl$2,
-    glE: glE$1,
-    gla: gla$2,
-    glj: glj$1,
-    gnE: gnE$1,
-    gnap: gnap$1,
-    gnapprox: gnapprox$1,
-    gne: gne$2,
-    gneq: gneq$1,
-    gneqq: gneqq$1,
-    gnsim: gnsim$1,
-    gopf: gopf$1,
-    grave: grave$2,
-    gscr: gscr$1,
-    gsim: gsim$1,
-    gsime: gsime$1,
-    gsiml: gsiml$1,
-    gtcc: gtcc$1,
-    gtcir: gtcir$1,
-    gtdot: gtdot$1,
-    gtlPar: gtlPar$1,
-    gtquest: gtquest$1,
-    gtrapprox: gtrapprox$1,
-    gtrarr: gtrarr$1,
-    gtrdot: gtrdot$1,
-    gtreqless: gtreqless$1,
-    gtreqqless: gtreqqless$1,
-    gtrless: gtrless$1,
-    gtrsim: gtrsim$1,
-    gvertneqq: gvertneqq$1,
-    gvnE: gvnE$1,
-    hairsp: hairsp$1,
-    half: half$2,
-    hamilt: hamilt$1,
-    hardcy: hardcy$1,
-    harrcir: harrcir$1,
-    harrw: harrw$1,
-    hbar: hbar$1,
-    hcirc: hcirc$1,
-    heartsuit: heartsuit$1,
-    hercon: hercon$1,
-    hfr: hfr$1,
-    hksearow: hksearow$1,
-    hkswarow: hkswarow$1,
-    hoarr: hoarr$1,
-    homtht: homtht$1,
-    hookleftarrow: hookleftarrow$1,
-    hookrightarrow: hookrightarrow$1,
-    hopf: hopf$2,
-    horbar: horbar$1,
-    hscr: hscr$1,
-    hslash: hslash$1,
-    hstrok: hstrok$1,
-    hybull: hybull$1,
-    hyphen: hyphen$2,
-    ic: ic$2,
-    icy: icy$2,
-    iecy: iecy$1,
-    iff: iff$2,
-    ifr: ifr$1,
-    ii: ii$2,
-    iiiint: iiiint$1,
-    iiint: iiint$1,
-    iinfin: iinfin$1,
-    iiota: iiota$1,
-    ijlig: ijlig$1,
-    imacr: imacr$1,
-    imagline: imagline$1,
-    imagpart: imagpart$1,
-    imath: imath$1,
-    imof: imof$1,
-    imped: imped$2,
-    "in": "#x2208",
-    incare: incare$1,
-    infintie: infintie$1,
-    inodot: inodot$1,
-    intcal: intcal$1,
-    integers: integers$2,
-    intercal: intercal$1,
-    intlarhk: intlarhk$1,
-    intprod: intprod$1,
-    iocy: iocy$2,
-    iogon: iogon$2,
-    iopf: iopf$1,
-    iprod: iprod$1,
-    iscr: iscr$1,
-    isinE: isinE$1,
-    isindot: isindot$1,
-    isins: isins$1,
-    isinsv: isinsv$1,
-    isinv: isinv$1,
-    it: it$2,
-    itilde: itilde$1,
-    iukcy: iukcy$1,
-    jcirc: jcirc$1,
-    jcy: jcy$1,
-    jfr: jfr$1,
-    jmath: jmath$1,
-    jopf: jopf$1,
-    jscr: jscr$1,
-    jsercy: jsercy$1,
-    jukcy: jukcy$1,
-    kappav: kappav$1,
-    kcedil: kcedil$1,
-    kcy: kcy$1,
-    kfr: kfr$1,
-    kgreen: kgreen$1,
-    khcy: khcy$1,
-    kjcy: kjcy$1,
-    kopf: kopf$2,
-    kscr: kscr$1,
-    lAarr: lAarr$1,
-    lAtail: lAtail$1,
-    lBarr: lBarr$1,
-    lE: lE$1,
-    lEg: lEg$1,
-    lHar: lHar$1,
-    lacute: lacute$1,
-    laemptyv: laemptyv$1,
-    lagran: lagran$1,
-    langd: langd$1,
-    langle: langle$1,
-    lap: lap$2,
-    larrb: larrb$1,
-    larrbfs: larrbfs$1,
-    larrfs: larrfs$1,
-    larrhk: larrhk$1,
-    larrlp: larrlp$1,
-    larrpl: larrpl$1,
-    larrsim: larrsim$1,
-    larrtl: larrtl$1,
-    lat: lat$2,
-    latail: latail$1,
-    late: late$2,
-    lates: lates$2,
-    lbarr: lbarr$1,
-    lbbrk: lbbrk$1,
-    lbrace: lbrace$1,
-    lbrack: lbrack$1,
-    lbrke: lbrke$1,
-    lbrksld: lbrksld$1,
-    lbrkslu: lbrkslu$1,
-    lcaron: lcaron$1,
-    lcedil: lcedil$1,
-    lcub: lcub$1,
-    lcy: lcy$1,
-    ldca: ldca$1,
-    ldquor: ldquor$1,
-    ldrdhar: ldrdhar$1,
-    ldrushar: ldrushar$1,
-    ldsh: ldsh$1,
-    leftarrow: leftarrow$1,
-    leftarrowtail: leftarrowtail$1,
-    leftharpoondown: leftharpoondown$1,
-    leftharpoonup: leftharpoonup$1,
-    leftleftarrows: leftleftarrows$1,
-    leftrightarrow: leftrightarrow$1,
-    leftrightarrows: leftrightarrows$1,
-    leftrightharpoons: leftrightharpoons$1,
-    leftrightsquigarrow: leftrightsquigarrow$1,
-    leftthreetimes: leftthreetimes$1,
-    leg: leg$2,
-    leq: leq$2,
-    leqq: leqq$1,
-    leqslant: leqslant$1,
-    les: les$2,
-    lescc: lescc$1,
-    lesdot: lesdot$1,
-    lesdoto: lesdoto$1,
-    lesdotor: lesdotor$1,
-    lesg: lesg$1,
-    lesges: lesges$1,
-    lessapprox: lessapprox$1,
-    lessdot: lessdot$1,
-    lesseqgtr: lesseqgtr$1,
-    lesseqqgtr: lesseqqgtr$1,
-    lessgtr: lessgtr$1,
-    lesssim: lesssim$1,
-    lfisht: lfisht$1,
-    lfr: lfr$1,
-    lg: lg$2,
-    lgE: lgE$1,
-    lhard: lhard$1,
-    lharu: lharu$1,
-    lharul: lharul$1,
-    lhblk: lhblk$1,
-    ljcy: ljcy$1,
-    ll: ll$2,
-    llarr: llarr$1,
-    llcorner: llcorner$1,
-    llhard: llhard$1,
-    lltri: lltri$1,
-    lmidot: lmidot$1,
-    lmoust: lmoust$1,
-    lmoustache: lmoustache$1,
-    lnE: lnE$1,
-    lnap: lnap$1,
-    lnapprox: lnapprox$1,
-    lne: lne$2,
-    lneq: lneq$1,
-    lneqq: lneqq$1,
-    lnsim: lnsim$1,
-    loang: loang$1,
-    loarr: loarr$1,
-    lobrk: lobrk$1,
-    longleftarrow: longleftarrow$1,
-    longleftrightarrow: longleftrightarrow$1,
-    longmapsto: longmapsto$1,
-    longrightarrow: longrightarrow$1,
-    looparrowleft: looparrowleft$1,
-    looparrowright: looparrowright$1,
-    lopar: lopar$1,
-    lopf: lopf$1,
-    loplus: loplus$1,
-    lotimes: lotimes$1,
-    lozenge: lozenge$2,
-    lozf: lozf$1,
-    lparlt: lparlt$1,
-    lrarr: lrarr$1,
-    lrcorner: lrcorner$1,
-    lrhar: lrhar$1,
-    lrhard: lrhard$1,
-    lrtri: lrtri$1,
-    lscr: lscr$1,
-    lsh: lsh$2,
-    lsim: lsim$1,
-    lsime: lsime$1,
-    lsimg: lsimg$1,
-    lsquor: lsquor$1,
-    lstrok: lstrok$1,
-    ltcc: ltcc$1,
-    ltcir: ltcir$1,
-    ltdot: ltdot$1,
-    lthree: lthree$1,
-    ltimes: ltimes$2,
-    ltlarr: ltlarr$1,
-    ltquest: ltquest$1,
-    ltrPar: ltrPar$1,
-    ltri: ltri$1,
-    ltrie: ltrie$1,
-    ltrif: ltrif$1,
-    lurdshar: lurdshar$1,
-    luruhar: luruhar$1,
-    lvertneqq: lvertneqq$1,
-    lvnE: lvnE$1,
-    mDDot: mDDot$1,
-    male: male$2,
-    malt: malt$2,
-    maltese: maltese$1,
-    map: map$2,
-    mapsto: mapsto$1,
-    mapstodown: mapstodown$1,
-    mapstoleft: mapstoleft$1,
-    mapstoup: mapstoup$1,
-    marker: marker$2,
-    mcomma: mcomma$1,
-    mcy: mcy$1,
-    measuredangle: measuredangle$1,
-    mfr: mfr$1,
-    mho: mho$1,
-    mid: mid$2,
-    midcir: midcir$1,
-    minusb: minusb$1,
-    minusd: minusd$1,
-    minusdu: minusdu$1,
-    mlcp: mlcp$1,
-    mldr: mldr$1,
-    mnplus: mnplus$1,
-    models: models$2,
-    mopf: mopf$1,
-    mp: mp$2,
-    mscr: mscr$1,
-    mstpos: mstpos$1,
-    multimap: multimap$1,
-    mumap: mumap$1,
-    nGg: nGg$1,
-    nGt: nGt$1,
-    nGtv: nGtv$1,
-    nLeftarrow: nLeftarrow$1,
-    nLeftrightarrow: nLeftrightarrow$1,
-    nLl: nLl$1,
-    nLt: nLt$1,
-    nLtv: nLtv$1,
-    nRightarrow: nRightarrow$1,
-    nVDash: nVDash$1,
-    nVdash: nVdash$1,
-    nacute: nacute$1,
-    nang: nang$2,
-    nap: nap$2,
-    napE: napE$1,
-    napid: napid$1,
-    napos: napos$1,
-    napprox: napprox$1,
-    natur: natur$1,
-    natural: natural$2,
-    naturals: naturals$2,
-    nbump: nbump$1,
-    nbumpe: nbumpe$1,
-    ncap: ncap$1,
-    ncaron: ncaron$1,
-    ncedil: ncedil$1,
-    ncong: ncong$1,
-    ncongdot: ncongdot$1,
-    ncup: ncup$1,
-    ncy: ncy$2,
-    neArr: neArr$1,
-    nearhk: nearhk$1,
-    nearr: nearr$1,
-    nearrow: nearrow$1,
-    nedot: nedot$1,
-    nequiv: nequiv$1,
-    nesear: nesear$1,
-    nesim: nesim$1,
-    nexist: nexist$1,
-    nexists: nexists$1,
-    nfr: nfr$1,
-    ngE: ngE$1,
-    nge: nge$2,
-    ngeq: ngeq$1,
-    ngeqq: ngeqq$1,
-    ngeqslant: ngeqslant$1,
-    nges: nges$1,
-    ngsim: ngsim$1,
-    ngt: ngt$2,
-    ngtr: ngtr$1,
-    nhArr: nhArr$1,
-    nharr: nharr$1,
-    nhpar: nhpar$1,
-    nis: nis$2,
-    nisd: nisd$1,
-    niv: niv$1,
-    njcy: njcy$1,
-    nlArr: nlArr$1,
-    nlE: nlE$1,
-    nlarr: nlarr$1,
-    nldr: nldr$1,
-    nle: nle$2,
-    nleftarrow: nleftarrow$1,
-    nleftrightarrow: nleftrightarrow$1,
-    nleq: nleq$1,
-    nleqq: nleqq$1,
-    nleqslant: nleqslant$1,
-    nles: nles$2,
-    nless: nless$2,
-    nlsim: nlsim$1,
-    nlt: nlt$2,
-    nltri: nltri$1,
-    nltrie: nltrie$1,
-    nmid: nmid$1,
-    nopf: nopf$2,
-    notinE: notinE$1,
-    notindot: notindot$1,
-    notinva: notinva$1,
-    notinvb: notinvb$1,
-    notinvc: notinvc$1,
-    notni: notni$1,
-    notniva: notniva$1,
-    notnivb: notnivb$1,
-    notnivc: notnivc$1,
-    npar: npar$1,
-    nparallel: nparallel$1,
-    nparsl: nparsl$1,
-    npart: npart$1,
-    npolint: npolint$1,
-    npr: npr$1,
-    nprcue: nprcue$1,
-    npre: npre$1,
-    nprec: nprec$1,
-    npreceq: npreceq$1,
-    nrArr: nrArr$1,
-    nrarr: nrarr$1,
-    nrarrc: nrarrc$1,
-    nrarrw: nrarrw$1,
-    nrightarrow: nrightarrow$1,
-    nrtri: nrtri$1,
-    nrtrie: nrtrie$1,
-    nsc: nsc$2,
-    nsccue: nsccue$1,
-    nsce: nsce$2,
-    nscr: nscr$1,
-    nshortmid: nshortmid$1,
-    nshortparallel: nshortparallel$1,
-    nsim: nsim$1,
-    nsime: nsime$1,
-    nsimeq: nsimeq$1,
-    nsmid: nsmid$1,
-    nspar: nspar$1,
-    nsqsube: nsqsube$1,
-    nsqsupe: nsqsupe$1,
-    nsubE: nsubE$1,
-    nsube: nsube$1,
-    nsubset: nsubset$1,
-    nsubseteq: nsubseteq$1,
-    nsubseteqq: nsubseteqq$1,
-    nsucc: nsucc$1,
-    nsucceq: nsucceq$1,
-    nsup: nsup$1,
-    nsupE: nsupE$1,
-    nsupe: nsupe$1,
-    nsupset: nsupset$1,
-    nsupseteq: nsupseteq$1,
-    nsupseteqq: nsupseteqq$1,
-    ntgl: ntgl$1,
-    ntlg: ntlg$1,
-    ntriangleleft: ntriangleleft$1,
-    ntrianglelefteq: ntrianglelefteq$1,
-    ntriangleright: ntriangleright$1,
-    ntrianglerighteq: ntrianglerighteq$1,
-    numero: numero$1,
-    numsp: numsp$1,
-    nvDash: nvDash$1,
-    nvHarr: nvHarr$1,
-    nvap: nvap$1,
-    nvdash: nvdash$1,
-    nvge: nvge$1,
-    nvgt: nvgt$1,
-    nvinfin: nvinfin$1,
-    nvlArr: nvlArr$1,
-    nvle: nvle$1,
-    nvlt: nvlt$1,
-    nvltrie: nvltrie$1,
-    nvrArr: nvrArr$1,
-    nvrtrie: nvrtrie$1,
-    nvsim: nvsim$1,
-    nwArr: nwArr$1,
-    nwarhk: nwarhk$1,
-    nwarr: nwarr$1,
-    nwarrow: nwarrow$1,
-    nwnear: nwnear$1,
-    oS: oS$1,
-    oast: oast$1,
-    ocir: ocir$1,
-    ocy: ocy$1,
-    odash: odash$1,
-    odblac: odblac$1,
-    odiv: odiv$1,
-    odot: odot$1,
-    odsold: odsold$1,
-    ofcir: ofcir$1,
-    ofr: ofr$1,
-    ogon: ogon$1,
-    ogt: ogt$2,
-    ohbar: ohbar$1,
-    ohm: ohm$2,
-    oint: oint$1,
-    olarr: olarr$1,
-    olcir: olcir$1,
-    olcross: olcross$1,
-    olt: olt$2,
-    omacr: omacr$1,
-    omid: omid$1,
-    ominus: ominus$1,
-    oopf: oopf$2,
-    opar: opar$2,
-    operp: operp$1,
-    orarr: orarr$1,
-    ord: ord$1,
-    order: order$2,
-    orderof: orderof$1,
-    origof: origof$1,
-    oror: oror$2,
-    orslope: orslope$1,
-    orv: orv$2,
-    oscr: oscr$1,
-    osol: osol$2,
-    otimesas: otimesas$1,
-    ovbar: ovbar$1,
-    par: par$2,
-    parallel: parallel$2,
-    parsim: parsim$1,
-    parsl: parsl$1,
-    pcy: pcy$1,
-    pertenk: pertenk$1,
-    pfr: pfr$1,
-    phiv: phiv$1,
-    phmmat: phmmat$1,
-    phone: phone$2,
-    pitchfork: pitchfork$2,
-    planck: planck$1,
-    planckh: planckh$1,
-    plankv: plankv$1,
-    plusacir: plusacir$1,
-    plusb: plusb$1,
-    pluscir: pluscir$1,
-    plusdo: plusdo$1,
-    plusdu: plusdu$1,
-    pluse: pluse$1,
-    plussim: plussim$1,
-    plustwo: plustwo$1,
-    pm: pm$2,
-    pointint: pointint$1,
-    popf: popf$2,
-    pr: pr$2,
-    prE: prE$1,
-    prap: prap$1,
-    prcue: prcue$1,
-    pre: pre$1,
-    prec: prec$1,
-    precapprox: precapprox$1,
-    preccurlyeq: preccurlyeq$1,
-    preceq: preceq$1,
-    precnapprox: precnapprox$1,
-    precneqq: precneqq$1,
-    precnsim: precnsim$1,
-    precsim: precsim$1,
-    primes: primes$2,
-    prnE: prnE$1,
-    prnap: prnap$1,
-    prnsim: prnsim$1,
-    profalar: profalar$1,
-    profline: profline$1,
-    profsurf: profsurf$1,
-    propto: propto$1,
-    prsim: prsim$1,
-    prurel: prurel$1,
-    pscr: pscr$1,
-    puncsp: puncsp$1,
-    qfr: qfr$1,
-    qint: qint$1,
-    qopf: qopf$1,
-    qprime: qprime$1,
-    qscr: qscr$1,
-    quaternions: quaternions$1,
-    quatint: quatint$1,
-    questeq: questeq$1,
-    rAarr: rAarr$1,
-    rAtail: rAtail$1,
-    rBarr: rBarr$1,
-    rHar: rHar$1,
-    race: race$2,
-    racute: racute$1,
-    raemptyv: raemptyv$1,
-    rangd: rangd$1,
-    range: range$2,
-    rangle: rangle$1,
-    rarrap: rarrap$1,
-    rarrb: rarrb$1,
-    rarrbfs: rarrbfs$1,
-    rarrc: rarrc$1,
-    rarrfs: rarrfs$1,
-    rarrhk: rarrhk$1,
-    rarrlp: rarrlp$1,
-    rarrpl: rarrpl$1,
-    rarrsim: rarrsim$1,
-    rarrtl: rarrtl$1,
-    rarrw: rarrw$1,
-    ratail: ratail$1,
-    ratio: ratio$2,
-    rationals: rationals$1,
-    rbarr: rbarr$1,
-    rbbrk: rbbrk$1,
-    rbrke: rbrke$1,
-    rbrksld: rbrksld$1,
-    rbrkslu: rbrkslu$1,
-    rcaron: rcaron$1,
-    rcedil: rcedil$1,
-    rcy: rcy$1,
-    rdca: rdca$1,
-    rdldhar: rdldhar$1,
-    rdquor: rdquor$1,
-    rdsh: rdsh$1,
-    realine: realine$1,
-    realpart: realpart$1,
-    reals: reals$2,
-    rect: rect$2,
-    rfisht: rfisht$1,
-    rfr: rfr$1,
-    rhard: rhard$1,
-    rharu: rharu$1,
-    rharul: rharul$1,
-    rhov: rhov$1,
-    rightarrow: rightarrow$1,
-    rightarrowtail: rightarrowtail$1,
-    rightharpoondown: rightharpoondown$1,
-    rightharpoonup: rightharpoonup$1,
-    rightleftarrows: rightleftarrows$1,
-    rightleftharpoons: rightleftharpoons$1,
-    rightrightarrows: rightrightarrows$1,
-    rightsquigarrow: rightsquigarrow$1,
-    rightthreetimes: rightthreetimes$1,
-    ring: ring$2,
-    risingdotseq: risingdotseq$1,
-    rlarr: rlarr$1,
-    rlhar: rlhar$1,
-    rmoust: rmoust$1,
-    rmoustache: rmoustache$1,
-    rnmid: rnmid$1,
-    roang: roang$1,
-    roarr: roarr$1,
-    robrk: robrk$1,
-    ropar: ropar$1,
-    ropf: ropf$1,
-    roplus: roplus$1,
-    rotimes: rotimes$1,
-    rpargt: rpargt$1,
-    rppolint: rppolint$1,
-    rrarr: rrarr$1,
-    rscr: rscr$1,
-    rsh: rsh$2,
-    rsquor: rsquor$1,
-    rthree: rthree$1,
-    rtimes: rtimes$1,
-    rtri: rtri$1,
-    rtrie: rtrie$1,
-    rtrif: rtrif$1,
-    rtriltri: rtriltri$1,
-    ruluhar: ruluhar$1,
-    rx: rx$1,
-    sacute: sacute$1,
-    sc: sc$2,
-    scE: scE$1,
-    scap: scap$2,
-    sccue: sccue$1,
-    sce: sce$2,
-    scedil: scedil$1,
-    scirc: scirc$1,
-    scnE: scnE$1,
-    scnap: scnap$1,
-    scnsim: scnsim$1,
-    scpolint: scpolint$1,
-    scsim: scsim$1,
-    scy: scy$2,
-    sdotb: sdotb$1,
-    sdote: sdote$1,
-    seArr: seArr$1,
-    searhk: searhk$1,
-    searr: searr$1,
-    searrow: searrow$1,
-    seswar: seswar$1,
-    setminus: setminus$1,
-    setmn: setmn$1,
-    sext: sext$1,
-    sfr: sfr$1,
-    sfrown: sfrown$1,
-    sharp: sharp$2,
-    shchcy: shchcy$1,
-    shcy: shcy$1,
-    shortmid: shortmid$1,
-    shortparallel: shortparallel$1,
-    sigmav: sigmav$1,
-    simdot: simdot$1,
-    sime: sime$1,
-    simeq: simeq$1,
-    simg: simg$1,
-    simgE: simgE$1,
-    siml: siml$1,
-    simlE: simlE$1,
-    simne: simne$1,
-    simplus: simplus$1,
-    simrarr: simrarr$1,
-    slarr: slarr$1,
-    smallsetminus: smallsetminus$1,
-    smashp: smashp$1,
-    smeparsl: smeparsl$1,
-    smid: smid$1,
-    smile: smile$1,
-    smt: smt$1,
-    smte: smte$1,
-    smtes: smtes$1,
-    softcy: softcy$1,
-    solb: solb$1,
-    solbar: solbar$1,
-    sopf: sopf$1,
-    spadesuit: spadesuit$1,
-    spar: spar$1,
-    sqcap: sqcap$1,
-    sqcaps: sqcaps$1,
-    sqcup: sqcup$1,
-    sqcups: sqcups$1,
-    sqsub: sqsub$1,
-    sqsube: sqsube$1,
-    sqsubset: sqsubset$1,
-    sqsubseteq: sqsubseteq$1,
-    sqsup: sqsup$1,
-    sqsupe: sqsupe$1,
-    sqsupset: sqsupset$1,
-    sqsupseteq: sqsupseteq$1,
-    squ: squ$1,
-    square: square$2,
-    squarf: squarf$1,
-    squf: squf$1,
-    srarr: srarr$1,
-    sscr: sscr$1,
-    ssetmn: ssetmn$1,
-    ssmile: ssmile$1,
-    sstarf: sstarf$1,
-    star: star$2,
-    starf: starf$1,
-    straightepsilon: straightepsilon$1,
-    straightphi: straightphi$1,
-    strns: strns$1,
-    subE: subE$1,
-    subdot: subdot$1,
-    subedot: subedot$1,
-    submult: submult$1,
-    subnE: subnE$1,
-    subne: subne$1,
-    subplus: subplus$1,
-    subrarr: subrarr$1,
-    subset: subset$1,
-    subseteq: subseteq$1,
-    subseteqq: subseteqq$1,
-    subsetneq: subsetneq$1,
-    subsetneqq: subsetneqq$1,
-    subsim: subsim$1,
-    subsub: subsub$1,
-    subsup: subsup$1,
-    succ: succ$1,
-    succapprox: succapprox$1,
-    succcurlyeq: succcurlyeq$1,
-    succeq: succeq$1,
-    succnapprox: succnapprox$1,
-    succneqq: succneqq$1,
-    succnsim: succnsim$1,
-    succsim: succsim$1,
-    sung: sung$1,
-    supE: supE$1,
-    supdot: supdot$1,
-    supdsub: supdsub$1,
-    supedot: supedot$1,
-    suphsol: suphsol$1,
-    suphsub: suphsub$1,
-    suplarr: suplarr$1,
-    supmult: supmult$1,
-    supnE: supnE$1,
-    supne: supne$1,
-    supplus: supplus$1,
-    supset: supset$1,
-    supseteq: supseteq$1,
-    supseteqq: supseteqq$1,
-    supsetneq: supsetneq$1,
-    supsetneqq: supsetneqq$1,
-    supsim: supsim$1,
-    supsub: supsub$1,
-    supsup: supsup$1,
-    swArr: swArr$1,
-    swarhk: swarhk$1,
-    swarr: swarr$1,
-    swarrow: swarrow$1,
-    swnwar: swnwar$1,
-    target: target$2,
-    tbrk: tbrk$1,
-    tcaron: tcaron$1,
-    tcedil: tcedil$1,
-    tcy: tcy$1,
-    tdot: tdot$1,
-    telrec: telrec$1,
-    tfr: tfr$1,
-    therefore: therefore$2,
-    thetav: thetav$1,
-    thickapprox: thickapprox$1,
-    thicksim: thicksim$1,
-    thkap: thkap$1,
-    thksim: thksim$1,
-    timesb: timesb$1,
-    timesbar: timesbar$1,
-    timesd: timesd$1,
-    tint: tint$2,
-    toea: toea$1,
-    top: top$2,
-    topbot: topbot$1,
-    topcir: topcir$1,
-    topf: topf$1,
-    topfork: topfork$1,
-    tosa: tosa$2,
-    tprime: tprime$1,
-    triangle: triangle$2,
-    triangledown: triangledown$1,
-    triangleleft: triangleleft$1,
-    trianglelefteq: trianglelefteq$1,
-    triangleq: triangleq$1,
-    triangleright: triangleright$1,
-    trianglerighteq: trianglerighteq$1,
-    tridot: tridot$1,
-    trie: trie$2,
-    triminus: triminus$1,
-    triplus: triplus$1,
-    trisb: trisb$1,
-    tritime: tritime$1,
-    trpezium: trpezium$1,
-    tscr: tscr$1,
-    tscy: tscy$1,
-    tshcy: tshcy$1,
-    tstrok: tstrok$1,
-    twixt: twixt$1,
-    twoheadleftarrow: twoheadleftarrow$1,
-    twoheadrightarrow: twoheadrightarrow$1,
-    uHar: uHar$1,
-    ubrcy: ubrcy$1,
-    ubreve: ubreve$1,
-    ucy: ucy$2,
-    udarr: udarr$1,
-    udblac: udblac$1,
-    udhar: udhar$1,
-    ufisht: ufisht$1,
-    ufr: ufr$1,
-    uharl: uharl$1,
-    uharr: uharr$1,
-    uhblk: uhblk$1,
-    ulcorn: ulcorn$1,
-    ulcorner: ulcorner$1,
-    ulcrop: ulcrop$1,
-    ultri: ultri$1,
-    umacr: umacr$1,
-    uogon: uogon$1,
-    uopf: uopf$1,
-    uparrow: uparrow$1,
-    updownarrow: updownarrow$1,
-    upharpoonleft: upharpoonleft$1,
-    upharpoonright: upharpoonright$1,
-    uplus: uplus$2,
-    upsi: upsi$2,
-    upuparrows: upuparrows$1,
-    urcorn: urcorn$1,
-    urcorner: urcorner$1,
-    urcrop: urcrop$1,
-    uring: uring$2,
-    urtri: urtri$1,
-    uscr: uscr$1,
-    utdot: utdot$1,
-    utilde: utilde$1,
-    utri: utri$1,
-    utrif: utrif$1,
-    uuarr: uuarr$1,
-    uwangle: uwangle$1,
-    vArr: vArr$1,
-    vBar: vBar$1,
-    vBarv: vBarv$1,
-    vDash: vDash$1,
-    vangrt: vangrt$1,
-    varepsilon: varepsilon$1,
-    varkappa: varkappa$1,
-    varnothing: varnothing$1,
-    varphi: varphi$1,
-    varpi: varpi$1,
-    varpropto: varpropto$1,
-    varr: varr$1,
-    varrho: varrho$1,
-    varsigma: varsigma$1,
-    varsubsetneq: varsubsetneq$1,
-    varsubsetneqq: varsubsetneqq$1,
-    varsupsetneq: varsupsetneq$1,
-    varsupsetneqq: varsupsetneqq$1,
-    vartheta: vartheta$1,
-    vartriangleleft: vartriangleleft$1,
-    vartriangleright: vartriangleright$1,
-    vcy: vcy$1,
-    vdash: vdash$1,
-    vee: vee$2,
-    veebar: veebar$1,
-    veeeq: veeeq$1,
-    vellip: vellip$1,
-    vfr: vfr$1,
-    vltri: vltri$1,
-    vnsub: vnsub$1,
-    vnsup: vnsup$1,
-    vopf: vopf$1,
-    vprop: vprop$1,
-    vrtri: vrtri$1,
-    vscr: vscr$1,
-    vsubnE: vsubnE$1,
-    vsubne: vsubne$1,
-    vsupnE: vsupnE$1,
-    vsupne: vsupne$1,
-    vzigzag: vzigzag$1,
-    wcirc: wcirc$1,
-    wedbar: wedbar$1,
-    wedge: wedge$2,
-    wedgeq: wedgeq$1,
-    wfr: wfr$1,
-    wopf: wopf$1,
-    wp: wp$1,
-    wr: wr$1,
-    wreath: wreath$2,
-    wscr: wscr$1,
-    xcap: xcap$1,
-    xcirc: xcirc$1,
-    xcup: xcup$1,
-    xdtri: xdtri$1,
-    xfr: xfr$1,
-    xhArr: xhArr$1,
-    xharr: xharr$1,
-    xlArr: xlArr$1,
-    xlarr: xlarr$1,
-    xmap: xmap$1,
-    xnis: xnis$1,
-    xodot: xodot$1,
-    xopf: xopf$1,
-    xoplus: xoplus$1,
-    xotime: xotime$1,
-    xrArr: xrArr$1,
-    xrarr: xrarr$1,
-    xscr: xscr$1,
-    xsqcup: xsqcup$1,
-    xuplus: xuplus$1,
-    xutri: xutri$1,
-    xvee: xvee$1,
-    xwedge: xwedge$1,
-    yacy: yacy$1,
-    ycirc: ycirc$2,
-    ycy: ycy$2,
-    yfr: yfr$1,
-    yicy: yicy$1,
-    yopf: yopf$1,
-    yscr: yscr$1,
-    yucy: yucy$1,
-    zacute: zacute$2,
-    zcaron: zcaron$1,
-    zcy: zcy$1,
-    zdot: zdot$1,
-    zeetrf: zeetrf$1,
-    zfr: zfr$1,
-    zhcy: zhcy$1,
-    zigrarr: zigrarr$1,
-    zopf: zopf$1,
-    zscr: zscr$1
+  const notEmailFriendly = {
+    AMP: "amp",
+    Abreve: "#x102",
+    Acy: "#x410",
+    Afr: "#x1D504",
+    Amacr: "#x100",
+    And: "#x2A53",
+    Aogon: "#x104",
+    Aopf: "#x1D538",
+    ApplyFunction: "#x2061",
+    Ascr: "#x1D49C",
+    Assign: "#x2254",
+    Backslash: "#x2216",
+    Barv: "#x2AE7",
+    Barwed: "#x2306",
+    Bcy: "#x411",
+    Because: "#x2235",
+    Bernoullis: "#x212C",
+    Bfr: "#x1D505",
+    Bopf: "#x1D539",
+    Breve: "#x2D8",
+    Bscr: "#x212C",
+    Bumpeq: "#x224E",
+    CHcy: "#x427",
+    COPY: "copy",
+    Cacute: "#x106",
+    Cap: "#x22D2",
+    CapitalDifferentialD: "#x2145",
+    Cayleys: "#x212D",
+    Ccaron: "#x10C",
+    Ccirc: "#x108",
+    Cconint: "#x2230",
+    Cdot: "#x10A",
+    Cedilla: "cedil",
+    CenterDot: "middot",
+    Cfr: "#x212D",
+    CircleDot: "#x2299",
+    CircleMinus: "#x2296",
+    CirclePlus: "oplus",
+    CircleTimes: "otimes",
+    ClockwiseContourIntegral: "#x2232",
+    CloseCurlyDoubleQuote: "rdquo",
+    CloseCurlyQuote: "rsquo",
+    Colon: "#x2237",
+    Colone: "#x2A74",
+    Congruent: "equiv",
+    Conint: "#x222F",
+    ContourIntegral: "#x222E",
+    Copf: "#x2102",
+    Coproduct: "#x2210",
+    CounterClockwiseContourIntegral: "#x2233",
+    Cross: "#x2A2F",
+    Cscr: "#x1D49E",
+    Cup: "#x22D3",
+    CupCap: "#x224D",
+    DD: "#x2145",
+    DDotrahd: "#x2911",
+    DJcy: "#x402",
+    DScy: "#x405",
+    DZcy: "#x40F",
+    Darr: "#x21A1",
+    Dashv: "#x2AE4",
+    Dcaron: "#x10E",
+    Dcy: "#x414",
+    Del: "#x2207",
+    Dfr: "#x1D507",
+    DiacriticalAcute: "acute",
+    DiacriticalDot: "#x2D9",
+    DiacriticalDoubleAcute: "#x2DD",
+    DiacriticalGrave: "#x60",
+    DiacriticalTilde: "tilde",
+    Diamond: "#x22C4",
+    DifferentialD: "#x2146",
+    Dopf: "#x1D53B",
+    Dot: "#xA8",
+    DotDot: "#x20DC",
+    DotEqual: "#x2250",
+    DoubleContourIntegral: "#x222F",
+    DoubleDot: "#xA8",
+    DoubleDownArrow: "dArr",
+    DoubleLeftArrow: "lArr",
+    DoubleLeftRightArrow: "#x21D4",
+    DoubleLeftTee: "#x2AE4",
+    DoubleLongLeftArrow: "#x27F8",
+    DoubleLongLeftRightArrow: "#x27FA",
+    DoubleLongRightArrow: "#x27F9",
+    DoubleRightArrow: "rArr",
+    DoubleRightTee: "#x22A8",
+    DoubleUpArrow: "uArr",
+    DoubleUpDownArrow: "#x21D5",
+    DoubleVerticalBar: "#x2225",
+    DownArrow: "darr",
+    DownArrowBar: "#x2913",
+    DownArrowUpArrow: "#x21F5",
+    DownBreve: "#x311",
+    DownLeftRightVector: "#x2950",
+    DownLeftTeeVector: "#x295E",
+    DownLeftVector: "#x21BD",
+    DownLeftVectorBar: "#x2956",
+    DownRightTeeVector: "#x295F",
+    DownRightVector: "#x21C1",
+    DownRightVectorBar: "#x2957",
+    DownTee: "#x22A4",
+    DownTeeArrow: "#x21A7",
+    Downarrow: "dArr",
+    Dscr: "#x1D49F",
+    Dstrok: "#x110",
+    ENG: "#x14A",
+    Ecaron: "#x11A",
+    Ecy: "#x42D",
+    Edot: "#x116",
+    Efr: "#x1D508",
+    Element: "#x2208",
+    Emacr: "#x112",
+    EmptySmallSquare: "#x25FB",
+    EmptyVerySmallSquare: "#x25AB",
+    Eogon: "#x118",
+    Eopf: "#x1D53C",
+    Equal: "#x2A75",
+    EqualTilde: "#x2242",
+    Equilibrium: "#x21CC",
+    Escr: "#x2130",
+    Esim: "#x2A73",
+    Exists: "exist",
+    ExponentialE: "#x2147",
+    Fcy: "#x424",
+    Ffr: "#x1D509",
+    FilledSmallSquare: "#x25FC",
+    FilledVerySmallSquare: "#x25AA",
+    Fopf: "#x1D53D",
+    ForAll: "forall",
+    Fouriertrf: "#x2131",
+    Fscr: "#x2131",
+    GJcy: "#x403",
+    GT: "gt",
+    Gammad: "#x3DC",
+    Gbreve: "#x11E",
+    Gcedil: "#x122",
+    Gcirc: "#x11C",
+    Gcy: "#x413",
+    Gdot: "#x120",
+    Gfr: "#x1D50A",
+    Gg: "#x22D9",
+    Gopf: "#x1D53E",
+    GreaterEqual: "ge",
+    GreaterEqualLess: "#x22DB",
+    GreaterFullEqual: "#x2267",
+    GreaterGreater: "#x2AA2",
+    GreaterLess: "#x2277",
+    GreaterSlantEqual: "#x2A7E",
+    GreaterTilde: "#x2273",
+    Gscr: "#x1D4A2",
+    Gt: "#x226B",
+    HARDcy: "#x42A",
+    Hacek: "#x2C7",
+    Hcirc: "#x124",
+    Hfr: "#x210C",
+    HilbertSpace: "#x210B",
+    Hopf: "#x210D",
+    HorizontalLine: "#x2500",
+    Hscr: "#x210B",
+    Hstrok: "#x126",
+    HumpDownHump: "#x224E",
+    HumpEqual: "#x224F",
+    IEcy: "#x415",
+    IJlig: "#x132",
+    IOcy: "#x401",
+    Icy: "#x418",
+    Idot: "#x130",
+    Ifr: "#x2111",
+    Im: "#x2111",
+    Imacr: "#x12A",
+    ImaginaryI: "#x2148",
+    Implies: "rArr",
+    Int: "#x222C",
+    Integral: "int",
+    Intersection: "#x22C2",
+    InvisibleComma: "#x2063",
+    InvisibleTimes: "#x2062",
+    Iogon: "#x12E",
+    Iopf: "#x1D540",
+    Iscr: "#x2110",
+    Itilde: "#x128",
+    Iukcy: "#x406",
+    Jcirc: "#x134",
+    Jcy: "#x419",
+    Jfr: "#x1D50D",
+    Jopf: "#x1D541",
+    Jscr: "#x1D4A5",
+    Jsercy: "#x408",
+    Jukcy: "#x404",
+    KHcy: "#x425",
+    KJcy: "#x40C",
+    Kcedil: "#x136",
+    Kcy: "#x41A",
+    Kfr: "#x1D50E",
+    Kopf: "#x1D542",
+    Kscr: "#x1D4A6",
+    LJcy: "#x409",
+    LT: "lt",
+    Lacute: "#x139",
+    Lang: "#x27EA",
+    Laplacetrf: "#x2112",
+    Larr: "#x219E",
+    Lcaron: "#x13D",
+    Lcedil: "#x13B",
+    Lcy: "#x41B",
+    LeftAngleBracket: "lang",
+    LeftArrow: "larr",
+    LeftArrowBar: "#x21E4",
+    LeftArrowRightArrow: "#x21C6",
+    LeftCeiling: "lceil",
+    LeftDoubleBracket: "#x27E6",
+    LeftDownTeeVector: "#x2961",
+    LeftDownVector: "#x21C3",
+    LeftDownVectorBar: "#x2959",
+    LeftFloor: "lfloor",
+    LeftRightArrow: "harr",
+    LeftRightVector: "#x294E",
+    LeftTee: "#x22A3",
+    LeftTeeArrow: "#x21A4",
+    LeftTeeVector: "#x295A",
+    LeftTriangle: "#x22B2",
+    LeftTriangleBar: "#x29CF",
+    LeftTriangleEqual: "#x22B4",
+    LeftUpDownVector: "#x2951",
+    LeftUpTeeVector: "#x2960",
+    LeftUpVector: "#x21BF",
+    LeftUpVectorBar: "#x2958",
+    LeftVector: "#x21BC",
+    LeftVectorBar: "#x2952",
+    Leftarrow: "lArr",
+    Leftrightarrow: "#x21D4",
+    LessEqualGreater: "#x22DA",
+    LessFullEqual: "#x2266",
+    LessGreater: "#x2276",
+    LessLess: "#x2AA1",
+    LessSlantEqual: "#x2A7D",
+    LessTilde: "#x2272",
+    Lfr: "#x1D50F",
+    Ll: "#x22D8",
+    Lleftarrow: "#x21DA",
+    Lmidot: "#x13F",
+    LongLeftArrow: "#x27F5",
+    LongLeftRightArrow: "#x27F7",
+    LongRightArrow: "#x27F6",
+    Longleftarrow: "#x27F8",
+    Longleftrightarrow: "#x27FA",
+    Longrightarrow: "#x27F9",
+    Lopf: "#x1D543",
+    LowerLeftArrow: "#x2199",
+    LowerRightArrow: "#x2198",
+    Lscr: "#x2112",
+    Lsh: "#x21B0",
+    Lstrok: "#x141",
+    Lt: "#x226A",
+    Map: "#x2905",
+    Mcy: "#x41C",
+    MediumSpace: "#x205F",
+    Mellintrf: "#x2133",
+    Mfr: "#x1D510",
+    MinusPlus: "#x2213",
+    Mopf: "#x1D544",
+    Mscr: "#x2133",
+    NJcy: "#x40A",
+    Nacute: "#x143",
+    Ncaron: "#x147",
+    Ncedil: "#x145",
+    Ncy: "#x41D",
+    NegativeMediumSpace: "#x200B",
+    NegativeThickSpace: "#x200B",
+    NegativeThinSpace: "#x200B",
+    NegativeVeryThinSpace: "#x200B",
+    NestedGreaterGreater: "#x226B",
+    NestedLessLess: "#x226A",
+    Nfr: "#x1D511",
+    NoBreak: "#x2060",
+    NonBreakingSpace: "nbsp",
+    Nopf: "#x2115",
+    Not: "#x2AEC",
+    NotCongruent: "#x2262",
+    NotCupCap: "#x226D",
+    NotDoubleVerticalBar: "#x2226",
+    NotElement: "notin",
+    NotEqual: "ne",
+    NotEqualTilde: "#x2242;&#x338",
+    NotExists: "#x2204",
+    NotGreater: "#x226F",
+    NotGreaterEqual: "#x2271",
+    NotGreaterFullEqual: "#x2267;&#x338",
+    NotGreaterGreater: "#x226B;&#x338",
+    NotGreaterLess: "#x2279",
+    NotGreaterSlantEqual: "#x2A7E;&#x338",
+    NotGreaterTilde: "#x2275",
+    NotHumpDownHump: "#x224E;&#x338",
+    NotHumpEqual: "#x224F;&#x338",
+    NotLeftTriangle: "#x22EA",
+    NotLeftTriangleBar: "#x29CF;&#x338",
+    NotLeftTriangleEqual: "#x22EC",
+    NotLess: "#x226E",
+    NotLessEqual: "#x2270",
+    NotLessGreater: "#x2278",
+    NotLessLess: "#x226A;&#x338",
+    NotLessSlantEqual: "#x2A7D;&#x338",
+    NotLessTilde: "#x2274",
+    NotNestedGreaterGreater: "#x2AA2;&#x338",
+    NotNestedLessLess: "#x2AA1;&#x338",
+    NotPrecedes: "#x2280",
+    NotPrecedesEqual: "#x2AAF;&#x338",
+    NotPrecedesSlantEqual: "#x22E0",
+    NotReverseElement: "#x220C",
+    NotRightTriangle: "#x22EB",
+    NotRightTriangleBar: "#x29D0;&#x338",
+    NotRightTriangleEqual: "#x22ED",
+    NotSquareSubset: "#x228F;&#x338",
+    NotSquareSubsetEqual: "#x22E2",
+    NotSquareSuperset: "#x2290;&#x338",
+    NotSquareSupersetEqual: "#x22E3",
+    NotSubset: "#x2282;&#x20D2",
+    NotSubsetEqual: "#x2288",
+    NotSucceeds: "#x2281",
+    NotSucceedsEqual: "#x2AB0;&#x338",
+    NotSucceedsSlantEqual: "#x22E1",
+    NotSucceedsTilde: "#x227F;&#x338",
+    NotSuperset: "#x2283;&#x20D2",
+    NotSupersetEqual: "#x2289",
+    NotTilde: "#x2241",
+    NotTildeEqual: "#x2244",
+    NotTildeFullEqual: "#x2247",
+    NotTildeTilde: "#x2249",
+    NotVerticalBar: "#x2224",
+    Nscr: "#x1D4A9",
+    Ocy: "#x41E",
+    Odblac: "#x150",
+    Ofr: "#x1D512",
+    Omacr: "#x14C",
+    Oopf: "#x1D546",
+    OpenCurlyDoubleQuote: "ldquo",
+    OpenCurlyQuote: "lsquo",
+    Or: "#x2A54",
+    Oscr: "#x1D4AA",
+    Otimes: "#x2A37",
+    OverBar: "oline",
+    OverBrace: "#x23DE",
+    OverBracket: "#x23B4",
+    OverParenthesis: "#x23DC",
+    PartialD: "part",
+    Pcy: "#x41F",
+    Pfr: "#x1D513",
+    PlusMinus: "#xB1",
+    Poincareplane: "#x210C",
+    Popf: "#x2119",
+    Pr: "#x2ABB",
+    Precedes: "#x227A",
+    PrecedesEqual: "#x2AAF",
+    PrecedesSlantEqual: "#x227C",
+    PrecedesTilde: "#x227E",
+    Product: "prod",
+    Proportion: "#x2237",
+    Proportional: "prop",
+    Pscr: "#x1D4AB",
+    QUOT: "quot",
+    Qfr: "#x1D514",
+    Qopf: "#x211A",
+    Qscr: "#x1D4AC",
+    RBarr: "#x2910",
+    REG: "reg",
+    Racute: "#x154",
+    Rang: "#x27EB",
+    Rarr: "#x21A0",
+    Rarrtl: "#x2916",
+    Rcaron: "#x158",
+    Rcedil: "#x156",
+    Rcy: "#x420",
+    Re: "#x211C",
+    ReverseElement: "ni",
+    ReverseEquilibrium: "#x21CB",
+    ReverseUpEquilibrium: "#x296F",
+    Rfr: "#x211C",
+    RightAngleBracket: "rang",
+    RightArrow: "rarr",
+    RightArrowBar: "#x21E5",
+    RightArrowLeftArrow: "#x21C4",
+    RightCeiling: "rceil",
+    RightDoubleBracket: "#x27E7",
+    RightDownTeeVector: "#x295D",
+    RightDownVector: "#x21C2",
+    RightDownVectorBar: "#x2955",
+    RightFloor: "rfloor",
+    RightTee: "#x22A2",
+    RightTeeArrow: "#x21A6",
+    RightTeeVector: "#x295B",
+    RightTriangle: "#x22B3",
+    RightTriangleBar: "#x29D0",
+    RightTriangleEqual: "#x22B5",
+    RightUpDownVector: "#x294F",
+    RightUpTeeVector: "#x295C",
+    RightUpVector: "#x21BE",
+    RightUpVectorBar: "#x2954",
+    RightVector: "#x21C0",
+    RightVectorBar: "#x2953",
+    Rightarrow: "rArr",
+    Ropf: "#x211D",
+    RoundImplies: "#x2970",
+    Rrightarrow: "#x21DB",
+    Rscr: "#x211B",
+    Rsh: "#x21B1",
+    RuleDelayed: "#x29F4",
+    SHCHcy: "#x429",
+    SHcy: "#x428",
+    SOFTcy: "#x42C",
+    Sacute: "#x15A",
+    Sc: "#x2ABC",
+    Scedil: "#x15E",
+    Scirc: "#x15C",
+    Scy: "#x421",
+    Sfr: "#x1D516",
+    ShortDownArrow: "darr",
+    ShortLeftArrow: "larr",
+    ShortRightArrow: "rarr",
+    ShortUpArrow: "uarr",
+    SmallCircle: "#x2218",
+    Sopf: "#x1D54A",
+    Sqrt: "#x221A",
+    Square: "#x25A1",
+    SquareIntersection: "#x2293",
+    SquareSubset: "#x228F",
+    SquareSubsetEqual: "#x2291",
+    SquareSuperset: "#x2290",
+    SquareSupersetEqual: "#x2292",
+    SquareUnion: "#x2294",
+    Sscr: "#x1D4AE",
+    Star: "#x22C6",
+    Sub: "#x22D0",
+    Subset: "#x22D0",
+    SubsetEqual: "sube",
+    Succeeds: "#x227B",
+    SucceedsEqual: "#x2AB0",
+    SucceedsSlantEqual: "#x227D",
+    SucceedsTilde: "#x227F",
+    SuchThat: "ni",
+    Sum: "sum",
+    Sup: "#x22D1",
+    Superset: "sup",
+    SupersetEqual: "supe",
+    Supset: "#x22D1",
+    TRADE: "trade",
+    TSHcy: "#x40B",
+    TScy: "#x426",
+    Tab: "#x9",
+    Tcaron: "#x164",
+    Tcedil: "#x162",
+    Tcy: "#x422",
+    Tfr: "#x1D517",
+    Therefore: "there4",
+    ThickSpace: "#x205F;&#x200A",
+    ThinSpace: "thinsp",
+    Tilde: "sim",
+    TildeEqual: "#x2243",
+    TildeFullEqual: "cong",
+    TildeTilde: "#x2248",
+    Topf: "#x1D54B",
+    TripleDot: "#x20DB",
+    Tscr: "#x1D4AF",
+    Tstrok: "#x166",
+    Uarr: "#x219F",
+    Uarrocir: "#x2949",
+    Ubrcy: "#x40E",
+    Ubreve: "#x16C",
+    Ucy: "#x423",
+    Udblac: "#x170",
+    Ufr: "#x1D518",
+    Umacr: "#x16A",
+    UnderBrace: "#x23DF",
+    UnderBracket: "#x23B5",
+    UnderParenthesis: "#x23DD",
+    Union: "#x22C3",
+    UnionPlus: "#x228E",
+    Uogon: "#x172",
+    Uopf: "#x1D54C",
+    UpArrow: "uarr",
+    UpArrowBar: "#x2912",
+    UpArrowDownArrow: "#x21C5",
+    UpDownArrow: "#x2195",
+    UpEquilibrium: "#x296E",
+    UpTee: "#x22A5",
+    UpTeeArrow: "#x21A5",
+    Uparrow: "uArr",
+    Updownarrow: "#x21D5",
+    UpperLeftArrow: "#x2196",
+    UpperRightArrow: "#x2197",
+    Upsi: "#x3D2",
+    Uring: "#x16E",
+    Uscr: "#x1D4B0",
+    Utilde: "#x168",
+    VDash: "#x22AB",
+    Vbar: "#x2AEB",
+    Vcy: "#x412",
+    Vdash: "#x22A9",
+    Vdashl: "#x2AE6",
+    Vee: "#x22C1",
+    Verbar: "#x2016",
+    Vert: "#x2016",
+    VerticalBar: "#x2223",
+    VerticalSeparator: "#x2758",
+    VerticalTilde: "#x2240",
+    VeryThinSpace: "#x200A",
+    Vfr: "#x1D519",
+    Vopf: "#x1D54D",
+    Vscr: "#x1D4B1",
+    Vvdash: "#x22AA",
+    Wcirc: "#x174",
+    Wedge: "#x22C0",
+    Wfr: "#x1D51A",
+    Wopf: "#x1D54E",
+    Wscr: "#x1D4B2",
+    Xfr: "#x1D51B",
+    Xopf: "#x1D54F",
+    Xscr: "#x1D4B3",
+    YAcy: "#x42F",
+    YIcy: "#x407",
+    YUcy: "#x42E",
+    Ycirc: "#x176",
+    Ycy: "#x42B",
+    Yfr: "#x1D51C",
+    Yopf: "#x1D550",
+    Yscr: "#x1D4B4",
+    ZHcy: "#x416",
+    Zacute: "#x179",
+    Zcaron: "#x17D",
+    Zcy: "#x417",
+    Zdot: "#x17B",
+    ZeroWidthSpace: "#x200B",
+    Zfr: "#x2128",
+    Zopf: "#x2124",
+    Zscr: "#x1D4B5",
+    abreve: "#x103",
+    ac: "#x223E",
+    acE: "#x223E;&#x333",
+    acd: "#x223F",
+    acy: "#x430",
+    af: "#x2061",
+    afr: "#x1D51E",
+    aleph: "#x2135",
+    amacr: "#x101",
+    amalg: "#x2A3F",
+    andand: "#x2A55",
+    andd: "#x2A5C",
+    andslope: "#x2A58",
+    andv: "#x2A5A",
+    ange: "#x29A4",
+    angle: "ang",
+    angmsd: "#x2221",
+    angmsdaa: "#x29A8",
+    angmsdab: "#x29A9",
+    angmsdac: "#x29AA",
+    angmsdad: "#x29AB",
+    angmsdae: "#x29AC",
+    angmsdaf: "#x29AD",
+    angmsdag: "#x29AE",
+    angmsdah: "#x29AF",
+    angrt: "#x221F",
+    angrtvb: "#x22BE",
+    angrtvbd: "#x299D",
+    angsph: "#x2222",
+    angst: "#xC5",
+    angzarr: "#x237C",
+    aogon: "#x105",
+    aopf: "#x1D552",
+    ap: "#x2248",
+    apE: "#x2A70",
+    apacir: "#x2A6F",
+    ape: "#x224A",
+    apid: "#x224B",
+    approx: "#x2248",
+    approxeq: "#x224A",
+    ascr: "#x1D4B6",
+    asympeq: "#x224D",
+    awconint: "#x2233",
+    awint: "#x2A11",
+    bNot: "#x2AED",
+    backcong: "#x224C",
+    backepsilon: "#x3F6",
+    backprime: "#x2035",
+    backsim: "#x223D",
+    backsimeq: "#x22CD",
+    barvee: "#x22BD",
+    barwed: "#x2305",
+    barwedge: "#x2305",
+    bbrk: "#x23B5",
+    bbrktbrk: "#x23B6",
+    bcong: "#x224C",
+    bcy: "#x431",
+    becaus: "#x2235",
+    because: "#x2235",
+    bemptyv: "#x29B0",
+    bepsi: "#x3F6",
+    bernou: "#x212C",
+    beth: "#x2136",
+    between: "#x226C",
+    bfr: "#x1D51F",
+    bigcap: "#x22C2",
+    bigcirc: "#x25EF",
+    bigcup: "#x22C3",
+    bigodot: "#x2A00",
+    bigoplus: "#x2A01",
+    bigotimes: "#x2A02",
+    bigsqcup: "#x2A06",
+    bigstar: "#x2605",
+    bigtriangledown: "#x25BD",
+    bigtriangleup: "#x25B3",
+    biguplus: "#x2A04",
+    bigvee: "#x22C1",
+    bigwedge: "#x22C0",
+    bkarow: "#x290D",
+    blacklozenge: "#x29EB",
+    blacksquare: "#x25AA",
+    blacktriangle: "#x25B4",
+    blacktriangledown: "#x25BE",
+    blacktriangleleft: "#x25C2",
+    blacktriangleright: "#x25B8",
+    blank: "#x2423",
+    blk12: "#x2592",
+    blk14: "#x2591",
+    blk34: "#x2593",
+    block: "#x2588",
+    bne: "&#x20E5",
+    bnequiv: "#x2261;&#x20E5",
+    bnot: "#x2310",
+    bopf: "#x1D553",
+    bot: "#x22A5",
+    bottom: "#x22A5",
+    bowtie: "#x22C8",
+    boxDL: "#x2557",
+    boxDR: "#x2554",
+    boxDl: "#x2556",
+    boxDr: "#x2553",
+    boxH: "#x2550",
+    boxHD: "#x2566",
+    boxHU: "#x2569",
+    boxHd: "#x2564",
+    boxHu: "#x2567",
+    boxUL: "#x255D",
+    boxUR: "#x255A",
+    boxUl: "#x255C",
+    boxUr: "#x2559",
+    boxV: "#x2551",
+    boxVH: "#x256C",
+    boxVL: "#x2563",
+    boxVR: "#x2560",
+    boxVh: "#x256B",
+    boxVl: "#x2562",
+    boxVr: "#x255F",
+    boxbox: "#x29C9",
+    boxdL: "#x2555",
+    boxdR: "#x2552",
+    boxdl: "#x2510",
+    boxdr: "#x250C",
+    boxh: "#x2500",
+    boxhD: "#x2565",
+    boxhU: "#x2568",
+    boxhd: "#x252C",
+    boxhu: "#x2534",
+    boxminus: "#x229F",
+    boxplus: "#x229E",
+    boxtimes: "#x22A0",
+    boxuL: "#x255B",
+    boxuR: "#x2558",
+    boxul: "#x2518",
+    boxur: "#x2514",
+    boxv: "#x2502",
+    boxvH: "#x256A",
+    boxvL: "#x2561",
+    boxvR: "#x255E",
+    boxvh: "#x253C",
+    boxvl: "#x2524",
+    boxvr: "#x251C",
+    bprime: "#x2035",
+    breve: "#x2D8",
+    bscr: "#x1D4B7",
+    bsemi: "#x204F",
+    bsim: "#x223D",
+    bsime: "#x22CD",
+    bsolb: "#x29C5",
+    bsolhsub: "#x27C8",
+    bullet: "bull",
+    bump: "#x224E",
+    bumpE: "#x2AAE",
+    bumpe: "#x224F",
+    bumpeq: "#x224F",
+    cacute: "#x107",
+    capand: "#x2A44",
+    capbrcup: "#x2A49",
+    capcap: "#x2A4B",
+    capcup: "#x2A47",
+    capdot: "#x2A40",
+    caps: "#x2229;&#xFE00",
+    caret: "#x2041",
+    caron: "#x2C7",
+    ccaps: "#x2A4D",
+    ccaron: "#x10D",
+    ccirc: "#x109",
+    ccups: "#x2A4C",
+    ccupssm: "#x2A50",
+    cdot: "#x10B",
+    cemptyv: "#x29B2",
+    centerdot: "middot",
+    cfr: "#x1D520",
+    chcy: "#x447",
+    check: "#x2713",
+    checkmark: "#x2713",
+    cir: "#x25CB",
+    cirE: "#x29C3",
+    circeq: "#x2257",
+    circlearrowleft: "#x21BA",
+    circlearrowright: "#x21BB",
+    circledR: "reg",
+    circledS: "#x24C8",
+    circledast: "#x229B",
+    circledcirc: "#x229A",
+    circleddash: "#x229D",
+    cire: "#x2257",
+    cirfnint: "#x2A10",
+    cirmid: "#x2AEF",
+    cirscir: "#x29C2",
+    clubsuit: "clubs",
+    colone: "#x2254",
+    coloneq: "#x2254",
+    comp: "#x2201",
+    compfn: "#x2218",
+    complement: "#x2201",
+    complexes: "#x2102",
+    congdot: "#x2A6D",
+    conint: "#x222E",
+    copf: "#x1D554",
+    coprod: "#x2210",
+    copysr: "#x2117",
+    cross: "#x2717",
+    cscr: "#x1D4B8",
+    csub: "#x2ACF",
+    csube: "#x2AD1",
+    csup: "#x2AD0",
+    csupe: "#x2AD2",
+    ctdot: "#x22EF",
+    cudarrl: "#x2938",
+    cudarrr: "#x2935",
+    cuepr: "#x22DE",
+    cuesc: "#x22DF",
+    cularr: "#x21B6",
+    cularrp: "#x293D",
+    cupbrcap: "#x2A48",
+    cupcap: "#x2A46",
+    cupcup: "#x2A4A",
+    cupdot: "#x228D",
+    cupor: "#x2A45",
+    cups: "#x222A;&#xFE00",
+    curarr: "#x21B7",
+    curarrm: "#x293C",
+    curlyeqprec: "#x22DE",
+    curlyeqsucc: "#x22DF",
+    curlyvee: "#x22CE",
+    curlywedge: "#x22CF",
+    curvearrowleft: "#x21B6",
+    curvearrowright: "#x21B7",
+    cuvee: "#x22CE",
+    cuwed: "#x22CF",
+    cwconint: "#x2232",
+    cwint: "#x2231",
+    cylcty: "#x232D",
+    dHar: "#x2965",
+    daleth: "#x2138",
+    dash: "#x2010",
+    dashv: "#x22A3",
+    dbkarow: "#x290F",
+    dblac: "#x2DD",
+    dcaron: "#x10F",
+    dcy: "#x434",
+    dd: "#x2146",
+    ddagger: "Dagger",
+    ddarr: "#x21CA",
+    ddotseq: "#x2A77",
+    demptyv: "#x29B1",
+    dfisht: "#x297F",
+    dfr: "#x1D521",
+    dharl: "#x21C3",
+    dharr: "#x21C2",
+    diam: "#x22C4",
+    diamond: "#x22C4",
+    diamondsuit: "diams",
+    die: "#xA8",
+    digamma: "#x3DD",
+    disin: "#x22F2",
+    div: "#xF7",
+    divideontimes: "#x22C7",
+    divonx: "#x22C7",
+    djcy: "#x452",
+    dlcorn: "#x231E",
+    dlcrop: "#x230D",
+    dopf: "#x1D555",
+    dot: "#x2D9",
+    doteq: "#x2250",
+    doteqdot: "#x2251",
+    dotminus: "#x2238",
+    dotplus: "#x2214",
+    dotsquare: "#x22A1",
+    doublebarwedge: "#x2306",
+    downarrow: "darr",
+    downdownarrows: "#x21CA",
+    downharpoonleft: "#x21C3",
+    downharpoonright: "#x21C2",
+    drbkarow: "#x2910",
+    drcorn: "#x231F",
+    drcrop: "#x230C",
+    dscr: "#x1D4B9",
+    dscy: "#x455",
+    dsol: "#x29F6",
+    dstrok: "#x111",
+    dtdot: "#x22F1",
+    dtri: "#x25BF",
+    dtrif: "#x25BE",
+    duarr: "#x21F5",
+    duhar: "#x296F",
+    dwangle: "#x29A6",
+    dzcy: "#x45F",
+    dzigrarr: "#x27FF",
+    eDDot: "#x2A77",
+    eDot: "#x2251",
+    easter: "#x2A6E",
+    ecaron: "#x11B",
+    ecir: "#x2256",
+    ecolon: "#x2255",
+    ecy: "#x44D",
+    edot: "#x117",
+    ee: "#x2147",
+    efDot: "#x2252",
+    efr: "#x1D522",
+    eg: "#x2A9A",
+    egs: "#x2A96",
+    egsdot: "#x2A98",
+    el: "#x2A99",
+    elinters: "#x23E7",
+    ell: "#x2113",
+    els: "#x2A95",
+    elsdot: "#x2A97",
+    emacr: "#x113",
+    emptyset: "empty",
+    emptyv: "empty",
+    emsp13: "#x2004",
+    emsp14: "#x2005",
+    eng: "#x14B",
+    eogon: "#x119",
+    eopf: "#x1D556",
+    epar: "#x22D5",
+    eparsl: "#x29E3",
+    eplus: "#x2A71",
+    epsi: "#x3B5",
+    epsiv: "#x3F5",
+    eqcirc: "#x2256",
+    eqcolon: "#x2255",
+    eqsim: "#x2242",
+    eqslantgtr: "#x2A96",
+    eqslantless: "#x2A95",
+    equest: "#x225F",
+    equivDD: "#x2A78",
+    eqvparsl: "#x29E5",
+    erDot: "#x2253",
+    erarr: "#x2971",
+    escr: "#x212F",
+    esdot: "#x2250",
+    esim: "#x2242",
+    expectation: "#x2130",
+    exponentiale: "#x2147",
+    fallingdotseq: "#x2252",
+    fcy: "#x444",
+    female: "#x2640",
+    ffilig: "#xFB03",
+    fflig: "#xFB00",
+    ffllig: "#xFB04",
+    ffr: "#x1D523",
+    filig: "#xFB01",
+    flat: "#x266D",
+    fllig: "#xFB02",
+    fltns: "#x25B1",
+    fopf: "#x1D557",
+    fork: "#x22D4",
+    forkv: "#x2AD9",
+    fpartint: "#x2A0D",
+    frac13: "#x2153",
+    frac15: "#x2155",
+    frac16: "#x2159",
+    frac18: "#x215B",
+    frac23: "#x2154",
+    frac25: "#x2156",
+    frac35: "#x2157",
+    frac38: "#x215C",
+    frac45: "#x2158",
+    frac56: "#x215A",
+    frac58: "#x215D",
+    frac78: "#x215E",
+    frown: "#x2322",
+    fscr: "#x1D4BB",
+    gE: "#x2267",
+    gEl: "#x2A8C",
+    gacute: "#x1F5",
+    gammad: "#x3DD",
+    gap: "#x2A86",
+    gbreve: "#x11F",
+    gcirc: "#x11D",
+    gcy: "#x433",
+    gdot: "#x121",
+    gel: "#x22DB",
+    geq: "ge",
+    geqq: "#x2267",
+    geqslant: "#x2A7E",
+    ges: "#x2A7E",
+    gescc: "#x2AA9",
+    gesdot: "#x2A80",
+    gesdoto: "#x2A82",
+    gesdotol: "#x2A84",
+    gesl: "#x22DB;&#xFE00",
+    gesles: "#x2A94",
+    gfr: "#x1D524",
+    gg: "#x226B",
+    ggg: "#x22D9",
+    gimel: "#x2137",
+    gjcy: "#x453",
+    gl: "#x2277",
+    glE: "#x2A92",
+    gla: "#x2AA5",
+    glj: "#x2AA4",
+    gnE: "#x2269",
+    gnap: "#x2A8A",
+    gnapprox: "#x2A8A",
+    gne: "#x2A88",
+    gneq: "#x2A88",
+    gneqq: "#x2269",
+    gnsim: "#x22E7",
+    gopf: "#x1D558",
+    grave: "#x60",
+    gscr: "#x210A",
+    gsim: "#x2273",
+    gsime: "#x2A8E",
+    gsiml: "#x2A90",
+    gtcc: "#x2AA7",
+    gtcir: "#x2A7A",
+    gtdot: "#x22D7",
+    gtlPar: "#x2995",
+    gtquest: "#x2A7C",
+    gtrapprox: "#x2A86",
+    gtrarr: "#x2978",
+    gtrdot: "#x22D7",
+    gtreqless: "#x22DB",
+    gtreqqless: "#x2A8C",
+    gtrless: "#x2277",
+    gtrsim: "#x2273",
+    gvertneqq: "#x2269;&#xFE00",
+    gvnE: "#x2269;&#xFE00",
+    hairsp: "#x200A",
+    half: "#xBD",
+    hamilt: "#x210B",
+    hardcy: "#x44A",
+    harrcir: "#x2948",
+    harrw: "#x21AD",
+    hbar: "#x210F",
+    hcirc: "#x125",
+    heartsuit: "hearts",
+    hercon: "#x22B9",
+    hfr: "#x1D525",
+    hksearow: "#x2925",
+    hkswarow: "#x2926",
+    hoarr: "#x21FF",
+    homtht: "#x223B",
+    hookleftarrow: "#x21A9",
+    hookrightarrow: "#x21AA",
+    hopf: "#x1D559",
+    horbar: "#x2015",
+    hscr: "#x1D4BD",
+    hslash: "#x210F",
+    hstrok: "#x127",
+    hybull: "#x2043",
+    hyphen: "#x2010",
+    ic: "#x2063",
+    icy: "#x438",
+    iecy: "#x435",
+    iff: "#x21D4",
+    ifr: "#x1D526",
+    ii: "#x2148",
+    iiiint: "#x2A0C",
+    iiint: "#x222D",
+    iinfin: "#x29DC",
+    iiota: "#x2129",
+    ijlig: "#x133",
+    imacr: "#x12B",
+    imagline: "#x2110",
+    imagpart: "#x2111",
+    imath: "#x131",
+    imof: "#x22B7",
+    imped: "#x1B5",
+    in: "#x2208",
+    incare: "#x2105",
+    infintie: "#x29DD",
+    inodot: "#x131",
+    intcal: "#x22BA",
+    integers: "#x2124",
+    intercal: "#x22BA",
+    intlarhk: "#x2A17",
+    intprod: "#x2A3C",
+    iocy: "#x451",
+    iogon: "#x12F",
+    iopf: "#x1D55A",
+    iprod: "#x2A3C",
+    iscr: "#x1D4BE",
+    isinE: "#x22F9",
+    isindot: "#x22F5",
+    isins: "#x22F4",
+    isinsv: "#x22F3",
+    isinv: "#x2208",
+    it: "#x2062",
+    itilde: "#x129",
+    iukcy: "#x456",
+    jcirc: "#x135",
+    jcy: "#x439",
+    jfr: "#x1D527",
+    jmath: "#x237",
+    jopf: "#x1D55B",
+    jscr: "#x1D4BF",
+    jsercy: "#x458",
+    jukcy: "#x454",
+    kappav: "#x3F0",
+    kcedil: "#x137",
+    kcy: "#x43A",
+    kfr: "#x1D528",
+    kgreen: "#x138",
+    khcy: "#x445",
+    kjcy: "#x45C",
+    kopf: "#x1D55C",
+    kscr: "#x1D4C0",
+    lAarr: "#x21DA",
+    lAtail: "#x291B",
+    lBarr: "#x290E",
+    lE: "#x2266",
+    lEg: "#x2A8B",
+    lHar: "#x2962",
+    lacute: "#x13A",
+    laemptyv: "#x29B4",
+    lagran: "#x2112",
+    langd: "#x2991",
+    langle: "lang",
+    lap: "#x2A85",
+    larrb: "#x21E4",
+    larrbfs: "#x291F",
+    larrfs: "#x291D",
+    larrhk: "#x21A9",
+    larrlp: "#x21AB",
+    larrpl: "#x2939",
+    larrsim: "#x2973",
+    larrtl: "#x21A2",
+    lat: "#x2AAB",
+    latail: "#x2919",
+    late: "#x2AAD",
+    lates: "#x2AAD;&#xFE00",
+    lbarr: "#x290C",
+    lbbrk: "#x2772",
+    lbrace: "{",
+    lbrack: "[",
+    lbrke: "#x298B",
+    lbrksld: "#x298F",
+    lbrkslu: "#x298D",
+    lcaron: "#x13E",
+    lcedil: "#x13C",
+    lcub: "{",
+    lcy: "#x43B",
+    ldca: "#x2936",
+    ldquor: "bdquo",
+    ldrdhar: "#x2967",
+    ldrushar: "#x294B",
+    ldsh: "#x21B2",
+    leftarrow: "larr",
+    leftarrowtail: "#x21A2",
+    leftharpoondown: "#x21BD",
+    leftharpoonup: "#x21BC",
+    leftleftarrows: "#x21C7",
+    leftrightarrow: "harr",
+    leftrightarrows: "#x21C6",
+    leftrightharpoons: "#x21CB",
+    leftrightsquigarrow: "#x21AD",
+    leftthreetimes: "#x22CB",
+    leg: "#x22DA",
+    leq: "le",
+    leqq: "#x2266",
+    leqslant: "#x2A7D",
+    les: "#x2A7D",
+    lescc: "#x2AA8",
+    lesdot: "#x2A7F",
+    lesdoto: "#x2A81",
+    lesdotor: "#x2A83",
+    lesg: "#x22DA;&#xFE00",
+    lesges: "#x2A93",
+    lessapprox: "#x2A85",
+    lessdot: "#x22D6",
+    lesseqgtr: "#x22DA",
+    lesseqqgtr: "#x2A8B",
+    lessgtr: "#x2276",
+    lesssim: "#x2272",
+    lfisht: "#x297C",
+    lfr: "#x1D529",
+    lg: "#x2276",
+    lgE: "#x2A91",
+    lhard: "#x21BD",
+    lharu: "#x21BC",
+    lharul: "#x296A",
+    lhblk: "#x2584",
+    ljcy: "#x459",
+    ll: "#x226A",
+    llarr: "#x21C7",
+    llcorner: "#x231E",
+    llhard: "#x296B",
+    lltri: "#x25FA",
+    lmidot: "#x140",
+    lmoust: "#x23B0",
+    lmoustache: "#x23B0",
+    lnE: "#x2268",
+    lnap: "#x2A89",
+    lnapprox: "#x2A89",
+    lne: "#x2A87",
+    lneq: "#x2A87",
+    lneqq: "#x2268",
+    lnsim: "#x22E6",
+    loang: "#x27EC",
+    loarr: "#x21FD",
+    lobrk: "#x27E6",
+    longleftarrow: "#x27F5",
+    longleftrightarrow: "#x27F7",
+    longmapsto: "#x27FC",
+    longrightarrow: "#x27F6",
+    looparrowleft: "#x21AB",
+    looparrowright: "#x21AC",
+    lopar: "#x2985",
+    lopf: "#x1D55D",
+    loplus: "#x2A2D",
+    lotimes: "#x2A34",
+    lozenge: "loz",
+    lozf: "#x29EB",
+    lparlt: "#x2993",
+    lrarr: "#x21C6",
+    lrcorner: "#x231F",
+    lrhar: "#x21CB",
+    lrhard: "#x296D",
+    lrtri: "#x22BF",
+    lscr: "#x1D4C1",
+    lsh: "#x21B0",
+    lsim: "#x2272",
+    lsime: "#x2A8D",
+    lsimg: "#x2A8F",
+    lsquor: "sbquo",
+    lstrok: "#x142",
+    ltcc: "#x2AA6",
+    ltcir: "#x2A79",
+    ltdot: "#x22D6",
+    lthree: "#x22CB",
+    ltimes: "#x22C9",
+    ltlarr: "#x2976",
+    ltquest: "#x2A7B",
+    ltrPar: "#x2996",
+    ltri: "#x25C3",
+    ltrie: "#x22B4",
+    ltrif: "#x25C2",
+    lurdshar: "#x294A",
+    luruhar: "#x2966",
+    lvertneqq: "#x2268;&#xFE00",
+    lvnE: "#x2268;&#xFE00",
+    mDDot: "#x223A",
+    male: "#x2642",
+    malt: "#x2720",
+    maltese: "#x2720",
+    map: "#x21A6",
+    mapsto: "#x21A6",
+    mapstodown: "#x21A7",
+    mapstoleft: "#x21A4",
+    mapstoup: "#x21A5",
+    marker: "#x25AE",
+    mcomma: "#x2A29",
+    mcy: "#x43C",
+    measuredangle: "#x2221",
+    mfr: "#x1D52A",
+    mho: "#x2127",
+    mid: "#x2223",
+    midcir: "#x2AF0",
+    minusb: "#x229F",
+    minusd: "#x2238",
+    minusdu: "#x2A2A",
+    mlcp: "#x2ADB",
+    mldr: "#x2026",
+    mnplus: "#x2213",
+    models: "#x22A7",
+    mopf: "#x1D55E",
+    mp: "#x2213",
+    mscr: "#x1D4C2",
+    mstpos: "#x223E",
+    multimap: "#x22B8",
+    mumap: "#x22B8",
+    nGg: "#x22D9;&#x338",
+    nGt: "#x226B;&#x20D2",
+    nGtv: "#x226B;&#x338",
+    nLeftarrow: "#x21CD",
+    nLeftrightarrow: "#x21CE",
+    nLl: "#x22D8;&#x338",
+    nLt: "#x226A;&#x20D2",
+    nLtv: "#x226A;&#x338",
+    nRightarrow: "#x21CF",
+    nVDash: "#x22AF",
+    nVdash: "#x22AE",
+    nacute: "#x144",
+    nang: "#x2220;&#x20D2",
+    nap: "#x2249",
+    napE: "#x2A70;&#x338",
+    napid: "#x224B;&#x338",
+    napos: "#x149",
+    napprox: "#x2249",
+    natur: "#x266E",
+    natural: "#x266E",
+    naturals: "#x2115",
+    nbump: "#x224E;&#x338",
+    nbumpe: "#x224F;&#x338",
+    ncap: "#x2A43",
+    ncaron: "#x148",
+    ncedil: "#x146",
+    ncong: "#x2247",
+    ncongdot: "#x2A6D;&#x338",
+    ncup: "#x2A42",
+    ncy: "#x43D",
+    neArr: "#x21D7",
+    nearhk: "#x2924",
+    nearr: "#x2197",
+    nearrow: "#x2197",
+    nedot: "#x2250;&#x338",
+    nequiv: "#x2262",
+    nesear: "#x2928",
+    nesim: "#x2242;&#x338",
+    nexist: "#x2204",
+    nexists: "#x2204",
+    nfr: "#x1D52B",
+    ngE: "#x2267;&#x338",
+    nge: "#x2271",
+    ngeq: "#x2271",
+    ngeqq: "#x2267;&#x338",
+    ngeqslant: "#x2A7E;&#x338",
+    nges: "#x2A7E;&#x338",
+    ngsim: "#x2275",
+    ngt: "#x226F",
+    ngtr: "#x226F",
+    nhArr: "#x21CE",
+    nharr: "#x21AE",
+    nhpar: "#x2AF2",
+    nis: "#x22FC",
+    nisd: "#x22FA",
+    niv: "ni",
+    njcy: "#x45A",
+    nlArr: "#x21CD",
+    nlE: "#x2266;&#x338",
+    nlarr: "#x219A",
+    nldr: "#x2025",
+    nle: "#x2270",
+    nleftarrow: "#x219A",
+    nleftrightarrow: "#x21AE",
+    nleq: "#x2270",
+    nleqq: "#x2266;&#x338",
+    nleqslant: "#x2A7D;&#x338",
+    nles: "#x2A7D;&#x338",
+    nless: "#x226E",
+    nlsim: "#x2274",
+    nlt: "#x226E",
+    nltri: "#x22EA",
+    nltrie: "#x22EC",
+    nmid: "#x2224",
+    nopf: "#x1D55F",
+    notinE: "#x22F9;&#x338",
+    notindot: "#x22F5;&#x338",
+    notinva: "notin",
+    notinvb: "#x22F7",
+    notinvc: "#x22F6",
+    notni: "#x220C",
+    notniva: "#x220C",
+    notnivb: "#x22FE",
+    notnivc: "#x22FD",
+    npar: "#x2226",
+    nparallel: "#x2226",
+    nparsl: "#x2AFD;&#x20E5",
+    npart: "#x2202;&#x338",
+    npolint: "#x2A14",
+    npr: "#x2280",
+    nprcue: "#x22E0",
+    npre: "#x2AAF;&#x338",
+    nprec: "#x2280",
+    npreceq: "#x2AAF;&#x338",
+    nrArr: "#x21CF",
+    nrarr: "#x219B",
+    nrarrc: "#x2933;&#x338",
+    nrarrw: "#x219D;&#x338",
+    nrightarrow: "#x219B",
+    nrtri: "#x22EB",
+    nrtrie: "#x22ED",
+    nsc: "#x2281",
+    nsccue: "#x22E1",
+    nsce: "#x2AB0;&#x338",
+    nscr: "#x1D4C3",
+    nshortmid: "#x2224",
+    nshortparallel: "#x2226",
+    nsim: "#x2241",
+    nsime: "#x2244",
+    nsimeq: "#x2244",
+    nsmid: "#x2224",
+    nspar: "#x2226",
+    nsqsube: "#x22E2",
+    nsqsupe: "#x22E3",
+    nsubE: "#x2AC5;&#x338",
+    nsube: "#x2288",
+    nsubset: "#x2282;&#x20D2",
+    nsubseteq: "#x2288",
+    nsubseteqq: "#x2AC5;&#x338",
+    nsucc: "#x2281",
+    nsucceq: "#x2AB0;&#x338",
+    nsup: "#x2285",
+    nsupE: "#x2AC6;&#x338",
+    nsupe: "#x2289",
+    nsupset: "#x2283;&#x20D2",
+    nsupseteq: "#x2289",
+    nsupseteqq: "#x2AC6;&#x338",
+    ntgl: "#x2279",
+    ntlg: "#x2278",
+    ntriangleleft: "#x22EA",
+    ntrianglelefteq: "#x22EC",
+    ntriangleright: "#x22EB",
+    ntrianglerighteq: "#x22ED",
+    numero: "#x2116",
+    numsp: "#x2007",
+    nvDash: "#x22AD",
+    nvHarr: "#x2904",
+    nvap: "#x224D;&#x20D2",
+    nvdash: "#x22AC",
+    nvge: "#x2265;&#x20D2",
+    nvgt: "#x3E;&#x20D2",
+    nvinfin: "#x29DE",
+    nvlArr: "#x2902",
+    nvle: "#x2264;&#x20D2",
+    nvlt: "#x3C;&#x20D2",
+    nvltrie: "#x22B4;&#x20D2",
+    nvrArr: "#x2903",
+    nvrtrie: "#x22B5;&#x20D2",
+    nvsim: "#x223C;&#x20D2",
+    nwArr: "#x21D6",
+    nwarhk: "#x2923",
+    nwarr: "#x2196",
+    nwarrow: "#x2196",
+    nwnear: "#x2927",
+    oS: "#x24C8",
+    oast: "#x229B",
+    ocir: "#x229A",
+    ocy: "#x43E",
+    odash: "#x229D",
+    odblac: "#x151",
+    odiv: "#x2A38",
+    odot: "#x2299",
+    odsold: "#x29BC",
+    ofcir: "#x29BF",
+    ofr: "#x1D52C",
+    ogon: "#x2DB",
+    ogt: "#x29C1",
+    ohbar: "#x29B5",
+    ohm: "#x3A9",
+    oint: "#x222E",
+    olarr: "#x21BA",
+    olcir: "#x29BE",
+    olcross: "#x29BB",
+    olt: "#x29C0",
+    omacr: "#x14D",
+    omid: "#x29B6",
+    ominus: "#x2296",
+    oopf: "#x1D560",
+    opar: "#x29B7",
+    operp: "#x29B9",
+    orarr: "#x21BB",
+    ord: "#x2A5D",
+    order: "#x2134",
+    orderof: "#x2134",
+    origof: "#x22B6",
+    oror: "#x2A56",
+    orslope: "#x2A57",
+    orv: "#x2A5B",
+    oscr: "#x2134",
+    osol: "#x2298",
+    otimesas: "#x2A36",
+    ovbar: "#x233D",
+    par: "#x2225",
+    parallel: "#x2225",
+    parsim: "#x2AF3",
+    parsl: "#x2AFD",
+    pcy: "#x43F",
+    pertenk: "#x2031",
+    pfr: "#x1D52D",
+    phiv: "#x3D5",
+    phmmat: "#x2133",
+    phone: "#x260E",
+    pitchfork: "#x22D4",
+    planck: "#x210F",
+    planckh: "#x210E",
+    plankv: "#x210F",
+    plusacir: "#x2A23",
+    plusb: "#x229E",
+    pluscir: "#x2A22",
+    plusdo: "#x2214",
+    plusdu: "#x2A25",
+    pluse: "#x2A72",
+    plussim: "#x2A26",
+    plustwo: "#x2A27",
+    pm: "#xB1",
+    pointint: "#x2A15",
+    popf: "#x1D561",
+    pr: "#x227A",
+    prE: "#x2AB3",
+    prap: "#x2AB7",
+    prcue: "#x227C",
+    pre: "#x2AAF",
+    prec: "#x227A",
+    precapprox: "#x2AB7",
+    preccurlyeq: "#x227C",
+    preceq: "#x2AAF",
+    precnapprox: "#x2AB9",
+    precneqq: "#x2AB5",
+    precnsim: "#x22E8",
+    precsim: "#x227E",
+    primes: "#x2119",
+    prnE: "#x2AB5",
+    prnap: "#x2AB9",
+    prnsim: "#x22E8",
+    profalar: "#x232E",
+    profline: "#x2312",
+    profsurf: "#x2313",
+    propto: "prop",
+    prsim: "#x227E",
+    prurel: "#x22B0",
+    pscr: "#x1D4C5",
+    puncsp: "#x2008",
+    qfr: "#x1D52E",
+    qint: "#x2A0C",
+    qopf: "#x1D562",
+    qprime: "#x2057",
+    qscr: "#x1D4C6",
+    quaternions: "#x210D",
+    quatint: "#x2A16",
+    questeq: "#x225F",
+    rAarr: "#x21DB",
+    rAtail: "#x291C",
+    rBarr: "#x290F",
+    rHar: "#x2964",
+    race: "#x223D;&#x331",
+    racute: "#x155",
+    raemptyv: "#x29B3",
+    rangd: "#x2992",
+    range: "#x29A5",
+    rangle: "rang",
+    rarrap: "#x2975",
+    rarrb: "#x21E5",
+    rarrbfs: "#x2920",
+    rarrc: "#x2933",
+    rarrfs: "#x291E",
+    rarrhk: "#x21AA",
+    rarrlp: "#x21AC",
+    rarrpl: "#x2945",
+    rarrsim: "#x2974",
+    rarrtl: "#x21A3",
+    rarrw: "#x219D",
+    ratail: "#x291A",
+    ratio: "#x2236",
+    rationals: "#x211A",
+    rbarr: "#x290D",
+    rbbrk: "#x2773",
+    rbrke: "#x298C",
+    rbrksld: "#x298E",
+    rbrkslu: "#x2990",
+    rcaron: "#x159",
+    rcedil: "#x157",
+    rcy: "#x440",
+    rdca: "#x2937",
+    rdldhar: "#x2969",
+    rdquor: "rdquo",
+    rdsh: "#x21B3",
+    realine: "#x211B",
+    realpart: "#x211C",
+    reals: "#x211D",
+    rect: "#x25AD",
+    rfisht: "#x297D",
+    rfr: "#x1D52F",
+    rhard: "#x21C1",
+    rharu: "#x21C0",
+    rharul: "#x296C",
+    rhov: "#x3F1",
+    rightarrow: "rarr",
+    rightarrowtail: "#x21A3",
+    rightharpoondown: "#x21C1",
+    rightharpoonup: "#x21C0",
+    rightleftarrows: "#x21C4",
+    rightleftharpoons: "#x21CC",
+    rightrightarrows: "#x21C9",
+    rightsquigarrow: "#x219D",
+    rightthreetimes: "#x22CC",
+    ring: "#x2DA",
+    risingdotseq: "#x2253",
+    rlarr: "#x21C4",
+    rlhar: "#x21CC",
+    rmoust: "#x23B1",
+    rmoustache: "#x23B1",
+    rnmid: "#x2AEE",
+    roang: "#x27ED",
+    roarr: "#x21FE",
+    robrk: "#x27E7",
+    ropar: "#x2986",
+    ropf: "#x1D563",
+    roplus: "#x2A2E",
+    rotimes: "#x2A35",
+    rpargt: "#x2994",
+    rppolint: "#x2A12",
+    rrarr: "#x21C9",
+    rscr: "#x1D4C7",
+    rsh: "#x21B1",
+    rsquor: "rsquo",
+    rthree: "#x22CC",
+    rtimes: "#x22CA",
+    rtri: "#x25B9",
+    rtrie: "#x22B5",
+    rtrif: "#x25B8",
+    rtriltri: "#x29CE",
+    ruluhar: "#x2968",
+    rx: "#x211E",
+    sacute: "#x15B",
+    sc: "#x227B",
+    scE: "#x2AB4",
+    scap: "#x2AB8",
+    sccue: "#x227D",
+    sce: "#x2AB0",
+    scedil: "#x15F",
+    scirc: "#x15D",
+    scnE: "#x2AB6",
+    scnap: "#x2ABA",
+    scnsim: "#x22E9",
+    scpolint: "#x2A13",
+    scsim: "#x227F",
+    scy: "#x441",
+    sdotb: "#x22A1",
+    sdote: "#x2A66",
+    seArr: "#x21D8",
+    searhk: "#x2925",
+    searr: "#x2198",
+    searrow: "#x2198",
+    seswar: "#x2929",
+    setminus: "#x2216",
+    setmn: "#x2216",
+    sext: "#x2736",
+    sfr: "#x1D530",
+    sfrown: "#x2322",
+    sharp: "#x266F",
+    shchcy: "#x449",
+    shcy: "#x448",
+    shortmid: "#x2223",
+    shortparallel: "#x2225",
+    sigmav: "sigmaf",
+    simdot: "#x2A6A",
+    sime: "#x2243",
+    simeq: "#x2243",
+    simg: "#x2A9E",
+    simgE: "#x2AA0",
+    siml: "#x2A9D",
+    simlE: "#x2A9F",
+    simne: "#x2246",
+    simplus: "#x2A24",
+    simrarr: "#x2972",
+    slarr: "larr",
+    smallsetminus: "#x2216",
+    smashp: "#x2A33",
+    smeparsl: "#x29E4",
+    smid: "#x2223",
+    smile: "#x2323",
+    smt: "#x2AAA",
+    smte: "#x2AAC",
+    smtes: "#x2AAC;&#xFE00",
+    softcy: "#x44C",
+    solb: "#x29C4",
+    solbar: "#x233F",
+    sopf: "#x1D564",
+    spadesuit: "spades",
+    spar: "#x2225",
+    sqcap: "#x2293",
+    sqcaps: "#x2293;&#xFE00",
+    sqcup: "#x2294",
+    sqcups: "#x2294;&#xFE00",
+    sqsub: "#x228F",
+    sqsube: "#x2291",
+    sqsubset: "#x228F",
+    sqsubseteq: "#x2291",
+    sqsup: "#x2290",
+    sqsupe: "#x2292",
+    sqsupset: "#x2290",
+    sqsupseteq: "#x2292",
+    squ: "#x25A1",
+    square: "#x25A1",
+    squarf: "#x25AA",
+    squf: "#x25AA",
+    srarr: "rarr",
+    sscr: "#x1D4C8",
+    ssetmn: "#x2216",
+    ssmile: "#x2323",
+    sstarf: "#x22C6",
+    star: "#x2606",
+    starf: "#x2605",
+    straightepsilon: "#x3F5",
+    straightphi: "#x3D5",
+    strns: "macr",
+    subE: "#x2AC5",
+    subdot: "#x2ABD",
+    subedot: "#x2AC3",
+    submult: "#x2AC1",
+    subnE: "#x2ACB",
+    subne: "#x228A",
+    subplus: "#x2ABF",
+    subrarr: "#x2979",
+    subset: "sub",
+    subseteq: "sube",
+    subseteqq: "#x2AC5",
+    subsetneq: "#x228A",
+    subsetneqq: "#x2ACB",
+    subsim: "#x2AC7",
+    subsub: "#x2AD5",
+    subsup: "#x2AD3",
+    succ: "#x227B",
+    succapprox: "#x2AB8",
+    succcurlyeq: "#x227D",
+    succeq: "#x2AB0",
+    succnapprox: "#x2ABA",
+    succneqq: "#x2AB6",
+    succnsim: "#x22E9",
+    succsim: "#x227F",
+    sung: "#x266A",
+    supE: "#x2AC6",
+    supdot: "#x2ABE",
+    supdsub: "#x2AD8",
+    supedot: "#x2AC4",
+    suphsol: "#x27C9",
+    suphsub: "#x2AD7",
+    suplarr: "#x297B",
+    supmult: "#x2AC2",
+    supnE: "#x2ACC",
+    supne: "#x228B",
+    supplus: "#x2AC0",
+    supset: "sup",
+    supseteq: "supe",
+    supseteqq: "#x2AC6",
+    supsetneq: "#x228B",
+    supsetneqq: "#x2ACC",
+    supsim: "#x2AC8",
+    supsub: "#x2AD4",
+    supsup: "#x2AD6",
+    swArr: "#x21D9",
+    swarhk: "#x2926",
+    swarr: "#x2199",
+    swarrow: "#x2199",
+    swnwar: "#x292A",
+    target: "#x2316",
+    tbrk: "#x23B4",
+    tcaron: "#x165",
+    tcedil: "#x163",
+    tcy: "#x442",
+    tdot: "#x20DB",
+    telrec: "#x2315",
+    tfr: "#x1D531",
+    therefore: "there4",
+    thetav: "#x3D1",
+    thickapprox: "#x2248",
+    thicksim: "sim",
+    thkap: "#x2248",
+    thksim: "sim",
+    timesb: "#x22A0",
+    timesbar: "#x2A31",
+    timesd: "#x2A30",
+    tint: "#x222D",
+    toea: "#x2928",
+    top: "#x22A4",
+    topbot: "#x2336",
+    topcir: "#x2AF1",
+    topf: "#x1D565",
+    topfork: "#x2ADA",
+    tosa: "#x2929",
+    tprime: "#x2034",
+    triangle: "#x25B5",
+    triangledown: "#x25BF",
+    triangleleft: "#x25C3",
+    trianglelefteq: "#x22B4",
+    triangleq: "#x225C",
+    triangleright: "#x25B9",
+    trianglerighteq: "#x22B5",
+    tridot: "#x25EC",
+    trie: "#x225C",
+    triminus: "#x2A3A",
+    triplus: "#x2A39",
+    trisb: "#x29CD",
+    tritime: "#x2A3B",
+    trpezium: "#x23E2",
+    tscr: "#x1D4C9",
+    tscy: "#x446",
+    tshcy: "#x45B",
+    tstrok: "#x167",
+    twixt: "#x226C",
+    twoheadleftarrow: "#x219E",
+    twoheadrightarrow: "#x21A0",
+    uHar: "#x2963",
+    ubrcy: "#x45E",
+    ubreve: "#x16D",
+    ucy: "#x443",
+    udarr: "#x21C5",
+    udblac: "#x171",
+    udhar: "#x296E",
+    ufisht: "#x297E",
+    ufr: "#x1D532",
+    uharl: "#x21BF",
+    uharr: "#x21BE",
+    uhblk: "#x2580",
+    ulcorn: "#x231C",
+    ulcorner: "#x231C",
+    ulcrop: "#x230F",
+    ultri: "#x25F8",
+    umacr: "#x16B",
+    uogon: "#x173",
+    uopf: "#x1D566",
+    uparrow: "uarr",
+    updownarrow: "#x2195",
+    upharpoonleft: "#x21BF",
+    upharpoonright: "#x21BE",
+    uplus: "#x228E",
+    upsi: "#x3C5",
+    upuparrows: "#x21C8",
+    urcorn: "#x231D",
+    urcorner: "#x231D",
+    urcrop: "#x230E",
+    uring: "#x16F",
+    urtri: "#x25F9",
+    uscr: "#x1D4CA",
+    utdot: "#x22F0",
+    utilde: "#x169",
+    utri: "#x25B5",
+    utrif: "#x25B4",
+    uuarr: "#x21C8",
+    uwangle: "#x29A7",
+    vArr: "#x21D5",
+    vBar: "#x2AE8",
+    vBarv: "#x2AE9",
+    vDash: "#x22A8",
+    vangrt: "#x299C",
+    varepsilon: "#x3F5",
+    varkappa: "#x3F0",
+    varnothing: "empty",
+    varphi: "#x3D5",
+    varpi: "piv",
+    varpropto: "prop",
+    varr: "#x2195",
+    varrho: "#x3F1",
+    varsigma: "sigmaf",
+    varsubsetneq: "#x228A;&#xFE00",
+    varsubsetneqq: "#x2ACB;&#xFE00",
+    varsupsetneq: "#x228B;&#xFE00",
+    varsupsetneqq: "#x2ACC;&#xFE00",
+    vartheta: "#x3D1",
+    vartriangleleft: "#x22B2",
+    vartriangleright: "#x22B3",
+    vcy: "#x432",
+    vdash: "#x22A2",
+    vee: "or",
+    veebar: "#x22BB",
+    veeeq: "#x225A",
+    vellip: "#x22EE",
+    vfr: "#x1D533",
+    vltri: "#x22B2",
+    vnsub: "#x2282;&#x20D2",
+    vnsup: "#x2283;&#x20D2",
+    vopf: "#x1D567",
+    vprop: "prop",
+    vrtri: "#x22B3",
+    vscr: "#x1D4CB",
+    vsubnE: "#x2ACB;&#xFE00",
+    vsubne: "#x228A;&#xFE00",
+    vsupnE: "#x2ACC;&#xFE00",
+    vsupne: "#x228B;&#xFE00",
+    vzigzag: "#x299A",
+    wcirc: "#x175",
+    wedbar: "#x2A5F",
+    wedge: "and",
+    wedgeq: "#x2259",
+    wfr: "#x1D534",
+    wopf: "#x1D568",
+    wp: "#x2118",
+    wr: "#x2240",
+    wreath: "#x2240",
+    wscr: "#x1D4CC",
+    xcap: "#x22C2",
+    xcirc: "#x25EF",
+    xcup: "#x22C3",
+    xdtri: "#x25BD",
+    xfr: "#x1D535",
+    xhArr: "#x27FA",
+    xharr: "#x27F7",
+    xlArr: "#x27F8",
+    xlarr: "#x27F5",
+    xmap: "#x27FC",
+    xnis: "#x22FB",
+    xodot: "#x2A00",
+    xopf: "#x1D569",
+    xoplus: "#x2A01",
+    xotime: "#x2A02",
+    xrArr: "#x27F9",
+    xrarr: "#x27F6",
+    xscr: "#x1D4CD",
+    xsqcup: "#x2A06",
+    xuplus: "#x2A04",
+    xutri: "#x25B3",
+    xvee: "#x22C1",
+    xwedge: "#x22C0",
+    yacy: "#x44F",
+    ycirc: "#x177",
+    ycy: "#x44B",
+    yfr: "#x1D536",
+    yicy: "#x457",
+    yopf: "#x1D56A",
+    yscr: "#x1D4CE",
+    yucy: "#x44E",
+    zacute: "#x17A",
+    zcaron: "#x17E",
+    zcy: "#x437",
+    zdot: "#x17C",
+    zeetrf: "#x2128",
+    zfr: "#x1D537",
+    zhcy: "#x436",
+    zigrarr: "#x21DD",
+    zopf: "#x1D56B",
+    zscr: "#x1D4CF"
   };
 
   // rule: bad-named-html-entity-not-email-friendly
@@ -40862,7 +39023,7 @@
   /**
    * string-find-malformed
    * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.3
+   * Version: 1.1.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -40917,7 +39078,7 @@
     let wasThisLetterMatched;
 
     for (let i = 0; i < len; i++) {
-      if (opts.ignoreWhitespace && !str[i].trim().length) {
+      if (opts.ignoreWhitespace && !str[i].trim()) {
         continue;
       }
 
@@ -40999,7 +39160,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.3
+   * Version: 4.0.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -41192,7 +39353,7 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
     }
 
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim().length) {
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
         let firstCharOutsideIndex;
         let startingPosition = position;
@@ -41205,7 +39366,7 @@
           for (let y = startingPosition; y--;) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -41214,7 +39375,7 @@
           for (let y = startingPosition; y < str.length; y++) {
             const currentChar = str[y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -43093,7 +41254,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.3
+   * Version: 1.7.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -43159,7 +41320,7 @@
       }
     }
 
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim().length && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
       passed = true;
     }
 
@@ -43210,7 +41371,7 @@
   /**
    * string-split-by-whitespace
    * Split string into array by chunks of whitespace
-   * Version: 1.6.60
+   * Version: 1.6.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -43267,7 +41428,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.0
+   * Version: 1.1.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -43332,7 +41493,7 @@
   }
 
   function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
-    if (typeof str !== "string" || !str.trim().length || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+    if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
       return false;
     }
 
@@ -43361,7 +41522,7 @@
         const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
         const E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
         const E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim().length && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
+        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
         let attrNameCharsChunkOnTheLeft;
 
         if (i === isThisClosingIdx) {
@@ -43403,7 +41564,7 @@
         return false;
       }
 
-      if (str[i].trim().length && !chunkStartsAt) {
+      if (str[i].trim() && !chunkStartsAt) {
         if (charSuitableForHTMLAttrName(str[i])) {
           chunkStartsAt = i;
         }
@@ -43445,7 +41606,7 @@
         if (openingQuote && str[i] === openingQuote) {
           const Y1 = !!lastQuoteAt;
           const Y2 = lastQuoteAt === isThisClosingIdx;
-          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim().length;
+          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
           const Y4 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
           const Y5 = i >= isThisClosingIdx;
           return Y1 && Y2 && Y3 && Y4 && Y5;
@@ -43475,11 +41636,11 @@
       } else {
         let firstNonWhitespaceCharOnTheLeft;
 
-        if (str[i - 1] && str[i - 1].trim().length && str[i - 1] !== "=") {
+        if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
           firstNonWhitespaceCharOnTheLeft = i - 1;
         } else {
           for (let y = i; y--;) {
-            if (str[y].trim().length && str[y] !== "=") {
+            if (str[y].trim() && str[y] !== "=") {
               firstNonWhitespaceCharOnTheLeft = y;
               break;
             }
@@ -43526,7 +41687,7 @@
   /**
    * codsen-tokenizer
    * HTML Lexer aimed at erroneous code
-   * Version: 2.12.0
+   * Version: 2.12.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -43800,7 +41961,7 @@
     }
 
     function dumpCurrentToken(token, i) {
-      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim().length || str[i] === "<")) {
+      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
         token.end = left(str, i) + 1;
         token.value = str.slice(token.start, token.end);
 
@@ -43812,7 +41973,7 @@
               if (token.attribs[i].attribNameRecognised) {
                 cutOffIndex = token.attribs[i].attribEnd;
 
-                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim().length && str[cutOffIndex + 1].trim().length) {
+                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                   cutOffIndex++;
                 }
               } else {
@@ -43846,7 +42007,7 @@
           pingTagCb(token);
           token = tokenReset();
 
-          if (str[i - 1] && !str[i - 1].trim().length) {
+          if (str[i - 1] && !str[i - 1].trim()) {
             initToken("text", left(str, i) + 1);
           }
         }
@@ -43981,7 +42142,7 @@
             token = tokenReset();
             doNothing = i + 1;
           }
-        } else if (token.type === "text" && str[i] && str[i].trim().length) {
+        } else if (token.type === "text" && str[i] && str[i].trim()) {
           token.end = i;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
@@ -44026,12 +42187,12 @@
         }
       }
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[i] && str[i].trim().length && str[i] !== "@") {
+      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[i] && str[i].trim() && str[i] !== "@") {
         token.identifierStartsAt = i;
       }
 
       if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[i])) {
-        if (str[i - 1] && str[i - 1].trim().length) {
+        if (str[i - 1] && str[i - 1].trim()) {
           token.queryEndsAt = i;
         } else {
           token.queryEndsAt = left(str, i) + 1;
@@ -44068,16 +42229,16 @@
         }
       }
 
-      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim().length && !Number.isInteger(token.queryStartsAt)) {
+      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !Number.isInteger(token.queryStartsAt)) {
         token.queryStartsAt = i;
       }
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && i >= token.start && str[i] && (!str[i].trim().length || "()".includes(str[i])) && !Number.isInteger(token.identifierEndsAt)) {
+      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !Number.isInteger(token.identifierEndsAt)) {
         token.identifierEndsAt = i;
         token.identifier = str.slice(token.identifierStartsAt, i);
       }
 
-      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim().length && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
+      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
         token.selectors.push({
           value: str.slice(selectorChunkStartedAt, i),
           selectorStarts: selectorChunkStartedAt,
@@ -44224,7 +42385,7 @@
           }
         } else if (token.start === null || token.end === i) {
           if (styleStarts) {
-            if (str[i] && !str[i].trim().length) {
+            if (str[i] && !str[i].trim()) {
               tokenReset();
               initToken("text", i);
               token.end = right(str, i) || str.length;
@@ -44237,7 +42398,7 @@
                 const idxOnTheRight = right(str, i);
                 initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
 
-                if (str[i + 1] && !str[i + 1].trim().length) {
+                if (str[i + 1] && !str[i + 1].trim()) {
                   doNothing = right(str, i);
                 }
               }
@@ -44258,14 +42419,14 @@
 
             initToken("text", i);
           }
-        } else if (token.type === "text" && styleStarts && str[i] && str[i].trim().length && !"{},".includes(str[i])) {
+        } else if (token.type === "text" && styleStarts && str[i] && str[i].trim() && !"{},".includes(str[i])) {
           dumpCurrentToken(token, i);
           tokenReset();
           initToken("rule", i);
         }
       }
 
-      if (!doNothing && token.type === "rule" && str[i] && str[i].trim().length && !"{}".includes(str[i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
+      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
         if (!",".includes(str[i])) {
           selectorChunkStartedAt = i;
 
@@ -44413,7 +42574,7 @@
         attrib.attribNameEndsAt = i;
         attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
-        if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim().length || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
+        if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
           if (`'"`.includes(str[right(str, i)])) ;else {
             attrib.attribEnd = i;
             token.attribs.push(lodash_clonedeep(attrib));
@@ -44467,7 +42628,7 @@
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
           }
-        } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim().length || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
+        } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim() || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
           attrib.attribValueEndsAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
           attrib.attribEnd = i;
@@ -44484,7 +42645,7 @@
           let attribClosingQuoteAt;
 
           for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
-            if (!whitespaceFound && str[y] && !str[y].trim().length) {
+            if (!whitespaceFound && str[y] && !str[y].trim()) {
               whitespaceFound = true;
 
               if (attribClosingQuoteAt) {
@@ -44492,7 +42653,7 @@
               }
             }
 
-            if (whitespaceFound && str[y] && str[y].trim().length) {
+            if (whitespaceFound && str[y] && str[y].trim()) {
               whitespaceFound = false;
 
               if (!attribClosingQuoteAt) {
@@ -44530,7 +42691,7 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim().length) {
+      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
         if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
           const firstCharOnTheRight = right(str, i);
           const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
@@ -44592,7 +42753,7 @@
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
 
-          if (Number.isInteger(attrib.attribValueStartsAt) && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim().length) {
+          if (Number.isInteger(attrib.attribValueStartsAt) && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
             attrib.attribValueEndsAt = i;
             attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
           } else {
@@ -44640,7 +42801,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.5.1
+   * Version: 0.5.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -44856,7 +43017,7 @@
 
           tokenTakenCareOf = true;
         } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$5(previousTagsToken)) {
-          if (previousTagsToken.type === "text" && previousTagsToken.value.trim().length && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
+          if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
             const capturedMalformedTagRanges = [];
             strFindMalformed(previousTagsToken.value, "<!--", obj => {
               capturedMalformedTagRanges.push(obj);
@@ -44897,7 +43058,7 @@
                 tokenTakenCareOf = true;
               }
             }
-          } else if (isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim().length && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+          } else if (isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
             const capturedMalformedTagRanges = [];
             strFindMalformed(parentsLastChildTokenValue.value, "<!--", obj => {
               capturedMalformedTagRanges.push(obj);
@@ -45732,7 +43893,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.17.0";
+  var version = "2.17.1";
 
   exports.Linter = Linter;
   exports.version = version;

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://gitlab.com/codsen/codsen/compare/json-variables@8.0.57...json-variables@8.1.0) (2020-04-18)
+
+
+### Features
+
+* some rebasing, two dependencies removed ([05e9346](https://gitlab.com/codsen/codsen/commit/05e93460cee8a02ab80bbd94f0bfa174ca785142))
+
+
+
+
+
 ## 8.0.37 (2019-10-02)
 
 ### Performance Improvements

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.26](https://gitlab.com/codsen/codsen/compare/html-crush@1.9.25...html-crush@1.9.26) (2020-04-18)
+
+**Note:** Version bump only for package html-crush
+
+
+
+
+
 ## 1.9.0 (2019-09-14)
 
 ### Features

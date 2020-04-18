@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 1.9.21
+ * Version: 1.9.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key
@@ -5324,7 +5324,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-contains-only-empty-space
    * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.3
+   * Version: 1.9.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
@@ -5354,7 +5354,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.3
+   * Version: 1.13.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
@@ -5563,7 +5563,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-monkey
    * Traverse and edit AST's (like parsed HTML or anything nested)
-   * Version: 7.11.5
+   * Version: 7.11.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey

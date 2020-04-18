@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.4](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.7.3...is-html-tag-opening@1.7.4) (2020-04-18)
+
+**Note:** Version bump only for package is-html-tag-opening
+
+
+
+
+
 ## 1.7.0 (2020-03-16)
 
 ### Bug Fixes
