@@ -2980,7 +2980,7 @@
 
   /**
    * codsen-tokenizer
-   * HTML Lexer aimed at erroneous code
+   * HTML and CSS Lexer aimed at code with fatal errors
    * Version: 2.12.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
