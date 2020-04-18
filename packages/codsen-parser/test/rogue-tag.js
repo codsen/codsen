@@ -387,7 +387,7 @@ t.only(
   }
 );
 
-t.todo(
+t.test(
   `02.04 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void, legit`,
   (t) => {
     const gatheredErr = [];
@@ -397,16 +397,67 @@ t.todo(
           gatheredErr.push(errObj);
         },
       }),
-      [],
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 5,
+          value: "<div>",
+          children: [
+            {
+              type: "tag",
+              start: 5,
+              end: 10,
+              value: "<div>",
+              children: [
+                {
+                  type: "tag",
+                  start: 10,
+                  end: 15,
+                  value: "<div>",
+                  children: [
+                    {
+                      type: "text",
+                      start: 15,
+                      end: 16,
+                      value: "x",
+                    },
+                  ],
+                },
+                {
+                  type: "tag",
+                  start: 16,
+                  end: 22,
+                  value: "</div>",
+                },
+                {
+                  type: "tag",
+                  start: 22,
+                  end: 27,
+                  value: "<br/>",
+                },
+              ],
+            },
+            // notice how the pairing is done hungrily - this div could close
+            // parent too but if it can fit this early, it's placed asap:
+            {
+              type: "tag",
+              start: 27,
+              end: 33,
+              value: "</div>",
+            },
+          ],
+        },
+      ],
       "02.04.01"
     );
     t.match(
       gatheredErr,
       [
         {
-          ruleId: "tag-rogue",
-          idxFrom: 21,
-          idxTo: 24,
+          ruleId: "tag-missing-closing",
+          idxFrom: 0,
+          idxTo: 5,
         },
       ],
       "02.04.02"
