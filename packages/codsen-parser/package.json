@@ -24,7 +24,7 @@
   "browser": "dist/codsen-parser.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "ciunittest": "npm run lint && npm run tap -- --no-only --no-coverage --reporter=silent --output-file=testStats.md && npm run format",
+    "ci_test": "npm run lint && npm run tap -- --no-only --no-coverage --reporter=silent --output-file=testStats.md && npm run format",
     "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
@@ -33,6 +33,7 @@
     "perf": "node perf/check",
     "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
+    "republish": "npm publish || :",
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
