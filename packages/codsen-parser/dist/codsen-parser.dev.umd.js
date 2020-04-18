@@ -4557,7 +4557,23 @@
 
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
-        !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
+        !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
+        // --------
+        // imagine the case:
+        // <div><a> </div>
+        // we don't want to nest that space text token under "a" if the following
+        // token </div> closes the pending layer -
+        // this means matching token that comes next against second layer
+        // behind (the layers[layers.length - 3] below):
+        // --------
+        //
+        !Array.isArray(next) || // another early escape latch:
+        !next.length || // another early escape latch:
+        !Array.isArray(layers) || // another early escape latch:
+        !layers.length || // another early escape latch:
+        layers.length < 3 || // the real clause:
+        !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing && // ensure it's not legit closing tag following:
+        next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
           // 1. reset the flag
           nestNext = false; // 2. go deeper
           // "1.children.3" -> "1.children.3.children.0"

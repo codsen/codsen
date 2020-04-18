@@ -303,7 +303,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `02.03 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void`,
   (t) => {
     const gatheredErr = [];
@@ -458,6 +458,9 @@ t.test(
           ruleId: "tag-missing-closing",
           idxFrom: 0,
           idxTo: 5,
+          tokenObj: {
+            value: "<div>",
+          },
         },
       ],
       "02.04.02"
@@ -467,7 +470,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `02.05 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - text`,
   (t) => {
     const gatheredErr = [];
@@ -477,16 +480,68 @@ t.todo(
           gatheredErr.push(errObj);
         },
       }),
-      [],
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7,
+          value: "<table>",
+          children: [
+            {
+              type: "tag",
+              start: 7,
+              end: 11,
+              value: "<tr>",
+              children: [
+                {
+                  type: "tag",
+                  start: 11,
+                  end: 15,
+                  value: "<td>",
+                  children: [
+                    {
+                      type: "text",
+                      start: 15,
+                      end: 16,
+                      value: "x",
+                    },
+                  ],
+                },
+                {
+                  type: "tag",
+                  start: 16,
+                  end: 21,
+                  value: "</td>",
+                },
+                {
+                  type: "text",
+                  start: 21,
+                  end: 22,
+                  value: "z",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "tag",
+          start: 22,
+          end: 30,
+          value: "</table>",
+        },
+      ],
       "02.05.01"
     );
     t.match(
       gatheredErr,
       [
         {
-          ruleId: "tag-rogue",
-          idxFrom: 21,
-          idxTo: 24,
+          ruleId: "tag-missing-closing",
+          idxFrom: 7,
+          idxTo: 11,
+          tokenObj: {
+            value: "<tr>",
+          },
         },
       ],
       "02.05.02"
@@ -496,7 +551,7 @@ t.todo(
   }
 );
 
-t.todo(
+t.test(
   `02.06 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace`,
   (t) => {
     const gatheredErr = [];
@@ -515,7 +570,86 @@ t.todo(
           },
         }
       ),
-      [],
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7,
+          value: "<table>",
+          children: [
+            {
+              type: "text",
+              start: 7,
+              end: 10,
+              value: "\n  ",
+            },
+            {
+              type: "tag",
+              start: 10,
+              end: 14,
+              value: "<tr>",
+              children: [
+                {
+                  type: "text",
+                  start: 14,
+                  end: 19,
+                  value: "\n    ",
+                },
+                {
+                  type: "tag",
+                  start: 19,
+                  end: 23,
+                  value: "<td>",
+                  children: [
+                    {
+                      type: "text",
+                      start: 23,
+                      end: 36,
+                      value: "\n      x\n    ",
+                    },
+                  ],
+                },
+                {
+                  type: "tag",
+                  start: 36,
+                  end: 41,
+                  value: "</td>",
+                },
+                {
+                  type: "text",
+                  start: 41,
+                  end: 46,
+                  value: "\n    ",
+                },
+                {
+                  type: "tag",
+                  start: 46,
+                  end: 49,
+                  value: "<a>",
+                },
+                //                          !!!
+                //      the following token is not nested under "a":
+                //                         !!!
+                {
+                  type: "text",
+                  start: 49,
+                  end: 50,
+                  value: "\n",
+                },
+                // it's because following tag closes second layer behind,
+                // first layer being parent "tr" and second layer being
+                // grandparent "table"
+              ],
+            },
+          ],
+        },
+        {
+          type: "tag",
+          start: 50,
+          end: 58,
+          value: "</table>",
+        },
+      ],
       "02.06.01"
     );
     t.match(
@@ -523,8 +657,11 @@ t.todo(
       [
         {
           ruleId: "tag-rogue",
-          idxFrom: 21,
-          idxTo: 24,
+          idxFrom: 46,
+          idxTo: 49,
+          tokenObj: {
+            value: "<a>",
+          },
         },
       ],
       "02.06.02"
@@ -534,35 +671,119 @@ t.todo(
   }
 );
 
-t.todo(
-  `02.07 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing - with whitespace`,
+t.test(
+  `02.07 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace - insurance`,
   (t) => {
     const gatheredErr = [];
     t.match(
       cparser(
+        // notice how anchor tag pair is complete!
         `<table>
   <tr>
     <td>
       x
     </td>
-    </a>
-</table>`,
+    <a>a</a></table>`,
         {
           errCb: (errObj) => {
             gatheredErr.push(errObj);
           },
         }
       ),
-      [],
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7,
+          value: "<table>",
+          children: [
+            {
+              type: "text",
+              start: 7,
+              end: 10,
+              value: "\n  ",
+            },
+            {
+              type: "tag",
+              start: 10,
+              end: 14,
+              value: "<tr>",
+              children: [
+                {
+                  type: "text",
+                  start: 14,
+                  end: 19,
+                  value: "\n    ",
+                },
+                {
+                  type: "tag",
+                  start: 19,
+                  end: 23,
+                  value: "<td>",
+                  children: [
+                    {
+                      type: "text",
+                      start: 23,
+                      end: 36,
+                      value: "\n      x\n    ",
+                    },
+                  ],
+                },
+                {
+                  type: "tag",
+                  start: 36,
+                  end: 41,
+                  value: "</td>",
+                },
+                {
+                  type: "text",
+                  start: 41,
+                  end: 46,
+                  value: "\n    ",
+                },
+                {
+                  type: "tag",
+                  start: 46,
+                  end: 49,
+                  value: "<a>",
+                  children: [
+                    {
+                      type: "text",
+                      start: 49,
+                      end: 50,
+                      value: "a",
+                    },
+                  ],
+                },
+                {
+                  type: "tag",
+                  start: 50,
+                  end: 54,
+                  value: "</a>",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "tag",
+          start: 54,
+          end: 62,
+          value: "</table>",
+        },
+      ],
       "02.07.01"
     );
     t.match(
       gatheredErr,
       [
         {
-          ruleId: "tag-rogue",
-          idxFrom: 21,
-          idxTo: 24,
+          ruleId: "tag-missing-closing",
+          idxFrom: 10,
+          idxTo: 14,
+          tokenObj: {
+            value: "<tr>",
+          },
         },
       ],
       "02.07.02"
@@ -573,17 +794,17 @@ t.todo(
 );
 
 t.todo(
-  `02.08 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void - with whitespace`,
+  `02.08 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing - with whitespace`,
   (t) => {
     const gatheredErr = [];
     t.match(
       cparser(
         `<table>
-<tr>
-  <td>
-    x
-  </td>
-  <br/>
+  <tr>
+    <td>
+      x
+    </td>
+    </a>
 </table>`,
         {
           errCb: (errObj) => {
@@ -606,6 +827,44 @@ t.todo(
       "02.08.02"
     );
     t.is(gatheredErr.length, 1, "02.08.03");
+    t.end();
+  }
+);
+
+t.todo(
+  `02.09 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void - with whitespace`,
+  (t) => {
+    const gatheredErr = [];
+    t.match(
+      cparser(
+        `<table>
+<tr>
+  <td>
+    x
+  </td>
+  <br/>
+</table>`,
+        {
+          errCb: (errObj) => {
+            gatheredErr.push(errObj);
+          },
+        }
+      ),
+      [],
+      "02.09.01"
+    );
+    t.match(
+      gatheredErr,
+      [
+        {
+          ruleId: "tag-rogue",
+          idxFrom: 21,
+          idxTo: 24,
+        },
+      ],
+      "02.09.02"
+    );
+    t.is(gatheredErr.length, 1, "02.09.03");
     t.end();
   }
 );
