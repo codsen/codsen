@@ -189,7 +189,7 @@
     },
     {
         "name": "detergent",
-        "size": 54417,
+        "size": 54375,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",

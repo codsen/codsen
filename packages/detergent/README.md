@@ -60,7 +60,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 49 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 53 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 390 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 389 KB |
 
 **[⬆ back to top](#)**
 
@@ -315,7 +315,7 @@ Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.js
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
-[cov-img]: https://img.shields.io/badge/coverage-89.05%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-89.72%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/detergent

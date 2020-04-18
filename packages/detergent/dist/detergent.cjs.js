@@ -793,7 +793,7 @@ function det(str, inputOpts) {
         var replacement = opts.convertApostrophes ? rightSingleQuote : "'";
         finalIndexesToDelete.push(i, i + 1, "".concat(replacement));
         applicableOpts.convertApostrophes = true;
-      } else if (str[i - 2] && isLowercaseLetter(str[i - 2]) && !str[i - 1].trim().length && str[i + 2] && isLowercaseLetter(str[i + 2]) && !str[i + 1].trim().length) {
+      } else if (str[i - 2] && isLowercaseLetter(str[i - 2]) && !str[i - 1].trim() && str[i + 2] && isLowercaseLetter(str[i + 2]) && !str[i + 1].trim()) {
         finalIndexesToDelete.push(i, i + 1, rawMDash);
       } else {
         finalIndexesToDelete.push(i, i + 1);
@@ -867,7 +867,7 @@ function det(str, inputOpts) {
               }
             }
             if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
-              return !_char.trim().length || _char === "/";
+              return !_char.trim() || _char === "/";
             })) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
             }
@@ -904,7 +904,7 @@ function det(str, inputOpts) {
             if (!str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim().length) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
             } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char2) {
-              return !_char2.trim().length || _char2 === "/";
+              return !_char2.trim() || _char2 === "/";
             })) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts, "/");
             }
@@ -913,10 +913,10 @@ function det(str, inputOpts) {
         if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
         }
-        if (["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks && str[tag.lastOpeningBracketAt - 1] && !str[tag.lastOpeningBracketAt - 1].trim().length) {
+        if (["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks && str[tag.lastOpeningBracketAt - 1] && !str[tag.lastOpeningBracketAt - 1].trim()) {
           finalIndexesToDelete.push(stringLeftRight.leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1, tag.lastOpeningBracketAt);
         }
-        if (str[tag.lastClosingBracketAt - 1] && !str[tag.lastClosingBracketAt - 1].trim().length) {
+        if (str[tag.lastClosingBracketAt - 1] && !str[tag.lastClosingBracketAt - 1].trim()) {
           finalIndexesToDelete.push(stringLeftRight.left(str, tag.lastClosingBracketAt) + 1, tag.lastClosingBracketAt);
         }
       }

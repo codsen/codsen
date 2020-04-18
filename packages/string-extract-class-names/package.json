@@ -23,7 +23,7 @@
   "browser": "dist/string-extract-class-names.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "ci_test": "npm run build && npm run lint && npm run tap -- --no-only --no-coverage --reporter=silent --output-file=testStats.md && npm run format",
+    "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run format",
     "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",

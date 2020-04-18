@@ -1524,10 +1524,10 @@ function det(str, inputOpts) {
       } else if (
         str[i - 2] &&
         isLowercaseLetter(str[i - 2]) &&
-        !str[i - 1].trim().length &&
+        !str[i - 1].trim() &&
         str[i + 2] &&
         isLowercaseLetter(str[i + 2]) &&
-        !str[i + 1].trim().length
+        !str[i + 1].trim()
       ) {
         finalIndexesToDelete.push(i, i + 1, rawMDash);
       } else {
@@ -1656,7 +1656,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every((char) => !char.trim().length || char === "/")
+                .every((char) => !char.trim() || char === "/")
             ) {
               finalIndexesToDelete.push(
                 tag.lastOpeningBracketAt + 1,
@@ -1742,7 +1742,7 @@ function det(str, inputOpts) {
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
-                .every((char) => !char.trim().length || char === "/")
+                .every((char) => !char.trim() || char === "/")
             ) {
               finalIndexesToDelete.push(
                 tag.lastOpeningBracketAt + 1,
@@ -1759,7 +1759,7 @@ function det(str, inputOpts) {
           ["ul", "li"].includes(tag.name.toLowerCase()) &&
           !opts.removeLineBreaks &&
           str[tag.lastOpeningBracketAt - 1] &&
-          !str[tag.lastOpeningBracketAt - 1].trim().length
+          !str[tag.lastOpeningBracketAt - 1].trim()
         ) {
           finalIndexesToDelete.push(
             leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1,
@@ -1768,7 +1768,7 @@ function det(str, inputOpts) {
         }
         if (
           str[tag.lastClosingBracketAt - 1] &&
-          !str[tag.lastClosingBracketAt - 1].trim().length
+          !str[tag.lastClosingBracketAt - 1].trim()
         ) {
           finalIndexesToDelete.push(
             left(str, tag.lastClosingBracketAt) + 1,
