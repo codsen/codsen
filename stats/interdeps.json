@@ -317,7 +317,7 @@
     },
     {
         "name": "html-entities-not-email-friendly",
-        "size": 79286,
+        "size": 83478,
         "imports": []
     },
     {
@@ -413,7 +413,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20258,
+        "size": 20399,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",

@@ -26,7 +26,7 @@
     "withinascii": "cli.js"
   },
   "scripts": {
-    "ci_test": "npm run tap -- -no-cov --no-only --reporter=silent --output-file=testStats.md && npm run format",
+    "ci_test": "npm run tap -- --no-coverage --no-only --reporter=silent --output-file=testStats.md && npm run format",
     "dev": "echo\"\"",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
