@@ -96,7 +96,15 @@ t.test(
               attribNameEndsAt: 7,
               attribOpeningQuoteAt: 8,
               attribClosingQuoteAt: 10,
-              attribValue: "z",
+              attribValueRaw: "z",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 9,
+                  end: 10,
+                  value: "z",
+                },
+              ],
               attribValueStartsAt: 9,
               attribValueEndsAt: 10,
               attribStart: 3,
@@ -122,7 +130,6 @@ t.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },

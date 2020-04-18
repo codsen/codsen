@@ -40,7 +40,12 @@ t.test(
           attribs: [
             {
               attribName: "src",
-              attribValue: "z",
+              attribValueRaw: "z",
+              attribValue: [
+                {
+                  value: "z",
+                },
+              ],
             },
           ],
         },
@@ -236,7 +241,12 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
         attribs: [
           {
             attribName: "src",
-            attribValue: "z",
+            attribValueRaw: "z",
+            attribValue: [
+              {
+                value: "z",
+              },
+            ],
           },
         ],
       },
@@ -257,7 +267,12 @@ t.test(`02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
         attribs: [
           {
             attribName: "src",
-            attribValue: "y",
+            attribValueRaw: "y",
+            attribValue: [
+              {
+                value: "y",
+              },
+            ],
           },
         ],
       },

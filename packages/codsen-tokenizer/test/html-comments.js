@@ -1364,7 +1364,15 @@ t.test(
               attribNameEndsAt: 35,
               attribOpeningQuoteAt: 36,
               attribClosingQuoteAt: 40,
-              attribValue: "gif",
+              attribValueRaw: "gif",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 37,
+                  end: 40,
+                  value: "gif",
+                },
+              ],
               attribValueStartsAt: 37,
               attribValueEndsAt: 40,
               attribStart: 32,

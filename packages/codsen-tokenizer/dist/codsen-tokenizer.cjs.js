@@ -11,12 +11,12 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
 var clone = _interopDefault(require('lodash.clonedeep'));
 var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 var attributeEnds = _interopDefault(require('is-html-attribute-closing'));
+var htmlAllKnownAttributes = require('html-all-known-attributes');
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
 
 function _typeof(obj) {
@@ -215,7 +215,8 @@ function tokenizer(str, originalOpts) {
     attribNameEndsAt: null,
     attribOpeningQuoteAt: null,
     attribClosingQuoteAt: null,
-    attribValue: null,
+    attribValueRaw: null,
+    attribValue: [],
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStart: null,
@@ -227,7 +228,7 @@ function tokenizer(str, originalOpts) {
   tokenReset();
   attribReset();
   var selectorChunkStartedAt;
-  var parentTokenToWrapAround;
+  var parentTokenToBackup;
   var layers = [];
   function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
@@ -638,13 +639,13 @@ function tokenizer(str, originalOpts) {
                 token.end = _i2 + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
-              if (parentTokenToWrapAround) {
-                if (!Array.isArray(parentTokenToWrapAround.attribs)) {
-                  parentTokenToWrapAround.attribs = [];
+              if (parentTokenToBackup) {
+                if (!Array.isArray(parentTokenToBackup.attribs)) {
+                  parentTokenToBackup.attribs = [];
                 }
-                parentTokenToWrapAround.attribs.push(clone(token));
-                token = clone(parentTokenToWrapAround);
-                parentTokenToWrapAround = undefined;
+                parentTokenToBackup.attribs.push(clone(token));
+                token = clone(parentTokenToBackup);
+                parentTokenToBackup = undefined;
                 layers.pop();
                 i = _i2;
                 return "continue";
@@ -680,7 +681,7 @@ function tokenizer(str, originalOpts) {
                   token.tagName = str.slice(token.tagNameStartsAt, _i2);
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
-                parentTokenToWrapAround = clone(token);
+                parentTokenToBackup = clone(token);
               } else {
                 dumpCurrentToken(token, _i2);
               }
@@ -909,9 +910,17 @@ function tokenizer(str, originalOpts) {
           attrib.attribClosingQuoteAt = _i2;
           attrib.attribValueEndsAt = _i2;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
-            attrib.attribValue = str.slice(attrib.attribValueStartsAt, _i2);
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
           }
           attrib.attribEnd = _i2 + 1;
+          if (attrib.attribValueRaw) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: attrib.attribValueEndsAt,
+              value: attrib.attribValueRaw
+            });
+          }
           if (str[attrib.attribOpeningQuoteAt] !== str[_i2]) {
             layers.pop();
             layers.pop();
@@ -921,7 +930,13 @@ function tokenizer(str, originalOpts) {
         }
       } else if (attrib.attribOpeningQuoteAt === null && (str[_i2] && !str[_i2].trim() || ["/", ">"].includes(str[_i2]) || espChars.includes(str[_i2]) && espChars.includes(str[_i2 + 1]))) {
         attrib.attribValueEndsAt = _i2;
-        attrib.attribValue = str.slice(attrib.attribValueStartsAt, _i2);
+        attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
+        attrib.attribValue.push({
+          type: "text",
+          start: attrib.attribValueStartsAt,
+          end: attrib.attribValueEndsAt,
+          value: attrib.attribValueRaw
+        });
         attrib.attribEnd = _i2;
         token.attribs.push(clone(attrib));
         attribReset();
@@ -950,7 +965,15 @@ function tokenizer(str, originalOpts) {
         if (attribClosingQuoteAt) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
-            attrib.attribValue = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
+            if (attrib.attribValueRaw) {
+              attrib.attribValue.push({
+                type: "text",
+                start: attrib.attribValueStartsAt,
+                end: attrib.attribValueEndsAt,
+                value: attrib.attribValueRaw
+              });
+            }
           }
           attrib.attribEnd = attribClosingQuoteAt;
           if (str[attrib.attribOpeningQuoteAt] !== str[_i2]) {
@@ -1052,7 +1075,15 @@ function tokenizer(str, originalOpts) {
         token.value = str.slice(token.start, token.end);
         if (Number.isInteger(attrib.attribValueStartsAt) && _i2 && attrib.attribValueStartsAt < _i2 && str.slice(attrib.attribValueStartsAt, _i2).trim()) {
           attrib.attribValueEndsAt = _i2;
-          attrib.attribValue = str.slice(attrib.attribValueStartsAt, _i2);
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
+          if (attrib.attribValueRaw) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: attrib.attribValueEndsAt,
+              value: attrib.attribValueRaw
+            });
+          }
         } else {
           attrib.attribValueStartsAt = null;
         }

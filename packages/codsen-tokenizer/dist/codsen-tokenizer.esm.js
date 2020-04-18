@@ -7,12 +7,12 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
  */
 
-import { allHtmlAttribs } from 'html-all-known-attributes';
 import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 import clone from 'lodash.clonedeep';
 import { left, right } from 'string-left-right';
 import isTagOpening from 'is-html-tag-opening';
 import attributeEnds from 'is-html-attribute-closing';
+import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
 
 const allHTMLTagsKnownToHumanity = [
@@ -420,7 +420,8 @@ function tokenizer(str, originalOpts) {
     attribNameEndsAt: null,
     attribOpeningQuoteAt: null,
     attribClosingQuoteAt: null,
-    attribValue: null,
+    attribValueRaw: null,
+    attribValue: [],
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStart: null,
@@ -432,7 +433,7 @@ function tokenizer(str, originalOpts) {
   tokenReset();
   attribReset();
   let selectorChunkStartedAt;
-  let parentTokenToWrapAround;
+  let parentTokenToBackup;
   let layers = [];
   function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
@@ -952,13 +953,13 @@ function tokenizer(str, originalOpts) {
                 token.end = i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
-              if (parentTokenToWrapAround) {
-                if (!Array.isArray(parentTokenToWrapAround.attribs)) {
-                  parentTokenToWrapAround.attribs = [];
+              if (parentTokenToBackup) {
+                if (!Array.isArray(parentTokenToBackup.attribs)) {
+                  parentTokenToBackup.attribs = [];
                 }
-                parentTokenToWrapAround.attribs.push(clone(token));
-                token = clone(parentTokenToWrapAround);
-                parentTokenToWrapAround = undefined;
+                parentTokenToBackup.attribs.push(clone(token));
+                token = clone(parentTokenToBackup);
+                parentTokenToBackup = undefined;
                 layers.pop();
                 continue;
               } else {
@@ -994,7 +995,7 @@ function tokenizer(str, originalOpts) {
                   token.tagName = str.slice(token.tagNameStartsAt, i);
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
-                parentTokenToWrapAround = clone(token);
+                parentTokenToBackup = clone(token);
               } else {
                 dumpCurrentToken(token, i);
               }
@@ -1352,9 +1353,17 @@ function tokenizer(str, originalOpts) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
-            attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
+          if (attrib.attribValueRaw) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: attrib.attribValueEndsAt,
+              value: attrib.attribValueRaw,
+            });
+          }
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();
             layers.pop();
@@ -1369,7 +1378,13 @@ function tokenizer(str, originalOpts) {
           (espChars.includes(str[i]) && espChars.includes(str[i + 1])))
       ) {
         attrib.attribValueEndsAt = i;
-        attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+        attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+        attrib.attribValue.push({
+          type: "text",
+          start: attrib.attribValueStartsAt,
+          end: attrib.attribValueEndsAt,
+          value: attrib.attribValueRaw,
+        });
         attrib.attribEnd = i;
         token.attribs.push(clone(attrib));
         attribReset();
@@ -1402,10 +1417,18 @@ function tokenizer(str, originalOpts) {
         if (attribClosingQuoteAt) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
-            attrib.attribValue = str.slice(
+            attrib.attribValueRaw = str.slice(
               attrib.attribValueStartsAt,
               attribClosingQuoteAt
             );
+            if (attrib.attribValueRaw) {
+              attrib.attribValue.push({
+                type: "text",
+                start: attrib.attribValueStartsAt,
+                end: attrib.attribValueEndsAt,
+                value: attrib.attribValueRaw,
+              });
+            }
           }
           attrib.attribEnd = attribClosingQuoteAt;
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
@@ -1569,7 +1592,15 @@ function tokenizer(str, originalOpts) {
           str.slice(attrib.attribValueStartsAt, i).trim()
         ) {
           attrib.attribValueEndsAt = i;
-          attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+          if (attrib.attribValueRaw) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: attrib.attribValueEndsAt,
+              value: attrib.attribValueRaw,
+            });
+          }
         } else {
           attrib.attribValueStartsAt = null;
         }
