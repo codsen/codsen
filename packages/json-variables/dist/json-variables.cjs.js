@@ -267,8 +267,10 @@ function resolveString(input, string, path, opts) {
         opts
         );
         if (resolvedValue === undefined) {
-          if (opts.allowUnresolved) {
+          if (opts.allowUnresolved === true) {
             resolvedValue = "";
+          } else if (typeof opts.allowUnresolved === "string") {
+            resolvedValue = opts.allowUnresolved;
           } else {
             throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
           }

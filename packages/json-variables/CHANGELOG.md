@@ -3,10 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.0 (2020-04-19)
+
+- `opts.allowUnresolved` can be supplied as string - thanks to **Thomas Ivall**
+
 ## 8.1.0 (2020-04-18)
 
 ### Features
 
+- `opts.allowUnresolved` - boolean flag allows to resolve to optionally empty string instead of `throw`ing - thanks to **Thomas Ivall**
 - some rebasing, two dependencies removed ([05e9346](https://gitlab.com/codsen/codsen/commit/05e93460cee8a02ab80bbd94f0bfa174ca785142))
 
 ## 8.0.37 (2019-10-02)

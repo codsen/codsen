@@ -222,6 +222,46 @@ t.test("01.08 - throws when data is missing", (t) => {
     "01.08.03"
   );
 
+  // when opts.allowUnresolved is string, that is used
+  t.same(
+    jv(
+      {
+        a: "some text %%_var1_%% more text",
+        b: "something",
+        a_data: "zzz",
+      },
+      {
+        allowUnresolved: "tralala",
+      }
+    ),
+    {
+      a: "some text tralala more text",
+      b: "something",
+      a_data: "zzz",
+    },
+    "01.08.04"
+  );
+
+  // when opts.allowUnresolved is empty string, that is used
+  t.same(
+    jv(
+      {
+        a: "some text %%_var1_%% more text",
+        b: "something",
+        a_data: "zzz",
+      },
+      {
+        allowUnresolved: "",
+      }
+    ),
+    {
+      a: "some text  more text",
+      b: "something",
+      a_data: "zzz",
+    },
+    "01.08.05"
+  );
+
   // also, consider the cases when only some variables can't be resolved
   t.same(
     jv(
@@ -243,7 +283,7 @@ t.test("01.08 - throws when data is missing", (t) => {
         var2: "zzz",
       },
     },
-    "01.08.04"
+    "01.08.06"
   );
 
   t.end();

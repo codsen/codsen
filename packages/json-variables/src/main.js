@@ -528,8 +528,10 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
           opts // opts
         );
         if (resolvedValue === undefined) {
-          if (opts.allowUnresolved) {
+          if (opts.allowUnresolved === true) {
             resolvedValue = "";
+          } else if (typeof opts.allowUnresolved === "string") {
+            resolvedValue = opts.allowUnresolved;
           } else {
             throw new Error(
               `json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ${string.slice(
@@ -727,7 +729,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     return temp2;
   }
 
-  console.log(`730 temp2 = ${JSON.stringify(temp2, null, 4)}`);
+  console.log(`732 temp2 = ${JSON.stringify(temp2, null, 4)}`);
 
   // 3. Then, work the finalRangesArr list
   // ================================
@@ -911,7 +913,7 @@ function jsonVariables(input, originalOpts = {}) {
     // to mutate it, we return "current". If we want to mutate it, we return a new
     // value (which will get written onto that node, previously equal to "current").
 
-    console.log(`914 current = ${JSON.stringify(current, null, 4)}`);
+    console.log(`916 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Instantly skip empty strings:
