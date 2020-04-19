@@ -589,7 +589,6 @@ t.test(
               closing: false,
               void: true,
               pureHTML: true,
-
               kind: null,
               attribs: [
                 {
@@ -599,7 +598,15 @@ t.test(
                   attribNameEndsAt: 27,
                   attribOpeningQuoteAt: 28,
                   attribClosingQuoteAt: 32,
-                  attribValue: "gif",
+                  attribValueRaw: "gif",
+                  attribValue: [
+                    {
+                      type: "text",
+                      start: 29,
+                      end: 32,
+                      value: "gif",
+                    },
+                  ],
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
                   attribStart: 24,
@@ -667,7 +674,15 @@ t.test(
                   attribNameEndsAt: 27,
                   attribOpeningQuoteAt: 28,
                   attribClosingQuoteAt: 32,
-                  attribValue: "gif",
+                  attribValueRaw: "gif",
+                  attribValue: [
+                    {
+                      type: "text",
+                      start: 29,
+                      end: 32,
+                      value: "gif",
+                    },
+                  ],
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
                   attribStart: 24,
@@ -735,7 +750,15 @@ t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
                 attribNameEndsAt: 27,
                 attribOpeningQuoteAt: 28,
                 attribClosingQuoteAt: 32,
-                attribValue: "gif",
+                attribValueRaw: "gif",
+                attribValue: [
+                  {
+                    type: "text",
+                    start: 29,
+                    end: 32,
+                    value: "gif",
+                  },
+                ],
                 attribValueStartsAt: 29,
                 attribValueEndsAt: 32,
                 attribStart: 24,
