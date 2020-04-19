@@ -1,6 +1,6 @@
 # codsen-tokenizer
 
-> HTML and CSS Lexer aimed at code with fatal errors
+> HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -35,7 +35,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
-[cov-img]: https://img.shields.io/badge/coverage-94.42%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-94.47%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/codsen-tokenizer

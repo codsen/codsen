@@ -3433,7 +3433,9 @@
           // (esp tags will have it set already)
           token.end = i;
           token.value = str.slice(token.start, token.end);
-        }
+        } // normally we'd ping the token but let's not forget we have token stashes
+        // in "attribToBackup" and "parentTokenToBackup"
+
 
         if (token.start !== null && token.end !== null) {
           pingTagCb(token);
@@ -3714,14 +3716,25 @@
       }
 
       if (token.end && token.end === _i2) {
-        // if value was captured from the past, push it now
         if (token.tagName === "style" && !token.closing) {
           styleStarts = true;
         } // we need to retain the information after tag was dumped to tagCb() and wiped
 
 
-        dumpCurrentToken(token, _i2);
-        layers = [];
+        if (attribToBackup) {
+          // 1. restore
+          attrib = attribToBackup; // 2. push current token into attrib.attribValue
+
+          attrib.attribValue.push(lodash_clonedeep(token)); // 3. restore real token
+
+          token = lodash_clonedeep(parentTokenToBackup); // 4. reset
+
+          attribToBackup = undefined;
+          parentTokenToBackup = undefined;
+        } else {
+          dumpCurrentToken(token, _i2);
+          layers = [];
+        }
       } //
       //
       //
@@ -4416,7 +4429,12 @@
           } else {
             // we consider this whole chunk is tails.
             token.end = _i2 + wholeEspTagClosing.length;
-            token.value = str.slice(token.start, token.end);
+            token.value = str.slice(token.start, token.end); // if last layer is ESP tag and we've got its closing, pop the layer
+
+            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+              layers.pop();
+            }
+
             doNothing = token.end;
           }
         } // END OF if (!doNothing)

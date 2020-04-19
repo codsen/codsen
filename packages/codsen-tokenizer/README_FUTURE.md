@@ -1,6 +1,6 @@
 # codsen-tokenizer
 
-> Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS
+> HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -86,15 +86,15 @@ Let's take an example of a `div` with a **fatal error** — a missing opening br
 
 All the common parsers/tokenizers in the market currently: Angular parser, HTMLParser2, Hyntax, Parse5, PostHTML-parser, svelte parser, vue parser **will not see it as a tag**, same way like the browser will not see it as a tag.
 
-This means, tools based on such parsers can't be used to detect FATAL ERRORS in the code.
+This means, tools based on such parsers can't be used to detect FATAL ERRORS like this.
 
-**This is the reason why the current HTML linters in the market are so primitive**.
+**Here is the reason why the current HTML linters in the market are so primitive**.
 
-Here's where `codsen-tokenizer` comes in.
+But that's where the `codsen-tokenizer` comes in.
 
-Reusing our example of fatal error div, `div class="zz">`. Here's the plan:
+Reusing our example of a fatal error div, `div class="zz">`. Here's the plan:
 
-**FIRST STEP.**
+**FIRST STEP**
 
 `codsen-tokenizer` correctly recognises `div class="zz">` _as a tag_, yielding:
 
@@ -104,7 +104,7 @@ Reusing our example of fatal error div, `div class="zz">`. Here's the plan:
         "type": "tag",
         "start": 0,
         "end": 15,
-        "value": "div class=\"zz\">",
+        "value": `div class="zz">`,
         ...
         "attribs": [
             {
@@ -120,15 +120,15 @@ Reusing our example of fatal error div, `div class="zz">`. Here's the plan:
 
 **SECOND STEP**
 
-the parser such as `codsen-parser` can assemble the correct AST
+The parser such as `codsen-parser` can assemble the AST representing reality - we have a tag!
 
 **THIRD STEP**
 
-linters such as `emlint` can check, does the token's `start` index fall upon an opening bracket. It does not in this case — but we can automatically fix this issue because we know where the bracket is missing.
+Linters such as `emlint` can traverse the AST and check, does the token's `start` index fall upon an opening bracket. It does not in this case — but we can automatically fix this issue because we know where the bracket is missing.
 
 **FOURTH STEP**
 
-after our tooling restores the opening bracket, the other tooling — browsers, inferior parsers etc. — can operate correctly.
+After our tooling restores the opening bracket, the other tooling — browsers, inferior parsers etc. — can operate correctly.
 
 **[⬆ back to top](#)**
 
@@ -140,21 +140,23 @@ It will be published once the API stabilises.
 
 ## More thoughts
 
-Conceptually, good tooling should be user-oriented. For example, if you make a code checker which says "The parser got fatal error", this is not a user-oriented program. Me, as a user, I don't care about innards of your program — its parser especially. Tell me what _I_ did wrong and _how to fix it_ — don't tell me cryptic meaningless messages.
+Conceptually, good tooling should be user-oriented. For example, if you make a code checker which says "The parser got a fatal error", this is not a user-oriented program. As a user, I don't care about innards of your program — its parser especially. Tell me what _I_ did wrong and _how to fix it_ — don't tell me cryptic meaningless messages about parsers.
 
-For example, humanity is pouring money into OpenJS Foundation. People work on it full-time. But ESLint is still based on a parser — if your code error manages to break the parser, it won't tell you where the error is, only that you broke the parser!
+For example, humanity is pouring money into OpenJS Foundation. People work on ESLint full-time. But ESLint is still based on a parser — if your code error manages to break that parser, it won't tell you where the error is, only that _you broke the parser_!
 
 For example, it is possible to omit the semicolon in ESLint causing a fatal parser error and you won't find where it is omitted. Good luck trawling 1000 lines of code!
 
-In order to find the fatal code errors, the tokenizer has to be by magnitude more lenient than the code spec (in this case ECMA standard).
+In order to find the fatal code errors, the tokenizer has to be _by magnitude more lenient_ than the code spec (in this case ECMA standard).
 
-In other words, if an error is fatal and breaks parser, tooling running on such parser will never be able to correctly identify such error.
+Theoretically, parser should not have fatal errors _in order to be able to fix_ fatal errors.
+
+In other words, if an source code error is fatal and it breaks parser, tooling running on such parser will never be able to correctly identify such error. The bar has to be raised.
 
 **[⬆ back to top](#)**
 
 ## Perf
 
-I admit, the more we beef up the algorithms the more the performance drops. A stupid, fragile parser which only follows the spec will be faster than a smart parser which calculates a hundred types of possible errors.
+I admit, the more we beef up the algorithms the more the performance drops. A stupid, fragile parser which only follows the code language spec will be faster than a smart parser which calculates a hundred types of possible errors supporting handful of languages properly and way more heuristically.
 
 For example, when a lexer (tokenizer) traverses the HTML attribute and meets the quote which matches the first opening quote, does it call it a day?
 
@@ -167,7 +169,7 @@ For example, when a lexer (tokenizer) traverses the HTML attribute and meets the
                           ending?
 ```
 
-Notice the double whammy error — mismatching quote pair and unencoded quote within an attribute's value!
+Notice the double whammy — a mismatching quote pair and an unencoded quote - all within an attribute's value!
 
 If lexer does call it a day when it meets the first matching quote, it will be faster but won't cope with quote-mismatch errors.
 

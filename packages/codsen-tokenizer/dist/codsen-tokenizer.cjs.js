@@ -600,8 +600,16 @@ function tokenizer(str, originalOpts) {
       if (token.tagName === "style" && !token.closing) {
         styleStarts = true;
       }
-      dumpCurrentToken(token, _i2);
-      layers = [];
+      if (attribToBackup) {
+        attrib = attribToBackup;
+        attrib.attribValue.push(clone(token));
+        token = clone(parentTokenToBackup);
+        attribToBackup = undefined;
+        parentTokenToBackup = undefined;
+      } else {
+        dumpCurrentToken(token, _i2);
+        layers = [];
+      }
     }
     if (!doNothing) {
       if (["tag", "esp", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
@@ -961,6 +969,9 @@ function tokenizer(str, originalOpts) {
         } else {
           token.end = _i2 + wholeEspTagClosing.length;
           token.value = str.slice(token.start, token.end);
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+            layers.pop();
+          }
           doNothing = token.end;
         }
       }
