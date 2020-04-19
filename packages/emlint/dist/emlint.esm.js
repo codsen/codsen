@@ -2986,11 +2986,14 @@ function attributeDuplicate(context, ...opts) {
                     node.attribs[i].attribEnd,
                   ]);
                 }
-                splitByWhitespace(node.attribs[i].attribValueRaw, ([from, to]) => {
-                  extractedValues.push(
-                    node.attribs[i].attribValueRaw.slice(from, to)
-                  );
-                });
+                splitByWhitespace(
+                  node.attribs[i].attribValueRaw,
+                  ([from, to]) => {
+                    extractedValues.push(
+                      node.attribs[i].attribValueRaw.slice(from, to)
+                    );
+                  }
+                );
               }
             }
             const mergedValue = extractedValues.sort().join(" ");
@@ -9148,13 +9151,17 @@ function attributeValidateValue(context, ...opts) {
           });
         } else {
           if (node.parent.tagName === "li") {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              type: "integer",
-              theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units.",
-              zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`,
-            }).forEach((errorObj) => {
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                type: "integer",
+                theOnlyGoodUnits: [],
+                customGenericValueError: "Should be integer, no units.",
+                zeroOK: false,
+                customPxMessage: `Sequence number should not be in pixels.`,
+              }
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-value",
@@ -9340,10 +9347,14 @@ function attributeValidateWidth(context, ...opts) {
           });
         } else {
           if (node.parent.tagName === "pre") {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              theOnlyGoodUnits: [],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                theOnlyGoodUnits: [],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",
@@ -9351,11 +9362,15 @@ function attributeValidateWidth(context, ...opts) {
               );
             });
           } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              theOnlyGoodUnits: ["*", "%"],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                badUnits: ["px"],
+                theOnlyGoodUnits: ["*", "%"],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",
@@ -9363,10 +9378,14 @@ function attributeValidateWidth(context, ...opts) {
               );
             });
           } else {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                badUnits: ["px"],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",
