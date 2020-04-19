@@ -434,6 +434,7 @@ function tokenizer(str, originalOpts) {
   attribReset();
   let selectorChunkStartedAt;
   let parentTokenToBackup;
+  let attribToBackup;
   let layers = [];
   function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
@@ -957,9 +958,15 @@ function tokenizer(str, originalOpts) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 }
-                parentTokenToBackup.attribs.push(clone(token));
+                if (attribToBackup) {
+                  attrib = attribToBackup;
+                  attrib.attribValue.push(clone(token));
+                } else {
+                  parentTokenToBackup.attribs.push(clone(token));
+                }
                 token = clone(parentTokenToBackup);
                 parentTokenToBackup = undefined;
+                attribToBackup = undefined;
                 layers.pop();
                 continue;
               } else {
@@ -987,15 +994,16 @@ function tokenizer(str, originalOpts) {
               position: i,
             });
             if (token.start !== null) {
-              if (
-                token.type === "tag"
-              ) {
+              if (token.type === "tag") {
                 if (!token.tagName || !token.tagNameEndsAt) {
                   token.tagNameEndsAt = i;
                   token.tagName = str.slice(token.tagNameStartsAt, i);
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone(token);
+                if (attrib.attribStart && !attrib.attribEnd) {
+                  attribToBackup = clone(attrib);
+                }
               } else {
                 dumpCurrentToken(token, i);
               }
@@ -1003,6 +1011,15 @@ function tokenizer(str, originalOpts) {
             initToken("esp", i);
             token.tail = flipEspTag(wholeEspTagLump);
             token.head = wholeEspTagLump;
+            if (
+              attribToBackup &&
+              Array.isArray(attribToBackup.attribValue) &&
+              attribToBackup.attribValue.length &&
+              attribToBackup.attribValue[attribToBackup.attribValue.length - 1]
+                .start === token.start
+            ) {
+              attribToBackup.attribValue.pop();
+            }
           }
           doNothing =
             i +
@@ -1337,6 +1354,17 @@ function tokenizer(str, originalOpts) {
         ) {
           attrib.attribOpeningQuoteAt = i;
           attrib.attribValueStartsAt = i + 1;
+          if (
+            Array.isArray(attrib.attribValue) &&
+            attrib.attribValue.length &&
+            attrib.attribValue[attrib.attribValue.length - 1].start &&
+            !attrib.attribValue[attrib.attribValue.length - 1].end &&
+            attrib.attribValueStartsAt >
+              attrib.attribValue[attrib.attribValue.length - 1].start
+          ) {
+            attrib.attribValue[attrib.attribValue.length - 1].start =
+              attrib.attribValueStartsAt;
+          }
           layers.push({
             type: "simple",
             value: str[i],
@@ -1356,13 +1384,16 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
-          if (attrib.attribValueRaw) {
-            attrib.attribValue.push({
-              type: "text",
-              start: attrib.attribValueStartsAt,
-              end: attrib.attribValueEndsAt,
-              value: attrib.attribValueRaw,
-            });
+          if (
+            Array.isArray(attrib.attribValue) &&
+            attrib.attribValue.length &&
+            !attrib.attribValue[attrib.attribValue.length - 1].end
+          ) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = i;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
+              attrib.attribValue[attrib.attribValue.length - 1].start,
+              i
+            );
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();
@@ -1379,12 +1410,17 @@ function tokenizer(str, originalOpts) {
       ) {
         attrib.attribValueEndsAt = i;
         attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
-        attrib.attribValue.push({
-          type: "text",
-          start: attrib.attribValueStartsAt,
-          end: attrib.attribValueEndsAt,
-          value: attrib.attribValueRaw,
-        });
+        if (
+          Array.isArray(attrib.attribValue) &&
+          attrib.attribValue.length &&
+          !attrib.attribValue[attrib.attribValue.length - 1].end
+        ) {
+          attrib.attribValue[attrib.attribValue.length - 1].end = i;
+          attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
+            attrib.attribValue[attrib.attribValue.length - 1].start,
+            attrib.attribValue[attrib.attribValue.length - 1].end
+          );
+        }
         attrib.attribEnd = i;
         token.attribs.push(clone(attrib));
         attribReset();
@@ -1421,13 +1457,19 @@ function tokenizer(str, originalOpts) {
               attrib.attribValueStartsAt,
               attribClosingQuoteAt
             );
-            if (attrib.attribValueRaw) {
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: attrib.attribValueEndsAt,
-                value: attrib.attribValueRaw,
-              });
+            if (
+              Array.isArray(attrib.attribValue) &&
+              attrib.attribValue.length &&
+              !attrib.attribValue[attrib.attribValue.length - 1].end
+            ) {
+              attrib.attribValue[attrib.attribValue.length - 1].end =
+                attrib.attribValueEndsAt;
+              attrib.attribValue[
+                attrib.attribValue.length - 1
+              ].value = str.slice(
+                attrib.attribValue[attrib.attribValue.length - 1].start,
+                attrib.attribValueEndsAt
+              );
             }
           }
           attrib.attribEnd = attribClosingQuoteAt;
@@ -1453,6 +1495,21 @@ function tokenizer(str, originalOpts) {
           attribReset();
           continue;
         }
+      } else if (
+        attrib &&
+        attrib.attribStart &&
+        !attrib.attribEnd &&
+        (!Array.isArray(attrib.attribValue) ||
+          !attrib.attribValue.length ||
+          (attrib.attribValue[attrib.attribValue.length - 1].end &&
+            attrib.attribValue[attrib.attribValue.length - 1].end <= i))
+      ) {
+        attrib.attribValue.push({
+          type: "text",
+          start: i,
+          end: null,
+          value: null,
+        });
       }
     }
     if (
@@ -1548,6 +1605,18 @@ function tokenizer(str, originalOpts) {
           if (str[i + 1]) {
             attrib.attribValueStartsAt = i + 1;
           }
+          if (
+            Array.isArray(attrib.attribValue) &&
+            (!attrib.attribValue.length ||
+              attrib.attribValue[attrib.attribValue.length - 1].end)
+          ) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: null,
+              value: null,
+            });
+          }
         }
       }
     }
@@ -1593,13 +1662,16 @@ function tokenizer(str, originalOpts) {
         ) {
           attrib.attribValueEndsAt = i;
           attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
-          if (attrib.attribValueRaw) {
-            attrib.attribValue.push({
-              type: "text",
-              start: attrib.attribValueStartsAt,
-              end: attrib.attribValueEndsAt,
-              value: attrib.attribValueRaw,
-            });
+          if (
+            Array.isArray(attrib.attribValue) &&
+            attrib.attribValue.length &&
+            !attrib.attribValue[attrib.attribValue.length - 1].end
+          ) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = i;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
+              attrib.attribValue[attrib.attribValue.length - 1].start,
+              i
+            );
           }
         } else {
           attrib.attribValueStartsAt = null;

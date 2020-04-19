@@ -229,6 +229,7 @@ function tokenizer(str, originalOpts) {
   attribReset();
   var selectorChunkStartedAt;
   var parentTokenToBackup;
+  var attribToBackup;
   var layers = [];
   function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
@@ -643,9 +644,15 @@ function tokenizer(str, originalOpts) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 }
-                parentTokenToBackup.attribs.push(clone(token));
+                if (attribToBackup) {
+                  attrib = attribToBackup;
+                  attrib.attribValue.push(clone(token));
+                } else {
+                  parentTokenToBackup.attribs.push(clone(token));
+                }
                 token = clone(parentTokenToBackup);
                 parentTokenToBackup = undefined;
+                attribToBackup = undefined;
                 layers.pop();
                 i = _i2;
                 return "continue";
@@ -674,14 +681,16 @@ function tokenizer(str, originalOpts) {
               position: _i2
             });
             if (token.start !== null) {
-              if (
-              token.type === "tag") {
+              if (token.type === "tag") {
                 if (!token.tagName || !token.tagNameEndsAt) {
                   token.tagNameEndsAt = _i2;
                   token.tagName = str.slice(token.tagNameStartsAt, _i2);
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone(token);
+                if (attrib.attribStart && !attrib.attribEnd) {
+                  attribToBackup = clone(attrib);
+                }
               } else {
                 dumpCurrentToken(token, _i2);
               }
@@ -689,6 +698,9 @@ function tokenizer(str, originalOpts) {
             initToken("esp", _i2);
             token.tail = flipEspTag(wholeEspTagLump);
             token.head = wholeEspTagLump;
+            if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+              attribToBackup.attribValue.pop();
+            }
           }
           doNothing = _i2 + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
         }
@@ -897,6 +909,12 @@ function tokenizer(str, originalOpts) {
         !str.slice(0, str.indexOf("<")).includes("="))) {
           attrib.attribOpeningQuoteAt = _i2;
           attrib.attribValueStartsAt = _i2 + 1;
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length &&
+          attrib.attribValue[attrib.attribValue.length - 1].start &&
+          !attrib.attribValue[attrib.attribValue.length - 1].end &&
+          attrib.attribValueStartsAt > attrib.attribValue[attrib.attribValue.length - 1].start) {
+            attrib.attribValue[attrib.attribValue.length - 1].start = attrib.attribValueStartsAt;
+          }
           layers.push({
             type: "simple",
             value: str[_i2],
@@ -913,13 +931,9 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
           }
           attrib.attribEnd = _i2 + 1;
-          if (attrib.attribValueRaw) {
-            attrib.attribValue.push({
-              type: "text",
-              start: attrib.attribValueStartsAt,
-              end: attrib.attribValueEndsAt,
-              value: attrib.attribValueRaw
-            });
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[_i2]) {
             layers.pop();
@@ -931,12 +945,10 @@ function tokenizer(str, originalOpts) {
       } else if (attrib.attribOpeningQuoteAt === null && (str[_i2] && !str[_i2].trim() || ["/", ">"].includes(str[_i2]) || espChars.includes(str[_i2]) && espChars.includes(str[_i2 + 1]))) {
         attrib.attribValueEndsAt = _i2;
         attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
-        attrib.attribValue.push({
-          type: "text",
-          start: attrib.attribValueStartsAt,
-          end: attrib.attribValueEndsAt,
-          value: attrib.attribValueRaw
-        });
+        if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+          attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+          attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
+        }
         attrib.attribEnd = _i2;
         token.attribs.push(clone(attrib));
         attribReset();
@@ -966,13 +978,9 @@ function tokenizer(str, originalOpts) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
-            if (attrib.attribValueRaw) {
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: attrib.attribValueEndsAt,
-                value: attrib.attribValueRaw
-              });
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+              attrib.attribValue[attrib.attribValue.length - 1].end = attrib.attribValueEndsAt;
+              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValueEndsAt);
             }
           }
           attrib.attribEnd = attribClosingQuoteAt;
@@ -994,6 +1002,16 @@ function tokenizer(str, originalOpts) {
           i = _i2;
           return "continue";
         }
+      } else if (attrib && attrib.attribStart && !attrib.attribEnd && (
+      !Array.isArray(attrib.attribValue) ||
+      !attrib.attribValue.length ||
+      attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= _i2)) {
+        attrib.attribValue.push({
+          type: "text",
+          start: _i2,
+          end: null,
+          value: null
+        });
       }
     }
     if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i2 && str[_i2] && str[_i2].trim()) {
@@ -1044,6 +1062,16 @@ function tokenizer(str, originalOpts) {
           if (str[_i2 + 1]) {
             attrib.attribValueStartsAt = _i2 + 1;
           }
+          if (
+          Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
+          attrib.attribValue[attrib.attribValue.length - 1].end)) {
+            attrib.attribValue.push({
+              type: "text",
+              start: attrib.attribValueStartsAt,
+              end: null,
+              value: null
+            });
+          }
         }
       }
     }
@@ -1076,13 +1104,9 @@ function tokenizer(str, originalOpts) {
         if (Number.isInteger(attrib.attribValueStartsAt) && _i2 && attrib.attribValueStartsAt < _i2 && str.slice(attrib.attribValueStartsAt, _i2).trim()) {
           attrib.attribValueEndsAt = _i2;
           attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
-          if (attrib.attribValueRaw) {
-            attrib.attribValue.push({
-              type: "text",
-              start: attrib.attribValueStartsAt,
-              end: attrib.attribValueEndsAt,
-              value: attrib.attribValueRaw
-            });
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
           }
         } else {
           attrib.attribValueStartsAt = null;

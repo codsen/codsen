@@ -601,8 +601,59 @@ t.test(
   }
 );
 
-t.todo(
+t.only(
   `04.02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{{ c }}d">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 16,
+          value: `<a b="{{ c }}d">`,
+          attribs: [
+            {
+              attribName: "b",
+              attribValueRaw: `{{ c }}d`,
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 13,
+                  value: "{{ c }}",
+                  head: "{{",
+                  tail: "}}",
+                },
+                {
+                  type: "text",
+                  start: 13,
+                  end: 14,
+                  value: "d",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 14,
+              attribStart: 3,
+              attribEnd: 15,
+            },
+          ],
+        },
+      ],
+      "04.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
     ct(`<img src="{{ root }}z" width="9"/>`, {
@@ -682,14 +733,14 @@ t.todo(
           ],
         },
       ],
-      "04.02"
+      "04.03"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
+  `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, {
@@ -717,14 +768,14 @@ t.test(
           end: 38,
         },
       ],
-      "04.03"
+      "04.04"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
+  `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
     ct(`<a b="c{{ z("'") }}"><b>`, {
@@ -746,14 +797,14 @@ t.test(
           end: 24,
         },
       ],
-      "04.04"
+      "04.05"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
+  `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
   (t) => {
     const gathered = [];
     ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, {
@@ -775,14 +826,14 @@ t.test(
           end: 52,
         },
       ],
-      "04.05"
+      "04.06"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
+  `04.07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
   (t) => {
     const gathered = [];
     ct(
@@ -807,7 +858,7 @@ t.test(
           end: 114,
         },
       ],
-      "04.06"
+      "04.07"
     );
     t.end();
   }

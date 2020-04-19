@@ -3126,6 +3126,29 @@
     //
     // to allow this, we have to save the current, parent token, in case above,
     // <td...> and then initiate the ESP token, which later will get nested
+
+    var attribToBackup; // We use it when ESP tag is inside the attribute:
+    // <a b="{{ c }}d">
+    //
+    // we need to back up both tag and attrib objects, assemble esp tag, then
+    // restore both and stick it inside the "attrib"'s array "attribValue":
+    //
+    // attribValue: [
+    //   {
+    //     type: "esp",
+    //     start: 6,
+    //     end: 13,
+    //     value: "{{ c }}",
+    //     head: "{{",
+    //     tail: "}}",
+    //   },
+    //   {
+    //     type: "text",
+    //     start: 13,
+    //     end: 14,
+    //     value: "d",
+    //   },
+    // ],
     // ---------------------------------------------------------------------------
     //
     //
@@ -3896,14 +3919,23 @@
                   } // 2. push
 
 
-                  parentTokenToBackup.attribs.push(lodash_clonedeep(token)); // 3. parentTokenToBackup becomes token
+                  if (attribToBackup) {
+                    // 1. restore
+                    attrib = attribToBackup; // 2. push
 
-                  token = lodash_clonedeep(parentTokenToBackup); // 4. reset "parentTokenToBackup"
+                    attrib.attribValue.push(lodash_clonedeep(token)); // 3. attribToBackup is reset in all cases, below
+                  } else {
+                    // push
+                    parentTokenToBackup.attribs.push(lodash_clonedeep(token));
+                  } // 3. parentTokenToBackup becomes token
 
-                  parentTokenToBackup = undefined; // 5. continue to prevent resets
-                  // 6. pop layers, remove the opening ESP tag record
 
-                  layers.pop(); // 7. finally, continue, bypassing the rest of the code in this loop
+                  token = lodash_clonedeep(parentTokenToBackup); // 4. resets
+
+                  parentTokenToBackup = undefined;
+                  attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
+
+                  layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
 
                   i = _i2;
                   return "continue";
@@ -3947,8 +3979,7 @@
                 // it means token has already being recorded, we need to tackle it -
                 // the new, ESP token is incoming!
                 // we nest ESP tokens inside "tag" type attributes
-                if ( // if a tag has been started up to now
-                token.type === "tag") {
+                if (token.type === "tag") {
                   // instead of dumping the tag token and starting a new-one,
                   // save the parent token, then nest all ESP tags among attributes
                   if (!token.tagName || !token.tagNameEndsAt) {
@@ -3958,6 +3989,10 @@
                   }
 
                   parentTokenToBackup = lodash_clonedeep(token);
+
+                  if (attrib.attribStart && !attrib.attribEnd) {
+                    attribToBackup = lodash_clonedeep(attrib);
+                  }
                 } else {
                   dumpCurrentToken(token, _i2);
                 }
@@ -3968,7 +4003,24 @@
 
               initToken("esp", _i2);
               token.tail = flipEspTag(wholeEspTagLump);
-              token.head = wholeEspTagLump;
+              token.head = wholeEspTagLump; // if text token has been initiated, imagine:
+              //  "attribValue": [
+              //     {
+              //         "type": "text",
+              //         "start": 6, <-------- after the initiation of this, we started ESP token at 6
+              //         "end": null,
+              //         "value": null
+              //     },
+              //     {
+              //         "type": "esp",
+              //         "start": 6, <-------- same start on real ESP token
+              //           ...
+              //  ],
+
+              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+                // erase it from stash
+                attribToBackup.attribValue.pop();
+              }
             } // do nothing for the second and following characters from the lump
 
 
@@ -4337,8 +4389,16 @@
             // "from" and "to" markers; if "from" was one character too early
             // and included quotes, those quotes would end up in the reported value
             attrib.attribOpeningQuoteAt = _i2;
-            attrib.attribValueStartsAt = _i2 + 1; // 2. restore layers, push this opening quote again, because
+            attrib.attribValueStartsAt = _i2 + 1; // 2. make correction to last start index on last attrib.attribValue
+
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && // start is present
+            attrib.attribValue[attrib.attribValue.length - 1].start && // but not closing
+            !attrib.attribValue[attrib.attribValue.length - 1].end && // and it starts too early,
+            attrib.attribValueStartsAt > attrib.attribValue[attrib.attribValue.length - 1].start) {
+              attrib.attribValue[attrib.attribValue.length - 1].start = attrib.attribValueStartsAt;
+            } // 3. restore layers, push this opening quote again, because
             // it has been just popped
+
 
             layers.push({
               type: "simple",
@@ -4370,14 +4430,9 @@
 
             attrib.attribEnd = _i2 + 1;
 
-            if (attrib.attribValueRaw) {
-              // otherwise, value of attribs.attribValue will be []
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: attrib.attribValueEndsAt,
-                value: attrib.attribValueRaw
-              });
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+              attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
             } // 2. if the pair was mismatching, wipe layers' last element
 
 
@@ -4395,12 +4450,12 @@
           // the attribute's value if there are no quotes
           attrib.attribValueEndsAt = _i2;
           attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
-          attrib.attribValue.push({
-            type: "text",
-            start: attrib.attribValueStartsAt,
-            end: attrib.attribValueEndsAt,
-            value: attrib.attribValueRaw
-          });
+
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
+          }
+
           attrib.attribEnd = _i2; // 2. push and wipe
 
           token.attribs.push(lodash_clonedeep(attrib));
@@ -4456,13 +4511,9 @@
             if (Number.isInteger(attrib.attribValueStartsAt)) {
               attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
 
-              if (attrib.attribValueRaw) {
-                attrib.attribValue.push({
-                  type: "text",
-                  start: attrib.attribValueStartsAt,
-                  end: attrib.attribValueEndsAt,
-                  value: attrib.attribValueRaw
-                });
+              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+                attrib.attribValue[attrib.attribValue.length - 1].end = attrib.attribValueEndsAt;
+                attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValueEndsAt);
               }
             }
 
@@ -4501,6 +4552,19 @@
             i = _i2;
             return "continue";
           }
+        } else if (attrib && attrib.attribStart && !attrib.attribEnd && ( //
+        // AND,
+        //
+        // either there are no attributes recorded under attrib.attribValue:
+        !Array.isArray(attrib.attribValue) || // or it's array but empty:
+        !attrib.attribValue.length || // or is it not empty but its last attrib has ended by now
+        attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= _i2)) {
+          attrib.attribValue.push({
+            type: "text",
+            start: _i2,
+            end: null,
+            value: null
+          });
         }
       } // Catch the start of a tag attribute's value:
       // -------------------------------------------------------------------------
@@ -4569,6 +4633,18 @@
 
             if (str[_i2 + 1]) {
               attrib.attribValueStartsAt = _i2 + 1;
+            }
+
+            if ( // if attribValue array is empty, no object has been placed yet,
+            Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // of there is one but it's got ending (prevention from submitting
+            // another text type object on top, before previous has been closed)
+            attrib.attribValue[attrib.attribValue.length - 1].end)) {
+              attrib.attribValue.push({
+                type: "text",
+                start: attrib.attribValueStartsAt,
+                end: null,
+                value: null
+              });
             }
           }
         } // else - value we assume does not start
@@ -4647,13 +4723,9 @@
             attrib.attribValueEndsAt = _i2;
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
 
-            if (attrib.attribValueRaw) {
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: attrib.attribValueEndsAt,
-                value: attrib.attribValueRaw
-              });
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+              attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
             } // otherwise, nulls stay
 
           } else {

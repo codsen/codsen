@@ -533,7 +533,14 @@ t.test(
               attribOpeningQuoteAt: 12,
               attribClosingQuoteAt: 13,
               attribValueRaw: "",
-              attribValue: [],
+              attribValue: [
+                {
+                  type: "text",
+                  start: 13,
+                  end: 13,
+                  value: "",
+                },
+              ],
               attribValueStartsAt: 13,
               attribValueEndsAt: 13,
               attribStart: 6,
@@ -544,7 +551,7 @@ t.test(
       ],
       "02.04.01"
     );
-    t.same(gathered[0].attribs[0].attribValue, [], "02.04.02");
+    t.same(gathered[0].attribs[0].attribValue.length, 1, "02.04.02");
     t.end();
   }
 );
