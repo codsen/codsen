@@ -7,11 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- `opts.allowUnresolved` can be supplied as string ([ada2a42](https://gitlab.com/codsen/codsen/commit/ada2a42031a8cd2aa0fdf11c6e1a62812e0e5b74))
-
-## 8.2.0 (2020-04-19)
-
-- `opts.allowUnresolved` can be supplied as string - thanks to **Thomas Ivall**
+- `opts.allowUnresolved` can be supplied as string ([ada2a42](https://gitlab.com/codsen/codsen/commit/ada2a42031a8cd2aa0fdf11c6e1a62812e0e5b74)) - thanks to **Thomas Ivall**
 
 ## 8.1.0 (2020-04-18)
 

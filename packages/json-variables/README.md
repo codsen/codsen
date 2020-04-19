@@ -107,7 +107,7 @@ This program is used in production — we use it to DRY the JSON files which hol
 
 - [`object-path`](https://www.npmjs.com/package/object-path) notation (arrays use dots too: `data.array.1` instead of `data.array[1]`)
 - `*_data` keys to dump the data nearby (customiseable naming pattern)
-- [Detects](https://github.com/codsen/string-find-heads-tails) existing heads tails and won't wrap twice
+- [Detects](https://www.npmjs.com/package/string-find-heads-tails) existing heads tails and won't wrap twice
 - Battle-tested, used in production to manage email templates
 
 **[⬆ back to top](#)**
@@ -153,7 +153,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 | `allowUnresolved`                      | Boolean or String          | no          | `false` | Normally, if a variable can't be resolved, program throws an error. If you prefer missing values to resolve to a string, set it here. Putting `true` resolves to an empty string.                                                                                                                                                                                                                                            |
 | }                                      |                            |             |         |
 
-**Defaults**:
+All **defaults** in one place:
 
 ```js
 {
