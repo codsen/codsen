@@ -221,6 +221,7 @@ function startsEsp(str, i, token, layers, styleStarts) {
     !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
     !(
       (
+        str[i] === "%" &&
         "0123456789".includes(str[left(str, i)]) &&
         (!str[i + 2] ||
           [`"`, `'`, ";"].includes(str[i + 2]) ||
@@ -1126,11 +1127,34 @@ function tokenizer(str, originalOpts) {
             if (
               attribToBackup &&
               Array.isArray(attribToBackup.attribValue) &&
-              attribToBackup.attribValue.length &&
-              attribToBackup.attribValue[attribToBackup.attribValue.length - 1]
-                .start === token.start
+              attribToBackup.attribValue.length
             ) {
-              attribToBackup.attribValue.pop();
+              if (
+                attribToBackup.attribValue[
+                  attribToBackup.attribValue.length - 1
+                ].start === token.start
+              ) {
+                attribToBackup.attribValue.pop();
+              } else if (
+                attribToBackup.attribValue[
+                  attribToBackup.attribValue.length - 1
+                ].type === "text" &&
+                !attribToBackup.attribValue[
+                  attribToBackup.attribValue.length - 1
+                ].end
+              ) {
+                attribToBackup.attribValue[
+                  attribToBackup.attribValue.length - 1
+                ].end = i;
+                attribToBackup.attribValue[
+                  attribToBackup.attribValue.length - 1
+                ].value = str.slice(
+                  attribToBackup.attribValue[
+                    attribToBackup.attribValue.length - 1
+                  ].start,
+                  i
+                );
+              }
             }
           }
           doNothing =

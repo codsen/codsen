@@ -784,8 +784,86 @@ t.test(
   }
 );
 
-t.todo(
-  `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`,
+t.test(
+  `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp-text-esp-text`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{% x %}1{% y %}2">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 24,
+          value: '<a b="{% x %}1{% y %}2">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 22,
+              attribValueRaw: "{% x %}1{% y %}2",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 13,
+                  value: "{% x %}",
+                  head: "{%",
+                  tail: "%}",
+                },
+                {
+                  type: "text",
+                  start: 13,
+                  end: 14,
+                  value: "1",
+                },
+                {
+                  type: "esp",
+                  start: 14,
+                  end: 21,
+                  value: "{% y %}",
+                  head: "{%",
+                  tail: "%}",
+                },
+                {
+                  type: "text",
+                  start: 21,
+                  end: 22,
+                  value: "2",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 22,
+              attribStart: 3,
+              attribEnd: 23,
+            },
+          ],
+        },
+      ],
+      "04.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>`, {
@@ -804,7 +882,7 @@ t.todo(
           attribs: [
             {
               attribName: "z",
-              attribNameRecognised: true,
+              attribNameRecognised: false,
               attribNameStartsAt: 3,
               attribNameEndsAt: 4,
               attribOpeningQuoteAt: 5,
@@ -816,13 +894,13 @@ t.todo(
                   start: 6,
                   end: 24,
                   value: "{% if something %}",
-                  head: "{{",
-                  tail: "}}",
+                  head: "{%",
+                  tail: "%}",
                 },
                 {
                   type: "text",
-                  start: 18,
-                  end: 19,
+                  start: 24,
+                  end: 25,
                   value: "1",
                 },
                 {
@@ -830,8 +908,8 @@ t.todo(
                   start: 25,
                   end: 35,
                   value: "{% else %}",
-                  head: "{{",
-                  tail: "}}",
+                  head: "{%",
+                  tail: "%}",
                 },
                 {
                   type: "text",
@@ -844,8 +922,8 @@ t.todo(
                   start: 36,
                   end: 47,
                   value: "{% endif %}",
-                  head: "{{",
-                  tail: "}}",
+                  head: "{%",
+                  tail: "%}",
                 },
               ],
               attribValueStartsAt: 6,
@@ -877,14 +955,14 @@ t.todo(
           ],
         },
       ],
-      "04.04"
+      "04.05"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
+  `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, {
@@ -912,14 +990,14 @@ t.test(
           end: 38,
         },
       ],
-      "04.05"
+      "04.06"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
+  `04.07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
     ct(`<a b="c{{ z("'") }}"><b>`, {
@@ -941,14 +1019,14 @@ t.test(
           end: 24,
         },
       ],
-      "04.06"
+      "04.07"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
+  `04.08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
   (t) => {
     const gathered = [];
     ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, {
@@ -970,14 +1048,14 @@ t.test(
           end: 52,
         },
       ],
-      "04.07"
+      "04.08"
     );
     t.end();
   }
 );
 
 t.test(
-  `04.08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
+  `04.09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
   (t) => {
     const gathered = [];
     ct(
@@ -1002,8 +1080,25 @@ t.test(
           end: 114,
         },
       ],
-      "04.08"
+      "04.09"
     );
+    t.end();
+  }
+);
+
+// 05. broken
+// -----------------------------------------------------------------------------
+
+t.todo(
+  `05.01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{% x }1{% y %}2">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "05.01");
     t.end();
   }
 );

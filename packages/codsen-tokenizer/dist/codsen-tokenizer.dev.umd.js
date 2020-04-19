@@ -2411,7 +2411,7 @@
 
   function startsEsp(str, i, token, layers, styleStarts) {
     return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
-    "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
+    str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
   }
 
   /**
@@ -3904,6 +3904,15 @@
         //     styleStarts
         //   )}`
         // );
+        // console.log(
+        //   `1533 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
+        //     str,
+        //     i,
+        //     token,
+        //     layers,
+        //     styleStarts
+        //   )}`
+        // );
         if (startsTag(str, _i2, token, layers)) {
           //
           //
@@ -4108,7 +4117,7 @@
 
               initToken("esp", _i2);
               token.tail = flipEspTag(wholeEspTagLump);
-              token.head = wholeEspTagLump;
+              token.head = wholeEspTagLump; // toggle parentTokenToBackup.pureHTML
 
               if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
                 parentTokenToBackup.pureHTML = false;
@@ -4127,9 +4136,16 @@
               //  ],
 
 
-              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
-                // erase it from stash
-                attribToBackup.attribValue.pop();
+              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
+                if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+                  // erase it from stash
+                  attribToBackup.attribValue.pop();
+                } else if ( // if the "text" type object is the last in "attribValue" and
+                // it's not closed, let's close it and calculate its value:
+                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i2;
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i2);
+                }
               }
             } // do nothing for the second and following characters from the lump
 

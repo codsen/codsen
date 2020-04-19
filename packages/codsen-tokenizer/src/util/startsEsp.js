@@ -17,6 +17,7 @@ function startsEsp(str, i, token, layers, styleStarts) {
     !(
       // insurance against repeated percentages
       (
+        str[i] === "%" &&
         "0123456789".includes(str[left(str, i)]) &&
         (!str[i + 2] ||
           [`"`, `'`, ";"].includes(str[i + 2]) ||
