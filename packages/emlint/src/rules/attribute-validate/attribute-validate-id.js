@@ -37,7 +37,7 @@ function attributeValidateId(context, ...opts) {
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt
           );
           console.log(

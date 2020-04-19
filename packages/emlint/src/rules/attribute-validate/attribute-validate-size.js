@@ -38,7 +38,7 @@ function attributeValidateSize(context, ...opts) {
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt
           );
 
@@ -74,7 +74,7 @@ function attributeValidateSize(context, ...opts) {
           if (Number.isInteger(charStart)) {
             // the attribute's value is not empty
 
-            const extractedVal = node.attribValue.slice(charStart, charEnd);
+            const extractedVal = node.attribValueRaw.slice(charStart, charEnd);
             console.log(
               `079 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedVal,

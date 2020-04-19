@@ -34,7 +34,7 @@ function attributeValidateMethod(context, ...opts) {
 
         // check in two parts, first, a quick try, match the most common values only
         const errorArr = validateString(
-          node.attribValue, // value
+          node.attribValueRaw, // value
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["get", "post"],

@@ -40,7 +40,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
         } else {
           // validate the script value
           const errorArr = validateScript(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt
           );
           console.log(

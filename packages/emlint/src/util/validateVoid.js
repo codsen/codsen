@@ -38,7 +38,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     // equal might be missing or there might be some rogue whitespace,
     // for example - only value check is not enough
     if (
-      node.attribValue !== node.attribName ||
+      node.attribValueRaw !== node.attribName ||
       context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
@@ -73,7 +73,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
         },
       });
     }
-  } else if (node.attribValue !== null) {
+  } else if (node.attribValueRaw !== null) {
     errorArr.push({
       idxFrom: node.attribNameEndsAt,
       idxTo: node.attribEnd,
@@ -114,7 +114,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
           (attribObj) =>
             attribObj.attribName === siblingAttr &&
             opts.enforceSiblingAttributes[siblingAttr].includes(
-              attribObj.attribValue
+              attribObj.attribValueRaw
             )
         )
       ) {

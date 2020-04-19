@@ -44,7 +44,7 @@ function attributeValidateChar(context, ...opts) {
         }
 
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

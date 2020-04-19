@@ -47,11 +47,15 @@ function attributeValidateWidth(context, ...opts) {
         } else {
           if (node.parent.tagName === "pre") {
             // number only
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
-              theOnlyGoodUnits: [],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
-              console.log(`054 RAISE ERROR`);
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                theOnlyGoodUnits: [],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
+              console.log(`058 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",
@@ -60,12 +64,16 @@ function attributeValidateWidth(context, ...opts) {
             });
           } else if (["colgroup", "col"].includes(node.parent.tagName)) {
             // multilength type
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              theOnlyGoodUnits: ["*", "%"],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
-              console.log(`068 RAISE ERROR`);
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                badUnits: ["px"],
+                theOnlyGoodUnits: ["*", "%"],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
+              console.log(`076 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",
@@ -74,11 +82,15 @@ function attributeValidateWidth(context, ...opts) {
             });
           } else {
             // normal length
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              noUnitsIsFine: true,
-            }).forEach((errorObj) => {
-              console.log(`081 RAISE ERROR`);
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                badUnits: ["px"],
+                noUnitsIsFine: true,
+              }
+            ).forEach((errorObj) => {
+              console.log(`093 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width",

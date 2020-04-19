@@ -34,7 +34,7 @@ function attributeValidateAbbr(context, ...opts) {
 
         // only check for rogue whitespace - value can be any string
         const { errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

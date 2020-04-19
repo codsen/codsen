@@ -41,7 +41,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
         // https://www.iana.org/assignments/character-sets/character-sets.xhtml
         // https://www.w3.org/TR/html4/interact/forms.html#adef-accept-charset
         const errorArr = validateString(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {
             canBeCommaSeparated: true,

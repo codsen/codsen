@@ -53,7 +53,7 @@ function attributeValidateType(context, ...opts) {
             )
           ) {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
@@ -101,7 +101,7 @@ function attributeValidateType(context, ...opts) {
             });
           } else if (node.parent.tagName === "input") {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
@@ -130,7 +130,7 @@ function attributeValidateType(context, ...opts) {
             });
           } else if (node.parent.tagName === "li") {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
@@ -157,7 +157,7 @@ function attributeValidateType(context, ...opts) {
             });
           } else if (node.parent.tagName === "ol") {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["1", "a", "A", "i", "I"],
@@ -175,7 +175,7 @@ function attributeValidateType(context, ...opts) {
             });
           } else if (node.parent.tagName === "ul") {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["disc", "square", "circle"],
@@ -193,7 +193,7 @@ function attributeValidateType(context, ...opts) {
             });
           } else if (node.parent.tagName === "button") {
             validateString(
-              node.attribValue, // value
+              node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["button", "submit", "reset"],

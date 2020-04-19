@@ -3266,11 +3266,11 @@ function attributeDuplicate(context) {
                 } else {
                   allOtherRanges.push([_i ? stringLeftRight.left(context.str, node.attribs[_i].attribStart) + 1 : node.attribs[_i].attribStart, node.attribs[_i].attribEnd]);
                 }
-                splitByWhitespace(node.attribs[_i].attribValue, function (_ref) {
+                splitByWhitespace(node.attribs[_i].attribValueRaw, function (_ref) {
                   var _ref2 = _slicedToArray(_ref, 2),
                       from = _ref2[0],
                       to = _ref2[1];
-                  extractedValues.push(node.attribs[_i].attribValue.slice(from, to));
+                  extractedValues.push(node.attribs[_i].attribValueRaw.slice(from, to));
                 });
               }
             };
@@ -3381,7 +3381,7 @@ function attributeMalformed(context) {
         });
       }
       if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null && context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt]) {
-        if (!node.attribValue.includes("\"")) {
+        if (!node.attribValueRaw.includes("\"")) {
           context.report({
             ruleId: "attribute-malformed",
             message: "".concat(context.str[node.attribClosingQuoteAt] === "\"" ? "Opening" : "Closing", " quote should be double."),
@@ -3391,7 +3391,7 @@ function attributeMalformed(context) {
               ranges: [context.str[node.attribClosingQuoteAt] === "\"" ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
             }
           });
-        } else if (!node.attribValue.includes("'")) {
+        } else if (!node.attribValueRaw.includes("'")) {
           context.report({
             ruleId: "attribute-malformed",
             message: "".concat(context.str[node.attribClosingQuoteAt] === "'" ? "Opening" : "Closing", " quote should be single."),
@@ -3420,7 +3420,7 @@ function attributeValidateAbbr(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -3618,7 +3618,7 @@ function attributeValidateAcceptCharset(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
           canBeCommaSeparated: true,
           noSpaceAfterComma: true,
           quickPermittedValues: ["UNKNOWN"],
@@ -3647,7 +3647,7 @@ function attributeValidateAccept(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
@@ -3678,7 +3678,7 @@ function attributeValidateAccesskey(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr,
@@ -3911,7 +3911,7 @@ function attributeValidateAction(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -3940,35 +3940,35 @@ function attributeValidateAlign(context) {
         }
         var errorArr = [];
         if (["legend", "caption"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValue,
+          errorArr = validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["top", "bottom", "left", "right"],
             canBeCommaSeparated: false
           });
         } else if (["applet", "iframe", "img", "input", "object"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValue,
+          errorArr = validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["top", "middle", "bottom", "left", "right"],
             canBeCommaSeparated: false
           });
         } else if (["table", "hr"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValue,
+          errorArr = validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["left", "center", "right"],
             canBeCommaSeparated: false
           });
         } else if (["div", "h1", "h2", "h3", "h4", "h5", "h6", "p"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValue,
+          errorArr = validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["left", "center", "right", "justify"],
             canBeCommaSeparated: false
           });
         } else if (["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValue,
+          errorArr = validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["left", "center", "right", "justify", "char"],
@@ -4067,7 +4067,7 @@ function attributeValidateAlink(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -4098,7 +4098,7 @@ function attributeValidateAlt(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -4124,7 +4124,7 @@ function attributeValidateArchive(context) {
           });
         } else {
           if (node.parent.tagName === "applet") {
-            validateUri(node.attribValue, {
+            validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true
@@ -4134,7 +4134,7 @@ function attributeValidateArchive(context) {
               }));
             });
           } else if (node.parent.tagName === "object") {
-            validateUri(node.attribValue, {
+            validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "space",
               multipleOK: true
@@ -4163,7 +4163,7 @@ function attributeValidateAxis(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -4188,7 +4188,7 @@ function attributeValidateBackground(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -4215,7 +4215,7 @@ function attributeValidateBgcolor(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -4463,7 +4463,7 @@ function attributeValidateBorder(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: []
@@ -4491,7 +4491,7 @@ function attributeValidateCellpadding(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: ["%"],
@@ -4521,7 +4521,7 @@ function attributeValidateCellspacing(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: ["%"],
@@ -4551,7 +4551,7 @@ function attributeValidateChar(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr,
@@ -4589,7 +4589,7 @@ function attributeValidateCharoff(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: true,
           theOnlyGoodUnits: [],
@@ -4628,7 +4628,7 @@ function attributeValidateCharset(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
           canBeCommaSeparated: false,
           noSpaceAfterComma: false,
           quickPermittedValues: [],
@@ -4657,7 +4657,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     } else if (node.attribClosingQuoteAt !== null && context.str[node.attribClosingQuoteAt] === "'") {
       quotesType = "'";
     }
-    if (node.attribValue !== node.attribName || context.str.slice(node.attribNameEndsAt, node.attribEnd) !== "=".concat(quotesType).concat(node.attribName).concat(quotesType)) {
+    if (node.attribValueRaw !== node.attribName || context.str.slice(node.attribNameEndsAt, node.attribEnd) !== "=".concat(quotesType).concat(node.attribName).concat(quotesType)) {
       errorArr.push({
         idxFrom: node.attribNameStartsAt,
         idxTo: node.attribNameEndsAt,
@@ -4667,7 +4667,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
         }
       });
     }
-  } else if (node.attribValue !== null) {
+  } else if (node.attribValueRaw !== null) {
     errorArr.push({
       idxFrom: node.attribNameEndsAt,
       idxTo: node.attribEnd,
@@ -4689,7 +4689,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
           fix: null
         });
       } else if (opts.enforceSiblingAttributes[siblingAttr] && Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) && Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
-        return attribObj.attribName === siblingAttr && opts.enforceSiblingAttributes[siblingAttr].includes(attribObj.attribValue);
+        return attribObj.attribName === siblingAttr && opts.enforceSiblingAttributes[siblingAttr].includes(attribObj.attribValueRaw);
       })) {
         var idxFrom;
         var idxTo;
@@ -4769,7 +4769,7 @@ function attributeValidateCite(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -4855,7 +4855,7 @@ function attributeValidateClass(context) {
             fix: null
           });
         } else {
-          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
@@ -4890,7 +4890,7 @@ function attributeValidateClassid(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -4917,7 +4917,7 @@ function attributeValidateClassid$1(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
@@ -4952,7 +4952,7 @@ function attributeValidateCode(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
@@ -4979,7 +4979,7 @@ function attributeValidateCodebase(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -5006,7 +5006,7 @@ function attributeValidateCodetype(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
@@ -5037,7 +5037,7 @@ function attributeValidateColor(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -5070,7 +5070,7 @@ function attributeValidateCols(context) {
         }
         var errorArr = [];
         if (node.parent.tagName === "frameset") {
-          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+          errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             whitelistValues: ["*"],
             theOnlyGoodUnits: ["%"],
             badUnits: ["px"],
@@ -5080,7 +5080,7 @@ function attributeValidateCols(context) {
             customGenericValueError: "Should be: pixels|%|*."
           });
         } else if (node.parent.tagName === "textarea") {
-          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+          errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             type: "integer",
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units."
@@ -5111,7 +5111,7 @@ function attributeValidateColspan(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
@@ -5179,7 +5179,7 @@ function attributeValidateContent(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
@@ -5221,14 +5221,14 @@ function attributeValidateCoords(context) {
               return attrObj.attribName === "shape";
             })[0];
             var enforceCount = null;
-            if (shapeAttr.attribValue === "rect") {
+            if (shapeAttr.attribValueRaw === "rect") {
               enforceCount = 4;
-            } else if (shapeAttr.attribValue === "circle") {
+            } else if (shapeAttr.attribValueRaw === "circle") {
               enforceCount = 3;
-            } else if (shapeAttr.attribValue === "poly") {
+            } else if (shapeAttr.attribValueRaw === "poly") {
               enforceCount = "even";
             }
-            var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+            var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               whitelistValues: null,
               theOnlyGoodUnits: [],
               badUnits: null,
@@ -5265,7 +5265,7 @@ function attributeValidateData(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -5292,7 +5292,7 @@ function attributeValidateDatetime(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           quickPermittedValues: [isoDateRegex],
@@ -5403,7 +5403,7 @@ function attributeValidateDir(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["ltr", "rtl"],
@@ -5472,7 +5472,7 @@ function attributeValidateEnctype(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"],
@@ -5502,7 +5502,7 @@ function attributeValidateFace(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
@@ -5529,11 +5529,11 @@ function attributeValidateFor(context) {
             fix: null
           });
         } else {
-          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
-          var extractedValue = node.attribValue.slice(charStart, charEnd);
+          var extractedValue = node.attribValueRaw.slice(charStart, charEnd);
           var message = "Wrong id name.";
           var fix = null;
           var idxFrom = charStart + node.attribValueStartsAt;
@@ -5545,7 +5545,7 @@ function attributeValidateFor(context) {
               message = "Should be one value, no spaces.";
             } else if (extractedValue.includes("#")) {
               message = "Remove hash.";
-              var firstHashAt = node.attribValue.indexOf("#");
+              var firstHashAt = node.attribValueRaw.indexOf("#");
               fix = {
                 ranges: [[node.attribValueStartsAt + firstHashAt, node.attribValueStartsAt + firstHashAt + 1]]
               };
@@ -5584,7 +5584,7 @@ function attributeValidateFrame(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["void",
@@ -5622,7 +5622,7 @@ function attributeValidateFrameborder(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["0", "1"],
@@ -5651,7 +5651,7 @@ function attributeValidateHeaders(context) {
             fix: null
           });
         } else {
-          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
@@ -5686,7 +5686,7 @@ function attributeValidateHeight(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           badUnits: ["px"],
           theOnlyGoodUnits: ["%"],
           noUnitsIsFine: true,
@@ -5715,7 +5715,7 @@ function attributeValidateHref(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -5742,11 +5742,11 @@ function attributeValidateHreflang(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
-        var _isLangCode = isLangCode(node.attribValue.slice(charStart, charEnd)),
+        var _isLangCode = isLangCode(node.attribValueRaw.slice(charStart, charEnd)),
             message = _isLangCode.message;
         if (message) {
           errorArr.push({
@@ -5779,7 +5779,7 @@ function attributeValidateHspace(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
@@ -5806,7 +5806,7 @@ function attributeValidateHttpequiv(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["content-type", "default-style", "refresh", "X-UA-Compatible"],
@@ -5836,7 +5836,7 @@ function attributeValidateId(context) {
             fix: null
           });
         } else {
-          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
@@ -5911,7 +5911,7 @@ function attributeValidateLabel(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -5936,11 +5936,11 @@ function attributeValidateLang(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
-        var _isLangCode = isLangCode(node.attribValue.slice(charStart, charEnd)),
+        var _isLangCode = isLangCode(node.attribValueRaw.slice(charStart, charEnd)),
             message = _isLangCode.message;
         if (message) {
           errorArr.push({
@@ -5973,7 +5973,7 @@ function attributeValidateLanguage(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -5998,7 +5998,7 @@ function attributeValidateLink(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -6029,7 +6029,7 @@ function attributeValidateLongdesc(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -6054,7 +6054,7 @@ function attributeValidateMarginheight(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
@@ -6081,7 +6081,7 @@ function attributeValidateMarginwidth(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
@@ -6108,7 +6108,7 @@ function attributeValidateMaxlength(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
@@ -6136,11 +6136,11 @@ function attributeValidateMedia(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
-        errorArr.concat(isMediaD(node.attribValue.slice(charStart, charEnd), {
+        errorArr.concat(isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
           offset: node.attribValueStartsAt
         })).forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -6165,7 +6165,7 @@ function attributeValidateMethod(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["get", "post"],
@@ -6234,7 +6234,7 @@ function attributeValidateName(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -6419,7 +6419,7 @@ function attributeValidateObject(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -6454,7 +6454,7 @@ function attributeValidateOnblur(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onblur"
@@ -6483,7 +6483,7 @@ function attributeValidateOnchange(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onchange"
@@ -6512,7 +6512,7 @@ function attributeValidateOnclick(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onclick"
@@ -6541,7 +6541,7 @@ function attributeValidateOndblclick(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-ondblclick"
@@ -6570,7 +6570,7 @@ function attributeValidateOnfocus(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onfocus"
@@ -6599,7 +6599,7 @@ function attributeValidateOnkeydown(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onkeydown"
@@ -6628,7 +6628,7 @@ function attributeValidateOnkeypress(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onkeypress"
@@ -6657,7 +6657,7 @@ function attributeValidateOnkeyup(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onkeyup"
@@ -6686,7 +6686,7 @@ function attributeValidateOnload(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onload"
@@ -6715,7 +6715,7 @@ function attributeValidateOnmousedown(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onmousedown"
@@ -6744,7 +6744,7 @@ function attributeValidateOnmousemove(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onmousemove"
@@ -6773,7 +6773,7 @@ function attributeValidateOnmouseout(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onmouseout"
@@ -6802,7 +6802,7 @@ function attributeValidateOnmouseover(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onmouseover"
@@ -6831,7 +6831,7 @@ function attributeValidateOnmouseup(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onmouseup"
@@ -6860,7 +6860,7 @@ function attributeValidateOnreset(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onreset"
@@ -6889,7 +6889,7 @@ function attributeValidateOnsubmit(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onsubmit"
@@ -6918,7 +6918,7 @@ function attributeValidateOnselect(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onselect"
@@ -6947,7 +6947,7 @@ function attributeValidateOnunload(context) {
             fix: null
           });
         } else {
-          var errorArr = validateScript(node.attribValue, node.attribValueStartsAt);
+          var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-onunload"
@@ -6972,7 +6972,7 @@ function attributeValidateProfile(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: true
           }).forEach(function (errorObj) {
@@ -6999,7 +6999,7 @@ function attributeValidatePrompt(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7068,7 +7068,7 @@ function attributeValidateRel(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: linkTypes,
@@ -7102,7 +7102,7 @@ function attributeValidateRev(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: linkTypes,
@@ -7134,7 +7134,7 @@ function attributeValidateRows(context) {
         }
         var errorArr = [];
         if (node.parent.tagName === "frameset") {
-          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+          errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             whitelistValues: ["*"],
             theOnlyGoodUnits: ["%"],
             badUnits: ["px"],
@@ -7144,7 +7144,7 @@ function attributeValidateRows(context) {
             customGenericValueError: "Should be: pixels|%|*."
           });
         } else if (node.parent.tagName === "textarea") {
-          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+          errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             type: "integer",
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units."
@@ -7175,7 +7175,7 @@ function attributeValidateRowspan(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
@@ -7203,7 +7203,7 @@ function attributeValidateRules(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["none", "groups", "rows", "cols", "all"],
@@ -7232,7 +7232,7 @@ function attributeValidateScheme(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7257,7 +7257,7 @@ function attributeValidateScope(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["row", "col", "rowgroup", "colgroup"],
@@ -7286,7 +7286,7 @@ function attributeValidateScrolling(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["auto", "yes", "no"],
@@ -7355,7 +7355,7 @@ function attributeValidateShape(context) {
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue,
+        var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
           permittedValues: ["default", "rect", "circle", "poly"],
@@ -7384,7 +7384,7 @@ function attributeValidateSize(context) {
             fix: null
           });
         } else {
-          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
@@ -7394,7 +7394,7 @@ function attributeValidateSize(context) {
             }));
           });
           if (Number.isInteger(charStart)) {
-            var extractedVal = node.attribValue.slice(charStart, charEnd);
+            var extractedVal = node.attribValueRaw.slice(charStart, charEnd);
             if (["hr", "input", "select"].includes(node.parent.tagName)) {
               validateDigitAndUnit(extractedVal, node.attribValueStartsAt + charStart, {
                 type: "integer",
@@ -7450,7 +7450,7 @@ function attributeValidateSpan(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
@@ -7480,7 +7480,7 @@ function attributeValidateSrc(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -7507,7 +7507,7 @@ function attributeValidateStandby(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7532,7 +7532,7 @@ function attributeValidateStart(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
@@ -7568,7 +7568,7 @@ function attributeValidateStyle(context) {
             fix: null
           });
         }
-        var errorArr = validateInlineStyle(node.attribValue, node.attribValueStartsAt);
+        var errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-style"
@@ -7592,7 +7592,7 @@ function attributeValidateSummary(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7617,7 +7617,7 @@ function attributeValidateTabindex(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
@@ -7648,7 +7648,7 @@ function attributeValidateTarget(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7673,7 +7673,7 @@ function attributeValidateText(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -7704,7 +7704,7 @@ function attributeValidateTitle(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7730,7 +7730,7 @@ function attributeValidateType(context) {
           });
         } else {
           if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
@@ -7743,7 +7743,7 @@ function attributeValidateType(context) {
               }));
             });
           } else if (node.parent.tagName === "input") {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["text", "password", "checkbox", "radio", "submit", "reset", "file", "hidden", "image", "button"],
@@ -7756,7 +7756,7 @@ function attributeValidateType(context) {
               }));
             });
           } else if (node.parent.tagName === "li") {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["disc", "square", "circle", "1", "a", "A", "i", "I"],
@@ -7769,7 +7769,7 @@ function attributeValidateType(context) {
               }));
             });
           } else if (node.parent.tagName === "ol") {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["1", "a", "A", "i", "I"],
@@ -7782,7 +7782,7 @@ function attributeValidateType(context) {
               }));
             });
           } else if (node.parent.tagName === "ul") {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["disc", "square", "circle"],
@@ -7795,7 +7795,7 @@ function attributeValidateType(context) {
               }));
             });
           } else if (node.parent.tagName === "button") {
-            validateString(node.attribValue,
+            validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["button", "submit", "reset"],
@@ -7827,7 +7827,7 @@ function attributeValidateUsemap(context) {
             fix: null
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
@@ -7854,7 +7854,7 @@ function attributeValidateValign(context) {
             fix: null
           });
         } else {
-          validateString(node.attribValue,
+          validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["top", "middle", "bottom", "baseline"],
@@ -7884,7 +7884,7 @@ function attributeValidateValue(context) {
           });
         } else {
           if (node.parent.tagName === "li") {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
@@ -7896,7 +7896,7 @@ function attributeValidateValue(context) {
               }));
             });
           } else {
-            var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+            var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
                 errorArr = _checkForWhitespace.errorArr;
             errorArr.forEach(function (errorObj) {
               context.report(Object.assign({}, errorObj, {
@@ -7923,7 +7923,7 @@ function attributeValidateValuetype(context) {
             fix: null
           });
         } else {
-          validateString(node.attribValue,
+          validateString(node.attribValueRaw,
           node.attribValueStartsAt,
           {
             permittedValues: ["data", "ref", "object"],
@@ -7952,7 +7952,7 @@ function attributeValidateVersion(context) {
             fix: null
           });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartsAt),
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -7977,7 +7977,7 @@ function attributeValidateVlink(context) {
             fix: null
           });
         }
-        var errorArr = validateColor(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
           namedCssLevel1OK: true,
           namedCssLevel2PlusOK: true,
           hexThreeOK: false,
@@ -8008,7 +8008,7 @@ function attributeValidateVspace(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
@@ -8036,7 +8036,7 @@ function attributeValidateWidth(context) {
           });
         } else {
           if (node.parent.tagName === "pre") {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               theOnlyGoodUnits: [],
               noUnitsIsFine: true
             }).forEach(function (errorObj) {
@@ -8045,7 +8045,7 @@ function attributeValidateWidth(context) {
               }));
             });
           } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               badUnits: ["px"],
               theOnlyGoodUnits: ["*", "%"],
               noUnitsIsFine: true
@@ -8055,7 +8055,7 @@ function attributeValidateWidth(context) {
               }));
             });
           } else {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               badUnits: ["px"],
               noUnitsIsFine: true
             }).forEach(function (errorObj) {

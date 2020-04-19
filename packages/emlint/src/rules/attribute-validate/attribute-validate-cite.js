@@ -33,7 +33,7 @@ function attributeValidateCite(context, ...opts) {
         } else {
           // Call validation upon the whole attribute's value. Validator includes
           // whitespace checks.
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {

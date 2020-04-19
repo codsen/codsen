@@ -37,7 +37,7 @@ function attributeValidateMedia(context, ...opts) {
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "node.attribValueStartsAt" value
         const { charStart, charEnd, errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(
@@ -61,7 +61,7 @@ function attributeValidateMedia(context, ...opts) {
         // concat errors from "is-media-descriptor" and report all:
         errorArr
           .concat(
-            isMediaD(node.attribValue.slice(charStart, charEnd), {
+            isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
               offset: node.attribValueStartsAt,
             })
           )

@@ -40,7 +40,7 @@ function attributeValidateArchive(context, ...opts) {
             // comma-separated list of archive URIs
             // Call validation upon the whole attribute's value. Validator includes
             // whitespace checks.
-            validateUri(node.attribValue, {
+            validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true,
@@ -56,7 +56,7 @@ function attributeValidateArchive(context, ...opts) {
             // space-separated list of URIs
             // Call validation upon the whole attribute's value. Validator includes
             // whitespace checks.
-            validateUri(node.attribValue, {
+            validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "space", // or "comma"
               multipleOK: true,

@@ -66,7 +66,7 @@ function attributeValidateAlign(context, ...opts) {
         if (["legend", "caption"].includes(node.parent.tagName.toLowerCase())) {
           // top|bottom|left|right
           errorArr = validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "bottom", "left", "right"],
@@ -80,7 +80,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           // top|middle|bottom|left|right
           errorArr = validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "middle", "bottom", "left", "right"],
@@ -92,7 +92,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           // left|center|right
           errorArr = validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right"],
@@ -106,7 +106,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           // left|center|right|justify
           errorArr = validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify"],
@@ -127,7 +127,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           // left|center|right|justify|char
           errorArr = validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify", "char"],

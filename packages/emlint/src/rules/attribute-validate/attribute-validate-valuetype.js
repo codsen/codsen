@@ -36,7 +36,7 @@ function attributeValidateValuetype(context, ...opts) {
           });
         } else {
           validateString(
-            node.attribValue, // value
+            node.attribValueRaw, // value
             node.attribValueStartsAt, // offset
             {
               permittedValues: ["data", "ref", "object"],

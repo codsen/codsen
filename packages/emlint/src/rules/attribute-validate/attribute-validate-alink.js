@@ -33,7 +33,7 @@ function attributeValidateAlink(context, ...opts) {
         }
 
         const errorArr = validateColor(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,

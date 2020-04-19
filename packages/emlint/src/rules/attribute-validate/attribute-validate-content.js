@@ -38,7 +38,7 @@ function attributeValidateContent(context, ...opts) {
 
         // only validate the whitespace
         const { charStart, charEnd, errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

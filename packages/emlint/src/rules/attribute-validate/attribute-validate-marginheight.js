@@ -33,7 +33,7 @@ function attributeValidateMarginheight(context, ...opts) {
         }
 
         const errorArr = validateDigitAndUnit(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [], // all units are bad, value is in px which is omitted

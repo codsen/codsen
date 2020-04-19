@@ -40,7 +40,7 @@ function attributeValidateClassid(context, ...opts) {
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "node.attribValueStartsAt" value
         const { charStart, charEnd, errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

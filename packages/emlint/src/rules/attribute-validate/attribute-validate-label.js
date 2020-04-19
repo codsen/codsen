@@ -34,7 +34,7 @@ function attributeValidateLabel(context, ...opts) {
 
         // only check for rogue whitespace - value can be any CDATA
         const { errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

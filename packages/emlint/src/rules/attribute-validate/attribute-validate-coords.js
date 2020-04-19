@@ -32,8 +32,8 @@ function attributeValidateCoords(context, ...opts) {
           });
         } else {
           console.log(
-            `035 attributeValidateCoords(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValue,
+            `035 attributeValidateCoords(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueRaw,
               null,
               4
             )}`
@@ -69,19 +69,19 @@ function attributeValidateCoords(context, ...opts) {
             );
 
             let enforceCount = null;
-            if (shapeAttr.attribValue === "rect") {
+            if (shapeAttr.attribValueRaw === "rect") {
               // enforce the value count to be 4
               enforceCount = 4;
-            } else if (shapeAttr.attribValue === "circle") {
+            } else if (shapeAttr.attribValueRaw === "circle") {
               // enforce the value count to be 3
               enforceCount = 3;
-            } else if (shapeAttr.attribValue === "poly") {
+            } else if (shapeAttr.attribValueRaw === "poly") {
               // enforce the value count to be an even number
               enforceCount = "even";
             }
 
             const errorArr = validateDigitAndUnit(
-              node.attribValue,
+              node.attribValueRaw,
               node.attribValueStartsAt,
               {
                 whitelistValues: null,

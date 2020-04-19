@@ -38,7 +38,7 @@ function attributeValidateFrameborder(context, ...opts) {
 
         // https://www.w3.org/TR/html4/present/frames.html#adef-frameborder
         const errorArr = validateString(
-          node.attribValue, // value
+          node.attribValueRaw, // value
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["0", "1"],

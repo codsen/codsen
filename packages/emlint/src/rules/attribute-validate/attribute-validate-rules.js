@@ -34,7 +34,7 @@ function attributeValidateRules(context, ...opts) {
 
         // https://www.w3.org/TR/html4/struct/tables.html#adef-frame
         const errorArr = validateString(
-          node.attribValue, // value
+          node.attribValueRaw, // value
           node.attribValueStartsAt, // offset
           {
             permittedValues: ["none", "groups", "rows", "cols", "all"],

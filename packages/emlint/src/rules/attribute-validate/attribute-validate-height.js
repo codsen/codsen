@@ -37,7 +37,7 @@ function attributeValidateHeight(context, ...opts) {
         }
 
         const errorArr = validateDigitAndUnit(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {
             badUnits: ["px"],

@@ -42,7 +42,7 @@ function attributeValidateStyle(context, ...opts) {
         }
 
         const errorArr = validateInlineStyle(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {}
         );

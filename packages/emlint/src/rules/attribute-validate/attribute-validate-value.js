@@ -39,14 +39,18 @@ function attributeValidateValue(context, ...opts) {
           // if parent is OK
           if (node.parent.tagName === "li") {
             // value is number
-            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
-              type: "integer",
-              theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units.",
-              zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`,
-            }).forEach((errorObj) => {
-              console.log(`049 RAISE ERROR`);
+            validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                type: "integer",
+                theOnlyGoodUnits: [],
+                customGenericValueError: "Should be integer, no units.",
+                zeroOK: false,
+                customPxMessage: `Sequence number should not be in pixels.`,
+              }
+            ).forEach((errorObj) => {
+              console.log(`053 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-value",
@@ -56,12 +60,12 @@ function attributeValidateValue(context, ...opts) {
           } else {
             // all others - value is CDATA
             const { errorArr } = checkForWhitespace(
-              node.attribValue,
+              node.attribValueRaw,
               node.attribValueStartsAt
             );
 
             errorArr.forEach((errorObj) => {
-              console.log(`064 RAISE ERROR`);
+              console.log(`068 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-value",

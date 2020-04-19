@@ -31,7 +31,7 @@ function attributeValidateData(context, ...opts) {
             fix: null,
           });
         } else {
-          validateUri(node.attribValue, {
+          validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {

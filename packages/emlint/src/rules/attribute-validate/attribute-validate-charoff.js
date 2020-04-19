@@ -48,7 +48,7 @@ function attributeValidateCharoff(context, ...opts) {
         }
 
         const errorArr = validateDigitAndUnit(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt,
           {
             type: "integer",

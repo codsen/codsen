@@ -49,7 +49,7 @@ function attributeValidateLang(context, ...opts) {
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "node.attribValueStartsAt" value
         const { charStart, charEnd, errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(
@@ -72,7 +72,7 @@ function attributeValidateLang(context, ...opts) {
         );
         // validate using "is-language-code" from npm:
         const { message } = isLangCode(
-          node.attribValue.slice(charStart, charEnd)
+          node.attribValueRaw.slice(charStart, charEnd)
         );
         console.log(
           `078 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(

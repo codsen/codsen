@@ -34,7 +34,7 @@ function attributeValidateFor(context, ...opts) {
           });
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt
           );
           console.log(
@@ -57,7 +57,7 @@ function attributeValidateFor(context, ...opts) {
             `057 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
           );
 
-          const extractedValue = node.attribValue.slice(charStart, charEnd);
+          const extractedValue = node.attribValueRaw.slice(charStart, charEnd);
 
           let message = `Wrong id name.`;
           let fix = null;
@@ -71,7 +71,7 @@ function attributeValidateFor(context, ...opts) {
               message = `Should be one value, no spaces.`;
             } else if (extractedValue.includes("#")) {
               message = `Remove hash.`;
-              const firstHashAt = node.attribValue.indexOf("#");
+              const firstHashAt = node.attribValueRaw.indexOf("#");
               fix = {
                 ranges: [
                   [

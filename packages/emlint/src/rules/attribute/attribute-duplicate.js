@@ -134,35 +134,38 @@ function attributeDuplicate(context, ...opts) {
                 }
 
                 // either way, extract the values, split by whitespace
-                splitByWhitespace(node.attribs[i].attribValue, ([from, to]) => {
-                  console.log(
-                    `139 attributeDuplicate(): * incoming: ${`\u001b[${33}m${`[${from}, ${to}]`}\u001b[${39}m`} ("${node.attribs[
-                      i
-                    ].attribValue.slice(from, to)}")`
-                  );
-                  extractedValues.push(
-                    node.attribs[i].attribValue.slice(from, to)
-                  );
-                });
+                splitByWhitespace(
+                  node.attribs[i].attribValueRaw,
+                  ([from, to]) => {
+                    console.log(
+                      `141 attributeDuplicate(): * incoming: ${`\u001b[${33}m${`[${from}, ${to}]`}\u001b[${39}m`} ("${node.attribs[
+                        i
+                      ].attribValueRaw.slice(from, to)}")`
+                    );
+                    extractedValues.push(
+                      node.attribs[i].attribValueRaw.slice(from, to)
+                    );
+                  }
+                );
               }
             }
 
             console.log(
-              `151 attributeDuplicate(): ${`\u001b[${35}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `154 attributeDuplicate(): ${`\u001b[${35}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
                 theFirstRange,
                 null,
                 4
               )}`
             );
             console.log(
-              `158 attributeDuplicate(): ${`\u001b[${35}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
+              `161 attributeDuplicate(): ${`\u001b[${35}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedValues,
                 null,
                 4
               )}`
             );
             console.log(
-              `165 attributeDuplicate(): ${`\u001b[${35}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              `168 attributeDuplicate(): ${`\u001b[${35}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
                 allOtherRanges,
                 null,
                 4
@@ -172,21 +175,21 @@ function attributeDuplicate(context, ...opts) {
             const mergedValue = extractedValues.sort().join(" ");
 
             console.log(
-              `175 attributeDuplicate(): ${`\u001b[${33}m${`mergedValue`}\u001b[${39}m`} = ${JSON.stringify(
+              `178 attributeDuplicate(): ${`\u001b[${33}m${`mergedValue`}\u001b[${39}m`} = ${JSON.stringify(
                 mergedValue,
                 null,
                 4
               )}`
             );
             console.log(
-              `182 attributeDuplicate(): ${`\u001b[${33}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `185 attributeDuplicate(): ${`\u001b[${33}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
                 theFirstRange,
                 null,
                 4
               )}`
             );
             console.log(
-              `189 attributeDuplicate(): ${`\u001b[${33}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              `192 attributeDuplicate(): ${`\u001b[${33}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
                 allOtherRanges,
                 null,
                 4
@@ -195,10 +198,10 @@ function attributeDuplicate(context, ...opts) {
 
             // finally, raise the error:
             console.log(
-              `198 attributeDuplicate(): RAISE ERROR FOR "${attrNameBeingMerged}"`
+              `201 attributeDuplicate(): RAISE ERROR FOR "${attrNameBeingMerged}"`
             );
             console.log(
-              `201 attributeDuplicate(): REPORT RANGES: ${JSON.stringify(
+              `204 attributeDuplicate(): REPORT RANGES: ${JSON.stringify(
                 [[...theFirstRange, mergedValue], ...allOtherRanges],
                 null,
                 4

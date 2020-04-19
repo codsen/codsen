@@ -33,8 +33,8 @@ function attributeValidateRows(context, ...opts) {
         }
 
         console.log(
-          `036 attributeValidateRows(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-            node.attribValue,
+          `036 attributeValidateRows(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+            node.attribValueRaw,
             null,
             4
           )}`
@@ -43,7 +43,7 @@ function attributeValidateRows(context, ...opts) {
         let errorArr = [];
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt,
             {
               whitelistValues: ["*"],
@@ -65,7 +65,7 @@ function attributeValidateRows(context, ...opts) {
         } else if (node.parent.tagName === "textarea") {
           // each character must be a digit
           errorArr = validateDigitAndUnit(
-            node.attribValue,
+            node.attribValueRaw,
             node.attribValueStartsAt,
             {
               type: "integer",

@@ -40,7 +40,7 @@ function attributeValidateLongdesc(context, ...opts) {
         // TODO - add more rules, https://www.w3schools.com/TagS/att_img_longdesc.asp
 
         const { errorArr } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

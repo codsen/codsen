@@ -48,7 +48,7 @@ function attributeValidateAccesskey(context, ...opts) {
 
         // only check for rogue whitespace - value can be any string
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
-          node.attribValue,
+          node.attribValueRaw,
           node.attribValueStartsAt
         );
         console.log(

@@ -196,7 +196,7 @@ function attributeMalformed(context, ...opts) {
         );
         // default is double quotes; if content doesn't have them, that's what
         // we're going to use
-        if (!node.attribValue.includes(`"`)) {
+        if (!node.attribValueRaw.includes(`"`)) {
           console.log(`200 attr value doesn't have double quotes`);
           context.report({
             ruleId: "attribute-malformed",
@@ -223,7 +223,7 @@ function attributeMalformed(context, ...opts) {
               ],
             },
           });
-        } else if (!node.attribValue.includes(`'`)) {
+        } else if (!node.attribValueRaw.includes(`'`)) {
           console.log(`227 attr value has double quote but not single`);
           context.report({
             ruleId: "attribute-malformed",
