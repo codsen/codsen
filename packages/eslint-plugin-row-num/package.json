@@ -34,6 +34,7 @@
     "perf": "echo\"\"",
     "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "republish": "npm publish || :",
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
