@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 54847,
+        "size": 55289,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -427,7 +427,7 @@
     },
     {
         "name": "lect",
-        "size": 74126,
+        "size": 74369,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

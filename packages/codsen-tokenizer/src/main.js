@@ -2644,7 +2644,7 @@ function tokenizer(str, originalOpts) {
               );
             }
           } else {
-            // so heads and tails don't contain unique character, and moreso,
+            // so heads and tails don't contain unique character, and more so,
             // starting-one, PLUS, second set is different.
             // For example, ESP heads/tails can be *|zzz|*
             // Imaginery example, following heads would be variation of those

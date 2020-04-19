@@ -42262,8 +42262,16 @@
           styleStarts = true;
         }
 
-        dumpCurrentToken(token, i);
-        layers = [];
+        if (attribToBackup) {
+          attrib = attribToBackup;
+          attrib.attribValue.push(lodash_clonedeep(token));
+          token = lodash_clonedeep(parentTokenToBackup);
+          attribToBackup = undefined;
+          parentTokenToBackup = undefined;
+        } else {
+          dumpCurrentToken(token, i);
+          layers = [];
+        }
       }
 
       if (!doNothing) {
@@ -42667,6 +42675,11 @@
           } else {
             token.end = i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
+
+            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+              layers.pop();
+            }
+
             doNothing = token.end;
           }
         }
