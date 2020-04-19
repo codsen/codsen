@@ -4,9 +4,7 @@
 
 The aim of Codsen is to help people.
 
-Use these programs, profit from them, use them as ingredients to make even greater projects.
-
-🍻
+Use these programs, profit from them, use them as ingredients to make even greater programs 🍻
 
 ## 💡 Table of Contents
 
