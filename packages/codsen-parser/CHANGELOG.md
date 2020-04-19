@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.6.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.5.2...codsen-parser@0.6.0) (2020-04-19)
-
+## 0.6.0 (2020-04-19)
 
 ### Features
 
-* don't nest under rogue opening tags ([54e0947](https://gitlab.com/codsen/codsen/commit/54e0947d3fd6de81347345571c6d04669124865b))
-
-
-
-
+- don't nest under rogue opening tags ([54e0947](https://gitlab.com/codsen/codsen/commit/54e0947d3fd6de81347345571c6d04669124865b))
 
 ## 0.5.0 (2020-04-04)
 
