@@ -146,7 +146,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 18585,
+        "size": 19118,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 46497,
+        "size": 54847,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -253,7 +253,7 @@
     },
     {
         "name": "emlint",
-        "size": 319688,
+        "size": 320417,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -317,7 +317,7 @@
     },
     {
         "name": "html-entities-not-email-friendly",
-        "size": 83478,
+        "size": 83477,
         "imports": []
     },
     {
@@ -372,7 +372,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 6703,
+        "size": 6704,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -413,7 +413,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20399,
+        "size": 20522,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -666,7 +666,7 @@
     },
     {
         "name": "string-range-expander",
-        "size": 8444,
+        "size": 8443,
         "imports": []
     },
     {
