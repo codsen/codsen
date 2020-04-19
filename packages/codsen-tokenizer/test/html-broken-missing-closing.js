@@ -28,7 +28,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           type: "tag",
           kind: null,
           attribs: [],
@@ -86,7 +85,6 @@ t.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [
             {

@@ -624,49 +624,154 @@ function tokenizer(str, originalOpts) {
       token.pureHTML = true;
       token.kind = null;
       token.attribs = [];
+      delete token.openingCurlyAt;
+      delete token.closingCurlyAt;
+      delete token.selectorsStart;
+      delete token.selectorsEnd;
+      delete token.selectors;
+      delete token.identifier;
+      delete token.identifierStartsAt;
+      delete token.identifierEndsAt;
+      delete token.query;
+      delete token.queryStartsAt;
+      delete token.queryEndsAt;
+      delete token.head;
+      delete token.tail;
     } else if (type === "comment") {
       token.type = type;
       token.start = start;
       token.end = null;
       token.value = null;
-      token.kind = "simple";
+      delete token.tagNameStartsAt;
+      delete token.tagNameEndsAt;
+      delete token.tagName;
+      delete token.recognised;
       token.closing = false;
+      delete token.void;
+      delete token.pureHTML;
+      token.kind = "simple";
+      delete token.attribs;
+      delete token.openingCurlyAt;
+      delete token.closingCurlyAt;
+      delete token.selectorsStart;
+      delete token.selectorsEnd;
+      delete token.selectors;
+      delete token.identifier;
+      delete token.identifierStartsAt;
+      delete token.identifierEndsAt;
+      delete token.query;
+      delete token.queryStartsAt;
+      delete token.queryEndsAt;
+      delete token.head;
+      delete token.tail;
     } else if (type === "rule") {
       token.type = type;
       token.start = start;
       token.end = null;
       token.value = null;
+      delete token.tagNameStartsAt;
+      delete token.tagNameEndsAt;
+      delete token.tagName;
+      delete token.recognised;
+      delete token.closing;
+      delete token.void;
+      delete token.pureHTML;
+      delete token.kind;
+      delete token.attribs;
       token.openingCurlyAt = null;
       token.closingCurlyAt = null;
       token.selectorsStart = null;
       token.selectorsEnd = null;
       token.selectors = [];
+      delete token.identifier;
+      delete token.identifierStartsAt;
+      delete token.identifierEndsAt;
+      delete token.query;
+      delete token.queryStartsAt;
+      delete token.queryEndsAt;
+      delete token.head;
+      delete token.tail;
     } else if (type === "at") {
       token.type = type;
       token.start = start;
       token.end = null;
       token.value = null;
+      delete token.tagNameStartsAt;
+      delete token.tagNameEndsAt;
+      delete token.tagName;
+      delete token.recognised;
+      delete token.closing;
+      delete token.void;
+      delete token.pureHTML;
+      delete token.kind;
+      delete token.attribs;
+      token.openingCurlyAt = null;
+      token.closingCurlyAt = null;
+      delete token.selectorsStart;
+      delete token.selectorsEnd;
+      delete token.selectors;
       token.identifier = null;
       token.identifierStartsAt = null;
       token.identifierEndsAt = null;
       token.query = null;
       token.queryStartsAt = null;
       token.queryEndsAt = null;
-      token.openingCurlyAt = null;
-      token.closingCurlyAt = null;
+      delete token.head;
+      delete token.tail;
     } else if (type === "text") {
       token.type = type;
       token.start = start;
       token.end = null;
       token.value = null;
+      delete token.tagNameStartsAt;
+      delete token.tagNameEndsAt;
+      delete token.tagName;
+      delete token.recognised;
+      delete token.closing;
+      delete token.void;
+      delete token.pureHTML;
+      delete token.kind;
+      delete token.attribs;
+      delete token.openingCurlyAt;
+      delete token.closingCurlyAt;
+      delete token.selectorsStart;
+      delete token.selectorsEnd;
+      delete token.selectors;
+      delete token.identifier;
+      delete token.identifierStartsAt;
+      delete token.identifierEndsAt;
+      delete token.query;
+      delete token.queryStartsAt;
+      delete token.queryEndsAt;
+      delete token.head;
+      delete token.tail;
     } else if (type === "esp") {
       token.type = type;
       token.start = start;
       token.end = null;
       token.value = null;
+      delete token.tagNameStartsAt;
+      delete token.tagNameEndsAt;
+      delete token.tagName;
+      delete token.recognised;
+      delete token.closing;
+      delete token.void;
+      delete token.pureHTML;
+      token.kind = null;
+      delete token.attribs;
+      delete token.openingCurlyAt;
+      delete token.closingCurlyAt;
+      delete token.selectorsStart;
+      delete token.selectorsEnd;
+      delete token.selectors;
+      delete token.identifier;
+      delete token.identifierStartsAt;
+      delete token.identifierEndsAt;
+      delete token.query;
+      delete token.queryStartsAt;
+      delete token.queryEndsAt;
       token.head = null;
       token.tail = null;
-      token.kind = null;
     }
   }
   for (let i = 0; i <= len; i++) {
@@ -1011,6 +1116,13 @@ function tokenizer(str, originalOpts) {
             initToken("esp", i);
             token.tail = flipEspTag(wholeEspTagLump);
             token.head = wholeEspTagLump;
+            if (
+              parentTokenToBackup &&
+              parentTokenToBackup.type === "tag" &&
+              parentTokenToBackup.pureHTML
+            ) {
+              parentTokenToBackup.pureHTML = false;
+            }
             if (
               attribToBackup &&
               Array.isArray(attribToBackup.attribValue) &&
