@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "2.12.1",
+  "version": "2.13.0",
   "description": "HTML and CSS Lexer aimed at code with fatal errors",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

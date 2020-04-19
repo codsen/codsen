@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken code, especially HTML & CSS
- * Version: 0.5.2
+ * Version: 0.6.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -2981,7 +2981,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS Lexer aimed at code with fatal errors
-   * Version: 2.12.1
+   * Version: 2.13.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer

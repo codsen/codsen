@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.12.1...codsen-tokenizer@2.13.0) (2020-04-19)
+
+
+### Bug Fixes
+
+* more fixes for `attribs[].attribValue[]` ([51f842b](https://gitlab.com/codsen/codsen/commit/51f842b1e78eb6751a3609d924b634ae41ea5dee))
+* set tag key `pureHTML` correctly ([90cbb4b](https://gitlab.com/codsen/codsen/commit/90cbb4b694a106445e9632ac4396dc0f8f67b3c6))
+
+
+### Features
+
+* esp tags can come as attributes or be among attribute value tokens ([28cfd40](https://gitlab.com/codsen/codsen/commit/28cfd407135b23521951d56d69893dd7a0a5d8cc))
+
+
+
+
+
 ## 2.12.0 (2020-04-13)
 
 ### Features
