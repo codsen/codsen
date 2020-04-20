@@ -352,8 +352,8 @@
     return typeof something === "string";
   }
 
-  function isNotLetter(_char) {
-    return _char === undefined || _char.toUpperCase() === _char.toLowerCase() && !"0123456789".includes(_char) && _char !== "=";
+  function isNotLetter(char) {
+    return char === undefined || char.toUpperCase() === char.toLowerCase() && !"0123456789".includes(char) && char !== "=";
   }
 
   function isOpening(str) {

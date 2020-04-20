@@ -52,12 +52,12 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     if (str.trim() === "") {
       var resArr = [];
       limit = limitLinebreaksCount;
-      Array.from(str).forEach(function (_char) {
-        if (_char !== "\n" || limit) {
-          if (_char === "\n") {
+      Array.from(str).forEach(function (char) {
+        if (char !== "\n" || limit) {
+          if (char === "\n") {
             limit--;
           }
-          push(resArr, true, _char);
+          push(resArr, true, char);
         }
       });
       while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {

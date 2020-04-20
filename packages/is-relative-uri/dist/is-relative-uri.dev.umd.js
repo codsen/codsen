@@ -68,8 +68,8 @@
     } // ---------------------------------------------------------------------------
 
 
-    if (str.split("").some(function (_char) {
-      return !_char.trim();
+    if (str.split("").some(function (char) {
+      return !char.trim();
     })) {
       return {
         res: false,

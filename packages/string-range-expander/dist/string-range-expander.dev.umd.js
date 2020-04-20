@@ -33,12 +33,12 @@
     var letterOrDigit = /^[0-9a-zA-Z]+$/; // Internal functions
     // ---------------------------------------------------------------------------
 
-    function isWhitespace(_char) {
-      if (!_char || typeof _char !== "string") {
+    function isWhitespace(char) {
+      if (!char || typeof char !== "string") {
         return false;
       }
 
-      return !_char.trim();
+      return !char.trim();
     }
 
     function isStr(something) {

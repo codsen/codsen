@@ -98,8 +98,8 @@ function comb(str, opts) {
   });
   var currentChunksMinifiedSelectors = new Ranges();
   var lineBreaksToDelete = new Ranges();
-  function characterSuitableForNames(_char) {
-    return /[-_A-Za-z0-9]/.test(_char);
+  function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
   }
   function isObj(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
@@ -118,8 +118,8 @@ function comb(str, opts) {
       nameStart: null
     }, initObj);
   }
-  function isLatinLetter(_char2) {
-    return typeof _char2 === "string" && _char2.length === 1 && (_char2.charCodeAt(0) > 64 && _char2.charCodeAt(0) < 91 || _char2.charCodeAt(0) > 96 && _char2.charCodeAt(0) < 123);
+  function isLatinLetter(char) {
+    return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
   }
   var i;
   var prevailingEOL;
@@ -410,7 +410,7 @@ function comb(str, opts) {
           var temp = void 0;
           if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim() && stringMatchLeftRight.matchRight(str, i + matchedAtTagsName.length + 1, ";", {
             trimBeforeMatching: true,
-            cb: function cb(_char3, theRemainderOfTheString, index) {
+            cb: function cb(char, theRemainderOfTheString, index) {
               temp = index;
               return true;
             }
@@ -587,7 +587,7 @@ function comb(str, opts) {
                   }
                 } else if (stringMatchLeftRight.matchLeft(str, fromIndex, "{", {
                   trimBeforeMatching: true,
-                  cb: function cb(_char4, theRemainderOfTheString, index) {
+                  cb: function cb(char, theRemainderOfTheString, index) {
                     tempFindingIndex = index;
                     return true;
                   }
@@ -652,9 +652,9 @@ function comb(str, opts) {
       if (!doNothing && str[i] === "<" && stringMatchLeftRight.matchRight(str, i, "body", {
         i: true,
         trimBeforeMatching: true,
-        cb: function cb(_char5, theRemainderOfTheString, index) {
+        cb: function cb(char, theRemainderOfTheString, index) {
           if (round === 1) {
-            if (_char5 !== undefined && (_char5.trim() === "" || _char5 === ">")) {
+            if (char !== undefined && (char.trim() === "" || char === ">")) {
               if (index - i > 5) {
                 finalIndexesToDelete.push(i, index, "<body");
                 nonIndentationsWhitespaceLength += index - i - 5;
@@ -1148,14 +1148,14 @@ function comb(str, opts) {
           return val.includes("ie");
         })) && stringMatchLeftRight.matchRight(str, i, "<!--", {
           trimBeforeMatching: true,
-          cb: function cb(_char6, theRemainderOfTheString, index) {
+          cb: function cb(char, theRemainderOfTheString, index) {
             _temp2 = index;
             return true;
           }
         })) {
           if (stringMatchLeftRight.matchRight(str, _temp2 - 1, "-->", {
             trimBeforeMatching: true,
-            cb: function cb(_char7, theRemainderOfTheString, index) {
+            cb: function cb(char, theRemainderOfTheString, index) {
               _temp2 = index;
               return true;
             }

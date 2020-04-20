@@ -114,13 +114,13 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
   var tempTo;
   if (typeof str === "string" && str.length > 0 && stringMatchLeftRight.matchRightIncl(str, 0, heads, {
     trimBeforeMatching: true,
-    cb: function cb(_char, theRemainderOfTheString, index) {
+    cb: function cb(char, theRemainderOfTheString, index) {
       tempFrom = index;
       return true;
     }
   }) && stringMatchLeftRight.matchLeftIncl(str, str.length - 1, tails, {
     trimBeforeMatching: true,
-    cb: function cb(_char2, theRemainderOfTheString, index) {
+    cb: function cb(char, theRemainderOfTheString, index) {
       tempTo = index + 1;
       return true;
     }

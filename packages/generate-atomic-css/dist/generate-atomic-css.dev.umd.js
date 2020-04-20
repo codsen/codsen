@@ -2546,8 +2546,8 @@
       }).map(function (val) {
         return val.trim();
       }).filter(function (val) {
-        return String(val).split("").every(function (_char) {
-          return /\d/g.test(_char);
+        return String(val).split("").every(function (char) {
+          return /\d/g.test(char);
         });
       });
     } else if (str.includes("|")) {
@@ -2556,8 +2556,8 @@
       }).map(function (val) {
         return val.trim();
       }).filter(function (val) {
-        return String(val).split("").every(function (_char2) {
-          return /\d/g.test(_char2);
+        return String(val).split("").every(function (char) {
+          return /\d/g.test(char);
         });
       });
     }

@@ -118,8 +118,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   function isLatinLetter(something) {
     return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
   }
-  function isLatinLetterOrNumberOrHash(_char) {
-    return isStr(_char) && _char.length === 1 && (_char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123 || _char.charCodeAt(0) > 47 && _char.charCodeAt(0) < 58 || _char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) === 35);
+  function isLatinLetterOrNumberOrHash(char) {
+    return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
   }
   function isNumber(something) {
     return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;

@@ -46,8 +46,8 @@
     };
     var opts = Object.assign({}, defaults, originalOpts);
 
-    function check(_char) {
-      return opts.classicTrim && !_char.trim() || !opts.classicTrim && (opts.space && _char === " " || opts.cr && _char === "\r" || opts.lf && _char === "\n" || opts.tab && _char === "\t" || opts.nbsp && _char === "\xA0");
+    function check(char) {
+      return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
     } // action:
 
 

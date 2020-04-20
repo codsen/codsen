@@ -2000,9 +2000,9 @@
     // functions
     // =========
 
-    function isLatinLetter(_char) {
+    function isLatinLetter(char) {
       // we mean Latin letters A-Z, a-z
-      return typeof _char === "string" && _char.length && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
+      return typeof char === "string" && char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
     } // action
     // ======
 

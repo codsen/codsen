@@ -59,11 +59,11 @@ var opts = {
   inclusiveRangeEnds: true,
   skipIncomingRangeSorting: true
 };
-function isProduction4(_char) {
-  return rangesIsIndexWithin(_char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(_char.codePointAt(0), nameStartChar, opts);
+function isProduction4(char) {
+  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameStartChar, opts);
 }
-function isProduction4a(_char2) {
-  return rangesIsIndexWithin(_char2.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(_char2.codePointAt(0), nameChar, opts);
+function isProduction4a(char) {
+  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameChar, opts);
 }
 
 exports.isProduction4 = isProduction4;

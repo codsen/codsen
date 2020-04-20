@@ -2980,7 +2980,7 @@
 
   /**
    * codsen-tokenizer
-   * HTML and CSS Lexer aimed at code with fatal errors
+   * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
    * Version: 2.13.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
@@ -4873,7 +4873,7 @@
         } // activate the nestNext
 
 
-        if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
+        if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
           nestNext = true;
 
           if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
@@ -5122,7 +5122,7 @@
 
 
         if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$3(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-          if (tokenObj["void"]) {
+          if (tokenObj.void) {
             if (opts.errCb) {
               opts.errCb({
                 ruleId: "tag-void-frontal-slash",

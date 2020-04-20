@@ -2648,8 +2648,8 @@
         // there's a whitespace in front of last chunk ("ddd" in example above)
 
         var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
-        Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
-          return charSuitableForHTMLAttrName(_char);
+        Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
+          return charSuitableForHTMLAttrName(char);
         }) && // known opening and suspected closing are both singles or doubles
         str[idxOfAttrOpening] === str[isThisClosingIdx]; // anti-rule - it's fine if we're on suspected ending and to the left
         // it's not an attribute start
@@ -2976,8 +2976,8 @@
             var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
             quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
 
-            var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
-              return charSuitableForHTMLAttrName(_char2);
+            var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
+              return charSuitableForHTMLAttrName(char);
             }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
             var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
             var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
@@ -3079,8 +3079,8 @@
         if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
           // ensure it's not tag ending on the right
           // before freaking out:
-          cb: function cb(_char3) {
-            return !"/>".includes(_char3);
+          cb: function cb(char) {
+            return !"/>".includes(char);
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]

@@ -88,59 +88,59 @@ function stripHtml(str, originalOpts) {
   function existy(x) {
     return x != null;
   }
-  function isValidAttributeCharacter(_char) {
-    if (_char.charCodeAt(0) >= 0 && _char.charCodeAt(0) <= 31) {
+  function isValidAttributeCharacter(char) {
+    if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
       return false;
-    } else if (_char.charCodeAt(0) >= 127 && _char.charCodeAt(0) <= 159) {
+    } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
       return false;
-    } else if (_char.charCodeAt(0) === 32) {
+    } else if (char.charCodeAt(0) === 32) {
       return false;
-    } else if (_char.charCodeAt(0) === 34) {
+    } else if (char.charCodeAt(0) === 34) {
       return false;
-    } else if (_char.charCodeAt(0) === 39) {
+    } else if (char.charCodeAt(0) === 39) {
       return false;
-    } else if (_char.charCodeAt(0) === 62) {
+    } else if (char.charCodeAt(0) === 62) {
       return false;
-    } else if (_char.charCodeAt(0) === 47) {
+    } else if (char.charCodeAt(0) === 47) {
       return false;
-    } else if (_char.charCodeAt(0) === 61) {
+    } else if (char.charCodeAt(0) === 61) {
       return false;
     } else if (
-    _char.charCodeAt(0) >= 64976 && _char.charCodeAt(0) <= 65007 ||
-    _char.charCodeAt(0) === 65534 ||
-    _char.charCodeAt(0) === 65535 ||
-    _char.charCodeAt(0) === 55359 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55359 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55423 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55423 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55487 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55487 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55551 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55551 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55615 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55615 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55679 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55679 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55743 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55743 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55807 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55807 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55871 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55871 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55935 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55935 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 55999 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 55999 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 56063 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 56063 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 56127 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 56127 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 56191 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 56191 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 56255 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 56255 && _char.charCodeAt(1) === 57343 ||
-    _char.charCodeAt(0) === 56319 && _char.charCodeAt(1) === 57342 ||
-    _char.charCodeAt(0) === 56319 && _char.charCodeAt(1) === 57343
+    char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 ||
+    char.charCodeAt(0) === 65534 ||
+    char.charCodeAt(0) === 65535 ||
+    char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 ||
+    char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 ||
+    char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343
     ) {
         return false;
       }
@@ -225,8 +225,8 @@ function stripHtml(str, originalOpts) {
       stringToInsertAfter = "".concat(lineBreaks).concat(hrefDump.hrefValue).concat(lineBreaks);
     }
   }
-  function characterSuitableForNames(_char2) {
-    return /[-_A-Za-z0-9]/.test(_char2);
+  function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
   }
   if (typeof str !== "string") {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));

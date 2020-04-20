@@ -1303,7 +1303,7 @@
 
       var resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
         trimBeforeMatching: true,
-        cb: function cb(_char, theRemainderOfTheString, index) {
+        cb: function cb(char, theRemainderOfTheString, index) {
           noteDownTheIndex = index;
           return true;
         },
@@ -1318,7 +1318,7 @@
 
       var resultOfAttemptToMatchTails = matchRightIncl(str1, noteDownTheIndex, opts1.tails, {
         trimBeforeMatching: true,
-        cb: function cb(_char2, theRemainderOfTheString, index) {
+        cb: function cb(char, theRemainderOfTheString, index) {
           // reassign noteDownTheIndex to new value, this time shifted right by
           // the width of matched tails
           noteDownTheIndex = index;
@@ -1345,7 +1345,7 @@
 
       var resultOfAttemptToMatchTails = matchLeftIncl(str1, str1.length - 1, opts1.tails, {
         trimBeforeMatching: true,
-        cb: function cb(_char3, theRemainderOfTheString, index) {
+        cb: function cb(char, theRemainderOfTheString, index) {
           noteDownTheIndex = index;
           return true;
         },
@@ -1360,7 +1360,7 @@
 
       var resultOfAttemptToMatchHeads = matchLeftIncl(str1, noteDownTheIndex, opts1.heads, {
         trimBeforeMatching: true,
-        cb: function cb(_char4, theRemainderOfTheString, index) {
+        cb: function cb(char, theRemainderOfTheString, index) {
           // reassign noteDownTheIndex to new value, this time shifted left by
           // the width of matched heads
           noteDownTheIndex = index;
@@ -1409,7 +1409,7 @@
         var noteDownTheIndex = void 0;
         var resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
           trimBeforeMatching: true,
-          cb: function cb(_char5, theRemainderOfTheString, index) {
+          cb: function cb(char, theRemainderOfTheString, index) {
             noteDownTheIndex = index;
             return true;
           },
@@ -1430,7 +1430,7 @@
 
           var _resultOfAttemptToMatchTails = matchRightIncl(str, noteDownTheIndex, opts.tails, {
             trimBeforeMatching: true,
-            cb: function cb(_char6, theRemainderOfTheString, index) {
+            cb: function cb(char, theRemainderOfTheString, index) {
               tempIndexUpTo = index;
               return true;
             },
@@ -1479,7 +1479,7 @@
 
         var resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
           trimBeforeMatching: true,
-          cb: function cb(_char7, theRemainderOfTheString, index) {
+          cb: function cb(char, theRemainderOfTheString, index) {
             noteDownTheIndex = existy(index) ? index : str.length;
             return true;
           },

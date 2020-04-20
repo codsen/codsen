@@ -128,8 +128,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var E32 =
       chunkStartsAt && chunkStartsAt < i && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
-      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
-        return charSuitableForHTMLAttrName(_char);
+      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
+        return charSuitableForHTMLAttrName(char);
       }) &&
       str[idxOfAttrOpening] === str[isThisClosingIdx];
       var attrNameCharsChunkOnTheLeft = void 0;
@@ -260,8 +260,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           "/>".includes(str[stringLeftRight.right(str, i)]));
           var _R2 = totalQuotesCount < 3 ||
           quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
-          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
-            return charSuitableForHTMLAttrName(_char2);
+          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
+            return charSuitableForHTMLAttrName(char);
           }) && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
           var R32 = !stringLeftRight.right(str, i) && totalQuotesCount % 2 === 0;
           var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
@@ -295,8 +295,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
       }
       if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
-        cb: function cb(_char3) {
-          return !"/>".includes(_char3);
+        cb: function cb(char) {
+          return !"/>".includes(char);
         },
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]

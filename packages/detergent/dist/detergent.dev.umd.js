@@ -17671,7 +17671,7 @@
       //   `427 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
       // );
       // split, check, encode conditionally
-      return Array.from(inputString).map(function (_char) {
+      return Array.from(inputString).map(function (char) {
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
         // console.log(
@@ -17681,20 +17681,20 @@
         //     4
         //   )}`
         // );
-        if (_char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(function (rangeArr) {
-          return _char.charCodeAt(0) > rangeArr[0] && _char.charCodeAt(0) < rangeArr[1];
+        if (char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(function (rangeArr) {
+          return char.charCodeAt(0) > rangeArr[0] && char.charCodeAt(0) < rangeArr[1];
         })) {
           // console.log(
           //   `450 doConvertEntities() - encoding to "${he.encode(char, {
           //     useNamedReferences: true,
           //   })}"`
           // );
-          return he.encode(_char, {
+          return he.encode(char, {
             useNamedReferences: true
           });
         }
 
-        return _char;
+        return char;
       }).join("");
     } // console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
     // else, if dontEncodeNonLatin if off, just encode everything:
@@ -27391,8 +27391,8 @@
               } // 4. remove slashes in front of a void tag
 
 
-              if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
-                return !_char.trim() || _char === "/";
+              if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (char) {
+                return !char.trim() || char === "/";
               })) {
                 finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
               } // 5. remove closing slash from void tags is XHTML mode is off
@@ -27450,8 +27450,8 @@
               if (!str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim().length) {
                 // all this whitespace goes
                 finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
-              } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char2) {
-                return !_char2.trim() || _char2 === "/";
+              } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (char) {
+                return !char.trim() || char === "/";
               })) {
                 // if there is mix of whitespace and closing slashes, all this
                 // goes and replaced with single slash.

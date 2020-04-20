@@ -49,8 +49,8 @@ function isRel(str, originalOpts) {
   if (!opts.offset) {
     opts.offset = 0;
   }
-  if (str.split("").some(function (_char) {
-    return !_char.trim();
+  if (str.split("").some(function (char) {
+    return !char.trim();
   })) {
     return {
       res: false,

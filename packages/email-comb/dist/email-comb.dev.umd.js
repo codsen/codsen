@@ -5928,8 +5928,8 @@
     var currentChunksMinifiedSelectors = new Ranges();
     var lineBreaksToDelete = new Ranges(); // PS. badChars is also used
 
-    function characterSuitableForNames(_char) {
-      return /[-_A-Za-z0-9]/.test(_char); // notice, there's no dot or hash!
+    function characterSuitableForNames(char) {
+      return /[-_A-Za-z0-9]/.test(char); // notice, there's no dot or hash!
     }
 
     function isObj(something) {
@@ -5953,9 +5953,9 @@
       }, initObj);
     }
 
-    function isLatinLetter(_char2) {
+    function isLatinLetter(char) {
       // we mean Latin letters A-Z, a-z
-      return typeof _char2 === "string" && _char2.length === 1 && (_char2.charCodeAt(0) > 64 && _char2.charCodeAt(0) < 91 || _char2.charCodeAt(0) > 96 && _char2.charCodeAt(0) < 123);
+      return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
     }
 
     var i;
@@ -6487,7 +6487,7 @@
 
             if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim() && matchRight(str, i + matchedAtTagsName.length + 1, ";", {
               trimBeforeMatching: true,
-              cb: function cb(_char3, theRemainderOfTheString, index) {
+              cb: function cb(char, theRemainderOfTheString, index) {
                 temp = index;
                 return true;
               }
@@ -6759,7 +6759,7 @@
                     }
                   } else if (matchLeft(str, fromIndex, "{", {
                     trimBeforeMatching: true,
-                    cb: function cb(_char4, theRemainderOfTheString, index) {
+                    cb: function cb(char, theRemainderOfTheString, index) {
                       tempFindingIndex = index;
                       return true;
                     }
@@ -6852,10 +6852,10 @@
         if (!doNothing && str[i] === "<" && matchRight(str, i, "body", {
           i: true,
           trimBeforeMatching: true,
-          cb: function cb(_char5, theRemainderOfTheString, index) {
+          cb: function cb(char, theRemainderOfTheString, index) {
             // remove any whitespace after opening bracket of a body tag:
             if (round === 1) {
-              if (_char5 !== undefined && (_char5.trim() === "" || _char5 === ">")) {
+              if (char !== undefined && (char.trim() === "" || char === ">")) {
                 if (index - i > 5) {
                   finalIndexesToDelete.push(i, index, "<body"); // remove the whitespace between < and body
 
@@ -7625,14 +7625,14 @@
             return val.includes("ie");
           })) && matchRight(str, i, "<!--", {
             trimBeforeMatching: true,
-            cb: function cb(_char6, theRemainderOfTheString, index) {
+            cb: function cb(char, theRemainderOfTheString, index) {
               _temp2 = index;
               return true;
             }
           })) {
             if (matchRight(str, _temp2 - 1, "-->", {
               trimBeforeMatching: true,
-              cb: function cb(_char7, theRemainderOfTheString, index) {
+              cb: function cb(char, theRemainderOfTheString, index) {
                 _temp2 = index;
                 return true;
               }

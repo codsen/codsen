@@ -217,7 +217,7 @@ function cparser(str, originalOpts) {
           layers.pop();
         }
       }
-      if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
+      if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
         nestNext = true;
         if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
           layers.push(Object.assign({}, tokenObj));
@@ -355,7 +355,7 @@ function cparser(str, originalOpts) {
         op.set(res, path, tokenObj);
       }
       if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-        if (tokenObj["void"]) {
+        if (tokenObj.void) {
           if (opts.errCb) {
             opts.errCb({
               ruleId: "tag-void-frontal-slash",

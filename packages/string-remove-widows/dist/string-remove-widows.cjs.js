@@ -351,7 +351,7 @@ function removeWidows(str, originalOpts) {
             i = _i;
             return stringMatchLeftRight.matchRightIncl(str, _i, oneOfHeadsTailsObjs.tails, {
               trimBeforeMatching: true,
-              cb: function cb(_char, theRemainderOfTheString, index) {
+              cb: function cb(char, theRemainderOfTheString, index) {
                 if (index) {
                   _i = index - 1;
                   if (str[_i + 1] && str[_i + 1].trim()) {

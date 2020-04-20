@@ -43,8 +43,7 @@
       throw new Error("lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ".concat(Array.isArray(changelogContents) ? "array" : _typeof(changelogContents), ", equal to:\n").concat(JSON.stringify(changelogContents, null, 4)));
     }
 
-    var _final;
-
+    var final;
     var lastLineWasEmpty = false;
 
     if (changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
@@ -127,12 +126,12 @@
         }
       }
 
-      _final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
+      final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
     }
 
     return {
       version: version,
-      res: _final || changelogContents
+      res: final || changelogContents
     };
   }
 

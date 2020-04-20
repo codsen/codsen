@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 55289,
+        "size": 55321,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
