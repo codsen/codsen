@@ -1,0 +1,22 @@
+// From "Comments" chapter in SASS documentation:
+// https://sass-lang.com/documentation/syntax/comments
+// -----------------------------------------------------------------------------
+
+$me: 0;
+
+// This comment won't be included in the CSS.
+
+/* But this comment will, except in compressed mode. */
+
+/* It can also contain interpolation:
+ * 1 + 1 = #{1 + 1} */
+
+/*! This comment will be included even in compressed mode. */
+
+p /* Multi-line comments can be written anywhere
+   * whitespace is allowed. */ .sans {
+  font: Helvetica, // So can single-line commments.
+        sans-serif;
+}
+
+$andMe: 999;
