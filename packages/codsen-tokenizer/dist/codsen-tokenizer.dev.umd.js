@@ -1,6 +1,6 @@
 /**
  * codsen-tokenizer
- * HTML and CSS Lexer aimed at code with fatal errors
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
  * Version: 2.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -2350,9 +2350,9 @@
     return typeof something === "string";
   }
 
-  function isLatinLetter(_char4) {
+  function isLatinLetter(char) {
     // we mean Latin letters A-Z, a-z
-    return isStr$1(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
+    return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
   } // Considering custom element name character requirements:
   // https://html.spec.whatwg.org/multipage/custom-elements.html
   // Example of Unicode character in a regex:
@@ -2360,8 +2360,8 @@
   // "-" | "." | [0-9] | "_" | [a-z] | #xB7 | [#xC0-#xEFFFF]
 
 
-  function charSuitableForTagName(_char5) {
-    return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(_char5);
+  function charSuitableForTagName(char) {
+    return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
   } // it flips all brackets backwards and puts characters in the opposite order
 
 
@@ -3263,8 +3263,8 @@
             }
           } else if ( // match every character from the last "layers" complex-type entry must be
           // present in the extracted lump
-          whichLayerToMatch.guessedClosingLump.split("").every(function (_char) {
-            return wholeEspTagLump.includes(_char);
+          whichLayerToMatch.guessedClosingLump.split("").every(function (char) {
+            return wholeEspTagLump.includes(char);
           })) {
             return {
               v: wholeEspTagLump.length
@@ -3463,7 +3463,7 @@
         token.tagName = null;
         token.recognised = null;
         token.closing = false;
-        token["void"] = false;
+        token.void = false;
         token.pureHTML = true; // meaning there are no esp bits
 
         token.kind = null;
@@ -3491,7 +3491,7 @@
         delete token.tagName;
         delete token.recognised;
         token.closing = false;
-        delete token["void"];
+        delete token.void;
         delete token.pureHTML;
         token.kind = "simple"; // or "only" or "not"
 
@@ -3519,7 +3519,7 @@
         delete token.tagName;
         delete token.recognised;
         delete token.closing;
-        delete token["void"];
+        delete token.void;
         delete token.pureHTML;
         delete token.kind;
         delete token.attribs;
@@ -3546,7 +3546,7 @@
         delete token.tagName;
         delete token.recognised;
         delete token.closing;
-        delete token["void"];
+        delete token.void;
         delete token.pureHTML;
         delete token.kind;
         delete token.attribs;
@@ -3573,7 +3573,7 @@
         delete token.tagName;
         delete token.recognised;
         delete token.closing;
-        delete token["void"];
+        delete token.void;
         delete token.pureHTML;
         delete token.kind;
         delete token.attribs;
@@ -3600,7 +3600,7 @@
         delete token.tagName;
         delete token.recognised;
         delete token.closing;
-        delete token["void"];
+        delete token.void;
         delete token.pureHTML;
         token.kind = null;
         delete token.attribs;
@@ -4406,15 +4406,15 @@
               // if every character from anticipated tails (-%}) is present in the front
               // chunk, Bob's your uncle, that's tails with new heads following.
 
-              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (_char2) {
-                return firstPartOfWholeEspTagClosing.includes(_char2);
+              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
+                return firstPartOfWholeEspTagClosing.includes(char);
               })) {
                 token.end = _i2 + firstPartOfWholeEspTagClosing.length;
                 token.value = str.slice(token.start, token.end);
                 doNothing = token.end;
               }
             } else {
-              // so heads and tails don't contain unique character, and moreso,
+              // so heads and tails don't contain unique character, and more so,
               // starting-one, PLUS, second set is different.
               // For example, ESP heads/tails can be *|zzz|*
               // Imaginery example, following heads would be variation of those
@@ -4457,7 +4457,7 @@
 
 
           if (voidTags.includes(token.tagName)) {
-            token["void"] = true;
+            token.void = true;
           }
 
           token.recognised = isTagNameRecognised(token.tagName);
@@ -4743,8 +4743,8 @@
             !firstQuoteOnTheRightIdx || // there is one but there are equal character between here and its location
             str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || // if there is no second quote of that type in the remaining string
             !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || // if string slice from quote to quote includes equal or brackets
-            Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (_char3) {
-              return "<>=".includes(_char3);
+            Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
+              return "<>=".includes(char);
             })) {
               // case of missing opening quotes
               attrib.attribValueStartsAt = firstCharOnTheRight; // push missing entry into layers
@@ -4767,8 +4767,8 @@
           str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
           // case: <span width="'100'">
           !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i2] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
-          !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (_char4) {
-            return "<>=".concat(str[_i2]).includes(_char4);
+          !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+            return "<>=".concat(str[_i2]).includes(char);
           })) {
             // pop the layers
             layers.pop();

@@ -1,6 +1,6 @@
 /**
  * codsen-tokenizer
- * HTML and CSS Lexer aimed at code with fatal errors
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
  * Version: 2.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -74,11 +74,11 @@ var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 function isStr(something) {
   return typeof something === "string";
 }
-function isLatinLetter(_char4) {
-  return isStr(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
+function isLatinLetter(char) {
+  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
-function charSuitableForTagName(_char5) {
-  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(_char5);
+function charSuitableForTagName(char) {
+  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
 }
 function flipEspTag(str) {
   var res = "";
@@ -282,8 +282,8 @@ function tokenizer(str, originalOpts) {
             if (_typeof(_ret2) === "object") return _ret2.v;
           }
         } else if (
-        whichLayerToMatch.guessedClosingLump.split("").every(function (_char) {
-          return wholeEspTagLump.includes(_char);
+        whichLayerToMatch.guessedClosingLump.split("").every(function (char) {
+          return wholeEspTagLump.includes(char);
         })) {
           return {
             v: wholeEspTagLump.length
@@ -393,7 +393,7 @@ function tokenizer(str, originalOpts) {
       token.tagName = null;
       token.recognised = null;
       token.closing = false;
-      token["void"] = false;
+      token.void = false;
       token.pureHTML = true;
       token.kind = null;
       token.attribs = [];
@@ -420,7 +420,7 @@ function tokenizer(str, originalOpts) {
       delete token.tagName;
       delete token.recognised;
       token.closing = false;
-      delete token["void"];
+      delete token.void;
       delete token.pureHTML;
       token.kind = "simple";
       delete token.attribs;
@@ -447,7 +447,7 @@ function tokenizer(str, originalOpts) {
       delete token.tagName;
       delete token.recognised;
       delete token.closing;
-      delete token["void"];
+      delete token.void;
       delete token.pureHTML;
       delete token.kind;
       delete token.attribs;
@@ -474,7 +474,7 @@ function tokenizer(str, originalOpts) {
       delete token.tagName;
       delete token.recognised;
       delete token.closing;
-      delete token["void"];
+      delete token.void;
       delete token.pureHTML;
       delete token.kind;
       delete token.attribs;
@@ -501,7 +501,7 @@ function tokenizer(str, originalOpts) {
       delete token.tagName;
       delete token.recognised;
       delete token.closing;
-      delete token["void"];
+      delete token.void;
       delete token.pureHTML;
       delete token.kind;
       delete token.attribs;
@@ -528,7 +528,7 @@ function tokenizer(str, originalOpts) {
       delete token.tagName;
       delete token.recognised;
       delete token.closing;
-      delete token["void"];
+      delete token.void;
       delete token.pureHTML;
       token.kind = null;
       delete token.attribs;
@@ -954,8 +954,8 @@ function tokenizer(str, originalOpts) {
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
             var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
             var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-            if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (_char2) {
-              return firstPartOfWholeEspTagClosing.includes(_char2);
+            if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
+              return firstPartOfWholeEspTagClosing.includes(char);
             })) {
               token.end = _i2 + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
@@ -984,7 +984,7 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         }
         if (voidTags.includes(token.tagName)) {
-          token["void"] = true;
+          token.void = true;
         }
         token.recognised = isTagNameRecognised(token.tagName);
       }
@@ -1159,8 +1159,8 @@ function tokenizer(str, originalOpts) {
           !firstQuoteOnTheRightIdx ||
           str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") ||
           !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) ||
-          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (_char3) {
-            return "<>=".includes(_char3);
+          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
+            return "<>=".includes(char);
           })) {
             attrib.attribValueStartsAt = firstCharOnTheRight;
             layers.push({
@@ -1178,8 +1178,8 @@ function tokenizer(str, originalOpts) {
         str.length > nextCharIdx + 2 &&
         str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
         !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i2] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
-        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (_char4) {
-          return "<>=".concat(str[_i2]).includes(_char4);
+        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+          return "<>=".concat(str[_i2]).includes(char);
         })) {
           layers.pop();
         } else {
