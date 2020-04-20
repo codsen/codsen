@@ -2,7 +2,34 @@ const t = require("tap");
 const e = require("../dist/string-extract-sass-vars.cjs");
 const fs = require("fs");
 
-// ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
+// 00. API
+// -----------------------------------------------------------------------------
+
+t.test("00.01 - api - first arg is not string", (t) => {
+  t.same(Object.keys(e(null)).length, 0, "00.01");
+  t.end();
+});
+
+t.test("00.02 - api - first arg is empty string", (t) => {
+  t.same(Object.keys(e("")).length, 0, "00.02");
+  t.end();
+});
+
+t.test("00.02 - api - opts is wrong", (t) => {
+  t.throws(() => {
+    e("z", true);
+  }, /THROW_ID_01/gm);
+  t.end();
+});
+
+t.test("00.03 - api - opts.throwIfEmpty", (t) => {
+  t.throws(() => {
+    e("z", {
+      throwIfEmpty: true,
+    });
+  }, /THROW_ID_02/gm);
+  t.end();
+});
 
 // 01. let's do the basics
 // -----------------------------------------------------------------------------

@@ -11,19 +11,18 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "css",
+    "extract",
+    "from",
+    "name",
+    "names",
     "parse",
     "parser",
     "sass",
     "scss",
-    "extract",
-    "variables",
+    "string",
     "variable",
-    "name",
-    "names",
-    "parser",
-    "css",
-    "from",
-    "string"
+    "variables"
   ],
   "main": "dist/string-extract-sass-vars.cjs.js",
   "module": "dist/string-extract-sass-vars.esm.js",
@@ -51,6 +50,7 @@
       "pre-commit": "npm run format && npm test"
     }
   },
+  "browserslist": "> 0.25%, not dead",
   "lect": {
     "babelrc": {
       "override": false,

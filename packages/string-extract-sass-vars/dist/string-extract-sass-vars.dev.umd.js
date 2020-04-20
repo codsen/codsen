@@ -13,11 +13,35 @@
   (global = global || self, global.stringExtractSassVars = factory());
 }(this, (function () { 'use strict';
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
   // As a bonus, it turns digit-only value strings into numbers.
   var BACKSLASH = "\\";
 
   function extractVars(str, originalOpts) {
+    if (typeof str !== "string") {
+      return {};
+    }
+
+    if (originalOpts && _typeof(originalOpts) !== "object") {
+      throw new Error("string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
+    }
+
     var defaults = {
       throwIfEmpty: false
     };
@@ -134,6 +158,11 @@
         lastNonQuoteCharAt = i;
       } // LOGGING:
 
+    } // opts.throwIfEmpty
+
+
+    if (!Object.keys(res).length && opts.throwIfEmpty) {
+      throw new Error("string-extract-sass-vars: [THROW_ID_02] no keys extracted! (setting opts.originalOpts)");
     }
 
     return res;

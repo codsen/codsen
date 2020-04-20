@@ -9,6 +9,18 @@
 
 const BACKSLASH = "\u005C";
 function extractVars(str, originalOpts) {
+  if (typeof str !== "string") {
+    return {};
+  }
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new Error(
+      `string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )} (type ${typeof originalOpts})`
+    );
+  }
   const defaults = {
     throwIfEmpty: false,
   };
@@ -103,6 +115,11 @@ function extractVars(str, originalOpts) {
     if (!`'"`.includes(str[i])) {
       lastNonQuoteCharAt = i;
     }
+  }
+  if (!Object.keys(res).length && opts.throwIfEmpty) {
+    throw new Error(
+      `string-extract-sass-vars: [THROW_ID_02] no keys extracted! (setting opts.originalOpts)`
+    );
   }
   return res;
 }

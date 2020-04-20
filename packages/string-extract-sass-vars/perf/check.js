@@ -25,8 +25,7 @@ $customValue2: trala: la;
 $customValue3: tralala;
 // don't mind this comment about #ff6565;
 $customValue4: 10;
-`,
-    true
+`
   );
 
 // action
