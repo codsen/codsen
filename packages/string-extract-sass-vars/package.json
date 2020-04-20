@@ -11,11 +11,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "class",
-    "css",
+    "parse",
+    "parser",
+    "sass",
+    "scss",
     "extract",
-    "id",
-    "selector",
+    "variables",
+    "variable",
+    "name",
+    "names",
+    "parser",
+    "css",
+    "from",
     "string"
   ],
   "main": "dist/string-extract-sass-vars.cjs.js",
