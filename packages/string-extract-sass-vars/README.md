@@ -101,20 +101,40 @@ into a plain object:
 ## API
 
 ```js
-extractVars(inputString);
+extractVars(inputString, [opts]);
 ```
+
+In other words, it is a function which takes two input arguments, string and an optional options object (above, those square brackets mean "optional").
 
 ### API - Input
 
-| Input argument | Type   | Obligatory? | Description       |
-| -------------- | ------ | ----------- | ----------------- |
-| inputString    | String | yes         | String to process |
+| Input argument          | Type         | Obligatory? | Description       |
+| ----------------------- | ------------ | ----------- | ----------------- |
+| inputString             | String       | yes         | String to process |
+| optional options object | Plain object | no          | See below         |
 
 For example, a typical input for this program:
 
 ```scss
 $red: #ff6565;
 $blue: #08f0fd;
+```
+
+**[⬆ back to top](#)**
+
+
+### Options Object, `opts`
+
+| Options Object's key | The type of its value | Default | Obligatory? | Description                                            |
+| -------------------- | --------------------- | ------- | ----------- | ------------------------------------------------------ |
+| `throwIfEmpty`    | Boolean               | `false` | no          | For extra insurance, you can set this program to throw if it didn't extract any keys. Not enabled by default. |
+
+Here are all defaults in one place:
+
+```js
+{
+  throwIfEmpty: false,
+}
 ```
 
 **[⬆ back to top](#)**
@@ -132,11 +152,21 @@ For example, a typical output of this program:
 }
 ```
 
+## `opts.throwIfEmpty`
+
+In production, you have many things to worry about. Imagine something went wrong with your SCSS variables file - or it was mangled - or something else went wrong - this program would find no variables and would yield an empty plain object. But you would not notice.
+
+If you know that there will always be at least one key in the extracted source — set `opts.throwIfEmpty` — it will throw an error instead of silently yielding an empty plain object.
+
+By default, this option is disabled.
+
 ## Example
 
 ```js
 const extractVars = require("string-extract-sass-vars");
-const res = extractVars("$blue: #08f0fd;");
+const res = extractVars("$blue: #08f0fd;", {
+  throwIfEmpty: true
+});
 console.log(JSON.stringify(res, null, 4));
 // => {
 //       "blue": "#08f0fd"
