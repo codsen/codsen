@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 1.5.18
+ * Version: 1.5.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -14,7 +14,7 @@ import isObj from 'lodash.isplainobject';
 import Ranges from 'ranges-push';
 import apply from 'ranges-apply';
 
-var version = "1.5.18";
+var version = "1.5.19";
 
 const rawnbsp = "\u00A0";
 const encodedNbspHtml = "&nbsp;";

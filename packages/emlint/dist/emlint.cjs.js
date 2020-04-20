@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.2
+ * Version: 2.17.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -2926,7 +2926,7 @@ function tagSpaceBeforeClosingSlash(context) {
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
-      if (mode === "never" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+      if (mode === "never" && node.void && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -2936,7 +2936,7 @@ function tagSpaceBeforeClosingSlash(context) {
             ranges: [[leftOfSlashPos + 1, slashPos]]
           }
         });
-      } else if (mode === "always" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+      } else if (mode === "always" && node.void && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -2985,24 +2985,24 @@ function tagClosingBackslash(context) {
       }
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH$1) {
-        var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
+        var message = node.void ? "Replace backslash with slash." : "Delete this.";
         var backSlashPos = stringLeftRight.left(context.str, node.end - 1);
         var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
-        var whatToInsert = node["void"] ? "/" : "";
+        var whatToInsert = node.void ? "/" : "";
         if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
         }
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           whatToInsert = " ".concat(whatToInsert);
-          if (node["void"] && context.str[idxFrom + 1] === " ") {
+          if (node.void && context.str[idxFrom + 1] === " ") {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
-          } else if (!node["void"]) {
+          } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
           }
         }
-        if (node["void"] && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
+        if (node.void && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
           whatToInsert = "";
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           message = "Delete this.";
@@ -3046,7 +3046,7 @@ function tagVoidSlash(context) {
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
-      if (mode === "never" && node["void"] && context.str[slashPos] === "/") {
+      if (mode === "never" && node.void && context.str[slashPos] === "/") {
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -3056,7 +3056,7 @@ function tagVoidSlash(context) {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && (
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
       !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
@@ -3184,7 +3184,7 @@ function tagBold(context) {
 function tagBadSelfClosing(context) {
   return {
     tag: function tag(node) {
-      if (!node["void"] && node.value.endsWith(">") && node.value[stringLeftRight.left(node.value, node.value.length - 1)] === "/") {
+      if (!node.void && node.value.endsWith(">") && node.value[stringLeftRight.left(node.value, node.value.length - 1)] === "/") {
         var idxFrom = node.start + stringLeftRight.left(node.value, stringLeftRight.left(node.value, node.value.length - 1)) + 1;
         var idxTo = node.start + node.value.length - 1;
         context.report({
@@ -9837,7 +9837,7 @@ var Linter = function (_EventEmitter) {
   return Linter;
 }(EventEmitter);
 
-var version = "2.17.2";
+var version = "2.17.3";
 
 exports.Linter = Linter;
 exports.version = version;

@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.2.0
+ * Version: 8.2.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
@@ -3039,7 +3039,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.16
+   * Version: 2.0.17
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -3352,7 +3352,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.5
+   * Version: 3.7.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3784,7 +3784,7 @@
   /**
    * string-trim-spaces-only
    * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.14
+   * Version: 2.8.15
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
@@ -3873,7 +3873,7 @@
   /**
    * string-remove-duplicate-heads-tails
    * Detect and (recursively) remove head and tail wrappings around the input string
-   * Version: 3.0.55
+   * Version: 3.0.56
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails

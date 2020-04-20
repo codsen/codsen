@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.9
+ * Version: 3.9.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -2503,7 +2503,7 @@
   /**
    * string-extract-class-names
    * Extract class (or id) name from a string
-   * Version: 5.9.20
+   * Version: 5.9.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
@@ -3723,7 +3723,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.0
+   * Version: 1.11.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
@@ -4073,7 +4073,7 @@
     return res;
   }
 
-  var version = "3.9.9";
+  var version = "3.9.10";
 
   /**
    * ranges-sort
@@ -4671,7 +4671,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.16
+   * Version: 2.0.17
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -4789,7 +4789,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.5
+   * Version: 3.7.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push

@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.2
+ * Version: 2.17.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -10375,7 +10375,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 2.5.13
+   * Version: 2.5.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -14982,7 +14982,7 @@
         var slashPos = left(context.str, closingBracketPos);
         var leftOfSlashPos = left(context.str, slashPos);
 
-        if (mode === "never" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+        if (mode === "never" && node.void && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
           context.report({
             ruleId: "tag-space-before-closing-slash",
             message: "Bad whitespace.",
@@ -14992,7 +14992,7 @@
               ranges: [[leftOfSlashPos + 1, slashPos]]
             }
           });
-        } else if (mode === "always" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+        } else if (mode === "always" && node.void && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
           context.report({
             ruleId: "tag-space-before-closing-slash",
             message: "Missing space.",
@@ -15068,12 +15068,12 @@
 
         if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
         context.str[left(context.str, node.end - 1)] === BACKSLASH$1) {
-          var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
+          var message = node.void ? "Replace backslash with slash." : "Delete this.";
           var backSlashPos = left(context.str, node.end - 1); // So we confirmed there's left slash.
           // Is it completely rogue or is it meant to be self-closing tag's closing?
 
           var idxFrom = left(context.str, backSlashPos) + 1;
-          var whatToInsert = node["void"] ? "/" : "";
+          var whatToInsert = node.void ? "/" : "";
 
           if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
             // include any and all the whitespace to the left as well
@@ -15087,16 +15087,16 @@
             whatToInsert = " ".concat(whatToInsert); // but if space is already present at the beginning of the range at
             // index left(context.str, backSlashPos) + 1, don't add one there
 
-            if (node["void"] && context.str[idxFrom + 1] === " ") {
+            if (node.void && context.str[idxFrom + 1] === " ") {
               idxFrom++;
               whatToInsert = whatToInsert.trim();
-            } else if (!node["void"]) {
+            } else if (!node.void) {
               whatToInsert = whatToInsert.trim();
             }
           } // maybe slashes are forbidden on void tags?
 
 
-          if (node["void"] && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
+          if (node.void && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
             whatToInsert = "";
             idxFrom = left(context.str, backSlashPos) + 1;
             message = "Delete this.";
@@ -15152,7 +15152,7 @@
         var slashPos = left(context.str, closingBracketPos);
         var leftOfSlashPos = left(context.str, slashPos);
 
-        if (mode === "never" && node["void"] && context.str[slashPos] === "/") {
+        if (mode === "never" && node.void && context.str[slashPos] === "/") {
           // if slashes are forbidden on void tags, delete the slash and all
           // the whitespace in front, because there's never a space before
           // non-void tag's closing bracket without a slash, for example, "<span >"
@@ -15165,7 +15165,7 @@
               ranges: [[leftOfSlashPos + 1, closingBracketPos]]
             }
           });
-        } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
+        } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
         !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
           // if slashes are requested on void tags, situation is more complex,
           // because we need to take into the account the rule
@@ -15322,7 +15322,7 @@
   function tagBadSelfClosing(context) {
     return {
       tag: function tag(node) {
-        if (!node["void"] && node.value.endsWith(">") && node.value[left(node.value, node.value.length - 1)] === "/") {
+        if (!node.void && node.value.endsWith(">") && node.value[left(node.value, node.value.length - 1)] === "/") {
           var idxFrom = node.start + left(node.value, left(node.value, node.value.length - 1)) + 1;
           var idxTo = node.start + node.value.length - 1;
           context.report({
@@ -26307,7 +26307,7 @@
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.7
+   * Version: 1.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -32705,7 +32705,7 @@
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.0
+   * Version: 0.2.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -41254,7 +41254,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.4
+   * Version: 1.7.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -41331,7 +41331,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.0
+   * Version: 1.1.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
@@ -41428,7 +41428,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.1
+   * Version: 1.1.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -41686,8 +41686,8 @@
 
   /**
    * codsen-tokenizer
-   * HTML and CSS Lexer aimed at code with fatal errors
-   * Version: 2.13.0
+   * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+   * Version: 2.14.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -42987,7 +42987,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.0
+   * Version: 0.6.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -44079,7 +44079,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.17.2";
+  var version = "2.17.3";
 
   exports.Linter = Linter;
   exports.version = version;

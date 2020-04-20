@@ -1,7 +1,7 @@
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri

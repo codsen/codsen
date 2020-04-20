@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 2.13.0
+ * Version: 2.14.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -2417,7 +2417,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.4
+   * Version: 1.7.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -2601,7 +2601,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.0
+   * Version: 1.1.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
@@ -2698,7 +2698,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.1
+   * Version: 1.1.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing

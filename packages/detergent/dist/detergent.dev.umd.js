@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.8.14
+ * Version: 5.8.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -10186,7 +10186,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 2.5.13
+   * Version: 2.5.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10974,7 +10974,7 @@
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.0
+   * Version: 0.2.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -12826,7 +12826,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.0
+   * Version: 1.11.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
@@ -18929,7 +18929,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.16
+   * Version: 2.0.17
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -19047,7 +19047,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.5
+   * Version: 3.7.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -19220,7 +19220,7 @@
   /**
    * string-remove-widows
    * Helps to prevent widow words in a text
-   * Version: 1.5.18
+   * Version: 1.5.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -20427,7 +20427,7 @@
   /**
    * string-trim-spaces-only
    * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.14
+   * Version: 2.8.15
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
@@ -20513,7 +20513,7 @@
     };
   }
 
-  var version = "5.8.14";
+  var version = "5.8.15";
 
   /**
    * lodash (Custom Build) <https://lodash.com/>
@@ -26419,7 +26419,7 @@
   /**
    * string-strip-html
    * Strips HTML tags from strings. No parser, accepts mixed sources.
-   * Version: 4.3.21
+   * Version: 4.3.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
