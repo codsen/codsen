@@ -56,6 +56,7 @@ This package has three builds in `dist/` folder:
 - [Install](#install)
 - [Parse a SASS variables file](#parse-a-sass-variables-file)
 - [API](#api)
+- [`opts.throwIfEmpty`](#optsthrowifempty)
 - [Example](#example)
 - [What this program doesn't do](#what-this-program-doesnt-do)
 - [Why do you need this](#why-do-you-need-this)
@@ -122,12 +123,11 @@ $blue: #08f0fd;
 
 **[⬆ back to top](#)**
 
-
 ### Options Object, `opts`
 
-| Options Object's key | The type of its value | Default | Obligatory? | Description                                            |
-| -------------------- | --------------------- | ------- | ----------- | ------------------------------------------------------ |
-| `throwIfEmpty`    | Boolean               | `false` | no          | For extra insurance, you can set this program to throw if it didn't extract any keys. Not enabled by default. |
+| Options Object's key | The type of its value | Default | Obligatory? | Description                                                                                                   |
+| -------------------- | --------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| `throwIfEmpty`       | Boolean               | `false` | no          | For extra insurance, you can set this program to throw if it didn't extract any keys. Not enabled by default. |
 
 Here are all defaults in one place:
 
@@ -160,18 +160,22 @@ If you know that there will always be at least one key in the extracted source �
 
 By default, this option is disabled.
 
+**[⬆ back to top](#)**
+
 ## Example
 
 ```js
 const extractVars = require("string-extract-sass-vars");
 const res = extractVars("$blue: #08f0fd;", {
-  throwIfEmpty: true
+  throwIfEmpty: true,
 });
 console.log(JSON.stringify(res, null, 4));
 // => {
 //       "blue": "#08f0fd"
 //    }
 ```
+
+**[⬆ back to top](#)**
 
 ## What this program doesn't do
 

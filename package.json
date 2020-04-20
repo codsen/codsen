@@ -42,6 +42,7 @@
   "watch": {
     "readme:generate": "scripts/generate-readme.js"
   },
+  "browserslist": "> 0.25%, not dead",
   "dependencies": {},
   "devDependencies": {
     "benchmark": "^2.1.4",
