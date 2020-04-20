@@ -93,6 +93,7 @@
         "string-collapse-white-space": 11546,
         "string-convert-indexes": 55,
         "string-extract-class-names": 441,
+        "string-extract-sass-vars": 20,
         "string-find-heads-tails": 89,
         "string-find-malformed": 18,
         "string-fix-broken-named-entities": 20938,
@@ -114,13 +115,13 @@
         "util-array-object-or-both": 31,
         "util-nonempty": 14
     },
-    "totalPackageCount": 113,
-    "totalAssertsCount": 811836,
+    "totalPackageCount": 114,
+    "totalAssertsCount": 811856,
     "minAssertsCount": 3,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 746749,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 50,
-    "assertsCountArithmeticMean": 7184,
-    "assertsCountGeometricMean": 65
+    "assertsCountArithmeticMean": 7122,
+    "assertsCountGeometricMean": 64
 }
