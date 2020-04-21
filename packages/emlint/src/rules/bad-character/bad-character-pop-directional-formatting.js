@@ -6,7 +6,7 @@
 
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",

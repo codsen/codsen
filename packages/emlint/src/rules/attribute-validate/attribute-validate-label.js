@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateLabel(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateLabel() ███████████████████████████████████████`
       );
@@ -47,11 +47,7 @@ function attributeValidateLabel(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-label",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-label" });
         });
       }
     },

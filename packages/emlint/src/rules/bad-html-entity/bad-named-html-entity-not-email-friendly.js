@@ -8,7 +8,7 @@ import { notEmailFriendly } from "html-entities-not-email-friendly";
 
 function htmlEntitiesNotEmailFriendly(context) {
   return {
-    entity: function ({ idxFrom, idxTo }) {
+    entity({ idxFrom, idxTo }) {
       console.log(
         `███████████████████████████████████████ htmlEntitiesNotEmailFriendly() ███████████████████████████████████████`
       );
@@ -21,8 +21,8 @@ function htmlEntitiesNotEmailFriendly(context) {
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
-          idxFrom: idxFrom,
-          idxTo: idxTo,
+          idxFrom,
+          idxTo,
           fix: {
             ranges: [
               [

@@ -4,7 +4,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // whitespace starts at "from" and ends at "to"
   console.log(`010 opts.from = ${opts.from}; opts.to = ${opts.to}`);

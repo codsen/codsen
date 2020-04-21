@@ -6,7 +6,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateId(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateId() ███████████████████████████████████████`
       );
@@ -81,11 +81,7 @@ function attributeValidateId(context, ...opts) {
 
           errorArr.forEach((errorObj) => {
             console.log(`083 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-id",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-id" });
           });
         }
       }

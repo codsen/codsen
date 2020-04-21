@@ -6,7 +6,7 @@
 
 function badCharacterPopDirectionalIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8297) {
         context.report({
           ruleId: "bad-character-pop-directional-isolate",

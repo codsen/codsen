@@ -6,7 +6,7 @@
 
 function badCharacterIdeographicSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 12288) {
         context.report({
           ruleId: "bad-character-ideographic-space",

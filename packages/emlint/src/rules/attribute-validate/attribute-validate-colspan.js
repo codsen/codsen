@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateColspan(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateColspan() ███████████████████████████████████████`
       );
@@ -47,11 +47,7 @@ function attributeValidateColspan(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-colspan",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-colspan" });
         });
       }
     },

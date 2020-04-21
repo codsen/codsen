@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCharoff(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCharoff() ███████████████████████████████████████`
       );
@@ -77,11 +77,7 @@ function attributeValidateCharoff(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`079 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charoff",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-charoff" });
         });
       }
     },

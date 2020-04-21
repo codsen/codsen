@@ -12,7 +12,7 @@ function attributeMalformed(context, ...opts) {
   const blacklist = ["doctype"];
 
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
       );
@@ -40,12 +40,12 @@ function attributeMalformed(context, ...opts) {
 
         let somethingMatched = false;
 
-        for (const oneOfKnownAttribs of allHtmlAttribs) {
-          if (leven(oneOfKnownAttribs, node.attribName) === 1) {
+        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
+          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
             console.log(`045 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${oneOfKnownAttribs}".`,
+              message: `Probably meant "${allHtmlAttribs[i]}".`,
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt, // second elem. from last range
               fix: {
@@ -53,7 +53,7 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    oneOfKnownAttribs,
+                    allHtmlAttribs[i],
                   ],
                 ],
               },
@@ -120,7 +120,7 @@ function attributeMalformed(context, ...opts) {
 
           // if equals is in a correct place, don't replace it
           if (context.str[fromRange] === "=") {
-            fromRange++;
+            fromRange += 1;
             whatToAdd = undefined;
           }
 

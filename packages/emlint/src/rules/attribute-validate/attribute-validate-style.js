@@ -5,7 +5,7 @@ import validateInlineStyle from "../../util/validateInlineStyle";
 
 function attributeValidateStyle(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
       );
@@ -52,11 +52,7 @@ function attributeValidateStyle(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-style",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-style" });
         });
       }
     },

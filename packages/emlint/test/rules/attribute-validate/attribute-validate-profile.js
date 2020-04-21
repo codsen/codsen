@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no profile, error level 0`,
   (t) => {
     const str = `<head><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no profile, error level 1`,
   (t) => {
     const str = `<head><form>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no profile, error level 2`,
   (t) => {
     const str = `<head><form>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, one URI`,
   (t) => {
     const str = `<head profile="https://codsen.com">`;
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, two URI's`,
   (t) => {
     const str = `<head profile="https://codsen.com https://detergent.io">`;
@@ -88,7 +88,7 @@ t.test(
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div profile='https://codsen.com'>`;
@@ -112,7 +112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz profile="https://codsen.com" yyy>`;
@@ -139,7 +139,7 @@ t.test(
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two non-URI's`,
   (t) => {
     const str = `<head profile="z?? y??">`;
@@ -171,7 +171,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit URL`,
   (t) => {
     const str = `<head profile=" https://codsen.com">`;
@@ -197,7 +197,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   (t) => {
     // notice wrong tag name case:
@@ -244,7 +244,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   (t) => {
     // notice wrong tag name case:
@@ -307,7 +307,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - first space retained`,
   (t) => {
     const str = `<head profile="https://codsen.com \t\t https://detergent.io">`;
@@ -337,7 +337,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - last space retained`,
   (t) => {
     const str = `<head profile="https://codsen.com\t\t\t https://detergent.io">`;
@@ -367,7 +367,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - all tabs`,
   (t) => {
     const str = `<head profile="https://codsen.com\t\t\t\thttps://detergent.io">`;

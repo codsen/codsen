@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateStandby(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateStandby() ███████████████████████████████████████`
       );
@@ -51,11 +51,7 @@ function attributeValidateStandby(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-standby",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-standby" });
         });
       }
     },

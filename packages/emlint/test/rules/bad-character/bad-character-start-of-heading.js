@@ -2,15 +2,15 @@
 // https://www.fileformat.info/info/unicode/char/0001/index.htm
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two START OF HEADING characters`, (t) => {
+tap.test(`01.01 - detects two START OF HEADING characters`, (t) => {
   const str = "\u0001dlkgjld\u0001j";
   const linter = new Linter();
   const messages = linter.verify(str, {

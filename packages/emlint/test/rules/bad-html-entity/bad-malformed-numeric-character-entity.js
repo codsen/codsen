@@ -1,15 +1,15 @@
 // rule: bad-malformed-numeric-character-entity
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // 01. double encoding on nbsp
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
   (t) => {
     const str = `a&#99999999999999999;z`;
@@ -36,7 +36,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 1`,
   (t) => {
     const str = `a&#99999999999999999;z`;
@@ -63,7 +63,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 2`,
   (t) => {
     const str = `a&#99999999999999999;z`;
@@ -93,7 +93,7 @@ t.test(
 // 02. dollar instead of a hash
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar instead of hash - rule by wildcard`,
   (t) => {
     const str = `_&$65;_`;
@@ -123,7 +123,7 @@ t.test(
 // 03. disabled rule
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
   (t) => {
     const str = `a&#99999999999999999;z`;
@@ -139,7 +139,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 0`,
   (t) => {
     const str = `a&#99999999999999999;z`;
@@ -155,7 +155,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, with other rules`,
   (t) => {
     const str = `a&#99999999999999999;z<br>`;

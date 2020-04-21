@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 0`,
   (t) => {
     [`<applet>`, `<object>`].forEach((tag) => {
@@ -22,7 +22,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 1`,
   (t) => {
     [`<applet>`, `<object>`].forEach((tag) => {
@@ -39,7 +39,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 2`,
   (t) => {
     [`<applet>`, `<object>`].forEach((tag) => {
@@ -56,7 +56,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, applet`,
   (t) => {
     const str = `<applet class='zz' archive='https://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
@@ -72,7 +72,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, object`,
   (t) => {
     const str = `<object class='zz' archive='https://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
@@ -91,7 +91,7 @@ t.test(
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<applet archive=" https://codsen.com">`;
@@ -117,7 +117,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<applet archive="https://codsen.com ">`;
@@ -143,7 +143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit object`,
   (t) => {
     const str = `<applet archive="  https://codsen.com  ">`;
@@ -172,7 +172,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<applet archive="  \t">`;
@@ -197,7 +197,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
   (t) => {
     const str = `<applet archive="">`;
@@ -225,20 +225,23 @@ t.test(
 // 03. applet tag
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, (t) => {
-  const str = `<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-archive": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
-  t.end();
-});
+tap.test(
+  `03.01 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`,
+  (t) => {
+    const str = `<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-archive": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
   (t) => {
     const str = `<applet archive="http://codsen.com,trala..">`;
@@ -263,7 +266,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
   (t) => {
     const str = `<applet archive="abc.,def.">`;
@@ -295,7 +298,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - legit URI's but space-separated`,
   (t) => {
     const str = `<applet archive="https://codsen.com https://detergent.io">`;
@@ -320,7 +323,7 @@ t.test(
   }
 );
 
-t.test(`03.05 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, (t) => {
+tap.test(`03.05 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, (t) => {
   const str = `<applet archive=",http://codsen.com, tralal. , ">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -393,20 +396,23 @@ t.test(`03.05 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, (t) => {
 // 04. object tag
 // -----------------------------------------------------------------------------
 
-t.test(`04.01 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, (t) => {
-  const str = `<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-archive": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
-  t.end();
-});
+tap.test(
+  `04.01 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`,
+  (t) => {
+    const str = `<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-archive": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`,
   (t) => {
     const str = `<object archive="tralala.">`;
@@ -431,7 +437,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`,
   (t) => {
     const str = `<object archive="https://codsen.com,https://detergent.io">`;
@@ -456,7 +462,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`,
   (t) => {
     const str = `<object archive="https://codsen.com, https://detergent.io">`;

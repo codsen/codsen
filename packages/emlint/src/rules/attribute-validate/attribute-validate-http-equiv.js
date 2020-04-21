@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateHttpequiv(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHttpequiv() ███████████████████████████████████████`
       );
@@ -62,11 +62,10 @@ function attributeValidateHttpequiv(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`064 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-http-equiv",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-http-equiv",
+          });
         });
       }
     },

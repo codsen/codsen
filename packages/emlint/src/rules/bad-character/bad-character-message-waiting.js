@@ -6,7 +6,7 @@
 
 function badCharacterMessageWaiting(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 149) {
         context.report({
           ruleId: "bad-character-message-waiting",

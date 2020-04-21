@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateMethod(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMethod() ███████████████████████████████████████`
       );
@@ -52,11 +52,7 @@ function attributeValidateMethod(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-method",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-method" });
         });
       }
     },

@@ -1,12 +1,12 @@
 // rule: attribute-validate-lang
 // -----------------------------------------------------------------------------
 
-import checkForWhitespace from "../../util/checkForWhitespace";
 import isLangCode from "is-language-code";
+import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateLang(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateLang() ███████████████████████████████████████`
       );
@@ -92,11 +92,7 @@ function attributeValidateLang(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`094 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-lang",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-lang" });
         });
       }
     },

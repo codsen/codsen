@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no size, error level 0`,
   (t) => {
     ["hr", "font", "input", "basefont", "select"].forEach((tagName) => {
@@ -23,7 +23,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no size, error level 1`,
   (t) => {
     ["hr", "font", "input", "basefont", "select"].forEach((tagName) => {
@@ -41,7 +41,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no size, error level 2`,
   (t) => {
     ["hr", "font", "input", "basefont", "select"].forEach((tagName) => {
@@ -62,7 +62,7 @@ t.test(
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<hr size=" 1">`;
@@ -88,7 +88,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<hr size="7 ">`;
@@ -114,7 +114,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   (t) => {
     const str = `<hr size="  6  ">`;
@@ -143,7 +143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<hr size="  \t">`;
@@ -171,7 +171,7 @@ t.test(
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div size="1">`;
@@ -195,7 +195,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz size="0" yyy>`;
@@ -222,7 +222,7 @@ t.test(
 // 04. hr
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - string as value`,
   (t) => {
     const str = `<hr size="z">`;
@@ -247,7 +247,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - dot as value`,
   (t) => {
     const str = `<hr size=".">`;
@@ -272,7 +272,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - a rational number`,
   (t) => {
     const str = `<hr size="1.5">`;
@@ -297,7 +297,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - with units`,
   (t) => {
     const str = `<hr size="1px">`;
@@ -323,20 +323,23 @@ t.test(
   }
 );
 
-t.test(`04.05 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - zero`, (t) => {
-  const str = `<hr size="0">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-size": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, []);
-  t.end();
-});
+tap.test(
+  `04.05 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - zero`,
+  (t) => {
+    const str = `<hr size="0">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, []);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${35}m${`value - hr`}\u001b[${39}m`} - value like font's with plus`,
   (t) => {
     const str = `<hr size="+2">`;
@@ -363,7 +366,7 @@ t.test(
 // 05. font
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - healthy font`,
   (t) => {
     [
@@ -403,7 +406,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - string as value`,
   (t) => {
     const str = `<font size="z">`;
@@ -428,7 +431,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - dot as value`,
   (t) => {
     const str = `<font size=".">`;
@@ -453,7 +456,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - a rational number`,
   (t) => {
     const str = `<font size="1.5">`;
@@ -478,7 +481,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - with units`,
   (t) => {
     const str = `<font size="1px">`;
@@ -504,7 +507,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - zero`,
   (t) => {
     const str = `<font size="0">`;
@@ -520,7 +523,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - eight`,
   (t) => {
     const str = `<font size="8">`;
@@ -545,7 +548,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - eight`,
   (t) => {
     const str = `<font size="+8">`;
@@ -570,7 +573,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - eight`,
   (t) => {
     const str = `<font size="-8">`;
@@ -595,29 +598,32 @@ t.test(
   }
 );
 
-t.test(`05.10 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - 99`, (t) => {
-  const str = `<font size="99">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-size": 2,
-    },
-  });
-  // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-size",
-      idxFrom: 12,
-      idxTo: 14,
-      message: `Should be integer 1-7, plus/minus are optional.`,
-      fix: null,
-    },
-  ]);
-  t.end();
-});
+tap.test(
+  `05.10 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - 99`,
+  (t) => {
+    const str = `<font size="99">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2,
+      },
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 12,
+        idxTo: 14,
+        message: `Should be integer 1-7, plus/minus are optional.`,
+        fix: null,
+      },
+    ]);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `05.11 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - repeated plus`,
   (t) => {
     const str = `<font size="++2">`;
@@ -642,7 +648,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.12 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - repeated plus`,
   (t) => {
     const str = `<font size="- --2">`;
@@ -667,7 +673,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.13 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - plus-space-legit digit`,
   (t) => {
     const str = `<font size="+\t2">`;
@@ -692,7 +698,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.14 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - plus-space-bad digit`,
   (t) => {
     const str = `<font size="+\t99">`;
@@ -717,7 +723,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.15 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - basefont - plus-space-bad digit`,
   (t) => {
     const str = `<basefont size="+\t99">`;
@@ -745,7 +751,7 @@ t.test(
 // 06. input
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - string as value`,
   (t) => {
     const str = `<input size="z">`;
@@ -770,7 +776,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - dot as value`,
   (t) => {
     const str = `<input size=".">`;
@@ -795,7 +801,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - a rational number`,
   (t) => {
     const str = `<input size="1.5">`;
@@ -820,7 +826,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - with units`,
   (t) => {
     const str = `<input size="1px">`;
@@ -846,7 +852,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.05 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - zero`,
   (t) => {
     const str = `<input size="0">`;
@@ -862,7 +868,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.06 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - value like font's with plus`,
   (t) => {
     const str = `<input size="+2">`;
@@ -886,7 +892,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.07 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - select - string as value`,
   (t) => {
     const str = `<select size="z">`;
@@ -911,7 +917,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.08 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - select - with units`,
   (t) => {
     const str = `<select size="1px">`;

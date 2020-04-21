@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCellspacing(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCellspacing() ███████████████████████████████████████`
       );
@@ -50,11 +50,10 @@ function attributeValidateCellspacing(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellspacing",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-cellspacing",
+          });
         });
       }
     },

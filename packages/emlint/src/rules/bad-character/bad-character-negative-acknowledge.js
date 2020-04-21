@@ -6,7 +6,7 @@
 
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",

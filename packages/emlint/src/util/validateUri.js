@@ -1,9 +1,9 @@
 import processCommaSeparated from "string-process-comma-separated";
+import isRel from "is-relative-uri";
+import urlRegex from "url-regex";
 import checkForWhitespace from "./checkForWhitespace";
 import splitByWhitespace from "./splitByWhitespace";
 import isSingleSpace from "./isSingleSpace";
-import isRel from "is-relative-uri";
-import urlRegex from "url-regex";
 
 function validateValue(str, originalOpts, errorArr) {
   console.log(" ");
@@ -18,7 +18,7 @@ function validateValue(str, originalOpts, errorArr) {
     attribStart: 0,
     attribEnd: str.length,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   console.log(" ");
   const extractedValue = str.slice(opts.from, opts.to);
@@ -197,7 +197,7 @@ function validateUri(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   console.log(
     `202 validateUri(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
@@ -269,13 +269,14 @@ function validateUri(str, originalOpts) {
               // Object assign needed to retain opts.multipleOK
               validateValue(
                 str,
-                Object.assign({}, opts, {
+                {
+                  ...opts,
                   from: charFrom,
                   to: charTo,
                   attribStart: charStart,
                   attribEnd: charEnd,
                   offset: opts.offset,
-                }),
+                },
                 errorArr
               );
             }
@@ -296,7 +297,7 @@ function validateUri(str, originalOpts) {
           }
         );
       } else {
-        console.log(`299 validateUri: use processCommaSeparated()`);
+        console.log(`300 validateUri: use processCommaSeparated()`);
         processCommaSeparated(str, {
           offset: opts.offset,
           oneSpaceAfterCommaOK: false,
@@ -304,7 +305,7 @@ function validateUri(str, originalOpts) {
           trailingWhitespaceOK: true,
           cb: (idxFrom, idxTo) => {
             console.log(
-              `307 validateUri: ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+              `308 validateUri: ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
             );
 
             const extractedValue = str.slice(
@@ -312,7 +313,7 @@ function validateUri(str, originalOpts) {
               idxTo - opts.offset
             );
             console.log(
-              `315 validateUri: ██ EXTRACTED VALUE: ${JSON.stringify(
+              `316 validateUri: ██ EXTRACTED VALUE: ${JSON.stringify(
                 extractedValue,
                 null,
                 0
@@ -325,19 +326,20 @@ function validateUri(str, originalOpts) {
             // Object assign needed to retain opts.multipleOK
             validateValue(
               str,
-              Object.assign({}, opts, {
+              {
+                ...opts,
                 from: idxFrom - opts.offset,
                 to: idxTo - opts.offset,
                 attribStart: charStart,
                 attribEnd: charEnd,
                 offset: opts.offset,
-              }),
+              },
               errorArr
             );
           },
           errCb: (ranges, message) => {
             console.log(
-              `340 validateUri: ${`\u001b[${32}m${`INCOMING errCb`}\u001b[${39}m`} ranges = ${JSON.stringify(
+              `342 validateUri: ${`\u001b[${32}m${`INCOMING errCb`}\u001b[${39}m`} ranges = ${JSON.stringify(
                 ranges,
                 null,
                 4
@@ -360,7 +362,7 @@ function validateUri(str, originalOpts) {
             ) {
               // if it's not outer whitespace, skip the fix
               console.log(
-                `363 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} fix = null`
+                `365 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} fix = null`
               );
               fix = null;
             }
@@ -372,7 +374,7 @@ function validateUri(str, originalOpts) {
               fix,
             });
             console.log(
-              `375 validateUri: after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              `377 validateUri: after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
                 errorArr,
                 null,
                 4
@@ -382,7 +384,7 @@ function validateUri(str, originalOpts) {
         });
       }
     } else {
-      console.log(`385 validateUri: the whole attribute should be validated`);
+      console.log(`387 validateUri: the whole attribute should be validated`);
       // we pass whole value to validateValue(), "cropping" the whitespace:
       validateValue(
         str,

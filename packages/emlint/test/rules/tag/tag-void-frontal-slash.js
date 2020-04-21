@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`,
   (t) => {
     const str = "</br>";
@@ -36,7 +36,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`,
   (t) => {
     const str = "</br>";
@@ -79,7 +79,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`,
   (t) => {
     const str = "</br>";

@@ -4,12 +4,12 @@
 import traverse from "ast-monkey-traverse";
 // import { pathNext, pathPrev, pathUp } from "ast-monkey-util";
 import { pathPrev } from "ast-monkey-util";
-import { isObj } from "../../util/util";
 import op from "object-path";
+import { isObj } from "../../util/util";
 
 function commentMismatchingPair(context, ...opts) {
   return {
-    ast: function (node) {
+    ast(node) {
       console.log(
         `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
       );

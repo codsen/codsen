@@ -16,7 +16,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
   };
 
   return {
-    text: function (node) {
+    text(node) {
       console.log(
         `███████████████████████████████████████ characterUnspacedPunctuation() ███████████████████████████████████████`
       );
@@ -58,14 +58,14 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
         },
       };
 
-      let opts = Object.assign({}, defaults); // default opts above are the default
+      let opts = { ...defaults }; // default opts above are the default
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
         typeof originalOpts[0] === "object" &&
         originalOpts[0] !== null
       ) {
-        opts = Object.assign({}, defaults, originalOpts[0]);
+        opts = { ...defaults, ...originalOpts[0] };
       }
 
       console.log(

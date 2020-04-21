@@ -5,7 +5,7 @@ import validateVoid from "../../util/validateVoid";
 
 function attributeValidateDisabled(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDisabled() ███████████████████████████████████████`
       );
@@ -60,25 +60,20 @@ function attributeValidateDisabled(context, ...originalOpts) {
           });
         } else {
           // validate the value (or absence thereof)
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
 
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`076 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-disabled",
-              })
-            );
+            console.log(`072 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-disabled",
+            });
           });
         }
       }

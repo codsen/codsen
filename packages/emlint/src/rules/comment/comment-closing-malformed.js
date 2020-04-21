@@ -5,7 +5,7 @@ import validateCommentClosing from "../../util/validateCommentClosing";
 
 function commentClosingMalformed(context, ...opts) {
   return {
-    comment: function (node) {
+    comment(node) {
       console.log(
         `███████████████████████████████████████ commentClosingMalformed() ███████████████████████████████████████`
       );
@@ -32,12 +32,11 @@ function commentClosingMalformed(context, ...opts) {
         // This is to simplify the rule fix clashing.
         errorArr.forEach((errorObj) => {
           console.log(`034 commentClosingMalformed(): RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              keepSeparateWhenFixing: true,
-              ruleId: "comment-closing-malformed",
-            })
-          );
+          context.report({
+            ...errorObj,
+            keepSeparateWhenFixing: true,
+            ruleId: "comment-closing-malformed",
+          });
         });
       }
     },

@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateArchive(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
       );
@@ -34,41 +34,38 @@ function attributeValidateArchive(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
-        } else {
-          // it depends, which tag is this attribute on...
-          if (node.parent.tagName === "applet") {
-            // comma-separated list of archive URIs
-            // Call validation upon the whole attribute's value. Validator includes
-            // whitespace checks.
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "comma",
-              multipleOK: true,
-            }).forEach((errorObj) => {
-              console.log(`048 RAISE ERROR`);
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive",
-                })
-              );
+        }
+        // it depends, which tag is this attribute on...
+        else if (node.parent.tagName === "applet") {
+          // comma-separated list of archive URIs
+          // Call validation upon the whole attribute's value. Validator includes
+          // whitespace checks.
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "comma",
+            multipleOK: true,
+          }).forEach((errorObj) => {
+            console.log(`048 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-archive",
             });
-          } else if (node.parent.tagName === "object") {
-            // space-separated list of URIs
-            // Call validation upon the whole attribute's value. Validator includes
-            // whitespace checks.
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "space", // or "comma"
-              multipleOK: true,
-            }).forEach((errorObj) => {
-              console.log(`064 RAISE ERROR`);
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "object") {
+          // space-separated list of URIs
+          // Call validation upon the whole attribute's value. Validator includes
+          // whitespace checks.
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "space", // or "comma"
+            multipleOK: true,
+          }).forEach((errorObj) => {
+            console.log(`063 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-archive",
             });
-          }
+          });
         }
       }
     },

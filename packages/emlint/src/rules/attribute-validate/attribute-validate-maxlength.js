@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateMaxlength(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMaxlength() ███████████████████████████████████████`
       );
@@ -47,11 +47,10 @@ function attributeValidateMaxlength(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-maxlength",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-maxlength",
+          });
         });
       }
     },

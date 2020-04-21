@@ -1,12 +1,12 @@
 // rule: attribute-validate-enctype
 // -----------------------------------------------------------------------------
 
-import { validateString } from "../../util/util";
 import db from "mime-db";
+import { validateString } from "../../util/util";
 
 function attributeValidateEnctype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateEnctype() ███████████████████████████████████████`
       );
@@ -62,11 +62,7 @@ function attributeValidateEnctype(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`064 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-enctype",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-enctype" });
         });
       }
     },

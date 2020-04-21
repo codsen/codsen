@@ -6,7 +6,7 @@
 
 function badCharacterBell(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 7) {
         context.report({
           ruleId: "bad-character-bell",

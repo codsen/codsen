@@ -8,7 +8,7 @@ import { left } from "string-left-right";
 // function tagBadSelfClosing(context, ...opts) {
 function tagBadSelfClosing(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagBadSelfClosing() ███████████████████████████████████████`
       );

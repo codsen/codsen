@@ -2,6 +2,7 @@
 // -----------------------------------------------------------------------------
 
 import { left } from "string-left-right";
+
 const BACKSLASH = "\u005C";
 
 // it flags up any tags which have whitespace between opening bracket and first
@@ -13,7 +14,7 @@ const BACKSLASH = "\u005C";
 
 function tagSpaceBeforeClosingBracket(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagSpaceBeforeClosingBracket() ███████████████████████████████████████`
       );
@@ -32,9 +33,9 @@ function tagSpaceBeforeClosingBracket(context) {
         // "tag-space-between-slash-and-bracket" turf)
         !`${BACKSLASH}/`.includes(context.str[left(context.str, node.end - 1)])
       ) {
-        console.log(`035 whitespace before closing bracket confirmed`);
+        console.log(`036 whitespace before closing bracket confirmed`);
         console.log(
-          `037 PUSH [${left(context.str, node.end - 1) + 1}, ${node.end - 1}]`
+          `038 PUSH [${left(context.str, node.end - 1) + 1}, ${node.end - 1}]`
         );
         ranges.push([left(context.str, node.end - 1) + 1, node.end - 1]);
       }

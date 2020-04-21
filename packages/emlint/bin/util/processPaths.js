@@ -1,11 +1,13 @@
 const { promisify } = require("util");
 const fs = require("fs");
 const path = require("path");
+
 const readFileAsync = promisify(fs.readFile);
 const globby = require("globby");
 const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
 const { Linter } = require("../../dist/emlint.cjs.js");
+
 const linter = new Linter();
 
 // const messagePrefix = `\u001b[${90}m${"✨ emlint: "}\u001b[${39}m`;
@@ -13,7 +15,7 @@ const linter = new Linter();
 function readUpdateAndWriteOverFile(receivedPath) {
   console.log(" ");
   console.log(
-    `016 readUpdateAndWriteOverFile(): received "${`\u001b[${32}m${receivedPath}\u001b[${39}m`}"`
+    `018 readUpdateAndWriteOverFile(): received "${`\u001b[${32}m${receivedPath}\u001b[${39}m`}"`
   );
   console.log(" ");
   readFileAsync(receivedPath, { encoding: "utf8" })
@@ -26,7 +28,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     )
     .then((contents) => {
       console.log(
-        `029 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
+        `031 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
           contents,
           null,
           4
@@ -36,7 +38,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     })
     .catch((err) => {
       console.log(
-        `039 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
+        `041 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
           err,
           null,
           4
@@ -47,7 +49,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
 
 function processPaths(paths) {
   console.log(
-    `050 processPaths received: ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
+    `052 processPaths received: ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
       paths,
       null,
       4
@@ -55,16 +57,16 @@ function processPaths(paths) {
   );
   return (
     globby(paths)
-      .then((paths) => {
+      .then((oneOfpaths) => {
         console.log(
-          `060 ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
-            paths,
+          `062 ${`\u001b[${33}m${`oneOfpaths`}\u001b[${39}m`} = ${JSON.stringify(
+            oneOfpaths,
             null,
             4
           )}`
         );
         return pReduce(
-          paths,
+          oneOfpaths,
           (concattedTotal, singleDirOrFilePath) =>
             concattedTotal.concat(
               isDirectory(path.resolve(singleDirOrFilePath)).then((bool) =>

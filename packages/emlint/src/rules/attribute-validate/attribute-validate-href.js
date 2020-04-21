@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateHref(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHref() ███████████████████████████████████████`
       );
@@ -36,11 +36,7 @@ function attributeValidateHref(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`038 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-href",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-href" });
           });
         }
       }

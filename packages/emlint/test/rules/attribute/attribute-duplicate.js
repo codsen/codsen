@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - one class each`,
   (t) => {
     const str = `<td class="z"><a class="z">z</a>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate but rule disabled`,
   (t) => {
     const str = `<td class="x" class="y"><a class="z" class="yo">z</a>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
   (t) => {
     const str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - value-less attributes repeated`,
   (t) => {
     const str = `<td nowrap nowrap><a class="z">z</a>`;
@@ -72,7 +72,7 @@ t.test(
 // 01. checks
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`01.01 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
   const str = `<a class="bb" id="cc" class="dd">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -85,7 +85,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - class merged`,
   (t) => {
     const str = `<a class="bb" id="bb" class="dd">`;
@@ -110,7 +110,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`,
   (t) => {
     const str = `<a class="cc" id="ee" id="dd" style="id" id="ff">`;
@@ -135,7 +135,7 @@ t.test(
   }
 );
 
-t.test(`01.04 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
+tap.test(`01.04 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   const str = `<a href="bb" href="bb" href="dd">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -164,7 +164,7 @@ t.test(`01.04 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
   (t) => {
     const str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
@@ -198,7 +198,7 @@ t.test(
 // 02. merging values
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
+tap.test(`02.01 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   const str = `<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">`;
   const fixed = `<a class="kk ll mm nn oo" id="uu">`;
   const linter = new Linter();

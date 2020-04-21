@@ -6,7 +6,7 @@
 
 function badCharacterNationalDigitShapes(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8302) {
         context.report({
           ruleId: "bad-character-national-digit-shapes",

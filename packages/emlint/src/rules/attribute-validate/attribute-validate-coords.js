@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCoords(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCoords() ███████████████████████████████████████`
       );
@@ -98,11 +98,10 @@ function attributeValidateCoords(context, ...opts) {
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach((errorObj) => {
                 console.log(`100 RAISE ERROR`);
-                context.report(
-                  Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-coords",
-                  })
-                );
+                context.report({
+                  ...errorObj,
+                  ruleId: "attribute-validate-coords",
+                });
               });
             }
           }

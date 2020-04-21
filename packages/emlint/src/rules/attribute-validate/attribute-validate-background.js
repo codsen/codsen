@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateBackground(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateBackground() ███████████████████████████████████████`
       );
@@ -42,11 +42,10 @@ function attributeValidateBackground(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`044 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-background",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-background",
+            });
           });
         }
       }

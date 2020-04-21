@@ -6,7 +6,7 @@
 
 function badCharacterFigureSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8199) {
         context.report({
           ruleId: "bad-character-figure-space",

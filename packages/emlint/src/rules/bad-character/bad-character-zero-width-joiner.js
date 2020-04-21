@@ -6,7 +6,7 @@
 
 function badCharacterZeroWidthJoiner(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8205) {
         context.report({
           ruleId: "bad-character-zero-width-joiner",

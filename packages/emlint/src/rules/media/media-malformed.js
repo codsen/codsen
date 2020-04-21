@@ -11,7 +11,7 @@ import isMediaD from "is-media-descriptor";
 
 function mediaMalformed(context, ...opts) {
   return {
-    at: function (node) {
+    at(node) {
       console.log(
         `███████████████████████████████████████ mediaMalformed() ███████████████████████████████████████`
       );
@@ -40,11 +40,7 @@ function mediaMalformed(context, ...opts) {
 
         errors.forEach((errorObj) => {
           console.log(`042 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "media-malformed",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "media-malformed" });
         });
       }
 

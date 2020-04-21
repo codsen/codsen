@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const meow = require("meow");
-const processPaths = require("./util/processPaths");
 const updateNotifier = require("update-notifier");
+const processPaths = require("./util/processPaths");
 
 const cli = meow(
   `

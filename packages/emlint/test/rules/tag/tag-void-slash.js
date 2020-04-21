@@ -1,15 +1,15 @@
 // rule: tag-void-slash
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 1. no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash present`,
   (t) => {
     const str = "<br/>";
@@ -25,7 +25,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash absent`,
   (t) => {
     const str = "<br>";
@@ -54,7 +54,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-slash"`,
   (t) => {
     const str = "<br>";
@@ -84,7 +84,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "tag"`,
   (t) => {
     const str = "<br>";
@@ -113,7 +113,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=always`,
   (t) => {
     const str = "<br>";
@@ -143,7 +143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never`,
   (t) => {
     const str = "<br>";
@@ -173,7 +173,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never, hardcoded void's default always`,
   (t) => {
     const str = "<br>";
@@ -203,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - both never`,
   (t) => {
     const str = "<br>";
@@ -223,7 +223,7 @@ t.test(
 // 02. with config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=always`,
   (t) => {
     const str = "<br>";
@@ -252,7 +252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=never`,
   (t) => {
     const str = "<br>";
@@ -268,7 +268,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=never`,
   (t) => {
     const str = "<br/>";
@@ -297,7 +297,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=always`,
   (t) => {
     const str = "<br/>";

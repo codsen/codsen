@@ -1,15 +1,15 @@
 // rule: bad-named-html-entity-unrecognised
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`,
   (t) => {
     const str = `abc&yo;def`;
@@ -36,7 +36,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`,
   (t) => {
     const str = `abc&yo;def`;
@@ -63,7 +63,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`,
   (t) => {
     const str = `abc&yo;def`;
@@ -90,7 +90,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`,
   (t) => {
     const str = `abc&yo;def`;
@@ -117,7 +117,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule - off`,
   (t) => {
     const str = `abc&yo;def`;
@@ -133,7 +133,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 0`,
   (t) => {
     const str = `abc&yo;def`;
@@ -149,7 +149,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard - off`,
   (t) => {
     const str = `abc&yo;def`;

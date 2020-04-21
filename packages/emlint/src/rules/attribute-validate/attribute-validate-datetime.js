@@ -5,7 +5,7 @@ import { validateString, isoDateRegex } from "../../util/util";
 
 function attributeValidateDatetime(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDatetime() ███████████████████████████████████████`
       );
@@ -60,11 +60,10 @@ function attributeValidateDatetime(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`062 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-datetime",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-datetime",
+          });
         });
       }
     },

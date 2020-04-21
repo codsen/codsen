@@ -1,12 +1,12 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 01. no config
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -19,41 +19,44 @@ t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
-  const str = "<bold>z</bold>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-bold": 1,
-    },
-  });
-  t.equal(applyFixes(str, messages), "<strong>z</strong>");
-  t.match(messages, [
-    {
-      ruleId: "tag-bold",
-      severity: 1,
-      idxFrom: 0,
-      idxTo: 6,
-      message: `Tag "bold" does not exist in HTML.`,
-      fix: {
-        ranges: [[1, 5, "strong"]],
+tap.test(
+  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`,
+  (t) => {
+    const str = "<bold>z</bold>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-bold": 1,
       },
-    },
-    {
-      ruleId: "tag-bold",
-      severity: 1,
-      idxFrom: 7,
-      idxTo: 14,
-      message: `Tag "bold" does not exist in HTML.`,
-      fix: {
-        ranges: [[9, 13, "strong"]],
+    });
+    t.equal(applyFixes(str, messages), "<strong>z</strong>");
+    t.match(messages, [
+      {
+        ruleId: "tag-bold",
+        severity: 1,
+        idxFrom: 0,
+        idxTo: 6,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[1, 5, "strong"]],
+        },
       },
-    },
-  ]);
-  t.end();
-});
+      {
+        ruleId: "tag-bold",
+        severity: 1,
+        idxFrom: 7,
+        idxTo: 14,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[9, 13, "strong"]],
+        },
+      },
+    ]);
+    t.end();
+  }
+);
 
-t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -90,7 +93,7 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
 // 02. config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`,
   (t) => {
     const str = "<bold>z</bold>";
@@ -127,7 +130,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`,
   (t) => {
     const str = "<bold>z</bold>";
@@ -164,7 +167,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`,
   (t) => {
     const str = "<bold>z</bold>";

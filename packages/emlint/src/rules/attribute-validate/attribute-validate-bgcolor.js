@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateBgcolor(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateBgcolor() ███████████████████████████████████████`
       );
@@ -52,11 +52,7 @@ function attributeValidateBgcolor(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-bgcolor",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-bgcolor" });
         });
       }
     },

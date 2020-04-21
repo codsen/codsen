@@ -6,7 +6,7 @@
 
 function badCharacterSubstitute(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 26) {
         context.report({
           ruleId: "bad-character-substitute",

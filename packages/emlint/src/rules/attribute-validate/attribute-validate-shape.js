@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateShape(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateShape() ███████████████████████████████████████`
       );
@@ -51,11 +51,7 @@ function attributeValidateShape(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-shape",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-shape" });
         });
       }
     },

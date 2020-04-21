@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCols(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCols() ███████████████████████████████████████`
       );
@@ -85,11 +85,7 @@ function attributeValidateCols(context, ...opts) {
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach((errorObj) => {
             console.log(`087 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cols",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-cols" });
           });
         }
       }

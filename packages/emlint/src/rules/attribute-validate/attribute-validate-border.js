@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateBorder(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
       );
@@ -47,11 +47,7 @@ function attributeValidateBorder(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-border",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-border" });
         });
       }
     },

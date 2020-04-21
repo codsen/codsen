@@ -6,7 +6,7 @@
 
 function badCharacterBackspace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8) {
         context.report({
           ruleId: "bad-character-backspace",

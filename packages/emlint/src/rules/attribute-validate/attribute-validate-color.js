@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateColor(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateColor() ███████████████████████████████████████`
       );
@@ -50,11 +50,7 @@ function attributeValidateColor(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-color",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-color" });
         });
       }
     },

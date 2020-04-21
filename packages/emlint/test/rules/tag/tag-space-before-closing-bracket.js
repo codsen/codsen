@@ -1,12 +1,13 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+
 const BACKSLASH = "\u005C";
 
 // 1. basic tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single tag`,
   (t) => {
     const str = "<a >";
@@ -38,7 +39,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single closing tag, space before slash`,
   (t) => {
     const str = "\n</a\t\t>";
@@ -70,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - works with attributes, double quotes`,
   (t) => {
     const str = `<div class="zz yy" >`;
@@ -105,43 +106,46 @@ t.test(
 // 02. XML
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
-  const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-bracket": 2,
-    },
-  });
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "tag-space-before-closing-bracket",
-        severity: 2,
-        idxFrom: 37,
-        idxTo: 40,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[37, 40]],
-        },
+tap.test(
+  `02.01 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`,
+  (t) => {
+    const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-bracket": 2,
       },
-    ],
-    "02.01.01"
-  );
-  t.equal(messages.length, 1, "02.01.02");
-  t.equal(
-    applyFixes(str, messages),
-    `<?xml version="1.0" encoding="UTF-8"?>`,
-    "02.01.03"
-  );
-  t.end();
-});
+    });
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-space-before-closing-bracket",
+          severity: 2,
+          idxFrom: 37,
+          idxTo: 40,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[37, 40]],
+          },
+        },
+      ],
+      "02.01.01"
+    );
+    t.equal(messages.length, 1, "02.01.02");
+    t.equal(
+      applyFixes(str, messages),
+      `<?xml version="1.0" encoding="UTF-8"?>`,
+      "02.01.03"
+    );
+    t.end();
+  }
+);
 
 // 03. doesn't raise errors
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - does not touch tags with closing slash`,
   (t) => {
     const str = "<br\t\t/\t\t>";
@@ -157,7 +161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - because of a backslash`,
   (t) => {
     const str = `<br\t\t${BACKSLASH}\t\t>`;

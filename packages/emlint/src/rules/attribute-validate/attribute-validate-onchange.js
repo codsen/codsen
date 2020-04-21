@@ -5,13 +5,13 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOnchange(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOnchange() ███████████████████████████████████████`
       );
       console.log(
-        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-          opts,
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
           null,
           4
         )}`
@@ -25,7 +25,7 @@ function attributeValidateOnchange(context, ...originalOpts) {
       );
 
       // preparing for the future:
-      const opts = Object.assign({}, originalOpts);
+      // const opts = { ...originalOpts };
 
       if (node.attribName === "onchange") {
         // validate the parent
@@ -53,11 +53,10 @@ function attributeValidateOnchange(context, ...originalOpts) {
 
           errorArr.forEach((errorObj) => {
             console.log(`055 attributeValidateOnchange(): RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onchange",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onchange",
+            });
           });
         }
       }

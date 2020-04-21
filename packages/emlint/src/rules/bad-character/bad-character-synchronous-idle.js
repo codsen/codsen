@@ -6,7 +6,7 @@
 
 function badCharacterSynchronousIdle(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 22) {
         context.report({
           ruleId: "bad-character-synchronous-idle",

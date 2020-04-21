@@ -5,7 +5,7 @@ import validateVoid from "../../util/validateVoid";
 
 function attributeValidateIsmap(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateIsmap() ███████████████████████████████████████`
       );
@@ -47,25 +47,17 @@ function attributeValidateIsmap(context, ...originalOpts) {
           });
         } else {
           // validate the value (or absence thereof)
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
 
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ismap",
-              })
-            );
+            console.log(`059 RAISE ERROR`);
+            context.report({ ...errorObj, ruleId: "attribute-validate-ismap" });
           });
         }
       }

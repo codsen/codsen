@@ -1,15 +1,15 @@
 // rule: character-unspaced-punctuation
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
   (t) => {
     const str = "<a>Click me!Now?Yes!</a>";
@@ -25,7 +25,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
   (t) => {
     const str = "<a>Click me!Now?Yes!</a>";
@@ -62,7 +62,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
   (t) => {
     const str = "<a>Click me!Now?Yes!</a>";
@@ -102,7 +102,7 @@ t.test(
 // 02. with config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, right side missing`,
   (t) => {
     const str = "<a>Click me!Now?Yes!</a>";
@@ -155,7 +155,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - French`,
   (t) => {
     const str = "-Les pommes ou les oranges?-Les pommes!";

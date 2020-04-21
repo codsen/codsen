@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateValign(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValign() ███████████████████████████████████████`
       );
@@ -51,11 +51,10 @@ function attributeValidateValign(context, ...opts) {
             }
           ).forEach((errorObj) => {
             console.log(`053 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valign",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-valign",
+            });
           });
         }
       }

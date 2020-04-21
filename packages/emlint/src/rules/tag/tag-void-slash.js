@@ -5,11 +5,12 @@
 // such as img. Is it <img...> or is it <img.../>?
 
 import { left } from "string-left-right";
+
 const BACKSLASH = "\u005C";
 
 function tagVoidSlash(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
       );
@@ -21,7 +22,7 @@ function tagVoidSlash(context, ...opts) {
         mode = opts[0];
       }
       console.log(
-        `024 tagVoidSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+        `025 tagVoidSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
       );
 
       // PROCESSING:
@@ -33,7 +34,7 @@ function tagVoidSlash(context, ...opts) {
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
-        console.log(`036 whitespace present in front of closing slash!`);
+        console.log(`037 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -61,7 +62,7 @@ function tagVoidSlash(context, ...opts) {
                   "always"))
           ))
       ) {
-        console.log(`064`);
+        console.log(`065`);
         // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
@@ -72,12 +73,12 @@ function tagVoidSlash(context, ...opts) {
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
-          console.log(`075`);
+          console.log(`076`);
           // space is needed
           // check, maybe space is there
           if (context.str[slashPos + 1] === " ") {
             // but space exists already
-            console.log(`080 add slash only`);
+            console.log(`081 add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -87,7 +88,7 @@ function tagVoidSlash(context, ...opts) {
             });
           } else {
             // space is missing so add one
-            console.log(`090 add space and slash`);
+            console.log(`091 add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -111,7 +112,7 @@ function tagVoidSlash(context, ...opts) {
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
           // no space needed
-          console.log(`114 add slash only`);
+          console.log(`115 add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",

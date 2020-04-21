@@ -6,7 +6,7 @@
 
 function badCharacterInvisibleTimes(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8290) {
         context.report({
           ruleId: "bad-character-invisible-times",

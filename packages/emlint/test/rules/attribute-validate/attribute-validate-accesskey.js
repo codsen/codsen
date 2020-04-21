@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accesskey, error level 0`,
   (t) => {
     const str = `<a>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accesskey, error level 1`,
   (t) => {
     const str = `<a>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accesskey, error level 2`,
   (t) => {
     const str = `<a>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
   (t) => {
     const str = `<a accesskey='z'>`; // <-- notice single quotes
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, encoded`,
   (t) => {
     const str = `<a accesskey="&pound;">`;
@@ -88,7 +88,7 @@ t.test(
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div accesskey="z">`;
@@ -112,7 +112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz accesskey="z" yyy>`;
@@ -139,7 +139,7 @@ t.test(
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`a wrong value`}\u001b[${39}m`} - more than 1 char, raw`,
   (t) => {
     const str = `z <a accesskey="abc" yyy>`;
@@ -164,7 +164,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, encoded`,
   (t) => {
     const str = `z <a accesskey=" &pound;">`;

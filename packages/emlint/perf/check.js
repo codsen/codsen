@@ -2,9 +2,10 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
-const { Linter } = require("../");
+const runPerf = require("../../../scripts/run-perf.js");
+const { Linter } = require("..");
 
 // 1. basic tests
 const str = "< a>";

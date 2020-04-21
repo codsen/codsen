@@ -12,7 +12,7 @@ import { left } from "string-left-right";
 
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
       );

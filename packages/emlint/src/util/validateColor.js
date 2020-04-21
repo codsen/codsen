@@ -7,14 +7,6 @@ import {
 import { isLetter } from "./util";
 
 function validateColor(str, idxOffset, opts) {
-  console.log(
-    `011 ${`\u001b[${35}m${`validateColor() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
-      [...arguments],
-      null,
-      4
-    )}`
-  );
-
   // we'll allow granular filtering of all color types
   // opts:
   // {
@@ -40,7 +32,7 @@ function validateColor(str, idxOffset, opts) {
       Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
     ) {
       console.log(
-        `043 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
+        `035 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
       );
 
       if (!opts.namedCssLevel1OK) {
@@ -88,7 +80,7 @@ function validateColor(str, idxOffset, opts) {
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
         console.log(
-          `091 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
+          `083 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
         );
         errorArr.push({
           idxFrom: idxOffset + charStart,

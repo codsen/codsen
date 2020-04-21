@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateStart(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateStart() ███████████████████████████████████████`
       );
@@ -46,11 +46,7 @@ function attributeValidateStart(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-start",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-start" });
         });
       }
     },

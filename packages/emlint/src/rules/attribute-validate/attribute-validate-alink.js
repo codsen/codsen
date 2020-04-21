@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateAlink(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAlink() ███████████████████████████████████████`
       );
@@ -50,11 +50,7 @@ function attributeValidateAlink(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alink",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
         });
       }
     },

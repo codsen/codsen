@@ -6,7 +6,7 @@
 
 function badCharacterNonBreakingSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 160) {
         context.report({
           ruleId: "bad-character-non-breaking-space",

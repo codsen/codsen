@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateFrame(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFrame() ███████████████████████████████████████`
       );
@@ -62,11 +62,7 @@ function attributeValidateFrame(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`064 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frame",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-frame" });
         });
       }
     },

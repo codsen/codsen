@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. type="simple"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`,
   (t) => {
     const str = `<--z-->`;
@@ -38,7 +38,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`,
   (t) => {
     const str = `<--<img class="z"/>-->`;
@@ -71,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`,
   (t) => {
     const str = `.< !--z-->`;
@@ -104,7 +104,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`,
   (t) => {
     const str = `< !--<img class="z"/>-->`;
@@ -137,7 +137,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`,
   (t) => {
     const str = `<! --z-->`;
@@ -170,7 +170,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`,
   (t) => {
     const str = `<! --<img class="z"/>-->`;
@@ -203,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`,
   (t) => {
     const str = `<!- -z-->`;
@@ -236,7 +236,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`,
   (t) => {
     const str = `<!- -<img class="z"/>-->`;
@@ -272,7 +272,7 @@ t.test(
 // 02. type="only"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`,
   (t) => {
     const str = `<!-[if mso]>
@@ -309,7 +309,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`,
   (t) => {
     const str = `<!--if mso]>
@@ -346,7 +346,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`,
   (t) => {
     const str = `<!--[if mso>
@@ -367,7 +367,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`,
   (t) => {
     const str = `<!--[if mso>]
@@ -388,7 +388,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`,
   (t) => {
     const str = `<!--(if mso)>
@@ -408,7 +408,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`,
   (t) => {
     const str = `<!--{if mso}>
@@ -431,7 +431,7 @@ t.test(
 // 03. type="not"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`,
   (t) => {
     const str = `<!--[if !mso><!-->
@@ -468,7 +468,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`,
   (t) => {
     const str = `<!--  [if !mso]><!-->
@@ -505,7 +505,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`,
   (t) => {
     const str = `<!-[if !mso]><!-->
@@ -542,7 +542,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`,
   (t) => {
     const str = `<!--[if !mso]><!->
@@ -579,7 +579,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`,
   (t) => {
     const str = `<!--[if !mso]><!--z>
@@ -600,7 +600,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`,
   (t) => {
     const str = `<!--[if !mso]>\n\n<!-->
@@ -621,7 +621,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
   (t) => {
     const str = `<!--[if !mso]><!-->
@@ -638,7 +638,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`,
   (t) => {
     const str = `<!--(if !mso)><!-->
@@ -658,7 +658,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`,
   (t) => {
     const str = `<!--{if !mso}><!-->
@@ -678,7 +678,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
   (t) => {
     const str = `<!--[if !mso]><-->
@@ -699,7 +699,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
   (t) => {
     const str = `<!--if !mso><!-->
@@ -719,7 +719,7 @@ t.test(
   }
 );
 
-t.todo(
+tap.todo(
   `03.12 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
   (t) => {
     const str = `<!--[if !mso]><!--><!-->
@@ -736,7 +736,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`,
   (t) => {
     const str = `<!--[if !mso]><!---->
@@ -754,7 +754,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.14 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`,
   (t) => {
     const str = `<!--[if !mso]><!-- -->
@@ -772,7 +772,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`,
   (t) => {
     const str = `<!--[if !mso]><!--\t -->
@@ -793,7 +793,7 @@ t.todo(
 // 04. various cases
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
   (t) => {
     const str = `<!--[if !mso><!--><!--z-->
@@ -846,7 +846,7 @@ t.test(
   }
 );
 
-t.todo(
+tap.todo(
   `04.02 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`,
   (t) => {
     const str = `<!-->

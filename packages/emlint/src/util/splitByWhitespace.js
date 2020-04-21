@@ -8,7 +8,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     from: 0,
     to: str.length,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   let nameStartsAt = null;
   let whitespaceStartsAt = null;

@@ -2,15 +2,15 @@
 // https://www.fileformat.info/info/unicode/char/2008/index.htm
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two PUNCTUATION SPACE characters`, (t) => {
+tap.test(`01.01 - detects two PUNCTUATION SPACE characters`, (t) => {
   const str = "\u2008dlkgjld\u2008j";
   const linter = new Linter();
   const messages = linter.verify(str, {

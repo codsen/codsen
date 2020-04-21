@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateAlign(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
       );
@@ -146,11 +146,7 @@ function attributeValidateAlign(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`148 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-align",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-align" });
         });
       }
     },

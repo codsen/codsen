@@ -1,12 +1,12 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 1. no config - nothing happens
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -19,20 +19,23 @@ t.test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
-  const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-is-present": 1,
-    },
-  });
-  t.same(messages, []);
-  t.equal(applyFixes(str, messages), str);
-  t.end();
-});
+tap.test(
+  `01.02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`,
+  (t) => {
+    const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-is-present": 1,
+      },
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-t.test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -48,7 +51,7 @@ t.test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
 // 02. flagging up tags by their names
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
@@ -88,7 +91,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";

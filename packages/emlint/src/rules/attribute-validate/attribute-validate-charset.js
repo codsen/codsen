@@ -6,7 +6,7 @@ import { knownCharsets } from "../../util/constants";
 
 function attributeValidateCharset(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCharset() ███████████████████████████████████████`
       );
@@ -60,11 +60,7 @@ function attributeValidateCharset(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`062 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charset",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-charset" });
         });
       }
     },

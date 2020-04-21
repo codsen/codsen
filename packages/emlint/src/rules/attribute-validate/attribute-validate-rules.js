@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateRules(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRules() ███████████████████████████████████████`
       );
@@ -52,11 +52,7 @@ function attributeValidateRules(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rules",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rules" });
         });
       }
     },

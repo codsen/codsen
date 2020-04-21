@@ -6,7 +6,7 @@
 
 function badCharacterSetTransmitState(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 147) {
         context.report({
           ruleId: "bad-character-set-transmit-state",

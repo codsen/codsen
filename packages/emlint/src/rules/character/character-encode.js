@@ -102,7 +102,7 @@ function processStr(str, offset, context, mode) {
 
 function characterEncode(context, ...opts) {
   return {
-    text: function (token) {
+    text(token) {
       console.log(
         `███████████████████████████████████████ characterEncode() ███████████████████████████████████████`
       );

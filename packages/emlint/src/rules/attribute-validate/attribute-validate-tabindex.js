@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateTabindex(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateTabindex() ███████████████████████████████████████`
       );
@@ -57,11 +57,10 @@ function attributeValidateTabindex(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`059 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-tabindex",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-tabindex",
+          });
         });
       }
     },

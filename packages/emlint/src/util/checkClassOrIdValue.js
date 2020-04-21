@@ -1,5 +1,5 @@
-import { classNameRegex } from "./constants";
 import { left, right } from "string-left-right";
+import { classNameRegex } from "./constants";
 import splitByWhitespace from "./splitByWhitespace";
 import isSingleSpace from "./isSingleSpace";
 
@@ -10,7 +10,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   console.log(
     `015 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,

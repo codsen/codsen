@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateScope(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateScope() ███████████████████████████████████████`
       );
@@ -51,11 +51,7 @@ function attributeValidateScope(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scope",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-scope" });
         });
       }
     },

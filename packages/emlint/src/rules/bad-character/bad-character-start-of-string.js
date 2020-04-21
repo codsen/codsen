@@ -6,7 +6,7 @@
 
 function badCharacterStartOfString(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 152) {
         context.report({
           ruleId: "bad-character-start-of-string",

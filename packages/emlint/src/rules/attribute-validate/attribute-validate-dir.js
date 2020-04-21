@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateDir(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateDir() ███████████████████████████████████████`
       );
@@ -64,11 +64,7 @@ function attributeValidateDir(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`066 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-dir",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-dir" });
         });
       }
     },

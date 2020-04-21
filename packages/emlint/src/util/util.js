@@ -1,5 +1,6 @@
 // validation functions
 import validateString from "./validateString";
+
 const wholeExtensionRegex = /^\.\w+$/g;
 
 // Regex is not so strict, to cover variations without miliseconds.
@@ -70,34 +71,11 @@ function isLetter(str) {
   );
 }
 
-function pathTwoUp(str) {
-  const foundDots = str.match(/\./g);
-  // console.log(
-  //   `054 pathTwoUp() ${`\u001b[${33}m${`foundDots`}\u001b[${39}m`} = ${JSON.stringify(
-  //     foundDots,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  if (!Array.isArray(foundDots) && foundDots.length > 1) {
-    return null;
-  }
-  // console.log(`063 traverse backwards`);
-  let firstDotMet = false;
-  for (let y = str.length; y--; ) {
-    if (str[y] === ".") {
-      if (firstDotMet) {
-        return str.slice(0, y);
-      }
-      firstDotMet = true;
-    }
-  }
-}
-
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
-  } else if (
+  }
+  if (
     Array.isArray(maybeARulesValue) &&
     maybeARulesValue.length &&
     Number.isInteger(maybeARulesValue[0]) &&
@@ -116,14 +94,14 @@ function isObj(something) {
 
 function isAnEnabledRule(config, ruleId) {
   console.log(
-    `119 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+    `097 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
       config,
       null,
       4
     )}`
   );
   console.log(
-    `126 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+    `104 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
       ruleId,
       null,
       4
@@ -131,18 +109,17 @@ function isAnEnabledRule(config, ruleId) {
   );
 
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
-    console.log(`134 RETURN ${config[ruleId]}`);
+    console.log(`112 RETURN ${config[ruleId]}`);
     return config[ruleId];
-  } else if (
+  }
+  if (
     ruleId.includes("-") &&
     Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])
   ) {
     return config[ruleId.split("-")[0]];
-  } else if (
-    isObj(config) &&
-    Object.prototype.hasOwnProperty.call(config, "all")
-  ) {
-    console.log(`145 RETURN ${config.all}`);
+  }
+  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
+    console.log(`122 RETURN ${config.all}`);
     return config.all;
   }
 
@@ -170,7 +147,6 @@ export {
   fontSizeRegex,
   isoDateRegex,
   linkTypes,
-  pathTwoUp,
   isLetter,
   isObj,
 };

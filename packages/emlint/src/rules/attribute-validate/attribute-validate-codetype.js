@@ -1,12 +1,12 @@
 // rule: attribute-validate-codetype
 // -----------------------------------------------------------------------------
 
-import { validateString } from "../../util/util";
 import db from "mime-db";
+import { validateString } from "../../util/util";
 
 function attributeValidateCodetype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCodetype() ███████████████████████████████████████`
       );
@@ -91,11 +91,10 @@ function attributeValidateCodetype(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`093 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-codetype",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-codetype",
+          });
         });
       }
     },

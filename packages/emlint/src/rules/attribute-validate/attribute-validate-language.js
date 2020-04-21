@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateLanguage(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateLanguage() ███████████████████████████████████████`
       );
@@ -51,11 +51,10 @@ function attributeValidateLanguage(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`053 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-language",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-language",
+          });
         });
       }
     },

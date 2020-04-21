@@ -5,7 +5,7 @@ import { validateString, linkTypes } from "../../util/util";
 
 function attributeValidateRev(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateRev() ███████████████████████████████████████`
       );
@@ -56,11 +56,7 @@ function attributeValidateRev(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rev",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rev" });
         });
       }
     },

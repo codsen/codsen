@@ -5,7 +5,7 @@ import validateColor from "../../util/validateColor";
 
 function attributeValidateVlink(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateVlink() ███████████████████████████████████████`
       );
@@ -50,11 +50,7 @@ function attributeValidateVlink(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vlink",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
         });
       }
     },

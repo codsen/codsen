@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 0`,
   (t) => {
     const str = `<label>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 1`,
   (t) => {
     const str = `<label>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no for, error level 2`,
   (t) => {
     const str = `<label>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy for`,
   (t) => {
     const str = `<label for='abc'>`;
@@ -72,7 +72,7 @@ t.test(
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<label for=" abcde">`;
@@ -98,7 +98,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<label for="abcde ">`;
@@ -124,7 +124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - one for, copious whitespace around`,
   (t) => {
     const str = `<label for="  abcde  \t">`;
@@ -153,7 +153,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<label for="  \t">`;
@@ -178,7 +178,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
   (t) => {
     const str = `<label for="">`;
@@ -203,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - two values, space-separated`,
   (t) => {
     const str = `<label for="abc def">`;
@@ -231,7 +231,7 @@ t.test(
 // 03. name checks
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - value starts with hash`,
   (t) => {
     const str = `<label for="#abc">`;
@@ -258,7 +258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - value starts with hash`,
   (t) => {
     const str = `<label for=".abc">`;
@@ -283,7 +283,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`value checks`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `<label for=".">`;

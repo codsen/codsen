@@ -7,7 +7,7 @@ import { fontSizeRegex } from "../../util/util";
 
 function attributeValidateSize(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateSize() ███████████████████████████████████████`
       );
@@ -58,11 +58,7 @@ function attributeValidateSize(context, ...opts) {
           // this whitespace reporting on every size attribute tag's case
           errorArr.forEach((errorObj) => {
             console.log(`060 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-size",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-size" });
           });
 
           //
@@ -76,14 +72,14 @@ function attributeValidateSize(context, ...opts) {
 
             const extractedVal = node.attribValueRaw.slice(charStart, charEnd);
             console.log(
-              `079 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `075 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedVal,
                 null,
                 4
               )}`
             );
             if (["hr", "input", "select"].includes(node.parent.tagName)) {
-              console.log(`086 validate hr/input/select tag's size`);
+              console.log(`082 validate hr/input/select tag's size`);
               // no need to check whitespace, opts.skipWhitespaceChecks: true
               validateDigitAndUnit(
                 extractedVal,
@@ -95,15 +91,14 @@ function attributeValidateSize(context, ...opts) {
                   skipWhitespaceChecks: true,
                 }
               ).forEach((errorObj) => {
-                console.log(`098 RAISE ERROR`);
-                context.report(
-                  Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-size",
-                  })
-                );
+                console.log(`094 RAISE ERROR`);
+                context.report({
+                  ...errorObj,
+                  ruleId: "attribute-validate-size",
+                });
               });
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
-              console.log(`106 validate font/basefont tag's size`);
+              console.log(`101 validate font/basefont tag's size`);
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,
@@ -131,12 +126,11 @@ function attributeValidateSize(context, ...opts) {
                 }
 
                 errorArr2.forEach((errorObj) => {
-                  console.log(`134 RAISE ERROR`);
-                  context.report(
-                    Object.assign({}, errorObj, {
-                      ruleId: "attribute-validate-size",
-                    })
-                  );
+                  console.log(`129 RAISE ERROR`);
+                  context.report({
+                    ...errorObj,
+                    ruleId: "attribute-validate-size",
+                  });
                 });
               }
             }

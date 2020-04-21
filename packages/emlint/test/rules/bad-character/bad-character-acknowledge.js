@@ -2,14 +2,14 @@
 // https://www.fileformat.info/info/unicode/char/0006/index.htm
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two ACKNOWLEDGE characters`, (t) => {
+tap.test(`01.01 - detects two ACKNOWLEDGE characters`, (t) => {
   const str = "\u0006dlkgjld\u0006j";
   const linter = new Linter();
   const messages = linter.verify(str, {

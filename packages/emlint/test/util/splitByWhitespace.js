@@ -1,10 +1,10 @@
-import t from "tap";
+import tap from "tap";
 import splitByWhitespace from "../../src/util/splitByWhitespace";
 
 // 01. no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -24,7 +24,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -44,7 +44,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -71,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -94,7 +94,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`,
   (t) => {
     const gatheredChunks = [];
@@ -124,7 +124,7 @@ t.test(
 // 02. with custom range
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`custom`}\u001b[${39}m`} - crops inside`,
   (t) => {
     const gatheredChunks = [];

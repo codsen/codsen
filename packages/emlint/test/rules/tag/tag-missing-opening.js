@@ -1,6 +1,6 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // RULE IS TRIGGERED DIRECTLY FROM PARSER!
 // IT'S SOURCE IS IN CODSEN-PARSER, NOT IN src/rules/tag/tag-missing-opening.js
@@ -10,7 +10,7 @@ const { applyFixes } = require("../../../t-util/util");
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -23,7 +23,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
+tap.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -45,7 +45,7 @@ t.test(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
   t.end();
 });
 
-t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
   const str = "z </b>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -67,7 +67,7 @@ t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`,
   (t) => {
     const str = "z </b>";
@@ -96,7 +96,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`,
   (t) => {
     const str = "z </b>";
@@ -125,7 +125,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
   (t) => {
     const str = "<style>\n\n</style>";
@@ -144,7 +144,7 @@ t.test(
 // 02. various
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
   (t) => {
     const str = `<br><br>zzz</br></br>`;
@@ -160,7 +160,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
   (t) => {
     const str = `<br><br>zzz<br>`;

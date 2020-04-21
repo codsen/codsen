@@ -99,8 +99,8 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
 // opts.canBeCommaSeparated  [Bool]  - for example, HTML attribute "accept" is like that
 function validateString(str, idxOffset, originalOpts) {
   console.log(
-    `102 ██ ${`\u001b[${35}m${`validateString() called`}\u001b[${39}m`}; opts = ${JSON.stringify(
-      opts,
+    `102 ██ ${`\u001b[${35}m${`validateString() called`}\u001b[${39}m`}; originalOpts = ${JSON.stringify(
+      originalOpts,
       null,
       4
     )}`
@@ -112,7 +112,7 @@ function validateString(str, idxOffset, originalOpts) {
     quickPermittedValues: null,
     permittedValues: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // we get trimmed string start and end positions, also an encountered errors array
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);

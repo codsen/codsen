@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateSpan(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateSpan() ███████████████████████████████████████`
       );
@@ -46,11 +46,7 @@ function attributeValidateSpan(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-span",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-span" });
         });
       }
     },

@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rows, error level 0`,
   (t) => {
     const str = `<frameset><textarea><div>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rows, error level 1`,
   (t) => {
     const str = `<frameset><textarea><div>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rows, error level 2`,
   (t) => {
     const str = `<frameset><textarea><div>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
   (t) => {
     const str = `<frameset rows="23%,*,45%">`;
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
   (t) => {
     const str = `<textarea rows="4" rows="50">`;
@@ -88,7 +88,7 @@ t.test(
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div rows="50">`;
@@ -112,7 +112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz rows="50" yyy>`;
@@ -139,7 +139,7 @@ t.test(
 // 03. frameset
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - right value, single px value, no units`,
   (t) => {
     const str = `<frameset rows="100">`;
@@ -155,7 +155,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - right value, single px value, with units`,
   (t) => {
     const str = `<frameset rows="100px">`;
@@ -181,7 +181,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - right value, perc, one`,
   (t) => {
     const str = `<frameset rows="100%">`;
@@ -197,7 +197,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - right value, perc, two`,
   (t) => {
     const str = `<frameset rows="50.5%,49.5%">`;
@@ -213,7 +213,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - right value, perc, two`,
   (t) => {
     const str = `<frameset rows="50%, 50%">`;
@@ -239,7 +239,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - asterisk`,
   (t) => {
     const str = `<frameset rows="*">`;
@@ -255,7 +255,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - value and asterisk`,
   (t) => {
     const str = `<frameset rows="30%,*,20%">`;
@@ -271,20 +271,23 @@ t.test(
   }
 );
 
-t.test(`03.08 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - mixed`, (t) => {
-  const str = `<frameset rows="30,*,20%">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-rows": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
-  t.end();
-});
+tap.test(
+  `03.08 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - mixed`,
+  (t) => {
+    const str = `<frameset rows="30,*,20%">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-rows": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - one wrong value`,
   (t) => {
     const str = `<frameset rows="zzz">`;
@@ -309,7 +312,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - one wrong value`,
   (t) => {
     const str = `<frameset rows="*,zzz">`;
@@ -334,7 +337,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - one wrong value`,
   (t) => {
     const str = `<frameset rows="*,zzz,100">`;
@@ -359,7 +362,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.12 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - two wrong values, with whitespace`,
   (t) => {
     const str = `<frameset rows=" *, zzz ,100,  ">`;
@@ -423,7 +426,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.13 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - one wrong value`,
   (t) => {
     const str = `<frameset rows="9rem">`;
@@ -448,7 +451,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.14 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - two asterisks`,
   (t) => {
     const str = `<frameset rows="**">`;
@@ -473,7 +476,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.15 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - two asterisks`,
   (t) => {
     const str = `<frameset rows="******">`;
@@ -501,7 +504,7 @@ t.test(
 // 04. textarea
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`,
   (t) => {
     const str = `<textarea rows="0">`;
@@ -517,7 +520,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`,
   (t) => {
     const str = `<textarea rows="10">`;
@@ -533,7 +536,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value, whitespace`,
   (t) => {
     const str = `<textarea rows=" 10 ">`;
@@ -562,49 +565,55 @@ t.test(
   }
 );
 
-t.test(`04.04 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, (t) => {
-  const str = `<textarea rows="100%">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-rows": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-rows",
-      idxFrom: 19,
-      idxTo: 20,
-      message: `Should be integer, no units.`,
-      fix: null,
-    },
-  ]);
-  t.end();
-});
+tap.test(
+  `04.04 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`,
+  (t) => {
+    const str = `<textarea rows="100%">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-rows": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-rows",
+        idxFrom: 19,
+        idxTo: 20,
+        message: `Should be integer, no units.`,
+        fix: null,
+      },
+    ]);
+    t.end();
+  }
+);
 
-t.test(`04.05 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, (t) => {
-  const str = `<textarea rows="z">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-rows": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-rows",
-      idxFrom: 16,
-      idxTo: 17,
-      message: `Should be integer, no units.`,
-      fix: null,
-    },
-  ]);
-  t.end();
-});
+tap.test(
+  `04.05 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`,
+  (t) => {
+    const str = `<textarea rows="z">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-rows": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-rows",
+        idxFrom: 16,
+        idxTo: 17,
+        message: `Should be integer, no units.`,
+        fix: null,
+      },
+    ]);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - missing value`,
   (t) => {
     const str = `<textarea rows="">`;
@@ -628,7 +637,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`,
   (t) => {
     const str = `<textarea rows="1.5">`;
@@ -652,7 +661,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`,
   (t) => {
     const str = `<textarea rows="1rem">`;
@@ -676,7 +685,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - negative number`,
   (t) => {
     const str = `<textarea rows="-1">`;

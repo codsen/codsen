@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 0`,
   (t) => {
     ["input", "option", "param", "button", "li"].forEach((tagName) => {
@@ -23,7 +23,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 1`,
   (t) => {
     ["input", "option", "param", "button", "li"].forEach((tagName) => {
@@ -41,7 +41,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 2`,
   (t) => {
     ["input", "option", "param", "button", "li"].forEach((tagName) => {
@@ -62,7 +62,7 @@ t.test(
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<input value=" 1">`;
@@ -88,7 +88,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<input value="7 ">`;
@@ -114,7 +114,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   (t) => {
     const str = `<input value="  6  ">`;
@@ -143,7 +143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<input value="  \t">`;
@@ -171,7 +171,7 @@ t.test(
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div value="9">`;
@@ -195,7 +195,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz value="9" yyy>`;
@@ -222,7 +222,7 @@ t.test(
 // 04. input/option/param/button - CDATA type
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${35}m${`value - input/option/param/button`}\u001b[${39}m`} - string as value`,
   (t) => {
     const str = `<input value="Submit form">`;
@@ -242,7 +242,7 @@ t.test(
 // 05. li
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - string as value`,
   (t) => {
     const str = `<li value="z">`;
@@ -267,7 +267,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - dot as value`,
   (t) => {
     const str = `<li value=".">`;
@@ -292,7 +292,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - a rational number`,
   (t) => {
     const str = `<li value="1.5">`;
@@ -317,7 +317,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - with units`,
   (t) => {
     const str = `<li value="1px">`;
@@ -341,7 +341,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - zero`,
   (t) => {
     const str = `<li value="0">`;

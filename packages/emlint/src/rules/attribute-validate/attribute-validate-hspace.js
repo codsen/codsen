@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateHspace(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHspace() ███████████████████████████████████████`
       );
@@ -46,11 +46,7 @@ function attributeValidateHspace(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hspace",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-hspace" });
         });
       }
     },

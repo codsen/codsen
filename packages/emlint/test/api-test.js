@@ -1,12 +1,12 @@
-const t = require("tap");
-const { Linter, version } = require("../dist/emlint.umd");
+import tap from "tap";
+import { Linter, version } from "../dist/emlint.umd";
 
-t.test("shows version from UMD build", (t) => {
+tap.test("shows version from UMD build", (t) => {
   t.match(version, /\d+\.\d+\.\d+/g);
   t.end();
 });
 
-t.test("config is truthy and is not an object", (t) => {
+tap.test("config is truthy and is not an object", (t) => {
   const linter = new Linter();
   const error1 = t.throws(() => {
     linter.verify("a", true);
@@ -15,13 +15,13 @@ t.test("config is truthy and is not an object", (t) => {
   t.end();
 });
 
-t.test("config is an empty object", (t) => {
+tap.test("config is an empty object", (t) => {
   const linter = new Linter();
   t.same(linter.verify("a", {}), []);
   t.end();
 });
 
-t.test("config is falsey", (t) => {
+tap.test("config is falsey", (t) => {
   const linter = new Linter();
   t.same(linter.verify("a", null), []);
   t.same(linter.verify("a", false), []);
@@ -31,7 +31,7 @@ t.test("config is falsey", (t) => {
   t.end();
 });
 
-t.test(`config is an object with key without "rules" key`, (t) => {
+tap.test(`config is an object with key without "rules" key`, (t) => {
   const linter = new Linter();
   t.throws(() => {
     linter.verify("a", { a: "z" });

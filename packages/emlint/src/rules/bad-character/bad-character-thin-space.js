@@ -6,7 +6,7 @@
 
 function badCharacterThinSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8201) {
         context.report({
           ruleId: "bad-character-thin-space",

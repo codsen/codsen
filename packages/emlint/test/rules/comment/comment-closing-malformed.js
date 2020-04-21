@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. type="simple"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - off, missing dash`,
   (t) => {
     const str = "<!--z->";
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, text inside`,
   (t) => {
     const str = "<!--z->";
@@ -56,7 +56,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, tag inside`,
   (t) => {
     const str = `<!--<img class="z"/>->`;
@@ -91,7 +91,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<!--<img class="z"/>-- >`;
@@ -126,7 +126,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue excl mark`,
   (t) => {
     const str = `<!--<img class="z"/>--!>`;
@@ -161,7 +161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue single character, z`,
   (t) => {
     const str = `<!--<img class="z"/>--z>`;
@@ -205,7 +205,7 @@ t.test(
 //     <img src="fallback">
 // <![endif]-->
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missing`,
   (t) => {
     const str = "<!--[if mso]>x<[endif]-->";
@@ -221,7 +221,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl mark missing`,
   (t) => {
     const str = "<!--[if mso]>x<[endif]-->";
@@ -254,7 +254,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
   (t) => {
     const str = "<!--[if mso]>x<1[endif]-->";
@@ -287,7 +287,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
   (t) => {
     const str = "<!--[if mso]>x<![ndif]-->";
@@ -320,7 +320,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, tight`,
   (t) => {
     const str = "<!--[if mso]>x<![endif]--<a>";
@@ -353,7 +353,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`,
   (t) => {
     const str = "<!--[if mso]>x<![endif]--\n\n<a>";
@@ -395,7 +395,7 @@ t.test(
 //     <img src="gif"/>
 // <!--<![endif]-->
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`;
@@ -429,7 +429,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><--<![endif]-->`;
@@ -462,7 +462,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!-<![endif]-->`;
@@ -495,7 +495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!- -<![endif]-->`;
@@ -528,7 +528,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--\n<![endif]-->`;
@@ -561,7 +561,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<[endif]-->`;
@@ -577,7 +577,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<!endif]-->`;
@@ -610,7 +610,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<![ndif]-->`;

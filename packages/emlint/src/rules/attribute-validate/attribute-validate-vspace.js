@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateVspace(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateVspace() ███████████████████████████████████████`
       );
@@ -46,11 +46,7 @@ function attributeValidateVspace(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vspace",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-vspace" });
         });
       }
     },

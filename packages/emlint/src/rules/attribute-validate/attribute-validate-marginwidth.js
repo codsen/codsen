@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateMarginwidth(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateMarginwidth() ███████████████████████████████████████`
       );
@@ -46,11 +46,10 @@ function attributeValidateMarginwidth(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`048 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginwidth",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-marginwidth",
+          });
         });
       }
     },

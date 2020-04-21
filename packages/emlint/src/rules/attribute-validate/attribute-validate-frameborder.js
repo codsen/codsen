@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateFrameborder(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateFrameborder() ███████████████████████████████████████`
       );
@@ -56,11 +56,10 @@ function attributeValidateFrameborder(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`058 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frameborder",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-frameborder",
+          });
         });
       }
     },

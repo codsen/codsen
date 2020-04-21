@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateLongdesc(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateLongdesc() ███████████████████████████████████████`
       );
@@ -53,11 +53,10 @@ function attributeValidateLongdesc(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`055 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-longdesc",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-longdesc",
+          });
         });
       }
     },

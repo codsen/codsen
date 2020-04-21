@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateScheme(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateScheme() ███████████████████████████████████████`
       );
@@ -47,11 +47,7 @@ function attributeValidateScheme(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`049 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scheme",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-scheme" });
         });
       }
     },

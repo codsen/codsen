@@ -5,7 +5,7 @@ import validateVoid from "../../util/validateVoid";
 
 function attributeValidateChecked(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateChecked() ███████████████████████████████████████`
       );
@@ -51,27 +51,22 @@ function attributeValidateChecked(context, ...originalOpts) {
           });
         } else {
           // validate the value (or absence thereof)
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: {
-                type: ["checkbox", "radio"],
-              },
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: {
+              type: ["checkbox", "radio"],
+            },
+          });
         }
 
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`069 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-checked",
-              })
-            );
+            console.log(`065 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-checked",
+            });
           });
         }
       }

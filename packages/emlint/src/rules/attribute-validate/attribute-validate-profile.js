@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateProfile(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateProfile() ███████████████████████████████████████`
       );
@@ -42,11 +42,10 @@ function attributeValidateProfile(context, ...opts) {
             multipleOK: true,
           }).forEach((errorObj) => {
             console.log(`044 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-profile",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-profile",
+            });
           });
         }
       }

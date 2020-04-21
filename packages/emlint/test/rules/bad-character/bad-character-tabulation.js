@@ -3,15 +3,15 @@
 // https://www.fileformat.info/info/unicode/char/0009/index.htm
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // 1. no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`,
   (t) => {
     const str = "\tdlkgjld\tj";
@@ -27,7 +27,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`,
   (t) => {
     const str = "\tdlkgjld\tj";
@@ -43,7 +43,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`,
   (t) => {
     const str = "\tdlkgjld\tj";
@@ -84,7 +84,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`,
   (t) => {
     const str = "\tdlkgjld\tj";
@@ -128,7 +128,7 @@ t.test(
 // 02. with config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`,
   (t) => {
     const str = "\tdlkgjld\tj";
@@ -169,7 +169,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`,
   (t) => {
     const str = "\t\t\tdlkgjld\tj";

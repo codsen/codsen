@@ -5,13 +5,13 @@ import validateScript from "../../util/validateScript";
 
 function attributeValidateOnmousemove(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateOnmousemove() ███████████████████████████████████████`
       );
       console.log(
-        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-          opts,
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
           null,
           4
         )}`
@@ -25,7 +25,7 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
       );
 
       // preparing for the future:
-      const opts = Object.assign({}, originalOpts);
+      // const opts = { ...originalOpts };
 
       if (node.attribName === "onmousemove") {
         // validate the parent
@@ -73,11 +73,10 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
 
           errorArr.forEach((errorObj) => {
             console.log(`075 attributeValidateOnmousemove(): RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmousemove",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmousemove",
+            });
           });
         }
       }

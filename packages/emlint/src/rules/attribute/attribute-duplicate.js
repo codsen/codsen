@@ -1,8 +1,8 @@
 // rule: attribute-duplicate
 // -----------------------------------------------------------------------------
 
-import splitByWhitespace from "../../util/splitByWhitespace";
 import { left } from "string-left-right";
+import splitByWhitespace from "../../util/splitByWhitespace";
 
 // it flags up duplicate HTML attributes
 
@@ -10,7 +10,7 @@ function attributeDuplicate(context, ...opts) {
   const attributesWhichCanBeMerged = ["id", "class"];
 
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ attributeDuplicate() ███████████████████████████████████████`
       );

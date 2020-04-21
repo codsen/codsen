@@ -2,15 +2,15 @@
 // https://www.fileformat.info/info/unicode/char/fffd/index.htm
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-t.test(`01.01 - detects two REPLACEMENT CHARACTERS`, (t) => {
+tap.test(`01.01 - detects two REPLACEMENT CHARACTERS`, (t) => {
   const str = "\uFFFDdlkgjld\uFFFDj";
   const linter = new Linter();
   const messages = linter.verify(str, {

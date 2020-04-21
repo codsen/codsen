@@ -12,7 +12,7 @@ import { left, right } from "string-left-right";
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagSpaceAfterOpeningBracket() ███████████████████████████████████████`
       );

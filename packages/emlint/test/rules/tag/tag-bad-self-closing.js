@@ -1,15 +1,15 @@
 // rule: tag-bad-self-closing
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 1. basics
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - rule is off`,
   (t) => {
     const str = `<table/>`;
@@ -25,7 +25,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - severity: warn`,
   (t) => {
     const str = `<table/>`;
@@ -54,7 +54,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - with attributes`,
   (t) => {
     const str = `<table width="1" border="0" cellpadding="0" cellspacing="0"/>
@@ -145,7 +145,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in front`,
   (t) => {
     const str = `<div  />`;
@@ -162,7 +162,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in between`,
   (t) => {
     const str = `<div/    >`;
@@ -179,7 +179,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace everywhere`,
   (t) => {
     const str = `<div   /    >`;
@@ -196,7 +196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - really excessive whitespace everywhere`,
   (t) => {
     const str = `<div\t\t\t\n\n\n\r\r\r\t\t\t/\t\t\t\r\r\r\r\r\r\r\r\t\t\t\t\t>`;
@@ -213,7 +213,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - group rule "tag" should be sensible`,
   (t) => {
     const str = `<div   /    >`;
@@ -229,7 +229,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - "all rules" setting should be sensible`,
   (t) => {
     const str = `<div   /    >`;

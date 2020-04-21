@@ -1,12 +1,12 @@
 // rule: attribute-validate-accept
 // -----------------------------------------------------------------------------
 
-import { validateString, wholeExtensionRegex } from "../../util/util";
 import db from "mime-db";
+import { validateString, wholeExtensionRegex } from "../../util/util";
 
 function attributeValidateAccept(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAccept() ███████████████████████████████████████`
       );
@@ -68,11 +68,7 @@ function attributeValidateAccept(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`070 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-accept" });
         });
       }
     },

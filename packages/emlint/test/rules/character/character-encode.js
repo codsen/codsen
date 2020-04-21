@@ -1,15 +1,15 @@
 // rule: character-encode
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
 
-const { applyFixes } = require("../../../t-util/util");
+import { applyFixes } from "../../../t-util/util";
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "fsdhkfdfgh kj ";
@@ -25,7 +25,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
@@ -57,7 +57,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
@@ -92,7 +92,7 @@ t.test(
 // 02. basic tests, no config
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`,
   (t) => {
     const str = "£100";
@@ -124,7 +124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
   (t) => {
     const str = "£100";
@@ -156,7 +156,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
   (t) => {
     const str = "£100";
@@ -188,7 +188,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
   (t) => {
     const str = "£100";
@@ -220,7 +220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
   (t) => {
     const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
@@ -239,7 +239,7 @@ t.test(
 // 03. Email-unfriendly entities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
@@ -271,7 +271,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
@@ -303,7 +303,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
@@ -338,7 +338,7 @@ t.test(
 // 04. visible HTML-unfriendly characters within ASCII
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
   (t) => {
     const str = `><'"&`;
@@ -403,7 +403,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
   (t) => {
     const str = `><'"&`;
@@ -471,7 +471,7 @@ t.test(
 // 05. mixed rules
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
   (t) => {
     const str = "a<!--b->c";
@@ -487,7 +487,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
   (t) => {
     const str = "a<!--b->c";

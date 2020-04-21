@@ -1,6 +1,6 @@
 import findMalformed from "string-find-malformed";
-import splitByWhitespace from "./splitByWhitespace";
 import { matchRight } from "string-match-left-right";
+import splitByWhitespace from "./splitByWhitespace";
 
 function validateCommentOpening(token) {
   const reference = {
@@ -120,7 +120,7 @@ function validateCommentOpening(token) {
           })
         ) {
           wrongBracketType = true;
-          finalIdxTo++;
+          finalIdxTo += 1;
           console.log(
             `125 validateCommentOpening(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} finalIdxTo = ${finalIdxTo}`
           );
@@ -151,7 +151,7 @@ function validateCommentOpening(token) {
         // "<!--{if" or "<!--(if"
         wrongBracketType
       ) {
-        finalIdxFrom--;
+        finalIdxFrom -= 1;
       }
 
       console.log(
@@ -180,7 +180,7 @@ function validateCommentOpening(token) {
         // and remove that bracket too
         let rangeStart = i + 1;
         if ("})".includes(token.value[i]) && wrongBracketType) {
-          rangeStart--;
+          rangeStart -= 1;
         }
         if (token.value.slice(i + 1) !== "]>") {
           errorArr.push({

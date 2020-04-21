@@ -6,7 +6,7 @@
 
 function badCharacterActivateSymmetricSwapping(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8299) {
         context.report({
           ruleId: "bad-character-activate-symmetric-swapping",

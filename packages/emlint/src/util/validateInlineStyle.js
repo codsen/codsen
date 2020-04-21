@@ -2,15 +2,7 @@ import checkForWhitespace from "./checkForWhitespace";
 
 function validateInlineStyle(str, idxOffset, opts) {
   console.log(
-    `005 ${`\u001b[${35}m${`validateInlineStyle() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
-      [...arguments],
-      null,
-      4
-    )}`
-  );
-
-  console.log(
-    `013 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `005 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4

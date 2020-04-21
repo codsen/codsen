@@ -9,7 +9,7 @@ import { isObj } from "../../util/util";
 // function commentConditionalNested(context, ...opts) {
 function commentConditionalNested(context) {
   return {
-    ast: function (node) {
+    ast(node) {
       console.log(
         `███████████████████████████████████████ commentConditionalNested() ███████████████████████████████████████`
       );

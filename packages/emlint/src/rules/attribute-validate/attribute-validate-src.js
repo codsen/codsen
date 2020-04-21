@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateSrc(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateSrc() ███████████████████████████████████████`
       );
@@ -40,11 +40,7 @@ function attributeValidateSrc(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`042 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-src",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-src" });
           });
         }
       }

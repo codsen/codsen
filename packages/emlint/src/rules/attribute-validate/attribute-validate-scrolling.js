@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateScrolling(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateScrolling() ███████████████████████████████████████`
       );
@@ -55,11 +55,10 @@ function attributeValidateScrolling(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`057 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scrolling",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-scrolling",
+          });
         });
       }
     },

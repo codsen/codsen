@@ -5,7 +5,7 @@ import { validateString } from "../../util/util";
 
 function attributeValidateValuetype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValuetype() ███████████████████████████████████████`
       );
@@ -44,11 +44,10 @@ function attributeValidateValuetype(context, ...opts) {
             }
           ).forEach((errorObj) => {
             console.log(`046 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valuetype",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-valuetype",
+            });
           });
         }
       }

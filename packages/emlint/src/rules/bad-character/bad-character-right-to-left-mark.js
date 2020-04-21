@@ -6,7 +6,7 @@
 
 function badCharacterRightToLeftMark(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8207) {
         context.report({
           ruleId: "bad-character-right-to-left-mark",

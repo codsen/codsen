@@ -1,12 +1,12 @@
 // rule: attribute-validate-hreflang
 // -----------------------------------------------------------------------------
 
-import checkForWhitespace from "../../util/checkForWhitespace";
 import isLangCode from "is-language-code";
+import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateHreflang(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHreflang() ███████████████████████████████████████`
       );
@@ -84,11 +84,10 @@ function attributeValidateHreflang(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`086 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hreflang",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-hreflang",
+          });
         });
       }
     },

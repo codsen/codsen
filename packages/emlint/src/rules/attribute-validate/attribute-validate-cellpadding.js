@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCellpadding(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCellpadding() ███████████████████████████████████████`
       );
@@ -50,11 +50,10 @@ function attributeValidateCellpadding(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`052 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellpadding",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-cellpadding",
+          });
         });
       }
     },

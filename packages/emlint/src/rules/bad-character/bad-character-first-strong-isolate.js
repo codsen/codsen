@@ -6,7 +6,7 @@
 
 function badCharacterFirstStrongIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8296) {
         context.report({
           ruleId: "bad-character-first-strong-isolate",

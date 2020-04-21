@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateAction(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateAction() ███████████████████████████████████████`
       );
@@ -38,11 +38,10 @@ function attributeValidateAction(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`040 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-action",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-action",
+            });
           });
         }
       }

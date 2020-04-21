@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no coords, error level 0`,
   (t) => {
     const str = `<area><a><div>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no coords, error level 1`,
   (t) => {
     const str = `<area><a><div>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no coords, error level 2`,
   (t) => {
     const str = `<area><a><div>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, area`,
   (t) => {
     const str = `<area shape="rect" coords="0,0,82,126" href="sun.html" alt="sun">`;
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, a`,
   (t) => {
     const str = `<a href="venus.htm" shape="circle" coords="124,58,8">Venus</a>`;
@@ -88,7 +88,7 @@ t.test(
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div coords="50">`;
@@ -112,7 +112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz coords="50" yyy>`;
@@ -139,7 +139,7 @@ t.test(
 // 03. area
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rect, correct`,
   (t) => {
     const str = `<area shape="rect" coords="0,0,82,126" href="sun.htm" alt="Sun">`;
@@ -155,7 +155,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rect, 1 coord`,
   (t) => {
     const str = `<area shape="rect" coords="0" href="sun.htm" alt="Sun">`;
@@ -179,7 +179,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rect, 3 coords`,
   (t) => {
     const str = `<area shape="rect" coords="0,82,126" href="sun.htm" alt="Sun">`;
@@ -203,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rect, 5 coords`,
   (t) => {
     const str = `<area shape="rect" coords="0,0,0,82,126" href="sun.htm" alt="Sun">`;
@@ -227,7 +227,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - circle, correct`,
   (t) => {
     const str = `<area shape="circle" coords="124,58,8" href="venus.htm" alt="Venus">`;
@@ -243,7 +243,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - circle, 1 coord`,
   (t) => {
     const str = `<area shape="circle" coords="124" href="venus.htm" alt="Venus">`;
@@ -267,7 +267,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - circle, 4 coords`,
   (t) => {
     const str = `<area shape="circle" coords="0,124,58,8" href="venus.htm" alt="Venus">`;
@@ -291,7 +291,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - poly, correct`,
   (t) => {
     const str = `<area shape="poly" coords="54,241,6,97,36,107,72,217"
@@ -309,7 +309,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - poly, uneven count`,
   (t) => {
     const str = `<area shape="poly" coords="54,241,6,97,36,107,72"
@@ -335,7 +335,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - poly, only one`,
   (t) => {
     const str = `<area shape="poly" coords="54"
@@ -361,7 +361,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rogue letter`,
   (t) => {
     const str = `<area shape="rect" coords="0,82a,126" href="sun.htm" alt="Sun">`;
@@ -385,7 +385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<area shape="rect" coords="0,82 ,126" href="sun.htm" alt="Sun">`;
@@ -414,7 +414,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.12 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<area shape="rect" coords="0,8.2,126" href="sun.htm" alt="Sun">`;
@@ -441,20 +441,23 @@ t.test(
 // 04. a
 // -----------------------------------------------------------------------------
 
-t.test(`04.01 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - a right value`, (t) => {
-  const str = `<a href="sun.htm" shape="rect" coords="0,0,82,126">The Sun</a>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-coords": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
-  t.end();
-});
+tap.test(
+  `04.01 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - a right value`,
+  (t) => {
+    const str = `<a href="sun.htm" shape="rect" coords="0,0,82,126">The Sun</a>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-coords": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - circle, two values`,
   (t) => {
     const str = `<a href="venus.htm" shape="circle" coords="124,58">Venus</a>`;

@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateCodebase(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCodebase() ███████████████████████████████████████`
       );
@@ -40,11 +40,10 @@ function attributeValidateCodebase(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`042 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-codebase",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-codebase",
+            });
           });
         }
       }

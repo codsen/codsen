@@ -6,7 +6,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateValue(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateValue() ███████████████████████████████████████`
       );
@@ -35,44 +35,38 @@ function attributeValidateValue(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
-        } else {
-          // if parent is OK
-          if (node.parent.tagName === "li") {
-            // value is number
-            validateDigitAndUnit(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                type: "integer",
-                theOnlyGoodUnits: [],
-                customGenericValueError: "Should be integer, no units.",
-                zeroOK: false,
-                customPxMessage: `Sequence number should not be in pixels.`,
-              }
-            ).forEach((errorObj) => {
-              console.log(`053 RAISE ERROR`);
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value",
-                })
-              );
-            });
-          } else {
-            // all others - value is CDATA
-            const { errorArr } = checkForWhitespace(
-              node.attribValueRaw,
-              node.attribValueStartsAt
-            );
+        }
 
-            errorArr.forEach((errorObj) => {
-              console.log(`068 RAISE ERROR`);
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value",
-                })
-              );
+        // if parent is OK
+        else if (node.parent.tagName === "li") {
+          // value is number
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: false,
+            customPxMessage: `Sequence number should not be in pixels.`,
+          }).forEach((errorObj) => {
+            console.log(`050 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-value",
             });
-          }
+          });
+        } else {
+          // all others - value is CDATA
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+
+          errorArr.forEach((errorObj) => {
+            console.log(`064 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-value",
+            });
+          });
         }
       }
     },

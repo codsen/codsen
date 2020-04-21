@@ -5,7 +5,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateName(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateName() ███████████████████████████████████████`
       );
@@ -64,11 +64,7 @@ function attributeValidateName(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`066 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-name",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-name" });
         });
       }
     },

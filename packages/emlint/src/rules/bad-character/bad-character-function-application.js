@@ -6,7 +6,7 @@
 
 function badCharacterFunctionApplication(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8289) {
         context.report({
           ruleId: "bad-character-function-application",

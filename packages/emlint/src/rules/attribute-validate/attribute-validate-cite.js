@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateCite(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateCite() ███████████████████████████████████████`
       );
@@ -38,11 +38,7 @@ function attributeValidateCite(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`040 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cite",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-cite" });
           });
         }
       }

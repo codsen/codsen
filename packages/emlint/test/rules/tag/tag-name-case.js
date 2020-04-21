@@ -1,15 +1,15 @@
 // rule: tag-name-case
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 01. recognised tag name
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag`,
   (t) => {
     const str = `<tablE>`;
@@ -36,7 +36,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag with attrs`,
   (t) => {
     const str = `<tablE class="zzz">`;
@@ -63,7 +63,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `</tablE>`;
@@ -90,7 +90,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `</tablE/>`;
@@ -117,7 +117,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `<tablE/>`;
@@ -148,7 +148,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 // https://www.w3.org/QA/2002/04/valid-dtd-list.html
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, correct`,
   (t) => {
     const str = `<!DOCTYPE html>`;
@@ -164,7 +164,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, incorrect case`,
   (t) => {
     const str = `<!doctype html>`;
@@ -180,7 +180,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, correct`,
   (t) => {
     const str = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -197,7 +197,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, incorrect case`,
   (t) => {
     const str = `<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -217,7 +217,7 @@ t.test(
 // 03. CDATA
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, correct`,
   (t) => {
     const str = `<![CDATA[x<y]]>`;
@@ -233,7 +233,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, incorrect case`,
   (t) => {
     const str = `<![cdata[x<y]]>`;

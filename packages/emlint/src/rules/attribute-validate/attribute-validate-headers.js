@@ -6,7 +6,7 @@ import checkForWhitespace from "../../util/checkForWhitespace";
 
 function attributeValidateHeaders(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHeaders() ███████████████████████████████████████`
       );
@@ -81,11 +81,10 @@ function attributeValidateHeaders(context, ...opts) {
 
           errorArr.forEach((errorObj) => {
             console.log(`083 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-headers",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-headers",
+            });
           });
         }
       }

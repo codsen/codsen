@@ -1,6 +1,6 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. type="only"
 // -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ const { applyFixes } = require("../../../t-util/util");
 //     <img src="fallback"/>
 // <![endif]-->
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--tralala--><![endif]-->`;
@@ -49,7 +49,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`,
   (t) => {
     const str = `<!--[if mso]>
@@ -89,7 +89,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`,
   (t) => {
     const str = `<!--[if mso]>
@@ -145,7 +145,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`,
   (t) => {
     const str = `<!--[if mso]>
@@ -197,7 +197,7 @@ t.test(
 //     <img src="gif"/>
 // <!--<![endif]-->
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--><!--tralala--><!--<![endif]-->`;
@@ -235,7 +235,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`,
   (t) => {
     const str = `<!--[if mso]><!-->
@@ -275,7 +275,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`,
   (t) => {
     const str = `<!--[if mso]><!-->
@@ -331,7 +331,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`,
   (t) => {
     const str = `<!--[if mso]><!-->

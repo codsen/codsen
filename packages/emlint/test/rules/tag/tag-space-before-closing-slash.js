@@ -1,15 +1,15 @@
 // rule: tag-space-before-closing-slash
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
-// const astDeepContains = require("ast-deep-contains");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
+// import astDeepContains from "ast-deep-contains");
 
 // 1. no opts
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, warning`,
   (t) => {
     const str = "<br />";
@@ -38,7 +38,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, error`,
   (t) => {
     const str = "<br />";
@@ -67,7 +67,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, warning`,
   (t) => {
     const str = "<br/>";
@@ -83,7 +83,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, error`,
   (t) => {
     const str = "<br/>";
@@ -102,7 +102,7 @@ t.test(
 // 02. space present
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, warning`,
   (t) => {
     const str = "<br />";
@@ -131,7 +131,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, error`,
   (t) => {
     const str = "<br />";
@@ -160,7 +160,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, warning`,
   (t) => {
     const str = "<br />";
@@ -176,7 +176,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, error`,
   (t) => {
     const str = "<br />";
@@ -195,7 +195,7 @@ t.test(
 // 03. space missing
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, warning`,
   (t) => {
     const str = "<br/>";
@@ -224,7 +224,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, error`,
   (t) => {
     const str = "<br/>";
@@ -253,7 +253,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, warning`,
   (t) => {
     const str = "<br/>";
@@ -269,7 +269,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, error`,
   (t) => {
     const str = "<br/>";
@@ -288,7 +288,7 @@ t.test(
 // 04. many tags with different situation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=always`,
   (t) => {
     const str = "<br/><hr/><hr /><br/>";
@@ -342,7 +342,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a space`,
   (t) => {
     const str = "<br/><hr/><hr  /><br/>";
@@ -372,7 +372,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a tab`,
   (t) => {
     const str = "<br/><hr/><hr\t/><br/>";

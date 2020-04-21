@@ -5,7 +5,7 @@ import validateUri from "../../util/validateUri";
 
 function attributeValidateUsemap(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateUsemap() ███████████████████████████████████████`
       );
@@ -36,11 +36,10 @@ function attributeValidateUsemap(context, ...opts) {
             multipleOK: false,
           }).forEach((errorObj) => {
             console.log(`038 RAISE ERROR`);
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-usemap",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-usemap",
+            });
           });
         }
       }

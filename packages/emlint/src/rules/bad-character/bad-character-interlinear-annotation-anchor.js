@@ -6,7 +6,7 @@
 
 function badCharacterInterlinearAnnotationAnchor(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65529) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-anchor",

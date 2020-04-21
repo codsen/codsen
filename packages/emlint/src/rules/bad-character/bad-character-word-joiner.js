@@ -6,7 +6,7 @@
 
 function badCharacterWordJoiner(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8288) {
         context.report({
           ruleId: "bad-character-word-joiner",

@@ -5,7 +5,7 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateHeight(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateHeight() ███████████████████████████████████████`
       );
@@ -52,11 +52,7 @@ function attributeValidateHeight(context, ...opts) {
 
         errorArr.forEach((errorObj) => {
           console.log(`054 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-height",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-height" });
         });
       }
     },

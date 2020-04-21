@@ -1,16 +1,16 @@
 // rule: tag-bad-self-closing
 // -----------------------------------------------------------------------------
 
-const t = require("tap");
-const { Linter } = require("../dist/emlint.cjs");
-const { applyFixes } = require("../t-util/util");
+import tap from "tap";
+import { Linter } from "../dist/emlint.esm";
+import { applyFixes } from "../t-util/util";
 
 // 1. all examples from Apple Safari Web Content Guide
 //
 // https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW4
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`Apple Safari Web Content Guide`}\u001b[${39}m`} - no rules should be triggered`,
   (t) => {
     const exampleSnippets = [

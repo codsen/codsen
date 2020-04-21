@@ -6,7 +6,7 @@
 
 function badCharacterEnQuad(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8192) {
         context.report({
           ruleId: "bad-character-en-quad",

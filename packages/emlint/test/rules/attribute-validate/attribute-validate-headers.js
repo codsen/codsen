@@ -1,11 +1,11 @@
-const t = require("tap");
-const { Linter } = require("../../../dist/emlint.cjs");
-const { applyFixes } = require("../../../t-util/util");
+import tap from "tap";
+import { Linter } from "../../../dist/emlint.esm";
+import { applyFixes } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no headers, error level 0`,
   (t) => {
     const str = `<td>`;
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no headers, error level 1`,
   (t) => {
     const str = `<td>`;
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no headers, error level 2`,
   (t) => {
     const str = `<td>`;
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy headers`,
   (t) => {
     const str = `<td headers='abc def'>`;
@@ -72,7 +72,7 @@ t.test(
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<td headers=" abc">`;
@@ -98,7 +98,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<td headers="abc ">`;
@@ -124,7 +124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - one id, copious whitespace around`,
   (t) => {
     const str = `<td headers="  abc  ">`;
@@ -153,7 +153,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - many ides, copious whitespace around`,
   (t) => {
     const str = `<td headers="  abc  ha \t fl  \n  ">`;
@@ -200,7 +200,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<td headers="  \t">`;
@@ -225,7 +225,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
   (t) => {
     const str = `<td headers="">`;
@@ -253,7 +253,7 @@ t.test(
 // 03. id name checks
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - healthy`,
   (t) => {
     const str = `<td headers="ab cd ef">`;
@@ -269,7 +269,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - mix 1`,
   (t) => {
     const str = `<td headers="ab \t3a e.f">`;
@@ -310,7 +310,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - starts with dot`,
   (t) => {
     const str = `<td headers=".abc">`;
@@ -335,7 +335,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `<td headers=".">`;
@@ -360,7 +360,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `

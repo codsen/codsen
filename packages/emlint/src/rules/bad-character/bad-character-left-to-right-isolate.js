@@ -6,7 +6,7 @@
 
 function badCharacterLeftToRightIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8294) {
         context.report({
           ruleId: "bad-character-left-to-right-isolate",

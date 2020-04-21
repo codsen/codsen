@@ -5,7 +5,7 @@ function tagNameCase(context) {
   const knownUpperCaseTags = ["CDATA"];
   const variableCaseTagNames = ["doctype"];
   return {
-    tag: function (node) {
+    tag(node) {
       console.log(
         `███████████████████████████████████████ tagNameCase() ███████████████████████████████████████`
       );

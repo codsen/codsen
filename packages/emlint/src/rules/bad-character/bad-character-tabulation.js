@@ -33,7 +33,7 @@ function badCharacterTabulation(context, ...originalOpts) {
   }
 
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
         if (mode === "never") {
           // simple - there can't be any TABs, so raise it straight away

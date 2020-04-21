@@ -6,7 +6,7 @@
 
 function badCharacterShiftOut(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
