@@ -333,9 +333,9 @@ function isRel(str, originalOpts) {
   };
   let opts;
   if (originalOpts) {
-    opts = Object.assign({}, defaults, originalOpts);
+    opts = { ...defaults, ...originalOpts };
   } else {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   }
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(

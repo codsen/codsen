@@ -1,7 +1,7 @@
-const t = require("tap");
-const isRel = require("../dist/is-relative-uri.umd");
+import tap from "tap";
+import isRel from "../dist/is-relative-uri.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   [
     "//example.com/path/resource.txt",
     "/path/resource.txt",
