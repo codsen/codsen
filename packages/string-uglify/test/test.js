@@ -1,18 +1,19 @@
-const t = require("tap");
-const { uglifyArr, uglifyById, version } = require("../dist/string-uglify.cjs");
+import tap from "tap";
+import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm";
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 function rand(from, to) {
-  from = Math.ceil(from);
-  to = Math.floor(to);
-  return Math.floor(Math.random() * (to - from + 1)) + from;
+  return (
+    Math.floor(Math.random() * (Math.floor(to) - Math.ceil(from) + 1)) +
+    Math.ceil(from)
+  );
 }
 
 // -----------------------------------------------------------------------------
 // 00. api bits
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported uglify is a function`,
   (t) => {
     t.equal(typeof uglifyById, "function", "01");
@@ -20,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`,
   (t) => {
     t.equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02");
@@ -48,7 +49,7 @@ function makeRandomArr(len = 500, dotshashes = true) {
   return randomArr;
 }
 
-t.test(
+tap.test(
   `03 - ${`\u001b[${33}m${`uglifyById`}\u001b[${39}m`} - generates unique and short class names`,
   (t) => {
     const randomArr = makeRandomArr();
@@ -68,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates uglified array from reference array`,
   (t) => {
     const generated = makeRandomArr(5000);
@@ -77,7 +78,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique elements array`,
   (t) => {
     // all are unique
@@ -94,7 +95,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06 - ${`\u001b[${31}m${`wrong cases`}\u001b[${39}m`} - bypasses for everything else`,
   (t) => {
     t.equal(uglifyArr(true), true, "06.01");
@@ -109,7 +110,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 const howMany = 5000;
-t.test(
+tap.test(
   `07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`,
   (t) => {
     // generate two arrays: {howMany}-long random class/id names array and clone of it
@@ -128,7 +129,7 @@ t.test(
     let counter = 0;
     generated1.forEach((key) => {
       if (!generated2.includes(key)) {
-        counter++;
+        counter += 1;
       }
     });
     // console.log(
@@ -146,7 +147,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`,
   (t) => {
     const randArr1 = makeRandomArr(1);
@@ -165,7 +166,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`,
   (t) => {
     // all are still unique
@@ -182,7 +183,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`,
   (t) => {
     t.same(
@@ -207,7 +208,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`,
   (t) => {
     t.same(
@@ -232,7 +233,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter name, repeating, cross-type`,
   (t) => {
     t.same(

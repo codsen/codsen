@@ -19,11 +19,6 @@
 
   function tellcp(str, idNum) {
     return str.codePointAt(idNum);
-  } // main function - converts n-th string in a given reference array of strings
-
-
-  function uglifyById(refArr, idNum) {
-    return uglifyArr(refArr)[idNum];
   } // converts whole array into array uglified names
 
 
@@ -167,8 +162,8 @@
           var temp = accum + curr;
 
           do {
-            temp = String(temp).split("").reduce(function (acc, curr) {
-              return acc + Number.parseInt(curr);
+            temp = String(temp).split("").reduce(function (acc, curr1) {
+              return acc + Number.parseInt(curr1, 10);
             }, 0);
           } while (temp >= 10);
 
@@ -182,7 +177,7 @@
         // );
 
         while (res.includes(soFarWeveGot)) {
-          counter++;
+          counter += 1;
           soFarWeveGot += lettersAndNumbers[reducedCodePointSum * magicNumber * counter % lettersAndNumbers.length];
         }
 
@@ -236,6 +231,11 @@
     }
 
     return res;
+  } // main function - converts n-th string in a given reference array of strings
+
+
+  function uglifyById(refArr, idNum) {
+    return uglifyArr(refArr)[idNum];
   } // main export
 
   exports.uglifyArr = uglifyArr;

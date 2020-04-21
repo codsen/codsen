@@ -13,9 +13,6 @@ const isArr = Array.isArray;
 function tellcp(str, idNum) {
   return str.codePointAt(idNum);
 }
-function uglifyById(refArr, idNum) {
-  return uglifyArr(refArr)[idNum];
-}
 function uglifyArr(arr) {
   const letters = "abcdefghijklmnopqrstuvwxyz";
   const lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -167,12 +164,12 @@ function uglifyArr(arr) {
           do {
             temp = String(temp)
               .split("")
-              .reduce((acc, curr) => acc + Number.parseInt(curr), 0);
+              .reduce((acc, curr1) => acc + Number.parseInt(curr1, 10), 0);
           } while (temp >= 10);
           return temp;
         }, 0);
       while (res.includes(soFarWeveGot)) {
-        counter++;
+        counter += 1;
         soFarWeveGot +=
           lettersAndNumbers[
             (reducedCodePointSum * magicNumber * counter) %
@@ -228,6 +225,9 @@ function uglifyArr(arr) {
     }
   }
   return res;
+}
+function uglifyById(refArr, idNum) {
+  return uglifyArr(refArr)[idNum];
 }
 
 export { uglifyArr, uglifyById, version };

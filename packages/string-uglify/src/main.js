@@ -1,14 +1,10 @@
 import { version } from "../package.json";
+
 const isArr = Array.isArray;
 
 // tells code point of a given id number
 function tellcp(str, idNum) {
   return str.codePointAt(idNum);
-}
-
-// main function - converts n-th string in a given reference array of strings
-function uglifyById(refArr, idNum) {
-  return uglifyArr(refArr)[idNum];
 }
 
 // converts whole array into array uglified names
@@ -177,7 +173,7 @@ function uglifyArr(arr) {
           do {
             temp = String(temp)
               .split("")
-              .reduce((acc, curr) => acc + Number.parseInt(curr), 0);
+              .reduce((acc, curr1) => acc + Number.parseInt(curr1, 10), 0);
           } while (temp >= 10);
           return temp;
         }, 0);
@@ -190,7 +186,7 @@ function uglifyArr(arr) {
       // );
 
       while (res.includes(soFarWeveGot)) {
-        counter++;
+        counter += 1;
         soFarWeveGot +=
           lettersAndNumbers[
             (reducedCodePointSum * magicNumber * counter) %
@@ -224,7 +220,7 @@ function uglifyArr(arr) {
   }
 
   console.log(
-    `227 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+    `223 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
       singleClasses,
       null,
       4
@@ -245,14 +241,14 @@ function uglifyArr(arr) {
   for (let i = 0, len = res.length; i < len; i++) {
     console.log("----------------------------------------");
     console.log(
-      `248 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+      `244 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
     );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
       if (!singleClasses[res[i].slice(1, 2)]) {
         singleClasses[res[i].slice(1, 2)] = res[i];
         console.log(
-          `255 shortened ${`\u001b[${33}m${
+          `251 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -266,7 +262,7 @@ function uglifyArr(arr) {
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         console.log(
-          `269 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+          `265 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
             0,
             2
           )}`
@@ -279,7 +275,7 @@ function uglifyArr(arr) {
       if (!singleIds[res[i].slice(1, 2)]) {
         singleIds[res[i].slice(1, 2)] = res[i];
         console.log(
-          `282 shortened ${`\u001b[${33}m${
+          `278 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -296,7 +292,7 @@ function uglifyArr(arr) {
       if (!singleNameonly[res[i].slice(0, 1)]) {
         singleNameonly[res[i].slice(0, 1)] = res[i];
         console.log(
-          `299 shortened ${`\u001b[${33}m${
+          `295 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -313,6 +309,11 @@ function uglifyArr(arr) {
   }
 
   return res;
+}
+
+// main function - converts n-th string in a given reference array of strings
+function uglifyById(refArr, idNum) {
+  return uglifyArr(refArr)[idNum];
 }
 
 // main export
