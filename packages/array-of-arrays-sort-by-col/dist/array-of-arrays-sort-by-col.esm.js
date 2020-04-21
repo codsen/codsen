@@ -50,6 +50,7 @@ function sortBySubarray(arr, axis = 0) {
       ) {
         return 1;
       }
+      /* istanbul ignore else */
       if (
         (existy(arr1[axis]) && !existy(arr2[axis])) ||
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis])
@@ -78,6 +79,7 @@ function sortBySubarray(arr, axis = 0) {
           }
         }
       }
+      /* istanbul ignore else */
       if (axis + i < maxRangeToIterate) {
         if (existy(arr1[axis + i])) {
           if (existy(arr2[axis + i])) {

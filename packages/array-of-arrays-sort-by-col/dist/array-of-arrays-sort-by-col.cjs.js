@@ -87,6 +87,7 @@ function sortBySubarray(arr) {
       if (!existy(arr1[axis]) && existy(arr2[axis]) || existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] > arr2[axis]) {
         return 1;
       }
+      /* istanbul ignore else */
       if (existy(arr1[axis]) && !existy(arr2[axis]) || existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis]) {
         return -1;
       }
@@ -112,6 +113,7 @@ function sortBySubarray(arr) {
           }
         }
       }
+      /* istanbul ignore else */
       if (axis + i < maxRangeToIterate) {
         if (existy(arr1[axis + i])) {
           if (existy(arr2[axis + i])) {

@@ -89,12 +89,13 @@ function sortBySubarray(arr, axis = 0) {
         );
         return 1;
       }
+      /* istanbul ignore else */
       if (
         (existy(arr1[axis]) && !existy(arr2[axis])) ||
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis])
       ) {
         console.log(
-          `097 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
+          `098 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
         );
         return -1;
       }
@@ -126,7 +127,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis - i])) {
             if (arr1[axis - i] < arr2[axis - i]) {
               console.log(
-                `129 return -1 - \u001b[${32}m${`${
+                `130 return -1 - \u001b[${32}m${`${
                   arr1[axis - 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -134,7 +135,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis - i] > arr2[axis - i]) {
               console.log(
-                `137 return 1 - \u001b[${32}m${`${
+                `138 return 1 - \u001b[${32}m${`${
                   arr2[axis - 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -142,7 +143,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `145 return -1 - \u001b[${32}m${`${
+              `146 return -1 - \u001b[${32}m${`${
                 arr1[axis - 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -153,7 +154,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis - i])) {
             console.log(
-              `156 return 1 - \u001b[${32}m${`${
+              `157 return 1 - \u001b[${32}m${`${
                 arr2[axis - 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -161,6 +162,7 @@ function sortBySubarray(arr, axis = 0) {
           }
         }
       }
+      /* istanbul ignore else */
       if (axis + i < maxRangeToIterate) {
         // logging:
         console.log(logArray(arr1, axis + i, 35));
@@ -171,7 +173,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis + i])) {
             if (arr1[axis + i] < arr2[axis + i]) {
               console.log(
-                `174 return -1 - \u001b[${32}m${`${
+                `176 return -1 - \u001b[${32}m${`${
                   arr1[axis + 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -179,7 +181,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis + i] > arr2[axis + i]) {
               console.log(
-                `182 return 1 - \u001b[${32}m${`${
+                `184 return 1 - \u001b[${32}m${`${
                   arr2[axis + 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -187,7 +189,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `190 return -1 - \u001b[${32}m${`${
+              `192 return -1 - \u001b[${32}m${`${
                 arr1[axis + 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -198,7 +200,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis + i])) {
             console.log(
-              `201 return 1 - \u001b[${32}m${`${
+              `203 return 1 - \u001b[${32}m${`${
                 arr2[axis + 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -209,7 +211,7 @@ function sortBySubarray(arr, axis = 0) {
     }
 
     // 3. if by now any of returns hasn't happened yet, these two rows are equal
-    console.log(`212 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
+    console.log(`214 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
     return 0;
   });
 

@@ -112,6 +112,8 @@
         if (!existy(arr1[axis]) && existy(arr2[axis]) || existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] > arr2[axis]) {
           return 1;
         }
+        /* istanbul ignore else */
+
 
         if (existy(arr1[axis]) && !existy(arr2[axis]) || existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis]) {
           return -1;
@@ -151,6 +153,8 @@
             }
           }
         }
+        /* istanbul ignore else */
+
 
         if (axis + i < maxRangeToIterate) {
           // logging:
