@@ -15,6 +15,55 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var rangesApply = _interopDefault(require('ranges-apply'));
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function convertOne(str, _ref) {
   var from = _ref.from,
       to = _ref.to,
@@ -39,14 +88,14 @@ function convertOne(str, _ref) {
   var singlePrime = "\u2032";
   var doublePrime = "\u2033";
   var punctuationChars = [".", ",", ";", "!", "?"];
-  function isNumber(str) {
-    return typeof str === "string" && str.charCodeAt(0) >= 48 && str.charCodeAt(0) <= 57;
+  function isDigitStr(str2) {
+    return typeof str2 === "string" && str2.charCodeAt(0) >= 48 && str2.charCodeAt(0) <= 57;
   }
-  function isLetter(str) {
-    return typeof str === "string" && str.length && str.toUpperCase() !== str.toLowerCase();
+  function isLetter(str2) {
+    return typeof str2 === "string" && str2.length && str2.toUpperCase() !== str2.toLowerCase();
   }
   if (["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && ["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
-    if (str[from - 1] && str[to] && isNumber(str[from - 1]) && !isLetter(str[to])) {
+    if (str[from - 1] && str[to] && isDigitStr(str[from - 1]) && !isLetter(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) && value !== (convertEntities ? "&prime;" : singlePrime)) {
         rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -65,7 +114,7 @@ function convertOne(str, _ref) {
             offsetBy(2);
           }
         }
-      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
+      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -105,7 +154,7 @@ function convertOne(str, _ref) {
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isNumber(str[from - 1])) && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) && (isLetter(str[to]) || isDigitStr(str[to]))) {
       if (convertApostrophes) {
         if ((str[to] && str[from - 5] && str[from - 5].toLowerCase() === "h" && str[from - 4].toLowerCase() === "a" && str[from - 3].toLowerCase() === "w" && str[from - 2].toLowerCase() === "a" && str[from - 1].toLowerCase() === "i" && str[to].toLowerCase() === "i" || str[from - 1] && str[from - 1].toLowerCase() === "o" && str[to + 2] && str[to].toLowerCase() === "a" && str[to + 1].toLowerCase() === "h" && str[to + 2].toLowerCase() === "u") && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
@@ -115,13 +164,13 @@ function convertOne(str, _ref) {
       } else if (str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
+    } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -141,7 +190,7 @@ function convertOne(str, _ref) {
       }
     }
   } else if (["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && ["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
-    if (str[from - 1] && isNumber(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
+    if (str[from - 1] && isDigitStr(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
         rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
@@ -180,13 +229,13 @@ function convertOne(str, _ref) {
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
-    } else if (str[from - 1] && (isLetter(str[from - 1]) || isNumber(str[from - 1]))) {
+    } else if (str[from - 1] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
@@ -210,23 +259,19 @@ function convertOne(str, _ref) {
 }
 function convertAll(str, opts) {
   var ranges = [];
-  var preppedOpts = Object.assign({
+  var preppedOpts = _objectSpread2({
     convertApostrophes: true,
     convertEntities: false
   }, opts);
-  var _loop = function _loop(_i, len) {
-    preppedOpts.from = _i;
+  for (var i = 0, len = str.length; i < len; i++) {
+    preppedOpts.from = i;
     preppedOpts.offsetBy = function (idx) {
-      _i = _i + idx;
+      i += idx;
     };
     var res = convertOne(str, preppedOpts);
     if (Array.isArray(res) && res.length) {
       ranges = ranges.concat(res);
     }
-    i = _i;
-  };
-  for (var i = 0, len = str.length; i < len; i++) {
-    _loop(i);
   }
   return {
     result: rangesApply(str, ranges),

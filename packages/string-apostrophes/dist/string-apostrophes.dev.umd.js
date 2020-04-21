@@ -13,6 +13,55 @@
   (global = global || self, factory(global.stringApostrophes = {}));
 }(this, (function (exports) { 'use strict';
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
@@ -34,7 +83,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -65,7 +116,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -120,7 +171,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -145,7 +198,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -225,7 +279,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -237,18 +291,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -283,7 +343,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -355,12 +415,12 @@
     // f's
     // ===
 
-    function isNumber(str) {
-      return typeof str === "string" && str.charCodeAt(0) >= 48 && str.charCodeAt(0) <= 57;
+    function isDigitStr(str2) {
+      return typeof str2 === "string" && str2.charCodeAt(0) >= 48 && str2.charCodeAt(0) <= 57;
     }
 
-    function isLetter(str) {
-      return typeof str === "string" && str.length && str.toUpperCase() !== str.toLowerCase();
+    function isLetter(str2) {
+      return typeof str2 === "string" && str2.length && str2.toUpperCase() !== str2.toLowerCase();
     } // The following section detects apostrophes, with aim to convert them to
     // curlie right single quote or similar.
     // However, we also need to tackle cases where wrong-side apostrophe is put,
@@ -370,7 +430,7 @@
     if (["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && ["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
       // IF SINGLE QUOTE OR APOSTROPHE, the '
       // OR LEFT/RIGHT SINGLE QUOTES OR SINGLE PRIME
-      if (str[from - 1] && str[to] && isNumber(str[from - 1]) && !isLetter(str[to])) {
+      if (str[from - 1] && str[to] && isDigitStr(str[from - 1]) && !isLetter(str[to])) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) && value !== (convertEntities ? "&prime;" : singlePrime)) {
           rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -392,7 +452,7 @@
               offsetBy(2);
             }
           }
-        } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
+        } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           // first, take care of 'tis, 'twas, 'twere, 'twould and so on
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
@@ -440,7 +500,7 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isNumber(str[from - 1])) && (isLetter(str[to]) || isNumber(str[to]))) {
+      } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) && (isLetter(str[to]) || isDigitStr(str[to]))) {
         // equivalent of /(\w)'(\w)/g
         // single quote surrounded with alphanumeric characters
         if (convertApostrophes) {
@@ -454,7 +514,7 @@
           // not convertApostrophes - remove anything that's not apostrophe
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+      } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
         // equivalent of /'\b/g
         // alphanumeric follows
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
@@ -462,7 +522,7 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
+      } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
         // equivalent of /'\b/g
         // alphanumeric precedes
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
@@ -487,7 +547,7 @@
       }
     } else if (["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && ["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
       // IF DOUBLE QUOTE (") OR OTHER TYPES OF DOUBLE QUOTES
-      if (str[from - 1] && isNumber(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
+      if (str[from - 1] && isDigitStr(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
           // replace double quotes meaning inches with double prime symbol:
           rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
@@ -532,7 +592,7 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+      } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
         // equivalent of /"\b/g
         // 4. alphanumeric follows
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
@@ -540,7 +600,7 @@
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[from - 1] && (isLetter(str[from - 1]) || isNumber(str[from - 1]))) {
+      } else if (str[from - 1] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))) {
         // equivalent of /"\b/g
         // 5. alphanumeric precedes
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
@@ -570,20 +630,22 @@
 
   function convertAll(str, opts) {
     var ranges = [];
-    var preppedOpts = Object.assign({
+
+    var preppedOpts = _objectSpread2({
       convertApostrophes: true,
       convertEntities: false
     }, opts); // loop through the given string
 
-    var _loop = function _loop(_i, len) {
+
+    for (var i = 0, len = str.length; i < len; i++) {
       // offset is needed to bypass characters we already fixed - it happens for
       // example with nested quotes - we'd fix many in one go and we need to skip
       // further processing, otherwise those characters would get processed
       // multiple times
-      preppedOpts.from = _i;
+      preppedOpts.from = i;
 
       preppedOpts.offsetBy = function (idx) {
-        _i = _i + idx;
+        i += idx;
       };
 
       var res = convertOne(str, preppedOpts);
@@ -591,12 +653,6 @@
       if (Array.isArray(res) && res.length) {
         ranges = ranges.concat(res);
       }
-
-      i = _i;
-    };
-
-    for (var i = 0, len = str.length; i < len; i++) {
-      _loop(i);
     }
 
     return {

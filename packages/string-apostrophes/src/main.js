@@ -41,19 +41,19 @@ function convertOne(
   // f's
   // ===
 
-  function isNumber(str) {
+  function isDigitStr(str2) {
     return (
-      typeof str === "string" &&
-      str.charCodeAt(0) >= 48 &&
-      str.charCodeAt(0) <= 57
+      typeof str2 === "string" &&
+      str2.charCodeAt(0) >= 48 &&
+      str2.charCodeAt(0) <= 57
     );
   }
 
-  function isLetter(str) {
+  function isLetter(str2) {
     return (
-      typeof str === "string" &&
-      str.length &&
-      str.toUpperCase() !== str.toLowerCase()
+      typeof str2 === "string" &&
+      str2.length &&
+      str2.toUpperCase() !== str2.toLowerCase()
     );
   }
 
@@ -74,7 +74,7 @@ function convertOne(
     if (
       str[from - 1] &&
       str[to] &&
-      isNumber(str[from - 1]) &&
+      isDigitStr(str[from - 1]) &&
       !isLetter(str[to])
     ) {
       console.log(`080 prime cases`);
@@ -177,7 +177,7 @@ function convertOne(
         str[to + 2].toLowerCase() === "u" &&
         str[to + 3].toLowerCase() === "s" &&
         str[to + 4].toLowerCase() === "e") ||
-      (str[to] && isNumber(str[to]))
+      (str[to] && isDigitStr(str[to]))
     ) {
       console.log(`182 'tis, 'twas, 'twere clauses`);
       if (
@@ -357,8 +357,8 @@ function convertOne(
     } else if (
       str[from - 1] &&
       str[to] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1])) &&
-      (isLetter(str[to]) || isNumber(str[to]))
+      (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) &&
+      (isLetter(str[to]) || isDigitStr(str[to]))
     ) {
       // equivalent of /(\w)'(\w)/g
       // single quote surrounded with alphanumeric characters
@@ -420,7 +420,7 @@ function convertOne(
           `420 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
         );
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       // equivalent of /'\b/g
       // alphanumeric follows
       console.log(`426 alphanumeric follows`);
@@ -450,7 +450,7 @@ function convertOne(
           `450 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
-    } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
+    } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
       // equivalent of /'\b/g
       // alphanumeric precedes
       console.log(`456 alphanumeric precedes`);
@@ -550,7 +550,7 @@ function convertOne(
 
     if (
       str[from - 1] &&
-      isNumber(str[from - 1]) &&
+      isDigitStr(str[from - 1]) &&
       str[to] &&
       str[to] !== "'" &&
       str[to] !== '"' &&
@@ -721,7 +721,7 @@ function convertOne(
           `721 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       // equivalent of /"\b/g
       // 4. alphanumeric follows
       if (
@@ -752,7 +752,7 @@ function convertOne(
       }
     } else if (
       str[from - 1] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1]))
+      (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))
     ) {
       // equivalent of /"\b/g
       // 5. alphanumeric precedes
@@ -846,13 +846,11 @@ function convertOne(
 
 function convertAll(str, opts) {
   let ranges = [];
-  const preppedOpts = Object.assign(
-    {
-      convertApostrophes: true,
-      convertEntities: false,
-    },
-    opts
-  );
+  const preppedOpts = {
+    convertApostrophes: true,
+    convertEntities: false,
+    ...opts,
+  };
   // loop through the given string
   for (let i = 0, len = str.length; i < len; i++) {
     console.log(
@@ -868,11 +866,11 @@ function convertAll(str, opts) {
     // multiple times
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      console.log(`871 ██ BUMP i from ${i} to ${i + idx}`);
-      i = i + idx;
+      console.log(`869 ██ BUMP i from ${i} to ${i + idx}`);
+      i += idx;
     };
     console.log(
-      `875 ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `873 ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         Object.keys(preppedOpts),
         null,
         4

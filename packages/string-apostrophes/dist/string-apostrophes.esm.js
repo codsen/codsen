@@ -37,18 +37,18 @@ function convertOne(
   const singlePrime = "\u2032";
   const doublePrime = "\u2033";
   const punctuationChars = [".", ",", ";", "!", "?"];
-  function isNumber(str) {
+  function isDigitStr(str2) {
     return (
-      typeof str === "string" &&
-      str.charCodeAt(0) >= 48 &&
-      str.charCodeAt(0) <= 57
+      typeof str2 === "string" &&
+      str2.charCodeAt(0) >= 48 &&
+      str2.charCodeAt(0) <= 57
     );
   }
-  function isLetter(str) {
+  function isLetter(str2) {
     return (
-      typeof str === "string" &&
-      str.length &&
-      str.toUpperCase() !== str.toLowerCase()
+      typeof str2 === "string" &&
+      str2.length &&
+      str2.toUpperCase() !== str2.toLowerCase()
     );
   }
   if (
@@ -59,7 +59,7 @@ function convertOne(
     if (
       str[from - 1] &&
       str[to] &&
-      isNumber(str[from - 1]) &&
+      isDigitStr(str[from - 1]) &&
       !isLetter(str[to])
     ) {
       if (
@@ -137,7 +137,7 @@ function convertOne(
         str[to + 2].toLowerCase() === "u" &&
         str[to + 3].toLowerCase() === "s" &&
         str[to + 4].toLowerCase() === "e") ||
-      (str[to] && isNumber(str[to]))
+      (str[to] && isDigitStr(str[to]))
     ) {
       if (
         convertApostrophes &&
@@ -261,8 +261,8 @@ function convertOne(
     } else if (
       str[from - 1] &&
       str[to] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1])) &&
-      (isLetter(str[to]) || isNumber(str[to]))
+      (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) &&
+      (isLetter(str[to]) || isDigitStr(str[to]))
     ) {
       if (convertApostrophes) {
         if (
@@ -303,7 +303,7 @@ function convertOne(
       } else if (str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, `'`]);
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -322,7 +322,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `'`]);
       }
-    } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
+    } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -387,7 +387,7 @@ function convertOne(
   ) {
     if (
       str[from - 1] &&
-      isNumber(str[from - 1]) &&
+      isDigitStr(str[from - 1]) &&
       str[to] &&
       str[to] !== "'" &&
       str[to] !== '"' &&
@@ -508,7 +508,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to, `"`]);
       }
-    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+    } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -529,7 +529,7 @@ function convertOne(
       }
     } else if (
       str[from - 1] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1]))
+      (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))
     ) {
       if (
         convertApostrophes &&
@@ -593,17 +593,15 @@ function convertOne(
 }
 function convertAll(str, opts) {
   let ranges = [];
-  const preppedOpts = Object.assign(
-    {
-      convertApostrophes: true,
-      convertEntities: false,
-    },
-    opts
-  );
+  const preppedOpts = {
+    convertApostrophes: true,
+    convertEntities: false,
+    ...opts,
+  };
   for (let i = 0, len = str.length; i < len; i++) {
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      i = i + idx;
+      i += idx;
     };
     const res = convertOne(str, preppedOpts);
     if (Array.isArray(res) && res.length) {
