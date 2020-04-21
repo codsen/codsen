@@ -1,5 +1,5 @@
-const t = require("tap");
-const a = require("../dist/array-of-arrays-into-ast.cjs");
+import t from "tap";
+import a from "../dist/array-of-arrays-into-ast.esm";
 
 t.test("1.1 - three elements", (t) => {
   t.same(

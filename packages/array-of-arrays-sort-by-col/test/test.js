@@ -1,6 +1,6 @@
-const t = require("tap");
-const sortByCol = require("../dist/array-of-arrays-sort-by-col.cjs");
-const shuffle = require("array-shuffle");
+import t from "tap";
+import sortByCol from "../dist/array-of-arrays-sort-by-col.esm";
+import shuffle from "array-shuffle";
 
 function mixer(t, tested, reference, idx) {
   // backwards loop for perf:

@@ -1,5 +1,5 @@
-const t = require("tap");
-const {
+import t from "tap";
+import {
   allNamedEntities,
   entStartsWith,
   entEndsWith,
@@ -10,7 +10,7 @@ const {
   minLength,
   maxLength,
   uncertain,
-} = require("../dist/all-named-html-entities.cjs");
+} from "../dist/all-named-html-entities.esm";
 
 t.test(`01 - entStartsWith is set`, (t) => {
   t.ok(entStartsWith.A.E[0] === "AElig");

@@ -133,6 +133,9 @@
       "json-summary",
       "text"
     ],
+    "nyc-arg": [
+      "--exclude=**/*.umd.js"
+    ],
     "timeout": 0
   },
   "dependencies": {

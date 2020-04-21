@@ -1,5 +1,5 @@
-const t = require("tap");
-const sortByCol1 = require("../dist/array-of-arrays-sort-by-col.umd");
+import t from "tap";
+import sortByCol1 from "../dist/array-of-arrays-sort-by-col.umd";
 
 const source = [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]];
 const idx = "1";

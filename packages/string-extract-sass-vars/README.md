@@ -129,7 +129,7 @@ $blue: #08f0fd;
 | Options Object's key | The type of its value | Default | Obligatory? | Description                                                                                                   |
 | -------------------- | --------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
 | `throwIfEmpty`       | Boolean               | `false` | no          | For extra insurance, you can set this program to throw if it didn't extract any keys. Not enabled by default. |
-| `cb`       | Function               | `null` | no          | Put a function here to process each value. |
+| `cb`                 | Function              | `null`  | no          | Put a function here to process each value.                                                                    |
 
 Here are all defaults in one place:
 

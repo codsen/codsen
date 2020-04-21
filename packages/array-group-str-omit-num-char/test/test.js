@@ -1,5 +1,5 @@
-const t = require("tap");
-const group = require("../dist/array-group-str-omit-num-char.cjs");
+import t from "tap";
+import group from "../dist/array-group-str-omit-num-char.esm";
 
 // ==============
 // 00. Edge cases

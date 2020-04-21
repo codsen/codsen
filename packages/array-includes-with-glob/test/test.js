@@ -1,5 +1,5 @@
-const t = require("tap");
-const i = require("../dist/array-includes-with-glob.cjs");
+import t from "tap";
+import i from "../dist/array-includes-with-glob.esm";
 
 // ==============
 // various throws

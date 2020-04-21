@@ -270,6 +270,9 @@
 				"text",
 				"json-summary"
 			],
+			"nyc-arg": [
+				"--exclude=**/*.umd.js"
+			],
 			"timeout": 0
 		},
 		"husky": {

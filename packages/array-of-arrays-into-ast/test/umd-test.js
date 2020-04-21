@@ -1,5 +1,5 @@
-const t = require("tap");
-const a1 = require("../dist/array-of-arrays-into-ast.umd");
+import t from "tap";
+import a1 from "../dist/array-of-arrays-into-ast.umd";
 
 const source = [[5], [1, 2, 3], [1, 2]];
 const result = {

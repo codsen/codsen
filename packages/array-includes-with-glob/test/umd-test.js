@@ -1,5 +1,5 @@
-const t = require("tap");
-const i1 = require("../dist/array-includes-with-glob.umd");
+import t from "tap";
+import i1 from "../dist/array-includes-with-glob.umd";
 
 t.test("UMD build works fine", (t) => {
   t.equal(
