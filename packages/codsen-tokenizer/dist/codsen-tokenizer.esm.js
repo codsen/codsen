@@ -9,11 +9,44 @@
 
 import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 import clone from 'lodash.clonedeep';
-import { left, right } from 'string-left-right';
-import isTagOpening from 'is-html-tag-opening';
+import { right, left } from 'string-left-right';
 import attributeEnds from 'is-html-attribute-closing';
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
+import isTagOpening from 'is-html-tag-opening';
+
+function startsComment(str, i, token) {
+  return (
+    ((str[i] === "<" &&
+      (matchRight(str, i, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true,
+      }) ||
+        matchRight(str, i, ["![endif]"], {
+          i: true,
+          maxMismatches: 2,
+          trimBeforeMatching: true,
+        })) &&
+      !matchRight(str, i, ["![cdata", "<"], {
+        i: true,
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+      }) &&
+      (token.type !== "comment" || token.kind !== "not")) ||
+      (str[i] === "-" &&
+        matchRight(str, i, ["->"], {
+          trimBeforeMatching: true,
+        }) &&
+        (token.type !== "comment" ||
+          (!token.closing && token.kind !== "not")) &&
+        !matchLeft(str, i, "<", {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["-", "!"],
+        }))) &&
+    (token.type !== "esp" || token.tail.includes(str[i]))
+  );
+}
 
 const allHTMLTagsKnownToHumanity = [
   "a",
@@ -203,36 +236,12 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       return true;
-    } else if (str.startsWith(y, i)) {
+    }
+    if (str.startsWith(y, i)) {
       return false;
     }
   }
   return false;
-}
-
-function startsEsp(str, i, token, layers, styleStarts) {
-  return (
-    espChars.includes(str[i]) &&
-    str[i + 1] &&
-    espChars.includes(str[i + 1]) &&
-    token.type !== "rule" &&
-    token.type !== "at" &&
-    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
-    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
-    !(
-      (
-        str[i] === "%" &&
-        "0123456789".includes(str[left(str, i)]) &&
-        (!str[i + 2] ||
-          [`"`, `'`, ";"].includes(str[i + 2]) ||
-          !str[i + 2].trim().length)
-      )
-    ) &&
-    !(
-      styleStarts &&
-      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
-    )
-  );
 }
 
 const BACKSLASH = "\u005C";
@@ -264,36 +273,28 @@ function startsTag(str, i, token, layers) {
   );
 }
 
-function startsComment(str, i, token) {
+function startsEsp(str, i, token, layers, styleStarts) {
   return (
-    ((str[i] === "<" &&
-      (matchRight(str, i, ["!--"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
-        trimBeforeMatching: true,
-      }) ||
-        matchRight(str, i, ["![endif]"], {
-          i: true,
-          maxMismatches: 2,
-          trimBeforeMatching: true,
-        })) &&
-      !matchRight(str, i, ["![cdata", "<"], {
-        i: true,
-        maxMismatches: 1,
-        trimBeforeMatching: true,
-      }) &&
-      (token.type !== "comment" || token.kind !== "not")) ||
-      (str[i] === "-" &&
-        matchRight(str, i, ["->"], {
-          trimBeforeMatching: true,
-        }) &&
-        (token.type !== "comment" ||
-          (!token.closing && token.kind !== "not")) &&
-        !matchLeft(str, i, "<", {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"],
-        }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
+    espChars.includes(str[i]) &&
+    str[i + 1] &&
+    espChars.includes(str[i + 1]) &&
+    token.type !== "rule" &&
+    token.type !== "at" &&
+    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
+    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
+    !(
+      (
+        str[i] === "%" &&
+        "0123456789".includes(str[left(str, i)]) &&
+        (!str[i + 2] ||
+          [`"`, `'`, ";"].includes(str[i + 2]) ||
+          !str[i + 2].trim().length)
+      )
+    ) &&
+    !(
+      styleStarts &&
+      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+    )
   );
 }
 
@@ -393,7 +394,7 @@ function tokenizer(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   let currentPercentageDone;
   let lastPercentage = 0;
   const len = str.length;
@@ -437,7 +438,7 @@ function tokenizer(str, originalOpts) {
   let parentTokenToBackup;
   let attribToBackup;
   let layers = [];
-  function matchLayerLast(str, i, matchFirstInstead) {
+  function matchLayerLast(str2, i, matchFirstInstead) {
     if (!layers.length) {
       return false;
     }
@@ -447,17 +448,17 @@ function tokenizer(str, originalOpts) {
     if (whichLayerToMatch.type === "simple") {
       return (
         !whichLayerToMatch.value ||
-        str[i] === flipEspTag(whichLayerToMatch.value)
+        str2[i] === flipEspTag(whichLayerToMatch.value)
       );
-    } else if (whichLayerToMatch.type === "esp") {
-      if (!espChars.includes(str[i])) {
+    }
+    if (whichLayerToMatch.type === "esp") {
+      if (!espChars.includes(str2[i])) {
         return false;
       }
       let wholeEspTagLump = "";
-      const len = str.length;
       for (let y = i; y < len; y++) {
-        if (espChars.includes(str[y])) {
-          wholeEspTagLump = wholeEspTagLump + str[y];
+        if (espChars.includes(str2[y])) {
+          wholeEspTagLump += str2[y];
         } else {
           break;
         }
@@ -484,7 +485,7 @@ function tokenizer(str, originalOpts) {
           if (
             uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])
           ) {
-            found++;
+            found += 1;
             uniqueCharsListFromGuessedClosingLumpArr = new Set(
               [...uniqueCharsListFromGuessedClosingLumpArr].filter(
                 (el) => el !== wholeEspTagLump[y]
@@ -501,8 +502,8 @@ function tokenizer(str, originalOpts) {
       }
     }
   }
-  function matchLayerFirst(str, i) {
-    return matchLayerLast(str, i, true);
+  function matchLayerFirst(str2, i) {
+    return matchLayerLast(str2, i, true);
   }
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     const currentElem = stash.shift();
@@ -532,57 +533,70 @@ function tokenizer(str, originalOpts) {
       }
     }
   }
-  function dumpCurrentToken(token, i) {
+  function dumpCurrentToken(incomingToken, i) {
     if (
-      !["text", "esp"].includes(token.type) &&
-      token.start !== null &&
-      token.start < i &&
+      !["text", "esp"].includes(incomingToken.type) &&
+      incomingToken.start !== null &&
+      incomingToken.start < i &&
       ((str[i - 1] && !str[i - 1].trim()) || str[i] === "<")
     ) {
-      token.end = left(str, i) + 1;
-      token.value = str.slice(token.start, token.end);
-      if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
-        let cutOffIndex = token.tagNameEndsAt || i;
-        if (Array.isArray(token.attribs) && token.attribs.length) {
-          for (let i = 0, len = token.attribs.length; i < len; i++) {
-            if (token.attribs[i].attribNameRecognised) {
-              cutOffIndex = token.attribs[i].attribEnd;
+      incomingToken.end = left(str, i) + 1;
+      incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+      if (
+        incomingToken.type === "tag" &&
+        !"/>".includes(str[incomingToken.end - 1])
+      ) {
+        let cutOffIndex = incomingToken.tagNameEndsAt || i;
+        if (
+          Array.isArray(incomingToken.attribs) &&
+          incomingToken.attribs.length
+        ) {
+          for (
+            let i2 = 0, len2 = incomingToken.attribs.length;
+            i2 < len2;
+            i2++
+          ) {
+            if (incomingToken.attribs[i2].attribNameRecognised) {
+              cutOffIndex = incomingToken.attribs[i2].attribEnd;
               if (
                 str[cutOffIndex] &&
                 str[cutOffIndex + 1] &&
                 !str[cutOffIndex].trim() &&
                 str[cutOffIndex + 1].trim()
               ) {
-                cutOffIndex++;
+                cutOffIndex += 1;
               }
             } else {
-              if (i === 0) {
-                token.attribs = [];
+              if (i2 === 0) {
+                incomingToken.attribs = [];
               } else {
-                token.attribs = token.attribs.splice(0, i);
+                incomingToken.attribs = incomingToken.attribs.splice(0, i2);
               }
               break;
             }
           }
         }
-        token.end = cutOffIndex;
-        token.value = str.slice(token.start, token.end);
-        if (!token.tagNameEndsAt) {
-          token.tagNameEndsAt = cutOffIndex;
+        incomingToken.end = cutOffIndex;
+        incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+        if (!incomingToken.tagNameEndsAt) {
+          incomingToken.tagNameEndsAt = cutOffIndex;
         }
         if (
-          Number.isInteger(token.tagNameStartsAt) &&
-          Number.isInteger(token.tagNameEndsAt) &&
-          !token.tagName
+          Number.isInteger(incomingToken.tagNameStartsAt) &&
+          Number.isInteger(incomingToken.tagNameEndsAt) &&
+          !incomingToken.tagName
         ) {
-          token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
-          token.recognised = isTagNameRecognised(token.tagName);
+          incomingToken.tagName = str.slice(
+            incomingToken.tagNameStartsAt,
+            cutOffIndex
+          );
+          incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
         }
-        pingTagCb(token);
+        pingTagCb(incomingToken);
         token = tokenReset();
         initToken("text", cutOffIndex);
       } else {
-        pingTagCb(token);
+        pingTagCb(incomingToken);
         token = tokenReset();
         if (str[i - 1] && !str[i - 1].trim()) {
           initToken("text", left(str, i) + 1);
@@ -609,11 +623,11 @@ function tokenizer(str, originalOpts) {
       !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt)
     );
   }
-  function initToken(type, start) {
+  function initToken(type, startVal) {
     attribReset();
     if (type === "tag") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       token.tagNameStartsAt = null;
@@ -640,7 +654,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "comment") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -667,7 +681,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "rule") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -694,7 +708,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "at") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -721,7 +735,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "text") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -748,7 +762,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "esp") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -1048,7 +1062,7 @@ function tokenizer(str, originalOpts) {
         let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
-            wholeEspTagLump = wholeEspTagLump + str[y];
+            wholeEspTagLump += str[y];
           } else {
             break;
           }
@@ -1165,11 +1179,7 @@ function tokenizer(str, originalOpts) {
               }
             }
           }
-          doNothing =
-            i +
-            (lengthOfClosingEspChunk
-              ? lengthOfClosingEspChunk
-              : wholeEspTagLump.length);
+          doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLump.length);
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
@@ -1341,7 +1351,7 @@ function tokenizer(str, originalOpts) {
         let wholeEspTagClosing = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
-            wholeEspTagClosing = wholeEspTagClosing + str[y];
+            wholeEspTagClosing += str[y];
           } else {
             break;
           }
@@ -1846,12 +1856,12 @@ function tokenizer(str, originalOpts) {
     }
   }
   if (charStash.length) {
-    for (let i = 0, len = charStash.length; i < len; i++) {
+    for (let i = 0, len2 = charStash.length; i < len2; i++) {
       reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
     }
   }
   if (tagStash.length) {
-    for (let i = 0, len = tagStash.length; i < len; i++) {
+    for (let i = 0, len2 = tagStash.length; i < len2; i++) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
   }

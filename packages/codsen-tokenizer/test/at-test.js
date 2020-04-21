@@ -1,10 +1,10 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
 // 00. MVP
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`,
   (t) => {
     const gathered = [];
@@ -60,7 +60,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
   (t) => {
     const gathered = [];
@@ -166,7 +166,7 @@ t.test(
 // 01. simple
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`,
   (t) => {
     const gathered = [];
@@ -251,7 +251,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
   (t) => {
     const gathered = [];

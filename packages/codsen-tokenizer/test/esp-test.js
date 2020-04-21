@@ -1,5 +1,5 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
 // ESP stands for Email Service Provider
 // in practice, we cover all other templating languages too, for example,
@@ -9,7 +9,7 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 // 01. ESP tag + something, no overlap
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - only an ESP tag`,
   (t) => {
     const gathered = [];
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text and ESP tag`,
   (t) => {
     const gathered = [];
@@ -71,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text-ESP-text`,
   (t) => {
     const gathered = [];
@@ -106,7 +106,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - tag-ESP-tag`,
   (t) => {
     const gathered = [];
@@ -141,7 +141,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - Responsys-style ESP tag`,
   (t) => {
     const gathered = [];
@@ -177,7 +177,7 @@ t.test(
 );
 
 // heuristically detecting tails and again new heads
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two Nunjucks tags, same pattern set of two, tight`,
   (t) => {
     const gathered = [];
@@ -207,7 +207,7 @@ t.test(
 );
 
 // heuristically detecting tails and again new heads, this time slightly different
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two nunjucks tags, different pattern set of two, tight`,
   (t) => {
     const gathered = [];
@@ -237,7 +237,7 @@ t.test(
 );
 
 // heuristically detecting tails and again new heads
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - different set, *|zzz|*`,
   (t) => {
     const gathered = [];
@@ -266,7 +266,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
   (t) => {
     const gathered = [];
@@ -298,7 +298,7 @@ t.test(
 // 02. false positives
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${31}m${`false positives`}\u001b[${39}m`} - double percentage`,
   (t) => {
     const gathered = [];
@@ -348,7 +348,7 @@ t.test(
 // 03. ESP tags in the attributes
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in as attribute`,
   (t) => {
     const gathered = [];
@@ -385,7 +385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
   (t) => {
     const gathered = [];
@@ -473,7 +473,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
   (t) => {
     const gathered = [];
@@ -572,7 +572,7 @@ t.test(
 // 04. ESP tags within attribute values
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag inside`,
   (t) => {
     const gathered = [];
@@ -646,7 +646,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
@@ -697,7 +697,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
@@ -784,7 +784,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp-text-esp-text`,
   (t) => {
     const gathered = [];
@@ -862,7 +862,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`,
   (t) => {
     const gathered = [];
@@ -961,7 +961,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
   (t) => {
     const gathered = [];
@@ -996,7 +996,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
@@ -1025,7 +1025,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
   (t) => {
     const gathered = [];
@@ -1054,7 +1054,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
   (t) => {
     const gathered = [];
@@ -1089,7 +1089,7 @@ t.test(
 // 05. broken
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - mini`,
   (t) => {
     const gathered = [];
@@ -1148,7 +1148,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - midi`,
   (t) => {
     const gathered = [];
@@ -1228,7 +1228,7 @@ t.test(
   }
 );
 
-t.todo(
+tap.todo(
   `05.03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - new heads follow`,
   (t) => {
     const gathered = [];
@@ -1242,7 +1242,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`,
   (t) => {
     const gathered = [];
@@ -1256,7 +1256,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`,
   (t) => {
     const gathered = [];
@@ -1270,7 +1270,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`,
   (t) => {
     const gathered = [];
@@ -1284,7 +1284,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`,
   (t) => {
     const gathered = [];
@@ -1298,7 +1298,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`,
   (t) => {
     const gathered = [];
@@ -1312,7 +1312,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `05.09 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`,
   (t) => {
     const gathered = [];

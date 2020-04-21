@@ -14,10 +14,10 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var stringMatchLeftRight = require('string-match-left-right');
 var clone = _interopDefault(require('lodash.clonedeep'));
 var stringLeftRight = require('string-left-right');
-var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 var attributeEnds = _interopDefault(require('is-html-attribute-closing'));
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
+var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -33,6 +33,55 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
 }
 
 function _toConsumableArray(arr) {
@@ -66,6 +115,29 @@ function _arrayLikeToArray(arr, len) {
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function startsComment(str, i, token) {
+  return (
+    (str[i] === "<" && (stringMatchLeftRight.matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
+      trimBeforeMatching: true
+    }) || stringMatchLeftRight.matchRight(str, i, ["![endif]"], {
+      i: true,
+      maxMismatches: 2,
+      trimBeforeMatching: true
+    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "<"], {
+      i: true,
+      maxMismatches: 1,
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !stringMatchLeftRight.matchLeft(str, i, "<", {
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["-", "!"]
+    })) && (token.type !== "esp" || token.tail.includes(str[i]))
+  );
 }
 
 var allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
@@ -102,16 +174,12 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       return true;
-    } else if (str.startsWith(y, i)) {
+    }
+    if (str.startsWith(y, i)) {
       return false;
     }
   }
   return false;
-}
-
-function startsEsp(str, i, token, layers, styleStarts) {
-  return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(
-  str[i] === "%" && "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[stringLeftRight.right(str, i)])));
 }
 
 var BACKSLASH = "\\";
@@ -129,27 +197,9 @@ function startsTag(str, i, token, layers) {
   token.type !== "esp" || token.tail.includes(str[i]));
 }
 
-function startsComment(str, i, token) {
-  return (
-    (str[i] === "<" && (stringMatchLeftRight.matchRight(str, i, ["!--"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
-      trimBeforeMatching: true
-    }) || stringMatchLeftRight.matchRight(str, i, ["![endif]"], {
-      i: true,
-      maxMismatches: 2,
-      trimBeforeMatching: true
-    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "<"], {
-      i: true,
-      maxMismatches: 1,
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !stringMatchLeftRight.matchLeft(str, i, "<", {
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["-", "!"]
-    })) && (token.type !== "esp" || token.tail.includes(str[i]))
-  );
+function startsEsp(str, i, token, layers, styleStarts) {
+  return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(
+  str[i] === "%" && "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[stringLeftRight.right(str, i)])));
 }
 
 function isObj(something) {
@@ -187,7 +237,7 @@ function tokenizer(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var currentPercentageDone;
   var lastPercentage = 0;
   var len = str.length;
@@ -231,25 +281,25 @@ function tokenizer(str, originalOpts) {
   var parentTokenToBackup;
   var attribToBackup;
   var layers = [];
-  function matchLayerLast(str, i, matchFirstInstead) {
+  function matchLayerLast(str2, i, matchFirstInstead) {
     if (!layers.length) {
       return false;
     }
     var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
     if (whichLayerToMatch.type === "simple") {
-      return !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value);
-    } else if (whichLayerToMatch.type === "esp") {
+      return !whichLayerToMatch.value || str2[i] === flipEspTag(whichLayerToMatch.value);
+    }
+    if (whichLayerToMatch.type === "esp") {
       var _ret = function () {
-        if (!espChars.includes(str[i])) {
+        if (!espChars.includes(str2[i])) {
           return {
             v: false
           };
         }
         var wholeEspTagLump = "";
-        var len = str.length;
         for (var y = i; y < len; y++) {
-          if (espChars.includes(str[y])) {
-            wholeEspTagLump = wholeEspTagLump + str[y];
+          if (espChars.includes(str2[y])) {
+            wholeEspTagLump += str2[y];
           } else {
             break;
           }
@@ -271,7 +321,7 @@ function tokenizer(str, originalOpts) {
               };
             }
             if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[_y])) {
-              found++;
+              found += 1;
               uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
                 return el !== wholeEspTagLump[_y];
               }));
@@ -293,8 +343,8 @@ function tokenizer(str, originalOpts) {
       if (_typeof(_ret) === "object") return _ret.v;
     }
   }
-  function matchLayerFirst(str, i) {
-    return matchLayerLast(str, i, true);
+  function matchLayerFirst(str2, i) {
+    return matchLayerLast(str2, i, true);
   }
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     var currentElem = stash.shift();
@@ -324,43 +374,43 @@ function tokenizer(str, originalOpts) {
       }
     }
   }
-  function dumpCurrentToken(token, i) {
-    if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
-      token.end = stringLeftRight.left(str, i) + 1;
-      token.value = str.slice(token.start, token.end);
-      if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
-        var cutOffIndex = token.tagNameEndsAt || i;
-        if (Array.isArray(token.attribs) && token.attribs.length) {
-          for (var _i = 0, _len = token.attribs.length; _i < _len; _i++) {
-            if (token.attribs[_i].attribNameRecognised) {
-              cutOffIndex = token.attribs[_i].attribEnd;
+  function dumpCurrentToken(incomingToken, i) {
+    if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
+      incomingToken.end = stringLeftRight.left(str, i) + 1;
+      incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+      if (incomingToken.type === "tag" && !"/>".includes(str[incomingToken.end - 1])) {
+        var cutOffIndex = incomingToken.tagNameEndsAt || i;
+        if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
+          for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
+            if (incomingToken.attribs[i2].attribNameRecognised) {
+              cutOffIndex = incomingToken.attribs[i2].attribEnd;
               if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
-                cutOffIndex++;
+                cutOffIndex += 1;
               }
             } else {
-              if (_i === 0) {
-                token.attribs = [];
+              if (i2 === 0) {
+                incomingToken.attribs = [];
               } else {
-                token.attribs = token.attribs.splice(0, _i);
+                incomingToken.attribs = incomingToken.attribs.splice(0, i2);
               }
               break;
             }
           }
         }
-        token.end = cutOffIndex;
-        token.value = str.slice(token.start, token.end);
-        if (!token.tagNameEndsAt) {
-          token.tagNameEndsAt = cutOffIndex;
+        incomingToken.end = cutOffIndex;
+        incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+        if (!incomingToken.tagNameEndsAt) {
+          incomingToken.tagNameEndsAt = cutOffIndex;
         }
-        if (Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.tagNameEndsAt) && !token.tagName) {
-          token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
-          token.recognised = isTagNameRecognised(token.tagName);
+        if (Number.isInteger(incomingToken.tagNameStartsAt) && Number.isInteger(incomingToken.tagNameEndsAt) && !incomingToken.tagName) {
+          incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
+          incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
         }
-        pingTagCb(token);
+        pingTagCb(incomingToken);
         token = tokenReset();
         initToken("text", cutOffIndex);
       } else {
-        pingTagCb(token);
+        pingTagCb(incomingToken);
         token = tokenReset();
         if (str[i - 1] && !str[i - 1].trim()) {
           initToken("text", stringLeftRight.left(str, i) + 1);
@@ -381,11 +431,11 @@ function tokenizer(str, originalOpts) {
   function atRuleWaitingForClosingCurlie() {
     return layers.length && layers[layers.length - 1].type === "at" && isObj(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
   }
-  function initToken(type, start) {
+  function initToken(type, startVal) {
     attribReset();
     if (type === "tag") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       token.tagNameStartsAt = null;
@@ -412,7 +462,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "comment") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -439,7 +489,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "rule") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -466,7 +516,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "at") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -493,7 +543,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "text") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -520,7 +570,7 @@ function tokenizer(str, originalOpts) {
       delete token.tail;
     } else if (type === "esp") {
       token.type = type;
-      token.start = start;
+      token.start = startVal;
       token.end = null;
       token.value = null;
       delete token.tagNameStartsAt;
@@ -547,14 +597,14 @@ function tokenizer(str, originalOpts) {
       token.tail = null;
     }
   }
-  var _loop2 = function _loop2(_i2) {
-    if (!doNothing && str[_i2] && opts.reportProgressFunc) {
+  var _loop2 = function _loop2(_i) {
+    if (!doNothing && str[_i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
-        if (_i2 === midLen) {
+        if (_i === midLen) {
           opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
         }
       } else if (len >= 2000) {
-        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i2 / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
+        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
@@ -564,39 +614,39 @@ function tokenizer(str, originalOpts) {
     if (styleStarts && token.type && !["rule", "at", "text"].includes(token.type)) {
       styleStarts = false;
     }
-    if (Number.isInteger(doNothing) && _i2 >= doNothing) {
+    if (Number.isInteger(doNothing) && _i >= doNothing) {
       doNothing = false;
     }
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
-      if (str[_i2] === "}") {
+      if (str[_i] === "}") {
         if (token.type === null || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
           if (token.type === "rule") {
-            token.end = stringLeftRight.left(str, _i2) + 1;
+            token.end = stringLeftRight.left(str, _i) + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
             token = tokenReset();
-            if (stringLeftRight.left(str, _i2) < _i2 - 1) {
-              initToken("text", stringLeftRight.left(str, _i2) + 1);
+            if (stringLeftRight.left(str, _i) < _i - 1) {
+              initToken("text", stringLeftRight.left(str, _i) + 1);
             }
           }
-          dumpCurrentToken(token, _i2);
+          dumpCurrentToken(token, _i);
           var poppedToken = layers.pop();
           token = poppedToken.token;
-          token.closingCurlyAt = _i2;
-          token.end = _i2 + 1;
+          token.closingCurlyAt = _i;
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
           token = tokenReset();
-          doNothing = _i2 + 1;
+          doNothing = _i + 1;
         }
-      } else if (token.type === "text" && str[_i2] && str[_i2].trim()) {
-        token.end = _i2;
+      } else if (token.type === "text" && str[_i] && str[_i].trim()) {
+        token.end = _i;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
         token = tokenReset();
       }
     }
-    if (token.end && token.end === _i2) {
+    if (token.end && token.end === _i) {
       if (token.tagName === "style" && !token.closing) {
         styleStarts = true;
       }
@@ -607,64 +657,64 @@ function tokenizer(str, originalOpts) {
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
       } else {
-        dumpCurrentToken(token, _i2);
+        dumpCurrentToken(token, _i);
         layers = [];
       }
     }
     if (!doNothing) {
       if (["tag", "esp", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-        if (["\"", "'", "(", ")"].includes(str[_i2]) && !(
-        ["\"", "'"].includes(str[stringLeftRight.left(str, _i2)]) && str[stringLeftRight.left(str, _i2)] === str[stringLeftRight.right(str, _i2)])) {
-          if (matchLayerLast(str, _i2)) {
+        if (["\"", "'", "(", ")"].includes(str[_i]) && !(
+        ["\"", "'"].includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)])) {
+          if (matchLayerLast(str, _i)) {
             layers.pop();
           } else {
             layers.push({
               type: "simple",
-              value: str[_i2],
-              position: _i2
+              value: str[_i],
+              position: _i
             });
           }
         }
       } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        if (["[", "]"].includes(str[_i2])) {
-          if (matchLayerLast(str, _i2)) {
+        if (["[", "]"].includes(str[_i])) {
+          if (matchLayerLast(str, _i)) {
             layers.pop();
           } else {
             layers.push({
               type: "simple",
-              value: str[_i2],
-              position: _i2
+              value: str[_i],
+              position: _i
             });
           }
         }
       }
     }
-    if (!doNothing && token.type === "at" && Number.isInteger(token.start) && _i2 >= token.start && !Number.isInteger(token.identifierStartsAt) && str[_i2] && str[_i2].trim() && str[_i2] !== "@") {
-      token.identifierStartsAt = _i2;
+    if (!doNothing && token.type === "at" && Number.isInteger(token.start) && _i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[_i] && str[_i].trim() && str[_i] !== "@") {
+      token.identifierStartsAt = _i;
     }
-    if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[_i2])) {
-      if (str[_i2 - 1] && str[_i2 - 1].trim()) {
-        token.queryEndsAt = _i2;
+    if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[_i])) {
+      if (str[_i - 1] && str[_i - 1].trim()) {
+        token.queryEndsAt = _i;
       } else {
-        token.queryEndsAt = stringLeftRight.left(str, _i2) + 1;
+        token.queryEndsAt = stringLeftRight.left(str, _i) + 1;
       }
       token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
     }
-    if (!doNothing && token.type === "at" && str[_i2] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
-      token.openingCurlyAt = _i2;
+    if (!doNothing && token.type === "at" && str[_i] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
+      token.openingCurlyAt = _i;
       layers.push({
         type: "at",
         token: token
       });
-      var charIdxOnTheRight = stringLeftRight.right(str, _i2);
+      var charIdxOnTheRight = stringLeftRight.right(str, _i);
       if (str[charIdxOnTheRight] === "}") {
         token.closingCurlyAt = charIdxOnTheRight;
         pingTagCb(token);
         doNothing = charIdxOnTheRight;
       } else {
         tokenReset();
-        if (charIdxOnTheRight > _i2 + 1) {
-          initToken("text", _i2 + 1);
+        if (charIdxOnTheRight > _i + 1) {
+          initToken("text", _i + 1);
           token.end = charIdxOnTheRight;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
@@ -674,57 +724,57 @@ function tokenizer(str, originalOpts) {
         doNothing = charIdxOnTheRight;
       }
     }
-    if (!doNothing && token.type === "at" && token.identifier && str[_i2] && str[_i2].trim() && !Number.isInteger(token.queryStartsAt)) {
-      token.queryStartsAt = _i2;
+    if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !Number.isInteger(token.queryStartsAt)) {
+      token.queryStartsAt = _i;
     }
-    if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && _i2 >= token.start && str[_i2] && (!str[_i2].trim() || "()".includes(str[_i2])) && !Number.isInteger(token.identifierEndsAt)) {
-      token.identifierEndsAt = _i2;
-      token.identifier = str.slice(token.identifierStartsAt, _i2);
+    if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !Number.isInteger(token.identifierEndsAt)) {
+      token.identifierEndsAt = _i;
+      token.identifier = str.slice(token.identifierStartsAt, _i);
     }
-    if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[_i2]) || str[_i2] && !str[_i2].trim() && charsThatEndCSSChunks.includes(str[stringLeftRight.right(str, _i2)]))) {
+    if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[stringLeftRight.right(str, _i)]))) {
       token.selectors.push({
-        value: str.slice(selectorChunkStartedAt, _i2),
+        value: str.slice(selectorChunkStartedAt, _i),
         selectorStarts: selectorChunkStartedAt,
-        selectorEnds: _i2
+        selectorEnds: _i
       });
       selectorChunkStartedAt = undefined;
-      token.selectorsEnd = _i2;
+      token.selectorsEnd = _i;
     }
     if (!doNothing) {
-      if (startsTag(str, _i2, token, layers)) {
+      if (startsTag(str, _i, token, layers)) {
         if (token.type && token.start !== null) {
-          dumpCurrentToken(token, _i2);
+          dumpCurrentToken(token, _i);
           tokenReset();
         }
-        initToken("tag", _i2);
+        initToken("tag", _i);
         if (styleStarts) {
           styleStarts = false;
         }
-        if (stringMatchLeftRight.matchRight(str, _i2, "doctype", {
+        if (stringMatchLeftRight.matchRight(str, _i, "doctype", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "doctype";
-        } else if (stringMatchLeftRight.matchRight(str, _i2, "cdata", {
+        } else if (stringMatchLeftRight.matchRight(str, _i, "cdata", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "cdata";
-        } else if (stringMatchLeftRight.matchRight(str, _i2, "xml", {
+        } else if (stringMatchLeftRight.matchRight(str, _i, "xml", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "xml";
         }
-      } else if (startsComment(str, _i2, token)) {
+      } else if (startsComment(str, _i, token)) {
         if (Number.isInteger(token.start)) {
-          dumpCurrentToken(token, _i2);
+          dumpCurrentToken(token, _i);
         }
         tokenReset();
-        initToken("comment", _i2);
-        if (str[_i2] === "-") {
+        initToken("comment", _i);
+        if (str[_i] === "-") {
           token.closing = true;
-        } else if (stringMatchLeftRight.matchRightIncl(str, _i2, ["<![endif]-->"], {
+        } else if (stringMatchLeftRight.matchRightIncl(str, _i, ["<![endif]-->"], {
           i: true,
           trimBeforeMatching: true,
           maxMismatches: 2
@@ -735,22 +785,22 @@ function tokenizer(str, originalOpts) {
         if (styleStarts) {
           styleStarts = false;
         }
-      } else if (startsEsp(str, _i2, token, layers, styleStarts)) {
+      } else if (startsEsp(str, _i, token, layers, styleStarts)) {
         var wholeEspTagLump = "";
-        for (var y = _i2; y < len; y++) {
+        for (var y = _i; y < len; y++) {
           if (espChars.includes(str[y])) {
-            wholeEspTagLump = wholeEspTagLump + str[y];
+            wholeEspTagLump += str[y];
           } else {
             break;
           }
         }
-        if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[_i2 + wholeEspTagLump.length])) {
+        if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[_i + wholeEspTagLump.length])) {
           var lengthOfClosingEspChunk;
-          if (layers.length && matchLayerLast(str, _i2)) {
-            lengthOfClosingEspChunk = matchLayerLast(str, _i2);
+          if (layers.length && matchLayerLast(str, _i)) {
+            lengthOfClosingEspChunk = matchLayerLast(str, _i);
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
-                token.end = _i2 + lengthOfClosingEspChunk;
+                token.end = _i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
               if (parentTokenToBackup) {
@@ -767,22 +817,22 @@ function tokenizer(str, originalOpts) {
                 parentTokenToBackup = undefined;
                 attribToBackup = undefined;
                 layers.pop();
-                i = _i2;
+                i = _i;
                 return "continue";
               } else {
-                dumpCurrentToken(token, _i2);
+                dumpCurrentToken(token, _i);
               }
               tokenReset();
             }
             layers.pop();
-          } else if (layers.length && matchLayerFirst(str, _i2)) {
-            lengthOfClosingEspChunk = matchLayerFirst(str, _i2);
+          } else if (layers.length && matchLayerFirst(str, _i)) {
+            lengthOfClosingEspChunk = matchLayerFirst(str, _i);
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
-                token.end = _i2 + lengthOfClosingEspChunk;
+                token.end = _i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
-              dumpCurrentToken(token, _i2);
+              dumpCurrentToken(token, _i);
               tokenReset();
             }
             layers = [];
@@ -791,13 +841,13 @@ function tokenizer(str, originalOpts) {
               type: "esp",
               openingLump: wholeEspTagLump,
               guessedClosingLump: flipEspTag(wholeEspTagLump),
-              position: _i2
+              position: _i
             });
             if (token.start !== null) {
               if (token.type === "tag") {
                 if (!token.tagName || !token.tagNameEndsAt) {
-                  token.tagNameEndsAt = _i2;
-                  token.tagName = str.slice(token.tagNameStartsAt, _i2);
+                  token.tagNameEndsAt = _i;
+                  token.tagName = str.slice(token.tagNameStartsAt, _i);
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone(token);
@@ -805,10 +855,10 @@ function tokenizer(str, originalOpts) {
                   attribToBackup = clone(attrib);
                 }
               } else {
-                dumpCurrentToken(token, _i2);
+                dumpCurrentToken(token, _i);
               }
             }
-            initToken("esp", _i2);
+            initToken("esp", _i);
             token.tail = flipEspTag(wholeEspTagLump);
             token.head = wholeEspTagLump;
             if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
@@ -819,124 +869,124 @@ function tokenizer(str, originalOpts) {
                 attribToBackup.attribValue.pop();
               } else if (
               attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i2;
-                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i2);
+                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
+                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
               }
             }
           }
-          doNothing = _i2 + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
+          doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLump.length);
         }
-      } else if (token.start === null || token.end === _i2) {
+      } else if (token.start === null || token.end === _i) {
         if (styleStarts) {
-          if (str[_i2] && !str[_i2].trim()) {
+          if (str[_i] && !str[_i].trim()) {
             tokenReset();
-            initToken("text", _i2);
-            token.end = stringLeftRight.right(str, _i2) || str.length;
+            initToken("text", _i);
+            token.end = stringLeftRight.right(str, _i) || str.length;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
             doNothing = token.end;
             tokenReset();
-            if (stringLeftRight.right(str, _i2) && !["{", "}", "<"].includes(str[stringLeftRight.right(str, _i2)])) {
-              var idxOnTheRight = stringLeftRight.right(str, _i2);
+            if (stringLeftRight.right(str, _i) && !["{", "}", "<"].includes(str[stringLeftRight.right(str, _i)])) {
+              var idxOnTheRight = stringLeftRight.right(str, _i);
               initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
-              if (str[_i2 + 1] && !str[_i2 + 1].trim()) {
-                doNothing = stringLeftRight.right(str, _i2);
+              if (str[_i + 1] && !str[_i + 1].trim()) {
+                doNothing = stringLeftRight.right(str, _i);
               }
             }
-          } else if (str[_i2]) {
+          } else if (str[_i]) {
             tokenReset();
-            if ("}".includes(str[_i2])) {
-              initToken("text", _i2);
-              doNothing = _i2 + 1;
+            if ("}".includes(str[_i])) {
+              initToken("text", _i);
+              doNothing = _i + 1;
             } else {
-              initToken(str[_i2] === "@" ? "at" : "rule", _i2);
+              initToken(str[_i] === "@" ? "at" : "rule", _i);
             }
           }
-        } else if (str[_i2]) {
-          if (_i2) {
+        } else if (str[_i]) {
+          if (_i) {
             token = tokenReset();
           }
-          initToken("text", _i2);
+          initToken("text", _i);
         }
-      } else if (token.type === "text" && styleStarts && str[_i2] && str[_i2].trim() && !"{},".includes(str[_i2])) {
-        dumpCurrentToken(token, _i2);
+      } else if (token.type === "text" && styleStarts && str[_i] && str[_i].trim() && !"{},".includes(str[_i])) {
+        dumpCurrentToken(token, _i);
         tokenReset();
-        initToken("rule", _i2);
+        initToken("rule", _i);
       }
     }
-    if (!doNothing && token.type === "rule" && str[_i2] && str[_i2].trim() && !"{}".includes(str[_i2]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
-      if (!",".includes(str[_i2])) {
-        selectorChunkStartedAt = _i2;
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
+      if (!",".includes(str[_i])) {
+        selectorChunkStartedAt = _i;
         if (token.selectorsStart === null) {
-          token.selectorsStart = _i2;
+          token.selectorsStart = _i;
         }
       } else {
-        token.selectorsEnd = _i2 + 1;
+        token.selectorsEnd = _i + 1;
       }
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-      if (str[_i2] === "[") ;
+      if (str[_i] === "[") ;
     }
     if (!doNothing) {
-      if (token.type === "tag" && !layers.length && str[_i2] === ">") {
-        token.end = _i2 + 1;
+      if (token.type === "tag" && !layers.length && str[_i] === ">") {
+        token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
-      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i2] === "-" && (stringMatchLeftRight.matchLeft(str, _i2, "!-", {
+      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (stringMatchLeftRight.matchLeft(str, _i, "!-", {
         trimBeforeMatching: true
-      }) || stringMatchLeftRight.matchLeftIncl(str, _i2, "!-", {
+      }) || stringMatchLeftRight.matchLeftIncl(str, _i, "!-", {
         trimBeforeMatching: true
-      }) && str[_i2 + 1] !== "-") || str[token.start] === "-" && str[_i2] === ">" && stringMatchLeftRight.matchLeft(str, _i2, "--", {
+      }) && str[_i + 1] !== "-") || str[token.start] === "-" && str[_i] === ">" && stringMatchLeftRight.matchLeft(str, _i, "--", {
         trimBeforeMatching: true,
         maxMismatches: 1
       }))) {
-        if (str[_i2] === "-" && (stringMatchLeftRight.matchRight(str, _i2, ["[if", "(if", "{if"], {
+        if (str[_i] === "-" && (stringMatchLeftRight.matchRight(str, _i, ["[if", "(if", "{if"], {
           i: true,
           trimBeforeMatching: true
-        }) || stringMatchLeftRight.matchRight(str, _i2, ["if"], {
+        }) || stringMatchLeftRight.matchRight(str, _i, ["if"], {
           i: true,
           trimBeforeMatching: true
         }) && (
-        xBeforeYOnTheRight(str, _i2, "]", ">") ||
-        str.includes("mso", _i2) && !str.slice(_i2, str.indexOf("mso")).includes("<") && !str.slice(_i2, str.indexOf("mso")).includes(">")))) {
+        xBeforeYOnTheRight(str, _i, "]", ">") ||
+        str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           token.kind = "only";
         } else if (
-        str[token.start] !== "-" && stringMatchLeftRight.matchRightIncl(str, _i2, ["-<![endif"], {
+        str[token.start] !== "-" && stringMatchLeftRight.matchRightIncl(str, _i, ["-<![endif"], {
           i: true,
           trimBeforeMatching: true,
           maxMismatches: 2
         })) {
           token.kind = "not";
           token.closing = true;
-        } else if (token.kind === "simple" && !token.closing && str[stringLeftRight.right(str, _i2)] === ">") {
-          token.end = stringLeftRight.right(str, _i2) + 1;
+        } else if (token.kind === "simple" && !token.closing && str[stringLeftRight.right(str, _i)] === ">") {
+          token.end = stringLeftRight.right(str, _i) + 1;
           token.kind = "simplet";
           token.closing = null;
         } else {
-          token.end = _i2 + 1;
-          if (str[stringLeftRight.left(str, _i2)] === "!" && str[stringLeftRight.right(str, _i2)] === "-") {
-            token.end = stringLeftRight.right(str, _i2) + 1;
+          token.end = _i + 1;
+          if (str[stringLeftRight.left(str, _i)] === "!" && str[stringLeftRight.right(str, _i)] === "-") {
+            token.end = stringLeftRight.right(str, _i) + 1;
           }
           token.value = str.slice(token.start, token.end);
         }
-      } else if (token.type === "comment" && str[_i2] === ">" && (!layers.length || str[stringLeftRight.right(str, _i2)] === "<")) {
+      } else if (token.type === "comment" && str[_i] === ">" && (!layers.length || str[stringLeftRight.right(str, _i)] === "<")) {
         if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
           layers.pop();
         }
-        if (!["simplet", "not"].includes(token.kind) && stringMatchLeftRight.matchRight(str, _i2, ["<!-->", "<!---->"], {
+        if (!["simplet", "not"].includes(token.kind) && stringMatchLeftRight.matchRight(str, _i, ["<!-->", "<!---->"], {
           trimBeforeMatching: true,
           maxMismatches: 1,
           lastMustMatch: true
         })) {
           token.kind = "not";
         } else {
-          token.end = _i2 + 1;
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[_i2])) {
+      } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[_i])) {
         var wholeEspTagClosing = "";
-        for (var _y2 = _i2; _y2 < len; _y2++) {
+        for (var _y2 = _i; _y2 < len; _y2++) {
           if (espChars.includes(str[_y2])) {
-            wholeEspTagClosing = wholeEspTagClosing + str[_y2];
+            wholeEspTagClosing += str[_y2];
           } else {
             break;
           }
@@ -944,11 +994,11 @@ function tokenizer(str, originalOpts) {
         if (wholeEspTagClosing.length > token.head.length) {
           var headsFirstChar = token.head[0];
           if (wholeEspTagClosing.endsWith(token.head)) {
-            token.end = _i2 + wholeEspTagClosing.length - token.head.length;
+            token.end = _i + wholeEspTagClosing.length - token.head.length;
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           } else if (wholeEspTagClosing.startsWith(token.tail)) {
-            token.end = _i2 + token.tail.length;
+            token.end = _i + token.tail.length;
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
@@ -957,17 +1007,17 @@ function tokenizer(str, originalOpts) {
             if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
               return firstPartOfWholeEspTagClosing.includes(char);
             })) {
-              token.end = _i2 + firstPartOfWholeEspTagClosing.length;
+              token.end = _i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
               doNothing = token.end;
             }
           } else {
-            token.end = _i2 + wholeEspTagClosing.length;
+            token.end = _i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           }
         } else {
-          token.end = _i2 + wholeEspTagClosing.length;
+          token.end = _i + wholeEspTagClosing.length;
           token.value = str.slice(token.start, token.end);
           if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
             layers.pop();
@@ -977,9 +1027,9 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing && token.type === "tag" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
-      if (!str[_i2] || !charSuitableForTagName(str[_i2])) {
-        token.tagNameEndsAt = _i2;
-        token.tagName = str.slice(token.tagNameStartsAt, _i2).toLowerCase();
+      if (!str[_i] || !charSuitableForTagName(str[_i])) {
+        token.tagNameEndsAt = _i;
+        token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
         }
@@ -989,51 +1039,51 @@ function tokenizer(str, originalOpts) {
         token.recognised = isTagNameRecognised(token.tagName);
       }
     }
-    if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && (token.start < _i2 || str[token.start] !== "<")) {
-      if (str[_i2] === "/") {
+    if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && (token.start < _i || str[token.start] !== "<")) {
+      if (str[_i] === "/") {
         token.closing = true;
-      } else if (isLatinLetter(str[_i2])) {
-        token.tagNameStartsAt = _i2;
+      } else if (isLatinLetter(str[_i])) {
+        token.tagNameStartsAt = _i;
         if (!token.closing) {
           token.closing = false;
         }
       }
     }
-    if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && _i2 > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i2])) {
-      attrib.attribNameEndsAt = _i2;
-      attrib.attribName = str.slice(attrib.attribNameStartsAt, _i2);
+    if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i])) {
+      attrib.attribNameEndsAt = _i;
+      attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.has(attrib.attribName);
-      if (str[_i2] && !str[_i2].trim() && str[stringLeftRight.right(str, _i2)] === "=") ; else if (str[_i2] && !str[_i2].trim() || str[_i2] === ">" || str[_i2] === "/" && str[stringLeftRight.right(str, _i2)] === ">") {
-        if ("'\"".includes(str[stringLeftRight.right(str, _i2)])) ; else {
-          attrib.attribEnd = _i2;
+      if (str[_i] && !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "=") ; else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
+        if ("'\"".includes(str[stringLeftRight.right(str, _i)])) ; else {
+          attrib.attribEnd = _i;
           token.attribs.push(clone(attrib));
           attribReset();
         }
       }
     }
-    if (!doNothing && str[_i2] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && _i2 > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i2])) {
-      attrib.attribStart = _i2;
-      attrib.attribNameStartsAt = _i2;
+    if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && _i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i])) {
+      attrib.attribStart = _i;
+      attrib.attribNameStartsAt = _i;
     }
     if (!doNothing && token.type === "rule") {
-      if (str[_i2] === "{" && !Number.isInteger(token.openingCurlyAt)) {
-        token.openingCurlyAt = _i2;
-      } else if (str[_i2] === "}" && Number.isInteger(token.openingCurlyAt) && !Number.isInteger(token.closingCurlyAt)) {
-        token.closingCurlyAt = _i2;
-        token.end = _i2 + 1;
+      if (str[_i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
+        token.openingCurlyAt = _i;
+      } else if (str[_i] === "}" && Number.isInteger(token.openingCurlyAt) && !Number.isInteger(token.closingCurlyAt)) {
+        token.closingCurlyAt = _i;
+        token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
         tokenReset();
       }
     }
-    if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && _i2 >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-      if ("'\"".includes(str[_i2])) {
-        if (str[stringLeftRight.left(str, _i2)] === str[_i2] &&
-        !"/>".concat(espChars).includes(str[stringLeftRight.right(str, _i2)]) && !xBeforeYOnTheRight(str, _i2, "=", "\"") && !xBeforeYOnTheRight(str, _i2, "=", "'") && (xBeforeYOnTheRight(str, _i2, "\"", ">") || xBeforeYOnTheRight(str, _i2, "'", ">")) && (
-        !str.slice(_i2 + 1).includes("<") ||
+    if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+      if ("'\"".includes(str[_i])) {
+        if (str[stringLeftRight.left(str, _i)] === str[_i] &&
+        !"/>".concat(espChars).includes(str[stringLeftRight.right(str, _i)]) && !xBeforeYOnTheRight(str, _i, "=", "\"") && !xBeforeYOnTheRight(str, _i, "=", "'") && (xBeforeYOnTheRight(str, _i, "\"", ">") || xBeforeYOnTheRight(str, _i, "'", ">")) && (
+        !str.slice(_i + 1).includes("<") ||
         !str.slice(0, str.indexOf("<")).includes("="))) {
-          attrib.attribOpeningQuoteAt = _i2;
-          attrib.attribValueStartsAt = _i2 + 1;
+          attrib.attribOpeningQuoteAt = _i;
+          attrib.attribValueStartsAt = _i + 1;
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length &&
           attrib.attribValue[attrib.attribValue.length - 1].start &&
           !attrib.attribValue[attrib.attribValue.length - 1].end &&
@@ -1042,50 +1092,50 @@ function tokenizer(str, originalOpts) {
           }
           layers.push({
             type: "simple",
-            value: str[_i2],
-            position: _i2
+            value: str[_i],
+            position: _i
           });
         } else if (
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         }) &&
-        attributeEnds(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i2)) {
-          attrib.attribClosingQuoteAt = _i2;
-          attrib.attribValueEndsAt = _i2;
+        attributeEnds(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i)) {
+          attrib.attribClosingQuoteAt = _i;
+          attrib.attribValueEndsAt = _i;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
-            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
           }
-          attrib.attribEnd = _i2 + 1;
+          attrib.attribEnd = _i + 1;
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
+            attrib.attribValue[attrib.attribValue.length - 1].end = _i;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i);
           }
-          if (str[attrib.attribOpeningQuoteAt] !== str[_i2]) {
+          if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
             layers.pop();
           }
           token.attribs.push(clone(attrib));
           attribReset();
         }
-      } else if (attrib.attribOpeningQuoteAt === null && (str[_i2] && !str[_i2].trim() || ["/", ">"].includes(str[_i2]) || espChars.includes(str[_i2]) && espChars.includes(str[_i2 + 1]))) {
-        attrib.attribValueEndsAt = _i2;
-        attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
+      } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
+        attrib.attribValueEndsAt = _i;
+        attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
         if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-          attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
+          attrib.attribValue[attrib.attribValue.length - 1].end = _i;
           attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
         }
-        attrib.attribEnd = _i2;
+        attrib.attribEnd = _i;
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
-        if (str[_i2] === ">") {
-          token.end = _i2 + 1;
+        if (str[_i] === ">") {
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[_i2] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i2)]) || str[_i2 - 1] && isLatinLetter(str[_i2 - 1]))) {
+      } else if (str[_i] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || str[_i - 1] && isLatinLetter(str[_i - 1]))) {
         var whitespaceFound;
         var attribClosingQuoteAt;
-        for (var _y3 = stringLeftRight.left(str, _i2); _y3 >= attrib.attribValueStartsAt; _y3--) {
+        for (var _y3 = stringLeftRight.left(str, _i); _y3 >= attrib.attribValueStartsAt; _y3--) {
           if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
             whitespaceFound = true;
             if (attribClosingQuoteAt) {
@@ -1109,40 +1159,40 @@ function tokenizer(str, originalOpts) {
             }
           }
           attrib.attribEnd = attribClosingQuoteAt;
-          if (str[attrib.attribOpeningQuoteAt] !== str[_i2]) {
+          if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
           }
           token.attribs.push(clone(attrib));
           attribReset();
-          _i2 = attribClosingQuoteAt - 1;
-          i = _i2;
+          _i = attribClosingQuoteAt - 1;
+          i = _i;
           return "continue";
-        } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[stringLeftRight.right(str, _i2)]) || htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i2).trim()))) {
-          _i2 = attrib.attribOpeningQuoteAt;
+        } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
+          _i = attrib.attribOpeningQuoteAt;
           attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
           layers.pop();
           token.attribs.push(clone(attrib));
           attribReset();
-          i = _i2;
+          i = _i;
           return "continue";
         }
       } else if (attrib && attrib.attribStart && !attrib.attribEnd && (
       !Array.isArray(attrib.attribValue) ||
       !attrib.attribValue.length ||
-      attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= _i2)) {
+      attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= _i)) {
         attrib.attribValue.push({
           type: "text",
-          start: _i2,
+          start: _i,
           end: null,
           value: null
         });
       }
     }
-    if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i2 && str[_i2] && str[_i2].trim()) {
-      if (str[_i2] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, _i2)]) && !espChars.includes(str[stringLeftRight.right(str, _i2)])
+    if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
+      if (str[_i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, _i)]) && !espChars.includes(str[stringLeftRight.right(str, _i)])
       ) {
-          var firstCharOnTheRight = stringLeftRight.right(str, _i2);
+          var firstCharOnTheRight = stringLeftRight.right(str, _i);
           var firstQuoteOnTheRightIdx = [str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
             return val > 0;
           }).length ? Math.min.apply(Math, _toConsumableArray([str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
@@ -1152,7 +1202,7 @@ function tokenizer(str, originalOpts) {
           firstCharOnTheRight &&
           str.slice(firstCharOnTheRight).includes("=") &&
           htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnd = _i2 + 1;
+            attrib.attribEnd = _i + 1;
             token.attribs.push(clone(attrib));
             attribReset();
           } else if (
@@ -1169,23 +1219,23 @@ function tokenizer(str, originalOpts) {
               position: attrib.attribValueStartsAt
             });
           }
-        } else if ("'\"".includes(str[_i2])) {
-        var nextCharIdx = stringLeftRight.right(str, _i2);
+        } else if ("'\"".includes(str[_i])) {
+        var nextCharIdx = stringLeftRight.right(str, _i);
         if (
         nextCharIdx &&
         "'\"".includes(str[nextCharIdx]) &&
-        str[_i2] !== str[nextCharIdx] &&
+        str[_i] !== str[nextCharIdx] &&
         str.length > nextCharIdx + 2 &&
         str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
-        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i2] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
+        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
         !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
-          return "<>=".concat(str[_i2]).includes(char);
+          return "<>=".concat(str[_i]).includes(char);
         })) {
           layers.pop();
         } else {
-          attrib.attribOpeningQuoteAt = _i2;
-          if (str[_i2 + 1]) {
-            attrib.attribValueStartsAt = _i2 + 1;
+          attrib.attribOpeningQuoteAt = _i;
+          if (str[_i + 1]) {
+            attrib.attribValueStartsAt = _i + 1;
           }
           if (
           Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
@@ -1200,12 +1250,12 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (str[_i2] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
+    if (str[_i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
       var thisIsRealEnding = false;
-      if (str[_i2 + 1]) {
-        for (var _y4 = _i2 + 1; _y4 < len; _y4++) {
+      if (str[_i + 1]) {
+        for (var _y4 = _i + 1; _y4 < len; _y4++) {
           if (attrib.attribOpeningQuoteAt !== null && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
-            if (_y4 !== _i2 + 1 && str[_y4 - 1] !== "=") {
+            if (_y4 !== _i + 1 && str[_y4 - 1] !== "=") {
               thisIsRealEnding = true;
             }
             break;
@@ -1224,48 +1274,48 @@ function tokenizer(str, originalOpts) {
         thisIsRealEnding = true;
       }
       if (thisIsRealEnding) {
-        token.end = _i2 + 1;
+        token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
-        if (Number.isInteger(attrib.attribValueStartsAt) && _i2 && attrib.attribValueStartsAt < _i2 && str.slice(attrib.attribValueStartsAt, _i2).trim()) {
-          attrib.attribValueEndsAt = _i2;
-          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i2);
+        if (Number.isInteger(attrib.attribValueStartsAt) && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
+          attrib.attribValueEndsAt = _i;
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = _i2;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i2);
+            attrib.attribValue[attrib.attribValue.length - 1].end = _i;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i);
           }
         } else {
           attrib.attribValueStartsAt = null;
         }
-        attrib.attribEnd = _i2;
+        attrib.attribEnd = _i;
         token.attribs.push(clone(attrib));
         attribReset();
       }
     }
-    if (str[_i2] && opts.charCb) {
+    if (str[_i] && opts.charCb) {
       pingCharCb({
         type: token.type,
-        chr: str[_i2],
-        i: _i2
+        chr: str[_i],
+        i: _i
       });
     }
-    if (!str[_i2] && token.start !== null) {
-      token.end = _i2;
+    if (!str[_i] && token.start !== null) {
+      token.end = _i;
       token.value = str.slice(token.start, token.end);
       pingTagCb(token);
     }
-    i = _i2;
+    i = _i;
   };
   for (var i = 0; i <= len; i++) {
     var _ret3 = _loop2(i);
     if (_ret3 === "continue") continue;
   }
   if (charStash.length) {
-    for (var _i3 = 0, _len2 = charStash.length; _i3 < _len2; _i3++) {
+    for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
       reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
     }
   }
   if (tagStash.length) {
-    for (var _i4 = 0, _len3 = tagStash.length; _i4 < _len3; _i4++) {
+    for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
   }

@@ -1,7 +1,7 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
-t.test((t) => {
+tap.test((t) => {
   const gathered = [];
   ct("abc", {
     reportProgressFunc: null,
@@ -23,7 +23,7 @@ t.test((t) => {
   t.end();
 });
 
-t.test((t) => {
+tap.test((t) => {
   const gathered = [];
   ct("abc", {
     reportProgressFunc: false,
@@ -45,7 +45,7 @@ t.test((t) => {
   t.end();
 });
 
-t.test((t) => {
+tap.test((t) => {
   const gathered = [];
   function shouldveBeenCalled(val) {
     throw new Error(val);
@@ -67,12 +67,12 @@ t.test((t) => {
   t.end();
 });
 
-t.test((t) => {
+tap.test((t) => {
   let counter = 0;
   const countingFunction = () => {
     // const countingFunction = val => {
     //   console.log(`val received: ${val}`);
-    counter++;
+    counter += 1;
   };
   // long input (>1000 chars long) should report at each natural number percentage passed:
 
@@ -91,7 +91,7 @@ t.test((t) => {
   t.end();
 });
 
-t.test((t) => {
+tap.test((t) => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -111,7 +111,7 @@ t.test((t) => {
   t.end();
 });
 
-t.test((t) => {
+tap.test((t) => {
   const gather = [];
   const countingFunction = (val) => {
     // const countingFunction = val => {

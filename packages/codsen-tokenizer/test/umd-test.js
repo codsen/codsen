@@ -1,7 +1,7 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.umd");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   const gathered = [];
   ct("<a>", {
     tagCb: (obj) => {

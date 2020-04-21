@@ -1,11 +1,11 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
-// const deepContains = require("ast-deep-contains");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
+// import deepContains from "ast-deep-contains");
 
 // 00. api
 // -----------------------------------------------------------------------------
 
-t.test("00.01 - 1st arg missing", (t) => {
+tap.test("00.01 - 1st arg missing", (t) => {
   t.throws(
     () => {
       ct();
@@ -16,7 +16,7 @@ t.test("00.01 - 1st arg missing", (t) => {
   t.end();
 });
 
-t.test("00.02 - 1st arg of a wrong type", (t) => {
+tap.test("00.02 - 1st arg of a wrong type", (t) => {
   t.throws(
     () => {
       ct(true);
@@ -27,7 +27,7 @@ t.test("00.02 - 1st arg of a wrong type", (t) => {
   t.end();
 });
 
-t.test("00.03 - 2nd arg (opts) is wrong", (t) => {
+tap.test("00.03 - 2nd arg (opts) is wrong", (t) => {
   t.throws(
     () => {
       ct("a", "z");
@@ -38,7 +38,7 @@ t.test("00.03 - 2nd arg (opts) is wrong", (t) => {
   t.end();
 });
 
-t.test("00.04 - opts.tagCb() is wrong", (t) => {
+tap.test("00.04 - opts.tagCb() is wrong", (t) => {
   t.throws(
     () => {
       ct("a", { tagCb: "z" });
@@ -49,7 +49,7 @@ t.test("00.04 - opts.tagCb() is wrong", (t) => {
   t.end();
 });
 
-t.test("00.05 - opts.charCb() is wrong", (t) => {
+tap.test("00.05 - opts.charCb() is wrong", (t) => {
   t.throws(
     () => {
       ct("a", { charCb: "z" });
@@ -60,7 +60,7 @@ t.test("00.05 - opts.charCb() is wrong", (t) => {
   t.end();
 });
 
-t.test("00.06 - opts.reportProgressFunc is wrong", (t) => {
+tap.test("00.06 - opts.reportProgressFunc is wrong", (t) => {
   t.throws(
     () => {
       ct("a", { reportProgressFunc: "z" });

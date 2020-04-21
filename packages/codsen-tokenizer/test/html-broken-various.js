@@ -1,11 +1,12 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
+
 const BACKSLASH = "\u005C";
 
 // 01. rule tag-space-after-opening-bracket
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
@@ -37,7 +38,7 @@ t.test(
 // 02. rule tag-closing-left-slash
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
@@ -61,7 +62,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
@@ -88,7 +89,7 @@ t.test(
 // 03. Various
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
+tap.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
   const gathered = [];
   ct(
     `a<!--[if]><z>

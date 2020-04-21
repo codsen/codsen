@@ -1,11 +1,11 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 // const BACKSLASH = "\u005C";
 
 // 01. general tests, exact matching via t.same
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -61,7 +61,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -141,7 +141,7 @@ t.test(
 // 02. tag pair
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - space is melded into tag's range`,
   (t) => {
     const gathered = [];
@@ -176,7 +176,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - two spaces`,
   (t) => {
     const gathered = [];
@@ -211,7 +211,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`,
   (t) => {
     const gathered = [];
@@ -248,7 +248,7 @@ t.test(
 // 03. missing bracket followed by opening bracket
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`,
   (t) => {
     const gathered = [];
@@ -337,7 +337,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
   (t) => {
     const gathered = [];
@@ -386,7 +386,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
   (t) => {
     const gathered = [];
@@ -435,7 +435,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`,
   (t) => {
     const gathered = [];
@@ -493,7 +493,7 @@ t.test(
 // 04. EOL ends the input and tag abruptly ends
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`,
   (t) => {
     const gathered = [];

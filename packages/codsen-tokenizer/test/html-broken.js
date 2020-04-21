@@ -1,10 +1,10 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
 // 01. empty bracket pair
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
   (t) => {
     const gathered = [];
@@ -32,7 +32,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
   (t) => {
     const gathered = [];
@@ -65,7 +65,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
@@ -93,7 +93,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
@@ -137,7 +137,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
@@ -204,7 +204,7 @@ t.test(
 // 02. comment and comment-like tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
@@ -233,7 +233,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
@@ -262,7 +262,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];

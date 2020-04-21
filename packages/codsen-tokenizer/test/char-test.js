@@ -1,10 +1,10 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
 // 01. character-based tokens
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`,
   (t) => {
     const gathered = [];
@@ -49,17 +49,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookahead`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 0,
     });
@@ -104,17 +100,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 1,
     });
@@ -183,17 +175,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 2,
     });
@@ -277,17 +265,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 3,
     });
@@ -381,17 +365,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 4,
     });
@@ -490,17 +470,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 5,
     });
@@ -599,17 +575,13 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
       charCb: (obj, next) => {
-        gathered.push(
-          Object.assign({}, obj, {
-            next,
-          })
-        );
+        gathered.push({ ...obj, next });
       },
       charCbLookahead: 99,
     });
@@ -708,7 +680,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99 - doesn't push next`,
   (t) => {
     const gathered = [];

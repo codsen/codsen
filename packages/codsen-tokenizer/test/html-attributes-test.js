@@ -1,12 +1,13 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
+
 const doubleQuotes = `\u0022`;
 const apostrophe = `\u0027`;
 
 // 01. basic - double quoted attributes
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`,
   (t) => {
     const gathered = [];
@@ -73,7 +74,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`,
   (t) => {
     const gathered = [];
@@ -133,7 +134,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   (t) => {
     const gathered = [];
@@ -169,7 +170,7 @@ t.test(
 );
 
 // space inside tag
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   (t) => {
     const gathered = [];
@@ -204,7 +205,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`,
   (t) => {
     const gathered = [];
@@ -276,7 +277,7 @@ t.test(
 // 02. broken
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`,
   (t) => {
     const gathered = [];
@@ -354,7 +355,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no opening quotes but equals present`,
   (t) => {
     const gathered = [];
@@ -432,7 +433,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`,
   (t) => {
     const gathered = [];
@@ -499,7 +500,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - empty attr value`,
   (t) => {
     const gathered = [];
@@ -556,7 +557,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - false alarm, brackets - rgb()`,
   (t) => {
     const gathered = [];
@@ -612,7 +613,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - space instead of equal`,
   (t) => {
     const gathered = [];
@@ -714,7 +715,7 @@ t.test(
 // 03. bool attributes
 // -----------------------------------------------------------------------------
 
-t.test(`03.01`, (t) => {
+tap.test(`03.01`, (t) => {
   const gathered = [];
   ct(`<td nowrap>`, {
     tagCb: (obj) => {
@@ -760,7 +761,7 @@ t.test(`03.01`, (t) => {
   t.end();
 });
 
-t.test(`03.02 - slash in the end`, (t) => {
+tap.test(`03.02 - slash in the end`, (t) => {
   const gathered = [];
   ct(`<td nowrap/>`, {
     tagCb: (obj) => {
@@ -806,7 +807,7 @@ t.test(`03.02 - slash in the end`, (t) => {
   t.end();
 });
 
-t.test(`03.03 - slash in front`, (t) => {
+tap.test(`03.03 - slash in front`, (t) => {
   const gathered = [];
   ct(`</td nowrap>`, {
     tagCb: (obj) => {
@@ -852,7 +853,7 @@ t.test(`03.03 - slash in front`, (t) => {
   t.end();
 });
 
-t.test(`03.04 - now crazier`, (t) => {
+tap.test(`03.04 - now crazier`, (t) => {
   const gathered = [];
   ct(`</td nowrap yo yo/>`, {
     tagCb: (obj) => {
@@ -924,7 +925,7 @@ t.test(`03.04 - now crazier`, (t) => {
   t.end();
 });
 
-t.test(`03.05 - unrecognised tag`, (t) => {
+tap.test(`03.05 - unrecognised tag`, (t) => {
   const gathered = [];
   ct(`<zzz accept-charset="utf-8" yyy>`, {
     tagCb: (obj) => {
@@ -992,7 +993,7 @@ t.test(`03.05 - unrecognised tag`, (t) => {
 // 04. erroneous code
 // -----------------------------------------------------------------------------
 
-t.test(`04.01 - attr value without quotes`, (t) => {
+tap.test(`04.01 - attr value without quotes`, (t) => {
   const gathered = [];
   ct(`<abc de=fg hi="jkl">`, {
     tagCb: (obj) => {
@@ -1065,7 +1066,7 @@ t.test(`04.01 - attr value without quotes`, (t) => {
   t.end();
 });
 
-t.test(`04.02 - attr value without quotes leads to tag's end`, (t) => {
+tap.test(`04.02 - attr value without quotes leads to tag's end`, (t) => {
   const gathered = [];
   ct(`<abc de=fg/>`, {
     tagCb: (obj) => {
@@ -1118,7 +1119,7 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, (t) => {
   t.end();
 });
 
-t.test(`04.03 - attr value without quotes leads to tag's end`, (t) => {
+tap.test(`04.03 - attr value without quotes leads to tag's end`, (t) => {
   const gathered = [];
   ct(`<abc de=fg>`, {
     tagCb: (obj) => {
@@ -1173,7 +1174,7 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, (t) => {
 // 05. mismatching quotes
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
   (t) => {
     const gathered = [];
@@ -1251,7 +1252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
   (t) => {
     const gathered = [];
@@ -1329,7 +1330,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. end of tag follows`,
   (t) => {
     const gathered = [];
@@ -1386,7 +1387,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. another attribute follows`,
   (t) => {
     const gathered = [];
@@ -1464,7 +1465,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B. end of tag follows`,
   (t) => {
     const gathered = [];
@@ -1521,7 +1522,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B, attr follows`,
   (t) => {
     const gathered = [];
@@ -1599,7 +1600,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
   (t) => {
     const gathered = [];
@@ -1656,7 +1657,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
   (t) => {
     const gathered = [];
@@ -1713,7 +1714,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
   (t) => {
     const gathered = [];
@@ -1773,7 +1774,7 @@ t.test(
 // 06. terminating unclosed string value (content within quotes)
 // -----------------------------------------------------------------------------
 
-t.test(`06.01 - attr value without quotes leads to tag's end`, (t) => {
+tap.test(`06.01 - attr value without quotes leads to tag's end`, (t) => {
   const gathered = [];
   ct(`<abc de =">\ntext<div class="z">`, {
     tagCb: (obj) => {
@@ -1858,7 +1859,7 @@ t.test(`06.01 - attr value without quotes leads to tag's end`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `06.02 - missing closing quote, cheeky raw text bracket follows`,
   (t) => {
     const gathered = [];
@@ -1911,7 +1912,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - two errors: space before equal and closing quotes missing`,
   (t) => {
     const gathered = [];
@@ -1979,7 +1980,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - two errors: space before equal and closing quotes missing, text follows`,
   (t) => {
     const gathered = [];
@@ -2054,7 +2055,7 @@ t.test(
   }
 );
 
-t.test(`06.05 - two asterisks as an attribute's value`, (t) => {
+tap.test(`06.05 - two asterisks as an attribute's value`, (t) => {
   const gathered = [];
   ct(`<frameset cols="**">`, {
     tagCb: (obj) => {
@@ -2106,7 +2107,7 @@ t.test(`06.05 - two asterisks as an attribute's value`, (t) => {
   t.end();
 });
 
-t.test(`06.06 - many asterisks as an attribute's value`, (t) => {
+tap.test(`06.06 - many asterisks as an attribute's value`, (t) => {
   const gathered = [];
   ct(`<frameset cols="******">`, {
     tagCb: (obj) => {
@@ -2158,7 +2159,7 @@ t.test(`06.06 - many asterisks as an attribute's value`, (t) => {
   t.end();
 });
 
-t.test(`06.07 - unescaped bracket as value, one tag`, (t) => {
+tap.test(`06.07 - unescaped bracket as value, one tag`, (t) => {
   const gathered = [];
   ct(`<abc de=">">`, {
     tagCb: (obj) => {
@@ -2212,7 +2213,7 @@ t.test(`06.07 - unescaped bracket as value, one tag`, (t) => {
   t.end();
 });
 
-t.test(`06.08 - unescaped bracket as value, few tags`, (t) => {
+tap.test(`06.08 - unescaped bracket as value, few tags`, (t) => {
   const gathered = [];
   ct(`<abc de=">" fg="h">`, {
     tagCb: (obj) => {
@@ -2287,7 +2288,7 @@ t.test(`06.08 - unescaped bracket as value, few tags`, (t) => {
   t.end();
 });
 
-t.test(`06.09 - unescaped bracket as value, more tags`, (t) => {
+tap.test(`06.09 - unescaped bracket as value, more tags`, (t) => {
   const gathered = [];
   ct(
     `<img alt="click here >" width="7" height="8" border="9" style="display:block;"/>`,
@@ -2432,7 +2433,7 @@ t.test(`06.09 - unescaped bracket as value, more tags`, (t) => {
 // 07. recognised and not recognised
 // -----------------------------------------------------------------------------
 
-t.test(`07.01 - two attrs, one recognised one not`, (t) => {
+tap.test(`07.01 - two attrs, one recognised one not`, (t) => {
   const gathered = [];
   ct(`<table class="aa" bbb="cc">`, {
     tagCb: (obj) => {
@@ -2469,7 +2470,7 @@ t.test(`07.01 - two attrs, one recognised one not`, (t) => {
 // 08. broken opening
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - missing opening quote`,
   (t) => {
     const gathered = [];
@@ -2551,7 +2552,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes`,
   (t) => {
     const gathered = [];
@@ -2644,7 +2645,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`,
   (t) => {
     const gathered = [];
@@ -2721,7 +2722,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, the other way`,
   (t) => {
     const gathered = [];
@@ -2814,7 +2815,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attribute should not affect tag that follows`,
   (t) => {
     const gathered = [];
@@ -2906,7 +2907,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, opposite pairs`,
   (t) => {
     const gathered = [];
@@ -2999,7 +3000,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote repeated`,
   (t) => {
     const gathered = [];
@@ -3081,7 +3082,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
   (t) => {
     const gathered = [];
@@ -3137,7 +3138,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
   (t) => {
     const gathered = [];
@@ -3219,7 +3220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
   (t) => {
     const gathered = [];
@@ -3301,7 +3302,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
   (t) => {
     const gathered = [];
@@ -3383,7 +3384,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.12 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
   (t) => {
     const gathered = [];
@@ -3465,7 +3466,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.13 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`,
   (t) => {
     const gathered = [];
@@ -3547,7 +3548,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.14 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
@@ -3650,7 +3651,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.15 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
@@ -3753,7 +3754,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.16 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
@@ -3845,7 +3846,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   (t) => {
     const gathered = [];
@@ -3941,7 +3942,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, quoteless attr inside`,
   (t) => {
     const gathered = [];
@@ -4028,7 +4029,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised text - equal - value`,
   (t) => {
     const gathered = [];
@@ -4101,7 +4102,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`,
   (t) => {
     const gathered = [];
@@ -4197,7 +4198,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   (t) => {
     const gathered = [];
@@ -4284,7 +4285,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
   (t) => {
     const gathered = [];
@@ -4371,7 +4372,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
@@ -4490,7 +4491,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   (t) => {
     const gathered = [];
@@ -4602,7 +4603,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
   (t) => {
     const gathered = [];
@@ -4721,7 +4722,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
   (t) => {
     const gathered = [];
@@ -4840,7 +4841,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/outer combo`,
   (t) => {
     const gathered = [];
@@ -4959,7 +4960,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`,
   (t) => {
     const gathered = [];
@@ -5032,7 +5033,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
   (t) => {
     const gathered = [];
@@ -5114,7 +5115,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
@@ -5196,7 +5197,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
   (t) => {
     const gathered = [];
@@ -5269,7 +5270,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
   (t) => {
     const gathered = [];
@@ -5351,7 +5352,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
@@ -5433,7 +5434,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.34 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
   (t) => {
     const gathered = [];
@@ -5506,7 +5507,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.35 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes and equal missing`,
   (t) => {
     const gathered = [];
@@ -5586,7 +5587,7 @@ t.test(
 // 09. broken closing
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, one attr`,
   (t) => {
     const gathered = [];
@@ -5663,7 +5664,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, two attrs`,
   (t) => {
     const gathered = [];

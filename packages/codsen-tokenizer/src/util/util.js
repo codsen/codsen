@@ -266,7 +266,8 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
       return true;
-    } else if (str.startsWith(y, i)) {
+    }
+    if (str.startsWith(y, i)) {
       // since we're in this clause, x failed, so if y matched,
       // this means y precedes x
       return false;
@@ -282,7 +283,8 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
       // it's escape clause, bracket or whatever was reached and yet,
       // "x" hasn't been encountered yet
       return true;
-    } else if (str[i] === x) {
+    }
+    if (str[i] === x) {
       // if "x" was found, that's it - falsey result
       return false;
     }

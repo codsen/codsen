@@ -1,10 +1,10 @@
-const t = require("tap");
-const ct = require("../dist/codsen-tokenizer.cjs");
+import tap from "tap";
+import ct from "../dist/codsen-tokenizer.esm";
 
 // 01. simple-kind comments
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - simple case`,
   (t) => {
     const gathered = [];
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - broken simple case, with space`,
   (t) => {
     const gathered = [];
@@ -102,7 +102,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
@@ -142,7 +142,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
@@ -196,7 +196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
@@ -236,7 +236,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
@@ -276,7 +276,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const gathered = [];
@@ -321,7 +321,7 @@ t.test(
 // 02. outlook conditionals: only
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal`,
   (t) => {
     const gathered = [];
@@ -370,7 +370,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`,
   (t) => {
     const gathered = [];
@@ -441,7 +441,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`,
   (t) => {
     const gathered = [];
@@ -490,7 +490,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing excl. mark`,
   (t) => {
     const gathered = [];
@@ -532,7 +532,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - empty conditional`,
   (t) => {
     const gathered = [];
@@ -566,7 +566,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - swapped excl. mark`,
   (t) => {
     const gathered = [];
@@ -605,7 +605,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - 1 instead of !`,
   (t) => {
     const gathered = [];
@@ -645,7 +645,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing closing bracket`,
   (t) => {
     const gathered = [];
@@ -679,7 +679,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
   (t) => {
     const gathered = [];
@@ -706,7 +706,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
   (t) => {
     const gathered = [];
@@ -740,7 +740,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - curly brackets`,
   (t) => {
     const gathered = [];
@@ -781,7 +781,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - parentheses`,
   (t) => {
     const gathered = [];
@@ -822,7 +822,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`,
   (t) => {
     const gathered = [];
@@ -880,7 +880,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - no brackets`,
   (t) => {
     const gathered = [];
@@ -922,7 +922,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`,
   (t) => {
     const gathered = [];
@@ -979,7 +979,7 @@ t.test(
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
   (t) => {
     const gathered = [];
@@ -1028,7 +1028,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
   (t) => {
     const gathered = [];
@@ -1065,7 +1065,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
   (t) => {
     const gathered = [];
@@ -1092,7 +1092,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, no space`,
   (t) => {
     const gathered = [];
@@ -1124,7 +1124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, with space`,
   (t) => {
     const gathered = [];
@@ -1156,7 +1156,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing`,
   (t) => {
     const gathered = [];
@@ -1205,7 +1205,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing, spaced notation`,
   (t) => {
     const gathered = [];
@@ -1254,7 +1254,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`,
   (t) => {
     const gathered = [];
@@ -1302,7 +1302,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, full`,
   (t) => {
     const gathered = [];
@@ -1404,7 +1404,7 @@ t.test(
 // 04. simplet-kind comments
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`,
   (t) => {
     const gathered = [];
@@ -1432,7 +1432,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`,
   (t) => {
     const gathered = [];
@@ -1476,7 +1476,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance`,
   (t) => {
     const gathered = [];
@@ -1512,7 +1512,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - three instances`,
   (t) => {
     const gathered = [];
