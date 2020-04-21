@@ -1,5 +1,6 @@
-const t = require("tap");
-const { crush, defaults, version } = require("../dist/html-crush.cjs");
+import tap from "tap";
+import { crush, defaults, version } from "../dist/html-crush.esm";
+
 const m = crush;
 
 function strip(str) {
@@ -15,7 +16,7 @@ function strip(str) {
 // 00. THROWS.
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when first arg is wrong`,
   (t) => {
     const err1 = t.throws(() => {
@@ -34,7 +35,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when second arg is wrong`,
   (t) => {
     const err1 = t.throws(() => {
@@ -53,7 +54,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when opts.breakToTheLeftOf contains non-string elements`,
   (t) => {
     const err1 = t.throws(() => {
@@ -89,7 +90,7 @@ t.test(
 // 01. Small tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - deletes trailing space`,
   (t) => {
     t.same(
@@ -118,7 +119,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - retains trailing linebreak`,
   (t) => {
     t.same(
@@ -133,7 +134,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - trailing line break`,
   (t) => {
     t.same(
@@ -147,7 +148,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - multiple line breaks`,
   (t) => {
     t.same(
@@ -161,7 +162,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - ends with character`,
   (t) => {
     t.same(
@@ -175,7 +176,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`,
   (t) => {
     t.same(
@@ -188,7 +189,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - what happens when it's impossible to break and exceeding line length limit is inevitable`,
   (t) => {
     t.same(
@@ -201,7 +202,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks lines when limiter is on`,
   (t) => {
     t.same(
@@ -216,7 +217,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks along with wiping whitespace`,
   (t) => {
     t.same(
@@ -230,7 +231,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks unbreakable chunks, each over limit`,
   (t) => {
     t.same(
@@ -244,7 +245,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes whitespace`,
   (t) => {
     t.same(
@@ -267,7 +268,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.12 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting`,
   (t) => {
     t.same(
@@ -290,7 +291,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.13 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - more tags and limiting`,
   (t) => {
     t.same(
@@ -327,7 +328,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.14 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 8`,
   (t) => {
     t.same(
@@ -342,7 +343,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.15 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 10`,
   (t) => {
     t.same(
@@ -357,7 +358,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.16 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 14`,
   (t) => {
     t.same(
@@ -372,7 +373,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.17 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence without whitespace is wrapped`,
   (t) => {
     t.same(
@@ -384,7 +385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.18 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence completely wrapped`,
   (t) => {
     t.same(
@@ -396,7 +397,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`,
   (t) => {
     t.same(
@@ -409,7 +410,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with character`,
   (t) => {
     t.same(
@@ -430,7 +431,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.21 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - comments`,
   (t) => {
     const src = `<!--<![endif]-->`;
@@ -448,7 +449,7 @@ t.test(
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - nothing to minify`,
   (t) => {
     t.same(m("").result, "", "02.01.01");
@@ -457,7 +458,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - minimal string of few words`,
   (t) => {
     const source = ` \t
@@ -521,7 +522,7 @@ c
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - trailing linebreaks (or their absence) at the EOF are respected`,
   (t) => {
     // removeLineBreaks: true
@@ -566,7 +567,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - opts.lineLengthLimit`,
   (t) => {
     // the following piece of HTML will render as having spaces between C's:
@@ -643,7 +644,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - spaces`,
   (t) => {
     t.same(
@@ -784,7 +785,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - linebreaks`,
   (t) => {
     t.same(
@@ -903,7 +904,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - double linebreaks`,
   (t) => {
     t.same(
@@ -1014,7 +1015,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - tags with single space between them`,
   (t) => {
     t.same(
@@ -1075,7 +1076,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking between tags`,
   (t) => {
     t.same(
@@ -1142,7 +1143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - break-position-friendly characters, not suitable for break yet - line limit 8`,
   (t) => {
     //
@@ -1197,7 +1198,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - break-position-friendly characters, not suitable for break yet - line limit 12`,
   (t) => {
     //
@@ -1335,7 +1336,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`,
   (t) => {
     t.same(
@@ -1374,7 +1375,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags are skipped too`,
   (t) => {
     t.same(
@@ -1413,7 +1414,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - code-pre blocks are not touched`,
   (t) => {
     const preBlock = `<pre id="lalalaa"><code class="tralalaa">    \n    \t   zz    z  \n  \t  r  r  \n \t  </code></pre>`;
@@ -1453,7 +1454,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - CDATA blocks are not touched`,
   (t) => {
     const preBlock = `<![CDATA[          \n     \t   \n  a  a \r     \n a    \t    \t\t\t\t\t  a   \n     \t\t\t    ]]>`;
@@ -1493,7 +1494,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - whitespace in front of </script>`,
   (t) => {
     // 0. baseline - no whitespace in front of </script>
@@ -1588,7 +1589,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.17 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is not replaced with a single space`,
   (t) => {
     t.equal(m("a\nb", { removeLineBreaks: true }).result, "a\nb", "02.17.01");
@@ -1611,7 +1612,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is deleted though`,
   (t) => {
     t.equal(
@@ -1638,7 +1639,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.19 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking to the right of style tag`,
   (t) => {
     const source = `<html>
@@ -1753,7 +1754,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.20 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - doesn't delete whitespace with linebreaks between curlies`,
   (t) => {
     const source = "{% a %}\n\n\n{% a %}";
@@ -1770,7 +1771,7 @@ t.test(
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
   (t) => {
     function shouldveBeenCalled(val) {
@@ -1781,7 +1782,7 @@ t.test(
     const countingFunction = () => {
       // const countingFunction = val => {
       // console.log(`val received: ${val}`);
-      counter++;
+      counter += 1;
     };
 
     t.same(
@@ -1889,7 +1890,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
   (t) => {
     const gather = [];
@@ -2098,7 +2099,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 // 04. opts.removeIndentations
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`,
   (t) => {
     t.same(
@@ -2113,7 +2114,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`,
   (t) => {
     t.same(
@@ -2128,7 +2129,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - leading whitespace`,
   (t) => {
     t.same(
@@ -2159,7 +2160,7 @@ t.test(
 // 05. OTHER API AREAS
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${32}m${`API's defaults`}\u001b[${39}m`} - plain object is exported and contains correct keys`,
   (t) => {
     t.same(
@@ -2180,7 +2181,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${32}m${`API's defaults`}\u001b[${39}m`} - plain object is exported`,
   (t) => {
     t.match(version, /\d+\.\d+\.\d+/, "05.02");
@@ -2191,7 +2192,7 @@ t.test(
 // 06. opts.breakToTheLeftOf
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks based on breakpoints (no whitespace involved)`,
   (t) => {
     t.same(
@@ -2276,7 +2277,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks based on breakpoints (whitespace involved)`,
   (t) => {
     t.same(
@@ -2366,7 +2367,7 @@ t.test(
 // 07. minification within style tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - minimal`,
   (t) => {
     t.same(
@@ -2401,7 +2402,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - spaces`,
   (t) => {
     t.same(
@@ -2436,7 +2437,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element > element`,
   (t) => {
     t.same(
@@ -2478,7 +2479,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.04 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element + element`,
   (t) => {
     t.same(
@@ -2523,7 +2524,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.05 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element ~ element`,
   (t) => {
     t.same(
@@ -2568,7 +2569,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.06 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes CSS comments`,
   (t) => {
     t.same(
@@ -2589,7 +2590,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of !important`,
   (t) => {
     t.same(
@@ -2624,7 +2625,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of <script>`,
   (t) => {
     const source =
@@ -2665,7 +2666,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.09 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals`,
   (t) => {
     t.same(
@@ -2689,7 +2690,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.10 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`,
   (t) => {
     t.same(
@@ -2714,7 +2715,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.11 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix`,
   (t) => {
     t.same(
@@ -2760,7 +2761,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.12 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`,
   (t) => {
     t.same(
@@ -2810,7 +2811,7 @@ t.test(
 // 08. inline CSS minification
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - one tag, minimal - double quotes`,
   (t) => {
     const input1 = `  <a style="a: 100%; b: c-d; ">`;
@@ -2849,7 +2850,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - inline CSS comments`,
   (t) => {
     t.same(
@@ -2863,7 +2864,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length limit falls in the middle of inline CSS comment`,
   (t) => {
     t.same(
@@ -2878,7 +2879,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length becomes all right because of truncation`,
   (t) => {
     t.same(
@@ -2893,7 +2894,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside double quotes`,
   (t) => {
     t.same(
@@ -2907,7 +2908,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside single quotes`,
   (t) => {
     t.same(
@@ -2924,7 +2925,7 @@ t.test(
 // 09. Inline tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #1`,
   (t) => {
     t.same(
@@ -2938,7 +2939,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #2`,
   (t) => {
     t.same(
@@ -2952,7 +2953,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.03 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans with space - space retained`,
   (t) => {
     t.same(
@@ -2966,7 +2967,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.04 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans without space - fine`,
   (t) => {
     t.same(
@@ -2980,7 +2981,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.06 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - inside tag`,
   (t) => {
     t.same(
@@ -2994,7 +2995,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.07 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - nameless attr`,
   (t) => {
     t.same(
@@ -3015,7 +3016,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.08 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style attr`,
   (t) => {
     t.same(
@@ -3037,7 +3038,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.09 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans`,
   (t) => {
     t.same(
@@ -3072,7 +3073,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.10 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - span + sup`,
   (t) => {
     t.same(
@@ -3094,7 +3095,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - won't line break between two inline tags`,
   (t) => {
     for (let i = 1; i < 37; i++) {
@@ -3111,7 +3112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.12 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`,
   (t) => {
     t.same(
@@ -3126,7 +3127,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed #1`,
   (t) => {
     t.same(
@@ -3149,7 +3150,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.14 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, #2`,
   (t) => {
     t.same(
@@ -3164,7 +3165,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.15 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #1`,
   (t) => {
     t.same(
@@ -3187,7 +3188,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.16 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #2`,
   (t) => {
     t.same(
@@ -3234,7 +3235,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.17 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - space between inline tags`,
   (t) => {
     t.same(
@@ -3297,7 +3298,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.18 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - excessive whitespace between inline tags #1`,
   (t) => {
     t.same(
@@ -3383,7 +3384,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.19 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup`,
   (t) => {
     t.same(
@@ -3404,7 +3405,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.20 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`,
   (t) => {
     t.same(
@@ -3419,7 +3420,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.21 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`,
   (t) => {
     for (let i = 10; i < 25; i++) {
@@ -3452,7 +3453,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.22 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - multiple wrapped inline tags`,
   (t) => {
     const source = `<span><a href="z"><b>a</b><i>b</i><a><span>`;
@@ -3485,7 +3486,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.23 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - first tag name letters resemble legit inline tags`,
   (t) => {
     t.same(
@@ -3507,7 +3508,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.24 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - spanner is not span`,
   (t) => {
     t.same(
@@ -3538,7 +3539,7 @@ t.test(
 // 10. whitespace around tag brackets, inside tag
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `10.01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitespace before closing bracket on opening tag`,
   (t) => {
     t.same(
@@ -3566,7 +3567,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.02 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - div - block level`,
   (t) => {
     t.same(
@@ -3580,7 +3581,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inline tag`,
   (t) => {
     t.same(
@@ -3594,7 +3595,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeLineBreaks = off`,
   (t) => {
     t.same(
@@ -3608,7 +3609,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, inline tag`,
   (t) => {
     t.same(
@@ -3623,7 +3624,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, block level tag`,
   (t) => {
     t.same(
@@ -3638,7 +3639,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.07 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - before closing slash`,
   (t) => {
     t.same(
@@ -3652,7 +3653,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.08 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - after closing slash`,
   (t) => {
     t.same(
@@ -3666,7 +3667,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.09 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash`,
   (t) => {
     t.same(
@@ -3680,7 +3681,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.10 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash - non inline tag`,
   (t) => {
     t.same(
@@ -3697,7 +3698,7 @@ t.test(
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `99.01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of characters`,
   (t) => {
     t.same(
@@ -3709,7 +3710,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set of characters`,
   (t) => {
     t.same(
@@ -3721,7 +3722,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.03 - ${`\u001b[${90}m${`adhoc 3`}\u001b[${39}m`} - yet another peculiar set of chars`,
   (t) => {
     const input = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -3750,7 +3751,7 @@ xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Conten
   }
 );
 
-t.test(
+tap.test(
   `99.04 - ${`\u001b[${90}m${`adhoc 4`}\u001b[${39}m`} - result's keyset is consistent`,
   (t) => {
     t.equal(Object.keys(m("")).length, Object.keys(m("zzz")).length, "99.04");
@@ -3758,7 +3759,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`,
   (t) => {
     t.same(
@@ -3811,7 +3812,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.06 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - raw non-breaking spaces`,
   (t) => {
     const chunk = "    <script >   >]] > < div>";
@@ -3837,7 +3838,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.07 - ${`\u001b[${90}m${`adhoc 7`}\u001b[${39}m`} - line length control`,
   (t) => {
     const input = `<m>
@@ -3867,7 +3868,7 @@ z><t><x><y><z klm`;
   }
 );
 
-t.test(
+tap.test(
   `99.08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`,
   (t) => {
     t.same(
@@ -3881,7 +3882,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`,
   (t) => {
     const source =

@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -459,7 +508,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -471,18 +520,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -517,7 +572,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -845,8 +900,6 @@
     }
 
   }
-
-  var version = "1.9.27";
 
   /**
    * arrayiffy-if-string
@@ -3259,6 +3312,8 @@
     return leftMain(str, idx, false);
   }
 
+  var version = "1.9.27";
+
   var isArr = Array.isArray;
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true
@@ -3309,7 +3364,7 @@
       }
     }
 
-    var opts = Object.assign({}, defaults, originalOpts); // checkTypes(opts, defaults, {
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // checkTypes(opts, defaults, {
     //   msg: "html-crush: [THROW_ID_04*]",
     //   schema: {
     //     reportProgressFunc: ["false", "null", "function"],
@@ -3317,6 +3372,7 @@
     //   }
     // });
     // normalize the values to they are always arrays (albeit sometimes empty):
+
 
     if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
       opts.breakToTheLeftOf = [];
@@ -3647,8 +3703,8 @@
           ) {
               finalIndexesToDelete.push(stageFrom, stageTo);
             } else {
-            countCharactersPerLine++;
-            _i++;
+            countCharactersPerLine += 1;
+            _i += 1;
           } // console.log(`0796 CONTINUE`);
           // continue;
 
@@ -3693,7 +3749,7 @@
           // console.log(`0912`);
           if (whitespaceStartedAt !== null) {
             if (opts.removeLineBreaks) {
-              countCharactersPerLine++;
+              countCharactersPerLine += 1;
             }
 
             if (beginningOfAFile) {
@@ -3765,12 +3821,12 @@
                   if (str[_i] === "/" && str[right(str, _i)] === ">" && right(str, _i) > _i + 1) {
                     // delete whitespace between / and >
                     finalIndexesToDelete.push(_i + 1, right(str, _i));
-                    countCharactersPerLine = countCharactersPerLine - (right(str, _i) - _i + 1);
+                    countCharactersPerLine -= right(str, _i) - _i + 1;
                   }
                 }
 
                 if (whatToAdd && whatToAdd.length) {
-                  countCharactersPerLine++;
+                  countCharactersPerLine += 1;
                 } // TWO CASES:
 
 
@@ -3832,7 +3888,7 @@
             if (opts.removeLineBreaks) {
               // there was no whitespace gap and linebreak removal is on, so just
               // increment the count
-              countCharactersPerLine++;
+              countCharactersPerLine += 1;
             }
           } // ===================================================================
           // ██ EXTRAS:
@@ -4003,7 +4059,7 @@
             countCharactersPerLine = _i - stageTo;
 
             if (str[_i].length) {
-              countCharactersPerLine++;
+              countCharactersPerLine += 1;
             }
 
             stageFrom = null;

@@ -1,6 +1,7 @@
 /* eslint import/no-extraneous-dependencies:0 */
-const t = require("tap");
+const tap = require("tap");
 const { crush } = require("../dist/html-crush.umd");
+
 const c = crush;
 
 const whitespace = ["\n", "\r", "\r\n", " ", "\t", "       \n \t     \n\n"];
@@ -10,6 +11,7 @@ function pick(...args) {
 }
 function addThousandSeparators(numStr) {
   if (typeof numStr !== "string") {
+    // eslint-disable-next-line no-param-reassign
     numStr = String(numStr);
   }
   let newStr = "";
@@ -303,7 +305,7 @@ function generate() {
   )}`;
 }
 
-t.test(`*** non-deterministic tests`, (t) => {
+tap.test(`*** non-deterministic tests`, (t) => {
   let run = true;
   let counter = 0;
   const startTime = Date.now();
@@ -315,9 +317,9 @@ t.test(`*** non-deterministic tests`, (t) => {
       if (Array.isArray(argWeSeek) && argWeSeek.length) {
         argWeSeek = argWeSeek[0];
         if (argWeSeek.includes("s")) {
-          argWeSeek = Number.parseInt(argWeSeek.replace(/s+/g, "")) * 1000;
+          argWeSeek = Number.parseInt(argWeSeek.replace(/s+/g, ""), 10) * 1000;
         } else if (argWeSeek.includes("m")) {
-          argWeSeek = Number.parseInt(argWeSeek.replace(/m+/g, "")) * 60000;
+          argWeSeek = Number.parseInt(argWeSeek.replace(/m+/g, ""), 10) * 60000;
         }
       }
     }
@@ -386,7 +388,7 @@ t.test(`*** non-deterministic tests`, (t) => {
             0
           )}\n-----------`
         );
-        counter++;
+        counter += 1;
       } else {
         run = false;
         console.log(`\n\nTOTAL: ${addThousandSeparators(counter)} ops\n\n`);

@@ -161,7 +161,7 @@ function crush(str, originalOpts) {
       }
     }
   }
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
@@ -470,8 +470,8 @@ function crush(str, originalOpts) {
         ) {
           finalIndexesToDelete.push(stageFrom, stageTo);
         } else {
-          countCharactersPerLine++;
-          i++;
+          countCharactersPerLine += 1;
+          i += 1;
         }
         doNothing = i + 2;
       }
@@ -546,7 +546,7 @@ function crush(str, originalOpts) {
       ) {
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
           if (beginningOfAFile) {
             beginningOfAFile = false;
@@ -639,12 +639,11 @@ function crush(str, originalOpts) {
                   right(str, i) > i + 1
                 ) {
                   finalIndexesToDelete.push(i + 1, right(str, i));
-                  countCharactersPerLine =
-                    countCharactersPerLine - (right(str, i) - i + 1);
+                  countCharactersPerLine -= right(str, i) - i + 1;
                 }
               }
               if (whatToAdd && whatToAdd.length) {
-                countCharactersPerLine++;
+                countCharactersPerLine += 1;
               }
               if (!opts.lineLengthLimit) {
                 if (
@@ -706,7 +705,7 @@ function crush(str, originalOpts) {
             beginningOfAFile = false;
           }
           if (opts.removeLineBreaks) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
         }
         if (!nonWhitespaceCharMet) {
@@ -923,7 +922,7 @@ function crush(str, originalOpts) {
           finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
           countCharactersPerLine = i - stageTo;
           if (str[i].length) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
           stageFrom = null;
           stageTo = null;

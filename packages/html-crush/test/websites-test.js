@@ -1,8 +1,7 @@
-const t = require("tap");
-const fetch = require("node-fetch");
-const { crush } = require("../dist/html-crush.cjs");
-const pMap = require("p-map");
-const m = crush;
+import tap from "tap";
+import fetch from "node-fetch";
+import pMap from "p-map";
+import { crush as m } from "../dist/html-crush.esm";
 
 // 08. Fetch sources of some real websites and see, a) are any non-whitespace
 // characters deleted; b) that there are no throws; c) is minified source less
@@ -24,7 +23,7 @@ const websitesToTest = [
   ["https://sjhgldgldgjdlfgldgldflkgjd.com", "Non-existent URL"],
 ];
 
-t.test(
+tap.test(
   `08.01-0${
     websitesToTest.length
   } - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`}`,
@@ -60,7 +59,7 @@ t.test(
             }% size savings)`
           );
           console.log(
-            `063 - 0${rowNum + 1}.03 - ${
+            `062 - 0${rowNum + 1}.03 - ${
               websiteArr[1]
             } - only indentations removed: ${
               minifiedResult1.log.percentageReducedOfOriginal
@@ -88,14 +87,14 @@ t.test(
             }% size savings)`
           );
           console.log(
-            `091 - 0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
+            `090 - 0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
               minifiedResult2.log.percentageReducedOfOriginal
             }% size savings`
           );
         })
         .catch((err) => {
           console.log(
-            `098 - 0${rowNum + 1}.xx - ${
+            `097 - 0${rowNum + 1}.xx - ${
               websiteArr[1]
             } - ${`\u001b[${31}m${`could not fetch the web page! Moving on...`}\u001b[${39}m`}`
           );

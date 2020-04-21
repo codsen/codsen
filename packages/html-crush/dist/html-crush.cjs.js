@@ -36,6 +36,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -152,7 +201,7 @@ function crush(str, originalOpts) {
       }
     }
   }
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
@@ -336,8 +385,8 @@ function crush(str, originalOpts) {
         ) {
             finalIndexesToDelete.push(stageFrom, stageTo);
           } else {
-          countCharactersPerLine++;
-          _i++;
+          countCharactersPerLine += 1;
+          _i += 1;
         }
         doNothing = _i + 2;
       }
@@ -362,7 +411,7 @@ function crush(str, originalOpts) {
       } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
           if (beginningOfAFile) {
             beginningOfAFile = false;
@@ -406,11 +455,11 @@ function crush(str, originalOpts) {
                 whatToAdd = "";
                 if (str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">" && stringLeftRight.right(str, _i) > _i + 1) {
                   finalIndexesToDelete.push(_i + 1, stringLeftRight.right(str, _i));
-                  countCharactersPerLine = countCharactersPerLine - (stringLeftRight.right(str, _i) - _i + 1);
+                  countCharactersPerLine -= stringLeftRight.right(str, _i) - _i + 1;
                 }
               }
               if (whatToAdd && whatToAdd.length) {
-                countCharactersPerLine++;
+                countCharactersPerLine += 1;
               }
               if (!opts.lineLengthLimit) {
                 if (!(_i === whitespaceStartedAt + 1 &&
@@ -446,7 +495,7 @@ function crush(str, originalOpts) {
             beginningOfAFile = false;
           }
           if (opts.removeLineBreaks) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
         }
         if (!nonWhitespaceCharMet) {
@@ -547,7 +596,7 @@ function crush(str, originalOpts) {
           finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd2);
           countCharactersPerLine = _i - stageTo;
           if (str[_i].length) {
-            countCharactersPerLine++;
+            countCharactersPerLine += 1;
           }
           stageFrom = null;
           stageTo = null;
