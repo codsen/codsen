@@ -194,24 +194,6 @@ const defaultOpts = {
   tagRanges: [],
 };
 function removeWidows(str, originalOpts) {
-  function push(finalStart, finalEnd) {
-    let finalWhatToInsert = rawnbsp;
-    if (opts.removeWidowPreventionMeasures) {
-      finalWhatToInsert = " ";
-    } else if (opts.convertEntities) {
-      finalWhatToInsert = encodedNbspHtml;
-      if (isStr(opts.targetLanguage)) {
-        if (opts.targetLanguage.trim().toLowerCase() === "css") {
-          finalWhatToInsert = encodedNbspCss;
-        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
-          finalWhatToInsert = encodedNbspJs;
-        }
-      }
-    }
-    if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
-      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
-    }
-  }
   function isStr(something) {
     return typeof something === "string";
   }
@@ -259,7 +241,7 @@ function removeWidows(str, originalOpts) {
   let lastEncodedNbspEndedAt;
   let doNothingUntil;
   let bumpWordCountAt;
-  const opts = Object.assign({}, defaultOpts, originalOpts);
+  const opts = { ...defaultOpts, ...originalOpts };
   const whatWasDone = {
     removeWidows: false,
     convertEntities: false,
@@ -290,7 +272,8 @@ function removeWidows(str, originalOpts) {
             temp = temp.concat(headsAndTailsHexo);
           }
           return false;
-        } else if (typeof val === "object") {
+        }
+        if (typeof val === "object") {
           return true;
         }
       });
@@ -307,6 +290,24 @@ function removeWidows(str, originalOpts) {
           leavePercForLastStage -
         opts.reportProgressFuncFrom
     );
+  }
+  function push(finalStart, finalEnd) {
+    let finalWhatToInsert = rawnbsp;
+    if (opts.removeWidowPreventionMeasures) {
+      finalWhatToInsert = " ";
+    } else if (opts.convertEntities) {
+      finalWhatToInsert = encodedNbspHtml;
+      if (isStr(opts.targetLanguage)) {
+        if (opts.targetLanguage.trim().toLowerCase() === "css") {
+          finalWhatToInsert = encodedNbspCss;
+        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
+          finalWhatToInsert = encodedNbspJs;
+        }
+      }
+    }
+    if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
+      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+    }
   }
   function resetAll() {
     wordCount = 0;
@@ -327,14 +328,14 @@ function removeWidows(str, originalOpts) {
             valObj.heads.some((oneOfHeads) => str.startsWith(oneOfHeads, i))) ||
           (isStr(valObj.heads) && str.startsWith(valObj.heads, i))
         ) {
-          wordCount++;
+          wordCount += 1;
           doNothingUntil = opts.ignore[y].tails;
           return true;
         }
       });
     }
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === i) {
-      wordCount++;
+      wordCount += 1;
       bumpWordCountAt = undefined;
     }
     if (typeof opts.reportProgressFunc === "function") {
@@ -355,7 +356,7 @@ function removeWidows(str, originalOpts) {
       lastWhitespaceEndedAt = i;
     }
     if (!doNothingUntil && str[i] && str[i].trim()) {
-      charCount++;
+      charCount += 1;
     }
     if (
       !doNothingUntil &&
@@ -494,7 +495,7 @@ function removeWidows(str, originalOpts) {
       str[i].trim() &&
       (!str[i - 1] || !str[i - 1].trim())
     ) {
-      wordCount++;
+      wordCount += 1;
     }
     if (
       !doNothingUntil &&
@@ -622,7 +623,7 @@ function removeWidows(str, originalOpts) {
                 if (index) {
                   i = index - 1;
                   if (str[i + 1] && str[i + 1].trim()) {
-                    wordCount++;
+                    wordCount += 1;
                   }
                 }
                 return true;

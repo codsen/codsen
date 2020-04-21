@@ -36,6 +36,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 var version = "1.5.19";
 
 var rawnbsp = "\xA0";
@@ -91,24 +140,6 @@ var defaultOpts = {
   tagRanges: []
 };
 function removeWidows(str, originalOpts) {
-  function push(finalStart, finalEnd) {
-    var finalWhatToInsert = rawnbsp;
-    if (opts.removeWidowPreventionMeasures) {
-      finalWhatToInsert = " ";
-    } else if (opts.convertEntities) {
-      finalWhatToInsert = encodedNbspHtml;
-      if (isStr(opts.targetLanguage)) {
-        if (opts.targetLanguage.trim().toLowerCase() === "css") {
-          finalWhatToInsert = encodedNbspCss;
-        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
-          finalWhatToInsert = encodedNbspJs;
-        }
-      }
-    }
-    if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
-      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
-    }
-  }
   function isStr(something) {
     return typeof something === "string";
   }
@@ -144,7 +175,7 @@ function removeWidows(str, originalOpts) {
   var lastEncodedNbspEndedAt;
   var doNothingUntil;
   var bumpWordCountAt;
-  var opts = Object.assign({}, defaultOpts, originalOpts);
+  var opts = _objectSpread2({}, defaultOpts, {}, originalOpts);
   var whatWasDone = {
     removeWidows: false,
     convertEntities: false
@@ -173,7 +204,8 @@ function removeWidows(str, originalOpts) {
             temp = temp.concat(headsAndTailsHexo);
           }
           return false;
-        } else if (_typeof(val) === "object") {
+        }
+        if (_typeof(val) === "object") {
           return true;
         }
       });
@@ -185,6 +217,24 @@ function removeWidows(str, originalOpts) {
   var ceil;
   if (opts.reportProgressFunc) {
     ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+  }
+  function push(finalStart, finalEnd) {
+    var finalWhatToInsert = rawnbsp;
+    if (opts.removeWidowPreventionMeasures) {
+      finalWhatToInsert = " ";
+    } else if (opts.convertEntities) {
+      finalWhatToInsert = encodedNbspHtml;
+      if (isStr(opts.targetLanguage)) {
+        if (opts.targetLanguage.trim().toLowerCase() === "css") {
+          finalWhatToInsert = encodedNbspCss;
+        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
+          finalWhatToInsert = encodedNbspJs;
+        }
+      }
+    }
+    if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
+      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+    }
   }
   function resetAll() {
     wordCount = 0;
@@ -203,7 +253,7 @@ function removeWidows(str, originalOpts) {
         if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
           return str.startsWith(oneOfHeads, _i);
         }) || isStr(valObj.heads) && str.startsWith(valObj.heads, _i)) {
-          wordCount++;
+          wordCount += 1;
           doNothingUntil = opts.ignore[y].tails;
           i = _i;
           return true;
@@ -211,7 +261,7 @@ function removeWidows(str, originalOpts) {
       });
     }
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === _i) {
-      wordCount++;
+      wordCount += 1;
       bumpWordCountAt = undefined;
     }
     if (typeof opts.reportProgressFunc === "function") {
@@ -225,7 +275,7 @@ function removeWidows(str, originalOpts) {
       lastWhitespaceEndedAt = _i;
     }
     if (!doNothingUntil && str[_i] && str[_i].trim()) {
-      charCount++;
+      charCount += 1;
     }
     if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
       if (str[_i - 1] && !str[_i - 1].trim() && str[stringLeftRight.left(str, _i)]) {
@@ -284,7 +334,7 @@ function removeWidows(str, originalOpts) {
       }
     }
     if (!doNothingUntil && str[_i] && str[_i].trim() && (!str[_i - 1] || !str[_i - 1].trim())) {
-      wordCount++;
+      wordCount += 1;
     }
     if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))
     ) {
@@ -355,7 +405,7 @@ function removeWidows(str, originalOpts) {
                 if (index) {
                   _i = index - 1;
                   if (str[_i + 1] && str[_i + 1].trim()) {
-                    wordCount++;
+                    wordCount += 1;
                   }
                 }
                 i = _i;

@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
@@ -2422,8 +2471,6 @@
     return leftMain(str, idx, false);
   }
 
-  var version = "1.5.19";
-
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
@@ -2927,7 +2974,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -2939,18 +2986,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -2985,7 +3038,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -3022,6 +3075,8 @@
 
     return str;
   }
+
+  var version = "1.5.19";
 
   // consts
   var rawnbsp = "\xA0";
@@ -3086,28 +3141,6 @@
   };
 
   function removeWidows(str, originalOpts) {
-    function push(finalStart, finalEnd) {
-      var finalWhatToInsert = rawnbsp; // calculate what to insert
-
-      if (opts.removeWidowPreventionMeasures) {
-        finalWhatToInsert = " ";
-      } else if (opts.convertEntities) {
-        finalWhatToInsert = encodedNbspHtml;
-
-        if (isStr(opts.targetLanguage)) {
-          if (opts.targetLanguage.trim().toLowerCase() === "css") {
-            finalWhatToInsert = encodedNbspCss;
-          } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
-            finalWhatToInsert = encodedNbspJs;
-          }
-        }
-      }
-
-      if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
-        rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
-      }
-    }
-
     function isStr(something) {
       return typeof something === "string";
     } // track time taken
@@ -3158,9 +3191,10 @@
 
     var bumpWordCountAt; // prep the opts
 
-    var opts = Object.assign({}, defaultOpts, originalOpts); // Now, strictly speaking, this program can remove widow words but also
+    var opts = _objectSpread2({}, defaultOpts, {}, originalOpts); // Now, strictly speaking, this program can remove widow words but also
     // it will decode any entities it encounters if option convertEntities is off.
     // We need an interface to report what actions were taken:
+
 
     var whatWasDone = {
       removeWidows: false,
@@ -3204,7 +3238,9 @@
             }
 
             return false;
-          } else if (_typeof(val) === "object") {
+          }
+
+          if (_typeof(val) === "object") {
             return true;
           } // otherwise false is returned, value is excluded
 
@@ -3224,14 +3260,29 @@
       // Also, leavePercForLastStage needs to be left to next stage, so "100" or
       // "opts.reportProgressFuncTo" is multiplied by (1 - leavePercForLastStage).
       ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
-    } // console.log(
-    //   `218 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts.ignore`}\u001b[${39}m`} = ${JSON.stringify(
-    //     opts.ignore,
-    //     null,
-    //     4
-    //   )}`
-    // );
+    }
 
+    function push(finalStart, finalEnd) {
+      var finalWhatToInsert = rawnbsp; // calculate what to insert
+
+      if (opts.removeWidowPreventionMeasures) {
+        finalWhatToInsert = " ";
+      } else if (opts.convertEntities) {
+        finalWhatToInsert = encodedNbspHtml;
+
+        if (isStr(opts.targetLanguage)) {
+          if (opts.targetLanguage.trim().toLowerCase() === "css") {
+            finalWhatToInsert = encodedNbspCss;
+          } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
+            finalWhatToInsert = encodedNbspJs;
+          }
+        }
+      }
+
+      if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
+        rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+      }
+    }
 
     function resetAll() {
       wordCount = 0;
@@ -3264,7 +3315,7 @@
           if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
             return str.startsWith(oneOfHeads, _i);
           }) || isStr(valObj.heads) && str.startsWith(valObj.heads, _i)) {
-            wordCount++;
+            wordCount += 1;
             doNothingUntil = opts.ignore[y].tails;
             i = _i;
             return true;
@@ -3275,7 +3326,7 @@
 
 
       if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === _i) {
-        wordCount++;
+        wordCount += 1;
         bumpWordCountAt = undefined;
       } // Report the progress. Used in web worker setups.
 
@@ -3301,7 +3352,7 @@
       }
 
       if (!doNothingUntil && str[_i] && str[_i].trim()) {
-        charCount++;
+        charCount += 1;
       } //
       //
       //
@@ -3407,7 +3458,7 @@
 
       if (!doNothingUntil && str[_i] && str[_i].trim() && (!str[_i - 1] || !str[_i - 1].trim())) {
         // 1. bump the word counter
-        wordCount++;
+        wordCount += 1;
       } // catch the ending of paragraphs or the EOL - here's where the action happens
 
 
@@ -3547,7 +3598,7 @@
                     _i = index - 1;
 
                     if (str[_i + 1] && str[_i + 1].trim()) {
-                      wordCount++;
+                      wordCount += 1;
                     }
                   }
 
