@@ -17,7 +17,8 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
       return true;
-    } else if (str[i] === x) {
+    }
+    if (str[i] === x) {
       return false;
     }
   }
@@ -27,7 +28,8 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       return true;
-    } else if (str.startsWith(y, i)) {
+    }
+    if (str.startsWith(y, i)) {
       return false;
     }
   }
@@ -204,7 +206,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           (A1 && (A21 || A22 || A23)) ||
           (B1 && (B21 || B22 || B23 || B24 || B25))
         );
-      } else if (
+      }
+      if (
         lastCapturedChunk &&
         allHtmlAttribs.has(lastCapturedChunk) &&
         lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
@@ -235,7 +238,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         makeTheQuoteOpposite(str[isThisClosingIdx])
       );
       return R0 && !(R1 && R2 && R3 && R4);
-    } else if (
+    }
+    if (
       (str[i] === "=" ||
         (!str[i].length &&
           str[right(str, i)] === "=")) &&
@@ -277,7 +281,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       ) {
         return false;
       }
-      else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+      if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
         const R0 =
           str[idxOfAttrOpening] === str[isThisClosingIdx] &&
           lastQuoteAt === isThisClosingIdx &&

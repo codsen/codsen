@@ -2414,7 +2414,9 @@
         return {
           v: true
         };
-      } else if (str[i] === x) {
+      }
+
+      if (str[i] === x) {
         // if "x" was found, that's it - falsey result
         return {
           v: false
@@ -2440,7 +2442,9 @@
       if (str.startsWith(x, i)) {
         // if x was first, Bob's your uncle, that's truthy result
         return true;
-      } else if (str.startsWith(y, i)) {
+      }
+
+      if (str.startsWith(y, i)) {
         // since we're in this clause, x failed, so if y matched,
         // this means y precedes x
         return false;
@@ -2811,7 +2815,9 @@
             return allHtmlAttribs.has(chunk);
           });
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
-        } else if ( // this is a recognised attribute
+        }
+
+        if ( // this is a recognised attribute
         lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
           return true;
         }
@@ -2870,7 +2876,9 @@
         // is on the right, before the its opposite kind
 
         return R0 && !(R1 && R2 && R3 && R4);
-      } else if ( // imagine
+      }
+
+      if ( // imagine
       // <a href=www" class=e'>
       //         ^  ^
       //     start  suspected
@@ -2949,85 +2957,87 @@
         //              ^
         //        we went past this suspected closing quote
         //        and reached the tag ending...
-        else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-            // happy path scenario
-            var _R = // opening matches closing
-            str[idxOfAttrOpening] === str[isThisClosingIdx] && // last captured quote was the suspected ("isThisClosingIdx")
-            lastQuoteAt === isThisClosingIdx && // all is clean inside - there are no quotes of the ones used in
-            // opening/closing (there can be opposite type quotes though)
-            !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]); // Not more than one pair of non-overlapping quotes should have been matched.
 
 
-            var R11 = quotesCount.get("matchedPairs") < 2; // at least it's not a recognised attribute name on the left:
+        if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+          // happy path scenario
+          var _R = // opening matches closing
+          str[idxOfAttrOpening] === str[isThisClosingIdx] && // last captured quote was the suspected ("isThisClosingIdx")
+          lastQuoteAt === isThisClosingIdx && // all is clean inside - there are no quotes of the ones used in
+          // opening/closing (there can be opposite type quotes though)
+          !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]); // Not more than one pair of non-overlapping quotes should have been matched.
 
-            var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
 
-            var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && ( // avoid cases where multiple pairs of mismatching quotes were matched
-            // we're past suspected closing:
-            !(i > isThisClosingIdx && // and there were some single quotes recorded so far
-            quotesCount.get("'") && // and doubles too
-            quotesCount.get("\"") && // and there were few quote pairs matched
-            quotesCount.get("matchedPairs") > 1) || // but add escape latch for when tag closing follows:
-            // <img alt='so-called "artists"!"/>
-            //          ^                    ^^
-            //        start         suspected  currently we're on slash
-            "/>".includes(str[right(str, i)]));
+          var R11 = quotesCount.get("matchedPairs") < 2; // at least it's not a recognised attribute name on the left:
 
-            var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
-            quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+          var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
 
-            var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
-              return charSuitableForHTMLAttrName(char);
-            }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-            var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
-            var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
-            var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
-            return (// happy path - known opening matched suspected closing and
-              // that suspected closing was the last captured quote ("lastQuoteAt")
-              //
-              _R || // The matched pair count total has not reach or exceed two
-              //
-              // because we're talking about fully matched opening-closing quote
-              // pairs.
-              //
-              // Let me remind you the question algorithm is answering:
-              // Is quote at index y closing quote, considering opening is at x?
-              //
-              // Now, imagine we went past index y, reached index z, and up to
-              // this point two sets of quotes were caught, as in:
-              // <z bbb"c" ddd"e">
-              //       ^        ^
-              //     start     we're here, quote in question
-              //
-              // above, that's falsey result, it can't be fourth caught quote!
-              (R11 || R12) && // besides that,
-              // We need to account for mismatching quote pair. If a pair is
-              // mismatching, "matchedPairs" might not get bumped to two thus
-              // leading to a mistake.
-              // When pair is mismatching, we can tell it's so because total count
-              // minus matched count times two would be equal to two - two
-              // quotes left unmatched.
-              // Mind you, it's not more because algorithm would exit by the time
-              // we would reach 4 let's say...
-              // either there's not more than one pair:
-              _R2 && ( // also, protection against cases like:
-              // <z bbb"c" ddd'e>
-              //       ^      ^
-              //   start     suspected
-              //
-              // in case above, all the clauses up until now pass
-              //
-              // we need to check against "lastQuoteWasMatched" flag
-              //
-              //
-              // or last pair was matched:
-              R31 || // either this closing bracket is the last:
-              R32 || // or char before starting is equal and char before that
-              // satisfies attribute name requirements
-              R33 || // or it seems like it's outside rather inside a tag:
-              R34)
-            );
-          } // if the true attribute ending was met passing
+          var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && ( // avoid cases where multiple pairs of mismatching quotes were matched
+          // we're past suspected closing:
+          !(i > isThisClosingIdx && // and there were some single quotes recorded so far
+          quotesCount.get("'") && // and doubles too
+          quotesCount.get("\"") && // and there were few quote pairs matched
+          quotesCount.get("matchedPairs") > 1) || // but add escape latch for when tag closing follows:
+          // <img alt='so-called "artists"!"/>
+          //          ^                    ^^
+          //        start         suspected  currently we're on slash
+          "/>".includes(str[right(str, i)]));
+
+          var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
+          quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+
+          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
+            return charSuitableForHTMLAttrName(char);
+          }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
+          var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+          var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+          var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
+          return (// happy path - known opening matched suspected closing and
+            // that suspected closing was the last captured quote ("lastQuoteAt")
+            //
+            _R || // The matched pair count total has not reach or exceed two
+            //
+            // because we're talking about fully matched opening-closing quote
+            // pairs.
+            //
+            // Let me remind you the question algorithm is answering:
+            // Is quote at index y closing quote, considering opening is at x?
+            //
+            // Now, imagine we went past index y, reached index z, and up to
+            // this point two sets of quotes were caught, as in:
+            // <z bbb"c" ddd"e">
+            //       ^        ^
+            //     start     we're here, quote in question
+            //
+            // above, that's falsey result, it can't be fourth caught quote!
+            (R11 || R12) && // besides that,
+            // We need to account for mismatching quote pair. If a pair is
+            // mismatching, "matchedPairs" might not get bumped to two thus
+            // leading to a mistake.
+            // When pair is mismatching, we can tell it's so because total count
+            // minus matched count times two would be equal to two - two
+            // quotes left unmatched.
+            // Mind you, it's not more because algorithm would exit by the time
+            // we would reach 4 let's say...
+            // either there's not more than one pair:
+            _R2 && ( // also, protection against cases like:
+            // <z bbb"c" ddd'e>
+            //       ^      ^
+            //   start     suspected
+            //
+            // in case above, all the clauses up until now pass
+            //
+            // we need to check against "lastQuoteWasMatched" flag
+            //
+            //
+            // or last pair was matched:
+            R31 || // either this closing bracket is the last:
+            R32 || // or char before starting is equal and char before that
+            // satisfies attribute name requirements
+            R33 || // or it seems like it's outside rather inside a tag:
+            R34)
+          );
+        } // if the true attribute ending was met passing
         // past the suspected one, this means that
         // suspected one was a false guess. Correct ending
         // is at this index "i"

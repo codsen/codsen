@@ -1,7 +1,7 @@
-const t = require("tap");
-const is1 = require("../dist/is-html-attribute-closing.umd");
+import tap from "tap";
+import is1 from "../dist/is-html-attribute-closing.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   const str = `<a href="zzz" target="_blank" style="color: black;">`;
   // 1. starting at the opening of "href":
   t.false(is1(str, 8, 8), "01");

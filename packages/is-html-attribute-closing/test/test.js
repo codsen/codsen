@@ -1,11 +1,11 @@
-const t = require("tap");
-const is = require("../dist/is-html-attribute-closing.cjs");
+import tap from "tap";
+import is from "../dist/is-html-attribute-closing.esm";
 // const BACKSLASH = "\u005C";
 
 // 00. Weird cases
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no input`,
   (t) => {
     t.false(is(), "00.01");
@@ -13,7 +13,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is not a string`,
   (t) => {
     t.false(is(2), "00.02");
@@ -21,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is empty string`,
   (t) => {
     t.false(is(""), "00.03");
@@ -29,7 +29,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 2nd arg is missing`,
   (t) => {
     t.false(is("a"), "00.04");
@@ -37,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.05 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 2nd arg is not integer`,
   (t) => {
     t.false(is("a", "a"), "00.05");
@@ -45,7 +45,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.06 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd arg is missing`,
   (t) => {
     t.false(is("a", 0), "00.06");
@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.07 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd arg is not integer`,
   (t) => {
     t.false(is("a", 0, "a"), "00.07");
@@ -61,7 +61,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.08 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 2nd arg`,
   (t) => {
     t.false(is("a", 99, 100), "00.08");
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.09 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no character in string at what's given by 3rd arg`,
   (t) => {
     t.false(is("a", 0, 100), "00.09");
@@ -77,7 +77,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.10 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - indexes equal`,
   (t) => {
     t.false(is("abcde", 2, 2), "00.10");
@@ -85,7 +85,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.11 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - 3rd > 2nd`,
   (t) => {
     t.false(is("abcde", 2, 1), "00.11");
@@ -96,7 +96,7 @@ t.test(
 // 01. healthy code
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, double quotes`,
   (t) => {
     const str = `<a href="zzz">`;
@@ -105,7 +105,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, single quotes`,
   (t) => {
     const str = `<a href='zzz'>`;
@@ -114,7 +114,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
   (t) => {
     const str = `<a href="zzz" target="_blank" style="color: black;">`;
@@ -147,7 +147,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, single quotes`,
   (t) => {
     const str = `<a href='zzz' target='_blank' style='color: black;'>`;
@@ -180,7 +180,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
   (t) => {
     const str = `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`;
@@ -220,7 +220,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap`,
   (t) => {
     // healthy tag being:
@@ -238,7 +238,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - similar but opposite`,
   (t) => {
     // healthy tag being:
@@ -258,7 +258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - also similar`,
   (t) => {
     // healthy tag being:
@@ -276,7 +276,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - basic, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt="="/>`;
@@ -287,7 +287,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class="c' id="x'>.</div>`;
@@ -309,7 +309,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class='c" id='x">.</div>`;
@@ -331,7 +331,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<div class="c' id="x' style='c">.</div>`;
@@ -365,7 +365,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - three attr pairs, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<div class='c" id='x" style="c'>.</div>`;
@@ -399,7 +399,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt='so-called "artists"!'/>`;
@@ -423,7 +423,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt="so-called 'artists'!"/>`;
@@ -441,7 +441,7 @@ t.test(
 
 // S - D - D - S
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!' class='yo'/>`;
@@ -459,7 +459,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!' class='yo"/>`;
@@ -477,7 +477,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!' class="yo'/>`;
@@ -495,7 +495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!' class="yo"/>`;
@@ -529,7 +529,7 @@ t.test(
 
 // S - D - D - D
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!" class='yo'/>`;
@@ -547,7 +547,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!" class='yo"/>`;
@@ -565,7 +565,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.17 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!" class="yo'/>`;
@@ -583,7 +583,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt='so-called "artists"!" class="yo"/>`;
@@ -603,7 +603,7 @@ t.test(
 
 // D - D - D - S
 
-t.test(
+tap.test(
   `02.19 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt="so-called "artists"!' class='yo'/>`;
@@ -621,7 +621,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.20 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - false positive of 02.19.*`,
   (t) => {
     const str = `<img alt="so-called "artists"class='yo'/>`;
@@ -638,7 +638,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.21 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt="so-called "artists"!' class='yo"/>`;
@@ -656,7 +656,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.22 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt="so-called "artists"!' class="yo'/>`;
@@ -674,7 +674,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.23 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - healthy \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m, \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m follows`,
   (t) => {
     const str = `<img alt="so-called "artists"!' class="yo"/>`;
@@ -710,7 +710,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `02.24 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt="Deal is your's!'/>`;
@@ -725,7 +725,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.25 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img alt='Deal is your's!"/>`;
@@ -764,7 +764,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.26 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m - more follows`,
   (t) => {
     // D-D follows
@@ -812,7 +812,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.27 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - one inside \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m - more follows`,
   (t) => {
     // D-D follows
@@ -860,7 +860,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.28 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap`,
   (t) => {
     // D-D-D-D
@@ -900,7 +900,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.29 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, D-D`,
   (t) => {
     // D-D-D-D
@@ -948,7 +948,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.30 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, D-S`,
   (t) => {
     // D-D-D-D
@@ -996,7 +996,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.31 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, S-D`,
   (t) => {
     // D-D-D-D
@@ -1044,7 +1044,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.32 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - a trap, second attr, S-S`,
   (t) => {
     // D-D-D-D
@@ -1096,7 +1096,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt="="/>`;
@@ -1118,7 +1118,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='='/>`;
@@ -1140,7 +1140,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt="='/>`;
@@ -1162,7 +1162,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='="/>`;
@@ -1188,7 +1188,7 @@ t.test(
 //                               three attributes
 //
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt="=" class="klm"/>`;
@@ -1222,7 +1222,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=' class="klm'/>`;
@@ -1256,7 +1256,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=' class='klm"/>`;
@@ -1290,7 +1290,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=" class="klm"/>`;
@@ -1324,7 +1324,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=" class="klm'/>`;
@@ -1358,7 +1358,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=" class='klm"/>`;
@@ -1392,7 +1392,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<img src="xyz" alt='=" class='klm'/>`;
@@ -1430,7 +1430,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z" click here</a>`;
@@ -1441,7 +1441,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z' click here</a>`;
@@ -1452,7 +1452,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z" click here</a>`;
@@ -1463,7 +1463,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z' click here</a>`;
@@ -1476,7 +1476,7 @@ t.test(
 
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // D-D follows
@@ -1508,7 +1508,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // D-D follows
@@ -1540,7 +1540,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // D-D follows
@@ -1572,7 +1572,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // D-D follows
@@ -1606,7 +1606,7 @@ t.test(
 
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z"</a>`;
@@ -1617,7 +1617,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.10 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href="z'</a>`;
@@ -1628,7 +1628,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.11 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z"</a>`;
@@ -1639,7 +1639,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.12 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a href='z'</a>`;
@@ -1654,7 +1654,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, one attr`,
   (t) => {
     const str = `<a href=z">click here</a>`;
@@ -1666,7 +1666,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, another attr follows`,
   (t) => {
     // D-D follows
@@ -1684,20 +1684,20 @@ t.test(
     t.false(is(str2, 8, 20), "05.01.06");
 
     //          off-tangent a little bit...
-    const str2_1 = `<a href=z" class="yo' id='ey">click here</a>`;
+    const str21 = `<a href=z" class="yo' id='ey">click here</a>`;
 
-    t.true(is(str2_1, 8, 9), "05.01.07");
-    t.false(is(str2_1, 8, 17), "05.01.08");
-    t.false(is(str2_1, 8, 20), "05.01.09");
-    t.false(is(str2_1, 8, 25), "05.01.10");
-    t.false(is(str2_1, 8, 28), "05.01.11");
+    t.true(is(str21, 8, 9), "05.01.07");
+    t.false(is(str21, 8, 17), "05.01.08");
+    t.false(is(str21, 8, 20), "05.01.09");
+    t.false(is(str21, 8, 25), "05.01.10");
+    t.false(is(str21, 8, 28), "05.01.11");
 
-    const str2_2 = `<a href=z" class="yo' id='ey>click here</a>`;
+    const str22 = `<a href=z" class="yo' id='ey>click here</a>`;
 
-    t.true(is(str2_2, 8, 9), "05.01.12");
-    t.false(is(str2_2, 8, 17), "05.01.13");
-    t.false(is(str2_2, 8, 20), "05.01.14");
-    t.false(is(str2_2, 8, 25), "05.01.15");
+    t.true(is(str22, 8, 9), "05.01.12");
+    t.false(is(str22, 8, 17), "05.01.13");
+    t.false(is(str22, 8, 20), "05.01.14");
+    t.false(is(str22, 8, 25), "05.01.15");
 
     // S-D follows
     const str3 = `<a href=z" class='yo">click here</a>`;
@@ -1706,13 +1706,13 @@ t.test(
     t.false(is(str3, 8, 17), "05.01.17");
     t.false(is(str3, 8, 20), "05.01.18");
 
-    const str3_1 = `<a href=z" class='yo" id="ey'>click here</a>`;
+    const str31 = `<a href=z" class='yo" id="ey'>click here</a>`;
 
-    t.true(is(str3_1, 8, 9), "05.01.19");
-    t.false(is(str3_1, 8, 17), "05.01.20");
-    t.false(is(str3_1, 8, 20), "05.01.21");
-    t.false(is(str2_2, 8, 25), "05.01.22");
-    t.false(is(str2_2, 8, 28), "05.01.23");
+    t.true(is(str31, 8, 9), "05.01.19");
+    t.false(is(str31, 8, 17), "05.01.20");
+    t.false(is(str31, 8, 20), "05.01.21");
+    t.false(is(str31, 8, 25), "05.01.22");
+    t.false(is(str31, 8, 28), "05.01.23");
 
     // S-S follows
     const str4 = `<a href=z" class='yo'>click here</a>`;
@@ -1722,13 +1722,13 @@ t.test(
     t.false(is(str4, 8, 20), "05.01.26");
 
     //                a provocation...
-    const str4_1 = `<a href=z" class='yo' id='ey">click here</a>`;
+    const str41 = `<a href=z" class='yo' id='ey">click here</a>`;
 
-    t.true(is(str4_1, 8, 9), "05.01.27");
-    t.false(is(str4_1, 8, 17), "05.01.28");
-    t.false(is(str4_1, 8, 20), "05.01.29");
-    t.false(is(str4_1, 8, 25), "05.01.30");
-    t.false(is(str4_1, 8, 28), "05.01.31");
+    t.true(is(str41, 8, 9), "05.01.27");
+    t.false(is(str41, 8, 17), "05.01.28");
+    t.false(is(str41, 8, 20), "05.01.29");
+    t.false(is(str41, 8, 25), "05.01.30");
+    t.false(is(str41, 8, 28), "05.01.31");
 
     // fin.
     t.end();
@@ -1739,7 +1739,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr`,
   (t) => {
     const str = `<a b=="c" d=='e'>`;
@@ -1761,7 +1761,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three equals`,
   (t) => {
     const str = `<a b==="c" d==='e'>`;
@@ -1783,7 +1783,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three spaced equals`,
   (t) => {
     const str = `<a b = = = "c" d = = = 'e'>`;
@@ -1809,7 +1809,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - one tag, three attrs`,
   (t) => {
     const str = `<a class "c" id 'e' href "www">`;
@@ -1849,7 +1849,7 @@ t.test(
 
 // S-S follows
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c" ddd'e'>.<z fff"g">`;
@@ -1875,7 +1875,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a class"c" id'e'>`;
@@ -1899,7 +1899,7 @@ t.test(
 
 // S-D follows
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c" ddd'e">`;
@@ -1931,7 +1931,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a class"c" id'e">`;
@@ -1955,7 +1955,7 @@ t.test(
 
 // D-S follows
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c" ddd"e'>`;
@@ -1977,7 +1977,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str = `<a class"c" id"e'>`;
@@ -2001,7 +2001,7 @@ t.test(
 
 // D-D follows
 
-t.test(
+tap.test(
   `08.07 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c" ddd"e">`;
@@ -2023,7 +2023,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.08 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<a class"c" id"e">`;
@@ -2047,7 +2047,7 @@ t.test(
 
 // counter-cases, false positives
 
-t.test(
+tap.test(
   `08.09 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     const str1 = `<z bbb"c" ddd'e>`;
@@ -2110,7 +2110,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c' ddd"e>`;
@@ -2130,7 +2130,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.11 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c' href"e>`;
@@ -2150,7 +2150,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.12 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c' z href"e>`;
@@ -2166,7 +2166,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.13 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z bbb"c' nowrap href"e>`;
@@ -2182,7 +2182,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.14 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     const str = `<z href"href' href href"href>`;
@@ -2201,7 +2201,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // no closing slash on img
@@ -2233,7 +2233,7 @@ t.test(
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - control`,
   (t) => {
     const str = `<a href="www" class=e'>`;
@@ -2253,7 +2253,7 @@ t.test(
 
 //              finally, the bizness
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`,
   (t) => {
     // D-D
@@ -2306,7 +2306,7 @@ t.test(
 );
 
 // "X" meaning absent
-t.test(
+tap.test(
   `09.03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // X-D + X-D + D-D
@@ -2426,7 +2426,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // X-D + X-S + D-D
@@ -2546,7 +2546,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`,
   (t) => {
     // X-S + X-D + D-D
@@ -2666,7 +2666,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`,
   (t) => {
     // X-S + X-S + D-D
@@ -2784,9 +2784,3 @@ t.test(
     t.end();
   }
 );
-
-t.todo(`deleteme`, (t) => {
-  const str2 = `<img alt='so-called "artists"!"/>`;
-  t.true(is(str2, 9, 30), "02.28.06");
-  t.end();
-});
