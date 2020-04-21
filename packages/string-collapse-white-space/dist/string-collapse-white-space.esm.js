@@ -52,7 +52,7 @@ function collapse(str, originalOpts) {
     returnRangesOnly: false,
     limitConsecutiveEmptyLinesTo: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   let preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
     preliminaryIndexesToDelete = [];
@@ -82,7 +82,7 @@ function collapse(str, originalOpts) {
   let consecutiveLineBreakCount = 0;
   for (let i = str.length; i--; ) {
     if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
-      consecutiveLineBreakCount++;
+      consecutiveLineBreakCount += 1;
     } else if (str[i].trim()) {
       consecutiveLineBreakCount = 0;
     }
@@ -400,96 +400,93 @@ function collapse(str, originalOpts) {
               ) {
                 tagMatched = true;
               }
-            } else {
-              if (
-                (str[i] === "o" &&
-                  matchLeftIncl(str, i, ["bdo", "video", "audio"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "p" &&
-                  (isSpaceOrLeftBracket(str[i - 1]) ||
-                    (str[i - 1] === "u" &&
-                      matchLeftIncl(
-                        str,
-                        i,
-                        ["hgroup", "colgroup", "optgroup", "sup"],
-                        { cb: isSpaceOrLeftBracket, i: true }
-                      )) ||
-                    matchLeftIncl(str, i, ["map", "samp", "rp"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }))) ||
-                (str[i] === "q" && isSpaceOrLeftBracket(str[i - 1])) ||
-                (str[i] === "r" &&
-                  ((str[i - 1] === "e" &&
-                    matchLeftIncl(str, i, ["header", "meter", "footer"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
+            }
+            else if (
+              (str[i] === "o" &&
+                matchLeftIncl(str, i, ["bdo", "video", "audio"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true,
+                })) ||
+              (str[i] === "p" &&
+                (isSpaceOrLeftBracket(str[i - 1]) ||
+                  (str[i - 1] === "u" &&
                     matchLeftIncl(
                       str,
                       i,
-                      ["var", "br", "abbr", "wbr", "hr", "tr"],
+                      ["hgroup", "colgroup", "optgroup", "sup"],
                       { cb: isSpaceOrLeftBracket, i: true }
-                    ))) ||
-                (str[i] === "s" &&
-                  ((str[i - 1] === "s" &&
-                    matchLeftIncl(str, i, ["address", "progress"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                    matchLeftIncl(str, i, ["canvas", "details", "ins"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }) ||
-                    isSpaceOrLeftBracket(str[i - 1]))) ||
-                (str[i] === "t" &&
-                  ((str[i - 1] === "c" &&
-                    matchLeftIncl(str, i, ["object", "select"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                    (str[i - 1] === "o" &&
-                      matchLeftIncl(str, i, ["slot", "tfoot"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    (str[i - 1] === "p" &&
-                      matchLeftIncl(str, i, ["script", "noscript"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    (str[i - 1] === "u" &&
-                      matchLeftIncl(str, i, ["input", "output"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    matchLeftIncl(
-                      str,
-                      i,
-                      ["fieldset", "rt", "datalist", "dt"],
-                      { cb: isSpaceOrLeftBracket, i: true }
-                    ))) ||
-                (str[i] === "u" &&
-                  (isSpaceOrLeftBracket(str[i - 1]) ||
-                    matchLeftIncl(str, i, "menu", {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }))) ||
-                (str[i] === "v" &&
-                  matchLeftIncl(str, i, ["nav", "div"], {
+                    )) ||
+                  matchLeftIncl(str, i, ["map", "samp", "rp"], {
+                    cb: isSpaceOrLeftBracket,
+                    i: true,
+                  }))) ||
+              (str[i] === "q" && isSpaceOrLeftBracket(str[i - 1])) ||
+              (str[i] === "r" &&
+                ((str[i - 1] === "e" &&
+                  matchLeftIncl(str, i, ["header", "meter", "footer"], {
                     cb: isSpaceOrLeftBracket,
                     i: true,
                   })) ||
-                (str[i] === "y" &&
-                  matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
+                  matchLeftIncl(
+                    str,
+                    i,
+                    ["var", "br", "abbr", "wbr", "hr", "tr"],
+                    { cb: isSpaceOrLeftBracket, i: true }
+                  ))) ||
+              (str[i] === "s" &&
+                ((str[i - 1] === "s" &&
+                  matchLeftIncl(str, i, ["address", "progress"], {
                     cb: isSpaceOrLeftBracket,
                     i: true,
-                  }))
-              ) {
-                tagMatched = true;
-              }
+                  })) ||
+                  matchLeftIncl(str, i, ["canvas", "details", "ins"], {
+                    cb: isSpaceOrLeftBracket,
+                    i: true,
+                  }) ||
+                  isSpaceOrLeftBracket(str[i - 1]))) ||
+              (str[i] === "t" &&
+                ((str[i - 1] === "c" &&
+                  matchLeftIncl(str, i, ["object", "select"], {
+                    cb: isSpaceOrLeftBracket,
+                    i: true,
+                  })) ||
+                  (str[i - 1] === "o" &&
+                    matchLeftIncl(str, i, ["slot", "tfoot"], {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    })) ||
+                  (str[i - 1] === "p" &&
+                    matchLeftIncl(str, i, ["script", "noscript"], {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    })) ||
+                  (str[i - 1] === "u" &&
+                    matchLeftIncl(str, i, ["input", "output"], {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    })) ||
+                  matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
+                    cb: isSpaceOrLeftBracket,
+                    i: true,
+                  }))) ||
+              (str[i] === "u" &&
+                (isSpaceOrLeftBracket(str[i - 1]) ||
+                  matchLeftIncl(str, i, "menu", {
+                    cb: isSpaceOrLeftBracket,
+                    i: true,
+                  }))) ||
+              (str[i] === "v" &&
+                matchLeftIncl(str, i, ["nav", "div"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true,
+                })) ||
+              (str[i] === "y" &&
+                matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true,
+                }))
+            ) {
+              tagMatched = true;
             }
           } else if (
             tagCanEndHere &&

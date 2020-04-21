@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -297,7 +346,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -309,18 +358,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -355,7 +410,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -763,7 +818,8 @@
 
     }; // fill any settings with defaults if missing:
 
-    var opts = Object.assign({}, defaults, originalOpts);
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var preliminaryIndexesToDelete;
 
     if (opts.recogniseHTML) {
@@ -803,7 +859,7 @@
     for (var i = str.length; i--;) {
       // line break counting
       if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
-        consecutiveLineBreakCount++;
+        consecutiveLineBreakCount += 1;
       } else if (str[i].trim()) {
         consecutiveLineBreakCount = 0;
       } //
@@ -1105,9 +1161,8 @@
                 }))) {
                   tagMatched = true;
                 }
-              } else {
-                // o-z, inclusive. codes 111-122, inclusive
-                if (str[i] === "o" && matchLeftIncl(str, i, ["bdo", "video", "audio"], {
+              } // o-z, inclusive. codes 111-122, inclusive
+              else if (str[i] === "o" && matchLeftIncl(str, i, ["bdo", "video", "audio"], {
                   cb: isSpaceOrLeftBracket,
                   i: true
                 }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
@@ -1154,8 +1209,7 @@
                   i: true
                 })) {
                   tagMatched = true;
-                }
-              } // ---------------------------------------------------------------
+                } // ---------------------------------------------------------------
 
             } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
               // if digits 1-6

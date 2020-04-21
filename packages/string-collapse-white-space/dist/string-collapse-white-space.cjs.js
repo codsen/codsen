@@ -31,6 +31,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -114,7 +163,7 @@ function collapse(str, originalOpts) {
     returnRangesOnly: false,
     limitConsecutiveEmptyLinesTo: 0
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
     preliminaryIndexesToDelete = [];
@@ -144,7 +193,7 @@ function collapse(str, originalOpts) {
   var consecutiveLineBreakCount = 0;
   for (var i = str.length; i--;) {
     if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
-      consecutiveLineBreakCount++;
+      consecutiveLineBreakCount += 1;
     } else if (str[i].trim()) {
       consecutiveLineBreakCount = 0;
     }
@@ -366,8 +415,8 @@ function collapse(str, originalOpts) {
               }))) {
                 tagMatched = true;
               }
-            } else {
-              if (str[i] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["bdo", "video", "audio"], {
+            }
+            else if (str[i] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["bdo", "video", "audio"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && stringMatchLeftRight.matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
@@ -415,7 +464,6 @@ function collapse(str, originalOpts) {
               })) {
                 tagMatched = true;
               }
-            }
           } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
             tagCanEndHere = false;
             if (str[i - 1] === "h" && (str[i - 2] === "<" || str[i - 2].trim() === "")) {
