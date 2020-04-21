@@ -1,10 +1,7 @@
-const t = require("tap");
-const fix = require("../dist/string-fix-broken-named-entities.cjs");
-const {
-  decode,
-  uncertain,
-  allNamedEntities,
-} = require("all-named-html-entities");
+import tap from "tap";
+import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
+import fix from "../dist/string-fix-broken-named-entities.esm";
+
 const falseCases = [
   "First we went to a camp;",
   "lamp;",
@@ -28,7 +25,7 @@ const falseCases = [
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
@@ -64,14 +61,14 @@ t.test(
   }
 );
 
-t.test(`02 - ad hoc #1`, (t) => {
+tap.test(`02 - ad hoc #1`, (t) => {
   const inp1 = "amp;";
   const outp1 = [[0, 4, "&amp;"]];
   t.same(fix(inp1), outp1, "02");
   t.end();
 });
 
-t.test(`03 - false positive prevention`, (t) => {
+tap.test(`03 - false positive prevention`, (t) => {
   falseCases.forEach((str) => {
     t.same(fix(str), [], `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`);
   });

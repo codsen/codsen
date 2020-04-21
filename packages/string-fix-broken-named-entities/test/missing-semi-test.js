@@ -1,15 +1,11 @@
-const t = require("tap");
-const fix = require("../dist/string-fix-broken-named-entities.cjs");
-const {
-  decode,
-  uncertain,
-  allNamedEntities,
-} = require("all-named-html-entities");
+import tap from "tap";
+import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
+import fix from "../dist/string-fix-broken-named-entities.esm";
 // -----------------------------------------------------------------------------
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
@@ -44,12 +40,12 @@ t.test(
   }
 );
 
-t.test("02 - single pi", (t) => {
+tap.test("02 - single pi", (t) => {
   t.same(fix("&pi"), [[0, 3, "&pi;"]], "02");
   t.end();
 });
 
-t.test("03 - larger set", (t) => {
+tap.test("03 - larger set", (t) => {
   t.same(
     fix("aaa&pi&piv&pi&pivaaa"),
     [
@@ -63,7 +59,7 @@ t.test("03 - larger set", (t) => {
   t.end();
 });
 
-t.test("04 - letters follow tightly", (t) => {
+tap.test("04 - letters follow tightly", (t) => {
   t.same(
     fix("aaa&ang&angst&ang&angstaaa"),
     [

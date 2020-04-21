@@ -1,5 +1,5 @@
-const t = require("tap");
-const fix = require("../dist/string-fix-broken-named-entities.cjs");
+import tap from "tap";
+import fix from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // helper functions
@@ -16,7 +16,7 @@ function cbDecoded(obj) {
     : [obj.rangeFrom, obj.rangeTo];
 }
 
-t.test(
+tap.test(
   `02.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, tight`,
   (t) => {
     const inp1 = "zzznbsp;zzznbsp;";
@@ -30,7 +30,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, spaced`,
   (t) => {
     const inp2 = "zz nbsp;zz nbsp;";
@@ -44,7 +44,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, linebreaks`,
   (t) => {
     const inp3 = "zz\nnbsp;zz\nnbsp;";
@@ -58,7 +58,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.004 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, isolated`,
   (t) => {
     const inp4 = "nbsp;";
@@ -69,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.005 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, tight, repeated`,
   (t) => {
     const inp5 = "nbsp;zzznbsp;";
@@ -83,7 +83,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.006 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, tight, repeated + decode`,
   (t) => {
     const inp1 = "zzznbsp;zzznbsp;";
@@ -106,7 +106,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.007 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, spaced, repeated + decode`,
   (t) => {
     const inp2 = "zz nbsp;zz nbsp;";
@@ -129,7 +129,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.008 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, linebreaks, repeated + decode`,
   (t) => {
     const inp1 = "zz\nnbsp;zz\nnbsp;";
@@ -152,7 +152,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.009 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, isolated + decode`,
   (t) => {
     const inp1 = "nbsp;";
@@ -164,7 +164,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.010 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, no semicol + decode`,
   (t) => {
     const inp1 = "nbsp;zzznbsp;";
@@ -179,7 +179,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.011 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, isolated`,
   (t) => {
     const inp1 = "&nbspz &nbspz";
@@ -193,7 +193,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.012 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, spaced`,
   (t) => {
     const inp1 = "&nbspz; &nbspz;";
@@ -207,7 +207,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.013 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tight`,
   (t) => {
     const inp1 = "&nbspzzz&nbspzzz&nbsp";
@@ -222,7 +222,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.014 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, dots`,
   (t) => {
     const inp1 = "&nbsp...&nbsp...&nbsp";
@@ -237,7 +237,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.015 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, line breaks`,
   (t) => {
     const inp1 = "&nbsp\n\n\n&nbsp\n\n\n&nbsp";
@@ -252,7 +252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.016 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, well spaced`,
   (t) => {
     const inp1 = "&nbsp   &nbsp   &nbsp";
@@ -267,7 +267,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.017 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, commas`,
   (t) => {
     const inp1 = "&nbsp,&nbsp,&nbsp";
@@ -282,7 +282,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.018 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, digits`,
   (t) => {
     const inp1 = "&nbsp123&nbsp123&nbsp";
@@ -297,7 +297,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.019 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tabs`,
   (t) => {
     const inp1 = "&nbsp\t\t\t&nbsp\t\t\t&nbsp";
@@ -312,7 +312,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.020 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - opts.decode is ignored if callback serves decoded`,
   (t) => {
     const inp1 = "&nbspz &nbspz";
@@ -328,7 +328,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.021 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, spaced + decode`,
   (t) => {
     const inp1 = "&nbspz; &nbspz;";
@@ -343,7 +343,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.022 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tight + decode`,
   (t) => {
     const inp1 = "&nbspzzz&nbspzzz&nbsp";
@@ -366,7 +366,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.023 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, dots + decode`,
   (t) => {
     const inp1 = "&nbsp...&nbsp...&nbsp";
@@ -387,7 +387,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.024 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, line breaks + decode`,
   (t) => {
     const inp1 = "&nbsp\n\n\n&nbsp\n\n\n&nbsp";
@@ -408,7 +408,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.025 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, well spaced + decode`,
   (t) => {
     const inp1 = "&nbsp   &nbsp   &nbsp";
@@ -429,7 +429,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.026 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, commas + decode`,
   (t) => {
     const inp1 = "&nbsp,&nbsp,&nbsp";
@@ -450,7 +450,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.027 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, digits + decode`,
   (t) => {
     const inp1 = "&nbsp123&nbsp123&nbsp";
@@ -469,7 +469,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.028 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tabs + decode`,
   (t) => {
     const inp1 = "&nbsp\t\t\t&nbsp\t\t\t&nbsp";
@@ -488,7 +488,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.029 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, no semicol, trailing letter`,
   (t) => {
     const inp1 = "nbspz";
@@ -499,7 +499,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.030 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing letter, sandwitched`,
   (t) => {
     const inp1 = "nbspzzznbspzzznbsp";
@@ -514,7 +514,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.031 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing dots, sandwitched`,
   (t) => {
     const inp1 = "nbsp...nbsp...nbsp";
@@ -529,7 +529,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.032 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing linebreaks, sandwitched`,
   (t) => {
     const inp1 = "nbsp\n\n\nnbsp\n\n\nnbsp";
@@ -544,7 +544,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.033 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing whitespace chunks, sandwitched`,
   (t) => {
     const inp1 = "nbsp   nbsp   nbsp";
@@ -559,7 +559,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.034 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing tight commas, sandwitched`,
   (t) => {
     const inp1 = "nbsp,nbsp,nbsp";
@@ -574,7 +574,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.035 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing digits, sandwitched`,
   (t) => {
     const inp1 = "nbsp123nbsp123nbsp";
@@ -589,7 +589,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.036 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp, no semicol`}\u001b[${39}m - trailing tight tabs, sandwitched`,
   (t) => {
     const inp1 = "nbsp\t\t\tnbsp\t\t\tnbsp";
@@ -604,7 +604,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.037 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - repeated characters - complete set - \u001b[${36}m${`repeated`}\u001b[${39}m amp, tight, leading letters`,
   (t) => {
     const inp1 = "&&nbsp;x&&nbsp;y&&nbsp;";
@@ -620,7 +620,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.038 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m characters - complete set - duplicate n`,
   (t) => {
     const inp1 = "&nnbsp;x&nnbsp;y&nnbsp;";
@@ -635,7 +635,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.039 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m characters - complete set - duplicate b`,
   (t) => {
     const inp1 = "&nbbsp;x&nbbsp;y&nbbsp;";
@@ -650,7 +650,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.040 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m characters - complete set - duplicate s`,
   (t) => {
     const inp1 = "&nbssp;x&nbssp;y&nbssp;";
@@ -665,7 +665,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.041 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m characters - complete set - duplicate p`,
   (t) => {
     const inp1 = "&nbspp;x&nbspp;y&nbspp;";
@@ -680,7 +680,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.042 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol`,
   (t) => {
     const inp1 = "&nbsp;;x&nbsp;;y&nbsp;;";
@@ -695,7 +695,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.043 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + n missing`,
   (t) => {
     const inp1 = "&&bsp;x&&bsp;y&&bsp;";
@@ -710,7 +710,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.044 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + b missing`,
   (t) => {
     const inp1 = "&&nsp;x&&nsp;y&&nsp;";
@@ -725,7 +725,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.045 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + s missing`,
   (t) => {
     const inp1 = "&&nbp;x&&nbp;y&&nbp;";
@@ -740,7 +740,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.046 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + p missing`,
   (t) => {
     const inp1 = "&&nbs;x&&nbs;y&&nbs;";
@@ -755,7 +755,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.047 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand - semicol missing`,
   (t) => {
     const inp1 = "&&nbspx&&nbspy&&nbsp";
@@ -770,7 +770,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.048 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m n - ampersand missing`,
   (t) => {
     // repeated n + ...
@@ -786,7 +786,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.049 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m n - b missing`,
   (t) => {
     const inp1 = "&nnsp;x&nnsp;y&nnsp;";
@@ -801,7 +801,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.050 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m n - s missing`,
   (t) => {
     const inp1 = "&nnbp;x&nnbp;y&nnbp;";
@@ -816,7 +816,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.051 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m n - s missing`,
   (t) => {
     const inp1 = "&nnbs;x&nnbs;y&nnbs;";
@@ -831,7 +831,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.052 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m n - semicol missing`,
   (t) => {
     const inp1 = "&nnbspx&nnbspy&nnbsp";
@@ -846,7 +846,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.053 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m b - ampersand missing`,
   (t) => {
     const inp1 = "nbbsp;xnbbsp;ynbbsp;";
@@ -861,7 +861,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.054 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m b - n missing`,
   (t) => {
     const inp1 = "&bbsp;x&bbsp;y&bbsp;";
@@ -876,7 +876,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.055 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m b - s missing`,
   (t) => {
     const inp1 = "&nbbp;x&nbbp;y&nbbp;";
@@ -891,7 +891,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.056 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m b - p missing`,
   (t) => {
     const inp1 = "&nbbs;x&nbbs;y&nbbs;";
@@ -906,7 +906,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.057 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m b - semicol missing`,
   (t) => {
     const inp1 = "&nbbspx&nbbspy&nbbsp";
@@ -921,7 +921,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.058 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m s - ampersand missing`,
   (t) => {
     const inp1 = "nbssp;xnbssp;ynbssp;";
@@ -936,7 +936,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.059 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m s - n missing`,
   (t) => {
     const inp1 = "&bssp;x&bssp;y&bssp;";
@@ -951,7 +951,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.060 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m s - b missing`,
   (t) => {
     const inp1 = "&nssp;x&nssp;y&nssp;";
@@ -966,7 +966,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.061 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m s - p missing`,
   (t) => {
     const inp1 = "&nbss;x&nbss;y&nbss;";
@@ -981,7 +981,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.062 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m s - semicol missing`,
   (t) => {
     const inp1 = "&nbsspx&nbsspy&nbssp";
@@ -996,7 +996,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.063 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m p - ampersand missing`,
   (t) => {
     const inp1 = "nbspp;xnbspp;ynbspp;";
@@ -1011,7 +1011,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.064 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m p - n missing`,
   (t) => {
     const inp1 = "&bspp;x&bspp;y&bspp;";
@@ -1026,7 +1026,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.065 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m p - b missing`,
   (t) => {
     const inp1 = "&nspp;x&nspp;y&nspp;";
@@ -1041,7 +1041,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.066 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m p - s missing`,
   (t) => {
     const inp1 = "&nbpp;x&nbpp;y&nbpp;";
@@ -1056,7 +1056,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.067 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m p - semicol missing`,
   (t) => {
     const inp1 = "&nbsppx&nbsppy&nbspp";
@@ -1071,7 +1071,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.068 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol - ampersand missing`,
   (t) => {
     const inp1 = "nbsp;;xnbsp;;ynbsp;;";
@@ -1086,7 +1086,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.069 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol - n missing`,
   (t) => {
     const inp1 = "&bsp;;x&bsp;;y&bsp;;";
@@ -1101,7 +1101,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.070 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol - b missing`,
   (t) => {
     const inp1 = "&nsp;;x&nsp;;y&nsp;;";
@@ -1116,7 +1116,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.071 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol - s missing`,
   (t) => {
     const inp1 = "&nbp;;x&nbp;;y&nbp;;";
@@ -1131,7 +1131,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.072 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m semicol - p missing`,
   (t) => {
     const inp1 = "&nbs;;x&nbs;;y&nbs;;";
@@ -1148,7 +1148,7 @@ t.test(
 
 // dangerous stuff: missing ampersand and one letter (semicol present)
 
-t.test(
+tap.test(
   `02.073 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - letter on the left, EOL on the right`,
   (t) => {
     t.same(fix("zzzzbsp;"), [[4, 8, "&nbsp;"]], "02.073.01");
@@ -1159,7 +1159,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.074 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - letter on the right, EOL on the left`,
   (t) => {
     t.same(fix("bsp;zzzz"), [[0, 4, "&nbsp;"]], "02.074.01");
@@ -1170,7 +1170,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.075 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - EOL on both sides`,
   (t) => {
     t.same(fix("bsp;"), [[0, 4, "&nbsp;"]], "02.075.01");
@@ -1181,7 +1181,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.076 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - space on either side, letter on the left`,
   (t) => {
     t.same(fix("aaaa bsp;"), [[5, 9, "&nbsp;"]], "02.076.01");
@@ -1192,7 +1192,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.077 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - space on either side, letter on the right`,
   (t) => {
     t.same(fix("bsp; aaaa"), [[0, 4, "&nbsp;"]], "02.077.01");
@@ -1203,7 +1203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.078 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing ampersand and one letter (semicol present)`}\u001b[${39}m - space on either side, letters outside`,
   (t) => {
     t.same(fix("aaaa bsp; aaaa"), [[5, 9, "&nbsp;"]], "02.078.01");
@@ -1214,7 +1214,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.079 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling (ampersand missing), incomplete set`,
   (t) => {
     t.same(
@@ -1241,7 +1241,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.080 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`at least one of each of the set`}\u001b[${39}m [n, b, s, p] \u001b[${32}m${`is present, repetitions`}\u001b[${39}m - n trailing`,
   (t) => {
     // any repetitions whatsoever like &&&&&nnnbbbssssp;;;
@@ -1259,7 +1259,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.081 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`at least one of each of the set`}\u001b[${39}m [n, b, s, p] \u001b[${32}m${`is present, repetitions`}\u001b[${39}m - b trailing`,
   (t) => {
     t.same(fix("aaa&nnnbbssssppp;bbb"), [[3, 17, "&nbsp;"]], "02.081.11");
@@ -1276,7 +1276,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.082 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`at least one of each of the set`}\u001b[${39}m [n, b, s, p] \u001b[${32}m${`is present, repetitions`}\u001b[${39}m - s trailing`,
   (t) => {
     t.same(fix("aaa&nnnbbssssppp;sss"), [[3, 17, "&nbsp;"]], "02.082.21");
@@ -1293,7 +1293,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.083 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`at least one of each of the set`}\u001b[${39}m [n, b, s, p] \u001b[${32}m${`is present, repetitions`}\u001b[${39}m - p trailing`,
   (t) => {
     t.same(fix("aaa&nnnbbssssppp;ppp"), [[3, 17, "&nbsp;"]], "02.083.31");
@@ -1310,7 +1310,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.084 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - twice`,
   (t) => {
     const inp1 = "a&amp;nbsp;b";
@@ -1320,7 +1320,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.085 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - thrice`,
   (t) => {
     const inp1 = "a&amp;amp;nbsp;b";
@@ -1330,7 +1330,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.086 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - quadruple`,
   (t) => {
     const inp1 = "a&amp;amp;amp;nbsp;b";
@@ -1340,7 +1340,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.087 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`capital N, no ampersand, no semicolon`}\u001b[${39}m - leading semicolon, tight`,
   (t) => {
     const inp1 = "text;Nbsptext";
@@ -1351,7 +1351,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.088 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`capital N, no ampersand, no semicolon`}\u001b[${39}m - leading space`,
   (t) => {
     const inp1 = "text Nbsptext";
@@ -1362,7 +1362,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.089 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`capital N, no ampersand, no semicolon`}\u001b[${39}m - decoded`,
   (t) => {
     // decode
@@ -1374,7 +1374,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.090 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`capital N, no ampersand, no semicolon`}\u001b[${39}m - leading space - decoded`,
   (t) => {
     const inp1 = "text Nbsptext";
@@ -1385,7 +1385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.091 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing semicolon when ampersand is present`}\u001b[${39}m - P capital`,
   (t) => {
     const inp1 = "&nBsPzzz&nBsPzzz";
@@ -1399,7 +1399,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.092 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${35}m${`missing semicolon when ampersand is present`}\u001b[${39}m - S capital`,
   (t) => {
     const inp1 = "&NbSpzzz&NbSpzzz";
@@ -1413,7 +1413,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.093 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N capital`,
   (t) => {
     const inp1 = "textNbsp;texttextNbsp;text";
@@ -1427,7 +1427,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.094 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N & S capitals`,
   (t) => {
     const inp1 = "&&NbSpzzz&&NbSpzzz";
@@ -1441,7 +1441,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.095 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N & S capitals, repetition`,
   (t) => {
     const inp1 = "&NbSspzzz&NbSspzzz";
@@ -1455,7 +1455,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.096 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N, S & P capitals, repetition`,
   (t) => {
     const inp1 = "&NbSsPzzz&NbSsPzzz";
@@ -1469,7 +1469,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.097 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N, S & P capitals, repetition, trailing space, tight`,
   (t) => {
     const inp1 = "&NbSsP zzz&NbSsP zzz";
@@ -1483,7 +1483,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.098 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N, S & P capitals, repetition, trailing space, spaced`,
   (t) => {
     const inp1 = "&NbSsP zzz &NbSsP zzz";
@@ -1497,7 +1497,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.099 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - full set`,
   (t) => {
     const inp1 = "a&bnsp;b&nsbp;c";
@@ -1511,7 +1511,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.100 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - one missing`,
   (t) => {
     const inp1 = "abnsp;bnsbp;c";
@@ -1525,7 +1525,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.101 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - n missing`,
   (t) => {
     const inp1 = "a&bsp;b&sbp;c&spb;";
@@ -1540,7 +1540,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.102 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - b missing`,
   (t) => {
     const inp1 = "a&nsp;b&nsp;c&nsp;";
@@ -1555,7 +1555,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.103 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - s missing`,
   (t) => {
     const inp1 = "a&mbsp;b&nbdp;c&nbsb;";
@@ -1570,7 +1570,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.104 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - p missing`,
   (t) => {
     const inp1 = "a&nbso;b&nbsl;c&nsbb;";
@@ -1585,7 +1585,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.105 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - very very suspicious cases - last b is considered to be text`,
   (t) => {
     // when a sequence of more than four letters of a set is encountered,
@@ -1600,7 +1600,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.106 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - very very suspicious cases - last z is considered to be text`,
   (t) => {
     const inp1 = "a&bnspz";
@@ -1611,7 +1611,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.107 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - very very suspicious cases - last b is still considered to be text`,
   (t) => {
     const inp1 = "a&bnnspb";
@@ -1622,7 +1622,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.108 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`n`}\u001b[${39}m-\u001b[${33}m${`b`}\u001b[${39}m-\u001b[${32}m${`s`}\u001b[${39}m-\u001b[${34}m${`p`}\u001b[${39}m set plus another letter`,
   (t) => {
     t.same(fix("&nbspx;"), [[0, 7, "&nbsp;"]], "02.108.01");
@@ -1635,7 +1635,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.109 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`n`}\u001b[${39}m-\u001b[${33}m${`b`}\u001b[${39}m-\u001b[${32}m${`s`}\u001b[${39}m-\u001b[${34}m${`p`}\u001b[${39}m set plus another letter plus semicols`,
   (t) => {
     const inp1 = "a&nbspl;;b";
@@ -1646,7 +1646,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.110 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`n`}\u001b[${39}m-\u001b[${33}m${`b`}\u001b[${39}m-\u001b[${32}m${`s`}\u001b[${39}m-\u001b[${34}m${`p`}\u001b[${39}m with one letter missing plus another letter`,
   (t) => {
     t.same(fix("&nspx;"), [[0, 6, "&nbsp;"]], "02.110.01");
@@ -1656,7 +1656,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.111 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - missing semicolon gets reported as such`,
   (t) => {
     const inp5 = "aaa&nbspbbb";
@@ -1675,7 +1675,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.112 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`false positive`}\u001b[${39}m - &nspar;`,
   (t) => {
     const source = "a&nspar;b";
@@ -1685,7 +1685,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.113 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`false positive`}\u001b[${39}m - &prnsim;`,
   (t) => {
     const source = "a&prnsim;b";
@@ -1695,7 +1695,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.114 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`false positive`}\u001b[${39}m - &subplus;`,
   (t) => {
     const source = "a&subplus;b";

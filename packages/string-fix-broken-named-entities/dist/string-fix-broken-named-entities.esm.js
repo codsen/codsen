@@ -7,105 +7,109 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
 
-import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import { entStartsWith, decode, uncertain, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
-const isArr = Array.isArray;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
+function onlyContainsNbsp(str, from, to) {
+  for (let i = from; i < to; i++) {
+    if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
+      return false;
+    }
+  }
+  return true;
+}
+function isLatinLetterOrNumberOrHash(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123) ||
+      (char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58) ||
+      (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      char.charCodeAt(0) === 35)
+  );
+}
+function isNumber(something) {
+  return (
+    isStr(something) &&
+    something.charCodeAt(0) > 47 &&
+    something.charCodeAt(0) < 58
+  );
+}
+function isNotaLetter(str2) {
+  return !(
+    typeof str2 === "string" &&
+    str2.length === 1 &&
+    str2.toUpperCase() !== str2.toLowerCase()
+  );
+}
+function isStr(something) {
+  return typeof something === "string";
+}
+function isLatinLetter(something) {
+  return (
+    typeof something === "string" &&
+    ((something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123) ||
+      (something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91))
+  );
+}
+function resemblesNumericEntity(str2, from, to) {
+  let lettersCount = 0;
+  let numbersCount = 0;
+  let othersCount = 0;
+  let hashesCount = 0;
+  let whitespaceCount = 0;
+  let numbersValue = "";
+  let charTrimmed = "";
+  for (let i = from; i < to; i++) {
+    if (str2[i].trim().length) {
+      charTrimmed += str2[i];
+    } else {
+      whitespaceCount += 1;
+    }
+    if (isLatinLetter(str2[i])) {
+      lettersCount += 1;
+    } else if (isNumber(str2[i])) {
+      numbersCount += 1;
+      numbersValue += String(str2[i]);
+    } else if (str2[i] === "#") {
+      hashesCount += 1;
+    } else {
+      othersCount += 1;
+    }
+  }
+  let probablyNumeric = false;
+  if (!lettersCount && numbersCount > othersCount) {
+    probablyNumeric = "deci";
+  } else if (
+    (numbersCount || lettersCount) &&
+    ((charTrimmed[0] === "#" &&
+      charTrimmed[1].toLowerCase() === "x" &&
+      (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
+      (charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount))
+  ) {
+    probablyNumeric = "hexi";
+  }
+  return {
+    probablyNumeric,
+    lettersCount,
+    numbersCount,
+    numbersValue,
+    hashesCount,
+    othersCount,
+    charTrimmed,
+    whitespaceCount,
+  };
+}
+
 function stringFixBrokenNamedEntities(str, originalOpts) {
-  function resemblesNumericEntity(str, from, to) {
-    let lettersCount = 0;
-    let numbersCount = 0;
-    let othersCount = 0;
-    let hashesCount = 0;
-    let whitespaceCount = 0;
-    let numbersValue = "";
-    let charTrimmed = "";
-    for (let i = from; i < to; i++) {
-      if (str[i].trim().length) {
-        charTrimmed += str[i];
-      } else {
-        whitespaceCount++;
-      }
-      if (isLatinLetter(str[i])) {
-        lettersCount++;
-      } else if (isNumber(str[i])) {
-        numbersCount++;
-        numbersValue += String(str[i]);
-      } else if (str[i] === "#") {
-        hashesCount++;
-      } else {
-        othersCount++;
-      }
-    }
-    let probablyNumeric = false;
-    if (!lettersCount && numbersCount > othersCount) {
-      probablyNumeric = "deci";
-    } else if (
-      (numbersCount || lettersCount) &&
-      ((charTrimmed[0] === "#" &&
-        charTrimmed[1].toLowerCase() === "x" &&
-        (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
-        (charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount))
-    ) {
-      probablyNumeric = "hexi";
-    }
-    return {
-      probablyNumeric,
-      lettersCount,
-      numbersCount,
-      numbersValue,
-      hashesCount,
-      othersCount,
-      charTrimmed,
-      whitespaceCount,
-    };
-  }
-  function isNotaLetter(str) {
-    return !(
-      typeof str === "string" &&
-      str.length === 1 &&
-      str.toUpperCase() !== str.toLowerCase()
-    );
-  }
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  function isLatinLetter(something) {
-    return (
-      typeof something === "string" &&
-      ((something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123) ||
-        (something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91))
-    );
-  }
-  function isLatinLetterOrNumberOrHash(char) {
-    return (
-      isStr(char) &&
-      char.length === 1 &&
-      ((char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123) ||
-        (char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58) ||
-        (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
-        char.charCodeAt(0) === 35)
-    );
-  }
-  function isNumber(something) {
-    return (
-      isStr(something) &&
-      something.charCodeAt(0) > 47 &&
-      something.charCodeAt(0) < 58
-    );
-  }
-  function onlyContainsNbsp(str, from, to) {
-    for (let i = from; i < to; i++) {
-      if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
-        return false;
-      }
-    }
-    return true;
-  }
   function findLongest(temp1) {
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       if (temp1.length === 1) {
         return temp1[0];
       }
@@ -120,7 +124,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   function removeGappedFromMixedCases(temp1) {
     let copy;
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       copy = Array.from(temp1);
       if (
         copy.length > 1 &&
@@ -145,7 +149,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               !entObj ||
               !entObj.tempRes ||
               !entObj.tempRes.gaps ||
-              !isArr(entObj.tempRes.gaps) ||
+              !Array.isArray(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
           ) ||
           copy.every(
@@ -153,7 +157,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               entObj &&
               entObj.tempRes &&
               entObj.tempRes.gaps &&
-              isArr(entObj.tempRes.gaps) &&
+              Array.isArray(entObj.tempRes.gaps) &&
               entObj.tempRes.gaps.length
           )
         )
@@ -162,7 +166,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           copy.filter(
             (entObj) =>
               !entObj.tempRes.gaps ||
-              !isArr(entObj.tempRes.gaps) ||
+              !Array.isArray(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
           )
         );
@@ -183,7 +187,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     decode: false,
     cb: ({ rangeFrom, rangeTo, rangeValEncoded, rangeValDecoded }) =>
       rangeValDecoded || rangeValEncoded
-        ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded]
+        ? [
+            rangeFrom,
+            rangeTo,
+            isObj(originalOpts) && originalOpts.decode
+              ? rangeValDecoded
+              : rangeValEncoded,
+          ]
         : [rangeFrom, rangeTo],
     progressFn: null,
     entityCatcherCb: null,
@@ -199,7 +209,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         )} (${typeof originalOpts}-type)`
       );
     } else {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = { ...defaults, ...originalOpts };
     }
   } else {
     opts = defaults;
@@ -231,7 +241,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       )}`
     );
   }
-  let state_AmpersandNotNeeded = false;
+  let ampersandNotNeeded = false;
   const nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
@@ -259,7 +269,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   let letterSeqStartAt = null;
   let brokenNumericEntityStartAt = null;
   const falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"];
-  outerloop: for (let i = 0; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
       if (percentageDone !== lastPercentageDone) {
@@ -271,7 +281,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
       } else {
-        counter++;
+        counter += 1;
         continue;
       }
     }
@@ -349,9 +359,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         "p",
         ";?"
       );
-      const beginningOfTheRange = chompedAmpFromLeft
-        ? chompedAmpFromLeft
-        : nbsp.nameStartsAt;
+      const beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt;
       if (
         !falsePositivesArr.some((val) =>
           str.slice(beginningOfTheRange).startsWith(val)
@@ -366,27 +374,26 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeValEncoded: "&nbsp;",
           rangeValDecoded: "\xA0",
         });
-      } else {
-        if (opts.decode) {
-          rangesArr2.push({
-            ruleName: "encoded-html-entity-nbsp",
-            entityName: "nbsp",
-            rangeFrom: beginningOfTheRange,
-            rangeTo: i,
-            rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0",
-          });
-        } else if (opts.entityCatcherCb) {
-          opts.entityCatcherCb(beginningOfTheRange, i);
-        }
+      }
+      else if (opts.decode) {
+        rangesArr2.push({
+          ruleName: "encoded-html-entity-nbsp",
+          entityName: "nbsp",
+          rangeFrom: beginningOfTheRange,
+          rangeTo: i,
+          rangeValEncoded: "&nbsp;",
+          rangeValDecoded: "\xA0",
+        });
+      } else if (opts.entityCatcherCb) {
+        opts.entityCatcherCb(beginningOfTheRange, i);
       }
       nbspWipe();
-      counter++;
+      counter += 1;
       if (str[i] === "&" && str[i + 1] !== "&") {
         nbsp.nameStartsAt = i;
         nbsp.ampersandNecessary = false;
       }
-      continue outerloop;
+      continue;
     }
     if (
       str[i] &&
@@ -396,8 +403,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       matchedLettersCount > 0
     ) {
       nbspWipe();
-      counter++;
-      continue outerloop;
+      counter += 1;
+      continue;
     }
     if (
       letterSeqStartAt !== null &&
@@ -678,12 +685,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 let entitysValue;
                 if (tempEnt) {
                   let issue = false;
-                  const firstChar = tempRes.leftmostChar;
-                  const secondChar = right(str, firstChar);
+                  const firstChar2 = tempRes.leftmostChar;
+                  const secondChar2 = right(str, firstChar2);
                   if (
                     Object.keys(uncertain).includes(potentialEntity) &&
-                    isStr(str[firstChar - 1]) &&
-                    !str[firstChar - 1].trim().length &&
+                    isStr(str[firstChar2 - 1]) &&
+                    !str[firstChar2 - 1].trim().length &&
                     uncertain[potentialEntity].addAmpIfSemiPresent !== true
                   ) {
                     letterSeqStartAt = null;
@@ -692,13 +699,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   if (
                     Object.prototype.hasOwnProperty.call(
                       entStartsWith,
-                      str[firstChar]
+                      str[firstChar2]
                     ) &&
                     Object.prototype.hasOwnProperty.call(
-                      entStartsWith[str[firstChar]],
-                      str[secondChar]
+                      entStartsWith[str[firstChar2]],
+                      str[secondChar2]
                     ) &&
-                    entStartsWith[str[firstChar]][str[secondChar]].includes(
+                    entStartsWith[str[firstChar2]][str[secondChar2]].includes(
                       situation.charTrimmed
                     )
                   ) {
@@ -742,9 +749,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       } else {
                         const missingLetters = filterLongest.map((entity) => {
                           let count = 0;
-                          for (let z = 0, len = entity.length; z < len; z++) {
+                          for (let z = 0, len2 = entity.length; z < len2; z++) {
                             if (entity[z] !== situation.charTrimmed[z]) {
-                              count++;
+                              count += 1;
                             }
                           }
                           return count;
@@ -919,7 +926,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",
                 entityName: matchedTemp,
-                rangeFrom: rangeFrom,
+                rangeFrom,
                 rangeTo: doNothingUntil,
                 rangeValEncoded: `${spaceReplacement}&${matchedTemp};`,
                 rangeValDecoded: `${spaceReplacement}${decode(
@@ -950,15 +957,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         str[i + 1].toLowerCase() === "s"
       ) {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
       if (nbsp.matchedN === null) {
         nbsp.matchedN = i;
       }
       if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
@@ -971,18 +978,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedB = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedB = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
     }
     if (str[i] && str[i].toLowerCase() === "s") {
@@ -991,18 +998,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedS = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedS = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
@@ -1013,18 +1020,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedP = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedP = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
     }
     if (str[i] === ";") {
@@ -1072,14 +1079,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       str[i] !== " "
     ) {
       if (nbsp.patience) {
-        nbsp.patience = nbsp.patience - 1;
+        nbsp.patience -= 1;
       } else {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
     }
-    counter++;
+    counter += 1;
   }
   if (!rangesArr2.length) {
     return [];

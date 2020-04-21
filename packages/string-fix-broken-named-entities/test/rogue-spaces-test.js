@@ -1,16 +1,12 @@
-const t = require("tap");
-const fix = require("../dist/string-fix-broken-named-entities.cjs");
-const {
-  decode,
-  uncertain,
-  allNamedEntities,
-} = require("all-named-html-entities");
+import tap from "tap";
+import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
+import fix from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `${
     Object.keys(allNamedEntities).length
   } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,

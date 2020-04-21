@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -61,152 +110,6 @@
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
-
-  /**
-   * lodash (Custom Build) <https://lodash.com/>
-   * Build: `lodash modularize exports="npm" -o ./`
-   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-   * Released under MIT license <https://lodash.com/license>
-   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-   */
-
-  /** `Object#toString` result references. */
-  var objectTag = '[object Object]';
-  /**
-   * Checks if `value` is a host object in IE < 9.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-   */
-
-  function isHostObject(value) {
-    // Many host objects are `Object` objects that can coerce to strings
-    // despite having improperly defined `toString` methods.
-    var result = false;
-
-    if (value != null && typeof value.toString != 'function') {
-      try {
-        result = !!(value + '');
-      } catch (e) {}
-    }
-
-    return result;
-  }
-  /**
-   * Creates a unary function that invokes `func` with its argument transformed.
-   *
-   * @private
-   * @param {Function} func The function to wrap.
-   * @param {Function} transform The argument transform.
-   * @returns {Function} Returns the new function.
-   */
-
-
-  function overArg(func, transform) {
-    return function (arg) {
-      return func(transform(arg));
-    };
-  }
-  /** Used for built-in method references. */
-
-
-  var funcProto = Function.prototype,
-      objectProto = Object.prototype;
-  /** Used to resolve the decompiled source of functions. */
-
-  var funcToString = funcProto.toString;
-  /** Used to check objects for own properties. */
-
-  var hasOwnProperty = objectProto.hasOwnProperty;
-  /** Used to infer the `Object` constructor. */
-
-  var objectCtorString = funcToString.call(Object);
-  /**
-   * Used to resolve the
-   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-   * of values.
-   */
-
-  var objectToString = objectProto.toString;
-  /** Built-in value references. */
-
-  var getPrototype = overArg(Object.getPrototypeOf, Object);
-  /**
-   * Checks if `value` is object-like. A value is object-like if it's not `null`
-   * and has a `typeof` result of "object".
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-   * @example
-   *
-   * _.isObjectLike({});
-   * // => true
-   *
-   * _.isObjectLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isObjectLike(_.noop);
-   * // => false
-   *
-   * _.isObjectLike(null);
-   * // => false
-   */
-
-  function isObjectLike(value) {
-    return !!value && typeof value == 'object';
-  }
-  /**
-   * Checks if `value` is a plain object, that is, an object created by the
-   * `Object` constructor or one with a `[[Prototype]]` of `null`.
-   *
-   * @static
-   * @memberOf _
-   * @since 0.8.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-   * @example
-   *
-   * function Foo() {
-   *   this.a = 1;
-   * }
-   *
-   * _.isPlainObject(new Foo);
-   * // => false
-   *
-   * _.isPlainObject([1, 2, 3]);
-   * // => false
-   *
-   * _.isPlainObject({ 'x': 0, 'y': 0 });
-   * // => true
-   *
-   * _.isPlainObject(Object.create(null));
-   * // => true
-   */
-
-
-  function isPlainObject(value) {
-    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
-      return false;
-    }
-
-    var proto = getPrototype(value);
-
-    if (proto === null) {
-      return true;
-    }
-
-    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-  }
-
-  var lodash_isplainobject = isPlainObject;
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -9814,6 +9717,152 @@
   const maxLength = 31;
 
   /**
+   * lodash (Custom Build) <https://lodash.com/>
+   * Build: `lodash modularize exports="npm" -o ./`
+   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   */
+
+  /** `Object#toString` result references. */
+  var objectTag = '[object Object]';
+  /**
+   * Checks if `value` is a host object in IE < 9.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+   */
+
+  function isHostObject(value) {
+    // Many host objects are `Object` objects that can coerce to strings
+    // despite having improperly defined `toString` methods.
+    var result = false;
+
+    if (value != null && typeof value.toString != 'function') {
+      try {
+        result = !!(value + '');
+      } catch (e) {}
+    }
+
+    return result;
+  }
+  /**
+   * Creates a unary function that invokes `func` with its argument transformed.
+   *
+   * @private
+   * @param {Function} func The function to wrap.
+   * @param {Function} transform The argument transform.
+   * @returns {Function} Returns the new function.
+   */
+
+
+  function overArg(func, transform) {
+    return function (arg) {
+      return func(transform(arg));
+    };
+  }
+  /** Used for built-in method references. */
+
+
+  var funcProto = Function.prototype,
+      objectProto = Object.prototype;
+  /** Used to resolve the decompiled source of functions. */
+
+  var funcToString = funcProto.toString;
+  /** Used to check objects for own properties. */
+
+  var hasOwnProperty = objectProto.hasOwnProperty;
+  /** Used to infer the `Object` constructor. */
+
+  var objectCtorString = funcToString.call(Object);
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString = objectProto.toString;
+  /** Built-in value references. */
+
+  var getPrototype = overArg(Object.getPrototypeOf, Object);
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+  function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+  }
+  /**
+   * Checks if `value` is a plain object, that is, an object created by the
+   * `Object` constructor or one with a `[[Prototype]]` of `null`.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.8.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+   * @example
+   *
+   * function Foo() {
+   *   this.a = 1;
+   * }
+   *
+   * _.isPlainObject(new Foo);
+   * // => false
+   *
+   * _.isPlainObject([1, 2, 3]);
+   * // => false
+   *
+   * _.isPlainObject({ 'x': 0, 'y': 0 });
+   * // => true
+   *
+   * _.isPlainObject(Object.create(null));
+   * // => true
+   */
+
+
+  function isPlainObject(value) {
+    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+      return false;
+    }
+
+    var proto = getPrototype(value);
+
+    if (proto === null) {
+      return true;
+    }
+
+    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  }
+
+  var lodash_isplainobject = isPlainObject;
+
+  /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
    * Version: 2.3.20
@@ -10171,7 +10220,100 @@
     return chomp("left", str, idx, defaults, lodash_clonedeep(args));
   }
 
-  var isArr = Array.isArray;
+  function isObj(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
+  } // checks, are there any other non-whitespace characters besides n, b, s or p
+
+
+  function onlyContainsNbsp(str, from, to) {
+    for (var i = from; i < to; i++) {
+      if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function isLatinLetterOrNumberOrHash(char) {
+    // we mean:
+    // - Latin letters a-z or
+    // - numbers 0-9 or
+    // - letters A-Z or
+    // - #
+    return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+  }
+
+  function isNumber(something) {
+    return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+  }
+
+  function isNotaLetter(str2) {
+    return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
+  }
+
+  function isStr$1(something) {
+    return typeof something === "string";
+  }
+
+  function isLatinLetter(something) {
+    return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
+  }
+
+  function resemblesNumericEntity(str2, from, to) {
+    // plan: loop characters, count types, judge what's given
+    var lettersCount = 0;
+    var numbersCount = 0;
+    var othersCount = 0;
+    var hashesCount = 0;
+    var whitespaceCount = 0;
+    var numbersValue = "";
+    var charTrimmed = "";
+
+    for (var i = from; i < to; i++) {
+      if (str2[i].trim().length) {
+        charTrimmed += str2[i];
+      } else {
+        whitespaceCount += 1;
+      }
+
+      if (isLatinLetter(str2[i])) {
+        lettersCount += 1;
+      } else if (isNumber(str2[i])) {
+        numbersCount += 1;
+        numbersValue += String(str2[i]);
+      } else if (str2[i] === "#") {
+        hashesCount += 1;
+      } else {
+        othersCount += 1;
+      }
+    } // if there are more numbers than letters (or equal) then it's more likely
+    // to be a numeric entity
+
+
+    var probablyNumeric = false; // if decimal-type, for example, &#999999;
+    // but wide enough to include messed up cases
+
+    if (!lettersCount && numbersCount > othersCount) {
+      probablyNumeric = "deci";
+    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+      // hexidecimal, for example, &#xA3;
+      // but wide enough to include messed up cases
+      probablyNumeric = "hexi";
+    }
+
+    return {
+      probablyNumeric: probablyNumeric,
+      lettersCount: lettersCount,
+      numbersCount: numbersCount,
+      numbersValue: numbersValue,
+      hashesCount: hashesCount,
+      othersCount: othersCount,
+      charTrimmed: charTrimmed,
+      whitespaceCount: whitespaceCount
+    };
+  }
+
   /**
    * stringFixBrokenNamedEntities - fixes broken named HTML entities
    *
@@ -10180,96 +10322,6 @@
    */
 
   function stringFixBrokenNamedEntities(str, originalOpts) {
-    function resemblesNumericEntity(str, from, to) {
-      // plan: loop characters, count types, judge what's given
-      var lettersCount = 0;
-      var numbersCount = 0;
-      var othersCount = 0;
-      var hashesCount = 0;
-      var whitespaceCount = 0;
-      var numbersValue = "";
-      var charTrimmed = "";
-
-      for (var i = from; i < to; i++) {
-        if (str[i].trim().length) {
-          charTrimmed += str[i];
-        } else {
-          whitespaceCount++;
-        }
-
-        if (isLatinLetter(str[i])) {
-          lettersCount++;
-        } else if (isNumber(str[i])) {
-          numbersCount++;
-          numbersValue += String(str[i]);
-        } else if (str[i] === "#") {
-          hashesCount++;
-        } else {
-          othersCount++;
-        }
-      } // if there are more numbers than letters (or equal) then it's more likely
-      // to be a numeric entity
-
-
-      var probablyNumeric = false; // if decimal-type, for example, &#999999;
-      // but wide enough to include messed up cases
-
-      if (!lettersCount && numbersCount > othersCount) {
-        probablyNumeric = "deci";
-      } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
-        // hexidecimal, for example, &#xA3;
-        // but wide enough to include messed up cases
-        probablyNumeric = "hexi";
-      }
-
-      return {
-        probablyNumeric: probablyNumeric,
-        lettersCount: lettersCount,
-        numbersCount: numbersCount,
-        numbersValue: numbersValue,
-        hashesCount: hashesCount,
-        othersCount: othersCount,
-        charTrimmed: charTrimmed,
-        whitespaceCount: whitespaceCount
-      };
-    }
-
-    function isNotaLetter(str) {
-      return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
-    function isLatinLetter(something) {
-      return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
-    }
-
-    function isLatinLetterOrNumberOrHash(char) {
-      // we mean:
-      // - Latin letters a-z or
-      // - numbers 0-9 or
-      // - letters A-Z or
-      // - #
-      return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
-    }
-
-    function isNumber(something) {
-      return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-    } // checks, are there any other non-whitespace characters besides n, b, s or p
-
-
-    function onlyContainsNbsp(str, from, to) {
-      for (var i = from; i < to; i++) {
-        if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
     function findLongest(temp1) {
       // we are filtering something like this:
       // [
@@ -10293,7 +10345,7 @@
       //
       // we find the object which represents the longest matched entity, that is,
       // object which "tempEnt" key value's length is the longest.
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         if (temp1.length === 1) {
           // quick ending - only one value anyway
           return temp1[0];
@@ -10351,7 +10403,7 @@
       // case picks &acd; as winner
       var copy;
 
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         // prevent mutation:
         copy = Array.from(temp1); // 1. if some matches have semicolon to the right of rightmostChar and
         // some matches don't, exclude those that don't.
@@ -10397,13 +10449,13 @@
 
 
         if (!(copy.every(function (entObj) {
-          return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+          return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
         }) || copy.every(function (entObj) {
-          return entObj && entObj.tempRes && entObj.tempRes.gaps && isArr(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
+          return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
         }))) {
           // filter out entities with gaps, leave gapless-ones
           return findLongest(copy.filter(function (entObj) {
-            return !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+            return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
           }));
         }
       } // else if all entries don't have gaps, return longest
@@ -10436,7 +10488,7 @@
             rangeTo = _ref.rangeTo,
             rangeValEncoded = _ref.rangeValEncoded,
             rangeValDecoded = _ref.rangeValDecoded;
-        return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
+        return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
       },
       progressFn: null,
       entityCatcherCb: null
@@ -10444,10 +10496,10 @@
     var opts;
 
     if (originalOpts != null) {
-      if (!lodash_isplainobject(originalOpts)) {
+      if (!isObj(originalOpts)) {
         throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), "-type)"));
       } else {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = _objectSpread2({}, defaults, {}, originalOpts);
       }
     } else {
       opts = defaults;
@@ -10472,7 +10524,7 @@
     // We don't add one though, because we consult with this flag.
 
 
-    var state_AmpersandNotNeeded = false; // markers:
+    var ampersandNotNeeded = false; // markers:
     // define defaults so that we can reset to objects with keys, not empty objects
     // * nbsp tracking:
 
@@ -10575,7 +10627,7 @@
         if (doNothingUntil !== true && i >= doNothingUntil) {
           doNothingUntil = null;
         } else {
-          counter++;
+          counter += 1;
           return "continue";
         }
       } // Catch ending of an nbsp (or messed up set of its characters)
@@ -10599,7 +10651,7 @@
       }, "s", "u", "p")) && str[right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
         // chomp all &amp; where ampersand is optional if sandwitched
         var chompedAmpFromLeft = chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-        var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt; // if our nbsp has problems:
+        var beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt; // if our nbsp has problems:
 
         if (!falsePositivesArr.some(function (val) {
           return str.slice(beginningOfTheRange).startsWith(val);
@@ -10612,9 +10664,8 @@
             rangeValEncoded: "&nbsp;",
             rangeValDecoded: "\xA0"
           });
-        } else {
-          // also, if it must be decoded this healthy nbsp is wrong
-          if (opts.decode) {
+        } // also, if it must be decoded this healthy nbsp is wrong
+        else if (opts.decode) {
             rangesArr2.push({
               ruleName: "encoded-html-entity-nbsp",
               entityName: "nbsp",
@@ -10627,24 +10678,23 @@
             // call the general entity callback if it's given
             opts.entityCatcherCb(beginningOfTheRange, i);
           }
-        }
 
         nbspWipe();
-        counter++; // if we are on an ampersand currently, start a new record
+        counter += 1; // if we are on an ampersand currently, start a new record
 
         if (str[i] === "&" && str[i + 1] !== "&") {
           nbsp.nameStartsAt = i;
           nbsp.ampersandNecessary = false;
         }
 
-        return "continue|outerloop";
+        return "continue";
       } // If semicolon was passed and tag is not closing, wipe:
 
 
       if (str[i] && str[i - 1] === ";" && !leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       } //            |
       //            |
       //            |
@@ -10778,7 +10828,7 @@
                 _tempRes = _temp3.tempRes;
               }
 
-              if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
+              if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr$1(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
                 var _decodedEntity = decode("&".concat(_tempEnt, ";"));
 
                 rangesArr2.push({
@@ -10962,24 +11012,22 @@
 
                   if (_tempEnt2) {
                     var issue = false;
-                    var _firstChar2 = _tempRes2.leftmostChar;
-
-                    var _secondChar2 = right(str, _firstChar2); // precaution against false positives
+                    var firstChar2 = _tempRes2.leftmostChar;
+                    var secondChar2 = right(str, firstChar2); // precaution against false positives
                     // catch the bail cases:
                     // if it's among uncertain entities, if there is whitespace
                     // around the entity's characters, bail, unless values
                     // un uncertain.json are set to true on that side (amp or
                     // semicol respectively).
 
-
-                    if (Object.keys(uncertain).includes(potentialEntity) && isStr(str[_firstChar2 - 1]) && !str[_firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
+                    if (Object.keys(uncertain).includes(potentialEntity) && isStr$1(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
                       letterSeqStartAt = null;
                       return "continue";
                     } // 1. check case-insensitive matched entity "tempEnt"
                     // case-sensitively
 
 
-                    if (Object.prototype.hasOwnProperty.call(startsWith, str[_firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[_firstChar2]], str[_secondChar2]) && startsWith[str[_firstChar2]][str[_secondChar2]].includes(situation.charTrimmed)) {
+                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar2]], str[secondChar2]) && startsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
                       entitysValue = situation.charTrimmed; // so entity's case is right, but what about whitespace
                       // between characters?
 
@@ -11027,9 +11075,9 @@
                           var missingLetters = filterLongest.map(function (entity) {
                             var count = 0;
 
-                            for (var z = 0, _len = entity.length; z < _len; z++) {
+                            for (var z = 0, len2 = entity.length; z < len2; z++) {
                               if (entity[z] !== situation.charTrimmed[z]) {
-                                count++;
+                                count += 1;
                               }
                             }
 
@@ -11281,8 +11329,8 @@
         // failsafe
         if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
           nbspWipe();
-          counter++;
-          return "continue|outerloop";
+          counter += 1;
+          return "continue";
         } // action
 
 
@@ -11294,7 +11342,7 @@
           // 1. mark it
           nbsp.nameStartsAt = i; // 2. tend the ampersand situation
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             // if by now there are signs of ampersand records, it must be added later:
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
@@ -11315,12 +11363,12 @@
           // dirty code case because ampersand or "n" are missing so far
           // 1. Patience is reduced for every single character missing. There can
           // be only one character missing out of n-b-s-p.
-          nbsp.patience--; // 2. mark the start
+          nbsp.patience -= 1; // 2. mark the start
 
           nbsp.nameStartsAt = i;
           nbsp.matchedB = i; // 3. tend the ampersand situation
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             // if by now there are signs of ampersand records, it must be added later:
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
@@ -11330,8 +11378,8 @@
         } else {
           // wipe
           nbspWipe();
-          counter++;
-          return "continue|outerloop";
+          counter += 1;
+          return "continue";
         }
       } // catch "s"
 
@@ -11346,12 +11394,12 @@
           // dirty code case because ampersand or "n" are missing so far
           // 1. Patience is reduced for every single character missing. There can
           // be only one character missing out of n-b-s-p.
-          nbsp.patience--; // 2. mark the start
+          nbsp.patience -= 1; // 2. mark the start
 
           nbsp.nameStartsAt = i;
           nbsp.matchedS = i; // 3. tend the ampersand situation
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             // if by now there are signs of ampersand records, it must be added later:
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
@@ -11361,8 +11409,8 @@
         } else {
           // wipe
           nbspWipe();
-          counter++;
-          return "continue|outerloop";
+          counter += 1;
+          return "continue";
         }
       } // catch "p"
 
@@ -11379,12 +11427,12 @@
           // dirty code case because ampersand or "n" are missing so far
           // 1. Patience is reduced for every single character missing. There can
           // be only one character missing out of n-b-s-p.
-          nbsp.patience--; // 2. mark the start
+          nbsp.patience -= 1; // 2. mark the start
 
           nbsp.nameStartsAt = i;
           nbsp.matchedP = i; // 3. tend the ampersand situation
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             // if by now there are signs of ampersand records, it must be added later:
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
@@ -11394,8 +11442,8 @@
         } else {
           // wipe
           nbspWipe();
-          counter++;
-          return "continue|outerloop";
+          counter += 1;
+          return "continue";
         }
       } // catch semicolon
 
@@ -11427,11 +11475,11 @@
 
       if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
         if (nbsp.patience) {
-          nbsp.patience = nbsp.patience - 1;
+          nbsp.patience -= 1;
         } else {
           nbspWipe();
-          counter++;
-          return "continue|outerloop";
+          counter += 1;
+          return "continue";
         }
       } //            |
       //            |
@@ -11444,7 +11492,7 @@
       //            |
       //            |
       //            |
-      // console.log(`state_AmpersandNotNeeded = ${state_AmpersandNotNeeded}`);
+      // console.log(`ampersandNotNeeded = ${ampersandNotNeeded}`);
       // console.log(
       //   `${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} = ${JSON.stringify(
       //     nbsp,
@@ -11462,19 +11510,13 @@
       // );
 
 
-      counter++;
+      counter += 1;
     };
 
-    outerloop: for (var i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       var _ret = _loop(i);
 
-      switch (_ret) {
-        case "continue":
-          continue;
-
-        case "continue|outerloop":
-          continue outerloop;
-      }
+      if (_ret === "continue") continue;
     } //                                      ^
     //                                     /|\
     //                                    / | \

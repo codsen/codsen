@@ -1,5 +1,5 @@
-const t = require("tap");
-const fix = require("../dist/string-fix-broken-named-entities.cjs");
+import tap from "tap";
+import fix from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // helper functions
@@ -15,7 +15,7 @@ function cb(obj) {
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.001 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`,
   (t) => {
     t.doesNotThrow(() => {
@@ -49,7 +49,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.002 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`,
   (t) => {
     t.throws(() => {
@@ -71,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.003 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.cb is not function`,
   (t) => {
     t.throws(() => {
@@ -81,7 +81,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.004 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`,
   (t) => {
     t.throws(() => {
@@ -95,7 +95,7 @@ t.test(
 // 03. nothing to fix
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.001 - ${`\u001b[${33}m${`insp`}\u001b[${39}m`} - false positives`,
   (t) => {
     t.same(fix("insp;"), [], "03.001.01");
@@ -110,7 +110,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - no decode requested`,
   (t) => {
     t.same(fix("&nbsp;"), [], "03.002.01 - one, surrounded by EOL");
@@ -120,7 +120,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - default callback, decode`,
   (t) => {
     // controls:
@@ -141,7 +141,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.004 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - full callback, decode`,
   (t) => {
     // same as 03.003 except has a callback to ensure correct rule name is reported
@@ -166,7 +166,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.005 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - two, surrounded by EOL`,
   (t) => {
     t.same(
@@ -181,7 +181,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.006 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - surrounded by letters`,
   (t) => {
     t.same(fix("a&nbsp;b", { decode: true }), [[1, 7, "\xA0"]], "03.006");
@@ -189,7 +189,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.007 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - various - decode off`,
   (t) => {
     t.same(fix("z&hairsp;y"), [], "03.007.01");
@@ -198,7 +198,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.008 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - hairsp - decode on`,
   (t) => {
     t.same(fix("z&hairsp;y", { decode: true }), [[1, 9, "\u200A"]], "03.008");
@@ -206,7 +206,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.009 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - VeryThinSpace - decode on`,
   (t) => {
     t.same(
@@ -218,7 +218,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.010 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - healthy &pound;`,
   (t) => {
     const inp1 = "&pound;";
@@ -232,7 +232,7 @@ t.test(
 // 04. other entities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.001 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
     t.same(fix("z &ang; y"), [], "04.001.01");
@@ -253,7 +253,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.002 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -268,7 +268,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.003 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -292,7 +292,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.004 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -304,7 +304,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.005 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -319,7 +319,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.006 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -331,7 +331,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.007 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(fix("text&sigma text&sigma text"), [], "04.007 - not conclusive");
@@ -339,7 +339,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.008 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(fix("text&sub text&sub text"), [], "04.008");
@@ -347,7 +347,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.009 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(
@@ -362,7 +362,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.010 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(fix("text&theta text&theta text"), [], "04.010");
@@ -370,7 +370,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.011 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, linebreaked`,
   (t) => {
     t.same(
@@ -385,7 +385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.012 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, tight`,
   (t) => {
     t.same(fix("&thinsp"), [[0, 7, "&thinsp;"]], "04.001.12");
@@ -403,7 +403,7 @@ t.test(
 
 // with decode
 
-t.test(
+tap.test(
   `04.013 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, spaced`,
   (t) => {
     t.same(
@@ -418,7 +418,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.014 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(
@@ -433,7 +433,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.015 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&angst", { decode: true }), [[4, 10, "\xC5"]], "04.015.01");
@@ -457,7 +457,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.016 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&pi text&pi text", { decode: true }), [], "04.016");
@@ -465,7 +465,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.017 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(
@@ -480,7 +480,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.018 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&Pi text&Pi text", { decode: true }), [], "04.018");
@@ -488,7 +488,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.019 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&sigma text&sigma text", { decode: true }), [], "04.019");
@@ -496,7 +496,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.020 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&sub text&sub text", { decode: true }), [], "04.020");
@@ -504,7 +504,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.021 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(
@@ -519,7 +519,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.022 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(fix("text&theta text&theta text", { decode: true }), [], "04.022");
@@ -527,7 +527,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.023 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, line breaked`,
   (t) => {
     t.same(
@@ -542,7 +542,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.024 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, isolated`,
   (t) => {
     t.same(fix("&thinsp", { decode: true }), [[0, 7, "\u2009"]], "04.024");
@@ -550,7 +550,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.025 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, tight`,
   (t) => {
     t.same(
@@ -565,7 +565,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.026 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - \u001b[${32}m${`pound`}\u001b[${39}m - in front of semicolon`,
   (t) => {
     t.same(
@@ -582,7 +582,7 @@ t.test(
 // 05. multiple encoding
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.001 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - no consecutive &amp;`,
   (t) => {
     const inp1 = "&amp;";
@@ -591,7 +591,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.002 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp;`,
   (t) => {
     const inp1 = "&amp; &amp; &amp;";
@@ -600,7 +600,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.003 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`,
   (t) => {
     const inp1 = "&amp;&amp;&amp;";
@@ -609,7 +609,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.004 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`,
   (t) => {
     const inp1 = "abc&amp;&amp;&amp;xyz";
@@ -618,7 +618,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.005 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #1`,
   (t) => {
     const inp1 = "B&amp;Q";
@@ -627,7 +627,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.006 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #2`,
   (t) => {
     const inp1 = "text B&amp;Q text";
@@ -636,7 +636,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.007 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - no cb`,
   (t) => {
     const inp1 = "text&amp;nbsp;text";
@@ -645,7 +645,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.008 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - with cb`,
   (t) => {
     const inp1 = "text&amp;nbsp;text";
@@ -678,7 +678,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.009 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - triple encoded`,
   (t) => {
     const inp1 = "text&amp;amp;nbsp;text";
@@ -690,7 +690,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`,
   (t) => {
     const inp1 = "textamp;nbsp;text";
@@ -708,7 +708,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`,
   (t) => {
     const inp1 = "textamp;nbsp;text";
@@ -720,7 +720,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.012 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2`,
   (t) => {
     const inp1 =
@@ -730,7 +730,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.013 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb`,
   (t) => {
     const inp1 =
@@ -760,7 +760,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.014 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`,
   (t) => {
     const inp1 = "abc &nbs;";
@@ -769,7 +769,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.015 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`,
   (t) => {
     const inp1 = "abc &nbs;";
@@ -798,7 +798,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.016 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`,
   (t) => {
     const inp1 = "abc &nbs; xyz";
@@ -852,7 +852,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`,
   (t) => {
     const inp1 = "abc&nbs;";
@@ -861,7 +861,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.018 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`,
   (t) => {
     const inp1 = "abc&nbs;";
@@ -890,7 +890,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`,
   (t) => {
     const inp1 = "abc&nbs; xyz";
@@ -948,7 +948,7 @@ t.test(
 // 06. opts.cb
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.001 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`default callback`}\u001b[${39}m mimicking non-cb result`,
   (t) => {
     t.same(
@@ -965,7 +965,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.002 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`emlint issue spec`}\u001b[${39}m callback`,
   (t) => {
     t.same(
@@ -1008,7 +1008,7 @@ t.test(
 // 07. opts.progressFn
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress`,
   (t) => {
     t.same(
@@ -1034,7 +1034,7 @@ t.test(
           progressFn: (percentageDone) => {
             // console.log(`percentageDone = ${percentageDone}`);
             t.ok(typeof percentageDone === "number");
-            count++;
+            count += 1;
           },
         }
       ),
@@ -1057,7 +1057,7 @@ t.test(
 // 08. ampersand missing
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - no decode, spaced`,
   (t) => {
     t.same(fix("z &aacute; y"), [], "08.001.01");
@@ -1066,7 +1066,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - legit word same as entity name, ending with semicol`,
   (t) => {
     t.same(
@@ -1078,7 +1078,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, rarrpl`,
   (t) => {
     const inp1 = "rarrpl;";
@@ -1089,7 +1089,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.004 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`,
   (t) => {
     const inp1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
@@ -1102,7 +1102,7 @@ t.test(
 // 09. spaces within entities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `09.001 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`,
   (t) => {
     const inp5 = "& nbsp;";
@@ -1121,7 +1121,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.002 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`,
   (t) => {
     const inp5 = "&nbsp ;";
@@ -1140,7 +1140,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.003 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`,
   (t) => {
     const inp5 = "& nbsp ;";
@@ -1163,7 +1163,7 @@ t.test(
 // 10. not broken HTML entities: unrecognised or recognised and correct
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `10.001 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unrecognised`}\u001b[${39}m - one`,
   (t) => {
     const inp1 = "abc &x  y z; def";
@@ -1187,7 +1187,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.002 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity`,
   (t) => {
     const inp1 = "abc &poumd; def";
@@ -1198,7 +1198,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.003 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity, cb() separately`,
   (t) => {
     const inp1 = "abc &p oumd; def";
@@ -1223,7 +1223,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.004 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with whitespace`,
   (t) => {
     const inp1 = "abc &p ou\nnd; def";
@@ -1234,7 +1234,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.005 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with capital letter`,
   (t) => {
     const inp1 = "x &Pound; y";
@@ -1245,7 +1245,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.006 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`,
   (t) => {
     const inp1 = "abc &pound; def";
@@ -1261,7 +1261,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.007 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`,
   (t) => {
     const inp1 = "x &Pound2; y";
@@ -1286,7 +1286,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.008 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`,
   (t) => {
     const inp1 = "a&poUnd;b";
@@ -1296,7 +1296,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.009 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`,
   (t) => {
     const inp1 = "abc &pozzz; def";
@@ -1320,7 +1320,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.010 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`,
   (t) => {
     const inp1 = "&Poun;";
@@ -1344,7 +1344,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.011 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`,
   (t) => {
     const oneOfBrokenEntities = "a&pound ;b";
@@ -1368,7 +1368,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.012 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`,
   (t) => {
     const inp1 = "a&twoheadRightarrow;b";
@@ -1392,7 +1392,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.013 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`,
   (t) => {
     const inp1 = "x&A lpha;y";
@@ -1416,7 +1416,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.014 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`,
   (t) => {
     const inp1 = "&ac d;";
@@ -1440,7 +1440,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.015 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`,
   (t) => {
     const inp1 = "&Acd;";
@@ -1464,7 +1464,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.016 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`,
   (t) => {
     const inp1 = "&Aelig;";
@@ -1488,7 +1488,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.017 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`,
   (t) => {
     const inp1 = "&zwjn;";
@@ -1512,7 +1512,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.018 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`,
   (t) => {
     const inp1 = "&xcap;";
@@ -1544,7 +1544,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.019 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`,
   (t) => {
     const inp1 = "&nbsp;&nbsp;";
@@ -1558,7 +1558,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.020 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 2`,
   (t) => {
     const inputs = [
@@ -1577,7 +1577,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.021 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`,
   (t) => {
     const inp1 = "&NBSP;&NBSP;";
@@ -1589,7 +1589,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.022 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`,
   (t) => {
     const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
@@ -1605,7 +1605,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.023 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`,
   (t) => {
     const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
@@ -1617,7 +1617,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.024 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`,
   (t) => {
     const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
@@ -1637,7 +1637,7 @@ t.test(
 
 // decode on
 
-t.test(
+tap.test(
   `11.001 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode within ASCII range - A`,
   (t) => {
     const inp1 = "&#65;";
@@ -1662,7 +1662,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.002 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#163;";
@@ -1687,7 +1687,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.003 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - non-existing number`,
   (t) => {
     const inp1 = "&#99999999999999999;";
@@ -1714,7 +1714,7 @@ t.test(
 
 // decode off
 
-t.test(
+tap.test(
   `11.004 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, within ASCII range - A`,
   (t) => {
     const inp1 = "&#65;";
@@ -1730,7 +1730,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.005 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#163;";
@@ -1746,7 +1746,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.006 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - non-existing number`,
   (t) => {
     const inp1 = "&#99999999999999999;";
@@ -1771,7 +1771,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.007 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - dollar instead of hash`,
   (t) => {
     const inp1 = "&$65;";
@@ -1795,7 +1795,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.008 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decoding text with healthy numeric entities`,
   (t) => {
     const inp1 = "something here &#163;";
@@ -1829,7 +1829,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#xA3;";
@@ -1855,7 +1855,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.010 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`,
   (t) => {
     const inp1 = "&x#A3;";
@@ -1880,7 +1880,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.011 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`,
   (t) => {
     const inp1 = "&x#A3;";
@@ -1906,7 +1906,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.012 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`,
   (t) => {
     const inp1 = "&x1000;";
@@ -1930,7 +1930,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.013 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`,
   (t) => {
     const inp1 = "abc#x26;def";
@@ -1958,7 +1958,7 @@ t.test(
 // 12. False positives
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `12.001 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
   (t) => {
     const inp1 = "one pound;";
@@ -1974,7 +1974,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `12.002 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
   (t) => {
     const inp1 = "one pound;";
@@ -2006,7 +2006,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.001 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &nbsp; z";
@@ -2027,7 +2027,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.002 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &nbsp; z";
@@ -2043,7 +2043,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.003 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &nbsp; z";
@@ -2064,7 +2064,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.004 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &nbsp; z";
@@ -2078,7 +2078,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.005 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - only healthy entities are pinged to entityCatcherCb`,
   (t) => {
     const inp1 = "y &nbsp; z &nsp;";
@@ -2114,7 +2114,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.005 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &isindot; z";
@@ -2129,7 +2129,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.006 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &isindot; z";
@@ -2143,7 +2143,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.007 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &isindot; z";
@@ -2158,7 +2158,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.008 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &isindot; z";
@@ -2184,7 +2184,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.009 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &nsp; z";
@@ -2209,7 +2209,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.010 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &nsp; z";
@@ -2223,7 +2223,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.011 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &nsp; z";
@@ -2248,7 +2248,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.012 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &nsp; z";
@@ -2274,7 +2274,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.013 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &abcdefg; z";
@@ -2295,7 +2295,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.014 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &abcdefg; z";
@@ -2309,7 +2309,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.015 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &abcdefg; z";
@@ -2330,7 +2330,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.016 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &abcdefg; z";
@@ -2356,7 +2356,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.017 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &#65; z";
@@ -2371,7 +2371,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.018 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &#65; z";
@@ -2385,7 +2385,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.019 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &#65; z";
@@ -2400,7 +2400,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.020 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &#65; z";
@@ -2426,7 +2426,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.021 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one broken decimal numeric entity`,
   (t) => {
     const inp1 = "y &65; z";
@@ -2440,7 +2440,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.022 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one broken decimal numeric entity`,
   (t) => {
     const inp1 = "y &#99999999999999999999; z";
@@ -2466,7 +2466,7 @@ t.test(
 //
 //
 
-t.test(
+tap.test(
   `13.021 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, with callback, no decode`,
   (t) => {
     const inp1 = "y &x#A3; z";
@@ -2481,7 +2481,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.022 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, without callback, no decode`,
   (t) => {
     const inp1 = "y &x#A3; z";
@@ -2495,7 +2495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.023 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, with callback, with decode`,
   (t) => {
     const inp1 = "y &x#A3; z";
@@ -2510,7 +2510,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.024 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, without callback, with decode`,
   (t) => {
     const inp1 = "y &x#A3; z";

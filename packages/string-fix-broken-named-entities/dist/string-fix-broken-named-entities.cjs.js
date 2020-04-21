@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringLeftRight = require('string-left-right');
@@ -30,6 +29,55 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
 }
 
 function _toConsumableArray(arr) {
@@ -65,75 +113,78 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var isArr = Array.isArray;
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
+function onlyContainsNbsp(str, from, to) {
+  for (var i = from; i < to; i++) {
+    if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
+      return false;
+    }
+  }
+  return true;
+}
+function isLatinLetterOrNumberOrHash(char) {
+  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+}
+function isNumber(something) {
+  return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+}
+function isNotaLetter(str2) {
+  return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
+}
+function isStr(something) {
+  return typeof something === "string";
+}
+function isLatinLetter(something) {
+  return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
+}
+function resemblesNumericEntity(str2, from, to) {
+  var lettersCount = 0;
+  var numbersCount = 0;
+  var othersCount = 0;
+  var hashesCount = 0;
+  var whitespaceCount = 0;
+  var numbersValue = "";
+  var charTrimmed = "";
+  for (var i = from; i < to; i++) {
+    if (str2[i].trim().length) {
+      charTrimmed += str2[i];
+    } else {
+      whitespaceCount += 1;
+    }
+    if (isLatinLetter(str2[i])) {
+      lettersCount += 1;
+    } else if (isNumber(str2[i])) {
+      numbersCount += 1;
+      numbersValue += String(str2[i]);
+    } else if (str2[i] === "#") {
+      hashesCount += 1;
+    } else {
+      othersCount += 1;
+    }
+  }
+  var probablyNumeric = false;
+  if (!lettersCount && numbersCount > othersCount) {
+    probablyNumeric = "deci";
+  } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+    probablyNumeric = "hexi";
+  }
+  return {
+    probablyNumeric: probablyNumeric,
+    lettersCount: lettersCount,
+    numbersCount: numbersCount,
+    numbersValue: numbersValue,
+    hashesCount: hashesCount,
+    othersCount: othersCount,
+    charTrimmed: charTrimmed,
+    whitespaceCount: whitespaceCount
+  };
+}
+
 function stringFixBrokenNamedEntities(str, originalOpts) {
-  function resemblesNumericEntity(str, from, to) {
-    var lettersCount = 0;
-    var numbersCount = 0;
-    var othersCount = 0;
-    var hashesCount = 0;
-    var whitespaceCount = 0;
-    var numbersValue = "";
-    var charTrimmed = "";
-    for (var i = from; i < to; i++) {
-      if (str[i].trim().length) {
-        charTrimmed += str[i];
-      } else {
-        whitespaceCount++;
-      }
-      if (isLatinLetter(str[i])) {
-        lettersCount++;
-      } else if (isNumber(str[i])) {
-        numbersCount++;
-        numbersValue += String(str[i]);
-      } else if (str[i] === "#") {
-        hashesCount++;
-      } else {
-        othersCount++;
-      }
-    }
-    var probablyNumeric = false;
-    if (!lettersCount && numbersCount > othersCount) {
-      probablyNumeric = "deci";
-    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
-      probablyNumeric = "hexi";
-    }
-    return {
-      probablyNumeric: probablyNumeric,
-      lettersCount: lettersCount,
-      numbersCount: numbersCount,
-      numbersValue: numbersValue,
-      hashesCount: hashesCount,
-      othersCount: othersCount,
-      charTrimmed: charTrimmed,
-      whitespaceCount: whitespaceCount
-    };
-  }
-  function isNotaLetter(str) {
-    return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
-  }
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  function isLatinLetter(something) {
-    return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
-  }
-  function isLatinLetterOrNumberOrHash(char) {
-    return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
-  }
-  function isNumber(something) {
-    return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-  }
-  function onlyContainsNbsp(str, from, to) {
-    for (var i = from; i < to; i++) {
-      if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
-        return false;
-      }
-    }
-    return true;
-  }
   function findLongest(temp1) {
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       if (temp1.length === 1) {
         return temp1[0];
       }
@@ -148,7 +199,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   function removeGappedFromMixedCases(temp1) {
     var copy;
-    if (isArr(temp1) && temp1.length) {
+    if (Array.isArray(temp1) && temp1.length) {
       copy = Array.from(temp1);
       if (copy.length > 1 && copy.some(function (entityObj) {
         return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
@@ -160,12 +211,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         });
       }
       if (!(copy.every(function (entObj) {
-        return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+        return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
       }) || copy.every(function (entObj) {
-        return entObj && entObj.tempRes && entObj.tempRes.gaps && isArr(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
+        return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
       }))) {
         return findLongest(copy.filter(function (entObj) {
-          return !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+          return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
         }));
       }
     }
@@ -181,7 +232,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeTo = _ref.rangeTo,
           rangeValEncoded = _ref.rangeValEncoded,
           rangeValDecoded = _ref.rangeValDecoded;
-      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
+      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
     progressFn: null,
     entityCatcherCb: null
@@ -191,7 +242,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (!isObj(originalOpts)) {
       throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), "-type)"));
     } else {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = _objectSpread2({}, defaults, {}, originalOpts);
     }
   } else {
     opts = defaults;
@@ -205,7 +256,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
   }
-  var state_AmpersandNotNeeded = false;
+  var ampersandNotNeeded = false;
   var nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
@@ -245,7 +296,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
       } else {
-        counter++;
+        counter += 1;
         return "continue";
       }
     }
@@ -259,7 +310,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       i: true
     }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
       var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-      var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
+      var beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt;
       if (!falsePositivesArr.some(function (val) {
         return str.slice(beginningOfTheRange).startsWith(val);
       }) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
@@ -271,8 +322,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeValEncoded: "&nbsp;",
           rangeValDecoded: "\xA0"
         });
-      } else {
-        if (opts.decode) {
+      }
+      else if (opts.decode) {
           rangesArr2.push({
             ruleName: "encoded-html-entity-nbsp",
             entityName: "nbsp",
@@ -284,19 +335,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (opts.entityCatcherCb) {
           opts.entityCatcherCb(beginningOfTheRange, i);
         }
-      }
       nbspWipe();
-      counter++;
+      counter += 1;
       if (str[i] === "&" && str[i + 1] !== "&") {
         nbsp.nameStartsAt = i;
         nbsp.ampersandNecessary = false;
       }
-      return "continue|outerloop";
+      return "continue";
     }
     if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
       nbspWipe();
-      counter++;
-      return "continue|outerloop";
+      counter += 1;
+      return "continue";
     }
     if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
       if (i > letterSeqStartAt + 1 && str.slice(letterSeqStartAt - 1, i + 1) !== "&nbsp;") {
@@ -459,13 +509,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 var entitysValue;
                 if (_tempEnt2) {
                   var issue = false;
-                  var _firstChar2 = _tempRes2.leftmostChar;
-                  var _secondChar2 = stringLeftRight.right(str, _firstChar2);
-                  if (Object.keys(allNamedHtmlEntities.uncertain).includes(potentialEntity) && isStr(str[_firstChar2 - 1]) && !str[_firstChar2 - 1].trim().length && allNamedHtmlEntities.uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
+                  var firstChar2 = _tempRes2.leftmostChar;
+                  var secondChar2 = stringLeftRight.right(str, firstChar2);
+                  if (Object.keys(allNamedHtmlEntities.uncertain).includes(potentialEntity) && isStr(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && allNamedHtmlEntities.uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
                     letterSeqStartAt = null;
                     return "continue";
                   }
-                  if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[_firstChar2]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[_firstChar2]], str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(situation.charTrimmed)) {
+                  if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[firstChar2]], str[secondChar2]) && allNamedHtmlEntities.entStartsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
                     entitysValue = situation.charTrimmed;
                     if (i - whatsOnTheLeft - 1 === _tempEnt2.length) {
                       if (opts.decode) {
@@ -496,9 +546,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       } else {
                         var missingLetters = filterLongest.map(function (entity) {
                           var count = 0;
-                          for (var z = 0, _len = entity.length; z < _len; z++) {
+                          for (var z = 0, len2 = entity.length; z < len2; z++) {
                             if (entity[z] !== situation.charTrimmed[z]) {
-                              count++;
+                              count += 1;
                             }
                           }
                           return count;
@@ -635,15 +685,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (str[i] && str[i].toLowerCase() === "n") {
       if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       }
       if (nbsp.matchedN === null) {
         nbsp.matchedN = i;
       }
       if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
@@ -656,18 +706,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedB = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedB = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       }
     }
     if (str[i] && str[i].toLowerCase() === "s") {
@@ -676,18 +726,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedS = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedS = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
@@ -698,18 +748,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.matchedP = i;
         }
       } else if (nbsp.patience) {
-        nbsp.patience--;
+        nbsp.patience -= 1;
         nbsp.nameStartsAt = i;
         nbsp.matchedP = i;
-        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
       } else {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       }
     }
     if (str[i] === ";") {
@@ -731,23 +781,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
     if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
       if (nbsp.patience) {
-        nbsp.patience = nbsp.patience - 1;
+        nbsp.patience -= 1;
       } else {
         nbspWipe();
-        counter++;
-        return "continue|outerloop";
+        counter += 1;
+        return "continue";
       }
     }
-    counter++;
+    counter += 1;
   };
-  outerloop: for (var i = 0; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     var _ret = _loop(i);
-    switch (_ret) {
-      case "continue":
-        continue;
-      case "continue|outerloop":
-        continue outerloop;
-    }
+    if (_ret === "continue") continue;
   }
   if (!rangesArr2.length) {
     return [];

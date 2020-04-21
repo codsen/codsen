@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -62,7 +64,6 @@ export default (commandLineArgs) => {
       external: [
         "all-named-html-entities",
         "lodash.clonedeep",
-        "lodash.isplainobject",
         "string-left-right",
       ],
       plugins: [
@@ -82,7 +83,6 @@ export default (commandLineArgs) => {
       external: [
         "all-named-html-entities",
         "lodash.clonedeep",
-        "lodash.isplainobject",
         "string-left-right",
       ],
       plugins: [
