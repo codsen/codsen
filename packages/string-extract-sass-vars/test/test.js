@@ -1,6 +1,6 @@
-const t = require("tap");
-const e = require("../dist/string-extract-sass-vars.cjs");
-const fs = require("fs");
+import t from "tap";
+import e from "../dist/string-extract-sass-vars.esm";
+import fs from "fs";
 
 // 00. API
 // -----------------------------------------------------------------------------
@@ -22,12 +22,21 @@ t.test("00.02 - api - opts is wrong", (t) => {
   t.end();
 });
 
-t.test("00.03 - api - opts.throwIfEmpty", (t) => {
+t.test("00.03 - api - opts.cb", (t) => {
+  t.throws(() => {
+    e("z", {
+      cb: true,
+    });
+  }, /THROW_ID_02/gm);
+  t.end();
+});
+
+t.test("00.04 - api - opts.throwIfEmpty", (t) => {
   t.throws(() => {
     e("z", {
       throwIfEmpty: true,
     });
-  }, /THROW_ID_02/gm);
+  }, /THROW_ID_03/gm);
   t.end();
 });
 
@@ -256,6 +265,27 @@ t.test("02.05 - fixture 05 - inline comments", (t) => {
       red: "#ff6565",
     },
     "02.05"
+  );
+  t.end();
+});
+
+// 03. opts.cb
+// -----------------------------------------------------------------------------
+
+t.test("03.01 - opts.cb - custom override of a value", (t) => {
+  t.same(
+    e(`$grey: #ccc;`, {
+      cb: (val) => {
+        if (val === "#ccc") {
+          return `#cccccc`;
+        }
+        return val;
+      },
+    }),
+    {
+      grey: "#cccccc",
+    },
+    "03.01"
   );
   t.end();
 });

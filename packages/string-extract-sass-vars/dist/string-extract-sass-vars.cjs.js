@@ -34,9 +34,13 @@ function extractVars(str, originalOpts) {
     throw new Error("string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
   }
   var defaults = {
-    throwIfEmpty: false
+    throwIfEmpty: false,
+    cb: null
   };
   var opts = Object.assign({}, defaults, originalOpts);
+  if (opts.cb && typeof opts.cb !== "function") {
+    throw new Error("string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
+  }
   var len = str.length;
   var varNameStartsAt = null;
   var varValueStartsAt = null;
@@ -76,7 +80,7 @@ function extractVars(str, originalOpts) {
       if (/^-?\d*\.?\d*$/.test(varValue)) {
         varValue = +varValue;
       }
-      res[varName] = varValue;
+      res[varName] = opts.cb ? opts.cb(varValue) : varValue;
       varNameStartsAt = null;
       varValueStartsAt = null;
       varName = null;
@@ -93,7 +97,7 @@ function extractVars(str, originalOpts) {
     }
   }
   if (!Object.keys(res).length && opts.throwIfEmpty) {
-    throw new Error("string-extract-sass-vars: [THROW_ID_02] no keys extracted! (setting opts.originalOpts)");
+    throw new Error("string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting opts.originalOpts)");
   }
   return res;
 }

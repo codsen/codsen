@@ -23,8 +23,18 @@ function extractVars(str, originalOpts) {
   }
   const defaults = {
     throwIfEmpty: false,
+    cb: null,
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  if (opts.cb && typeof opts.cb !== "function") {
+    throw new Error(
+      `string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )} (type ${typeof originalOpts})`
+    );
+  }
   const len = str.length;
   let varNameStartsAt = null;
   let varValueStartsAt = null;
@@ -88,7 +98,7 @@ function extractVars(str, originalOpts) {
       if (/^-?\d*\.?\d*$/.test(varValue)) {
         varValue = +varValue;
       }
-      res[varName] = varValue;
+      res[varName] = opts.cb ? opts.cb(varValue) : varValue;
       varNameStartsAt = null;
       varValueStartsAt = null;
       varName = null;
@@ -118,7 +128,7 @@ function extractVars(str, originalOpts) {
   }
   if (!Object.keys(res).length && opts.throwIfEmpty) {
     throw new Error(
-      `string-extract-sass-vars: [THROW_ID_02] no keys extracted! (setting opts.originalOpts)`
+      `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting opts.originalOpts)`
     );
   }
   return res;

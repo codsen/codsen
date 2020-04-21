@@ -45,8 +45,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                   | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-sass-vars.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-sass-vars.esm.js` | 3 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-sass-vars.cjs.js` | 4 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-sass-vars.esm.js` | 4 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-extract-sass-vars.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
@@ -57,7 +57,8 @@ This package has three builds in `dist/` folder:
 - [Parse a SASS variables file](#parse-a-sass-variables-file)
 - [API](#api)
 - [`opts.throwIfEmpty`](#optsthrowifempty)
-- [Example](#example)
+- [`opts.cb`](#optscb)
+- [Another example](#another-example)
 - [What this program doesn't do](#what-this-program-doesnt-do)
 - [Why do you need this](#why-do-you-need-this)
 - [Contributing](#contributing)
@@ -128,12 +129,14 @@ $blue: #08f0fd;
 | Options Object's key | The type of its value | Default | Obligatory? | Description                                                                                                   |
 | -------------------- | --------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
 | `throwIfEmpty`       | Boolean               | `false` | no          | For extra insurance, you can set this program to throw if it didn't extract any keys. Not enabled by default. |
+| `cb`       | Function               | `null` | no          | Put a function here to process each value. |
 
 Here are all defaults in one place:
 
 ```js
 {
   throwIfEmpty: false,
+  cb: null,
 }
 ```
 
@@ -162,7 +165,30 @@ By default, this option is disabled.
 
 **[⬆ back to top](#)**
 
-## Example
+## `opts.cb`
+
+Think of it as a middleware — if you pass a function, then before placing the extracted value into a result object, this program will feed that value into your function and use function's result instead.
+
+This gives opportunities to process the values, for example, [turning](<[npm](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/)>) 3-digit hex colour numbers into email-friendly 6-digit:
+
+```js
+const extractVars = require("string-extract-sass-vars");
+const conv = require("color-shorthand-hex-to-six-digit");
+const res = extractVars("$blue: #ccc;", {
+  throwIfEmpty: true,
+  cb: (val) => conv(val), // converts hex codes only, bypasses the rest
+});
+console.log(JSON.stringify(res, null, 4));
+// => {
+//       "blue": "#cccccc"
+//    }
+//
+// notice hex code is 6-digit, not 3-digit
+```
+
+**[⬆ back to top](#)**
+
+## Another example
 
 ```js
 const extractVars = require("string-extract-sass-vars");
@@ -227,7 +253,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-sass-vars
-[cov-img]: https://img.shields.io/badge/coverage-96.61%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-sass-vars
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/string-extract-sass-vars?activeTab=dependencies
