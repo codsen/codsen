@@ -161,24 +161,35 @@ function stripHtml(str, originalOpts) {
   function existy(x) {
     return x != null;
   }
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function isValidAttributeCharacter(char) {
     if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
       return false;
-    } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+    }
+    if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
       return false;
-    } else if (char.charCodeAt(0) === 32) {
+    }
+    if (char.charCodeAt(0) === 32) {
       return false;
-    } else if (char.charCodeAt(0) === 34) {
+    }
+    if (char.charCodeAt(0) === 34) {
       return false;
-    } else if (char.charCodeAt(0) === 39) {
+    }
+    if (char.charCodeAt(0) === 39) {
       return false;
-    } else if (char.charCodeAt(0) === 62) {
+    }
+    if (char.charCodeAt(0) === 62) {
       return false;
-    } else if (char.charCodeAt(0) === 47) {
+    }
+    if (char.charCodeAt(0) === 47) {
       return false;
-    } else if (char.charCodeAt(0) === 61) {
+    }
+    if (char.charCodeAt(0) === 61) {
       return false;
-    } else if (
+    }
+    if (
       (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007) ||
       char.charCodeAt(0) === 65534 ||
       char.charCodeAt(0) === 65535 ||
@@ -219,7 +230,7 @@ function stripHtml(str, originalOpts) {
     }
     return true;
   }
-  function treatRangedTags(i) {
+  function treatRangedTags(i, opts, rangesToDelete) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       if (
         isArr(rangedOpeningTags) &&
@@ -266,7 +277,7 @@ function stripHtml(str, originalOpts) {
     }
   }
   function calculateWhitespaceToInsert(
-    str,
+    str2,
     currCharIdx,
     fromIdx,
     toIdx,
@@ -275,25 +286,26 @@ function stripHtml(str, originalOpts) {
   ) {
     let strToEvaluateForLineBreaks = "";
     if (fromIdx < lastOpeningBracketAt) {
-      strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
+      strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
     }
     if (toIdx > lastClosingBracketAt + 1) {
-      const temp = str.slice(lastClosingBracketAt + 1, toIdx);
-      if (temp.includes("\n") && str[toIdx] === "<") {
+      const temp = str2.slice(lastClosingBracketAt + 1, toIdx);
+      if (temp.includes("\n") && str2[toIdx] === "<") {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
       }
     }
     if (
-      !punctuation.has(str[currCharIdx]) &&
-      str[currCharIdx] !== "!"
+      !punctuation.has(str2[currCharIdx]) &&
+      str2[currCharIdx] !== "!"
     ) {
       const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
       if (isArr(foundLineBreaks) && foundLineBreaks.length) {
         if (foundLineBreaks.length === 1) {
           return "\n";
-        } else if (foundLineBreaks.length === 2) {
+        }
+        if (foundLineBreaks.length === 2) {
           return "\n\n";
         }
         return "\n\n\n";
@@ -302,7 +314,7 @@ function stripHtml(str, originalOpts) {
     }
     return "";
   }
-  function calculateHrefToBeInserted() {
+  function calculateHrefToBeInserted(opts) {
     if (
       opts.dumpLinkHrefsNearby.enabled &&
       Object.keys(hrefDump).length &&
@@ -347,21 +359,21 @@ function stripHtml(str, originalOpts) {
   function prepHopefullyAnArray(something, name) {
     if (!something) {
       return [];
-    } else if (isArr(something)) {
+    }
+    if (isArr(something)) {
       return something.filter((val) => isStr(val) && val.trim());
-    } else if (isStr(something)) {
+    }
+    if (isStr(something)) {
       if (something.length) {
         return [something];
       }
       return [];
-    } else if (!isArr(something)) {
+    }
+    if (!isArr(something)) {
       throw new TypeError(
         `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
       );
     }
-  }
-  function isStr(something) {
-    return typeof something === "string";
   }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
@@ -384,7 +396,7 @@ function stripHtml(str, originalOpts) {
     },
     cb: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
   opts.onlyStripTags = prepHopefullyAnArray(
     opts.onlyStripTags,
@@ -395,7 +407,7 @@ function stripHtml(str, originalOpts) {
     opts.onlyStripTags = without(opts.onlyStripTags, ...opts.ignoreTags);
   }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
-    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+    opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
   }
   if (typeof opts.ignoreTags === "string") {
     if (opts.ignoreTags.length === 0) {
@@ -411,11 +423,10 @@ function stripHtml(str, originalOpts) {
     existy(originalOpts.dumpLinkHrefsNearby)
   ) {
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
-      opts.dumpLinkHrefsNearby = Object.assign(
-        {},
-        defaults.dumpLinkHrefsNearby,
-        originalOpts.dumpLinkHrefsNearby
-      );
+      opts.dumpLinkHrefsNearby = {
+        ...defaults.dumpLinkHrefsNearby,
+        ...originalOpts.dumpLinkHrefsNearby,
+      };
     } else if (originalOpts.dumpLinkHrefsNearby) {
       throw new TypeError(
         `string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(
@@ -439,7 +450,7 @@ function stripHtml(str, originalOpts) {
     (isObj(opts.dumpLinkHrefsNearby) &&
       !Object.keys(opts.dumpLinkHrefsNearby).length)
   ) {
-    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+    opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
   }
   if (!isArr(opts.stripTogetherWithTheirContents)) {
     opts.stripTogetherWithTheirContents = [];
@@ -510,8 +521,8 @@ function stripHtml(str, originalOpts) {
                     culprit
                       .trim()
                       .split(" ")
-                      .filter((val) => val.trim())
-                      .filter((val, i) => i === 0),
+                      .filter((val2) => val2.trim())
+                      .filter((val3, i3) => i3 === 0),
                     "/>"
                   ).toLowerCase() === val
               ) &&
@@ -641,7 +652,7 @@ function stripHtml(str, originalOpts) {
         continue;
       }
       if (str[i] === "<") {
-        calculateHrefToBeInserted();
+        calculateHrefToBeInserted(opts);
         const whiteSpaceCompensation = calculateWhitespaceToInsert(
           str,
           i,
@@ -663,7 +674,7 @@ function stripHtml(str, originalOpts) {
           ],
         });
         resetHrefMarkers();
-        treatRangedTags(i);
+        treatRangedTags(i, opts, rangesToDelete);
       }
     }
     if (
@@ -824,7 +835,7 @@ function stripHtml(str, originalOpts) {
                 (tag.onlyPlausible === true && tag.attributes.length))) ||
             str[i + 1] === undefined
           ) {
-            calculateHrefToBeInserted();
+            calculateHrefToBeInserted(opts);
             const whiteSpaceCompensation = calculateWhitespaceToInsert(
               str,
               i,
@@ -846,7 +857,7 @@ function stripHtml(str, originalOpts) {
               ],
             });
             resetHrefMarkers();
-            treatRangedTags(i);
+            treatRangedTags(i, opts, rangesToDelete);
           }
         }
       } else if (
@@ -882,7 +893,8 @@ function stripHtml(str, originalOpts) {
             tag.name &&
             (definitelyTagNames.has(tag.name.toLowerCase()) ||
               singleLetterTags.has(tag.name.toLowerCase()))) ||
-          (tag.attributes && tag.attributes.some((attrObj) => attrObj.equalsAt))
+          (tag.attributes &&
+            tag.attributes.some((attrObj2) => attrObj2.equalsAt))
         ) {
           const whiteSpaceCompensation = calculateWhitespaceToInsert(
             str,
@@ -894,7 +906,7 @@ function stripHtml(str, originalOpts) {
           );
           stringToInsertAfter = "";
           hrefInsertionActive = false;
-          calculateHrefToBeInserted();
+          calculateHrefToBeInserted(opts);
           let insert;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
             insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
@@ -927,7 +939,7 @@ function stripHtml(str, originalOpts) {
             proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert],
           });
           resetHrefMarkers();
-          treatRangedTags(i);
+          treatRangedTags(i, opts, rangesToDelete);
         } else {
           tag = {};
         }
@@ -967,7 +979,7 @@ function stripHtml(str, originalOpts) {
                 whiteSpaceCompensation,
               ],
             });
-            treatRangedTags(i);
+            treatRangedTags(i, opts, rangesToDelete);
             tag = {};
             attrObj = {};
           } else if (
@@ -1013,7 +1025,7 @@ function stripHtml(str, originalOpts) {
             if (str[i + 2] === "-") {
               cdata = false;
             }
-            let closingFoundAt = undefined;
+            let closingFoundAt;
             for (let y = i; y < len; y++) {
               if (
                 (!closingFoundAt &&
@@ -1120,7 +1132,8 @@ function stripHtml(str, originalOpts) {
       return trim(untrimmedRes, " ");
     }
     return untrimmedRes.trim();
-  } else if (opts.returnRangesOnly) {
+  }
+  if (opts.returnRangesOnly) {
     return [];
   }
   if (opts.trimOnlySpaces) {

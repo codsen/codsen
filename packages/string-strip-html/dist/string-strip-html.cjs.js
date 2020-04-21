@@ -35,6 +35,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -88,24 +137,35 @@ function stripHtml(str, originalOpts) {
   function existy(x) {
     return x != null;
   }
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function isValidAttributeCharacter(char) {
     if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
       return false;
-    } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+    }
+    if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
       return false;
-    } else if (char.charCodeAt(0) === 32) {
+    }
+    if (char.charCodeAt(0) === 32) {
       return false;
-    } else if (char.charCodeAt(0) === 34) {
+    }
+    if (char.charCodeAt(0) === 34) {
       return false;
-    } else if (char.charCodeAt(0) === 39) {
+    }
+    if (char.charCodeAt(0) === 39) {
       return false;
-    } else if (char.charCodeAt(0) === 62) {
+    }
+    if (char.charCodeAt(0) === 62) {
       return false;
-    } else if (char.charCodeAt(0) === 47) {
+    }
+    if (char.charCodeAt(0) === 47) {
       return false;
-    } else if (char.charCodeAt(0) === 61) {
+    }
+    if (char.charCodeAt(0) === 61) {
       return false;
-    } else if (
+    }
+    if (
     char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 ||
     char.charCodeAt(0) === 65534 ||
     char.charCodeAt(0) === 65535 ||
@@ -146,7 +206,7 @@ function stripHtml(str, originalOpts) {
       }
     return true;
   }
-  function treatRangedTags(i) {
+  function treatRangedTags(i, opts, rangesToDelete) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       if (isArr(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
@@ -181,7 +241,7 @@ function stripHtml(str, originalOpts) {
       }
     }
   }
-  function calculateWhitespaceToInsert(str,
+  function calculateWhitespaceToInsert(str2,
   currCharIdx,
   fromIdx,
   toIdx,
@@ -190,24 +250,25 @@ function stripHtml(str, originalOpts) {
   ) {
     var strToEvaluateForLineBreaks = "";
     if (fromIdx < lastOpeningBracketAt) {
-      strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
+      strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
     }
     if (toIdx > lastClosingBracketAt + 1) {
-      var temp = str.slice(lastClosingBracketAt + 1, toIdx);
-      if (temp.includes("\n") && str[toIdx] === "<") {
+      var temp = str2.slice(lastClosingBracketAt + 1, toIdx);
+      if (temp.includes("\n") && str2[toIdx] === "<") {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
       }
     }
-    if (!punctuation.has(str[currCharIdx]) &&
-    str[currCharIdx] !== "!"
+    if (!punctuation.has(str2[currCharIdx]) &&
+    str2[currCharIdx] !== "!"
     ) {
         var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
         if (isArr(foundLineBreaks) && foundLineBreaks.length) {
           if (foundLineBreaks.length === 1) {
             return "\n";
-          } else if (foundLineBreaks.length === 2) {
+          }
+          if (foundLineBreaks.length === 2) {
             return "\n\n";
           }
           return "\n\n\n";
@@ -216,7 +277,7 @@ function stripHtml(str, originalOpts) {
       }
     return "";
   }
-  function calculateHrefToBeInserted() {
+  function calculateHrefToBeInserted(opts) {
     if (opts.dumpLinkHrefsNearby.enabled && Object.keys(hrefDump).length && hrefDump.tagName === tag.name && tag.lastOpeningBracketAt && (hrefDump.openingTagEnds && tag.lastOpeningBracketAt > hrefDump.openingTagEnds || !hrefDump.openingTagEnds)) {
       hrefInsertionActive = true;
     }
@@ -237,21 +298,21 @@ function stripHtml(str, originalOpts) {
   function prepHopefullyAnArray(something, name) {
     if (!something) {
       return [];
-    } else if (isArr(something)) {
+    }
+    if (isArr(something)) {
       return something.filter(function (val) {
         return isStr(val) && val.trim();
       });
-    } else if (isStr(something)) {
+    }
+    if (isStr(something)) {
       if (something.length) {
         return [something];
       }
       return [];
-    } else if (!isArr(something)) {
+    }
+    if (!isArr(something)) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
     }
-  }
-  function isStr(something) {
-    return typeof something === "string";
   }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
@@ -274,7 +335,7 @@ function stripHtml(str, originalOpts) {
     },
     cb: null
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
   opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
   var onlyStripTagsMode = !!opts.onlyStripTags.length;
@@ -282,7 +343,7 @@ function stripHtml(str, originalOpts) {
     opts.onlyStripTags = without.apply(void 0, [opts.onlyStripTags].concat(_toConsumableArray(opts.ignoreTags)));
   }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
-    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+    opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
   }
   if (typeof opts.ignoreTags === "string") {
     if (opts.ignoreTags.length === 0) {
@@ -294,7 +355,7 @@ function stripHtml(str, originalOpts) {
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
-      opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby, originalOpts.dumpLinkHrefsNearby);
+      opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby, {}, originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
     }
@@ -305,7 +366,7 @@ function stripHtml(str, originalOpts) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
   if (!opts.dumpLinkHrefsNearby || isObj(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+    opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
   }
   if (!isArr(opts.stripTogetherWithTheirContents)) {
     opts.stripTogetherWithTheirContents = [];
@@ -356,10 +417,10 @@ function stripHtml(str, originalOpts) {
               var culprit = str.slice(startingPoint, i + 1);
               if (str !== "<".concat(trim(culprit.trim(), "/>"), ">") &&
               _toConsumableArray(definitelyTagNames).some(function (val) {
-                return trim(culprit.trim().split(" ").filter(function (val) {
-                  return val.trim();
-                }).filter(function (val, i) {
-                  return i === 0;
+                return trim(culprit.trim().split(" ").filter(function (val2) {
+                  return val2.trim();
+                }).filter(function (val3, i3) {
+                  return i3 === 0;
                 }), "/>").toLowerCase() === val;
               }) && stripHtml("<".concat(culprit.trim(), ">"), opts) === "") {
                 var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
@@ -409,7 +470,8 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
         tag.quotes = undefined;
         var hrefVal = void 0;
-        if (opts.dumpLinkHrefsNearby.enabled && tag.attributes.some(function (obj) {
+        if (opts.dumpLinkHrefsNearby.enabled &&
+        tag.attributes.some(function (obj) {
           if (obj.name && obj.name.toLowerCase() === "href") {
             hrefVal = "".concat(opts.dumpLinkHrefsNearby.wrapHeads || "").concat(obj.value).concat(opts.dumpLinkHrefsNearby.wrapTails || "");
             return true;
@@ -438,7 +500,7 @@ function stripHtml(str, originalOpts) {
         continue;
       }
       if (str[i] === "<") {
-        calculateHrefToBeInserted();
+        calculateHrefToBeInserted(opts);
         var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
         opts.cb({
           tag: tag,
@@ -449,7 +511,7 @@ function stripHtml(str, originalOpts) {
           proposedReturn: [tag.leftOuterWhitespace, i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
         });
         resetHrefMarkers();
-        treatRangedTags(i);
+        treatRangedTags(i, opts, rangesToDelete);
       }
     }
     if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
@@ -539,7 +601,7 @@ function stripHtml(str, originalOpts) {
             continue;
           }
           if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
-            calculateHrefToBeInserted();
+            calculateHrefToBeInserted(opts);
             var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
             opts.cb({
               tag: tag,
@@ -550,7 +612,7 @@ function stripHtml(str, originalOpts) {
               proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
             });
             resetHrefMarkers();
-            treatRangedTags(i);
+            treatRangedTags(i, opts, rangesToDelete);
           }
         }
       } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
@@ -571,13 +633,13 @@ function stripHtml(str, originalOpts) {
           attrObj = {};
         } else if (!tag.onlyPlausible ||
         tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) ||
-        tag.attributes && tag.attributes.some(function (attrObj) {
-          return attrObj.equalsAt;
+        tag.attributes && tag.attributes.some(function (attrObj2) {
+          return attrObj2.equalsAt;
         })) {
           var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
           stringToInsertAfter = "";
           hrefInsertionActive = false;
-          calculateHrefToBeInserted();
+          calculateHrefToBeInserted(opts);
           var insert = void 0;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
             insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2 === "\n\n" ? "\n" : _whiteSpaceCompensation2);
@@ -599,7 +661,7 @@ function stripHtml(str, originalOpts) {
             proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
           });
           resetHrefMarkers();
-          treatRangedTags(i);
+          treatRangedTags(i, opts, rangesToDelete);
         } else {
           tag = {};
         }
@@ -623,7 +685,7 @@ function stripHtml(str, originalOpts) {
               rangesArr: rangesToDelete,
               proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
             });
-            treatRangedTags(i);
+            treatRangedTags(i, opts, rangesToDelete);
             tag = {};
             attrObj = {};
           } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
@@ -651,7 +713,7 @@ function stripHtml(str, originalOpts) {
             if (str[i + 2] === "-") {
               cdata = false;
             }
-            var closingFoundAt = undefined;
+            var closingFoundAt = void 0;
             for (var _y = i; _y < len; _y++) {
               if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
                 closingFoundAt = _y;
@@ -687,7 +749,8 @@ function stripHtml(str, originalOpts) {
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
         if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 &&
-        !rangedOpeningTags.some(function (rangedTagObj) {
+        !rangedOpeningTags.some(
+        function (rangedTagObj) {
           return rangedTagObj.name === tag.name;
         })) {
           tag.onlyPlausible = true;
@@ -722,7 +785,8 @@ function stripHtml(str, originalOpts) {
       return trim(untrimmedRes, " ");
     }
     return untrimmedRes.trim();
-  } else if (opts.returnRangesOnly) {
+  }
+  if (opts.returnRangesOnly) {
     return [];
   }
   if (opts.trimOnlySpaces) {

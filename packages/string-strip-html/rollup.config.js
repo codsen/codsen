@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import builtins from "rollup-plugin-node-builtins";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";

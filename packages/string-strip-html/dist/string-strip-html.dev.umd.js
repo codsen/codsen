@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -274,7 +323,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -286,18 +335,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -332,7 +387,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -8646,33 +8701,53 @@
       return x != null;
     }
 
+    function isStr(something) {
+      return typeof something === "string";
+    }
+
     function isValidAttributeCharacter(char) {
       // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
       if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
         // C0 CONTROLS
         return false;
-      } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+      }
+
+      if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
         // U+007F DELETE to U+009F APPLICATION PROGRAM COMMAND
         return false;
-      } else if (char.charCodeAt(0) === 32) {
+      }
+
+      if (char.charCodeAt(0) === 32) {
         // U+0020 SPACE
         return false;
-      } else if (char.charCodeAt(0) === 34) {
+      }
+
+      if (char.charCodeAt(0) === 34) {
         // U+0022 (")
         return false;
-      } else if (char.charCodeAt(0) === 39) {
+      }
+
+      if (char.charCodeAt(0) === 39) {
         // U+0027 (')
         return false;
-      } else if (char.charCodeAt(0) === 62) {
+      }
+
+      if (char.charCodeAt(0) === 62) {
         // U+003E (>)
         return false;
-      } else if (char.charCodeAt(0) === 47) {
+      }
+
+      if (char.charCodeAt(0) === 47) {
         // U+002F (/)
         return false;
-      } else if (char.charCodeAt(0) === 61) {
+      }
+
+      if (char.charCodeAt(0) === 61) {
         // U+003D (=)
         return false;
-      } else if ( // noncharacter:
+      }
+
+      if ( // noncharacter:
       // https://infra.spec.whatwg.org/#noncharacter
       char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 || // U+FDD0 to U+FDEF, inclusive,
       char.charCodeAt(0) === 65534 || // or U+FFFE,
@@ -8716,7 +8791,7 @@
       return true;
     }
 
-    function treatRangedTags(i) {
+    function treatRangedTags(i, opts, rangesToDelete) {
       if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
         // it depends, is it opening or closing range tag:
         // We could try to distinguish opening from closing tags by presence of
@@ -8780,7 +8855,7 @@
       }
     }
 
-    function calculateWhitespaceToInsert(str, // whole string
+    function calculateWhitespaceToInsert(str2, // whole string
     currCharIdx, // current index
     fromIdx, // leftmost whitespace edge around tag
     toIdx, // rightmost whitespace edge around tag
@@ -8790,31 +8865,33 @@
       var strToEvaluateForLineBreaks = "";
 
       if (fromIdx < lastOpeningBracketAt) {
-        strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
+        strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
       }
 
       if (toIdx > lastClosingBracketAt + 1) {
         // limit whitespace that follows the tag, stop at linebreak. That's to make
         // the algorithm composable - we include linebreaks in front but not after.
-        var temp = str.slice(lastClosingBracketAt + 1, toIdx);
+        var temp = str2.slice(lastClosingBracketAt + 1, toIdx);
 
-        if (temp.includes("\n") && str[toIdx] === "<") {
+        if (temp.includes("\n") && str2[toIdx] === "<") {
           strToEvaluateForLineBreaks += " ";
         } else {
           strToEvaluateForLineBreaks += temp;
         }
       }
 
-      if (!punctuation.has(str[currCharIdx]) && // str[tag.leftOuterWhitespace - 1] !== ">" &&
-      str[currCharIdx] !== "!" // &&
-      // str[currCharIdx] !== "<"
+      if (!punctuation.has(str2[currCharIdx]) && // str2[tag.leftOuterWhitespace - 1] !== ">" &&
+      str2[currCharIdx] !== "!" // &&
+      // str2[currCharIdx] !== "<"
       ) {
           var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
 
           if (isArr(foundLineBreaks) && foundLineBreaks.length) {
             if (foundLineBreaks.length === 1) {
               return "\n";
-            } else if (foundLineBreaks.length === 2) {
+            }
+
+            if (foundLineBreaks.length === 2) {
               return "\n\n";
             } // return three line breaks maximum
 
@@ -8830,7 +8907,7 @@
       return "";
     }
 
-    function calculateHrefToBeInserted() {
+    function calculateHrefToBeInserted(opts) {
       if (opts.dumpLinkHrefsNearby.enabled && Object.keys(hrefDump).length && hrefDump.tagName === tag.name && tag.lastOpeningBracketAt && (hrefDump.openingTagEnds && tag.lastOpeningBracketAt > hrefDump.openingTagEnds || !hrefDump.openingTagEnds)) {
         hrefInsertionActive = true;
       }
@@ -8853,29 +8930,32 @@
 
     if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-    }
+    } // eslint-disable-next-line consistent-return
+
 
     function prepHopefullyAnArray(something, name) {
       if (!something) {
         return [];
-      } else if (isArr(something)) {
+      }
+
+      if (isArr(something)) {
         // leave only the strings:
         return something.filter(function (val) {
           return isStr(val) && val.trim();
         });
-      } else if (isStr(something)) {
+      }
+
+      if (isStr(something)) {
         if (something.length) {
           return [something];
         }
 
         return [];
-      } else if (!isArr(something)) {
+      }
+
+      if (!isArr(something)) {
         throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
       }
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
     }
 
     function resetHrefMarkers() {
@@ -8903,8 +8983,10 @@
       },
       cb: null
     };
-    var opts = Object.assign({}, defaults, originalOpts); // filter non-string or whitespace entries from the following arrays or turn
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // filter non-string or whitespace entries from the following arrays or turn
     // them into arrays:
+
 
     opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
     opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags"); // let's define the onlyStripTagsMode. Since opts.onlyStripTags can cancel
@@ -8919,7 +9001,7 @@
     }
 
     if (!lodash_isplainobject(opts.dumpLinkHrefsNearby)) {
-      opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+      opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
     }
 
     if (typeof opts.ignoreTags === "string") {
@@ -8935,7 +9017,7 @@
 
     if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
       if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
-        opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby, originalOpts.dumpLinkHrefsNearby);
+        opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby, {}, originalOpts.dumpLinkHrefsNearby);
       } else if (originalOpts.dumpLinkHrefsNearby) {
         // checking to omit value as number zero
         throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
@@ -8949,7 +9031,7 @@
     }
 
     if (!opts.dumpLinkHrefsNearby || lodash_isplainobject(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-      opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby); // clone, not just assign
+      opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby); // clone, not just assign
     }
 
     if (!isArr(opts.stripTogetherWithTheirContents)) {
@@ -8996,12 +9078,14 @@
 
     if (!opts.skipHtmlDecoding) {
       while (str !== ent.decode(str)) {
+        // eslint-disable-next-line no-param-reassign
         str = ent.decode(str);
       }
     } // trim first, if allowed
 
 
     if (!opts.trimOnlySpaces) {
+      // eslint-disable-next-line no-param-reassign
       str = str.trim();
     } // step 1.
     // ===========================================================================
@@ -9036,10 +9120,10 @@
 
                 if (str !== "<".concat(lodash_trim(culprit.trim(), "/>"), ">") && // recursion prevention
                 _toConsumableArray(definitelyTagNames).some(function (val) {
-                  return lodash_trim(culprit.trim().split(" ").filter(function (val) {
-                    return val.trim();
-                  }).filter(function (val, i) {
-                    return i === 0;
+                  return lodash_trim(culprit.trim().split(" ").filter(function (val2) {
+                    return val2.trim();
+                  }).filter(function (val3, i3) {
+                    return i3 === 0;
                   }), "/>").toLowerCase() === val;
                 }) && stripHtml("<".concat(culprit.trim(), ">"), opts) === "") {
                   var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
@@ -9108,7 +9192,8 @@
 
           var hrefVal = void 0;
 
-          if (opts.dumpLinkHrefsNearby.enabled && tag.attributes.some(function (obj) {
+          if (opts.dumpLinkHrefsNearby.enabled && // eslint-disable-next-line
+          tag.attributes.some(function (obj) {
             if (obj.name && obj.name.toLowerCase() === "href") {
               hrefVal = "".concat(opts.dumpLinkHrefsNearby.wrapHeads || "").concat(obj.value).concat(opts.dumpLinkHrefsNearby.wrapTails || "");
               return true;
@@ -9147,7 +9232,7 @@
 
         if (str[i] === "<") {
           // process it because we need to tackle this new tag
-          calculateHrefToBeInserted(); // calculateWhitespaceToInsert() API:
+          calculateHrefToBeInserted(opts); // calculateWhitespaceToInsert() API:
           // str, // whole string
           // currCharIdx, // current index
           // fromIdx, // leftmost whitespace edge around tag
@@ -9166,7 +9251,7 @@
           });
           resetHrefMarkers(); // also,
 
-          treatRangedTags(i);
+          treatRangedTags(i, opts, rangesToDelete);
         }
       } // catch beginning of an attribute value
       // -------------------------------------------------------------------------
@@ -9322,7 +9407,7 @@
 
 
             if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
-              calculateHrefToBeInserted();
+              calculateHrefToBeInserted(opts);
 
               var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
 
@@ -9336,9 +9421,9 @@
               });
               resetHrefMarkers(); // also,
 
-              treatRangedTags(i);
+              treatRangedTags(i, opts, rangesToDelete);
             } // else {
-            //   console.log(`1438 continue`);
+            //   console.log(`1455 continue`);
             //   continue;
             // }
             // }
@@ -9374,8 +9459,8 @@
             attrObj = {}; // continue;
           } else if (!tag.onlyPlausible || // tag name is recognised and there are no attributes:
           tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || // OR there is at least one equals that follow the attribute's name:
-          tag.attributes && tag.attributes.some(function (attrObj) {
-            return attrObj.equalsAt;
+          tag.attributes && tag.attributes.some(function (attrObj2) {
+            return attrObj2.equalsAt;
           })) {
             // if this was an ignored tag name, algorithm would have bailed earlier,
             // in stage "catch the ending of the tag name".
@@ -9384,7 +9469,7 @@
 
             stringToInsertAfter = "";
             hrefInsertionActive = false;
-            calculateHrefToBeInserted();
+            calculateHrefToBeInserted(opts);
             var insert = void 0;
 
             if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
@@ -9413,7 +9498,7 @@
             });
             resetHrefMarkers(); // also,
 
-            treatRangedTags(i);
+            treatRangedTags(i, opts, rangesToDelete);
           } else {
             tag = {};
           } // part 2.
@@ -9449,7 +9534,7 @@
                 proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
               }); // also,
 
-              treatRangedTags(i); // then, for continuity, mark everything up accordingly if it's a new bracket:
+              treatRangedTags(i, opts, rangesToDelete); // then, for continuity, mark everything up accordingly if it's a new bracket:
 
               tag = {};
               attrObj = {};
@@ -9496,7 +9581,7 @@
                 cdata = false;
               }
 
-              var closingFoundAt = undefined;
+              var closingFoundAt = void 0;
 
               for (var _y = i; _y < len; _y++) {
                 if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
@@ -9547,7 +9632,8 @@
           chunkOfWhitespaceStartsAt = i;
 
           if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 && // insurance against tail part of ranged tag being deleted:
-          !rangedOpeningTags.some(function (rangedTagObj) {
+          !rangedOpeningTags.some( // eslint-disable-next-line no-loop-func
+          function (rangedTagObj) {
             return rangedTagObj.name === tag.name;
           })) {
             tag.onlyPlausible = true;
@@ -9615,7 +9701,9 @@
       }
 
       return untrimmedRes.trim();
-    } else if (opts.returnRangesOnly) {
+    }
+
+    if (opts.returnRangesOnly) {
       return [];
     }
 
