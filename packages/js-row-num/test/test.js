@@ -1,5 +1,8 @@
-const t = require("tap");
-const fixRowNums = require("../dist/js-row-num.cjs");
+/* eslint no-template-curly-in-string: 0 */
+
+import tap from "tap";
+import fixRowNums from "../dist/js-row-num.esm";
+
 const BACKSLASH = `\u005C`;
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
@@ -9,7 +12,7 @@ const letterC = "\x63";
 // group 01. no throws
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - wrong input is just being returned`, (t) => {
+tap.test(`01.01 - wrong input is just being returned`, (t) => {
   t.doesNotThrow(() => {
     fixRowNums();
   });
@@ -38,7 +41,7 @@ t.test(`01.01 - wrong input is just being returned`, (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - single straight quotes - no whitespace`, (t) => {
+tap.test(`02.01 - single straight quotes - no whitespace`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -58,7 +61,7 @@ ${letterC}onsole.log('006 something')
   t.end();
 });
 
-t.test(`02.02 - single straight quotes - with whitespace`, (t) => {
+tap.test(`02.02 - single straight quotes - with whitespace`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -78,7 +81,7 @@ ${letterC}onsole.log('----\n\n\n009 something')
   t.end();
 });
 
-t.test(`02.03 - single straight quotes - tight, no semicolon`, (t) => {
+tap.test(`02.03 - single straight quotes - tight, no semicolon`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -96,7 +99,7 @@ ${letterC}onsole.log('005 something')${letterC}onsole.log('005 something')
   t.end();
 });
 
-t.test(`02.04 - double quotes - tight`, (t) => {
+tap.test(`02.04 - double quotes - tight`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -114,7 +117,7 @@ ${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----005 somet
   t.end();
 });
 
-t.test(`02.05 - double quotes - newlines`, (t) => {
+tap.test(`02.05 - double quotes - newlines`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -132,7 +135,7 @@ ${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----\n\n\n008
   t.end();
 });
 
-t.test(`02.06 - double quotes - with whitespace`, (t) => {
+tap.test(`02.06 - double quotes - with whitespace`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -152,7 +155,7 @@ ${letterC}onsole.log("----\n\n\n 009 something")
   t.end();
 });
 
-t.test(`02.07 - backticks - tight`, (t) => {
+tap.test(`02.07 - backticks - tight`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -170,7 +173,7 @@ ${letterC}onsole.log(\`005 123 something 456\`)${letterC}onsole.log(\`----005 so
   t.end();
 });
 
-t.test(
+tap.test(
   `02.08 - console log with ANSI escapes - one ANSI escape chunk in front`,
   (t) => {
     t.is(
@@ -181,7 +184,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - synthetic test where colour is put in deeper curlies for easier visual grepping`,
   (t) => {
     t.is(
@@ -194,7 +197,7 @@ t.test(
   }
 );
 
-t.test(`02.10 - synthetic test where colour code is put raw`, (t) => {
+tap.test(`02.10 - synthetic test where colour code is put raw`, (t) => {
   t.is(
     fixRowNums(
       "\x63onsole.log(`\\u001b[012399999999m${`888 z`}\\u001b[${39}m`)"
@@ -204,7 +207,7 @@ t.test(`02.10 - synthetic test where colour code is put raw`, (t) => {
   t.end();
 });
 
-t.test(`02.11 - bunch of whitespace 1`, (t) => {
+tap.test(`02.11 - bunch of whitespace 1`, (t) => {
   t.is(
     fixRowNums(
       `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
@@ -215,7 +218,7 @@ t.test(`02.11 - bunch of whitespace 1`, (t) => {
   t.end();
 });
 
-t.test(`02.12 - bunch of whitespace 2`, (t) => {
+tap.test(`02.12 - bunch of whitespace 2`, (t) => {
   t.is(
     fixRowNums(
       `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
@@ -226,7 +229,7 @@ t.test(`02.12 - bunch of whitespace 2`, (t) => {
   t.end();
 });
 
-t.test(`02.13 - updates ${letterC}onsole.logs within comment blocks`, (t) => {
+tap.test(`02.13 - updates ${letterC}onsole.logs within comment blocks`, (t) => {
   t.is(
     fixRowNums(`
 // ${letterC}onsole.log(
@@ -242,7 +245,7 @@ t.test(`02.13 - updates ${letterC}onsole.logs within comment blocks`, (t) => {
   t.end();
 });
 
-t.test(`02.14 - \\n in front`, (t) => {
+tap.test(`02.14 - \\n in front`, (t) => {
   t.is(
     fixRowNums(`
 ${letterC}onsole.log(
@@ -258,7 +261,7 @@ ${letterC}onsole.log(
   t.end();
 });
 
-t.test(`02.15 - automatic 4 digit padding on >45K chars`, (t) => {
+tap.test(`02.15 - automatic 4 digit padding on >45K chars`, (t) => {
   t.is(
     fixRowNums(`
 ${`12345\n`.repeat(10000)}
@@ -276,7 +279,7 @@ ${letterC}onsole.log(
   t.end();
 });
 
-t.test(`02.16 - num - dot - num`, (t) => {
+tap.test(`02.16 - num - dot - num`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -296,7 +299,7 @@ ${letterC}onsole.log('006.2 something')
   t.end();
 });
 
-t.test(`02.17 - num - colon - space - num`, (t) => {
+tap.test(`02.17 - num - colon - space - num`, (t) => {
   t.is(
     fixRowNums(`
 zzz
@@ -320,7 +323,7 @@ ${letterC}onsole.log('006: 2 something')
 // group 03. sneaky false positives
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - text that mentions ${letterC}onsole.log`,
   (t) => {
     const str =
@@ -330,7 +333,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no digits at all`,
   (t) => {
     const str = "${letterC}onsole.log(`zzz`)";
@@ -339,7 +342,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no opening bracket after ${letterC}onsole.log`,
   (t) => {
     const str = "${letterC}onsole.log `123`";
@@ -348,7 +351,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - all ASCII symbols`,
   (t) => {
     let allAscii = new Array(127);
@@ -358,7 +361,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - letter, then digit`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -367,11 +370,53 @@ t.test(
   }
 );
 
+tap.test(
+  `03.06 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - freak out clauses kick in`,
+  (t) => {
+    const str = `console.log(z)`;
+    t.is(fixRowNums(str), str, `03.06`);
+    t.end();
+  }
+);
+
+tap.test(
+  `03.07 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - console.log without brackets`,
+  (t) => {
+    const str = `console.log[]`;
+    t.is(fixRowNums(str), str, `03.07`);
+    t.end();
+  }
+);
+
+tap.test(
+  `03.08 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - console.log without brackets`,
+  (t) => {
+    const str = `I used console.log 3 times`;
+    t.is(fixRowNums(str), str, `03.08`);
+    t.end();
+  }
+);
+
+tap.test(
+  `03.08 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - console.log without brackets`,
+  (t) => {
+    const str = `I used console.log 3 times`;
+    t.is(
+      fixRowNums(str, {
+        overrideRowNum: 100,
+      }),
+      str,
+      `03.08`
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // group 04. opts
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to numbers`,
   (t) => {
     const str = `zzz\n${letterC}onsole.log('1 something')`;
@@ -415,11 +460,23 @@ t.test(
       `zzz\n${letterC}onsole.log('2 something')`,
       `04.01.07 - negative numbers are ignored, default (3) is used`
     );
+
+    // opts.overrideRowNum
+    t.is(
+      fixRowNums(str, { padStart: 9, overrideRowNum: 1 }),
+      `zzz\n${letterC}onsole.log('000000001 something')`,
+      `04.01.08`
+    );
+    t.is(
+      fixRowNums(str, { overrideRowNum: null }),
+      `zzz\n${letterC}onsole.log('002 something')`,
+      `04.01.09`
+    );
     t.end();
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to be falsey`,
   (t) => {
     const str = `zzz\n${letterC}onsole.log('1 something')`;
@@ -442,7 +499,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - letter then digit`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -457,7 +514,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -472,7 +529,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.returnRangesOnly`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -487,7 +544,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.returnRangesOnly +`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -503,7 +560,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
   (t) => {
     const str = `\nconsole.log("a 1")`;
@@ -518,7 +575,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
   (t) => {
     const str = `\n"a 1"`;
@@ -533,7 +590,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
   (t) => {
     const str = `a 1`;
@@ -548,7 +605,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.10 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
   (t) => {
     const str = "`a 1`";
@@ -563,11 +620,24 @@ t.test(
   }
 );
 
+tap.test(
+  `04.11 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum and no opts.padStart`,
+  (t) => {
+    const str = "console.log('0 something')";
+    t.is(
+      fixRowNums(str, { padStart: null, overrideRowNum: 0 }),
+      `console.log('0 something')`,
+      `04.01.11`
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // group 05. ad-hoc
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - text that uses \\r only as EOL characters`,
   (t) => {
     t.is(
@@ -589,21 +659,21 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - broken ANSI - will not update`,
   (t) => {
     t.is(
       fixRowNums(
-        `${letterC}onsole.log(\`\\u001b[012399999999$\{\` \t 888 z\`}\\u001b[$\{39}m\`)`
+        `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`
       ),
-      `${letterC}onsole.log(\`\\u001b[012399999999$\{\` \t 888 z\`}\\u001b[$\{39}m\`)`,
+      `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`,
       `05.02 - ANSI opening sequence's m is missing`
     );
     t.end();
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - no text`,
   (t) => {
     t.is(
@@ -619,7 +689,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - no text`,
   (t) => {
     t.same(
@@ -635,7 +705,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - with text`,
   (t) => {
     t.is(
@@ -651,7 +721,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - with text`,
   (t) => {
     t.same(
@@ -667,7 +737,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text`,
   (t) => {
     t.is(
@@ -683,7 +753,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is number`,
   (t) => {
     t.same(
@@ -699,7 +769,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is text`,
   (t) => {
     t.same(
@@ -715,7 +785,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.10 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - with text`,
   (t) => {
     t.is(
@@ -731,7 +801,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.11 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - with text`,
   (t) => {
     t.same(
@@ -747,7 +817,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.12 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with backticks - no text`,
   (t) => {
     t.is(
@@ -763,7 +833,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.13 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with backticks - no text, override rownum is number`,
   (t) => {
     t.same(
@@ -779,7 +849,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.14 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - only number, with surrounding whitespace`,
   (t) => {
     t.same(
@@ -795,7 +865,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.15 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 1`,
   (t) => {
     const source = "\\u001b[${32}m${`z`}\\u001b[${39}m";
@@ -812,7 +882,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.16 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 2`,
   (t) => {
     const source = "some text 1 and more text";
@@ -829,11 +899,26 @@ t.test(
   }
 );
 
+tap.test(
+  `05.17 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - extractedLogContentsWereGiven`,
+  (t) => {
+    const source = `${BACKSLASH}u1000`;
+    t.same(
+      fixRowNums(source, {
+        extractedLogContentsWereGiven: true,
+      }),
+      source,
+      `05.16`
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // 06. custom functions via opts.triggerKeywords
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - baseline`,
   (t) => {
     t.is(
@@ -844,7 +929,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works on custom function`,
   (t) => {
     t.is(
@@ -855,7 +940,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - non-existing log function`,
   (t) => {
     const sources = [

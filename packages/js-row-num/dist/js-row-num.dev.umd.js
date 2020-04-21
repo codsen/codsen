@@ -677,7 +677,7 @@
     for (i = 0; i < len; i++) {
       // count lines:
       if (opts.overrideRowNum === null && (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n")) {
-        currentRow++;
+        currentRow += 1;
       } // catch closing quotes console.log( ' -----> ' <------)
 
 
@@ -698,13 +698,6 @@
           wasLetterDetected = false;
         } else if (opts.extractedLogContentsWereGiven && digitStartsAt === null) {
           if (isDigit(str[i])) {
-            // insurance against ANSI color codes, like \u001b[${32}m...
-            //                                            ^
-            //                                       false digits
-            if (str[i - 2] && str[i - 1] === "u" && str[i - 2] === "\\") {
-              break;
-            }
-
             digitStartsAt = i;
           } else {
             break;
@@ -725,7 +718,13 @@
 
       if (Number.isInteger(digitStartsAt) && (!isDigit(str[i]) || !str[i + 1]) && (i > digitStartsAt || !str[i + 1])) {
         // replace the digits:
-        finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow)); // then, reset:
+        if (!opts.padStart) {
+          if (opts.overrideRowNum != null) ;
+        } // PS. finalIndexesToDelete is a Ranges class so we can push
+        // two/three arguments and it will understand it's (range) array...
+
+
+        finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow)); // then, reset:
 
         digitStartsAt = null; // set wasLetterDetected as a decoy to prevent further digit lumps from being edited:
 
@@ -741,7 +740,11 @@
         // \u001B[4m        \u001B[0m
         // \u001B[4m   \u001B[0m
         // check for pattern \u001B[ + optional ${ + any amount of digits + optional } + m
-        if (str[i - 1] === "\\" && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
+
+        /* istanbul ignore if */
+        if (
+        /* istanbul ignore next */
+        str[i - 1] === BACKSLASH && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
           // at this moment, we have stuck here:
           //
           // console.log(`\u001b[${33}m${`291 zzz`}\u001b[${39}m`)
@@ -793,12 +796,16 @@
           } else if (str[numbersSequenceEndsAt] === "}" && str[numbersSequenceEndsAt + 1] === "m") {
             ansiSequencesLetterMAt = numbersSequenceEndsAt + 1;
           }
+          /* istanbul ignore else */
+
 
           if (!ansiSequencesLetterMAt) {
             // if ANSI closing "m" hasn't been detected yet, bail:
             wasLetterDetected = true;
             continue;
           }
+          /* istanbul ignore else */
+
 
           if (str[ansiSequencesLetterMAt + 1] === "$" && str[ansiSequencesLetterMAt + 2] === "{" && str[ansiSequencesLetterMAt + 3] === "`") {
             i = ansiSequencesLetterMAt + 3;
@@ -818,26 +825,30 @@
           consoleStartsAt = null;
           digitStartsAt = null;
         }
-      } // catch console.log
+      } // catch the trigger keywords
 
 
-      var caughtKeyword = void 0;
+      if (isObj(opts) && opts.triggerKeywords && Array.isArray(opts.triggerKeywords)) {
+        // check does any of the trigger keywords match
+        var caughtKeyword = void 0;
 
-      if (isObj(opts) && opts.triggerKeywords && Array.isArray(opts.triggerKeywords) && opts.triggerKeywords.some(function (keyw) {
-        if (str.startsWith(keyw, i)) {
-          caughtKeyword = keyw;
-          return true;
+        for (var _y = 0, len2 = opts.triggerKeywords.length; _y < len2; _y++) {
+          /* istanbul ignore else */
+          if (str.startsWith(opts.triggerKeywords[_y], i)) {
+            caughtKeyword = opts.triggerKeywords[_y];
+            break;
+          }
+        } // if any of trigger keywords starts here
+
+        /* istanbul ignore else */
+
+
+        if (caughtKeyword) {
+          consoleStartsAt = i + caughtKeyword.length; // offset the index so we don't traverse twice what was traversed already:
+
+          i = i + caughtKeyword.length - 1;
+          continue;
         }
-      }) || opts.triggerKeywords !== null && (!Array.isArray(opts.triggerKeywords) || !opts.triggerKeywords.length) && ["console.log"].some(function (keyw) {
-        if (str.startsWith(keyw, i)) {
-          caughtKeyword = keyw;
-          return true;
-        }
-      })) {
-        consoleStartsAt = i + caughtKeyword.length; // offset the index so we don't traverse twice what was traversed already:
-
-        i = i + caughtKeyword.length - 1;
-        continue;
       }
     } // wipe
 
@@ -852,7 +863,9 @@
 
     if (opts.returnRangesOnly) {
       return finalIndexesToDelete.current();
-    } else if (finalIndexesToDelete.current()) {
+    }
+
+    if (finalIndexesToDelete.current()) {
       return rangesApply(str, finalIndexesToDelete.current());
     }
 

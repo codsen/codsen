@@ -58,7 +58,7 @@ function fixRowNums(str, originalOpts) {
       opts.overrideRowNum === null &&
       (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n"))
     ) {
-      currentRow++;
+      currentRow += 1;
     }
     if (
       !opts.extractedLogContentsWereGiven &&
@@ -88,9 +88,6 @@ function fixRowNums(str, originalOpts) {
         wasLetterDetected = false;
       } else if (opts.extractedLogContentsWereGiven && digitStartsAt === null) {
         if (isDigit(str[i])) {
-          if (str[i - 2] && str[i - 1] === "u" && str[i - 2] === "\\") {
-            break;
-          }
           digitStartsAt = i;
         } else {
           break;
@@ -120,14 +117,17 @@ function fixRowNums(str, originalOpts) {
       (!isDigit(str[i]) || !str[i + 1]) &&
       (i > digitStartsAt || !str[i + 1])
     ) {
+      if (!opts.padStart) {
+        if (opts.overrideRowNum != null) ;
+      }
       finalIndexesToDelete.push(
         digitStartsAt,
         !isDigit(str[i]) ? i : i + 1,
         opts.padStart
           ? String(
-              opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow
+              opts.overrideRowNum != null ? opts.overrideRowNum : currentRow
             ).padStart(opts.padStart, "0")
-          : `${opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow}`
+          : `${opts.overrideRowNum != null ? opts.overrideRowNum : currentRow}`
       );
       digitStartsAt = null;
       wasLetterDetected = true;
@@ -140,8 +140,10 @@ function fixRowNums(str, originalOpts) {
       isAZ(str[i]) &&
       !(str[i] === "n" && str[i - 1] === BACKSLASH)
     ) {
+      /* istanbul ignore if */
       if (
-        str[i - 1] === "\\" &&
+        /* istanbul ignore next */
+        str[i - 1] === BACKSLASH &&
         str[i] === "u" &&
         str[i + 1] === "0" &&
         str[i + 2] === "0" &&
@@ -177,10 +179,12 @@ function fixRowNums(str, originalOpts) {
         ) {
           ansiSequencesLetterMAt = numbersSequenceEndsAt + 1;
         }
+        /* istanbul ignore else */
         if (!ansiSequencesLetterMAt) {
           wasLetterDetected = true;
           continue;
         }
+        /* istanbul ignore else */
         if (
           str[ansiSequencesLetterMAt + 1] === "$" &&
           str[ansiSequencesLetterMAt + 2] === "{" &&
@@ -205,30 +209,25 @@ function fixRowNums(str, originalOpts) {
         digitStartsAt = null;
       }
     }
-    let caughtKeyword;
     if (
-      (isObj(opts) &&
-        opts.triggerKeywords &&
-        Array.isArray(opts.triggerKeywords) &&
-        opts.triggerKeywords.some((keyw) => {
-          if (str.startsWith(keyw, i)) {
-            caughtKeyword = keyw;
-            return true;
-          }
-        })) ||
-      (opts.triggerKeywords !== null &&
-        (!Array.isArray(opts.triggerKeywords) ||
-          !opts.triggerKeywords.length) &&
-        ["console.log"].some((keyw) => {
-          if (str.startsWith(keyw, i)) {
-            caughtKeyword = keyw;
-            return true;
-          }
-        }))
+      isObj(opts) &&
+      opts.triggerKeywords &&
+      Array.isArray(opts.triggerKeywords)
     ) {
-      consoleStartsAt = i + caughtKeyword.length;
-      i = i + caughtKeyword.length - 1;
-      continue;
+      let caughtKeyword;
+      for (let y = 0, len2 = opts.triggerKeywords.length; y < len2; y++) {
+        /* istanbul ignore else */
+        if (str.startsWith(opts.triggerKeywords[y], i)) {
+          caughtKeyword = opts.triggerKeywords[y];
+          break;
+        }
+      }
+      /* istanbul ignore else */
+      if (caughtKeyword) {
+        consoleStartsAt = i + caughtKeyword.length;
+        i = i + caughtKeyword.length - 1;
+        continue;
+      }
     }
   }
   quotes = null;
@@ -240,7 +239,8 @@ function fixRowNums(str, originalOpts) {
   currentRow = 1;
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();
-  } else if (finalIndexesToDelete.current()) {
+  }
+  if (finalIndexesToDelete.current()) {
     return apply(str, finalIndexesToDelete.current());
   }
   return str;

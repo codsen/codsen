@@ -61,7 +61,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 6 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 7 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 7 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 13 KB |
 
@@ -125,14 +125,14 @@ API is simple: `string` in, `string` out. No options, everything beyond the 1st 
 
 ### Optional Options Object
 
-| options object's key | Type of its value                       | Default value     | Description                                                                                                                                                                                                                        |
-| -------------------- | --------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                    |                                         |                   |                                                                                                                                                                                                                                    |
-| `padStart`           | Zero, natural number or anything falsey | `3`               | Sets how much digits will be padded                                                                                                                                                                                                |
-| `triggerKeywords`    | `null` or array of zero or more strings | `["console.log"]` | After this string, first met chunks of numbers will be replaced with padded row number, unless letter is met first                                                                                                                 |
-| `overrideRowNum`     | integer or something falsey             | `null`            | If you have console.log contents already extracted and know the row number, you can pass that row number here. Multiple `console.log`s on multiple lineswon't be recognised, we assume you'll process each console.log one by one. |
-| `returnRangesOnly`   | boolean                                 | `false`           | When enabled, instead of string, program will return either `null` (no ranges) or an array of one or more range arrays.                                                                                                            |
-| }                    |                                         |                   |                                                                                                                                                                                                                                    |
+| options object's key | Type of its value                       | Default value     | Description                                                                                                                                                                                                                         |
+| -------------------- | --------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                    |                                         |                   |                                                                                                                                                                                                                                     |
+| `padStart`           | Zero, natural number or anything falsey | `3`               | Sets how much digits will be padded                                                                                                                                                                                                 |
+| `triggerKeywords`    | `null` or array of zero or more strings | `["console.log"]` | After this string, first met chunks of numbers will be replaced with padded row number, unless letter is met first                                                                                                                  |
+| `overrideRowNum`     | integer or something falsey             | `null`            | If you have console.log contents already extracted and know the row number, you can pass that row number here. Multiple `console.log`s on multiple lines won't be recognised, we assume you'll process each console.log one by one. |
+| `returnRangesOnly`   | boolean                                 | `false`           | When enabled, instead of string, program will return either `null` (no ranges) or an array of one or more range arrays.                                                                                                             |
+| }                    |                                         |                   |                                                                                                                                                                                                                                     |
 
 Here it is all in one place:
 
@@ -261,7 +261,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
-[cov-img]: https://img.shields.io/badge/coverage-90.35%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/js-row-num

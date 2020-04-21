@@ -69,7 +69,7 @@ function fixRowNums(str, originalOpts) {
   }
   for (i = 0; i < len; i++) {
     if (opts.overrideRowNum === null && (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n")) {
-      currentRow++;
+      currentRow += 1;
     }
     if (!opts.extractedLogContentsWereGiven && quotes !== null && quotes.start < i && quotes.type === str[i]) {
       quotes = null;
@@ -86,9 +86,6 @@ function fixRowNums(str, originalOpts) {
         wasLetterDetected = false;
       } else if (opts.extractedLogContentsWereGiven && digitStartsAt === null) {
         if (isDigit(str[i])) {
-          if (str[i - 2] && str[i - 1] === "u" && str[i - 2] === "\\") {
-            break;
-          }
           digitStartsAt = i;
         } else {
           break;
@@ -103,12 +100,18 @@ function fixRowNums(str, originalOpts) {
       digitStartsAt = i;
     }
     if (Number.isInteger(digitStartsAt) && (!isDigit(str[i]) || !str[i + 1]) && (i > digitStartsAt || !str[i + 1])) {
-      finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow));
+      if (!opts.padStart) {
+        if (opts.overrideRowNum != null) ;
+      }
+      finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow));
       digitStartsAt = null;
       wasLetterDetected = true;
     }
     if (quotes && Number.isInteger(quotes.start) && quotes.start < i && !wasLetterDetected && isAZ(str[i]) && !(str[i] === "n" && str[i - 1] === BACKSLASH)) {
-      if (str[i - 1] === "\\" && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
+      /* istanbul ignore if */
+      if (
+      /* istanbul ignore next */
+      str[i - 1] === BACKSLASH && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
         var startMarchingForwFrom = void 0;
         if (isDigit(str[i + 6])) {
           startMarchingForwFrom = i + 6;
@@ -130,10 +133,12 @@ function fixRowNums(str, originalOpts) {
         } else if (str[numbersSequenceEndsAt] === "}" && str[numbersSequenceEndsAt + 1] === "m") {
           ansiSequencesLetterMAt = numbersSequenceEndsAt + 1;
         }
+        /* istanbul ignore else */
         if (!ansiSequencesLetterMAt) {
           wasLetterDetected = true;
           continue;
         }
+        /* istanbul ignore else */
         if (str[ansiSequencesLetterMAt + 1] === "$" && str[ansiSequencesLetterMAt + 2] === "{" && str[ansiSequencesLetterMAt + 3] === "`") {
           i = ansiSequencesLetterMAt + 3;
           continue;
@@ -149,21 +154,21 @@ function fixRowNums(str, originalOpts) {
         digitStartsAt = null;
       }
     }
-    var caughtKeyword = void 0;
-    if (isObj(opts) && opts.triggerKeywords && Array.isArray(opts.triggerKeywords) && opts.triggerKeywords.some(function (keyw) {
-      if (str.startsWith(keyw, i)) {
-        caughtKeyword = keyw;
-        return true;
+    if (isObj(opts) && opts.triggerKeywords && Array.isArray(opts.triggerKeywords)) {
+      var caughtKeyword = void 0;
+      for (var _y = 0, len2 = opts.triggerKeywords.length; _y < len2; _y++) {
+        /* istanbul ignore else */
+        if (str.startsWith(opts.triggerKeywords[_y], i)) {
+          caughtKeyword = opts.triggerKeywords[_y];
+          break;
+        }
       }
-    }) || opts.triggerKeywords !== null && (!Array.isArray(opts.triggerKeywords) || !opts.triggerKeywords.length) && ["console.log"].some(function (keyw) {
-      if (str.startsWith(keyw, i)) {
-        caughtKeyword = keyw;
-        return true;
+      /* istanbul ignore else */
+      if (caughtKeyword) {
+        consoleStartsAt = i + caughtKeyword.length;
+        i = i + caughtKeyword.length - 1;
+        continue;
       }
-    })) {
-      consoleStartsAt = i + caughtKeyword.length;
-      i = i + caughtKeyword.length - 1;
-      continue;
     }
   }
   quotes = null;
@@ -175,7 +180,8 @@ function fixRowNums(str, originalOpts) {
   currentRow = 1;
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();
-  } else if (finalIndexesToDelete.current()) {
+  }
+  if (finalIndexesToDelete.current()) {
     return apply(str, finalIndexesToDelete.current());
   }
   return str;
