@@ -30,7 +30,7 @@ function within(str, originalOpts) {
   };
 
   // fill any settings with defaults if missing:
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // -----------------------------------------------------------------------------
 

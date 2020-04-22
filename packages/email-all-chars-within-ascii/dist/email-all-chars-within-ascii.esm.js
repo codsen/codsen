@@ -35,7 +35,7 @@ function within(str, originalOpts) {
     messageOnly: false,
     checkLineLength: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   let counter = 0;
   for (let i = 0, len = str.length; i < len; i++) {
     counter += 1;
