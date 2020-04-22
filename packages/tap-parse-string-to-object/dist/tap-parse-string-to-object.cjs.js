@@ -37,6 +37,55 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function stringPingLineByLine(str, cb) {
   var start = null;
   for (var i = 0, len = str.length; i < len; i++) {
@@ -45,11 +94,10 @@ function stringPingLineByLine(str, cb) {
         cb(str.slice(start, i));
         start = null;
       }
-    } else {
-      if (start === null) {
+    }
+    else if (start === null) {
         start = i;
       }
-    }
     if (start !== null && !str[i + 1]) {
       cb(str.slice(start, i + 1));
     }
@@ -79,30 +127,29 @@ var Counter = function () {
       }
       if (this.doNothing && lineStr.trim() === "...") {
         this.doNothing = false;
-      } else {
-        if (!this.doNothing && this.canCount) {
+      }
+      else if (!this.doNothing && this.canCount) {
           if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
             if (lineStr.trim().startsWith("ok")) {
-              this.total.assertsPassed = this.total.assertsPassed + 1;
+              this.total.assertsPassed += 1;
             } else if (lineStr.trim().startsWith("not ok")) {
-              this.total.assertsFailed = this.total.assertsFailed + 1;
+              this.total.assertsFailed += 1;
               if (!this.thereWereFailuresInThisSuite) {
                 this.thereWereFailuresInThisSuite = true;
               }
             }
-            this.total.assertsTotal = this.total.assertsTotal + 1;
+            this.total.assertsTotal += 1;
           } else {
             this.canCount = false;
           }
         }
-      }
       if (!this.doNothing && lineStr.trim() === "{") {
-        this.total.suitesTotal = this.total.suitesTotal + 1;
+        this.total.suitesTotal += 1;
         if (this.thereWereFailuresInThisSuite !== null) {
           if (this.thereWereFailuresInThisSuite) {
-            this.total.suitesFailed = this.total.suitesFailed + 1;
+            this.total.suitesFailed += 1;
           } else {
-            this.total.suitesPassed = this.total.suitesPassed + 1;
+            this.total.suitesPassed += 1;
           }
         }
         this.thereWereFailuresInThisSuite = false;
@@ -111,14 +158,14 @@ var Counter = function () {
       if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
         this.canCount = true;
         if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
-          this.total.suitesTotal = this.total.suitesTotal + 1;
+          this.total.suitesTotal += 1;
           if (this.thereWereFailuresInThisSuite === null) {
             this.thereWereFailuresInThisSuite = false;
           } else if (this.thereWereFailuresInThisSuite) {
-            this.total.suitesFailed = this.total.suitesFailed + 1;
+            this.total.suitesFailed += 1;
             this.thereWereFailuresInThisSuite = false;
           } else {
-            this.total.suitesPassed = this.total.suitesPassed + 1;
+            this.total.suitesPassed += 1;
           }
         }
       }
@@ -127,10 +174,10 @@ var Counter = function () {
     key: "getTotal",
     value: function getTotal() {
       if (this.thereWereFailuresInThisSuite) {
-        this.total.suitesFailed = this.total.suitesFailed + 1;
+        this.total.suitesFailed += 1;
         this.thereWereFailuresInThisSuite = false;
       } else if (this.total.suitesTotal) {
-        this.total.suitesPassed = this.total.suitesPassed + 1;
+        this.total.suitesPassed += 1;
       }
       if (!this.total.suitesTotal && this.total.assertsTotal) {
         this.total.suitesTotal = 1;
@@ -140,7 +187,7 @@ var Counter = function () {
           this.total.suitesPassed = 1;
         }
       }
-      return Object.assign({}, this.total);
+      return _objectSpread2({}, this.total);
     }
   }]);
   return Counter;
@@ -159,7 +206,8 @@ function externalApi(something) {
       });
       something.on("error", reject);
     });
-  } else if (typeof something === "string") {
+  }
+  if (typeof something === "string") {
     if (!something.length) {
       return {
         ok: true,

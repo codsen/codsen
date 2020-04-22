@@ -1,10 +1,10 @@
-const fs = require("fs-extra");
-const path = require("path");
-const t = require("tap");
-const execa = require("execa");
-const tempy = require("tempy");
-const pMap = require("p-map");
-const pack = require("../package");
+import fs from "fs-extra";
+import path from "path";
+import tap from "tap";
+import execa from "execa";
+import tempy from "tempy";
+import pMap from "p-map";
+import pack from "../package.json";
 
 // File contents:
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ const testFilePaths = [
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - version output mode", async (t) => {
+tap.test("01.01 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.equal(reportedVersion1.stdout, pack.version);
 
@@ -115,7 +115,7 @@ t.test("01.01 - version output mode", async (t) => {
   t.end();
 });
 
-t.test("01.02 - help output mode", async (t) => {
+tap.test("01.02 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.match(reportedVersion1.stdout, /Usage/g);
   t.match(reportedVersion1.stdout, /Options/g);
@@ -126,7 +126,7 @@ t.test("01.02 - help output mode", async (t) => {
   t.end();
 });
 
-t.test("01.03 - no files found in the given directory [ID_1]", async (t) => {
+tap.test("01.03 - no files found in the given directory [ID_1]", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
@@ -137,7 +137,7 @@ t.test("01.03 - no files found in the given directory [ID_1]", async (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.04 - normalisation, called on the directory with subdirectories",
   async (t) => {
     // 1. fetch us an empty, random, temporary folder:
@@ -190,23 +190,26 @@ t.test(
   }
 );
 
-t.test("01.05 - normalisation stops if one file is given [ID_2]", async (t) => {
-  // fetch us a random temp folder
-  // const tempFolder = "temp";
-  // fs.ensureDirSync(path.join(tempFolder));
-  const tempFolder = tempy.directory();
+tap.test(
+  "01.05 - normalisation stops if one file is given [ID_2]",
+  async (t) => {
+    // fetch us a random temp folder
+    // const tempFolder = "temp";
+    // fs.ensureDirSync(path.join(tempFolder));
+    const tempFolder = tempy.directory();
 
-  const stdOutContents = await fs
-    .writeJson(path.join(tempFolder, "data.json"), {
-      a: "b",
-      c: "d",
-    })
-    .then(() => execa("./cli.js", ["--normalise", tempFolder]))
-    .catch((err) => t.fail(err));
+    const stdOutContents = await fs
+      .writeJson(path.join(tempFolder, "data.json"), {
+        a: "b",
+        c: "d",
+      })
+      .then(() => execa("./cli.js", ["--normalise", tempFolder]))
+      .catch((err) => t.fail(err));
 
-  // CLI will complain no files could be found
-  t.match(stdOutContents.stdout, /ID_2/g);
-  t.end();
-});
+    // CLI will complain no files could be found
+    t.match(stdOutContents.stdout, /ID_2/g);
+    t.end();
+  }
+);
 
-// test.todo("01.05 - sort, there's a broken JSON among files");
+// tap.todo("01.05 - sort, there's a broken JSON among files");

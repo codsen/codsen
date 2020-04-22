@@ -19,10 +19,9 @@ function stringPingLineByLine(str, cb) {
         cb(str.slice(start, i));
         start = null;
       }
-    } else {
-      if (start === null) {
-        start = i;
-      }
+    }
+    else if (start === null) {
+      start = i;
     }
     if (start !== null && !str[i + 1]) {
       cb(str.slice(start, i + 1));
@@ -50,33 +49,32 @@ class Counter {
     }
     if (this.doNothing && lineStr.trim() === "...") {
       this.doNothing = false;
-    } else {
-      if (!this.doNothing && this.canCount) {
-        if (
-          lineStr.trim().startsWith("ok") ||
-          lineStr.trim().startsWith("not ok")
-        ) {
-          if (lineStr.trim().startsWith("ok")) {
-            this.total.assertsPassed = this.total.assertsPassed + 1;
-          } else if (lineStr.trim().startsWith("not ok")) {
-            this.total.assertsFailed = this.total.assertsFailed + 1;
-            if (!this.thereWereFailuresInThisSuite) {
-              this.thereWereFailuresInThisSuite = true;
-            }
+    }
+    else if (!this.doNothing && this.canCount) {
+      if (
+        lineStr.trim().startsWith("ok") ||
+        lineStr.trim().startsWith("not ok")
+      ) {
+        if (lineStr.trim().startsWith("ok")) {
+          this.total.assertsPassed += 1;
+        } else if (lineStr.trim().startsWith("not ok")) {
+          this.total.assertsFailed += 1;
+          if (!this.thereWereFailuresInThisSuite) {
+            this.thereWereFailuresInThisSuite = true;
           }
-          this.total.assertsTotal = this.total.assertsTotal + 1;
-        } else {
-          this.canCount = false;
         }
+        this.total.assertsTotal += 1;
+      } else {
+        this.canCount = false;
       }
     }
     if (!this.doNothing && lineStr.trim() === "{") {
-      this.total.suitesTotal = this.total.suitesTotal + 1;
+      this.total.suitesTotal += 1;
       if (this.thereWereFailuresInThisSuite !== null) {
         if (this.thereWereFailuresInThisSuite) {
-          this.total.suitesFailed = this.total.suitesFailed + 1;
+          this.total.suitesFailed += 1;
         } else {
-          this.total.suitesPassed = this.total.suitesPassed + 1;
+          this.total.suitesPassed += 1;
         }
       }
       this.thereWereFailuresInThisSuite = false;
@@ -85,24 +83,24 @@ class Counter {
     if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
       this.canCount = true;
       if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
-        this.total.suitesTotal = this.total.suitesTotal + 1;
+        this.total.suitesTotal += 1;
         if (this.thereWereFailuresInThisSuite === null) {
           this.thereWereFailuresInThisSuite = false;
         } else if (this.thereWereFailuresInThisSuite) {
-          this.total.suitesFailed = this.total.suitesFailed + 1;
+          this.total.suitesFailed += 1;
           this.thereWereFailuresInThisSuite = false;
         } else {
-          this.total.suitesPassed = this.total.suitesPassed + 1;
+          this.total.suitesPassed += 1;
         }
       }
     }
   }
   getTotal() {
     if (this.thereWereFailuresInThisSuite) {
-      this.total.suitesFailed = this.total.suitesFailed + 1;
+      this.total.suitesFailed += 1;
       this.thereWereFailuresInThisSuite = false;
     } else if (this.total.suitesTotal) {
-      this.total.suitesPassed = this.total.suitesPassed + 1;
+      this.total.suitesPassed += 1;
     }
     if (!this.total.suitesTotal && this.total.assertsTotal) {
       this.total.suitesTotal = 1;
@@ -112,7 +110,7 @@ class Counter {
         this.total.suitesPassed = 1;
       }
     }
-    return Object.assign({}, this.total);
+    return { ...this.total };
   }
 }
 
@@ -131,7 +129,8 @@ function externalApi(something) {
       });
       something.on("error", reject);
     });
-  } else if (typeof something === "string") {
+  }
+  if (typeof something === "string") {
     if (!something.length) {
       return {
         ok: true,

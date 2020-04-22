@@ -1,14 +1,14 @@
-const t = require("tap");
-const parse = require("../dist/tap-parse-string-to-object.cjs");
-const tempy = require("tempy");
-const fs = require("fs-extra");
-const path = require("path");
+import tap from "tap";
+import tempy from "tempy";
+import fs from "fs-extra";
+import path from "path";
+import parse from "../dist/tap-parse-string-to-object.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01 - wrong/missing input = throw", (t) => {
+tap.test("01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     parse();
   }, /THROW_ID_01/g);
@@ -53,7 +53,7 @@ t.test("01 - wrong/missing input = throw", (t) => {
 //                            |
 //                            |
 
-t.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
+tap.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
   ok 1 - 01.01.01
@@ -123,7 +123,7 @@ t.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
 //                            |
 //                            |
 
-t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
+tap.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
   const input = `TAP version 13
   not ok 1 - test/test.js # time=229.587ms
     ---
@@ -165,7 +165,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              t.test("01.01 - string input", t => {
+              tap.test("01.01 - string input", t => {
                 t.same(a("aaa"), ["aaa"], "01.01.01");
               ----^
                 t.same(a(""), [], "01.01.02");
@@ -224,7 +224,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              t.test("01.02 - non-string input", t => {
+              tap.test("01.02 - non-string input", t => {
                 t.same(a(1), 1, "01.02.01");
               ----^
                 t.same(a(null), null, "01.02.02");
@@ -388,7 +388,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              t.test("UMD build works fine", t => {
+              tap.test("UMD build works fine", t => {
                 t.same(a1(source), res);
               ----^
                 t.end();
@@ -446,7 +446,7 @@ t.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
 //                            |
 //                            |
 
-t.test("02.03 - ranges-merge", (t) => {
+tap.test("02.03 - ranges-merge", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=203.828ms {
       # Subtest: 00.00 - does not throw when the first arg is wrong
@@ -675,7 +675,7 @@ t.test("02.03 - ranges-merge", (t) => {
 //                            |
 //                            |
 
-t.test("02.04 - object-set-all-values-to", (t) => {
+tap.test("02.04 - object-set-all-values-to", (t) => {
   const input = `TAP version 13
   # Subtest: test/test.js
       # Subtest: 01.01 - input simple plain object, default
@@ -833,7 +833,7 @@ t.test("02.04 - object-set-all-values-to", (t) => {
 // 03. stream was given
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`,
   async (t) => {
     const tempFolder = tempy.directory();

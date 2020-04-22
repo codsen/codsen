@@ -30,7 +30,8 @@ function externalApi(something) {
 
       something.on("error", reject);
     });
-  } else if (typeof something === "string") {
+  }
+  if (typeof something === "string") {
     console.log(`not a stream but string was given`);
     if (!something.length) {
       return {

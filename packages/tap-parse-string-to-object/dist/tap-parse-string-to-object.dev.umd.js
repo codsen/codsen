@@ -11119,6 +11119,55 @@
     return Constructor;
   }
 
+  function _defineProperty$3(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys$2(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys$2(Object(source), true).forEach(function (key) {
+          _defineProperty$3(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys$2(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   // pings each line to the callback cb()
   function stringPingLineByLine(str, cb) {
     // console.log(
@@ -11134,14 +11183,12 @@
           //   `020 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} start = null`
           // );
         }
-      } else {
-        // not a linebreak character
-        if (start === null) {
+      } // not a linebreak character
+      else if (start === null) {
           start = i; // console.log(
           //   `028 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} start = ${start}`
           // );
-        }
-      } // if an end is reached, ping the remainder
+        } // if an end is reached, ping the remainder
 
 
       if (start !== null && !str[i + 1]) {
@@ -11178,37 +11225,35 @@
 
         if (this.doNothing && lineStr.trim() === "...") {
           this.doNothing = false;
-        } else {
-          // catch the assertion result lines
-          if (!this.doNothing && this.canCount) {
+        } // catch the assertion result lines
+        else if (!this.doNothing && this.canCount) {
             if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
               if (lineStr.trim().startsWith("ok")) {
-                this.total.assertsPassed = this.total.assertsPassed + 1;
+                this.total.assertsPassed += 1;
               } else if (lineStr.trim().startsWith("not ok")) {
-                this.total.assertsFailed = this.total.assertsFailed + 1;
+                this.total.assertsFailed += 1;
 
                 if (!this.thereWereFailuresInThisSuite) {
                   this.thereWereFailuresInThisSuite = true;
                 }
               }
 
-              this.total.assertsTotal = this.total.assertsTotal + 1;
+              this.total.assertsTotal += 1;
             } else {
               this.canCount = false;
             }
-          }
-        } // if { is on a separate line, bump the suite count and reset the this.thereWereFailuresInThisSuite
+          } // if { is on a separate line, bump the suite count and reset the this.thereWereFailuresInThisSuite
 
 
         if (!this.doNothing && lineStr.trim() === "{") {
-          this.total.suitesTotal = this.total.suitesTotal + 1;
+          this.total.suitesTotal += 1;
 
           if (this.thereWereFailuresInThisSuite !== null) {
             // second suite onwards already has a gathered result
             if (this.thereWereFailuresInThisSuite) {
-              this.total.suitesFailed = this.total.suitesFailed + 1;
+              this.total.suitesFailed += 1;
             } else {
-              this.total.suitesPassed = this.total.suitesPassed + 1;
+              this.total.suitesPassed += 1;
             }
           } // reset:
 
@@ -11227,17 +11272,17 @@
           // then bump the suite count
 
           if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
-            this.total.suitesTotal = this.total.suitesTotal + 1; // we must skip the first opening curlies and count suite passing
+            this.total.suitesTotal += 1; // we must skip the first opening curlies and count suite passing
             // for all others
 
             if (this.thereWereFailuresInThisSuite === null) {
               // if it's first suite's opening curlie
               this.thereWereFailuresInThisSuite = false;
             } else if (this.thereWereFailuresInThisSuite) {
-              this.total.suitesFailed = this.total.suitesFailed + 1;
+              this.total.suitesFailed += 1;
               this.thereWereFailuresInThisSuite = false;
             } else {
-              this.total.suitesPassed = this.total.suitesPassed + 1;
+              this.total.suitesPassed += 1;
             }
           }
         }
@@ -11246,10 +11291,10 @@
       key: "getTotal",
       value: function getTotal() {
         if (this.thereWereFailuresInThisSuite) {
-          this.total.suitesFailed = this.total.suitesFailed + 1;
+          this.total.suitesFailed += 1;
           this.thereWereFailuresInThisSuite = false;
         } else if (this.total.suitesTotal) {
-          this.total.suitesPassed = this.total.suitesPassed + 1;
+          this.total.suitesPassed += 1;
         }
 
         if (!this.total.suitesTotal && this.total.assertsTotal) {
@@ -11262,7 +11307,7 @@
           }
         }
 
-        return Object.assign({}, this.total);
+        return _objectSpread2({}, this.total);
       }
     }]);
 
@@ -11289,7 +11334,9 @@
         });
         something.on("error", reject);
       });
-    } else if (typeof something === "string") {
+    }
+
+    if (typeof something === "string") {
       if (!something.length) {
         return {
           ok: true,

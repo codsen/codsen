@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("../");
+const f = require("..");
+
 const testme = () =>
   f(`TAP version 13
 ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
