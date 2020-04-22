@@ -1,18 +1,18 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const t = require("tap");
-const isMediaD = require("../dist/is-media-descriptor.cjs");
-const { applyFixes, writeSample } = require("../t-util/util");
+import tap from "tap";
+import isMediaD from "../dist/is-media-descriptor.esm";
+import { applyFixes, writeSample } from "../t-util/util";
 
 // first, remove all files from test/samples subfolder - think of test renames
 // and tests being shuffled - this will guarantee that all sample files
 // are always fresh
 const filesInSamples = fs.readdirSync("test/samples");
-for (const file of filesInSamples) {
+for (let i = 0, len = filesInSamples.length; i < len; i++) {
   // _red.css and _green.css are stationary, they're not deleted
-  if (!file.startsWith("_")) {
-    fs.unlink(path.join("test/samples", file), (err) => {
+  if (!filesInSamples[i].startsWith("_")) {
+    fs.unlink(path.join("test/samples", filesInSamples[i]), (err) => {
       if (err) {
         throw err;
       }
@@ -23,7 +23,7 @@ for (const file of filesInSamples) {
 // 00. API bits
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`,
   (t) => {
     t.same(isMediaD(), []);
@@ -31,7 +31,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
   (t) => {
     const str = "";
@@ -45,7 +45,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
   (t) => {
     const str = " ";
@@ -59,7 +59,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
   (t) => {
     const str = "\n\n\n";
@@ -73,7 +73,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`,
   (t) => {
     t.throws(() => {
@@ -86,7 +86,7 @@ t.test(
 // 01. single-string values
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`,
   (t) => {
     [
@@ -108,7 +108,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offset`,
   (t) => {
     [
@@ -130,7 +130,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = ` zzz`;
@@ -161,7 +161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = `only`;
@@ -183,7 +183,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = `not`;
@@ -208,7 +208,7 @@ t.test(
 // 02. whitespace related errors
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`,
   (t) => {
     const str = `\tall`;
@@ -235,7 +235,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`,
   (t) => {
     const str = `all\t`;
@@ -261,7 +261,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading and trailing`,
   (t) => {
     const str = `\t\t\tall\t\n`;
@@ -290,7 +290,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab whitespace chunk`,
   (t) => {
     const str = `only\tscreen`;
@@ -317,7 +317,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whitespace chunk`,
   (t) => {
     const str = `only\t\tscreen`;
@@ -344,7 +344,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab end`,
   (t) => {
     const str = `only  \tscreen`;
@@ -371,7 +371,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`,
   (t) => {
     const str = `only\t \tscreen`;
@@ -398,7 +398,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start`,
   (t) => {
     const str = `only\t  screen`;
@@ -425,7 +425,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
   (t) => {
     const str = `not (monochrome)`;
@@ -449,7 +449,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
   (t) => {
     const str = `not (width <= -100px)`;
@@ -473,7 +473,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type, whitespace`,
   (t) => {
     const str = `not ( monochrome )`;
@@ -514,7 +514,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
   (t) => {
     const str = `screen `;
@@ -543,7 +543,7 @@ t.test(
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`,
   (t) => {
     const str = `screeen`;
@@ -570,7 +570,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`,
   (t) => {
     const str = `\t\t\tal\t\n`;
@@ -610,7 +610,7 @@ t.test(
 // 04. preliminary checks
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 1`,
   (t) => {
     const str = `only (screen))`;
@@ -633,7 +633,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 2`,
   (t) => {
     const str = `only ((screen)`;
@@ -656,7 +656,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `only ())screen(()`;
@@ -679,7 +679,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `only )))))`;
@@ -702,7 +702,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon present`,
   (t) => {
     // for example
@@ -727,7 +727,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `screen and ()`;
@@ -750,7 +750,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `screen and (\t\r)`;
@@ -776,7 +776,7 @@ t.test(
 // 05. composed values
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
   (t) => {
     const str = `only screen`;
@@ -792,7 +792,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
   (t) => {
     const str = `onlies screen`;
@@ -815,7 +815,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`,
   (t) => {
     const str = `not (monochrome)`;
@@ -838,7 +838,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `only .`;
@@ -861,7 +861,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `only --`;
@@ -884,7 +884,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only and`;
@@ -907,7 +907,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only only`;
@@ -930,7 +930,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only not`;
@@ -953,7 +953,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
   (t) => {
     // const str = `screen and (color)`;
@@ -969,7 +969,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.10 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
   (t) => {
     const str = `not (monochrome)`;
@@ -991,7 +991,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.11 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
   (t) => {
     const str = `not screen and color`;
@@ -1021,7 +1021,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.12 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
   (t) => {
     const str = `not screen and screen`;
@@ -1045,7 +1045,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.13 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
   (t) => {
     const str = `not screen and (monochrome) \tand`;
@@ -1080,7 +1080,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.14 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
   (t) => {
     const str = `screeen and (color), projection and (color)`;
@@ -1107,7 +1107,7 @@ t.test(
 // 06. brackets
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, healthy`,
   (t) => {
     const str = `speech and (device-aspect-ratio: 16/9)`;
@@ -1124,7 +1124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
   (t) => {
     const str = `speech and device-aspect-ratio : 16/9`;
@@ -1148,7 +1148,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
   (t) => {
     const str = `speech and device-aspect-ratio`;
@@ -1172,7 +1172,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and not (print)`;
@@ -1196,7 +1196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.05 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and (not print)`;
@@ -1220,7 +1220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.06 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and (print and (zzz))`;
@@ -1250,7 +1250,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.07 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and not (print and (zzz))`;
@@ -1274,7 +1274,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.08 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets`,
   (t) => {
     const str = `(screen and (color))`;
@@ -1298,7 +1298,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.09 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets, chained`,
   (t) => {
     const str = `(screen and (color)) and (print and (color)) and (speech and (update))`;
@@ -1337,7 +1337,7 @@ t.test(
 // 07. comma
 // -----------------------------------------------------------------------------
 
-t.test(`07.01 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
+tap.test(`07.01 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
   const str = `screen, print`;
   writeSample({
     id: "07.01",

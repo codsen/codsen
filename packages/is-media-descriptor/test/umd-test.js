@@ -1,7 +1,7 @@
-const t = require("tap");
-const isMediaD = require("../dist/is-media-descriptor.umd");
+import tap from "tap";
+import isMediaD from "../dist/is-media-descriptor.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   [
     "all",
     "aural",

@@ -225,10 +225,10 @@ function loop(str, opts, res) {
         if (whitespaceStartsAt !== i - 1) {
           console.log(`226 A MULTIPLE WHITESPACE CHARS`);
           if (str[whitespaceStartsAt] === " ") {
-            rangesFrom++;
+            rangesFrom += 1;
             rangesInsert = null;
           } else if (str[i - 1] === " ") {
-            rangesTo--;
+            rangesTo -= 1;
             rangesInsert = null;
           }
         }

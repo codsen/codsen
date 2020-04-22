@@ -123,10 +123,10 @@ function loop(str, opts, res) {
         let rangesInsert = " ";
         if (whitespaceStartsAt !== i - 1) {
           if (str[whitespaceStartsAt] === " ") {
-            rangesFrom++;
+            rangesFrom += 1;
             rangesInsert = null;
           } else if (str[i - 1] === " ") {
-            rangesTo--;
+            rangesTo -= 1;
             rangesInsert = null;
           }
         }
@@ -290,7 +290,7 @@ function isMediaD(originalStr, originalOpts) {
   const defaults = {
     offset: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(
       `is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ${
@@ -303,7 +303,8 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (typeof originalStr !== "string") {
     return [];
-  } else if (!originalStr.trim()) {
+  }
+  if (!originalStr.trim()) {
     return [];
   }
   const res = [];
@@ -341,7 +342,8 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (recognisedMediaTypes.includes(str)) {
     return res;
-  } else if (["only", "not"].includes(str)) {
+  }
+  if (["only", "not"].includes(str)) {
     res.push({
       idxFrom: nonWhitespaceStart + opts.offset,
       idxTo: nonWhitespaceEnd + opts.offset,
@@ -389,9 +391,11 @@ function isMediaD(originalStr, originalOpts) {
             wrongOrder = true;
           }
           return [acc[0], acc[1] + 1];
-        } else if (curr === "(") {
+        }
+        if (curr === "(") {
           return [acc[0] + 1, acc[1]];
-        } else if (curr === ";") {
+        }
+        if (curr === ";") {
           res.push({
             idxFrom: idx + opts.offset,
             idxTo: idx + 1 + opts.offset,
@@ -462,10 +466,11 @@ function isMediaD(originalStr, originalOpts) {
       cb: (idxFrom, idxTo) => {
         loop(
           str,
-          Object.assign({}, opts, {
+          {
+            ...opts,
             idxFrom: idxFrom - opts.offset,
             idxTo: idxTo - opts.offset,
-          }),
+          },
           res
         );
       },

@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -161,6 +210,157 @@
   var _default = leven;
   leven_1.default = _default;
 
+  /**
+   * string-process-comma-separated
+   * Extracts chunks from possibly comma or whatever-separated string
+   * Version: 1.2.5
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
+   */
+  function processCommaSeparated(str, originalOpts) {
+    if (typeof str !== "string") {
+      throw new Error(`string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(str, null, 4)}`);
+    } else if (!str.length || !originalOpts.cb && !originalOpts.errCb) {
+      return;
+    }
+
+    const defaults = {
+      from: 0,
+      to: str.length,
+      offset: 0,
+      leadingWhitespaceOK: false,
+      trailingWhitespaceOK: false,
+      oneSpaceAfterCommaOK: false,
+      innerWhitespaceAllowed: false,
+      separator: ",",
+      cb: null,
+      errCb: null
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    if (!Number.isInteger(originalOpts.from)) {
+      opts.from = 0;
+    }
+
+    if (!Number.isInteger(originalOpts.to)) {
+      opts.to = str.length;
+    }
+
+    if (!Number.isInteger(originalOpts.offset)) {
+      opts.offset = 0;
+    }
+
+    let chunkStartsAt = null;
+    let whitespaceStartsAt = null;
+    let firstNonwhitespaceNonseparatorCharFound = false;
+    let separatorsArr = [];
+    let lastNonWhitespaceCharAt = null;
+    let fixable = true;
+
+    for (let i = opts.from; i < opts.to; i++) {
+      if (str[i].trim() && str[i] !== opts.separator) {
+        lastNonWhitespaceCharAt = i;
+      }
+
+      if (chunkStartsAt === null && str[i].trim() && (!opts.separator || str[i] !== opts.separator)) {
+        if (!firstNonwhitespaceNonseparatorCharFound) {
+          firstNonwhitespaceNonseparatorCharFound = true;
+        }
+
+        if (separatorsArr.length) {
+          if (separatorsArr.length > 1) {
+            separatorsArr.forEach((separatorsIdx, orderNumber) => {
+              if (orderNumber) {
+                opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
+              }
+            });
+          }
+
+          separatorsArr = [];
+        }
+
+        chunkStartsAt = i;
+      }
+
+      if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
+        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
+
+        if (typeof opts.cb === "function") {
+          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
+        }
+
+        chunkStartsAt = null;
+      }
+
+      if (!str[i].trim() && whitespaceStartsAt === null) {
+        whitespaceStartsAt = i;
+      }
+
+      if (whitespaceStartsAt !== null && (str[i].trim() || i + 1 === opts.to)) {
+        if (whitespaceStartsAt === opts.from) {
+          if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
+            opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
+          }
+        } else if (!str[i].trim() && i + 1 === opts.to) {
+          if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
+            opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
+          }
+        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
+          let startingIdx = whitespaceStartsAt;
+          let endingIdx = i;
+
+          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
+            endingIdx += 1;
+          }
+
+          let whatToAdd = "";
+
+          if (opts.oneSpaceAfterCommaOK) {
+            if (str[whitespaceStartsAt] === " " && str[whitespaceStartsAt - 1] === opts.separator) {
+              startingIdx += 1;
+            } else if (str[whitespaceStartsAt] !== " ") {
+              whatToAdd = " ";
+            }
+          }
+
+          let message = "Remove whitespace.";
+
+          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
+            fixable = false;
+            message = "Bad whitespace.";
+          }
+
+          if (whatToAdd.length) {
+            opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]], message, fixable);
+          } else {
+            opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], message, fixable);
+          }
+
+          fixable = true;
+        }
+
+        whitespaceStartsAt = null;
+      }
+
+      if (str[i] === opts.separator) {
+        if (!firstNonwhitespaceNonseparatorCharFound) {
+          opts.errCb([[i + opts.offset, i + 1 + opts.offset]], "Remove separator.", fixable);
+        } else {
+          separatorsArr.push(i);
+        }
+      }
+
+      if (i + 1 === opts.to) {
+        separatorsArr.forEach(separatorsIdx => {
+          opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
+        });
+      }
+    }
+  }
+
   var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"]; // eslint-disable-next-line no-unused-vars
 
   var recognisedMediaFeatures = ["width", "min-width", "max-width", "height", "min-height", "max-height", "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation", "resolution", "min-resolution", "max-resolution", "scan", "grid", "update", "overflow-block", "overflow-inline", "color", "min-color", "max-color", "color-index", "min-color-index", "max-color-index", "monochrome", "color-gamut", "pointer", "hover", "any-pointer", "any-hover"]; // eslint-disable-next-line no-unused-vars
@@ -273,10 +473,10 @@
 
           if (whitespaceStartsAt !== i - 1) {
             if (str[whitespaceStartsAt] === " ") {
-              rangesFrom++;
+              rangesFrom += 1;
               rangesInsert = null;
             } else if (str[i - 1] === " ") {
-              rangesTo--;
+              rangesTo -= 1;
               rangesInsert = null;
             }
           }
@@ -470,155 +670,6 @@
     }
   }
 
-  /**
-   * string-process-comma-separated
-   * Extracts chunks from possibly comma or whatever-separated string
-   * Version: 1.2.5
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
-   */
-  function processCommaSeparated(str, originalOpts) {
-    if (typeof str !== "string") {
-      throw new Error(`string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(str, null, 4)}`);
-    } else if (!str.length || !originalOpts.cb && !originalOpts.errCb) {
-      return;
-    }
-
-    const defaults = {
-      from: 0,
-      to: str.length,
-      offset: 0,
-      leadingWhitespaceOK: false,
-      trailingWhitespaceOK: false,
-      oneSpaceAfterCommaOK: false,
-      innerWhitespaceAllowed: false,
-      separator: ",",
-      cb: null,
-      errCb: null
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-
-    if (!Number.isInteger(originalOpts.from)) {
-      opts.from = 0;
-    }
-
-    if (!Number.isInteger(originalOpts.to)) {
-      opts.to = str.length;
-    }
-
-    if (!Number.isInteger(originalOpts.offset)) {
-      opts.offset = 0;
-    }
-
-    let chunkStartsAt = null;
-    let whitespaceStartsAt = null;
-    let firstNonwhitespaceNonseparatorCharFound = false;
-    let separatorsArr = [];
-    let lastNonWhitespaceCharAt = null;
-    let fixable = true;
-
-    for (let i = opts.from; i < opts.to; i++) {
-      if (str[i].trim() && str[i] !== opts.separator) {
-        lastNonWhitespaceCharAt = i;
-      }
-
-      if (chunkStartsAt === null && str[i].trim() && (!opts.separator || str[i] !== opts.separator)) {
-        if (!firstNonwhitespaceNonseparatorCharFound) {
-          firstNonwhitespaceNonseparatorCharFound = true;
-        }
-
-        if (separatorsArr.length) {
-          if (separatorsArr.length > 1) {
-            separatorsArr.forEach((separatorsIdx, orderNumber) => {
-              if (orderNumber) {
-                opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
-              }
-            });
-          }
-
-          separatorsArr = [];
-        }
-
-        chunkStartsAt = i;
-      }
-
-      if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
-
-        if (typeof opts.cb === "function") {
-          opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
-        }
-
-        chunkStartsAt = null;
-      }
-
-      if (!str[i].trim() && whitespaceStartsAt === null) {
-        whitespaceStartsAt = i;
-      }
-
-      if (whitespaceStartsAt !== null && (str[i].trim() || i + 1 === opts.to)) {
-        if (whitespaceStartsAt === opts.from) {
-          if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
-            opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
-          }
-        } else if (!str[i].trim() && i + 1 === opts.to) {
-          if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
-            opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
-          }
-        } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
-          let startingIdx = whitespaceStartsAt;
-          let endingIdx = i;
-
-          if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
-            endingIdx++;
-          }
-
-          let whatToAdd = "";
-
-          if (opts.oneSpaceAfterCommaOK) {
-            if (str[whitespaceStartsAt] === " " && str[whitespaceStartsAt - 1] === opts.separator) {
-              startingIdx++;
-            } else if (str[whitespaceStartsAt] !== " ") {
-              whatToAdd = " ";
-            }
-          }
-
-          let message = "Remove whitespace.";
-
-          if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
-            fixable = false;
-            message = "Bad whitespace.";
-          }
-
-          if (whatToAdd.length) {
-            opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]], message, fixable);
-          } else {
-            opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], message, fixable);
-          }
-
-          fixable = true;
-        }
-
-        whitespaceStartsAt = null;
-      }
-
-      if (str[i] === opts.separator) {
-        if (!firstNonwhitespaceNonseparatorCharFound) {
-          opts.errCb([[i + opts.offset, i + 1 + opts.offset]], "Remove separator.", fixable);
-        } else {
-          separatorsArr.push(i);
-        }
-      }
-
-      if (i + 1 === opts.to) {
-        separatorsArr.forEach(separatorsIdx => {
-          opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
-        });
-      }
-    }
-  }
-
   // Also https://csstree.github.io/docs/validator.html
   // Also, test in Chrome yourself
 
@@ -626,7 +677,9 @@
     var defaults = {
       offset: 0
     };
-    var opts = Object.assign({}, defaults, originalOpts); // insurance first
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // insurance first
+
 
     if (opts.offset && !Number.isInteger(opts.offset)) {
       throw new Error("is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ".concat(opts.offset, " (type ").concat(_typeof(opts.offset), ")"));
@@ -640,7 +693,9 @@
 
     if (typeof originalStr !== "string") {
       return [];
-    } else if (!originalStr.trim()) {
+    }
+
+    if (!originalStr.trim()) {
       return [];
     }
 
@@ -716,7 +771,9 @@
       //
       //
       return res;
-    } else if (["only", "not"].includes(str)) {
+    }
+
+    if (["only", "not"].includes(str)) {
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
         idxTo: nonWhitespaceEnd + opts.offset,
@@ -797,9 +854,13 @@
           }
 
           return [acc[0], acc[1] + 1];
-        } else if (curr === "(") {
+        }
+
+        if (curr === "(") {
           return [acc[0] + 1, acc[1]];
-        } else if (curr === ";") {
+        }
+
+        if (curr === ";") {
           res.push({
             idxFrom: idx + opts.offset,
             idxTo: idx + 1 + opts.offset,
@@ -885,7 +946,7 @@
         innerWhitespaceAllowed: true,
         separator: ",",
         cb: function cb(idxFrom, idxTo) {
-          loop(str, Object.assign({}, opts, {
+          loop(str, _objectSpread2({}, opts, {
             idxFrom: idxFrom - opts.offset,
             idxTo: idxTo - opts.offset
           }), res);

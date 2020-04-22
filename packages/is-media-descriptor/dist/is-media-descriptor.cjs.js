@@ -30,6 +30,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -145,10 +194,10 @@ function loop(str, opts, res) {
         var rangesInsert = " ";
         if (whitespaceStartsAt !== i - 1) {
           if (str[whitespaceStartsAt] === " ") {
-            rangesFrom++;
+            rangesFrom += 1;
             rangesInsert = null;
           } else if (str[i - 1] === " ") {
-            rangesTo--;
+            rangesTo -= 1;
             rangesInsert = null;
           }
         }
@@ -277,7 +326,7 @@ function isMediaD(originalStr, originalOpts) {
   var defaults = {
     offset: 0
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error("is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ".concat(opts.offset, " (type ").concat(_typeof(opts.offset), ")"));
   }
@@ -286,7 +335,8 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (typeof originalStr !== "string") {
     return [];
-  } else if (!originalStr.trim()) {
+  }
+  if (!originalStr.trim()) {
     return [];
   }
   var res = [];
@@ -324,7 +374,8 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (recognisedMediaTypes.includes(str)) {
     return res;
-  } else if (["only", "not"].includes(str)) {
+  }
+  if (["only", "not"].includes(str)) {
     res.push({
       idxFrom: nonWhitespaceStart + opts.offset,
       idxTo: nonWhitespaceEnd + opts.offset,
@@ -361,9 +412,11 @@ function isMediaD(originalStr, originalOpts) {
           wrongOrder = true;
         }
         return [acc[0], acc[1] + 1];
-      } else if (curr === "(") {
+      }
+      if (curr === "(") {
         return [acc[0] + 1, acc[1]];
-      } else if (curr === ";") {
+      }
+      if (curr === ";") {
         res.push({
           idxFrom: idx + opts.offset,
           idxTo: idx + 1 + opts.offset,
@@ -433,7 +486,7 @@ function isMediaD(originalStr, originalOpts) {
       innerWhitespaceAllowed: true,
       separator: ",",
       cb: function cb(idxFrom, idxTo) {
-        loop(str, Object.assign({}, opts, {
+        loop(str, _objectSpread2({}, opts, {
           idxFrom: idxFrom - opts.offset,
           idxTo: idxTo - opts.offset
         }), res);
