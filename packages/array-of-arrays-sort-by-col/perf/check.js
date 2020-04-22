@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("../");
+const f = require("..");
+
 const testme = () => f([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 1);
 
 // action

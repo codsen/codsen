@@ -73,8 +73,8 @@ function sortBySubarray(arr) {
       throw new Error("array-of-arrays-sort-by-col: [THROW_ID_02]: The second input argument, index of the column to sort by (axis), is not integer (incl. zero)! It's currently given as:\n".concat(JSON.stringify(axis, null, 0)));
     }
   }
-  var maxLength = Math.max.apply(Math, _toConsumableArray(arr.map(function (arr) {
-    return arr.length;
+  var maxLength = Math.max.apply(Math, _toConsumableArray(arr.map(function (arr2) {
+    return arr2.length;
   })));
   if (maxLength === 0) {
     return arr;
@@ -107,11 +107,10 @@ function sortBySubarray(arr) {
           } else {
             return -1;
           }
-        } else {
-          if (existy(arr2[axis - i])) {
+        }
+        else if (existy(arr2[axis - i])) {
             return 1;
           }
-        }
       }
       /* istanbul ignore else */
       if (axis + i < maxRangeToIterate) {
@@ -126,11 +125,10 @@ function sortBySubarray(arr) {
           } else {
             return -1;
           }
-        } else {
-          if (existy(arr2[axis + i])) {
+        }
+        else if (existy(arr2[axis + i])) {
             return 1;
           }
-        }
       }
     }
     return 0;

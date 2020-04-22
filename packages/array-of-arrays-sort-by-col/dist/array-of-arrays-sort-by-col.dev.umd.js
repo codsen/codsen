@@ -88,14 +88,15 @@
 
     if (!Number.isInteger(axis)) {
       if (/^\d*$/.test(axis)) {
+        // eslint-disable-next-line no-param-reassign
         axis = parseInt(axis, 10);
       } else {
         throw new Error("array-of-arrays-sort-by-col: [THROW_ID_02]: The second input argument, index of the column to sort by (axis), is not integer (incl. zero)! It's currently given as:\n".concat(JSON.stringify(axis, null, 0)));
       }
     }
 
-    var maxLength = Math.max.apply(Math, _toConsumableArray(arr.map(function (arr) {
-      return arr.length;
+    var maxLength = Math.max.apply(Math, _toConsumableArray(arr.map(function (arr2) {
+      return arr2.length;
     })));
 
     if (maxLength === 0) {
@@ -145,13 +146,11 @@
             } else {
               return -1;
             }
-          } else {
-            // arr1 value is null or undefined
-            // it's enough for arr2 not to be null or undefined and it goes on top:
-            if (existy(arr2[axis - i])) {
+          } // arr1 value is null or undefined
+          // it's enough for arr2 not to be null or undefined and it goes on top:
+          else if (existy(arr2[axis - i])) {
               return 1;
             }
-          }
         }
         /* istanbul ignore else */
 
@@ -171,13 +170,11 @@
             } else {
               return -1;
             }
-          } else {
-            // arr1 value is null or undefined
-            // it's enough for arr2 not to be null or undefined and it goes on top:
-            if (existy(arr2[axis + i])) {
+          } // arr1 value is null or undefined
+          // it's enough for arr2 not to be null or undefined and it goes on top:
+          else if (existy(arr2[axis + i])) {
               return 1;
             }
-          }
         }
       } // 3. if by now any of returns hasn't happened yet, these two rows are equal
 

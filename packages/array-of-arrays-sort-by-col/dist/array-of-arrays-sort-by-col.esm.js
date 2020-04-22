@@ -33,7 +33,7 @@ function sortBySubarray(arr, axis = 0) {
       );
     }
   }
-  const maxLength = Math.max(...arr.map((arr) => arr.length));
+  const maxLength = Math.max(...arr.map((arr2) => arr2.length));
   if (maxLength === 0) {
     return arr;
   }
@@ -73,10 +73,9 @@ function sortBySubarray(arr, axis = 0) {
           } else {
             return -1;
           }
-        } else {
-          if (existy(arr2[axis - i])) {
-            return 1;
-          }
+        }
+        else if (existy(arr2[axis - i])) {
+          return 1;
         }
       }
       /* istanbul ignore else */
@@ -92,10 +91,9 @@ function sortBySubarray(arr, axis = 0) {
           } else {
             return -1;
           }
-        } else {
-          if (existy(arr2[axis + i])) {
-            return 1;
-          }
+        }
+        else if (existy(arr2[axis + i])) {
+          return 1;
         }
       }
     }
