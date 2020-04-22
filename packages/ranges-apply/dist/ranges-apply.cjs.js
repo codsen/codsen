@@ -35,7 +35,7 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function rangesApply(str, rangesArr, _progressFn) {
+function rangesApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
   var lastPercentageDone = 0;
   if (arguments.length === 0) {
@@ -44,16 +44,20 @@ function rangesApply(str, rangesArr, _progressFn) {
   if (!isStr(str)) {
     throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (rangesArr === null) {
+  if (originalRangesArr === null) {
     return str;
-  } else if (!Array.isArray(rangesArr)) {
-    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(rangesArr), ", equal to: ").concat(JSON.stringify(rangesArr, null, 4)));
+  }
+  if (!Array.isArray(originalRangesArr)) {
+    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
   }
   if (_progressFn && typeof _progressFn !== "function") {
     throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
   }
-  if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-    rangesArr = [rangesArr];
+  var rangesArr;
+  if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+    rangesArr = [Array.from(originalRangesArr)];
+  } else {
+    rangesArr = Array.from(originalRangesArr);
   }
   var len = rangesArr.length;
   var counter = 0;
@@ -82,7 +86,7 @@ function rangesApply(str, rangesArr, _progressFn) {
         throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
       }
     }
-    counter++;
+    counter += 1;
   });
   var workingRanges = rangesMerge(rangesArr, {
     progressFn: function progressFn(perc) {

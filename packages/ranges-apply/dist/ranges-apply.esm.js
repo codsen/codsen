@@ -15,7 +15,7 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function rangesApply(str, rangesArr, progressFn) {
+function rangesApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;
   let lastPercentageDone = 0;
   if (arguments.length === 0) {
@@ -30,12 +30,13 @@ function rangesApply(str, rangesArr, progressFn) {
       )}`
     );
   }
-  if (rangesArr === null) {
+  if (originalRangesArr === null) {
     return str;
-  } else if (!Array.isArray(rangesArr)) {
+  }
+  if (!Array.isArray(originalRangesArr)) {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(
-        rangesArr,
+      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
+        originalRangesArr,
         null,
         4
       )}`
@@ -50,14 +51,17 @@ function rangesApply(str, rangesArr, progressFn) {
       )}`
     );
   }
+  let rangesArr;
   if (
-    Array.isArray(rangesArr) &&
-    ((Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0) ||
-      /^\d*$/.test(rangesArr[0])) &&
-    ((Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0) ||
-      /^\d*$/.test(rangesArr[1]))
+    Array.isArray(originalRangesArr) &&
+    ((Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0) ||
+      /^\d*$/.test(originalRangesArr[0])) &&
+    ((Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0) ||
+      /^\d*$/.test(originalRangesArr[1]))
   ) {
-    rangesArr = [rangesArr];
+    rangesArr = [Array.from(originalRangesArr)];
+  } else {
+    rangesArr = Array.from(originalRangesArr);
   }
   const len = rangesArr.length;
   let counter = 0;
@@ -112,7 +116,7 @@ function rangesApply(str, rangesArr, progressFn) {
         );
       }
     }
-    counter++;
+    counter += 1;
   });
   const workingRanges = rangesMerge(rangesArr, {
     progressFn: (perc) => {

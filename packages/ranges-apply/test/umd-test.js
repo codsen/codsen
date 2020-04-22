@@ -1,5 +1,5 @@
-const t = require("tap");
-const r1 = require("../dist/ranges-apply.umd");
+import tap from "tap";
+import r1 from "../dist/ranges-apply.umd";
 
 const str = "delete me bbb and me too ccc";
 const ranges = [
@@ -8,7 +8,7 @@ const ranges = [
 ];
 const res = "bbb ccc";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.same(r1(str, ranges), res);
   t.end();
 });

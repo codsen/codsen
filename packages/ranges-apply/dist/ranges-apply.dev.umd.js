@@ -50,7 +50,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -81,7 +83,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -136,7 +138,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -161,7 +165,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -232,7 +237,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, _progressFn) {
+  function rangesApply(str, originalRangesArr, _progressFn) {
     var percentageDone = 0;
     var lastPercentageDone = 0;
 
@@ -244,18 +249,24 @@
       throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(rangesArr), ", equal to: ").concat(JSON.stringify(rangesArr, null, 4)));
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
     }
 
     if (_progressFn && typeof _progressFn !== "function") {
       throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    var rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     } // allocate first 10% of progress to this stage
 
 
@@ -292,7 +303,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     }); // allocate another 10% of the progress indicator length to the rangesMerge step:
 
     var workingRanges = mergeRanges(rangesArr, {
@@ -314,7 +325,8 @@
     var len2 = workingRanges.length;
 
     if (len2 > 0) {
-      var tails = str.slice(workingRanges[len2 - 1][1]);
+      var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
+
       str = workingRanges.reduce(function (acc, val, i, arr) {
         if (_progressFn) {
           // since "perc" is already from zero to hundred, we just divide by 10 and
@@ -331,7 +343,8 @@
         var beginning = i === 0 ? 0 : arr[i - 1][1];
         var ending = arr[i][0];
         return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
-      }, "");
+      }, ""); // eslint-disable-next-line no-param-reassign
+
       str += tails;
     }
 
