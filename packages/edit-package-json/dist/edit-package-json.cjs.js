@@ -42,7 +42,8 @@ function isNum(something) {
 function stringifyPath(something) {
   if (isArr(something)) {
     return something.join(".");
-  } else if (isStr(something)) {
+  }
+  if (isStr(something)) {
     return something;
   }
   return String(something);
@@ -290,24 +291,25 @@ function main(_ref) {
             }
             var endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
             if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt]) && str[stringLeftRight.right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== "\"") {
-              endingPartsBeginning = endingPartsBeginning - 1;
+              endingPartsBeginning -= 1;
             }
             if (currentlyWithinArray && str[valueStartedAt - 1] === "\"") {
-              valueStartedAt = valueStartedAt - 1;
+              valueStartedAt -= 1;
             }
             return "".concat(str.slice(0, valueStartedAt)).concat(stringifyAndEscapeValue(calculatedValueToInsert)).concat(extraLineBreak).concat(str.slice(endingPartsBeginning));
-          } else if (mode === "del") {
+          }
+          if (mode === "del") {
             log();
             log("851 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
             var startingPoint = stringLeftRight.left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1) + 1;
             log();
             var endingPoint = i + (str[i].trim() ? 1 : 0);
             if (str[startingPoint - 1] === "," && ["}", "]"].includes(str[stringLeftRight.right(str, endingPoint - 1)])) {
-              startingPoint--;
+              startingPoint -= 1;
               log();
             }
             if (str[endingPoint] === ",") {
-              endingPoint++;
+              endingPoint += 1;
               log();
             }
             log("883 ".concat("\x1B[".concat(33, "m", "startingPoint", "\x1B[", 39, "m"), " = ", JSON.stringify(startingPoint, null, 4), "; ", "\x1B[".concat(33, "m", "endingPoint", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(endingPoint, null, 4), ";"));

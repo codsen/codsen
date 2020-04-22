@@ -1,13 +1,12 @@
-const t = require("tap");
-const fs = require("fs");
-const fsp = fs.promises;
-const { set } = require("../dist/edit-package-json.cjs");
-const objectPath = require("object-path");
-const traverse = require("ast-monkey-traverse");
-const globby = require("globby");
-const path = require("path");
-const pMap = require("p-map");
-const clone = require("lodash.clonedeep");
+import tap from "tap";
+import { promises as fsp } from "fs";
+import objectPath from "object-path";
+import traverse from "ast-monkey-traverse";
+import globby from "globby";
+import path from "path";
+import pMap from "p-map";
+import clone from "lodash.clonedeep";
+import { set } from "../dist/edit-package-json.esm";
 
 function isStr(something) {
   return typeof something === "string";
@@ -19,15 +18,15 @@ globby([
   "!**/test/**",
 ])
   .then((arr) =>
-    pMap(arr, (path) => {
+    pMap(arr, (path2) => {
       return fsp
-        .readFile(path)
+        .readFile(path2)
         .then((contents) => (contents ? JSON.parse(contents) : {}));
     })
   )
   .then((objectsArr) => {
     // console.log(objectsArr.length);
-    t.test("validate the incoming parsed package.json count", (t) => {
+    tap.test("validate the incoming parsed package.json count", (t) => {
       t.ok(
         objectsArr.length,
         `${objectsArr.length} package.json objects are parsed and fed here`
@@ -51,7 +50,7 @@ globby([
         try {
           calculated = JSON.parse(amended);
         } catch (e) {
-          t.test(`failure in set()`, (t) => {
+          tap.test(`failure in set()`, (t) => {
             t.fail(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -65,7 +64,7 @@ globby([
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
         } catch (e) {
-          t.test(`failure in objectPath.set():`, (t) => {
+          tap.test(`failure in objectPath.set():`, (t) => {
             t.fail(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -78,7 +77,7 @@ globby([
         if (!(isStr(key) && key.includes("."))) {
           // only run the test if key's name doesn't include a dot.
           // Object-path won't work while this program will but still we can't compare.
-          t.test(
+          tap.test(
             `${idx} - ${innerObj.path} - our set() is identical to object-path.set()`,
             (t) => {
               t.same(

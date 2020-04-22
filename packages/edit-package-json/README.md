@@ -230,7 +230,7 @@ Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-pa
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
-[cov-img]: https://img.shields.io/badge/coverage-98.27%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-99.07%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/edit-package-json

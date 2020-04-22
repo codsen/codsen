@@ -1,10 +1,8 @@
-const t = require("tap");
-const path = require("path");
-const fs = require("fs");
-const read = fs.readFileSync;
-const write = fs.writeFileSync;
-const { set, del } = require("../dist/edit-package-json.cjs");
-const objectPath = require("object-path");
+import tap from "tap";
+import path from "path";
+import { readFileSync as read, writeFileSync as write } from "fs";
+import objectPath from "object-path";
+import { set, del } from "../dist/edit-package-json.esm";
 
 function compare(t, testName, pathToProcess, val) {
   const isSet = arguments.length === 4;
@@ -73,7 +71,7 @@ function compare(t, testName, pathToProcess, val) {
 
 // if there's fourth input argument, it's SET(), if not, it's DEL()
 
-t.test(
+tap.test(
   "deletes a key from package.json - scenario from update-versions package",
   (t) => {
     compare(t, "upd", "lect.various.devDependencies.4");
@@ -81,7 +79,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "deletes a key from key which has a value with escaped quotes - minified",
   (t) => {
     compare(t, "escaped-quotes-minified", "a");
@@ -89,7 +87,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "deletes a key from key which has a value with escaped quotes - normal",
   (t) => {
     compare(t, "escaped-quotes", "a");
@@ -97,17 +95,17 @@ t.test(
   }
 );
 
-t.test("updates a key 1", (t) => {
+tap.test("updates a key 1", (t) => {
   compare(t, "bug1", "dependencies.yz", "^1.2.17");
   t.end();
 });
 
-t.test("updates a key 2", (t) => {
+tap.test("updates a key 2", (t) => {
   compare(t, "bug2", "gh.yz", "3");
   t.end();
 });
 
-t.test("updates a key 3", (t) => {
+tap.test("updates a key 3", (t) => {
   compare(t, "bug3", "gh.yz", "3");
   t.end();
 });

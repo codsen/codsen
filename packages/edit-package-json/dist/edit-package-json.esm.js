@@ -20,7 +20,8 @@ function isNum(something) {
 function stringifyPath(something) {
   if (isArr(something)) {
     return something.join(".");
-  } else if (isStr(something)) {
+  }
+  if (isStr(something)) {
     return something;
   }
   return String(something);
@@ -507,15 +508,16 @@ function main({ str, path, valToInsert, mode }) {
             (str[endingPartsBeginning - 1] === "," &&
               str[valueStartedAt - 1] !== `"`)
           ) {
-            endingPartsBeginning = endingPartsBeginning - 1;
+            endingPartsBeginning -= 1;
           }
           if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
-            valueStartedAt = valueStartedAt - 1;
+            valueStartedAt -= 1;
           }
           return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(
             calculatedValueToInsert
           )}${extraLineBreak}${str.slice(endingPartsBeginning)}`;
-        } else if (mode === "del") {
+        }
+        if (mode === "del") {
           log();
           log(
             `851 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
@@ -537,11 +539,11 @@ function main({ str, path, valToInsert, mode }) {
             str[startingPoint - 1] === "," &&
             ["}", "]"].includes(str[right(str, endingPoint - 1)])
           ) {
-            startingPoint--;
+            startingPoint -= 1;
             log();
           }
           if (str[endingPoint] === ",") {
-            endingPoint++;
+            endingPoint += 1;
             log();
           }
           log(

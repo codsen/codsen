@@ -2076,9 +2076,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2106,9 +2110,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -2147,7 +2155,7 @@
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
-        i++;
+        i += 1;
         continue;
       }
 
@@ -2164,7 +2172,7 @@
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
         } else {
-          i++;
+          i += 1;
         }
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
@@ -2189,10 +2197,10 @@
           leftmostChar = whattsOnTheSide;
         }
       } else if (optional) {
-        i++;
+        i += 1;
         continue;
       } else if (satiated) {
-        i++;
+        i += 1;
         satiated = undefined;
         continue;
       } else {
@@ -2222,7 +2230,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -2241,7 +2251,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -2274,7 +2286,7 @@
     } while (lastRes);
 
     if (lastIdx != null && direction === "right") {
-      lastIdx++;
+      lastIdx += 1;
     }
 
     if (lastIdx === null) {
@@ -2291,7 +2303,9 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        }
+
+        if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -2316,7 +2330,7 @@
         return str.length;
       }
 
-      return whatsOnTheRight ? whatsOnTheRight : str.length;
+      return whatsOnTheRight || str.length;
     }
 
     if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
@@ -2328,7 +2342,9 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      }
+
+      if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
           if (`\n\r`.includes(str[y]) || str[y].trim()) {
             return y + 1 + (str[y].trim() ? 1 : 0);
@@ -2337,9 +2353,13 @@
       }
 
       return 0;
-    } else if (opts.mode === 1) {
+    }
+
+    if (opts.mode === 1) {
       return lastIdx;
-    } else if (opts.mode === 2) {
+    }
+
+    if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
@@ -2366,7 +2386,9 @@
     };
 
     if (lodash_isplainobject(args[0])) {
-      const opts = Object.assign({}, defaults, lodash_clonedeep(args[0]));
+      const opts = { ...defaults,
+        ...lodash_clonedeep(args[0])
+      };
 
       if (!opts.mode) {
         opts.mode = 0;
@@ -2377,7 +2399,9 @@
       }
 
       return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
-    } else if (!isStr(args[0])) {
+    }
+
+    if (!isStr(args[0])) {
       return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
     }
 
@@ -2405,7 +2429,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -2436,7 +2462,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -2491,7 +2517,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -2516,7 +2544,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -2596,7 +2625,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -2608,18 +2637,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -2654,7 +2689,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -2705,7 +2740,9 @@
   function stringifyPath(something) {
     if (isArr(something)) {
       return something.join(".");
-    } else if (isStr$2(something)) {
+    }
+
+    if (isStr$2(something)) {
       return something;
     }
 
@@ -3146,15 +3183,17 @@
               var endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
 
               if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt]) && str[right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== "\"") {
-                endingPartsBeginning = endingPartsBeginning - 1;
+                endingPartsBeginning -= 1;
               }
 
               if (currentlyWithinArray && str[valueStartedAt - 1] === "\"") {
-                valueStartedAt = valueStartedAt - 1;
+                valueStartedAt -= 1;
               }
 
               return "".concat(str.slice(0, valueStartedAt)).concat(stringifyAndEscapeValue(calculatedValueToInsert)).concat(extraLineBreak).concat(str.slice(endingPartsBeginning));
-            } else if (mode === "del") {
+            }
+
+            if (mode === "del") {
               // 1. if del()
               log();
               log("851 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
@@ -3163,12 +3202,12 @@
               var endingPoint = i + (str[i].trim() ? 1 : 0);
 
               if (str[startingPoint - 1] === "," && ["}", "]"].includes(str[right(str, endingPoint - 1)])) {
-                startingPoint--;
+                startingPoint -= 1;
                 log();
               }
 
               if (str[endingPoint] === ",") {
-                endingPoint++;
+                endingPoint += 1;
                 log();
               }
 
