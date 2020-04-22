@@ -29,7 +29,8 @@ function allValuesEqualTo(input, value, opts) {
       }
     }
     return true;
-  } else if (isObj(input)) {
+  }
+  if (isObj(input)) {
     const keys = Object.keys(input);
     if (keys.length === 0) {
       return true;
@@ -70,7 +71,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   const defaults = {
     arraysMustNotContainPlaceholders: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 

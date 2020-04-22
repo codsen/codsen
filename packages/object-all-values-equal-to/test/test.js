@@ -1,10 +1,10 @@
-const t = require("tap");
-const allValuesEqualTo = require("../dist/object-all-values-equal-to.cjs");
+import tap from "tap";
+import allValuesEqualTo from "../dist/object-all-values-equal-to.esm";
 
 // 01. B.A.U.
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - nested objects", (t) => {
+tap.test("01.01 - nested objects", (t) => {
   t.same(
     allValuesEqualTo(
       {
@@ -44,7 +44,7 @@ t.test("01.01 - nested objects", (t) => {
   t.end();
 });
 
-t.test("01.02 - nested array", (t) => {
+tap.test("01.02 - nested array", (t) => {
   t.same(
     allValuesEqualTo(
       [
@@ -81,7 +81,7 @@ t.test("01.02 - nested array", (t) => {
   t.end();
 });
 
-t.test("01.03 - nulls", (t) => {
+tap.test("01.03 - nulls", (t) => {
   t.same(allValuesEqualTo([null], null), false, "01.03.01");
   t.same(
     allValuesEqualTo([null], null, { arraysMustNotContainPlaceholders: false }),
@@ -91,7 +91,7 @@ t.test("01.03 - nulls", (t) => {
   t.end();
 });
 
-t.test("01.04 - empty obj/arr", (t) => {
+tap.test("01.04 - empty obj/arr", (t) => {
   t.same(allValuesEqualTo([], false), true, "01.04.01");
   t.same(allValuesEqualTo({}, false), true, "01.04.02");
   t.same(
@@ -105,7 +105,7 @@ t.test("01.04 - empty obj/arr", (t) => {
 // 02. Throws
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - various throws", (t) => {
+tap.test("02.01 - various throws", (t) => {
   t.throws(() => {
     allValuesEqualTo();
   }, /THROW_ID_01/); // first arg missing - will throw
