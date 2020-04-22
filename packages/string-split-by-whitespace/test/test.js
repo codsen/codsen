@@ -1,12 +1,12 @@
-const t = require("tap");
-const strFindHeadsTails = require("string-find-heads-tails");
-const split = require("../dist/string-split-by-whitespace.cjs");
+import tap from "tap";
+import strFindHeadsTails from "string-find-heads-tails";
+import split from "../dist/string-split-by-whitespace.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - wrong/missing input = throw", (t) => {
+tap.test("01.01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     split();
   }, /THROW_ID_01/g);
@@ -20,12 +20,12 @@ t.test("01.01 - wrong/missing input = throw", (t) => {
   t.end();
 });
 
-t.test("01.02 - empty string as input", (t) => {
+tap.test("01.02 - empty string as input", (t) => {
   t.same(split(""), [], "01.02");
   t.end();
 });
 
-t.test("01.03 - opts contain non-array elements", (t) => {
+tap.test("01.03 - opts contain non-array elements", (t) => {
   t.throws(() => {
     split("a b", { ignoreRanges: ["a"] });
   }, /THROW_ID_03/g);
@@ -36,7 +36,7 @@ t.test("01.03 - opts contain non-array elements", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - splits two", (t) => {
+tap.test("02.01 - splits two", (t) => {
   t.same(split("a b"), ["a", "b"], "02.01.01");
   t.same(split(" a  b "), ["a", "b"], "02.01.02");
   t.same(split("a  b "), ["a", "b"], "02.01.03");
@@ -55,7 +55,7 @@ t.test("02.01 - splits two", (t) => {
   t.end();
 });
 
-t.test("02.02 - single substring", (t) => {
+tap.test("02.02 - single substring", (t) => {
   t.same(split("a"), ["a"], "02.02.01");
   t.same(split(" a"), ["a"], "02.02.02");
   t.same(split("a "), ["a"], "02.02.03");
@@ -69,7 +69,7 @@ t.test("02.02 - single substring", (t) => {
 // 03. opts.ignoreRanges
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - opts.ignoreRanges offset the start", (t) => {
+tap.test("03.01 - opts.ignoreRanges offset the start", (t) => {
   t.same(
     split("a b c d e", {
       ignoreRanges: [[0, 2]],
@@ -80,7 +80,7 @@ t.test("03.01 - opts.ignoreRanges offset the start", (t) => {
   t.end();
 });
 
-t.test("03.02 - starts from the middle of a string", (t) => {
+tap.test("03.02 - starts from the middle of a string", (t) => {
   t.same(
     split("abcdef", {
       ignoreRanges: [[1, 5]],
@@ -91,7 +91,7 @@ t.test("03.02 - starts from the middle of a string", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   '03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails',
   (t) => {
     const input = "some interesting {{text}} {% and %} {{ some more }} text.";
@@ -115,7 +115,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   '03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables',
   (t) => {
     const input = "some interesting {{text}} {% and %} {{ some more }} text.";

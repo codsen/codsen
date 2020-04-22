@@ -24,7 +24,7 @@ function split(str, originalOpts) {
   const defaults = {
     ignoreRanges: [],
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (
     opts.ignoreRanges.length > 0 &&
     !opts.ignoreRanges.every((arr) => Array.isArray(arr))
