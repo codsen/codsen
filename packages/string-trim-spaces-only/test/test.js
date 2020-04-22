@@ -1,9 +1,9 @@
-const t = require("tap");
-const trim = require("../dist/string-trim-spaces-only.cjs");
+import tap from "tap";
+import trim from "../dist/string-trim-spaces-only.esm";
 
 const rawnbsp = "\u00a0";
 
-t.test("01 - empty string, defaults", (t) => {
+tap.test("01 - empty string, defaults", (t) => {
   t.same(
     trim(""),
     {
@@ -15,7 +15,7 @@ t.test("01 - empty string, defaults", (t) => {
   t.end();
 });
 
-t.test("02 - empty string, classicTrim=false", (t) => {
+tap.test("02 - empty string, classicTrim=false", (t) => {
   t.same(
     trim("", { classicTrim: false }),
     {
@@ -27,7 +27,7 @@ t.test("02 - empty string, classicTrim=false", (t) => {
   t.end();
 });
 
-t.test("03 - empty string, classicTrim=true", (t) => {
+tap.test("03 - empty string, classicTrim=true", (t) => {
   t.same(
     trim("", { classicTrim: true }),
     {
@@ -39,7 +39,7 @@ t.test("03 - empty string, classicTrim=true", (t) => {
   t.end();
 });
 
-t.test("04 - single space, defaults", (t) => {
+tap.test("04 - single space, defaults", (t) => {
   t.same(
     trim(" "),
     {
@@ -51,7 +51,7 @@ t.test("04 - single space, defaults", (t) => {
   t.end();
 });
 
-t.test("05 - single space, classicTrim=false", (t) => {
+tap.test("05 - single space, classicTrim=false", (t) => {
   t.same(
     trim(" ", { classicTrim: false }),
     {
@@ -63,7 +63,7 @@ t.test("05 - single space, classicTrim=false", (t) => {
   t.end();
 });
 
-t.test("06 - single space, classicTrim=true", (t) => {
+tap.test("06 - single space, classicTrim=true", (t) => {
   t.same(
     trim(" ", { classicTrim: true }),
     {
@@ -75,27 +75,27 @@ t.test("06 - single space, classicTrim=true", (t) => {
   t.end();
 });
 
-t.test("07 - single letter", (t) => {
+tap.test("07 - single letter", (t) => {
   t.same(trim("a"), { res: "a", ranges: [] }, "07");
   t.end();
 });
 
-t.test("08 - single letter, classicTrim=false", (t) => {
+tap.test("08 - single letter, classicTrim=false", (t) => {
   t.same(trim("a", { classicTrim: false }), { res: "a", ranges: [] }, "08");
   t.end();
 });
 
-t.test("09 - single letter, classicTrim=true", (t) => {
+tap.test("09 - single letter, classicTrim=true", (t) => {
   t.same(trim("a", { classicTrim: true }), { res: "a", ranges: [] }, "09");
   t.end();
 });
 
-t.test("10 - leading space, default", (t) => {
+tap.test("10 - leading space, default", (t) => {
   t.same(trim(" a a"), { res: "a a", ranges: [[0, 1]] }, "10");
   t.end();
 });
 
-t.test("11 - leading space, classicTrim=false", (t) => {
+tap.test("11 - leading space, classicTrim=false", (t) => {
   t.same(
     trim(" a a", { classicTrim: false }),
     { res: "a a", ranges: [[0, 1]] },
@@ -104,7 +104,7 @@ t.test("11 - leading space, classicTrim=false", (t) => {
   t.end();
 });
 
-t.test("12 - leading space, classicTrim=true", (t) => {
+tap.test("12 - leading space, classicTrim=true", (t) => {
   t.same(
     trim(" a a", { classicTrim: true }),
     { res: "a a", ranges: [[0, 1]] },
@@ -113,12 +113,12 @@ t.test("12 - leading space, classicTrim=true", (t) => {
   t.end();
 });
 
-t.test("13 - trailing space, defaults", (t) => {
+tap.test("13 - trailing space, defaults", (t) => {
   t.same(trim("a a "), { res: "a a", ranges: [[3, 4]] }, "13");
   t.end();
 });
 
-t.test("14 - trailing space, defaults", (t) => {
+tap.test("14 - trailing space, defaults", (t) => {
   t.same(
     trim("a a ", { classicTrim: false }),
     { res: "a a", ranges: [[3, 4]] },
@@ -127,7 +127,7 @@ t.test("14 - trailing space, defaults", (t) => {
   t.end();
 });
 
-t.test("15 - trailing space, defaults", (t) => {
+tap.test("15 - trailing space, defaults", (t) => {
   t.same(
     trim("a a ", { classicTrim: true }),
     { res: "a a", ranges: [[3, 4]] },
@@ -136,7 +136,7 @@ t.test("15 - trailing space, defaults", (t) => {
   t.end();
 });
 
-t.test("16 - space on both sides", (t) => {
+tap.test("16 - space on both sides", (t) => {
   t.same(
     trim("   a a     "),
     {
@@ -151,7 +151,7 @@ t.test("16 - space on both sides", (t) => {
   t.end();
 });
 
-t.test("17 - space on both sides - copes with emoji", (t) => {
+tap.test("17 - space on both sides - copes with emoji", (t) => {
   t.same(
     trim("   👍     "),
     {
@@ -166,7 +166,7 @@ t.test("17 - space on both sides - copes with emoji", (t) => {
   t.end();
 });
 
-t.test("18 - space on both sides - classicTrim=true", (t) => {
+tap.test("18 - space on both sides - classicTrim=true", (t) => {
   t.same(
     trim("   a a     ", { classicTrim: true }),
     {
@@ -181,7 +181,7 @@ t.test("18 - space on both sides - classicTrim=true", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "19 - space on both sides - copes with emoji - classicTrim=true",
   (t) => {
     t.same(
@@ -199,7 +199,7 @@ t.test(
   }
 );
 
-t.test("20 - trimming hits the newline and stops", (t) => {
+tap.test("20 - trimming hits the newline and stops", (t) => {
   t.same(
     trim("   \n  a a  \n   "),
     {
@@ -214,7 +214,7 @@ t.test("20 - trimming hits the newline and stops", (t) => {
   t.end();
 });
 
-t.test("21 - trimming hits the tab and stops", (t) => {
+tap.test("21 - trimming hits the tab and stops", (t) => {
   t.same(
     trim("   \t  a a  \t   "),
     {
@@ -229,7 +229,7 @@ t.test("21 - trimming hits the tab and stops", (t) => {
   t.end();
 });
 
-t.test("22 - trimming hits the newline and stops - classicTrim", (t) => {
+tap.test("22 - trimming hits the newline and stops - classicTrim", (t) => {
   t.same(
     trim("   \n  a a  \n   ", { classicTrim: true }),
     {
@@ -244,7 +244,7 @@ t.test("22 - trimming hits the newline and stops - classicTrim", (t) => {
   t.end();
 });
 
-t.test("23 - trimming hits the tab and stops - classicTrim", (t) => {
+tap.test("23 - trimming hits the tab and stops - classicTrim", (t) => {
   t.same(
     trim("   \t  a a  \t   ", { classicTrim: true }),
     {
@@ -259,7 +259,7 @@ t.test("23 - trimming hits the tab and stops - classicTrim", (t) => {
   t.end();
 });
 
-t.test("24 - non-string input", (t) => {
+tap.test("24 - non-string input", (t) => {
   t.throws(() => {
     trim(true);
   }, /THROW_ID_01/g);
@@ -297,7 +297,7 @@ t.test("24 - non-string input", (t) => {
 });
 
 // opts.space
-t.test("25 - opts.space - default", (t) => {
+tap.test("25 - opts.space - default", (t) => {
   t.same(
     trim("   a b c   "),
     {
@@ -312,7 +312,7 @@ t.test("25 - opts.space - default", (t) => {
   t.end();
 });
 
-t.test("26 - opts.space - tabs", (t) => {
+tap.test("26 - opts.space - tabs", (t) => {
   t.same(
     trim(" \t  a b c  \t "),
     {
@@ -366,7 +366,7 @@ t.test("26 - opts.space - tabs", (t) => {
 });
 
 // opts.cr
-t.test("27 - opts.cr", (t) => {
+tap.test("27 - opts.cr", (t) => {
   t.same(
     trim(" \t  a b c  \t "),
     {
@@ -431,7 +431,7 @@ t.test("27 - opts.cr", (t) => {
 });
 
 // opts.cr
-t.test("28 - opts.lf", (t) => {
+tap.test("28 - opts.lf", (t) => {
   t.same(
     trim(" \t  a b c  \t "),
     {
@@ -496,7 +496,7 @@ t.test("28 - opts.lf", (t) => {
 });
 
 // opts.tab
-t.test("29 - opts.tab", (t) => {
+tap.test("29 - opts.tab", (t) => {
   t.same(
     trim(" \n  a b c  \n "),
     {
@@ -561,7 +561,7 @@ t.test("29 - opts.tab", (t) => {
 });
 
 // opts.nbsp
-t.test("30 - opts.nbsp", (t) => {
+tap.test("30 - opts.nbsp", (t) => {
   t.same(
     trim(" \n  a b c  \n "),
     {

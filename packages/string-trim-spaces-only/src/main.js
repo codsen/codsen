@@ -18,7 +18,7 @@ function trimSpaces(s, originalOpts) {
     space: true,
     nbsp: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   function check(char) {
     return (
