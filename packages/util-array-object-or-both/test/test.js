@@ -1,11 +1,11 @@
-const t = require("tap");
-const aoob = require("../dist/util-array-object-or-both.cjs");
+import tap from "tap";
+import aoob from "../dist/util-array-object-or-both.esm";
 
 // ===========
 // precautions
 // ===========
 
-t.test("1.1 - wrong/missing inputs - throws", (t) => {
+tap.test("1.1 - wrong/missing inputs - throws", (t) => {
   t.throws(() => {
     aoob();
   }, /THROW_ID_01/g);
@@ -31,7 +31,7 @@ t.test("1.1 - wrong/missing inputs - throws", (t) => {
 // BAU
 // ===
 
-t.test("2.1 - arrays", (t) => {
+tap.test("2.1 - arrays", (t) => {
   t.same(aoob("array"), "array", "2.1.1");
   t.same(aoob("Array"), "array", "2.1.2");
   t.same(aoob("\n\nArray\t \t"), "array", "2.1.3");
@@ -41,7 +41,7 @@ t.test("2.1 - arrays", (t) => {
   t.end();
 });
 
-t.test("2.2 - objects", (t) => {
+tap.test("2.2 - objects", (t) => {
   t.same(aoob("object"), "object", "2.2.1");
   t.same(aoob("Object"), "object", "2.2.2");
   t.same(aoob("obj"), "object", "2.2.3");
@@ -54,7 +54,7 @@ t.test("2.2 - objects", (t) => {
   t.end();
 });
 
-t.test("2.3 - any", (t) => {
+tap.test("2.3 - any", (t) => {
   t.same(aoob("any"), "any", "2.3.1");
   t.same(aoob("all"), "any", "2.3.2");
   t.same(aoob("Everything"), "any", "2.3.3");
@@ -68,7 +68,7 @@ t.test("2.3 - any", (t) => {
 // opts
 // ====
 
-t.test("3.1 - opts.msg", (t) => {
+tap.test("3.1 - opts.msg", (t) => {
   t.same(
     aoob("object", {
       msg: "z",

@@ -58,7 +58,7 @@ function arrObjOrBoth(str, originalOpts) {
     msg: "",
     optsVarName: "given variable",
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (existy(opts.msg) && opts.msg.length > 0) {
     opts.msg = `${opts.msg.trim()} `;
   }
@@ -67,9 +67,11 @@ function arrObjOrBoth(str, originalOpts) {
   }
   if (includes(onlyObjectValues, str.toLowerCase().trim())) {
     return "object";
-  } else if (includes(onlyArrayValues, str.toLowerCase().trim())) {
+  }
+  if (includes(onlyArrayValues, str.toLowerCase().trim())) {
     return "array";
-  } else if (includes(onlyAnyValues, str.toLowerCase().trim())) {
+  }
+  if (includes(onlyAnyValues, str.toLowerCase().trim())) {
     return "any";
   }
   throw new TypeError(
