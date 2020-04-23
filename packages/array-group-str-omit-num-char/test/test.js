@@ -1,17 +1,17 @@
-import t from "tap";
+import tap from "tap";
 import group from "../dist/array-group-str-omit-num-char.esm";
 
 // ==============
 // 00. Edge cases
 // ==============
 
-t.test("00.01 - throws when the first argument is not array", (t) => {
+tap.test("00.01 - throws when the first argument is not array", (t) => {
   t.equal(group(), undefined, "00.01");
   t.same(group([]), {}, "00.04");
   t.end();
 });
 
-t.test("00.02 - second argument can be faulty, opts is simply reset", (t) => {
+tap.test("00.02 - second argument can be faulty, opts is simply reset", (t) => {
   t.same(
     group(["aaa", "bbb"], true),
     {
@@ -51,7 +51,7 @@ t.test("00.02 - second argument can be faulty, opts is simply reset", (t) => {
 // 01. BAU
 // =======
 
-t.test("01.01 - groups two kinds", (t) => {
+tap.test("01.01 - groups two kinds", (t) => {
   t.same(
     group(["aaaaaa1-1", "aaaaaa1-2", "bbbbbb", "aaaaaa1-3"]),
     {
@@ -63,7 +63,7 @@ t.test("01.01 - groups two kinds", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.02 - sneaky - wildcard pattern changes later in the traverse",
   (t) => {
     t.same(
@@ -78,7 +78,7 @@ t.test(
   }
 );
 
-t.test("01.03 - all contain digits and all are unique", (t) => {
+tap.test("01.03 - all contain digits and all are unique", (t) => {
   t.same(
     group(["a1-1", "b2-2", "c3-3", "d4-4"]),
     {
@@ -110,7 +110,7 @@ t.test("01.03 - all contain digits and all are unique", (t) => {
   t.end();
 });
 
-t.test("01.04 - nothing to group, one character", (t) => {
+tap.test("01.04 - nothing to group, one character", (t) => {
   t.same(
     group(["a", "b"]),
     {
@@ -122,7 +122,7 @@ t.test("01.04 - nothing to group, one character", (t) => {
   t.end();
 });
 
-t.test("01.05 - concerning dedupe", (t) => {
+tap.test("01.05 - concerning dedupe", (t) => {
   t.same(
     group(["a-1", "a-1", "a-1"]),
     {
@@ -144,7 +144,7 @@ t.test("01.05 - concerning dedupe", (t) => {
 // 02. ad-hoc
 // ==========
 
-t.test("02.01 - does not mutate the input array", (t) => {
+tap.test("02.01 - does not mutate the input array", (t) => {
   const source = ["aaaaaa1-1", "aaaaaa1-2", "bbbbbb", "aaaaaa1-3"];
   const res = group(Object.keys(group(source)));
   t.pass(res);
@@ -156,7 +156,7 @@ t.test("02.01 - does not mutate the input array", (t) => {
   t.end();
 });
 
-t.test("02.02 - does not mutate an empty given array", (t) => {
+tap.test("02.02 - does not mutate an empty given array", (t) => {
   const source = [];
   const res = group(Object.keys(group(source)));
   t.pass(res);
@@ -168,7 +168,7 @@ t.test("02.02 - does not mutate an empty given array", (t) => {
 // 03. opts.wildcard
 // =================
 
-t.test("03.01 - opts.wildcard", (t) => {
+tap.test("03.01 - opts.wildcard", (t) => {
   t.same(
     group(["a-1", "a-2", "a-333333", "b-1", "b-99999"]),
     {

@@ -45,9 +45,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-group-str-omit-num-char.cjs.js` | 3 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-group-str-omit-num-char.cjs.js` | 4 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-group-str-omit-num-char.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-group-str-omit-num-char.umd.js` | 11 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-group-str-omit-num-char.umd.js` | 12 KB |
 
 **[⬆ back to top](#)**
 

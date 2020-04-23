@@ -14,7 +14,8 @@ const isArr = Array.isArray;
 function groupStr(originalArr, originalOpts) {
   if (!isArr(originalArr)) {
     return originalArr;
-  } else if (!originalArr.length) {
+  }
+  if (!originalArr.length) {
     return {};
   }
   let opts;
@@ -23,9 +24,9 @@ function groupStr(originalArr, originalOpts) {
     dedupePlease: true,
   };
   if (originalOpts != null) {
-    opts = Object.assign({}, defaults, originalOpts);
+    opts = { ...defaults, ...originalOpts };
   } else {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   }
   let arr;
   if (opts.dedupePlease) {
@@ -44,18 +45,20 @@ function groupStr(originalArr, originalOpts) {
     } else {
       const wildcarded = arr[i].replace(/\d+/gm, opts.wildcard);
       if (Object.prototype.hasOwnProperty.call(compiledObj, wildcarded)) {
-        digitChunks.forEach((digitsChunkStr, i) => {
+        digitChunks.forEach((digitsChunkStr, i2) => {
           if (
-            compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i] &&
+            compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[
+              i2
+            ] &&
             digitsChunkStr !==
-              compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i]
+              compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2]
           ) {
             compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[
-              i
+              i2
             ] = false;
           }
         });
-        compiledObj[wildcarded].count++;
+        compiledObj[wildcarded].count += 1;
       } else {
         compiledObj[wildcarded] = {
           count: 1,
