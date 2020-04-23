@@ -156,22 +156,13 @@ function outer(originalInput1, originalReference1, opts1) {
   function ofr(
     originalInput,
     originalReference,
-    opts,
-    wrap,
-    joinArraysUsingBrs,
-    currentRoot
+    originalOpts,
+    wrap = true,
+    joinArraysUsingBrs = true,
+    currentRoot = ""
   ) {
     let input = clone(originalInput);
     const reference = clone(originalReference);
-    if (wrap === undefined) {
-      wrap = true;
-    }
-    if (joinArraysUsingBrs === undefined) {
-      joinArraysUsingBrs = true;
-    }
-    if (currentRoot === undefined) {
-      currentRoot = "";
-    }
     const defaults = {
       wrapHeadsWith: "%%_",
       wrapTailsWith: "_%%",
@@ -188,7 +179,7 @@ function outer(originalInput1, originalReference1, opts1) {
       mergeWithoutTrailingBrIfLineContainsBr: true,
       enforceStrictKeyset: true,
     };
-    opts = Object.assign({}, defaults, opts);
+    const opts = { ...defaults, ...originalOpts };
     opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
     opts.preventWrappingIfContains = arrayiffyString(
       opts.preventWrappingIfContains
@@ -290,7 +281,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 input[key] = ofr(
                   input[key],
                   reference[key],
-                  Object.assign({}, opts, { wrapGlobalFlipSwitch: false }),
+                  { ...opts, wrapGlobalFlipSwitch: false },
                   wrap,
                   joinArraysUsingBrs,
                   currentPath

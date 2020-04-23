@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -2360,24 +2409,14 @@
       throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ".concat(_typeof(opts1)));
     }
 
-    function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs, currentRoot) {
+    function ofr(originalInput, originalReference, originalOpts) {
+      var wrap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      var joinArraysUsingBrs = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+      var currentRoot = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
       // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
       // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
       var input = lodash_clonedeep(originalInput);
-      var reference = lodash_clonedeep(originalReference);
-
-      if (wrap === undefined) {
-        wrap = true;
-      }
-
-      if (joinArraysUsingBrs === undefined) {
-        joinArraysUsingBrs = true;
-      }
-
-      if (currentRoot === undefined) {
-        currentRoot = "";
-      } // console.log(`* currentRoot = ${JSON.stringify(currentRoot, null, 4)}`)
-
+      var reference = lodash_clonedeep(originalReference); // console.log(`* currentRoot = ${JSON.stringify(currentRoot, null, 4)}`)
 
       var defaults = {
         wrapHeadsWith: "%%_",
@@ -2410,7 +2449,9 @@
         // keys in an options object?
 
       };
-      opts = Object.assign({}, defaults, opts);
+
+      var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
       opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
       opts.preventWrappingIfContains = arrayiffyString(opts.preventWrappingIfContains);
       opts.dontWrapPaths = arrayiffyString(opts.dontWrapPaths);
@@ -2507,7 +2548,7 @@
                   // to prevent that, we flip the switch on the global wrap
                   // setting for all deeper child nodes.
                   // we also clone the options object so as not to mutate it.
-                  input[key] = ofr(input[key], reference[key], Object.assign({}, opts, {
+                  input[key] = ofr(input[key], reference[key], _objectSpread2({}, opts, {
                     wrapGlobalFlipSwitch: false
                   }), wrap, joinArraysUsingBrs, currentPath);
                 } else {

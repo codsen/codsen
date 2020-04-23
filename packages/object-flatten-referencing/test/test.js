@@ -1,19 +1,19 @@
 /* eslint no-template-curly-in-string: 0 */
 
-const t = require("tap");
-const ofr = require("../dist/object-flatten-referencing.cjs");
-const {
+import tap from "tap";
+import ofr from "../dist/object-flatten-referencing.esm";
+import {
   flattenObject,
   flattenArr,
   arrayiffyString,
   reclaimIntegerString,
-} = require("../src/util.js");
+} from "../src/util";
 
 // -----------------------------------------------------------------------------
 // 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - throws when inputs are missing/wrong", (t) => {
+tap.test("01.01 - throws when inputs are missing/wrong", (t) => {
   t.throws(() => {
     ofr();
   }, /THROW_ID_01/g);
@@ -30,7 +30,7 @@ t.test("01.01 - throws when inputs are missing/wrong", (t) => {
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - defaults - objects, one level", (t) => {
+tap.test("02.01 - defaults - objects, one level", (t) => {
   t.same(
     ofr(
       {
@@ -234,7 +234,7 @@ t.test("02.01 - defaults - objects, one level", (t) => {
   t.end();
 });
 
-t.test("02.02 - opts.preventDoubleWrapping", (t) => {
+tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
   t.same(
     ofr(
       {
@@ -317,7 +317,7 @@ t.test("02.02 - opts.preventDoubleWrapping", (t) => {
   t.end();
 });
 
-t.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
+tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
   t.same(
     ofr(
       {
@@ -461,7 +461,7 @@ t.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
   t.end();
 });
 
-t.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
+tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
   t.same(
     ofr(
       {
@@ -611,7 +611,7 @@ t.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
   t.end();
 });
 
-t.test("02.05 - array of input vs string of reference", (t) => {
+tap.test("02.05 - array of input vs string of reference", (t) => {
   t.same(
     ofr(
       {
@@ -638,7 +638,7 @@ t.test("02.05 - array of input vs string of reference", (t) => {
   t.end();
 });
 
-t.test("02.06 - action within an array's contents", (t) => {
+tap.test("02.06 - action within an array's contents", (t) => {
   t.same(
     ofr(
       {
@@ -691,7 +691,7 @@ t.test("02.06 - action within an array's contents", (t) => {
   t.end();
 });
 
-t.test("02.07 - doesn't wrap empty string values", (t) => {
+tap.test("02.07 - doesn't wrap empty string values", (t) => {
   t.same(
     ofr(
       {
@@ -718,7 +718,7 @@ t.test("02.07 - doesn't wrap empty string values", (t) => {
   t.end();
 });
 
-t.test("02.08 - reference array as value is shorter than input's", (t) => {
+tap.test("02.08 - reference array as value is shorter than input's", (t) => {
   t.same(
     ofr(
       {
@@ -745,7 +745,7 @@ t.test("02.08 - reference array as value is shorter than input's", (t) => {
   t.end();
 });
 
-t.test("02.09 - one ignore works on multiple keys", (t) => {
+tap.test("02.09 - one ignore works on multiple keys", (t) => {
   t.same(
     ofr(
       {
@@ -873,7 +873,7 @@ t.test("02.09 - one ignore works on multiple keys", (t) => {
   t.end();
 });
 
-t.test("02.10 - deeper level - array VS. string", (t) => {
+tap.test("02.10 - deeper level - array VS. string", (t) => {
   t.same(
     ofr(
       {
@@ -917,7 +917,7 @@ t.test("02.10 - deeper level - array VS. string", (t) => {
   t.end();
 });
 
-t.test("02.11 - deeper level - array within array VS. string", (t) => {
+tap.test("02.11 - deeper level - array within array VS. string", (t) => {
   t.same(
     ofr(
       {
@@ -939,7 +939,7 @@ t.test("02.11 - deeper level - array within array VS. string", (t) => {
   t.end();
 });
 
-t.test("02.12 - deeper level - array within array VS. string #2", (t) => {
+tap.test("02.12 - deeper level - array within array VS. string #2", (t) => {
   t.same(
     ofr(
       {
@@ -1009,7 +1009,7 @@ t.test("02.12 - deeper level - array within array VS. string #2", (t) => {
   t.end();
 });
 
-t.test("02.13 - one ignore works on multiple keys", (t) => {
+tap.test("02.13 - one ignore works on multiple keys", (t) => {
   t.same(
     ofr(
       {
@@ -1102,7 +1102,7 @@ t.test("02.13 - one ignore works on multiple keys", (t) => {
   t.end();
 });
 
-t.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
+tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
   t.same(
     ofr(
       {
@@ -1205,7 +1205,7 @@ t.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
 // 03. opts.ignore
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - opts.ignore & wrapping function", (t) => {
+tap.test("03.01 - opts.ignore & wrapping function", (t) => {
   t.same(
     ofr(
       {
@@ -1266,7 +1266,7 @@ t.test("03.01 - opts.ignore & wrapping function", (t) => {
   t.end();
 });
 
-t.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
+tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
   t.same(
     ofr(
       {
@@ -1427,7 +1427,7 @@ t.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
 // 04. opts.whatToDoWhenReferenceIsMissing
 // -----------------------------------------------------------------------------
 
-t.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
+tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
   t.same(
     ofr(
       {
@@ -1520,7 +1520,7 @@ t.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
 // 05. Other cases
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "05.01 - double-wrapping prevention when markers have white space",
   (t) => {
     t.same(
@@ -1586,7 +1586,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "05.02 - double-wrapping prevention from setting opts.preventWrappingIfContains",
   (t) => {
     t.same(
@@ -1709,7 +1709,7 @@ t.test(
 // 95. util.reclaimIntegerString
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "95.01 - util.reclaimIntegerString - does what it says on strings",
   (t) => {
     t.same(reclaimIntegerString("1"), 1, "95.01.03");
@@ -1717,7 +1717,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "95.02 - util.reclaimIntegerString - doesn't parse non-integer strings",
   (t) => {
     t.same(reclaimIntegerString("1.1"), "1.1", "95.02");
@@ -1725,7 +1725,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "95.03 - util.reclaimIntegerString - doesn't parse non-number strings either",
   (t) => {
     t.same(reclaimIntegerString("zz"), "zz", "95.03");
@@ -1733,7 +1733,7 @@ t.test(
   }
 );
 
-t.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
+tap.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
   t.same(reclaimIntegerString(true), true, "95.04");
   t.end();
 });
@@ -1742,12 +1742,12 @@ t.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
 // 96. util.arrayiffyString
 // -----------------------------------------------------------------------------
 
-t.test("96.01 - util.arrayiffyString - turns string into an array", (t) => {
+tap.test("96.01 - util.arrayiffyString - turns string into an array", (t) => {
   t.same(arrayiffyString("zzz"), ["zzz"], "96.01");
   t.end();
 });
 
-t.test(
+tap.test(
   "96.02 - util.arrayiffyString - turns empty string into an empty array",
   (t) => {
     t.same(arrayiffyString(""), [], "96.02");
@@ -1755,7 +1755,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "96.03 - util.arrayiffyString - doesn't touch any other input types",
   (t) => {
     t.same(arrayiffyString(["a"]), ["a"], "96.03.01");
@@ -1770,13 +1770,13 @@ t.test(
 // 98. util.flattenObject
 // -----------------------------------------------------------------------------
 
-t.test("98.01 - util.flattenObject > empty input", (t) => {
+tap.test("98.01 - util.flattenObject > empty input", (t) => {
   t.same(flattenObject(), [], "98.01.01");
   t.same(flattenObject({}), [], "98.01.02");
   t.end();
 });
 
-t.test("98.02 - util.flattenObject > simple object", (t) => {
+tap.test("98.02 - util.flattenObject > simple object", (t) => {
   t.same(
     flattenObject(
       {
@@ -1798,7 +1798,7 @@ t.test("98.02 - util.flattenObject > simple object", (t) => {
   t.end();
 });
 
-t.test("98.03 - util.flattenObject > nested objects", (t) => {
+tap.test("98.03 - util.flattenObject > nested objects", (t) => {
   t.same(
     flattenObject(
       {
@@ -1824,12 +1824,12 @@ t.test("98.03 - util.flattenObject > nested objects", (t) => {
 // 99. util.flattenArr
 // -----------------------------------------------------------------------------
 
-t.test("99.01 - util.flattenArr > empty input", (t) => {
+tap.test("99.01 - util.flattenArr > empty input", (t) => {
   t.same(flattenArr(), "", "99.01");
   t.end();
 });
 
-t.test("99.02 - util.flattenArr > simple array", (t) => {
+tap.test("99.02 - util.flattenArr > simple array", (t) => {
   t.same(
     flattenArr(
       ["a", "b", "c"],
@@ -1865,7 +1865,7 @@ t.test("99.02 - util.flattenArr > simple array", (t) => {
   t.end();
 });
 
-t.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
+tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
   t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],

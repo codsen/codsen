@@ -38,25 +38,16 @@ function outer(originalInput1, originalReference1, opts1) {
   function ofr(
     originalInput,
     originalReference,
-    opts,
-    wrap,
-    joinArraysUsingBrs,
-    currentRoot
+    originalOpts,
+    wrap = true,
+    joinArraysUsingBrs = true,
+    currentRoot = ""
   ) {
     // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
     // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
     let input = clone(originalInput);
     const reference = clone(originalReference);
 
-    if (wrap === undefined) {
-      wrap = true;
-    }
-    if (joinArraysUsingBrs === undefined) {
-      joinArraysUsingBrs = true;
-    }
-    if (currentRoot === undefined) {
-      currentRoot = "";
-    }
     // console.log(`* currentRoot = ${JSON.stringify(currentRoot, null, 4)}`)
     const defaults = {
       wrapHeadsWith: "%%_",
@@ -81,7 +72,7 @@ function outer(originalInput1, originalReference1, opts1) {
       enforceStrictKeyset: true, // are you allowed to pass-in any unrecognised
       // keys in an options object?
     };
-    opts = Object.assign({}, defaults, opts);
+    const opts = { ...defaults, ...originalOpts };
     opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
     opts.preventWrappingIfContains = arrayiffyString(
       opts.preventWrappingIfContains
@@ -218,7 +209,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 input[key] = ofr(
                   input[key],
                   reference[key],
-                  Object.assign({}, opts, { wrapGlobalFlipSwitch: false }),
+                  { ...opts, wrapGlobalFlipSwitch: false },
                   wrap,
                   joinArraysUsingBrs,
                   currentPath
