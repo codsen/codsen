@@ -29,6 +29,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
@@ -76,9 +125,9 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
     caseSensitive: true
   };
   if (originalOpts === null) {
-    opts = Object.assign({}, defaults);
+    opts = _objectSpread2({}, defaults);
   } else {
-    opts = Object.assign({}, defaults, originalOpts);
+    opts = _objectSpread2({}, defaults, {}, originalOpts);
   }
   return Array.from(originalInput).filter(function (originalVal) {
     return !toBeRemoved.some(function (remVal) {

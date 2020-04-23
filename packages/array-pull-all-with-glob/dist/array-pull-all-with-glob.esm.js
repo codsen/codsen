@@ -85,9 +85,9 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
     caseSensitive: true,
   };
   if (originalOpts === null) {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   } else {
-    opts = Object.assign({}, defaults, originalOpts);
+    opts = { ...defaults, ...originalOpts };
   }
   return Array.from(originalInput).filter(
     (originalVal) =>
