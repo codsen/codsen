@@ -1,5 +1,7 @@
-const t = require("tap");
-const processCommaSeparated = require("../dist/string-process-comma-separated.cjs");
+/* eslint no-param-reassign:0 */
+
+import tap from "tap";
+import processCommaSeparated from "../dist/string-process-comma-separated.esm";
 
 const rawnbsp = "\u00a0";
 
@@ -26,7 +28,7 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
 // 01. edge cases - unusual, broken or strange inputs
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`,
   (t) => {
     const gatheredChunks = [];
@@ -48,7 +50,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
   (t) => {
     t.doesNotThrow(() => {
@@ -58,7 +60,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
   (t) => {
     t.throws(() => {
@@ -71,7 +73,7 @@ t.test(
 // 02. B.A.U
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - one chunk`,
   (t) => {
     const gatheredChunks = [];
@@ -93,7 +95,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - two chunks`,
   (t) => {
     const gatheredChunks = [];
@@ -122,7 +124,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - space after comma, default`,
   (t) => {
     const gatheredChunks = [];
@@ -155,7 +157,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
   (t) => {
     const gatheredChunks = [];
@@ -194,7 +196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
   (t) => {
     const gatheredChunks = [];
@@ -239,7 +241,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, default`,
   (t) => {
     const gatheredChunks = [];
@@ -278,7 +280,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
   (t) => {
     const gatheredChunks = [];
@@ -319,7 +321,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
   (t) => {
     const gatheredChunks = [];
@@ -360,7 +362,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
   (t) => {
     const gatheredChunks = [];
@@ -415,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
   (t) => {
     const gatheredChunks = [];
@@ -471,7 +473,7 @@ t.test(
 // 03. opts.leadingWhitespaceOK
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - from-to ranges`,
   (t) => {
     const gatheredChunks = [];
@@ -494,7 +496,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string`,
   (t) => {
     const gatheredChunks = [];
@@ -515,7 +517,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string + offset`,
   (t) => {
     const gatheredChunks = [];
@@ -537,7 +539,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -570,7 +572,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -594,7 +596,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -627,7 +629,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -660,7 +662,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - more complex`,
   (t) => {
     const gatheredChunks = [];
@@ -721,7 +723,7 @@ t.test(
 // 04. opts.innerWhitespaceAllowed
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
@@ -767,7 +769,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];

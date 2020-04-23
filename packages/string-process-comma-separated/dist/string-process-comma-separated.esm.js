@@ -31,7 +31,7 @@ function processCommaSeparated(str, originalOpts) {
     cb: null,
     errCb: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (!Number.isInteger(originalOpts.from)) {
     opts.from = 0;
   }
@@ -146,7 +146,7 @@ function processCommaSeparated(str, originalOpts) {
         let startingIdx = whitespaceStartsAt;
         let endingIdx = i;
         if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
-          endingIdx++;
+          endingIdx += 1;
         }
         let whatToAdd = "";
         if (opts.oneSpaceAfterCommaOK) {
@@ -154,7 +154,7 @@ function processCommaSeparated(str, originalOpts) {
             str[whitespaceStartsAt] === " " &&
             str[whitespaceStartsAt - 1] === opts.separator
           ) {
-            startingIdx++;
+            startingIdx += 1;
           } else if (str[whitespaceStartsAt] !== " ") {
             whatToAdd = " ";
           }
