@@ -312,10 +312,9 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
         if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
           onlyDigitsAndWhitespaceBeenMet = true;
         }
-      } else {
-        if (str[i] !== "|" && str[i].trim().length) {
-          onlyDigitsAndWhitespaceBeenMet = false;
-        }
+      }
+      else if (str[i] !== "|" && str[i].trim().length) {
+        onlyDigitsAndWhitespaceBeenMet = false;
       }
       if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
         endTo = lastPipeWasAt;
@@ -452,7 +451,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
         res += `${i !== to ? "\n" : ""}`;
       }
     }
-    generatedCount.count++;
+    generatedCount.count += 1;
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(
         subsetFrom + (i / (to - from)) * subsetRange
@@ -467,7 +466,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
 }
 function bump(str, thingToBump) {
   if (/\.\w/g.test(str)) {
-    thingToBump.count++;
+    thingToBump.count += 1;
   }
   return str;
 }
@@ -501,11 +500,11 @@ function prepConfig(
 }
 
 function genAtomic(str, originalOpts) {
-  function trimIfNeeded(str) {
+  function trimIfNeeded(str2, opts = {}) {
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-      return str;
+      return str2;
     }
-    return str.trim();
+    return str2.trim();
   }
   if (typeof str !== "string") {
     throw new Error(
@@ -529,7 +528,7 @@ function genAtomic(str, originalOpts) {
   const generatedCount = {
     count: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
@@ -652,15 +651,15 @@ function genAtomic(str, originalOpts) {
       rawContentBelow.trim().endsWith("/*") &&
       !rawContentBelow.trim().startsWith("*/")
     ) {
-      let frontPart = "";
+      let frontPart2 = "";
       if (
         isStr(rawContentBelow) &&
         rawContentBelow[0] &&
         !rawContentBelow[0].trim()
       ) {
-        frontPart = rawContentBelow.slice(0, right(rawContentBelow, 0));
+        frontPart2 = rawContentBelow.slice(0, right(rawContentBelow, 0));
       }
-      rawContentBelow = `${frontPart}/* ${rawContentBelow.trim()}`;
+      rawContentBelow = `${frontPart2}/* ${rawContentBelow.trim()}`;
     }
     endPart = `${endPart}${rawContentBelow}`;
   }
@@ -673,7 +672,8 @@ function genAtomic(str, originalOpts) {
       true,
       generatedCount,
       opts.pad
-    )}${endPart}`
+    )}${endPart}`,
+    opts
   )}\n`;
   return {
     log: { count: generatedCount.count },

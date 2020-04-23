@@ -1,5 +1,5 @@
-import { version } from "../package.json";
 import { left, right } from "string-left-right";
+import { version } from "../package.json";
 import {
   prepConfig,
   isStr,
@@ -9,14 +9,14 @@ import {
 } from "./util";
 
 function genAtomic(str, originalOpts) {
-  function trimIfNeeded(str) {
+  function trimIfNeeded(str2, opts = {}) {
     // if config and heads/tails are turned off, don't trim
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
       console.log(`015 didn't trim`);
-      return str;
+      return str2;
     }
     console.log(`018 trim`);
-    return str.trim();
+    return str2.trim();
   }
 
   if (typeof str !== "string") {
@@ -43,7 +43,7 @@ function genAtomic(str, originalOpts) {
     count: 0,
   };
 
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     // opts.includeConfig is a superset feature of opts.includeHeadsAndTails
     opts.includeHeadsAndTails = true;
@@ -346,22 +346,22 @@ function genAtomic(str, originalOpts) {
     ) {
       console.log(`347 add opening CSS comment block to rawContentBelow`);
       // but leave leading whitespace intact
-      let frontPart = "";
+      let frontPart2 = "";
       if (
         isStr(rawContentBelow) &&
         rawContentBelow[0] &&
         !rawContentBelow[0].trim()
       ) {
-        frontPart = rawContentBelow.slice(0, right(rawContentBelow, 0));
+        frontPart2 = rawContentBelow.slice(0, right(rawContentBelow, 0));
         console.log(
-          `357 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`} = ${JSON.stringify(
-            frontPart,
+          `357 ${`\u001b[${33}m${`frontPart2`}\u001b[${39}m`} = ${JSON.stringify(
+            frontPart2,
             null,
             4
           )}`
         );
       }
-      rawContentBelow = `${frontPart}/* ${rawContentBelow.trim()}`;
+      rawContentBelow = `${frontPart2}/* ${rawContentBelow.trim()}`;
     }
 
     endPart = `${endPart}${rawContentBelow}`;
@@ -386,12 +386,13 @@ function genAtomic(str, originalOpts) {
       true, // opts.includeConfig || opts.includeHeadsAndTails
       generatedCount,
       opts.pad
-    )}${endPart}`
+    )}${endPart}`,
+    opts
   )}\n`;
 
   console.log("\n\n\n");
   console.log(
-    `394 FINAL RES:
+    `395 FINAL RES:
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}
 ${finalRes}
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}

@@ -1,10 +1,10 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   genAtomic,
   version,
   headsAndTails,
   extractFromToSource,
-} = require("../dist/generate-atomic-css.cjs");
+} from "../dist/generate-atomic-css.esm";
 
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 
@@ -55,7 +55,7 @@ const allOptsVariations = [
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input`,
   (t) => {
     t.throws(() => {
@@ -65,7 +65,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - undefined literal`,
   (t) => {
     t.throws(() => {
@@ -75,21 +75,24 @@ t.test(
   }
 );
 
-t.test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - numbers`, (t) => {
-  t.throws(() => {
-    genAtomic(1);
-  }, /THROW_ID_01/g);
-  t.end();
-});
+tap.test(
+  `01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - numbers`,
+  (t) => {
+    t.throws(() => {
+      genAtomic(1);
+    }, /THROW_ID_01/g);
+    t.end();
+  }
+);
 
-t.test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - null`, (t) => {
+tap.test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - null`, (t) => {
   t.throws(() => {
     genAtomic(null);
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, (t) => {
+tap.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, (t) => {
   t.throws(() => {
     genAtomic(true);
   }, /THROW_ID_01/g);
@@ -100,7 +103,7 @@ t.test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, (t) => {
 // 02. taster
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`,
   (t) => {
     const source = "zzz";
@@ -160,7 +163,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - multiliner`,
   (t) => {
     const source =
@@ -201,7 +204,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content`,
   (t) => {
     t.same(
@@ -242,7 +245,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content, no pad`,
   (t) => {
     t.same(
@@ -286,7 +289,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
   (t) => {
     t.same(
@@ -310,7 +313,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
   (t) => {
     t.same(
@@ -342,7 +345,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with p`,
   (t) => {
     t.same(
@@ -368,7 +371,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - starts with a placeholder (not legit)`,
   (t) => {
     t.same(
@@ -398,7 +401,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 // 03. generates from an input string, returns it - config + heads/tails off
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - defaults, empty content`,
   (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
@@ -419,7 +422,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - min max set #1`,
   (t) => {
     const source1 = `
@@ -465,7 +468,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m`} - min max set #2`,
   (t) => {
     const source = `
@@ -505,7 +508,7 @@ t.test(
 // 04. generates from an input string, returns it, heads only requested
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, default range`,
   (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
@@ -528,7 +531,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
   (t) => {
     const source1 = `
@@ -578,7 +581,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, fully custom range`,
   (t) => {
     const source = `
@@ -617,7 +620,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incoming content heads without opening comment and content in front`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -664,7 +667,7 @@ ${CONTENTHEAD}
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incoming content heads without opening comment and comments clash`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -709,7 +712,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - content's heads and tails instead of config's heads and tails`,
   (t) => {
     const source = `/*${CONTENTHEAD}*/
@@ -741,7 +744,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - blank content heads/tails`,
   (t) => {
     const contents = `\t\n\n \t\t\t   \t`;
@@ -784,7 +787,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - blank config heads/tails`,
   (t) => {
     const input = `
@@ -828,7 +831,7 @@ ${CONTENTTAIL}
   }
 );
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around`,
   (t) => {
     t.same(
@@ -865,7 +868,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.10 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around, incl. tails`,
   (t) => {
     const { log, result } = genAtomic(
@@ -906,7 +909,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.11 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
   (t) => {
     t.same(
@@ -945,7 +948,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.12 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
   (t) => {
     t.same(
@@ -984,7 +987,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.13 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around`,
   (t) => {
     t.same(
@@ -1026,7 +1029,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.14 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. tails`,
   (t) => {
     t.same(
@@ -1070,7 +1073,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.15 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
   (t) => {
     t.same(
@@ -1114,7 +1117,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.16 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
   (t) => {
     t.same(
@@ -1158,7 +1161,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `04.19 - ${`\u001b[${35}m${`config present no config requested`}\u001b[${39}m`} - comments surrounding`,
   (t) => {
     t.same(
@@ -1197,7 +1200,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.20 - ${`\u001b[${35}m${`content tails present no config requested`}\u001b[${39}m`} - comments surrounding`,
   (t) => {
     t.same(
@@ -1236,7 +1239,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.21 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
   (t) => {
     const source = `a
@@ -1276,7 +1279,7 @@ b
   }
 );
 
-t.test(
+tap.test(
   `04.22 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - head missing`,
   (t) => {
     t.same(
@@ -1318,7 +1321,7 @@ lala
 // 05. generates from an input string, config requested but not present
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, default range`,
   (t) => {
     const source = ".pt$$$ { padding-top: $$$px !important; }";
@@ -1346,7 +1349,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper`,
   (t) => {
     const source1 = `
@@ -1423,7 +1426,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`,
   (t) => {
     const ref1 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -1471,7 +1474,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`,
   (t) => {
     const ref2 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -1517,7 +1520,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, fully custom range`,
   (t) => {
     const source = `
@@ -1569,7 +1572,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - only content heads/tails, no content around`,
   (t) => {
     const source = `
@@ -1609,7 +1612,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - only content heads/tails, content on top`,
   (t) => {
     const source = `
@@ -1650,7 +1653,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, content tails`,
   (t) => {
     t.same(
@@ -1698,7 +1701,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, config tails`,
   (t) => {
     t.same(
@@ -1746,7 +1749,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.10 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around`,
   (t) => {
     t.same(
@@ -1788,7 +1791,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `05.11 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - above there are comments followed by content`,
   (t) => {
     t.same(
@@ -1832,7 +1835,7 @@ lala
   }
 );
 
-t.test(
+tap.test(
   `05.12 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, fully custom range, no pad`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -1898,7 +1901,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.13 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -1949,7 +1952,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.14 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -2000,7 +2003,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.15 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - style with no $$$`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -2041,7 +2044,7 @@ b
   }
 );
 
-t.test(
+tap.test(
   `05.16 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$, no pad`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -2086,7 +2089,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.17 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`,
   (t) => {
     // ---------------------------------------------------------------------------
@@ -2136,7 +2139,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `05.18 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride`,
   (t) => {
     const source = `
@@ -2196,7 +2199,7 @@ b
   }
 );
 
-t.test(
+tap.test(
   `05.19 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`,
   (t) => {
     const source = `
@@ -2261,7 +2264,7 @@ y
   }
 );
 
-t.test(
+tap.test(
   `05.20 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #2`,
   (t) => {
     const source = `
@@ -2321,7 +2324,7 @@ b
   }
 );
 
-t.test(
+tap.test(
   `05.21 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #3`,
   (t) => {
     const source = `
@@ -2385,7 +2388,7 @@ b
 // 06. full set present but neither config requested nor heads/tails requested
 // ----class-------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #1`,
   (t) => {
     const source = `a
@@ -2423,7 +2426,7 @@ z
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #2`,
   (t) => {
     const source = `a
@@ -2467,7 +2470,7 @@ z
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${35}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #3`,
   (t) => {
     const source = `a
@@ -2520,7 +2523,7 @@ z
 // 07. opts.configOverride
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - control`,
   (t) => {
     const source = `a
@@ -2550,7 +2553,7 @@ z
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config/tails off`,
   (t) => {
     const source = `a
@@ -2584,7 +2587,7 @@ z
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - only tails on`,
   (t) => {
     const source = `a
@@ -2620,7 +2623,7 @@ z
   }
 );
 
-t.test(
+tap.test(
   `07.04 - ${`\u001b[${36}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config & tails on`,
   (t) => {
     const source = `a
@@ -2664,7 +2667,7 @@ z
 // 08. heads on, config on
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - combo styles`,
   (t) => {
     const content = `
@@ -2699,7 +2702,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - combo styles #2, tighter`,
   (t) => {
     const content = `
@@ -2732,7 +2735,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - control`,
   (t) => {
     const content = `
@@ -2769,7 +2772,7 @@ ${CONTENTHEAD} */
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last`,
   (t) => {
     const content1 = `
@@ -2841,7 +2844,7 @@ zzz
   }
 );
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last - content via opts.configOverride`,
   (t) => {
     const content1 = `
@@ -2865,10 +2868,7 @@ t.test(
 
     allOptsVariations.forEach((setOfOpts, i) => {
       t.equal(
-        genAtomic(
-          `zzz`,
-          Object.assign({}, setOfOpts, { configOverride: content1 })
-        ).log.count,
+        genAtomic(`zzz`, { ...setOfOpts, configOverride: content1 }).log.count,
         5,
         `08.05.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`
       );
@@ -2881,7 +2881,7 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-          Object.assign({}, setOfOpts, { configOverride: content1 })
+          { ...setOfOpts, configOverride: content1 }
         ).log.count,
         5,
         `08.05.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`
@@ -2889,10 +2889,7 @@ replace me
 
       // content2
       t.equal(
-        genAtomic(
-          `zzz`,
-          Object.assign({}, setOfOpts, { configOverride: content2 })
-        ).log.count,
+        genAtomic(`zzz`, { ...setOfOpts, configOverride: content2 }).log.count,
         5,
         `08.05.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`
       );
@@ -2905,7 +2902,7 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-          Object.assign({}, setOfOpts, { configOverride: content2 })
+          { ...setOfOpts, configOverride: content2 }
         ).log.count,
         5,
         `08.05.4${i} - ${JSON.stringify(setOfOpts, null, 0)}`
@@ -2913,10 +2910,7 @@ replace me
 
       // content3
       t.equal(
-        genAtomic(
-          `zzz`,
-          Object.assign({}, setOfOpts, { configOverride: content3 })
-        ).log.count,
+        genAtomic(`zzz`, { ...setOfOpts, configOverride: content3 }).log.count,
         5,
         `08.05.5${i} - ${JSON.stringify(setOfOpts, null, 0)}`
       );
@@ -2929,7 +2923,7 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-          Object.assign({}, setOfOpts, { configOverride: content3 })
+          { ...setOfOpts, configOverride: content3 }
         ).log.count,
         5,
         `08.05.6${i} - ${JSON.stringify(setOfOpts, null, 0)}`
@@ -2939,7 +2933,7 @@ replace me
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - two levels of curlies wrapping the source`,
   (t) => {
     const source = `@media screen and (max-width: 650px) {
@@ -2969,7 +2963,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   }
 );
 
-t.test(
+tap.test(
   `08.07 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - only content heads/tails`,
   (t) => {
     const source = `@media screen and (max-width: 650px) {
@@ -2994,7 +2988,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.08 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - no heads/tails`,
   (t) => {
     const source = `@media screen and (max-width: 650px) {
@@ -3021,7 +3015,7 @@ t.test(
 // 98. API bits - extractFromToSource
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `98.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 1 arg`,
   (t) => {
     t.same(extractFromToSource("mt|10"), [0, 10, "mt"], "98.01.01");
@@ -3035,7 +3029,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.02 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 2 args`,
   (t) => {
     t.same(extractFromToSource("mt|2|10"), [2, 10, "mt"], "98.02.01");
@@ -3059,7 +3053,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.03 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
   (t) => {
     // takes first two digits
@@ -3071,7 +3065,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args - taster`,
   (t) => {
     t.same(
@@ -3083,7 +3077,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
   (t) => {
     t.same(
@@ -3125,7 +3119,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.05 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 1 arg`,
   (t) => {
     t.same(
@@ -3173,7 +3167,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.06 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 2 arg`,
   (t) => {
     t.same(
@@ -3225,7 +3219,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `98.07 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - pipe in CSS`,
   (t) => {
     t.same(
@@ -3271,7 +3265,7 @@ t.test(
 // 99. API bits - the others
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `99.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - version is exported`,
   (t) => {
     t.match(version, /\d+\.\d+\.\d+/g, "99.01");
@@ -3279,7 +3273,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.02 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - heads and tails are exported`,
   (t) => {
     t.equal(Object.keys(headsAndTails).length, 4, "99.02");
@@ -3287,7 +3281,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `99.03 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - exports reportProgressFunc which works`,
   (t) => {
     const counterArr = [];

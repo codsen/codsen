@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -84,8 +133,6 @@
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
-
-  var version = "1.2.38";
 
   /**
    * lodash (Custom Build) <https://lodash.com/>
@@ -2130,9 +2177,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2160,9 +2211,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -2201,7 +2256,7 @@
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
-        i++;
+        i += 1;
         continue;
       }
 
@@ -2218,7 +2273,7 @@
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
         } else {
-          i++;
+          i += 1;
         }
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
@@ -2243,10 +2298,10 @@
           leftmostChar = whattsOnTheSide;
         }
       } else if (optional) {
-        i++;
+        i += 1;
         continue;
       } else if (satiated) {
-        i++;
+        i += 1;
         satiated = undefined;
         continue;
       } else {
@@ -2276,7 +2331,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -2295,13 +2352,17 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
 
     return seq("right", str, idx, opts, args);
   }
+
+  var version = "1.2.38";
 
   var isArr = Array.isArray;
 
@@ -2597,12 +2658,10 @@
           if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
             onlyDigitsAndWhitespaceBeenMet = true;
           }
-        } else {
-          // if not digit...
-          if (str[i] !== "|" && str[i].trim().length) {
+        } // if not digit...
+        else if (str[i] !== "|" && str[i].trim().length) {
             onlyDigitsAndWhitespaceBeenMet = false;
-          }
-        } // catch the last character
+          } // catch the last character
 
 
         if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
@@ -2676,7 +2735,8 @@
           var restOfStr = source.slice(y + 1);
           var unitFound;
 
-          if (i === 0 && units.some(function (unit) {
+          if (i === 0 && // eslint-disable-next-line consistent-return, array-callback-return
+          units.some(function (unit) {
             if (restOfStr.startsWith(unit)) {
               unitFound = unit;
               return true;
@@ -2686,7 +2746,8 @@
             startPoint = y + 1 + (unitFound ? unitFound.length : 0);
           } else {
             // extract units if any follow the $$$
-            var unitThatFollow;
+            var unitThatFollow; // eslint-disable-next-line consistent-return, array-callback-return
+
             units.some(function (unit) {
               if (source.slice(y + 1).startsWith(unit)) {
                 unitThatFollow = unit;
@@ -2694,7 +2755,8 @@
               }
             });
 
-            if (!source[y - 3].trim().length || padLeftIfTheresOnTheLeft.some(function (val) {
+            if (!source[y - 3].trim().length || // eslint-disable-next-line
+            padLeftIfTheresOnTheLeft.some(function (val) {
               return source.slice(startPoint, y - 2).trim().endsWith(val);
             })) {
               // if left-side padding can be possible:
@@ -2703,6 +2765,7 @@
               var temp = 0;
 
               if (i === 0) {
+                // eslint-disable-next-line no-loop-func
                 units.some(function (unit) {
                   if ("".concat(source.slice(startPoint, y - 2)).startsWith(unit)) {
                     temp = unit.length;
@@ -2750,7 +2813,8 @@
 
           var _restOfStr = source.slice(startPoint);
 
-          if (i === 0 && units.some(function (unit) {
+          if (i === 0 && // eslint-disable-next-line
+          units.some(function (unit) {
             if (_restOfStr.startsWith(unit)) {
               _unitFound = unit;
               return true;
@@ -2768,9 +2832,10 @@
 
       for (var y = 0, len = source.length; y < len; y++) {
         _loop2(y);
-      }
+      } // eslint-disable-next-line no-param-reassign
 
-      generatedCount.count++;
+
+      generatedCount.count += 1;
 
       if (typeof progressFn === "function") {
         currentPercentageDone = Math.floor(subsetFrom + i / (to - from) * subsetRange);
@@ -2791,7 +2856,8 @@
 
   function bump(str, thingToBump) {
     if (/\.\w/g.test(str)) {
-      thingToBump.count++;
+      // eslint-disable-next-line no-param-reassign
+      thingToBump.count += 1;
     }
 
     return str;
@@ -2812,13 +2878,15 @@
   }
 
   function genAtomic(str, originalOpts) {
-    function trimIfNeeded(str) {
+    function trimIfNeeded(str2) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
       // if config and heads/tails are turned off, don't trim
       if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-        return str;
+        return str2;
       }
 
-      return str.trim();
+      return str2.trim();
     }
 
     if (typeof str !== "string") {
@@ -2841,7 +2909,8 @@
     var generatedCount = {
       count: 0
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (opts.includeConfig && !opts.includeHeadsAndTails) {
       // opts.includeConfig is a superset feature of opts.includeHeadsAndTails
@@ -2986,20 +3055,20 @@
       // precaution if rawContentBelow ends but not starts with CSS comment
       if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
         // but leave leading whitespace intact
-        var _frontPart = "";
+        var frontPart2 = "";
 
         if (isStr$1(rawContentBelow) && rawContentBelow[0] && !rawContentBelow[0].trim()) {
-          _frontPart = rawContentBelow.slice(0, right(rawContentBelow, 0));
+          frontPart2 = rawContentBelow.slice(0, right(rawContentBelow, 0));
         }
 
-        rawContentBelow = "".concat(_frontPart, "/* ").concat(rawContentBelow.trim());
+        rawContentBelow = "".concat(frontPart2, "/* ").concat(rawContentBelow.trim());
       }
 
       endPart = "".concat(endPart).concat(rawContentBelow);
     }
 
     var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true, // opts.includeConfig || opts.includeHeadsAndTails
-    generatedCount, opts.pad)).concat(endPart)), "\n");
+    generatedCount, opts.pad)).concat(endPart), opts), "\n");
     return {
       log: {
         count: generatedCount.count

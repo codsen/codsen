@@ -29,6 +29,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -308,11 +357,10 @@ function extractFromToSource(str) {
         if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
           onlyDigitsAndWhitespaceBeenMet = true;
         }
-      } else {
-        if (str[i] !== "|" && str[i].trim().length) {
+      }
+      else if (str[i] !== "|" && str[i].trim().length) {
           onlyDigitsAndWhitespaceBeenMet = false;
         }
-      }
       if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
         endTo = lastPipeWasAt;
       }
@@ -352,7 +400,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
         var restOfStr = source.slice(y + 1);
         var unitFound;
-        if (i === 0 && units.some(function (unit) {
+        if (i === 0 &&
+        units.some(function (unit) {
           if (restOfStr.startsWith(unit)) {
             unitFound = unit;
             return true;
@@ -368,7 +417,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
               return true;
             }
           });
-          if (!source[y - 3].trim().length || padLeftIfTheresOnTheLeft.some(function (val) {
+          if (!source[y - 3].trim().length ||
+          padLeftIfTheresOnTheLeft.some(function (val) {
             return source.slice(startPoint, y - 2).trim().endsWith(val);
           })) {
             var temp = 0;
@@ -402,7 +452,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       if (!source[y + 1]) {
         var _unitFound;
         var _restOfStr = source.slice(startPoint);
-        if (i === 0 && units.some(function (unit) {
+        if (i === 0 &&
+        units.some(function (unit) {
           if (_restOfStr.startsWith(unit)) {
             _unitFound = unit;
             return true;
@@ -418,7 +469,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
     for (var y = 0, len = source.length; y < len; y++) {
       _loop2(y);
     }
-    generatedCount.count++;
+    generatedCount.count += 1;
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(subsetFrom + i / (to - from) * subsetRange);
       if (currentPercentageDone !== lastPercentage) {
@@ -434,7 +485,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
 }
 function bump(str, thingToBump) {
   if (/\.\w/g.test(str)) {
-    thingToBump.count++;
+    thingToBump.count += 1;
   }
   return str;
 }
@@ -448,11 +499,12 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
 }
 
 function genAtomic(str, originalOpts) {
-  function trimIfNeeded(str) {
+  function trimIfNeeded(str2) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-      return str;
+      return str2;
     }
-    return str.trim();
+    return str2.trim();
   }
   if (typeof str !== "string") {
     throw new Error("generate-atomic-css: [THROW_ID_01] First input argument must be a string! It was given as \"".concat(JSON.stringify(str, null, 4), "\" (type ").concat(_typeof(str), ")"));
@@ -473,7 +525,7 @@ function genAtomic(str, originalOpts) {
   var generatedCount = {
     count: 0
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
@@ -555,16 +607,16 @@ function genAtomic(str, originalOpts) {
   }
   if (isStr(rawContentBelow)) {
     if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
-      var _frontPart = "";
+      var frontPart2 = "";
       if (isStr(rawContentBelow) && rawContentBelow[0] && !rawContentBelow[0].trim()) {
-        _frontPart = rawContentBelow.slice(0, stringLeftRight.right(rawContentBelow, 0));
+        frontPart2 = rawContentBelow.slice(0, stringLeftRight.right(rawContentBelow, 0));
       }
-      rawContentBelow = "".concat(_frontPart, "/* ").concat(rawContentBelow.trim());
+      rawContentBelow = "".concat(frontPart2, "/* ").concat(rawContentBelow.trim());
     }
     endPart = "".concat(endPart).concat(rawContentBelow);
   }
   var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true,
-  generatedCount, opts.pad)).concat(endPart)), "\n");
+  generatedCount, opts.pad)).concat(endPart), opts), "\n");
   return {
     log: {
       count: generatedCount.count
