@@ -1,11 +1,11 @@
-const t = require("tap");
-const rem = require("../dist/string-remove-duplicate-heads-tails.cjs");
+import tap from "tap";
+import rem from "../dist/string-remove-duplicate-heads-tails.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - wrong/missing input = throw", (t) => {
+tap.test("01.01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     rem();
   }, /THROW_ID_01/g);
@@ -15,7 +15,7 @@ t.test("01.01 - wrong/missing input = throw", (t) => {
   t.end();
 });
 
-t.test("01.02 - wrong opts", (t) => {
+tap.test("01.02 - wrong opts", (t) => {
   t.throws(() => {
     rem("a", "a");
   }, /THROW_ID_03/g);
@@ -37,7 +37,7 @@ t.test("01.02 - wrong opts", (t) => {
   t.end();
 });
 
-t.test("01.03 - empty input string", (t) => {
+tap.test("01.03 - empty input string", (t) => {
   t.same(
     rem("", {
       heads: "{{",
@@ -50,7 +50,7 @@ t.test("01.03 - empty input string", (t) => {
   t.end();
 });
 
-t.test("01.04 - none of heads or tails found", (t) => {
+tap.test("01.04 - none of heads or tails found", (t) => {
   t.same(
     rem("aaa {{", {
       heads: "%%",
@@ -66,7 +66,7 @@ t.test("01.04 - none of heads or tails found", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - trims wrapped heads and tails", (t) => {
+tap.test("02.01 - trims wrapped heads and tails", (t) => {
   t.same(
     rem("{{ hi {{ name }}! }}", {
       heads: "{{",
@@ -86,7 +86,7 @@ t.test("02.01 - trims wrapped heads and tails", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.02 - trims wrapped heads and tails, with space inside heads/tails",
   (t) => {
     t.same(
@@ -101,7 +101,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.03 - trimmed heads and tails in the source still get caught",
   (t) => {
     t.same(
@@ -116,7 +116,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.04 - excessive whitespace in opts heads/tails doesn't matter",
   (t) => {
     t.same(
@@ -131,7 +131,7 @@ t.test(
   }
 );
 
-t.test("02.05 - single curly brace heads/tails", (t) => {
+tap.test("02.05 - single curly brace heads/tails", (t) => {
   t.same(
     rem("{ Hi { first_name }! }", {
       heads: "{",
@@ -143,7 +143,7 @@ t.test("02.05 - single curly brace heads/tails", (t) => {
   t.end();
 });
 
-t.test("02.06 - custom heads and tails, whitespace both sides", (t) => {
+tap.test("02.06 - custom heads and tails, whitespace both sides", (t) => {
   t.same(
     rem("{Hi { first_name }!}", {
       heads: " { ",
@@ -155,7 +155,7 @@ t.test("02.06 - custom heads and tails, whitespace both sides", (t) => {
   t.end();
 });
 
-t.test("02.07 - ends with tails, doesn't start with heads", (t) => {
+tap.test("02.07 - ends with tails, doesn't start with heads", (t) => {
   t.same(
     rem("Hi {{ first_name }}", {
       heads: ["%%-", "{{"],
@@ -167,7 +167,7 @@ t.test("02.07 - ends with tails, doesn't start with heads", (t) => {
   t.end();
 });
 
-t.test("02.08 - starts with heads, doesn't end with tails", (t) => {
+tap.test("02.08 - starts with heads, doesn't end with tails", (t) => {
   t.same(
     rem("  {{ first_name }}!  ", {
       heads: ["%%-", "{{"],
@@ -179,7 +179,7 @@ t.test("02.08 - starts with heads, doesn't end with tails", (t) => {
   t.end();
 });
 
-t.test("02.09 - properly wrapped, heads/tails in array, matched", (t) => {
+tap.test("02.09 - properly wrapped, heads/tails in array, matched", (t) => {
   t.same(
     rem("  {{ first_name }}  ", {
       heads: ["%%-", "{{"],
@@ -191,7 +191,7 @@ t.test("02.09 - properly wrapped, heads/tails in array, matched", (t) => {
   t.end();
 });
 
-t.test("02.10 - starts with heads, doesn't end with tails", (t) => {
+tap.test("02.10 - starts with heads, doesn't end with tails", (t) => {
   t.same(
     rem("   {{ a }}{{ b }}   ", {
       heads: ["%%-", "{{"],
@@ -203,7 +203,7 @@ t.test("02.10 - starts with heads, doesn't end with tails", (t) => {
   t.end();
 });
 
-t.test("02.11 - unclosed heads", (t) => {
+tap.test("02.11 - unclosed heads", (t) => {
   t.same(
     rem("zzz {{", {
       heads: ["%%-", "{{"],
@@ -215,7 +215,7 @@ t.test("02.11 - unclosed heads", (t) => {
   t.end();
 });
 
-t.test("02.12 - unclosed tails", (t) => {
+tap.test("02.12 - unclosed tails", (t) => {
   t.same(
     rem("zzz }}", {
       heads: ["%%-", "{{"],
@@ -227,7 +227,7 @@ t.test("02.12 - unclosed tails", (t) => {
   t.end();
 });
 
-t.test("02.13 - ends with empty variable", (t) => {
+tap.test("02.13 - ends with empty variable", (t) => {
   t.same(
     rem("zzz {{}}", {
       heads: ["%%-", "{{"],
@@ -239,7 +239,7 @@ t.test("02.13 - ends with empty variable", (t) => {
   t.end();
 });
 
-t.test("02.14 - empty variable with text both sides", (t) => {
+tap.test("02.14 - empty variable with text both sides", (t) => {
   t.same(
     rem("zzz {{}} yyy", {
       heads: ["%%-", "{{"],
@@ -251,7 +251,7 @@ t.test("02.14 - empty variable with text both sides", (t) => {
   t.end();
 });
 
-t.test("02.15 - heads/tails in opposite order", (t) => {
+tap.test("02.15 - heads/tails in opposite order", (t) => {
   t.same(
     rem(" zzz }}{{ yyy", {
       heads: ["%%-", "{{"],
@@ -263,7 +263,7 @@ t.test("02.15 - heads/tails in opposite order", (t) => {
   t.end();
 });
 
-t.test("02.16 - tails with text on both sides", (t) => {
+tap.test("02.16 - tails with text on both sides", (t) => {
   t.same(
     rem("zzz }} yyy", {
       heads: ["%%-", "{{"],
@@ -275,7 +275,7 @@ t.test("02.16 - tails with text on both sides", (t) => {
   t.end();
 });
 
-t.test("02.17 - heads with text on both sides", (t) => {
+tap.test("02.17 - heads with text on both sides", (t) => {
   t.same(
     rem("zzz {{ yyy", {
       heads: ["%%-", "{{"],
@@ -287,7 +287,7 @@ t.test("02.17 - heads with text on both sides", (t) => {
   t.end();
 });
 
-t.test("02.18 - multiple heads, single tails", (t) => {
+tap.test("02.18 - multiple heads, single tails", (t) => {
   t.same(
     rem("{{{{ first_name }}!", {
       heads: ["%%-", "{{"],
@@ -299,91 +299,94 @@ t.test("02.18 - multiple heads, single tails", (t) => {
   t.end();
 });
 
-t.test("02.19 - one set of custom heads and tails, single char string", (t) => {
-  t.same(
-    rem("??z!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.01"
-  );
-  t.same(
-    rem("??!! ??z!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.02"
-  );
-  t.same(
-    rem("??z!! ??!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.03"
-  );
-  t.same(
-    rem("??!! ??z!! ??!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.04"
-  );
-  t.same(
-    rem("\t??z!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.05"
-  );
-  t.same(
-    rem("??!!\t??z!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.06"
-  );
-  t.same(
-    rem("??z!! ??!! ", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.07"
-  );
-  t.same(
-    rem("\t??!! ??z!! ??!!", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "??z!!",
-    "02.19.08"
-  );
-  t.same(
-    rem("{{ z }}", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "{{ z }}",
-    "02.19.09 - checking are defaults not leaking #1"
-  );
-  t.same(
-    rem("{{{{ z }}}}", {
-      heads: "??",
-      tails: "!!",
-    }),
-    "{{{{ z }}}}",
-    "02.19.10 - checking are defaults not leaking #2"
-  );
-  t.end();
-});
+tap.test(
+  "02.19 - one set of custom heads and tails, single char string",
+  (t) => {
+    t.same(
+      rem("??z!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.01"
+    );
+    t.same(
+      rem("??!! ??z!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.02"
+    );
+    t.same(
+      rem("??z!! ??!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.03"
+    );
+    t.same(
+      rem("??!! ??z!! ??!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.04"
+    );
+    t.same(
+      rem("\t??z!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.05"
+    );
+    t.same(
+      rem("??!!\t??z!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.06"
+    );
+    t.same(
+      rem("??z!! ??!! ", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.07"
+    );
+    t.same(
+      rem("\t??!! ??z!! ??!!", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "??z!!",
+      "02.19.08"
+    );
+    t.same(
+      rem("{{ z }}", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "{{ z }}",
+      "02.19.09 - checking are defaults not leaking #1"
+    );
+    t.same(
+      rem("{{{{ z }}}}", {
+        heads: "??",
+        tails: "!!",
+      }),
+      "{{{{ z }}}}",
+      "02.19.10 - checking are defaults not leaking #2"
+    );
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   "02.20 - two sets of custom heads and tails, single char string",
   (t) => {
     // recursively:
@@ -399,7 +402,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.21 - words with space, single set of custom heads and tails",
   (t) => {
     t.same(
@@ -414,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.22 - double wrapped with custom heads and tails, with whitespace",
   (t) => {
     // recursively with spaces
@@ -430,7 +433,7 @@ t.test(
   }
 );
 
-t.test("02.23 - mixed sets of heads and tails #1", (t) => {
+tap.test("02.23 - mixed sets of heads and tails #1", (t) => {
   // peels off two outer layers but doesn't touch separate var wrappers
   t.same(
     rem("?? ((( ?? x !! ?? y !! ))) !!", {
@@ -459,7 +462,7 @@ t.test("02.23 - mixed sets of heads and tails #1", (t) => {
   t.end();
 });
 
-t.test("02.24 - mixed sets of heads and tails #2", (t) => {
+tap.test("02.24 - mixed sets of heads and tails #2", (t) => {
   t.same(
     rem("??(((??tralalala!!(((lalala))))))!!", {
       heads: ["??", "((("],
@@ -471,7 +474,7 @@ t.test("02.24 - mixed sets of heads and tails #2", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.25 - blank heads and tails within second level being removed",
   (t) => {
     t.same(
@@ -502,7 +505,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.26 - removing empty head/tail chunks from around the text #1",
   (t) => {
     t.same(
@@ -560,7 +563,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.27 - removing empty head/tail chunks from around the text #2 (touches end)",
   (t) => {
     t.same(
@@ -575,7 +578,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.28 - removing empty head/tail chunks from around the text #3 (touches beginning)",
   (t) => {
     t.same(
@@ -598,7 +601,7 @@ t.test(
   }
 );
 
-t.test("02.29 - leading letter ruins the removal from the front", (t) => {
+tap.test("02.29 - leading letter ruins the removal from the front", (t) => {
   t.same(
     rem("\ta ((())) (((some))) text ((()))", {
       heads: ["??", "((("],
@@ -618,7 +621,7 @@ t.test("02.29 - leading letter ruins the removal from the front", (t) => {
   t.end();
 });
 
-t.test("02.30 - leading line break", (t) => {
+tap.test("02.30 - leading line break", (t) => {
   t.same(
     rem("aaa\n", {
       heads: ["??", "((("],
@@ -630,7 +633,7 @@ t.test("02.30 - leading line break", (t) => {
   t.end();
 });
 
-t.test("02.31 - leading line break", (t) => {
+tap.test("02.31 - leading line break", (t) => {
   t.same(
     rem("{{ items[0].prepayPin }}", {
       heads: ["{{"],

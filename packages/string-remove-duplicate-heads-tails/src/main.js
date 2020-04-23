@@ -63,7 +63,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     heads: ["{{"],
     tails: ["}}"],
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map((el) => el.trim());

@@ -62,7 +62,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     heads: ["{{"],
     tails: ["}}"],
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   opts.heads = opts.heads.map((el) => el.trim());
   opts.tails = opts.tails.map((el) => el.trim());
   let firstNonMarkerChunkFound = false;
