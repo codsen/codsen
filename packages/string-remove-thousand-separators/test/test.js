@@ -1,11 +1,11 @@
-const t = require("tap");
-const r = require("../dist/string-remove-thousand-separators.cjs");
+import tap from "tap";
+import r from "../dist/string-remove-thousand-separators.esm";
 
 // ==============================
 // normal use cases
 // ==============================
 
-t.test(
+tap.test(
   "01.01 - removes Swiss-style thousand separators, single quotes",
   (t) => {
     t.same(r("1'000'000.00"), "1000000.00", "01.01.01 - normal");
@@ -55,7 +55,7 @@ t.test(
   }
 );
 
-t.test("01.02 - removes Russian-style thousand separators, spaces", (t) => {
+tap.test("01.02 - removes Russian-style thousand separators, spaces", (t) => {
   t.same(r("1 000 000.00"), "1000000.00", "01.02.01");
   t.same(
     r("1 000 000.2"),
@@ -102,7 +102,7 @@ t.test("01.02 - removes Russian-style thousand separators, spaces", (t) => {
   t.end();
 });
 
-t.test("01.03 - removes UK/US-style thousand separators, commas", (t) => {
+tap.test("01.03 - removes UK/US-style thousand separators, commas", (t) => {
   t.same(r("1,000,000.00"), "1000000.00", "01.03.01");
   t.same(
     r("1,000,000.2"),
@@ -149,7 +149,7 @@ t.test("01.03 - removes UK/US-style thousand separators, commas", (t) => {
   t.end();
 });
 
-t.test("01.04 - removes opposite-style thousand separators, commas", (t) => {
+tap.test("01.04 - removes opposite-style thousand separators, commas", (t) => {
   t.same(r("1.000.000,00"), "1000000,00", "01.04.01 - removes separators");
   t.same(
     r("1.000.000,2"),
@@ -201,7 +201,7 @@ t.test("01.04 - removes opposite-style thousand separators, commas", (t) => {
 // false-ones
 // ==============================
 
-t.test("02.01 - false - includes some text characters", (t) => {
+tap.test("02.01 - false - includes some text characters", (t) => {
   t.same(
     r("The price is 1,999.99"),
     "The price is 1,999.99",
@@ -232,15 +232,18 @@ t.test("02.01 - false - includes some text characters", (t) => {
   t.end();
 });
 
-t.test("02.02 - false - mixed thousand separators, two dots one comma", (t) => {
-  t.same(r("1,000.000"), "1,000.000", "02.02.01");
-  t.same(r("1.000,000"), "1.000,000", "02.02.02");
-  t.same(r("1,000.000.000"), "1,000.000.000", "02.02.03");
-  t.same(r("1.000,000,000"), "1.000,000,000", "02.02.04");
-  t.end();
-});
+tap.test(
+  "02.02 - false - mixed thousand separators, two dots one comma",
+  (t) => {
+    t.same(r("1,000.000"), "1,000.000", "02.02.01");
+    t.same(r("1.000,000"), "1.000,000", "02.02.02");
+    t.same(r("1,000.000.000"), "1,000.000.000", "02.02.03");
+    t.same(r("1.000,000,000"), "1.000,000,000", "02.02.04");
+    t.end();
+  }
+);
 
-t.test("02.03 - false - few sneaky cases", (t) => {
+tap.test("02.03 - false - few sneaky cases", (t) => {
   t.same(
     r("1,a"),
     "1,a",
@@ -264,7 +267,7 @@ t.test("02.03 - false - few sneaky cases", (t) => {
   t.end();
 });
 
-t.test("02.04 - trims", (t) => {
+tap.test("02.04 - trims", (t) => {
   t.same(r('"100,000.01"'), "100000.01", "02.04.01 - trims double quotes");
   t.same(
     r("100,00:0.01"),
@@ -289,7 +292,7 @@ t.test("02.04 - trims", (t) => {
 // opts.forceUKStyle
 // ==============================
 
-t.test("03.01 - converts Russian-style notation into UK-one", (t) => {
+tap.test("03.01 - converts Russian-style notation into UK-one", (t) => {
   // defaults
   t.same(r("1,5"), "1,50", "03.01.01 - one decimal place");
   t.same(
@@ -378,7 +381,7 @@ t.test("03.01 - converts Russian-style notation into UK-one", (t) => {
 // throws
 // ==============================
 
-t.test("99.01 - throws when the inputs are missing", (t) => {
+tap.test("99.01 - throws when the inputs are missing", (t) => {
   t.throws(() => {
     r();
   }, /THROW_ID_01/g);
@@ -391,7 +394,7 @@ t.test("99.01 - throws when the inputs are missing", (t) => {
   t.end();
 });
 
-t.test("99.02 - throws when first arg is not string", (t) => {
+tap.test("99.02 - throws when first arg is not string", (t) => {
   t.throws(() => {
     r(null);
   }, /THROW_ID_01/g);
@@ -410,7 +413,7 @@ t.test("99.02 - throws when first arg is not string", (t) => {
   t.end();
 });
 
-t.test("99.03 - throws when second arg is not a plain object", (t) => {
+tap.test("99.03 - throws when second arg is not a plain object", (t) => {
   t.doesNotThrow(() => {
     r("aaa", {});
   });

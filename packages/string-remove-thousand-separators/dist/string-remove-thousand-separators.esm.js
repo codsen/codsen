@@ -44,7 +44,7 @@ function remSep(str, originalOpts) {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const res = trimChars(str.trim(), '"');
   if (res === "") {
     return res;
