@@ -22,6 +22,7 @@ function c(changelogContents) {
   let lastLineWasEmpty = false;
 
   if (
+    typeof changelogContents === "string" &&
     changelogContents.length &&
     (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
   ) {
@@ -31,6 +32,7 @@ function c(changelogContents) {
       (changelogContents[changelogContents.length - 1] === "\n" ||
         changelogContents[changelogContents.length - 1] === "\r");
 
+    // eslint-disable-next-line no-param-reassign
     changelogContents = changelogContents.trim();
     const linesArr = changelogContents.split(/\r?\n/);
     // console.log(
@@ -88,7 +90,7 @@ function c(changelogContents) {
       ) {
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
         // after that, delete the title, but only if there were no other entries:
         if (
@@ -96,11 +98,11 @@ function c(changelogContents) {
           isStr(linesArr[i - 1]) &&
           linesArr[i - 1].trim().startsWith("#")
         ) {
-          i--;
+          i -= 1;
         }
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
       } else if (!linesArr[i].trim()) {
         // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
@@ -110,23 +112,22 @@ function c(changelogContents) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `113 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `115 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
+      }
+      // fix asterisk list items into dash (Prettier default):
+      else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+        newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
       } else {
-        // fix asterisk list items into dash (Prettier default):
-        if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
-          newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
-        } else {
-          newLinesArr.unshift(linesArr[i]);
-        }
+        newLinesArr.unshift(linesArr[i]);
       }
 
       // reset:
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `129 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }

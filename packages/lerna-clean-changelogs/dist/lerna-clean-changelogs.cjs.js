@@ -38,7 +38,7 @@ function c(changelogContents) {
   }
   var final;
   var lastLineWasEmpty = false;
-  if (changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
+  if (typeof changelogContents === "string" && changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
     var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
     changelogContents = changelogContents.trim();
     var linesArr = changelogContents.split(/\r?\n/);
@@ -54,26 +54,25 @@ function c(changelogContents) {
     for (var i = linesArr.length; i--;) {
       if (linesArr[i].startsWith("**Note:** Version bump only") || linesArr[i].toLowerCase().includes("wip")) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
         if (i && isStr(linesArr[i - 1]) && linesArr[i - 1].trim().startsWith("#")) {
-          i--;
+          i -= 1;
         }
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
       } else if (!linesArr[i].trim()) {
         if (!lastLineWasEmpty) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
         }
-      } else {
-        if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+      }
+      else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
           newLinesArr.unshift("- ".concat(linesArr[i].slice(2)));
         } else {
           newLinesArr.unshift(linesArr[i]);
         }
-      }
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
       }

@@ -1,8 +1,8 @@
-const { readFileSync } = require("fs");
-const path = require("path");
-const t = require("tap");
-const c = require("../dist/lerna-clean-changelogs.cjs");
-const { version } = require("../package.json");
+import { readFileSync } from "fs";
+import path from "path";
+import tap from "tap";
+import c from "../dist/lerna-clean-changelogs.esm";
+import { version } from "../package.json";
 
 const fixtures = path.join(__dirname, "fixtures");
 
@@ -18,7 +18,7 @@ function compare(t, name) {
 // 00. insurance
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - missing 1st arg`,
   (t) => {
     t.throws(() => {
@@ -32,7 +32,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg of a wrong type`,
   (t) => {
     t.throws(() => {
@@ -59,7 +59,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg is empty string`,
   (t) => {
     t.same(
@@ -78,7 +78,7 @@ t.test(
 // 01. cleaning
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - deletes bump-only entries together with their headings`,
   (t) => {
     compare(t, "01_deletes_bump-only");
@@ -86,7 +86,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - turns h1 headings within body into h2`,
   (t) => {
     compare(t, "02_remove_h1_tags_in_body");
@@ -94,7 +94,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - cleans whitespace and replaces bullet dashes with asterisks`,
   (t) => {
     compare(t, "03_whitespace");
@@ -102,7 +102,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - removes WIP entries`,
   (t) => {
     compare(t, "04_wip");

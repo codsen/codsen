@@ -46,8 +46,9 @@
     var final;
     var lastLineWasEmpty = false;
 
-    if (changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
-      var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
+    if (typeof changelogContents === "string" && changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
+      var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r"); // eslint-disable-next-line no-param-reassign
+
       changelogContents = changelogContents.trim();
       var linesArr = changelogContents.split(/\r?\n/); // console.log(
       //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -91,17 +92,17 @@
         if (linesArr[i].startsWith("**Note:** Version bump only") || linesArr[i].toLowerCase().includes("wip")) {
           // delete all the blank lines above the culprit:
           while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-            i--;
+            i -= 1;
           } // after that, delete the title, but only if there were no other entries:
 
 
           if (i && isStr(linesArr[i - 1]) && linesArr[i - 1].trim().startsWith("#")) {
-            i--;
+            i -= 1;
           } // delete all the blank lines above the culprit:
 
 
           while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-            i--;
+            i -= 1;
           }
         } else if (!linesArr[i].trim()) {
           // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
@@ -111,14 +112,12 @@
             newLinesArr.unshift(linesArr[i].trim());
             lastLineWasEmpty = true;
           }
-        } else {
-          // fix asterisk list items into dash (Prettier default):
-          if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+        } // fix asterisk list items into dash (Prettier default):
+        else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
             newLinesArr.unshift("- ".concat(linesArr[i].slice(2)));
           } else {
             newLinesArr.unshift(linesArr[i]);
-          }
-        } // reset:
+          } // reset:
 
 
         if (linesArr[i].trim()) {

@@ -27,6 +27,7 @@ function c(changelogContents) {
   let final;
   let lastLineWasEmpty = false;
   if (
+    typeof changelogContents === "string" &&
     changelogContents.length &&
     (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
   ) {
@@ -55,29 +56,28 @@ function c(changelogContents) {
         linesArr[i].toLowerCase().includes("wip")
       ) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
         if (
           i &&
           isStr(linesArr[i - 1]) &&
           linesArr[i - 1].trim().startsWith("#")
         ) {
-          i--;
+          i -= 1;
         }
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
-          i--;
+          i -= 1;
         }
       } else if (!linesArr[i].trim()) {
         if (!lastLineWasEmpty) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
         }
+      }
+      else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+        newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
       } else {
-        if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
-          newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
-        } else {
-          newLinesArr.unshift(linesArr[i]);
-        }
+        newLinesArr.unshift(linesArr[i]);
       }
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
