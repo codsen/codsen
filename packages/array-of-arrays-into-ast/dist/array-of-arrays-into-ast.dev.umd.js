@@ -44,6 +44,40 @@
     return obj;
   }
 
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -2547,19 +2581,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -2573,11 +2608,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -2603,11 +2638,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -2620,7 +2655,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   /**
@@ -4213,9 +4248,12 @@
     let opts;
 
     if (existy(originalOptions) && isObj(originalOptions)) {
-      opts = Object.assign({}, defaults, originalOptions);
+      opts = { ...defaults,
+        ...originalOptions
+      };
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
@@ -4402,7 +4440,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     const defaults = {
       arrayVsArrayAllMustBeFound: "any"
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (arguments.length === 0) {
       throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
@@ -6341,11 +6381,17 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   function nonEmpty(input) {
     if (arguments.length === 0 || input === undefined) {
       return false;
-    } else if (isArr$1(input) || isStr(input)) {
+    }
+
+    if (isArr$1(input) || isStr(input)) {
       return input.length > 0;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       return Object.keys(input).length > 0;
-    } else if (isNum(input)) {
+    }
+
+    if (isNum(input)) {
       return true;
     }
 
@@ -6432,7 +6478,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   function getType(something) {
     if (isObj$1(something)) {
       return "object";
-    } else if (isArr$2(something)) {
+    }
+
+    if (isArr$2(something)) {
       return "array";
     }
 
@@ -6603,7 +6651,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
             key: infoObj.key,
             type: infoObj.type
           }) : currentResult;
-        } else if (isObj$1(i2)) {
+        }
+
+        if (isObj$1(i2)) {
           Object.keys(i2).forEach(key => {
             currPath = infoObj.path && infoObj.path.length ? `${infoObj.path}.${key}` : `${key}`;
 
@@ -6611,31 +6661,31 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
               if (arrayIncludesWithGlob(key, opts.ignoreKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   ignoreEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardMergeEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardArrayConcat: true
-                }));
+                });
               } else {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
                 }, i1[key], i2[key], opts);
               }
@@ -6736,7 +6786,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
           key: infoObj.key,
           type: infoObj.type
         }) : currentResult;
-      } else if (i2 != null) {
+      }
+
+      if (i2 != null) {
         const currentResult = uni ? uniRes : i2;
         return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
@@ -6800,12 +6852,13 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
   function sortObject(obj) {
     return Object.keys(obj).sort().reduce(function (result, key) {
+      // eslint-disable-next-line no-param-reassign
       result[key] = obj[key];
       return result;
     }, {});
   }
 
-  function generateAst(input, opts) {
+  function generateAst(input, originalOpts) {
     if (!isArr$3(input)) {
       throw new Error("array-of-arrays-into-ast: [THROW_ID_01] input must be array. Currently it's of a type ".concat(_typeof(input), " equal to:\n").concat(JSON.stringify(input, null, 4)));
     } else if (input.length === 0) {
@@ -6815,7 +6868,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     var defaults = {
       dedupe: true
     };
-    opts = Object.assign({}, defaults, opts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     externalApi(opts, defaults, {
       msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
       optsVarName: "opts"

@@ -9,12 +9,13 @@ function sortObject(obj) {
   return Object.keys(obj)
     .sort()
     .reduce((result, key) => {
+      // eslint-disable-next-line no-param-reassign
       result[key] = obj[key];
       return result;
     }, {});
 }
 
-function generateAst(input, opts) {
+function generateAst(input, originalOpts) {
   if (!isArr(input)) {
     throw new Error(
       `array-of-arrays-into-ast: [THROW_ID_01] input must be array. Currently it's of a type ${typeof input} equal to:\n${JSON.stringify(
@@ -30,7 +31,7 @@ function generateAst(input, opts) {
   const defaults = {
     dedupe: true,
   };
-  opts = Object.assign({}, defaults, opts);
+  const opts = { ...defaults, ...originalOpts };
 
   checkTypes(opts, defaults, {
     msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
