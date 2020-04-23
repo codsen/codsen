@@ -44,6 +44,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -112,7 +161,7 @@ function comb(str, opts) {
   }
   function resetBodyClassOrId() {
     var initObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    return Object.assign({
+    return _objectSpread2({
       valuesStart: null,
       valueStart: null,
       nameStart: null
@@ -184,7 +233,7 @@ function comb(str, opts) {
   if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
     opts.backend = [];
   }
-  opts = Object.assign({}, defaults, opts);
+  opts = _objectSpread2({}, defaults, {}, opts);
   if (isStr(opts.whitelist)) {
     opts.whitelist = [opts.whitelist];
   }
@@ -311,16 +360,14 @@ function comb(str, opts) {
       if (str[i] === "\n") {
         if (str[i - 1] === "\r") {
           if (round === 1) {
-            endingsCount.rn++;
+            endingsCount.rn += 1;
           }
-        } else {
-          if (round === 1) {
-            endingsCount.n++;
-          }
+        } else if (round === 1) {
+          endingsCount.n += 1;
         }
       } else if (str[i] === "\r" && str[i + 1] !== "\n") {
         if (round === 1) {
-          endingsCount.r++;
+          endingsCount.r += 1;
         }
       }
       if (stateWithinStyleTag !== true && (
@@ -340,7 +387,7 @@ function comb(str, opts) {
           }
         } else if (str[i] === "\"" && str[stringLeftRight.right(str, i)] === "'" && str[stringLeftRight.right(str, stringLeftRight.right(str, i))] === "\"" || str[i] === "'" && str[stringLeftRight.right(str, i)] === "\"" && str[stringLeftRight.right(str, stringLeftRight.right(str, i))] === "'") {
           i = stringLeftRight.right(str, stringLeftRight.right(str, i));
-          continue stepouter;
+          continue;
         } else if (currentlyWithinQuotes === str[i]) {
           currentlyWithinQuotes = null;
         }
@@ -369,7 +416,7 @@ function comb(str, opts) {
           i = i + doNothingUntil.length - 1;
           doNothingUntil = null;
           doNothing = false;
-          continue stepouter;
+          continue;
         }
       }
       if (!doNothing && str[i] === "<" && str[i + 1] === "s" && str[i + 2] === "t" && str[i + 3] === "y" && str[i + 4] === "l" && str[i + 5] === "e") {
@@ -378,7 +425,7 @@ function comb(str, opts) {
           stateWithinStyleTag = true;
         }
         for (var y = i; y < len; y++) {
-          totalCounter++;
+          totalCounter += 1;
           if (str[y] === ">") {
             styleStartedAt = y + 1;
             ruleChunkStartedAt = y + 1;
@@ -398,8 +445,8 @@ function comb(str, opts) {
         commentStartedAt = i;
         doNothing = true;
         doNothingUntil = "*/";
-        i++;
-        continue stepouter;
+        i += 1;
+        continue;
       }
       if (!doNothing && stateWithinStyleTag && str[i] === "@") {
         if (whitespaceStartedAt) {
@@ -415,11 +462,11 @@ function comb(str, opts) {
               return true;
             }
           })) {
-            finalIndexesToDelete.push(i, temp ? temp : i + matchedAtTagsName.length + 2);
+            finalIndexesToDelete.push(i, temp || i + matchedAtTagsName.length + 2);
           }
           var secondaryStopper = void 0;
           for (var z = i + 1; z < len; z++) {
-            totalCounter++;
+            totalCounter += 1;
             if (secondaryStopper && str[z] === secondaryStopper) {
               if (str[z] === "}" && atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) || str[z] === "{" && atRulesWhichMightWrapStyles.includes(matchedAtTagsName)) {
                 i = z;
@@ -505,7 +552,7 @@ function comb(str, opts) {
               currentChunk = null;
             } else if (chr === "<" && str[i + 1] === "!") {
               for (var _y = i; _y < len; _y++) {
-                totalCounter++;
+                totalCounter += 1;
                 if (str[_y] === ">") {
                   ruleChunkStartedAt = _y + 1;
                   selectorChunkStartedAt = _y + 1;
@@ -515,8 +562,8 @@ function comb(str, opts) {
               }
             }
           }
-        } else {
-          if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
+        }
+        else if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
             var singleSelector = str.slice(singleSelectorStartedAt, i);
             if (singleSelectorType) {
               singleSelector = "".concat(singleSelectorType).concat(singleSelector);
@@ -540,15 +587,14 @@ function comb(str, opts) {
               singleSelectorStartedAt = null;
             }
           }
-        }
         if (selectorChunkStartedAt === null) {
           if (chr.trim() && chr !== "}" && chr !== ";" && !(str[i] === "/" && str[i + 1] === "*")) {
             selectorChunkCanBeDeleted = false;
             selectorChunkStartedAt = i;
           }
-        } else {
-          if (",{".includes(chr)) {
-            var sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
+        }
+        else if (",{".includes(chr)) {
+            var sliceTo = whitespaceStartedAt || i;
             currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
             if (round === 1) {
               if (whitespaceStartedAt) {
@@ -561,14 +607,14 @@ function comb(str, opts) {
                 }
               }
               headSelectorsArr.push(currentChunk);
-            } else {
-              if (selectorChunkCanBeDeleted) {
+            }
+            else if (selectorChunkCanBeDeleted) {
                 var fromIndex = selectorChunkStartedAt;
                 var toIndex = i;
                 var tempFindingIndex = void 0;
                 if (chr === "{" && str[fromIndex - 1] !== ">" && str[fromIndex - 1] !== "}") {
                   for (var _y2 = selectorChunkStartedAt; _y2--;) {
-                    totalCounter++;
+                    totalCounter += 1;
                     if (str[_y2].trim() && str[_y2] !== ",") {
                       fromIndex = _y2 + 1;
                       break;
@@ -579,7 +625,7 @@ function comb(str, opts) {
                   }
                 } else if (chr === "," && !str[i + 1].trim()) {
                   for (var _y3 = i + 1; _y3 < len; _y3++) {
-                    totalCounter++;
+                    totalCounter += 1;
                     if (str[_y3].trim()) {
                       toIndex = _y3;
                       break;
@@ -618,7 +664,6 @@ function comb(str, opts) {
                   currentChunksMinifiedSelectors.wipe();
                 }
               }
-            }
             if (chr !== "{") {
               selectorChunkStartedAt = null;
             } else if (round === 2) {
@@ -638,7 +683,6 @@ function comb(str, opts) {
               }
             }
           }
-        }
       }
       if (!doNothing && !stateWithinStyleTag && stateWithinBody && str[i] === "/" && stringMatchLeftRight.matchRight(str, i, "body", {
         trimBeforeMatching: true,
@@ -668,7 +712,7 @@ function comb(str, opts) {
         }
       })) {
         for (var _y5 = i; _y5 < len; _y5++) {
-          totalCounter++;
+          totalCounter += 1;
           if (str[_y5] === ">") {
             bodyStartedAt = _y5 + 1;
             break;
@@ -701,7 +745,7 @@ function comb(str, opts) {
             }
           } else if (!str[i + 5].trim()) {
             for (var _y6 = i + 5; _y6 < len; _y6++) {
-              totalCounter++;
+              totalCounter += 1;
               if (str[_y6].trim()) {
                 if (str[_y6] === "=") {
                   if (_y6 > i + 5 && round === 1) {
@@ -711,7 +755,7 @@ function comb(str, opts) {
                     valuesStart = _y6 + 2;
                   } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
                     for (var _z = _y6 + 1; _z < len; _z++) {
-                      totalCounter++;
+                      totalCounter += 1;
                       if (str[_z].trim()) {
                         if (_z > _y6 + 1 && round === 1) {
                           finalIndexesToDelete.push(_y6 + 1, _z);
@@ -723,8 +767,8 @@ function comb(str, opts) {
                       }
                     }
                   }
-                } else {
-                  if (round === 1) {
+                }
+                else if (round === 1) {
                     var _calculatedRange = expander({
                       str: str,
                       from: i,
@@ -734,7 +778,6 @@ function comb(str, opts) {
                     });
                     finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
                   }
-                }
                 break;
               }
             }
@@ -774,7 +817,7 @@ function comb(str, opts) {
             }
           } else if (!str[i + 2].trim()) {
             for (var _y7 = i + 2; _y7 < len; _y7++) {
-              totalCounter++;
+              totalCounter += 1;
               if (str[_y7].trim()) {
                 if (str[_y7] === "=") {
                   if (_y7 > i + 2 && round === 1) {
@@ -784,7 +827,7 @@ function comb(str, opts) {
                     _valuesStart = _y7 + 2;
                   } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
                     for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
-                      totalCounter++;
+                      totalCounter += 1;
                       if (str[_z2].trim()) {
                         if (_z2 > _y7 + 1 && round === 1) {
                           finalIndexesToDelete.push(_y7 + 1, _z2);
@@ -796,8 +839,8 @@ function comb(str, opts) {
                       }
                     }
                   }
-                } else {
-                  if (round === 1) {
+                }
+                else if (round === 1) {
                     var _calculatedRange3 = expander({
                       str: str,
                       from: i,
@@ -807,7 +850,6 @@ function comb(str, opts) {
                     });
                     finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
                   }
-                }
                 break;
               }
             }
@@ -847,7 +889,7 @@ function comb(str, opts) {
             var findings = opts.backend.find(function (headsTailsObj) {
               return headsTailsObj.heads === matchedHeads;
             });
-            doNothingUntil = findings["tails"];
+            doNothingUntil = findings.tails;
           })();
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
@@ -875,7 +917,7 @@ function comb(str, opts) {
             var findings = opts.backend.find(function (headsTailsObj) {
               return headsTailsObj.heads === matchedHeads;
             });
-            doNothingUntil = findings["tails"];
+            doNothingUntil = findings.tails;
           })();
         } else {
           var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
@@ -886,8 +928,8 @@ function comb(str, opts) {
                 finalIndexesToDelete.push(i, i, "\"");
               }
             }
-          } else {
-            if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
+          }
+          else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
               var expandedRange = expander({
                 str: str,
                 from: bodyClass.valueStart,
@@ -907,7 +949,6 @@ function comb(str, opts) {
                 finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
               }
             }
-          }
           bodyClass.valueStart = null;
         }
       }
@@ -920,8 +961,8 @@ function comb(str, opts) {
               finalIndexesToDelete.push(i, i, "\"");
             }
           }
-        } else {
-          if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
+        }
+        else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
             var _expandedRange = expander({
               str: str,
               from: bodyId.valueStart,
@@ -939,7 +980,6 @@ function comb(str, opts) {
               finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
             }
           }
-        }
         bodyId.valueStart = null;
       }
       if (!doNothing && bodyClass.valuesStart != null && (!bodyClass.quoteless && (chr === "'" || chr === '"') || bodyClass.quoteless && !characterSuitableForNames(str[i])) && i >= bodyClass.valuesStart) {
@@ -1030,7 +1070,7 @@ function comb(str, opts) {
             var findings = opts.backend.find(function (headsTailsObj) {
               return headsTailsObj.heads === matchedHeads;
             });
-            doNothingUntil = findings["tails"];
+            doNothingUntil = findings.tails;
           })();
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
@@ -1109,7 +1149,7 @@ function comb(str, opts) {
         }
       }
       if (chr === "}" && curliesDepth) {
-        curliesDepth--;
+        curliesDepth -= 1;
       }
       if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
         if (!insideCurlyBraces) {
@@ -1118,7 +1158,7 @@ function comb(str, opts) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
           }
         } else {
-          curliesDepth++;
+          curliesDepth += 1;
         }
       }
       if (!doNothing) {
@@ -1135,7 +1175,7 @@ function comb(str, opts) {
         if (_temp[1] - 1 > i) {
           i = _temp[1] - 1;
         }
-        continue stepouter;
+        continue;
       }
       if (commentNearlyStartedAt !== null && str[i] === ">") {
         commentNearlyStartedAt = null;
@@ -1176,7 +1216,7 @@ function comb(str, opts) {
           }
         });
       });
-      headSelectorsCountClone = Object.assign({}, headSelectorsCount);
+      headSelectorsCountClone = _objectSpread2({}, headSelectorsCount);
       allClassesAndIdsWithinHead = uniq(headSelectorsArr.reduce(function (arr, el) {
         return arr.concat(extract(el));
       }, [])).sort();
@@ -1184,7 +1224,7 @@ function comb(str, opts) {
       var preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       var deletedFromHeadArr = [];
       for (var _y8 = 0, len2 = preppedHeadSelectorsArr.length; _y8 < len2; _y8++) {
-        totalCounter++;
+        totalCounter += 1;
         var _temp3 = void 0;
         if (preppedHeadSelectorsArr[_y8] != null) {
           _temp3 = extract(preppedHeadSelectorsArr[_y8]);

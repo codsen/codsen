@@ -3,11 +3,13 @@
 // deps
 const path = require("path");
 const fs = require("fs");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const { comb } = require("../");
+const { comb } = require("..");
+
 const source = fs.readFileSync(path.resolve("./perf/dummy_file.html"), "utf8");
 const testme = () =>
   comb(source, {

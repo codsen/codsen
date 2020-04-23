@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -164,7 +213,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -207,7 +256,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -229,13 +280,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
 
     if (!isStr(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -348,12 +403,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -551,9 +606,12 @@
     };
 
     if (originalOpts === null) {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     } else {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = { ...defaults,
+        ...originalOpts
+      };
     }
 
     return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
@@ -2451,9 +2509,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2481,9 +2543,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -2509,18 +2575,12 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
    */
 
-  function stringExtractClassNames(input, returnRangesInstead) {
-    function existy(x) {
-      return x != null;
-    }
-
+  function stringExtractClassNames(input, returnRangesInstead = false) {
     if (typeof input !== "string") {
       throw new TypeError(`string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(input, null, 4)}`);
     }
 
-    if (!existy(returnRangesInstead) || !returnRangesInstead) {
-      returnRangesInstead = false;
-    } else if (typeof returnRangesInstead !== "boolean") {
+    if (typeof returnRangesInstead !== "boolean") {
       throw new TypeError(`string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ${typeof input}, currently equal to ${JSON.stringify(input, null, 4)}`);
     }
 
@@ -2556,12 +2616,11 @@
       }
 
       if (input.startsWith("class", i) && input[left(input, i)] === "[" && input[right(input, i + 4)] === "=") {
+        /* istanbul ignore else */
         if (isLatinLetter(input[right(input, right(input, i + 4))])) {
           selectorStartsAt = right(input, right(input, i + 4));
-        } else if (`'"`.includes(input[right(input, right(input, i + 4))])) {
-          if (isLatinLetter(input[right(input, right(input, right(input, i + 4)))])) {
-            selectorStartsAt = right(input, right(input, right(input, i + 4)));
-          }
+        } else if (`'"`.includes(input[right(input, right(input, i + 4))]) && isLatinLetter(input[right(input, right(input, right(input, i + 4)))])) {
+          selectorStartsAt = right(input, right(input, right(input, i + 4)));
         }
 
         stateCurrentlyIs = ".";
@@ -2570,10 +2629,8 @@
       if (input.startsWith("id", i) && input[left(input, i)] === "[" && input[right(input, i + 1)] === "=") {
         if (isLatinLetter(input[right(input, right(input, i + 1))])) {
           selectorStartsAt = right(input, right(input, i + 1));
-        } else if (`'"`.includes(input[right(input, right(input, i + 1))])) {
-          if (isLatinLetter(input[right(input, right(input, right(input, i + 1)))])) {
-            selectorStartsAt = right(input, right(input, right(input, i + 1)));
-          }
+        } else if (`'"`.includes(input[right(input, right(input, i + 1))]) && isLatinLetter(input[right(input, right(input, right(input, i + 1)))])) {
+          selectorStartsAt = right(input, right(input, right(input, i + 1)));
         }
 
         stateCurrentlyIs = "#";
@@ -3796,7 +3853,9 @@
       wipeAllWhitespaceOnRight: false,
       addSingleSpaceToPreventAccidentalConcatenation: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
       let culpritsIndex;
@@ -3861,11 +3920,11 @@
 
     if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
       if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
-        from--;
+        from -= 1;
       }
 
       if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
-        to++;
+        to += 1;
       }
     }
 
@@ -4020,14 +4079,14 @@
           let temp = accum + curr;
 
           do {
-            temp = String(temp).split("").reduce((acc, curr) => acc + Number.parseInt(curr), 0);
+            temp = String(temp).split("").reduce((acc, curr1) => acc + Number.parseInt(curr1, 10), 0);
           } while (temp >= 10);
 
           return temp;
         }, 0);
 
         while (res.includes(soFarWeveGot)) {
-          counter++;
+          counter += 1;
           soFarWeveGot += lettersAndNumbers[reducedCodePointSum * magicNumber * counter % lettersAndNumbers.length];
         }
 
@@ -4073,8 +4132,6 @@
     return res;
   }
 
-  var version = "3.9.10";
-
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
@@ -4096,7 +4153,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -4127,7 +4186,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -4182,7 +4241,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -4207,7 +4268,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -4287,7 +4349,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -4299,18 +4361,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -4345,7 +4413,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -4639,7 +4707,9 @@
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }
@@ -4653,7 +4723,9 @@
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }
@@ -4724,7 +4796,7 @@
         Array.from(str).forEach(char => {
           if (char !== "\n" || limit) {
             if (char === "\n") {
-              limit--;
+              limit -= 1;
             }
 
             push(resArr, true, char);
@@ -4745,14 +4817,12 @@
         for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(startCharacter, true, str[i]);
           }
         }
       }
@@ -4764,14 +4834,12 @@
         for (let i = str.length; i--;) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(endCharacter, false, str[i]);
           }
         }
       }
@@ -4818,7 +4886,9 @@
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = Object.assign({}, defaults, originalOpts);
+      const opts = { ...defaults,
+        ...originalOpts
+      };
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -4840,7 +4910,9 @@
 
       if (!existy$1(originalFrom) && !existy$1(originalTo)) {
         return;
-      } else if (existy$1(originalFrom) && !existy$1(originalTo)) {
+      }
+
+      if (existy$1(originalFrom) && !existy$1(originalTo)) {
         if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(el => Array.isArray(el))) {
@@ -4850,7 +4922,9 @@
                 }
               });
               return;
-            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+            }
+
+            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
               this.add(...originalFrom);
             }
           }
@@ -5906,6 +5980,8 @@
 
   var lodash_uniq = uniq;
 
+  var version = "3.9.10";
+
   var isArr$1 = Array.isArray;
   var defaults = {
     whitelist: [],
@@ -5946,7 +6022,7 @@
 
     function resetBodyClassOrId() {
       var initObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      return Object.assign({
+      return _objectSpread2({
         valuesStart: null,
         valueStart: null,
         nameStart: null
@@ -6107,7 +6183,7 @@
       opts.backend = [];
     }
 
-    opts = Object.assign({}, defaults, opts); // sweeping:
+    opts = _objectSpread2({}, defaults, {}, opts); // sweeping:
 
     if (isStr(opts.whitelist)) {
       opts.whitelist = [opts.whitelist];
@@ -6255,7 +6331,7 @@
       //                              |
       //                              V
 
-      totalCounter += len;
+      totalCounter += len; // eslint-disable-next-line no-restricted-syntax
 
       stepouter: for (i = 0; i < len; i++) {
         //                                S
@@ -6307,16 +6383,14 @@
         if (str[i] === "\n") {
           if (str[i - 1] === "\r") {
             if (round === 1) {
-              endingsCount.rn++;
+              endingsCount.rn += 1;
             }
-          } else {
-            if (round === 1) {
-              endingsCount.n++;
-            }
+          } else if (round === 1) {
+            endingsCount.n += 1;
           }
         } else if (str[i] === "\r" && str[i + 1] !== "\n") {
           if (round === 1) {
-            endingsCount.r++;
+            endingsCount.r += 1;
           }
         }
 
@@ -6365,7 +6439,7 @@
             }
           } else if (str[i] === "\"" && str[right(str, i)] === "'" && str[right(str, right(str, i))] === "\"" || str[i] === "'" && str[right(str, i)] === "\"" && str[right(str, right(str, i))] === "'") {
             i = right(str, right(str, i));
-            continue stepouter;
+            continue;
           } else if (currentlyWithinQuotes === str[i]) {
             currentlyWithinQuotes = null;
           }
@@ -6412,7 +6486,7 @@
 
             doNothingUntil = null;
             doNothing = false;
-            continue stepouter;
+            continue;
           }
         } // head: pinpoint any <style... tag, anywhere within the given HTML
         // ================
@@ -6426,7 +6500,7 @@
           }
 
           for (var y = i; y < len; y++) {
-            totalCounter++;
+            totalCounter += 1;
 
             if (str[y] === ">") {
               styleStartedAt = y + 1;
@@ -6467,8 +6541,8 @@
           doNothing = true;
           doNothingUntil = "*/"; // just over the "*":
 
-          i++;
-          continue stepouter;
+          i += 1;
+          continue;
         } // pinpoint "@"
 
 
@@ -6492,7 +6566,7 @@
                 return true;
               }
             })) {
-              finalIndexesToDelete.push(i, temp ? temp : i + matchedAtTagsName.length + 2);
+              finalIndexesToDelete.push(i, temp || i + matchedAtTagsName.length + 2);
             } // these can wrap styles and each other and their pesky curlies can throw
             // our algorithm off-track. We need to jump past the chunk from "@..."
             // to, and including, first curly bracket. But mind the dirty code cases.
@@ -6501,7 +6575,7 @@
             var secondaryStopper = void 0;
 
             for (var z = i + 1; z < len; z++) {
-              totalCounter++; // ------------------------------------------------------------------
+              totalCounter += 1; // ------------------------------------------------------------------
               // a secondary stopper is any character which must be matched with its
               // closing counterpart before anything continues. For example, we look
               // for semicolon. On the way, we encounter an opening bracket. Now,
@@ -6638,7 +6712,7 @@
                 // catch comment blocks, probably Outlook conditional comments
                 // like <!--[if mso]>
                 for (var _y = i; _y < len; _y++) {
-                  totalCounter++;
+                  totalCounter += 1;
 
                   if (str[_y] === ">") {
                     ruleChunkStartedAt = _y + 1;
@@ -6649,9 +6723,8 @@
                 }
               }
             }
-          } else {
-            // catch the END of a single selectors
-            if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
+          } // catch the END of a single selectors
+          else if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
               var singleSelector = str.slice(singleSelectorStartedAt, i);
 
               if (singleSelectorType) {
@@ -6681,8 +6754,7 @@
               } else {
                 singleSelectorStartedAt = null;
               }
-            }
-          } // PART 2.
+            } // PART 2.
           // catch the selectorChunks (for example, #head-only-id-2.real-class-1[lang|en]):
           // only opening curly brace or comma stops the recording.
 
@@ -6696,10 +6768,9 @@
 
               selectorChunkStartedAt = i;
             }
-          } else {
-            // catch the ending of a chunk
-            if (",{".includes(chr)) {
-              var sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
+          } // catch the ending of a chunk
+          else if (",{".includes(chr)) {
+              var sliceTo = whitespaceStartedAt || i;
               currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
 
               if (round === 1) {
@@ -6716,9 +6787,8 @@
                 }
 
                 headSelectorsArr.push(currentChunk);
-              } else {
-                // it's round 2
-                if (selectorChunkCanBeDeleted) {
+              } // it's round 2
+              else if (selectorChunkCanBeDeleted) {
                   var fromIndex = selectorChunkStartedAt;
                   var toIndex = i;
                   var tempFindingIndex = void 0;
@@ -6733,7 +6803,7 @@
                     //
                     // 1. expand the left side to include comma, if such is present
                     for (var _y2 = selectorChunkStartedAt; _y2--;) {
-                      totalCounter++;
+                      totalCounter += 1;
 
                       if (str[_y2].trim() && str[_y2] !== ",") {
                         fromIndex = _y2 + 1;
@@ -6750,7 +6820,7 @@
                     }
                   } else if (chr === "," && !str[i + 1].trim()) {
                     for (var _y3 = i + 1; _y3 < len; _y3++) {
-                      totalCounter++;
+                      totalCounter += 1;
 
                       if (str[_y3].trim()) {
                         toIndex = _y3;
@@ -6800,8 +6870,7 @@
                     finalIndexesToDelete.push(currentChunksMinifiedSelectors.current());
                     currentChunksMinifiedSelectors.wipe();
                   }
-                }
-              } // wipe the marker:
+                } // wipe the marker:
 
 
               if (chr !== "{") {
@@ -6830,8 +6899,7 @@
                   onlyDeletedChunksFollow = false;
                 }
               }
-            }
-          } //
+            } //
 
         } // catch the closing body tag
         // ================
@@ -6876,7 +6944,7 @@
         })) {
           // Find the ending of the body tag:
           for (var _y5 = i; _y5 < len; _y5++) {
-            totalCounter++;
+            totalCounter += 1;
 
             if (str[_y5] === ">") {
               bodyStartedAt = _y5 + 1; // we can't offset the index because there might be unused classes
@@ -6922,7 +6990,7 @@
             } else if (!str[i + 5].trim()) {
               // loop forward:
               for (var _y6 = i + 5; _y6 < len; _y6++) {
-                totalCounter++;
+                totalCounter += 1;
 
                 if (str[_y6].trim()) {
                   // 1. is it the "equals" character?
@@ -6939,7 +7007,7 @@
                     } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
                       // 1-2-2. traverse even more forward:
                       for (var _z = _y6 + 1; _z < len; _z++) {
-                        totalCounter++;
+                        totalCounter += 1;
 
                         if (str[_z].trim()) {
                           if (_z > _y6 + 1 && round === 1) {
@@ -6954,9 +7022,8 @@
                         }
                       }
                     }
-                  } else {
-                    // not equals is followed by "class" attribute's name
-                    if (round === 1) {
+                  } // not equals is followed by "class" attribute's name
+                  else if (round === 1) {
                       var _calculatedRange = expander({
                         str: str,
                         from: i,
@@ -6967,8 +7034,7 @@
                       });
 
                       finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
-                    }
-                  } // 2. stop anyway
+                    } // 2. stop anyway
 
 
                   break;
@@ -7021,7 +7087,7 @@
             } else if (!str[i + 2].trim()) {
               // loop forward:
               for (var _y7 = i + 2; _y7 < len; _y7++) {
-                totalCounter++;
+                totalCounter += 1;
 
                 if (str[_y7].trim()) {
                   // 1. is it the "equals" character?
@@ -7038,7 +7104,7 @@
                     } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
                       // 1-2-2. traverse even more forward:
                       for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
-                        totalCounter++;
+                        totalCounter += 1;
 
                         if (str[_z2].trim()) {
                           if (_z2 > _y7 + 1 && round === 1) {
@@ -7053,9 +7119,8 @@
                         }
                       }
                     }
-                  } else {
-                    // not equals is followed by "id" attribute's name
-                    if (round === 1) {
+                  } // not equals is followed by "id" attribute's name
+                  else if (round === 1) {
                       var _calculatedRange3 = expander({
                         str: str,
                         from: i,
@@ -7066,8 +7131,7 @@
                       });
 
                       finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
-                    }
-                  } // 2. stop anyway
+                    } // 2. stop anyway
 
 
                   break;
@@ -7122,7 +7186,7 @@
               var findings = opts.backend.find(function (headsTailsObj) {
                 return headsTailsObj.heads === matchedHeads;
               });
-              doNothingUntil = findings["tails"];
+              doNothingUntil = findings.tails;
             })();
           } else if (characterSuitableForNames(chr)) {
             // 1. mark the class' starting index
@@ -7165,7 +7229,7 @@
               var findings = opts.backend.find(function (headsTailsObj) {
                 return headsTailsObj.heads === matchedHeads;
               });
-              doNothingUntil = findings["tails"];
+              doNothingUntil = findings.tails;
             })();
           } else {
             // normal operations can continue
@@ -7185,9 +7249,8 @@
                   finalIndexesToDelete.push(i, i, "\"");
                 }
               }
-            } else {
-              // round 2
-              if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
+            } // round 2
+            else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
                 // submit this class for deletion
                 var expandedRange = expander({
                   str: str,
@@ -7213,7 +7276,6 @@
                   finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
                 }
               }
-            }
 
             bodyClass.valueStart = null;
           }
@@ -7232,9 +7294,8 @@
                 finalIndexesToDelete.push(i, i, "\"");
               }
             }
-          } else {
-            // round 2
-            if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
+          } // round 2
+          else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
               // submit this id for deletion
               var _expandedRange = expander({
                 str: str,
@@ -7258,7 +7319,6 @@
                 finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
               }
             }
-          }
 
           bodyId.valueStart = null;
         } // body: stop the class attribute's recording if closing single/double quote encountered
@@ -7397,7 +7457,7 @@
               var findings = opts.backend.find(function (headsTailsObj) {
                 return headsTailsObj.heads === matchedHeads;
               });
-              doNothingUntil = findings["tails"];
+              doNothingUntil = findings.tails;
             })();
           } else if (characterSuitableForNames(chr)) {
             // 1. mark the id's starting index
@@ -7542,7 +7602,7 @@
 
 
         if (chr === "}" && curliesDepth) {
-          curliesDepth--;
+          curliesDepth -= 1;
         } // pinpoint opening curly braces (in head styles), but not @media's.
         // ================
 
@@ -7557,7 +7617,7 @@
               finalIndexesToDelete.push(whitespaceStartedAt, i);
             }
           } else {
-            curliesDepth++;
+            curliesDepth += 1;
           }
         } // catch the whitespace
 
@@ -7606,7 +7666,7 @@
           // }
 
 
-          continue stepouter;
+          continue;
         } // catch would-have-been comment endings
 
 
@@ -7686,7 +7746,7 @@
         }); // create a working copy of `headSelectorsCount` which we'll mutate, subtracting
         // each deleted class/id:
 
-        headSelectorsCountClone = Object.assign({}, headSelectorsCount); // compile list of to-be-terminated
+        headSelectorsCountClone = _objectSpread2({}, headSelectorsCount); // compile list of to-be-terminated
         // ================
 
         allClassesAndIdsWithinHead = lodash_uniq(headSelectorsArr.reduce(function (arr, el) {
@@ -7704,7 +7764,7 @@
         var deletedFromHeadArr = [];
 
         for (var _y8 = 0, len2 = preppedHeadSelectorsArr.length; _y8 < len2; _y8++) {
-          totalCounter++;
+          totalCounter += 1;
 
           var _temp3 = void 0; // intentional loose comparison !=, that's existy():
 

@@ -56,14 +56,12 @@ function comb(str, opts) {
     return typeof something === "string";
   }
   function resetBodyClassOrId(initObj = {}) {
-    return Object.assign(
-      {
-        valuesStart: null,
-        valueStart: null,
-        nameStart: null,
-      },
-      initObj
-    );
+    return {
+      valuesStart: null,
+      valueStart: null,
+      nameStart: null,
+      ...initObj,
+    };
   }
   function isLatinLetter(char) {
     return (
@@ -156,7 +154,7 @@ function comb(str, opts) {
   if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
     opts.backend = [];
   }
-  opts = Object.assign({}, defaults, opts);
+  opts = { ...defaults, ...opts };
   if (isStr(opts.whitelist)) {
     opts.whitelist = [opts.whitelist];
   }
@@ -335,16 +333,14 @@ function comb(str, opts) {
       if (str[i] === "\n") {
         if (str[i - 1] === "\r") {
           if (round === 1) {
-            endingsCount.rn++;
+            endingsCount.rn += 1;
           }
-        } else {
-          if (round === 1) {
-            endingsCount.n++;
-          }
+        } else if (round === 1) {
+          endingsCount.n += 1;
         }
       } else if (str[i] === "\r" && str[i + 1] !== "\n") {
         if (round === 1) {
-          endingsCount.r++;
+          endingsCount.r += 1;
         }
       }
       if (
@@ -389,7 +385,7 @@ function comb(str, opts) {
             str[right(str, right(str, i))] === `'`)
         ) {
           i = right(str, right(str, i));
-          continue stepouter;
+          continue;
         } else if (currentlyWithinQuotes === str[i]) {
           currentlyWithinQuotes = null;
         }
@@ -438,7 +434,7 @@ function comb(str, opts) {
           i = i + doNothingUntil.length - 1;
           doNothingUntil = null;
           doNothing = false;
-          continue stepouter;
+          continue;
         }
       }
       if (
@@ -455,7 +451,7 @@ function comb(str, opts) {
           stateWithinStyleTag = true;
         }
         for (let y = i; y < len; y++) {
-          totalCounter++;
+          totalCounter += 1;
           if (str[y] === ">") {
             styleStartedAt = y + 1;
             ruleChunkStartedAt = y + 1;
@@ -491,8 +487,8 @@ function comb(str, opts) {
         commentStartedAt = i;
         doNothing = true;
         doNothingUntil = "*/";
-        i++;
-        continue stepouter;
+        i += 1;
+        continue;
       }
       if (!doNothing && stateWithinStyleTag && str[i] === "@") {
         if (whitespaceStartedAt) {
@@ -517,12 +513,12 @@ function comb(str, opts) {
           ) {
             finalIndexesToDelete.push(
               i,
-              temp ? temp : i + matchedAtTagsName.length + 2
+              temp || i + matchedAtTagsName.length + 2
             );
           }
           let secondaryStopper;
           for (let z = i + 1; z < len; z++) {
-            totalCounter++;
+            totalCounter += 1;
             if (secondaryStopper && str[z] === secondaryStopper) {
               if (
                 (str[z] === "}" &&
@@ -646,7 +642,7 @@ function comb(str, opts) {
               currentChunk = null;
             } else if (chr === "<" && str[i + 1] === "!") {
               for (let y = i; y < len; y++) {
-                totalCounter++;
+                totalCounter += 1;
                 if (str[y] === ">") {
                   ruleChunkStartedAt = y + 1;
                   selectorChunkStartedAt = y + 1;
@@ -656,48 +652,47 @@ function comb(str, opts) {
               }
             }
           }
-        } else {
+        }
+        else if (
+          singleSelectorStartedAt !== null &&
+          !characterSuitableForNames(chr)
+        ) {
+          let singleSelector = str.slice(singleSelectorStartedAt, i);
+          if (singleSelectorType) {
+            singleSelector = `${singleSelectorType}${singleSelector}`;
+            singleSelectorType = undefined;
+          }
           if (
-            singleSelectorStartedAt !== null &&
-            !characterSuitableForNames(chr)
+            round === 2 &&
+            !selectorChunkCanBeDeleted &&
+            headCssToDelete.includes(singleSelector)
           ) {
-            let singleSelector = str.slice(singleSelectorStartedAt, i);
-            if (singleSelectorType) {
-              singleSelector = `${singleSelectorType}${singleSelector}`;
-              singleSelectorType = undefined;
-            }
+            selectorChunkCanBeDeleted = true;
+            onlyDeletedChunksFollow = true;
+          } else if (round === 2 && !selectorChunkCanBeDeleted) {
             if (
-              round === 2 &&
-              !selectorChunkCanBeDeleted &&
-              headCssToDelete.includes(singleSelector)
+              opts.uglify &&
+              (!isArr(opts.whitelist) ||
+                !opts.whitelist.length ||
+                !matcher([singleSelector], opts.whitelist).length)
             ) {
-              selectorChunkCanBeDeleted = true;
-              onlyDeletedChunksFollow = true;
-            } else if (round === 2 && !selectorChunkCanBeDeleted) {
-              if (
-                opts.uglify &&
-                (!isArr(opts.whitelist) ||
-                  !opts.whitelist.length ||
-                  !matcher([singleSelector], opts.whitelist).length)
-              ) {
-                currentChunksMinifiedSelectors.push(
-                  singleSelectorStartedAt,
-                  i,
-                  allClassesAndIdsWithinHeadFinalUglified[
-                    allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
-                  ]
-                );
-              }
-              if (chr === ",") {
-                lastKeptChunksCommaAt = i;
-                onlyDeletedChunksFollow = false;
-              }
+              currentChunksMinifiedSelectors.push(
+                singleSelectorStartedAt,
+                i,
+                allClassesAndIdsWithinHeadFinalUglified[
+                  allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
+                ]
+              );
             }
-            if (chr === "." || chr === "#") {
-              singleSelectorStartedAt = i;
-            } else {
-              singleSelectorStartedAt = null;
+            if (chr === ",") {
+              lastKeptChunksCommaAt = i;
+              onlyDeletedChunksFollow = false;
             }
+          }
+          if (chr === "." || chr === "#") {
+            singleSelectorStartedAt = i;
+          } else {
+            singleSelectorStartedAt = null;
           }
         }
         if (selectorChunkStartedAt === null) {
@@ -710,109 +705,106 @@ function comb(str, opts) {
             selectorChunkCanBeDeleted = false;
             selectorChunkStartedAt = i;
           }
-        } else {
-          if (",{".includes(chr)) {
-            const sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
-            currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
-            if (round === 1) {
-              if (whitespaceStartedAt) {
-                if (chr === "," && whitespaceStartedAt < i) {
-                  finalIndexesToDelete.push(whitespaceStartedAt, i);
-                  nonIndentationsWhitespaceLength += i - whitespaceStartedAt;
-                } else if (chr === "{" && whitespaceStartedAt < i - 1) {
-                  finalIndexesToDelete.push(whitespaceStartedAt, i - 1);
-                  nonIndentationsWhitespaceLength +=
-                    i - 1 - whitespaceStartedAt;
-                }
-              }
-              headSelectorsArr.push(currentChunk);
-            } else {
-              if (selectorChunkCanBeDeleted) {
-                let fromIndex = selectorChunkStartedAt;
-                let toIndex = i;
-                let tempFindingIndex;
-                if (
-                  chr === "{" &&
-                  str[fromIndex - 1] !== ">" &&
-                  str[fromIndex - 1] !== "}"
-                ) {
-                  for (let y = selectorChunkStartedAt; y--; ) {
-                    totalCounter++;
-                    if (str[y].trim() && str[y] !== ",") {
-                      fromIndex = y + 1;
-                      break;
-                    }
-                  }
-                  if (!str[i - 1].trim()) {
-                    toIndex = i - 1;
-                  }
-                } else if (chr === "," && !str[i + 1].trim()) {
-                  for (let y = i + 1; y < len; y++) {
-                    totalCounter++;
-                    if (str[y].trim()) {
-                      toIndex = y;
-                      break;
-                    }
-                  }
-                } else if (
-                  matchLeft(str, fromIndex, "{", {
-                    trimBeforeMatching: true,
-                    cb: (char, theRemainderOfTheString, index) => {
-                      tempFindingIndex = index;
-                      return true;
-                    },
-                  })
-                ) {
-                  fromIndex = tempFindingIndex + 2;
-                }
-                const resToPush = expander({
-                  str,
-                  from: fromIndex,
-                  to: toIndex,
-                  ifRightSideIncludesThisThenCropTightly: ".#",
-                  ifRightSideIncludesThisCropItToo: ",",
-                  extendToOneSide: "right",
-                });
-                finalIndexesToDelete.push(...resToPush);
-                if (opts.uglify) {
-                  currentChunksMinifiedSelectors.wipe();
-                }
-              } else {
-                if (headWholeLineCanBeDeleted) {
-                  headWholeLineCanBeDeleted = false;
-                }
-                if (onlyDeletedChunksFollow) {
-                  onlyDeletedChunksFollow = false;
-                }
-                if (opts.uglify) {
-                  finalIndexesToDelete.push(
-                    currentChunksMinifiedSelectors.current()
-                  );
-                  currentChunksMinifiedSelectors.wipe();
-                }
+        }
+        else if (",{".includes(chr)) {
+          const sliceTo = whitespaceStartedAt || i;
+          currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
+          if (round === 1) {
+            if (whitespaceStartedAt) {
+              if (chr === "," && whitespaceStartedAt < i) {
+                finalIndexesToDelete.push(whitespaceStartedAt, i);
+                nonIndentationsWhitespaceLength += i - whitespaceStartedAt;
+              } else if (chr === "{" && whitespaceStartedAt < i - 1) {
+                finalIndexesToDelete.push(whitespaceStartedAt, i - 1);
+                nonIndentationsWhitespaceLength += i - 1 - whitespaceStartedAt;
               }
             }
-            if (chr !== "{") {
-              selectorChunkStartedAt = null;
-            } else if (round === 2) {
-              if (
-                !headWholeLineCanBeDeleted &&
-                lastKeptChunksCommaAt !== null &&
-                onlyDeletedChunksFollow
-              ) {
-                let deleteUpTo = lastKeptChunksCommaAt + 1;
-                if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
-                  for (let y = lastKeptChunksCommaAt + 1; y < len; y++) {
-                    if (str[y].trim()) {
-                      deleteUpTo = y;
-                      break;
-                    }
+            headSelectorsArr.push(currentChunk);
+          }
+          else if (selectorChunkCanBeDeleted) {
+            let fromIndex = selectorChunkStartedAt;
+            let toIndex = i;
+            let tempFindingIndex;
+            if (
+              chr === "{" &&
+              str[fromIndex - 1] !== ">" &&
+              str[fromIndex - 1] !== "}"
+            ) {
+              for (let y = selectorChunkStartedAt; y--; ) {
+                totalCounter += 1;
+                if (str[y].trim() && str[y] !== ",") {
+                  fromIndex = y + 1;
+                  break;
+                }
+              }
+              if (!str[i - 1].trim()) {
+                toIndex = i - 1;
+              }
+            } else if (chr === "," && !str[i + 1].trim()) {
+              for (let y = i + 1; y < len; y++) {
+                totalCounter += 1;
+                if (str[y].trim()) {
+                  toIndex = y;
+                  break;
+                }
+              }
+            } else if (
+              matchLeft(str, fromIndex, "{", {
+                trimBeforeMatching: true,
+                cb: (char, theRemainderOfTheString, index) => {
+                  tempFindingIndex = index;
+                  return true;
+                },
+              })
+            ) {
+              fromIndex = tempFindingIndex + 2;
+            }
+            const resToPush = expander({
+              str,
+              from: fromIndex,
+              to: toIndex,
+              ifRightSideIncludesThisThenCropTightly: ".#",
+              ifRightSideIncludesThisCropItToo: ",",
+              extendToOneSide: "right",
+            });
+            finalIndexesToDelete.push(...resToPush);
+            if (opts.uglify) {
+              currentChunksMinifiedSelectors.wipe();
+            }
+          } else {
+            if (headWholeLineCanBeDeleted) {
+              headWholeLineCanBeDeleted = false;
+            }
+            if (onlyDeletedChunksFollow) {
+              onlyDeletedChunksFollow = false;
+            }
+            if (opts.uglify) {
+              finalIndexesToDelete.push(
+                currentChunksMinifiedSelectors.current()
+              );
+              currentChunksMinifiedSelectors.wipe();
+            }
+          }
+          if (chr !== "{") {
+            selectorChunkStartedAt = null;
+          } else if (round === 2) {
+            if (
+              !headWholeLineCanBeDeleted &&
+              lastKeptChunksCommaAt !== null &&
+              onlyDeletedChunksFollow
+            ) {
+              let deleteUpTo = lastKeptChunksCommaAt + 1;
+              if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
+                for (let y = lastKeptChunksCommaAt + 1; y < len; y++) {
+                  if (str[y].trim()) {
+                    deleteUpTo = y;
+                    break;
                   }
                 }
-                finalIndexesToDelete.push(lastKeptChunksCommaAt, deleteUpTo);
-                lastKeptChunksCommaAt = null;
-                onlyDeletedChunksFollow = false;
               }
+              finalIndexesToDelete.push(lastKeptChunksCommaAt, deleteUpTo);
+              lastKeptChunksCommaAt = null;
+              onlyDeletedChunksFollow = false;
             }
           }
         }
@@ -851,7 +843,7 @@ function comb(str, opts) {
         })
       ) {
         for (let y = i; y < len; y++) {
-          totalCounter++;
+          totalCounter += 1;
           if (str[y] === ">") {
             bodyStartedAt = y + 1;
             break;
@@ -907,7 +899,7 @@ function comb(str, opts) {
           }
         } else if (!str[i + 5].trim()) {
           for (let y = i + 5; y < len; y++) {
-            totalCounter++;
+            totalCounter += 1;
             if (str[y].trim()) {
               if (str[y] === "=") {
                 if (y > i + 5 && round === 1) {
@@ -917,7 +909,7 @@ function comb(str, opts) {
                   valuesStart = y + 2;
                 } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
-                    totalCounter++;
+                    totalCounter += 1;
                     if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
                         finalIndexesToDelete.push(y + 1, z);
@@ -929,17 +921,16 @@ function comb(str, opts) {
                     }
                   }
                 }
-              } else {
-                if (round === 1) {
-                  const calculatedRange = expander({
-                    str,
-                    from: i,
-                    to: y - 1,
-                    ifRightSideIncludesThisThenCropTightly: "/>",
-                    wipeAllWhitespaceOnLeft: true,
-                  });
-                  finalIndexesToDelete.push(...calculatedRange);
-                }
+              }
+              else if (round === 1) {
+                const calculatedRange = expander({
+                  str,
+                  from: i,
+                  to: y - 1,
+                  ifRightSideIncludesThisThenCropTightly: "/>",
+                  wipeAllWhitespaceOnLeft: true,
+                });
+                finalIndexesToDelete.push(...calculatedRange);
               }
               break;
             }
@@ -990,7 +981,7 @@ function comb(str, opts) {
           }
         } else if (!str[i + 2].trim()) {
           for (let y = i + 2; y < len; y++) {
-            totalCounter++;
+            totalCounter += 1;
             if (str[y].trim()) {
               if (str[y] === "=") {
                 if (y > i + 2 && round === 1) {
@@ -1000,7 +991,7 @@ function comb(str, opts) {
                   valuesStart = y + 2;
                 } else if (str[y + 1] && !str[y + 1].trim()) {
                   for (let z = y + 1; z < len; z++) {
-                    totalCounter++;
+                    totalCounter += 1;
                     if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
                         finalIndexesToDelete.push(y + 1, z);
@@ -1012,17 +1003,16 @@ function comb(str, opts) {
                     }
                   }
                 }
-              } else {
-                if (round === 1) {
-                  const calculatedRange = expander({
-                    str,
-                    from: i,
-                    to: y - 1,
-                    ifRightSideIncludesThisThenCropTightly: "/>",
-                    wipeAllWhitespaceOnLeft: true,
-                  });
-                  finalIndexesToDelete.push(...calculatedRange);
-                }
+              }
+              else if (round === 1) {
+                const calculatedRange = expander({
+                  str,
+                  from: i,
+                  to: y - 1,
+                  ifRightSideIncludesThisThenCropTightly: "/>",
+                  wipeAllWhitespaceOnLeft: true,
+                });
+                finalIndexesToDelete.push(...calculatedRange);
               }
               break;
             }
@@ -1067,7 +1057,7 @@ function comb(str, opts) {
           const findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
-          doNothingUntil = findings["tails"];
+          doNothingUntil = findings.tails;
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
           if (round === 1) {
@@ -1107,7 +1097,7 @@ function comb(str, opts) {
           const findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
-          doNothingUntil = findings["tails"];
+          doNothingUntil = findings.tails;
         } else {
           const carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
           if (round === 1) {
@@ -1117,50 +1107,49 @@ function comb(str, opts) {
                 finalIndexesToDelete.push(i, i, `"`);
               }
             }
-          } else {
+          }
+          else if (
+            bodyClass.valueStart != null &&
+            bodyClassesToDelete.includes(carvedClass)
+          ) {
+            const expandedRange = expander({
+              str,
+              from: bodyClass.valueStart,
+              to: i,
+              ifLeftSideIncludesThisThenCropTightly: `"'`,
+              ifRightSideIncludesThisThenCropTightly: `"'`,
+              wipeAllWhitespaceOnLeft: true,
+            });
+            let whatToInsert = "";
             if (
-              bodyClass.valueStart != null &&
-              bodyClassesToDelete.includes(carvedClass)
+              str[expandedRange[0] - 1] &&
+              str[expandedRange[0] - 1].trim() &&
+              str[expandedRange[1]] &&
+              str[expandedRange[1]].trim() &&
+              (allHeads || allTails) &&
+              ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
+                (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
             ) {
-              const expandedRange = expander({
-                str,
-                from: bodyClass.valueStart,
-                to: i,
-                ifLeftSideIncludesThisThenCropTightly: `"'`,
-                ifRightSideIncludesThisThenCropTightly: `"'`,
-                wipeAllWhitespaceOnLeft: true,
-              });
-              let whatToInsert = "";
-              if (
-                str[expandedRange[0] - 1] &&
-                str[expandedRange[0] - 1].trim() &&
-                str[expandedRange[1]] &&
-                str[expandedRange[1]].trim() &&
-                (allHeads || allTails) &&
-                ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
-                  (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
-              ) {
-                whatToInsert = " ";
-              }
-              finalIndexesToDelete.push(...expandedRange, whatToInsert);
-            } else {
-              bodyClassOrIdCanBeDeleted = false;
-              if (
-                opts.uglify &&
-                !(
-                  isArr(opts.whitelist) &&
-                  opts.whitelist.length &&
-                  matcher([`.${carvedClass}`], opts.whitelist).length
-                )
-              ) {
-                finalIndexesToDelete.push(
-                  bodyClass.valueStart,
-                  i,
-                  allClassesAndIdsWithinHeadFinalUglified[
-                    allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
-                  ].slice(1)
-                );
-              }
+              whatToInsert = " ";
+            }
+            finalIndexesToDelete.push(...expandedRange, whatToInsert);
+          } else {
+            bodyClassOrIdCanBeDeleted = false;
+            if (
+              opts.uglify &&
+              !(
+                isArr(opts.whitelist) &&
+                opts.whitelist.length &&
+                matcher([`.${carvedClass}`], opts.whitelist).length
+              )
+            ) {
+              finalIndexesToDelete.push(
+                bodyClass.valueStart,
+                i,
+                allClassesAndIdsWithinHeadFinalUglified[
+                  allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
+                ].slice(1)
+              );
             }
           }
           bodyClass.valueStart = null;
@@ -1181,45 +1170,47 @@ function comb(str, opts) {
               finalIndexesToDelete.push(i, i, `"`);
             }
           }
+        }
+        else if (
+          bodyId.valueStart != null &&
+          bodyIdsToDelete.includes(carvedId)
+        ) {
+          const expandedRange = expander({
+            str,
+            from: bodyId.valueStart,
+            to: i,
+            ifRightSideIncludesThisThenCropTightly: `"'`,
+            wipeAllWhitespaceOnLeft: true,
+          });
+          if (
+            str[expandedRange[0] - 1] &&
+            str[expandedRange[0] - 1].trim() &&
+            str[expandedRange[1]] &&
+            str[expandedRange[1]].trim() &&
+            (allHeads || allTails) &&
+            ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
+              (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
+          ) {
+            expandedRange[0] += 1;
+          }
+          finalIndexesToDelete.push(...expandedRange);
         } else {
-          if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
-            const expandedRange = expander({
-              str,
-              from: bodyId.valueStart,
-              to: i,
-              ifRightSideIncludesThisThenCropTightly: `"'`,
-              wipeAllWhitespaceOnLeft: true,
-            });
-            if (
-              str[expandedRange[0] - 1] &&
-              str[expandedRange[0] - 1].trim() &&
-              str[expandedRange[1]] &&
-              str[expandedRange[1]].trim() &&
-              (allHeads || allTails) &&
-              ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
-                (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
-            ) {
-              expandedRange[0] += 1;
-            }
-            finalIndexesToDelete.push(...expandedRange);
-          } else {
-            bodyClassOrIdCanBeDeleted = false;
-            if (
-              opts.uglify &&
-              !(
-                isArr(opts.whitelist) &&
-                opts.whitelist.length &&
-                matcher([`#${carvedId}`], opts.whitelist).length
-              )
-            ) {
-              finalIndexesToDelete.push(
-                bodyId.valueStart,
-                i,
-                allClassesAndIdsWithinHeadFinalUglified[
-                  allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
-                ].slice(1)
-              );
-            }
+          bodyClassOrIdCanBeDeleted = false;
+          if (
+            opts.uglify &&
+            !(
+              isArr(opts.whitelist) &&
+              opts.whitelist.length &&
+              matcher([`#${carvedId}`], opts.whitelist).length
+            )
+          ) {
+            finalIndexesToDelete.push(
+              bodyId.valueStart,
+              i,
+              allClassesAndIdsWithinHeadFinalUglified[
+                allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
+              ].slice(1)
+            );
           }
         }
         bodyId.valueStart = null;
@@ -1342,7 +1333,7 @@ function comb(str, opts) {
           const findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
-          doNothingUntil = findings["tails"];
+          doNothingUntil = findings.tails;
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
           if (round === 1) {
@@ -1466,7 +1457,7 @@ function comb(str, opts) {
         }
       }
       if (chr === "}" && curliesDepth) {
-        curliesDepth--;
+        curliesDepth -= 1;
       }
       if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
         if (!insideCurlyBraces) {
@@ -1479,7 +1470,7 @@ function comb(str, opts) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
           }
         } else {
-          curliesDepth++;
+          curliesDepth += 1;
         }
       }
       if (!doNothing) {
@@ -1502,7 +1493,7 @@ function comb(str, opts) {
         if (temp[1] - 1 > i) {
           i = temp[1] - 1;
         }
-        continue stepouter;
+        continue;
       }
       if (commentNearlyStartedAt !== null && str[i] === ">") {
         commentNearlyStartedAt = null;
@@ -1557,7 +1548,7 @@ function comb(str, opts) {
           }
         });
       });
-      headSelectorsCountClone = Object.assign({}, headSelectorsCount);
+      headSelectorsCountClone = { ...headSelectorsCount };
       allClassesAndIdsWithinHead = uniq(
         headSelectorsArr.reduce((arr, el) => arr.concat(extract(el)), [])
       ).sort();
@@ -1565,7 +1556,7 @@ function comb(str, opts) {
       const preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       let deletedFromHeadArr = [];
       for (let y = 0, len2 = preppedHeadSelectorsArr.length; y < len2; y++) {
-        totalCounter++;
+        totalCounter += 1;
         let temp;
         if (preppedHeadSelectorsArr[y] != null) {
           temp = extract(preppedHeadSelectorsArr[y]);
