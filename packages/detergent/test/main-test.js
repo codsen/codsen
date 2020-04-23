@@ -1,10 +1,11 @@
-const t = require("tap");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-const exportedOptsObj = detergent.opts;
-const { version } = detergent;
-const { det, mixer, allCombinations } = require("../t-util/util");
-const {
+import tap from "tap";
+import {
+  det as det1,
+  opts as exportedOptsObj,
+  version,
+} from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
+import {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -15,7 +16,7 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../src/util.js");
+} from "../src/util";
 
 // ==============================
 // 0. throws and API bits
@@ -23,7 +24,7 @@ const {
 
 // pinning throws by throw ID:
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first argument is not string`,
   (t) => {
     t.throws(() => {
@@ -53,7 +54,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`,
   (t) => {
     t.throws(() => {
@@ -63,7 +64,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`,
   (t) => {
     t.ok(Object.keys(exportedOptsObj).length > 10);
@@ -71,7 +72,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`,
   (t) => {
     t.match(version, /\d+\.\d+\.\d+/g);
@@ -79,7 +80,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`,
   (t) => {
     t.throws(() => {
@@ -89,7 +90,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.06 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - not throws when opts.cb is falsey`,
   (t) => {
     // original function det1():
@@ -122,7 +123,7 @@ t.test(
 // 02. everything about line breaks
 // ==============================
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - LF`,
   (t) => {
     t.equal(
@@ -134,7 +135,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - CRLF`,
   (t) => {
     t.equal(
@@ -146,7 +147,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
   (t) => {
     t.equal(
@@ -159,7 +160,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
   (t) => {
     t.equal(
@@ -172,7 +173,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
   (t) => {
     t.match(
@@ -202,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
   (t) => {
     t.equal(
@@ -215,7 +216,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
   (t) => {
     t.equal(
@@ -229,7 +230,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`,
   (t) => {
     t.equal(
@@ -243,7 +244,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
   (t) => {
     t.equal(det(t, 0, `<BR />`).res, `<br/>`);
@@ -251,7 +252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
   (t) => {
     t.equal(det(t, 0, `< BR>`).res, `<br/>`);
@@ -259,7 +260,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
   (t) => {
     t.equal(det(t, 0, `<BR class="z"/>`).res, `<br class="z"/>`);
@@ -267,7 +268,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
   (t) => {
     t.equal(
@@ -278,7 +279,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`,
   (t) => {
     t.equal(
@@ -291,7 +292,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`,
   (t) => {
     t.equal(
@@ -304,7 +305,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`,
   (t) => {
     t.equal(
@@ -318,7 +319,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`,
   (t) => {
     t.equal(
@@ -332,7 +333,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`,
   (t) => {
     t.equal(
@@ -346,7 +347,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`,
   (t) => {
     t.equal(
@@ -360,7 +361,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`,
   (t) => {
     t.equal(
@@ -374,7 +375,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`,
   (t) => {
     t.equal(
@@ -388,7 +389,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`,
   (t) => {
     t.equal(
@@ -402,7 +403,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`,
   (t) => {
     t.equal(
@@ -416,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.23 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`,
   (t) => {
     t.equal(
@@ -434,7 +435,7 @@ t.test(
 // 03. rubbish removal
 // ===================
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - front & back spaces stripped`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -448,7 +449,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - redundant space between words`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -462,7 +463,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -478,7 +479,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -494,7 +495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -510,7 +511,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -526,7 +527,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -563,7 +564,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     mixer({
@@ -579,7 +580,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -613,7 +614,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -629,7 +630,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -645,7 +646,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.12 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -685,7 +686,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.13 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -706,7 +707,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.14 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`,
   (t) => {
     mixer({
@@ -727,7 +728,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.15 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - ETX - useXHTML=on`,
   (t) => {
     mixer({
@@ -745,7 +746,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.16 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - ETX - useXHTML=off`,
   (t) => {
     mixer({
@@ -763,7 +764,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.17 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - ETX - replaceLineBreaks=off`,
   (t) => {
     mixer({
@@ -781,7 +782,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.18 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - strips UTF8 BOM`,
   (t) => {
     mixer({
@@ -798,7 +799,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.19 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - strips UTF8 BOM`,
   (t) => {
     mixer({
@@ -815,7 +816,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.20 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - strips UTF8 BOM`,
   (t) => {
     mixer({
@@ -837,7 +838,7 @@ t.test(
 // ==============================
 // see https://en.wikipedia.org/wiki/Newline#Representation
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, removeLineBreaks=on`,
   (t) => {
     mixer({
@@ -849,7 +850,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, removeLineBreaks=off`,
   (t) => {
     mixer({
@@ -862,7 +863,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`,
   (t) => {
     mixer({
@@ -880,7 +881,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`,
   (t) => {
     mixer({
@@ -964,7 +965,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`,
   (t) => {
     mixer({
@@ -986,7 +987,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`,
   (t) => {
     mixer({
@@ -1009,7 +1010,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`,
   (t) => {
     mixer({
@@ -1027,7 +1028,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`,
   (t) => {
     mixer({
@@ -1050,7 +1051,7 @@ t.test(
 // 06. opts.dontEncodeNonLatin
 // ==============================
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - doesn't encode non-Latin`,
   (t) => {
     mixer({
@@ -1107,7 +1108,7 @@ t.test(
 // 07. Clearly errors
 // ==============================
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off`,
   (t) => {
     mixer({
@@ -1131,7 +1132,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on`,
   (t) => {
     mixer({
@@ -1156,7 +1157,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=off`,
   (t) => {
     mixer({
@@ -1181,7 +1182,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.04 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeLineBreaks=off`,
   (t) => {
     mixer({
@@ -1205,7 +1206,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.05 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=on`,
   (t) => {
     mixer({
@@ -1230,7 +1231,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.06 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=off`,
   (t) => {
     mixer({
@@ -1255,7 +1256,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.07 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, replaceLineBreaks=on`,
   (t) => {
     mixer({
@@ -1279,7 +1280,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.08 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on`,
   (t) => {
     mixer({
@@ -1304,7 +1305,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.09 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on, convertEntities=off`,
   (t) => {
     mixer({
@@ -1329,7 +1330,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.10 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - LF`,
   (t) => {
     mixer({
@@ -1351,7 +1352,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.11 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CR`,
   (t) => {
     mixer({
@@ -1373,7 +1374,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.12 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CRLF`,
   (t) => {
     mixer({
@@ -1395,7 +1396,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.13 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, removeLineBreaks=on`,
   (t) => {
     mixer({
@@ -1418,7 +1419,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, convertEntities=off`,
   (t) => {
     mixer({
@@ -1441,7 +1442,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.15 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`,
   (t) => {
     t.equal(det(t, 0, `a. \na`).res, "a.<br/>\na");
@@ -1449,7 +1450,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.16 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`,
   (t) => {
     t.equal(det(t, 0, `a . \na`).res, "a.<br/>\na");
@@ -1457,7 +1458,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.17 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`,
   (t) => {
     t.equal(det(t, 0, `a , \na`).res, "a,<br/>\na");
@@ -1465,7 +1466,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.18 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - checking line feed being replaced with space`,
   (t) => {
     mixer({
@@ -1486,7 +1487,7 @@ t.test(
 // 08. COPING WITH MULTIPLE ENCODING
 // ==============================
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1502,7 +1503,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1518,7 +1519,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1534,7 +1535,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1550,7 +1551,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1566,7 +1567,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1582,7 +1583,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.07 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1598,7 +1599,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.08 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1614,7 +1615,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.09 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1630,7 +1631,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.10 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive entity de-coding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1651,7 +1652,7 @@ t.test(
 // 09. UL/LI TAGS
 // ==============================
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`,
   (t) => {
     mixer({
@@ -1697,7 +1698,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, removeLineBreaks=on`,
   (t) => {
     mixer({
@@ -1749,7 +1750,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.03 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`,
   (t) => {
     mixer({
@@ -1768,7 +1769,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`,
   (t) => {
     mixer({
@@ -1792,7 +1793,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=on`,
   (t) => {
     mixer({
@@ -1836,7 +1837,7 @@ t.test(
 // 10. AD-HOC
 // ==============================
 
-t.test(
+tap.test(
   `10.01 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - improvised arrows are not mangled, convertEntities=off`,
   (t) => {
     mixer({
@@ -1854,7 +1855,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.02 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - improvised arrows are not mangled, convertEntities=on`,
   (t) => {
     mixer({
@@ -1872,7 +1873,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.03 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - improvised arrows are not mangled, convertEntities=off`,
   (t) => {
     mixer({
@@ -1890,7 +1891,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.04 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - widow removal and single space between ] and (`,
   (t) => {
     mixer({
@@ -1907,7 +1908,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.05 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - unlinked .co.uk in the text, removeWidows=on`,
   (t) => {
     mixer({
@@ -1929,7 +1930,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.06 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - unlinked .co.uk in the text, removeWidows=off`,
   (t) => {
     mixer({
@@ -1950,7 +1951,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.07 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - consecutive empty lines full of whitespace symbols`,
   (t) => {
     mixer({
@@ -1972,7 +1973,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.08 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - less than sign`,
   (t) => {
     mixer({
@@ -1990,7 +1991,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.09 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - greater than sign`,
   (t) => {
     mixer({
@@ -2032,7 +2033,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.10 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, CR requested`,
   (t) => {
     const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
@@ -2049,7 +2050,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.11 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, LF requested`,
   (t) => {
     const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
@@ -2066,7 +2067,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.12 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, CRLF requested`,
   (t) => {
     const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
@@ -2083,7 +2084,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.13 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, CR requested`,
   (t) => {
     const source = `aaa\n\nbbb\n\nccc`;
@@ -2100,7 +2101,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.14 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, LF requested`,
   (t) => {
     const source = `aaa\n\nbbb\n\nccc`;
@@ -2117,7 +2118,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.15 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, CRLF requested`,
   (t) => {
     const source = `aaa\n\nbbb\n\nccc`;
@@ -2134,7 +2135,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.16 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, CR requested`,
   (t) => {
     const source = `aaa\r\rbbb\r\rccc`;
@@ -2151,7 +2152,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.17 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, LF requested`,
   (t) => {
     const source = `aaa\r\rbbb\r\rccc`;
@@ -2168,7 +2169,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.18 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, CRLF requested`,
   (t) => {
     const source = `aaa\r\rbbb\r\rccc`;

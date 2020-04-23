@@ -15,11 +15,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var stringLeftRight = require('string-left-right');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
-var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
-var allNamedHtmlEntities = require('all-named-html-entities');
-var rangesExpander = _interopDefault(require('string-range-expander'));
-var stringApostrophes = require('string-apostrophes');
-var he = _interopDefault(require('he'));
 var stringRemoveWidows = require('string-remove-widows');
 var processOutside = _interopDefault(require('ranges-process-outside'));
 var collapse = _interopDefault(require('string-collapse-white-space'));
@@ -29,6 +24,11 @@ var invertRanges = _interopDefault(require('ranges-invert'));
 var rangesApply = _interopDefault(require('ranges-apply'));
 var ansiRegex = _interopDefault(require('ansi-regex'));
 var Ranges = _interopDefault(require('ranges-push'));
+var he = _interopDefault(require('he'));
+var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
+var allNamedHtmlEntities = require('all-named-html-entities');
+var rangesExpander = _interopDefault(require('string-range-expander'));
+var stringApostrophes = require('string-apostrophes');
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -44,6 +44,55 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
 }
 
 function _toConsumableArray(arr) {
@@ -78,6 +127,8 @@ function _arrayLikeToArray(arr, len) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
+
+var version = "5.8.15";
 
 var defaultOpts = {
   fixBrokenEntities: true,
@@ -418,8 +469,8 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             }
           }
         } else if (charcode === 45) {
-          if (str[i - 1] === " " && str[y] === " " && isNumber(str[stringLeftRight.left(str, i)]) && isNumber(str[stringLeftRight.right(str, y)])) ; else {
-            if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
+          if (str[i - 1] === " " && str[y] === " " && isNumber(str[stringLeftRight.left(str, i)]) && isNumber(str[stringLeftRight.right(str, y)])) ;
+          else if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
               applicableOpts.addMissingSpaces = true;
               if (opts.addMissingSpaces) {
                 rangesArr.push(y, y, " ");
@@ -443,7 +494,6 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
                 rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
               }
             }
-          }
           if (str[i - 2] && str[i - 2].trim().length && !str[i - 1].trim().length && !["\n", "\r"].includes(str[i - 1])) {
             applicableOpts.removeWidows = true;
             if (opts.removeWidows) {
@@ -635,13 +685,13 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         });
         if (_tempRes2 && _tempRes2.length) {
           applicableOpts.convertApostrophes = true;
-          var _tempRes3 = stringApostrophes.convertOne(str, {
+          var tempRes2 = stringApostrophes.convertOne(str, {
             from: i,
             to: y,
             convertEntities: true,
             convertApostrophes: true
           });
-          if (_tempRes3) {
+          if (tempRes2) {
             if (opts.convertApostrophes) {
               applicableOpts.convertEntities = true;
             }
@@ -721,8 +771,6 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
   }
 }
 
-var version = "5.8.15";
-
 function det(str, inputOpts) {
   if (typeof str !== "string") {
     throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
@@ -733,7 +781,7 @@ function det(str, inputOpts) {
   if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
     throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
   }
-  var opts = Object.assign({}, defaultOpts, inputOpts);
+  var opts = _objectSpread2({}, defaultOpts, {}, inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
   }
@@ -886,14 +934,13 @@ function det(str, inputOpts) {
                 finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
               }
             }
-          } else {
-            if (tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
+          }
+          else if (tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
               finalIndexesToDelete.push(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
                 mode: 2
               }, "/"), tag.lastClosingBracketAt);
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
             }
-          }
           if (tag.name.toLowerCase() !== tag.name) {
             finalIndexesToDelete.push(tag.nameStarts, tag.nameEnds, tag.name.toLowerCase());
           }

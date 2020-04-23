@@ -1,11 +1,12 @@
 const obc = require("object-boolean-combinations");
 const clone = require("lodash.clonedeep");
-const { defaultOpts } = require("../src/util.js");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-const exportedOptsObj = detergent.opts;
 const isCI = require("is-ci");
 const objectPath = require("object-path");
+const { defaultOpts } = require("../src/util.js");
+const detergent = require("../dist/detergent.cjs");
+
+const det1 = detergent.det;
+const exportedOptsObj = detergent.opts;
 
 function mixer(ref) {
   // for quick testing, you can short-wire to test only one set of options, instead
@@ -91,7 +92,7 @@ function mixer(ref) {
 // test calculations only for the n === 0
 function det(t, n, src, opts = {}) {
   if (!n) {
-    const resolvedOpts = Object.assign({}, exportedOptsObj, opts);
+    const resolvedOpts = { ...exportedOptsObj, ...opts };
     const tempObj = {};
     Object.keys(resolvedOpts).forEach((key) => {
       if (

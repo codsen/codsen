@@ -1,6 +1,6 @@
-const t = require("tap");
-const { det, mixer, allCombinations } = require("../t-util/util");
-const {
+import tap from "tap";
+import { det, mixer, allCombinations } from "../t-util/util";
+import {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -11,12 +11,12 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../src/util.js");
+} from "../src/util";
 
 // 00 - minimal cases for MVP
 // -----------------------------------------------------------------------------
 
-t.test(`00.01 - minimal samples`, (t) => {
+tap.test(`00.01 - minimal samples`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc ddd`, {
       removeWidows: 1,
@@ -28,7 +28,7 @@ t.test(`00.01 - minimal samples`, (t) => {
   t.end();
 });
 
-t.test(`00.02 - ETX processed twice, 2nd time during widow removal`, (t) => {
+tap.test(`00.02 - ETX processed twice, 2nd time during widow removal`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc\u0003ddd`, {
       removeWidows: 1,
@@ -44,7 +44,7 @@ t.test(`00.02 - ETX processed twice, 2nd time during widow removal`, (t) => {
 // 01 - full tests on all opts variations (mixer)
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities on`,
   (t) => {
     mixer({
@@ -66,7 +66,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities off`,
   (t) => {
     mixer({
@@ -88,7 +88,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - removeWidows off`,
   (t) => {
     mixer({
@@ -109,7 +109,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML on`,
   (t) => {
     mixer({
@@ -129,7 +129,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML off`,
   (t) => {
     mixer({
@@ -149,7 +149,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - replaceLineBreaks off`,
   (t) => {
     mixer({
@@ -168,7 +168,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities off`,
   (t) => {
     mixer({
@@ -187,7 +187,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities on`,
   (t) => {
     mixer({
@@ -211,7 +211,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with trailing whitespace`,
   (t) => {
     mixer({
@@ -231,7 +231,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities on`,
   (t) => {
     mixer({
@@ -293,7 +293,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities off`,
   (t) => {
     mixer({
@@ -355,7 +355,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - removeWidows off`,
   (t) => {
     mixer({
@@ -417,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -436,7 +436,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -455,7 +455,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -474,7 +474,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -493,7 +493,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.17 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widow removal detects template code (Jinja/Nunjucks)`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -522,7 +522,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.18 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
   (t) => {
     mixer({
@@ -539,7 +539,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.19 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
@@ -557,7 +557,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.20 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
@@ -575,7 +575,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.21 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
@@ -593,7 +593,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.22 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
   (t) => {
     mixer({
@@ -614,7 +614,7 @@ t.test(
 // 02. HTML tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
@@ -632,7 +632,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
@@ -650,7 +650,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
@@ -668,7 +668,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
@@ -686,7 +686,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
@@ -704,7 +704,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({

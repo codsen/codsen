@@ -1,12 +1,11 @@
-const t = require("tap");
-// const detergent = require("../dist/detergent.cjs");
-// const det1 = detergent.det;
-const {
+import tap from "tap";
+// import { det as det1 } from "../dist/detergent.esm";
+import {
   det,
   mixer, // allCombinations
-} = require("../t-util/util");
+} from "../t-util/util";
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
   (t) => {
     mixer({
@@ -22,7 +21,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
   (t) => {
     mixer({
@@ -38,7 +37,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without a slash`,
   (t) => {
     mixer({
@@ -54,7 +53,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     mixer({
@@ -70,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags`,
   (t) => {
     mixer({
@@ -91,7 +90,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`,
   (t) => {
     mixer({
@@ -108,7 +107,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored singleton tags`,
   (t) => {
     mixer({
@@ -120,7 +119,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
   (t) => {
     mixer({
@@ -133,7 +132,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
   (t) => {
     mixer({
@@ -150,7 +149,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singleton tag`,
   (t) => {
     mixer({
@@ -168,7 +167,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - removes slash`,
   (t) => {
     mixer({
@@ -186,7 +185,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds slash`,
   (t) => {
     mixer({
@@ -204,7 +203,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keeps slash`,
   (t) => {
     mixer({
@@ -222,7 +221,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
@@ -238,7 +237,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
@@ -254,7 +253,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
@@ -271,7 +270,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
@@ -289,7 +288,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -302,7 +301,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -315,7 +314,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -328,7 +327,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -341,7 +340,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -354,7 +353,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
@@ -367,7 +366,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
@@ -383,7 +382,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
@@ -399,7 +398,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
@@ -415,7 +414,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
@@ -431,7 +430,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with whitespace within closing tags`,
   (t) => {
     mixer({
@@ -447,7 +446,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
@@ -465,7 +464,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
@@ -483,7 +482,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
@@ -504,7 +503,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
@@ -525,7 +524,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
@@ -541,7 +540,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
@@ -557,7 +556,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
@@ -573,7 +572,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
@@ -590,7 +589,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
@@ -606,7 +605,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
@@ -623,7 +622,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
@@ -640,7 +639,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -661,7 +660,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -682,7 +681,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -703,7 +702,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -719,7 +718,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -740,7 +739,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.45 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
@@ -765,7 +764,7 @@ t.test(
 // 02. opts.stripHtmlButIgnoreTags
 // ==============================
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - simple case`,
   (t) => {
     t.equal(
@@ -777,7 +776,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -790,7 +789,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -803,7 +802,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -817,7 +816,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -831,7 +830,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - both tags ignored`,
   (t) => {
     t.equal(
@@ -845,7 +844,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - other tags ignored, not present in the input`,
   (t) => {
     t.equal(
@@ -859,7 +858,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - control for stripHtml`,
   (t) => {
     t.equal(
@@ -871,7 +870,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
   (t) => {
     t.equal(
@@ -885,7 +884,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
   (t) => {
     t.equal(
@@ -899,7 +898,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -914,7 +913,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -929,7 +928,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -944,7 +943,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -959,7 +958,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -974,7 +973,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
@@ -989,7 +988,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.17 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -1004,7 +1003,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
@@ -1019,7 +1018,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.19 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
   (t) => {
     t.equal(
@@ -1034,7 +1033,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.20 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
   (t) => {
     t.equal(
@@ -1049,7 +1048,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.21 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
   (t) => {
     t.equal(
@@ -1064,7 +1063,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.22 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
   (t) => {
     t.equal(
@@ -1079,7 +1078,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.23 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
@@ -1093,7 +1092,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.24 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
@@ -1106,7 +1105,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.25 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
@@ -1120,7 +1119,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.26 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
@@ -1134,7 +1133,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.27 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
@@ -1148,7 +1147,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.28 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
@@ -1162,7 +1161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.29 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
@@ -1176,7 +1175,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.30 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
@@ -1193,7 +1192,7 @@ t.test(
 // 03. stripping off
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
   (t) => {
     const input = `<a b c d>`;
@@ -1221,7 +1220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
   (t) => {
     const input = `<a w="1" x="y" z="x">\n<!--[if (gte mso 9)|(IE)]>\n<td a="b:c;" d="e" f="g">`;

@@ -1,11 +1,10 @@
-const t = require("tap");
-// const detergent = require("../dist/detergent.cjs");
-// const det1 = detergent.det;
-const {
+import tap from "tap";
+// import { det as det1 } from "../dist/detergent.esm";
+import {
   det,
-  mixer, //, allCombinations
-} = require("../t-util/util");
-const {
+  mixer, // , allCombinations
+} from "../t-util/util";
+import {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -16,14 +15,14 @@ const {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} = require("../src/util.js");
+} from "../src/util";
 
-t.test(`00 - empty string input`, (t) => {
+tap.test(`00 - empty string input`, (t) => {
   t.equal(det(t, 0, "").res, "");
   t.end();
 });
 
-t.test(`01 - all low ASCII invisible characters are removed`, (t) => {
+tap.test(`01 - all low ASCII invisible characters are removed`, (t) => {
   t.equal(
     det(
       t,
@@ -36,7 +35,7 @@ t.test(`01 - all low ASCII invisible characters are removed`, (t) => {
   t.end();
 });
 
-t.test(`02 - hairspace - tight - hairspace changed to space`, (t) => {
+tap.test(`02 - hairspace - tight - hairspace changed to space`, (t) => {
   mixer({
     removeWidows: 0,
   }).forEach((opt, n) => {
@@ -54,7 +53,7 @@ t.test(`02 - hairspace - tight - hairspace changed to space`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `03 - hairspace - tight - hairspace changed to space (lots of spaces)`,
   (t) => {
     mixer({
@@ -75,7 +74,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04 - hairspace - tight - hairspace changed to space: +widows+entities`,
   (t) => {
     mixer({
@@ -97,7 +96,7 @@ t.test(
   }
 );
 
-t.test("05 - invisible breaks - raw", (t) => {
+tap.test("05 - invisible breaks - raw", (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
@@ -111,7 +110,7 @@ t.test("05 - invisible breaks - raw", (t) => {
   t.end();
 });
 
-t.test("06 - invisible breaks - encoded decimal HTML entities", (t) => {
+tap.test("06 - invisible breaks - encoded decimal HTML entities", (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
@@ -125,7 +124,7 @@ t.test("06 - invisible breaks - encoded decimal HTML entities", (t) => {
   t.end();
 });
 
-t.test("07 - invisible breaks - remove all line breaks on", (t) => {
+tap.test("07 - invisible breaks - remove all line breaks on", (t) => {
   mixer({
     removeLineBreaks: 1,
   }).forEach((opt, n) => {
@@ -138,7 +137,7 @@ t.test("07 - invisible breaks - remove all line breaks on", (t) => {
   t.end();
 });
 
-t.test("08 - invisible breaks - replace breaks into XHTML BR's", (t) => {
+tap.test("08 - invisible breaks - replace breaks into XHTML BR's", (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -153,7 +152,7 @@ t.test("08 - invisible breaks - replace breaks into XHTML BR's", (t) => {
   t.end();
 });
 
-t.test("09 - invisible breaks - replace breaks into HTML BR's", (t) => {
+tap.test("09 - invisible breaks - replace breaks into HTML BR's", (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -168,7 +167,7 @@ t.test("09 - invisible breaks - replace breaks into HTML BR's", (t) => {
   t.end();
 });
 
-t.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
+tap.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 1,
@@ -178,7 +177,7 @@ t.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
   t.end();
 });
 
-t.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
+tap.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
@@ -189,7 +188,7 @@ t.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
   t.end();
 });
 
-t.test("12 - narrow no break space", (t) => {
+tap.test("12 - narrow no break space", (t) => {
   mixer({
     convertEntities: 0,
   }).forEach((opt, n) => {

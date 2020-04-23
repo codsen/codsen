@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -2113,9 +2162,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2147,9 +2200,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -2192,7 +2249,7 @@
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
-        i++;
+        i += 1;
         continue;
       }
 
@@ -2209,7 +2266,7 @@
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
         } else {
-          i++;
+          i += 1;
         }
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
@@ -2234,10 +2291,10 @@
           leftmostChar = whattsOnTheSide;
         }
       } else if (optional) {
-        i++;
+        i += 1;
         continue;
       } else if (satiated) {
-        i++;
+        i += 1;
         satiated = undefined;
         continue;
       } else {
@@ -2267,7 +2324,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -2286,7 +2345,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -2319,7 +2380,7 @@
     } while (lastRes);
 
     if (lastIdx != null && direction === "right") {
-      lastIdx++;
+      lastIdx += 1;
     }
 
     if (lastIdx === null) {
@@ -2336,7 +2397,9 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        }
+
+        if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -2361,7 +2424,7 @@
         return str.length;
       }
 
-      return whatsOnTheRight ? whatsOnTheRight : str.length;
+      return whatsOnTheRight || str.length;
     }
 
     if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
@@ -2373,7 +2436,9 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      }
+
+      if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
           if (`\n\r`.includes(str[y]) || str[y].trim()) {
             return y + 1 + (str[y].trim() ? 1 : 0);
@@ -2382,9 +2447,13 @@
       }
 
       return 0;
-    } else if (opts.mode === 1) {
+    }
+
+    if (opts.mode === 1) {
       return lastIdx;
-    } else if (opts.mode === 2) {
+    }
+
+    if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
@@ -2411,7 +2480,9 @@
     };
 
     if (lodash_isplainobject(args[0])) {
-      const opts = Object.assign({}, defaults, lodash_clonedeep(args[0]));
+      const opts = { ...defaults,
+        ...lodash_clonedeep(args[0])
+      };
 
       if (!opts.mode) {
         opts.mode = 0;
@@ -2422,7 +2493,9 @@
       }
 
       return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
-    } else if (!isStr(args[0])) {
+    }
+
+    if (!isStr(args[0])) {
       return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
     }
 
@@ -10191,89 +10264,92 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
    */
-  const isArr = Array.isArray;
+
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function onlyContainsNbsp(str, from, to) {
+    for (let i = from; i < to; i++) {
+      if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function isLatinLetterOrNumberOrHash(char) {
+    return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+  }
+
+  function isNumber(something) {
+    return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+  }
+
+  function isNotaLetter(str2) {
+    return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
+  }
+
+  function isStr$1(something) {
+    return typeof something === "string";
+  }
+
+  function isLatinLetter(something) {
+    return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
+  }
+
+  function resemblesNumericEntity(str2, from, to) {
+    let lettersCount = 0;
+    let numbersCount = 0;
+    let othersCount = 0;
+    let hashesCount = 0;
+    let whitespaceCount = 0;
+    let numbersValue = "";
+    let charTrimmed = "";
+
+    for (let i = from; i < to; i++) {
+      if (str2[i].trim().length) {
+        charTrimmed += str2[i];
+      } else {
+        whitespaceCount += 1;
+      }
+
+      if (isLatinLetter(str2[i])) {
+        lettersCount += 1;
+      } else if (isNumber(str2[i])) {
+        numbersCount += 1;
+        numbersValue += String(str2[i]);
+      } else if (str2[i] === "#") {
+        hashesCount += 1;
+      } else {
+        othersCount += 1;
+      }
+    }
+
+    let probablyNumeric = false;
+
+    if (!lettersCount && numbersCount > othersCount) {
+      probablyNumeric = "deci";
+    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+      probablyNumeric = "hexi";
+    }
+
+    return {
+      probablyNumeric,
+      lettersCount,
+      numbersCount,
+      numbersValue,
+      hashesCount,
+      othersCount,
+      charTrimmed,
+      whitespaceCount
+    };
+  }
 
   function stringFixBrokenNamedEntities(str, originalOpts) {
-    function resemblesNumericEntity(str, from, to) {
-      let lettersCount = 0;
-      let numbersCount = 0;
-      let othersCount = 0;
-      let hashesCount = 0;
-      let whitespaceCount = 0;
-      let numbersValue = "";
-      let charTrimmed = "";
-
-      for (let i = from; i < to; i++) {
-        if (str[i].trim().length) {
-          charTrimmed += str[i];
-        } else {
-          whitespaceCount++;
-        }
-
-        if (isLatinLetter(str[i])) {
-          lettersCount++;
-        } else if (isNumber(str[i])) {
-          numbersCount++;
-          numbersValue += String(str[i]);
-        } else if (str[i] === "#") {
-          hashesCount++;
-        } else {
-          othersCount++;
-        }
-      }
-
-      let probablyNumeric = false;
-
-      if (!lettersCount && numbersCount > othersCount) {
-        probablyNumeric = "deci";
-      } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
-        probablyNumeric = "hexi";
-      }
-
-      return {
-        probablyNumeric,
-        lettersCount,
-        numbersCount,
-        numbersValue,
-        hashesCount,
-        othersCount,
-        charTrimmed,
-        whitespaceCount
-      };
-    }
-
-    function isNotaLetter(str) {
-      return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
-    function isLatinLetter(something) {
-      return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
-    }
-
-    function isLatinLetterOrNumberOrHash(char) {
-      return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
-    }
-
-    function isNumber(something) {
-      return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-    }
-
-    function onlyContainsNbsp(str, from, to) {
-      for (let i = from; i < to; i++) {
-        if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
     function findLongest(temp1) {
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         if (temp1.length === 1) {
           return temp1[0];
         }
@@ -10293,15 +10369,15 @@
     function removeGappedFromMixedCases(temp1) {
       let copy;
 
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         copy = Array.from(temp1);
 
         if (copy.length > 1 && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";") && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] !== ";")) {
           copy = copy.filter(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";");
         }
 
-        if (!(copy.every(entObj => !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length) || copy.every(entObj => entObj && entObj.tempRes && entObj.tempRes.gaps && isArr(entObj.tempRes.gaps) && entObj.tempRes.gaps.length))) {
-          return findLongest(copy.filter(entObj => !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length));
+        if (!(copy.every(entObj => !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length) || copy.every(entObj => entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length))) {
+          return findLongest(copy.filter(entObj => !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length));
         }
       }
 
@@ -10319,17 +10395,19 @@
         rangeTo,
         rangeValEncoded,
         rangeValDecoded
-      }) => rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo],
+      }) => rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo],
       progressFn: null,
       entityCatcherCb: null
     };
     let opts;
 
     if (originalOpts != null) {
-      if (!lodash_isplainobject(originalOpts)) {
+      if (!isObj(originalOpts)) {
         throw new Error(`string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(originalOpts, null, 4)} (${typeof originalOpts}-type)`);
       } else {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
       }
     } else {
       opts = defaults;
@@ -10347,7 +10425,7 @@
       throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(opts.progressFn, null, 4)}`);
     }
 
-    let state_AmpersandNotNeeded = false;
+    let ampersandNotNeeded = false;
     const nbspDefault = {
       nameStartsAt: null,
       ampersandNecessary: null,
@@ -10378,7 +10456,7 @@
     let brokenNumericEntityStartAt = null;
     const falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"];
 
-    outerloop: for (let i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       if (opts.progressFn) {
         percentageDone = Math.floor(counter / len * 100);
 
@@ -10392,7 +10470,7 @@
         if (doNothingUntil !== true && i >= doNothingUntil) {
           doNothingUntil = null;
         } else {
-          counter++;
+          counter += 1;
           continue;
         }
       }
@@ -10406,7 +10484,7 @@
         i: true
       }, "s", "u", "p")) && str[right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
         const chompedAmpFromLeft = chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-        const beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
+        const beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt;
 
         if (!falsePositivesArr.some(val => str.slice(beginningOfTheRange).startsWith(val)) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
           rangesArr2.push({
@@ -10417,36 +10495,34 @@
             rangeValEncoded: "&nbsp;",
             rangeValDecoded: "\xA0"
           });
-        } else {
-          if (opts.decode) {
-            rangesArr2.push({
-              ruleName: "encoded-html-entity-nbsp",
-              entityName: "nbsp",
-              rangeFrom: beginningOfTheRange,
-              rangeTo: i,
-              rangeValEncoded: "&nbsp;",
-              rangeValDecoded: "\xA0"
-            });
-          } else if (opts.entityCatcherCb) {
-            opts.entityCatcherCb(beginningOfTheRange, i);
-          }
+        } else if (opts.decode) {
+          rangesArr2.push({
+            ruleName: "encoded-html-entity-nbsp",
+            entityName: "nbsp",
+            rangeFrom: beginningOfTheRange,
+            rangeTo: i,
+            rangeValEncoded: "&nbsp;",
+            rangeValDecoded: "\xA0"
+          });
+        } else if (opts.entityCatcherCb) {
+          opts.entityCatcherCb(beginningOfTheRange, i);
         }
 
         nbspWipe();
-        counter++;
+        counter += 1;
 
         if (str[i] === "&" && str[i + 1] !== "&") {
           nbsp.nameStartsAt = i;
           nbsp.ampersandNecessary = false;
         }
 
-        continue outerloop;
+        continue;
       }
 
       if (str[i] && str[i - 1] === ";" && !leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
 
       if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
@@ -10523,7 +10599,7 @@
                 } = temp1);
               }
 
-              if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || uncertain[tempEnt].addAmpIfSemiPresent === true || uncertain[tempEnt].addAmpIfSemiPresent && (!tempRes.leftmostChar || isStr(str[tempRes.leftmostChar - 1]) && !str[tempRes.leftmostChar - 1].trim().length))) {
+              if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || uncertain[tempEnt].addAmpIfSemiPresent === true || uncertain[tempEnt].addAmpIfSemiPresent && (!tempRes.leftmostChar || isStr$1(str[tempRes.leftmostChar - 1]) && !str[tempRes.leftmostChar - 1].trim().length))) {
                 const decodedEntity = decode(`&${tempEnt};`);
                 rangesArr2.push({
                   ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
@@ -10631,15 +10707,15 @@
 
                   if (tempEnt) {
                     let issue = false;
-                    const firstChar = tempRes.leftmostChar;
-                    const secondChar = right(str, firstChar);
+                    const firstChar2 = tempRes.leftmostChar;
+                    const secondChar2 = right(str, firstChar2);
 
-                    if (Object.keys(uncertain).includes(potentialEntity) && isStr(str[firstChar - 1]) && !str[firstChar - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
+                    if (Object.keys(uncertain).includes(potentialEntity) && isStr$1(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
                       letterSeqStartAt = null;
                       continue;
                     }
 
-                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar]], str[secondChar]) && startsWith[str[firstChar]][str[secondChar]].includes(situation.charTrimmed)) {
+                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar2]], str[secondChar2]) && startsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
                       entitysValue = situation.charTrimmed;
 
                       if (i - whatsOnTheLeft - 1 === tempEnt.length) {
@@ -10674,9 +10750,9 @@
                           const missingLetters = filterLongest.map(entity => {
                             let count = 0;
 
-                            for (let z = 0, len = entity.length; z < len; z++) {
+                            for (let z = 0, len2 = entity.length; z < len2; z++) {
                               if (entity[z] !== situation.charTrimmed[z]) {
-                                count++;
+                                count += 1;
                               }
                             }
 
@@ -10812,7 +10888,7 @@
                 rangesArr2.push({
                   ruleName: "bad-named-html-entity-multiple-encoding",
                   entityName: matchedTemp,
-                  rangeFrom: rangeFrom,
+                  rangeFrom,
                   rangeTo: doNothingUntil,
                   rangeValEncoded: `${spaceReplacement}&${matchedTemp};`,
                   rangeValDecoded: `${spaceReplacement}${decode(`&${matchedTemp};`)}`
@@ -10835,8 +10911,8 @@
       if (str[i] && str[i].toLowerCase() === "n") {
         if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
 
         if (nbsp.matchedN === null) {
@@ -10846,7 +10922,7 @@
         if (nbsp.nameStartsAt === null) {
           nbsp.nameStartsAt = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
@@ -10860,19 +10936,19 @@
             nbsp.matchedB = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedB = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -10882,19 +10958,19 @@
             nbsp.matchedS = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedS = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -10906,19 +10982,19 @@
             nbsp.matchedP = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedP = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -10940,15 +11016,15 @@
 
       if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
         if (nbsp.patience) {
-          nbsp.patience = nbsp.patience - 1;
+          nbsp.patience -= 1;
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
-      counter++;
+      counter += 1;
     }
 
     if (!rangesArr2.length) {
@@ -10972,2011 +11048,454 @@
   }
 
   /**
-   * html-entities-not-email-friendly
-   * All HTML entities which are not email template friendly
-   * Version: 0.2.1
+   * arrayiffy-if-string
+   * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+   * Version: 3.11.29
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
    */
-  const notEmailFriendly = {
-    AMP: "amp",
-    Abreve: "#x102",
-    Acy: "#x410",
-    Afr: "#x1D504",
-    Amacr: "#x100",
-    And: "#x2A53",
-    Aogon: "#x104",
-    Aopf: "#x1D538",
-    ApplyFunction: "#x2061",
-    Ascr: "#x1D49C",
-    Assign: "#x2254",
-    Backslash: "#x2216",
-    Barv: "#x2AE7",
-    Barwed: "#x2306",
-    Bcy: "#x411",
-    Because: "#x2235",
-    Bernoullis: "#x212C",
-    Bfr: "#x1D505",
-    Bopf: "#x1D539",
-    Breve: "#x2D8",
-    Bscr: "#x212C",
-    Bumpeq: "#x224E",
-    CHcy: "#x427",
-    COPY: "copy",
-    Cacute: "#x106",
-    Cap: "#x22D2",
-    CapitalDifferentialD: "#x2145",
-    Cayleys: "#x212D",
-    Ccaron: "#x10C",
-    Ccirc: "#x108",
-    Cconint: "#x2230",
-    Cdot: "#x10A",
-    Cedilla: "cedil",
-    CenterDot: "middot",
-    Cfr: "#x212D",
-    CircleDot: "#x2299",
-    CircleMinus: "#x2296",
-    CirclePlus: "oplus",
-    CircleTimes: "otimes",
-    ClockwiseContourIntegral: "#x2232",
-    CloseCurlyDoubleQuote: "rdquo",
-    CloseCurlyQuote: "rsquo",
-    Colon: "#x2237",
-    Colone: "#x2A74",
-    Congruent: "equiv",
-    Conint: "#x222F",
-    ContourIntegral: "#x222E",
-    Copf: "#x2102",
-    Coproduct: "#x2210",
-    CounterClockwiseContourIntegral: "#x2233",
-    Cross: "#x2A2F",
-    Cscr: "#x1D49E",
-    Cup: "#x22D3",
-    CupCap: "#x224D",
-    DD: "#x2145",
-    DDotrahd: "#x2911",
-    DJcy: "#x402",
-    DScy: "#x405",
-    DZcy: "#x40F",
-    Darr: "#x21A1",
-    Dashv: "#x2AE4",
-    Dcaron: "#x10E",
-    Dcy: "#x414",
-    Del: "#x2207",
-    Dfr: "#x1D507",
-    DiacriticalAcute: "acute",
-    DiacriticalDot: "#x2D9",
-    DiacriticalDoubleAcute: "#x2DD",
-    DiacriticalGrave: "#x60",
-    DiacriticalTilde: "tilde",
-    Diamond: "#x22C4",
-    DifferentialD: "#x2146",
-    Dopf: "#x1D53B",
-    Dot: "#xA8",
-    DotDot: "#x20DC",
-    DotEqual: "#x2250",
-    DoubleContourIntegral: "#x222F",
-    DoubleDot: "#xA8",
-    DoubleDownArrow: "dArr",
-    DoubleLeftArrow: "lArr",
-    DoubleLeftRightArrow: "#x21D4",
-    DoubleLeftTee: "#x2AE4",
-    DoubleLongLeftArrow: "#x27F8",
-    DoubleLongLeftRightArrow: "#x27FA",
-    DoubleLongRightArrow: "#x27F9",
-    DoubleRightArrow: "rArr",
-    DoubleRightTee: "#x22A8",
-    DoubleUpArrow: "uArr",
-    DoubleUpDownArrow: "#x21D5",
-    DoubleVerticalBar: "#x2225",
-    DownArrow: "darr",
-    DownArrowBar: "#x2913",
-    DownArrowUpArrow: "#x21F5",
-    DownBreve: "#x311",
-    DownLeftRightVector: "#x2950",
-    DownLeftTeeVector: "#x295E",
-    DownLeftVector: "#x21BD",
-    DownLeftVectorBar: "#x2956",
-    DownRightTeeVector: "#x295F",
-    DownRightVector: "#x21C1",
-    DownRightVectorBar: "#x2957",
-    DownTee: "#x22A4",
-    DownTeeArrow: "#x21A7",
-    Downarrow: "dArr",
-    Dscr: "#x1D49F",
-    Dstrok: "#x110",
-    ENG: "#x14A",
-    Ecaron: "#x11A",
-    Ecy: "#x42D",
-    Edot: "#x116",
-    Efr: "#x1D508",
-    Element: "#x2208",
-    Emacr: "#x112",
-    EmptySmallSquare: "#x25FB",
-    EmptyVerySmallSquare: "#x25AB",
-    Eogon: "#x118",
-    Eopf: "#x1D53C",
-    Equal: "#x2A75",
-    EqualTilde: "#x2242",
-    Equilibrium: "#x21CC",
-    Escr: "#x2130",
-    Esim: "#x2A73",
-    Exists: "exist",
-    ExponentialE: "#x2147",
-    Fcy: "#x424",
-    Ffr: "#x1D509",
-    FilledSmallSquare: "#x25FC",
-    FilledVerySmallSquare: "#x25AA",
-    Fopf: "#x1D53D",
-    ForAll: "forall",
-    Fouriertrf: "#x2131",
-    Fscr: "#x2131",
-    GJcy: "#x403",
-    GT: "gt",
-    Gammad: "#x3DC",
-    Gbreve: "#x11E",
-    Gcedil: "#x122",
-    Gcirc: "#x11C",
-    Gcy: "#x413",
-    Gdot: "#x120",
-    Gfr: "#x1D50A",
-    Gg: "#x22D9",
-    Gopf: "#x1D53E",
-    GreaterEqual: "ge",
-    GreaterEqualLess: "#x22DB",
-    GreaterFullEqual: "#x2267",
-    GreaterGreater: "#x2AA2",
-    GreaterLess: "#x2277",
-    GreaterSlantEqual: "#x2A7E",
-    GreaterTilde: "#x2273",
-    Gscr: "#x1D4A2",
-    Gt: "#x226B",
-    HARDcy: "#x42A",
-    Hacek: "#x2C7",
-    Hcirc: "#x124",
-    Hfr: "#x210C",
-    HilbertSpace: "#x210B",
-    Hopf: "#x210D",
-    HorizontalLine: "#x2500",
-    Hscr: "#x210B",
-    Hstrok: "#x126",
-    HumpDownHump: "#x224E",
-    HumpEqual: "#x224F",
-    IEcy: "#x415",
-    IJlig: "#x132",
-    IOcy: "#x401",
-    Icy: "#x418",
-    Idot: "#x130",
-    Ifr: "#x2111",
-    Im: "#x2111",
-    Imacr: "#x12A",
-    ImaginaryI: "#x2148",
-    Implies: "rArr",
-    Int: "#x222C",
-    Integral: "int",
-    Intersection: "#x22C2",
-    InvisibleComma: "#x2063",
-    InvisibleTimes: "#x2062",
-    Iogon: "#x12E",
-    Iopf: "#x1D540",
-    Iscr: "#x2110",
-    Itilde: "#x128",
-    Iukcy: "#x406",
-    Jcirc: "#x134",
-    Jcy: "#x419",
-    Jfr: "#x1D50D",
-    Jopf: "#x1D541",
-    Jscr: "#x1D4A5",
-    Jsercy: "#x408",
-    Jukcy: "#x404",
-    KHcy: "#x425",
-    KJcy: "#x40C",
-    Kcedil: "#x136",
-    Kcy: "#x41A",
-    Kfr: "#x1D50E",
-    Kopf: "#x1D542",
-    Kscr: "#x1D4A6",
-    LJcy: "#x409",
-    LT: "lt",
-    Lacute: "#x139",
-    Lang: "#x27EA",
-    Laplacetrf: "#x2112",
-    Larr: "#x219E",
-    Lcaron: "#x13D",
-    Lcedil: "#x13B",
-    Lcy: "#x41B",
-    LeftAngleBracket: "lang",
-    LeftArrow: "larr",
-    LeftArrowBar: "#x21E4",
-    LeftArrowRightArrow: "#x21C6",
-    LeftCeiling: "lceil",
-    LeftDoubleBracket: "#x27E6",
-    LeftDownTeeVector: "#x2961",
-    LeftDownVector: "#x21C3",
-    LeftDownVectorBar: "#x2959",
-    LeftFloor: "lfloor",
-    LeftRightArrow: "harr",
-    LeftRightVector: "#x294E",
-    LeftTee: "#x22A3",
-    LeftTeeArrow: "#x21A4",
-    LeftTeeVector: "#x295A",
-    LeftTriangle: "#x22B2",
-    LeftTriangleBar: "#x29CF",
-    LeftTriangleEqual: "#x22B4",
-    LeftUpDownVector: "#x2951",
-    LeftUpTeeVector: "#x2960",
-    LeftUpVector: "#x21BF",
-    LeftUpVectorBar: "#x2958",
-    LeftVector: "#x21BC",
-    LeftVectorBar: "#x2952",
-    Leftarrow: "lArr",
-    Leftrightarrow: "#x21D4",
-    LessEqualGreater: "#x22DA",
-    LessFullEqual: "#x2266",
-    LessGreater: "#x2276",
-    LessLess: "#x2AA1",
-    LessSlantEqual: "#x2A7D",
-    LessTilde: "#x2272",
-    Lfr: "#x1D50F",
-    Ll: "#x22D8",
-    Lleftarrow: "#x21DA",
-    Lmidot: "#x13F",
-    LongLeftArrow: "#x27F5",
-    LongLeftRightArrow: "#x27F7",
-    LongRightArrow: "#x27F6",
-    Longleftarrow: "#x27F8",
-    Longleftrightarrow: "#x27FA",
-    Longrightarrow: "#x27F9",
-    Lopf: "#x1D543",
-    LowerLeftArrow: "#x2199",
-    LowerRightArrow: "#x2198",
-    Lscr: "#x2112",
-    Lsh: "#x21B0",
-    Lstrok: "#x141",
-    Lt: "#x226A",
-    Map: "#x2905",
-    Mcy: "#x41C",
-    MediumSpace: "#x205F",
-    Mellintrf: "#x2133",
-    Mfr: "#x1D510",
-    MinusPlus: "#x2213",
-    Mopf: "#x1D544",
-    Mscr: "#x2133",
-    NJcy: "#x40A",
-    Nacute: "#x143",
-    Ncaron: "#x147",
-    Ncedil: "#x145",
-    Ncy: "#x41D",
-    NegativeMediumSpace: "#x200B",
-    NegativeThickSpace: "#x200B",
-    NegativeThinSpace: "#x200B",
-    NegativeVeryThinSpace: "#x200B",
-    NestedGreaterGreater: "#x226B",
-    NestedLessLess: "#x226A",
-    Nfr: "#x1D511",
-    NoBreak: "#x2060",
-    NonBreakingSpace: "nbsp",
-    Nopf: "#x2115",
-    Not: "#x2AEC",
-    NotCongruent: "#x2262",
-    NotCupCap: "#x226D",
-    NotDoubleVerticalBar: "#x2226",
-    NotElement: "notin",
-    NotEqual: "ne",
-    NotEqualTilde: "#x2242;&#x338",
-    NotExists: "#x2204",
-    NotGreater: "#x226F",
-    NotGreaterEqual: "#x2271",
-    NotGreaterFullEqual: "#x2267;&#x338",
-    NotGreaterGreater: "#x226B;&#x338",
-    NotGreaterLess: "#x2279",
-    NotGreaterSlantEqual: "#x2A7E;&#x338",
-    NotGreaterTilde: "#x2275",
-    NotHumpDownHump: "#x224E;&#x338",
-    NotHumpEqual: "#x224F;&#x338",
-    NotLeftTriangle: "#x22EA",
-    NotLeftTriangleBar: "#x29CF;&#x338",
-    NotLeftTriangleEqual: "#x22EC",
-    NotLess: "#x226E",
-    NotLessEqual: "#x2270",
-    NotLessGreater: "#x2278",
-    NotLessLess: "#x226A;&#x338",
-    NotLessSlantEqual: "#x2A7D;&#x338",
-    NotLessTilde: "#x2274",
-    NotNestedGreaterGreater: "#x2AA2;&#x338",
-    NotNestedLessLess: "#x2AA1;&#x338",
-    NotPrecedes: "#x2280",
-    NotPrecedesEqual: "#x2AAF;&#x338",
-    NotPrecedesSlantEqual: "#x22E0",
-    NotReverseElement: "#x220C",
-    NotRightTriangle: "#x22EB",
-    NotRightTriangleBar: "#x29D0;&#x338",
-    NotRightTriangleEqual: "#x22ED",
-    NotSquareSubset: "#x228F;&#x338",
-    NotSquareSubsetEqual: "#x22E2",
-    NotSquareSuperset: "#x2290;&#x338",
-    NotSquareSupersetEqual: "#x22E3",
-    NotSubset: "#x2282;&#x20D2",
-    NotSubsetEqual: "#x2288",
-    NotSucceeds: "#x2281",
-    NotSucceedsEqual: "#x2AB0;&#x338",
-    NotSucceedsSlantEqual: "#x22E1",
-    NotSucceedsTilde: "#x227F;&#x338",
-    NotSuperset: "#x2283;&#x20D2",
-    NotSupersetEqual: "#x2289",
-    NotTilde: "#x2241",
-    NotTildeEqual: "#x2244",
-    NotTildeFullEqual: "#x2247",
-    NotTildeTilde: "#x2249",
-    NotVerticalBar: "#x2224",
-    Nscr: "#x1D4A9",
-    Ocy: "#x41E",
-    Odblac: "#x150",
-    Ofr: "#x1D512",
-    Omacr: "#x14C",
-    Oopf: "#x1D546",
-    OpenCurlyDoubleQuote: "ldquo",
-    OpenCurlyQuote: "lsquo",
-    Or: "#x2A54",
-    Oscr: "#x1D4AA",
-    Otimes: "#x2A37",
-    OverBar: "oline",
-    OverBrace: "#x23DE",
-    OverBracket: "#x23B4",
-    OverParenthesis: "#x23DC",
-    PartialD: "part",
-    Pcy: "#x41F",
-    Pfr: "#x1D513",
-    PlusMinus: "#xB1",
-    Poincareplane: "#x210C",
-    Popf: "#x2119",
-    Pr: "#x2ABB",
-    Precedes: "#x227A",
-    PrecedesEqual: "#x2AAF",
-    PrecedesSlantEqual: "#x227C",
-    PrecedesTilde: "#x227E",
-    Product: "prod",
-    Proportion: "#x2237",
-    Proportional: "prop",
-    Pscr: "#x1D4AB",
-    QUOT: "quot",
-    Qfr: "#x1D514",
-    Qopf: "#x211A",
-    Qscr: "#x1D4AC",
-    RBarr: "#x2910",
-    REG: "reg",
-    Racute: "#x154",
-    Rang: "#x27EB",
-    Rarr: "#x21A0",
-    Rarrtl: "#x2916",
-    Rcaron: "#x158",
-    Rcedil: "#x156",
-    Rcy: "#x420",
-    Re: "#x211C",
-    ReverseElement: "ni",
-    ReverseEquilibrium: "#x21CB",
-    ReverseUpEquilibrium: "#x296F",
-    Rfr: "#x211C",
-    RightAngleBracket: "rang",
-    RightArrow: "rarr",
-    RightArrowBar: "#x21E5",
-    RightArrowLeftArrow: "#x21C4",
-    RightCeiling: "rceil",
-    RightDoubleBracket: "#x27E7",
-    RightDownTeeVector: "#x295D",
-    RightDownVector: "#x21C2",
-    RightDownVectorBar: "#x2955",
-    RightFloor: "rfloor",
-    RightTee: "#x22A2",
-    RightTeeArrow: "#x21A6",
-    RightTeeVector: "#x295B",
-    RightTriangle: "#x22B3",
-    RightTriangleBar: "#x29D0",
-    RightTriangleEqual: "#x22B5",
-    RightUpDownVector: "#x294F",
-    RightUpTeeVector: "#x295C",
-    RightUpVector: "#x21BE",
-    RightUpVectorBar: "#x2954",
-    RightVector: "#x21C0",
-    RightVectorBar: "#x2953",
-    Rightarrow: "rArr",
-    Ropf: "#x211D",
-    RoundImplies: "#x2970",
-    Rrightarrow: "#x21DB",
-    Rscr: "#x211B",
-    Rsh: "#x21B1",
-    RuleDelayed: "#x29F4",
-    SHCHcy: "#x429",
-    SHcy: "#x428",
-    SOFTcy: "#x42C",
-    Sacute: "#x15A",
-    Sc: "#x2ABC",
-    Scedil: "#x15E",
-    Scirc: "#x15C",
-    Scy: "#x421",
-    Sfr: "#x1D516",
-    ShortDownArrow: "darr",
-    ShortLeftArrow: "larr",
-    ShortRightArrow: "rarr",
-    ShortUpArrow: "uarr",
-    SmallCircle: "#x2218",
-    Sopf: "#x1D54A",
-    Sqrt: "#x221A",
-    Square: "#x25A1",
-    SquareIntersection: "#x2293",
-    SquareSubset: "#x228F",
-    SquareSubsetEqual: "#x2291",
-    SquareSuperset: "#x2290",
-    SquareSupersetEqual: "#x2292",
-    SquareUnion: "#x2294",
-    Sscr: "#x1D4AE",
-    Star: "#x22C6",
-    Sub: "#x22D0",
-    Subset: "#x22D0",
-    SubsetEqual: "sube",
-    Succeeds: "#x227B",
-    SucceedsEqual: "#x2AB0",
-    SucceedsSlantEqual: "#x227D",
-    SucceedsTilde: "#x227F",
-    SuchThat: "ni",
-    Sum: "sum",
-    Sup: "#x22D1",
-    Superset: "sup",
-    SupersetEqual: "supe",
-    Supset: "#x22D1",
-    TRADE: "trade",
-    TSHcy: "#x40B",
-    TScy: "#x426",
-    Tab: "#x9",
-    Tcaron: "#x164",
-    Tcedil: "#x162",
-    Tcy: "#x422",
-    Tfr: "#x1D517",
-    Therefore: "there4",
-    ThickSpace: "#x205F;&#x200A",
-    ThinSpace: "thinsp",
-    Tilde: "sim",
-    TildeEqual: "#x2243",
-    TildeFullEqual: "cong",
-    TildeTilde: "#x2248",
-    Topf: "#x1D54B",
-    TripleDot: "#x20DB",
-    Tscr: "#x1D4AF",
-    Tstrok: "#x166",
-    Uarr: "#x219F",
-    Uarrocir: "#x2949",
-    Ubrcy: "#x40E",
-    Ubreve: "#x16C",
-    Ucy: "#x423",
-    Udblac: "#x170",
-    Ufr: "#x1D518",
-    Umacr: "#x16A",
-    UnderBrace: "#x23DF",
-    UnderBracket: "#x23B5",
-    UnderParenthesis: "#x23DD",
-    Union: "#x22C3",
-    UnionPlus: "#x228E",
-    Uogon: "#x172",
-    Uopf: "#x1D54C",
-    UpArrow: "uarr",
-    UpArrowBar: "#x2912",
-    UpArrowDownArrow: "#x21C5",
-    UpDownArrow: "#x2195",
-    UpEquilibrium: "#x296E",
-    UpTee: "#x22A5",
-    UpTeeArrow: "#x21A5",
-    Uparrow: "uArr",
-    Updownarrow: "#x21D5",
-    UpperLeftArrow: "#x2196",
-    UpperRightArrow: "#x2197",
-    Upsi: "#x3D2",
-    Uring: "#x16E",
-    Uscr: "#x1D4B0",
-    Utilde: "#x168",
-    VDash: "#x22AB",
-    Vbar: "#x2AEB",
-    Vcy: "#x412",
-    Vdash: "#x22A9",
-    Vdashl: "#x2AE6",
-    Vee: "#x22C1",
-    Verbar: "#x2016",
-    Vert: "#x2016",
-    VerticalBar: "#x2223",
-    VerticalSeparator: "#x2758",
-    VerticalTilde: "#x2240",
-    VeryThinSpace: "#x200A",
-    Vfr: "#x1D519",
-    Vopf: "#x1D54D",
-    Vscr: "#x1D4B1",
-    Vvdash: "#x22AA",
-    Wcirc: "#x174",
-    Wedge: "#x22C0",
-    Wfr: "#x1D51A",
-    Wopf: "#x1D54E",
-    Wscr: "#x1D4B2",
-    Xfr: "#x1D51B",
-    Xopf: "#x1D54F",
-    Xscr: "#x1D4B3",
-    YAcy: "#x42F",
-    YIcy: "#x407",
-    YUcy: "#x42E",
-    Ycirc: "#x176",
-    Ycy: "#x42B",
-    Yfr: "#x1D51C",
-    Yopf: "#x1D550",
-    Yscr: "#x1D4B4",
-    ZHcy: "#x416",
-    Zacute: "#x179",
-    Zcaron: "#x17D",
-    Zcy: "#x417",
-    Zdot: "#x17B",
-    ZeroWidthSpace: "#x200B",
-    Zfr: "#x2128",
-    Zopf: "#x2124",
-    Zscr: "#x1D4B5",
-    abreve: "#x103",
-    ac: "#x223E",
-    acE: "#x223E;&#x333",
-    acd: "#x223F",
-    acy: "#x430",
-    af: "#x2061",
-    afr: "#x1D51E",
-    aleph: "#x2135",
-    amacr: "#x101",
-    amalg: "#x2A3F",
-    andand: "#x2A55",
-    andd: "#x2A5C",
-    andslope: "#x2A58",
-    andv: "#x2A5A",
-    ange: "#x29A4",
-    angle: "ang",
-    angmsd: "#x2221",
-    angmsdaa: "#x29A8",
-    angmsdab: "#x29A9",
-    angmsdac: "#x29AA",
-    angmsdad: "#x29AB",
-    angmsdae: "#x29AC",
-    angmsdaf: "#x29AD",
-    angmsdag: "#x29AE",
-    angmsdah: "#x29AF",
-    angrt: "#x221F",
-    angrtvb: "#x22BE",
-    angrtvbd: "#x299D",
-    angsph: "#x2222",
-    angst: "#xC5",
-    angzarr: "#x237C",
-    aogon: "#x105",
-    aopf: "#x1D552",
-    ap: "#x2248",
-    apE: "#x2A70",
-    apacir: "#x2A6F",
-    ape: "#x224A",
-    apid: "#x224B",
-    approx: "#x2248",
-    approxeq: "#x224A",
-    ascr: "#x1D4B6",
-    asympeq: "#x224D",
-    awconint: "#x2233",
-    awint: "#x2A11",
-    bNot: "#x2AED",
-    backcong: "#x224C",
-    backepsilon: "#x3F6",
-    backprime: "#x2035",
-    backsim: "#x223D",
-    backsimeq: "#x22CD",
-    barvee: "#x22BD",
-    barwed: "#x2305",
-    barwedge: "#x2305",
-    bbrk: "#x23B5",
-    bbrktbrk: "#x23B6",
-    bcong: "#x224C",
-    bcy: "#x431",
-    becaus: "#x2235",
-    because: "#x2235",
-    bemptyv: "#x29B0",
-    bepsi: "#x3F6",
-    bernou: "#x212C",
-    beth: "#x2136",
-    between: "#x226C",
-    bfr: "#x1D51F",
-    bigcap: "#x22C2",
-    bigcirc: "#x25EF",
-    bigcup: "#x22C3",
-    bigodot: "#x2A00",
-    bigoplus: "#x2A01",
-    bigotimes: "#x2A02",
-    bigsqcup: "#x2A06",
-    bigstar: "#x2605",
-    bigtriangledown: "#x25BD",
-    bigtriangleup: "#x25B3",
-    biguplus: "#x2A04",
-    bigvee: "#x22C1",
-    bigwedge: "#x22C0",
-    bkarow: "#x290D",
-    blacklozenge: "#x29EB",
-    blacksquare: "#x25AA",
-    blacktriangle: "#x25B4",
-    blacktriangledown: "#x25BE",
-    blacktriangleleft: "#x25C2",
-    blacktriangleright: "#x25B8",
-    blank: "#x2423",
-    blk12: "#x2592",
-    blk14: "#x2591",
-    blk34: "#x2593",
-    block: "#x2588",
-    bne: "&#x20E5",
-    bnequiv: "#x2261;&#x20E5",
-    bnot: "#x2310",
-    bopf: "#x1D553",
-    bot: "#x22A5",
-    bottom: "#x22A5",
-    bowtie: "#x22C8",
-    boxDL: "#x2557",
-    boxDR: "#x2554",
-    boxDl: "#x2556",
-    boxDr: "#x2553",
-    boxH: "#x2550",
-    boxHD: "#x2566",
-    boxHU: "#x2569",
-    boxHd: "#x2564",
-    boxHu: "#x2567",
-    boxUL: "#x255D",
-    boxUR: "#x255A",
-    boxUl: "#x255C",
-    boxUr: "#x2559",
-    boxV: "#x2551",
-    boxVH: "#x256C",
-    boxVL: "#x2563",
-    boxVR: "#x2560",
-    boxVh: "#x256B",
-    boxVl: "#x2562",
-    boxVr: "#x255F",
-    boxbox: "#x29C9",
-    boxdL: "#x2555",
-    boxdR: "#x2552",
-    boxdl: "#x2510",
-    boxdr: "#x250C",
-    boxh: "#x2500",
-    boxhD: "#x2565",
-    boxhU: "#x2568",
-    boxhd: "#x252C",
-    boxhu: "#x2534",
-    boxminus: "#x229F",
-    boxplus: "#x229E",
-    boxtimes: "#x22A0",
-    boxuL: "#x255B",
-    boxuR: "#x2558",
-    boxul: "#x2518",
-    boxur: "#x2514",
-    boxv: "#x2502",
-    boxvH: "#x256A",
-    boxvL: "#x2561",
-    boxvR: "#x255E",
-    boxvh: "#x253C",
-    boxvl: "#x2524",
-    boxvr: "#x251C",
-    bprime: "#x2035",
-    breve: "#x2D8",
-    bscr: "#x1D4B7",
-    bsemi: "#x204F",
-    bsim: "#x223D",
-    bsime: "#x22CD",
-    bsolb: "#x29C5",
-    bsolhsub: "#x27C8",
-    bullet: "bull",
-    bump: "#x224E",
-    bumpE: "#x2AAE",
-    bumpe: "#x224F",
-    bumpeq: "#x224F",
-    cacute: "#x107",
-    capand: "#x2A44",
-    capbrcup: "#x2A49",
-    capcap: "#x2A4B",
-    capcup: "#x2A47",
-    capdot: "#x2A40",
-    caps: "#x2229;&#xFE00",
-    caret: "#x2041",
-    caron: "#x2C7",
-    ccaps: "#x2A4D",
-    ccaron: "#x10D",
-    ccirc: "#x109",
-    ccups: "#x2A4C",
-    ccupssm: "#x2A50",
-    cdot: "#x10B",
-    cemptyv: "#x29B2",
-    centerdot: "middot",
-    cfr: "#x1D520",
-    chcy: "#x447",
-    check: "#x2713",
-    checkmark: "#x2713",
-    cir: "#x25CB",
-    cirE: "#x29C3",
-    circeq: "#x2257",
-    circlearrowleft: "#x21BA",
-    circlearrowright: "#x21BB",
-    circledR: "reg",
-    circledS: "#x24C8",
-    circledast: "#x229B",
-    circledcirc: "#x229A",
-    circleddash: "#x229D",
-    cire: "#x2257",
-    cirfnint: "#x2A10",
-    cirmid: "#x2AEF",
-    cirscir: "#x29C2",
-    clubsuit: "clubs",
-    colone: "#x2254",
-    coloneq: "#x2254",
-    comp: "#x2201",
-    compfn: "#x2218",
-    complement: "#x2201",
-    complexes: "#x2102",
-    congdot: "#x2A6D",
-    conint: "#x222E",
-    copf: "#x1D554",
-    coprod: "#x2210",
-    copysr: "#x2117",
-    cross: "#x2717",
-    cscr: "#x1D4B8",
-    csub: "#x2ACF",
-    csube: "#x2AD1",
-    csup: "#x2AD0",
-    csupe: "#x2AD2",
-    ctdot: "#x22EF",
-    cudarrl: "#x2938",
-    cudarrr: "#x2935",
-    cuepr: "#x22DE",
-    cuesc: "#x22DF",
-    cularr: "#x21B6",
-    cularrp: "#x293D",
-    cupbrcap: "#x2A48",
-    cupcap: "#x2A46",
-    cupcup: "#x2A4A",
-    cupdot: "#x228D",
-    cupor: "#x2A45",
-    cups: "#x222A;&#xFE00",
-    curarr: "#x21B7",
-    curarrm: "#x293C",
-    curlyeqprec: "#x22DE",
-    curlyeqsucc: "#x22DF",
-    curlyvee: "#x22CE",
-    curlywedge: "#x22CF",
-    curvearrowleft: "#x21B6",
-    curvearrowright: "#x21B7",
-    cuvee: "#x22CE",
-    cuwed: "#x22CF",
-    cwconint: "#x2232",
-    cwint: "#x2231",
-    cylcty: "#x232D",
-    dHar: "#x2965",
-    daleth: "#x2138",
-    dash: "#x2010",
-    dashv: "#x22A3",
-    dbkarow: "#x290F",
-    dblac: "#x2DD",
-    dcaron: "#x10F",
-    dcy: "#x434",
-    dd: "#x2146",
-    ddagger: "Dagger",
-    ddarr: "#x21CA",
-    ddotseq: "#x2A77",
-    demptyv: "#x29B1",
-    dfisht: "#x297F",
-    dfr: "#x1D521",
-    dharl: "#x21C3",
-    dharr: "#x21C2",
-    diam: "#x22C4",
-    diamond: "#x22C4",
-    diamondsuit: "diams",
-    die: "#xA8",
-    digamma: "#x3DD",
-    disin: "#x22F2",
-    div: "#xF7",
-    divideontimes: "#x22C7",
-    divonx: "#x22C7",
-    djcy: "#x452",
-    dlcorn: "#x231E",
-    dlcrop: "#x230D",
-    dopf: "#x1D555",
-    dot: "#x2D9",
-    doteq: "#x2250",
-    doteqdot: "#x2251",
-    dotminus: "#x2238",
-    dotplus: "#x2214",
-    dotsquare: "#x22A1",
-    doublebarwedge: "#x2306",
-    downarrow: "darr",
-    downdownarrows: "#x21CA",
-    downharpoonleft: "#x21C3",
-    downharpoonright: "#x21C2",
-    drbkarow: "#x2910",
-    drcorn: "#x231F",
-    drcrop: "#x230C",
-    dscr: "#x1D4B9",
-    dscy: "#x455",
-    dsol: "#x29F6",
-    dstrok: "#x111",
-    dtdot: "#x22F1",
-    dtri: "#x25BF",
-    dtrif: "#x25BE",
-    duarr: "#x21F5",
-    duhar: "#x296F",
-    dwangle: "#x29A6",
-    dzcy: "#x45F",
-    dzigrarr: "#x27FF",
-    eDDot: "#x2A77",
-    eDot: "#x2251",
-    easter: "#x2A6E",
-    ecaron: "#x11B",
-    ecir: "#x2256",
-    ecolon: "#x2255",
-    ecy: "#x44D",
-    edot: "#x117",
-    ee: "#x2147",
-    efDot: "#x2252",
-    efr: "#x1D522",
-    eg: "#x2A9A",
-    egs: "#x2A96",
-    egsdot: "#x2A98",
-    el: "#x2A99",
-    elinters: "#x23E7",
-    ell: "#x2113",
-    els: "#x2A95",
-    elsdot: "#x2A97",
-    emacr: "#x113",
-    emptyset: "empty",
-    emptyv: "empty",
-    emsp13: "#x2004",
-    emsp14: "#x2005",
-    eng: "#x14B",
-    eogon: "#x119",
-    eopf: "#x1D556",
-    epar: "#x22D5",
-    eparsl: "#x29E3",
-    eplus: "#x2A71",
-    epsi: "#x3B5",
-    epsiv: "#x3F5",
-    eqcirc: "#x2256",
-    eqcolon: "#x2255",
-    eqsim: "#x2242",
-    eqslantgtr: "#x2A96",
-    eqslantless: "#x2A95",
-    equest: "#x225F",
-    equivDD: "#x2A78",
-    eqvparsl: "#x29E5",
-    erDot: "#x2253",
-    erarr: "#x2971",
-    escr: "#x212F",
-    esdot: "#x2250",
-    esim: "#x2242",
-    expectation: "#x2130",
-    exponentiale: "#x2147",
-    fallingdotseq: "#x2252",
-    fcy: "#x444",
-    female: "#x2640",
-    ffilig: "#xFB03",
-    fflig: "#xFB00",
-    ffllig: "#xFB04",
-    ffr: "#x1D523",
-    filig: "#xFB01",
-    flat: "#x266D",
-    fllig: "#xFB02",
-    fltns: "#x25B1",
-    fopf: "#x1D557",
-    fork: "#x22D4",
-    forkv: "#x2AD9",
-    fpartint: "#x2A0D",
-    frac13: "#x2153",
-    frac15: "#x2155",
-    frac16: "#x2159",
-    frac18: "#x215B",
-    frac23: "#x2154",
-    frac25: "#x2156",
-    frac35: "#x2157",
-    frac38: "#x215C",
-    frac45: "#x2158",
-    frac56: "#x215A",
-    frac58: "#x215D",
-    frac78: "#x215E",
-    frown: "#x2322",
-    fscr: "#x1D4BB",
-    gE: "#x2267",
-    gEl: "#x2A8C",
-    gacute: "#x1F5",
-    gammad: "#x3DD",
-    gap: "#x2A86",
-    gbreve: "#x11F",
-    gcirc: "#x11D",
-    gcy: "#x433",
-    gdot: "#x121",
-    gel: "#x22DB",
-    geq: "ge",
-    geqq: "#x2267",
-    geqslant: "#x2A7E",
-    ges: "#x2A7E",
-    gescc: "#x2AA9",
-    gesdot: "#x2A80",
-    gesdoto: "#x2A82",
-    gesdotol: "#x2A84",
-    gesl: "#x22DB;&#xFE00",
-    gesles: "#x2A94",
-    gfr: "#x1D524",
-    gg: "#x226B",
-    ggg: "#x22D9",
-    gimel: "#x2137",
-    gjcy: "#x453",
-    gl: "#x2277",
-    glE: "#x2A92",
-    gla: "#x2AA5",
-    glj: "#x2AA4",
-    gnE: "#x2269",
-    gnap: "#x2A8A",
-    gnapprox: "#x2A8A",
-    gne: "#x2A88",
-    gneq: "#x2A88",
-    gneqq: "#x2269",
-    gnsim: "#x22E7",
-    gopf: "#x1D558",
-    grave: "#x60",
-    gscr: "#x210A",
-    gsim: "#x2273",
-    gsime: "#x2A8E",
-    gsiml: "#x2A90",
-    gtcc: "#x2AA7",
-    gtcir: "#x2A7A",
-    gtdot: "#x22D7",
-    gtlPar: "#x2995",
-    gtquest: "#x2A7C",
-    gtrapprox: "#x2A86",
-    gtrarr: "#x2978",
-    gtrdot: "#x22D7",
-    gtreqless: "#x22DB",
-    gtreqqless: "#x2A8C",
-    gtrless: "#x2277",
-    gtrsim: "#x2273",
-    gvertneqq: "#x2269;&#xFE00",
-    gvnE: "#x2269;&#xFE00",
-    hairsp: "#x200A",
-    half: "#xBD",
-    hamilt: "#x210B",
-    hardcy: "#x44A",
-    harrcir: "#x2948",
-    harrw: "#x21AD",
-    hbar: "#x210F",
-    hcirc: "#x125",
-    heartsuit: "hearts",
-    hercon: "#x22B9",
-    hfr: "#x1D525",
-    hksearow: "#x2925",
-    hkswarow: "#x2926",
-    hoarr: "#x21FF",
-    homtht: "#x223B",
-    hookleftarrow: "#x21A9",
-    hookrightarrow: "#x21AA",
-    hopf: "#x1D559",
-    horbar: "#x2015",
-    hscr: "#x1D4BD",
-    hslash: "#x210F",
-    hstrok: "#x127",
-    hybull: "#x2043",
-    hyphen: "#x2010",
-    ic: "#x2063",
-    icy: "#x438",
-    iecy: "#x435",
-    iff: "#x21D4",
-    ifr: "#x1D526",
-    ii: "#x2148",
-    iiiint: "#x2A0C",
-    iiint: "#x222D",
-    iinfin: "#x29DC",
-    iiota: "#x2129",
-    ijlig: "#x133",
-    imacr: "#x12B",
-    imagline: "#x2110",
-    imagpart: "#x2111",
-    imath: "#x131",
-    imof: "#x22B7",
-    imped: "#x1B5",
-    in: "#x2208",
-    incare: "#x2105",
-    infintie: "#x29DD",
-    inodot: "#x131",
-    intcal: "#x22BA",
-    integers: "#x2124",
-    intercal: "#x22BA",
-    intlarhk: "#x2A17",
-    intprod: "#x2A3C",
-    iocy: "#x451",
-    iogon: "#x12F",
-    iopf: "#x1D55A",
-    iprod: "#x2A3C",
-    iscr: "#x1D4BE",
-    isinE: "#x22F9",
-    isindot: "#x22F5",
-    isins: "#x22F4",
-    isinsv: "#x22F3",
-    isinv: "#x2208",
-    it: "#x2062",
-    itilde: "#x129",
-    iukcy: "#x456",
-    jcirc: "#x135",
-    jcy: "#x439",
-    jfr: "#x1D527",
-    jmath: "#x237",
-    jopf: "#x1D55B",
-    jscr: "#x1D4BF",
-    jsercy: "#x458",
-    jukcy: "#x454",
-    kappav: "#x3F0",
-    kcedil: "#x137",
-    kcy: "#x43A",
-    kfr: "#x1D528",
-    kgreen: "#x138",
-    khcy: "#x445",
-    kjcy: "#x45C",
-    kopf: "#x1D55C",
-    kscr: "#x1D4C0",
-    lAarr: "#x21DA",
-    lAtail: "#x291B",
-    lBarr: "#x290E",
-    lE: "#x2266",
-    lEg: "#x2A8B",
-    lHar: "#x2962",
-    lacute: "#x13A",
-    laemptyv: "#x29B4",
-    lagran: "#x2112",
-    langd: "#x2991",
-    langle: "lang",
-    lap: "#x2A85",
-    larrb: "#x21E4",
-    larrbfs: "#x291F",
-    larrfs: "#x291D",
-    larrhk: "#x21A9",
-    larrlp: "#x21AB",
-    larrpl: "#x2939",
-    larrsim: "#x2973",
-    larrtl: "#x21A2",
-    lat: "#x2AAB",
-    latail: "#x2919",
-    late: "#x2AAD",
-    lates: "#x2AAD;&#xFE00",
-    lbarr: "#x290C",
-    lbbrk: "#x2772",
-    lbrace: "{",
-    lbrack: "[",
-    lbrke: "#x298B",
-    lbrksld: "#x298F",
-    lbrkslu: "#x298D",
-    lcaron: "#x13E",
-    lcedil: "#x13C",
-    lcub: "{",
-    lcy: "#x43B",
-    ldca: "#x2936",
-    ldquor: "bdquo",
-    ldrdhar: "#x2967",
-    ldrushar: "#x294B",
-    ldsh: "#x21B2",
-    leftarrow: "larr",
-    leftarrowtail: "#x21A2",
-    leftharpoondown: "#x21BD",
-    leftharpoonup: "#x21BC",
-    leftleftarrows: "#x21C7",
-    leftrightarrow: "harr",
-    leftrightarrows: "#x21C6",
-    leftrightharpoons: "#x21CB",
-    leftrightsquigarrow: "#x21AD",
-    leftthreetimes: "#x22CB",
-    leg: "#x22DA",
-    leq: "le",
-    leqq: "#x2266",
-    leqslant: "#x2A7D",
-    les: "#x2A7D",
-    lescc: "#x2AA8",
-    lesdot: "#x2A7F",
-    lesdoto: "#x2A81",
-    lesdotor: "#x2A83",
-    lesg: "#x22DA;&#xFE00",
-    lesges: "#x2A93",
-    lessapprox: "#x2A85",
-    lessdot: "#x22D6",
-    lesseqgtr: "#x22DA",
-    lesseqqgtr: "#x2A8B",
-    lessgtr: "#x2276",
-    lesssim: "#x2272",
-    lfisht: "#x297C",
-    lfr: "#x1D529",
-    lg: "#x2276",
-    lgE: "#x2A91",
-    lhard: "#x21BD",
-    lharu: "#x21BC",
-    lharul: "#x296A",
-    lhblk: "#x2584",
-    ljcy: "#x459",
-    ll: "#x226A",
-    llarr: "#x21C7",
-    llcorner: "#x231E",
-    llhard: "#x296B",
-    lltri: "#x25FA",
-    lmidot: "#x140",
-    lmoust: "#x23B0",
-    lmoustache: "#x23B0",
-    lnE: "#x2268",
-    lnap: "#x2A89",
-    lnapprox: "#x2A89",
-    lne: "#x2A87",
-    lneq: "#x2A87",
-    lneqq: "#x2268",
-    lnsim: "#x22E6",
-    loang: "#x27EC",
-    loarr: "#x21FD",
-    lobrk: "#x27E6",
-    longleftarrow: "#x27F5",
-    longleftrightarrow: "#x27F7",
-    longmapsto: "#x27FC",
-    longrightarrow: "#x27F6",
-    looparrowleft: "#x21AB",
-    looparrowright: "#x21AC",
-    lopar: "#x2985",
-    lopf: "#x1D55D",
-    loplus: "#x2A2D",
-    lotimes: "#x2A34",
-    lozenge: "loz",
-    lozf: "#x29EB",
-    lparlt: "#x2993",
-    lrarr: "#x21C6",
-    lrcorner: "#x231F",
-    lrhar: "#x21CB",
-    lrhard: "#x296D",
-    lrtri: "#x22BF",
-    lscr: "#x1D4C1",
-    lsh: "#x21B0",
-    lsim: "#x2272",
-    lsime: "#x2A8D",
-    lsimg: "#x2A8F",
-    lsquor: "sbquo",
-    lstrok: "#x142",
-    ltcc: "#x2AA6",
-    ltcir: "#x2A79",
-    ltdot: "#x22D6",
-    lthree: "#x22CB",
-    ltimes: "#x22C9",
-    ltlarr: "#x2976",
-    ltquest: "#x2A7B",
-    ltrPar: "#x2996",
-    ltri: "#x25C3",
-    ltrie: "#x22B4",
-    ltrif: "#x25C2",
-    lurdshar: "#x294A",
-    luruhar: "#x2966",
-    lvertneqq: "#x2268;&#xFE00",
-    lvnE: "#x2268;&#xFE00",
-    mDDot: "#x223A",
-    male: "#x2642",
-    malt: "#x2720",
-    maltese: "#x2720",
-    map: "#x21A6",
-    mapsto: "#x21A6",
-    mapstodown: "#x21A7",
-    mapstoleft: "#x21A4",
-    mapstoup: "#x21A5",
-    marker: "#x25AE",
-    mcomma: "#x2A29",
-    mcy: "#x43C",
-    measuredangle: "#x2221",
-    mfr: "#x1D52A",
-    mho: "#x2127",
-    mid: "#x2223",
-    midcir: "#x2AF0",
-    minusb: "#x229F",
-    minusd: "#x2238",
-    minusdu: "#x2A2A",
-    mlcp: "#x2ADB",
-    mldr: "#x2026",
-    mnplus: "#x2213",
-    models: "#x22A7",
-    mopf: "#x1D55E",
-    mp: "#x2213",
-    mscr: "#x1D4C2",
-    mstpos: "#x223E",
-    multimap: "#x22B8",
-    mumap: "#x22B8",
-    nGg: "#x22D9;&#x338",
-    nGt: "#x226B;&#x20D2",
-    nGtv: "#x226B;&#x338",
-    nLeftarrow: "#x21CD",
-    nLeftrightarrow: "#x21CE",
-    nLl: "#x22D8;&#x338",
-    nLt: "#x226A;&#x20D2",
-    nLtv: "#x226A;&#x338",
-    nRightarrow: "#x21CF",
-    nVDash: "#x22AF",
-    nVdash: "#x22AE",
-    nacute: "#x144",
-    nang: "#x2220;&#x20D2",
-    nap: "#x2249",
-    napE: "#x2A70;&#x338",
-    napid: "#x224B;&#x338",
-    napos: "#x149",
-    napprox: "#x2249",
-    natur: "#x266E",
-    natural: "#x266E",
-    naturals: "#x2115",
-    nbump: "#x224E;&#x338",
-    nbumpe: "#x224F;&#x338",
-    ncap: "#x2A43",
-    ncaron: "#x148",
-    ncedil: "#x146",
-    ncong: "#x2247",
-    ncongdot: "#x2A6D;&#x338",
-    ncup: "#x2A42",
-    ncy: "#x43D",
-    neArr: "#x21D7",
-    nearhk: "#x2924",
-    nearr: "#x2197",
-    nearrow: "#x2197",
-    nedot: "#x2250;&#x338",
-    nequiv: "#x2262",
-    nesear: "#x2928",
-    nesim: "#x2242;&#x338",
-    nexist: "#x2204",
-    nexists: "#x2204",
-    nfr: "#x1D52B",
-    ngE: "#x2267;&#x338",
-    nge: "#x2271",
-    ngeq: "#x2271",
-    ngeqq: "#x2267;&#x338",
-    ngeqslant: "#x2A7E;&#x338",
-    nges: "#x2A7E;&#x338",
-    ngsim: "#x2275",
-    ngt: "#x226F",
-    ngtr: "#x226F",
-    nhArr: "#x21CE",
-    nharr: "#x21AE",
-    nhpar: "#x2AF2",
-    nis: "#x22FC",
-    nisd: "#x22FA",
-    niv: "ni",
-    njcy: "#x45A",
-    nlArr: "#x21CD",
-    nlE: "#x2266;&#x338",
-    nlarr: "#x219A",
-    nldr: "#x2025",
-    nle: "#x2270",
-    nleftarrow: "#x219A",
-    nleftrightarrow: "#x21AE",
-    nleq: "#x2270",
-    nleqq: "#x2266;&#x338",
-    nleqslant: "#x2A7D;&#x338",
-    nles: "#x2A7D;&#x338",
-    nless: "#x226E",
-    nlsim: "#x2274",
-    nlt: "#x226E",
-    nltri: "#x22EA",
-    nltrie: "#x22EC",
-    nmid: "#x2224",
-    nopf: "#x1D55F",
-    notinE: "#x22F9;&#x338",
-    notindot: "#x22F5;&#x338",
-    notinva: "notin",
-    notinvb: "#x22F7",
-    notinvc: "#x22F6",
-    notni: "#x220C",
-    notniva: "#x220C",
-    notnivb: "#x22FE",
-    notnivc: "#x22FD",
-    npar: "#x2226",
-    nparallel: "#x2226",
-    nparsl: "#x2AFD;&#x20E5",
-    npart: "#x2202;&#x338",
-    npolint: "#x2A14",
-    npr: "#x2280",
-    nprcue: "#x22E0",
-    npre: "#x2AAF;&#x338",
-    nprec: "#x2280",
-    npreceq: "#x2AAF;&#x338",
-    nrArr: "#x21CF",
-    nrarr: "#x219B",
-    nrarrc: "#x2933;&#x338",
-    nrarrw: "#x219D;&#x338",
-    nrightarrow: "#x219B",
-    nrtri: "#x22EB",
-    nrtrie: "#x22ED",
-    nsc: "#x2281",
-    nsccue: "#x22E1",
-    nsce: "#x2AB0;&#x338",
-    nscr: "#x1D4C3",
-    nshortmid: "#x2224",
-    nshortparallel: "#x2226",
-    nsim: "#x2241",
-    nsime: "#x2244",
-    nsimeq: "#x2244",
-    nsmid: "#x2224",
-    nspar: "#x2226",
-    nsqsube: "#x22E2",
-    nsqsupe: "#x22E3",
-    nsubE: "#x2AC5;&#x338",
-    nsube: "#x2288",
-    nsubset: "#x2282;&#x20D2",
-    nsubseteq: "#x2288",
-    nsubseteqq: "#x2AC5;&#x338",
-    nsucc: "#x2281",
-    nsucceq: "#x2AB0;&#x338",
-    nsup: "#x2285",
-    nsupE: "#x2AC6;&#x338",
-    nsupe: "#x2289",
-    nsupset: "#x2283;&#x20D2",
-    nsupseteq: "#x2289",
-    nsupseteqq: "#x2AC6;&#x338",
-    ntgl: "#x2279",
-    ntlg: "#x2278",
-    ntriangleleft: "#x22EA",
-    ntrianglelefteq: "#x22EC",
-    ntriangleright: "#x22EB",
-    ntrianglerighteq: "#x22ED",
-    numero: "#x2116",
-    numsp: "#x2007",
-    nvDash: "#x22AD",
-    nvHarr: "#x2904",
-    nvap: "#x224D;&#x20D2",
-    nvdash: "#x22AC",
-    nvge: "#x2265;&#x20D2",
-    nvgt: "#x3E;&#x20D2",
-    nvinfin: "#x29DE",
-    nvlArr: "#x2902",
-    nvle: "#x2264;&#x20D2",
-    nvlt: "#x3C;&#x20D2",
-    nvltrie: "#x22B4;&#x20D2",
-    nvrArr: "#x2903",
-    nvrtrie: "#x22B5;&#x20D2",
-    nvsim: "#x223C;&#x20D2",
-    nwArr: "#x21D6",
-    nwarhk: "#x2923",
-    nwarr: "#x2196",
-    nwarrow: "#x2196",
-    nwnear: "#x2927",
-    oS: "#x24C8",
-    oast: "#x229B",
-    ocir: "#x229A",
-    ocy: "#x43E",
-    odash: "#x229D",
-    odblac: "#x151",
-    odiv: "#x2A38",
-    odot: "#x2299",
-    odsold: "#x29BC",
-    ofcir: "#x29BF",
-    ofr: "#x1D52C",
-    ogon: "#x2DB",
-    ogt: "#x29C1",
-    ohbar: "#x29B5",
-    ohm: "#x3A9",
-    oint: "#x222E",
-    olarr: "#x21BA",
-    olcir: "#x29BE",
-    olcross: "#x29BB",
-    olt: "#x29C0",
-    omacr: "#x14D",
-    omid: "#x29B6",
-    ominus: "#x2296",
-    oopf: "#x1D560",
-    opar: "#x29B7",
-    operp: "#x29B9",
-    orarr: "#x21BB",
-    ord: "#x2A5D",
-    order: "#x2134",
-    orderof: "#x2134",
-    origof: "#x22B6",
-    oror: "#x2A56",
-    orslope: "#x2A57",
-    orv: "#x2A5B",
-    oscr: "#x2134",
-    osol: "#x2298",
-    otimesas: "#x2A36",
-    ovbar: "#x233D",
-    par: "#x2225",
-    parallel: "#x2225",
-    parsim: "#x2AF3",
-    parsl: "#x2AFD",
-    pcy: "#x43F",
-    pertenk: "#x2031",
-    pfr: "#x1D52D",
-    phiv: "#x3D5",
-    phmmat: "#x2133",
-    phone: "#x260E",
-    pitchfork: "#x22D4",
-    planck: "#x210F",
-    planckh: "#x210E",
-    plankv: "#x210F",
-    plusacir: "#x2A23",
-    plusb: "#x229E",
-    pluscir: "#x2A22",
-    plusdo: "#x2214",
-    plusdu: "#x2A25",
-    pluse: "#x2A72",
-    plussim: "#x2A26",
-    plustwo: "#x2A27",
-    pm: "#xB1",
-    pointint: "#x2A15",
-    popf: "#x1D561",
-    pr: "#x227A",
-    prE: "#x2AB3",
-    prap: "#x2AB7",
-    prcue: "#x227C",
-    pre: "#x2AAF",
-    prec: "#x227A",
-    precapprox: "#x2AB7",
-    preccurlyeq: "#x227C",
-    preceq: "#x2AAF",
-    precnapprox: "#x2AB9",
-    precneqq: "#x2AB5",
-    precnsim: "#x22E8",
-    precsim: "#x227E",
-    primes: "#x2119",
-    prnE: "#x2AB5",
-    prnap: "#x2AB9",
-    prnsim: "#x22E8",
-    profalar: "#x232E",
-    profline: "#x2312",
-    profsurf: "#x2313",
-    propto: "prop",
-    prsim: "#x227E",
-    prurel: "#x22B0",
-    pscr: "#x1D4C5",
-    puncsp: "#x2008",
-    qfr: "#x1D52E",
-    qint: "#x2A0C",
-    qopf: "#x1D562",
-    qprime: "#x2057",
-    qscr: "#x1D4C6",
-    quaternions: "#x210D",
-    quatint: "#x2A16",
-    questeq: "#x225F",
-    rAarr: "#x21DB",
-    rAtail: "#x291C",
-    rBarr: "#x290F",
-    rHar: "#x2964",
-    race: "#x223D;&#x331",
-    racute: "#x155",
-    raemptyv: "#x29B3",
-    rangd: "#x2992",
-    range: "#x29A5",
-    rangle: "rang",
-    rarrap: "#x2975",
-    rarrb: "#x21E5",
-    rarrbfs: "#x2920",
-    rarrc: "#x2933",
-    rarrfs: "#x291E",
-    rarrhk: "#x21AA",
-    rarrlp: "#x21AC",
-    rarrpl: "#x2945",
-    rarrsim: "#x2974",
-    rarrtl: "#x21A3",
-    rarrw: "#x219D",
-    ratail: "#x291A",
-    ratio: "#x2236",
-    rationals: "#x211A",
-    rbarr: "#x290D",
-    rbbrk: "#x2773",
-    rbrke: "#x298C",
-    rbrksld: "#x298E",
-    rbrkslu: "#x2990",
-    rcaron: "#x159",
-    rcedil: "#x157",
-    rcy: "#x440",
-    rdca: "#x2937",
-    rdldhar: "#x2969",
-    rdquor: "rdquo",
-    rdsh: "#x21B3",
-    realine: "#x211B",
-    realpart: "#x211C",
-    reals: "#x211D",
-    rect: "#x25AD",
-    rfisht: "#x297D",
-    rfr: "#x1D52F",
-    rhard: "#x21C1",
-    rharu: "#x21C0",
-    rharul: "#x296C",
-    rhov: "#x3F1",
-    rightarrow: "rarr",
-    rightarrowtail: "#x21A3",
-    rightharpoondown: "#x21C1",
-    rightharpoonup: "#x21C0",
-    rightleftarrows: "#x21C4",
-    rightleftharpoons: "#x21CC",
-    rightrightarrows: "#x21C9",
-    rightsquigarrow: "#x219D",
-    rightthreetimes: "#x22CC",
-    ring: "#x2DA",
-    risingdotseq: "#x2253",
-    rlarr: "#x21C4",
-    rlhar: "#x21CC",
-    rmoust: "#x23B1",
-    rmoustache: "#x23B1",
-    rnmid: "#x2AEE",
-    roang: "#x27ED",
-    roarr: "#x21FE",
-    robrk: "#x27E7",
-    ropar: "#x2986",
-    ropf: "#x1D563",
-    roplus: "#x2A2E",
-    rotimes: "#x2A35",
-    rpargt: "#x2994",
-    rppolint: "#x2A12",
-    rrarr: "#x21C9",
-    rscr: "#x1D4C7",
-    rsh: "#x21B1",
-    rsquor: "rsquo",
-    rthree: "#x22CC",
-    rtimes: "#x22CA",
-    rtri: "#x25B9",
-    rtrie: "#x22B5",
-    rtrif: "#x25B8",
-    rtriltri: "#x29CE",
-    ruluhar: "#x2968",
-    rx: "#x211E",
-    sacute: "#x15B",
-    sc: "#x227B",
-    scE: "#x2AB4",
-    scap: "#x2AB8",
-    sccue: "#x227D",
-    sce: "#x2AB0",
-    scedil: "#x15F",
-    scirc: "#x15D",
-    scnE: "#x2AB6",
-    scnap: "#x2ABA",
-    scnsim: "#x22E9",
-    scpolint: "#x2A13",
-    scsim: "#x227F",
-    scy: "#x441",
-    sdotb: "#x22A1",
-    sdote: "#x2A66",
-    seArr: "#x21D8",
-    searhk: "#x2925",
-    searr: "#x2198",
-    searrow: "#x2198",
-    seswar: "#x2929",
-    setminus: "#x2216",
-    setmn: "#x2216",
-    sext: "#x2736",
-    sfr: "#x1D530",
-    sfrown: "#x2322",
-    sharp: "#x266F",
-    shchcy: "#x449",
-    shcy: "#x448",
-    shortmid: "#x2223",
-    shortparallel: "#x2225",
-    sigmav: "sigmaf",
-    simdot: "#x2A6A",
-    sime: "#x2243",
-    simeq: "#x2243",
-    simg: "#x2A9E",
-    simgE: "#x2AA0",
-    siml: "#x2A9D",
-    simlE: "#x2A9F",
-    simne: "#x2246",
-    simplus: "#x2A24",
-    simrarr: "#x2972",
-    slarr: "larr",
-    smallsetminus: "#x2216",
-    smashp: "#x2A33",
-    smeparsl: "#x29E4",
-    smid: "#x2223",
-    smile: "#x2323",
-    smt: "#x2AAA",
-    smte: "#x2AAC",
-    smtes: "#x2AAC;&#xFE00",
-    softcy: "#x44C",
-    solb: "#x29C4",
-    solbar: "#x233F",
-    sopf: "#x1D564",
-    spadesuit: "spades",
-    spar: "#x2225",
-    sqcap: "#x2293",
-    sqcaps: "#x2293;&#xFE00",
-    sqcup: "#x2294",
-    sqcups: "#x2294;&#xFE00",
-    sqsub: "#x228F",
-    sqsube: "#x2291",
-    sqsubset: "#x228F",
-    sqsubseteq: "#x2291",
-    sqsup: "#x2290",
-    sqsupe: "#x2292",
-    sqsupset: "#x2290",
-    sqsupseteq: "#x2292",
-    squ: "#x25A1",
-    square: "#x25A1",
-    squarf: "#x25AA",
-    squf: "#x25AA",
-    srarr: "rarr",
-    sscr: "#x1D4C8",
-    ssetmn: "#x2216",
-    ssmile: "#x2323",
-    sstarf: "#x22C6",
-    star: "#x2606",
-    starf: "#x2605",
-    straightepsilon: "#x3F5",
-    straightphi: "#x3D5",
-    strns: "macr",
-    subE: "#x2AC5",
-    subdot: "#x2ABD",
-    subedot: "#x2AC3",
-    submult: "#x2AC1",
-    subnE: "#x2ACB",
-    subne: "#x228A",
-    subplus: "#x2ABF",
-    subrarr: "#x2979",
-    subset: "sub",
-    subseteq: "sube",
-    subseteqq: "#x2AC5",
-    subsetneq: "#x228A",
-    subsetneqq: "#x2ACB",
-    subsim: "#x2AC7",
-    subsub: "#x2AD5",
-    subsup: "#x2AD3",
-    succ: "#x227B",
-    succapprox: "#x2AB8",
-    succcurlyeq: "#x227D",
-    succeq: "#x2AB0",
-    succnapprox: "#x2ABA",
-    succneqq: "#x2AB6",
-    succnsim: "#x22E9",
-    succsim: "#x227F",
-    sung: "#x266A",
-    supE: "#x2AC6",
-    supdot: "#x2ABE",
-    supdsub: "#x2AD8",
-    supedot: "#x2AC4",
-    suphsol: "#x27C9",
-    suphsub: "#x2AD7",
-    suplarr: "#x297B",
-    supmult: "#x2AC2",
-    supnE: "#x2ACC",
-    supne: "#x228B",
-    supplus: "#x2AC0",
-    supset: "sup",
-    supseteq: "supe",
-    supseteqq: "#x2AC6",
-    supsetneq: "#x228B",
-    supsetneqq: "#x2ACC",
-    supsim: "#x2AC8",
-    supsub: "#x2AD4",
-    supsup: "#x2AD6",
-    swArr: "#x21D9",
-    swarhk: "#x2926",
-    swarr: "#x2199",
-    swarrow: "#x2199",
-    swnwar: "#x292A",
-    target: "#x2316",
-    tbrk: "#x23B4",
-    tcaron: "#x165",
-    tcedil: "#x163",
-    tcy: "#x442",
-    tdot: "#x20DB",
-    telrec: "#x2315",
-    tfr: "#x1D531",
-    therefore: "there4",
-    thetav: "#x3D1",
-    thickapprox: "#x2248",
-    thicksim: "sim",
-    thkap: "#x2248",
-    thksim: "sim",
-    timesb: "#x22A0",
-    timesbar: "#x2A31",
-    timesd: "#x2A30",
-    tint: "#x222D",
-    toea: "#x2928",
-    top: "#x22A4",
-    topbot: "#x2336",
-    topcir: "#x2AF1",
-    topf: "#x1D565",
-    topfork: "#x2ADA",
-    tosa: "#x2929",
-    tprime: "#x2034",
-    triangle: "#x25B5",
-    triangledown: "#x25BF",
-    triangleleft: "#x25C3",
-    trianglelefteq: "#x22B4",
-    triangleq: "#x225C",
-    triangleright: "#x25B9",
-    trianglerighteq: "#x22B5",
-    tridot: "#x25EC",
-    trie: "#x225C",
-    triminus: "#x2A3A",
-    triplus: "#x2A39",
-    trisb: "#x29CD",
-    tritime: "#x2A3B",
-    trpezium: "#x23E2",
-    tscr: "#x1D4C9",
-    tscy: "#x446",
-    tshcy: "#x45B",
-    tstrok: "#x167",
-    twixt: "#x226C",
-    twoheadleftarrow: "#x219E",
-    twoheadrightarrow: "#x21A0",
-    uHar: "#x2963",
-    ubrcy: "#x45E",
-    ubreve: "#x16D",
-    ucy: "#x443",
-    udarr: "#x21C5",
-    udblac: "#x171",
-    udhar: "#x296E",
-    ufisht: "#x297E",
-    ufr: "#x1D532",
-    uharl: "#x21BF",
-    uharr: "#x21BE",
-    uhblk: "#x2580",
-    ulcorn: "#x231C",
-    ulcorner: "#x231C",
-    ulcrop: "#x230F",
-    ultri: "#x25F8",
-    umacr: "#x16B",
-    uogon: "#x173",
-    uopf: "#x1D566",
-    uparrow: "uarr",
-    updownarrow: "#x2195",
-    upharpoonleft: "#x21BF",
-    upharpoonright: "#x21BE",
-    uplus: "#x228E",
-    upsi: "#x3C5",
-    upuparrows: "#x21C8",
-    urcorn: "#x231D",
-    urcorner: "#x231D",
-    urcrop: "#x230E",
-    uring: "#x16F",
-    urtri: "#x25F9",
-    uscr: "#x1D4CA",
-    utdot: "#x22F0",
-    utilde: "#x169",
-    utri: "#x25B5",
-    utrif: "#x25B4",
-    uuarr: "#x21C8",
-    uwangle: "#x29A7",
-    vArr: "#x21D5",
-    vBar: "#x2AE8",
-    vBarv: "#x2AE9",
-    vDash: "#x22A8",
-    vangrt: "#x299C",
-    varepsilon: "#x3F5",
-    varkappa: "#x3F0",
-    varnothing: "empty",
-    varphi: "#x3D5",
-    varpi: "piv",
-    varpropto: "prop",
-    varr: "#x2195",
-    varrho: "#x3F1",
-    varsigma: "sigmaf",
-    varsubsetneq: "#x228A;&#xFE00",
-    varsubsetneqq: "#x2ACB;&#xFE00",
-    varsupsetneq: "#x228B;&#xFE00",
-    varsupsetneqq: "#x2ACC;&#xFE00",
-    vartheta: "#x3D1",
-    vartriangleleft: "#x22B2",
-    vartriangleright: "#x22B3",
-    vcy: "#x432",
-    vdash: "#x22A2",
-    vee: "or",
-    veebar: "#x22BB",
-    veeeq: "#x225A",
-    vellip: "#x22EE",
-    vfr: "#x1D533",
-    vltri: "#x22B2",
-    vnsub: "#x2282;&#x20D2",
-    vnsup: "#x2283;&#x20D2",
-    vopf: "#x1D567",
-    vprop: "prop",
-    vrtri: "#x22B3",
-    vscr: "#x1D4CB",
-    vsubnE: "#x2ACB;&#xFE00",
-    vsubne: "#x228A;&#xFE00",
-    vsupnE: "#x2ACC;&#xFE00",
-    vsupne: "#x228B;&#xFE00",
-    vzigzag: "#x299A",
-    wcirc: "#x175",
-    wedbar: "#x2A5F",
-    wedge: "and",
-    wedgeq: "#x2259",
-    wfr: "#x1D534",
-    wopf: "#x1D568",
-    wp: "#x2118",
-    wr: "#x2240",
-    wreath: "#x2240",
-    wscr: "#x1D4CC",
-    xcap: "#x22C2",
-    xcirc: "#x25EF",
-    xcup: "#x22C3",
-    xdtri: "#x25BD",
-    xfr: "#x1D535",
-    xhArr: "#x27FA",
-    xharr: "#x27F7",
-    xlArr: "#x27F8",
-    xlarr: "#x27F5",
-    xmap: "#x27FC",
-    xnis: "#x22FB",
-    xodot: "#x2A00",
-    xopf: "#x1D569",
-    xoplus: "#x2A01",
-    xotime: "#x2A02",
-    xrArr: "#x27F9",
-    xrarr: "#x27F6",
-    xscr: "#x1D4CD",
-    xsqcup: "#x2A06",
-    xuplus: "#x2A04",
-    xutri: "#x25B3",
-    xvee: "#x22C1",
-    xwedge: "#x22C0",
-    yacy: "#x44F",
-    ycirc: "#x177",
-    ycy: "#x44B",
-    yfr: "#x1D536",
-    yicy: "#x457",
-    yopf: "#x1D56A",
-    yscr: "#x1D4CE",
-    yucy: "#x44E",
-    zacute: "#x17A",
-    zcaron: "#x17E",
-    zcy: "#x437",
-    zdot: "#x17C",
-    zeetrf: "#x2128",
-    zfr: "#x1D537",
-    zhcy: "#x436",
-    zigrarr: "#x21DD",
-    zopf: "#x1D56B",
-    zscr: "#x1D4CF"
-  };
+  function arrayiffyString(something) {
+    if (typeof something === "string") {
+      if (something.length > 0) {
+        return [something];
+      }
+
+      return [];
+    }
+
+    return something;
+  }
 
   /**
-   * string-range-expander
-   * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.1
+   * string-match-left-right
+   * Do substrings match what's on the left or right of a given index?
+   * Version: 4.0.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
    */
-  function expander(originalOpts) {
-    const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
-    function isWhitespace(char) {
-      if (!char || typeof char !== "string") {
-        return false;
+  function isObj$1(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function isStr$2(something) {
+    return typeof something === "string";
+  }
+
+  function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
+    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+
+    if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
+      return whatToMatchValVal;
+    }
+
+    if (fromIndexInclusive >= str.length && !special) {
+      return false;
+    }
+
+    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
+    let lastWasMismatched = false;
+    let atLeastSomethingWasMatched = false;
+    let patience = opts.maxMismatches;
+    let i = fromIndexInclusive;
+    let somethingFound = false;
+    let firstCharacterMatched = false;
+    let lastCharacterMatched = false;
+
+    while (str[i]) {
+      const nextIdx = getNextIdx(i);
+
+      if (opts.trimBeforeMatching && str[i].trim() === "") {
+        if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
+          return true;
+        }
+
+        i = getNextIdx(i);
+        continue;
       }
 
-      return !char.trim();
-    }
+      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+        if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
+          return true;
+        }
 
-    function isStr(something) {
-      return typeof something === "string";
-    }
+        i = getNextIdx(i);
+        continue;
+      }
 
-    if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
-      let supplementalString;
+      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
-      if (originalOpts === undefined) {
-        supplementalString = "but it is missing completely.";
-      } else if (originalOpts === null) {
-        supplementalString = "but it was given as null.";
+      if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+        if (!somethingFound) {
+          somethingFound = true;
+        }
+
+        if (!atLeastSomethingWasMatched) {
+          atLeastSomethingWasMatched = true;
+        }
+
+        if (charsToCheckCount === whatToMatchVal.length) {
+          firstCharacterMatched = true;
+        } else if (charsToCheckCount === 1) {
+          lastCharacterMatched = true;
+        }
+
+        charsToCheckCount -= 1;
+
+        if (charsToCheckCount < 1) {
+          return i;
+        }
       } else {
-        supplementalString = `but it was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}.`;
+        if (opts.maxMismatches && patience && i) {
+          patience -= 1;
+
+          for (let y = 0; y <= patience; y++) {
+            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            const nextCharInSource = str[getNextIdx(i)];
+
+            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+              charsToCheckCount -= 2;
+              somethingFound = true;
+              break;
+            } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+              charsToCheckCount -= 1;
+              somethingFound = true;
+              break;
+            } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
+              return i;
+            }
+          }
+
+          if (!somethingFound) {
+            lastWasMismatched = i;
+          }
+        } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
+          return 0;
+        } else {
+          return false;
+        }
       }
 
-      throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
-    } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
-      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
+      if (lastWasMismatched !== false && lastWasMismatched !== i) {
+        lastWasMismatched = false;
+      }
+
+      if (charsToCheckCount < 1) {
+        return i;
+      }
+
+      i = getNextIdx(i);
     }
 
-    if (typeof originalOpts.from !== "number") {
-      throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof originalOpts.from}, equal to ${JSON.stringify(originalOpts.from, null, 0)}`);
-    }
+    if (charsToCheckCount > 0) {
+      if (special && whatToMatchValVal === "EOL") {
+        return true;
+      }
 
-    if (typeof originalOpts.to !== "number") {
-      throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(originalOpts.to, null, 0)}`);
-    }
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+        return lastWasMismatched || 0;
+      }
 
-    if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
-      throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`);
+      return false;
     }
+  }
 
-    if (!originalOpts.str[originalOpts.to - 1]) {
-      throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${originalOpts.str}") must contain the character at index before "to" ("${originalOpts.to - 1}")`);
-    }
-
-    if (originalOpts.from > originalOpts.to) {
-      throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`);
-    }
-
-    if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
-      throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${originalOpts.extendToOneSide}" (${typeof originalOpts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);
-    }
-
+  function main(mode, str, position, originalWhatToMatch, originalOpts) {
     const defaults = {
-      str: "",
-      from: 0,
-      to: 0,
-      ifLeftSideIncludesThisThenCropTightly: "",
-      ifLeftSideIncludesThisCropItToo: "",
-      ifRightSideIncludesThisThenCropTightly: "",
-      ifRightSideIncludesThisCropItToo: "",
-      extendToOneSide: false,
-      wipeAllWhitespaceOnLeft: false,
-      wipeAllWhitespaceOnRight: false,
-      addSingleSpaceToPreventAccidentalConcatenation: false
+      i: false,
+      trimBeforeMatching: false,
+      trimCharsBeforeMatching: [],
+      maxMismatches: 0,
+      firstMustMatch: false,
+      lastMustMatch: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
 
-    if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
-      let culpritsIndex;
-      let culpritsValue;
+    if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+    }
 
-      if (opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
-        if (!isStr(val)) {
-          culpritsIndex = i;
-          culpritsValue = val;
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
+    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
+
+    if (!isStr$2(str)) {
+      return false;
+    }
+
+    if (!str.length) {
+      return false;
+    }
+
+    if (!Number.isInteger(position) || position < 0) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+    }
+
+    let whatToMatch;
+    let special;
+
+    if (isStr$2(originalWhatToMatch)) {
+      whatToMatch = [originalWhatToMatch];
+    } else if (Array.isArray(originalWhatToMatch)) {
+      whatToMatch = originalWhatToMatch;
+    } else if (!originalWhatToMatch) {
+      whatToMatch = originalWhatToMatch;
+    } else if (typeof originalWhatToMatch === "function") {
+      whatToMatch = [];
+      whatToMatch.push(originalWhatToMatch);
+    } else {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+    }
+
+    if (originalOpts && !isObj$1(originalOpts)) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    let culpritsIndex;
+    let culpritsVal;
+
+    if (opts.trimCharsBeforeMatching.some((el, i) => {
+      if (el.length > 1) {
+        culpritsIndex = i;
+        culpritsVal = el;
+        return true;
+      }
+
+      return false;
+    })) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+    }
+
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
+      if (typeof opts.cb === "function") {
+        let firstCharOutsideIndex;
+        let startingPosition = position;
+
+        if (mode === "matchLeftIncl" || mode === "matchRight") {
+          startingPosition += 1;
+        }
+
+        if (mode[5] === "L") {
+          for (let y = startingPosition; y--;) {
+            const currentChar = str[y];
+
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        } else if (mode.startsWith("matchRight")) {
+          for (let y = startingPosition; y < str.length; y++) {
+            const currentChar = str[y];
+
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        }
+
+        if (firstCharOutsideIndex === undefined) {
           return false;
         }
 
-        return true;
-      })) {
-        opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
+        const wholeCharacterOutside = str[firstCharOutsideIndex];
+        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        let theRemainderOfTheString = "";
+
+        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+        }
+
+        if (mode[5] === "L") {
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+        }
+
+        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
+        }
+
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+      }
+
+      let extraNote = "";
+
+      if (!originalOpts) {
+        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      }
+
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+    }
+
+    for (let i = 0, len = whatToMatch.length; i < len; i++) {
+      special = typeof whatToMatch[i] === "function";
+      const whatToMatchVal = whatToMatch[i];
+      let fullCharacterInFront;
+      let indexOfTheCharacterInFront;
+      let restOfStringInFront = "";
+      let startingPosition = position;
+
+      if (mode === "matchRight") {
+        startingPosition += 1;
+      } else if (mode === "matchLeft") {
+        startingPosition -= 1;
+      }
+
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+
+      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
+        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
+      }
+
+      if (Number.isInteger(found)) {
+        indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
+
+        if (mode[5] === "L") {
+          restOfStringInFront = str.slice(0, found);
+        } else {
+          restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+        }
+      }
+
+      if (indexOfTheCharacterInFront < 0) {
+        indexOfTheCharacterInFront = undefined;
+      }
+
+      if (str[indexOfTheCharacterInFront]) {
+        fullCharacterInFront = str[indexOfTheCharacterInFront];
+      }
+
+      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
+        return whatToMatchVal;
+      }
+    }
+
+    return false;
+  }
+
+  function matchLeftIncl(str, position, whatToMatch, opts) {
+    return main("matchLeftIncl", str, position, whatToMatch, opts);
+  }
+
+  function matchRightIncl(str, position, whatToMatch, opts) {
+    return main("matchRightIncl", str, position, whatToMatch, opts);
+  }
+
+  /**
+   * string-collapse-leading-whitespace
+   * Collapse the leading and trailing whitespace of a string
+   * Version: 2.0.17
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   */
+  const rawNbsp = "\u00A0";
+
+  function push(arr, leftSide = true, charToPush) {
+    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
+      if (leftSide) {
+        if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
+          while (arr.length && arr[arr.length - 1] === " ") {
+            arr.pop();
+          }
+        }
+
+        arr.push(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
       } else {
-        throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4)}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(culpritsValue, null, 0)}).`);
+        if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[0] === " ") {
+          while (arr.length && arr[0] === " ") {
+            arr.shift();
+          }
+        }
+
+        arr.unshift(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
       }
     }
+  }
 
-    const str = opts.str;
-    let from = opts.from;
-    let to = opts.to;
+  function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
+    if (typeof str === "string" && str.length) {
+      let windowsEol = false;
 
-    if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
-      for (let i = from; i--;) {
-        if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+      if (str.includes("\r\n")) {
+        windowsEol = true;
+      }
+
+      let limitLinebreaksCount;
+
+      if (!originalLimitLinebreaksCount || typeof originalLimitLinebreaksCount !== "number") {
+        limitLinebreaksCount = 1;
+      } else {
+        limitLinebreaksCount = originalLimitLinebreaksCount;
+      }
+
+      let limit;
+
+      if (str.trim() === "") {
+        const resArr = [];
+        limit = limitLinebreaksCount;
+        Array.from(str).forEach(char => {
+          if (char !== "\n" || limit) {
+            if (char === "\n") {
+              limit -= 1;
+            }
+
+            push(resArr, true, char);
+          }
+        });
+
+        while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
+          resArr.pop();
+        }
+
+        return resArr.join("");
+      }
+
+      const startCharacter = [];
+      limit = limitLinebreaksCount;
+
+      if (str[0].trim() === "") {
+        for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
-            if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
-              from = i + 1;
-            } else {
-              from = i + 2;
+            break;
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
 
-            break;
-          } else if (i === 0) {
-            if (opts.wipeAllWhitespaceOnLeft) {
-              from = 0;
-            } else {
-              from = 1;
-            }
-
-            break;
+            push(startCharacter, true, str[i]);
           }
         }
       }
-    }
 
-    if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
-      for (let i = to, len = str.length; i < len; i++) {
-        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
-          if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
-            to = i;
-          } else {
-            to = i - 1;
+      const endCharacter = [];
+      limit = limitLinebreaksCount;
+
+      if (str.slice(-1).trim() === "") {
+        for (let i = str.length; i--;) {
+          if (str[i].trim()) {
+            break;
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
+            }
+
+            push(endCharacter, false, str[i]);
           }
-
-          break;
         }
       }
-    }
 
-    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
-      if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
-        from--;
+      if (!windowsEol) {
+        return startCharacter.join("") + str.trim() + endCharacter.join("");
       }
 
-      if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
-        to++;
-      }
+      return `${startCharacter.join("")}${str.trim()}${endCharacter.join("")}`.replace(/\n/g, "\r\n");
     }
 
-    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
-      return [from, to, " "];
-    }
-
-    return [from, to];
+    return str;
   }
 
   /**
@@ -13000,7 +11519,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -13031,7 +11552,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -13086,7 +11607,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -13111,7 +11634,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -13175,6 +11699,185 @@
   }
 
   /**
+   * ranges-push
+   * Manage the array of ranges referencing the index ranges within the string
+   * Version: 3.7.6
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
+   */
+
+  function existy(x) {
+    return x != null;
+  }
+
+  function isNum$1(something) {
+    return Number.isInteger(something) && something >= 0;
+  }
+
+  function isStr$3(something) {
+    return typeof something === "string";
+  }
+
+  function prepNumStr(str) {
+    return /^\d*$/.test(str) ? parseInt(str, 10) : str;
+  }
+
+  class Ranges {
+    constructor(originalOpts) {
+      const defaults = {
+        limitToBeAddedWhitespace: false,
+        limitLinebreaksCount: 1,
+        mergeType: 1
+      };
+      const opts = { ...defaults,
+        ...originalOpts
+      };
+
+      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+        if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
+          opts.mergeType = 1;
+        } else if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "2") {
+          opts.mergeType = 2;
+        } else {
+          throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+        }
+      }
+
+      this.opts = opts;
+    }
+
+    add(originalFrom, originalTo, addVal, ...etc) {
+      if (etc.length > 0) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`);
+      }
+
+      if (!existy(originalFrom) && !existy(originalTo)) {
+        return;
+      }
+
+      if (existy(originalFrom) && !existy(originalTo)) {
+        if (Array.isArray(originalFrom)) {
+          if (originalFrom.length) {
+            if (originalFrom.some(el => Array.isArray(el))) {
+              originalFrom.forEach(thing => {
+                if (Array.isArray(thing)) {
+                  this.add(...thing);
+                }
+              });
+              return;
+            }
+
+            if (originalFrom.length > 1 && isNum$1(prepNumStr(originalFrom[0])) && isNum$1(prepNumStr(originalFrom[1]))) {
+              this.add(...originalFrom);
+            }
+          }
+
+          return;
+        }
+
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
+      } else if (!existy(originalFrom) && existy(originalTo)) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
+      }
+
+      const from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
+      const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
+
+      if (isNum$1(addVal)) {
+        addVal = String(addVal);
+      }
+
+      if (isNum$1(from) && isNum$1(to)) {
+        if (existy(addVal) && !isStr$3(addVal) && !isNum$1(addVal)) {
+          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
+        }
+
+        if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+          this.last()[1] = to;
+          if (this.last()[2] === null || addVal === null) ;
+
+          if (this.last()[2] !== null && existy(addVal)) {
+            let calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+
+            if (this.opts.limitToBeAddedWhitespace) {
+              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+            }
+
+            if (!(isStr$3(calculatedVal) && !calculatedVal.length)) {
+              this.last()[2] = calculatedVal;
+            }
+          }
+        } else {
+          if (!this.slices) {
+            this.slices = [];
+          }
+
+          const whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+          this.slices.push(whatToPush);
+        }
+      } else {
+        if (!(isNum$1(from) && from >= 0)) {
+          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
+        } else {
+          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
+        }
+      }
+    }
+
+    push(originalFrom, originalTo, addVal, ...etc) {
+      this.add(originalFrom, originalTo, addVal, ...etc);
+    }
+
+    current() {
+      if (this.slices != null) {
+        this.slices = mergeRanges(this.slices, {
+          mergeType: this.opts.mergeType
+        });
+
+        if (this.opts.limitToBeAddedWhitespace) {
+          return this.slices.map(val => {
+            if (existy(val[2])) {
+              return [val[0], val[1], collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)];
+            }
+
+            return val;
+          });
+        }
+
+        return this.slices;
+      }
+
+      return null;
+    }
+
+    wipe() {
+      this.slices = undefined;
+    }
+
+    replace(givenRanges) {
+      if (Array.isArray(givenRanges) && givenRanges.length) {
+        if (!(Array.isArray(givenRanges[0]) && isNum$1(givenRanges[0][0]))) {
+          throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
+        } else {
+          this.slices = Array.from(givenRanges);
+        }
+      } else {
+        this.slices = undefined;
+      }
+    }
+
+    last() {
+      if (this.slices !== undefined && Array.isArray(this.slices)) {
+        return this.slices[this.slices.length - 1];
+      }
+
+      return null;
+    }
+
+  }
+
+  /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
    * Version: 3.1.4
@@ -13183,15 +11886,15 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
    */
 
-  function existy(x) {
+  function existy$1(x) {
     return x != null;
   }
 
-  function isStr$1(something) {
+  function isStr$4(something) {
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -13199,22 +11902,28 @@
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
-    if (!isStr$1(str)) {
+    if (!isStr$4(str)) {
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -13249,7 +11958,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -13279,7 +11988,7 @@
 
         const beginning = i === 0 ? 0 : arr[i - 1][1];
         const ending = arr[i][0];
-        return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
+        return acc + str.slice(beginning, ending) + (existy$1(arr[i][2]) ? arr[i][2] : "");
       }, "");
       str += tails;
     }
@@ -13288,213 +11997,7956 @@
   }
 
   /**
-   * string-apostrophes
-   * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
-   * Version: 1.2.17
+   * string-remove-widows
+   * Helps to prevent widow words in a text
+   * Version: 1.5.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
+   */
+  const rawnbsp = "\u00A0";
+  const encodedNbspHtml = "&nbsp;";
+  const encodedNbspCss = "\\00A0";
+  const encodedNbspJs = "\\u00A0";
+  const rawNdash = "\u2013";
+  const encodedNdashHtml = "&ndash;";
+  const encodedNdashCss = "\\2013";
+  const encodedNdashJs = "\\u2013";
+  const rawMdash = "\u2014";
+  const encodedMdashHtml = "&mdash;";
+  const encodedMdashCss = "\\2014";
+  const encodedMdashJs = "\\u2014";
+  const headsAndTailsJinja = [{
+    heads: "{{",
+    tails: "}}"
+  }, {
+    heads: ["{% if", "{%- if"],
+    tails: ["{% endif", "{%- endif"]
+  }, {
+    heads: ["{% for", "{%- for"],
+    tails: ["{% endfor", "{%- endfor"]
+  }, {
+    heads: ["{%", "{%-"],
+    tails: ["%}", "-%}"]
+  }, {
+    heads: "{#",
+    tails: "#}"
+  }];
+  const headsAndTailsHugo = [{
+    heads: "{{",
+    tails: "}}"
+  }];
+  const headsAndTailsHexo = [{
+    heads: ["<%", "<%=", "<%-"],
+    tails: ["%>", "=%>", "-%>"]
+  }];
+  const knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
+  const defaultOpts = {
+    removeWidowPreventionMeasures: false,
+    convertEntities: true,
+    targetLanguage: "html",
+    UKPostcodes: false,
+    hyphens: true,
+    minWordCount: 4,
+    minCharCount: 5,
+    ignore: [],
+    reportProgressFunc: null,
+    reportProgressFuncFrom: 0,
+    reportProgressFuncTo: 100,
+    tagRanges: []
+  };
+
+  function removeWidows(str, originalOpts) {
+    function isStr(something) {
+      return typeof something === "string";
+    }
+
+    const start = Date.now();
+
+    if (!isStr(str)) {
+      if (str === undefined) {
+        throw new Error("string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+      } else {
+        throw new Error(`string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+      }
+    }
+
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
+      throw new Error(`string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    const isArr = Array.isArray;
+    const len = str.length;
+    const rangesArr = new Ranges({
+      mergeType: 2
+    });
+    const punctuationCharsToConsiderWidowIssue = ["."];
+    const postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
+    const postcodeRegexEnd = /^[0-9][A-Z]{2}/;
+    const leavePercForLastStage = 0.06;
+    let currentPercentageDone;
+    let lastPercentage = 0;
+    let wordCount;
+    let charCount;
+    let secondToLastWhitespaceStartedAt;
+    let secondToLastWhitespaceEndedAt;
+    let lastWhitespaceStartedAt;
+    let lastWhitespaceEndedAt;
+    let lastEncodedNbspStartedAt;
+    let lastEncodedNbspEndedAt;
+    let doNothingUntil;
+    let bumpWordCountAt;
+    const opts = { ...defaultOpts,
+      ...originalOpts
+    };
+    const whatWasDone = {
+      removeWidows: false,
+      convertEntities: false
+    };
+
+    if (opts.dashes) {
+      opts.hyphens = true;
+      delete opts.dashes;
+    }
+
+    if (!opts.ignore || !isArr(opts.ignore) && !isStr(opts.ignore)) {
+      opts.ignore = [];
+    } else {
+      opts.ignore = arrayiffyString(opts.ignore);
+
+      if (opts.ignore.includes("all")) {
+        opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
+      } else if (opts.ignore.some(val => isStr(val))) {
+        let temp = [];
+        opts.ignore = opts.ignore.filter(val => {
+          if (isStr(val) && val.length) {
+            if (["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())) {
+              temp = temp.concat(headsAndTailsJinja);
+            } else if (["hugo"].includes(val.trim().toLowerCase())) {
+              temp = temp.concat(headsAndTailsHugo);
+            } else if (["hexo"].includes(val.trim().toLowerCase())) {
+              temp = temp.concat(headsAndTailsHexo);
+            }
+
+            return false;
+          }
+
+          if (typeof val === "object") {
+            return true;
+          }
+        });
+
+        if (temp.length) {
+          opts.ignore = opts.ignore.concat(temp);
+        }
+      }
+    }
+
+    let ceil;
+
+    if (opts.reportProgressFunc) {
+      ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+    }
+
+    function push(finalStart, finalEnd) {
+      let finalWhatToInsert = rawnbsp;
+
+      if (opts.removeWidowPreventionMeasures) {
+        finalWhatToInsert = " ";
+      } else if (opts.convertEntities) {
+        finalWhatToInsert = encodedNbspHtml;
+
+        if (isStr(opts.targetLanguage)) {
+          if (opts.targetLanguage.trim().toLowerCase() === "css") {
+            finalWhatToInsert = encodedNbspCss;
+          } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
+            finalWhatToInsert = encodedNbspJs;
+          }
+        }
+      }
+
+      if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
+        rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+      }
+    }
+
+    function resetAll() {
+      wordCount = 0;
+      charCount = 0;
+      secondToLastWhitespaceStartedAt = undefined;
+      secondToLastWhitespaceEndedAt = undefined;
+      lastWhitespaceStartedAt = undefined;
+      lastWhitespaceEndedAt = undefined;
+      lastEncodedNbspStartedAt = undefined;
+      lastEncodedNbspEndedAt = undefined;
+    }
+
+    resetAll();
+
+    for (let i = 0; i <= len; i++) {
+      if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
+        opts.ignore.some((valObj, y) => {
+          if (isArr(valObj.heads) && valObj.heads.some(oneOfHeads => str.startsWith(oneOfHeads, i)) || isStr(valObj.heads) && str.startsWith(valObj.heads, i)) {
+            wordCount += 1;
+            doNothingUntil = opts.ignore[y].tails;
+            return true;
+          }
+        });
+      }
+
+      if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === i) {
+        wordCount += 1;
+        bumpWordCountAt = undefined;
+      }
+
+      if (typeof opts.reportProgressFunc === "function") {
+        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * ceil);
+
+        if (currentPercentageDone !== lastPercentage) {
+          lastPercentage = currentPercentageDone;
+          opts.reportProgressFunc(currentPercentageDone);
+        }
+      }
+
+      if (!doNothingUntil && i && str[i] && str[i].trim() && (!str[i - 1] || str[i - 1] && !str[i - 1].trim())) {
+        lastWhitespaceEndedAt = i;
+      }
+
+      if (!doNothingUntil && str[i] && str[i].trim()) {
+        charCount += 1;
+      }
+
+      if (!doNothingUntil && opts.hyphens && (str[i] === "-" || str[i] === rawMdash || str[i] === rawNdash || str.slice(i).startsWith(encodedNdashHtml) || str.slice(i).startsWith(encodedNdashCss) || str.slice(i).startsWith(encodedNdashJs) || str.slice(i).startsWith(encodedMdashHtml) || str.slice(i).startsWith(encodedMdashCss) || str.slice(i).startsWith(encodedMdashJs)) && str[i + 1] && (!str[i + 1].trim() || str[i] === "&")) {
+        if (str[i - 1] && !str[i - 1].trim() && str[left(str, i)]) {
+          push(left(str, i) + 1, i);
+          whatWasDone.removeWidows = true;
+        }
+      }
+
+      if (!doNothingUntil && (str[i] === "&" && str[i + 1] === "n" && str[i + 2] === "b" && str[i + 3] === "s" && str[i + 4] === "p" && str[i + 5] === ";" || str[i] === "&" && str[i + 1] === "#" && str[i + 2] === "1" && str[i + 3] === "6" && str[i + 4] === "0" && str[i + 5] === ";")) {
+        lastEncodedNbspStartedAt = i;
+        lastEncodedNbspEndedAt = i + 6;
+
+        if (str[i + 6] && str[i + 6].trim()) {
+          bumpWordCountAt = i + 6;
+        }
+
+        if (!opts.convertEntities) {
+          rangesArr.push(i, i + 6, rawnbsp);
+          whatWasDone.convertEntities = true;
+        } else if (opts.targetLanguage === "css" || opts.targetLanguage === "js") {
+          rangesArr.push(i, i + 6, opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs);
+          whatWasDone.convertEntities = true;
+        }
+      }
+
+      if (!doNothingUntil && str[i] === "\\" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] && str[i + 3].toUpperCase() === "A" && str[i + 4] === "0") {
+        lastEncodedNbspStartedAt = i;
+        lastEncodedNbspEndedAt = i + 5;
+
+        if (str[i + 5] && str[i + 5].trim()) {
+          bumpWordCountAt = i + 5;
+        }
+
+        if (!opts.convertEntities) {
+          rangesArr.push(i, i + 5, rawnbsp);
+          whatWasDone.convertEntities = true;
+        } else if (opts.targetLanguage === "html" || opts.targetLanguage === "js") {
+          rangesArr.push(i, i + 5, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs);
+          whatWasDone.convertEntities = true;
+        }
+      }
+
+      if (!doNothingUntil && str[i] === "\\" && str[i + 1] && str[i + 1].toLowerCase() === "u" && str[i + 2] === "0" && str[i + 3] === "0" && str[i + 4] && str[i + 4].toUpperCase() === "A" && str[i + 5] === "0") {
+        lastEncodedNbspStartedAt = i;
+        lastEncodedNbspEndedAt = i + 6;
+
+        if (str[i + 6] && str[i + 6].trim()) {
+          bumpWordCountAt = i + 6;
+        }
+
+        if (!opts.convertEntities) {
+          rangesArr.push(i, i + 6, rawnbsp);
+        } else if (opts.targetLanguage === "html" || opts.targetLanguage === "css") {
+          rangesArr.push(i, i + 6, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss);
+        }
+      }
+
+      if (!doNothingUntil && str[i] === rawnbsp) {
+        lastEncodedNbspStartedAt = i;
+        lastEncodedNbspEndedAt = i + 1;
+
+        if (str[i + 2] && str[i + 2].trim()) {
+          bumpWordCountAt = i + 2;
+        }
+
+        if (opts.convertEntities) {
+          rangesArr.push(i, i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
+        }
+      }
+
+      if (!doNothingUntil && str[i] && str[i].trim() && (!str[i - 1] || !str[i - 1].trim())) {
+        wordCount += 1;
+      }
+
+      if (!doNothingUntil && (!str[i] || `\r\n`.includes(str[i]) || (str[i] === "\n" || str[i] === "\r" || str[i] === "\r" && str[i + 1] === "\n") && str[i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)]))) {
+        if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
+          let finalStart;
+          let finalEnd;
+
+          if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
+              finalStart = lastWhitespaceStartedAt;
+              finalEnd = lastWhitespaceEndedAt;
+            } else {
+              finalStart = lastEncodedNbspStartedAt;
+              finalEnd = lastEncodedNbspEndedAt;
+            }
+          } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
+            finalStart = lastWhitespaceStartedAt;
+            finalEnd = lastWhitespaceEndedAt;
+          } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            finalStart = lastEncodedNbspStartedAt;
+            finalEnd = lastEncodedNbspEndedAt;
+          }
+
+          if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
+            finalStart = secondToLastWhitespaceStartedAt;
+            finalEnd = secondToLastWhitespaceEndedAt;
+          }
+
+          if (finalStart && finalEnd) {
+            push(finalStart, finalEnd);
+            whatWasDone.removeWidows = true;
+          }
+        }
+
+        resetAll();
+      }
+
+      if (opts.UKPostcodes && str[i] && !str[i].trim() && str[i - 1] && str[i - 1].trim() && postcodeRegexFront.test(str.slice(0, i)) && str[right(str, i)] && postcodeRegexEnd.test(str.slice(right(str, i)))) {
+        push(i, right(str, i));
+        whatWasDone.removeWidows = true;
+      }
+
+      if (!doNothingUntil && str[i] && !str[i].trim() && str[i - 1] && str[i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, i)]) && !str.slice(0, left(str, i) + 1).endsWith("br") && !str.slice(0, left(str, i) + 1).endsWith("hr") && !(str[left(str, i)] === "<" && knownHTMLTags.some(tag => str.startsWith(tag, right(str, i))))) {
+        secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
+        secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
+        lastWhitespaceStartedAt = i;
+        lastWhitespaceEndedAt = undefined;
+
+        if (lastEncodedNbspStartedAt !== undefined || lastEncodedNbspEndedAt !== undefined) {
+          lastEncodedNbspStartedAt = undefined;
+          lastEncodedNbspEndedAt = undefined;
+        }
+      }
+
+      let tempTailFinding;
+
+      if (doNothingUntil) {
+        if (isStr(doNothingUntil) && (!doNothingUntil.length || str.startsWith(doNothingUntil, i))) {
+          doNothingUntil = undefined;
+        } else if (isArr(doNothingUntil) && (!doNothingUntil.length || doNothingUntil.some(val => {
+          if (str.startsWith(val, i)) {
+            tempTailFinding = val;
+            return true;
+          }
+        }))) {
+          doNothingUntil = undefined;
+          i += tempTailFinding.length;
+
+          if (isArr(opts.ignore) && opts.ignore.length && str[i + 1]) {
+            opts.ignore.some(oneOfHeadsTailsObjs => {
+              return matchRightIncl(str, i, oneOfHeadsTailsObjs.tails, {
+                trimBeforeMatching: true,
+                cb: (char, theRemainderOfTheString, index) => {
+                  if (index) {
+                    i = index - 1;
+
+                    if (str[i + 1] && str[i + 1].trim()) {
+                      wordCount += 1;
+                    }
+                  }
+
+                  return true;
+                }
+              });
+            });
+          }
+        }
+      }
+
+      if (str[i] && `\r\n`.includes(str[i])) {
+        wordCount = 0;
+        charCount = 0;
+      }
+
+      if (isArr(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(rangeArr => {
+        if (i >= rangeArr[0] && i <= rangeArr[1] && rangeArr[1] - 1 > i) {
+          i = rangeArr[1] - 1;
+          return true;
+        }
+      })) ;
+    }
+
+    return {
+      res: rangesApply(str, rangesArr.current(), opts.reportProgressFunc ? incomingPerc => {
+        currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
+
+        if (currentPercentageDone !== lastPercentage) {
+          lastPercentage = currentPercentageDone;
+          opts.reportProgressFunc(currentPercentageDone);
+        }
+      } : null),
+      ranges: rangesArr.current(),
+      log: {
+        timeTakenInMiliseconds: Date.now() - start
+      },
+      whatWasDone
+    };
+  }
+
+  /**
+   * ranges-crop
+   * Crop array of ranges when they go beyond the reference string's length
+   * Version: 2.0.50
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
+   */
+  const isArr = Array.isArray;
+
+  function isStr$5(something) {
+    return typeof something === "string";
+  }
+
+  function existy$2(x) {
+    return x != null;
+  }
+
+  function rangesCrop(arrOfRanges, strLen) {
+    if (!isArr(arrOfRanges)) {
+      throw new TypeError(`ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
+    }
+
+    if (!Number.isInteger(strLen)) {
+      throw new TypeError(`ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
+    }
+
+    if (arrOfRanges.length === 0) {
+      return arrOfRanges;
+    }
+
+    let culpritsIndex;
+
+    if (!arrOfRanges.every((rangeArr, indx) => {
+      if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
+        culpritsIndex = indx;
+        return false;
+      }
+
+      return true;
+    })) {
+      if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
+        throw new TypeError(`ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
+      }
+
+      throw new TypeError(`ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
+    }
+
+    if (!arrOfRanges.every((rangeArr, indx) => {
+      if (existy$2(rangeArr[2]) && !isStr$5(rangeArr[2])) {
+        culpritsIndex = indx;
+        return false;
+      }
+
+      return true;
+    })) {
+      throw new TypeError(`ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)} has a argument in the range of a type ${typeof arrOfRanges[culpritsIndex][2]}`);
+    }
+
+    const res = mergeRanges(arrOfRanges).filter(singleRangeArr => singleRangeArr[0] <= strLen && (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen)).map(singleRangeArr => {
+      if (singleRangeArr[1] > strLen) {
+        if (singleRangeArr[2] !== undefined) {
+          return [singleRangeArr[0], strLen, singleRangeArr[2]];
+        }
+
+        return [singleRangeArr[0], strLen];
+      }
+
+      return singleRangeArr;
+    });
+    return res;
+  }
+
+  /**
+   * ranges-invert
+   * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+   * Version: 2.1.37
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
+   */
+  const isArr$1 = Array.isArray;
+
+  function rangesInvert(arrOfRanges, strLen, originalOptions) {
+    if (!isArr$1(arrOfRanges) && arrOfRanges !== null) {
+      throw new TypeError(`ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
+    }
+
+    if (!Number.isInteger(strLen) || strLen < 0) {
+      throw new TypeError(`ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
+    }
+
+    if (arrOfRanges === null) {
+      if (strLen === 0) {
+        return [];
+      }
+
+      return [[0, strLen]];
+    }
+
+    if (arrOfRanges.length === 0) {
+      return [];
+    }
+
+    const defaults = {
+      strictlyTwoElementsInRangeArrays: false,
+      skipChecks: false
+    };
+    const opts = { ...defaults,
+      ...originalOptions
+    };
+    let culpritsIndex;
+    let culpritsLen;
+
+    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+      if (rangeArr.length !== 2) {
+        culpritsIndex = indx;
+        culpritsLen = rangeArr.length;
+        return false;
+      }
+
+      return true;
+    })) {
+      throw new TypeError(`ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) has not two but ${culpritsLen} elements!`);
+    }
+
+    if (!opts.skipChecks && !arrOfRanges.every((rangeArr, indx) => {
+      if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
+        culpritsIndex = indx;
+        return false;
+      }
+
+      return true;
+    })) {
+      if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
+        throw new TypeError(`ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
+      }
+
+      throw new TypeError(`ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
+    }
+
+    let prep;
+
+    if (!opts.skipChecks) {
+      prep = mergeRanges(arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]));
+    } else {
+      prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
+    }
+
+    if (prep.length === 0) {
+      if (strLen === 0) {
+        return [];
+      }
+
+      return [[0, strLen]];
+    }
+
+    const res = prep.reduce((accum, currArr, i, arr) => {
+      const res2 = [];
+
+      if (i === 0 && arr[0][0] !== 0) {
+        res2.push([0, arr[0][0]]);
+      }
+
+      const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
+
+      if (currArr[1] !== endingIndex) {
+        if (opts.skipChecks && currArr[1] > endingIndex) {
+          throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${currArr[1]}, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(arr, null, 0)}`);
+        }
+
+        res2.push([currArr[1], endingIndex]);
+      }
+
+      return accum.concat(res2);
+    }, []);
+    return rangesCrop(res, strLen);
+  }
+
+  const HIGH_SURROGATE_START = 0xd800;
+  const HIGH_SURROGATE_END = 0xdbff;
+  const LOW_SURROGATE_START = 0xdc00;
+  const REGIONAL_INDICATOR_START = 0x1f1e6;
+  const REGIONAL_INDICATOR_END = 0x1f1ff;
+  const FITZPATRICK_MODIFIER_START = 0x1f3fb;
+  const FITZPATRICK_MODIFIER_END = 0x1f3ff;
+  const VARIATION_MODIFIER_START = 0xfe00;
+  const VARIATION_MODIFIER_END = 0xfe0f;
+  const DIACRITICAL_MARKS_START = 0x20d0;
+  const DIACRITICAL_MARKS_END = 0x20ff;
+  const ZWJ = 0x200d;
+  const GRAPHEMS = [0x0308, // ( ◌̈ ) COMBINING DIAERESIS
+  0x0937, // ( ष ) DEVANAGARI LETTER SSA
+  0x0937, // ( ष ) DEVANAGARI LETTER SSA
+  0x093F, // ( ि ) DEVANAGARI VOWEL SIGN I
+  0x093F, // ( ि ) DEVANAGARI VOWEL SIGN I
+  0x0BA8, // ( ந ) TAMIL LETTER NA
+  0x0BBF, // ( ி ) TAMIL VOWEL SIGN I
+  0x0BCD, // ( ◌்) TAMIL SIGN VIRAMA
+  0x0E31, // ( ◌ั ) THAI CHARACTER MAI HAN-AKAT
+  0x0E33, // ( ำ ) THAI CHARACTER SARA AM
+  0x0E40, // ( เ ) THAI CHARACTER SARA E
+  0x0E49, // ( เ ) THAI CHARACTER MAI THO
+  0x1100, // ( ᄀ ) HANGUL CHOSEONG KIYEOK
+  0x1161, // ( ᅡ ) HANGUL JUNGSEONG A
+  0x11A8 // ( ᆨ ) HANGUL JONGSEONG KIYEOK
+  ];
+
+  function runes(string) {
+    if (typeof string !== 'string') {
+      throw new Error('string cannot be undefined or null');
+    }
+
+    const result = [];
+    let i = 0;
+    let increment = 0;
+
+    while (i < string.length) {
+      increment += nextUnits(i + increment, string);
+
+      if (isGraphem(string[i + increment])) {
+        increment++;
+      }
+
+      if (isVariationSelector(string[i + increment])) {
+        increment++;
+      }
+
+      if (isDiacriticalMark(string[i + increment])) {
+        increment++;
+      }
+
+      if (isZeroWidthJoiner(string[i + increment])) {
+        increment++;
+        continue;
+      }
+
+      result.push(string.substring(i, i + increment));
+      i += increment;
+      increment = 0;
+    }
+
+    return result;
+  } // Decide how many code units make up the current character.
+  // BMP characters: 1 code unit
+  // Non-BMP characters (represented by surrogate pairs): 2 code units
+  // Emoji with skin-tone modifiers: 4 code units (2 code points)
+  // Country flags: 4 code units (2 code points)
+  // Variations: 2 code units
+
+
+  function nextUnits(i, string) {
+    const current = string[i]; // If we don't have a value that is part of a surrogate pair, or we're at
+    // the end, only take the value at i
+
+    if (!isFirstOfSurrogatePair(current) || i === string.length - 1) {
+      return 1;
+    }
+
+    const currentPair = current + string[i + 1];
+    let nextPair = string.substring(i + 2, i + 5); // Country flags are comprised of two regional indicator symbols,
+    // each represented by a surrogate pair.
+    // See http://emojipedia.org/flags/
+    // If both pairs are regional indicator symbols, take 4
+
+    if (isRegionalIndicator(currentPair) && isRegionalIndicator(nextPair)) {
+      return 4;
+    } // If the next pair make a Fitzpatrick skin tone
+    // modifier, take 4
+    // See http://emojipedia.org/modifiers/
+    // Technically, only some code points are meant to be
+    // combined with the skin tone modifiers. This function
+    // does not check the current pair to see if it is
+    // one of them.
+
+
+    if (isFitzpatrickModifier(nextPair)) {
+      return 4;
+    }
+
+    return 2;
+  }
+
+  function isFirstOfSurrogatePair(string) {
+    return string && betweenInclusive(string[0].charCodeAt(0), HIGH_SURROGATE_START, HIGH_SURROGATE_END);
+  }
+
+  function isRegionalIndicator(string) {
+    return betweenInclusive(codePointFromSurrogatePair(string), REGIONAL_INDICATOR_START, REGIONAL_INDICATOR_END);
+  }
+
+  function isFitzpatrickModifier(string) {
+    return betweenInclusive(codePointFromSurrogatePair(string), FITZPATRICK_MODIFIER_START, FITZPATRICK_MODIFIER_END);
+  }
+
+  function isVariationSelector(string) {
+    return typeof string === 'string' && betweenInclusive(string.charCodeAt(0), VARIATION_MODIFIER_START, VARIATION_MODIFIER_END);
+  }
+
+  function isDiacriticalMark(string) {
+    return typeof string === 'string' && betweenInclusive(string.charCodeAt(0), DIACRITICAL_MARKS_START, DIACRITICAL_MARKS_END);
+  }
+
+  function isGraphem(string) {
+    return typeof string === 'string' && GRAPHEMS.indexOf(string.charCodeAt(0)) !== -1;
+  }
+
+  function isZeroWidthJoiner(string) {
+    return typeof string === 'string' && string.charCodeAt(0) === ZWJ;
+  }
+
+  function codePointFromSurrogatePair(pair) {
+    const highOffset = pair.charCodeAt(0) - HIGH_SURROGATE_START;
+    const lowOffset = pair.charCodeAt(1) - LOW_SURROGATE_START;
+    return (highOffset << 10) + lowOffset + 0x10000;
+  }
+
+  function betweenInclusive(value, lower, upper) {
+    return value >= lower && value <= upper;
+  }
+
+  function substring(string, start, width) {
+    const chars = runes(string);
+
+    if (start === undefined) {
+      return string;
+    }
+
+    if (start >= chars.length) {
+      return '';
+    }
+
+    const rest = chars.length - start;
+    const stringWidth = width === undefined ? rest : width;
+    let endIndex = start + stringWidth;
+
+    if (endIndex > start + rest) {
+      endIndex = undefined;
+    }
+
+    return chars.slice(start, endIndex).join('');
+  }
+
+  var runes_1 = runes;
+  var substr = substring;
+  runes_1.substr = substr;
+
+  /**
+   * ranges-process-outside
+   * Iterate through string and optionally a given ranges as if they were one
+   * Version: 2.2.22
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
+   */
+  const isArr$2 = Array.isArray;
+
+  function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
+    function isFunction(functionToCheck) {
+      return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
+    }
+
+    if (typeof originalStr !== "string") {
+      if (originalStr === undefined) {
+        throw new Error(`ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`);
+      } else {
+        throw new Error(`ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(originalStr, null, 4)} (type ${typeof originalStr})`);
+      }
+    }
+
+    if (originalRanges && !isArr$2(originalRanges)) {
+      throw new Error(`ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(originalRanges, null, 4)} (type ${typeof originalRanges})`);
+    }
+
+    if (!isFunction(cb)) {
+      throw new Error(`ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(cb, null, 4)} (type ${typeof cb})`);
+    }
+
+    function iterator(str, arrOfArrays) {
+      arrOfArrays.forEach(([fromIdx, toIdx]) => {
+        for (let i = fromIdx; i < toIdx; i++) {
+          const charLength = runes_1(str.slice(i))[0].length;
+          cb(i, i + charLength, offsetValue => {
+            /* istanbul ignore else */
+            if (offsetValue != null) {
+              i += offsetValue;
+            }
+          });
+
+          if (charLength && charLength > 1) {
+            i += charLength - 1;
+          }
+        }
+      });
+    }
+
+    if (originalRanges && originalRanges.length) {
+      const temp = rangesCrop(rangesInvert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
+        skipChecks: !!skipChecks
+      }), originalStr.length);
+      iterator(originalStr, temp);
+    } else {
+      iterator(originalStr, [[0, originalStr.length]]);
+    }
+  }
+
+  /**
+   * string-collapse-white-space
+   * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
+   * Version: 5.2.17
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
    */
 
-  function convertOne(str, {
-    from,
-    to,
-    value,
-    convertEntities = true,
-    convertApostrophes = true,
-    offsetBy
-  }) {
-    if (!Number.isInteger(to)) {
-      if (Number.isInteger(from)) {
-        to = from + 1;
+  function collapse(str, originalOpts) {
+    function charCodeBetweenInclusive(character, from, end) {
+      return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
+    }
+
+    function isSpaceOrLeftBracket(character) {
+      return typeof character === "string" && (character === "<" || !character.trim());
+    }
+
+    if (typeof str !== "string") {
+      throw new Error(`string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+    }
+
+    if (originalOpts && typeof originalOpts !== "object") {
+      throw new Error(`string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    if (!str.length) {
+      return "";
+    }
+
+    const finalIndexesToDelete = [];
+    const defaults = {
+      trimStart: true,
+      trimEnd: true,
+      trimLines: false,
+      trimnbsp: false,
+      recogniseHTML: true,
+      removeEmptyLines: false,
+      returnRangesOnly: false,
+      limitConsecutiveEmptyLinesTo: 0
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    let preliminaryIndexesToDelete;
+
+    if (opts.recogniseHTML) {
+      preliminaryIndexesToDelete = [];
+    }
+
+    let spacesEndAt = null;
+    let whiteSpaceEndsAt = null;
+    let lineWhiteSpaceEndsAt = null;
+    let endingOfTheLine = false;
+    let stateWithinTag = false;
+    let whiteSpaceWithinTagEndsAt = null;
+    let tagMatched = false;
+    let tagCanEndHere = false;
+    const count = {};
+    let bail = false;
+
+    const resetCounts = obj => {
+      obj.equalDoubleQuoteCombo = 0;
+      obj.equalOnly = 0;
+      obj.doubleQuoteOnly = 0;
+      obj.spacesBetweenLetterChunks = 0;
+      obj.linebreaks = 0;
+    };
+
+    let bracketJustFound = false;
+
+    if (opts.recogniseHTML) {
+      resetCounts(count);
+    }
+
+    let lastLineBreaksLastCharIndex;
+    let consecutiveLineBreakCount = 0;
+
+    for (let i = str.length; i--;) {
+      if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
+        consecutiveLineBreakCount += 1;
+      } else if (str[i].trim()) {
+        consecutiveLineBreakCount = 0;
+      }
+
+      if (str[i] === " ") {
+        if (spacesEndAt === null) {
+          spacesEndAt = i;
+        }
+      } else if (spacesEndAt !== null) {
+        if (i + 1 !== spacesEndAt) {
+          finalIndexesToDelete.push([i + 1, spacesEndAt]);
+        }
+
+        spacesEndAt = null;
+      }
+
+      if (str[i].trim() === "" && (!opts.trimnbsp && str[i] !== "\xa0" || opts.trimnbsp)) {
+        if (whiteSpaceEndsAt === null) {
+          whiteSpaceEndsAt = i;
+        }
+
+        if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
+          lineWhiteSpaceEndsAt = i + 1;
+        }
+
+        if (str[i] === "\n" || str[i] === "\r") {
+          if (lineWhiteSpaceEndsAt !== null) {
+            if (opts.trimLines) {
+              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
+            }
+
+            lineWhiteSpaceEndsAt = null;
+          }
+
+          if (str[i - 1] !== "\n" && str[i - 1] !== "\r") {
+            lineWhiteSpaceEndsAt = i;
+            endingOfTheLine = true;
+          }
+        }
+
+        if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
+          const sliceFrom = i + 1;
+          let sliceTo;
+
+          if (Number.isInteger(lastLineBreaksLastCharIndex)) {
+            sliceTo = lastLineBreaksLastCharIndex + 1;
+
+            if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
+              if (consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {
+                finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
+              }
+            }
+          }
+
+          lastLineBreaksLastCharIndex = i;
+        }
       } else {
-        throw new Error(`string-apostrophes: [THROW_ID_01] options objects keys' "to" and "from" values are not integers!`);
+        if (whiteSpaceEndsAt !== null) {
+          if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
+            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
+          }
+
+          whiteSpaceEndsAt = null;
+        }
+
+        if (lineWhiteSpaceEndsAt !== null) {
+          if (endingOfTheLine && opts.trimLines) {
+            endingOfTheLine = false;
+
+            if (lineWhiteSpaceEndsAt !== i + 1) {
+              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
+            }
+          }
+
+          lineWhiteSpaceEndsAt = null;
+        }
+      }
+
+      if (i === 0) {
+        if (whiteSpaceEndsAt !== null && opts.trimStart) {
+          finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
+        } else if (spacesEndAt !== null) {
+          finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
+        }
+      }
+
+      if (opts.recogniseHTML) {
+        if (str[i].trim() === "") {
+          if (stateWithinTag && !tagCanEndHere) {
+            tagCanEndHere = true;
+          }
+
+          if (tagMatched && !whiteSpaceWithinTagEndsAt) {
+            whiteSpaceWithinTagEndsAt = i + 1;
+          }
+
+          if (tagMatched && str[i - 1] !== undefined && str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
+            tagMatched = false;
+            stateWithinTag = false;
+            preliminaryIndexesToDelete = [];
+          }
+
+          if (!bail && !bracketJustFound && str[i].trim() === "" && str[i - 1] !== "<" && (str[i + 1] === undefined || str[i + 1].trim() !== "" && str[i + 1].trim() !== "/")) {
+            if (str[i - 1] === undefined || str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
+              count.spacesBetweenLetterChunks += 1;
+            } else {
+              for (let y = i - 1; y--;) {
+                if (str[y].trim() !== "") {
+                  if (str[y] === "<") {
+                    bail = true;
+                  } else if (str[y] !== "/") {
+                    count.spacesBetweenLetterChunks += i - y;
+                  }
+
+                  break;
+                }
+              }
+            }
+          }
+        } else {
+          if (str[i] === "=") {
+            count.equalOnly += 1;
+
+            if (str[i + 1] === '"') {
+              count.equalDoubleQuoteCombo += 1;
+            }
+          } else if (str[i] === '"') {
+            count.doubleQuoteOnly += 1;
+          }
+
+          if (bracketJustFound) {
+            bracketJustFound = false;
+          }
+
+          if (whiteSpaceWithinTagEndsAt !== null) {
+            preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
+            whiteSpaceWithinTagEndsAt = null;
+          }
+
+          if (str[i] === ">") {
+            resetCounts(count);
+            bracketJustFound = true;
+
+            if (stateWithinTag) {
+              preliminaryIndexesToDelete = [];
+            } else {
+              stateWithinTag = true;
+
+              if (str[i - 1] !== undefined && str[i - 1].trim() === "" && !whiteSpaceWithinTagEndsAt) {
+                whiteSpaceWithinTagEndsAt = i;
+              }
+            }
+
+            if (!tagCanEndHere) {
+              tagCanEndHere = true;
+            }
+          } else if (str[i] === "<") {
+            stateWithinTag = false;
+
+            if (bail) {
+              bail = false;
+            }
+
+            if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
+              tagMatched = false;
+              preliminaryIndexesToDelete = [];
+            }
+
+            if (tagMatched) {
+              if (preliminaryIndexesToDelete.length) {
+                preliminaryIndexesToDelete.forEach(([rangeStart, rangeEnd]) => finalIndexesToDelete.push([rangeStart, rangeEnd]));
+              }
+
+              tagMatched = false;
+            }
+
+            resetCounts(count);
+          } else if (stateWithinTag && str[i] === "/") {
+            whiteSpaceWithinTagEndsAt = i;
+          } else if (stateWithinTag && !tagMatched) {
+            if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
+              tagCanEndHere = false;
+
+              if (charCodeBetweenInclusive(str[i], 97, 110)) {
+                if (str[i] === "a" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["area", "textarea"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["data", "meta"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "b" && (matchLeftIncl(str, i, ["rb", "sub"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "c" && matchLeftIncl(str, i, "rtc", {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "d" && (str[i - 1] === "a" && matchLeftIncl(str, i, ["head", "thead"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || matchLeftIncl(str, i, ["kbd", "dd", "embed", "legend", "td"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                })) || str[i] === "e" && (matchLeftIncl(str, i, "source", {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "d" && matchLeftIncl(str, i, ["aside", "code"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "l" && matchLeftIncl(str, i, ["table", "article", "title", "style"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "m" && matchLeftIncl(str, i, ["iframe", "time"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "r" && matchLeftIncl(str, i, ["pre", "figure", "picture"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["template", "cite", "blockquote"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || matchLeftIncl(str, i, "base", {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "g" && matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "h" && matchLeftIncl(str, i, ["th", "math"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "i" && (matchLeftIncl(str, i, ["bdi", "li"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "k" && matchLeftIncl(str, i, ["track", "link", "mark"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "l" && matchLeftIncl(str, i, ["html", "ol", "ul", "dl", "label", "del", "small", "col"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "m" && matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || str[i] === "n" && (str[i - 1] === "o" && matchLeftIncl(str, i, ["section", "caption", "figcaption", "option", "button"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }) || matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
+                  cb: isSpaceOrLeftBracket,
+                  i: true
+                }))) {
+                  tagMatched = true;
+                }
+              } else if (str[i] === "o" && matchLeftIncl(str, i, ["bdo", "video", "audio"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || matchLeftIncl(str, i, ["map", "samp", "rp"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "q" && isSpaceOrLeftBracket(str[i - 1]) || str[i] === "r" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["header", "meter", "footer"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || matchLeftIncl(str, i, ["var", "br", "abbr", "wbr", "hr", "tr"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "s" && (str[i - 1] === "s" && matchLeftIncl(str, i, ["address", "progress"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || matchLeftIncl(str, i, ["canvas", "details", "ins"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "t" && (str[i - 1] === "c" && matchLeftIncl(str, i, ["object", "select"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i - 1] === "o" && matchLeftIncl(str, i, ["slot", "tfoot"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i - 1] === "p" && matchLeftIncl(str, i, ["script", "noscript"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i - 1] === "u" && matchLeftIncl(str, i, ["input", "output"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "u" && (isSpaceOrLeftBracket(str[i - 1]) || matchLeftIncl(str, i, "menu", {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "v" && matchLeftIncl(str, i, ["nav", "div"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i] === "y" && matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) {
+                tagMatched = true;
+              }
+            } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
+              tagCanEndHere = false;
+
+              if (str[i - 1] === "h" && (str[i - 2] === "<" || str[i - 2].trim() === "")) {
+                tagMatched = true;
+              }
+            } else if (str[i] === "=" || str[i] === '"') {
+              tagCanEndHere = false;
+            }
+          }
+        }
       }
     }
 
-    const rangesArr = [];
-    const leftSingleQuote = "\u2018";
-    const rightSingleQuote = "\u2019";
-    const leftDoubleQuote = "\u201C";
-    const rightDoubleQuote = "\u201D";
-    const singlePrime = "\u2032";
-    const doublePrime = "\u2033";
-    const punctuationChars = [".", ",", ";", "!", "?"];
-
-    function isNumber(str) {
-      return typeof str === "string" && str.charCodeAt(0) >= 48 && str.charCodeAt(0) <= 57;
+    if (opts.returnRangesOnly) {
+      return mergeRanges(finalIndexesToDelete);
     }
 
-    function isLetter(str) {
-      return typeof str === "string" && str.length && str.toUpperCase() !== str.toLowerCase();
-    }
-
-    if ([`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && [`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
-      if (str[from - 1] && str[to] && isNumber(str[from - 1]) && !isLetter(str[to])) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) && value !== (convertEntities ? "&prime;" : singlePrime)) {
-          rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))) {
-        if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`) && value !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`)) {
-          rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`]);
-
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
-        } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
-          rangesArr.push([from, to + 2, "'n'"]);
-
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
-        }
-      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isNumber(str[to])) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
-          rangesArr.push([from, to, "'"]);
-        }
-      } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-        if (!str[to].trim()) {
-          if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-            rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-          } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
-            rangesArr.push([from, to, "'"]);
-          }
-        } else if (str[to].charCodeAt(0) === 34 && str[to + 1] && !str[to + 1].trim()) {
-          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`) && value !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`)) {
-            rangesArr.push([from, to + 1, `${convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`}`]);
-
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          } else if (!convertApostrophes && str.slice(from, to + 1) !== `'"` && value !== `'"`) {
-            rangesArr.push([from, to + 1, `'"`]);
-
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          }
-        }
-      } else if (from === 0 && str.slice(to).trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (!str[to] && str.slice(0, from).trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isNumber(str[from - 1])) && (isLetter(str[to]) || isNumber(str[to]))) {
-        if (convertApostrophes) {
-          if ((str[to] && str[from - 5] && str[from - 5].toLowerCase() === "h" && str[from - 4].toLowerCase() === "a" && str[from - 3].toLowerCase() === "w" && str[from - 2].toLowerCase() === "a" && str[from - 1].toLowerCase() === "i" && str[to].toLowerCase() === "i" || str[from - 1] && str[from - 1].toLowerCase() === "o" && str[to + 2] && str[to].toLowerCase() === "a" && str[to + 1].toLowerCase() === "h" && str[to + 2].toLowerCase() === "u") && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
-            rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
-          } else if (str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-            rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-          }
-        } else if (str.slice(from, to) !== "'" && value !== "'") {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (str[from - 1] && !str[from - 1].trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      } else if (str[to] && !str[to].trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
-          rangesArr.push([from, to, `'`]);
-        }
-      }
-    } else if ([`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && [`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
-      if (str[from - 1] && isNumber(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
-          rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-        if (!str[to].trim()) {
-          if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
-            rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
-          } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-            rangesArr.push([from, to, `"`]);
-          }
-        } else if (str[to].charCodeAt(0) === 39 && str[to + 1] && !str[to + 1].trim()) {
-          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`) && value !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`)) {
-            rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`]);
-
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          } else if (!convertApostrophes && str.slice(from, to + 1) !== `"'` && value !== `"'`) {
-            rangesArr.push([from, to + 1, `"'`]);
-
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          }
-        }
-      } else if (from === 0 && str[to] && str.slice(to).trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (!str[to] && str.slice(0, from).trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (str[from - 1] && (isLetter(str[from - 1]) || isNumber(str[from - 1]))) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (str[from - 1] && !str[from - 1].trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      } else if (str[to] && !str[to].trim()) {
-        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
-          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
-        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
-          rangesArr.push([from, to, `"`]);
-        }
-      }
-    }
-
-    return rangesArr;
+    return finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str;
   }
+
+  /**
+   * string-trim-spaces-only
+   * Like String.trim() but you can choose granularly what to trim
+   * Version: 2.8.15
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
+   */
+  function trimSpaces(s, originalOpts) {
+    if (typeof s !== "string") {
+      throw new Error(`string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof s}, equal to:\n${JSON.stringify(s, null, 4)}`);
+    }
+
+    const defaults = {
+      classicTrim: false,
+      cr: false,
+      lf: false,
+      tab: false,
+      space: true,
+      nbsp: false
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    function check(char) {
+      return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\u00a0");
+    }
+
+    let newStart;
+    let newEnd;
+
+    if (s.length) {
+      if (check(s[0])) {
+        for (let i = 0, len = s.length; i < len; i++) {
+          if (!check(s[i])) {
+            newStart = i;
+            break;
+          }
+
+          if (i === s.length - 1) {
+            return {
+              res: "",
+              ranges: [[0, s.length]]
+            };
+          }
+        }
+      }
+
+      if (check(s[s.length - 1])) {
+        for (let i = s.length; i--;) {
+          if (!check(s[i])) {
+            newEnd = i + 1;
+            break;
+          }
+        }
+      }
+
+      if (newStart) {
+        if (newEnd) {
+          return {
+            res: s.slice(newStart, newEnd),
+            ranges: [[0, newStart], [newEnd, s.length]]
+          };
+        }
+
+        return {
+          res: s.slice(newStart),
+          ranges: [[0, newStart]]
+        };
+      }
+
+      if (newEnd) {
+        return {
+          res: s.slice(0, newEnd),
+          ranges: [[newEnd, s.length]]
+        };
+      }
+
+      return {
+        res: s,
+        ranges: []
+      };
+    }
+
+    return {
+      res: "",
+      ranges: []
+    };
+  }
+
+  /**
+   * lodash (Custom Build) <https://lodash.com/>
+   * Build: `lodash modularize exports="npm" -o ./`
+   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   */
+
+  /** Used as references for various `Number` constants. */
+
+  var INFINITY = 1 / 0;
+  /** `Object#toString` result references. */
+
+  var symbolTag = '[object Symbol]';
+  /** Used to match leading and trailing whitespace. */
+
+  var reTrim = /^\s+|\s+$/g;
+  /** Used to compose unicode character classes. */
+
+  var rsAstralRange = '\\ud800-\\udfff',
+      rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
+      rsComboSymbolsRange = '\\u20d0-\\u20f0',
+      rsVarRange = '\\ufe0e\\ufe0f';
+  /** Used to compose unicode capture groups. */
+
+  var rsAstral = '[' + rsAstralRange + ']',
+      rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
+      rsFitz = '\\ud83c[\\udffb-\\udfff]',
+      rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+      rsNonAstral = '[^' + rsAstralRange + ']',
+      rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+      rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+      rsZWJ = '\\u200d';
+  /** Used to compose unicode regexes. */
+
+  var reOptMod = rsModifier + '?',
+      rsOptVar = '[' + rsVarRange + ']?',
+      rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+      rsSeq = rsOptVar + reOptMod + rsOptJoin,
+      rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+  /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+
+  var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+  /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+
+  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
+  /** Detect free variable `global` from Node.js. */
+
+  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  /** Detect free variable `self`. */
+
+  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  /** Used as a reference to the global object. */
+
+  var root = freeGlobal || freeSelf || Function('return this')();
+  /**
+   * Converts an ASCII `string` to an array.
+   *
+   * @private
+   * @param {string} string The string to convert.
+   * @returns {Array} Returns the converted array.
+   */
+
+  function asciiToArray(string) {
+    return string.split('');
+  }
+  /**
+   * The base implementation of `_.findIndex` and `_.findLastIndex` without
+   * support for iteratee shorthands.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {Function} predicate The function invoked per iteration.
+   * @param {number} fromIndex The index to search from.
+   * @param {boolean} [fromRight] Specify iterating from right to left.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+
+  function baseFindIndex(array, predicate, fromIndex, fromRight) {
+    var length = array.length,
+        index = fromIndex + (fromRight ? 1 : -1);
+
+    while (fromRight ? index-- : ++index < length) {
+      if (predicate(array[index], index, array)) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {*} value The value to search for.
+   * @param {number} fromIndex The index to search from.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+
+  function baseIndexOf(array, value, fromIndex) {
+    if (value !== value) {
+      return baseFindIndex(array, baseIsNaN, fromIndex);
+    }
+
+    var index = fromIndex - 1,
+        length = array.length;
+
+    while (++index < length) {
+      if (array[index] === value) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of `_.isNaN` without support for number objects.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+   */
+
+
+  function baseIsNaN(value) {
+    return value !== value;
+  }
+  /**
+   * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
+   * that is not found in the character symbols.
+   *
+   * @private
+   * @param {Array} strSymbols The string symbols to inspect.
+   * @param {Array} chrSymbols The character symbols to find.
+   * @returns {number} Returns the index of the first unmatched string symbol.
+   */
+
+
+  function charsStartIndex(strSymbols, chrSymbols) {
+    var index = -1,
+        length = strSymbols.length;
+
+    while (++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
+
+    return index;
+  }
+  /**
+   * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
+   * that is not found in the character symbols.
+   *
+   * @private
+   * @param {Array} strSymbols The string symbols to inspect.
+   * @param {Array} chrSymbols The character symbols to find.
+   * @returns {number} Returns the index of the last unmatched string symbol.
+   */
+
+
+  function charsEndIndex(strSymbols, chrSymbols) {
+    var index = strSymbols.length;
+
+    while (index-- && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
+
+    return index;
+  }
+  /**
+   * Checks if `string` contains Unicode symbols.
+   *
+   * @private
+   * @param {string} string The string to inspect.
+   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+   */
+
+
+  function hasUnicode(string) {
+    return reHasUnicode.test(string);
+  }
+  /**
+   * Converts `string` to an array.
+   *
+   * @private
+   * @param {string} string The string to convert.
+   * @returns {Array} Returns the converted array.
+   */
+
+
+  function stringToArray(string) {
+    return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
+  }
+  /**
+   * Converts a Unicode `string` to an array.
+   *
+   * @private
+   * @param {string} string The string to convert.
+   * @returns {Array} Returns the converted array.
+   */
+
+
+  function unicodeToArray(string) {
+    return string.match(reUnicode) || [];
+  }
+  /** Used for built-in method references. */
+
+
+  var objectProto$1 = Object.prototype;
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString$1 = objectProto$1.toString;
+  /** Built-in value references. */
+
+  var Symbol$1 = root.Symbol;
+  /** Used to convert symbols to primitives and strings. */
+
+  var symbolProto = Symbol$1 ? Symbol$1.prototype : undefined,
+      symbolToString = symbolProto ? symbolProto.toString : undefined;
+  /**
+   * The base implementation of `_.slice` without an iteratee call guard.
+   *
+   * @private
+   * @param {Array} array The array to slice.
+   * @param {number} [start=0] The start position.
+   * @param {number} [end=array.length] The end position.
+   * @returns {Array} Returns the slice of `array`.
+   */
+
+  function baseSlice(array, start, end) {
+    var index = -1,
+        length = array.length;
+
+    if (start < 0) {
+      start = -start > length ? 0 : length + start;
+    }
+
+    end = end > length ? length : end;
+
+    if (end < 0) {
+      end += length;
+    }
+
+    length = start > end ? 0 : end - start >>> 0;
+    start >>>= 0;
+    var result = Array(length);
+
+    while (++index < length) {
+      result[index] = array[index + start];
+    }
+
+    return result;
+  }
+  /**
+   * The base implementation of `_.toString` which doesn't convert nullish
+   * values to empty strings.
+   *
+   * @private
+   * @param {*} value The value to process.
+   * @returns {string} Returns the string.
+   */
+
+
+  function baseToString(value) {
+    // Exit early for strings to avoid a performance hit in some environments.
+    if (typeof value == 'string') {
+      return value;
+    }
+
+    if (isSymbol(value)) {
+      return symbolToString ? symbolToString.call(value) : '';
+    }
+
+    var result = value + '';
+    return result == '0' && 1 / value == -INFINITY ? '-0' : result;
+  }
+  /**
+   * Casts `array` to a slice if it's needed.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {number} start The start position.
+   * @param {number} [end=array.length] The end position.
+   * @returns {Array} Returns the cast slice.
+   */
+
+
+  function castSlice(array, start, end) {
+    var length = array.length;
+    end = end === undefined ? length : end;
+    return !start && end >= length ? array : baseSlice(array, start, end);
+  }
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+
+  function isObjectLike$1(value) {
+    return !!value && typeof value == 'object';
+  }
+  /**
+   * Checks if `value` is classified as a `Symbol` primitive or object.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+   * @example
+   *
+   * _.isSymbol(Symbol.iterator);
+   * // => true
+   *
+   * _.isSymbol('abc');
+   * // => false
+   */
+
+
+  function isSymbol(value) {
+    return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
+  }
+  /**
+   * Converts `value` to a string. An empty string is returned for `null`
+   * and `undefined` values. The sign of `-0` is preserved.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to process.
+   * @returns {string} Returns the string.
+   * @example
+   *
+   * _.toString(null);
+   * // => ''
+   *
+   * _.toString(-0);
+   * // => '-0'
+   *
+   * _.toString([1, 2, 3]);
+   * // => '1,2,3'
+   */
+
+
+  function toString(value) {
+    return value == null ? '' : baseToString(value);
+  }
+  /**
+   * Removes leading and trailing whitespace or specified characters from `string`.
+   *
+   * @static
+   * @memberOf _
+   * @since 3.0.0
+   * @category String
+   * @param {string} [string=''] The string to trim.
+   * @param {string} [chars=whitespace] The characters to trim.
+   * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+   * @returns {string} Returns the trimmed string.
+   * @example
+   *
+   * _.trim('  abc  ');
+   * // => 'abc'
+   *
+   * _.trim('-_-abc-_-', '_-');
+   * // => 'abc'
+   *
+   * _.map(['  foo  ', '  bar  '], _.trim);
+   * // => ['foo', 'bar']
+   */
+
+
+  function trim(string, chars, guard) {
+    string = toString(string);
+
+    if (string && (guard || chars === undefined)) {
+      return string.replace(reTrim, '');
+    }
+
+    if (!string || !(chars = baseToString(chars))) {
+      return string;
+    }
+
+    var strSymbols = stringToArray(string),
+        chrSymbols = stringToArray(chars),
+        start = charsStartIndex(strSymbols, chrSymbols),
+        end = charsEndIndex(strSymbols, chrSymbols) + 1;
+    return castSlice(strSymbols, start, end).join('');
+  }
+
+  var lodash_trim = trim;
+
+  /**
+   * lodash (Custom Build) <https://lodash.com/>
+   * Build: `lodash modularize exports="npm" -o ./`
+   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   */
+
+  /** Used as the size to enable large array optimizations. */
+
+  var LARGE_ARRAY_SIZE = 200;
+  /** Used to stand-in for `undefined` hash values. */
+
+  var HASH_UNDEFINED = '__lodash_hash_undefined__';
+  /** Used as references for various `Number` constants. */
+
+  var MAX_SAFE_INTEGER = 9007199254740991;
+  /** `Object#toString` result references. */
+
+  var funcTag = '[object Function]',
+      genTag = '[object GeneratorFunction]';
+  /**
+   * Used to match `RegExp`
+   * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+   */
+
+  var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+  /** Used to detect host constructors (Safari). */
+
+  var reIsHostCtor = /^\[object .+?Constructor\]$/;
+  /** Detect free variable `global` from Node.js. */
+
+  var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  /** Detect free variable `self`. */
+
+  var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
+  /** Used as a reference to the global object. */
+
+  var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
+  /**
+   * A faster alternative to `Function#apply`, this function invokes `func`
+   * with the `this` binding of `thisArg` and the arguments of `args`.
+   *
+   * @private
+   * @param {Function} func The function to invoke.
+   * @param {*} thisArg The `this` binding of `func`.
+   * @param {Array} args The arguments to invoke `func` with.
+   * @returns {*} Returns the result of `func`.
+   */
+
+  function apply(func, thisArg, args) {
+    switch (args.length) {
+      case 0:
+        return func.call(thisArg);
+
+      case 1:
+        return func.call(thisArg, args[0]);
+
+      case 2:
+        return func.call(thisArg, args[0], args[1]);
+
+      case 3:
+        return func.call(thisArg, args[0], args[1], args[2]);
+    }
+
+    return func.apply(thisArg, args);
+  }
+  /**
+   * A specialized version of `_.includes` for arrays without support for
+   * specifying an index to search from.
+   *
+   * @private
+   * @param {Array} [array] The array to inspect.
+   * @param {*} target The value to search for.
+   * @returns {boolean} Returns `true` if `target` is found, else `false`.
+   */
+
+
+  function arrayIncludes(array, value) {
+    var length = array ? array.length : 0;
+    return !!length && baseIndexOf$1(array, value, 0) > -1;
+  }
+  /**
+   * This function is like `arrayIncludes` except that it accepts a comparator.
+   *
+   * @private
+   * @param {Array} [array] The array to inspect.
+   * @param {*} target The value to search for.
+   * @param {Function} comparator The comparator invoked per element.
+   * @returns {boolean} Returns `true` if `target` is found, else `false`.
+   */
+
+
+  function arrayIncludesWith(array, value, comparator) {
+    var index = -1,
+        length = array ? array.length : 0;
+
+    while (++index < length) {
+      if (comparator(value, array[index])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  /**
+   * A specialized version of `_.map` for arrays without support for iteratee
+   * shorthands.
+   *
+   * @private
+   * @param {Array} [array] The array to iterate over.
+   * @param {Function} iteratee The function invoked per iteration.
+   * @returns {Array} Returns the new mapped array.
+   */
+
+
+  function arrayMap(array, iteratee) {
+    var index = -1,
+        length = array ? array.length : 0,
+        result = Array(length);
+
+    while (++index < length) {
+      result[index] = iteratee(array[index], index, array);
+    }
+
+    return result;
+  }
+  /**
+   * The base implementation of `_.findIndex` and `_.findLastIndex` without
+   * support for iteratee shorthands.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {Function} predicate The function invoked per iteration.
+   * @param {number} fromIndex The index to search from.
+   * @param {boolean} [fromRight] Specify iterating from right to left.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+
+  function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+    var length = array.length,
+        index = fromIndex + (fromRight ? 1 : -1);
+
+    while (fromRight ? index-- : ++index < length) {
+      if (predicate(array[index], index, array)) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {*} value The value to search for.
+   * @param {number} fromIndex The index to search from.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+
+  function baseIndexOf$1(array, value, fromIndex) {
+    if (value !== value) {
+      return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    }
+
+    var index = fromIndex - 1,
+        length = array.length;
+
+    while (++index < length) {
+      if (array[index] === value) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of `_.isNaN` without support for number objects.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+   */
+
+
+  function baseIsNaN$1(value) {
+    return value !== value;
+  }
+  /**
+   * The base implementation of `_.unary` without support for storing metadata.
+   *
+   * @private
+   * @param {Function} func The function to cap arguments for.
+   * @returns {Function} Returns the new capped function.
+   */
+
+
+  function baseUnary(func) {
+    return function (value) {
+      return func(value);
+    };
+  }
+  /**
+   * Checks if a cache value for `key` exists.
+   *
+   * @private
+   * @param {Object} cache The cache to query.
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function cacheHas(cache, key) {
+    return cache.has(key);
+  }
+  /**
+   * Gets the value at `key` of `object`.
+   *
+   * @private
+   * @param {Object} [object] The object to query.
+   * @param {string} key The key of the property to get.
+   * @returns {*} Returns the property value.
+   */
+
+
+  function getValue(object, key) {
+    return object == null ? undefined : object[key];
+  }
+  /**
+   * Checks if `value` is a host object in IE < 9.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+   */
+
+
+  function isHostObject$1(value) {
+    // Many host objects are `Object` objects that can coerce to strings
+    // despite having improperly defined `toString` methods.
+    var result = false;
+
+    if (value != null && typeof value.toString != 'function') {
+      try {
+        result = !!(value + '');
+      } catch (e) {}
+    }
+
+    return result;
+  }
+  /** Used for built-in method references. */
+
+
+  var arrayProto = Array.prototype,
+      funcProto$1 = Function.prototype,
+      objectProto$2 = Object.prototype;
+  /** Used to detect overreaching core-js shims. */
+
+  var coreJsData = root$1['__core-js_shared__'];
+  /** Used to detect methods masquerading as native. */
+
+  var maskSrcKey = function () {
+    var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+    return uid ? 'Symbol(src)_1.' + uid : '';
+  }();
+  /** Used to resolve the decompiled source of functions. */
+
+
+  var funcToString$1 = funcProto$1.toString;
+  /** Used to check objects for own properties. */
+
+  var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString$2 = objectProto$2.toString;
+  /** Used to detect if a method is native. */
+
+  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  /** Built-in value references. */
+
+  var splice = arrayProto.splice;
+  /* Built-in method references for those with the same name as other `lodash` methods. */
+
+  var nativeMax = Math.max;
+  /* Built-in method references that are verified to be native. */
+
+  var Map = getNative(root$1, 'Map'),
+      nativeCreate = getNative(Object, 'create');
+  /**
+   * Creates a hash object.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function Hash(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  /**
+   * Removes all key-value entries from the hash.
+   *
+   * @private
+   * @name clear
+   * @memberOf Hash
+   */
+
+
+  function hashClear() {
+    this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  }
+  /**
+   * Removes `key` and its value from the hash.
+   *
+   * @private
+   * @name delete
+   * @memberOf Hash
+   * @param {Object} hash The hash to modify.
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
+
+
+  function hashDelete(key) {
+    return this.has(key) && delete this.__data__[key];
+  }
+  /**
+   * Gets the hash value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf Hash
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
+
+
+  function hashGet(key) {
+    var data = this.__data__;
+
+    if (nativeCreate) {
+      var result = data[key];
+      return result === HASH_UNDEFINED ? undefined : result;
+    }
+
+    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+  }
+  /**
+   * Checks if a hash value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf Hash
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function hashHas(key) {
+    var data = this.__data__;
+    return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+  }
+  /**
+   * Sets the hash `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf Hash
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the hash instance.
+   */
+
+
+  function hashSet(key, value) {
+    var data = this.__data__;
+    data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
+    return this;
+  } // Add methods to `Hash`.
+
+
+  Hash.prototype.clear = hashClear;
+  Hash.prototype['delete'] = hashDelete;
+  Hash.prototype.get = hashGet;
+  Hash.prototype.has = hashHas;
+  Hash.prototype.set = hashSet;
+  /**
+   * Creates an list cache object.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function ListCache(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  /**
+   * Removes all key-value entries from the list cache.
+   *
+   * @private
+   * @name clear
+   * @memberOf ListCache
+   */
+
+
+  function listCacheClear() {
+    this.__data__ = [];
+  }
+  /**
+   * Removes `key` and its value from the list cache.
+   *
+   * @private
+   * @name delete
+   * @memberOf ListCache
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
+
+
+  function listCacheDelete(key) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+
+    if (index < 0) {
+      return false;
+    }
+
+    var lastIndex = data.length - 1;
+
+    if (index == lastIndex) {
+      data.pop();
+    } else {
+      splice.call(data, index, 1);
+    }
+
+    return true;
+  }
+  /**
+   * Gets the list cache value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf ListCache
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
+
+
+  function listCacheGet(key) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+    return index < 0 ? undefined : data[index][1];
+  }
+  /**
+   * Checks if a list cache value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf ListCache
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function listCacheHas(key) {
+    return assocIndexOf(this.__data__, key) > -1;
+  }
+  /**
+   * Sets the list cache `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf ListCache
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the list cache instance.
+   */
+
+
+  function listCacheSet(key, value) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+
+    if (index < 0) {
+      data.push([key, value]);
+    } else {
+      data[index][1] = value;
+    }
+
+    return this;
+  } // Add methods to `ListCache`.
+
+
+  ListCache.prototype.clear = listCacheClear;
+  ListCache.prototype['delete'] = listCacheDelete;
+  ListCache.prototype.get = listCacheGet;
+  ListCache.prototype.has = listCacheHas;
+  ListCache.prototype.set = listCacheSet;
+  /**
+   * Creates a map cache object to store key-value pairs.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function MapCache(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  /**
+   * Removes all key-value entries from the map.
+   *
+   * @private
+   * @name clear
+   * @memberOf MapCache
+   */
+
+
+  function mapCacheClear() {
+    this.__data__ = {
+      'hash': new Hash(),
+      'map': new (Map || ListCache)(),
+      'string': new Hash()
+    };
+  }
+  /**
+   * Removes `key` and its value from the map.
+   *
+   * @private
+   * @name delete
+   * @memberOf MapCache
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
+
+
+  function mapCacheDelete(key) {
+    return getMapData(this, key)['delete'](key);
+  }
+  /**
+   * Gets the map value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf MapCache
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
+
+
+  function mapCacheGet(key) {
+    return getMapData(this, key).get(key);
+  }
+  /**
+   * Checks if a map value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf MapCache
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function mapCacheHas(key) {
+    return getMapData(this, key).has(key);
+  }
+  /**
+   * Sets the map `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf MapCache
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the map cache instance.
+   */
+
+
+  function mapCacheSet(key, value) {
+    getMapData(this, key).set(key, value);
+    return this;
+  } // Add methods to `MapCache`.
+
+
+  MapCache.prototype.clear = mapCacheClear;
+  MapCache.prototype['delete'] = mapCacheDelete;
+  MapCache.prototype.get = mapCacheGet;
+  MapCache.prototype.has = mapCacheHas;
+  MapCache.prototype.set = mapCacheSet;
+  /**
+   *
+   * Creates an array cache object to store unique values.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [values] The values to cache.
+   */
+
+  function SetCache(values) {
+    var index = -1,
+        length = values ? values.length : 0;
+    this.__data__ = new MapCache();
+
+    while (++index < length) {
+      this.add(values[index]);
+    }
+  }
+  /**
+   * Adds `value` to the array cache.
+   *
+   * @private
+   * @name add
+   * @memberOf SetCache
+   * @alias push
+   * @param {*} value The value to cache.
+   * @returns {Object} Returns the cache instance.
+   */
+
+
+  function setCacheAdd(value) {
+    this.__data__.set(value, HASH_UNDEFINED);
+
+    return this;
+  }
+  /**
+   * Checks if `value` is in the array cache.
+   *
+   * @private
+   * @name has
+   * @memberOf SetCache
+   * @param {*} value The value to search for.
+   * @returns {number} Returns `true` if `value` is found, else `false`.
+   */
+
+
+  function setCacheHas(value) {
+    return this.__data__.has(value);
+  } // Add methods to `SetCache`.
+
+
+  SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+  SetCache.prototype.has = setCacheHas;
+  /**
+   * Gets the index at which the `key` is found in `array` of key-value pairs.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {*} key The key to search for.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+  function assocIndexOf(array, key) {
+    var length = array.length;
+
+    while (length--) {
+      if (eq(array[length][0], key)) {
+        return length;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of methods like `_.difference` without support
+   * for excluding multiple arrays or iteratee shorthands.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {Array} values The values to exclude.
+   * @param {Function} [iteratee] The iteratee invoked per element.
+   * @param {Function} [comparator] The comparator invoked per element.
+   * @returns {Array} Returns the new array of filtered values.
+   */
+
+
+  function baseDifference(array, values, iteratee, comparator) {
+    var index = -1,
+        includes = arrayIncludes,
+        isCommon = true,
+        length = array.length,
+        result = [],
+        valuesLength = values.length;
+
+    if (!length) {
+      return result;
+    }
+
+    if (iteratee) {
+      values = arrayMap(values, baseUnary(iteratee));
+    }
+
+    if (comparator) {
+      includes = arrayIncludesWith;
+      isCommon = false;
+    } else if (values.length >= LARGE_ARRAY_SIZE) {
+      includes = cacheHas;
+      isCommon = false;
+      values = new SetCache(values);
+    }
+
+    outer: while (++index < length) {
+      var value = array[index],
+          computed = iteratee ? iteratee(value) : value;
+      value = comparator || value !== 0 ? value : 0;
+
+      if (isCommon && computed === computed) {
+        var valuesIndex = valuesLength;
+
+        while (valuesIndex--) {
+          if (values[valuesIndex] === computed) {
+            continue outer;
+          }
+        }
+
+        result.push(value);
+      } else if (!includes(values, computed, comparator)) {
+        result.push(value);
+      }
+    }
+
+    return result;
+  }
+  /**
+   * The base implementation of `_.isNative` without bad shim checks.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a native function,
+   *  else `false`.
+   */
+
+
+  function baseIsNative(value) {
+    if (!isObject(value) || isMasked(value)) {
+      return false;
+    }
+
+    var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+    return pattern.test(toSource(value));
+  }
+  /**
+   * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+   *
+   * @private
+   * @param {Function} func The function to apply a rest parameter to.
+   * @param {number} [start=func.length-1] The start position of the rest parameter.
+   * @returns {Function} Returns the new function.
+   */
+
+
+  function baseRest(func, start) {
+    start = nativeMax(start === undefined ? func.length - 1 : start, 0);
+    return function () {
+      var args = arguments,
+          index = -1,
+          length = nativeMax(args.length - start, 0),
+          array = Array(length);
+
+      while (++index < length) {
+        array[index] = args[start + index];
+      }
+
+      index = -1;
+      var otherArgs = Array(start + 1);
+
+      while (++index < start) {
+        otherArgs[index] = args[index];
+      }
+
+      otherArgs[start] = array;
+      return apply(func, this, otherArgs);
+    };
+  }
+  /**
+   * Gets the data for `map`.
+   *
+   * @private
+   * @param {Object} map The map to query.
+   * @param {string} key The reference key.
+   * @returns {*} Returns the map data.
+   */
+
+
+  function getMapData(map, key) {
+    var data = map.__data__;
+    return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+  }
+  /**
+   * Gets the native function at `key` of `object`.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @param {string} key The key of the method to get.
+   * @returns {*} Returns the function if it's native, else `undefined`.
+   */
+
+
+  function getNative(object, key) {
+    var value = getValue(object, key);
+    return baseIsNative(value) ? value : undefined;
+  }
+  /**
+   * Checks if `value` is suitable for use as unique object key.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+   */
+
+
+  function isKeyable(value) {
+    var type = typeof value;
+    return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
+  }
+  /**
+   * Checks if `func` has its source masked.
+   *
+   * @private
+   * @param {Function} func The function to check.
+   * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+   */
+
+
+  function isMasked(func) {
+    return !!maskSrcKey && maskSrcKey in func;
+  }
+  /**
+   * Converts `func` to its source code.
+   *
+   * @private
+   * @param {Function} func The function to process.
+   * @returns {string} Returns the source code.
+   */
+
+
+  function toSource(func) {
+    if (func != null) {
+      try {
+        return funcToString$1.call(func);
+      } catch (e) {}
+
+      try {
+        return func + '';
+      } catch (e) {}
+    }
+
+    return '';
+  }
+  /**
+   * Creates an array excluding all given values using
+   * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+   * for equality comparisons.
+   *
+   * **Note:** Unlike `_.pull`, this method returns a new array.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Array
+   * @param {Array} array The array to inspect.
+   * @param {...*} [values] The values to exclude.
+   * @returns {Array} Returns the new array of filtered values.
+   * @see _.difference, _.xor
+   * @example
+   *
+   * _.without([2, 1, 2, 3], 1, 2);
+   * // => [3]
+   */
+
+
+  var without = baseRest(function (array, values) {
+    return isArrayLikeObject(array) ? baseDifference(array, values) : [];
+  });
+  /**
+   * Performs a
+   * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+   * comparison between two values to determine if they are equivalent.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to compare.
+   * @param {*} other The other value to compare.
+   * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+   * @example
+   *
+   * var object = { 'a': 1 };
+   * var other = { 'a': 1 };
+   *
+   * _.eq(object, object);
+   * // => true
+   *
+   * _.eq(object, other);
+   * // => false
+   *
+   * _.eq('a', 'a');
+   * // => true
+   *
+   * _.eq('a', Object('a'));
+   * // => false
+   *
+   * _.eq(NaN, NaN);
+   * // => true
+   */
+
+  function eq(value, other) {
+    return value === other || value !== value && other !== other;
+  }
+  /**
+   * Checks if `value` is array-like. A value is considered array-like if it's
+   * not a function and has a `value.length` that's an integer greater than or
+   * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+   * @example
+   *
+   * _.isArrayLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isArrayLike(document.body.children);
+   * // => true
+   *
+   * _.isArrayLike('abc');
+   * // => true
+   *
+   * _.isArrayLike(_.noop);
+   * // => false
+   */
+
+
+  function isArrayLike(value) {
+    return value != null && isLength(value.length) && !isFunction(value);
+  }
+  /**
+   * This method is like `_.isArrayLike` except that it also checks if `value`
+   * is an object.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an array-like object,
+   *  else `false`.
+   * @example
+   *
+   * _.isArrayLikeObject([1, 2, 3]);
+   * // => true
+   *
+   * _.isArrayLikeObject(document.body.children);
+   * // => true
+   *
+   * _.isArrayLikeObject('abc');
+   * // => false
+   *
+   * _.isArrayLikeObject(_.noop);
+   * // => false
+   */
+
+
+  function isArrayLikeObject(value) {
+    return isObjectLike$2(value) && isArrayLike(value);
+  }
+  /**
+   * Checks if `value` is classified as a `Function` object.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+   * @example
+   *
+   * _.isFunction(_);
+   * // => true
+   *
+   * _.isFunction(/abc/);
+   * // => false
+   */
+
+
+  function isFunction(value) {
+    // The use of `Object#toString` avoids issues with the `typeof` operator
+    // in Safari 8-9 which returns 'object' for typed array and other constructors.
+    var tag = isObject(value) ? objectToString$2.call(value) : '';
+    return tag == funcTag || tag == genTag;
+  }
+  /**
+   * Checks if `value` is a valid array-like length.
+   *
+   * **Note:** This method is loosely based on
+   * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+   * @example
+   *
+   * _.isLength(3);
+   * // => true
+   *
+   * _.isLength(Number.MIN_VALUE);
+   * // => false
+   *
+   * _.isLength(Infinity);
+   * // => false
+   *
+   * _.isLength('3');
+   * // => false
+   */
+
+
+  function isLength(value) {
+    return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+  }
+  /**
+   * Checks if `value` is the
+   * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+   * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+   * @example
+   *
+   * _.isObject({});
+   * // => true
+   *
+   * _.isObject([1, 2, 3]);
+   * // => true
+   *
+   * _.isObject(_.noop);
+   * // => true
+   *
+   * _.isObject(null);
+   * // => false
+   */
+
+
+  function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == 'object' || type == 'function');
+  }
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+
+  function isObjectLike$2(value) {
+    return !!value && typeof value == 'object';
+  }
+
+  var lodash_without = without;
+
+  /*! https://mths.be/punycode v1.4.1 by @mathias */
+
+  /** Highest positive signed 32-bit float value */
+  var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
+
+  /** Bootstring parameters */
+
+  var base = 36;
+  var tMin = 1;
+  var tMax = 26;
+  var skew = 38;
+  var damp = 700;
+  var initialBias = 72;
+  var initialN = 128; // 0x80
+
+  var delimiter = '-'; // '\x2D'
+
+  /** Regular expressions */
+
+  var regexPunycode = /^xn--/;
+  var regexNonASCII = /[^\x20-\x7E]/; // unprintable ASCII chars + non-ASCII chars
+
+  var regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g; // RFC 3490 separators
+
+  /** Error messages */
+
+  var errors = {
+    'overflow': 'Overflow: input needs wider integers to process',
+    'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+    'invalid-input': 'Invalid input'
+  };
+  /** Convenience shortcuts */
+
+  var baseMinusTMin = base - tMin;
+  var floor = Math.floor;
+  var stringFromCharCode = String.fromCharCode;
+  /*--------------------------------------------------------------------------*/
+
+  /**
+   * A generic error utility function.
+   * @private
+   * @param {String} type The error type.
+   * @returns {Error} Throws a `RangeError` with the applicable error message.
+   */
+
+  function error(type) {
+    throw new RangeError(errors[type]);
+  }
+  /**
+   * A generic `Array#map` utility function.
+   * @private
+   * @param {Array} array The array to iterate over.
+   * @param {Function} callback The function that gets called for every array
+   * item.
+   * @returns {Array} A new array of values returned by the callback function.
+   */
+
+
+  function map$2(array, fn) {
+    var length = array.length;
+    var result = [];
+
+    while (length--) {
+      result[length] = fn(array[length]);
+    }
+
+    return result;
+  }
+  /**
+   * A simple `Array#map`-like wrapper to work with domain name strings or email
+   * addresses.
+   * @private
+   * @param {String} domain The domain name or email address.
+   * @param {Function} callback The function that gets called for every
+   * character.
+   * @returns {Array} A new string of characters returned by the callback
+   * function.
+   */
+
+
+  function mapDomain(string, fn) {
+    var parts = string.split('@');
+    var result = '';
+
+    if (parts.length > 1) {
+      // In email addresses, only the domain name should be punycoded. Leave
+      // the local part (i.e. everything up to `@`) intact.
+      result = parts[0] + '@';
+      string = parts[1];
+    } // Avoid `split(regex)` for IE8 compatibility. See #17.
+
+
+    string = string.replace(regexSeparators, '\x2E');
+    var labels = string.split('.');
+    var encoded = map$2(labels, fn).join('.');
+    return result + encoded;
+  }
+  /**
+   * Creates an array containing the numeric code points of each Unicode
+   * character in the string. While JavaScript uses UCS-2 internally,
+   * this function will convert a pair of surrogate halves (each of which
+   * UCS-2 exposes as separate characters) into a single code point,
+   * matching UTF-16.
+   * @see `punycode.ucs2.encode`
+   * @see <https://mathiasbynens.be/notes/javascript-encoding>
+   * @memberOf punycode.ucs2
+   * @name decode
+   * @param {String} string The Unicode input string (UCS-2).
+   * @returns {Array} The new array of code points.
+   */
+
+
+  function ucs2decode(string) {
+    var output = [],
+        counter = 0,
+        length = string.length,
+        value,
+        extra;
+
+    while (counter < length) {
+      value = string.charCodeAt(counter++);
+
+      if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+        // high surrogate, and there is a next character
+        extra = string.charCodeAt(counter++);
+
+        if ((extra & 0xFC00) == 0xDC00) {
+          // low surrogate
+          output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+        } else {
+          // unmatched surrogate; only append this code unit, in case the next
+          // code unit is the high surrogate of a surrogate pair
+          output.push(value);
+          counter--;
+        }
+      } else {
+        output.push(value);
+      }
+    }
+
+    return output;
+  }
+  /**
+   * Creates a string based on an array of numeric code points.
+   * @see `punycode.ucs2.decode`
+   * @memberOf punycode.ucs2
+   * @name encode
+   * @param {Array} codePoints The array of numeric code points.
+   * @returns {String} The new Unicode string (UCS-2).
+   */
+
+
+  function ucs2encode(array) {
+    return map$2(array, function (value) {
+      var output = '';
+
+      if (value > 0xFFFF) {
+        value -= 0x10000;
+        output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+        value = 0xDC00 | value & 0x3FF;
+      }
+
+      output += stringFromCharCode(value);
+      return output;
+    }).join('');
+  }
+  /**
+   * Converts a basic code point into a digit/integer.
+   * @see `digitToBasic()`
+   * @private
+   * @param {Number} codePoint The basic numeric code point value.
+   * @returns {Number} The numeric value of a basic code point (for use in
+   * representing integers) in the range `0` to `base - 1`, or `base` if
+   * the code point does not represent a value.
+   */
+
+
+  function basicToDigit(codePoint) {
+    if (codePoint - 48 < 10) {
+      return codePoint - 22;
+    }
+
+    if (codePoint - 65 < 26) {
+      return codePoint - 65;
+    }
+
+    if (codePoint - 97 < 26) {
+      return codePoint - 97;
+    }
+
+    return base;
+  }
+  /**
+   * Converts a digit/integer into a basic code point.
+   * @see `basicToDigit()`
+   * @private
+   * @param {Number} digit The numeric value of a basic code point.
+   * @returns {Number} The basic code point whose value (when used for
+   * representing integers) is `digit`, which needs to be in the range
+   * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+   * used; else, the lowercase form is used. The behavior is undefined
+   * if `flag` is non-zero and `digit` has no uppercase form.
+   */
+
+
+  function digitToBasic(digit, flag) {
+    //  0..25 map to ASCII a..z or A..Z
+    // 26..35 map to ASCII 0..9
+    return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+  }
+  /**
+   * Bias adaptation function as per section 3.4 of RFC 3492.
+   * https://tools.ietf.org/html/rfc3492#section-3.4
+   * @private
+   */
+
+
+  function adapt(delta, numPoints, firstTime) {
+    var k = 0;
+    delta = firstTime ? floor(delta / damp) : delta >> 1;
+    delta += floor(delta / numPoints);
+
+    for (;
+    /* no initialization */
+    delta > baseMinusTMin * tMax >> 1; k += base) {
+      delta = floor(delta / baseMinusTMin);
+    }
+
+    return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+  }
+  /**
+   * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+   * symbols.
+   * @memberOf punycode
+   * @param {String} input The Punycode string of ASCII-only symbols.
+   * @returns {String} The resulting string of Unicode symbols.
+   */
+
+
+  function decode$1(input) {
+    // Don't use UCS-2
+    var output = [],
+        inputLength = input.length,
+        out,
+        i = 0,
+        n = initialN,
+        bias = initialBias,
+        basic,
+        j,
+        index,
+        oldi,
+        w,
+        k,
+        digit,
+        t,
+
+    /** Cached calculation results */
+    baseMinusT; // Handle the basic code points: let `basic` be the number of input code
+    // points before the last delimiter, or `0` if there is none, then copy
+    // the first basic code points to the output.
+
+    basic = input.lastIndexOf(delimiter);
+
+    if (basic < 0) {
+      basic = 0;
+    }
+
+    for (j = 0; j < basic; ++j) {
+      // if it's not a basic code point
+      if (input.charCodeAt(j) >= 0x80) {
+        error('not-basic');
+      }
+
+      output.push(input.charCodeAt(j));
+    } // Main decoding loop: start just after the last delimiter if any basic code
+    // points were copied; start at the beginning otherwise.
+
+
+    for (index = basic > 0 ? basic + 1 : 0; index < inputLength;)
+    /* no final expression */
+    {
+      // `index` is the index of the next character to be consumed.
+      // Decode a generalized variable-length integer into `delta`,
+      // which gets added to `i`. The overflow checking is easier
+      // if we increase `i` as we go, then subtract off its starting
+      // value at the end to obtain `delta`.
+      for (oldi = i, w = 1, k = base;;
+      /* no condition */
+      k += base) {
+        if (index >= inputLength) {
+          error('invalid-input');
+        }
+
+        digit = basicToDigit(input.charCodeAt(index++));
+
+        if (digit >= base || digit > floor((maxInt - i) / w)) {
+          error('overflow');
+        }
+
+        i += digit * w;
+        t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+
+        if (digit < t) {
+          break;
+        }
+
+        baseMinusT = base - t;
+
+        if (w > floor(maxInt / baseMinusT)) {
+          error('overflow');
+        }
+
+        w *= baseMinusT;
+      }
+
+      out = output.length + 1;
+      bias = adapt(i - oldi, out, oldi == 0); // `i` was supposed to wrap around from `out` to `0`,
+      // incrementing `n` each time, so we'll fix that now:
+
+      if (floor(i / out) > maxInt - n) {
+        error('overflow');
+      }
+
+      n += floor(i / out);
+      i %= out; // Insert `n` at position `i` of the output
+
+      output.splice(i++, 0, n);
+    }
+
+    return ucs2encode(output);
+  }
+  /**
+   * Converts a string of Unicode symbols (e.g. a domain name label) to a
+   * Punycode string of ASCII-only symbols.
+   * @memberOf punycode
+   * @param {String} input The string of Unicode symbols.
+   * @returns {String} The resulting Punycode string of ASCII-only symbols.
+   */
+
+  function encode(input) {
+    var n,
+        delta,
+        handledCPCount,
+        basicLength,
+        bias,
+        j,
+        m,
+        q,
+        k,
+        t,
+        currentValue,
+        output = [],
+
+    /** `inputLength` will hold the number of code points in `input`. */
+    inputLength,
+
+    /** Cached calculation results */
+    handledCPCountPlusOne,
+        baseMinusT,
+        qMinusT; // Convert the input in UCS-2 to Unicode
+
+    input = ucs2decode(input); // Cache the length
+
+    inputLength = input.length; // Initialize the state
+
+    n = initialN;
+    delta = 0;
+    bias = initialBias; // Handle the basic code points
+
+    for (j = 0; j < inputLength; ++j) {
+      currentValue = input[j];
+
+      if (currentValue < 0x80) {
+        output.push(stringFromCharCode(currentValue));
+      }
+    }
+
+    handledCPCount = basicLength = output.length; // `handledCPCount` is the number of code points that have been handled;
+    // `basicLength` is the number of basic code points.
+    // Finish the basic string - if it is not empty - with a delimiter
+
+    if (basicLength) {
+      output.push(delimiter);
+    } // Main encoding loop:
+
+
+    while (handledCPCount < inputLength) {
+      // All non-basic code points < n have been handled already. Find the next
+      // larger one:
+      for (m = maxInt, j = 0; j < inputLength; ++j) {
+        currentValue = input[j];
+
+        if (currentValue >= n && currentValue < m) {
+          m = currentValue;
+        }
+      } // Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+      // but guard against overflow
+
+
+      handledCPCountPlusOne = handledCPCount + 1;
+
+      if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+        error('overflow');
+      }
+
+      delta += (m - n) * handledCPCountPlusOne;
+      n = m;
+
+      for (j = 0; j < inputLength; ++j) {
+        currentValue = input[j];
+
+        if (currentValue < n && ++delta > maxInt) {
+          error('overflow');
+        }
+
+        if (currentValue == n) {
+          // Represent delta as a generalized variable-length integer
+          for (q = delta, k = base;;
+          /* no condition */
+          k += base) {
+            t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+
+            if (q < t) {
+              break;
+            }
+
+            qMinusT = q - t;
+            baseMinusT = base - t;
+            output.push(stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0)));
+            q = floor(qMinusT / baseMinusT);
+          }
+
+          output.push(stringFromCharCode(digitToBasic(q, 0)));
+          bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+          delta = 0;
+          ++handledCPCount;
+        }
+      }
+
+      ++delta;
+      ++n;
+    }
+
+    return output.join('');
+  }
+  /**
+   * Converts a Punycode string representing a domain name or an email address
+   * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+   * it doesn't matter if you call it on a string that has already been
+   * converted to Unicode.
+   * @memberOf punycode
+   * @param {String} input The Punycoded domain name or email address to
+   * convert to Unicode.
+   * @returns {String} The Unicode representation of the given Punycode
+   * string.
+   */
+
+  function toUnicode(input) {
+    return mapDomain(input, function (string) {
+      return regexPunycode.test(string) ? decode$1(string.slice(4).toLowerCase()) : string;
+    });
+  }
+  /**
+   * Converts a Unicode string representing a domain name or an email address to
+   * Punycode. Only the non-ASCII parts of the domain name will be converted,
+   * i.e. it doesn't matter if you call it with a domain that's already in
+   * ASCII.
+   * @memberOf punycode
+   * @param {String} input The domain name or email address to convert, as a
+   * Unicode string.
+   * @returns {String} The Punycode representation of the given domain name or
+   * email address.
+   */
+
+  function toASCII(input) {
+    return mapDomain(input, function (string) {
+      return regexNonASCII.test(string) ? 'xn--' + encode(string) : string;
+    });
+  }
+  var version = '1.4.1';
+  /**
+   * An object of methods to convert from JavaScript's internal character
+   * representation (UCS-2) to Unicode code points, and back.
+   * @see <https://mathiasbynens.be/notes/javascript-encoding>
+   * @memberOf punycode
+   * @type Object
+   */
+
+  var ucs2 = {
+    decode: ucs2decode,
+    encode: ucs2encode
+  };
+  var punycode = {
+    version: version,
+    ucs2: ucs2,
+    toASCII: toASCII,
+    toUnicode: toUnicode,
+    encode: encode,
+    decode: decode$1
+  };
+
+  var punycode$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    decode: decode$1,
+    encode: encode,
+    toUnicode: toUnicode,
+    toASCII: toASCII,
+    version: version,
+    ucs2: ucs2,
+    'default': punycode
+  });
+
+  var reversed = {
+  	"9": "Tab;",
+  	"10": "NewLine;",
+  	"33": "excl;",
+  	"34": "quot;",
+  	"35": "num;",
+  	"36": "dollar;",
+  	"37": "percnt;",
+  	"38": "amp;",
+  	"39": "apos;",
+  	"40": "lpar;",
+  	"41": "rpar;",
+  	"42": "midast;",
+  	"43": "plus;",
+  	"44": "comma;",
+  	"46": "period;",
+  	"47": "sol;",
+  	"58": "colon;",
+  	"59": "semi;",
+  	"60": "lt;",
+  	"61": "equals;",
+  	"62": "gt;",
+  	"63": "quest;",
+  	"64": "commat;",
+  	"91": "lsqb;",
+  	"92": "bsol;",
+  	"93": "rsqb;",
+  	"94": "Hat;",
+  	"95": "UnderBar;",
+  	"96": "grave;",
+  	"123": "lcub;",
+  	"124": "VerticalLine;",
+  	"125": "rcub;",
+  	"160": "NonBreakingSpace;",
+  	"161": "iexcl;",
+  	"162": "cent;",
+  	"163": "pound;",
+  	"164": "curren;",
+  	"165": "yen;",
+  	"166": "brvbar;",
+  	"167": "sect;",
+  	"168": "uml;",
+  	"169": "copy;",
+  	"170": "ordf;",
+  	"171": "laquo;",
+  	"172": "not;",
+  	"173": "shy;",
+  	"174": "reg;",
+  	"175": "strns;",
+  	"176": "deg;",
+  	"177": "pm;",
+  	"178": "sup2;",
+  	"179": "sup3;",
+  	"180": "DiacriticalAcute;",
+  	"181": "micro;",
+  	"182": "para;",
+  	"183": "middot;",
+  	"184": "Cedilla;",
+  	"185": "sup1;",
+  	"186": "ordm;",
+  	"187": "raquo;",
+  	"188": "frac14;",
+  	"189": "half;",
+  	"190": "frac34;",
+  	"191": "iquest;",
+  	"192": "Agrave;",
+  	"193": "Aacute;",
+  	"194": "Acirc;",
+  	"195": "Atilde;",
+  	"196": "Auml;",
+  	"197": "Aring;",
+  	"198": "AElig;",
+  	"199": "Ccedil;",
+  	"200": "Egrave;",
+  	"201": "Eacute;",
+  	"202": "Ecirc;",
+  	"203": "Euml;",
+  	"204": "Igrave;",
+  	"205": "Iacute;",
+  	"206": "Icirc;",
+  	"207": "Iuml;",
+  	"208": "ETH;",
+  	"209": "Ntilde;",
+  	"210": "Ograve;",
+  	"211": "Oacute;",
+  	"212": "Ocirc;",
+  	"213": "Otilde;",
+  	"214": "Ouml;",
+  	"215": "times;",
+  	"216": "Oslash;",
+  	"217": "Ugrave;",
+  	"218": "Uacute;",
+  	"219": "Ucirc;",
+  	"220": "Uuml;",
+  	"221": "Yacute;",
+  	"222": "THORN;",
+  	"223": "szlig;",
+  	"224": "agrave;",
+  	"225": "aacute;",
+  	"226": "acirc;",
+  	"227": "atilde;",
+  	"228": "auml;",
+  	"229": "aring;",
+  	"230": "aelig;",
+  	"231": "ccedil;",
+  	"232": "egrave;",
+  	"233": "eacute;",
+  	"234": "ecirc;",
+  	"235": "euml;",
+  	"236": "igrave;",
+  	"237": "iacute;",
+  	"238": "icirc;",
+  	"239": "iuml;",
+  	"240": "eth;",
+  	"241": "ntilde;",
+  	"242": "ograve;",
+  	"243": "oacute;",
+  	"244": "ocirc;",
+  	"245": "otilde;",
+  	"246": "ouml;",
+  	"247": "divide;",
+  	"248": "oslash;",
+  	"249": "ugrave;",
+  	"250": "uacute;",
+  	"251": "ucirc;",
+  	"252": "uuml;",
+  	"253": "yacute;",
+  	"254": "thorn;",
+  	"255": "yuml;",
+  	"256": "Amacr;",
+  	"257": "amacr;",
+  	"258": "Abreve;",
+  	"259": "abreve;",
+  	"260": "Aogon;",
+  	"261": "aogon;",
+  	"262": "Cacute;",
+  	"263": "cacute;",
+  	"264": "Ccirc;",
+  	"265": "ccirc;",
+  	"266": "Cdot;",
+  	"267": "cdot;",
+  	"268": "Ccaron;",
+  	"269": "ccaron;",
+  	"270": "Dcaron;",
+  	"271": "dcaron;",
+  	"272": "Dstrok;",
+  	"273": "dstrok;",
+  	"274": "Emacr;",
+  	"275": "emacr;",
+  	"278": "Edot;",
+  	"279": "edot;",
+  	"280": "Eogon;",
+  	"281": "eogon;",
+  	"282": "Ecaron;",
+  	"283": "ecaron;",
+  	"284": "Gcirc;",
+  	"285": "gcirc;",
+  	"286": "Gbreve;",
+  	"287": "gbreve;",
+  	"288": "Gdot;",
+  	"289": "gdot;",
+  	"290": "Gcedil;",
+  	"292": "Hcirc;",
+  	"293": "hcirc;",
+  	"294": "Hstrok;",
+  	"295": "hstrok;",
+  	"296": "Itilde;",
+  	"297": "itilde;",
+  	"298": "Imacr;",
+  	"299": "imacr;",
+  	"302": "Iogon;",
+  	"303": "iogon;",
+  	"304": "Idot;",
+  	"305": "inodot;",
+  	"306": "IJlig;",
+  	"307": "ijlig;",
+  	"308": "Jcirc;",
+  	"309": "jcirc;",
+  	"310": "Kcedil;",
+  	"311": "kcedil;",
+  	"312": "kgreen;",
+  	"313": "Lacute;",
+  	"314": "lacute;",
+  	"315": "Lcedil;",
+  	"316": "lcedil;",
+  	"317": "Lcaron;",
+  	"318": "lcaron;",
+  	"319": "Lmidot;",
+  	"320": "lmidot;",
+  	"321": "Lstrok;",
+  	"322": "lstrok;",
+  	"323": "Nacute;",
+  	"324": "nacute;",
+  	"325": "Ncedil;",
+  	"326": "ncedil;",
+  	"327": "Ncaron;",
+  	"328": "ncaron;",
+  	"329": "napos;",
+  	"330": "ENG;",
+  	"331": "eng;",
+  	"332": "Omacr;",
+  	"333": "omacr;",
+  	"336": "Odblac;",
+  	"337": "odblac;",
+  	"338": "OElig;",
+  	"339": "oelig;",
+  	"340": "Racute;",
+  	"341": "racute;",
+  	"342": "Rcedil;",
+  	"343": "rcedil;",
+  	"344": "Rcaron;",
+  	"345": "rcaron;",
+  	"346": "Sacute;",
+  	"347": "sacute;",
+  	"348": "Scirc;",
+  	"349": "scirc;",
+  	"350": "Scedil;",
+  	"351": "scedil;",
+  	"352": "Scaron;",
+  	"353": "scaron;",
+  	"354": "Tcedil;",
+  	"355": "tcedil;",
+  	"356": "Tcaron;",
+  	"357": "tcaron;",
+  	"358": "Tstrok;",
+  	"359": "tstrok;",
+  	"360": "Utilde;",
+  	"361": "utilde;",
+  	"362": "Umacr;",
+  	"363": "umacr;",
+  	"364": "Ubreve;",
+  	"365": "ubreve;",
+  	"366": "Uring;",
+  	"367": "uring;",
+  	"368": "Udblac;",
+  	"369": "udblac;",
+  	"370": "Uogon;",
+  	"371": "uogon;",
+  	"372": "Wcirc;",
+  	"373": "wcirc;",
+  	"374": "Ycirc;",
+  	"375": "ycirc;",
+  	"376": "Yuml;",
+  	"377": "Zacute;",
+  	"378": "zacute;",
+  	"379": "Zdot;",
+  	"380": "zdot;",
+  	"381": "Zcaron;",
+  	"382": "zcaron;",
+  	"402": "fnof;",
+  	"437": "imped;",
+  	"501": "gacute;",
+  	"567": "jmath;",
+  	"710": "circ;",
+  	"711": "Hacek;",
+  	"728": "breve;",
+  	"729": "dot;",
+  	"730": "ring;",
+  	"731": "ogon;",
+  	"732": "tilde;",
+  	"733": "DiacriticalDoubleAcute;",
+  	"785": "DownBreve;",
+  	"913": "Alpha;",
+  	"914": "Beta;",
+  	"915": "Gamma;",
+  	"916": "Delta;",
+  	"917": "Epsilon;",
+  	"918": "Zeta;",
+  	"919": "Eta;",
+  	"920": "Theta;",
+  	"921": "Iota;",
+  	"922": "Kappa;",
+  	"923": "Lambda;",
+  	"924": "Mu;",
+  	"925": "Nu;",
+  	"926": "Xi;",
+  	"927": "Omicron;",
+  	"928": "Pi;",
+  	"929": "Rho;",
+  	"931": "Sigma;",
+  	"932": "Tau;",
+  	"933": "Upsilon;",
+  	"934": "Phi;",
+  	"935": "Chi;",
+  	"936": "Psi;",
+  	"937": "Omega;",
+  	"945": "alpha;",
+  	"946": "beta;",
+  	"947": "gamma;",
+  	"948": "delta;",
+  	"949": "epsilon;",
+  	"950": "zeta;",
+  	"951": "eta;",
+  	"952": "theta;",
+  	"953": "iota;",
+  	"954": "kappa;",
+  	"955": "lambda;",
+  	"956": "mu;",
+  	"957": "nu;",
+  	"958": "xi;",
+  	"959": "omicron;",
+  	"960": "pi;",
+  	"961": "rho;",
+  	"962": "varsigma;",
+  	"963": "sigma;",
+  	"964": "tau;",
+  	"965": "upsilon;",
+  	"966": "phi;",
+  	"967": "chi;",
+  	"968": "psi;",
+  	"969": "omega;",
+  	"977": "vartheta;",
+  	"978": "upsih;",
+  	"981": "varphi;",
+  	"982": "varpi;",
+  	"988": "Gammad;",
+  	"989": "gammad;",
+  	"1008": "varkappa;",
+  	"1009": "varrho;",
+  	"1013": "varepsilon;",
+  	"1014": "bepsi;",
+  	"1025": "IOcy;",
+  	"1026": "DJcy;",
+  	"1027": "GJcy;",
+  	"1028": "Jukcy;",
+  	"1029": "DScy;",
+  	"1030": "Iukcy;",
+  	"1031": "YIcy;",
+  	"1032": "Jsercy;",
+  	"1033": "LJcy;",
+  	"1034": "NJcy;",
+  	"1035": "TSHcy;",
+  	"1036": "KJcy;",
+  	"1038": "Ubrcy;",
+  	"1039": "DZcy;",
+  	"1040": "Acy;",
+  	"1041": "Bcy;",
+  	"1042": "Vcy;",
+  	"1043": "Gcy;",
+  	"1044": "Dcy;",
+  	"1045": "IEcy;",
+  	"1046": "ZHcy;",
+  	"1047": "Zcy;",
+  	"1048": "Icy;",
+  	"1049": "Jcy;",
+  	"1050": "Kcy;",
+  	"1051": "Lcy;",
+  	"1052": "Mcy;",
+  	"1053": "Ncy;",
+  	"1054": "Ocy;",
+  	"1055": "Pcy;",
+  	"1056": "Rcy;",
+  	"1057": "Scy;",
+  	"1058": "Tcy;",
+  	"1059": "Ucy;",
+  	"1060": "Fcy;",
+  	"1061": "KHcy;",
+  	"1062": "TScy;",
+  	"1063": "CHcy;",
+  	"1064": "SHcy;",
+  	"1065": "SHCHcy;",
+  	"1066": "HARDcy;",
+  	"1067": "Ycy;",
+  	"1068": "SOFTcy;",
+  	"1069": "Ecy;",
+  	"1070": "YUcy;",
+  	"1071": "YAcy;",
+  	"1072": "acy;",
+  	"1073": "bcy;",
+  	"1074": "vcy;",
+  	"1075": "gcy;",
+  	"1076": "dcy;",
+  	"1077": "iecy;",
+  	"1078": "zhcy;",
+  	"1079": "zcy;",
+  	"1080": "icy;",
+  	"1081": "jcy;",
+  	"1082": "kcy;",
+  	"1083": "lcy;",
+  	"1084": "mcy;",
+  	"1085": "ncy;",
+  	"1086": "ocy;",
+  	"1087": "pcy;",
+  	"1088": "rcy;",
+  	"1089": "scy;",
+  	"1090": "tcy;",
+  	"1091": "ucy;",
+  	"1092": "fcy;",
+  	"1093": "khcy;",
+  	"1094": "tscy;",
+  	"1095": "chcy;",
+  	"1096": "shcy;",
+  	"1097": "shchcy;",
+  	"1098": "hardcy;",
+  	"1099": "ycy;",
+  	"1100": "softcy;",
+  	"1101": "ecy;",
+  	"1102": "yucy;",
+  	"1103": "yacy;",
+  	"1105": "iocy;",
+  	"1106": "djcy;",
+  	"1107": "gjcy;",
+  	"1108": "jukcy;",
+  	"1109": "dscy;",
+  	"1110": "iukcy;",
+  	"1111": "yicy;",
+  	"1112": "jsercy;",
+  	"1113": "ljcy;",
+  	"1114": "njcy;",
+  	"1115": "tshcy;",
+  	"1116": "kjcy;",
+  	"1118": "ubrcy;",
+  	"1119": "dzcy;",
+  	"8194": "ensp;",
+  	"8195": "emsp;",
+  	"8196": "emsp13;",
+  	"8197": "emsp14;",
+  	"8199": "numsp;",
+  	"8200": "puncsp;",
+  	"8201": "ThinSpace;",
+  	"8202": "VeryThinSpace;",
+  	"8203": "ZeroWidthSpace;",
+  	"8204": "zwnj;",
+  	"8205": "zwj;",
+  	"8206": "lrm;",
+  	"8207": "rlm;",
+  	"8208": "hyphen;",
+  	"8211": "ndash;",
+  	"8212": "mdash;",
+  	"8213": "horbar;",
+  	"8214": "Vert;",
+  	"8216": "OpenCurlyQuote;",
+  	"8217": "rsquor;",
+  	"8218": "sbquo;",
+  	"8220": "OpenCurlyDoubleQuote;",
+  	"8221": "rdquor;",
+  	"8222": "ldquor;",
+  	"8224": "dagger;",
+  	"8225": "ddagger;",
+  	"8226": "bullet;",
+  	"8229": "nldr;",
+  	"8230": "mldr;",
+  	"8240": "permil;",
+  	"8241": "pertenk;",
+  	"8242": "prime;",
+  	"8243": "Prime;",
+  	"8244": "tprime;",
+  	"8245": "bprime;",
+  	"8249": "lsaquo;",
+  	"8250": "rsaquo;",
+  	"8254": "OverBar;",
+  	"8257": "caret;",
+  	"8259": "hybull;",
+  	"8260": "frasl;",
+  	"8271": "bsemi;",
+  	"8279": "qprime;",
+  	"8287": "MediumSpace;",
+  	"8288": "NoBreak;",
+  	"8289": "ApplyFunction;",
+  	"8290": "it;",
+  	"8291": "InvisibleComma;",
+  	"8364": "euro;",
+  	"8411": "TripleDot;",
+  	"8412": "DotDot;",
+  	"8450": "Copf;",
+  	"8453": "incare;",
+  	"8458": "gscr;",
+  	"8459": "Hscr;",
+  	"8460": "Poincareplane;",
+  	"8461": "quaternions;",
+  	"8462": "planckh;",
+  	"8463": "plankv;",
+  	"8464": "Iscr;",
+  	"8465": "imagpart;",
+  	"8466": "Lscr;",
+  	"8467": "ell;",
+  	"8469": "Nopf;",
+  	"8470": "numero;",
+  	"8471": "copysr;",
+  	"8472": "wp;",
+  	"8473": "primes;",
+  	"8474": "rationals;",
+  	"8475": "Rscr;",
+  	"8476": "Rfr;",
+  	"8477": "Ropf;",
+  	"8478": "rx;",
+  	"8482": "trade;",
+  	"8484": "Zopf;",
+  	"8487": "mho;",
+  	"8488": "Zfr;",
+  	"8489": "iiota;",
+  	"8492": "Bscr;",
+  	"8493": "Cfr;",
+  	"8495": "escr;",
+  	"8496": "expectation;",
+  	"8497": "Fscr;",
+  	"8499": "phmmat;",
+  	"8500": "oscr;",
+  	"8501": "aleph;",
+  	"8502": "beth;",
+  	"8503": "gimel;",
+  	"8504": "daleth;",
+  	"8517": "DD;",
+  	"8518": "DifferentialD;",
+  	"8519": "exponentiale;",
+  	"8520": "ImaginaryI;",
+  	"8531": "frac13;",
+  	"8532": "frac23;",
+  	"8533": "frac15;",
+  	"8534": "frac25;",
+  	"8535": "frac35;",
+  	"8536": "frac45;",
+  	"8537": "frac16;",
+  	"8538": "frac56;",
+  	"8539": "frac18;",
+  	"8540": "frac38;",
+  	"8541": "frac58;",
+  	"8542": "frac78;",
+  	"8592": "slarr;",
+  	"8593": "uparrow;",
+  	"8594": "srarr;",
+  	"8595": "ShortDownArrow;",
+  	"8596": "leftrightarrow;",
+  	"8597": "varr;",
+  	"8598": "UpperLeftArrow;",
+  	"8599": "UpperRightArrow;",
+  	"8600": "searrow;",
+  	"8601": "swarrow;",
+  	"8602": "nleftarrow;",
+  	"8603": "nrightarrow;",
+  	"8605": "rightsquigarrow;",
+  	"8606": "twoheadleftarrow;",
+  	"8607": "Uarr;",
+  	"8608": "twoheadrightarrow;",
+  	"8609": "Darr;",
+  	"8610": "leftarrowtail;",
+  	"8611": "rightarrowtail;",
+  	"8612": "mapstoleft;",
+  	"8613": "UpTeeArrow;",
+  	"8614": "RightTeeArrow;",
+  	"8615": "mapstodown;",
+  	"8617": "larrhk;",
+  	"8618": "rarrhk;",
+  	"8619": "looparrowleft;",
+  	"8620": "rarrlp;",
+  	"8621": "leftrightsquigarrow;",
+  	"8622": "nleftrightarrow;",
+  	"8624": "lsh;",
+  	"8625": "rsh;",
+  	"8626": "ldsh;",
+  	"8627": "rdsh;",
+  	"8629": "crarr;",
+  	"8630": "curvearrowleft;",
+  	"8631": "curvearrowright;",
+  	"8634": "olarr;",
+  	"8635": "orarr;",
+  	"8636": "lharu;",
+  	"8637": "lhard;",
+  	"8638": "upharpoonright;",
+  	"8639": "upharpoonleft;",
+  	"8640": "RightVector;",
+  	"8641": "rightharpoondown;",
+  	"8642": "RightDownVector;",
+  	"8643": "LeftDownVector;",
+  	"8644": "rlarr;",
+  	"8645": "UpArrowDownArrow;",
+  	"8646": "lrarr;",
+  	"8647": "llarr;",
+  	"8648": "uuarr;",
+  	"8649": "rrarr;",
+  	"8650": "downdownarrows;",
+  	"8651": "ReverseEquilibrium;",
+  	"8652": "rlhar;",
+  	"8653": "nLeftarrow;",
+  	"8654": "nLeftrightarrow;",
+  	"8655": "nRightarrow;",
+  	"8656": "Leftarrow;",
+  	"8657": "Uparrow;",
+  	"8658": "Rightarrow;",
+  	"8659": "Downarrow;",
+  	"8660": "Leftrightarrow;",
+  	"8661": "vArr;",
+  	"8662": "nwArr;",
+  	"8663": "neArr;",
+  	"8664": "seArr;",
+  	"8665": "swArr;",
+  	"8666": "Lleftarrow;",
+  	"8667": "Rrightarrow;",
+  	"8669": "zigrarr;",
+  	"8676": "LeftArrowBar;",
+  	"8677": "RightArrowBar;",
+  	"8693": "duarr;",
+  	"8701": "loarr;",
+  	"8702": "roarr;",
+  	"8703": "hoarr;",
+  	"8704": "forall;",
+  	"8705": "complement;",
+  	"8706": "PartialD;",
+  	"8707": "Exists;",
+  	"8708": "NotExists;",
+  	"8709": "varnothing;",
+  	"8711": "nabla;",
+  	"8712": "isinv;",
+  	"8713": "notinva;",
+  	"8715": "SuchThat;",
+  	"8716": "NotReverseElement;",
+  	"8719": "Product;",
+  	"8720": "Coproduct;",
+  	"8721": "sum;",
+  	"8722": "minus;",
+  	"8723": "mp;",
+  	"8724": "plusdo;",
+  	"8726": "ssetmn;",
+  	"8727": "lowast;",
+  	"8728": "SmallCircle;",
+  	"8730": "Sqrt;",
+  	"8733": "vprop;",
+  	"8734": "infin;",
+  	"8735": "angrt;",
+  	"8736": "angle;",
+  	"8737": "measuredangle;",
+  	"8738": "angsph;",
+  	"8739": "VerticalBar;",
+  	"8740": "nsmid;",
+  	"8741": "spar;",
+  	"8742": "nspar;",
+  	"8743": "wedge;",
+  	"8744": "vee;",
+  	"8745": "cap;",
+  	"8746": "cup;",
+  	"8747": "Integral;",
+  	"8748": "Int;",
+  	"8749": "tint;",
+  	"8750": "oint;",
+  	"8751": "DoubleContourIntegral;",
+  	"8752": "Cconint;",
+  	"8753": "cwint;",
+  	"8754": "cwconint;",
+  	"8755": "CounterClockwiseContourIntegral;",
+  	"8756": "therefore;",
+  	"8757": "because;",
+  	"8758": "ratio;",
+  	"8759": "Proportion;",
+  	"8760": "minusd;",
+  	"8762": "mDDot;",
+  	"8763": "homtht;",
+  	"8764": "Tilde;",
+  	"8765": "bsim;",
+  	"8766": "mstpos;",
+  	"8767": "acd;",
+  	"8768": "wreath;",
+  	"8769": "nsim;",
+  	"8770": "esim;",
+  	"8771": "TildeEqual;",
+  	"8772": "nsimeq;",
+  	"8773": "TildeFullEqual;",
+  	"8774": "simne;",
+  	"8775": "NotTildeFullEqual;",
+  	"8776": "TildeTilde;",
+  	"8777": "NotTildeTilde;",
+  	"8778": "approxeq;",
+  	"8779": "apid;",
+  	"8780": "bcong;",
+  	"8781": "CupCap;",
+  	"8782": "HumpDownHump;",
+  	"8783": "HumpEqual;",
+  	"8784": "esdot;",
+  	"8785": "eDot;",
+  	"8786": "fallingdotseq;",
+  	"8787": "risingdotseq;",
+  	"8788": "coloneq;",
+  	"8789": "eqcolon;",
+  	"8790": "eqcirc;",
+  	"8791": "cire;",
+  	"8793": "wedgeq;",
+  	"8794": "veeeq;",
+  	"8796": "trie;",
+  	"8799": "questeq;",
+  	"8800": "NotEqual;",
+  	"8801": "equiv;",
+  	"8802": "NotCongruent;",
+  	"8804": "leq;",
+  	"8805": "GreaterEqual;",
+  	"8806": "LessFullEqual;",
+  	"8807": "GreaterFullEqual;",
+  	"8808": "lneqq;",
+  	"8809": "gneqq;",
+  	"8810": "NestedLessLess;",
+  	"8811": "NestedGreaterGreater;",
+  	"8812": "twixt;",
+  	"8813": "NotCupCap;",
+  	"8814": "NotLess;",
+  	"8815": "NotGreater;",
+  	"8816": "NotLessEqual;",
+  	"8817": "NotGreaterEqual;",
+  	"8818": "lsim;",
+  	"8819": "gtrsim;",
+  	"8820": "NotLessTilde;",
+  	"8821": "NotGreaterTilde;",
+  	"8822": "lg;",
+  	"8823": "gtrless;",
+  	"8824": "ntlg;",
+  	"8825": "ntgl;",
+  	"8826": "Precedes;",
+  	"8827": "Succeeds;",
+  	"8828": "PrecedesSlantEqual;",
+  	"8829": "SucceedsSlantEqual;",
+  	"8830": "prsim;",
+  	"8831": "succsim;",
+  	"8832": "nprec;",
+  	"8833": "nsucc;",
+  	"8834": "subset;",
+  	"8835": "supset;",
+  	"8836": "nsub;",
+  	"8837": "nsup;",
+  	"8838": "SubsetEqual;",
+  	"8839": "supseteq;",
+  	"8840": "nsubseteq;",
+  	"8841": "nsupseteq;",
+  	"8842": "subsetneq;",
+  	"8843": "supsetneq;",
+  	"8845": "cupdot;",
+  	"8846": "uplus;",
+  	"8847": "SquareSubset;",
+  	"8848": "SquareSuperset;",
+  	"8849": "SquareSubsetEqual;",
+  	"8850": "SquareSupersetEqual;",
+  	"8851": "SquareIntersection;",
+  	"8852": "SquareUnion;",
+  	"8853": "oplus;",
+  	"8854": "ominus;",
+  	"8855": "otimes;",
+  	"8856": "osol;",
+  	"8857": "odot;",
+  	"8858": "ocir;",
+  	"8859": "oast;",
+  	"8861": "odash;",
+  	"8862": "plusb;",
+  	"8863": "minusb;",
+  	"8864": "timesb;",
+  	"8865": "sdotb;",
+  	"8866": "vdash;",
+  	"8867": "LeftTee;",
+  	"8868": "top;",
+  	"8869": "UpTee;",
+  	"8871": "models;",
+  	"8872": "vDash;",
+  	"8873": "Vdash;",
+  	"8874": "Vvdash;",
+  	"8875": "VDash;",
+  	"8876": "nvdash;",
+  	"8877": "nvDash;",
+  	"8878": "nVdash;",
+  	"8879": "nVDash;",
+  	"8880": "prurel;",
+  	"8882": "vltri;",
+  	"8883": "vrtri;",
+  	"8884": "trianglelefteq;",
+  	"8885": "trianglerighteq;",
+  	"8886": "origof;",
+  	"8887": "imof;",
+  	"8888": "mumap;",
+  	"8889": "hercon;",
+  	"8890": "intercal;",
+  	"8891": "veebar;",
+  	"8893": "barvee;",
+  	"8894": "angrtvb;",
+  	"8895": "lrtri;",
+  	"8896": "xwedge;",
+  	"8897": "xvee;",
+  	"8898": "xcap;",
+  	"8899": "xcup;",
+  	"8900": "diamond;",
+  	"8901": "sdot;",
+  	"8902": "Star;",
+  	"8903": "divonx;",
+  	"8904": "bowtie;",
+  	"8905": "ltimes;",
+  	"8906": "rtimes;",
+  	"8907": "lthree;",
+  	"8908": "rthree;",
+  	"8909": "bsime;",
+  	"8910": "cuvee;",
+  	"8911": "cuwed;",
+  	"8912": "Subset;",
+  	"8913": "Supset;",
+  	"8914": "Cap;",
+  	"8915": "Cup;",
+  	"8916": "pitchfork;",
+  	"8917": "epar;",
+  	"8918": "ltdot;",
+  	"8919": "gtrdot;",
+  	"8920": "Ll;",
+  	"8921": "ggg;",
+  	"8922": "LessEqualGreater;",
+  	"8923": "gtreqless;",
+  	"8926": "curlyeqprec;",
+  	"8927": "curlyeqsucc;",
+  	"8928": "nprcue;",
+  	"8929": "nsccue;",
+  	"8930": "nsqsube;",
+  	"8931": "nsqsupe;",
+  	"8934": "lnsim;",
+  	"8935": "gnsim;",
+  	"8936": "prnsim;",
+  	"8937": "succnsim;",
+  	"8938": "ntriangleleft;",
+  	"8939": "ntriangleright;",
+  	"8940": "ntrianglelefteq;",
+  	"8941": "ntrianglerighteq;",
+  	"8942": "vellip;",
+  	"8943": "ctdot;",
+  	"8944": "utdot;",
+  	"8945": "dtdot;",
+  	"8946": "disin;",
+  	"8947": "isinsv;",
+  	"8948": "isins;",
+  	"8949": "isindot;",
+  	"8950": "notinvc;",
+  	"8951": "notinvb;",
+  	"8953": "isinE;",
+  	"8954": "nisd;",
+  	"8955": "xnis;",
+  	"8956": "nis;",
+  	"8957": "notnivc;",
+  	"8958": "notnivb;",
+  	"8965": "barwedge;",
+  	"8966": "doublebarwedge;",
+  	"8968": "LeftCeiling;",
+  	"8969": "RightCeiling;",
+  	"8970": "lfloor;",
+  	"8971": "RightFloor;",
+  	"8972": "drcrop;",
+  	"8973": "dlcrop;",
+  	"8974": "urcrop;",
+  	"8975": "ulcrop;",
+  	"8976": "bnot;",
+  	"8978": "profline;",
+  	"8979": "profsurf;",
+  	"8981": "telrec;",
+  	"8982": "target;",
+  	"8988": "ulcorner;",
+  	"8989": "urcorner;",
+  	"8990": "llcorner;",
+  	"8991": "lrcorner;",
+  	"8994": "sfrown;",
+  	"8995": "ssmile;",
+  	"9005": "cylcty;",
+  	"9006": "profalar;",
+  	"9014": "topbot;",
+  	"9021": "ovbar;",
+  	"9023": "solbar;",
+  	"9084": "angzarr;",
+  	"9136": "lmoustache;",
+  	"9137": "rmoustache;",
+  	"9140": "tbrk;",
+  	"9141": "UnderBracket;",
+  	"9142": "bbrktbrk;",
+  	"9180": "OverParenthesis;",
+  	"9181": "UnderParenthesis;",
+  	"9182": "OverBrace;",
+  	"9183": "UnderBrace;",
+  	"9186": "trpezium;",
+  	"9191": "elinters;",
+  	"9251": "blank;",
+  	"9416": "oS;",
+  	"9472": "HorizontalLine;",
+  	"9474": "boxv;",
+  	"9484": "boxdr;",
+  	"9488": "boxdl;",
+  	"9492": "boxur;",
+  	"9496": "boxul;",
+  	"9500": "boxvr;",
+  	"9508": "boxvl;",
+  	"9516": "boxhd;",
+  	"9524": "boxhu;",
+  	"9532": "boxvh;",
+  	"9552": "boxH;",
+  	"9553": "boxV;",
+  	"9554": "boxdR;",
+  	"9555": "boxDr;",
+  	"9556": "boxDR;",
+  	"9557": "boxdL;",
+  	"9558": "boxDl;",
+  	"9559": "boxDL;",
+  	"9560": "boxuR;",
+  	"9561": "boxUr;",
+  	"9562": "boxUR;",
+  	"9563": "boxuL;",
+  	"9564": "boxUl;",
+  	"9565": "boxUL;",
+  	"9566": "boxvR;",
+  	"9567": "boxVr;",
+  	"9568": "boxVR;",
+  	"9569": "boxvL;",
+  	"9570": "boxVl;",
+  	"9571": "boxVL;",
+  	"9572": "boxHd;",
+  	"9573": "boxhD;",
+  	"9574": "boxHD;",
+  	"9575": "boxHu;",
+  	"9576": "boxhU;",
+  	"9577": "boxHU;",
+  	"9578": "boxvH;",
+  	"9579": "boxVh;",
+  	"9580": "boxVH;",
+  	"9600": "uhblk;",
+  	"9604": "lhblk;",
+  	"9608": "block;",
+  	"9617": "blk14;",
+  	"9618": "blk12;",
+  	"9619": "blk34;",
+  	"9633": "square;",
+  	"9642": "squf;",
+  	"9643": "EmptyVerySmallSquare;",
+  	"9645": "rect;",
+  	"9646": "marker;",
+  	"9649": "fltns;",
+  	"9651": "xutri;",
+  	"9652": "utrif;",
+  	"9653": "utri;",
+  	"9656": "rtrif;",
+  	"9657": "triangleright;",
+  	"9661": "xdtri;",
+  	"9662": "dtrif;",
+  	"9663": "triangledown;",
+  	"9666": "ltrif;",
+  	"9667": "triangleleft;",
+  	"9674": "lozenge;",
+  	"9675": "cir;",
+  	"9708": "tridot;",
+  	"9711": "xcirc;",
+  	"9720": "ultri;",
+  	"9721": "urtri;",
+  	"9722": "lltri;",
+  	"9723": "EmptySmallSquare;",
+  	"9724": "FilledSmallSquare;",
+  	"9733": "starf;",
+  	"9734": "star;",
+  	"9742": "phone;",
+  	"9792": "female;",
+  	"9794": "male;",
+  	"9824": "spadesuit;",
+  	"9827": "clubsuit;",
+  	"9829": "heartsuit;",
+  	"9830": "diams;",
+  	"9834": "sung;",
+  	"9837": "flat;",
+  	"9838": "natural;",
+  	"9839": "sharp;",
+  	"10003": "checkmark;",
+  	"10007": "cross;",
+  	"10016": "maltese;",
+  	"10038": "sext;",
+  	"10072": "VerticalSeparator;",
+  	"10098": "lbbrk;",
+  	"10099": "rbbrk;",
+  	"10184": "bsolhsub;",
+  	"10185": "suphsol;",
+  	"10214": "lobrk;",
+  	"10215": "robrk;",
+  	"10216": "LeftAngleBracket;",
+  	"10217": "RightAngleBracket;",
+  	"10218": "Lang;",
+  	"10219": "Rang;",
+  	"10220": "loang;",
+  	"10221": "roang;",
+  	"10229": "xlarr;",
+  	"10230": "xrarr;",
+  	"10231": "xharr;",
+  	"10232": "xlArr;",
+  	"10233": "xrArr;",
+  	"10234": "xhArr;",
+  	"10236": "xmap;",
+  	"10239": "dzigrarr;",
+  	"10498": "nvlArr;",
+  	"10499": "nvrArr;",
+  	"10500": "nvHarr;",
+  	"10501": "Map;",
+  	"10508": "lbarr;",
+  	"10509": "rbarr;",
+  	"10510": "lBarr;",
+  	"10511": "rBarr;",
+  	"10512": "RBarr;",
+  	"10513": "DDotrahd;",
+  	"10514": "UpArrowBar;",
+  	"10515": "DownArrowBar;",
+  	"10518": "Rarrtl;",
+  	"10521": "latail;",
+  	"10522": "ratail;",
+  	"10523": "lAtail;",
+  	"10524": "rAtail;",
+  	"10525": "larrfs;",
+  	"10526": "rarrfs;",
+  	"10527": "larrbfs;",
+  	"10528": "rarrbfs;",
+  	"10531": "nwarhk;",
+  	"10532": "nearhk;",
+  	"10533": "searhk;",
+  	"10534": "swarhk;",
+  	"10535": "nwnear;",
+  	"10536": "toea;",
+  	"10537": "tosa;",
+  	"10538": "swnwar;",
+  	"10547": "rarrc;",
+  	"10549": "cudarrr;",
+  	"10550": "ldca;",
+  	"10551": "rdca;",
+  	"10552": "cudarrl;",
+  	"10553": "larrpl;",
+  	"10556": "curarrm;",
+  	"10557": "cularrp;",
+  	"10565": "rarrpl;",
+  	"10568": "harrcir;",
+  	"10569": "Uarrocir;",
+  	"10570": "lurdshar;",
+  	"10571": "ldrushar;",
+  	"10574": "LeftRightVector;",
+  	"10575": "RightUpDownVector;",
+  	"10576": "DownLeftRightVector;",
+  	"10577": "LeftUpDownVector;",
+  	"10578": "LeftVectorBar;",
+  	"10579": "RightVectorBar;",
+  	"10580": "RightUpVectorBar;",
+  	"10581": "RightDownVectorBar;",
+  	"10582": "DownLeftVectorBar;",
+  	"10583": "DownRightVectorBar;",
+  	"10584": "LeftUpVectorBar;",
+  	"10585": "LeftDownVectorBar;",
+  	"10586": "LeftTeeVector;",
+  	"10587": "RightTeeVector;",
+  	"10588": "RightUpTeeVector;",
+  	"10589": "RightDownTeeVector;",
+  	"10590": "DownLeftTeeVector;",
+  	"10591": "DownRightTeeVector;",
+  	"10592": "LeftUpTeeVector;",
+  	"10593": "LeftDownTeeVector;",
+  	"10594": "lHar;",
+  	"10595": "uHar;",
+  	"10596": "rHar;",
+  	"10597": "dHar;",
+  	"10598": "luruhar;",
+  	"10599": "ldrdhar;",
+  	"10600": "ruluhar;",
+  	"10601": "rdldhar;",
+  	"10602": "lharul;",
+  	"10603": "llhard;",
+  	"10604": "rharul;",
+  	"10605": "lrhard;",
+  	"10606": "UpEquilibrium;",
+  	"10607": "ReverseUpEquilibrium;",
+  	"10608": "RoundImplies;",
+  	"10609": "erarr;",
+  	"10610": "simrarr;",
+  	"10611": "larrsim;",
+  	"10612": "rarrsim;",
+  	"10613": "rarrap;",
+  	"10614": "ltlarr;",
+  	"10616": "gtrarr;",
+  	"10617": "subrarr;",
+  	"10619": "suplarr;",
+  	"10620": "lfisht;",
+  	"10621": "rfisht;",
+  	"10622": "ufisht;",
+  	"10623": "dfisht;",
+  	"10629": "lopar;",
+  	"10630": "ropar;",
+  	"10635": "lbrke;",
+  	"10636": "rbrke;",
+  	"10637": "lbrkslu;",
+  	"10638": "rbrksld;",
+  	"10639": "lbrksld;",
+  	"10640": "rbrkslu;",
+  	"10641": "langd;",
+  	"10642": "rangd;",
+  	"10643": "lparlt;",
+  	"10644": "rpargt;",
+  	"10645": "gtlPar;",
+  	"10646": "ltrPar;",
+  	"10650": "vzigzag;",
+  	"10652": "vangrt;",
+  	"10653": "angrtvbd;",
+  	"10660": "ange;",
+  	"10661": "range;",
+  	"10662": "dwangle;",
+  	"10663": "uwangle;",
+  	"10664": "angmsdaa;",
+  	"10665": "angmsdab;",
+  	"10666": "angmsdac;",
+  	"10667": "angmsdad;",
+  	"10668": "angmsdae;",
+  	"10669": "angmsdaf;",
+  	"10670": "angmsdag;",
+  	"10671": "angmsdah;",
+  	"10672": "bemptyv;",
+  	"10673": "demptyv;",
+  	"10674": "cemptyv;",
+  	"10675": "raemptyv;",
+  	"10676": "laemptyv;",
+  	"10677": "ohbar;",
+  	"10678": "omid;",
+  	"10679": "opar;",
+  	"10681": "operp;",
+  	"10683": "olcross;",
+  	"10684": "odsold;",
+  	"10686": "olcir;",
+  	"10687": "ofcir;",
+  	"10688": "olt;",
+  	"10689": "ogt;",
+  	"10690": "cirscir;",
+  	"10691": "cirE;",
+  	"10692": "solb;",
+  	"10693": "bsolb;",
+  	"10697": "boxbox;",
+  	"10701": "trisb;",
+  	"10702": "rtriltri;",
+  	"10703": "LeftTriangleBar;",
+  	"10704": "RightTriangleBar;",
+  	"10716": "iinfin;",
+  	"10717": "infintie;",
+  	"10718": "nvinfin;",
+  	"10723": "eparsl;",
+  	"10724": "smeparsl;",
+  	"10725": "eqvparsl;",
+  	"10731": "lozf;",
+  	"10740": "RuleDelayed;",
+  	"10742": "dsol;",
+  	"10752": "xodot;",
+  	"10753": "xoplus;",
+  	"10754": "xotime;",
+  	"10756": "xuplus;",
+  	"10758": "xsqcup;",
+  	"10764": "qint;",
+  	"10765": "fpartint;",
+  	"10768": "cirfnint;",
+  	"10769": "awint;",
+  	"10770": "rppolint;",
+  	"10771": "scpolint;",
+  	"10772": "npolint;",
+  	"10773": "pointint;",
+  	"10774": "quatint;",
+  	"10775": "intlarhk;",
+  	"10786": "pluscir;",
+  	"10787": "plusacir;",
+  	"10788": "simplus;",
+  	"10789": "plusdu;",
+  	"10790": "plussim;",
+  	"10791": "plustwo;",
+  	"10793": "mcomma;",
+  	"10794": "minusdu;",
+  	"10797": "loplus;",
+  	"10798": "roplus;",
+  	"10799": "Cross;",
+  	"10800": "timesd;",
+  	"10801": "timesbar;",
+  	"10803": "smashp;",
+  	"10804": "lotimes;",
+  	"10805": "rotimes;",
+  	"10806": "otimesas;",
+  	"10807": "Otimes;",
+  	"10808": "odiv;",
+  	"10809": "triplus;",
+  	"10810": "triminus;",
+  	"10811": "tritime;",
+  	"10812": "iprod;",
+  	"10815": "amalg;",
+  	"10816": "capdot;",
+  	"10818": "ncup;",
+  	"10819": "ncap;",
+  	"10820": "capand;",
+  	"10821": "cupor;",
+  	"10822": "cupcap;",
+  	"10823": "capcup;",
+  	"10824": "cupbrcap;",
+  	"10825": "capbrcup;",
+  	"10826": "cupcup;",
+  	"10827": "capcap;",
+  	"10828": "ccups;",
+  	"10829": "ccaps;",
+  	"10832": "ccupssm;",
+  	"10835": "And;",
+  	"10836": "Or;",
+  	"10837": "andand;",
+  	"10838": "oror;",
+  	"10839": "orslope;",
+  	"10840": "andslope;",
+  	"10842": "andv;",
+  	"10843": "orv;",
+  	"10844": "andd;",
+  	"10845": "ord;",
+  	"10847": "wedbar;",
+  	"10854": "sdote;",
+  	"10858": "simdot;",
+  	"10861": "congdot;",
+  	"10862": "easter;",
+  	"10863": "apacir;",
+  	"10864": "apE;",
+  	"10865": "eplus;",
+  	"10866": "pluse;",
+  	"10867": "Esim;",
+  	"10868": "Colone;",
+  	"10869": "Equal;",
+  	"10871": "eDDot;",
+  	"10872": "equivDD;",
+  	"10873": "ltcir;",
+  	"10874": "gtcir;",
+  	"10875": "ltquest;",
+  	"10876": "gtquest;",
+  	"10877": "LessSlantEqual;",
+  	"10878": "GreaterSlantEqual;",
+  	"10879": "lesdot;",
+  	"10880": "gesdot;",
+  	"10881": "lesdoto;",
+  	"10882": "gesdoto;",
+  	"10883": "lesdotor;",
+  	"10884": "gesdotol;",
+  	"10885": "lessapprox;",
+  	"10886": "gtrapprox;",
+  	"10887": "lneq;",
+  	"10888": "gneq;",
+  	"10889": "lnapprox;",
+  	"10890": "gnapprox;",
+  	"10891": "lesseqqgtr;",
+  	"10892": "gtreqqless;",
+  	"10893": "lsime;",
+  	"10894": "gsime;",
+  	"10895": "lsimg;",
+  	"10896": "gsiml;",
+  	"10897": "lgE;",
+  	"10898": "glE;",
+  	"10899": "lesges;",
+  	"10900": "gesles;",
+  	"10901": "eqslantless;",
+  	"10902": "eqslantgtr;",
+  	"10903": "elsdot;",
+  	"10904": "egsdot;",
+  	"10905": "el;",
+  	"10906": "eg;",
+  	"10909": "siml;",
+  	"10910": "simg;",
+  	"10911": "simlE;",
+  	"10912": "simgE;",
+  	"10913": "LessLess;",
+  	"10914": "GreaterGreater;",
+  	"10916": "glj;",
+  	"10917": "gla;",
+  	"10918": "ltcc;",
+  	"10919": "gtcc;",
+  	"10920": "lescc;",
+  	"10921": "gescc;",
+  	"10922": "smt;",
+  	"10923": "lat;",
+  	"10924": "smte;",
+  	"10925": "late;",
+  	"10926": "bumpE;",
+  	"10927": "preceq;",
+  	"10928": "succeq;",
+  	"10931": "prE;",
+  	"10932": "scE;",
+  	"10933": "prnE;",
+  	"10934": "succneqq;",
+  	"10935": "precapprox;",
+  	"10936": "succapprox;",
+  	"10937": "prnap;",
+  	"10938": "succnapprox;",
+  	"10939": "Pr;",
+  	"10940": "Sc;",
+  	"10941": "subdot;",
+  	"10942": "supdot;",
+  	"10943": "subplus;",
+  	"10944": "supplus;",
+  	"10945": "submult;",
+  	"10946": "supmult;",
+  	"10947": "subedot;",
+  	"10948": "supedot;",
+  	"10949": "subseteqq;",
+  	"10950": "supseteqq;",
+  	"10951": "subsim;",
+  	"10952": "supsim;",
+  	"10955": "subsetneqq;",
+  	"10956": "supsetneqq;",
+  	"10959": "csub;",
+  	"10960": "csup;",
+  	"10961": "csube;",
+  	"10962": "csupe;",
+  	"10963": "subsup;",
+  	"10964": "supsub;",
+  	"10965": "subsub;",
+  	"10966": "supsup;",
+  	"10967": "suphsub;",
+  	"10968": "supdsub;",
+  	"10969": "forkv;",
+  	"10970": "topfork;",
+  	"10971": "mlcp;",
+  	"10980": "DoubleLeftTee;",
+  	"10982": "Vdashl;",
+  	"10983": "Barv;",
+  	"10984": "vBar;",
+  	"10985": "vBarv;",
+  	"10987": "Vbar;",
+  	"10988": "Not;",
+  	"10989": "bNot;",
+  	"10990": "rnmid;",
+  	"10991": "cirmid;",
+  	"10992": "midcir;",
+  	"10993": "topcir;",
+  	"10994": "nhpar;",
+  	"10995": "parsim;",
+  	"11005": "parsl;",
+  	"64256": "fflig;",
+  	"64257": "filig;",
+  	"64258": "fllig;",
+  	"64259": "ffilig;",
+  	"64260": "ffllig;"
+  };
+
+  var reversed$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': reversed
+  });
+
+  var punycode$2 = getCjsExportFromNamespace(punycode$1);
+
+  var revEntities = getCjsExportFromNamespace(reversed$1);
+
+  var encode_1 = encode$1;
+
+  function encode$1(str, opts) {
+    if (typeof str !== 'string') {
+      throw new TypeError('Expected a String');
+    }
+
+    if (!opts) opts = {};
+    var numeric = true;
+    if (opts.named) numeric = false;
+    if (opts.numeric !== undefined) numeric = opts.numeric;
+    var special = opts.special || {
+      '"': true,
+      "'": true,
+      '<': true,
+      '>': true,
+      '&': true
+    };
+    var codePoints = punycode$2.ucs2.decode(str);
+    var chars = [];
+
+    for (var i = 0; i < codePoints.length; i++) {
+      var cc = codePoints[i];
+      var c = punycode$2.ucs2.encode([cc]);
+      var e = revEntities[cc];
+
+      if (e && (cc >= 127 || special[c]) && !numeric) {
+        chars.push('&' + (/;$/.test(e) ? e : e + ';'));
+      } else if (cc < 32 || cc >= 127 || special[c]) {
+        chars.push('&#' + cc + ';');
+      } else {
+        chars.push(c);
+      }
+    }
+
+    return chars.join('');
+  }
+
+  var Aacute$1 = "Á";
+  var aacute$1 = "á";
+  var Acirc$1 = "Â";
+  var acirc$1 = "â";
+  var acute$2 = "´";
+  var AElig$1 = "Æ";
+  var aelig$1 = "æ";
+  var Agrave$1 = "À";
+  var agrave$1 = "à";
+  var AMP$1 = "&";
+  var amp$2 = "&";
+  var Aring$2 = "Å";
+  var aring$2 = "å";
+  var Atilde$1 = "Ã";
+  var atilde$2 = "ã";
+  var Auml$1 = "Ä";
+  var auml$1 = "ä";
+  var brvbar$1 = "¦";
+  var Ccedil$1 = "Ç";
+  var ccedil$1 = "ç";
+  var cedil$2 = "¸";
+  var cent$2 = "¢";
+  var COPY$2 = "©";
+  var copy$2 = "©";
+  var curren$1 = "¤";
+  var deg$2 = "°";
+  var divide$2 = "÷";
+  var Eacute$1 = "É";
+  var eacute$1 = "é";
+  var Ecirc$1 = "Ê";
+  var ecirc$1 = "ê";
+  var Egrave$1 = "È";
+  var egrave$2 = "è";
+  var ETH$2 = "Ð";
+  var eth$2 = "ð";
+  var Euml$1 = "Ë";
+  var euml$1 = "ë";
+  var frac12$1 = "½";
+  var frac14$1 = "¼";
+  var frac34$1 = "¾";
+  var GT$2 = ">";
+  var gt$2 = ">";
+  var Iacute$1 = "Í";
+  var iacute$1 = "í";
+  var Icirc$1 = "Î";
+  var icirc$1 = "î";
+  var iexcl$1 = "¡";
+  var Igrave$1 = "Ì";
+  var igrave$1 = "ì";
+  var iquest$1 = "¿";
+  var Iuml$1 = "Ï";
+  var iuml$1 = "ï";
+  var laquo$1 = "«";
+  var LT$2 = "<";
+  var lt$2 = "<";
+  var macr$1 = "¯";
+  var micro$1 = "µ";
+  var middot$1 = "·";
+  var nbsp$1 = " ";
+  var not$2 = "¬";
+  var Ntilde$1 = "Ñ";
+  var ntilde$1 = "ñ";
+  var Oacute$1 = "Ó";
+  var oacute$1 = "ó";
+  var Ocirc$1 = "Ô";
+  var ocirc$1 = "ô";
+  var Ograve$1 = "Ò";
+  var ograve$1 = "ò";
+  var ordf$1 = "ª";
+  var ordm$1 = "º";
+  var Oslash$1 = "Ø";
+  var oslash$1 = "ø";
+  var Otilde$1 = "Õ";
+  var otilde$1 = "õ";
+  var Ouml$1 = "Ö";
+  var ouml$1 = "ö";
+  var para$2 = "¶";
+  var plusmn$1 = "±";
+  var pound$2 = "£";
+  var QUOT$2 = "\"";
+  var quot$2 = "\"";
+  var raquo$1 = "»";
+  var REG$2 = "®";
+  var reg$2 = "®";
+  var sect$2 = "§";
+  var shy$2 = "­";
+  var sup1$1 = "¹";
+  var sup2$1 = "²";
+  var sup3$1 = "³";
+  var szlig$1 = "ß";
+  var THORN$2 = "Þ";
+  var thorn$2 = "þ";
+  var times$2 = "×";
+  var Uacute$1 = "Ú";
+  var uacute$1 = "ú";
+  var Ucirc$1 = "Û";
+  var ucirc$1 = "û";
+  var Ugrave$1 = "Ù";
+  var ugrave$1 = "ù";
+  var uml$2 = "¨";
+  var Uuml$1 = "Ü";
+  var uuml$1 = "ü";
+  var Yacute$1 = "Ý";
+  var yacute$1 = "ý";
+  var yen$2 = "¥";
+  var yuml$1 = "ÿ";
+  var entities = {
+  	"Aacute;": "Á",
+  	Aacute: Aacute$1,
+  	"aacute;": "á",
+  	aacute: aacute$1,
+  	"Abreve;": "Ă",
+  	"abreve;": "ă",
+  	"ac;": "∾",
+  	"acd;": "∿",
+  	"acE;": "∾̳",
+  	"Acirc;": "Â",
+  	Acirc: Acirc$1,
+  	"acirc;": "â",
+  	acirc: acirc$1,
+  	"acute;": "´",
+  	acute: acute$2,
+  	"Acy;": "А",
+  	"acy;": "а",
+  	"AElig;": "Æ",
+  	AElig: AElig$1,
+  	"aelig;": "æ",
+  	aelig: aelig$1,
+  	"af;": "⁡",
+  	"Afr;": "𝔄",
+  	"afr;": "𝔞",
+  	"Agrave;": "À",
+  	Agrave: Agrave$1,
+  	"agrave;": "à",
+  	agrave: agrave$1,
+  	"alefsym;": "ℵ",
+  	"aleph;": "ℵ",
+  	"Alpha;": "Α",
+  	"alpha;": "α",
+  	"Amacr;": "Ā",
+  	"amacr;": "ā",
+  	"amalg;": "⨿",
+  	"AMP;": "&",
+  	AMP: AMP$1,
+  	"amp;": "&",
+  	amp: amp$2,
+  	"And;": "⩓",
+  	"and;": "∧",
+  	"andand;": "⩕",
+  	"andd;": "⩜",
+  	"andslope;": "⩘",
+  	"andv;": "⩚",
+  	"ang;": "∠",
+  	"ange;": "⦤",
+  	"angle;": "∠",
+  	"angmsd;": "∡",
+  	"angmsdaa;": "⦨",
+  	"angmsdab;": "⦩",
+  	"angmsdac;": "⦪",
+  	"angmsdad;": "⦫",
+  	"angmsdae;": "⦬",
+  	"angmsdaf;": "⦭",
+  	"angmsdag;": "⦮",
+  	"angmsdah;": "⦯",
+  	"angrt;": "∟",
+  	"angrtvb;": "⊾",
+  	"angrtvbd;": "⦝",
+  	"angsph;": "∢",
+  	"angst;": "Å",
+  	"angzarr;": "⍼",
+  	"Aogon;": "Ą",
+  	"aogon;": "ą",
+  	"Aopf;": "𝔸",
+  	"aopf;": "𝕒",
+  	"ap;": "≈",
+  	"apacir;": "⩯",
+  	"apE;": "⩰",
+  	"ape;": "≊",
+  	"apid;": "≋",
+  	"apos;": "'",
+  	"ApplyFunction;": "⁡",
+  	"approx;": "≈",
+  	"approxeq;": "≊",
+  	"Aring;": "Å",
+  	Aring: Aring$2,
+  	"aring;": "å",
+  	aring: aring$2,
+  	"Ascr;": "𝒜",
+  	"ascr;": "𝒶",
+  	"Assign;": "≔",
+  	"ast;": "*",
+  	"asymp;": "≈",
+  	"asympeq;": "≍",
+  	"Atilde;": "Ã",
+  	Atilde: Atilde$1,
+  	"atilde;": "ã",
+  	atilde: atilde$2,
+  	"Auml;": "Ä",
+  	Auml: Auml$1,
+  	"auml;": "ä",
+  	auml: auml$1,
+  	"awconint;": "∳",
+  	"awint;": "⨑",
+  	"backcong;": "≌",
+  	"backepsilon;": "϶",
+  	"backprime;": "‵",
+  	"backsim;": "∽",
+  	"backsimeq;": "⋍",
+  	"Backslash;": "∖",
+  	"Barv;": "⫧",
+  	"barvee;": "⊽",
+  	"Barwed;": "⌆",
+  	"barwed;": "⌅",
+  	"barwedge;": "⌅",
+  	"bbrk;": "⎵",
+  	"bbrktbrk;": "⎶",
+  	"bcong;": "≌",
+  	"Bcy;": "Б",
+  	"bcy;": "б",
+  	"bdquo;": "„",
+  	"becaus;": "∵",
+  	"Because;": "∵",
+  	"because;": "∵",
+  	"bemptyv;": "⦰",
+  	"bepsi;": "϶",
+  	"bernou;": "ℬ",
+  	"Bernoullis;": "ℬ",
+  	"Beta;": "Β",
+  	"beta;": "β",
+  	"beth;": "ℶ",
+  	"between;": "≬",
+  	"Bfr;": "𝔅",
+  	"bfr;": "𝔟",
+  	"bigcap;": "⋂",
+  	"bigcirc;": "◯",
+  	"bigcup;": "⋃",
+  	"bigodot;": "⨀",
+  	"bigoplus;": "⨁",
+  	"bigotimes;": "⨂",
+  	"bigsqcup;": "⨆",
+  	"bigstar;": "★",
+  	"bigtriangledown;": "▽",
+  	"bigtriangleup;": "△",
+  	"biguplus;": "⨄",
+  	"bigvee;": "⋁",
+  	"bigwedge;": "⋀",
+  	"bkarow;": "⤍",
+  	"blacklozenge;": "⧫",
+  	"blacksquare;": "▪",
+  	"blacktriangle;": "▴",
+  	"blacktriangledown;": "▾",
+  	"blacktriangleleft;": "◂",
+  	"blacktriangleright;": "▸",
+  	"blank;": "␣",
+  	"blk12;": "▒",
+  	"blk14;": "░",
+  	"blk34;": "▓",
+  	"block;": "█",
+  	"bne;": "=⃥",
+  	"bnequiv;": "≡⃥",
+  	"bNot;": "⫭",
+  	"bnot;": "⌐",
+  	"Bopf;": "𝔹",
+  	"bopf;": "𝕓",
+  	"bot;": "⊥",
+  	"bottom;": "⊥",
+  	"bowtie;": "⋈",
+  	"boxbox;": "⧉",
+  	"boxDL;": "╗",
+  	"boxDl;": "╖",
+  	"boxdL;": "╕",
+  	"boxdl;": "┐",
+  	"boxDR;": "╔",
+  	"boxDr;": "╓",
+  	"boxdR;": "╒",
+  	"boxdr;": "┌",
+  	"boxH;": "═",
+  	"boxh;": "─",
+  	"boxHD;": "╦",
+  	"boxHd;": "╤",
+  	"boxhD;": "╥",
+  	"boxhd;": "┬",
+  	"boxHU;": "╩",
+  	"boxHu;": "╧",
+  	"boxhU;": "╨",
+  	"boxhu;": "┴",
+  	"boxminus;": "⊟",
+  	"boxplus;": "⊞",
+  	"boxtimes;": "⊠",
+  	"boxUL;": "╝",
+  	"boxUl;": "╜",
+  	"boxuL;": "╛",
+  	"boxul;": "┘",
+  	"boxUR;": "╚",
+  	"boxUr;": "╙",
+  	"boxuR;": "╘",
+  	"boxur;": "└",
+  	"boxV;": "║",
+  	"boxv;": "│",
+  	"boxVH;": "╬",
+  	"boxVh;": "╫",
+  	"boxvH;": "╪",
+  	"boxvh;": "┼",
+  	"boxVL;": "╣",
+  	"boxVl;": "╢",
+  	"boxvL;": "╡",
+  	"boxvl;": "┤",
+  	"boxVR;": "╠",
+  	"boxVr;": "╟",
+  	"boxvR;": "╞",
+  	"boxvr;": "├",
+  	"bprime;": "‵",
+  	"Breve;": "˘",
+  	"breve;": "˘",
+  	"brvbar;": "¦",
+  	brvbar: brvbar$1,
+  	"Bscr;": "ℬ",
+  	"bscr;": "𝒷",
+  	"bsemi;": "⁏",
+  	"bsim;": "∽",
+  	"bsime;": "⋍",
+  	"bsol;": "\\",
+  	"bsolb;": "⧅",
+  	"bsolhsub;": "⟈",
+  	"bull;": "•",
+  	"bullet;": "•",
+  	"bump;": "≎",
+  	"bumpE;": "⪮",
+  	"bumpe;": "≏",
+  	"Bumpeq;": "≎",
+  	"bumpeq;": "≏",
+  	"Cacute;": "Ć",
+  	"cacute;": "ć",
+  	"Cap;": "⋒",
+  	"cap;": "∩",
+  	"capand;": "⩄",
+  	"capbrcup;": "⩉",
+  	"capcap;": "⩋",
+  	"capcup;": "⩇",
+  	"capdot;": "⩀",
+  	"CapitalDifferentialD;": "ⅅ",
+  	"caps;": "∩︀",
+  	"caret;": "⁁",
+  	"caron;": "ˇ",
+  	"Cayleys;": "ℭ",
+  	"ccaps;": "⩍",
+  	"Ccaron;": "Č",
+  	"ccaron;": "č",
+  	"Ccedil;": "Ç",
+  	Ccedil: Ccedil$1,
+  	"ccedil;": "ç",
+  	ccedil: ccedil$1,
+  	"Ccirc;": "Ĉ",
+  	"ccirc;": "ĉ",
+  	"Cconint;": "∰",
+  	"ccups;": "⩌",
+  	"ccupssm;": "⩐",
+  	"Cdot;": "Ċ",
+  	"cdot;": "ċ",
+  	"cedil;": "¸",
+  	cedil: cedil$2,
+  	"Cedilla;": "¸",
+  	"cemptyv;": "⦲",
+  	"cent;": "¢",
+  	cent: cent$2,
+  	"CenterDot;": "·",
+  	"centerdot;": "·",
+  	"Cfr;": "ℭ",
+  	"cfr;": "𝔠",
+  	"CHcy;": "Ч",
+  	"chcy;": "ч",
+  	"check;": "✓",
+  	"checkmark;": "✓",
+  	"Chi;": "Χ",
+  	"chi;": "χ",
+  	"cir;": "○",
+  	"circ;": "ˆ",
+  	"circeq;": "≗",
+  	"circlearrowleft;": "↺",
+  	"circlearrowright;": "↻",
+  	"circledast;": "⊛",
+  	"circledcirc;": "⊚",
+  	"circleddash;": "⊝",
+  	"CircleDot;": "⊙",
+  	"circledR;": "®",
+  	"circledS;": "Ⓢ",
+  	"CircleMinus;": "⊖",
+  	"CirclePlus;": "⊕",
+  	"CircleTimes;": "⊗",
+  	"cirE;": "⧃",
+  	"cire;": "≗",
+  	"cirfnint;": "⨐",
+  	"cirmid;": "⫯",
+  	"cirscir;": "⧂",
+  	"ClockwiseContourIntegral;": "∲",
+  	"CloseCurlyDoubleQuote;": "”",
+  	"CloseCurlyQuote;": "’",
+  	"clubs;": "♣",
+  	"clubsuit;": "♣",
+  	"Colon;": "∷",
+  	"colon;": ":",
+  	"Colone;": "⩴",
+  	"colone;": "≔",
+  	"coloneq;": "≔",
+  	"comma;": ",",
+  	"commat;": "@",
+  	"comp;": "∁",
+  	"compfn;": "∘",
+  	"complement;": "∁",
+  	"complexes;": "ℂ",
+  	"cong;": "≅",
+  	"congdot;": "⩭",
+  	"Congruent;": "≡",
+  	"Conint;": "∯",
+  	"conint;": "∮",
+  	"ContourIntegral;": "∮",
+  	"Copf;": "ℂ",
+  	"copf;": "𝕔",
+  	"coprod;": "∐",
+  	"Coproduct;": "∐",
+  	"COPY;": "©",
+  	COPY: COPY$2,
+  	"copy;": "©",
+  	copy: copy$2,
+  	"copysr;": "℗",
+  	"CounterClockwiseContourIntegral;": "∳",
+  	"crarr;": "↵",
+  	"Cross;": "⨯",
+  	"cross;": "✗",
+  	"Cscr;": "𝒞",
+  	"cscr;": "𝒸",
+  	"csub;": "⫏",
+  	"csube;": "⫑",
+  	"csup;": "⫐",
+  	"csupe;": "⫒",
+  	"ctdot;": "⋯",
+  	"cudarrl;": "⤸",
+  	"cudarrr;": "⤵",
+  	"cuepr;": "⋞",
+  	"cuesc;": "⋟",
+  	"cularr;": "↶",
+  	"cularrp;": "⤽",
+  	"Cup;": "⋓",
+  	"cup;": "∪",
+  	"cupbrcap;": "⩈",
+  	"CupCap;": "≍",
+  	"cupcap;": "⩆",
+  	"cupcup;": "⩊",
+  	"cupdot;": "⊍",
+  	"cupor;": "⩅",
+  	"cups;": "∪︀",
+  	"curarr;": "↷",
+  	"curarrm;": "⤼",
+  	"curlyeqprec;": "⋞",
+  	"curlyeqsucc;": "⋟",
+  	"curlyvee;": "⋎",
+  	"curlywedge;": "⋏",
+  	"curren;": "¤",
+  	curren: curren$1,
+  	"curvearrowleft;": "↶",
+  	"curvearrowright;": "↷",
+  	"cuvee;": "⋎",
+  	"cuwed;": "⋏",
+  	"cwconint;": "∲",
+  	"cwint;": "∱",
+  	"cylcty;": "⌭",
+  	"Dagger;": "‡",
+  	"dagger;": "†",
+  	"daleth;": "ℸ",
+  	"Darr;": "↡",
+  	"dArr;": "⇓",
+  	"darr;": "↓",
+  	"dash;": "‐",
+  	"Dashv;": "⫤",
+  	"dashv;": "⊣",
+  	"dbkarow;": "⤏",
+  	"dblac;": "˝",
+  	"Dcaron;": "Ď",
+  	"dcaron;": "ď",
+  	"Dcy;": "Д",
+  	"dcy;": "д",
+  	"DD;": "ⅅ",
+  	"dd;": "ⅆ",
+  	"ddagger;": "‡",
+  	"ddarr;": "⇊",
+  	"DDotrahd;": "⤑",
+  	"ddotseq;": "⩷",
+  	"deg;": "°",
+  	deg: deg$2,
+  	"Del;": "∇",
+  	"Delta;": "Δ",
+  	"delta;": "δ",
+  	"demptyv;": "⦱",
+  	"dfisht;": "⥿",
+  	"Dfr;": "𝔇",
+  	"dfr;": "𝔡",
+  	"dHar;": "⥥",
+  	"dharl;": "⇃",
+  	"dharr;": "⇂",
+  	"DiacriticalAcute;": "´",
+  	"DiacriticalDot;": "˙",
+  	"DiacriticalDoubleAcute;": "˝",
+  	"DiacriticalGrave;": "`",
+  	"DiacriticalTilde;": "˜",
+  	"diam;": "⋄",
+  	"Diamond;": "⋄",
+  	"diamond;": "⋄",
+  	"diamondsuit;": "♦",
+  	"diams;": "♦",
+  	"die;": "¨",
+  	"DifferentialD;": "ⅆ",
+  	"digamma;": "ϝ",
+  	"disin;": "⋲",
+  	"div;": "÷",
+  	"divide;": "÷",
+  	divide: divide$2,
+  	"divideontimes;": "⋇",
+  	"divonx;": "⋇",
+  	"DJcy;": "Ђ",
+  	"djcy;": "ђ",
+  	"dlcorn;": "⌞",
+  	"dlcrop;": "⌍",
+  	"dollar;": "$",
+  	"Dopf;": "𝔻",
+  	"dopf;": "𝕕",
+  	"Dot;": "¨",
+  	"dot;": "˙",
+  	"DotDot;": "⃜",
+  	"doteq;": "≐",
+  	"doteqdot;": "≑",
+  	"DotEqual;": "≐",
+  	"dotminus;": "∸",
+  	"dotplus;": "∔",
+  	"dotsquare;": "⊡",
+  	"doublebarwedge;": "⌆",
+  	"DoubleContourIntegral;": "∯",
+  	"DoubleDot;": "¨",
+  	"DoubleDownArrow;": "⇓",
+  	"DoubleLeftArrow;": "⇐",
+  	"DoubleLeftRightArrow;": "⇔",
+  	"DoubleLeftTee;": "⫤",
+  	"DoubleLongLeftArrow;": "⟸",
+  	"DoubleLongLeftRightArrow;": "⟺",
+  	"DoubleLongRightArrow;": "⟹",
+  	"DoubleRightArrow;": "⇒",
+  	"DoubleRightTee;": "⊨",
+  	"DoubleUpArrow;": "⇑",
+  	"DoubleUpDownArrow;": "⇕",
+  	"DoubleVerticalBar;": "∥",
+  	"DownArrow;": "↓",
+  	"Downarrow;": "⇓",
+  	"downarrow;": "↓",
+  	"DownArrowBar;": "⤓",
+  	"DownArrowUpArrow;": "⇵",
+  	"DownBreve;": "̑",
+  	"downdownarrows;": "⇊",
+  	"downharpoonleft;": "⇃",
+  	"downharpoonright;": "⇂",
+  	"DownLeftRightVector;": "⥐",
+  	"DownLeftTeeVector;": "⥞",
+  	"DownLeftVector;": "↽",
+  	"DownLeftVectorBar;": "⥖",
+  	"DownRightTeeVector;": "⥟",
+  	"DownRightVector;": "⇁",
+  	"DownRightVectorBar;": "⥗",
+  	"DownTee;": "⊤",
+  	"DownTeeArrow;": "↧",
+  	"drbkarow;": "⤐",
+  	"drcorn;": "⌟",
+  	"drcrop;": "⌌",
+  	"Dscr;": "𝒟",
+  	"dscr;": "𝒹",
+  	"DScy;": "Ѕ",
+  	"dscy;": "ѕ",
+  	"dsol;": "⧶",
+  	"Dstrok;": "Đ",
+  	"dstrok;": "đ",
+  	"dtdot;": "⋱",
+  	"dtri;": "▿",
+  	"dtrif;": "▾",
+  	"duarr;": "⇵",
+  	"duhar;": "⥯",
+  	"dwangle;": "⦦",
+  	"DZcy;": "Џ",
+  	"dzcy;": "џ",
+  	"dzigrarr;": "⟿",
+  	"Eacute;": "É",
+  	Eacute: Eacute$1,
+  	"eacute;": "é",
+  	eacute: eacute$1,
+  	"easter;": "⩮",
+  	"Ecaron;": "Ě",
+  	"ecaron;": "ě",
+  	"ecir;": "≖",
+  	"Ecirc;": "Ê",
+  	Ecirc: Ecirc$1,
+  	"ecirc;": "ê",
+  	ecirc: ecirc$1,
+  	"ecolon;": "≕",
+  	"Ecy;": "Э",
+  	"ecy;": "э",
+  	"eDDot;": "⩷",
+  	"Edot;": "Ė",
+  	"eDot;": "≑",
+  	"edot;": "ė",
+  	"ee;": "ⅇ",
+  	"efDot;": "≒",
+  	"Efr;": "𝔈",
+  	"efr;": "𝔢",
+  	"eg;": "⪚",
+  	"Egrave;": "È",
+  	Egrave: Egrave$1,
+  	"egrave;": "è",
+  	egrave: egrave$2,
+  	"egs;": "⪖",
+  	"egsdot;": "⪘",
+  	"el;": "⪙",
+  	"Element;": "∈",
+  	"elinters;": "⏧",
+  	"ell;": "ℓ",
+  	"els;": "⪕",
+  	"elsdot;": "⪗",
+  	"Emacr;": "Ē",
+  	"emacr;": "ē",
+  	"empty;": "∅",
+  	"emptyset;": "∅",
+  	"EmptySmallSquare;": "◻",
+  	"emptyv;": "∅",
+  	"EmptyVerySmallSquare;": "▫",
+  	"emsp;": " ",
+  	"emsp13;": " ",
+  	"emsp14;": " ",
+  	"ENG;": "Ŋ",
+  	"eng;": "ŋ",
+  	"ensp;": " ",
+  	"Eogon;": "Ę",
+  	"eogon;": "ę",
+  	"Eopf;": "𝔼",
+  	"eopf;": "𝕖",
+  	"epar;": "⋕",
+  	"eparsl;": "⧣",
+  	"eplus;": "⩱",
+  	"epsi;": "ε",
+  	"Epsilon;": "Ε",
+  	"epsilon;": "ε",
+  	"epsiv;": "ϵ",
+  	"eqcirc;": "≖",
+  	"eqcolon;": "≕",
+  	"eqsim;": "≂",
+  	"eqslantgtr;": "⪖",
+  	"eqslantless;": "⪕",
+  	"Equal;": "⩵",
+  	"equals;": "=",
+  	"EqualTilde;": "≂",
+  	"equest;": "≟",
+  	"Equilibrium;": "⇌",
+  	"equiv;": "≡",
+  	"equivDD;": "⩸",
+  	"eqvparsl;": "⧥",
+  	"erarr;": "⥱",
+  	"erDot;": "≓",
+  	"Escr;": "ℰ",
+  	"escr;": "ℯ",
+  	"esdot;": "≐",
+  	"Esim;": "⩳",
+  	"esim;": "≂",
+  	"Eta;": "Η",
+  	"eta;": "η",
+  	"ETH;": "Ð",
+  	ETH: ETH$2,
+  	"eth;": "ð",
+  	eth: eth$2,
+  	"Euml;": "Ë",
+  	Euml: Euml$1,
+  	"euml;": "ë",
+  	euml: euml$1,
+  	"euro;": "€",
+  	"excl;": "!",
+  	"exist;": "∃",
+  	"Exists;": "∃",
+  	"expectation;": "ℰ",
+  	"ExponentialE;": "ⅇ",
+  	"exponentiale;": "ⅇ",
+  	"fallingdotseq;": "≒",
+  	"Fcy;": "Ф",
+  	"fcy;": "ф",
+  	"female;": "♀",
+  	"ffilig;": "ﬃ",
+  	"fflig;": "ﬀ",
+  	"ffllig;": "ﬄ",
+  	"Ffr;": "𝔉",
+  	"ffr;": "𝔣",
+  	"filig;": "ﬁ",
+  	"FilledSmallSquare;": "◼",
+  	"FilledVerySmallSquare;": "▪",
+  	"fjlig;": "fj",
+  	"flat;": "♭",
+  	"fllig;": "ﬂ",
+  	"fltns;": "▱",
+  	"fnof;": "ƒ",
+  	"Fopf;": "𝔽",
+  	"fopf;": "𝕗",
+  	"ForAll;": "∀",
+  	"forall;": "∀",
+  	"fork;": "⋔",
+  	"forkv;": "⫙",
+  	"Fouriertrf;": "ℱ",
+  	"fpartint;": "⨍",
+  	"frac12;": "½",
+  	frac12: frac12$1,
+  	"frac13;": "⅓",
+  	"frac14;": "¼",
+  	frac14: frac14$1,
+  	"frac15;": "⅕",
+  	"frac16;": "⅙",
+  	"frac18;": "⅛",
+  	"frac23;": "⅔",
+  	"frac25;": "⅖",
+  	"frac34;": "¾",
+  	frac34: frac34$1,
+  	"frac35;": "⅗",
+  	"frac38;": "⅜",
+  	"frac45;": "⅘",
+  	"frac56;": "⅚",
+  	"frac58;": "⅝",
+  	"frac78;": "⅞",
+  	"frasl;": "⁄",
+  	"frown;": "⌢",
+  	"Fscr;": "ℱ",
+  	"fscr;": "𝒻",
+  	"gacute;": "ǵ",
+  	"Gamma;": "Γ",
+  	"gamma;": "γ",
+  	"Gammad;": "Ϝ",
+  	"gammad;": "ϝ",
+  	"gap;": "⪆",
+  	"Gbreve;": "Ğ",
+  	"gbreve;": "ğ",
+  	"Gcedil;": "Ģ",
+  	"Gcirc;": "Ĝ",
+  	"gcirc;": "ĝ",
+  	"Gcy;": "Г",
+  	"gcy;": "г",
+  	"Gdot;": "Ġ",
+  	"gdot;": "ġ",
+  	"gE;": "≧",
+  	"ge;": "≥",
+  	"gEl;": "⪌",
+  	"gel;": "⋛",
+  	"geq;": "≥",
+  	"geqq;": "≧",
+  	"geqslant;": "⩾",
+  	"ges;": "⩾",
+  	"gescc;": "⪩",
+  	"gesdot;": "⪀",
+  	"gesdoto;": "⪂",
+  	"gesdotol;": "⪄",
+  	"gesl;": "⋛︀",
+  	"gesles;": "⪔",
+  	"Gfr;": "𝔊",
+  	"gfr;": "𝔤",
+  	"Gg;": "⋙",
+  	"gg;": "≫",
+  	"ggg;": "⋙",
+  	"gimel;": "ℷ",
+  	"GJcy;": "Ѓ",
+  	"gjcy;": "ѓ",
+  	"gl;": "≷",
+  	"gla;": "⪥",
+  	"glE;": "⪒",
+  	"glj;": "⪤",
+  	"gnap;": "⪊",
+  	"gnapprox;": "⪊",
+  	"gnE;": "≩",
+  	"gne;": "⪈",
+  	"gneq;": "⪈",
+  	"gneqq;": "≩",
+  	"gnsim;": "⋧",
+  	"Gopf;": "𝔾",
+  	"gopf;": "𝕘",
+  	"grave;": "`",
+  	"GreaterEqual;": "≥",
+  	"GreaterEqualLess;": "⋛",
+  	"GreaterFullEqual;": "≧",
+  	"GreaterGreater;": "⪢",
+  	"GreaterLess;": "≷",
+  	"GreaterSlantEqual;": "⩾",
+  	"GreaterTilde;": "≳",
+  	"Gscr;": "𝒢",
+  	"gscr;": "ℊ",
+  	"gsim;": "≳",
+  	"gsime;": "⪎",
+  	"gsiml;": "⪐",
+  	"GT;": ">",
+  	GT: GT$2,
+  	"Gt;": "≫",
+  	"gt;": ">",
+  	gt: gt$2,
+  	"gtcc;": "⪧",
+  	"gtcir;": "⩺",
+  	"gtdot;": "⋗",
+  	"gtlPar;": "⦕",
+  	"gtquest;": "⩼",
+  	"gtrapprox;": "⪆",
+  	"gtrarr;": "⥸",
+  	"gtrdot;": "⋗",
+  	"gtreqless;": "⋛",
+  	"gtreqqless;": "⪌",
+  	"gtrless;": "≷",
+  	"gtrsim;": "≳",
+  	"gvertneqq;": "≩︀",
+  	"gvnE;": "≩︀",
+  	"Hacek;": "ˇ",
+  	"hairsp;": " ",
+  	"half;": "½",
+  	"hamilt;": "ℋ",
+  	"HARDcy;": "Ъ",
+  	"hardcy;": "ъ",
+  	"hArr;": "⇔",
+  	"harr;": "↔",
+  	"harrcir;": "⥈",
+  	"harrw;": "↭",
+  	"Hat;": "^",
+  	"hbar;": "ℏ",
+  	"Hcirc;": "Ĥ",
+  	"hcirc;": "ĥ",
+  	"hearts;": "♥",
+  	"heartsuit;": "♥",
+  	"hellip;": "…",
+  	"hercon;": "⊹",
+  	"Hfr;": "ℌ",
+  	"hfr;": "𝔥",
+  	"HilbertSpace;": "ℋ",
+  	"hksearow;": "⤥",
+  	"hkswarow;": "⤦",
+  	"hoarr;": "⇿",
+  	"homtht;": "∻",
+  	"hookleftarrow;": "↩",
+  	"hookrightarrow;": "↪",
+  	"Hopf;": "ℍ",
+  	"hopf;": "𝕙",
+  	"horbar;": "―",
+  	"HorizontalLine;": "─",
+  	"Hscr;": "ℋ",
+  	"hscr;": "𝒽",
+  	"hslash;": "ℏ",
+  	"Hstrok;": "Ħ",
+  	"hstrok;": "ħ",
+  	"HumpDownHump;": "≎",
+  	"HumpEqual;": "≏",
+  	"hybull;": "⁃",
+  	"hyphen;": "‐",
+  	"Iacute;": "Í",
+  	Iacute: Iacute$1,
+  	"iacute;": "í",
+  	iacute: iacute$1,
+  	"ic;": "⁣",
+  	"Icirc;": "Î",
+  	Icirc: Icirc$1,
+  	"icirc;": "î",
+  	icirc: icirc$1,
+  	"Icy;": "И",
+  	"icy;": "и",
+  	"Idot;": "İ",
+  	"IEcy;": "Е",
+  	"iecy;": "е",
+  	"iexcl;": "¡",
+  	iexcl: iexcl$1,
+  	"iff;": "⇔",
+  	"Ifr;": "ℑ",
+  	"ifr;": "𝔦",
+  	"Igrave;": "Ì",
+  	Igrave: Igrave$1,
+  	"igrave;": "ì",
+  	igrave: igrave$1,
+  	"ii;": "ⅈ",
+  	"iiiint;": "⨌",
+  	"iiint;": "∭",
+  	"iinfin;": "⧜",
+  	"iiota;": "℩",
+  	"IJlig;": "Ĳ",
+  	"ijlig;": "ĳ",
+  	"Im;": "ℑ",
+  	"Imacr;": "Ī",
+  	"imacr;": "ī",
+  	"image;": "ℑ",
+  	"ImaginaryI;": "ⅈ",
+  	"imagline;": "ℐ",
+  	"imagpart;": "ℑ",
+  	"imath;": "ı",
+  	"imof;": "⊷",
+  	"imped;": "Ƶ",
+  	"Implies;": "⇒",
+  	"in;": "∈",
+  	"incare;": "℅",
+  	"infin;": "∞",
+  	"infintie;": "⧝",
+  	"inodot;": "ı",
+  	"Int;": "∬",
+  	"int;": "∫",
+  	"intcal;": "⊺",
+  	"integers;": "ℤ",
+  	"Integral;": "∫",
+  	"intercal;": "⊺",
+  	"Intersection;": "⋂",
+  	"intlarhk;": "⨗",
+  	"intprod;": "⨼",
+  	"InvisibleComma;": "⁣",
+  	"InvisibleTimes;": "⁢",
+  	"IOcy;": "Ё",
+  	"iocy;": "ё",
+  	"Iogon;": "Į",
+  	"iogon;": "į",
+  	"Iopf;": "𝕀",
+  	"iopf;": "𝕚",
+  	"Iota;": "Ι",
+  	"iota;": "ι",
+  	"iprod;": "⨼",
+  	"iquest;": "¿",
+  	iquest: iquest$1,
+  	"Iscr;": "ℐ",
+  	"iscr;": "𝒾",
+  	"isin;": "∈",
+  	"isindot;": "⋵",
+  	"isinE;": "⋹",
+  	"isins;": "⋴",
+  	"isinsv;": "⋳",
+  	"isinv;": "∈",
+  	"it;": "⁢",
+  	"Itilde;": "Ĩ",
+  	"itilde;": "ĩ",
+  	"Iukcy;": "І",
+  	"iukcy;": "і",
+  	"Iuml;": "Ï",
+  	Iuml: Iuml$1,
+  	"iuml;": "ï",
+  	iuml: iuml$1,
+  	"Jcirc;": "Ĵ",
+  	"jcirc;": "ĵ",
+  	"Jcy;": "Й",
+  	"jcy;": "й",
+  	"Jfr;": "𝔍",
+  	"jfr;": "𝔧",
+  	"jmath;": "ȷ",
+  	"Jopf;": "𝕁",
+  	"jopf;": "𝕛",
+  	"Jscr;": "𝒥",
+  	"jscr;": "𝒿",
+  	"Jsercy;": "Ј",
+  	"jsercy;": "ј",
+  	"Jukcy;": "Є",
+  	"jukcy;": "є",
+  	"Kappa;": "Κ",
+  	"kappa;": "κ",
+  	"kappav;": "ϰ",
+  	"Kcedil;": "Ķ",
+  	"kcedil;": "ķ",
+  	"Kcy;": "К",
+  	"kcy;": "к",
+  	"Kfr;": "𝔎",
+  	"kfr;": "𝔨",
+  	"kgreen;": "ĸ",
+  	"KHcy;": "Х",
+  	"khcy;": "х",
+  	"KJcy;": "Ќ",
+  	"kjcy;": "ќ",
+  	"Kopf;": "𝕂",
+  	"kopf;": "𝕜",
+  	"Kscr;": "𝒦",
+  	"kscr;": "𝓀",
+  	"lAarr;": "⇚",
+  	"Lacute;": "Ĺ",
+  	"lacute;": "ĺ",
+  	"laemptyv;": "⦴",
+  	"lagran;": "ℒ",
+  	"Lambda;": "Λ",
+  	"lambda;": "λ",
+  	"Lang;": "⟪",
+  	"lang;": "⟨",
+  	"langd;": "⦑",
+  	"langle;": "⟨",
+  	"lap;": "⪅",
+  	"Laplacetrf;": "ℒ",
+  	"laquo;": "«",
+  	laquo: laquo$1,
+  	"Larr;": "↞",
+  	"lArr;": "⇐",
+  	"larr;": "←",
+  	"larrb;": "⇤",
+  	"larrbfs;": "⤟",
+  	"larrfs;": "⤝",
+  	"larrhk;": "↩",
+  	"larrlp;": "↫",
+  	"larrpl;": "⤹",
+  	"larrsim;": "⥳",
+  	"larrtl;": "↢",
+  	"lat;": "⪫",
+  	"lAtail;": "⤛",
+  	"latail;": "⤙",
+  	"late;": "⪭",
+  	"lates;": "⪭︀",
+  	"lBarr;": "⤎",
+  	"lbarr;": "⤌",
+  	"lbbrk;": "❲",
+  	"lbrace;": "{",
+  	"lbrack;": "[",
+  	"lbrke;": "⦋",
+  	"lbrksld;": "⦏",
+  	"lbrkslu;": "⦍",
+  	"Lcaron;": "Ľ",
+  	"lcaron;": "ľ",
+  	"Lcedil;": "Ļ",
+  	"lcedil;": "ļ",
+  	"lceil;": "⌈",
+  	"lcub;": "{",
+  	"Lcy;": "Л",
+  	"lcy;": "л",
+  	"ldca;": "⤶",
+  	"ldquo;": "“",
+  	"ldquor;": "„",
+  	"ldrdhar;": "⥧",
+  	"ldrushar;": "⥋",
+  	"ldsh;": "↲",
+  	"lE;": "≦",
+  	"le;": "≤",
+  	"LeftAngleBracket;": "⟨",
+  	"LeftArrow;": "←",
+  	"Leftarrow;": "⇐",
+  	"leftarrow;": "←",
+  	"LeftArrowBar;": "⇤",
+  	"LeftArrowRightArrow;": "⇆",
+  	"leftarrowtail;": "↢",
+  	"LeftCeiling;": "⌈",
+  	"LeftDoubleBracket;": "⟦",
+  	"LeftDownTeeVector;": "⥡",
+  	"LeftDownVector;": "⇃",
+  	"LeftDownVectorBar;": "⥙",
+  	"LeftFloor;": "⌊",
+  	"leftharpoondown;": "↽",
+  	"leftharpoonup;": "↼",
+  	"leftleftarrows;": "⇇",
+  	"LeftRightArrow;": "↔",
+  	"Leftrightarrow;": "⇔",
+  	"leftrightarrow;": "↔",
+  	"leftrightarrows;": "⇆",
+  	"leftrightharpoons;": "⇋",
+  	"leftrightsquigarrow;": "↭",
+  	"LeftRightVector;": "⥎",
+  	"LeftTee;": "⊣",
+  	"LeftTeeArrow;": "↤",
+  	"LeftTeeVector;": "⥚",
+  	"leftthreetimes;": "⋋",
+  	"LeftTriangle;": "⊲",
+  	"LeftTriangleBar;": "⧏",
+  	"LeftTriangleEqual;": "⊴",
+  	"LeftUpDownVector;": "⥑",
+  	"LeftUpTeeVector;": "⥠",
+  	"LeftUpVector;": "↿",
+  	"LeftUpVectorBar;": "⥘",
+  	"LeftVector;": "↼",
+  	"LeftVectorBar;": "⥒",
+  	"lEg;": "⪋",
+  	"leg;": "⋚",
+  	"leq;": "≤",
+  	"leqq;": "≦",
+  	"leqslant;": "⩽",
+  	"les;": "⩽",
+  	"lescc;": "⪨",
+  	"lesdot;": "⩿",
+  	"lesdoto;": "⪁",
+  	"lesdotor;": "⪃",
+  	"lesg;": "⋚︀",
+  	"lesges;": "⪓",
+  	"lessapprox;": "⪅",
+  	"lessdot;": "⋖",
+  	"lesseqgtr;": "⋚",
+  	"lesseqqgtr;": "⪋",
+  	"LessEqualGreater;": "⋚",
+  	"LessFullEqual;": "≦",
+  	"LessGreater;": "≶",
+  	"lessgtr;": "≶",
+  	"LessLess;": "⪡",
+  	"lesssim;": "≲",
+  	"LessSlantEqual;": "⩽",
+  	"LessTilde;": "≲",
+  	"lfisht;": "⥼",
+  	"lfloor;": "⌊",
+  	"Lfr;": "𝔏",
+  	"lfr;": "𝔩",
+  	"lg;": "≶",
+  	"lgE;": "⪑",
+  	"lHar;": "⥢",
+  	"lhard;": "↽",
+  	"lharu;": "↼",
+  	"lharul;": "⥪",
+  	"lhblk;": "▄",
+  	"LJcy;": "Љ",
+  	"ljcy;": "љ",
+  	"Ll;": "⋘",
+  	"ll;": "≪",
+  	"llarr;": "⇇",
+  	"llcorner;": "⌞",
+  	"Lleftarrow;": "⇚",
+  	"llhard;": "⥫",
+  	"lltri;": "◺",
+  	"Lmidot;": "Ŀ",
+  	"lmidot;": "ŀ",
+  	"lmoust;": "⎰",
+  	"lmoustache;": "⎰",
+  	"lnap;": "⪉",
+  	"lnapprox;": "⪉",
+  	"lnE;": "≨",
+  	"lne;": "⪇",
+  	"lneq;": "⪇",
+  	"lneqq;": "≨",
+  	"lnsim;": "⋦",
+  	"loang;": "⟬",
+  	"loarr;": "⇽",
+  	"lobrk;": "⟦",
+  	"LongLeftArrow;": "⟵",
+  	"Longleftarrow;": "⟸",
+  	"longleftarrow;": "⟵",
+  	"LongLeftRightArrow;": "⟷",
+  	"Longleftrightarrow;": "⟺",
+  	"longleftrightarrow;": "⟷",
+  	"longmapsto;": "⟼",
+  	"LongRightArrow;": "⟶",
+  	"Longrightarrow;": "⟹",
+  	"longrightarrow;": "⟶",
+  	"looparrowleft;": "↫",
+  	"looparrowright;": "↬",
+  	"lopar;": "⦅",
+  	"Lopf;": "𝕃",
+  	"lopf;": "𝕝",
+  	"loplus;": "⨭",
+  	"lotimes;": "⨴",
+  	"lowast;": "∗",
+  	"lowbar;": "_",
+  	"LowerLeftArrow;": "↙",
+  	"LowerRightArrow;": "↘",
+  	"loz;": "◊",
+  	"lozenge;": "◊",
+  	"lozf;": "⧫",
+  	"lpar;": "(",
+  	"lparlt;": "⦓",
+  	"lrarr;": "⇆",
+  	"lrcorner;": "⌟",
+  	"lrhar;": "⇋",
+  	"lrhard;": "⥭",
+  	"lrm;": "‎",
+  	"lrtri;": "⊿",
+  	"lsaquo;": "‹",
+  	"Lscr;": "ℒ",
+  	"lscr;": "𝓁",
+  	"Lsh;": "↰",
+  	"lsh;": "↰",
+  	"lsim;": "≲",
+  	"lsime;": "⪍",
+  	"lsimg;": "⪏",
+  	"lsqb;": "[",
+  	"lsquo;": "‘",
+  	"lsquor;": "‚",
+  	"Lstrok;": "Ł",
+  	"lstrok;": "ł",
+  	"LT;": "<",
+  	LT: LT$2,
+  	"Lt;": "≪",
+  	"lt;": "<",
+  	lt: lt$2,
+  	"ltcc;": "⪦",
+  	"ltcir;": "⩹",
+  	"ltdot;": "⋖",
+  	"lthree;": "⋋",
+  	"ltimes;": "⋉",
+  	"ltlarr;": "⥶",
+  	"ltquest;": "⩻",
+  	"ltri;": "◃",
+  	"ltrie;": "⊴",
+  	"ltrif;": "◂",
+  	"ltrPar;": "⦖",
+  	"lurdshar;": "⥊",
+  	"luruhar;": "⥦",
+  	"lvertneqq;": "≨︀",
+  	"lvnE;": "≨︀",
+  	"macr;": "¯",
+  	macr: macr$1,
+  	"male;": "♂",
+  	"malt;": "✠",
+  	"maltese;": "✠",
+  	"Map;": "⤅",
+  	"map;": "↦",
+  	"mapsto;": "↦",
+  	"mapstodown;": "↧",
+  	"mapstoleft;": "↤",
+  	"mapstoup;": "↥",
+  	"marker;": "▮",
+  	"mcomma;": "⨩",
+  	"Mcy;": "М",
+  	"mcy;": "м",
+  	"mdash;": "—",
+  	"mDDot;": "∺",
+  	"measuredangle;": "∡",
+  	"MediumSpace;": " ",
+  	"Mellintrf;": "ℳ",
+  	"Mfr;": "𝔐",
+  	"mfr;": "𝔪",
+  	"mho;": "℧",
+  	"micro;": "µ",
+  	micro: micro$1,
+  	"mid;": "∣",
+  	"midast;": "*",
+  	"midcir;": "⫰",
+  	"middot;": "·",
+  	middot: middot$1,
+  	"minus;": "−",
+  	"minusb;": "⊟",
+  	"minusd;": "∸",
+  	"minusdu;": "⨪",
+  	"MinusPlus;": "∓",
+  	"mlcp;": "⫛",
+  	"mldr;": "…",
+  	"mnplus;": "∓",
+  	"models;": "⊧",
+  	"Mopf;": "𝕄",
+  	"mopf;": "𝕞",
+  	"mp;": "∓",
+  	"Mscr;": "ℳ",
+  	"mscr;": "𝓂",
+  	"mstpos;": "∾",
+  	"Mu;": "Μ",
+  	"mu;": "μ",
+  	"multimap;": "⊸",
+  	"mumap;": "⊸",
+  	"nabla;": "∇",
+  	"Nacute;": "Ń",
+  	"nacute;": "ń",
+  	"nang;": "∠⃒",
+  	"nap;": "≉",
+  	"napE;": "⩰̸",
+  	"napid;": "≋̸",
+  	"napos;": "ŉ",
+  	"napprox;": "≉",
+  	"natur;": "♮",
+  	"natural;": "♮",
+  	"naturals;": "ℕ",
+  	"nbsp;": " ",
+  	nbsp: nbsp$1,
+  	"nbump;": "≎̸",
+  	"nbumpe;": "≏̸",
+  	"ncap;": "⩃",
+  	"Ncaron;": "Ň",
+  	"ncaron;": "ň",
+  	"Ncedil;": "Ņ",
+  	"ncedil;": "ņ",
+  	"ncong;": "≇",
+  	"ncongdot;": "⩭̸",
+  	"ncup;": "⩂",
+  	"Ncy;": "Н",
+  	"ncy;": "н",
+  	"ndash;": "–",
+  	"ne;": "≠",
+  	"nearhk;": "⤤",
+  	"neArr;": "⇗",
+  	"nearr;": "↗",
+  	"nearrow;": "↗",
+  	"nedot;": "≐̸",
+  	"NegativeMediumSpace;": "​",
+  	"NegativeThickSpace;": "​",
+  	"NegativeThinSpace;": "​",
+  	"NegativeVeryThinSpace;": "​",
+  	"nequiv;": "≢",
+  	"nesear;": "⤨",
+  	"nesim;": "≂̸",
+  	"NestedGreaterGreater;": "≫",
+  	"NestedLessLess;": "≪",
+  	"NewLine;": "\n",
+  	"nexist;": "∄",
+  	"nexists;": "∄",
+  	"Nfr;": "𝔑",
+  	"nfr;": "𝔫",
+  	"ngE;": "≧̸",
+  	"nge;": "≱",
+  	"ngeq;": "≱",
+  	"ngeqq;": "≧̸",
+  	"ngeqslant;": "⩾̸",
+  	"nges;": "⩾̸",
+  	"nGg;": "⋙̸",
+  	"ngsim;": "≵",
+  	"nGt;": "≫⃒",
+  	"ngt;": "≯",
+  	"ngtr;": "≯",
+  	"nGtv;": "≫̸",
+  	"nhArr;": "⇎",
+  	"nharr;": "↮",
+  	"nhpar;": "⫲",
+  	"ni;": "∋",
+  	"nis;": "⋼",
+  	"nisd;": "⋺",
+  	"niv;": "∋",
+  	"NJcy;": "Њ",
+  	"njcy;": "њ",
+  	"nlArr;": "⇍",
+  	"nlarr;": "↚",
+  	"nldr;": "‥",
+  	"nlE;": "≦̸",
+  	"nle;": "≰",
+  	"nLeftarrow;": "⇍",
+  	"nleftarrow;": "↚",
+  	"nLeftrightarrow;": "⇎",
+  	"nleftrightarrow;": "↮",
+  	"nleq;": "≰",
+  	"nleqq;": "≦̸",
+  	"nleqslant;": "⩽̸",
+  	"nles;": "⩽̸",
+  	"nless;": "≮",
+  	"nLl;": "⋘̸",
+  	"nlsim;": "≴",
+  	"nLt;": "≪⃒",
+  	"nlt;": "≮",
+  	"nltri;": "⋪",
+  	"nltrie;": "⋬",
+  	"nLtv;": "≪̸",
+  	"nmid;": "∤",
+  	"NoBreak;": "⁠",
+  	"NonBreakingSpace;": " ",
+  	"Nopf;": "ℕ",
+  	"nopf;": "𝕟",
+  	"Not;": "⫬",
+  	"not;": "¬",
+  	not: not$2,
+  	"NotCongruent;": "≢",
+  	"NotCupCap;": "≭",
+  	"NotDoubleVerticalBar;": "∦",
+  	"NotElement;": "∉",
+  	"NotEqual;": "≠",
+  	"NotEqualTilde;": "≂̸",
+  	"NotExists;": "∄",
+  	"NotGreater;": "≯",
+  	"NotGreaterEqual;": "≱",
+  	"NotGreaterFullEqual;": "≧̸",
+  	"NotGreaterGreater;": "≫̸",
+  	"NotGreaterLess;": "≹",
+  	"NotGreaterSlantEqual;": "⩾̸",
+  	"NotGreaterTilde;": "≵",
+  	"NotHumpDownHump;": "≎̸",
+  	"NotHumpEqual;": "≏̸",
+  	"notin;": "∉",
+  	"notindot;": "⋵̸",
+  	"notinE;": "⋹̸",
+  	"notinva;": "∉",
+  	"notinvb;": "⋷",
+  	"notinvc;": "⋶",
+  	"NotLeftTriangle;": "⋪",
+  	"NotLeftTriangleBar;": "⧏̸",
+  	"NotLeftTriangleEqual;": "⋬",
+  	"NotLess;": "≮",
+  	"NotLessEqual;": "≰",
+  	"NotLessGreater;": "≸",
+  	"NotLessLess;": "≪̸",
+  	"NotLessSlantEqual;": "⩽̸",
+  	"NotLessTilde;": "≴",
+  	"NotNestedGreaterGreater;": "⪢̸",
+  	"NotNestedLessLess;": "⪡̸",
+  	"notni;": "∌",
+  	"notniva;": "∌",
+  	"notnivb;": "⋾",
+  	"notnivc;": "⋽",
+  	"NotPrecedes;": "⊀",
+  	"NotPrecedesEqual;": "⪯̸",
+  	"NotPrecedesSlantEqual;": "⋠",
+  	"NotReverseElement;": "∌",
+  	"NotRightTriangle;": "⋫",
+  	"NotRightTriangleBar;": "⧐̸",
+  	"NotRightTriangleEqual;": "⋭",
+  	"NotSquareSubset;": "⊏̸",
+  	"NotSquareSubsetEqual;": "⋢",
+  	"NotSquareSuperset;": "⊐̸",
+  	"NotSquareSupersetEqual;": "⋣",
+  	"NotSubset;": "⊂⃒",
+  	"NotSubsetEqual;": "⊈",
+  	"NotSucceeds;": "⊁",
+  	"NotSucceedsEqual;": "⪰̸",
+  	"NotSucceedsSlantEqual;": "⋡",
+  	"NotSucceedsTilde;": "≿̸",
+  	"NotSuperset;": "⊃⃒",
+  	"NotSupersetEqual;": "⊉",
+  	"NotTilde;": "≁",
+  	"NotTildeEqual;": "≄",
+  	"NotTildeFullEqual;": "≇",
+  	"NotTildeTilde;": "≉",
+  	"NotVerticalBar;": "∤",
+  	"npar;": "∦",
+  	"nparallel;": "∦",
+  	"nparsl;": "⫽⃥",
+  	"npart;": "∂̸",
+  	"npolint;": "⨔",
+  	"npr;": "⊀",
+  	"nprcue;": "⋠",
+  	"npre;": "⪯̸",
+  	"nprec;": "⊀",
+  	"npreceq;": "⪯̸",
+  	"nrArr;": "⇏",
+  	"nrarr;": "↛",
+  	"nrarrc;": "⤳̸",
+  	"nrarrw;": "↝̸",
+  	"nRightarrow;": "⇏",
+  	"nrightarrow;": "↛",
+  	"nrtri;": "⋫",
+  	"nrtrie;": "⋭",
+  	"nsc;": "⊁",
+  	"nsccue;": "⋡",
+  	"nsce;": "⪰̸",
+  	"Nscr;": "𝒩",
+  	"nscr;": "𝓃",
+  	"nshortmid;": "∤",
+  	"nshortparallel;": "∦",
+  	"nsim;": "≁",
+  	"nsime;": "≄",
+  	"nsimeq;": "≄",
+  	"nsmid;": "∤",
+  	"nspar;": "∦",
+  	"nsqsube;": "⋢",
+  	"nsqsupe;": "⋣",
+  	"nsub;": "⊄",
+  	"nsubE;": "⫅̸",
+  	"nsube;": "⊈",
+  	"nsubset;": "⊂⃒",
+  	"nsubseteq;": "⊈",
+  	"nsubseteqq;": "⫅̸",
+  	"nsucc;": "⊁",
+  	"nsucceq;": "⪰̸",
+  	"nsup;": "⊅",
+  	"nsupE;": "⫆̸",
+  	"nsupe;": "⊉",
+  	"nsupset;": "⊃⃒",
+  	"nsupseteq;": "⊉",
+  	"nsupseteqq;": "⫆̸",
+  	"ntgl;": "≹",
+  	"Ntilde;": "Ñ",
+  	Ntilde: Ntilde$1,
+  	"ntilde;": "ñ",
+  	ntilde: ntilde$1,
+  	"ntlg;": "≸",
+  	"ntriangleleft;": "⋪",
+  	"ntrianglelefteq;": "⋬",
+  	"ntriangleright;": "⋫",
+  	"ntrianglerighteq;": "⋭",
+  	"Nu;": "Ν",
+  	"nu;": "ν",
+  	"num;": "#",
+  	"numero;": "№",
+  	"numsp;": " ",
+  	"nvap;": "≍⃒",
+  	"nVDash;": "⊯",
+  	"nVdash;": "⊮",
+  	"nvDash;": "⊭",
+  	"nvdash;": "⊬",
+  	"nvge;": "≥⃒",
+  	"nvgt;": ">⃒",
+  	"nvHarr;": "⤄",
+  	"nvinfin;": "⧞",
+  	"nvlArr;": "⤂",
+  	"nvle;": "≤⃒",
+  	"nvlt;": "<⃒",
+  	"nvltrie;": "⊴⃒",
+  	"nvrArr;": "⤃",
+  	"nvrtrie;": "⊵⃒",
+  	"nvsim;": "∼⃒",
+  	"nwarhk;": "⤣",
+  	"nwArr;": "⇖",
+  	"nwarr;": "↖",
+  	"nwarrow;": "↖",
+  	"nwnear;": "⤧",
+  	"Oacute;": "Ó",
+  	Oacute: Oacute$1,
+  	"oacute;": "ó",
+  	oacute: oacute$1,
+  	"oast;": "⊛",
+  	"ocir;": "⊚",
+  	"Ocirc;": "Ô",
+  	Ocirc: Ocirc$1,
+  	"ocirc;": "ô",
+  	ocirc: ocirc$1,
+  	"Ocy;": "О",
+  	"ocy;": "о",
+  	"odash;": "⊝",
+  	"Odblac;": "Ő",
+  	"odblac;": "ő",
+  	"odiv;": "⨸",
+  	"odot;": "⊙",
+  	"odsold;": "⦼",
+  	"OElig;": "Œ",
+  	"oelig;": "œ",
+  	"ofcir;": "⦿",
+  	"Ofr;": "𝔒",
+  	"ofr;": "𝔬",
+  	"ogon;": "˛",
+  	"Ograve;": "Ò",
+  	Ograve: Ograve$1,
+  	"ograve;": "ò",
+  	ograve: ograve$1,
+  	"ogt;": "⧁",
+  	"ohbar;": "⦵",
+  	"ohm;": "Ω",
+  	"oint;": "∮",
+  	"olarr;": "↺",
+  	"olcir;": "⦾",
+  	"olcross;": "⦻",
+  	"oline;": "‾",
+  	"olt;": "⧀",
+  	"Omacr;": "Ō",
+  	"omacr;": "ō",
+  	"Omega;": "Ω",
+  	"omega;": "ω",
+  	"Omicron;": "Ο",
+  	"omicron;": "ο",
+  	"omid;": "⦶",
+  	"ominus;": "⊖",
+  	"Oopf;": "𝕆",
+  	"oopf;": "𝕠",
+  	"opar;": "⦷",
+  	"OpenCurlyDoubleQuote;": "“",
+  	"OpenCurlyQuote;": "‘",
+  	"operp;": "⦹",
+  	"oplus;": "⊕",
+  	"Or;": "⩔",
+  	"or;": "∨",
+  	"orarr;": "↻",
+  	"ord;": "⩝",
+  	"order;": "ℴ",
+  	"orderof;": "ℴ",
+  	"ordf;": "ª",
+  	ordf: ordf$1,
+  	"ordm;": "º",
+  	ordm: ordm$1,
+  	"origof;": "⊶",
+  	"oror;": "⩖",
+  	"orslope;": "⩗",
+  	"orv;": "⩛",
+  	"oS;": "Ⓢ",
+  	"Oscr;": "𝒪",
+  	"oscr;": "ℴ",
+  	"Oslash;": "Ø",
+  	Oslash: Oslash$1,
+  	"oslash;": "ø",
+  	oslash: oslash$1,
+  	"osol;": "⊘",
+  	"Otilde;": "Õ",
+  	Otilde: Otilde$1,
+  	"otilde;": "õ",
+  	otilde: otilde$1,
+  	"Otimes;": "⨷",
+  	"otimes;": "⊗",
+  	"otimesas;": "⨶",
+  	"Ouml;": "Ö",
+  	Ouml: Ouml$1,
+  	"ouml;": "ö",
+  	ouml: ouml$1,
+  	"ovbar;": "⌽",
+  	"OverBar;": "‾",
+  	"OverBrace;": "⏞",
+  	"OverBracket;": "⎴",
+  	"OverParenthesis;": "⏜",
+  	"par;": "∥",
+  	"para;": "¶",
+  	para: para$2,
+  	"parallel;": "∥",
+  	"parsim;": "⫳",
+  	"parsl;": "⫽",
+  	"part;": "∂",
+  	"PartialD;": "∂",
+  	"Pcy;": "П",
+  	"pcy;": "п",
+  	"percnt;": "%",
+  	"period;": ".",
+  	"permil;": "‰",
+  	"perp;": "⊥",
+  	"pertenk;": "‱",
+  	"Pfr;": "𝔓",
+  	"pfr;": "𝔭",
+  	"Phi;": "Φ",
+  	"phi;": "φ",
+  	"phiv;": "ϕ",
+  	"phmmat;": "ℳ",
+  	"phone;": "☎",
+  	"Pi;": "Π",
+  	"pi;": "π",
+  	"pitchfork;": "⋔",
+  	"piv;": "ϖ",
+  	"planck;": "ℏ",
+  	"planckh;": "ℎ",
+  	"plankv;": "ℏ",
+  	"plus;": "+",
+  	"plusacir;": "⨣",
+  	"plusb;": "⊞",
+  	"pluscir;": "⨢",
+  	"plusdo;": "∔",
+  	"plusdu;": "⨥",
+  	"pluse;": "⩲",
+  	"PlusMinus;": "±",
+  	"plusmn;": "±",
+  	plusmn: plusmn$1,
+  	"plussim;": "⨦",
+  	"plustwo;": "⨧",
+  	"pm;": "±",
+  	"Poincareplane;": "ℌ",
+  	"pointint;": "⨕",
+  	"Popf;": "ℙ",
+  	"popf;": "𝕡",
+  	"pound;": "£",
+  	pound: pound$2,
+  	"Pr;": "⪻",
+  	"pr;": "≺",
+  	"prap;": "⪷",
+  	"prcue;": "≼",
+  	"prE;": "⪳",
+  	"pre;": "⪯",
+  	"prec;": "≺",
+  	"precapprox;": "⪷",
+  	"preccurlyeq;": "≼",
+  	"Precedes;": "≺",
+  	"PrecedesEqual;": "⪯",
+  	"PrecedesSlantEqual;": "≼",
+  	"PrecedesTilde;": "≾",
+  	"preceq;": "⪯",
+  	"precnapprox;": "⪹",
+  	"precneqq;": "⪵",
+  	"precnsim;": "⋨",
+  	"precsim;": "≾",
+  	"Prime;": "″",
+  	"prime;": "′",
+  	"primes;": "ℙ",
+  	"prnap;": "⪹",
+  	"prnE;": "⪵",
+  	"prnsim;": "⋨",
+  	"prod;": "∏",
+  	"Product;": "∏",
+  	"profalar;": "⌮",
+  	"profline;": "⌒",
+  	"profsurf;": "⌓",
+  	"prop;": "∝",
+  	"Proportion;": "∷",
+  	"Proportional;": "∝",
+  	"propto;": "∝",
+  	"prsim;": "≾",
+  	"prurel;": "⊰",
+  	"Pscr;": "𝒫",
+  	"pscr;": "𝓅",
+  	"Psi;": "Ψ",
+  	"psi;": "ψ",
+  	"puncsp;": " ",
+  	"Qfr;": "𝔔",
+  	"qfr;": "𝔮",
+  	"qint;": "⨌",
+  	"Qopf;": "ℚ",
+  	"qopf;": "𝕢",
+  	"qprime;": "⁗",
+  	"Qscr;": "𝒬",
+  	"qscr;": "𝓆",
+  	"quaternions;": "ℍ",
+  	"quatint;": "⨖",
+  	"quest;": "?",
+  	"questeq;": "≟",
+  	"QUOT;": "\"",
+  	QUOT: QUOT$2,
+  	"quot;": "\"",
+  	quot: quot$2,
+  	"rAarr;": "⇛",
+  	"race;": "∽̱",
+  	"Racute;": "Ŕ",
+  	"racute;": "ŕ",
+  	"radic;": "√",
+  	"raemptyv;": "⦳",
+  	"Rang;": "⟫",
+  	"rang;": "⟩",
+  	"rangd;": "⦒",
+  	"range;": "⦥",
+  	"rangle;": "⟩",
+  	"raquo;": "»",
+  	raquo: raquo$1,
+  	"Rarr;": "↠",
+  	"rArr;": "⇒",
+  	"rarr;": "→",
+  	"rarrap;": "⥵",
+  	"rarrb;": "⇥",
+  	"rarrbfs;": "⤠",
+  	"rarrc;": "⤳",
+  	"rarrfs;": "⤞",
+  	"rarrhk;": "↪",
+  	"rarrlp;": "↬",
+  	"rarrpl;": "⥅",
+  	"rarrsim;": "⥴",
+  	"Rarrtl;": "⤖",
+  	"rarrtl;": "↣",
+  	"rarrw;": "↝",
+  	"rAtail;": "⤜",
+  	"ratail;": "⤚",
+  	"ratio;": "∶",
+  	"rationals;": "ℚ",
+  	"RBarr;": "⤐",
+  	"rBarr;": "⤏",
+  	"rbarr;": "⤍",
+  	"rbbrk;": "❳",
+  	"rbrace;": "}",
+  	"rbrack;": "]",
+  	"rbrke;": "⦌",
+  	"rbrksld;": "⦎",
+  	"rbrkslu;": "⦐",
+  	"Rcaron;": "Ř",
+  	"rcaron;": "ř",
+  	"Rcedil;": "Ŗ",
+  	"rcedil;": "ŗ",
+  	"rceil;": "⌉",
+  	"rcub;": "}",
+  	"Rcy;": "Р",
+  	"rcy;": "р",
+  	"rdca;": "⤷",
+  	"rdldhar;": "⥩",
+  	"rdquo;": "”",
+  	"rdquor;": "”",
+  	"rdsh;": "↳",
+  	"Re;": "ℜ",
+  	"real;": "ℜ",
+  	"realine;": "ℛ",
+  	"realpart;": "ℜ",
+  	"reals;": "ℝ",
+  	"rect;": "▭",
+  	"REG;": "®",
+  	REG: REG$2,
+  	"reg;": "®",
+  	reg: reg$2,
+  	"ReverseElement;": "∋",
+  	"ReverseEquilibrium;": "⇋",
+  	"ReverseUpEquilibrium;": "⥯",
+  	"rfisht;": "⥽",
+  	"rfloor;": "⌋",
+  	"Rfr;": "ℜ",
+  	"rfr;": "𝔯",
+  	"rHar;": "⥤",
+  	"rhard;": "⇁",
+  	"rharu;": "⇀",
+  	"rharul;": "⥬",
+  	"Rho;": "Ρ",
+  	"rho;": "ρ",
+  	"rhov;": "ϱ",
+  	"RightAngleBracket;": "⟩",
+  	"RightArrow;": "→",
+  	"Rightarrow;": "⇒",
+  	"rightarrow;": "→",
+  	"RightArrowBar;": "⇥",
+  	"RightArrowLeftArrow;": "⇄",
+  	"rightarrowtail;": "↣",
+  	"RightCeiling;": "⌉",
+  	"RightDoubleBracket;": "⟧",
+  	"RightDownTeeVector;": "⥝",
+  	"RightDownVector;": "⇂",
+  	"RightDownVectorBar;": "⥕",
+  	"RightFloor;": "⌋",
+  	"rightharpoondown;": "⇁",
+  	"rightharpoonup;": "⇀",
+  	"rightleftarrows;": "⇄",
+  	"rightleftharpoons;": "⇌",
+  	"rightrightarrows;": "⇉",
+  	"rightsquigarrow;": "↝",
+  	"RightTee;": "⊢",
+  	"RightTeeArrow;": "↦",
+  	"RightTeeVector;": "⥛",
+  	"rightthreetimes;": "⋌",
+  	"RightTriangle;": "⊳",
+  	"RightTriangleBar;": "⧐",
+  	"RightTriangleEqual;": "⊵",
+  	"RightUpDownVector;": "⥏",
+  	"RightUpTeeVector;": "⥜",
+  	"RightUpVector;": "↾",
+  	"RightUpVectorBar;": "⥔",
+  	"RightVector;": "⇀",
+  	"RightVectorBar;": "⥓",
+  	"ring;": "˚",
+  	"risingdotseq;": "≓",
+  	"rlarr;": "⇄",
+  	"rlhar;": "⇌",
+  	"rlm;": "‏",
+  	"rmoust;": "⎱",
+  	"rmoustache;": "⎱",
+  	"rnmid;": "⫮",
+  	"roang;": "⟭",
+  	"roarr;": "⇾",
+  	"robrk;": "⟧",
+  	"ropar;": "⦆",
+  	"Ropf;": "ℝ",
+  	"ropf;": "𝕣",
+  	"roplus;": "⨮",
+  	"rotimes;": "⨵",
+  	"RoundImplies;": "⥰",
+  	"rpar;": ")",
+  	"rpargt;": "⦔",
+  	"rppolint;": "⨒",
+  	"rrarr;": "⇉",
+  	"Rrightarrow;": "⇛",
+  	"rsaquo;": "›",
+  	"Rscr;": "ℛ",
+  	"rscr;": "𝓇",
+  	"Rsh;": "↱",
+  	"rsh;": "↱",
+  	"rsqb;": "]",
+  	"rsquo;": "’",
+  	"rsquor;": "’",
+  	"rthree;": "⋌",
+  	"rtimes;": "⋊",
+  	"rtri;": "▹",
+  	"rtrie;": "⊵",
+  	"rtrif;": "▸",
+  	"rtriltri;": "⧎",
+  	"RuleDelayed;": "⧴",
+  	"ruluhar;": "⥨",
+  	"rx;": "℞",
+  	"Sacute;": "Ś",
+  	"sacute;": "ś",
+  	"sbquo;": "‚",
+  	"Sc;": "⪼",
+  	"sc;": "≻",
+  	"scap;": "⪸",
+  	"Scaron;": "Š",
+  	"scaron;": "š",
+  	"sccue;": "≽",
+  	"scE;": "⪴",
+  	"sce;": "⪰",
+  	"Scedil;": "Ş",
+  	"scedil;": "ş",
+  	"Scirc;": "Ŝ",
+  	"scirc;": "ŝ",
+  	"scnap;": "⪺",
+  	"scnE;": "⪶",
+  	"scnsim;": "⋩",
+  	"scpolint;": "⨓",
+  	"scsim;": "≿",
+  	"Scy;": "С",
+  	"scy;": "с",
+  	"sdot;": "⋅",
+  	"sdotb;": "⊡",
+  	"sdote;": "⩦",
+  	"searhk;": "⤥",
+  	"seArr;": "⇘",
+  	"searr;": "↘",
+  	"searrow;": "↘",
+  	"sect;": "§",
+  	sect: sect$2,
+  	"semi;": ";",
+  	"seswar;": "⤩",
+  	"setminus;": "∖",
+  	"setmn;": "∖",
+  	"sext;": "✶",
+  	"Sfr;": "𝔖",
+  	"sfr;": "𝔰",
+  	"sfrown;": "⌢",
+  	"sharp;": "♯",
+  	"SHCHcy;": "Щ",
+  	"shchcy;": "щ",
+  	"SHcy;": "Ш",
+  	"shcy;": "ш",
+  	"ShortDownArrow;": "↓",
+  	"ShortLeftArrow;": "←",
+  	"shortmid;": "∣",
+  	"shortparallel;": "∥",
+  	"ShortRightArrow;": "→",
+  	"ShortUpArrow;": "↑",
+  	"shy;": "­",
+  	shy: shy$2,
+  	"Sigma;": "Σ",
+  	"sigma;": "σ",
+  	"sigmaf;": "ς",
+  	"sigmav;": "ς",
+  	"sim;": "∼",
+  	"simdot;": "⩪",
+  	"sime;": "≃",
+  	"simeq;": "≃",
+  	"simg;": "⪞",
+  	"simgE;": "⪠",
+  	"siml;": "⪝",
+  	"simlE;": "⪟",
+  	"simne;": "≆",
+  	"simplus;": "⨤",
+  	"simrarr;": "⥲",
+  	"slarr;": "←",
+  	"SmallCircle;": "∘",
+  	"smallsetminus;": "∖",
+  	"smashp;": "⨳",
+  	"smeparsl;": "⧤",
+  	"smid;": "∣",
+  	"smile;": "⌣",
+  	"smt;": "⪪",
+  	"smte;": "⪬",
+  	"smtes;": "⪬︀",
+  	"SOFTcy;": "Ь",
+  	"softcy;": "ь",
+  	"sol;": "/",
+  	"solb;": "⧄",
+  	"solbar;": "⌿",
+  	"Sopf;": "𝕊",
+  	"sopf;": "𝕤",
+  	"spades;": "♠",
+  	"spadesuit;": "♠",
+  	"spar;": "∥",
+  	"sqcap;": "⊓",
+  	"sqcaps;": "⊓︀",
+  	"sqcup;": "⊔",
+  	"sqcups;": "⊔︀",
+  	"Sqrt;": "√",
+  	"sqsub;": "⊏",
+  	"sqsube;": "⊑",
+  	"sqsubset;": "⊏",
+  	"sqsubseteq;": "⊑",
+  	"sqsup;": "⊐",
+  	"sqsupe;": "⊒",
+  	"sqsupset;": "⊐",
+  	"sqsupseteq;": "⊒",
+  	"squ;": "□",
+  	"Square;": "□",
+  	"square;": "□",
+  	"SquareIntersection;": "⊓",
+  	"SquareSubset;": "⊏",
+  	"SquareSubsetEqual;": "⊑",
+  	"SquareSuperset;": "⊐",
+  	"SquareSupersetEqual;": "⊒",
+  	"SquareUnion;": "⊔",
+  	"squarf;": "▪",
+  	"squf;": "▪",
+  	"srarr;": "→",
+  	"Sscr;": "𝒮",
+  	"sscr;": "𝓈",
+  	"ssetmn;": "∖",
+  	"ssmile;": "⌣",
+  	"sstarf;": "⋆",
+  	"Star;": "⋆",
+  	"star;": "☆",
+  	"starf;": "★",
+  	"straightepsilon;": "ϵ",
+  	"straightphi;": "ϕ",
+  	"strns;": "¯",
+  	"Sub;": "⋐",
+  	"sub;": "⊂",
+  	"subdot;": "⪽",
+  	"subE;": "⫅",
+  	"sube;": "⊆",
+  	"subedot;": "⫃",
+  	"submult;": "⫁",
+  	"subnE;": "⫋",
+  	"subne;": "⊊",
+  	"subplus;": "⪿",
+  	"subrarr;": "⥹",
+  	"Subset;": "⋐",
+  	"subset;": "⊂",
+  	"subseteq;": "⊆",
+  	"subseteqq;": "⫅",
+  	"SubsetEqual;": "⊆",
+  	"subsetneq;": "⊊",
+  	"subsetneqq;": "⫋",
+  	"subsim;": "⫇",
+  	"subsub;": "⫕",
+  	"subsup;": "⫓",
+  	"succ;": "≻",
+  	"succapprox;": "⪸",
+  	"succcurlyeq;": "≽",
+  	"Succeeds;": "≻",
+  	"SucceedsEqual;": "⪰",
+  	"SucceedsSlantEqual;": "≽",
+  	"SucceedsTilde;": "≿",
+  	"succeq;": "⪰",
+  	"succnapprox;": "⪺",
+  	"succneqq;": "⪶",
+  	"succnsim;": "⋩",
+  	"succsim;": "≿",
+  	"SuchThat;": "∋",
+  	"Sum;": "∑",
+  	"sum;": "∑",
+  	"sung;": "♪",
+  	"Sup;": "⋑",
+  	"sup;": "⊃",
+  	"sup1;": "¹",
+  	sup1: sup1$1,
+  	"sup2;": "²",
+  	sup2: sup2$1,
+  	"sup3;": "³",
+  	sup3: sup3$1,
+  	"supdot;": "⪾",
+  	"supdsub;": "⫘",
+  	"supE;": "⫆",
+  	"supe;": "⊇",
+  	"supedot;": "⫄",
+  	"Superset;": "⊃",
+  	"SupersetEqual;": "⊇",
+  	"suphsol;": "⟉",
+  	"suphsub;": "⫗",
+  	"suplarr;": "⥻",
+  	"supmult;": "⫂",
+  	"supnE;": "⫌",
+  	"supne;": "⊋",
+  	"supplus;": "⫀",
+  	"Supset;": "⋑",
+  	"supset;": "⊃",
+  	"supseteq;": "⊇",
+  	"supseteqq;": "⫆",
+  	"supsetneq;": "⊋",
+  	"supsetneqq;": "⫌",
+  	"supsim;": "⫈",
+  	"supsub;": "⫔",
+  	"supsup;": "⫖",
+  	"swarhk;": "⤦",
+  	"swArr;": "⇙",
+  	"swarr;": "↙",
+  	"swarrow;": "↙",
+  	"swnwar;": "⤪",
+  	"szlig;": "ß",
+  	szlig: szlig$1,
+  	"Tab;": "\t",
+  	"target;": "⌖",
+  	"Tau;": "Τ",
+  	"tau;": "τ",
+  	"tbrk;": "⎴",
+  	"Tcaron;": "Ť",
+  	"tcaron;": "ť",
+  	"Tcedil;": "Ţ",
+  	"tcedil;": "ţ",
+  	"Tcy;": "Т",
+  	"tcy;": "т",
+  	"tdot;": "⃛",
+  	"telrec;": "⌕",
+  	"Tfr;": "𝔗",
+  	"tfr;": "𝔱",
+  	"there4;": "∴",
+  	"Therefore;": "∴",
+  	"therefore;": "∴",
+  	"Theta;": "Θ",
+  	"theta;": "θ",
+  	"thetasym;": "ϑ",
+  	"thetav;": "ϑ",
+  	"thickapprox;": "≈",
+  	"thicksim;": "∼",
+  	"ThickSpace;": "  ",
+  	"thinsp;": " ",
+  	"ThinSpace;": " ",
+  	"thkap;": "≈",
+  	"thksim;": "∼",
+  	"THORN;": "Þ",
+  	THORN: THORN$2,
+  	"thorn;": "þ",
+  	thorn: thorn$2,
+  	"Tilde;": "∼",
+  	"tilde;": "˜",
+  	"TildeEqual;": "≃",
+  	"TildeFullEqual;": "≅",
+  	"TildeTilde;": "≈",
+  	"times;": "×",
+  	times: times$2,
+  	"timesb;": "⊠",
+  	"timesbar;": "⨱",
+  	"timesd;": "⨰",
+  	"tint;": "∭",
+  	"toea;": "⤨",
+  	"top;": "⊤",
+  	"topbot;": "⌶",
+  	"topcir;": "⫱",
+  	"Topf;": "𝕋",
+  	"topf;": "𝕥",
+  	"topfork;": "⫚",
+  	"tosa;": "⤩",
+  	"tprime;": "‴",
+  	"TRADE;": "™",
+  	"trade;": "™",
+  	"triangle;": "▵",
+  	"triangledown;": "▿",
+  	"triangleleft;": "◃",
+  	"trianglelefteq;": "⊴",
+  	"triangleq;": "≜",
+  	"triangleright;": "▹",
+  	"trianglerighteq;": "⊵",
+  	"tridot;": "◬",
+  	"trie;": "≜",
+  	"triminus;": "⨺",
+  	"TripleDot;": "⃛",
+  	"triplus;": "⨹",
+  	"trisb;": "⧍",
+  	"tritime;": "⨻",
+  	"trpezium;": "⏢",
+  	"Tscr;": "𝒯",
+  	"tscr;": "𝓉",
+  	"TScy;": "Ц",
+  	"tscy;": "ц",
+  	"TSHcy;": "Ћ",
+  	"tshcy;": "ћ",
+  	"Tstrok;": "Ŧ",
+  	"tstrok;": "ŧ",
+  	"twixt;": "≬",
+  	"twoheadleftarrow;": "↞",
+  	"twoheadrightarrow;": "↠",
+  	"Uacute;": "Ú",
+  	Uacute: Uacute$1,
+  	"uacute;": "ú",
+  	uacute: uacute$1,
+  	"Uarr;": "↟",
+  	"uArr;": "⇑",
+  	"uarr;": "↑",
+  	"Uarrocir;": "⥉",
+  	"Ubrcy;": "Ў",
+  	"ubrcy;": "ў",
+  	"Ubreve;": "Ŭ",
+  	"ubreve;": "ŭ",
+  	"Ucirc;": "Û",
+  	Ucirc: Ucirc$1,
+  	"ucirc;": "û",
+  	ucirc: ucirc$1,
+  	"Ucy;": "У",
+  	"ucy;": "у",
+  	"udarr;": "⇅",
+  	"Udblac;": "Ű",
+  	"udblac;": "ű",
+  	"udhar;": "⥮",
+  	"ufisht;": "⥾",
+  	"Ufr;": "𝔘",
+  	"ufr;": "𝔲",
+  	"Ugrave;": "Ù",
+  	Ugrave: Ugrave$1,
+  	"ugrave;": "ù",
+  	ugrave: ugrave$1,
+  	"uHar;": "⥣",
+  	"uharl;": "↿",
+  	"uharr;": "↾",
+  	"uhblk;": "▀",
+  	"ulcorn;": "⌜",
+  	"ulcorner;": "⌜",
+  	"ulcrop;": "⌏",
+  	"ultri;": "◸",
+  	"Umacr;": "Ū",
+  	"umacr;": "ū",
+  	"uml;": "¨",
+  	uml: uml$2,
+  	"UnderBar;": "_",
+  	"UnderBrace;": "⏟",
+  	"UnderBracket;": "⎵",
+  	"UnderParenthesis;": "⏝",
+  	"Union;": "⋃",
+  	"UnionPlus;": "⊎",
+  	"Uogon;": "Ų",
+  	"uogon;": "ų",
+  	"Uopf;": "𝕌",
+  	"uopf;": "𝕦",
+  	"UpArrow;": "↑",
+  	"Uparrow;": "⇑",
+  	"uparrow;": "↑",
+  	"UpArrowBar;": "⤒",
+  	"UpArrowDownArrow;": "⇅",
+  	"UpDownArrow;": "↕",
+  	"Updownarrow;": "⇕",
+  	"updownarrow;": "↕",
+  	"UpEquilibrium;": "⥮",
+  	"upharpoonleft;": "↿",
+  	"upharpoonright;": "↾",
+  	"uplus;": "⊎",
+  	"UpperLeftArrow;": "↖",
+  	"UpperRightArrow;": "↗",
+  	"Upsi;": "ϒ",
+  	"upsi;": "υ",
+  	"upsih;": "ϒ",
+  	"Upsilon;": "Υ",
+  	"upsilon;": "υ",
+  	"UpTee;": "⊥",
+  	"UpTeeArrow;": "↥",
+  	"upuparrows;": "⇈",
+  	"urcorn;": "⌝",
+  	"urcorner;": "⌝",
+  	"urcrop;": "⌎",
+  	"Uring;": "Ů",
+  	"uring;": "ů",
+  	"urtri;": "◹",
+  	"Uscr;": "𝒰",
+  	"uscr;": "𝓊",
+  	"utdot;": "⋰",
+  	"Utilde;": "Ũ",
+  	"utilde;": "ũ",
+  	"utri;": "▵",
+  	"utrif;": "▴",
+  	"uuarr;": "⇈",
+  	"Uuml;": "Ü",
+  	Uuml: Uuml$1,
+  	"uuml;": "ü",
+  	uuml: uuml$1,
+  	"uwangle;": "⦧",
+  	"vangrt;": "⦜",
+  	"varepsilon;": "ϵ",
+  	"varkappa;": "ϰ",
+  	"varnothing;": "∅",
+  	"varphi;": "ϕ",
+  	"varpi;": "ϖ",
+  	"varpropto;": "∝",
+  	"vArr;": "⇕",
+  	"varr;": "↕",
+  	"varrho;": "ϱ",
+  	"varsigma;": "ς",
+  	"varsubsetneq;": "⊊︀",
+  	"varsubsetneqq;": "⫋︀",
+  	"varsupsetneq;": "⊋︀",
+  	"varsupsetneqq;": "⫌︀",
+  	"vartheta;": "ϑ",
+  	"vartriangleleft;": "⊲",
+  	"vartriangleright;": "⊳",
+  	"Vbar;": "⫫",
+  	"vBar;": "⫨",
+  	"vBarv;": "⫩",
+  	"Vcy;": "В",
+  	"vcy;": "в",
+  	"VDash;": "⊫",
+  	"Vdash;": "⊩",
+  	"vDash;": "⊨",
+  	"vdash;": "⊢",
+  	"Vdashl;": "⫦",
+  	"Vee;": "⋁",
+  	"vee;": "∨",
+  	"veebar;": "⊻",
+  	"veeeq;": "≚",
+  	"vellip;": "⋮",
+  	"Verbar;": "‖",
+  	"verbar;": "|",
+  	"Vert;": "‖",
+  	"vert;": "|",
+  	"VerticalBar;": "∣",
+  	"VerticalLine;": "|",
+  	"VerticalSeparator;": "❘",
+  	"VerticalTilde;": "≀",
+  	"VeryThinSpace;": " ",
+  	"Vfr;": "𝔙",
+  	"vfr;": "𝔳",
+  	"vltri;": "⊲",
+  	"vnsub;": "⊂⃒",
+  	"vnsup;": "⊃⃒",
+  	"Vopf;": "𝕍",
+  	"vopf;": "𝕧",
+  	"vprop;": "∝",
+  	"vrtri;": "⊳",
+  	"Vscr;": "𝒱",
+  	"vscr;": "𝓋",
+  	"vsubnE;": "⫋︀",
+  	"vsubne;": "⊊︀",
+  	"vsupnE;": "⫌︀",
+  	"vsupne;": "⊋︀",
+  	"Vvdash;": "⊪",
+  	"vzigzag;": "⦚",
+  	"Wcirc;": "Ŵ",
+  	"wcirc;": "ŵ",
+  	"wedbar;": "⩟",
+  	"Wedge;": "⋀",
+  	"wedge;": "∧",
+  	"wedgeq;": "≙",
+  	"weierp;": "℘",
+  	"Wfr;": "𝔚",
+  	"wfr;": "𝔴",
+  	"Wopf;": "𝕎",
+  	"wopf;": "𝕨",
+  	"wp;": "℘",
+  	"wr;": "≀",
+  	"wreath;": "≀",
+  	"Wscr;": "𝒲",
+  	"wscr;": "𝓌",
+  	"xcap;": "⋂",
+  	"xcirc;": "◯",
+  	"xcup;": "⋃",
+  	"xdtri;": "▽",
+  	"Xfr;": "𝔛",
+  	"xfr;": "𝔵",
+  	"xhArr;": "⟺",
+  	"xharr;": "⟷",
+  	"Xi;": "Ξ",
+  	"xi;": "ξ",
+  	"xlArr;": "⟸",
+  	"xlarr;": "⟵",
+  	"xmap;": "⟼",
+  	"xnis;": "⋻",
+  	"xodot;": "⨀",
+  	"Xopf;": "𝕏",
+  	"xopf;": "𝕩",
+  	"xoplus;": "⨁",
+  	"xotime;": "⨂",
+  	"xrArr;": "⟹",
+  	"xrarr;": "⟶",
+  	"Xscr;": "𝒳",
+  	"xscr;": "𝓍",
+  	"xsqcup;": "⨆",
+  	"xuplus;": "⨄",
+  	"xutri;": "△",
+  	"xvee;": "⋁",
+  	"xwedge;": "⋀",
+  	"Yacute;": "Ý",
+  	Yacute: Yacute$1,
+  	"yacute;": "ý",
+  	yacute: yacute$1,
+  	"YAcy;": "Я",
+  	"yacy;": "я",
+  	"Ycirc;": "Ŷ",
+  	"ycirc;": "ŷ",
+  	"Ycy;": "Ы",
+  	"ycy;": "ы",
+  	"yen;": "¥",
+  	yen: yen$2,
+  	"Yfr;": "𝔜",
+  	"yfr;": "𝔶",
+  	"YIcy;": "Ї",
+  	"yicy;": "ї",
+  	"Yopf;": "𝕐",
+  	"yopf;": "𝕪",
+  	"Yscr;": "𝒴",
+  	"yscr;": "𝓎",
+  	"YUcy;": "Ю",
+  	"yucy;": "ю",
+  	"Yuml;": "Ÿ",
+  	"yuml;": "ÿ",
+  	yuml: yuml$1,
+  	"Zacute;": "Ź",
+  	"zacute;": "ź",
+  	"Zcaron;": "Ž",
+  	"zcaron;": "ž",
+  	"Zcy;": "З",
+  	"zcy;": "з",
+  	"Zdot;": "Ż",
+  	"zdot;": "ż",
+  	"zeetrf;": "ℨ",
+  	"ZeroWidthSpace;": "​",
+  	"Zeta;": "Ζ",
+  	"zeta;": "ζ",
+  	"Zfr;": "ℨ",
+  	"zfr;": "𝔷",
+  	"ZHcy;": "Ж",
+  	"zhcy;": "ж",
+  	"zigrarr;": "⇝",
+  	"Zopf;": "ℤ",
+  	"zopf;": "𝕫",
+  	"Zscr;": "𝒵",
+  	"zscr;": "𝓏",
+  	"zwj;": "‍",
+  	"zwnj;": "‌"
+  };
+
+  var entities$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Aacute: Aacute$1,
+    aacute: aacute$1,
+    Acirc: Acirc$1,
+    acirc: acirc$1,
+    acute: acute$2,
+    AElig: AElig$1,
+    aelig: aelig$1,
+    Agrave: Agrave$1,
+    agrave: agrave$1,
+    AMP: AMP$1,
+    amp: amp$2,
+    Aring: Aring$2,
+    aring: aring$2,
+    Atilde: Atilde$1,
+    atilde: atilde$2,
+    Auml: Auml$1,
+    auml: auml$1,
+    brvbar: brvbar$1,
+    Ccedil: Ccedil$1,
+    ccedil: ccedil$1,
+    cedil: cedil$2,
+    cent: cent$2,
+    COPY: COPY$2,
+    copy: copy$2,
+    curren: curren$1,
+    deg: deg$2,
+    divide: divide$2,
+    Eacute: Eacute$1,
+    eacute: eacute$1,
+    Ecirc: Ecirc$1,
+    ecirc: ecirc$1,
+    Egrave: Egrave$1,
+    egrave: egrave$2,
+    ETH: ETH$2,
+    eth: eth$2,
+    Euml: Euml$1,
+    euml: euml$1,
+    frac12: frac12$1,
+    frac14: frac14$1,
+    frac34: frac34$1,
+    GT: GT$2,
+    gt: gt$2,
+    Iacute: Iacute$1,
+    iacute: iacute$1,
+    Icirc: Icirc$1,
+    icirc: icirc$1,
+    iexcl: iexcl$1,
+    Igrave: Igrave$1,
+    igrave: igrave$1,
+    iquest: iquest$1,
+    Iuml: Iuml$1,
+    iuml: iuml$1,
+    laquo: laquo$1,
+    LT: LT$2,
+    lt: lt$2,
+    macr: macr$1,
+    micro: micro$1,
+    middot: middot$1,
+    nbsp: nbsp$1,
+    not: not$2,
+    Ntilde: Ntilde$1,
+    ntilde: ntilde$1,
+    Oacute: Oacute$1,
+    oacute: oacute$1,
+    Ocirc: Ocirc$1,
+    ocirc: ocirc$1,
+    Ograve: Ograve$1,
+    ograve: ograve$1,
+    ordf: ordf$1,
+    ordm: ordm$1,
+    Oslash: Oslash$1,
+    oslash: oslash$1,
+    Otilde: Otilde$1,
+    otilde: otilde$1,
+    Ouml: Ouml$1,
+    ouml: ouml$1,
+    para: para$2,
+    plusmn: plusmn$1,
+    pound: pound$2,
+    QUOT: QUOT$2,
+    quot: quot$2,
+    raquo: raquo$1,
+    REG: REG$2,
+    reg: reg$2,
+    sect: sect$2,
+    shy: shy$2,
+    sup1: sup1$1,
+    sup2: sup2$1,
+    sup3: sup3$1,
+    szlig: szlig$1,
+    THORN: THORN$2,
+    thorn: thorn$2,
+    times: times$2,
+    Uacute: Uacute$1,
+    uacute: uacute$1,
+    Ucirc: Ucirc$1,
+    ucirc: ucirc$1,
+    Ugrave: Ugrave$1,
+    ugrave: ugrave$1,
+    uml: uml$2,
+    Uuml: Uuml$1,
+    uuml: uuml$1,
+    Yacute: Yacute$1,
+    yacute: yacute$1,
+    yen: yen$2,
+    yuml: yuml$1,
+    'default': entities
+  });
+
+  var entities$2 = getCjsExportFromNamespace(entities$1);
+
+  var decode_1 = decode$2;
+
+  function decode$2(str) {
+    if (typeof str !== 'string') {
+      throw new TypeError('Expected a String');
+    }
+
+    return str.replace(/&(#?[^;\W]+;?)/g, function (_, match) {
+      var m;
+
+      if (m = /^#(\d+);?$/.exec(match)) {
+        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
+      } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
+        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
+      } else {
+        // named entity
+        var hasSemi = /;$/.test(match);
+        var withoutSemi = hasSemi ? match.replace(/;$/, '') : match;
+        var target = entities$2[withoutSemi] || hasSemi && entities$2[match];
+
+        if (typeof target === 'number') {
+          return punycode$2.ucs2.encode([target]);
+        } else if (typeof target === 'string') {
+          return target;
+        } else {
+          return '&' + match;
+        }
+      }
+    });
+  }
+
+  var encode$2 = encode_1;
+  var decode$3 = decode_1;
+  var ent = {
+    encode: encode$2,
+    decode: decode$3
+  };
+
+  /**
+   * string-strip-html
+   * Strips HTML tags from strings. No parser, accepts mixed sources.
+   * Version: 4.3.22
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
+   */
+
+  function stripHtml(str, originalOpts) {
+    const isArr = Array.isArray;
+    const definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
+    const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+    const punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"]);
+    const stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]);
+    let tag = {
+      attributes: []
+    };
+    let chunkOfWhitespaceStartsAt = null;
+    let chunkOfSpacesStartsAt = null;
+    const rangedOpeningTags = [];
+    let attrObj = {};
+    let hrefDump = {};
+    let stringToInsertAfter = "";
+    let hrefInsertionActive;
+    let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+
+    function existy(x) {
+      return x != null;
+    }
+
+    function isStr(something) {
+      return typeof something === "string";
+    }
+
+    function isValidAttributeCharacter(char) {
+      if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 32) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 34) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 39) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 62) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 47) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) === 61) {
+        return false;
+      }
+
+      if (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 || char.charCodeAt(0) === 65534 || char.charCodeAt(0) === 65535 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function treatRangedTags(i, opts, rangesToDelete) {
+      if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+        if (isArr(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
+          for (let y = rangedOpeningTags.length; y--;) {
+            if (rangedOpeningTags[y].name === tag.name) {
+              if (punctuation.has(str[i])) {
+                opts.cb({
+                  tag,
+                  deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                  deleteTo: i,
+                  insert: null,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
+                });
+              } else {
+                opts.cb({
+                  tag,
+                  deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                  deleteTo: i,
+                  insert: "",
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
+                });
+              }
+
+              rangedOpeningTags.splice(y, 1);
+              break;
+            }
+          }
+        } else {
+          rangedOpeningTags.push(tag);
+        }
+      }
+    }
+
+    function calculateWhitespaceToInsert(str2, currCharIdx, fromIdx, toIdx, lastOpeningBracketAt, lastClosingBracketAt) {
+      let strToEvaluateForLineBreaks = "";
+
+      if (fromIdx < lastOpeningBracketAt) {
+        strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
+      }
+
+      if (toIdx > lastClosingBracketAt + 1) {
+        const temp = str2.slice(lastClosingBracketAt + 1, toIdx);
+
+        if (temp.includes("\n") && str2[toIdx] === "<") {
+          strToEvaluateForLineBreaks += " ";
+        } else {
+          strToEvaluateForLineBreaks += temp;
+        }
+      }
+
+      if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
+        const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+
+        if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+          if (foundLineBreaks.length === 1) {
+            return "\n";
+          }
+
+          if (foundLineBreaks.length === 2) {
+            return "\n\n";
+          }
+
+          return "\n\n\n";
+        }
+
+        return " ";
+      }
+
+      return "";
+    }
+
+    function calculateHrefToBeInserted(opts) {
+      if (opts.dumpLinkHrefsNearby.enabled && Object.keys(hrefDump).length && hrefDump.tagName === tag.name && tag.lastOpeningBracketAt && (hrefDump.openingTagEnds && tag.lastOpeningBracketAt > hrefDump.openingTagEnds || !hrefDump.openingTagEnds)) {
+        hrefInsertionActive = true;
+      }
+
+      if (hrefInsertionActive) {
+        const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
+        stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
+      }
+    }
+
+    function characterSuitableForNames(char) {
+      return /[-_A-Za-z0-9]/.test(char);
+    }
+
+    if (typeof str !== "string") {
+      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
+    }
+
+    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
+      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    function prepHopefullyAnArray(something, name) {
+      if (!something) {
+        return [];
+      }
+
+      if (isArr(something)) {
+        return something.filter(val => isStr(val) && val.trim());
+      }
+
+      if (isStr(something)) {
+        if (something.length) {
+          return [something];
+        }
+
+        return [];
+      }
+
+      if (!isArr(something)) {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
+      }
+    }
+
+    function resetHrefMarkers() {
+      if (hrefInsertionActive) {
+        hrefDump = {};
+        hrefInsertionActive = false;
+      }
+    }
+
+    const defaults = {
+      ignoreTags: [],
+      onlyStripTags: [],
+      stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
+      skipHtmlDecoding: false,
+      returnRangesOnly: false,
+      trimOnlySpaces: false,
+      dumpLinkHrefsNearby: {
+        enabled: false,
+        putOnNewLine: false,
+        wrapHeads: "",
+        wrapTails: ""
+      },
+      cb: null
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
+    opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
+    const onlyStripTagsMode = !!opts.onlyStripTags.length;
+
+    if (opts.onlyStripTags.length && opts.ignoreTags.length) {
+      opts.onlyStripTags = lodash_without(opts.onlyStripTags, ...opts.ignoreTags);
+    }
+
+    if (!lodash_isplainobject(opts.dumpLinkHrefsNearby)) {
+      opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby
+      };
+    }
+
+    if (typeof opts.ignoreTags === "string") {
+      if (opts.ignoreTags.length === 0) {
+        opts.ignoreTags = [];
+      } else {
+        opts.ignoreTags = [opts.ignoreTags];
+      }
+    }
+
+    opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
+
+    if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+      if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
+        opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby,
+          ...originalOpts.dumpLinkHrefsNearby
+        };
+      } else if (originalOpts.dumpLinkHrefsNearby) {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4)}. The only allowed value is a plain object. See the API reference.`);
+      }
+    }
+
+    if (!opts.stripTogetherWithTheirContents) {
+      opts.stripTogetherWithTheirContents = [];
+    } else if (typeof opts.stripTogetherWithTheirContents === "string" && opts.stripTogetherWithTheirContents.length > 0) {
+      opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
+    }
+
+    if (!opts.dumpLinkHrefsNearby || lodash_isplainobject(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
+      opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby
+      };
+    }
+
+    if (!isArr(opts.stripTogetherWithTheirContents)) {
+      opts.stripTogetherWithTheirContents = [];
+    }
+
+    const somethingCaught = {};
+
+    if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every((el, i) => {
+      if (!(typeof el === "string")) {
+        somethingCaught.el = el;
+        somethingCaught.i = i;
+        return false;
+      }
+
+      return true;
+    })) {
+      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${somethingCaught.i} has a value ${somethingCaught.el} which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`);
+    }
+
+    if (!opts.cb) {
+      opts.cb = ({
+        rangesArr,
+        proposedReturn
+      }) => {
+        rangesArr.push(...proposedReturn);
+      };
+    }
+
+    const rangesToDelete = new Ranges({
+      limitToBeAddedWhitespace: true,
+      limitLinebreaksCount: 2
+    });
+
+    if (str === "" || str.trim() === "") {
+      return str;
+    }
+
+    if (!opts.skipHtmlDecoding) {
+      while (str !== ent.decode(str)) {
+        str = ent.decode(str);
+      }
+    }
+
+    if (!opts.trimOnlySpaces) {
+      str = str.trim();
+    }
+
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+        spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+      }
+
+      if (str[i] === ">") {
+        if ((!tag || Object.keys(tag).length < 2) && i > 1) {
+          for (let y = i; y--;) {
+            if (str[y - 1] === undefined || str[y] === ">") {
+              const startingPoint = str[y - 1] === undefined ? y : y + 1;
+              const culprit = str.slice(startingPoint, i + 1);
+
+              if (str !== `<${lodash_trim(culprit.trim(), "/>")}>` && [...definitelyTagNames].some(val => lodash_trim(culprit.trim().split(" ").filter(val2 => val2.trim()).filter((val3, i3) => i3 === 0), "/>").toLowerCase() === val) && stripHtml(`<${culprit.trim()}>`, opts) === "") {
+                const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
+                let deleteUpTo = i + 1;
+
+                if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
+                  for (let z = deleteUpTo; z < len; z++) {
+                    if (str[z].trim()) {
+                      deleteUpTo = z;
+                      break;
+                    }
+
+                    if (!str[z + 1]) {
+                      deleteUpTo = z + 1;
+                      break;
+                    }
+                  }
+                }
+
+                opts.cb({
+                  tag,
+                  deleteFrom: startingPoint,
+                  deleteTo: deleteUpTo,
+                  insert: whiteSpaceCompensation,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [startingPoint, deleteUpTo, whiteSpaceCompensation]
+                });
+              }
+
+              break;
+            }
+          }
+        }
+      }
+
+      if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
+        tag.slashPresent = i;
+      }
+
+      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt) {
+        tag = {};
+        tag.attributes = [];
+        attrObj = {};
+      }
+
+      if (str[i] === '"' || str[i] === "'") {
+        if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+          attrObj.valueEnds = i;
+          attrObj.value = str.slice(attrObj.valueStarts, i);
+          tag.attributes.push(attrObj);
+          attrObj = {};
+          tag.quotes = undefined;
+          let hrefVal;
+
+          if (opts.dumpLinkHrefsNearby.enabled && tag.attributes.some(obj => {
+            if (obj.name && obj.name.toLowerCase() === "href") {
+              hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${obj.value}${opts.dumpLinkHrefsNearby.wrapTails || ""}`;
+              return true;
+            }
+          })) {
+            hrefDump = {
+              tagName: tag.name,
+              hrefValue: hrefVal
+            };
+          }
+        } else if (!tag.quotes && tag.nameStarts) {
+          tag.quotes = {};
+          tag.quotes.value = str[i];
+          tag.quotes.start = i;
+
+          if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
+            attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+          }
+        }
+      }
+
+      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
+        tag.nameEnds = i;
+        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+
+        if (str[tag.nameStarts - 1] !== "!" && !tag.name.replace(/-/g, "").length) {
+          tag = {};
+          continue;
+        }
+
+        if (str[i] === "<") {
+          calculateHrefToBeInserted(opts);
+          const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+          opts.cb({
+            tag,
+            deleteFrom: tag.leftOuterWhitespace,
+            deleteTo: i,
+            insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+            rangesArr: rangesToDelete,
+            proposedReturn: [tag.leftOuterWhitespace, i, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
+          });
+          resetHrefMarkers();
+          treatRangedTags(i, opts, rangesToDelete);
+        }
+      }
+
+      if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
+        if (attrObj.valueEnds) ;else {
+          attrObj.valueStarts = i;
+        }
+      }
+
+      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
+        if (!attrObj.equalsAt) {
+          attrObj.equalsAt = i;
+        }
+      }
+
+      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
+        tag.attributes.push(attrObj);
+        attrObj = {};
+      }
+
+      if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
+        if (!str[i].trim()) {
+          attrObj.nameEnds = i;
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        } else if (str[i] === "=") {
+          if (!attrObj.equalsAt) {
+            attrObj.nameEnds = i;
+            attrObj.equalsAt = i;
+            attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+          }
+        } else if (str[i] === "/" || str[i] === ">") {
+          attrObj.nameEnds = i;
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+          tag.attributes.push(attrObj);
+          attrObj = {};
+        } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
+          attrObj.nameEnds = i;
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+          tag.attributes.push(attrObj);
+          attrObj = {};
+        }
+      }
+
+      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+        if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`) && str[i] !== "<") {
+          attrObj.nameStarts = i;
+        } else if (tag.onlyPlausible && str[i] !== "<") {
+          tag = {};
+        }
+      }
+
+      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
+        tag.onlyPlausible = false;
+      }
+
+      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/") {
+        if (tag.onlyPlausible === undefined) {
+          if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
+            tag.onlyPlausible = true;
+          } else {
+            tag.onlyPlausible = false;
+          }
+        }
+
+        if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
+          tag.nameStarts = i;
+          tag.nameContainsLetters = false;
+        }
+      }
+
+      if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
+        tag.nameContainsLetters = true;
+      }
+
+      if (str[i] === ">") {
+        if (tag.lastOpeningBracketAt !== undefined) {
+          tag.lastClosingBracketAt = i;
+          spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+
+          if (Object.keys(attrObj).length) {
+            tag.attributes.push(attrObj);
+            attrObj = {};
+          }
+
+          if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
+            hrefDump.openingTagEnds = i;
+          }
+        }
+      }
+
+      if (tag.lastOpeningBracketAt !== undefined) {
+        if (tag.lastClosingBracketAt === undefined) {
+          if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
+            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+
+            if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+              tag = {};
+              attrObj = {};
+              continue;
+            }
+
+            if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+              calculateHrefToBeInserted(opts);
+              const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+              opts.cb({
+                tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i + 1,
+                insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                rangesArr: rangesToDelete,
+                proposedReturn: [tag.leftOuterWhitespace, i + 1, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
+              });
+              resetHrefMarkers();
+              treatRangedTags(i, opts, rangesToDelete);
+            }
+          }
+        } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
+          let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+
+          if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+            endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+          }
+
+          if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+            opts.cb({
+              tag,
+              deleteFrom: null,
+              deleteTo: null,
+              insert: null,
+              rangesArr: rangesToDelete,
+              proposedReturn: []
+            });
+            tag = {};
+            attrObj = {};
+          } else if (!tag.onlyPlausible || tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || tag.attributes && tag.attributes.some(attrObj2 => attrObj2.equalsAt)) {
+            const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+            stringToInsertAfter = "";
+            hrefInsertionActive = false;
+            calculateHrefToBeInserted(opts);
+            let insert;
+
+            if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
+              insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
+            } else {
+              insert = whiteSpaceCompensation;
+            }
+
+            if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
+              insert = "";
+            }
+
+            if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
+              insert = " ";
+            }
+
+            opts.cb({
+              tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: endingRangeIndex,
+              insert,
+              rangesArr: rangesToDelete,
+              proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
+            });
+            resetHrefMarkers();
+            treatRangedTags(i, opts, rangesToDelete);
+          } else {
+            tag = {};
+          }
+
+          if (str[i] !== ">") {
+            tag = {};
+          }
+        }
+      }
+
+      if (str[i] === "<" && str[i - 1] !== "<") {
+        if (str[right(str, i)] === ">") {
+          continue;
+        } else {
+          if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+            if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
+              const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+              opts.cb({
+                tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i,
+                insert: whiteSpaceCompensation,
+                rangesArr: rangesToDelete,
+                proposedReturn: [tag.leftOuterWhitespace, i, whiteSpaceCompensation]
+              });
+              treatRangedTags(i, opts, rangesToDelete);
+              tag = {};
+              attrObj = {};
+            } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
+              tag = {};
+              attrObj = {};
+            }
+          }
+
+          if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
+            tag.lastOpeningBracketAt = undefined;
+            tag.onlyPlausible = false;
+          }
+
+          if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
+            tag.lastOpeningBracketAt = i;
+            tag.slashPresent = false;
+            tag.attributes = [];
+
+            if (chunkOfWhitespaceStartsAt === null) {
+              tag.leftOuterWhitespace = i;
+            } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+              tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+            } else {
+              tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
+            }
+
+            if (`${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" || `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${str[i + 6]}${str[i + 7]}${str[i + 8]}` === "![CDATA[") {
+              let cdata = true;
+
+              if (str[i + 2] === "-") {
+                cdata = false;
+              }
+
+              let closingFoundAt;
+
+              for (let y = i; y < len; y++) {
+                if (!closingFoundAt && cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>" || !cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->") {
+                  closingFoundAt = y;
+                }
+
+                if (closingFoundAt && (closingFoundAt < y && str[y].trim() || str[y + 1] === undefined)) {
+                  let rangeEnd = y;
+
+                  if (str[y + 1] === undefined && !str[y].trim() || str[y] === ">") {
+                    rangeEnd += 1;
+                  }
+
+                  const whiteSpaceCompensation = calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
+                  opts.cb({
+                    tag,
+                    deleteFrom: tag.leftOuterWhitespace,
+                    deleteTo: rangeEnd,
+                    insert: whiteSpaceCompensation,
+                    rangesArr: rangesToDelete,
+                    proposedReturn: [tag.leftOuterWhitespace, rangeEnd, whiteSpaceCompensation]
+                  });
+                  i = y - 1;
+
+                  if (str[y] === ">") {
+                    i = y;
+                  }
+
+                  tag = {};
+                  attrObj = {};
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (str[i].trim() === "") {
+        if (chunkOfWhitespaceStartsAt === null) {
+          chunkOfWhitespaceStartsAt = i;
+
+          if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 && !rangedOpeningTags.some(rangedTagObj => rangedTagObj.name === tag.name)) {
+            tag.onlyPlausible = true;
+            tag.name = undefined;
+            tag.nameStarts = undefined;
+          }
+        }
+      } else if (chunkOfWhitespaceStartsAt !== null) {
+        if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+          if (lodash_isplainobject(attrObj)) {
+            tag.attributes.push(attrObj);
+          }
+
+          attrObj = {};
+          tag.equalsSpottedAt = undefined;
+        }
+
+        chunkOfWhitespaceStartsAt = null;
+      }
+
+      if (str[i] === " ") {
+        if (chunkOfSpacesStartsAt === null) {
+          chunkOfSpacesStartsAt = i;
+        }
+      } else if (chunkOfSpacesStartsAt !== null) {
+        chunkOfSpacesStartsAt = null;
+      }
+    }
+
+    if (rangesToDelete.current()) {
+      if (opts.returnRangesOnly) {
+        return rangesToDelete.current();
+      }
+
+      const untrimmedRes = rangesApply(str, rangesToDelete.current());
+
+      if (opts.trimOnlySpaces) {
+        return lodash_trim(untrimmedRes, " ");
+      }
+
+      return untrimmedRes.trim();
+    }
+
+    if (opts.returnRangesOnly) {
+      return [];
+    }
+
+    if (opts.trimOnlySpaces) {
+      return lodash_trim(str, " ");
+    }
+
+    return str.trim();
+  }
+
+  var ansiRegex = ({
+    onlyFirst = false
+  } = {}) => {
+    const pattern = ['[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)', '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'].join('|');
+    return new RegExp(pattern, onlyFirst ? undefined : 'g');
+  };
 
   var he = createCommonjsModule(function (module, exports) {
 
@@ -17623,9 +24075,2230 @@
     })(commonjsGlobal);
   });
 
+  var version$1 = "5.8.15";
+
+  /**
+   * html-entities-not-email-friendly
+   * All HTML entities which are not email template friendly
+   * Version: 0.2.1
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+   */
+  const notEmailFriendly = {
+    AMP: "amp",
+    Abreve: "#x102",
+    Acy: "#x410",
+    Afr: "#x1D504",
+    Amacr: "#x100",
+    And: "#x2A53",
+    Aogon: "#x104",
+    Aopf: "#x1D538",
+    ApplyFunction: "#x2061",
+    Ascr: "#x1D49C",
+    Assign: "#x2254",
+    Backslash: "#x2216",
+    Barv: "#x2AE7",
+    Barwed: "#x2306",
+    Bcy: "#x411",
+    Because: "#x2235",
+    Bernoullis: "#x212C",
+    Bfr: "#x1D505",
+    Bopf: "#x1D539",
+    Breve: "#x2D8",
+    Bscr: "#x212C",
+    Bumpeq: "#x224E",
+    CHcy: "#x427",
+    COPY: "copy",
+    Cacute: "#x106",
+    Cap: "#x22D2",
+    CapitalDifferentialD: "#x2145",
+    Cayleys: "#x212D",
+    Ccaron: "#x10C",
+    Ccirc: "#x108",
+    Cconint: "#x2230",
+    Cdot: "#x10A",
+    Cedilla: "cedil",
+    CenterDot: "middot",
+    Cfr: "#x212D",
+    CircleDot: "#x2299",
+    CircleMinus: "#x2296",
+    CirclePlus: "oplus",
+    CircleTimes: "otimes",
+    ClockwiseContourIntegral: "#x2232",
+    CloseCurlyDoubleQuote: "rdquo",
+    CloseCurlyQuote: "rsquo",
+    Colon: "#x2237",
+    Colone: "#x2A74",
+    Congruent: "equiv",
+    Conint: "#x222F",
+    ContourIntegral: "#x222E",
+    Copf: "#x2102",
+    Coproduct: "#x2210",
+    CounterClockwiseContourIntegral: "#x2233",
+    Cross: "#x2A2F",
+    Cscr: "#x1D49E",
+    Cup: "#x22D3",
+    CupCap: "#x224D",
+    DD: "#x2145",
+    DDotrahd: "#x2911",
+    DJcy: "#x402",
+    DScy: "#x405",
+    DZcy: "#x40F",
+    Darr: "#x21A1",
+    Dashv: "#x2AE4",
+    Dcaron: "#x10E",
+    Dcy: "#x414",
+    Del: "#x2207",
+    Dfr: "#x1D507",
+    DiacriticalAcute: "acute",
+    DiacriticalDot: "#x2D9",
+    DiacriticalDoubleAcute: "#x2DD",
+    DiacriticalGrave: "#x60",
+    DiacriticalTilde: "tilde",
+    Diamond: "#x22C4",
+    DifferentialD: "#x2146",
+    Dopf: "#x1D53B",
+    Dot: "#xA8",
+    DotDot: "#x20DC",
+    DotEqual: "#x2250",
+    DoubleContourIntegral: "#x222F",
+    DoubleDot: "#xA8",
+    DoubleDownArrow: "dArr",
+    DoubleLeftArrow: "lArr",
+    DoubleLeftRightArrow: "#x21D4",
+    DoubleLeftTee: "#x2AE4",
+    DoubleLongLeftArrow: "#x27F8",
+    DoubleLongLeftRightArrow: "#x27FA",
+    DoubleLongRightArrow: "#x27F9",
+    DoubleRightArrow: "rArr",
+    DoubleRightTee: "#x22A8",
+    DoubleUpArrow: "uArr",
+    DoubleUpDownArrow: "#x21D5",
+    DoubleVerticalBar: "#x2225",
+    DownArrow: "darr",
+    DownArrowBar: "#x2913",
+    DownArrowUpArrow: "#x21F5",
+    DownBreve: "#x311",
+    DownLeftRightVector: "#x2950",
+    DownLeftTeeVector: "#x295E",
+    DownLeftVector: "#x21BD",
+    DownLeftVectorBar: "#x2956",
+    DownRightTeeVector: "#x295F",
+    DownRightVector: "#x21C1",
+    DownRightVectorBar: "#x2957",
+    DownTee: "#x22A4",
+    DownTeeArrow: "#x21A7",
+    Downarrow: "dArr",
+    Dscr: "#x1D49F",
+    Dstrok: "#x110",
+    ENG: "#x14A",
+    Ecaron: "#x11A",
+    Ecy: "#x42D",
+    Edot: "#x116",
+    Efr: "#x1D508",
+    Element: "#x2208",
+    Emacr: "#x112",
+    EmptySmallSquare: "#x25FB",
+    EmptyVerySmallSquare: "#x25AB",
+    Eogon: "#x118",
+    Eopf: "#x1D53C",
+    Equal: "#x2A75",
+    EqualTilde: "#x2242",
+    Equilibrium: "#x21CC",
+    Escr: "#x2130",
+    Esim: "#x2A73",
+    Exists: "exist",
+    ExponentialE: "#x2147",
+    Fcy: "#x424",
+    Ffr: "#x1D509",
+    FilledSmallSquare: "#x25FC",
+    FilledVerySmallSquare: "#x25AA",
+    Fopf: "#x1D53D",
+    ForAll: "forall",
+    Fouriertrf: "#x2131",
+    Fscr: "#x2131",
+    GJcy: "#x403",
+    GT: "gt",
+    Gammad: "#x3DC",
+    Gbreve: "#x11E",
+    Gcedil: "#x122",
+    Gcirc: "#x11C",
+    Gcy: "#x413",
+    Gdot: "#x120",
+    Gfr: "#x1D50A",
+    Gg: "#x22D9",
+    Gopf: "#x1D53E",
+    GreaterEqual: "ge",
+    GreaterEqualLess: "#x22DB",
+    GreaterFullEqual: "#x2267",
+    GreaterGreater: "#x2AA2",
+    GreaterLess: "#x2277",
+    GreaterSlantEqual: "#x2A7E",
+    GreaterTilde: "#x2273",
+    Gscr: "#x1D4A2",
+    Gt: "#x226B",
+    HARDcy: "#x42A",
+    Hacek: "#x2C7",
+    Hcirc: "#x124",
+    Hfr: "#x210C",
+    HilbertSpace: "#x210B",
+    Hopf: "#x210D",
+    HorizontalLine: "#x2500",
+    Hscr: "#x210B",
+    Hstrok: "#x126",
+    HumpDownHump: "#x224E",
+    HumpEqual: "#x224F",
+    IEcy: "#x415",
+    IJlig: "#x132",
+    IOcy: "#x401",
+    Icy: "#x418",
+    Idot: "#x130",
+    Ifr: "#x2111",
+    Im: "#x2111",
+    Imacr: "#x12A",
+    ImaginaryI: "#x2148",
+    Implies: "rArr",
+    Int: "#x222C",
+    Integral: "int",
+    Intersection: "#x22C2",
+    InvisibleComma: "#x2063",
+    InvisibleTimes: "#x2062",
+    Iogon: "#x12E",
+    Iopf: "#x1D540",
+    Iscr: "#x2110",
+    Itilde: "#x128",
+    Iukcy: "#x406",
+    Jcirc: "#x134",
+    Jcy: "#x419",
+    Jfr: "#x1D50D",
+    Jopf: "#x1D541",
+    Jscr: "#x1D4A5",
+    Jsercy: "#x408",
+    Jukcy: "#x404",
+    KHcy: "#x425",
+    KJcy: "#x40C",
+    Kcedil: "#x136",
+    Kcy: "#x41A",
+    Kfr: "#x1D50E",
+    Kopf: "#x1D542",
+    Kscr: "#x1D4A6",
+    LJcy: "#x409",
+    LT: "lt",
+    Lacute: "#x139",
+    Lang: "#x27EA",
+    Laplacetrf: "#x2112",
+    Larr: "#x219E",
+    Lcaron: "#x13D",
+    Lcedil: "#x13B",
+    Lcy: "#x41B",
+    LeftAngleBracket: "lang",
+    LeftArrow: "larr",
+    LeftArrowBar: "#x21E4",
+    LeftArrowRightArrow: "#x21C6",
+    LeftCeiling: "lceil",
+    LeftDoubleBracket: "#x27E6",
+    LeftDownTeeVector: "#x2961",
+    LeftDownVector: "#x21C3",
+    LeftDownVectorBar: "#x2959",
+    LeftFloor: "lfloor",
+    LeftRightArrow: "harr",
+    LeftRightVector: "#x294E",
+    LeftTee: "#x22A3",
+    LeftTeeArrow: "#x21A4",
+    LeftTeeVector: "#x295A",
+    LeftTriangle: "#x22B2",
+    LeftTriangleBar: "#x29CF",
+    LeftTriangleEqual: "#x22B4",
+    LeftUpDownVector: "#x2951",
+    LeftUpTeeVector: "#x2960",
+    LeftUpVector: "#x21BF",
+    LeftUpVectorBar: "#x2958",
+    LeftVector: "#x21BC",
+    LeftVectorBar: "#x2952",
+    Leftarrow: "lArr",
+    Leftrightarrow: "#x21D4",
+    LessEqualGreater: "#x22DA",
+    LessFullEqual: "#x2266",
+    LessGreater: "#x2276",
+    LessLess: "#x2AA1",
+    LessSlantEqual: "#x2A7D",
+    LessTilde: "#x2272",
+    Lfr: "#x1D50F",
+    Ll: "#x22D8",
+    Lleftarrow: "#x21DA",
+    Lmidot: "#x13F",
+    LongLeftArrow: "#x27F5",
+    LongLeftRightArrow: "#x27F7",
+    LongRightArrow: "#x27F6",
+    Longleftarrow: "#x27F8",
+    Longleftrightarrow: "#x27FA",
+    Longrightarrow: "#x27F9",
+    Lopf: "#x1D543",
+    LowerLeftArrow: "#x2199",
+    LowerRightArrow: "#x2198",
+    Lscr: "#x2112",
+    Lsh: "#x21B0",
+    Lstrok: "#x141",
+    Lt: "#x226A",
+    Map: "#x2905",
+    Mcy: "#x41C",
+    MediumSpace: "#x205F",
+    Mellintrf: "#x2133",
+    Mfr: "#x1D510",
+    MinusPlus: "#x2213",
+    Mopf: "#x1D544",
+    Mscr: "#x2133",
+    NJcy: "#x40A",
+    Nacute: "#x143",
+    Ncaron: "#x147",
+    Ncedil: "#x145",
+    Ncy: "#x41D",
+    NegativeMediumSpace: "#x200B",
+    NegativeThickSpace: "#x200B",
+    NegativeThinSpace: "#x200B",
+    NegativeVeryThinSpace: "#x200B",
+    NestedGreaterGreater: "#x226B",
+    NestedLessLess: "#x226A",
+    Nfr: "#x1D511",
+    NoBreak: "#x2060",
+    NonBreakingSpace: "nbsp",
+    Nopf: "#x2115",
+    Not: "#x2AEC",
+    NotCongruent: "#x2262",
+    NotCupCap: "#x226D",
+    NotDoubleVerticalBar: "#x2226",
+    NotElement: "notin",
+    NotEqual: "ne",
+    NotEqualTilde: "#x2242;&#x338",
+    NotExists: "#x2204",
+    NotGreater: "#x226F",
+    NotGreaterEqual: "#x2271",
+    NotGreaterFullEqual: "#x2267;&#x338",
+    NotGreaterGreater: "#x226B;&#x338",
+    NotGreaterLess: "#x2279",
+    NotGreaterSlantEqual: "#x2A7E;&#x338",
+    NotGreaterTilde: "#x2275",
+    NotHumpDownHump: "#x224E;&#x338",
+    NotHumpEqual: "#x224F;&#x338",
+    NotLeftTriangle: "#x22EA",
+    NotLeftTriangleBar: "#x29CF;&#x338",
+    NotLeftTriangleEqual: "#x22EC",
+    NotLess: "#x226E",
+    NotLessEqual: "#x2270",
+    NotLessGreater: "#x2278",
+    NotLessLess: "#x226A;&#x338",
+    NotLessSlantEqual: "#x2A7D;&#x338",
+    NotLessTilde: "#x2274",
+    NotNestedGreaterGreater: "#x2AA2;&#x338",
+    NotNestedLessLess: "#x2AA1;&#x338",
+    NotPrecedes: "#x2280",
+    NotPrecedesEqual: "#x2AAF;&#x338",
+    NotPrecedesSlantEqual: "#x22E0",
+    NotReverseElement: "#x220C",
+    NotRightTriangle: "#x22EB",
+    NotRightTriangleBar: "#x29D0;&#x338",
+    NotRightTriangleEqual: "#x22ED",
+    NotSquareSubset: "#x228F;&#x338",
+    NotSquareSubsetEqual: "#x22E2",
+    NotSquareSuperset: "#x2290;&#x338",
+    NotSquareSupersetEqual: "#x22E3",
+    NotSubset: "#x2282;&#x20D2",
+    NotSubsetEqual: "#x2288",
+    NotSucceeds: "#x2281",
+    NotSucceedsEqual: "#x2AB0;&#x338",
+    NotSucceedsSlantEqual: "#x22E1",
+    NotSucceedsTilde: "#x227F;&#x338",
+    NotSuperset: "#x2283;&#x20D2",
+    NotSupersetEqual: "#x2289",
+    NotTilde: "#x2241",
+    NotTildeEqual: "#x2244",
+    NotTildeFullEqual: "#x2247",
+    NotTildeTilde: "#x2249",
+    NotVerticalBar: "#x2224",
+    Nscr: "#x1D4A9",
+    Ocy: "#x41E",
+    Odblac: "#x150",
+    Ofr: "#x1D512",
+    Omacr: "#x14C",
+    Oopf: "#x1D546",
+    OpenCurlyDoubleQuote: "ldquo",
+    OpenCurlyQuote: "lsquo",
+    Or: "#x2A54",
+    Oscr: "#x1D4AA",
+    Otimes: "#x2A37",
+    OverBar: "oline",
+    OverBrace: "#x23DE",
+    OverBracket: "#x23B4",
+    OverParenthesis: "#x23DC",
+    PartialD: "part",
+    Pcy: "#x41F",
+    Pfr: "#x1D513",
+    PlusMinus: "#xB1",
+    Poincareplane: "#x210C",
+    Popf: "#x2119",
+    Pr: "#x2ABB",
+    Precedes: "#x227A",
+    PrecedesEqual: "#x2AAF",
+    PrecedesSlantEqual: "#x227C",
+    PrecedesTilde: "#x227E",
+    Product: "prod",
+    Proportion: "#x2237",
+    Proportional: "prop",
+    Pscr: "#x1D4AB",
+    QUOT: "quot",
+    Qfr: "#x1D514",
+    Qopf: "#x211A",
+    Qscr: "#x1D4AC",
+    RBarr: "#x2910",
+    REG: "reg",
+    Racute: "#x154",
+    Rang: "#x27EB",
+    Rarr: "#x21A0",
+    Rarrtl: "#x2916",
+    Rcaron: "#x158",
+    Rcedil: "#x156",
+    Rcy: "#x420",
+    Re: "#x211C",
+    ReverseElement: "ni",
+    ReverseEquilibrium: "#x21CB",
+    ReverseUpEquilibrium: "#x296F",
+    Rfr: "#x211C",
+    RightAngleBracket: "rang",
+    RightArrow: "rarr",
+    RightArrowBar: "#x21E5",
+    RightArrowLeftArrow: "#x21C4",
+    RightCeiling: "rceil",
+    RightDoubleBracket: "#x27E7",
+    RightDownTeeVector: "#x295D",
+    RightDownVector: "#x21C2",
+    RightDownVectorBar: "#x2955",
+    RightFloor: "rfloor",
+    RightTee: "#x22A2",
+    RightTeeArrow: "#x21A6",
+    RightTeeVector: "#x295B",
+    RightTriangle: "#x22B3",
+    RightTriangleBar: "#x29D0",
+    RightTriangleEqual: "#x22B5",
+    RightUpDownVector: "#x294F",
+    RightUpTeeVector: "#x295C",
+    RightUpVector: "#x21BE",
+    RightUpVectorBar: "#x2954",
+    RightVector: "#x21C0",
+    RightVectorBar: "#x2953",
+    Rightarrow: "rArr",
+    Ropf: "#x211D",
+    RoundImplies: "#x2970",
+    Rrightarrow: "#x21DB",
+    Rscr: "#x211B",
+    Rsh: "#x21B1",
+    RuleDelayed: "#x29F4",
+    SHCHcy: "#x429",
+    SHcy: "#x428",
+    SOFTcy: "#x42C",
+    Sacute: "#x15A",
+    Sc: "#x2ABC",
+    Scedil: "#x15E",
+    Scirc: "#x15C",
+    Scy: "#x421",
+    Sfr: "#x1D516",
+    ShortDownArrow: "darr",
+    ShortLeftArrow: "larr",
+    ShortRightArrow: "rarr",
+    ShortUpArrow: "uarr",
+    SmallCircle: "#x2218",
+    Sopf: "#x1D54A",
+    Sqrt: "#x221A",
+    Square: "#x25A1",
+    SquareIntersection: "#x2293",
+    SquareSubset: "#x228F",
+    SquareSubsetEqual: "#x2291",
+    SquareSuperset: "#x2290",
+    SquareSupersetEqual: "#x2292",
+    SquareUnion: "#x2294",
+    Sscr: "#x1D4AE",
+    Star: "#x22C6",
+    Sub: "#x22D0",
+    Subset: "#x22D0",
+    SubsetEqual: "sube",
+    Succeeds: "#x227B",
+    SucceedsEqual: "#x2AB0",
+    SucceedsSlantEqual: "#x227D",
+    SucceedsTilde: "#x227F",
+    SuchThat: "ni",
+    Sum: "sum",
+    Sup: "#x22D1",
+    Superset: "sup",
+    SupersetEqual: "supe",
+    Supset: "#x22D1",
+    TRADE: "trade",
+    TSHcy: "#x40B",
+    TScy: "#x426",
+    Tab: "#x9",
+    Tcaron: "#x164",
+    Tcedil: "#x162",
+    Tcy: "#x422",
+    Tfr: "#x1D517",
+    Therefore: "there4",
+    ThickSpace: "#x205F;&#x200A",
+    ThinSpace: "thinsp",
+    Tilde: "sim",
+    TildeEqual: "#x2243",
+    TildeFullEqual: "cong",
+    TildeTilde: "#x2248",
+    Topf: "#x1D54B",
+    TripleDot: "#x20DB",
+    Tscr: "#x1D4AF",
+    Tstrok: "#x166",
+    Uarr: "#x219F",
+    Uarrocir: "#x2949",
+    Ubrcy: "#x40E",
+    Ubreve: "#x16C",
+    Ucy: "#x423",
+    Udblac: "#x170",
+    Ufr: "#x1D518",
+    Umacr: "#x16A",
+    UnderBrace: "#x23DF",
+    UnderBracket: "#x23B5",
+    UnderParenthesis: "#x23DD",
+    Union: "#x22C3",
+    UnionPlus: "#x228E",
+    Uogon: "#x172",
+    Uopf: "#x1D54C",
+    UpArrow: "uarr",
+    UpArrowBar: "#x2912",
+    UpArrowDownArrow: "#x21C5",
+    UpDownArrow: "#x2195",
+    UpEquilibrium: "#x296E",
+    UpTee: "#x22A5",
+    UpTeeArrow: "#x21A5",
+    Uparrow: "uArr",
+    Updownarrow: "#x21D5",
+    UpperLeftArrow: "#x2196",
+    UpperRightArrow: "#x2197",
+    Upsi: "#x3D2",
+    Uring: "#x16E",
+    Uscr: "#x1D4B0",
+    Utilde: "#x168",
+    VDash: "#x22AB",
+    Vbar: "#x2AEB",
+    Vcy: "#x412",
+    Vdash: "#x22A9",
+    Vdashl: "#x2AE6",
+    Vee: "#x22C1",
+    Verbar: "#x2016",
+    Vert: "#x2016",
+    VerticalBar: "#x2223",
+    VerticalSeparator: "#x2758",
+    VerticalTilde: "#x2240",
+    VeryThinSpace: "#x200A",
+    Vfr: "#x1D519",
+    Vopf: "#x1D54D",
+    Vscr: "#x1D4B1",
+    Vvdash: "#x22AA",
+    Wcirc: "#x174",
+    Wedge: "#x22C0",
+    Wfr: "#x1D51A",
+    Wopf: "#x1D54E",
+    Wscr: "#x1D4B2",
+    Xfr: "#x1D51B",
+    Xopf: "#x1D54F",
+    Xscr: "#x1D4B3",
+    YAcy: "#x42F",
+    YIcy: "#x407",
+    YUcy: "#x42E",
+    Ycirc: "#x176",
+    Ycy: "#x42B",
+    Yfr: "#x1D51C",
+    Yopf: "#x1D550",
+    Yscr: "#x1D4B4",
+    ZHcy: "#x416",
+    Zacute: "#x179",
+    Zcaron: "#x17D",
+    Zcy: "#x417",
+    Zdot: "#x17B",
+    ZeroWidthSpace: "#x200B",
+    Zfr: "#x2128",
+    Zopf: "#x2124",
+    Zscr: "#x1D4B5",
+    abreve: "#x103",
+    ac: "#x223E",
+    acE: "#x223E;&#x333",
+    acd: "#x223F",
+    acy: "#x430",
+    af: "#x2061",
+    afr: "#x1D51E",
+    aleph: "#x2135",
+    amacr: "#x101",
+    amalg: "#x2A3F",
+    andand: "#x2A55",
+    andd: "#x2A5C",
+    andslope: "#x2A58",
+    andv: "#x2A5A",
+    ange: "#x29A4",
+    angle: "ang",
+    angmsd: "#x2221",
+    angmsdaa: "#x29A8",
+    angmsdab: "#x29A9",
+    angmsdac: "#x29AA",
+    angmsdad: "#x29AB",
+    angmsdae: "#x29AC",
+    angmsdaf: "#x29AD",
+    angmsdag: "#x29AE",
+    angmsdah: "#x29AF",
+    angrt: "#x221F",
+    angrtvb: "#x22BE",
+    angrtvbd: "#x299D",
+    angsph: "#x2222",
+    angst: "#xC5",
+    angzarr: "#x237C",
+    aogon: "#x105",
+    aopf: "#x1D552",
+    ap: "#x2248",
+    apE: "#x2A70",
+    apacir: "#x2A6F",
+    ape: "#x224A",
+    apid: "#x224B",
+    approx: "#x2248",
+    approxeq: "#x224A",
+    ascr: "#x1D4B6",
+    asympeq: "#x224D",
+    awconint: "#x2233",
+    awint: "#x2A11",
+    bNot: "#x2AED",
+    backcong: "#x224C",
+    backepsilon: "#x3F6",
+    backprime: "#x2035",
+    backsim: "#x223D",
+    backsimeq: "#x22CD",
+    barvee: "#x22BD",
+    barwed: "#x2305",
+    barwedge: "#x2305",
+    bbrk: "#x23B5",
+    bbrktbrk: "#x23B6",
+    bcong: "#x224C",
+    bcy: "#x431",
+    becaus: "#x2235",
+    because: "#x2235",
+    bemptyv: "#x29B0",
+    bepsi: "#x3F6",
+    bernou: "#x212C",
+    beth: "#x2136",
+    between: "#x226C",
+    bfr: "#x1D51F",
+    bigcap: "#x22C2",
+    bigcirc: "#x25EF",
+    bigcup: "#x22C3",
+    bigodot: "#x2A00",
+    bigoplus: "#x2A01",
+    bigotimes: "#x2A02",
+    bigsqcup: "#x2A06",
+    bigstar: "#x2605",
+    bigtriangledown: "#x25BD",
+    bigtriangleup: "#x25B3",
+    biguplus: "#x2A04",
+    bigvee: "#x22C1",
+    bigwedge: "#x22C0",
+    bkarow: "#x290D",
+    blacklozenge: "#x29EB",
+    blacksquare: "#x25AA",
+    blacktriangle: "#x25B4",
+    blacktriangledown: "#x25BE",
+    blacktriangleleft: "#x25C2",
+    blacktriangleright: "#x25B8",
+    blank: "#x2423",
+    blk12: "#x2592",
+    blk14: "#x2591",
+    blk34: "#x2593",
+    block: "#x2588",
+    bne: "&#x20E5",
+    bnequiv: "#x2261;&#x20E5",
+    bnot: "#x2310",
+    bopf: "#x1D553",
+    bot: "#x22A5",
+    bottom: "#x22A5",
+    bowtie: "#x22C8",
+    boxDL: "#x2557",
+    boxDR: "#x2554",
+    boxDl: "#x2556",
+    boxDr: "#x2553",
+    boxH: "#x2550",
+    boxHD: "#x2566",
+    boxHU: "#x2569",
+    boxHd: "#x2564",
+    boxHu: "#x2567",
+    boxUL: "#x255D",
+    boxUR: "#x255A",
+    boxUl: "#x255C",
+    boxUr: "#x2559",
+    boxV: "#x2551",
+    boxVH: "#x256C",
+    boxVL: "#x2563",
+    boxVR: "#x2560",
+    boxVh: "#x256B",
+    boxVl: "#x2562",
+    boxVr: "#x255F",
+    boxbox: "#x29C9",
+    boxdL: "#x2555",
+    boxdR: "#x2552",
+    boxdl: "#x2510",
+    boxdr: "#x250C",
+    boxh: "#x2500",
+    boxhD: "#x2565",
+    boxhU: "#x2568",
+    boxhd: "#x252C",
+    boxhu: "#x2534",
+    boxminus: "#x229F",
+    boxplus: "#x229E",
+    boxtimes: "#x22A0",
+    boxuL: "#x255B",
+    boxuR: "#x2558",
+    boxul: "#x2518",
+    boxur: "#x2514",
+    boxv: "#x2502",
+    boxvH: "#x256A",
+    boxvL: "#x2561",
+    boxvR: "#x255E",
+    boxvh: "#x253C",
+    boxvl: "#x2524",
+    boxvr: "#x251C",
+    bprime: "#x2035",
+    breve: "#x2D8",
+    bscr: "#x1D4B7",
+    bsemi: "#x204F",
+    bsim: "#x223D",
+    bsime: "#x22CD",
+    bsolb: "#x29C5",
+    bsolhsub: "#x27C8",
+    bullet: "bull",
+    bump: "#x224E",
+    bumpE: "#x2AAE",
+    bumpe: "#x224F",
+    bumpeq: "#x224F",
+    cacute: "#x107",
+    capand: "#x2A44",
+    capbrcup: "#x2A49",
+    capcap: "#x2A4B",
+    capcup: "#x2A47",
+    capdot: "#x2A40",
+    caps: "#x2229;&#xFE00",
+    caret: "#x2041",
+    caron: "#x2C7",
+    ccaps: "#x2A4D",
+    ccaron: "#x10D",
+    ccirc: "#x109",
+    ccups: "#x2A4C",
+    ccupssm: "#x2A50",
+    cdot: "#x10B",
+    cemptyv: "#x29B2",
+    centerdot: "middot",
+    cfr: "#x1D520",
+    chcy: "#x447",
+    check: "#x2713",
+    checkmark: "#x2713",
+    cir: "#x25CB",
+    cirE: "#x29C3",
+    circeq: "#x2257",
+    circlearrowleft: "#x21BA",
+    circlearrowright: "#x21BB",
+    circledR: "reg",
+    circledS: "#x24C8",
+    circledast: "#x229B",
+    circledcirc: "#x229A",
+    circleddash: "#x229D",
+    cire: "#x2257",
+    cirfnint: "#x2A10",
+    cirmid: "#x2AEF",
+    cirscir: "#x29C2",
+    clubsuit: "clubs",
+    colone: "#x2254",
+    coloneq: "#x2254",
+    comp: "#x2201",
+    compfn: "#x2218",
+    complement: "#x2201",
+    complexes: "#x2102",
+    congdot: "#x2A6D",
+    conint: "#x222E",
+    copf: "#x1D554",
+    coprod: "#x2210",
+    copysr: "#x2117",
+    cross: "#x2717",
+    cscr: "#x1D4B8",
+    csub: "#x2ACF",
+    csube: "#x2AD1",
+    csup: "#x2AD0",
+    csupe: "#x2AD2",
+    ctdot: "#x22EF",
+    cudarrl: "#x2938",
+    cudarrr: "#x2935",
+    cuepr: "#x22DE",
+    cuesc: "#x22DF",
+    cularr: "#x21B6",
+    cularrp: "#x293D",
+    cupbrcap: "#x2A48",
+    cupcap: "#x2A46",
+    cupcup: "#x2A4A",
+    cupdot: "#x228D",
+    cupor: "#x2A45",
+    cups: "#x222A;&#xFE00",
+    curarr: "#x21B7",
+    curarrm: "#x293C",
+    curlyeqprec: "#x22DE",
+    curlyeqsucc: "#x22DF",
+    curlyvee: "#x22CE",
+    curlywedge: "#x22CF",
+    curvearrowleft: "#x21B6",
+    curvearrowright: "#x21B7",
+    cuvee: "#x22CE",
+    cuwed: "#x22CF",
+    cwconint: "#x2232",
+    cwint: "#x2231",
+    cylcty: "#x232D",
+    dHar: "#x2965",
+    daleth: "#x2138",
+    dash: "#x2010",
+    dashv: "#x22A3",
+    dbkarow: "#x290F",
+    dblac: "#x2DD",
+    dcaron: "#x10F",
+    dcy: "#x434",
+    dd: "#x2146",
+    ddagger: "Dagger",
+    ddarr: "#x21CA",
+    ddotseq: "#x2A77",
+    demptyv: "#x29B1",
+    dfisht: "#x297F",
+    dfr: "#x1D521",
+    dharl: "#x21C3",
+    dharr: "#x21C2",
+    diam: "#x22C4",
+    diamond: "#x22C4",
+    diamondsuit: "diams",
+    die: "#xA8",
+    digamma: "#x3DD",
+    disin: "#x22F2",
+    div: "#xF7",
+    divideontimes: "#x22C7",
+    divonx: "#x22C7",
+    djcy: "#x452",
+    dlcorn: "#x231E",
+    dlcrop: "#x230D",
+    dopf: "#x1D555",
+    dot: "#x2D9",
+    doteq: "#x2250",
+    doteqdot: "#x2251",
+    dotminus: "#x2238",
+    dotplus: "#x2214",
+    dotsquare: "#x22A1",
+    doublebarwedge: "#x2306",
+    downarrow: "darr",
+    downdownarrows: "#x21CA",
+    downharpoonleft: "#x21C3",
+    downharpoonright: "#x21C2",
+    drbkarow: "#x2910",
+    drcorn: "#x231F",
+    drcrop: "#x230C",
+    dscr: "#x1D4B9",
+    dscy: "#x455",
+    dsol: "#x29F6",
+    dstrok: "#x111",
+    dtdot: "#x22F1",
+    dtri: "#x25BF",
+    dtrif: "#x25BE",
+    duarr: "#x21F5",
+    duhar: "#x296F",
+    dwangle: "#x29A6",
+    dzcy: "#x45F",
+    dzigrarr: "#x27FF",
+    eDDot: "#x2A77",
+    eDot: "#x2251",
+    easter: "#x2A6E",
+    ecaron: "#x11B",
+    ecir: "#x2256",
+    ecolon: "#x2255",
+    ecy: "#x44D",
+    edot: "#x117",
+    ee: "#x2147",
+    efDot: "#x2252",
+    efr: "#x1D522",
+    eg: "#x2A9A",
+    egs: "#x2A96",
+    egsdot: "#x2A98",
+    el: "#x2A99",
+    elinters: "#x23E7",
+    ell: "#x2113",
+    els: "#x2A95",
+    elsdot: "#x2A97",
+    emacr: "#x113",
+    emptyset: "empty",
+    emptyv: "empty",
+    emsp13: "#x2004",
+    emsp14: "#x2005",
+    eng: "#x14B",
+    eogon: "#x119",
+    eopf: "#x1D556",
+    epar: "#x22D5",
+    eparsl: "#x29E3",
+    eplus: "#x2A71",
+    epsi: "#x3B5",
+    epsiv: "#x3F5",
+    eqcirc: "#x2256",
+    eqcolon: "#x2255",
+    eqsim: "#x2242",
+    eqslantgtr: "#x2A96",
+    eqslantless: "#x2A95",
+    equest: "#x225F",
+    equivDD: "#x2A78",
+    eqvparsl: "#x29E5",
+    erDot: "#x2253",
+    erarr: "#x2971",
+    escr: "#x212F",
+    esdot: "#x2250",
+    esim: "#x2242",
+    expectation: "#x2130",
+    exponentiale: "#x2147",
+    fallingdotseq: "#x2252",
+    fcy: "#x444",
+    female: "#x2640",
+    ffilig: "#xFB03",
+    fflig: "#xFB00",
+    ffllig: "#xFB04",
+    ffr: "#x1D523",
+    filig: "#xFB01",
+    flat: "#x266D",
+    fllig: "#xFB02",
+    fltns: "#x25B1",
+    fopf: "#x1D557",
+    fork: "#x22D4",
+    forkv: "#x2AD9",
+    fpartint: "#x2A0D",
+    frac13: "#x2153",
+    frac15: "#x2155",
+    frac16: "#x2159",
+    frac18: "#x215B",
+    frac23: "#x2154",
+    frac25: "#x2156",
+    frac35: "#x2157",
+    frac38: "#x215C",
+    frac45: "#x2158",
+    frac56: "#x215A",
+    frac58: "#x215D",
+    frac78: "#x215E",
+    frown: "#x2322",
+    fscr: "#x1D4BB",
+    gE: "#x2267",
+    gEl: "#x2A8C",
+    gacute: "#x1F5",
+    gammad: "#x3DD",
+    gap: "#x2A86",
+    gbreve: "#x11F",
+    gcirc: "#x11D",
+    gcy: "#x433",
+    gdot: "#x121",
+    gel: "#x22DB",
+    geq: "ge",
+    geqq: "#x2267",
+    geqslant: "#x2A7E",
+    ges: "#x2A7E",
+    gescc: "#x2AA9",
+    gesdot: "#x2A80",
+    gesdoto: "#x2A82",
+    gesdotol: "#x2A84",
+    gesl: "#x22DB;&#xFE00",
+    gesles: "#x2A94",
+    gfr: "#x1D524",
+    gg: "#x226B",
+    ggg: "#x22D9",
+    gimel: "#x2137",
+    gjcy: "#x453",
+    gl: "#x2277",
+    glE: "#x2A92",
+    gla: "#x2AA5",
+    glj: "#x2AA4",
+    gnE: "#x2269",
+    gnap: "#x2A8A",
+    gnapprox: "#x2A8A",
+    gne: "#x2A88",
+    gneq: "#x2A88",
+    gneqq: "#x2269",
+    gnsim: "#x22E7",
+    gopf: "#x1D558",
+    grave: "#x60",
+    gscr: "#x210A",
+    gsim: "#x2273",
+    gsime: "#x2A8E",
+    gsiml: "#x2A90",
+    gtcc: "#x2AA7",
+    gtcir: "#x2A7A",
+    gtdot: "#x22D7",
+    gtlPar: "#x2995",
+    gtquest: "#x2A7C",
+    gtrapprox: "#x2A86",
+    gtrarr: "#x2978",
+    gtrdot: "#x22D7",
+    gtreqless: "#x22DB",
+    gtreqqless: "#x2A8C",
+    gtrless: "#x2277",
+    gtrsim: "#x2273",
+    gvertneqq: "#x2269;&#xFE00",
+    gvnE: "#x2269;&#xFE00",
+    hairsp: "#x200A",
+    half: "#xBD",
+    hamilt: "#x210B",
+    hardcy: "#x44A",
+    harrcir: "#x2948",
+    harrw: "#x21AD",
+    hbar: "#x210F",
+    hcirc: "#x125",
+    heartsuit: "hearts",
+    hercon: "#x22B9",
+    hfr: "#x1D525",
+    hksearow: "#x2925",
+    hkswarow: "#x2926",
+    hoarr: "#x21FF",
+    homtht: "#x223B",
+    hookleftarrow: "#x21A9",
+    hookrightarrow: "#x21AA",
+    hopf: "#x1D559",
+    horbar: "#x2015",
+    hscr: "#x1D4BD",
+    hslash: "#x210F",
+    hstrok: "#x127",
+    hybull: "#x2043",
+    hyphen: "#x2010",
+    ic: "#x2063",
+    icy: "#x438",
+    iecy: "#x435",
+    iff: "#x21D4",
+    ifr: "#x1D526",
+    ii: "#x2148",
+    iiiint: "#x2A0C",
+    iiint: "#x222D",
+    iinfin: "#x29DC",
+    iiota: "#x2129",
+    ijlig: "#x133",
+    imacr: "#x12B",
+    imagline: "#x2110",
+    imagpart: "#x2111",
+    imath: "#x131",
+    imof: "#x22B7",
+    imped: "#x1B5",
+    in: "#x2208",
+    incare: "#x2105",
+    infintie: "#x29DD",
+    inodot: "#x131",
+    intcal: "#x22BA",
+    integers: "#x2124",
+    intercal: "#x22BA",
+    intlarhk: "#x2A17",
+    intprod: "#x2A3C",
+    iocy: "#x451",
+    iogon: "#x12F",
+    iopf: "#x1D55A",
+    iprod: "#x2A3C",
+    iscr: "#x1D4BE",
+    isinE: "#x22F9",
+    isindot: "#x22F5",
+    isins: "#x22F4",
+    isinsv: "#x22F3",
+    isinv: "#x2208",
+    it: "#x2062",
+    itilde: "#x129",
+    iukcy: "#x456",
+    jcirc: "#x135",
+    jcy: "#x439",
+    jfr: "#x1D527",
+    jmath: "#x237",
+    jopf: "#x1D55B",
+    jscr: "#x1D4BF",
+    jsercy: "#x458",
+    jukcy: "#x454",
+    kappav: "#x3F0",
+    kcedil: "#x137",
+    kcy: "#x43A",
+    kfr: "#x1D528",
+    kgreen: "#x138",
+    khcy: "#x445",
+    kjcy: "#x45C",
+    kopf: "#x1D55C",
+    kscr: "#x1D4C0",
+    lAarr: "#x21DA",
+    lAtail: "#x291B",
+    lBarr: "#x290E",
+    lE: "#x2266",
+    lEg: "#x2A8B",
+    lHar: "#x2962",
+    lacute: "#x13A",
+    laemptyv: "#x29B4",
+    lagran: "#x2112",
+    langd: "#x2991",
+    langle: "lang",
+    lap: "#x2A85",
+    larrb: "#x21E4",
+    larrbfs: "#x291F",
+    larrfs: "#x291D",
+    larrhk: "#x21A9",
+    larrlp: "#x21AB",
+    larrpl: "#x2939",
+    larrsim: "#x2973",
+    larrtl: "#x21A2",
+    lat: "#x2AAB",
+    latail: "#x2919",
+    late: "#x2AAD",
+    lates: "#x2AAD;&#xFE00",
+    lbarr: "#x290C",
+    lbbrk: "#x2772",
+    lbrace: "{",
+    lbrack: "[",
+    lbrke: "#x298B",
+    lbrksld: "#x298F",
+    lbrkslu: "#x298D",
+    lcaron: "#x13E",
+    lcedil: "#x13C",
+    lcub: "{",
+    lcy: "#x43B",
+    ldca: "#x2936",
+    ldquor: "bdquo",
+    ldrdhar: "#x2967",
+    ldrushar: "#x294B",
+    ldsh: "#x21B2",
+    leftarrow: "larr",
+    leftarrowtail: "#x21A2",
+    leftharpoondown: "#x21BD",
+    leftharpoonup: "#x21BC",
+    leftleftarrows: "#x21C7",
+    leftrightarrow: "harr",
+    leftrightarrows: "#x21C6",
+    leftrightharpoons: "#x21CB",
+    leftrightsquigarrow: "#x21AD",
+    leftthreetimes: "#x22CB",
+    leg: "#x22DA",
+    leq: "le",
+    leqq: "#x2266",
+    leqslant: "#x2A7D",
+    les: "#x2A7D",
+    lescc: "#x2AA8",
+    lesdot: "#x2A7F",
+    lesdoto: "#x2A81",
+    lesdotor: "#x2A83",
+    lesg: "#x22DA;&#xFE00",
+    lesges: "#x2A93",
+    lessapprox: "#x2A85",
+    lessdot: "#x22D6",
+    lesseqgtr: "#x22DA",
+    lesseqqgtr: "#x2A8B",
+    lessgtr: "#x2276",
+    lesssim: "#x2272",
+    lfisht: "#x297C",
+    lfr: "#x1D529",
+    lg: "#x2276",
+    lgE: "#x2A91",
+    lhard: "#x21BD",
+    lharu: "#x21BC",
+    lharul: "#x296A",
+    lhblk: "#x2584",
+    ljcy: "#x459",
+    ll: "#x226A",
+    llarr: "#x21C7",
+    llcorner: "#x231E",
+    llhard: "#x296B",
+    lltri: "#x25FA",
+    lmidot: "#x140",
+    lmoust: "#x23B0",
+    lmoustache: "#x23B0",
+    lnE: "#x2268",
+    lnap: "#x2A89",
+    lnapprox: "#x2A89",
+    lne: "#x2A87",
+    lneq: "#x2A87",
+    lneqq: "#x2268",
+    lnsim: "#x22E6",
+    loang: "#x27EC",
+    loarr: "#x21FD",
+    lobrk: "#x27E6",
+    longleftarrow: "#x27F5",
+    longleftrightarrow: "#x27F7",
+    longmapsto: "#x27FC",
+    longrightarrow: "#x27F6",
+    looparrowleft: "#x21AB",
+    looparrowright: "#x21AC",
+    lopar: "#x2985",
+    lopf: "#x1D55D",
+    loplus: "#x2A2D",
+    lotimes: "#x2A34",
+    lozenge: "loz",
+    lozf: "#x29EB",
+    lparlt: "#x2993",
+    lrarr: "#x21C6",
+    lrcorner: "#x231F",
+    lrhar: "#x21CB",
+    lrhard: "#x296D",
+    lrtri: "#x22BF",
+    lscr: "#x1D4C1",
+    lsh: "#x21B0",
+    lsim: "#x2272",
+    lsime: "#x2A8D",
+    lsimg: "#x2A8F",
+    lsquor: "sbquo",
+    lstrok: "#x142",
+    ltcc: "#x2AA6",
+    ltcir: "#x2A79",
+    ltdot: "#x22D6",
+    lthree: "#x22CB",
+    ltimes: "#x22C9",
+    ltlarr: "#x2976",
+    ltquest: "#x2A7B",
+    ltrPar: "#x2996",
+    ltri: "#x25C3",
+    ltrie: "#x22B4",
+    ltrif: "#x25C2",
+    lurdshar: "#x294A",
+    luruhar: "#x2966",
+    lvertneqq: "#x2268;&#xFE00",
+    lvnE: "#x2268;&#xFE00",
+    mDDot: "#x223A",
+    male: "#x2642",
+    malt: "#x2720",
+    maltese: "#x2720",
+    map: "#x21A6",
+    mapsto: "#x21A6",
+    mapstodown: "#x21A7",
+    mapstoleft: "#x21A4",
+    mapstoup: "#x21A5",
+    marker: "#x25AE",
+    mcomma: "#x2A29",
+    mcy: "#x43C",
+    measuredangle: "#x2221",
+    mfr: "#x1D52A",
+    mho: "#x2127",
+    mid: "#x2223",
+    midcir: "#x2AF0",
+    minusb: "#x229F",
+    minusd: "#x2238",
+    minusdu: "#x2A2A",
+    mlcp: "#x2ADB",
+    mldr: "#x2026",
+    mnplus: "#x2213",
+    models: "#x22A7",
+    mopf: "#x1D55E",
+    mp: "#x2213",
+    mscr: "#x1D4C2",
+    mstpos: "#x223E",
+    multimap: "#x22B8",
+    mumap: "#x22B8",
+    nGg: "#x22D9;&#x338",
+    nGt: "#x226B;&#x20D2",
+    nGtv: "#x226B;&#x338",
+    nLeftarrow: "#x21CD",
+    nLeftrightarrow: "#x21CE",
+    nLl: "#x22D8;&#x338",
+    nLt: "#x226A;&#x20D2",
+    nLtv: "#x226A;&#x338",
+    nRightarrow: "#x21CF",
+    nVDash: "#x22AF",
+    nVdash: "#x22AE",
+    nacute: "#x144",
+    nang: "#x2220;&#x20D2",
+    nap: "#x2249",
+    napE: "#x2A70;&#x338",
+    napid: "#x224B;&#x338",
+    napos: "#x149",
+    napprox: "#x2249",
+    natur: "#x266E",
+    natural: "#x266E",
+    naturals: "#x2115",
+    nbump: "#x224E;&#x338",
+    nbumpe: "#x224F;&#x338",
+    ncap: "#x2A43",
+    ncaron: "#x148",
+    ncedil: "#x146",
+    ncong: "#x2247",
+    ncongdot: "#x2A6D;&#x338",
+    ncup: "#x2A42",
+    ncy: "#x43D",
+    neArr: "#x21D7",
+    nearhk: "#x2924",
+    nearr: "#x2197",
+    nearrow: "#x2197",
+    nedot: "#x2250;&#x338",
+    nequiv: "#x2262",
+    nesear: "#x2928",
+    nesim: "#x2242;&#x338",
+    nexist: "#x2204",
+    nexists: "#x2204",
+    nfr: "#x1D52B",
+    ngE: "#x2267;&#x338",
+    nge: "#x2271",
+    ngeq: "#x2271",
+    ngeqq: "#x2267;&#x338",
+    ngeqslant: "#x2A7E;&#x338",
+    nges: "#x2A7E;&#x338",
+    ngsim: "#x2275",
+    ngt: "#x226F",
+    ngtr: "#x226F",
+    nhArr: "#x21CE",
+    nharr: "#x21AE",
+    nhpar: "#x2AF2",
+    nis: "#x22FC",
+    nisd: "#x22FA",
+    niv: "ni",
+    njcy: "#x45A",
+    nlArr: "#x21CD",
+    nlE: "#x2266;&#x338",
+    nlarr: "#x219A",
+    nldr: "#x2025",
+    nle: "#x2270",
+    nleftarrow: "#x219A",
+    nleftrightarrow: "#x21AE",
+    nleq: "#x2270",
+    nleqq: "#x2266;&#x338",
+    nleqslant: "#x2A7D;&#x338",
+    nles: "#x2A7D;&#x338",
+    nless: "#x226E",
+    nlsim: "#x2274",
+    nlt: "#x226E",
+    nltri: "#x22EA",
+    nltrie: "#x22EC",
+    nmid: "#x2224",
+    nopf: "#x1D55F",
+    notinE: "#x22F9;&#x338",
+    notindot: "#x22F5;&#x338",
+    notinva: "notin",
+    notinvb: "#x22F7",
+    notinvc: "#x22F6",
+    notni: "#x220C",
+    notniva: "#x220C",
+    notnivb: "#x22FE",
+    notnivc: "#x22FD",
+    npar: "#x2226",
+    nparallel: "#x2226",
+    nparsl: "#x2AFD;&#x20E5",
+    npart: "#x2202;&#x338",
+    npolint: "#x2A14",
+    npr: "#x2280",
+    nprcue: "#x22E0",
+    npre: "#x2AAF;&#x338",
+    nprec: "#x2280",
+    npreceq: "#x2AAF;&#x338",
+    nrArr: "#x21CF",
+    nrarr: "#x219B",
+    nrarrc: "#x2933;&#x338",
+    nrarrw: "#x219D;&#x338",
+    nrightarrow: "#x219B",
+    nrtri: "#x22EB",
+    nrtrie: "#x22ED",
+    nsc: "#x2281",
+    nsccue: "#x22E1",
+    nsce: "#x2AB0;&#x338",
+    nscr: "#x1D4C3",
+    nshortmid: "#x2224",
+    nshortparallel: "#x2226",
+    nsim: "#x2241",
+    nsime: "#x2244",
+    nsimeq: "#x2244",
+    nsmid: "#x2224",
+    nspar: "#x2226",
+    nsqsube: "#x22E2",
+    nsqsupe: "#x22E3",
+    nsubE: "#x2AC5;&#x338",
+    nsube: "#x2288",
+    nsubset: "#x2282;&#x20D2",
+    nsubseteq: "#x2288",
+    nsubseteqq: "#x2AC5;&#x338",
+    nsucc: "#x2281",
+    nsucceq: "#x2AB0;&#x338",
+    nsup: "#x2285",
+    nsupE: "#x2AC6;&#x338",
+    nsupe: "#x2289",
+    nsupset: "#x2283;&#x20D2",
+    nsupseteq: "#x2289",
+    nsupseteqq: "#x2AC6;&#x338",
+    ntgl: "#x2279",
+    ntlg: "#x2278",
+    ntriangleleft: "#x22EA",
+    ntrianglelefteq: "#x22EC",
+    ntriangleright: "#x22EB",
+    ntrianglerighteq: "#x22ED",
+    numero: "#x2116",
+    numsp: "#x2007",
+    nvDash: "#x22AD",
+    nvHarr: "#x2904",
+    nvap: "#x224D;&#x20D2",
+    nvdash: "#x22AC",
+    nvge: "#x2265;&#x20D2",
+    nvgt: "#x3E;&#x20D2",
+    nvinfin: "#x29DE",
+    nvlArr: "#x2902",
+    nvle: "#x2264;&#x20D2",
+    nvlt: "#x3C;&#x20D2",
+    nvltrie: "#x22B4;&#x20D2",
+    nvrArr: "#x2903",
+    nvrtrie: "#x22B5;&#x20D2",
+    nvsim: "#x223C;&#x20D2",
+    nwArr: "#x21D6",
+    nwarhk: "#x2923",
+    nwarr: "#x2196",
+    nwarrow: "#x2196",
+    nwnear: "#x2927",
+    oS: "#x24C8",
+    oast: "#x229B",
+    ocir: "#x229A",
+    ocy: "#x43E",
+    odash: "#x229D",
+    odblac: "#x151",
+    odiv: "#x2A38",
+    odot: "#x2299",
+    odsold: "#x29BC",
+    ofcir: "#x29BF",
+    ofr: "#x1D52C",
+    ogon: "#x2DB",
+    ogt: "#x29C1",
+    ohbar: "#x29B5",
+    ohm: "#x3A9",
+    oint: "#x222E",
+    olarr: "#x21BA",
+    olcir: "#x29BE",
+    olcross: "#x29BB",
+    olt: "#x29C0",
+    omacr: "#x14D",
+    omid: "#x29B6",
+    ominus: "#x2296",
+    oopf: "#x1D560",
+    opar: "#x29B7",
+    operp: "#x29B9",
+    orarr: "#x21BB",
+    ord: "#x2A5D",
+    order: "#x2134",
+    orderof: "#x2134",
+    origof: "#x22B6",
+    oror: "#x2A56",
+    orslope: "#x2A57",
+    orv: "#x2A5B",
+    oscr: "#x2134",
+    osol: "#x2298",
+    otimesas: "#x2A36",
+    ovbar: "#x233D",
+    par: "#x2225",
+    parallel: "#x2225",
+    parsim: "#x2AF3",
+    parsl: "#x2AFD",
+    pcy: "#x43F",
+    pertenk: "#x2031",
+    pfr: "#x1D52D",
+    phiv: "#x3D5",
+    phmmat: "#x2133",
+    phone: "#x260E",
+    pitchfork: "#x22D4",
+    planck: "#x210F",
+    planckh: "#x210E",
+    plankv: "#x210F",
+    plusacir: "#x2A23",
+    plusb: "#x229E",
+    pluscir: "#x2A22",
+    plusdo: "#x2214",
+    plusdu: "#x2A25",
+    pluse: "#x2A72",
+    plussim: "#x2A26",
+    plustwo: "#x2A27",
+    pm: "#xB1",
+    pointint: "#x2A15",
+    popf: "#x1D561",
+    pr: "#x227A",
+    prE: "#x2AB3",
+    prap: "#x2AB7",
+    prcue: "#x227C",
+    pre: "#x2AAF",
+    prec: "#x227A",
+    precapprox: "#x2AB7",
+    preccurlyeq: "#x227C",
+    preceq: "#x2AAF",
+    precnapprox: "#x2AB9",
+    precneqq: "#x2AB5",
+    precnsim: "#x22E8",
+    precsim: "#x227E",
+    primes: "#x2119",
+    prnE: "#x2AB5",
+    prnap: "#x2AB9",
+    prnsim: "#x22E8",
+    profalar: "#x232E",
+    profline: "#x2312",
+    profsurf: "#x2313",
+    propto: "prop",
+    prsim: "#x227E",
+    prurel: "#x22B0",
+    pscr: "#x1D4C5",
+    puncsp: "#x2008",
+    qfr: "#x1D52E",
+    qint: "#x2A0C",
+    qopf: "#x1D562",
+    qprime: "#x2057",
+    qscr: "#x1D4C6",
+    quaternions: "#x210D",
+    quatint: "#x2A16",
+    questeq: "#x225F",
+    rAarr: "#x21DB",
+    rAtail: "#x291C",
+    rBarr: "#x290F",
+    rHar: "#x2964",
+    race: "#x223D;&#x331",
+    racute: "#x155",
+    raemptyv: "#x29B3",
+    rangd: "#x2992",
+    range: "#x29A5",
+    rangle: "rang",
+    rarrap: "#x2975",
+    rarrb: "#x21E5",
+    rarrbfs: "#x2920",
+    rarrc: "#x2933",
+    rarrfs: "#x291E",
+    rarrhk: "#x21AA",
+    rarrlp: "#x21AC",
+    rarrpl: "#x2945",
+    rarrsim: "#x2974",
+    rarrtl: "#x21A3",
+    rarrw: "#x219D",
+    ratail: "#x291A",
+    ratio: "#x2236",
+    rationals: "#x211A",
+    rbarr: "#x290D",
+    rbbrk: "#x2773",
+    rbrke: "#x298C",
+    rbrksld: "#x298E",
+    rbrkslu: "#x2990",
+    rcaron: "#x159",
+    rcedil: "#x157",
+    rcy: "#x440",
+    rdca: "#x2937",
+    rdldhar: "#x2969",
+    rdquor: "rdquo",
+    rdsh: "#x21B3",
+    realine: "#x211B",
+    realpart: "#x211C",
+    reals: "#x211D",
+    rect: "#x25AD",
+    rfisht: "#x297D",
+    rfr: "#x1D52F",
+    rhard: "#x21C1",
+    rharu: "#x21C0",
+    rharul: "#x296C",
+    rhov: "#x3F1",
+    rightarrow: "rarr",
+    rightarrowtail: "#x21A3",
+    rightharpoondown: "#x21C1",
+    rightharpoonup: "#x21C0",
+    rightleftarrows: "#x21C4",
+    rightleftharpoons: "#x21CC",
+    rightrightarrows: "#x21C9",
+    rightsquigarrow: "#x219D",
+    rightthreetimes: "#x22CC",
+    ring: "#x2DA",
+    risingdotseq: "#x2253",
+    rlarr: "#x21C4",
+    rlhar: "#x21CC",
+    rmoust: "#x23B1",
+    rmoustache: "#x23B1",
+    rnmid: "#x2AEE",
+    roang: "#x27ED",
+    roarr: "#x21FE",
+    robrk: "#x27E7",
+    ropar: "#x2986",
+    ropf: "#x1D563",
+    roplus: "#x2A2E",
+    rotimes: "#x2A35",
+    rpargt: "#x2994",
+    rppolint: "#x2A12",
+    rrarr: "#x21C9",
+    rscr: "#x1D4C7",
+    rsh: "#x21B1",
+    rsquor: "rsquo",
+    rthree: "#x22CC",
+    rtimes: "#x22CA",
+    rtri: "#x25B9",
+    rtrie: "#x22B5",
+    rtrif: "#x25B8",
+    rtriltri: "#x29CE",
+    ruluhar: "#x2968",
+    rx: "#x211E",
+    sacute: "#x15B",
+    sc: "#x227B",
+    scE: "#x2AB4",
+    scap: "#x2AB8",
+    sccue: "#x227D",
+    sce: "#x2AB0",
+    scedil: "#x15F",
+    scirc: "#x15D",
+    scnE: "#x2AB6",
+    scnap: "#x2ABA",
+    scnsim: "#x22E9",
+    scpolint: "#x2A13",
+    scsim: "#x227F",
+    scy: "#x441",
+    sdotb: "#x22A1",
+    sdote: "#x2A66",
+    seArr: "#x21D8",
+    searhk: "#x2925",
+    searr: "#x2198",
+    searrow: "#x2198",
+    seswar: "#x2929",
+    setminus: "#x2216",
+    setmn: "#x2216",
+    sext: "#x2736",
+    sfr: "#x1D530",
+    sfrown: "#x2322",
+    sharp: "#x266F",
+    shchcy: "#x449",
+    shcy: "#x448",
+    shortmid: "#x2223",
+    shortparallel: "#x2225",
+    sigmav: "sigmaf",
+    simdot: "#x2A6A",
+    sime: "#x2243",
+    simeq: "#x2243",
+    simg: "#x2A9E",
+    simgE: "#x2AA0",
+    siml: "#x2A9D",
+    simlE: "#x2A9F",
+    simne: "#x2246",
+    simplus: "#x2A24",
+    simrarr: "#x2972",
+    slarr: "larr",
+    smallsetminus: "#x2216",
+    smashp: "#x2A33",
+    smeparsl: "#x29E4",
+    smid: "#x2223",
+    smile: "#x2323",
+    smt: "#x2AAA",
+    smte: "#x2AAC",
+    smtes: "#x2AAC;&#xFE00",
+    softcy: "#x44C",
+    solb: "#x29C4",
+    solbar: "#x233F",
+    sopf: "#x1D564",
+    spadesuit: "spades",
+    spar: "#x2225",
+    sqcap: "#x2293",
+    sqcaps: "#x2293;&#xFE00",
+    sqcup: "#x2294",
+    sqcups: "#x2294;&#xFE00",
+    sqsub: "#x228F",
+    sqsube: "#x2291",
+    sqsubset: "#x228F",
+    sqsubseteq: "#x2291",
+    sqsup: "#x2290",
+    sqsupe: "#x2292",
+    sqsupset: "#x2290",
+    sqsupseteq: "#x2292",
+    squ: "#x25A1",
+    square: "#x25A1",
+    squarf: "#x25AA",
+    squf: "#x25AA",
+    srarr: "rarr",
+    sscr: "#x1D4C8",
+    ssetmn: "#x2216",
+    ssmile: "#x2323",
+    sstarf: "#x22C6",
+    star: "#x2606",
+    starf: "#x2605",
+    straightepsilon: "#x3F5",
+    straightphi: "#x3D5",
+    strns: "macr",
+    subE: "#x2AC5",
+    subdot: "#x2ABD",
+    subedot: "#x2AC3",
+    submult: "#x2AC1",
+    subnE: "#x2ACB",
+    subne: "#x228A",
+    subplus: "#x2ABF",
+    subrarr: "#x2979",
+    subset: "sub",
+    subseteq: "sube",
+    subseteqq: "#x2AC5",
+    subsetneq: "#x228A",
+    subsetneqq: "#x2ACB",
+    subsim: "#x2AC7",
+    subsub: "#x2AD5",
+    subsup: "#x2AD3",
+    succ: "#x227B",
+    succapprox: "#x2AB8",
+    succcurlyeq: "#x227D",
+    succeq: "#x2AB0",
+    succnapprox: "#x2ABA",
+    succneqq: "#x2AB6",
+    succnsim: "#x22E9",
+    succsim: "#x227F",
+    sung: "#x266A",
+    supE: "#x2AC6",
+    supdot: "#x2ABE",
+    supdsub: "#x2AD8",
+    supedot: "#x2AC4",
+    suphsol: "#x27C9",
+    suphsub: "#x2AD7",
+    suplarr: "#x297B",
+    supmult: "#x2AC2",
+    supnE: "#x2ACC",
+    supne: "#x228B",
+    supplus: "#x2AC0",
+    supset: "sup",
+    supseteq: "supe",
+    supseteqq: "#x2AC6",
+    supsetneq: "#x228B",
+    supsetneqq: "#x2ACC",
+    supsim: "#x2AC8",
+    supsub: "#x2AD4",
+    supsup: "#x2AD6",
+    swArr: "#x21D9",
+    swarhk: "#x2926",
+    swarr: "#x2199",
+    swarrow: "#x2199",
+    swnwar: "#x292A",
+    target: "#x2316",
+    tbrk: "#x23B4",
+    tcaron: "#x165",
+    tcedil: "#x163",
+    tcy: "#x442",
+    tdot: "#x20DB",
+    telrec: "#x2315",
+    tfr: "#x1D531",
+    therefore: "there4",
+    thetav: "#x3D1",
+    thickapprox: "#x2248",
+    thicksim: "sim",
+    thkap: "#x2248",
+    thksim: "sim",
+    timesb: "#x22A0",
+    timesbar: "#x2A31",
+    timesd: "#x2A30",
+    tint: "#x222D",
+    toea: "#x2928",
+    top: "#x22A4",
+    topbot: "#x2336",
+    topcir: "#x2AF1",
+    topf: "#x1D565",
+    topfork: "#x2ADA",
+    tosa: "#x2929",
+    tprime: "#x2034",
+    triangle: "#x25B5",
+    triangledown: "#x25BF",
+    triangleleft: "#x25C3",
+    trianglelefteq: "#x22B4",
+    triangleq: "#x225C",
+    triangleright: "#x25B9",
+    trianglerighteq: "#x22B5",
+    tridot: "#x25EC",
+    trie: "#x225C",
+    triminus: "#x2A3A",
+    triplus: "#x2A39",
+    trisb: "#x29CD",
+    tritime: "#x2A3B",
+    trpezium: "#x23E2",
+    tscr: "#x1D4C9",
+    tscy: "#x446",
+    tshcy: "#x45B",
+    tstrok: "#x167",
+    twixt: "#x226C",
+    twoheadleftarrow: "#x219E",
+    twoheadrightarrow: "#x21A0",
+    uHar: "#x2963",
+    ubrcy: "#x45E",
+    ubreve: "#x16D",
+    ucy: "#x443",
+    udarr: "#x21C5",
+    udblac: "#x171",
+    udhar: "#x296E",
+    ufisht: "#x297E",
+    ufr: "#x1D532",
+    uharl: "#x21BF",
+    uharr: "#x21BE",
+    uhblk: "#x2580",
+    ulcorn: "#x231C",
+    ulcorner: "#x231C",
+    ulcrop: "#x230F",
+    ultri: "#x25F8",
+    umacr: "#x16B",
+    uogon: "#x173",
+    uopf: "#x1D566",
+    uparrow: "uarr",
+    updownarrow: "#x2195",
+    upharpoonleft: "#x21BF",
+    upharpoonright: "#x21BE",
+    uplus: "#x228E",
+    upsi: "#x3C5",
+    upuparrows: "#x21C8",
+    urcorn: "#x231D",
+    urcorner: "#x231D",
+    urcrop: "#x230E",
+    uring: "#x16F",
+    urtri: "#x25F9",
+    uscr: "#x1D4CA",
+    utdot: "#x22F0",
+    utilde: "#x169",
+    utri: "#x25B5",
+    utrif: "#x25B4",
+    uuarr: "#x21C8",
+    uwangle: "#x29A7",
+    vArr: "#x21D5",
+    vBar: "#x2AE8",
+    vBarv: "#x2AE9",
+    vDash: "#x22A8",
+    vangrt: "#x299C",
+    varepsilon: "#x3F5",
+    varkappa: "#x3F0",
+    varnothing: "empty",
+    varphi: "#x3D5",
+    varpi: "piv",
+    varpropto: "prop",
+    varr: "#x2195",
+    varrho: "#x3F1",
+    varsigma: "sigmaf",
+    varsubsetneq: "#x228A;&#xFE00",
+    varsubsetneqq: "#x2ACB;&#xFE00",
+    varsupsetneq: "#x228B;&#xFE00",
+    varsupsetneqq: "#x2ACC;&#xFE00",
+    vartheta: "#x3D1",
+    vartriangleleft: "#x22B2",
+    vartriangleright: "#x22B3",
+    vcy: "#x432",
+    vdash: "#x22A2",
+    vee: "or",
+    veebar: "#x22BB",
+    veeeq: "#x225A",
+    vellip: "#x22EE",
+    vfr: "#x1D533",
+    vltri: "#x22B2",
+    vnsub: "#x2282;&#x20D2",
+    vnsup: "#x2283;&#x20D2",
+    vopf: "#x1D567",
+    vprop: "prop",
+    vrtri: "#x22B3",
+    vscr: "#x1D4CB",
+    vsubnE: "#x2ACB;&#xFE00",
+    vsubne: "#x228A;&#xFE00",
+    vsupnE: "#x2ACC;&#xFE00",
+    vsupne: "#x228B;&#xFE00",
+    vzigzag: "#x299A",
+    wcirc: "#x175",
+    wedbar: "#x2A5F",
+    wedge: "and",
+    wedgeq: "#x2259",
+    wfr: "#x1D534",
+    wopf: "#x1D568",
+    wp: "#x2118",
+    wr: "#x2240",
+    wreath: "#x2240",
+    wscr: "#x1D4CC",
+    xcap: "#x22C2",
+    xcirc: "#x25EF",
+    xcup: "#x22C3",
+    xdtri: "#x25BD",
+    xfr: "#x1D535",
+    xhArr: "#x27FA",
+    xharr: "#x27F7",
+    xlArr: "#x27F8",
+    xlarr: "#x27F5",
+    xmap: "#x27FC",
+    xnis: "#x22FB",
+    xodot: "#x2A00",
+    xopf: "#x1D569",
+    xoplus: "#x2A01",
+    xotime: "#x2A02",
+    xrArr: "#x27F9",
+    xrarr: "#x27F6",
+    xscr: "#x1D4CD",
+    xsqcup: "#x2A06",
+    xuplus: "#x2A04",
+    xutri: "#x25B3",
+    xvee: "#x22C1",
+    xwedge: "#x22C0",
+    yacy: "#x44F",
+    ycirc: "#x177",
+    ycy: "#x44B",
+    yfr: "#x1D536",
+    yicy: "#x457",
+    yopf: "#x1D56A",
+    yscr: "#x1D4CE",
+    yucy: "#x44E",
+    zacute: "#x17A",
+    zcaron: "#x17E",
+    zcy: "#x437",
+    zdot: "#x17C",
+    zeetrf: "#x2128",
+    zfr: "#x1D537",
+    zhcy: "#x436",
+    zigrarr: "#x21DD",
+    zopf: "#x1D56B",
+    zscr: "#x1D4CF"
+  };
+
+  /**
+   * string-range-expander
+   * Expands string index ranges within whitespace boundaries until letters are met
+   * Version: 1.11.1
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+   */
+  function expander(originalOpts) {
+    const letterOrDigit = /^[0-9a-zA-Z]+$/;
+
+    function isWhitespace(char) {
+      if (!char || typeof char !== "string") {
+        return false;
+      }
+
+      return !char.trim();
+    }
+
+    function isStr(something) {
+      return typeof something === "string";
+    }
+
+    if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
+      let supplementalString;
+
+      if (originalOpts === undefined) {
+        supplementalString = "but it is missing completely.";
+      } else if (originalOpts === null) {
+        supplementalString = "but it was given as null.";
+      } else {
+        supplementalString = `but it was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}.`;
+      }
+
+      throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
+    } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
+    }
+
+    if (typeof originalOpts.from !== "number") {
+      throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof originalOpts.from}, equal to ${JSON.stringify(originalOpts.from, null, 0)}`);
+    }
+
+    if (typeof originalOpts.to !== "number") {
+      throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(originalOpts.to, null, 0)}`);
+    }
+
+    if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+      throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`);
+    }
+
+    if (!originalOpts.str[originalOpts.to - 1]) {
+      throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${originalOpts.str}") must contain the character at index before "to" ("${originalOpts.to - 1}")`);
+    }
+
+    if (originalOpts.from > originalOpts.to) {
+      throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`);
+    }
+
+    if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
+      throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${originalOpts.extendToOneSide}" (${typeof originalOpts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);
+    }
+
+    const defaults = {
+      str: "",
+      from: 0,
+      to: 0,
+      ifLeftSideIncludesThisThenCropTightly: "",
+      ifLeftSideIncludesThisCropItToo: "",
+      ifRightSideIncludesThisThenCropTightly: "",
+      ifRightSideIncludesThisCropItToo: "",
+      extendToOneSide: false,
+      wipeAllWhitespaceOnLeft: false,
+      wipeAllWhitespaceOnRight: false,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
+      let culpritsIndex;
+      let culpritsValue;
+
+      if (opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+        if (!isStr(val)) {
+          culpritsIndex = i;
+          culpritsValue = val;
+          return false;
+        }
+
+        return true;
+      })) {
+        opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
+      } else {
+        throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4)}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(culpritsValue, null, 0)}).`);
+      }
+    }
+
+    const str = opts.str;
+    let from = opts.from;
+    let to = opts.to;
+
+    if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
+      for (let i = from; i--;) {
+        if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+          if (str[i].trim()) {
+            if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
+              from = i + 1;
+            } else {
+              from = i + 2;
+            }
+
+            break;
+          } else if (i === 0) {
+            if (opts.wipeAllWhitespaceOnLeft) {
+              from = 0;
+            } else {
+              from = 1;
+            }
+
+            break;
+          }
+        }
+      }
+    }
+
+    if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
+      for (let i = to, len = str.length; i < len; i++) {
+        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
+          if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
+            to = i;
+          } else {
+            to = i - 1;
+          }
+
+          break;
+        }
+      }
+    }
+
+    if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
+      if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
+        from -= 1;
+      }
+
+      if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
+        to += 1;
+      }
+    }
+
+    if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
+      return [from, to, " "];
+    }
+
+    return [from, to];
+  }
+
+  /**
+   * string-apostrophes
+   * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
+   * Version: 1.2.17
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes
+   */
+
+  function convertOne(str, {
+    from,
+    to,
+    value,
+    convertEntities = true,
+    convertApostrophes = true,
+    offsetBy
+  }) {
+    if (!Number.isInteger(to)) {
+      if (Number.isInteger(from)) {
+        to = from + 1;
+      } else {
+        throw new Error(`string-apostrophes: [THROW_ID_01] options objects keys' "to" and "from" values are not integers!`);
+      }
+    }
+
+    const rangesArr = [];
+    const leftSingleQuote = "\u2018";
+    const rightSingleQuote = "\u2019";
+    const leftDoubleQuote = "\u201C";
+    const rightDoubleQuote = "\u201D";
+    const singlePrime = "\u2032";
+    const doublePrime = "\u2033";
+    const punctuationChars = [".", ",", ";", "!", "?"];
+
+    function isDigitStr(str2) {
+      return typeof str2 === "string" && str2.charCodeAt(0) >= 48 && str2.charCodeAt(0) <= 57;
+    }
+
+    function isLetter(str2) {
+      return typeof str2 === "string" && str2.length && str2.toUpperCase() !== str2.toLowerCase();
+    }
+
+    if ([`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && [`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
+      if (str[from - 1] && str[to] && isDigitStr(str[from - 1]) && !isLetter(str[to])) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) && value !== (convertEntities ? "&prime;" : singlePrime)) {
+          rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))) {
+        if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`) && value !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`)) {
+          rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`]);
+
+          if (typeof offsetBy === "function") {
+            offsetBy(2);
+          }
+        } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
+          rangesArr.push([from, to + 2, "'n'"]);
+
+          if (typeof offsetBy === "function") {
+            offsetBy(2);
+          }
+        }
+      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
+          rangesArr.push([from, to, "'"]);
+        }
+      } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
+        if (!str[to].trim()) {
+          if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+            rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+          } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
+            rangesArr.push([from, to, "'"]);
+          }
+        } else if (str[to].charCodeAt(0) === 34 && str[to + 1] && !str[to + 1].trim()) {
+          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`) && value !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`)) {
+            rangesArr.push([from, to + 1, `${convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`}`]);
+
+            if (typeof offsetBy === "function") {
+              offsetBy(1);
+            }
+          } else if (!convertApostrophes && str.slice(from, to + 1) !== `'"` && value !== `'"`) {
+            rangesArr.push([from, to + 1, `'"`]);
+
+            if (typeof offsetBy === "function") {
+              offsetBy(1);
+            }
+          }
+        }
+      } else if (from === 0 && str.slice(to).trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (!str[to] && str.slice(0, from).trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) && (isLetter(str[to]) || isDigitStr(str[to]))) {
+        if (convertApostrophes) {
+          if ((str[to] && str[from - 5] && str[from - 5].toLowerCase() === "h" && str[from - 4].toLowerCase() === "a" && str[from - 3].toLowerCase() === "w" && str[from - 2].toLowerCase() === "a" && str[from - 1].toLowerCase() === "i" && str[to].toLowerCase() === "i" || str[from - 1] && str[from - 1].toLowerCase() === "o" && str[to + 2] && str[to].toLowerCase() === "a" && str[to + 1].toLowerCase() === "h" && str[to + 2].toLowerCase() === "u") && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
+            rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
+          } else if (str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+            rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+          }
+        } else if (str.slice(from, to) !== "'" && value !== "'") {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (str[from - 1] && !str[from - 1].trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      } else if (str[to] && !str[to].trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `'` && value !== `'`) {
+          rangesArr.push([from, to, `'`]);
+        }
+      }
+    } else if ([`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && [`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
+      if (str[from - 1] && isDigitStr(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
+          rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
+        if (!str[to].trim()) {
+          if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
+            rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
+          } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+            rangesArr.push([from, to, `"`]);
+          }
+        } else if (str[to].charCodeAt(0) === 39 && str[to + 1] && !str[to + 1].trim()) {
+          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`) && value !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`)) {
+            rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`]);
+
+            if (typeof offsetBy === "function") {
+              offsetBy(1);
+            }
+          } else if (!convertApostrophes && str.slice(from, to + 1) !== `"'` && value !== `"'`) {
+            rangesArr.push([from, to + 1, `"'`]);
+
+            if (typeof offsetBy === "function") {
+              offsetBy(1);
+            }
+          }
+        }
+      } else if (from === 0 && str[to] && str.slice(to).trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (!str[to] && str.slice(0, from).trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (str[from - 1] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (str[from - 1] && !str[from - 1].trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (str[to] && !str[to].trim()) {
+        if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
+          rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
+        } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
+          rangesArr.push([from, to, `"`]);
+        }
+      }
+    }
+
+    return rangesArr;
+  }
+
   /* eslint no-unused-vars:0 */
 
-  var defaultOpts = {
+  var defaultOpts$1 = {
     fixBrokenEntities: true,
     removeWidows: true,
     convertEntities: true,
@@ -17650,7 +26323,7 @@
   var punctuationChars = [".", ",", ";", "!", "?"];
   var rawNDash = "\u2013";
   var rawMDash = "\u2014";
-  var rawNbsp = "\xA0";
+  var rawNbsp$1 = "\xA0";
   var rawEllipsis = "\u2026";
   var widowRegexTest = /. ./g;
   var latinAndNonNonLatinRanges = [[0, 880], [887, 890], [894, 900], [906, 908], [908, 910], [929, 931], [1319, 1329], [1366, 1369], [1375, 1377], [1415, 1417], [1418, 1423], [1423, 1425], [1479, 1488], [1514, 1520], [1524, 1536], [1540, 1542], [1563, 1566], [1805, 1807], [1866, 1869], [1969, 1984], [2042, 2048], [2093, 2096], [2110, 2112], [2139, 2142], [2142, 2208], [2208, 2210], [2220, 2276], [2302, 2304], [2423, 2425], [2431, 2433], [2435, 2437], [2444, 2447], [2448, 2451], [2472, 2474], [2480, 2482], [2482, 2486], [2489, 2492], [2500, 2503], [2504, 2507], [2510, 2519], [2519, 2524], [2525, 2527], [2531, 2534], [2555, 2561], [2563, 2565], [2570, 2575], [2576, 2579], [2600, 2602], [2608, 2610], [2611, 2613], [2614, 2616], [2617, 2620], [2620, 2622], [2626, 2631], [2632, 2635], [2637, 2641], [2641, 2649], [2652, 2654], [2654, 2662], [2677, 2689], [2691, 2693], [2701, 2703], [2705, 2707], [2728, 2730], [2736, 2738], [2739, 2741], [2745, 2748], [2757, 2759], [2761, 2763], [2765, 2768], [2768, 2784], [2787, 2790], [2801, 2817], [2819, 2821], [2828, 2831], [2832, 2835], [2856, 2858], [2864, 2866], [2867, 2869], [2873, 2876], [2884, 2887], [2888, 2891], [2893, 2902], [2903, 2908], [2909, 2911], [2915, 2918], [2935, 2946], [2947, 2949], [2954, 2958], [2960, 2962], [2965, 2969], [2970, 2972], [2972, 2974], [2975, 2979], [2980, 2984], [2986, 2990], [3001, 3006], [3010, 3014], [3016, 3018], [3021, 3024], [3024, 3031], [3031, 3046], [3066, 3073], [3075, 3077], [3084, 3086], [3088, 3090], [3112, 3114], [3123, 3125], [3129, 3133], [3140, 3142], [3144, 3146], [3149, 3157], [3158, 3160], [3161, 3168], [3171, 3174], [3183, 3192], [3199, 3202], [3203, 3205], [3212, 3214], [3216, 3218], [3240, 3242], [3251, 3253], [3257, 3260], [3268, 3270], [3272, 3274], [3277, 3285], [3286, 3294], [3294, 3296], [3299, 3302], [3311, 3313], [3314, 3330], [3331, 3333], [3340, 3342], [3344, 3346], [3386, 3389], [3396, 3398], [3400, 3402], [3406, 3415], [3415, 3424], [3427, 3430], [3445, 3449], [3455, 3458], [3459, 3461], [3478, 3482], [3505, 3507], [3515, 3517], [3517, 3520], [3526, 3530], [3530, 3535], [3540, 3542], [3542, 3544], [3551, 3570], [3572, 3585], [3642, 3647], [3675, 3713], [3714, 3716], [3716, 3719], [3720, 3722], [3722, 3725], [3725, 3732], [3735, 3737], [3743, 3745], [3747, 3749], [3749, 3751], [3751, 3754], [3755, 3757], [3769, 3771], [3773, 3776], [3780, 3782], [3782, 3784], [3789, 3792], [3801, 3804], [3807, 3840], [3911, 3913], [3948, 3953], [3991, 3993], [4028, 4030], [4044, 4046], [4058, 4096], [4293, 4295], [4295, 4301], [4301, 4304], [4680, 4682], [4685, 4688], [4694, 4696], [4696, 4698], [4701, 4704], [4744, 4746], [4749, 4752], [4784, 4786], [4789, 4792], [4798, 4800], [4800, 4802], [4805, 4808], [4822, 4824], [4880, 4882], [4885, 4888], [4954, 4957], [4988, 4992], [5017, 5024], [5108, 5120], [5788, 5792], [5872, 5888], [5900, 5902], [5908, 5920], [5942, 5952], [5971, 5984], [5996, 5998], [6000, 6002], [6003, 6016], [6109, 6112], [6121, 6128], [6137, 6144], [6158, 6160], [6169, 6176], [6263, 6272], [6314, 7936], [7957, 7960], [7965, 7968], [8005, 8008], [8013, 8016], [8023, 8025], [8025, 8027], [8027, 8029], [8029, 8031], [8061, 8064], [8116, 8118], [8132, 8134], [8147, 8150], [8155, 8157], [8175, 8178], [8180, 8182], [8190, 11904], [11929, 11931], [12019, 12032], [12245, 12288], [12351, 12353], [12438, 12441], [12543, 12549], [12589, 12593], [12686, 12688], [12730, 12736], [12771, 12784], [12830, 12832], [13054, 13056], [13312, 19893], [19893, 19904], [40869, 40908], [40908, 40960], [42124, 42128], [42182, 42192], [42539, 42560], [42647, 42655], [42743, 42752], [42894, 42896], [42899, 42912], [42922, 43000], [43051, 43056], [43065, 43072], [43127, 43136], [43204, 43214], [43225, 43232], [43259, 43264], [43347, 43359], [43388, 43392], [43469, 43471], [43481, 43486], [43487, 43520], [43574, 43584], [43597, 43600], [43609, 43612], [43643, 43648], [43714, 43739], [43766, 43777], [43782, 43785], [43790, 43793], [43798, 43808], [43814, 43816], [43822, 43968], [44013, 44016], [44025, 44032], [55203, 55216], [55238, 55243], [55291, 63744], [64109, 64112], [64217, 64256], [64262, 64275], [64279, 64285], [64310, 64312], [64316, 64318], [64318, 64320], [64321, 64323], [64324, 64326], [64449, 64467], [64831, 64848], [64911, 64914], [64967, 65008], [65021, 65136], [65140, 65142], [65276, 66560], [66717, 66720], [66729, 67584], [67589, 67592], [67592, 67594], [67637, 67639], [67640, 67644], [67644, 67647], [67669, 67671], [67679, 67840], [67867, 67871], [67897, 67903], [67903, 67968], [68023, 68030], [68031, 68096], [68099, 68101], [68102, 68108], [68115, 68117], [68119, 68121], [68147, 68152], [68154, 68159], [68167, 68176], [68184, 68192], [68223, 68352], [68405, 68409], [68437, 68440], [68466, 68472], [68479, 68608], [68680, 69216], [69246, 69632], [69709, 69714], [69743, 69760], [69825, 69840], [69864, 69872], [69881, 69888], [69940, 69942], [69955, 70016], [70088, 70096], [70105, 71296], [71351, 71360], [71369, 73728], [74606, 74752], [74850, 74864], [74867, 77824], [78894, 92160], [92728, 93952], [94020, 94032], [94078, 94095], [94111, 110592], [110593, 131072], [131072, 173782], [173782, 173824], [173824, 177972], [177972, 177984], [177984, 178205], [178205, 194560]]; // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
@@ -17706,7 +26379,7 @@
   } // -----------------------------------------------------------------------------
 
 
-  function isNumber(something) {
+  function isNumber$1(something) {
     return typeof something === "string" && something.charCodeAt(0) >= 48 && something.charCodeAt(0) <= 57 || Number.isInteger(something);
   }
 
@@ -17996,7 +26669,7 @@
             // IF DOUBLE QUOTE
             applicableOpts.convertEntities = true;
 
-            if (isNumber(left(str, i)) || isNumber(right(str, i))) {
+            if (isNumber$1(left(str, i)) || isNumber$1(right(str, i))) {
               applicableOpts.convertApostrophes = true;
             }
 
@@ -18058,7 +26731,7 @@
             } else if (str[right(str, i)] === "#") {
               // it can be a numeric, a decimal or a hex entity
               for (var z = right(str, i); z < len; z++) {
-                if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
+                if (str[z].trim().length && !isNumber$1(str[z]) && str[z] !== "#") {
                   if (str[z] === ";") {
                     // it's numeric entity
                     var _tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
@@ -18117,7 +26790,7 @@
             } // 2. comma-specific
 
 
-            if (charcode === 44 && str[y] !== undefined && !state.onUrlCurrently && !isNumber(str[y]) && str[y].trim().length && str[y] !== " " && str[y] !== "\n" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
+            if (charcode === 44 && str[y] !== undefined && !state.onUrlCurrently && !isNumber$1(str[y]) && str[y].trim().length && str[y] !== " " && str[y] !== "\n" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
               // comma, not on URL, not followed by number = add space afterwards
               applicableOpts.addMissingSpaces = true;
 
@@ -18137,18 +26810,17 @@
           } else if (charcode === 45) {
             // IF MINUS SIGN / HYPHEN
             // don't mess up if minus is between two numbers
-            if (str[i - 1] === " " && str[y] === " " && isNumber(str[left(str, i)]) && isNumber(str[right(str, y)])) ; else {
-              // add space after minus/dash character if there's nbsp or space in front of it,
-              // but the next character is not currency or digit.
-              // That's to prevent the space addition in front of legit minuses.
-              if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
+            if (str[i - 1] === " " && str[y] === " " && isNumber$1(str[left(str, i)]) && isNumber$1(str[right(str, y)])) ; // add space after minus/dash character if there's nbsp or space in front of it,
+            // but the next character is not currency or digit.
+            // That's to prevent the space addition in front of legit minuses.
+            else if ((str[i - 1] === rawNbsp$1 || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
                 applicableOpts.addMissingSpaces = true;
 
                 if (opts.addMissingSpaces) {
                   // add space after it:
                   rangesArr.push(y, y, " ");
                 }
-              } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
+              } else if (str[i - 1] && str[y] && (isNumber$1(str[i - 1]) && isNumber$1(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
                 applicableOpts.convertDashes = true;
 
                 if (opts.convertDashes) {
@@ -18170,8 +26842,7 @@
 
                   rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
                 }
-              }
-            } // tackle widow word setting - space in front when opts.removeWidows is on
+              } // tackle widow word setting - space in front when opts.removeWidows is on
 
 
             if (str[i - 2] && str[i - 2].trim().length && !str[i - 1].trim().length && !["\n", "\r"].includes(str[i - 1])) {
@@ -18180,7 +26851,7 @@
 
               if (opts.removeWidows) {
                 applicableOpts.convertEntities = true;
-                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp$1);
               }
             }
           } else if (charcode === 46) {
@@ -18349,7 +27020,7 @@
         } else if (charcode === 8207) {
           // remove all right-to-right mark chars, '\u200F'
           rangesArr.push(i, y);
-        } else if (charcode === 8211 || charcode === 65533 && isNumber(str[i - 1]) && isNumber(str[y])) {
+        } else if (charcode === 8211 || charcode === 65533 && isNumber$1(str[i - 1]) && isNumber$1(str[y])) {
           // IF N-DASH, '\u2013'
           applicableOpts.convertDashes = true;
 
@@ -18360,7 +27031,7 @@
 
             if (opts.convertEntities) {
               // if it's space-ndash-space, put m-dash instead
-              if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
+              if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length && !(isNumber$1(str[i - 2]) && isNumber$1(str[i + 2]))) {
                 rangesArr.push(i, y, "&mdash;");
               } else {
                 // ELSE - n-dash stays
@@ -18378,7 +27049,7 @@
 
 
           if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
-            if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
+            if (str[i - 2] && isNumber$1(str[i - 2]) && isNumber$1(str[y])) {
               rangesArr.push(i - 1, i);
             } else {
               applicableOpts.addMissingSpaces = true;
@@ -18394,7 +27065,7 @@
                   applicableOpts.removeWidows = true;
 
                   if (opts.removeWidows) {
-                    whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+                    whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp$1;
                   }
                 }
 
@@ -18403,15 +27074,15 @@
               // replace space in front with non-breaking space if widow removal is on
 
 
-              if (str.slice(i - 1, i) !== rawNbsp) {
+              if (str.slice(i - 1, i) !== rawNbsp$1) {
                 applicableOpts.removeWidows = true;
 
                 if (opts.removeWidows) {
-                  rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+                  rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp$1);
                 }
               }
             }
-          } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
+          } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber$1(str[i - 2]) && isNumber$1(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
             // delete spaces around n-dash if those are number strings
             rangesArr.push(i - 1, i);
             rangesArr.push(y, y + 1);
@@ -18419,13 +27090,13 @@
           // the widow word, space in front of it within this clause.
 
 
-          if (str[i - 2] && str[i + 1] && !str[i - 1].trim().length && str[i - 2].trim().length && !str[i + 1].trim().length && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
+          if (str[i - 2] && str[i + 1] && !str[i - 1].trim().length && str[i - 2].trim().length && !str[i + 1].trim().length && !(isNumber$1(str[i - 2]) && isNumber$1(str[i + 2]))) {
             // 1. report as applicable
             applicableOpts.removeWidows = true;
 
             if (opts.removeWidows) {
               // 2. replace the space
-              rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+              rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp$1);
             }
           }
         } else if (charcode === 8212 || charcode === 65533 && str[i - 1] === " " && str[y] === " ") {
@@ -18437,7 +27108,7 @@
 
             if (opts.removeWidows) {
               applicableOpts.convertEntities = true;
-              rangesArr.push(left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+              rangesArr.push(left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp$1);
             }
           } // tackle conversion into hyphen and surrounding spaces
 
@@ -18473,15 +27144,14 @@
 
           if (_tempRes2 && _tempRes2.length) {
             applicableOpts.convertApostrophes = true;
-
-            var _tempRes3 = convertOne(str, {
+            var tempRes2 = convertOne(str, {
               from: i,
               to: y,
               convertEntities: true,
               convertApostrophes: true
             });
 
-            if (_tempRes3) {
+            if (tempRes2) {
               if (opts.convertApostrophes) {
                 applicableOpts.convertEntities = true;
               }
@@ -18595,8539 +27265,6 @@
     }
   }
 
-  /**
-   * arrayiffy-if-string
-   * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.29
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
-   */
-  function arrayiffyString(something) {
-    if (typeof something === "string") {
-      if (something.length > 0) {
-        return [something];
-      }
-
-      return [];
-    }
-
-    return something;
-  }
-
-  /**
-   * string-match-left-right
-   * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.4
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-   */
-
-  function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
-  function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
-
-    if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
-      return whatToMatchValVal;
-    }
-
-    if (fromIndexInclusive >= str.length && !special) {
-      return false;
-    }
-
-    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    let lastWasMismatched = false;
-    let atLeastSomethingWasMatched = false;
-    let patience = opts.maxMismatches;
-    let i = fromIndexInclusive;
-    let somethingFound = false;
-    let firstCharacterMatched = false;
-    let lastCharacterMatched = false;
-
-    while (str[i]) {
-      const nextIdx = getNextIdx(i);
-
-      if (opts.trimBeforeMatching && str[i].trim() === "") {
-        if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
-          return true;
-        }
-
-        i = getNextIdx(i);
-        continue;
-      }
-
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
-        if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-          return true;
-        }
-
-        i = getNextIdx(i);
-        continue;
-      }
-
-      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
-
-      if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
-        if (!somethingFound) {
-          somethingFound = true;
-        }
-
-        if (!atLeastSomethingWasMatched) {
-          atLeastSomethingWasMatched = true;
-        }
-
-        if (charsToCheckCount === whatToMatchVal.length) {
-          firstCharacterMatched = true;
-        } else if (charsToCheckCount === 1) {
-          lastCharacterMatched = true;
-        }
-
-        charsToCheckCount -= 1;
-
-        if (charsToCheckCount < 1) {
-          return i;
-        }
-      } else {
-        if (opts.maxMismatches && patience && i) {
-          patience--;
-
-          for (let y = 0; y <= patience; y++) {
-            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            const nextCharInSource = str[getNextIdx(i)];
-
-            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 2;
-              somethingFound = true;
-              break;
-            } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 1;
-              somethingFound = true;
-              break;
-            } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-              return i;
-            }
-          }
-
-          if (!somethingFound) {
-            lastWasMismatched = i;
-          }
-        } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
-          return 0;
-        } else {
-          return false;
-        }
-      }
-
-      if (lastWasMismatched !== false && lastWasMismatched !== i) {
-        lastWasMismatched = false;
-      }
-
-      if (charsToCheckCount < 1) {
-        return i;
-      }
-
-      i = getNextIdx(i);
-    }
-
-    if (charsToCheckCount > 0) {
-      if (special && whatToMatchValVal === "EOL") {
-        return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
-        return lastWasMismatched || 0;
-      }
-
-      return false;
-    }
-  }
-
-  function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    const defaults = {
-      i: false,
-      trimBeforeMatching: false,
-      trimCharsBeforeMatching: [],
-      maxMismatches: 0,
-      firstMustMatch: false,
-      lastMustMatch: false
-    };
-
-    if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
-    }
-
-    const opts = Object.assign({}, defaults, originalOpts);
-    opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
-
-    if (!isStr$2(str)) {
-      return false;
-    } else if (!str.length) {
-      return false;
-    }
-
-    if (!Number.isInteger(position) || position < 0) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
-    }
-
-    let whatToMatch;
-    let special;
-
-    if (isStr$2(originalWhatToMatch)) {
-      whatToMatch = [originalWhatToMatch];
-    } else if (Array.isArray(originalWhatToMatch)) {
-      whatToMatch = originalWhatToMatch;
-    } else if (!originalWhatToMatch) {
-      whatToMatch = originalWhatToMatch;
-    } else if (typeof originalWhatToMatch === "function") {
-      whatToMatch = [];
-      whatToMatch.push(originalWhatToMatch);
-    } else {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
-    }
-
-    if (originalOpts && !isObj(originalOpts)) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    let culpritsIndex;
-    let culpritsVal;
-
-    if (opts.trimCharsBeforeMatching.some((el, i) => {
-      if (el.length > 1) {
-        culpritsIndex = i;
-        culpritsVal = el;
-        return true;
-      }
-
-      return false;
-    })) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
-    }
-
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
-      if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
-
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-
-        if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        }
-
-        if (firstCharOutsideIndex === undefined) {
-          return false;
-        }
-
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
-
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
-
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        }
-
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
-
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-      }
-
-      let extraNote = "";
-
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
-      }
-
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
-    }
-
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
-      special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
-
-      if (mode === "matchRight") {
-        startingPosition++;
-      } else if (mode === "matchLeft") {
-        startingPosition--;
-      }
-
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
-
-      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
-        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-      }
-
-      if (Number.isInteger(found)) {
-        indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
-
-        if (mode[5] === "L") {
-          restOfStringInFront = str.slice(0, found);
-        } else {
-          restOfStringInFront = str.slice(indexOfTheCharacterInFront);
-        }
-      }
-
-      if (indexOfTheCharacterInFront < 0) {
-        indexOfTheCharacterInFront = undefined;
-      }
-
-      if (str[indexOfTheCharacterInFront]) {
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-      }
-
-      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
-        return whatToMatchVal;
-      }
-    }
-
-    return false;
-  }
-
-  function matchLeftIncl(str, position, whatToMatch, opts) {
-    return main("matchLeftIncl", str, position, whatToMatch, opts);
-  }
-
-  function matchRightIncl(str, position, whatToMatch, opts) {
-    return main("matchRightIncl", str, position, whatToMatch, opts);
-  }
-
-  /**
-   * string-collapse-leading-whitespace
-   * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.17
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
-   */
-  const rawNbsp$1 = "\u00A0";
-
-  function push(arr, leftSide = true, charToPush) {
-    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp$1 || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp$1)) {
-      if (leftSide) {
-        if ((charToPush === "\n" || charToPush === rawNbsp$1) && arr.length && arr[arr.length - 1] === " ") {
-          while (arr.length && arr[arr.length - 1] === " ") {
-            arr.pop();
-          }
-        }
-
-        arr.push(charToPush === rawNbsp$1 || charToPush === "\n" ? charToPush : " ");
-      } else {
-        if ((charToPush === "\n" || charToPush === rawNbsp$1) && arr.length && arr[0] === " ") {
-          while (arr.length && arr[0] === " ") {
-            arr.shift();
-          }
-        }
-
-        arr.unshift(charToPush === rawNbsp$1 || charToPush === "\n" ? charToPush : " ");
-      }
-    }
-  }
-
-  function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-    if (typeof str === "string" && str.length) {
-      let windowsEol = false;
-
-      if (str.includes("\r\n")) {
-        windowsEol = true;
-      }
-
-      let limitLinebreaksCount;
-
-      if (!originalLimitLinebreaksCount || typeof originalLimitLinebreaksCount !== "number") {
-        limitLinebreaksCount = 1;
-      } else {
-        limitLinebreaksCount = originalLimitLinebreaksCount;
-      }
-
-      let limit;
-
-      if (str.trim() === "") {
-        const resArr = [];
-        limit = limitLinebreaksCount;
-        Array.from(str).forEach(char => {
-          if (char !== "\n" || limit) {
-            if (char === "\n") {
-              limit--;
-            }
-
-            push(resArr, true, char);
-          }
-        });
-
-        while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
-          resArr.pop();
-        }
-
-        return resArr.join("");
-      }
-
-      const startCharacter = [];
-      limit = limitLinebreaksCount;
-
-      if (str[0].trim() === "") {
-        for (let i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim()) {
-            break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
-            }
-          }
-        }
-      }
-
-      const endCharacter = [];
-      limit = limitLinebreaksCount;
-
-      if (str.slice(-1).trim() === "") {
-        for (let i = str.length; i--;) {
-          if (str[i].trim()) {
-            break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
-            }
-          }
-        }
-      }
-
-      if (!windowsEol) {
-        return startCharacter.join("") + str.trim() + endCharacter.join("");
-      }
-
-      return `${startCharacter.join("")}${str.trim()}${endCharacter.join("")}`.replace(/\n/g, "\r\n");
-    }
-
-    return str;
-  }
-
-  /**
-   * ranges-push
-   * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.6
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
-   */
-
-  function existy$1(x) {
-    return x != null;
-  }
-
-  function isNum$1(something) {
-    return Number.isInteger(something) && something >= 0;
-  }
-
-  function isStr$3(something) {
-    return typeof something === "string";
-  }
-
-  function prepNumStr(str) {
-    return /^\d*$/.test(str) ? parseInt(str, 10) : str;
-  }
-
-  class Ranges {
-    constructor(originalOpts) {
-      const defaults = {
-        limitToBeAddedWhitespace: false,
-        limitLinebreaksCount: 1,
-        mergeType: 1
-      };
-      const opts = Object.assign({}, defaults, originalOpts);
-
-      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-        if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
-          opts.mergeType = 1;
-        } else if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "2") {
-          opts.mergeType = 2;
-        } else {
-          throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
-        }
-      }
-
-      this.opts = opts;
-    }
-
-    add(originalFrom, originalTo, addVal, ...etc) {
-      if (etc.length > 0) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`);
-      }
-
-      if (!existy$1(originalFrom) && !existy$1(originalTo)) {
-        return;
-      } else if (existy$1(originalFrom) && !existy$1(originalTo)) {
-        if (Array.isArray(originalFrom)) {
-          if (originalFrom.length) {
-            if (originalFrom.some(el => Array.isArray(el))) {
-              originalFrom.forEach(thing => {
-                if (Array.isArray(thing)) {
-                  this.add(...thing);
-                }
-              });
-              return;
-            } else if (originalFrom.length > 1 && isNum$1(prepNumStr(originalFrom[0])) && isNum$1(prepNumStr(originalFrom[1]))) {
-              this.add(...originalFrom);
-            }
-          }
-
-          return;
-        }
-
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
-      } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
-      }
-
-      const from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
-      const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
-
-      if (isNum$1(addVal)) {
-        addVal = String(addVal);
-      }
-
-      if (isNum$1(from) && isNum$1(to)) {
-        if (existy$1(addVal) && !isStr$3(addVal) && !isNum$1(addVal)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
-        }
-
-        if (existy$1(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
-          this.last()[1] = to;
-          if (this.last()[2] === null || addVal === null) ;
-
-          if (this.last()[2] !== null && existy$1(addVal)) {
-            let calculatedVal = existy$1(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
-
-            if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
-            }
-
-            if (!(isStr$3(calculatedVal) && !calculatedVal.length)) {
-              this.last()[2] = calculatedVal;
-            }
-          }
-        } else {
-          if (!this.slices) {
-            this.slices = [];
-          }
-
-          const whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-          this.slices.push(whatToPush);
-        }
-      } else {
-        if (!(isNum$1(from) && from >= 0)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
-        } else {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
-        }
-      }
-    }
-
-    push(originalFrom, originalTo, addVal, ...etc) {
-      this.add(originalFrom, originalTo, addVal, ...etc);
-    }
-
-    current() {
-      if (this.slices != null) {
-        this.slices = mergeRanges(this.slices, {
-          mergeType: this.opts.mergeType
-        });
-
-        if (this.opts.limitToBeAddedWhitespace) {
-          return this.slices.map(val => {
-            if (existy$1(val[2])) {
-              return [val[0], val[1], collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)];
-            }
-
-            return val;
-          });
-        }
-
-        return this.slices;
-      }
-
-      return null;
-    }
-
-    wipe() {
-      this.slices = undefined;
-    }
-
-    replace(givenRanges) {
-      if (Array.isArray(givenRanges) && givenRanges.length) {
-        if (!(Array.isArray(givenRanges[0]) && isNum$1(givenRanges[0][0]))) {
-          throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
-        } else {
-          this.slices = Array.from(givenRanges);
-        }
-      } else {
-        this.slices = undefined;
-      }
-    }
-
-    last() {
-      if (this.slices !== undefined && Array.isArray(this.slices)) {
-        return this.slices[this.slices.length - 1];
-      }
-
-      return null;
-    }
-
-  }
-
-  /**
-   * string-remove-widows
-   * Helps to prevent widow words in a text
-   * Version: 1.5.19
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
-   */
-  const rawnbsp = "\u00A0";
-  const encodedNbspHtml = "&nbsp;";
-  const encodedNbspCss = "\\00A0";
-  const encodedNbspJs = "\\u00A0";
-  const rawNdash = "\u2013";
-  const encodedNdashHtml = "&ndash;";
-  const encodedNdashCss = "\\2013";
-  const encodedNdashJs = "\\u2013";
-  const rawMdash = "\u2014";
-  const encodedMdashHtml = "&mdash;";
-  const encodedMdashCss = "\\2014";
-  const encodedMdashJs = "\\u2014";
-  const headsAndTailsJinja = [{
-    heads: "{{",
-    tails: "}}"
-  }, {
-    heads: ["{% if", "{%- if"],
-    tails: ["{% endif", "{%- endif"]
-  }, {
-    heads: ["{% for", "{%- for"],
-    tails: ["{% endfor", "{%- endfor"]
-  }, {
-    heads: ["{%", "{%-"],
-    tails: ["%}", "-%}"]
-  }, {
-    heads: "{#",
-    tails: "#}"
-  }];
-  const headsAndTailsHugo = [{
-    heads: "{{",
-    tails: "}}"
-  }];
-  const headsAndTailsHexo = [{
-    heads: ["<%", "<%=", "<%-"],
-    tails: ["%>", "=%>", "-%>"]
-  }];
-  const knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
-  const defaultOpts$1 = {
-    removeWidowPreventionMeasures: false,
-    convertEntities: true,
-    targetLanguage: "html",
-    UKPostcodes: false,
-    hyphens: true,
-    minWordCount: 4,
-    minCharCount: 5,
-    ignore: [],
-    reportProgressFunc: null,
-    reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100,
-    tagRanges: []
-  };
-
-  function removeWidows(str, originalOpts) {
-    function push(finalStart, finalEnd) {
-      let finalWhatToInsert = rawnbsp;
-
-      if (opts.removeWidowPreventionMeasures) {
-        finalWhatToInsert = " ";
-      } else if (opts.convertEntities) {
-        finalWhatToInsert = encodedNbspHtml;
-
-        if (isStr(opts.targetLanguage)) {
-          if (opts.targetLanguage.trim().toLowerCase() === "css") {
-            finalWhatToInsert = encodedNbspCss;
-          } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
-            finalWhatToInsert = encodedNbspJs;
-          }
-        }
-      }
-
-      if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
-        rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
-      }
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
-    const start = Date.now();
-
-    if (!isStr(str)) {
-      if (str === undefined) {
-        throw new Error("string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
-      } else {
-        throw new Error(`string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
-      }
-    }
-
-    if (originalOpts && !lodash_isplainobject(originalOpts)) {
-      throw new Error(`string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    const isArr = Array.isArray;
-    const len = str.length;
-    const rangesArr = new Ranges({
-      mergeType: 2
-    });
-    const punctuationCharsToConsiderWidowIssue = ["."];
-    const postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
-    const postcodeRegexEnd = /^[0-9][A-Z]{2}/;
-    const leavePercForLastStage = 0.06;
-    let currentPercentageDone;
-    let lastPercentage = 0;
-    let wordCount;
-    let charCount;
-    let secondToLastWhitespaceStartedAt;
-    let secondToLastWhitespaceEndedAt;
-    let lastWhitespaceStartedAt;
-    let lastWhitespaceEndedAt;
-    let lastEncodedNbspStartedAt;
-    let lastEncodedNbspEndedAt;
-    let doNothingUntil;
-    let bumpWordCountAt;
-    const opts = Object.assign({}, defaultOpts$1, originalOpts);
-    const whatWasDone = {
-      removeWidows: false,
-      convertEntities: false
-    };
-
-    if (opts.dashes) {
-      opts.hyphens = true;
-      delete opts.dashes;
-    }
-
-    if (!opts.ignore || !isArr(opts.ignore) && !isStr(opts.ignore)) {
-      opts.ignore = [];
-    } else {
-      opts.ignore = arrayiffyString(opts.ignore);
-
-      if (opts.ignore.includes("all")) {
-        opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
-      } else if (opts.ignore.some(val => isStr(val))) {
-        let temp = [];
-        opts.ignore = opts.ignore.filter(val => {
-          if (isStr(val) && val.length) {
-            if (["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())) {
-              temp = temp.concat(headsAndTailsJinja);
-            } else if (["hugo"].includes(val.trim().toLowerCase())) {
-              temp = temp.concat(headsAndTailsHugo);
-            } else if (["hexo"].includes(val.trim().toLowerCase())) {
-              temp = temp.concat(headsAndTailsHexo);
-            }
-
-            return false;
-          } else if (typeof val === "object") {
-            return true;
-          }
-        });
-
-        if (temp.length) {
-          opts.ignore = opts.ignore.concat(temp);
-        }
-      }
-    }
-
-    let ceil;
-
-    if (opts.reportProgressFunc) {
-      ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
-    }
-
-    function resetAll() {
-      wordCount = 0;
-      charCount = 0;
-      secondToLastWhitespaceStartedAt = undefined;
-      secondToLastWhitespaceEndedAt = undefined;
-      lastWhitespaceStartedAt = undefined;
-      lastWhitespaceEndedAt = undefined;
-      lastEncodedNbspStartedAt = undefined;
-      lastEncodedNbspEndedAt = undefined;
-    }
-
-    resetAll();
-
-    for (let i = 0; i <= len; i++) {
-      if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
-        opts.ignore.some((valObj, y) => {
-          if (isArr(valObj.heads) && valObj.heads.some(oneOfHeads => str.startsWith(oneOfHeads, i)) || isStr(valObj.heads) && str.startsWith(valObj.heads, i)) {
-            wordCount++;
-            doNothingUntil = opts.ignore[y].tails;
-            return true;
-          }
-        });
-      }
-
-      if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === i) {
-        wordCount++;
-        bumpWordCountAt = undefined;
-      }
-
-      if (typeof opts.reportProgressFunc === "function") {
-        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * ceil);
-
-        if (currentPercentageDone !== lastPercentage) {
-          lastPercentage = currentPercentageDone;
-          opts.reportProgressFunc(currentPercentageDone);
-        }
-      }
-
-      if (!doNothingUntil && i && str[i] && str[i].trim() && (!str[i - 1] || str[i - 1] && !str[i - 1].trim())) {
-        lastWhitespaceEndedAt = i;
-      }
-
-      if (!doNothingUntil && str[i] && str[i].trim()) {
-        charCount++;
-      }
-
-      if (!doNothingUntil && opts.hyphens && (str[i] === "-" || str[i] === rawMdash || str[i] === rawNdash || str.slice(i).startsWith(encodedNdashHtml) || str.slice(i).startsWith(encodedNdashCss) || str.slice(i).startsWith(encodedNdashJs) || str.slice(i).startsWith(encodedMdashHtml) || str.slice(i).startsWith(encodedMdashCss) || str.slice(i).startsWith(encodedMdashJs)) && str[i + 1] && (!str[i + 1].trim() || str[i] === "&")) {
-        if (str[i - 1] && !str[i - 1].trim() && str[left(str, i)]) {
-          push(left(str, i) + 1, i);
-          whatWasDone.removeWidows = true;
-        }
-      }
-
-      if (!doNothingUntil && (str[i] === "&" && str[i + 1] === "n" && str[i + 2] === "b" && str[i + 3] === "s" && str[i + 4] === "p" && str[i + 5] === ";" || str[i] === "&" && str[i + 1] === "#" && str[i + 2] === "1" && str[i + 3] === "6" && str[i + 4] === "0" && str[i + 5] === ";")) {
-        lastEncodedNbspStartedAt = i;
-        lastEncodedNbspEndedAt = i + 6;
-
-        if (str[i + 6] && str[i + 6].trim()) {
-          bumpWordCountAt = i + 6;
-        }
-
-        if (!opts.convertEntities) {
-          rangesArr.push(i, i + 6, rawnbsp);
-          whatWasDone.convertEntities = true;
-        } else if (opts.targetLanguage === "css" || opts.targetLanguage === "js") {
-          rangesArr.push(i, i + 6, opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs);
-          whatWasDone.convertEntities = true;
-        }
-      }
-
-      if (!doNothingUntil && str[i] === "\\" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] && str[i + 3].toUpperCase() === "A" && str[i + 4] === "0") {
-        lastEncodedNbspStartedAt = i;
-        lastEncodedNbspEndedAt = i + 5;
-
-        if (str[i + 5] && str[i + 5].trim()) {
-          bumpWordCountAt = i + 5;
-        }
-
-        if (!opts.convertEntities) {
-          rangesArr.push(i, i + 5, rawnbsp);
-          whatWasDone.convertEntities = true;
-        } else if (opts.targetLanguage === "html" || opts.targetLanguage === "js") {
-          rangesArr.push(i, i + 5, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs);
-          whatWasDone.convertEntities = true;
-        }
-      }
-
-      if (!doNothingUntil && str[i] === "\\" && str[i + 1] && str[i + 1].toLowerCase() === "u" && str[i + 2] === "0" && str[i + 3] === "0" && str[i + 4] && str[i + 4].toUpperCase() === "A" && str[i + 5] === "0") {
-        lastEncodedNbspStartedAt = i;
-        lastEncodedNbspEndedAt = i + 6;
-
-        if (str[i + 6] && str[i + 6].trim()) {
-          bumpWordCountAt = i + 6;
-        }
-
-        if (!opts.convertEntities) {
-          rangesArr.push(i, i + 6, rawnbsp);
-        } else if (opts.targetLanguage === "html" || opts.targetLanguage === "css") {
-          rangesArr.push(i, i + 6, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss);
-        }
-      }
-
-      if (!doNothingUntil && str[i] === rawnbsp) {
-        lastEncodedNbspStartedAt = i;
-        lastEncodedNbspEndedAt = i + 1;
-
-        if (str[i + 2] && str[i + 2].trim()) {
-          bumpWordCountAt = i + 2;
-        }
-
-        if (opts.convertEntities) {
-          rangesArr.push(i, i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
-        }
-      }
-
-      if (!doNothingUntil && str[i] && str[i].trim() && (!str[i - 1] || !str[i - 1].trim())) {
-        wordCount++;
-      }
-
-      if (!doNothingUntil && (!str[i] || `\r\n`.includes(str[i]) || (str[i] === "\n" || str[i] === "\r" || str[i] === "\r" && str[i + 1] === "\n") && str[i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)]))) {
-        if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
-          let finalStart;
-          let finalEnd;
-
-          if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-            if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
-              finalStart = lastWhitespaceStartedAt;
-              finalEnd = lastWhitespaceEndedAt;
-            } else {
-              finalStart = lastEncodedNbspStartedAt;
-              finalEnd = lastEncodedNbspEndedAt;
-            }
-          } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
-            finalStart = lastWhitespaceStartedAt;
-            finalEnd = lastWhitespaceEndedAt;
-          } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-            finalStart = lastEncodedNbspStartedAt;
-            finalEnd = lastEncodedNbspEndedAt;
-          }
-
-          if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
-            finalStart = secondToLastWhitespaceStartedAt;
-            finalEnd = secondToLastWhitespaceEndedAt;
-          }
-
-          if (finalStart && finalEnd) {
-            push(finalStart, finalEnd);
-            whatWasDone.removeWidows = true;
-          }
-        }
-
-        resetAll();
-      }
-
-      if (opts.UKPostcodes && str[i] && !str[i].trim() && str[i - 1] && str[i - 1].trim() && postcodeRegexFront.test(str.slice(0, i)) && str[right(str, i)] && postcodeRegexEnd.test(str.slice(right(str, i)))) {
-        push(i, right(str, i));
-        whatWasDone.removeWidows = true;
-      }
-
-      if (!doNothingUntil && str[i] && !str[i].trim() && str[i - 1] && str[i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, i)]) && !str.slice(0, left(str, i) + 1).endsWith("br") && !str.slice(0, left(str, i) + 1).endsWith("hr") && !(str[left(str, i)] === "<" && knownHTMLTags.some(tag => str.startsWith(tag, right(str, i))))) {
-        secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
-        secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
-        lastWhitespaceStartedAt = i;
-        lastWhitespaceEndedAt = undefined;
-
-        if (lastEncodedNbspStartedAt !== undefined || lastEncodedNbspEndedAt !== undefined) {
-          lastEncodedNbspStartedAt = undefined;
-          lastEncodedNbspEndedAt = undefined;
-        }
-      }
-
-      let tempTailFinding;
-
-      if (doNothingUntil) {
-        if (isStr(doNothingUntil) && (!doNothingUntil.length || str.startsWith(doNothingUntil, i))) {
-          doNothingUntil = undefined;
-        } else if (isArr(doNothingUntil) && (!doNothingUntil.length || doNothingUntil.some(val => {
-          if (str.startsWith(val, i)) {
-            tempTailFinding = val;
-            return true;
-          }
-        }))) {
-          doNothingUntil = undefined;
-          i += tempTailFinding.length;
-
-          if (isArr(opts.ignore) && opts.ignore.length && str[i + 1]) {
-            opts.ignore.some(oneOfHeadsTailsObjs => {
-              return matchRightIncl(str, i, oneOfHeadsTailsObjs.tails, {
-                trimBeforeMatching: true,
-                cb: (char, theRemainderOfTheString, index) => {
-                  if (index) {
-                    i = index - 1;
-
-                    if (str[i + 1] && str[i + 1].trim()) {
-                      wordCount++;
-                    }
-                  }
-
-                  return true;
-                }
-              });
-            });
-          }
-        }
-      }
-
-      if (str[i] && `\r\n`.includes(str[i])) {
-        wordCount = 0;
-        charCount = 0;
-      }
-
-      if (isArr(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(rangeArr => {
-        if (i >= rangeArr[0] && i <= rangeArr[1] && rangeArr[1] - 1 > i) {
-          i = rangeArr[1] - 1;
-          return true;
-        }
-      })) ;
-    }
-
-    return {
-      res: rangesApply(str, rangesArr.current(), opts.reportProgressFunc ? incomingPerc => {
-        currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
-
-        if (currentPercentageDone !== lastPercentage) {
-          lastPercentage = currentPercentageDone;
-          opts.reportProgressFunc(currentPercentageDone);
-        }
-      } : null),
-      ranges: rangesArr.current(),
-      log: {
-        timeTakenInMiliseconds: Date.now() - start
-      },
-      whatWasDone
-    };
-  }
-
-  /**
-   * ranges-crop
-   * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.50
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
-   */
-  const isArr$1 = Array.isArray;
-
-  function isStr$4(something) {
-    return typeof something === "string";
-  }
-
-  function existy$2(x) {
-    return x != null;
-  }
-
-  function rangesCrop(arrOfRanges, strLen) {
-    if (!isArr$1(arrOfRanges)) {
-      throw new TypeError(`ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
-    }
-
-    if (!Number.isInteger(strLen)) {
-      throw new TypeError(`ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
-    }
-
-    if (arrOfRanges.length === 0) {
-      return arrOfRanges;
-    }
-
-    let culpritsIndex;
-
-    if (!arrOfRanges.every((rangeArr, indx) => {
-      if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
-        culpritsIndex = indx;
-        return false;
-      }
-
-      return true;
-    })) {
-      if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
-        throw new TypeError(`ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
-      }
-
-      throw new TypeError(`ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
-    }
-
-    if (!arrOfRanges.every((rangeArr, indx) => {
-      if (existy$2(rangeArr[2]) && !isStr$4(rangeArr[2])) {
-        culpritsIndex = indx;
-        return false;
-      }
-
-      return true;
-    })) {
-      throw new TypeError(`ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)} has a argument in the range of a type ${typeof arrOfRanges[culpritsIndex][2]}`);
-    }
-
-    const res = mergeRanges(arrOfRanges).filter(singleRangeArr => singleRangeArr[0] <= strLen && (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen)).map(singleRangeArr => {
-      if (singleRangeArr[1] > strLen) {
-        if (singleRangeArr[2] !== undefined) {
-          return [singleRangeArr[0], strLen, singleRangeArr[2]];
-        }
-
-        return [singleRangeArr[0], strLen];
-      }
-
-      return singleRangeArr;
-    });
-    return res;
-  }
-
-  /**
-   * ranges-invert
-   * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
-   * Version: 2.1.37
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
-   */
-  const isArr$2 = Array.isArray;
-
-  function rangesInvert(arrOfRanges, strLen, originalOptions) {
-    if (!isArr$2(arrOfRanges) && arrOfRanges !== null) {
-      throw new TypeError(`ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
-    }
-
-    if (!Number.isInteger(strLen) || strLen < 0) {
-      throw new TypeError(`ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
-    }
-
-    if (arrOfRanges === null) {
-      if (strLen === 0) {
-        return [];
-      }
-
-      return [[0, strLen]];
-    } else if (arrOfRanges.length === 0) {
-      return [];
-    }
-
-    const defaults = {
-      strictlyTwoElementsInRangeArrays: false,
-      skipChecks: false
-    };
-    const opts = Object.assign({}, defaults, originalOptions);
-    let culpritsIndex;
-    let culpritsLen;
-
-    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
-      if (rangeArr.length !== 2) {
-        culpritsIndex = indx;
-        culpritsLen = rangeArr.length;
-        return false;
-      }
-
-      return true;
-    })) {
-      throw new TypeError(`ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) has not two but ${culpritsLen} elements!`);
-    }
-
-    if (!opts.skipChecks && !arrOfRanges.every((rangeArr, indx) => {
-      if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
-        culpritsIndex = indx;
-        return false;
-      }
-
-      return true;
-    })) {
-      if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
-        throw new TypeError(`ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
-      }
-
-      throw new TypeError(`ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
-    }
-
-    let prep;
-
-    if (!opts.skipChecks) {
-      prep = mergeRanges(arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]));
-    } else {
-      prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
-    }
-
-    if (prep.length === 0) {
-      if (strLen === 0) {
-        return [];
-      }
-
-      return [[0, strLen]];
-    }
-
-    const res = prep.reduce((accum, currArr, i, arr) => {
-      const res = [];
-
-      if (i === 0 && arr[0][0] !== 0) {
-        res.push([0, arr[0][0]]);
-      }
-
-      const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
-
-      if (currArr[1] !== endingIndex) {
-        if (opts.skipChecks && currArr[1] > endingIndex) {
-          throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${currArr[1]}, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(arr, null, 0)}`);
-        }
-
-        res.push([currArr[1], endingIndex]);
-      }
-
-      return accum.concat(res);
-    }, []);
-    return rangesCrop(res, strLen);
-  }
-
-  const HIGH_SURROGATE_START = 0xd800;
-  const HIGH_SURROGATE_END = 0xdbff;
-  const LOW_SURROGATE_START = 0xdc00;
-  const REGIONAL_INDICATOR_START = 0x1f1e6;
-  const REGIONAL_INDICATOR_END = 0x1f1ff;
-  const FITZPATRICK_MODIFIER_START = 0x1f3fb;
-  const FITZPATRICK_MODIFIER_END = 0x1f3ff;
-  const VARIATION_MODIFIER_START = 0xfe00;
-  const VARIATION_MODIFIER_END = 0xfe0f;
-  const DIACRITICAL_MARKS_START = 0x20d0;
-  const DIACRITICAL_MARKS_END = 0x20ff;
-  const ZWJ = 0x200d;
-  const GRAPHEMS = [0x0308, // ( ◌̈ ) COMBINING DIAERESIS
-  0x0937, // ( ष ) DEVANAGARI LETTER SSA
-  0x0937, // ( ष ) DEVANAGARI LETTER SSA
-  0x093F, // ( ि ) DEVANAGARI VOWEL SIGN I
-  0x093F, // ( ि ) DEVANAGARI VOWEL SIGN I
-  0x0BA8, // ( ந ) TAMIL LETTER NA
-  0x0BBF, // ( ி ) TAMIL VOWEL SIGN I
-  0x0BCD, // ( ◌்) TAMIL SIGN VIRAMA
-  0x0E31, // ( ◌ั ) THAI CHARACTER MAI HAN-AKAT
-  0x0E33, // ( ำ ) THAI CHARACTER SARA AM
-  0x0E40, // ( เ ) THAI CHARACTER SARA E
-  0x0E49, // ( เ ) THAI CHARACTER MAI THO
-  0x1100, // ( ᄀ ) HANGUL CHOSEONG KIYEOK
-  0x1161, // ( ᅡ ) HANGUL JUNGSEONG A
-  0x11A8 // ( ᆨ ) HANGUL JONGSEONG KIYEOK
-  ];
-
-  function runes(string) {
-    if (typeof string !== 'string') {
-      throw new Error('string cannot be undefined or null');
-    }
-
-    const result = [];
-    let i = 0;
-    let increment = 0;
-
-    while (i < string.length) {
-      increment += nextUnits(i + increment, string);
-
-      if (isGraphem(string[i + increment])) {
-        increment++;
-      }
-
-      if (isVariationSelector(string[i + increment])) {
-        increment++;
-      }
-
-      if (isDiacriticalMark(string[i + increment])) {
-        increment++;
-      }
-
-      if (isZeroWidthJoiner(string[i + increment])) {
-        increment++;
-        continue;
-      }
-
-      result.push(string.substring(i, i + increment));
-      i += increment;
-      increment = 0;
-    }
-
-    return result;
-  } // Decide how many code units make up the current character.
-  // BMP characters: 1 code unit
-  // Non-BMP characters (represented by surrogate pairs): 2 code units
-  // Emoji with skin-tone modifiers: 4 code units (2 code points)
-  // Country flags: 4 code units (2 code points)
-  // Variations: 2 code units
-
-
-  function nextUnits(i, string) {
-    const current = string[i]; // If we don't have a value that is part of a surrogate pair, or we're at
-    // the end, only take the value at i
-
-    if (!isFirstOfSurrogatePair(current) || i === string.length - 1) {
-      return 1;
-    }
-
-    const currentPair = current + string[i + 1];
-    let nextPair = string.substring(i + 2, i + 5); // Country flags are comprised of two regional indicator symbols,
-    // each represented by a surrogate pair.
-    // See http://emojipedia.org/flags/
-    // If both pairs are regional indicator symbols, take 4
-
-    if (isRegionalIndicator(currentPair) && isRegionalIndicator(nextPair)) {
-      return 4;
-    } // If the next pair make a Fitzpatrick skin tone
-    // modifier, take 4
-    // See http://emojipedia.org/modifiers/
-    // Technically, only some code points are meant to be
-    // combined with the skin tone modifiers. This function
-    // does not check the current pair to see if it is
-    // one of them.
-
-
-    if (isFitzpatrickModifier(nextPair)) {
-      return 4;
-    }
-
-    return 2;
-  }
-
-  function isFirstOfSurrogatePair(string) {
-    return string && betweenInclusive(string[0].charCodeAt(0), HIGH_SURROGATE_START, HIGH_SURROGATE_END);
-  }
-
-  function isRegionalIndicator(string) {
-    return betweenInclusive(codePointFromSurrogatePair(string), REGIONAL_INDICATOR_START, REGIONAL_INDICATOR_END);
-  }
-
-  function isFitzpatrickModifier(string) {
-    return betweenInclusive(codePointFromSurrogatePair(string), FITZPATRICK_MODIFIER_START, FITZPATRICK_MODIFIER_END);
-  }
-
-  function isVariationSelector(string) {
-    return typeof string === 'string' && betweenInclusive(string.charCodeAt(0), VARIATION_MODIFIER_START, VARIATION_MODIFIER_END);
-  }
-
-  function isDiacriticalMark(string) {
-    return typeof string === 'string' && betweenInclusive(string.charCodeAt(0), DIACRITICAL_MARKS_START, DIACRITICAL_MARKS_END);
-  }
-
-  function isGraphem(string) {
-    return typeof string === 'string' && GRAPHEMS.indexOf(string.charCodeAt(0)) !== -1;
-  }
-
-  function isZeroWidthJoiner(string) {
-    return typeof string === 'string' && string.charCodeAt(0) === ZWJ;
-  }
-
-  function codePointFromSurrogatePair(pair) {
-    const highOffset = pair.charCodeAt(0) - HIGH_SURROGATE_START;
-    const lowOffset = pair.charCodeAt(1) - LOW_SURROGATE_START;
-    return (highOffset << 10) + lowOffset + 0x10000;
-  }
-
-  function betweenInclusive(value, lower, upper) {
-    return value >= lower && value <= upper;
-  }
-
-  function substring(string, start, width) {
-    const chars = runes(string);
-
-    if (start === undefined) {
-      return string;
-    }
-
-    if (start >= chars.length) {
-      return '';
-    }
-
-    const rest = chars.length - start;
-    const stringWidth = width === undefined ? rest : width;
-    let endIndex = start + stringWidth;
-
-    if (endIndex > start + rest) {
-      endIndex = undefined;
-    }
-
-    return chars.slice(start, endIndex).join('');
-  }
-
-  var runes_1 = runes;
-  var substr = substring;
-  runes_1.substr = substr;
-
-  /**
-   * ranges-process-outside
-   * Iterate through string and optionally a given ranges as if they were one
-   * Version: 2.2.22
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
-   */
-  const isArr$3 = Array.isArray;
-
-  function processOutside(str, originalRanges, cb, skipChecks = false) {
-    function isFunction(functionToCheck) {
-      return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
-    }
-
-    if (typeof str !== "string") {
-      if (str === undefined) {
-        throw new Error(`ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`);
-      } else {
-        throw new Error(`ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(str, null, 4)} (type ${typeof str})`);
-      }
-    }
-
-    if (originalRanges && !isArr$3(originalRanges)) {
-      throw new Error(`ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(originalRanges, null, 4)} (type ${typeof originalRanges})`);
-    }
-
-    if (!isFunction(cb)) {
-      throw new Error(`ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(cb, null, 4)} (type ${typeof cb})`);
-    }
-
-    function iterator(str, arrOfArrays) {
-      arrOfArrays.forEach(([fromIdx, toIdx]) => {
-        for (let i = fromIdx; i < toIdx; i++) {
-          const charLength = runes_1(str.slice(i))[0].length;
-          cb(i, i + charLength, offsetValue => {
-            if (offsetValue != null) {
-              i += offsetValue;
-            }
-          });
-
-          if (charLength && charLength > 1) {
-            i += charLength - 1;
-          }
-        }
-      });
-    }
-
-    if (originalRanges && originalRanges.length) {
-      const temp = rangesCrop(rangesInvert(skipChecks ? originalRanges : originalRanges, str.length, {
-        skipChecks: !!skipChecks
-      }), str.length);
-      iterator(str, temp);
-    } else {
-      iterator(str, [[0, str.length]]);
-    }
-  }
-
-  /**
-   * string-collapse-white-space
-   * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
-   * Version: 5.2.17
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
-   */
-
-  function collapse(str, originalOpts) {
-    function charCodeBetweenInclusive(character, from, end) {
-      return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
-    }
-
-    function isSpaceOrLeftBracket(character) {
-      return typeof character === "string" && (character === "<" || !character.trim());
-    }
-
-    if (typeof str !== "string") {
-      throw new Error(`string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
-    }
-
-    if (originalOpts && typeof originalOpts !== "object") {
-      throw new Error(`string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    if (!str.length) {
-      return "";
-    }
-
-    const finalIndexesToDelete = [];
-    const defaults = {
-      trimStart: true,
-      trimEnd: true,
-      trimLines: false,
-      trimnbsp: false,
-      recogniseHTML: true,
-      removeEmptyLines: false,
-      returnRangesOnly: false,
-      limitConsecutiveEmptyLinesTo: 0
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    let preliminaryIndexesToDelete;
-
-    if (opts.recogniseHTML) {
-      preliminaryIndexesToDelete = [];
-    }
-
-    let spacesEndAt = null;
-    let whiteSpaceEndsAt = null;
-    let lineWhiteSpaceEndsAt = null;
-    let endingOfTheLine = false;
-    let stateWithinTag = false;
-    let whiteSpaceWithinTagEndsAt = null;
-    let tagMatched = false;
-    let tagCanEndHere = false;
-    const count = {};
-    let bail = false;
-
-    const resetCounts = obj => {
-      obj.equalDoubleQuoteCombo = 0;
-      obj.equalOnly = 0;
-      obj.doubleQuoteOnly = 0;
-      obj.spacesBetweenLetterChunks = 0;
-      obj.linebreaks = 0;
-    };
-
-    let bracketJustFound = false;
-
-    if (opts.recogniseHTML) {
-      resetCounts(count);
-    }
-
-    let lastLineBreaksLastCharIndex;
-    let consecutiveLineBreakCount = 0;
-
-    for (let i = str.length; i--;) {
-      if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
-        consecutiveLineBreakCount++;
-      } else if (str[i].trim()) {
-        consecutiveLineBreakCount = 0;
-      }
-
-      if (str[i] === " ") {
-        if (spacesEndAt === null) {
-          spacesEndAt = i;
-        }
-      } else if (spacesEndAt !== null) {
-        if (i + 1 !== spacesEndAt) {
-          finalIndexesToDelete.push([i + 1, spacesEndAt]);
-        }
-
-        spacesEndAt = null;
-      }
-
-      if (str[i].trim() === "" && (!opts.trimnbsp && str[i] !== "\xa0" || opts.trimnbsp)) {
-        if (whiteSpaceEndsAt === null) {
-          whiteSpaceEndsAt = i;
-        }
-
-        if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
-          lineWhiteSpaceEndsAt = i + 1;
-        }
-
-        if (str[i] === "\n" || str[i] === "\r") {
-          if (lineWhiteSpaceEndsAt !== null) {
-            if (opts.trimLines) {
-              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-            }
-
-            lineWhiteSpaceEndsAt = null;
-          }
-
-          if (str[i - 1] !== "\n" && str[i - 1] !== "\r") {
-            lineWhiteSpaceEndsAt = i;
-            endingOfTheLine = true;
-          }
-        }
-
-        if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
-          const sliceFrom = i + 1;
-          let sliceTo;
-
-          if (Number.isInteger(lastLineBreaksLastCharIndex)) {
-            sliceTo = lastLineBreaksLastCharIndex + 1;
-
-            if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
-              if (consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {
-                finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
-              }
-            }
-          }
-
-          lastLineBreaksLastCharIndex = i;
-        }
-      } else {
-        if (whiteSpaceEndsAt !== null) {
-          if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
-            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
-          }
-
-          whiteSpaceEndsAt = null;
-        }
-
-        if (lineWhiteSpaceEndsAt !== null) {
-          if (endingOfTheLine && opts.trimLines) {
-            endingOfTheLine = false;
-
-            if (lineWhiteSpaceEndsAt !== i + 1) {
-              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-            }
-          }
-
-          lineWhiteSpaceEndsAt = null;
-        }
-      }
-
-      if (i === 0) {
-        if (whiteSpaceEndsAt !== null && opts.trimStart) {
-          finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
-        } else if (spacesEndAt !== null) {
-          finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
-        }
-      }
-
-      if (opts.recogniseHTML) {
-        if (str[i].trim() === "") {
-          if (stateWithinTag && !tagCanEndHere) {
-            tagCanEndHere = true;
-          }
-
-          if (tagMatched && !whiteSpaceWithinTagEndsAt) {
-            whiteSpaceWithinTagEndsAt = i + 1;
-          }
-
-          if (tagMatched && str[i - 1] !== undefined && str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
-            tagMatched = false;
-            stateWithinTag = false;
-            preliminaryIndexesToDelete = [];
-          }
-
-          if (!bail && !bracketJustFound && str[i].trim() === "" && str[i - 1] !== "<" && (str[i + 1] === undefined || str[i + 1].trim() !== "" && str[i + 1].trim() !== "/")) {
-            if (str[i - 1] === undefined || str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
-              count.spacesBetweenLetterChunks += 1;
-            } else {
-              for (let y = i - 1; y--;) {
-                if (str[y].trim() !== "") {
-                  if (str[y] === "<") {
-                    bail = true;
-                  } else if (str[y] !== "/") {
-                    count.spacesBetweenLetterChunks += i - y;
-                  }
-
-                  break;
-                }
-              }
-            }
-          }
-        } else {
-          if (str[i] === "=") {
-            count.equalOnly += 1;
-
-            if (str[i + 1] === '"') {
-              count.equalDoubleQuoteCombo += 1;
-            }
-          } else if (str[i] === '"') {
-            count.doubleQuoteOnly += 1;
-          }
-
-          if (bracketJustFound) {
-            bracketJustFound = false;
-          }
-
-          if (whiteSpaceWithinTagEndsAt !== null) {
-            preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
-            whiteSpaceWithinTagEndsAt = null;
-          }
-
-          if (str[i] === ">") {
-            resetCounts(count);
-            bracketJustFound = true;
-
-            if (stateWithinTag) {
-              preliminaryIndexesToDelete = [];
-            } else {
-              stateWithinTag = true;
-
-              if (str[i - 1] !== undefined && str[i - 1].trim() === "" && !whiteSpaceWithinTagEndsAt) {
-                whiteSpaceWithinTagEndsAt = i;
-              }
-            }
-
-            if (!tagCanEndHere) {
-              tagCanEndHere = true;
-            }
-          } else if (str[i] === "<") {
-            stateWithinTag = false;
-
-            if (bail) {
-              bail = false;
-            }
-
-            if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
-              tagMatched = false;
-              preliminaryIndexesToDelete = [];
-            }
-
-            if (tagMatched) {
-              if (preliminaryIndexesToDelete.length) {
-                preliminaryIndexesToDelete.forEach(([rangeStart, rangeEnd]) => finalIndexesToDelete.push([rangeStart, rangeEnd]));
-              }
-
-              tagMatched = false;
-            }
-
-            resetCounts(count);
-          } else if (stateWithinTag && str[i] === "/") {
-            whiteSpaceWithinTagEndsAt = i;
-          } else if (stateWithinTag && !tagMatched) {
-            if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
-              tagCanEndHere = false;
-
-              if (charCodeBetweenInclusive(str[i], 97, 110)) {
-                if (str[i] === "a" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["area", "textarea"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["data", "meta"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "b" && (matchLeftIncl(str, i, ["rb", "sub"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "c" && matchLeftIncl(str, i, "rtc", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "d" && (str[i - 1] === "a" && matchLeftIncl(str, i, ["head", "thead"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["kbd", "dd", "embed", "legend", "td"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "e" && (matchLeftIncl(str, i, "source", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "d" && matchLeftIncl(str, i, ["aside", "code"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "l" && matchLeftIncl(str, i, ["table", "article", "title", "style"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "m" && matchLeftIncl(str, i, ["iframe", "time"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "r" && matchLeftIncl(str, i, ["pre", "figure", "picture"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["template", "cite", "blockquote"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, "base", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "g" && matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "h" && matchLeftIncl(str, i, ["th", "math"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "i" && (matchLeftIncl(str, i, ["bdi", "li"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "k" && matchLeftIncl(str, i, ["track", "link", "mark"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "l" && matchLeftIncl(str, i, ["html", "ol", "ul", "dl", "label", "del", "small", "col"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "m" && matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "n" && (str[i - 1] === "o" && matchLeftIncl(str, i, ["section", "caption", "figcaption", "option", "button"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }))) {
-                  tagMatched = true;
-                }
-              } else {
-                if (str[i] === "o" && matchLeftIncl(str, i, ["bdo", "video", "audio"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["map", "samp", "rp"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "q" && isSpaceOrLeftBracket(str[i - 1]) || str[i] === "r" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["header", "meter", "footer"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["var", "br", "abbr", "wbr", "hr", "tr"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "s" && (str[i - 1] === "s" && matchLeftIncl(str, i, ["address", "progress"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["canvas", "details", "ins"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "t" && (str[i - 1] === "c" && matchLeftIncl(str, i, ["object", "select"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "o" && matchLeftIncl(str, i, ["slot", "tfoot"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "p" && matchLeftIncl(str, i, ["script", "noscript"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "u" && matchLeftIncl(str, i, ["input", "output"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "u" && (isSpaceOrLeftBracket(str[i - 1]) || matchLeftIncl(str, i, "menu", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "v" && matchLeftIncl(str, i, ["nav", "div"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "y" && matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) {
-                  tagMatched = true;
-                }
-              }
-            } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
-              tagCanEndHere = false;
-
-              if (str[i - 1] === "h" && (str[i - 2] === "<" || str[i - 2].trim() === "")) {
-                tagMatched = true;
-              }
-            } else if (str[i] === "=" || str[i] === '"') {
-              tagCanEndHere = false;
-            }
-          }
-        }
-      }
-    }
-
-    if (opts.returnRangesOnly) {
-      return mergeRanges(finalIndexesToDelete);
-    }
-
-    return finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str;
-  }
-
-  /**
-   * string-trim-spaces-only
-   * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.15
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
-   */
-  function trimSpaces(s, originalOpts) {
-    if (typeof s !== "string") {
-      throw new Error(`string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof s}, equal to:\n${JSON.stringify(s, null, 4)}`);
-    }
-
-    const defaults = {
-      classicTrim: false,
-      cr: false,
-      lf: false,
-      tab: false,
-      space: true,
-      nbsp: false
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-
-    function check(char) {
-      return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\u00a0");
-    }
-
-    let newStart;
-    let newEnd;
-
-    if (s.length) {
-      if (check(s[0])) {
-        for (let i = 0, len = s.length; i < len; i++) {
-          if (!check(s[i])) {
-            newStart = i;
-            break;
-          }
-
-          if (i === s.length - 1) {
-            return {
-              res: "",
-              ranges: [[0, s.length]]
-            };
-          }
-        }
-      }
-
-      if (check(s[s.length - 1])) {
-        for (let i = s.length; i--;) {
-          if (!check(s[i])) {
-            newEnd = i + 1;
-            break;
-          }
-        }
-      }
-
-      if (newStart) {
-        if (newEnd) {
-          return {
-            res: s.slice(newStart, newEnd),
-            ranges: [[0, newStart], [newEnd, s.length]]
-          };
-        }
-
-        return {
-          res: s.slice(newStart),
-          ranges: [[0, newStart]]
-        };
-      }
-
-      if (newEnd) {
-        return {
-          res: s.slice(0, newEnd),
-          ranges: [[newEnd, s.length]]
-        };
-      }
-
-      return {
-        res: s,
-        ranges: []
-      };
-    }
-
-    return {
-      res: "",
-      ranges: []
-    };
-  }
-
-  var version = "5.8.15";
-
-  /**
-   * lodash (Custom Build) <https://lodash.com/>
-   * Build: `lodash modularize exports="npm" -o ./`
-   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-   * Released under MIT license <https://lodash.com/license>
-   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-   */
-
-  /** Used as references for various `Number` constants. */
-
-  var INFINITY = 1 / 0;
-  /** `Object#toString` result references. */
-
-  var symbolTag = '[object Symbol]';
-  /** Used to match leading and trailing whitespace. */
-
-  var reTrim = /^\s+|\s+$/g;
-  /** Used to compose unicode character classes. */
-
-  var rsAstralRange = '\\ud800-\\udfff',
-      rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-      rsComboSymbolsRange = '\\u20d0-\\u20f0',
-      rsVarRange = '\\ufe0e\\ufe0f';
-  /** Used to compose unicode capture groups. */
-
-  var rsAstral = '[' + rsAstralRange + ']',
-      rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
-      rsFitz = '\\ud83c[\\udffb-\\udfff]',
-      rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-      rsNonAstral = '[^' + rsAstralRange + ']',
-      rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-      rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-      rsZWJ = '\\u200d';
-  /** Used to compose unicode regexes. */
-
-  var reOptMod = rsModifier + '?',
-      rsOptVar = '[' + rsVarRange + ']?',
-      rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-      rsSeq = rsOptVar + reOptMod + rsOptJoin,
-      rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-  /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-
-  var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
-  /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-
-  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
-  /** Detect free variable `global` from Node.js. */
-
-  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-  /** Detect free variable `self`. */
-
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-  /** Used as a reference to the global object. */
-
-  var root = freeGlobal || freeSelf || Function('return this')();
-  /**
-   * Converts an ASCII `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */
-
-  function asciiToArray(string) {
-    return string.split('');
-  }
-  /**
-   * The base implementation of `_.findIndex` and `_.findLastIndex` without
-   * support for iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {number} fromIndex The index to search from.
-   * @param {boolean} [fromRight] Specify iterating from right to left.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */
-
-
-  function baseFindIndex(array, predicate, fromIndex, fromRight) {
-    var length = array.length,
-        index = fromIndex + (fromRight ? 1 : -1);
-
-    while (fromRight ? index-- : ++index < length) {
-      if (predicate(array[index], index, array)) {
-        return index;
-      }
-    }
-
-    return -1;
-  }
-  /**
-   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */
-
-
-  function baseIndexOf(array, value, fromIndex) {
-    if (value !== value) {
-      return baseFindIndex(array, baseIsNaN, fromIndex);
-    }
-
-    var index = fromIndex - 1,
-        length = array.length;
-
-    while (++index < length) {
-      if (array[index] === value) {
-        return index;
-      }
-    }
-
-    return -1;
-  }
-  /**
-   * The base implementation of `_.isNaN` without support for number objects.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
-   */
-
-
-  function baseIsNaN(value) {
-    return value !== value;
-  }
-  /**
-   * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
-   * that is not found in the character symbols.
-   *
-   * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the first unmatched string symbol.
-   */
-
-
-  function charsStartIndex(strSymbols, chrSymbols) {
-    var index = -1,
-        length = strSymbols.length;
-
-    while (++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
-
-    return index;
-  }
-  /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
-   * that is not found in the character symbols.
-   *
-   * @private
-   * @param {Array} strSymbols The string symbols to inspect.
-   * @param {Array} chrSymbols The character symbols to find.
-   * @returns {number} Returns the index of the last unmatched string symbol.
-   */
-
-
-  function charsEndIndex(strSymbols, chrSymbols) {
-    var index = strSymbols.length;
-
-    while (index-- && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
-
-    return index;
-  }
-  /**
-   * Checks if `string` contains Unicode symbols.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
-   */
-
-
-  function hasUnicode(string) {
-    return reHasUnicode.test(string);
-  }
-  /**
-   * Converts `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */
-
-
-  function stringToArray(string) {
-    return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
-  }
-  /**
-   * Converts a Unicode `string` to an array.
-   *
-   * @private
-   * @param {string} string The string to convert.
-   * @returns {Array} Returns the converted array.
-   */
-
-
-  function unicodeToArray(string) {
-    return string.match(reUnicode) || [];
-  }
-  /** Used for built-in method references. */
-
-
-  var objectProto$1 = Object.prototype;
-  /**
-   * Used to resolve the
-   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-   * of values.
-   */
-
-  var objectToString$1 = objectProto$1.toString;
-  /** Built-in value references. */
-
-  var Symbol$1 = root.Symbol;
-  /** Used to convert symbols to primitives and strings. */
-
-  var symbolProto = Symbol$1 ? Symbol$1.prototype : undefined,
-      symbolToString = symbolProto ? symbolProto.toString : undefined;
-  /**
-   * The base implementation of `_.slice` without an iteratee call guard.
-   *
-   * @private
-   * @param {Array} array The array to slice.
-   * @param {number} [start=0] The start position.
-   * @param {number} [end=array.length] The end position.
-   * @returns {Array} Returns the slice of `array`.
-   */
-
-  function baseSlice(array, start, end) {
-    var index = -1,
-        length = array.length;
-
-    if (start < 0) {
-      start = -start > length ? 0 : length + start;
-    }
-
-    end = end > length ? length : end;
-
-    if (end < 0) {
-      end += length;
-    }
-
-    length = start > end ? 0 : end - start >>> 0;
-    start >>>= 0;
-    var result = Array(length);
-
-    while (++index < length) {
-      result[index] = array[index + start];
-    }
-
-    return result;
-  }
-  /**
-   * The base implementation of `_.toString` which doesn't convert nullish
-   * values to empty strings.
-   *
-   * @private
-   * @param {*} value The value to process.
-   * @returns {string} Returns the string.
-   */
-
-
-  function baseToString(value) {
-    // Exit early for strings to avoid a performance hit in some environments.
-    if (typeof value == 'string') {
-      return value;
-    }
-
-    if (isSymbol(value)) {
-      return symbolToString ? symbolToString.call(value) : '';
-    }
-
-    var result = value + '';
-    return result == '0' && 1 / value == -INFINITY ? '-0' : result;
-  }
-  /**
-   * Casts `array` to a slice if it's needed.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {number} start The start position.
-   * @param {number} [end=array.length] The end position.
-   * @returns {Array} Returns the cast slice.
-   */
-
-
-  function castSlice(array, start, end) {
-    var length = array.length;
-    end = end === undefined ? length : end;
-    return !start && end >= length ? array : baseSlice(array, start, end);
-  }
-  /**
-   * Checks if `value` is object-like. A value is object-like if it's not `null`
-   * and has a `typeof` result of "object".
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-   * @example
-   *
-   * _.isObjectLike({});
-   * // => true
-   *
-   * _.isObjectLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isObjectLike(_.noop);
-   * // => false
-   *
-   * _.isObjectLike(null);
-   * // => false
-   */
-
-
-  function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
-  }
-  /**
-   * Checks if `value` is classified as a `Symbol` primitive or object.
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
-   * @example
-   *
-   * _.isSymbol(Symbol.iterator);
-   * // => true
-   *
-   * _.isSymbol('abc');
-   * // => false
-   */
-
-
-  function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
-  }
-  /**
-   * Converts `value` to a string. An empty string is returned for `null`
-   * and `undefined` values. The sign of `-0` is preserved.
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to process.
-   * @returns {string} Returns the string.
-   * @example
-   *
-   * _.toString(null);
-   * // => ''
-   *
-   * _.toString(-0);
-   * // => '-0'
-   *
-   * _.toString([1, 2, 3]);
-   * // => '1,2,3'
-   */
-
-
-  function toString(value) {
-    return value == null ? '' : baseToString(value);
-  }
-  /**
-   * Removes leading and trailing whitespace or specified characters from `string`.
-   *
-   * @static
-   * @memberOf _
-   * @since 3.0.0
-   * @category String
-   * @param {string} [string=''] The string to trim.
-   * @param {string} [chars=whitespace] The characters to trim.
-   * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
-   * @returns {string} Returns the trimmed string.
-   * @example
-   *
-   * _.trim('  abc  ');
-   * // => 'abc'
-   *
-   * _.trim('-_-abc-_-', '_-');
-   * // => 'abc'
-   *
-   * _.map(['  foo  ', '  bar  '], _.trim);
-   * // => ['foo', 'bar']
-   */
-
-
-  function trim(string, chars, guard) {
-    string = toString(string);
-
-    if (string && (guard || chars === undefined)) {
-      return string.replace(reTrim, '');
-    }
-
-    if (!string || !(chars = baseToString(chars))) {
-      return string;
-    }
-
-    var strSymbols = stringToArray(string),
-        chrSymbols = stringToArray(chars),
-        start = charsStartIndex(strSymbols, chrSymbols),
-        end = charsEndIndex(strSymbols, chrSymbols) + 1;
-    return castSlice(strSymbols, start, end).join('');
-  }
-
-  var lodash_trim = trim;
-
-  /**
-   * lodash (Custom Build) <https://lodash.com/>
-   * Build: `lodash modularize exports="npm" -o ./`
-   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-   * Released under MIT license <https://lodash.com/license>
-   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-   */
-
-  /** Used as the size to enable large array optimizations. */
-
-  var LARGE_ARRAY_SIZE = 200;
-  /** Used to stand-in for `undefined` hash values. */
-
-  var HASH_UNDEFINED = '__lodash_hash_undefined__';
-  /** Used as references for various `Number` constants. */
-
-  var MAX_SAFE_INTEGER = 9007199254740991;
-  /** `Object#toString` result references. */
-
-  var funcTag = '[object Function]',
-      genTag = '[object GeneratorFunction]';
-  /**
-   * Used to match `RegExp`
-   * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
-   */
-
-  var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-  /** Used to detect host constructors (Safari). */
-
-  var reIsHostCtor = /^\[object .+?Constructor\]$/;
-  /** Detect free variable `global` from Node.js. */
-
-  var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-  /** Detect free variable `self`. */
-
-  var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
-  /** Used as a reference to the global object. */
-
-  var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
-  /**
-   * A faster alternative to `Function#apply`, this function invokes `func`
-   * with the `this` binding of `thisArg` and the arguments of `args`.
-   *
-   * @private
-   * @param {Function} func The function to invoke.
-   * @param {*} thisArg The `this` binding of `func`.
-   * @param {Array} args The arguments to invoke `func` with.
-   * @returns {*} Returns the result of `func`.
-   */
-
-  function apply(func, thisArg, args) {
-    switch (args.length) {
-      case 0:
-        return func.call(thisArg);
-
-      case 1:
-        return func.call(thisArg, args[0]);
-
-      case 2:
-        return func.call(thisArg, args[0], args[1]);
-
-      case 3:
-        return func.call(thisArg, args[0], args[1], args[2]);
-    }
-
-    return func.apply(thisArg, args);
-  }
-  /**
-   * A specialized version of `_.includes` for arrays without support for
-   * specifying an index to search from.
-   *
-   * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
-   */
-
-
-  function arrayIncludes(array, value) {
-    var length = array ? array.length : 0;
-    return !!length && baseIndexOf$1(array, value, 0) > -1;
-  }
-  /**
-   * This function is like `arrayIncludes` except that it accepts a comparator.
-   *
-   * @private
-   * @param {Array} [array] The array to inspect.
-   * @param {*} target The value to search for.
-   * @param {Function} comparator The comparator invoked per element.
-   * @returns {boolean} Returns `true` if `target` is found, else `false`.
-   */
-
-
-  function arrayIncludesWith(array, value, comparator) {
-    var index = -1,
-        length = array ? array.length : 0;
-
-    while (++index < length) {
-      if (comparator(value, array[index])) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-  /**
-   * A specialized version of `_.map` for arrays without support for iteratee
-   * shorthands.
-   *
-   * @private
-   * @param {Array} [array] The array to iterate over.
-   * @param {Function} iteratee The function invoked per iteration.
-   * @returns {Array} Returns the new mapped array.
-   */
-
-
-  function arrayMap(array, iteratee) {
-    var index = -1,
-        length = array ? array.length : 0,
-        result = Array(length);
-
-    while (++index < length) {
-      result[index] = iteratee(array[index], index, array);
-    }
-
-    return result;
-  }
-  /**
-   * The base implementation of `_.findIndex` and `_.findLastIndex` without
-   * support for iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {Function} predicate The function invoked per iteration.
-   * @param {number} fromIndex The index to search from.
-   * @param {boolean} [fromRight] Specify iterating from right to left.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */
-
-
-  function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
-    var length = array.length,
-        index = fromIndex + (fromRight ? 1 : -1);
-
-    while (fromRight ? index-- : ++index < length) {
-      if (predicate(array[index], index, array)) {
-        return index;
-      }
-    }
-
-    return -1;
-  }
-  /**
-   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} value The value to search for.
-   * @param {number} fromIndex The index to search from.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */
-
-
-  function baseIndexOf$1(array, value, fromIndex) {
-    if (value !== value) {
-      return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
-    }
-
-    var index = fromIndex - 1,
-        length = array.length;
-
-    while (++index < length) {
-      if (array[index] === value) {
-        return index;
-      }
-    }
-
-    return -1;
-  }
-  /**
-   * The base implementation of `_.isNaN` without support for number objects.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
-   */
-
-
-  function baseIsNaN$1(value) {
-    return value !== value;
-  }
-  /**
-   * The base implementation of `_.unary` without support for storing metadata.
-   *
-   * @private
-   * @param {Function} func The function to cap arguments for.
-   * @returns {Function} Returns the new capped function.
-   */
-
-
-  function baseUnary(func) {
-    return function (value) {
-      return func(value);
-    };
-  }
-  /**
-   * Checks if a cache value for `key` exists.
-   *
-   * @private
-   * @param {Object} cache The cache to query.
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-   */
-
-
-  function cacheHas(cache, key) {
-    return cache.has(key);
-  }
-  /**
-   * Gets the value at `key` of `object`.
-   *
-   * @private
-   * @param {Object} [object] The object to query.
-   * @param {string} key The key of the property to get.
-   * @returns {*} Returns the property value.
-   */
-
-
-  function getValue(object, key) {
-    return object == null ? undefined : object[key];
-  }
-  /**
-   * Checks if `value` is a host object in IE < 9.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-   */
-
-
-  function isHostObject$1(value) {
-    // Many host objects are `Object` objects that can coerce to strings
-    // despite having improperly defined `toString` methods.
-    var result = false;
-
-    if (value != null && typeof value.toString != 'function') {
-      try {
-        result = !!(value + '');
-      } catch (e) {}
-    }
-
-    return result;
-  }
-  /** Used for built-in method references. */
-
-
-  var arrayProto = Array.prototype,
-      funcProto$1 = Function.prototype,
-      objectProto$2 = Object.prototype;
-  /** Used to detect overreaching core-js shims. */
-
-  var coreJsData = root$1['__core-js_shared__'];
-  /** Used to detect methods masquerading as native. */
-
-  var maskSrcKey = function () {
-    var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-    return uid ? 'Symbol(src)_1.' + uid : '';
-  }();
-  /** Used to resolve the decompiled source of functions. */
-
-
-  var funcToString$1 = funcProto$1.toString;
-  /** Used to check objects for own properties. */
-
-  var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
-  /**
-   * Used to resolve the
-   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-   * of values.
-   */
-
-  var objectToString$2 = objectProto$2.toString;
-  /** Used to detect if a method is native. */
-
-  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
-  /** Built-in value references. */
-
-  var splice = arrayProto.splice;
-  /* Built-in method references for those with the same name as other `lodash` methods. */
-
-  var nativeMax = Math.max;
-  /* Built-in method references that are verified to be native. */
-
-  var Map = getNative(root$1, 'Map'),
-      nativeCreate = getNative(Object, 'create');
-  /**
-   * Creates a hash object.
-   *
-   * @private
-   * @constructor
-   * @param {Array} [entries] The key-value pairs to cache.
-   */
-
-  function Hash(entries) {
-    var index = -1,
-        length = entries ? entries.length : 0;
-    this.clear();
-
-    while (++index < length) {
-      var entry = entries[index];
-      this.set(entry[0], entry[1]);
-    }
-  }
-  /**
-   * Removes all key-value entries from the hash.
-   *
-   * @private
-   * @name clear
-   * @memberOf Hash
-   */
-
-
-  function hashClear() {
-    this.__data__ = nativeCreate ? nativeCreate(null) : {};
-  }
-  /**
-   * Removes `key` and its value from the hash.
-   *
-   * @private
-   * @name delete
-   * @memberOf Hash
-   * @param {Object} hash The hash to modify.
-   * @param {string} key The key of the value to remove.
-   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-   */
-
-
-  function hashDelete(key) {
-    return this.has(key) && delete this.__data__[key];
-  }
-  /**
-   * Gets the hash value for `key`.
-   *
-   * @private
-   * @name get
-   * @memberOf Hash
-   * @param {string} key The key of the value to get.
-   * @returns {*} Returns the entry value.
-   */
-
-
-  function hashGet(key) {
-    var data = this.__data__;
-
-    if (nativeCreate) {
-      var result = data[key];
-      return result === HASH_UNDEFINED ? undefined : result;
-    }
-
-    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
-  }
-  /**
-   * Checks if a hash value for `key` exists.
-   *
-   * @private
-   * @name has
-   * @memberOf Hash
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-   */
-
-
-  function hashHas(key) {
-    var data = this.__data__;
-    return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
-  }
-  /**
-   * Sets the hash `key` to `value`.
-   *
-   * @private
-   * @name set
-   * @memberOf Hash
-   * @param {string} key The key of the value to set.
-   * @param {*} value The value to set.
-   * @returns {Object} Returns the hash instance.
-   */
-
-
-  function hashSet(key, value) {
-    var data = this.__data__;
-    data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
-    return this;
-  } // Add methods to `Hash`.
-
-
-  Hash.prototype.clear = hashClear;
-  Hash.prototype['delete'] = hashDelete;
-  Hash.prototype.get = hashGet;
-  Hash.prototype.has = hashHas;
-  Hash.prototype.set = hashSet;
-  /**
-   * Creates an list cache object.
-   *
-   * @private
-   * @constructor
-   * @param {Array} [entries] The key-value pairs to cache.
-   */
-
-  function ListCache(entries) {
-    var index = -1,
-        length = entries ? entries.length : 0;
-    this.clear();
-
-    while (++index < length) {
-      var entry = entries[index];
-      this.set(entry[0], entry[1]);
-    }
-  }
-  /**
-   * Removes all key-value entries from the list cache.
-   *
-   * @private
-   * @name clear
-   * @memberOf ListCache
-   */
-
-
-  function listCacheClear() {
-    this.__data__ = [];
-  }
-  /**
-   * Removes `key` and its value from the list cache.
-   *
-   * @private
-   * @name delete
-   * @memberOf ListCache
-   * @param {string} key The key of the value to remove.
-   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-   */
-
-
-  function listCacheDelete(key) {
-    var data = this.__data__,
-        index = assocIndexOf(data, key);
-
-    if (index < 0) {
-      return false;
-    }
-
-    var lastIndex = data.length - 1;
-
-    if (index == lastIndex) {
-      data.pop();
-    } else {
-      splice.call(data, index, 1);
-    }
-
-    return true;
-  }
-  /**
-   * Gets the list cache value for `key`.
-   *
-   * @private
-   * @name get
-   * @memberOf ListCache
-   * @param {string} key The key of the value to get.
-   * @returns {*} Returns the entry value.
-   */
-
-
-  function listCacheGet(key) {
-    var data = this.__data__,
-        index = assocIndexOf(data, key);
-    return index < 0 ? undefined : data[index][1];
-  }
-  /**
-   * Checks if a list cache value for `key` exists.
-   *
-   * @private
-   * @name has
-   * @memberOf ListCache
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-   */
-
-
-  function listCacheHas(key) {
-    return assocIndexOf(this.__data__, key) > -1;
-  }
-  /**
-   * Sets the list cache `key` to `value`.
-   *
-   * @private
-   * @name set
-   * @memberOf ListCache
-   * @param {string} key The key of the value to set.
-   * @param {*} value The value to set.
-   * @returns {Object} Returns the list cache instance.
-   */
-
-
-  function listCacheSet(key, value) {
-    var data = this.__data__,
-        index = assocIndexOf(data, key);
-
-    if (index < 0) {
-      data.push([key, value]);
-    } else {
-      data[index][1] = value;
-    }
-
-    return this;
-  } // Add methods to `ListCache`.
-
-
-  ListCache.prototype.clear = listCacheClear;
-  ListCache.prototype['delete'] = listCacheDelete;
-  ListCache.prototype.get = listCacheGet;
-  ListCache.prototype.has = listCacheHas;
-  ListCache.prototype.set = listCacheSet;
-  /**
-   * Creates a map cache object to store key-value pairs.
-   *
-   * @private
-   * @constructor
-   * @param {Array} [entries] The key-value pairs to cache.
-   */
-
-  function MapCache(entries) {
-    var index = -1,
-        length = entries ? entries.length : 0;
-    this.clear();
-
-    while (++index < length) {
-      var entry = entries[index];
-      this.set(entry[0], entry[1]);
-    }
-  }
-  /**
-   * Removes all key-value entries from the map.
-   *
-   * @private
-   * @name clear
-   * @memberOf MapCache
-   */
-
-
-  function mapCacheClear() {
-    this.__data__ = {
-      'hash': new Hash(),
-      'map': new (Map || ListCache)(),
-      'string': new Hash()
-    };
-  }
-  /**
-   * Removes `key` and its value from the map.
-   *
-   * @private
-   * @name delete
-   * @memberOf MapCache
-   * @param {string} key The key of the value to remove.
-   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-   */
-
-
-  function mapCacheDelete(key) {
-    return getMapData(this, key)['delete'](key);
-  }
-  /**
-   * Gets the map value for `key`.
-   *
-   * @private
-   * @name get
-   * @memberOf MapCache
-   * @param {string} key The key of the value to get.
-   * @returns {*} Returns the entry value.
-   */
-
-
-  function mapCacheGet(key) {
-    return getMapData(this, key).get(key);
-  }
-  /**
-   * Checks if a map value for `key` exists.
-   *
-   * @private
-   * @name has
-   * @memberOf MapCache
-   * @param {string} key The key of the entry to check.
-   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-   */
-
-
-  function mapCacheHas(key) {
-    return getMapData(this, key).has(key);
-  }
-  /**
-   * Sets the map `key` to `value`.
-   *
-   * @private
-   * @name set
-   * @memberOf MapCache
-   * @param {string} key The key of the value to set.
-   * @param {*} value The value to set.
-   * @returns {Object} Returns the map cache instance.
-   */
-
-
-  function mapCacheSet(key, value) {
-    getMapData(this, key).set(key, value);
-    return this;
-  } // Add methods to `MapCache`.
-
-
-  MapCache.prototype.clear = mapCacheClear;
-  MapCache.prototype['delete'] = mapCacheDelete;
-  MapCache.prototype.get = mapCacheGet;
-  MapCache.prototype.has = mapCacheHas;
-  MapCache.prototype.set = mapCacheSet;
-  /**
-   *
-   * Creates an array cache object to store unique values.
-   *
-   * @private
-   * @constructor
-   * @param {Array} [values] The values to cache.
-   */
-
-  function SetCache(values) {
-    var index = -1,
-        length = values ? values.length : 0;
-    this.__data__ = new MapCache();
-
-    while (++index < length) {
-      this.add(values[index]);
-    }
-  }
-  /**
-   * Adds `value` to the array cache.
-   *
-   * @private
-   * @name add
-   * @memberOf SetCache
-   * @alias push
-   * @param {*} value The value to cache.
-   * @returns {Object} Returns the cache instance.
-   */
-
-
-  function setCacheAdd(value) {
-    this.__data__.set(value, HASH_UNDEFINED);
-
-    return this;
-  }
-  /**
-   * Checks if `value` is in the array cache.
-   *
-   * @private
-   * @name has
-   * @memberOf SetCache
-   * @param {*} value The value to search for.
-   * @returns {number} Returns `true` if `value` is found, else `false`.
-   */
-
-
-  function setCacheHas(value) {
-    return this.__data__.has(value);
-  } // Add methods to `SetCache`.
-
-
-  SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
-  SetCache.prototype.has = setCacheHas;
-  /**
-   * Gets the index at which the `key` is found in `array` of key-value pairs.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {*} key The key to search for.
-   * @returns {number} Returns the index of the matched value, else `-1`.
-   */
-
-  function assocIndexOf(array, key) {
-    var length = array.length;
-
-    while (length--) {
-      if (eq(array[length][0], key)) {
-        return length;
-      }
-    }
-
-    return -1;
-  }
-  /**
-   * The base implementation of methods like `_.difference` without support
-   * for excluding multiple arrays or iteratee shorthands.
-   *
-   * @private
-   * @param {Array} array The array to inspect.
-   * @param {Array} values The values to exclude.
-   * @param {Function} [iteratee] The iteratee invoked per element.
-   * @param {Function} [comparator] The comparator invoked per element.
-   * @returns {Array} Returns the new array of filtered values.
-   */
-
-
-  function baseDifference(array, values, iteratee, comparator) {
-    var index = -1,
-        includes = arrayIncludes,
-        isCommon = true,
-        length = array.length,
-        result = [],
-        valuesLength = values.length;
-
-    if (!length) {
-      return result;
-    }
-
-    if (iteratee) {
-      values = arrayMap(values, baseUnary(iteratee));
-    }
-
-    if (comparator) {
-      includes = arrayIncludesWith;
-      isCommon = false;
-    } else if (values.length >= LARGE_ARRAY_SIZE) {
-      includes = cacheHas;
-      isCommon = false;
-      values = new SetCache(values);
-    }
-
-    outer: while (++index < length) {
-      var value = array[index],
-          computed = iteratee ? iteratee(value) : value;
-      value = comparator || value !== 0 ? value : 0;
-
-      if (isCommon && computed === computed) {
-        var valuesIndex = valuesLength;
-
-        while (valuesIndex--) {
-          if (values[valuesIndex] === computed) {
-            continue outer;
-          }
-        }
-
-        result.push(value);
-      } else if (!includes(values, computed, comparator)) {
-        result.push(value);
-      }
-    }
-
-    return result;
-  }
-  /**
-   * The base implementation of `_.isNative` without bad shim checks.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a native function,
-   *  else `false`.
-   */
-
-
-  function baseIsNative(value) {
-    if (!isObject(value) || isMasked(value)) {
-      return false;
-    }
-
-    var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
-    return pattern.test(toSource(value));
-  }
-  /**
-   * The base implementation of `_.rest` which doesn't validate or coerce arguments.
-   *
-   * @private
-   * @param {Function} func The function to apply a rest parameter to.
-   * @param {number} [start=func.length-1] The start position of the rest parameter.
-   * @returns {Function} Returns the new function.
-   */
-
-
-  function baseRest(func, start) {
-    start = nativeMax(start === undefined ? func.length - 1 : start, 0);
-    return function () {
-      var args = arguments,
-          index = -1,
-          length = nativeMax(args.length - start, 0),
-          array = Array(length);
-
-      while (++index < length) {
-        array[index] = args[start + index];
-      }
-
-      index = -1;
-      var otherArgs = Array(start + 1);
-
-      while (++index < start) {
-        otherArgs[index] = args[index];
-      }
-
-      otherArgs[start] = array;
-      return apply(func, this, otherArgs);
-    };
-  }
-  /**
-   * Gets the data for `map`.
-   *
-   * @private
-   * @param {Object} map The map to query.
-   * @param {string} key The reference key.
-   * @returns {*} Returns the map data.
-   */
-
-
-  function getMapData(map, key) {
-    var data = map.__data__;
-    return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
-  }
-  /**
-   * Gets the native function at `key` of `object`.
-   *
-   * @private
-   * @param {Object} object The object to query.
-   * @param {string} key The key of the method to get.
-   * @returns {*} Returns the function if it's native, else `undefined`.
-   */
-
-
-  function getNative(object, key) {
-    var value = getValue(object, key);
-    return baseIsNative(value) ? value : undefined;
-  }
-  /**
-   * Checks if `value` is suitable for use as unique object key.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
-   */
-
-
-  function isKeyable(value) {
-    var type = typeof value;
-    return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
-  }
-  /**
-   * Checks if `func` has its source masked.
-   *
-   * @private
-   * @param {Function} func The function to check.
-   * @returns {boolean} Returns `true` if `func` is masked, else `false`.
-   */
-
-
-  function isMasked(func) {
-    return !!maskSrcKey && maskSrcKey in func;
-  }
-  /**
-   * Converts `func` to its source code.
-   *
-   * @private
-   * @param {Function} func The function to process.
-   * @returns {string} Returns the source code.
-   */
-
-
-  function toSource(func) {
-    if (func != null) {
-      try {
-        return funcToString$1.call(func);
-      } catch (e) {}
-
-      try {
-        return func + '';
-      } catch (e) {}
-    }
-
-    return '';
-  }
-  /**
-   * Creates an array excluding all given values using
-   * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-   * for equality comparisons.
-   *
-   * **Note:** Unlike `_.pull`, this method returns a new array.
-   *
-   * @static
-   * @memberOf _
-   * @since 0.1.0
-   * @category Array
-   * @param {Array} array The array to inspect.
-   * @param {...*} [values] The values to exclude.
-   * @returns {Array} Returns the new array of filtered values.
-   * @see _.difference, _.xor
-   * @example
-   *
-   * _.without([2, 1, 2, 3], 1, 2);
-   * // => [3]
-   */
-
-
-  var without = baseRest(function (array, values) {
-    return isArrayLikeObject(array) ? baseDifference(array, values) : [];
-  });
-  /**
-   * Performs a
-   * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-   * comparison between two values to determine if they are equivalent.
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to compare.
-   * @param {*} other The other value to compare.
-   * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
-   * @example
-   *
-   * var object = { 'a': 1 };
-   * var other = { 'a': 1 };
-   *
-   * _.eq(object, object);
-   * // => true
-   *
-   * _.eq(object, other);
-   * // => false
-   *
-   * _.eq('a', 'a');
-   * // => true
-   *
-   * _.eq('a', Object('a'));
-   * // => false
-   *
-   * _.eq(NaN, NaN);
-   * // => true
-   */
-
-  function eq(value, other) {
-    return value === other || value !== value && other !== other;
-  }
-  /**
-   * Checks if `value` is array-like. A value is considered array-like if it's
-   * not a function and has a `value.length` that's an integer greater than or
-   * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
-   * @example
-   *
-   * _.isArrayLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isArrayLike(document.body.children);
-   * // => true
-   *
-   * _.isArrayLike('abc');
-   * // => true
-   *
-   * _.isArrayLike(_.noop);
-   * // => false
-   */
-
-
-  function isArrayLike(value) {
-    return value != null && isLength(value.length) && !isFunction(value);
-  }
-  /**
-   * This method is like `_.isArrayLike` except that it also checks if `value`
-   * is an object.
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is an array-like object,
-   *  else `false`.
-   * @example
-   *
-   * _.isArrayLikeObject([1, 2, 3]);
-   * // => true
-   *
-   * _.isArrayLikeObject(document.body.children);
-   * // => true
-   *
-   * _.isArrayLikeObject('abc');
-   * // => false
-   *
-   * _.isArrayLikeObject(_.noop);
-   * // => false
-   */
-
-
-  function isArrayLikeObject(value) {
-    return isObjectLike$2(value) && isArrayLike(value);
-  }
-  /**
-   * Checks if `value` is classified as a `Function` object.
-   *
-   * @static
-   * @memberOf _
-   * @since 0.1.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a function, else `false`.
-   * @example
-   *
-   * _.isFunction(_);
-   * // => true
-   *
-   * _.isFunction(/abc/);
-   * // => false
-   */
-
-
-  function isFunction(value) {
-    // The use of `Object#toString` avoids issues with the `typeof` operator
-    // in Safari 8-9 which returns 'object' for typed array and other constructors.
-    var tag = isObject(value) ? objectToString$2.call(value) : '';
-    return tag == funcTag || tag == genTag;
-  }
-  /**
-   * Checks if `value` is a valid array-like length.
-   *
-   * **Note:** This method is loosely based on
-   * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
-   * @example
-   *
-   * _.isLength(3);
-   * // => true
-   *
-   * _.isLength(Number.MIN_VALUE);
-   * // => false
-   *
-   * _.isLength(Infinity);
-   * // => false
-   *
-   * _.isLength('3');
-   * // => false
-   */
-
-
-  function isLength(value) {
-    return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-  }
-  /**
-   * Checks if `value` is the
-   * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-   * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-   *
-   * @static
-   * @memberOf _
-   * @since 0.1.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-   * @example
-   *
-   * _.isObject({});
-   * // => true
-   *
-   * _.isObject([1, 2, 3]);
-   * // => true
-   *
-   * _.isObject(_.noop);
-   * // => true
-   *
-   * _.isObject(null);
-   * // => false
-   */
-
-
-  function isObject(value) {
-    var type = typeof value;
-    return !!value && (type == 'object' || type == 'function');
-  }
-  /**
-   * Checks if `value` is object-like. A value is object-like if it's not `null`
-   * and has a `typeof` result of "object".
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-   * @example
-   *
-   * _.isObjectLike({});
-   * // => true
-   *
-   * _.isObjectLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isObjectLike(_.noop);
-   * // => false
-   *
-   * _.isObjectLike(null);
-   * // => false
-   */
-
-
-  function isObjectLike$2(value) {
-    return !!value && typeof value == 'object';
-  }
-
-  var lodash_without = without;
-
-  /*! https://mths.be/punycode v1.4.1 by @mathias */
-
-  /** Highest positive signed 32-bit float value */
-  var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
-
-  /** Bootstring parameters */
-
-  var base = 36;
-  var tMin = 1;
-  var tMax = 26;
-  var skew = 38;
-  var damp = 700;
-  var initialBias = 72;
-  var initialN = 128; // 0x80
-
-  var delimiter = '-'; // '\x2D'
-
-  /** Regular expressions */
-
-  var regexPunycode = /^xn--/;
-  var regexNonASCII = /[^\x20-\x7E]/; // unprintable ASCII chars + non-ASCII chars
-
-  var regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g; // RFC 3490 separators
-
-  /** Error messages */
-
-  var errors = {
-    'overflow': 'Overflow: input needs wider integers to process',
-    'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
-    'invalid-input': 'Invalid input'
-  };
-  /** Convenience shortcuts */
-
-  var baseMinusTMin = base - tMin;
-  var floor = Math.floor;
-  var stringFromCharCode = String.fromCharCode;
-  /*--------------------------------------------------------------------------*/
-
-  /**
-   * A generic error utility function.
-   * @private
-   * @param {String} type The error type.
-   * @returns {Error} Throws a `RangeError` with the applicable error message.
-   */
-
-  function error(type) {
-    throw new RangeError(errors[type]);
-  }
-  /**
-   * A generic `Array#map` utility function.
-   * @private
-   * @param {Array} array The array to iterate over.
-   * @param {Function} callback The function that gets called for every array
-   * item.
-   * @returns {Array} A new array of values returned by the callback function.
-   */
-
-
-  function map$2(array, fn) {
-    var length = array.length;
-    var result = [];
-
-    while (length--) {
-      result[length] = fn(array[length]);
-    }
-
-    return result;
-  }
-  /**
-   * A simple `Array#map`-like wrapper to work with domain name strings or email
-   * addresses.
-   * @private
-   * @param {String} domain The domain name or email address.
-   * @param {Function} callback The function that gets called for every
-   * character.
-   * @returns {Array} A new string of characters returned by the callback
-   * function.
-   */
-
-
-  function mapDomain(string, fn) {
-    var parts = string.split('@');
-    var result = '';
-
-    if (parts.length > 1) {
-      // In email addresses, only the domain name should be punycoded. Leave
-      // the local part (i.e. everything up to `@`) intact.
-      result = parts[0] + '@';
-      string = parts[1];
-    } // Avoid `split(regex)` for IE8 compatibility. See #17.
-
-
-    string = string.replace(regexSeparators, '\x2E');
-    var labels = string.split('.');
-    var encoded = map$2(labels, fn).join('.');
-    return result + encoded;
-  }
-  /**
-   * Creates an array containing the numeric code points of each Unicode
-   * character in the string. While JavaScript uses UCS-2 internally,
-   * this function will convert a pair of surrogate halves (each of which
-   * UCS-2 exposes as separate characters) into a single code point,
-   * matching UTF-16.
-   * @see `punycode.ucs2.encode`
-   * @see <https://mathiasbynens.be/notes/javascript-encoding>
-   * @memberOf punycode.ucs2
-   * @name decode
-   * @param {String} string The Unicode input string (UCS-2).
-   * @returns {Array} The new array of code points.
-   */
-
-
-  function ucs2decode(string) {
-    var output = [],
-        counter = 0,
-        length = string.length,
-        value,
-        extra;
-
-    while (counter < length) {
-      value = string.charCodeAt(counter++);
-
-      if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-        // high surrogate, and there is a next character
-        extra = string.charCodeAt(counter++);
-
-        if ((extra & 0xFC00) == 0xDC00) {
-          // low surrogate
-          output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-        } else {
-          // unmatched surrogate; only append this code unit, in case the next
-          // code unit is the high surrogate of a surrogate pair
-          output.push(value);
-          counter--;
-        }
-      } else {
-        output.push(value);
-      }
-    }
-
-    return output;
-  }
-  /**
-   * Creates a string based on an array of numeric code points.
-   * @see `punycode.ucs2.decode`
-   * @memberOf punycode.ucs2
-   * @name encode
-   * @param {Array} codePoints The array of numeric code points.
-   * @returns {String} The new Unicode string (UCS-2).
-   */
-
-
-  function ucs2encode(array) {
-    return map$2(array, function (value) {
-      var output = '';
-
-      if (value > 0xFFFF) {
-        value -= 0x10000;
-        output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-        value = 0xDC00 | value & 0x3FF;
-      }
-
-      output += stringFromCharCode(value);
-      return output;
-    }).join('');
-  }
-  /**
-   * Converts a basic code point into a digit/integer.
-   * @see `digitToBasic()`
-   * @private
-   * @param {Number} codePoint The basic numeric code point value.
-   * @returns {Number} The numeric value of a basic code point (for use in
-   * representing integers) in the range `0` to `base - 1`, or `base` if
-   * the code point does not represent a value.
-   */
-
-
-  function basicToDigit(codePoint) {
-    if (codePoint - 48 < 10) {
-      return codePoint - 22;
-    }
-
-    if (codePoint - 65 < 26) {
-      return codePoint - 65;
-    }
-
-    if (codePoint - 97 < 26) {
-      return codePoint - 97;
-    }
-
-    return base;
-  }
-  /**
-   * Converts a digit/integer into a basic code point.
-   * @see `basicToDigit()`
-   * @private
-   * @param {Number} digit The numeric value of a basic code point.
-   * @returns {Number} The basic code point whose value (when used for
-   * representing integers) is `digit`, which needs to be in the range
-   * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-   * used; else, the lowercase form is used. The behavior is undefined
-   * if `flag` is non-zero and `digit` has no uppercase form.
-   */
-
-
-  function digitToBasic(digit, flag) {
-    //  0..25 map to ASCII a..z or A..Z
-    // 26..35 map to ASCII 0..9
-    return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
-  }
-  /**
-   * Bias adaptation function as per section 3.4 of RFC 3492.
-   * https://tools.ietf.org/html/rfc3492#section-3.4
-   * @private
-   */
-
-
-  function adapt(delta, numPoints, firstTime) {
-    var k = 0;
-    delta = firstTime ? floor(delta / damp) : delta >> 1;
-    delta += floor(delta / numPoints);
-
-    for (;
-    /* no initialization */
-    delta > baseMinusTMin * tMax >> 1; k += base) {
-      delta = floor(delta / baseMinusTMin);
-    }
-
-    return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
-  }
-  /**
-   * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-   * symbols.
-   * @memberOf punycode
-   * @param {String} input The Punycode string of ASCII-only symbols.
-   * @returns {String} The resulting string of Unicode symbols.
-   */
-
-
-  function decode$1(input) {
-    // Don't use UCS-2
-    var output = [],
-        inputLength = input.length,
-        out,
-        i = 0,
-        n = initialN,
-        bias = initialBias,
-        basic,
-        j,
-        index,
-        oldi,
-        w,
-        k,
-        digit,
-        t,
-
-    /** Cached calculation results */
-    baseMinusT; // Handle the basic code points: let `basic` be the number of input code
-    // points before the last delimiter, or `0` if there is none, then copy
-    // the first basic code points to the output.
-
-    basic = input.lastIndexOf(delimiter);
-
-    if (basic < 0) {
-      basic = 0;
-    }
-
-    for (j = 0; j < basic; ++j) {
-      // if it's not a basic code point
-      if (input.charCodeAt(j) >= 0x80) {
-        error('not-basic');
-      }
-
-      output.push(input.charCodeAt(j));
-    } // Main decoding loop: start just after the last delimiter if any basic code
-    // points were copied; start at the beginning otherwise.
-
-
-    for (index = basic > 0 ? basic + 1 : 0; index < inputLength;)
-    /* no final expression */
-    {
-      // `index` is the index of the next character to be consumed.
-      // Decode a generalized variable-length integer into `delta`,
-      // which gets added to `i`. The overflow checking is easier
-      // if we increase `i` as we go, then subtract off its starting
-      // value at the end to obtain `delta`.
-      for (oldi = i, w = 1, k = base;;
-      /* no condition */
-      k += base) {
-        if (index >= inputLength) {
-          error('invalid-input');
-        }
-
-        digit = basicToDigit(input.charCodeAt(index++));
-
-        if (digit >= base || digit > floor((maxInt - i) / w)) {
-          error('overflow');
-        }
-
-        i += digit * w;
-        t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-
-        if (digit < t) {
-          break;
-        }
-
-        baseMinusT = base - t;
-
-        if (w > floor(maxInt / baseMinusT)) {
-          error('overflow');
-        }
-
-        w *= baseMinusT;
-      }
-
-      out = output.length + 1;
-      bias = adapt(i - oldi, out, oldi == 0); // `i` was supposed to wrap around from `out` to `0`,
-      // incrementing `n` each time, so we'll fix that now:
-
-      if (floor(i / out) > maxInt - n) {
-        error('overflow');
-      }
-
-      n += floor(i / out);
-      i %= out; // Insert `n` at position `i` of the output
-
-      output.splice(i++, 0, n);
-    }
-
-    return ucs2encode(output);
-  }
-  /**
-   * Converts a string of Unicode symbols (e.g. a domain name label) to a
-   * Punycode string of ASCII-only symbols.
-   * @memberOf punycode
-   * @param {String} input The string of Unicode symbols.
-   * @returns {String} The resulting Punycode string of ASCII-only symbols.
-   */
-
-  function encode(input) {
-    var n,
-        delta,
-        handledCPCount,
-        basicLength,
-        bias,
-        j,
-        m,
-        q,
-        k,
-        t,
-        currentValue,
-        output = [],
-
-    /** `inputLength` will hold the number of code points in `input`. */
-    inputLength,
-
-    /** Cached calculation results */
-    handledCPCountPlusOne,
-        baseMinusT,
-        qMinusT; // Convert the input in UCS-2 to Unicode
-
-    input = ucs2decode(input); // Cache the length
-
-    inputLength = input.length; // Initialize the state
-
-    n = initialN;
-    delta = 0;
-    bias = initialBias; // Handle the basic code points
-
-    for (j = 0; j < inputLength; ++j) {
-      currentValue = input[j];
-
-      if (currentValue < 0x80) {
-        output.push(stringFromCharCode(currentValue));
-      }
-    }
-
-    handledCPCount = basicLength = output.length; // `handledCPCount` is the number of code points that have been handled;
-    // `basicLength` is the number of basic code points.
-    // Finish the basic string - if it is not empty - with a delimiter
-
-    if (basicLength) {
-      output.push(delimiter);
-    } // Main encoding loop:
-
-
-    while (handledCPCount < inputLength) {
-      // All non-basic code points < n have been handled already. Find the next
-      // larger one:
-      for (m = maxInt, j = 0; j < inputLength; ++j) {
-        currentValue = input[j];
-
-        if (currentValue >= n && currentValue < m) {
-          m = currentValue;
-        }
-      } // Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
-      // but guard against overflow
-
-
-      handledCPCountPlusOne = handledCPCount + 1;
-
-      if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
-        error('overflow');
-      }
-
-      delta += (m - n) * handledCPCountPlusOne;
-      n = m;
-
-      for (j = 0; j < inputLength; ++j) {
-        currentValue = input[j];
-
-        if (currentValue < n && ++delta > maxInt) {
-          error('overflow');
-        }
-
-        if (currentValue == n) {
-          // Represent delta as a generalized variable-length integer
-          for (q = delta, k = base;;
-          /* no condition */
-          k += base) {
-            t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-
-            if (q < t) {
-              break;
-            }
-
-            qMinusT = q - t;
-            baseMinusT = base - t;
-            output.push(stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0)));
-            q = floor(qMinusT / baseMinusT);
-          }
-
-          output.push(stringFromCharCode(digitToBasic(q, 0)));
-          bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-          delta = 0;
-          ++handledCPCount;
-        }
-      }
-
-      ++delta;
-      ++n;
-    }
-
-    return output.join('');
-  }
-  /**
-   * Converts a Punycode string representing a domain name or an email address
-   * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
-   * it doesn't matter if you call it on a string that has already been
-   * converted to Unicode.
-   * @memberOf punycode
-   * @param {String} input The Punycoded domain name or email address to
-   * convert to Unicode.
-   * @returns {String} The Unicode representation of the given Punycode
-   * string.
-   */
-
-  function toUnicode(input) {
-    return mapDomain(input, function (string) {
-      return regexPunycode.test(string) ? decode$1(string.slice(4).toLowerCase()) : string;
-    });
-  }
-  /**
-   * Converts a Unicode string representing a domain name or an email address to
-   * Punycode. Only the non-ASCII parts of the domain name will be converted,
-   * i.e. it doesn't matter if you call it with a domain that's already in
-   * ASCII.
-   * @memberOf punycode
-   * @param {String} input The domain name or email address to convert, as a
-   * Unicode string.
-   * @returns {String} The Punycode representation of the given domain name or
-   * email address.
-   */
-
-  function toASCII(input) {
-    return mapDomain(input, function (string) {
-      return regexNonASCII.test(string) ? 'xn--' + encode(string) : string;
-    });
-  }
-  var version$1 = '1.4.1';
-  /**
-   * An object of methods to convert from JavaScript's internal character
-   * representation (UCS-2) to Unicode code points, and back.
-   * @see <https://mathiasbynens.be/notes/javascript-encoding>
-   * @memberOf punycode
-   * @type Object
-   */
-
-  var ucs2 = {
-    decode: ucs2decode,
-    encode: ucs2encode
-  };
-  var punycode = {
-    version: version$1,
-    ucs2: ucs2,
-    toASCII: toASCII,
-    toUnicode: toUnicode,
-    encode: encode,
-    decode: decode$1
-  };
-
-  var punycode$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decode: decode$1,
-    encode: encode,
-    toUnicode: toUnicode,
-    toASCII: toASCII,
-    version: version$1,
-    ucs2: ucs2,
-    'default': punycode
-  });
-
-  var reversed = {
-  	"9": "Tab;",
-  	"10": "NewLine;",
-  	"33": "excl;",
-  	"34": "quot;",
-  	"35": "num;",
-  	"36": "dollar;",
-  	"37": "percnt;",
-  	"38": "amp;",
-  	"39": "apos;",
-  	"40": "lpar;",
-  	"41": "rpar;",
-  	"42": "midast;",
-  	"43": "plus;",
-  	"44": "comma;",
-  	"46": "period;",
-  	"47": "sol;",
-  	"58": "colon;",
-  	"59": "semi;",
-  	"60": "lt;",
-  	"61": "equals;",
-  	"62": "gt;",
-  	"63": "quest;",
-  	"64": "commat;",
-  	"91": "lsqb;",
-  	"92": "bsol;",
-  	"93": "rsqb;",
-  	"94": "Hat;",
-  	"95": "UnderBar;",
-  	"96": "grave;",
-  	"123": "lcub;",
-  	"124": "VerticalLine;",
-  	"125": "rcub;",
-  	"160": "NonBreakingSpace;",
-  	"161": "iexcl;",
-  	"162": "cent;",
-  	"163": "pound;",
-  	"164": "curren;",
-  	"165": "yen;",
-  	"166": "brvbar;",
-  	"167": "sect;",
-  	"168": "uml;",
-  	"169": "copy;",
-  	"170": "ordf;",
-  	"171": "laquo;",
-  	"172": "not;",
-  	"173": "shy;",
-  	"174": "reg;",
-  	"175": "strns;",
-  	"176": "deg;",
-  	"177": "pm;",
-  	"178": "sup2;",
-  	"179": "sup3;",
-  	"180": "DiacriticalAcute;",
-  	"181": "micro;",
-  	"182": "para;",
-  	"183": "middot;",
-  	"184": "Cedilla;",
-  	"185": "sup1;",
-  	"186": "ordm;",
-  	"187": "raquo;",
-  	"188": "frac14;",
-  	"189": "half;",
-  	"190": "frac34;",
-  	"191": "iquest;",
-  	"192": "Agrave;",
-  	"193": "Aacute;",
-  	"194": "Acirc;",
-  	"195": "Atilde;",
-  	"196": "Auml;",
-  	"197": "Aring;",
-  	"198": "AElig;",
-  	"199": "Ccedil;",
-  	"200": "Egrave;",
-  	"201": "Eacute;",
-  	"202": "Ecirc;",
-  	"203": "Euml;",
-  	"204": "Igrave;",
-  	"205": "Iacute;",
-  	"206": "Icirc;",
-  	"207": "Iuml;",
-  	"208": "ETH;",
-  	"209": "Ntilde;",
-  	"210": "Ograve;",
-  	"211": "Oacute;",
-  	"212": "Ocirc;",
-  	"213": "Otilde;",
-  	"214": "Ouml;",
-  	"215": "times;",
-  	"216": "Oslash;",
-  	"217": "Ugrave;",
-  	"218": "Uacute;",
-  	"219": "Ucirc;",
-  	"220": "Uuml;",
-  	"221": "Yacute;",
-  	"222": "THORN;",
-  	"223": "szlig;",
-  	"224": "agrave;",
-  	"225": "aacute;",
-  	"226": "acirc;",
-  	"227": "atilde;",
-  	"228": "auml;",
-  	"229": "aring;",
-  	"230": "aelig;",
-  	"231": "ccedil;",
-  	"232": "egrave;",
-  	"233": "eacute;",
-  	"234": "ecirc;",
-  	"235": "euml;",
-  	"236": "igrave;",
-  	"237": "iacute;",
-  	"238": "icirc;",
-  	"239": "iuml;",
-  	"240": "eth;",
-  	"241": "ntilde;",
-  	"242": "ograve;",
-  	"243": "oacute;",
-  	"244": "ocirc;",
-  	"245": "otilde;",
-  	"246": "ouml;",
-  	"247": "divide;",
-  	"248": "oslash;",
-  	"249": "ugrave;",
-  	"250": "uacute;",
-  	"251": "ucirc;",
-  	"252": "uuml;",
-  	"253": "yacute;",
-  	"254": "thorn;",
-  	"255": "yuml;",
-  	"256": "Amacr;",
-  	"257": "amacr;",
-  	"258": "Abreve;",
-  	"259": "abreve;",
-  	"260": "Aogon;",
-  	"261": "aogon;",
-  	"262": "Cacute;",
-  	"263": "cacute;",
-  	"264": "Ccirc;",
-  	"265": "ccirc;",
-  	"266": "Cdot;",
-  	"267": "cdot;",
-  	"268": "Ccaron;",
-  	"269": "ccaron;",
-  	"270": "Dcaron;",
-  	"271": "dcaron;",
-  	"272": "Dstrok;",
-  	"273": "dstrok;",
-  	"274": "Emacr;",
-  	"275": "emacr;",
-  	"278": "Edot;",
-  	"279": "edot;",
-  	"280": "Eogon;",
-  	"281": "eogon;",
-  	"282": "Ecaron;",
-  	"283": "ecaron;",
-  	"284": "Gcirc;",
-  	"285": "gcirc;",
-  	"286": "Gbreve;",
-  	"287": "gbreve;",
-  	"288": "Gdot;",
-  	"289": "gdot;",
-  	"290": "Gcedil;",
-  	"292": "Hcirc;",
-  	"293": "hcirc;",
-  	"294": "Hstrok;",
-  	"295": "hstrok;",
-  	"296": "Itilde;",
-  	"297": "itilde;",
-  	"298": "Imacr;",
-  	"299": "imacr;",
-  	"302": "Iogon;",
-  	"303": "iogon;",
-  	"304": "Idot;",
-  	"305": "inodot;",
-  	"306": "IJlig;",
-  	"307": "ijlig;",
-  	"308": "Jcirc;",
-  	"309": "jcirc;",
-  	"310": "Kcedil;",
-  	"311": "kcedil;",
-  	"312": "kgreen;",
-  	"313": "Lacute;",
-  	"314": "lacute;",
-  	"315": "Lcedil;",
-  	"316": "lcedil;",
-  	"317": "Lcaron;",
-  	"318": "lcaron;",
-  	"319": "Lmidot;",
-  	"320": "lmidot;",
-  	"321": "Lstrok;",
-  	"322": "lstrok;",
-  	"323": "Nacute;",
-  	"324": "nacute;",
-  	"325": "Ncedil;",
-  	"326": "ncedil;",
-  	"327": "Ncaron;",
-  	"328": "ncaron;",
-  	"329": "napos;",
-  	"330": "ENG;",
-  	"331": "eng;",
-  	"332": "Omacr;",
-  	"333": "omacr;",
-  	"336": "Odblac;",
-  	"337": "odblac;",
-  	"338": "OElig;",
-  	"339": "oelig;",
-  	"340": "Racute;",
-  	"341": "racute;",
-  	"342": "Rcedil;",
-  	"343": "rcedil;",
-  	"344": "Rcaron;",
-  	"345": "rcaron;",
-  	"346": "Sacute;",
-  	"347": "sacute;",
-  	"348": "Scirc;",
-  	"349": "scirc;",
-  	"350": "Scedil;",
-  	"351": "scedil;",
-  	"352": "Scaron;",
-  	"353": "scaron;",
-  	"354": "Tcedil;",
-  	"355": "tcedil;",
-  	"356": "Tcaron;",
-  	"357": "tcaron;",
-  	"358": "Tstrok;",
-  	"359": "tstrok;",
-  	"360": "Utilde;",
-  	"361": "utilde;",
-  	"362": "Umacr;",
-  	"363": "umacr;",
-  	"364": "Ubreve;",
-  	"365": "ubreve;",
-  	"366": "Uring;",
-  	"367": "uring;",
-  	"368": "Udblac;",
-  	"369": "udblac;",
-  	"370": "Uogon;",
-  	"371": "uogon;",
-  	"372": "Wcirc;",
-  	"373": "wcirc;",
-  	"374": "Ycirc;",
-  	"375": "ycirc;",
-  	"376": "Yuml;",
-  	"377": "Zacute;",
-  	"378": "zacute;",
-  	"379": "Zdot;",
-  	"380": "zdot;",
-  	"381": "Zcaron;",
-  	"382": "zcaron;",
-  	"402": "fnof;",
-  	"437": "imped;",
-  	"501": "gacute;",
-  	"567": "jmath;",
-  	"710": "circ;",
-  	"711": "Hacek;",
-  	"728": "breve;",
-  	"729": "dot;",
-  	"730": "ring;",
-  	"731": "ogon;",
-  	"732": "tilde;",
-  	"733": "DiacriticalDoubleAcute;",
-  	"785": "DownBreve;",
-  	"913": "Alpha;",
-  	"914": "Beta;",
-  	"915": "Gamma;",
-  	"916": "Delta;",
-  	"917": "Epsilon;",
-  	"918": "Zeta;",
-  	"919": "Eta;",
-  	"920": "Theta;",
-  	"921": "Iota;",
-  	"922": "Kappa;",
-  	"923": "Lambda;",
-  	"924": "Mu;",
-  	"925": "Nu;",
-  	"926": "Xi;",
-  	"927": "Omicron;",
-  	"928": "Pi;",
-  	"929": "Rho;",
-  	"931": "Sigma;",
-  	"932": "Tau;",
-  	"933": "Upsilon;",
-  	"934": "Phi;",
-  	"935": "Chi;",
-  	"936": "Psi;",
-  	"937": "Omega;",
-  	"945": "alpha;",
-  	"946": "beta;",
-  	"947": "gamma;",
-  	"948": "delta;",
-  	"949": "epsilon;",
-  	"950": "zeta;",
-  	"951": "eta;",
-  	"952": "theta;",
-  	"953": "iota;",
-  	"954": "kappa;",
-  	"955": "lambda;",
-  	"956": "mu;",
-  	"957": "nu;",
-  	"958": "xi;",
-  	"959": "omicron;",
-  	"960": "pi;",
-  	"961": "rho;",
-  	"962": "varsigma;",
-  	"963": "sigma;",
-  	"964": "tau;",
-  	"965": "upsilon;",
-  	"966": "phi;",
-  	"967": "chi;",
-  	"968": "psi;",
-  	"969": "omega;",
-  	"977": "vartheta;",
-  	"978": "upsih;",
-  	"981": "varphi;",
-  	"982": "varpi;",
-  	"988": "Gammad;",
-  	"989": "gammad;",
-  	"1008": "varkappa;",
-  	"1009": "varrho;",
-  	"1013": "varepsilon;",
-  	"1014": "bepsi;",
-  	"1025": "IOcy;",
-  	"1026": "DJcy;",
-  	"1027": "GJcy;",
-  	"1028": "Jukcy;",
-  	"1029": "DScy;",
-  	"1030": "Iukcy;",
-  	"1031": "YIcy;",
-  	"1032": "Jsercy;",
-  	"1033": "LJcy;",
-  	"1034": "NJcy;",
-  	"1035": "TSHcy;",
-  	"1036": "KJcy;",
-  	"1038": "Ubrcy;",
-  	"1039": "DZcy;",
-  	"1040": "Acy;",
-  	"1041": "Bcy;",
-  	"1042": "Vcy;",
-  	"1043": "Gcy;",
-  	"1044": "Dcy;",
-  	"1045": "IEcy;",
-  	"1046": "ZHcy;",
-  	"1047": "Zcy;",
-  	"1048": "Icy;",
-  	"1049": "Jcy;",
-  	"1050": "Kcy;",
-  	"1051": "Lcy;",
-  	"1052": "Mcy;",
-  	"1053": "Ncy;",
-  	"1054": "Ocy;",
-  	"1055": "Pcy;",
-  	"1056": "Rcy;",
-  	"1057": "Scy;",
-  	"1058": "Tcy;",
-  	"1059": "Ucy;",
-  	"1060": "Fcy;",
-  	"1061": "KHcy;",
-  	"1062": "TScy;",
-  	"1063": "CHcy;",
-  	"1064": "SHcy;",
-  	"1065": "SHCHcy;",
-  	"1066": "HARDcy;",
-  	"1067": "Ycy;",
-  	"1068": "SOFTcy;",
-  	"1069": "Ecy;",
-  	"1070": "YUcy;",
-  	"1071": "YAcy;",
-  	"1072": "acy;",
-  	"1073": "bcy;",
-  	"1074": "vcy;",
-  	"1075": "gcy;",
-  	"1076": "dcy;",
-  	"1077": "iecy;",
-  	"1078": "zhcy;",
-  	"1079": "zcy;",
-  	"1080": "icy;",
-  	"1081": "jcy;",
-  	"1082": "kcy;",
-  	"1083": "lcy;",
-  	"1084": "mcy;",
-  	"1085": "ncy;",
-  	"1086": "ocy;",
-  	"1087": "pcy;",
-  	"1088": "rcy;",
-  	"1089": "scy;",
-  	"1090": "tcy;",
-  	"1091": "ucy;",
-  	"1092": "fcy;",
-  	"1093": "khcy;",
-  	"1094": "tscy;",
-  	"1095": "chcy;",
-  	"1096": "shcy;",
-  	"1097": "shchcy;",
-  	"1098": "hardcy;",
-  	"1099": "ycy;",
-  	"1100": "softcy;",
-  	"1101": "ecy;",
-  	"1102": "yucy;",
-  	"1103": "yacy;",
-  	"1105": "iocy;",
-  	"1106": "djcy;",
-  	"1107": "gjcy;",
-  	"1108": "jukcy;",
-  	"1109": "dscy;",
-  	"1110": "iukcy;",
-  	"1111": "yicy;",
-  	"1112": "jsercy;",
-  	"1113": "ljcy;",
-  	"1114": "njcy;",
-  	"1115": "tshcy;",
-  	"1116": "kjcy;",
-  	"1118": "ubrcy;",
-  	"1119": "dzcy;",
-  	"8194": "ensp;",
-  	"8195": "emsp;",
-  	"8196": "emsp13;",
-  	"8197": "emsp14;",
-  	"8199": "numsp;",
-  	"8200": "puncsp;",
-  	"8201": "ThinSpace;",
-  	"8202": "VeryThinSpace;",
-  	"8203": "ZeroWidthSpace;",
-  	"8204": "zwnj;",
-  	"8205": "zwj;",
-  	"8206": "lrm;",
-  	"8207": "rlm;",
-  	"8208": "hyphen;",
-  	"8211": "ndash;",
-  	"8212": "mdash;",
-  	"8213": "horbar;",
-  	"8214": "Vert;",
-  	"8216": "OpenCurlyQuote;",
-  	"8217": "rsquor;",
-  	"8218": "sbquo;",
-  	"8220": "OpenCurlyDoubleQuote;",
-  	"8221": "rdquor;",
-  	"8222": "ldquor;",
-  	"8224": "dagger;",
-  	"8225": "ddagger;",
-  	"8226": "bullet;",
-  	"8229": "nldr;",
-  	"8230": "mldr;",
-  	"8240": "permil;",
-  	"8241": "pertenk;",
-  	"8242": "prime;",
-  	"8243": "Prime;",
-  	"8244": "tprime;",
-  	"8245": "bprime;",
-  	"8249": "lsaquo;",
-  	"8250": "rsaquo;",
-  	"8254": "OverBar;",
-  	"8257": "caret;",
-  	"8259": "hybull;",
-  	"8260": "frasl;",
-  	"8271": "bsemi;",
-  	"8279": "qprime;",
-  	"8287": "MediumSpace;",
-  	"8288": "NoBreak;",
-  	"8289": "ApplyFunction;",
-  	"8290": "it;",
-  	"8291": "InvisibleComma;",
-  	"8364": "euro;",
-  	"8411": "TripleDot;",
-  	"8412": "DotDot;",
-  	"8450": "Copf;",
-  	"8453": "incare;",
-  	"8458": "gscr;",
-  	"8459": "Hscr;",
-  	"8460": "Poincareplane;",
-  	"8461": "quaternions;",
-  	"8462": "planckh;",
-  	"8463": "plankv;",
-  	"8464": "Iscr;",
-  	"8465": "imagpart;",
-  	"8466": "Lscr;",
-  	"8467": "ell;",
-  	"8469": "Nopf;",
-  	"8470": "numero;",
-  	"8471": "copysr;",
-  	"8472": "wp;",
-  	"8473": "primes;",
-  	"8474": "rationals;",
-  	"8475": "Rscr;",
-  	"8476": "Rfr;",
-  	"8477": "Ropf;",
-  	"8478": "rx;",
-  	"8482": "trade;",
-  	"8484": "Zopf;",
-  	"8487": "mho;",
-  	"8488": "Zfr;",
-  	"8489": "iiota;",
-  	"8492": "Bscr;",
-  	"8493": "Cfr;",
-  	"8495": "escr;",
-  	"8496": "expectation;",
-  	"8497": "Fscr;",
-  	"8499": "phmmat;",
-  	"8500": "oscr;",
-  	"8501": "aleph;",
-  	"8502": "beth;",
-  	"8503": "gimel;",
-  	"8504": "daleth;",
-  	"8517": "DD;",
-  	"8518": "DifferentialD;",
-  	"8519": "exponentiale;",
-  	"8520": "ImaginaryI;",
-  	"8531": "frac13;",
-  	"8532": "frac23;",
-  	"8533": "frac15;",
-  	"8534": "frac25;",
-  	"8535": "frac35;",
-  	"8536": "frac45;",
-  	"8537": "frac16;",
-  	"8538": "frac56;",
-  	"8539": "frac18;",
-  	"8540": "frac38;",
-  	"8541": "frac58;",
-  	"8542": "frac78;",
-  	"8592": "slarr;",
-  	"8593": "uparrow;",
-  	"8594": "srarr;",
-  	"8595": "ShortDownArrow;",
-  	"8596": "leftrightarrow;",
-  	"8597": "varr;",
-  	"8598": "UpperLeftArrow;",
-  	"8599": "UpperRightArrow;",
-  	"8600": "searrow;",
-  	"8601": "swarrow;",
-  	"8602": "nleftarrow;",
-  	"8603": "nrightarrow;",
-  	"8605": "rightsquigarrow;",
-  	"8606": "twoheadleftarrow;",
-  	"8607": "Uarr;",
-  	"8608": "twoheadrightarrow;",
-  	"8609": "Darr;",
-  	"8610": "leftarrowtail;",
-  	"8611": "rightarrowtail;",
-  	"8612": "mapstoleft;",
-  	"8613": "UpTeeArrow;",
-  	"8614": "RightTeeArrow;",
-  	"8615": "mapstodown;",
-  	"8617": "larrhk;",
-  	"8618": "rarrhk;",
-  	"8619": "looparrowleft;",
-  	"8620": "rarrlp;",
-  	"8621": "leftrightsquigarrow;",
-  	"8622": "nleftrightarrow;",
-  	"8624": "lsh;",
-  	"8625": "rsh;",
-  	"8626": "ldsh;",
-  	"8627": "rdsh;",
-  	"8629": "crarr;",
-  	"8630": "curvearrowleft;",
-  	"8631": "curvearrowright;",
-  	"8634": "olarr;",
-  	"8635": "orarr;",
-  	"8636": "lharu;",
-  	"8637": "lhard;",
-  	"8638": "upharpoonright;",
-  	"8639": "upharpoonleft;",
-  	"8640": "RightVector;",
-  	"8641": "rightharpoondown;",
-  	"8642": "RightDownVector;",
-  	"8643": "LeftDownVector;",
-  	"8644": "rlarr;",
-  	"8645": "UpArrowDownArrow;",
-  	"8646": "lrarr;",
-  	"8647": "llarr;",
-  	"8648": "uuarr;",
-  	"8649": "rrarr;",
-  	"8650": "downdownarrows;",
-  	"8651": "ReverseEquilibrium;",
-  	"8652": "rlhar;",
-  	"8653": "nLeftarrow;",
-  	"8654": "nLeftrightarrow;",
-  	"8655": "nRightarrow;",
-  	"8656": "Leftarrow;",
-  	"8657": "Uparrow;",
-  	"8658": "Rightarrow;",
-  	"8659": "Downarrow;",
-  	"8660": "Leftrightarrow;",
-  	"8661": "vArr;",
-  	"8662": "nwArr;",
-  	"8663": "neArr;",
-  	"8664": "seArr;",
-  	"8665": "swArr;",
-  	"8666": "Lleftarrow;",
-  	"8667": "Rrightarrow;",
-  	"8669": "zigrarr;",
-  	"8676": "LeftArrowBar;",
-  	"8677": "RightArrowBar;",
-  	"8693": "duarr;",
-  	"8701": "loarr;",
-  	"8702": "roarr;",
-  	"8703": "hoarr;",
-  	"8704": "forall;",
-  	"8705": "complement;",
-  	"8706": "PartialD;",
-  	"8707": "Exists;",
-  	"8708": "NotExists;",
-  	"8709": "varnothing;",
-  	"8711": "nabla;",
-  	"8712": "isinv;",
-  	"8713": "notinva;",
-  	"8715": "SuchThat;",
-  	"8716": "NotReverseElement;",
-  	"8719": "Product;",
-  	"8720": "Coproduct;",
-  	"8721": "sum;",
-  	"8722": "minus;",
-  	"8723": "mp;",
-  	"8724": "plusdo;",
-  	"8726": "ssetmn;",
-  	"8727": "lowast;",
-  	"8728": "SmallCircle;",
-  	"8730": "Sqrt;",
-  	"8733": "vprop;",
-  	"8734": "infin;",
-  	"8735": "angrt;",
-  	"8736": "angle;",
-  	"8737": "measuredangle;",
-  	"8738": "angsph;",
-  	"8739": "VerticalBar;",
-  	"8740": "nsmid;",
-  	"8741": "spar;",
-  	"8742": "nspar;",
-  	"8743": "wedge;",
-  	"8744": "vee;",
-  	"8745": "cap;",
-  	"8746": "cup;",
-  	"8747": "Integral;",
-  	"8748": "Int;",
-  	"8749": "tint;",
-  	"8750": "oint;",
-  	"8751": "DoubleContourIntegral;",
-  	"8752": "Cconint;",
-  	"8753": "cwint;",
-  	"8754": "cwconint;",
-  	"8755": "CounterClockwiseContourIntegral;",
-  	"8756": "therefore;",
-  	"8757": "because;",
-  	"8758": "ratio;",
-  	"8759": "Proportion;",
-  	"8760": "minusd;",
-  	"8762": "mDDot;",
-  	"8763": "homtht;",
-  	"8764": "Tilde;",
-  	"8765": "bsim;",
-  	"8766": "mstpos;",
-  	"8767": "acd;",
-  	"8768": "wreath;",
-  	"8769": "nsim;",
-  	"8770": "esim;",
-  	"8771": "TildeEqual;",
-  	"8772": "nsimeq;",
-  	"8773": "TildeFullEqual;",
-  	"8774": "simne;",
-  	"8775": "NotTildeFullEqual;",
-  	"8776": "TildeTilde;",
-  	"8777": "NotTildeTilde;",
-  	"8778": "approxeq;",
-  	"8779": "apid;",
-  	"8780": "bcong;",
-  	"8781": "CupCap;",
-  	"8782": "HumpDownHump;",
-  	"8783": "HumpEqual;",
-  	"8784": "esdot;",
-  	"8785": "eDot;",
-  	"8786": "fallingdotseq;",
-  	"8787": "risingdotseq;",
-  	"8788": "coloneq;",
-  	"8789": "eqcolon;",
-  	"8790": "eqcirc;",
-  	"8791": "cire;",
-  	"8793": "wedgeq;",
-  	"8794": "veeeq;",
-  	"8796": "trie;",
-  	"8799": "questeq;",
-  	"8800": "NotEqual;",
-  	"8801": "equiv;",
-  	"8802": "NotCongruent;",
-  	"8804": "leq;",
-  	"8805": "GreaterEqual;",
-  	"8806": "LessFullEqual;",
-  	"8807": "GreaterFullEqual;",
-  	"8808": "lneqq;",
-  	"8809": "gneqq;",
-  	"8810": "NestedLessLess;",
-  	"8811": "NestedGreaterGreater;",
-  	"8812": "twixt;",
-  	"8813": "NotCupCap;",
-  	"8814": "NotLess;",
-  	"8815": "NotGreater;",
-  	"8816": "NotLessEqual;",
-  	"8817": "NotGreaterEqual;",
-  	"8818": "lsim;",
-  	"8819": "gtrsim;",
-  	"8820": "NotLessTilde;",
-  	"8821": "NotGreaterTilde;",
-  	"8822": "lg;",
-  	"8823": "gtrless;",
-  	"8824": "ntlg;",
-  	"8825": "ntgl;",
-  	"8826": "Precedes;",
-  	"8827": "Succeeds;",
-  	"8828": "PrecedesSlantEqual;",
-  	"8829": "SucceedsSlantEqual;",
-  	"8830": "prsim;",
-  	"8831": "succsim;",
-  	"8832": "nprec;",
-  	"8833": "nsucc;",
-  	"8834": "subset;",
-  	"8835": "supset;",
-  	"8836": "nsub;",
-  	"8837": "nsup;",
-  	"8838": "SubsetEqual;",
-  	"8839": "supseteq;",
-  	"8840": "nsubseteq;",
-  	"8841": "nsupseteq;",
-  	"8842": "subsetneq;",
-  	"8843": "supsetneq;",
-  	"8845": "cupdot;",
-  	"8846": "uplus;",
-  	"8847": "SquareSubset;",
-  	"8848": "SquareSuperset;",
-  	"8849": "SquareSubsetEqual;",
-  	"8850": "SquareSupersetEqual;",
-  	"8851": "SquareIntersection;",
-  	"8852": "SquareUnion;",
-  	"8853": "oplus;",
-  	"8854": "ominus;",
-  	"8855": "otimes;",
-  	"8856": "osol;",
-  	"8857": "odot;",
-  	"8858": "ocir;",
-  	"8859": "oast;",
-  	"8861": "odash;",
-  	"8862": "plusb;",
-  	"8863": "minusb;",
-  	"8864": "timesb;",
-  	"8865": "sdotb;",
-  	"8866": "vdash;",
-  	"8867": "LeftTee;",
-  	"8868": "top;",
-  	"8869": "UpTee;",
-  	"8871": "models;",
-  	"8872": "vDash;",
-  	"8873": "Vdash;",
-  	"8874": "Vvdash;",
-  	"8875": "VDash;",
-  	"8876": "nvdash;",
-  	"8877": "nvDash;",
-  	"8878": "nVdash;",
-  	"8879": "nVDash;",
-  	"8880": "prurel;",
-  	"8882": "vltri;",
-  	"8883": "vrtri;",
-  	"8884": "trianglelefteq;",
-  	"8885": "trianglerighteq;",
-  	"8886": "origof;",
-  	"8887": "imof;",
-  	"8888": "mumap;",
-  	"8889": "hercon;",
-  	"8890": "intercal;",
-  	"8891": "veebar;",
-  	"8893": "barvee;",
-  	"8894": "angrtvb;",
-  	"8895": "lrtri;",
-  	"8896": "xwedge;",
-  	"8897": "xvee;",
-  	"8898": "xcap;",
-  	"8899": "xcup;",
-  	"8900": "diamond;",
-  	"8901": "sdot;",
-  	"8902": "Star;",
-  	"8903": "divonx;",
-  	"8904": "bowtie;",
-  	"8905": "ltimes;",
-  	"8906": "rtimes;",
-  	"8907": "lthree;",
-  	"8908": "rthree;",
-  	"8909": "bsime;",
-  	"8910": "cuvee;",
-  	"8911": "cuwed;",
-  	"8912": "Subset;",
-  	"8913": "Supset;",
-  	"8914": "Cap;",
-  	"8915": "Cup;",
-  	"8916": "pitchfork;",
-  	"8917": "epar;",
-  	"8918": "ltdot;",
-  	"8919": "gtrdot;",
-  	"8920": "Ll;",
-  	"8921": "ggg;",
-  	"8922": "LessEqualGreater;",
-  	"8923": "gtreqless;",
-  	"8926": "curlyeqprec;",
-  	"8927": "curlyeqsucc;",
-  	"8928": "nprcue;",
-  	"8929": "nsccue;",
-  	"8930": "nsqsube;",
-  	"8931": "nsqsupe;",
-  	"8934": "lnsim;",
-  	"8935": "gnsim;",
-  	"8936": "prnsim;",
-  	"8937": "succnsim;",
-  	"8938": "ntriangleleft;",
-  	"8939": "ntriangleright;",
-  	"8940": "ntrianglelefteq;",
-  	"8941": "ntrianglerighteq;",
-  	"8942": "vellip;",
-  	"8943": "ctdot;",
-  	"8944": "utdot;",
-  	"8945": "dtdot;",
-  	"8946": "disin;",
-  	"8947": "isinsv;",
-  	"8948": "isins;",
-  	"8949": "isindot;",
-  	"8950": "notinvc;",
-  	"8951": "notinvb;",
-  	"8953": "isinE;",
-  	"8954": "nisd;",
-  	"8955": "xnis;",
-  	"8956": "nis;",
-  	"8957": "notnivc;",
-  	"8958": "notnivb;",
-  	"8965": "barwedge;",
-  	"8966": "doublebarwedge;",
-  	"8968": "LeftCeiling;",
-  	"8969": "RightCeiling;",
-  	"8970": "lfloor;",
-  	"8971": "RightFloor;",
-  	"8972": "drcrop;",
-  	"8973": "dlcrop;",
-  	"8974": "urcrop;",
-  	"8975": "ulcrop;",
-  	"8976": "bnot;",
-  	"8978": "profline;",
-  	"8979": "profsurf;",
-  	"8981": "telrec;",
-  	"8982": "target;",
-  	"8988": "ulcorner;",
-  	"8989": "urcorner;",
-  	"8990": "llcorner;",
-  	"8991": "lrcorner;",
-  	"8994": "sfrown;",
-  	"8995": "ssmile;",
-  	"9005": "cylcty;",
-  	"9006": "profalar;",
-  	"9014": "topbot;",
-  	"9021": "ovbar;",
-  	"9023": "solbar;",
-  	"9084": "angzarr;",
-  	"9136": "lmoustache;",
-  	"9137": "rmoustache;",
-  	"9140": "tbrk;",
-  	"9141": "UnderBracket;",
-  	"9142": "bbrktbrk;",
-  	"9180": "OverParenthesis;",
-  	"9181": "UnderParenthesis;",
-  	"9182": "OverBrace;",
-  	"9183": "UnderBrace;",
-  	"9186": "trpezium;",
-  	"9191": "elinters;",
-  	"9251": "blank;",
-  	"9416": "oS;",
-  	"9472": "HorizontalLine;",
-  	"9474": "boxv;",
-  	"9484": "boxdr;",
-  	"9488": "boxdl;",
-  	"9492": "boxur;",
-  	"9496": "boxul;",
-  	"9500": "boxvr;",
-  	"9508": "boxvl;",
-  	"9516": "boxhd;",
-  	"9524": "boxhu;",
-  	"9532": "boxvh;",
-  	"9552": "boxH;",
-  	"9553": "boxV;",
-  	"9554": "boxdR;",
-  	"9555": "boxDr;",
-  	"9556": "boxDR;",
-  	"9557": "boxdL;",
-  	"9558": "boxDl;",
-  	"9559": "boxDL;",
-  	"9560": "boxuR;",
-  	"9561": "boxUr;",
-  	"9562": "boxUR;",
-  	"9563": "boxuL;",
-  	"9564": "boxUl;",
-  	"9565": "boxUL;",
-  	"9566": "boxvR;",
-  	"9567": "boxVr;",
-  	"9568": "boxVR;",
-  	"9569": "boxvL;",
-  	"9570": "boxVl;",
-  	"9571": "boxVL;",
-  	"9572": "boxHd;",
-  	"9573": "boxhD;",
-  	"9574": "boxHD;",
-  	"9575": "boxHu;",
-  	"9576": "boxhU;",
-  	"9577": "boxHU;",
-  	"9578": "boxvH;",
-  	"9579": "boxVh;",
-  	"9580": "boxVH;",
-  	"9600": "uhblk;",
-  	"9604": "lhblk;",
-  	"9608": "block;",
-  	"9617": "blk14;",
-  	"9618": "blk12;",
-  	"9619": "blk34;",
-  	"9633": "square;",
-  	"9642": "squf;",
-  	"9643": "EmptyVerySmallSquare;",
-  	"9645": "rect;",
-  	"9646": "marker;",
-  	"9649": "fltns;",
-  	"9651": "xutri;",
-  	"9652": "utrif;",
-  	"9653": "utri;",
-  	"9656": "rtrif;",
-  	"9657": "triangleright;",
-  	"9661": "xdtri;",
-  	"9662": "dtrif;",
-  	"9663": "triangledown;",
-  	"9666": "ltrif;",
-  	"9667": "triangleleft;",
-  	"9674": "lozenge;",
-  	"9675": "cir;",
-  	"9708": "tridot;",
-  	"9711": "xcirc;",
-  	"9720": "ultri;",
-  	"9721": "urtri;",
-  	"9722": "lltri;",
-  	"9723": "EmptySmallSquare;",
-  	"9724": "FilledSmallSquare;",
-  	"9733": "starf;",
-  	"9734": "star;",
-  	"9742": "phone;",
-  	"9792": "female;",
-  	"9794": "male;",
-  	"9824": "spadesuit;",
-  	"9827": "clubsuit;",
-  	"9829": "heartsuit;",
-  	"9830": "diams;",
-  	"9834": "sung;",
-  	"9837": "flat;",
-  	"9838": "natural;",
-  	"9839": "sharp;",
-  	"10003": "checkmark;",
-  	"10007": "cross;",
-  	"10016": "maltese;",
-  	"10038": "sext;",
-  	"10072": "VerticalSeparator;",
-  	"10098": "lbbrk;",
-  	"10099": "rbbrk;",
-  	"10184": "bsolhsub;",
-  	"10185": "suphsol;",
-  	"10214": "lobrk;",
-  	"10215": "robrk;",
-  	"10216": "LeftAngleBracket;",
-  	"10217": "RightAngleBracket;",
-  	"10218": "Lang;",
-  	"10219": "Rang;",
-  	"10220": "loang;",
-  	"10221": "roang;",
-  	"10229": "xlarr;",
-  	"10230": "xrarr;",
-  	"10231": "xharr;",
-  	"10232": "xlArr;",
-  	"10233": "xrArr;",
-  	"10234": "xhArr;",
-  	"10236": "xmap;",
-  	"10239": "dzigrarr;",
-  	"10498": "nvlArr;",
-  	"10499": "nvrArr;",
-  	"10500": "nvHarr;",
-  	"10501": "Map;",
-  	"10508": "lbarr;",
-  	"10509": "rbarr;",
-  	"10510": "lBarr;",
-  	"10511": "rBarr;",
-  	"10512": "RBarr;",
-  	"10513": "DDotrahd;",
-  	"10514": "UpArrowBar;",
-  	"10515": "DownArrowBar;",
-  	"10518": "Rarrtl;",
-  	"10521": "latail;",
-  	"10522": "ratail;",
-  	"10523": "lAtail;",
-  	"10524": "rAtail;",
-  	"10525": "larrfs;",
-  	"10526": "rarrfs;",
-  	"10527": "larrbfs;",
-  	"10528": "rarrbfs;",
-  	"10531": "nwarhk;",
-  	"10532": "nearhk;",
-  	"10533": "searhk;",
-  	"10534": "swarhk;",
-  	"10535": "nwnear;",
-  	"10536": "toea;",
-  	"10537": "tosa;",
-  	"10538": "swnwar;",
-  	"10547": "rarrc;",
-  	"10549": "cudarrr;",
-  	"10550": "ldca;",
-  	"10551": "rdca;",
-  	"10552": "cudarrl;",
-  	"10553": "larrpl;",
-  	"10556": "curarrm;",
-  	"10557": "cularrp;",
-  	"10565": "rarrpl;",
-  	"10568": "harrcir;",
-  	"10569": "Uarrocir;",
-  	"10570": "lurdshar;",
-  	"10571": "ldrushar;",
-  	"10574": "LeftRightVector;",
-  	"10575": "RightUpDownVector;",
-  	"10576": "DownLeftRightVector;",
-  	"10577": "LeftUpDownVector;",
-  	"10578": "LeftVectorBar;",
-  	"10579": "RightVectorBar;",
-  	"10580": "RightUpVectorBar;",
-  	"10581": "RightDownVectorBar;",
-  	"10582": "DownLeftVectorBar;",
-  	"10583": "DownRightVectorBar;",
-  	"10584": "LeftUpVectorBar;",
-  	"10585": "LeftDownVectorBar;",
-  	"10586": "LeftTeeVector;",
-  	"10587": "RightTeeVector;",
-  	"10588": "RightUpTeeVector;",
-  	"10589": "RightDownTeeVector;",
-  	"10590": "DownLeftTeeVector;",
-  	"10591": "DownRightTeeVector;",
-  	"10592": "LeftUpTeeVector;",
-  	"10593": "LeftDownTeeVector;",
-  	"10594": "lHar;",
-  	"10595": "uHar;",
-  	"10596": "rHar;",
-  	"10597": "dHar;",
-  	"10598": "luruhar;",
-  	"10599": "ldrdhar;",
-  	"10600": "ruluhar;",
-  	"10601": "rdldhar;",
-  	"10602": "lharul;",
-  	"10603": "llhard;",
-  	"10604": "rharul;",
-  	"10605": "lrhard;",
-  	"10606": "UpEquilibrium;",
-  	"10607": "ReverseUpEquilibrium;",
-  	"10608": "RoundImplies;",
-  	"10609": "erarr;",
-  	"10610": "simrarr;",
-  	"10611": "larrsim;",
-  	"10612": "rarrsim;",
-  	"10613": "rarrap;",
-  	"10614": "ltlarr;",
-  	"10616": "gtrarr;",
-  	"10617": "subrarr;",
-  	"10619": "suplarr;",
-  	"10620": "lfisht;",
-  	"10621": "rfisht;",
-  	"10622": "ufisht;",
-  	"10623": "dfisht;",
-  	"10629": "lopar;",
-  	"10630": "ropar;",
-  	"10635": "lbrke;",
-  	"10636": "rbrke;",
-  	"10637": "lbrkslu;",
-  	"10638": "rbrksld;",
-  	"10639": "lbrksld;",
-  	"10640": "rbrkslu;",
-  	"10641": "langd;",
-  	"10642": "rangd;",
-  	"10643": "lparlt;",
-  	"10644": "rpargt;",
-  	"10645": "gtlPar;",
-  	"10646": "ltrPar;",
-  	"10650": "vzigzag;",
-  	"10652": "vangrt;",
-  	"10653": "angrtvbd;",
-  	"10660": "ange;",
-  	"10661": "range;",
-  	"10662": "dwangle;",
-  	"10663": "uwangle;",
-  	"10664": "angmsdaa;",
-  	"10665": "angmsdab;",
-  	"10666": "angmsdac;",
-  	"10667": "angmsdad;",
-  	"10668": "angmsdae;",
-  	"10669": "angmsdaf;",
-  	"10670": "angmsdag;",
-  	"10671": "angmsdah;",
-  	"10672": "bemptyv;",
-  	"10673": "demptyv;",
-  	"10674": "cemptyv;",
-  	"10675": "raemptyv;",
-  	"10676": "laemptyv;",
-  	"10677": "ohbar;",
-  	"10678": "omid;",
-  	"10679": "opar;",
-  	"10681": "operp;",
-  	"10683": "olcross;",
-  	"10684": "odsold;",
-  	"10686": "olcir;",
-  	"10687": "ofcir;",
-  	"10688": "olt;",
-  	"10689": "ogt;",
-  	"10690": "cirscir;",
-  	"10691": "cirE;",
-  	"10692": "solb;",
-  	"10693": "bsolb;",
-  	"10697": "boxbox;",
-  	"10701": "trisb;",
-  	"10702": "rtriltri;",
-  	"10703": "LeftTriangleBar;",
-  	"10704": "RightTriangleBar;",
-  	"10716": "iinfin;",
-  	"10717": "infintie;",
-  	"10718": "nvinfin;",
-  	"10723": "eparsl;",
-  	"10724": "smeparsl;",
-  	"10725": "eqvparsl;",
-  	"10731": "lozf;",
-  	"10740": "RuleDelayed;",
-  	"10742": "dsol;",
-  	"10752": "xodot;",
-  	"10753": "xoplus;",
-  	"10754": "xotime;",
-  	"10756": "xuplus;",
-  	"10758": "xsqcup;",
-  	"10764": "qint;",
-  	"10765": "fpartint;",
-  	"10768": "cirfnint;",
-  	"10769": "awint;",
-  	"10770": "rppolint;",
-  	"10771": "scpolint;",
-  	"10772": "npolint;",
-  	"10773": "pointint;",
-  	"10774": "quatint;",
-  	"10775": "intlarhk;",
-  	"10786": "pluscir;",
-  	"10787": "plusacir;",
-  	"10788": "simplus;",
-  	"10789": "plusdu;",
-  	"10790": "plussim;",
-  	"10791": "plustwo;",
-  	"10793": "mcomma;",
-  	"10794": "minusdu;",
-  	"10797": "loplus;",
-  	"10798": "roplus;",
-  	"10799": "Cross;",
-  	"10800": "timesd;",
-  	"10801": "timesbar;",
-  	"10803": "smashp;",
-  	"10804": "lotimes;",
-  	"10805": "rotimes;",
-  	"10806": "otimesas;",
-  	"10807": "Otimes;",
-  	"10808": "odiv;",
-  	"10809": "triplus;",
-  	"10810": "triminus;",
-  	"10811": "tritime;",
-  	"10812": "iprod;",
-  	"10815": "amalg;",
-  	"10816": "capdot;",
-  	"10818": "ncup;",
-  	"10819": "ncap;",
-  	"10820": "capand;",
-  	"10821": "cupor;",
-  	"10822": "cupcap;",
-  	"10823": "capcup;",
-  	"10824": "cupbrcap;",
-  	"10825": "capbrcup;",
-  	"10826": "cupcup;",
-  	"10827": "capcap;",
-  	"10828": "ccups;",
-  	"10829": "ccaps;",
-  	"10832": "ccupssm;",
-  	"10835": "And;",
-  	"10836": "Or;",
-  	"10837": "andand;",
-  	"10838": "oror;",
-  	"10839": "orslope;",
-  	"10840": "andslope;",
-  	"10842": "andv;",
-  	"10843": "orv;",
-  	"10844": "andd;",
-  	"10845": "ord;",
-  	"10847": "wedbar;",
-  	"10854": "sdote;",
-  	"10858": "simdot;",
-  	"10861": "congdot;",
-  	"10862": "easter;",
-  	"10863": "apacir;",
-  	"10864": "apE;",
-  	"10865": "eplus;",
-  	"10866": "pluse;",
-  	"10867": "Esim;",
-  	"10868": "Colone;",
-  	"10869": "Equal;",
-  	"10871": "eDDot;",
-  	"10872": "equivDD;",
-  	"10873": "ltcir;",
-  	"10874": "gtcir;",
-  	"10875": "ltquest;",
-  	"10876": "gtquest;",
-  	"10877": "LessSlantEqual;",
-  	"10878": "GreaterSlantEqual;",
-  	"10879": "lesdot;",
-  	"10880": "gesdot;",
-  	"10881": "lesdoto;",
-  	"10882": "gesdoto;",
-  	"10883": "lesdotor;",
-  	"10884": "gesdotol;",
-  	"10885": "lessapprox;",
-  	"10886": "gtrapprox;",
-  	"10887": "lneq;",
-  	"10888": "gneq;",
-  	"10889": "lnapprox;",
-  	"10890": "gnapprox;",
-  	"10891": "lesseqqgtr;",
-  	"10892": "gtreqqless;",
-  	"10893": "lsime;",
-  	"10894": "gsime;",
-  	"10895": "lsimg;",
-  	"10896": "gsiml;",
-  	"10897": "lgE;",
-  	"10898": "glE;",
-  	"10899": "lesges;",
-  	"10900": "gesles;",
-  	"10901": "eqslantless;",
-  	"10902": "eqslantgtr;",
-  	"10903": "elsdot;",
-  	"10904": "egsdot;",
-  	"10905": "el;",
-  	"10906": "eg;",
-  	"10909": "siml;",
-  	"10910": "simg;",
-  	"10911": "simlE;",
-  	"10912": "simgE;",
-  	"10913": "LessLess;",
-  	"10914": "GreaterGreater;",
-  	"10916": "glj;",
-  	"10917": "gla;",
-  	"10918": "ltcc;",
-  	"10919": "gtcc;",
-  	"10920": "lescc;",
-  	"10921": "gescc;",
-  	"10922": "smt;",
-  	"10923": "lat;",
-  	"10924": "smte;",
-  	"10925": "late;",
-  	"10926": "bumpE;",
-  	"10927": "preceq;",
-  	"10928": "succeq;",
-  	"10931": "prE;",
-  	"10932": "scE;",
-  	"10933": "prnE;",
-  	"10934": "succneqq;",
-  	"10935": "precapprox;",
-  	"10936": "succapprox;",
-  	"10937": "prnap;",
-  	"10938": "succnapprox;",
-  	"10939": "Pr;",
-  	"10940": "Sc;",
-  	"10941": "subdot;",
-  	"10942": "supdot;",
-  	"10943": "subplus;",
-  	"10944": "supplus;",
-  	"10945": "submult;",
-  	"10946": "supmult;",
-  	"10947": "subedot;",
-  	"10948": "supedot;",
-  	"10949": "subseteqq;",
-  	"10950": "supseteqq;",
-  	"10951": "subsim;",
-  	"10952": "supsim;",
-  	"10955": "subsetneqq;",
-  	"10956": "supsetneqq;",
-  	"10959": "csub;",
-  	"10960": "csup;",
-  	"10961": "csube;",
-  	"10962": "csupe;",
-  	"10963": "subsup;",
-  	"10964": "supsub;",
-  	"10965": "subsub;",
-  	"10966": "supsup;",
-  	"10967": "suphsub;",
-  	"10968": "supdsub;",
-  	"10969": "forkv;",
-  	"10970": "topfork;",
-  	"10971": "mlcp;",
-  	"10980": "DoubleLeftTee;",
-  	"10982": "Vdashl;",
-  	"10983": "Barv;",
-  	"10984": "vBar;",
-  	"10985": "vBarv;",
-  	"10987": "Vbar;",
-  	"10988": "Not;",
-  	"10989": "bNot;",
-  	"10990": "rnmid;",
-  	"10991": "cirmid;",
-  	"10992": "midcir;",
-  	"10993": "topcir;",
-  	"10994": "nhpar;",
-  	"10995": "parsim;",
-  	"11005": "parsl;",
-  	"64256": "fflig;",
-  	"64257": "filig;",
-  	"64258": "fllig;",
-  	"64259": "ffilig;",
-  	"64260": "ffllig;"
-  };
-
-  var reversed$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': reversed
-  });
-
-  var punycode$2 = getCjsExportFromNamespace(punycode$1);
-
-  var revEntities = getCjsExportFromNamespace(reversed$1);
-
-  var encode_1 = encode$1;
-
-  function encode$1(str, opts) {
-    if (typeof str !== 'string') {
-      throw new TypeError('Expected a String');
-    }
-
-    if (!opts) opts = {};
-    var numeric = true;
-    if (opts.named) numeric = false;
-    if (opts.numeric !== undefined) numeric = opts.numeric;
-    var special = opts.special || {
-      '"': true,
-      "'": true,
-      '<': true,
-      '>': true,
-      '&': true
-    };
-    var codePoints = punycode$2.ucs2.decode(str);
-    var chars = [];
-
-    for (var i = 0; i < codePoints.length; i++) {
-      var cc = codePoints[i];
-      var c = punycode$2.ucs2.encode([cc]);
-      var e = revEntities[cc];
-
-      if (e && (cc >= 127 || special[c]) && !numeric) {
-        chars.push('&' + (/;$/.test(e) ? e : e + ';'));
-      } else if (cc < 32 || cc >= 127 || special[c]) {
-        chars.push('&#' + cc + ';');
-      } else {
-        chars.push(c);
-      }
-    }
-
-    return chars.join('');
-  }
-
-  var Aacute$1 = "Á";
-  var aacute$1 = "á";
-  var Acirc$1 = "Â";
-  var acirc$1 = "â";
-  var acute$2 = "´";
-  var AElig$1 = "Æ";
-  var aelig$1 = "æ";
-  var Agrave$1 = "À";
-  var agrave$1 = "à";
-  var AMP$1 = "&";
-  var amp$2 = "&";
-  var Aring$2 = "Å";
-  var aring$2 = "å";
-  var Atilde$1 = "Ã";
-  var atilde$2 = "ã";
-  var Auml$1 = "Ä";
-  var auml$1 = "ä";
-  var brvbar$1 = "¦";
-  var Ccedil$1 = "Ç";
-  var ccedil$1 = "ç";
-  var cedil$2 = "¸";
-  var cent$2 = "¢";
-  var COPY$2 = "©";
-  var copy$2 = "©";
-  var curren$1 = "¤";
-  var deg$2 = "°";
-  var divide$2 = "÷";
-  var Eacute$1 = "É";
-  var eacute$1 = "é";
-  var Ecirc$1 = "Ê";
-  var ecirc$1 = "ê";
-  var Egrave$1 = "È";
-  var egrave$2 = "è";
-  var ETH$2 = "Ð";
-  var eth$2 = "ð";
-  var Euml$1 = "Ë";
-  var euml$1 = "ë";
-  var frac12$1 = "½";
-  var frac14$1 = "¼";
-  var frac34$1 = "¾";
-  var GT$2 = ">";
-  var gt$2 = ">";
-  var Iacute$1 = "Í";
-  var iacute$1 = "í";
-  var Icirc$1 = "Î";
-  var icirc$1 = "î";
-  var iexcl$1 = "¡";
-  var Igrave$1 = "Ì";
-  var igrave$1 = "ì";
-  var iquest$1 = "¿";
-  var Iuml$1 = "Ï";
-  var iuml$1 = "ï";
-  var laquo$1 = "«";
-  var LT$2 = "<";
-  var lt$2 = "<";
-  var macr$1 = "¯";
-  var micro$1 = "µ";
-  var middot$1 = "·";
-  var nbsp$1 = " ";
-  var not$2 = "¬";
-  var Ntilde$1 = "Ñ";
-  var ntilde$1 = "ñ";
-  var Oacute$1 = "Ó";
-  var oacute$1 = "ó";
-  var Ocirc$1 = "Ô";
-  var ocirc$1 = "ô";
-  var Ograve$1 = "Ò";
-  var ograve$1 = "ò";
-  var ordf$1 = "ª";
-  var ordm$1 = "º";
-  var Oslash$1 = "Ø";
-  var oslash$1 = "ø";
-  var Otilde$1 = "Õ";
-  var otilde$1 = "õ";
-  var Ouml$1 = "Ö";
-  var ouml$1 = "ö";
-  var para$2 = "¶";
-  var plusmn$1 = "±";
-  var pound$2 = "£";
-  var QUOT$2 = "\"";
-  var quot$2 = "\"";
-  var raquo$1 = "»";
-  var REG$2 = "®";
-  var reg$2 = "®";
-  var sect$2 = "§";
-  var shy$2 = "­";
-  var sup1$1 = "¹";
-  var sup2$1 = "²";
-  var sup3$1 = "³";
-  var szlig$1 = "ß";
-  var THORN$2 = "Þ";
-  var thorn$2 = "þ";
-  var times$2 = "×";
-  var Uacute$1 = "Ú";
-  var uacute$1 = "ú";
-  var Ucirc$1 = "Û";
-  var ucirc$1 = "û";
-  var Ugrave$1 = "Ù";
-  var ugrave$1 = "ù";
-  var uml$2 = "¨";
-  var Uuml$1 = "Ü";
-  var uuml$1 = "ü";
-  var Yacute$1 = "Ý";
-  var yacute$1 = "ý";
-  var yen$2 = "¥";
-  var yuml$1 = "ÿ";
-  var entities = {
-  	"Aacute;": "Á",
-  	Aacute: Aacute$1,
-  	"aacute;": "á",
-  	aacute: aacute$1,
-  	"Abreve;": "Ă",
-  	"abreve;": "ă",
-  	"ac;": "∾",
-  	"acd;": "∿",
-  	"acE;": "∾̳",
-  	"Acirc;": "Â",
-  	Acirc: Acirc$1,
-  	"acirc;": "â",
-  	acirc: acirc$1,
-  	"acute;": "´",
-  	acute: acute$2,
-  	"Acy;": "А",
-  	"acy;": "а",
-  	"AElig;": "Æ",
-  	AElig: AElig$1,
-  	"aelig;": "æ",
-  	aelig: aelig$1,
-  	"af;": "⁡",
-  	"Afr;": "𝔄",
-  	"afr;": "𝔞",
-  	"Agrave;": "À",
-  	Agrave: Agrave$1,
-  	"agrave;": "à",
-  	agrave: agrave$1,
-  	"alefsym;": "ℵ",
-  	"aleph;": "ℵ",
-  	"Alpha;": "Α",
-  	"alpha;": "α",
-  	"Amacr;": "Ā",
-  	"amacr;": "ā",
-  	"amalg;": "⨿",
-  	"AMP;": "&",
-  	AMP: AMP$1,
-  	"amp;": "&",
-  	amp: amp$2,
-  	"And;": "⩓",
-  	"and;": "∧",
-  	"andand;": "⩕",
-  	"andd;": "⩜",
-  	"andslope;": "⩘",
-  	"andv;": "⩚",
-  	"ang;": "∠",
-  	"ange;": "⦤",
-  	"angle;": "∠",
-  	"angmsd;": "∡",
-  	"angmsdaa;": "⦨",
-  	"angmsdab;": "⦩",
-  	"angmsdac;": "⦪",
-  	"angmsdad;": "⦫",
-  	"angmsdae;": "⦬",
-  	"angmsdaf;": "⦭",
-  	"angmsdag;": "⦮",
-  	"angmsdah;": "⦯",
-  	"angrt;": "∟",
-  	"angrtvb;": "⊾",
-  	"angrtvbd;": "⦝",
-  	"angsph;": "∢",
-  	"angst;": "Å",
-  	"angzarr;": "⍼",
-  	"Aogon;": "Ą",
-  	"aogon;": "ą",
-  	"Aopf;": "𝔸",
-  	"aopf;": "𝕒",
-  	"ap;": "≈",
-  	"apacir;": "⩯",
-  	"apE;": "⩰",
-  	"ape;": "≊",
-  	"apid;": "≋",
-  	"apos;": "'",
-  	"ApplyFunction;": "⁡",
-  	"approx;": "≈",
-  	"approxeq;": "≊",
-  	"Aring;": "Å",
-  	Aring: Aring$2,
-  	"aring;": "å",
-  	aring: aring$2,
-  	"Ascr;": "𝒜",
-  	"ascr;": "𝒶",
-  	"Assign;": "≔",
-  	"ast;": "*",
-  	"asymp;": "≈",
-  	"asympeq;": "≍",
-  	"Atilde;": "Ã",
-  	Atilde: Atilde$1,
-  	"atilde;": "ã",
-  	atilde: atilde$2,
-  	"Auml;": "Ä",
-  	Auml: Auml$1,
-  	"auml;": "ä",
-  	auml: auml$1,
-  	"awconint;": "∳",
-  	"awint;": "⨑",
-  	"backcong;": "≌",
-  	"backepsilon;": "϶",
-  	"backprime;": "‵",
-  	"backsim;": "∽",
-  	"backsimeq;": "⋍",
-  	"Backslash;": "∖",
-  	"Barv;": "⫧",
-  	"barvee;": "⊽",
-  	"Barwed;": "⌆",
-  	"barwed;": "⌅",
-  	"barwedge;": "⌅",
-  	"bbrk;": "⎵",
-  	"bbrktbrk;": "⎶",
-  	"bcong;": "≌",
-  	"Bcy;": "Б",
-  	"bcy;": "б",
-  	"bdquo;": "„",
-  	"becaus;": "∵",
-  	"Because;": "∵",
-  	"because;": "∵",
-  	"bemptyv;": "⦰",
-  	"bepsi;": "϶",
-  	"bernou;": "ℬ",
-  	"Bernoullis;": "ℬ",
-  	"Beta;": "Β",
-  	"beta;": "β",
-  	"beth;": "ℶ",
-  	"between;": "≬",
-  	"Bfr;": "𝔅",
-  	"bfr;": "𝔟",
-  	"bigcap;": "⋂",
-  	"bigcirc;": "◯",
-  	"bigcup;": "⋃",
-  	"bigodot;": "⨀",
-  	"bigoplus;": "⨁",
-  	"bigotimes;": "⨂",
-  	"bigsqcup;": "⨆",
-  	"bigstar;": "★",
-  	"bigtriangledown;": "▽",
-  	"bigtriangleup;": "△",
-  	"biguplus;": "⨄",
-  	"bigvee;": "⋁",
-  	"bigwedge;": "⋀",
-  	"bkarow;": "⤍",
-  	"blacklozenge;": "⧫",
-  	"blacksquare;": "▪",
-  	"blacktriangle;": "▴",
-  	"blacktriangledown;": "▾",
-  	"blacktriangleleft;": "◂",
-  	"blacktriangleright;": "▸",
-  	"blank;": "␣",
-  	"blk12;": "▒",
-  	"blk14;": "░",
-  	"blk34;": "▓",
-  	"block;": "█",
-  	"bne;": "=⃥",
-  	"bnequiv;": "≡⃥",
-  	"bNot;": "⫭",
-  	"bnot;": "⌐",
-  	"Bopf;": "𝔹",
-  	"bopf;": "𝕓",
-  	"bot;": "⊥",
-  	"bottom;": "⊥",
-  	"bowtie;": "⋈",
-  	"boxbox;": "⧉",
-  	"boxDL;": "╗",
-  	"boxDl;": "╖",
-  	"boxdL;": "╕",
-  	"boxdl;": "┐",
-  	"boxDR;": "╔",
-  	"boxDr;": "╓",
-  	"boxdR;": "╒",
-  	"boxdr;": "┌",
-  	"boxH;": "═",
-  	"boxh;": "─",
-  	"boxHD;": "╦",
-  	"boxHd;": "╤",
-  	"boxhD;": "╥",
-  	"boxhd;": "┬",
-  	"boxHU;": "╩",
-  	"boxHu;": "╧",
-  	"boxhU;": "╨",
-  	"boxhu;": "┴",
-  	"boxminus;": "⊟",
-  	"boxplus;": "⊞",
-  	"boxtimes;": "⊠",
-  	"boxUL;": "╝",
-  	"boxUl;": "╜",
-  	"boxuL;": "╛",
-  	"boxul;": "┘",
-  	"boxUR;": "╚",
-  	"boxUr;": "╙",
-  	"boxuR;": "╘",
-  	"boxur;": "└",
-  	"boxV;": "║",
-  	"boxv;": "│",
-  	"boxVH;": "╬",
-  	"boxVh;": "╫",
-  	"boxvH;": "╪",
-  	"boxvh;": "┼",
-  	"boxVL;": "╣",
-  	"boxVl;": "╢",
-  	"boxvL;": "╡",
-  	"boxvl;": "┤",
-  	"boxVR;": "╠",
-  	"boxVr;": "╟",
-  	"boxvR;": "╞",
-  	"boxvr;": "├",
-  	"bprime;": "‵",
-  	"Breve;": "˘",
-  	"breve;": "˘",
-  	"brvbar;": "¦",
-  	brvbar: brvbar$1,
-  	"Bscr;": "ℬ",
-  	"bscr;": "𝒷",
-  	"bsemi;": "⁏",
-  	"bsim;": "∽",
-  	"bsime;": "⋍",
-  	"bsol;": "\\",
-  	"bsolb;": "⧅",
-  	"bsolhsub;": "⟈",
-  	"bull;": "•",
-  	"bullet;": "•",
-  	"bump;": "≎",
-  	"bumpE;": "⪮",
-  	"bumpe;": "≏",
-  	"Bumpeq;": "≎",
-  	"bumpeq;": "≏",
-  	"Cacute;": "Ć",
-  	"cacute;": "ć",
-  	"Cap;": "⋒",
-  	"cap;": "∩",
-  	"capand;": "⩄",
-  	"capbrcup;": "⩉",
-  	"capcap;": "⩋",
-  	"capcup;": "⩇",
-  	"capdot;": "⩀",
-  	"CapitalDifferentialD;": "ⅅ",
-  	"caps;": "∩︀",
-  	"caret;": "⁁",
-  	"caron;": "ˇ",
-  	"Cayleys;": "ℭ",
-  	"ccaps;": "⩍",
-  	"Ccaron;": "Č",
-  	"ccaron;": "č",
-  	"Ccedil;": "Ç",
-  	Ccedil: Ccedil$1,
-  	"ccedil;": "ç",
-  	ccedil: ccedil$1,
-  	"Ccirc;": "Ĉ",
-  	"ccirc;": "ĉ",
-  	"Cconint;": "∰",
-  	"ccups;": "⩌",
-  	"ccupssm;": "⩐",
-  	"Cdot;": "Ċ",
-  	"cdot;": "ċ",
-  	"cedil;": "¸",
-  	cedil: cedil$2,
-  	"Cedilla;": "¸",
-  	"cemptyv;": "⦲",
-  	"cent;": "¢",
-  	cent: cent$2,
-  	"CenterDot;": "·",
-  	"centerdot;": "·",
-  	"Cfr;": "ℭ",
-  	"cfr;": "𝔠",
-  	"CHcy;": "Ч",
-  	"chcy;": "ч",
-  	"check;": "✓",
-  	"checkmark;": "✓",
-  	"Chi;": "Χ",
-  	"chi;": "χ",
-  	"cir;": "○",
-  	"circ;": "ˆ",
-  	"circeq;": "≗",
-  	"circlearrowleft;": "↺",
-  	"circlearrowright;": "↻",
-  	"circledast;": "⊛",
-  	"circledcirc;": "⊚",
-  	"circleddash;": "⊝",
-  	"CircleDot;": "⊙",
-  	"circledR;": "®",
-  	"circledS;": "Ⓢ",
-  	"CircleMinus;": "⊖",
-  	"CirclePlus;": "⊕",
-  	"CircleTimes;": "⊗",
-  	"cirE;": "⧃",
-  	"cire;": "≗",
-  	"cirfnint;": "⨐",
-  	"cirmid;": "⫯",
-  	"cirscir;": "⧂",
-  	"ClockwiseContourIntegral;": "∲",
-  	"CloseCurlyDoubleQuote;": "”",
-  	"CloseCurlyQuote;": "’",
-  	"clubs;": "♣",
-  	"clubsuit;": "♣",
-  	"Colon;": "∷",
-  	"colon;": ":",
-  	"Colone;": "⩴",
-  	"colone;": "≔",
-  	"coloneq;": "≔",
-  	"comma;": ",",
-  	"commat;": "@",
-  	"comp;": "∁",
-  	"compfn;": "∘",
-  	"complement;": "∁",
-  	"complexes;": "ℂ",
-  	"cong;": "≅",
-  	"congdot;": "⩭",
-  	"Congruent;": "≡",
-  	"Conint;": "∯",
-  	"conint;": "∮",
-  	"ContourIntegral;": "∮",
-  	"Copf;": "ℂ",
-  	"copf;": "𝕔",
-  	"coprod;": "∐",
-  	"Coproduct;": "∐",
-  	"COPY;": "©",
-  	COPY: COPY$2,
-  	"copy;": "©",
-  	copy: copy$2,
-  	"copysr;": "℗",
-  	"CounterClockwiseContourIntegral;": "∳",
-  	"crarr;": "↵",
-  	"Cross;": "⨯",
-  	"cross;": "✗",
-  	"Cscr;": "𝒞",
-  	"cscr;": "𝒸",
-  	"csub;": "⫏",
-  	"csube;": "⫑",
-  	"csup;": "⫐",
-  	"csupe;": "⫒",
-  	"ctdot;": "⋯",
-  	"cudarrl;": "⤸",
-  	"cudarrr;": "⤵",
-  	"cuepr;": "⋞",
-  	"cuesc;": "⋟",
-  	"cularr;": "↶",
-  	"cularrp;": "⤽",
-  	"Cup;": "⋓",
-  	"cup;": "∪",
-  	"cupbrcap;": "⩈",
-  	"CupCap;": "≍",
-  	"cupcap;": "⩆",
-  	"cupcup;": "⩊",
-  	"cupdot;": "⊍",
-  	"cupor;": "⩅",
-  	"cups;": "∪︀",
-  	"curarr;": "↷",
-  	"curarrm;": "⤼",
-  	"curlyeqprec;": "⋞",
-  	"curlyeqsucc;": "⋟",
-  	"curlyvee;": "⋎",
-  	"curlywedge;": "⋏",
-  	"curren;": "¤",
-  	curren: curren$1,
-  	"curvearrowleft;": "↶",
-  	"curvearrowright;": "↷",
-  	"cuvee;": "⋎",
-  	"cuwed;": "⋏",
-  	"cwconint;": "∲",
-  	"cwint;": "∱",
-  	"cylcty;": "⌭",
-  	"Dagger;": "‡",
-  	"dagger;": "†",
-  	"daleth;": "ℸ",
-  	"Darr;": "↡",
-  	"dArr;": "⇓",
-  	"darr;": "↓",
-  	"dash;": "‐",
-  	"Dashv;": "⫤",
-  	"dashv;": "⊣",
-  	"dbkarow;": "⤏",
-  	"dblac;": "˝",
-  	"Dcaron;": "Ď",
-  	"dcaron;": "ď",
-  	"Dcy;": "Д",
-  	"dcy;": "д",
-  	"DD;": "ⅅ",
-  	"dd;": "ⅆ",
-  	"ddagger;": "‡",
-  	"ddarr;": "⇊",
-  	"DDotrahd;": "⤑",
-  	"ddotseq;": "⩷",
-  	"deg;": "°",
-  	deg: deg$2,
-  	"Del;": "∇",
-  	"Delta;": "Δ",
-  	"delta;": "δ",
-  	"demptyv;": "⦱",
-  	"dfisht;": "⥿",
-  	"Dfr;": "𝔇",
-  	"dfr;": "𝔡",
-  	"dHar;": "⥥",
-  	"dharl;": "⇃",
-  	"dharr;": "⇂",
-  	"DiacriticalAcute;": "´",
-  	"DiacriticalDot;": "˙",
-  	"DiacriticalDoubleAcute;": "˝",
-  	"DiacriticalGrave;": "`",
-  	"DiacriticalTilde;": "˜",
-  	"diam;": "⋄",
-  	"Diamond;": "⋄",
-  	"diamond;": "⋄",
-  	"diamondsuit;": "♦",
-  	"diams;": "♦",
-  	"die;": "¨",
-  	"DifferentialD;": "ⅆ",
-  	"digamma;": "ϝ",
-  	"disin;": "⋲",
-  	"div;": "÷",
-  	"divide;": "÷",
-  	divide: divide$2,
-  	"divideontimes;": "⋇",
-  	"divonx;": "⋇",
-  	"DJcy;": "Ђ",
-  	"djcy;": "ђ",
-  	"dlcorn;": "⌞",
-  	"dlcrop;": "⌍",
-  	"dollar;": "$",
-  	"Dopf;": "𝔻",
-  	"dopf;": "𝕕",
-  	"Dot;": "¨",
-  	"dot;": "˙",
-  	"DotDot;": "⃜",
-  	"doteq;": "≐",
-  	"doteqdot;": "≑",
-  	"DotEqual;": "≐",
-  	"dotminus;": "∸",
-  	"dotplus;": "∔",
-  	"dotsquare;": "⊡",
-  	"doublebarwedge;": "⌆",
-  	"DoubleContourIntegral;": "∯",
-  	"DoubleDot;": "¨",
-  	"DoubleDownArrow;": "⇓",
-  	"DoubleLeftArrow;": "⇐",
-  	"DoubleLeftRightArrow;": "⇔",
-  	"DoubleLeftTee;": "⫤",
-  	"DoubleLongLeftArrow;": "⟸",
-  	"DoubleLongLeftRightArrow;": "⟺",
-  	"DoubleLongRightArrow;": "⟹",
-  	"DoubleRightArrow;": "⇒",
-  	"DoubleRightTee;": "⊨",
-  	"DoubleUpArrow;": "⇑",
-  	"DoubleUpDownArrow;": "⇕",
-  	"DoubleVerticalBar;": "∥",
-  	"DownArrow;": "↓",
-  	"Downarrow;": "⇓",
-  	"downarrow;": "↓",
-  	"DownArrowBar;": "⤓",
-  	"DownArrowUpArrow;": "⇵",
-  	"DownBreve;": "̑",
-  	"downdownarrows;": "⇊",
-  	"downharpoonleft;": "⇃",
-  	"downharpoonright;": "⇂",
-  	"DownLeftRightVector;": "⥐",
-  	"DownLeftTeeVector;": "⥞",
-  	"DownLeftVector;": "↽",
-  	"DownLeftVectorBar;": "⥖",
-  	"DownRightTeeVector;": "⥟",
-  	"DownRightVector;": "⇁",
-  	"DownRightVectorBar;": "⥗",
-  	"DownTee;": "⊤",
-  	"DownTeeArrow;": "↧",
-  	"drbkarow;": "⤐",
-  	"drcorn;": "⌟",
-  	"drcrop;": "⌌",
-  	"Dscr;": "𝒟",
-  	"dscr;": "𝒹",
-  	"DScy;": "Ѕ",
-  	"dscy;": "ѕ",
-  	"dsol;": "⧶",
-  	"Dstrok;": "Đ",
-  	"dstrok;": "đ",
-  	"dtdot;": "⋱",
-  	"dtri;": "▿",
-  	"dtrif;": "▾",
-  	"duarr;": "⇵",
-  	"duhar;": "⥯",
-  	"dwangle;": "⦦",
-  	"DZcy;": "Џ",
-  	"dzcy;": "џ",
-  	"dzigrarr;": "⟿",
-  	"Eacute;": "É",
-  	Eacute: Eacute$1,
-  	"eacute;": "é",
-  	eacute: eacute$1,
-  	"easter;": "⩮",
-  	"Ecaron;": "Ě",
-  	"ecaron;": "ě",
-  	"ecir;": "≖",
-  	"Ecirc;": "Ê",
-  	Ecirc: Ecirc$1,
-  	"ecirc;": "ê",
-  	ecirc: ecirc$1,
-  	"ecolon;": "≕",
-  	"Ecy;": "Э",
-  	"ecy;": "э",
-  	"eDDot;": "⩷",
-  	"Edot;": "Ė",
-  	"eDot;": "≑",
-  	"edot;": "ė",
-  	"ee;": "ⅇ",
-  	"efDot;": "≒",
-  	"Efr;": "𝔈",
-  	"efr;": "𝔢",
-  	"eg;": "⪚",
-  	"Egrave;": "È",
-  	Egrave: Egrave$1,
-  	"egrave;": "è",
-  	egrave: egrave$2,
-  	"egs;": "⪖",
-  	"egsdot;": "⪘",
-  	"el;": "⪙",
-  	"Element;": "∈",
-  	"elinters;": "⏧",
-  	"ell;": "ℓ",
-  	"els;": "⪕",
-  	"elsdot;": "⪗",
-  	"Emacr;": "Ē",
-  	"emacr;": "ē",
-  	"empty;": "∅",
-  	"emptyset;": "∅",
-  	"EmptySmallSquare;": "◻",
-  	"emptyv;": "∅",
-  	"EmptyVerySmallSquare;": "▫",
-  	"emsp;": " ",
-  	"emsp13;": " ",
-  	"emsp14;": " ",
-  	"ENG;": "Ŋ",
-  	"eng;": "ŋ",
-  	"ensp;": " ",
-  	"Eogon;": "Ę",
-  	"eogon;": "ę",
-  	"Eopf;": "𝔼",
-  	"eopf;": "𝕖",
-  	"epar;": "⋕",
-  	"eparsl;": "⧣",
-  	"eplus;": "⩱",
-  	"epsi;": "ε",
-  	"Epsilon;": "Ε",
-  	"epsilon;": "ε",
-  	"epsiv;": "ϵ",
-  	"eqcirc;": "≖",
-  	"eqcolon;": "≕",
-  	"eqsim;": "≂",
-  	"eqslantgtr;": "⪖",
-  	"eqslantless;": "⪕",
-  	"Equal;": "⩵",
-  	"equals;": "=",
-  	"EqualTilde;": "≂",
-  	"equest;": "≟",
-  	"Equilibrium;": "⇌",
-  	"equiv;": "≡",
-  	"equivDD;": "⩸",
-  	"eqvparsl;": "⧥",
-  	"erarr;": "⥱",
-  	"erDot;": "≓",
-  	"Escr;": "ℰ",
-  	"escr;": "ℯ",
-  	"esdot;": "≐",
-  	"Esim;": "⩳",
-  	"esim;": "≂",
-  	"Eta;": "Η",
-  	"eta;": "η",
-  	"ETH;": "Ð",
-  	ETH: ETH$2,
-  	"eth;": "ð",
-  	eth: eth$2,
-  	"Euml;": "Ë",
-  	Euml: Euml$1,
-  	"euml;": "ë",
-  	euml: euml$1,
-  	"euro;": "€",
-  	"excl;": "!",
-  	"exist;": "∃",
-  	"Exists;": "∃",
-  	"expectation;": "ℰ",
-  	"ExponentialE;": "ⅇ",
-  	"exponentiale;": "ⅇ",
-  	"fallingdotseq;": "≒",
-  	"Fcy;": "Ф",
-  	"fcy;": "ф",
-  	"female;": "♀",
-  	"ffilig;": "ﬃ",
-  	"fflig;": "ﬀ",
-  	"ffllig;": "ﬄ",
-  	"Ffr;": "𝔉",
-  	"ffr;": "𝔣",
-  	"filig;": "ﬁ",
-  	"FilledSmallSquare;": "◼",
-  	"FilledVerySmallSquare;": "▪",
-  	"fjlig;": "fj",
-  	"flat;": "♭",
-  	"fllig;": "ﬂ",
-  	"fltns;": "▱",
-  	"fnof;": "ƒ",
-  	"Fopf;": "𝔽",
-  	"fopf;": "𝕗",
-  	"ForAll;": "∀",
-  	"forall;": "∀",
-  	"fork;": "⋔",
-  	"forkv;": "⫙",
-  	"Fouriertrf;": "ℱ",
-  	"fpartint;": "⨍",
-  	"frac12;": "½",
-  	frac12: frac12$1,
-  	"frac13;": "⅓",
-  	"frac14;": "¼",
-  	frac14: frac14$1,
-  	"frac15;": "⅕",
-  	"frac16;": "⅙",
-  	"frac18;": "⅛",
-  	"frac23;": "⅔",
-  	"frac25;": "⅖",
-  	"frac34;": "¾",
-  	frac34: frac34$1,
-  	"frac35;": "⅗",
-  	"frac38;": "⅜",
-  	"frac45;": "⅘",
-  	"frac56;": "⅚",
-  	"frac58;": "⅝",
-  	"frac78;": "⅞",
-  	"frasl;": "⁄",
-  	"frown;": "⌢",
-  	"Fscr;": "ℱ",
-  	"fscr;": "𝒻",
-  	"gacute;": "ǵ",
-  	"Gamma;": "Γ",
-  	"gamma;": "γ",
-  	"Gammad;": "Ϝ",
-  	"gammad;": "ϝ",
-  	"gap;": "⪆",
-  	"Gbreve;": "Ğ",
-  	"gbreve;": "ğ",
-  	"Gcedil;": "Ģ",
-  	"Gcirc;": "Ĝ",
-  	"gcirc;": "ĝ",
-  	"Gcy;": "Г",
-  	"gcy;": "г",
-  	"Gdot;": "Ġ",
-  	"gdot;": "ġ",
-  	"gE;": "≧",
-  	"ge;": "≥",
-  	"gEl;": "⪌",
-  	"gel;": "⋛",
-  	"geq;": "≥",
-  	"geqq;": "≧",
-  	"geqslant;": "⩾",
-  	"ges;": "⩾",
-  	"gescc;": "⪩",
-  	"gesdot;": "⪀",
-  	"gesdoto;": "⪂",
-  	"gesdotol;": "⪄",
-  	"gesl;": "⋛︀",
-  	"gesles;": "⪔",
-  	"Gfr;": "𝔊",
-  	"gfr;": "𝔤",
-  	"Gg;": "⋙",
-  	"gg;": "≫",
-  	"ggg;": "⋙",
-  	"gimel;": "ℷ",
-  	"GJcy;": "Ѓ",
-  	"gjcy;": "ѓ",
-  	"gl;": "≷",
-  	"gla;": "⪥",
-  	"glE;": "⪒",
-  	"glj;": "⪤",
-  	"gnap;": "⪊",
-  	"gnapprox;": "⪊",
-  	"gnE;": "≩",
-  	"gne;": "⪈",
-  	"gneq;": "⪈",
-  	"gneqq;": "≩",
-  	"gnsim;": "⋧",
-  	"Gopf;": "𝔾",
-  	"gopf;": "𝕘",
-  	"grave;": "`",
-  	"GreaterEqual;": "≥",
-  	"GreaterEqualLess;": "⋛",
-  	"GreaterFullEqual;": "≧",
-  	"GreaterGreater;": "⪢",
-  	"GreaterLess;": "≷",
-  	"GreaterSlantEqual;": "⩾",
-  	"GreaterTilde;": "≳",
-  	"Gscr;": "𝒢",
-  	"gscr;": "ℊ",
-  	"gsim;": "≳",
-  	"gsime;": "⪎",
-  	"gsiml;": "⪐",
-  	"GT;": ">",
-  	GT: GT$2,
-  	"Gt;": "≫",
-  	"gt;": ">",
-  	gt: gt$2,
-  	"gtcc;": "⪧",
-  	"gtcir;": "⩺",
-  	"gtdot;": "⋗",
-  	"gtlPar;": "⦕",
-  	"gtquest;": "⩼",
-  	"gtrapprox;": "⪆",
-  	"gtrarr;": "⥸",
-  	"gtrdot;": "⋗",
-  	"gtreqless;": "⋛",
-  	"gtreqqless;": "⪌",
-  	"gtrless;": "≷",
-  	"gtrsim;": "≳",
-  	"gvertneqq;": "≩︀",
-  	"gvnE;": "≩︀",
-  	"Hacek;": "ˇ",
-  	"hairsp;": " ",
-  	"half;": "½",
-  	"hamilt;": "ℋ",
-  	"HARDcy;": "Ъ",
-  	"hardcy;": "ъ",
-  	"hArr;": "⇔",
-  	"harr;": "↔",
-  	"harrcir;": "⥈",
-  	"harrw;": "↭",
-  	"Hat;": "^",
-  	"hbar;": "ℏ",
-  	"Hcirc;": "Ĥ",
-  	"hcirc;": "ĥ",
-  	"hearts;": "♥",
-  	"heartsuit;": "♥",
-  	"hellip;": "…",
-  	"hercon;": "⊹",
-  	"Hfr;": "ℌ",
-  	"hfr;": "𝔥",
-  	"HilbertSpace;": "ℋ",
-  	"hksearow;": "⤥",
-  	"hkswarow;": "⤦",
-  	"hoarr;": "⇿",
-  	"homtht;": "∻",
-  	"hookleftarrow;": "↩",
-  	"hookrightarrow;": "↪",
-  	"Hopf;": "ℍ",
-  	"hopf;": "𝕙",
-  	"horbar;": "―",
-  	"HorizontalLine;": "─",
-  	"Hscr;": "ℋ",
-  	"hscr;": "𝒽",
-  	"hslash;": "ℏ",
-  	"Hstrok;": "Ħ",
-  	"hstrok;": "ħ",
-  	"HumpDownHump;": "≎",
-  	"HumpEqual;": "≏",
-  	"hybull;": "⁃",
-  	"hyphen;": "‐",
-  	"Iacute;": "Í",
-  	Iacute: Iacute$1,
-  	"iacute;": "í",
-  	iacute: iacute$1,
-  	"ic;": "⁣",
-  	"Icirc;": "Î",
-  	Icirc: Icirc$1,
-  	"icirc;": "î",
-  	icirc: icirc$1,
-  	"Icy;": "И",
-  	"icy;": "и",
-  	"Idot;": "İ",
-  	"IEcy;": "Е",
-  	"iecy;": "е",
-  	"iexcl;": "¡",
-  	iexcl: iexcl$1,
-  	"iff;": "⇔",
-  	"Ifr;": "ℑ",
-  	"ifr;": "𝔦",
-  	"Igrave;": "Ì",
-  	Igrave: Igrave$1,
-  	"igrave;": "ì",
-  	igrave: igrave$1,
-  	"ii;": "ⅈ",
-  	"iiiint;": "⨌",
-  	"iiint;": "∭",
-  	"iinfin;": "⧜",
-  	"iiota;": "℩",
-  	"IJlig;": "Ĳ",
-  	"ijlig;": "ĳ",
-  	"Im;": "ℑ",
-  	"Imacr;": "Ī",
-  	"imacr;": "ī",
-  	"image;": "ℑ",
-  	"ImaginaryI;": "ⅈ",
-  	"imagline;": "ℐ",
-  	"imagpart;": "ℑ",
-  	"imath;": "ı",
-  	"imof;": "⊷",
-  	"imped;": "Ƶ",
-  	"Implies;": "⇒",
-  	"in;": "∈",
-  	"incare;": "℅",
-  	"infin;": "∞",
-  	"infintie;": "⧝",
-  	"inodot;": "ı",
-  	"Int;": "∬",
-  	"int;": "∫",
-  	"intcal;": "⊺",
-  	"integers;": "ℤ",
-  	"Integral;": "∫",
-  	"intercal;": "⊺",
-  	"Intersection;": "⋂",
-  	"intlarhk;": "⨗",
-  	"intprod;": "⨼",
-  	"InvisibleComma;": "⁣",
-  	"InvisibleTimes;": "⁢",
-  	"IOcy;": "Ё",
-  	"iocy;": "ё",
-  	"Iogon;": "Į",
-  	"iogon;": "į",
-  	"Iopf;": "𝕀",
-  	"iopf;": "𝕚",
-  	"Iota;": "Ι",
-  	"iota;": "ι",
-  	"iprod;": "⨼",
-  	"iquest;": "¿",
-  	iquest: iquest$1,
-  	"Iscr;": "ℐ",
-  	"iscr;": "𝒾",
-  	"isin;": "∈",
-  	"isindot;": "⋵",
-  	"isinE;": "⋹",
-  	"isins;": "⋴",
-  	"isinsv;": "⋳",
-  	"isinv;": "∈",
-  	"it;": "⁢",
-  	"Itilde;": "Ĩ",
-  	"itilde;": "ĩ",
-  	"Iukcy;": "І",
-  	"iukcy;": "і",
-  	"Iuml;": "Ï",
-  	Iuml: Iuml$1,
-  	"iuml;": "ï",
-  	iuml: iuml$1,
-  	"Jcirc;": "Ĵ",
-  	"jcirc;": "ĵ",
-  	"Jcy;": "Й",
-  	"jcy;": "й",
-  	"Jfr;": "𝔍",
-  	"jfr;": "𝔧",
-  	"jmath;": "ȷ",
-  	"Jopf;": "𝕁",
-  	"jopf;": "𝕛",
-  	"Jscr;": "𝒥",
-  	"jscr;": "𝒿",
-  	"Jsercy;": "Ј",
-  	"jsercy;": "ј",
-  	"Jukcy;": "Є",
-  	"jukcy;": "є",
-  	"Kappa;": "Κ",
-  	"kappa;": "κ",
-  	"kappav;": "ϰ",
-  	"Kcedil;": "Ķ",
-  	"kcedil;": "ķ",
-  	"Kcy;": "К",
-  	"kcy;": "к",
-  	"Kfr;": "𝔎",
-  	"kfr;": "𝔨",
-  	"kgreen;": "ĸ",
-  	"KHcy;": "Х",
-  	"khcy;": "х",
-  	"KJcy;": "Ќ",
-  	"kjcy;": "ќ",
-  	"Kopf;": "𝕂",
-  	"kopf;": "𝕜",
-  	"Kscr;": "𝒦",
-  	"kscr;": "𝓀",
-  	"lAarr;": "⇚",
-  	"Lacute;": "Ĺ",
-  	"lacute;": "ĺ",
-  	"laemptyv;": "⦴",
-  	"lagran;": "ℒ",
-  	"Lambda;": "Λ",
-  	"lambda;": "λ",
-  	"Lang;": "⟪",
-  	"lang;": "⟨",
-  	"langd;": "⦑",
-  	"langle;": "⟨",
-  	"lap;": "⪅",
-  	"Laplacetrf;": "ℒ",
-  	"laquo;": "«",
-  	laquo: laquo$1,
-  	"Larr;": "↞",
-  	"lArr;": "⇐",
-  	"larr;": "←",
-  	"larrb;": "⇤",
-  	"larrbfs;": "⤟",
-  	"larrfs;": "⤝",
-  	"larrhk;": "↩",
-  	"larrlp;": "↫",
-  	"larrpl;": "⤹",
-  	"larrsim;": "⥳",
-  	"larrtl;": "↢",
-  	"lat;": "⪫",
-  	"lAtail;": "⤛",
-  	"latail;": "⤙",
-  	"late;": "⪭",
-  	"lates;": "⪭︀",
-  	"lBarr;": "⤎",
-  	"lbarr;": "⤌",
-  	"lbbrk;": "❲",
-  	"lbrace;": "{",
-  	"lbrack;": "[",
-  	"lbrke;": "⦋",
-  	"lbrksld;": "⦏",
-  	"lbrkslu;": "⦍",
-  	"Lcaron;": "Ľ",
-  	"lcaron;": "ľ",
-  	"Lcedil;": "Ļ",
-  	"lcedil;": "ļ",
-  	"lceil;": "⌈",
-  	"lcub;": "{",
-  	"Lcy;": "Л",
-  	"lcy;": "л",
-  	"ldca;": "⤶",
-  	"ldquo;": "“",
-  	"ldquor;": "„",
-  	"ldrdhar;": "⥧",
-  	"ldrushar;": "⥋",
-  	"ldsh;": "↲",
-  	"lE;": "≦",
-  	"le;": "≤",
-  	"LeftAngleBracket;": "⟨",
-  	"LeftArrow;": "←",
-  	"Leftarrow;": "⇐",
-  	"leftarrow;": "←",
-  	"LeftArrowBar;": "⇤",
-  	"LeftArrowRightArrow;": "⇆",
-  	"leftarrowtail;": "↢",
-  	"LeftCeiling;": "⌈",
-  	"LeftDoubleBracket;": "⟦",
-  	"LeftDownTeeVector;": "⥡",
-  	"LeftDownVector;": "⇃",
-  	"LeftDownVectorBar;": "⥙",
-  	"LeftFloor;": "⌊",
-  	"leftharpoondown;": "↽",
-  	"leftharpoonup;": "↼",
-  	"leftleftarrows;": "⇇",
-  	"LeftRightArrow;": "↔",
-  	"Leftrightarrow;": "⇔",
-  	"leftrightarrow;": "↔",
-  	"leftrightarrows;": "⇆",
-  	"leftrightharpoons;": "⇋",
-  	"leftrightsquigarrow;": "↭",
-  	"LeftRightVector;": "⥎",
-  	"LeftTee;": "⊣",
-  	"LeftTeeArrow;": "↤",
-  	"LeftTeeVector;": "⥚",
-  	"leftthreetimes;": "⋋",
-  	"LeftTriangle;": "⊲",
-  	"LeftTriangleBar;": "⧏",
-  	"LeftTriangleEqual;": "⊴",
-  	"LeftUpDownVector;": "⥑",
-  	"LeftUpTeeVector;": "⥠",
-  	"LeftUpVector;": "↿",
-  	"LeftUpVectorBar;": "⥘",
-  	"LeftVector;": "↼",
-  	"LeftVectorBar;": "⥒",
-  	"lEg;": "⪋",
-  	"leg;": "⋚",
-  	"leq;": "≤",
-  	"leqq;": "≦",
-  	"leqslant;": "⩽",
-  	"les;": "⩽",
-  	"lescc;": "⪨",
-  	"lesdot;": "⩿",
-  	"lesdoto;": "⪁",
-  	"lesdotor;": "⪃",
-  	"lesg;": "⋚︀",
-  	"lesges;": "⪓",
-  	"lessapprox;": "⪅",
-  	"lessdot;": "⋖",
-  	"lesseqgtr;": "⋚",
-  	"lesseqqgtr;": "⪋",
-  	"LessEqualGreater;": "⋚",
-  	"LessFullEqual;": "≦",
-  	"LessGreater;": "≶",
-  	"lessgtr;": "≶",
-  	"LessLess;": "⪡",
-  	"lesssim;": "≲",
-  	"LessSlantEqual;": "⩽",
-  	"LessTilde;": "≲",
-  	"lfisht;": "⥼",
-  	"lfloor;": "⌊",
-  	"Lfr;": "𝔏",
-  	"lfr;": "𝔩",
-  	"lg;": "≶",
-  	"lgE;": "⪑",
-  	"lHar;": "⥢",
-  	"lhard;": "↽",
-  	"lharu;": "↼",
-  	"lharul;": "⥪",
-  	"lhblk;": "▄",
-  	"LJcy;": "Љ",
-  	"ljcy;": "љ",
-  	"Ll;": "⋘",
-  	"ll;": "≪",
-  	"llarr;": "⇇",
-  	"llcorner;": "⌞",
-  	"Lleftarrow;": "⇚",
-  	"llhard;": "⥫",
-  	"lltri;": "◺",
-  	"Lmidot;": "Ŀ",
-  	"lmidot;": "ŀ",
-  	"lmoust;": "⎰",
-  	"lmoustache;": "⎰",
-  	"lnap;": "⪉",
-  	"lnapprox;": "⪉",
-  	"lnE;": "≨",
-  	"lne;": "⪇",
-  	"lneq;": "⪇",
-  	"lneqq;": "≨",
-  	"lnsim;": "⋦",
-  	"loang;": "⟬",
-  	"loarr;": "⇽",
-  	"lobrk;": "⟦",
-  	"LongLeftArrow;": "⟵",
-  	"Longleftarrow;": "⟸",
-  	"longleftarrow;": "⟵",
-  	"LongLeftRightArrow;": "⟷",
-  	"Longleftrightarrow;": "⟺",
-  	"longleftrightarrow;": "⟷",
-  	"longmapsto;": "⟼",
-  	"LongRightArrow;": "⟶",
-  	"Longrightarrow;": "⟹",
-  	"longrightarrow;": "⟶",
-  	"looparrowleft;": "↫",
-  	"looparrowright;": "↬",
-  	"lopar;": "⦅",
-  	"Lopf;": "𝕃",
-  	"lopf;": "𝕝",
-  	"loplus;": "⨭",
-  	"lotimes;": "⨴",
-  	"lowast;": "∗",
-  	"lowbar;": "_",
-  	"LowerLeftArrow;": "↙",
-  	"LowerRightArrow;": "↘",
-  	"loz;": "◊",
-  	"lozenge;": "◊",
-  	"lozf;": "⧫",
-  	"lpar;": "(",
-  	"lparlt;": "⦓",
-  	"lrarr;": "⇆",
-  	"lrcorner;": "⌟",
-  	"lrhar;": "⇋",
-  	"lrhard;": "⥭",
-  	"lrm;": "‎",
-  	"lrtri;": "⊿",
-  	"lsaquo;": "‹",
-  	"Lscr;": "ℒ",
-  	"lscr;": "𝓁",
-  	"Lsh;": "↰",
-  	"lsh;": "↰",
-  	"lsim;": "≲",
-  	"lsime;": "⪍",
-  	"lsimg;": "⪏",
-  	"lsqb;": "[",
-  	"lsquo;": "‘",
-  	"lsquor;": "‚",
-  	"Lstrok;": "Ł",
-  	"lstrok;": "ł",
-  	"LT;": "<",
-  	LT: LT$2,
-  	"Lt;": "≪",
-  	"lt;": "<",
-  	lt: lt$2,
-  	"ltcc;": "⪦",
-  	"ltcir;": "⩹",
-  	"ltdot;": "⋖",
-  	"lthree;": "⋋",
-  	"ltimes;": "⋉",
-  	"ltlarr;": "⥶",
-  	"ltquest;": "⩻",
-  	"ltri;": "◃",
-  	"ltrie;": "⊴",
-  	"ltrif;": "◂",
-  	"ltrPar;": "⦖",
-  	"lurdshar;": "⥊",
-  	"luruhar;": "⥦",
-  	"lvertneqq;": "≨︀",
-  	"lvnE;": "≨︀",
-  	"macr;": "¯",
-  	macr: macr$1,
-  	"male;": "♂",
-  	"malt;": "✠",
-  	"maltese;": "✠",
-  	"Map;": "⤅",
-  	"map;": "↦",
-  	"mapsto;": "↦",
-  	"mapstodown;": "↧",
-  	"mapstoleft;": "↤",
-  	"mapstoup;": "↥",
-  	"marker;": "▮",
-  	"mcomma;": "⨩",
-  	"Mcy;": "М",
-  	"mcy;": "м",
-  	"mdash;": "—",
-  	"mDDot;": "∺",
-  	"measuredangle;": "∡",
-  	"MediumSpace;": " ",
-  	"Mellintrf;": "ℳ",
-  	"Mfr;": "𝔐",
-  	"mfr;": "𝔪",
-  	"mho;": "℧",
-  	"micro;": "µ",
-  	micro: micro$1,
-  	"mid;": "∣",
-  	"midast;": "*",
-  	"midcir;": "⫰",
-  	"middot;": "·",
-  	middot: middot$1,
-  	"minus;": "−",
-  	"minusb;": "⊟",
-  	"minusd;": "∸",
-  	"minusdu;": "⨪",
-  	"MinusPlus;": "∓",
-  	"mlcp;": "⫛",
-  	"mldr;": "…",
-  	"mnplus;": "∓",
-  	"models;": "⊧",
-  	"Mopf;": "𝕄",
-  	"mopf;": "𝕞",
-  	"mp;": "∓",
-  	"Mscr;": "ℳ",
-  	"mscr;": "𝓂",
-  	"mstpos;": "∾",
-  	"Mu;": "Μ",
-  	"mu;": "μ",
-  	"multimap;": "⊸",
-  	"mumap;": "⊸",
-  	"nabla;": "∇",
-  	"Nacute;": "Ń",
-  	"nacute;": "ń",
-  	"nang;": "∠⃒",
-  	"nap;": "≉",
-  	"napE;": "⩰̸",
-  	"napid;": "≋̸",
-  	"napos;": "ŉ",
-  	"napprox;": "≉",
-  	"natur;": "♮",
-  	"natural;": "♮",
-  	"naturals;": "ℕ",
-  	"nbsp;": " ",
-  	nbsp: nbsp$1,
-  	"nbump;": "≎̸",
-  	"nbumpe;": "≏̸",
-  	"ncap;": "⩃",
-  	"Ncaron;": "Ň",
-  	"ncaron;": "ň",
-  	"Ncedil;": "Ņ",
-  	"ncedil;": "ņ",
-  	"ncong;": "≇",
-  	"ncongdot;": "⩭̸",
-  	"ncup;": "⩂",
-  	"Ncy;": "Н",
-  	"ncy;": "н",
-  	"ndash;": "–",
-  	"ne;": "≠",
-  	"nearhk;": "⤤",
-  	"neArr;": "⇗",
-  	"nearr;": "↗",
-  	"nearrow;": "↗",
-  	"nedot;": "≐̸",
-  	"NegativeMediumSpace;": "​",
-  	"NegativeThickSpace;": "​",
-  	"NegativeThinSpace;": "​",
-  	"NegativeVeryThinSpace;": "​",
-  	"nequiv;": "≢",
-  	"nesear;": "⤨",
-  	"nesim;": "≂̸",
-  	"NestedGreaterGreater;": "≫",
-  	"NestedLessLess;": "≪",
-  	"NewLine;": "\n",
-  	"nexist;": "∄",
-  	"nexists;": "∄",
-  	"Nfr;": "𝔑",
-  	"nfr;": "𝔫",
-  	"ngE;": "≧̸",
-  	"nge;": "≱",
-  	"ngeq;": "≱",
-  	"ngeqq;": "≧̸",
-  	"ngeqslant;": "⩾̸",
-  	"nges;": "⩾̸",
-  	"nGg;": "⋙̸",
-  	"ngsim;": "≵",
-  	"nGt;": "≫⃒",
-  	"ngt;": "≯",
-  	"ngtr;": "≯",
-  	"nGtv;": "≫̸",
-  	"nhArr;": "⇎",
-  	"nharr;": "↮",
-  	"nhpar;": "⫲",
-  	"ni;": "∋",
-  	"nis;": "⋼",
-  	"nisd;": "⋺",
-  	"niv;": "∋",
-  	"NJcy;": "Њ",
-  	"njcy;": "њ",
-  	"nlArr;": "⇍",
-  	"nlarr;": "↚",
-  	"nldr;": "‥",
-  	"nlE;": "≦̸",
-  	"nle;": "≰",
-  	"nLeftarrow;": "⇍",
-  	"nleftarrow;": "↚",
-  	"nLeftrightarrow;": "⇎",
-  	"nleftrightarrow;": "↮",
-  	"nleq;": "≰",
-  	"nleqq;": "≦̸",
-  	"nleqslant;": "⩽̸",
-  	"nles;": "⩽̸",
-  	"nless;": "≮",
-  	"nLl;": "⋘̸",
-  	"nlsim;": "≴",
-  	"nLt;": "≪⃒",
-  	"nlt;": "≮",
-  	"nltri;": "⋪",
-  	"nltrie;": "⋬",
-  	"nLtv;": "≪̸",
-  	"nmid;": "∤",
-  	"NoBreak;": "⁠",
-  	"NonBreakingSpace;": " ",
-  	"Nopf;": "ℕ",
-  	"nopf;": "𝕟",
-  	"Not;": "⫬",
-  	"not;": "¬",
-  	not: not$2,
-  	"NotCongruent;": "≢",
-  	"NotCupCap;": "≭",
-  	"NotDoubleVerticalBar;": "∦",
-  	"NotElement;": "∉",
-  	"NotEqual;": "≠",
-  	"NotEqualTilde;": "≂̸",
-  	"NotExists;": "∄",
-  	"NotGreater;": "≯",
-  	"NotGreaterEqual;": "≱",
-  	"NotGreaterFullEqual;": "≧̸",
-  	"NotGreaterGreater;": "≫̸",
-  	"NotGreaterLess;": "≹",
-  	"NotGreaterSlantEqual;": "⩾̸",
-  	"NotGreaterTilde;": "≵",
-  	"NotHumpDownHump;": "≎̸",
-  	"NotHumpEqual;": "≏̸",
-  	"notin;": "∉",
-  	"notindot;": "⋵̸",
-  	"notinE;": "⋹̸",
-  	"notinva;": "∉",
-  	"notinvb;": "⋷",
-  	"notinvc;": "⋶",
-  	"NotLeftTriangle;": "⋪",
-  	"NotLeftTriangleBar;": "⧏̸",
-  	"NotLeftTriangleEqual;": "⋬",
-  	"NotLess;": "≮",
-  	"NotLessEqual;": "≰",
-  	"NotLessGreater;": "≸",
-  	"NotLessLess;": "≪̸",
-  	"NotLessSlantEqual;": "⩽̸",
-  	"NotLessTilde;": "≴",
-  	"NotNestedGreaterGreater;": "⪢̸",
-  	"NotNestedLessLess;": "⪡̸",
-  	"notni;": "∌",
-  	"notniva;": "∌",
-  	"notnivb;": "⋾",
-  	"notnivc;": "⋽",
-  	"NotPrecedes;": "⊀",
-  	"NotPrecedesEqual;": "⪯̸",
-  	"NotPrecedesSlantEqual;": "⋠",
-  	"NotReverseElement;": "∌",
-  	"NotRightTriangle;": "⋫",
-  	"NotRightTriangleBar;": "⧐̸",
-  	"NotRightTriangleEqual;": "⋭",
-  	"NotSquareSubset;": "⊏̸",
-  	"NotSquareSubsetEqual;": "⋢",
-  	"NotSquareSuperset;": "⊐̸",
-  	"NotSquareSupersetEqual;": "⋣",
-  	"NotSubset;": "⊂⃒",
-  	"NotSubsetEqual;": "⊈",
-  	"NotSucceeds;": "⊁",
-  	"NotSucceedsEqual;": "⪰̸",
-  	"NotSucceedsSlantEqual;": "⋡",
-  	"NotSucceedsTilde;": "≿̸",
-  	"NotSuperset;": "⊃⃒",
-  	"NotSupersetEqual;": "⊉",
-  	"NotTilde;": "≁",
-  	"NotTildeEqual;": "≄",
-  	"NotTildeFullEqual;": "≇",
-  	"NotTildeTilde;": "≉",
-  	"NotVerticalBar;": "∤",
-  	"npar;": "∦",
-  	"nparallel;": "∦",
-  	"nparsl;": "⫽⃥",
-  	"npart;": "∂̸",
-  	"npolint;": "⨔",
-  	"npr;": "⊀",
-  	"nprcue;": "⋠",
-  	"npre;": "⪯̸",
-  	"nprec;": "⊀",
-  	"npreceq;": "⪯̸",
-  	"nrArr;": "⇏",
-  	"nrarr;": "↛",
-  	"nrarrc;": "⤳̸",
-  	"nrarrw;": "↝̸",
-  	"nRightarrow;": "⇏",
-  	"nrightarrow;": "↛",
-  	"nrtri;": "⋫",
-  	"nrtrie;": "⋭",
-  	"nsc;": "⊁",
-  	"nsccue;": "⋡",
-  	"nsce;": "⪰̸",
-  	"Nscr;": "𝒩",
-  	"nscr;": "𝓃",
-  	"nshortmid;": "∤",
-  	"nshortparallel;": "∦",
-  	"nsim;": "≁",
-  	"nsime;": "≄",
-  	"nsimeq;": "≄",
-  	"nsmid;": "∤",
-  	"nspar;": "∦",
-  	"nsqsube;": "⋢",
-  	"nsqsupe;": "⋣",
-  	"nsub;": "⊄",
-  	"nsubE;": "⫅̸",
-  	"nsube;": "⊈",
-  	"nsubset;": "⊂⃒",
-  	"nsubseteq;": "⊈",
-  	"nsubseteqq;": "⫅̸",
-  	"nsucc;": "⊁",
-  	"nsucceq;": "⪰̸",
-  	"nsup;": "⊅",
-  	"nsupE;": "⫆̸",
-  	"nsupe;": "⊉",
-  	"nsupset;": "⊃⃒",
-  	"nsupseteq;": "⊉",
-  	"nsupseteqq;": "⫆̸",
-  	"ntgl;": "≹",
-  	"Ntilde;": "Ñ",
-  	Ntilde: Ntilde$1,
-  	"ntilde;": "ñ",
-  	ntilde: ntilde$1,
-  	"ntlg;": "≸",
-  	"ntriangleleft;": "⋪",
-  	"ntrianglelefteq;": "⋬",
-  	"ntriangleright;": "⋫",
-  	"ntrianglerighteq;": "⋭",
-  	"Nu;": "Ν",
-  	"nu;": "ν",
-  	"num;": "#",
-  	"numero;": "№",
-  	"numsp;": " ",
-  	"nvap;": "≍⃒",
-  	"nVDash;": "⊯",
-  	"nVdash;": "⊮",
-  	"nvDash;": "⊭",
-  	"nvdash;": "⊬",
-  	"nvge;": "≥⃒",
-  	"nvgt;": ">⃒",
-  	"nvHarr;": "⤄",
-  	"nvinfin;": "⧞",
-  	"nvlArr;": "⤂",
-  	"nvle;": "≤⃒",
-  	"nvlt;": "<⃒",
-  	"nvltrie;": "⊴⃒",
-  	"nvrArr;": "⤃",
-  	"nvrtrie;": "⊵⃒",
-  	"nvsim;": "∼⃒",
-  	"nwarhk;": "⤣",
-  	"nwArr;": "⇖",
-  	"nwarr;": "↖",
-  	"nwarrow;": "↖",
-  	"nwnear;": "⤧",
-  	"Oacute;": "Ó",
-  	Oacute: Oacute$1,
-  	"oacute;": "ó",
-  	oacute: oacute$1,
-  	"oast;": "⊛",
-  	"ocir;": "⊚",
-  	"Ocirc;": "Ô",
-  	Ocirc: Ocirc$1,
-  	"ocirc;": "ô",
-  	ocirc: ocirc$1,
-  	"Ocy;": "О",
-  	"ocy;": "о",
-  	"odash;": "⊝",
-  	"Odblac;": "Ő",
-  	"odblac;": "ő",
-  	"odiv;": "⨸",
-  	"odot;": "⊙",
-  	"odsold;": "⦼",
-  	"OElig;": "Œ",
-  	"oelig;": "œ",
-  	"ofcir;": "⦿",
-  	"Ofr;": "𝔒",
-  	"ofr;": "𝔬",
-  	"ogon;": "˛",
-  	"Ograve;": "Ò",
-  	Ograve: Ograve$1,
-  	"ograve;": "ò",
-  	ograve: ograve$1,
-  	"ogt;": "⧁",
-  	"ohbar;": "⦵",
-  	"ohm;": "Ω",
-  	"oint;": "∮",
-  	"olarr;": "↺",
-  	"olcir;": "⦾",
-  	"olcross;": "⦻",
-  	"oline;": "‾",
-  	"olt;": "⧀",
-  	"Omacr;": "Ō",
-  	"omacr;": "ō",
-  	"Omega;": "Ω",
-  	"omega;": "ω",
-  	"Omicron;": "Ο",
-  	"omicron;": "ο",
-  	"omid;": "⦶",
-  	"ominus;": "⊖",
-  	"Oopf;": "𝕆",
-  	"oopf;": "𝕠",
-  	"opar;": "⦷",
-  	"OpenCurlyDoubleQuote;": "“",
-  	"OpenCurlyQuote;": "‘",
-  	"operp;": "⦹",
-  	"oplus;": "⊕",
-  	"Or;": "⩔",
-  	"or;": "∨",
-  	"orarr;": "↻",
-  	"ord;": "⩝",
-  	"order;": "ℴ",
-  	"orderof;": "ℴ",
-  	"ordf;": "ª",
-  	ordf: ordf$1,
-  	"ordm;": "º",
-  	ordm: ordm$1,
-  	"origof;": "⊶",
-  	"oror;": "⩖",
-  	"orslope;": "⩗",
-  	"orv;": "⩛",
-  	"oS;": "Ⓢ",
-  	"Oscr;": "𝒪",
-  	"oscr;": "ℴ",
-  	"Oslash;": "Ø",
-  	Oslash: Oslash$1,
-  	"oslash;": "ø",
-  	oslash: oslash$1,
-  	"osol;": "⊘",
-  	"Otilde;": "Õ",
-  	Otilde: Otilde$1,
-  	"otilde;": "õ",
-  	otilde: otilde$1,
-  	"Otimes;": "⨷",
-  	"otimes;": "⊗",
-  	"otimesas;": "⨶",
-  	"Ouml;": "Ö",
-  	Ouml: Ouml$1,
-  	"ouml;": "ö",
-  	ouml: ouml$1,
-  	"ovbar;": "⌽",
-  	"OverBar;": "‾",
-  	"OverBrace;": "⏞",
-  	"OverBracket;": "⎴",
-  	"OverParenthesis;": "⏜",
-  	"par;": "∥",
-  	"para;": "¶",
-  	para: para$2,
-  	"parallel;": "∥",
-  	"parsim;": "⫳",
-  	"parsl;": "⫽",
-  	"part;": "∂",
-  	"PartialD;": "∂",
-  	"Pcy;": "П",
-  	"pcy;": "п",
-  	"percnt;": "%",
-  	"period;": ".",
-  	"permil;": "‰",
-  	"perp;": "⊥",
-  	"pertenk;": "‱",
-  	"Pfr;": "𝔓",
-  	"pfr;": "𝔭",
-  	"Phi;": "Φ",
-  	"phi;": "φ",
-  	"phiv;": "ϕ",
-  	"phmmat;": "ℳ",
-  	"phone;": "☎",
-  	"Pi;": "Π",
-  	"pi;": "π",
-  	"pitchfork;": "⋔",
-  	"piv;": "ϖ",
-  	"planck;": "ℏ",
-  	"planckh;": "ℎ",
-  	"plankv;": "ℏ",
-  	"plus;": "+",
-  	"plusacir;": "⨣",
-  	"plusb;": "⊞",
-  	"pluscir;": "⨢",
-  	"plusdo;": "∔",
-  	"plusdu;": "⨥",
-  	"pluse;": "⩲",
-  	"PlusMinus;": "±",
-  	"plusmn;": "±",
-  	plusmn: plusmn$1,
-  	"plussim;": "⨦",
-  	"plustwo;": "⨧",
-  	"pm;": "±",
-  	"Poincareplane;": "ℌ",
-  	"pointint;": "⨕",
-  	"Popf;": "ℙ",
-  	"popf;": "𝕡",
-  	"pound;": "£",
-  	pound: pound$2,
-  	"Pr;": "⪻",
-  	"pr;": "≺",
-  	"prap;": "⪷",
-  	"prcue;": "≼",
-  	"prE;": "⪳",
-  	"pre;": "⪯",
-  	"prec;": "≺",
-  	"precapprox;": "⪷",
-  	"preccurlyeq;": "≼",
-  	"Precedes;": "≺",
-  	"PrecedesEqual;": "⪯",
-  	"PrecedesSlantEqual;": "≼",
-  	"PrecedesTilde;": "≾",
-  	"preceq;": "⪯",
-  	"precnapprox;": "⪹",
-  	"precneqq;": "⪵",
-  	"precnsim;": "⋨",
-  	"precsim;": "≾",
-  	"Prime;": "″",
-  	"prime;": "′",
-  	"primes;": "ℙ",
-  	"prnap;": "⪹",
-  	"prnE;": "⪵",
-  	"prnsim;": "⋨",
-  	"prod;": "∏",
-  	"Product;": "∏",
-  	"profalar;": "⌮",
-  	"profline;": "⌒",
-  	"profsurf;": "⌓",
-  	"prop;": "∝",
-  	"Proportion;": "∷",
-  	"Proportional;": "∝",
-  	"propto;": "∝",
-  	"prsim;": "≾",
-  	"prurel;": "⊰",
-  	"Pscr;": "𝒫",
-  	"pscr;": "𝓅",
-  	"Psi;": "Ψ",
-  	"psi;": "ψ",
-  	"puncsp;": " ",
-  	"Qfr;": "𝔔",
-  	"qfr;": "𝔮",
-  	"qint;": "⨌",
-  	"Qopf;": "ℚ",
-  	"qopf;": "𝕢",
-  	"qprime;": "⁗",
-  	"Qscr;": "𝒬",
-  	"qscr;": "𝓆",
-  	"quaternions;": "ℍ",
-  	"quatint;": "⨖",
-  	"quest;": "?",
-  	"questeq;": "≟",
-  	"QUOT;": "\"",
-  	QUOT: QUOT$2,
-  	"quot;": "\"",
-  	quot: quot$2,
-  	"rAarr;": "⇛",
-  	"race;": "∽̱",
-  	"Racute;": "Ŕ",
-  	"racute;": "ŕ",
-  	"radic;": "√",
-  	"raemptyv;": "⦳",
-  	"Rang;": "⟫",
-  	"rang;": "⟩",
-  	"rangd;": "⦒",
-  	"range;": "⦥",
-  	"rangle;": "⟩",
-  	"raquo;": "»",
-  	raquo: raquo$1,
-  	"Rarr;": "↠",
-  	"rArr;": "⇒",
-  	"rarr;": "→",
-  	"rarrap;": "⥵",
-  	"rarrb;": "⇥",
-  	"rarrbfs;": "⤠",
-  	"rarrc;": "⤳",
-  	"rarrfs;": "⤞",
-  	"rarrhk;": "↪",
-  	"rarrlp;": "↬",
-  	"rarrpl;": "⥅",
-  	"rarrsim;": "⥴",
-  	"Rarrtl;": "⤖",
-  	"rarrtl;": "↣",
-  	"rarrw;": "↝",
-  	"rAtail;": "⤜",
-  	"ratail;": "⤚",
-  	"ratio;": "∶",
-  	"rationals;": "ℚ",
-  	"RBarr;": "⤐",
-  	"rBarr;": "⤏",
-  	"rbarr;": "⤍",
-  	"rbbrk;": "❳",
-  	"rbrace;": "}",
-  	"rbrack;": "]",
-  	"rbrke;": "⦌",
-  	"rbrksld;": "⦎",
-  	"rbrkslu;": "⦐",
-  	"Rcaron;": "Ř",
-  	"rcaron;": "ř",
-  	"Rcedil;": "Ŗ",
-  	"rcedil;": "ŗ",
-  	"rceil;": "⌉",
-  	"rcub;": "}",
-  	"Rcy;": "Р",
-  	"rcy;": "р",
-  	"rdca;": "⤷",
-  	"rdldhar;": "⥩",
-  	"rdquo;": "”",
-  	"rdquor;": "”",
-  	"rdsh;": "↳",
-  	"Re;": "ℜ",
-  	"real;": "ℜ",
-  	"realine;": "ℛ",
-  	"realpart;": "ℜ",
-  	"reals;": "ℝ",
-  	"rect;": "▭",
-  	"REG;": "®",
-  	REG: REG$2,
-  	"reg;": "®",
-  	reg: reg$2,
-  	"ReverseElement;": "∋",
-  	"ReverseEquilibrium;": "⇋",
-  	"ReverseUpEquilibrium;": "⥯",
-  	"rfisht;": "⥽",
-  	"rfloor;": "⌋",
-  	"Rfr;": "ℜ",
-  	"rfr;": "𝔯",
-  	"rHar;": "⥤",
-  	"rhard;": "⇁",
-  	"rharu;": "⇀",
-  	"rharul;": "⥬",
-  	"Rho;": "Ρ",
-  	"rho;": "ρ",
-  	"rhov;": "ϱ",
-  	"RightAngleBracket;": "⟩",
-  	"RightArrow;": "→",
-  	"Rightarrow;": "⇒",
-  	"rightarrow;": "→",
-  	"RightArrowBar;": "⇥",
-  	"RightArrowLeftArrow;": "⇄",
-  	"rightarrowtail;": "↣",
-  	"RightCeiling;": "⌉",
-  	"RightDoubleBracket;": "⟧",
-  	"RightDownTeeVector;": "⥝",
-  	"RightDownVector;": "⇂",
-  	"RightDownVectorBar;": "⥕",
-  	"RightFloor;": "⌋",
-  	"rightharpoondown;": "⇁",
-  	"rightharpoonup;": "⇀",
-  	"rightleftarrows;": "⇄",
-  	"rightleftharpoons;": "⇌",
-  	"rightrightarrows;": "⇉",
-  	"rightsquigarrow;": "↝",
-  	"RightTee;": "⊢",
-  	"RightTeeArrow;": "↦",
-  	"RightTeeVector;": "⥛",
-  	"rightthreetimes;": "⋌",
-  	"RightTriangle;": "⊳",
-  	"RightTriangleBar;": "⧐",
-  	"RightTriangleEqual;": "⊵",
-  	"RightUpDownVector;": "⥏",
-  	"RightUpTeeVector;": "⥜",
-  	"RightUpVector;": "↾",
-  	"RightUpVectorBar;": "⥔",
-  	"RightVector;": "⇀",
-  	"RightVectorBar;": "⥓",
-  	"ring;": "˚",
-  	"risingdotseq;": "≓",
-  	"rlarr;": "⇄",
-  	"rlhar;": "⇌",
-  	"rlm;": "‏",
-  	"rmoust;": "⎱",
-  	"rmoustache;": "⎱",
-  	"rnmid;": "⫮",
-  	"roang;": "⟭",
-  	"roarr;": "⇾",
-  	"robrk;": "⟧",
-  	"ropar;": "⦆",
-  	"Ropf;": "ℝ",
-  	"ropf;": "𝕣",
-  	"roplus;": "⨮",
-  	"rotimes;": "⨵",
-  	"RoundImplies;": "⥰",
-  	"rpar;": ")",
-  	"rpargt;": "⦔",
-  	"rppolint;": "⨒",
-  	"rrarr;": "⇉",
-  	"Rrightarrow;": "⇛",
-  	"rsaquo;": "›",
-  	"Rscr;": "ℛ",
-  	"rscr;": "𝓇",
-  	"Rsh;": "↱",
-  	"rsh;": "↱",
-  	"rsqb;": "]",
-  	"rsquo;": "’",
-  	"rsquor;": "’",
-  	"rthree;": "⋌",
-  	"rtimes;": "⋊",
-  	"rtri;": "▹",
-  	"rtrie;": "⊵",
-  	"rtrif;": "▸",
-  	"rtriltri;": "⧎",
-  	"RuleDelayed;": "⧴",
-  	"ruluhar;": "⥨",
-  	"rx;": "℞",
-  	"Sacute;": "Ś",
-  	"sacute;": "ś",
-  	"sbquo;": "‚",
-  	"Sc;": "⪼",
-  	"sc;": "≻",
-  	"scap;": "⪸",
-  	"Scaron;": "Š",
-  	"scaron;": "š",
-  	"sccue;": "≽",
-  	"scE;": "⪴",
-  	"sce;": "⪰",
-  	"Scedil;": "Ş",
-  	"scedil;": "ş",
-  	"Scirc;": "Ŝ",
-  	"scirc;": "ŝ",
-  	"scnap;": "⪺",
-  	"scnE;": "⪶",
-  	"scnsim;": "⋩",
-  	"scpolint;": "⨓",
-  	"scsim;": "≿",
-  	"Scy;": "С",
-  	"scy;": "с",
-  	"sdot;": "⋅",
-  	"sdotb;": "⊡",
-  	"sdote;": "⩦",
-  	"searhk;": "⤥",
-  	"seArr;": "⇘",
-  	"searr;": "↘",
-  	"searrow;": "↘",
-  	"sect;": "§",
-  	sect: sect$2,
-  	"semi;": ";",
-  	"seswar;": "⤩",
-  	"setminus;": "∖",
-  	"setmn;": "∖",
-  	"sext;": "✶",
-  	"Sfr;": "𝔖",
-  	"sfr;": "𝔰",
-  	"sfrown;": "⌢",
-  	"sharp;": "♯",
-  	"SHCHcy;": "Щ",
-  	"shchcy;": "щ",
-  	"SHcy;": "Ш",
-  	"shcy;": "ш",
-  	"ShortDownArrow;": "↓",
-  	"ShortLeftArrow;": "←",
-  	"shortmid;": "∣",
-  	"shortparallel;": "∥",
-  	"ShortRightArrow;": "→",
-  	"ShortUpArrow;": "↑",
-  	"shy;": "­",
-  	shy: shy$2,
-  	"Sigma;": "Σ",
-  	"sigma;": "σ",
-  	"sigmaf;": "ς",
-  	"sigmav;": "ς",
-  	"sim;": "∼",
-  	"simdot;": "⩪",
-  	"sime;": "≃",
-  	"simeq;": "≃",
-  	"simg;": "⪞",
-  	"simgE;": "⪠",
-  	"siml;": "⪝",
-  	"simlE;": "⪟",
-  	"simne;": "≆",
-  	"simplus;": "⨤",
-  	"simrarr;": "⥲",
-  	"slarr;": "←",
-  	"SmallCircle;": "∘",
-  	"smallsetminus;": "∖",
-  	"smashp;": "⨳",
-  	"smeparsl;": "⧤",
-  	"smid;": "∣",
-  	"smile;": "⌣",
-  	"smt;": "⪪",
-  	"smte;": "⪬",
-  	"smtes;": "⪬︀",
-  	"SOFTcy;": "Ь",
-  	"softcy;": "ь",
-  	"sol;": "/",
-  	"solb;": "⧄",
-  	"solbar;": "⌿",
-  	"Sopf;": "𝕊",
-  	"sopf;": "𝕤",
-  	"spades;": "♠",
-  	"spadesuit;": "♠",
-  	"spar;": "∥",
-  	"sqcap;": "⊓",
-  	"sqcaps;": "⊓︀",
-  	"sqcup;": "⊔",
-  	"sqcups;": "⊔︀",
-  	"Sqrt;": "√",
-  	"sqsub;": "⊏",
-  	"sqsube;": "⊑",
-  	"sqsubset;": "⊏",
-  	"sqsubseteq;": "⊑",
-  	"sqsup;": "⊐",
-  	"sqsupe;": "⊒",
-  	"sqsupset;": "⊐",
-  	"sqsupseteq;": "⊒",
-  	"squ;": "□",
-  	"Square;": "□",
-  	"square;": "□",
-  	"SquareIntersection;": "⊓",
-  	"SquareSubset;": "⊏",
-  	"SquareSubsetEqual;": "⊑",
-  	"SquareSuperset;": "⊐",
-  	"SquareSupersetEqual;": "⊒",
-  	"SquareUnion;": "⊔",
-  	"squarf;": "▪",
-  	"squf;": "▪",
-  	"srarr;": "→",
-  	"Sscr;": "𝒮",
-  	"sscr;": "𝓈",
-  	"ssetmn;": "∖",
-  	"ssmile;": "⌣",
-  	"sstarf;": "⋆",
-  	"Star;": "⋆",
-  	"star;": "☆",
-  	"starf;": "★",
-  	"straightepsilon;": "ϵ",
-  	"straightphi;": "ϕ",
-  	"strns;": "¯",
-  	"Sub;": "⋐",
-  	"sub;": "⊂",
-  	"subdot;": "⪽",
-  	"subE;": "⫅",
-  	"sube;": "⊆",
-  	"subedot;": "⫃",
-  	"submult;": "⫁",
-  	"subnE;": "⫋",
-  	"subne;": "⊊",
-  	"subplus;": "⪿",
-  	"subrarr;": "⥹",
-  	"Subset;": "⋐",
-  	"subset;": "⊂",
-  	"subseteq;": "⊆",
-  	"subseteqq;": "⫅",
-  	"SubsetEqual;": "⊆",
-  	"subsetneq;": "⊊",
-  	"subsetneqq;": "⫋",
-  	"subsim;": "⫇",
-  	"subsub;": "⫕",
-  	"subsup;": "⫓",
-  	"succ;": "≻",
-  	"succapprox;": "⪸",
-  	"succcurlyeq;": "≽",
-  	"Succeeds;": "≻",
-  	"SucceedsEqual;": "⪰",
-  	"SucceedsSlantEqual;": "≽",
-  	"SucceedsTilde;": "≿",
-  	"succeq;": "⪰",
-  	"succnapprox;": "⪺",
-  	"succneqq;": "⪶",
-  	"succnsim;": "⋩",
-  	"succsim;": "≿",
-  	"SuchThat;": "∋",
-  	"Sum;": "∑",
-  	"sum;": "∑",
-  	"sung;": "♪",
-  	"Sup;": "⋑",
-  	"sup;": "⊃",
-  	"sup1;": "¹",
-  	sup1: sup1$1,
-  	"sup2;": "²",
-  	sup2: sup2$1,
-  	"sup3;": "³",
-  	sup3: sup3$1,
-  	"supdot;": "⪾",
-  	"supdsub;": "⫘",
-  	"supE;": "⫆",
-  	"supe;": "⊇",
-  	"supedot;": "⫄",
-  	"Superset;": "⊃",
-  	"SupersetEqual;": "⊇",
-  	"suphsol;": "⟉",
-  	"suphsub;": "⫗",
-  	"suplarr;": "⥻",
-  	"supmult;": "⫂",
-  	"supnE;": "⫌",
-  	"supne;": "⊋",
-  	"supplus;": "⫀",
-  	"Supset;": "⋑",
-  	"supset;": "⊃",
-  	"supseteq;": "⊇",
-  	"supseteqq;": "⫆",
-  	"supsetneq;": "⊋",
-  	"supsetneqq;": "⫌",
-  	"supsim;": "⫈",
-  	"supsub;": "⫔",
-  	"supsup;": "⫖",
-  	"swarhk;": "⤦",
-  	"swArr;": "⇙",
-  	"swarr;": "↙",
-  	"swarrow;": "↙",
-  	"swnwar;": "⤪",
-  	"szlig;": "ß",
-  	szlig: szlig$1,
-  	"Tab;": "\t",
-  	"target;": "⌖",
-  	"Tau;": "Τ",
-  	"tau;": "τ",
-  	"tbrk;": "⎴",
-  	"Tcaron;": "Ť",
-  	"tcaron;": "ť",
-  	"Tcedil;": "Ţ",
-  	"tcedil;": "ţ",
-  	"Tcy;": "Т",
-  	"tcy;": "т",
-  	"tdot;": "⃛",
-  	"telrec;": "⌕",
-  	"Tfr;": "𝔗",
-  	"tfr;": "𝔱",
-  	"there4;": "∴",
-  	"Therefore;": "∴",
-  	"therefore;": "∴",
-  	"Theta;": "Θ",
-  	"theta;": "θ",
-  	"thetasym;": "ϑ",
-  	"thetav;": "ϑ",
-  	"thickapprox;": "≈",
-  	"thicksim;": "∼",
-  	"ThickSpace;": "  ",
-  	"thinsp;": " ",
-  	"ThinSpace;": " ",
-  	"thkap;": "≈",
-  	"thksim;": "∼",
-  	"THORN;": "Þ",
-  	THORN: THORN$2,
-  	"thorn;": "þ",
-  	thorn: thorn$2,
-  	"Tilde;": "∼",
-  	"tilde;": "˜",
-  	"TildeEqual;": "≃",
-  	"TildeFullEqual;": "≅",
-  	"TildeTilde;": "≈",
-  	"times;": "×",
-  	times: times$2,
-  	"timesb;": "⊠",
-  	"timesbar;": "⨱",
-  	"timesd;": "⨰",
-  	"tint;": "∭",
-  	"toea;": "⤨",
-  	"top;": "⊤",
-  	"topbot;": "⌶",
-  	"topcir;": "⫱",
-  	"Topf;": "𝕋",
-  	"topf;": "𝕥",
-  	"topfork;": "⫚",
-  	"tosa;": "⤩",
-  	"tprime;": "‴",
-  	"TRADE;": "™",
-  	"trade;": "™",
-  	"triangle;": "▵",
-  	"triangledown;": "▿",
-  	"triangleleft;": "◃",
-  	"trianglelefteq;": "⊴",
-  	"triangleq;": "≜",
-  	"triangleright;": "▹",
-  	"trianglerighteq;": "⊵",
-  	"tridot;": "◬",
-  	"trie;": "≜",
-  	"triminus;": "⨺",
-  	"TripleDot;": "⃛",
-  	"triplus;": "⨹",
-  	"trisb;": "⧍",
-  	"tritime;": "⨻",
-  	"trpezium;": "⏢",
-  	"Tscr;": "𝒯",
-  	"tscr;": "𝓉",
-  	"TScy;": "Ц",
-  	"tscy;": "ц",
-  	"TSHcy;": "Ћ",
-  	"tshcy;": "ћ",
-  	"Tstrok;": "Ŧ",
-  	"tstrok;": "ŧ",
-  	"twixt;": "≬",
-  	"twoheadleftarrow;": "↞",
-  	"twoheadrightarrow;": "↠",
-  	"Uacute;": "Ú",
-  	Uacute: Uacute$1,
-  	"uacute;": "ú",
-  	uacute: uacute$1,
-  	"Uarr;": "↟",
-  	"uArr;": "⇑",
-  	"uarr;": "↑",
-  	"Uarrocir;": "⥉",
-  	"Ubrcy;": "Ў",
-  	"ubrcy;": "ў",
-  	"Ubreve;": "Ŭ",
-  	"ubreve;": "ŭ",
-  	"Ucirc;": "Û",
-  	Ucirc: Ucirc$1,
-  	"ucirc;": "û",
-  	ucirc: ucirc$1,
-  	"Ucy;": "У",
-  	"ucy;": "у",
-  	"udarr;": "⇅",
-  	"Udblac;": "Ű",
-  	"udblac;": "ű",
-  	"udhar;": "⥮",
-  	"ufisht;": "⥾",
-  	"Ufr;": "𝔘",
-  	"ufr;": "𝔲",
-  	"Ugrave;": "Ù",
-  	Ugrave: Ugrave$1,
-  	"ugrave;": "ù",
-  	ugrave: ugrave$1,
-  	"uHar;": "⥣",
-  	"uharl;": "↿",
-  	"uharr;": "↾",
-  	"uhblk;": "▀",
-  	"ulcorn;": "⌜",
-  	"ulcorner;": "⌜",
-  	"ulcrop;": "⌏",
-  	"ultri;": "◸",
-  	"Umacr;": "Ū",
-  	"umacr;": "ū",
-  	"uml;": "¨",
-  	uml: uml$2,
-  	"UnderBar;": "_",
-  	"UnderBrace;": "⏟",
-  	"UnderBracket;": "⎵",
-  	"UnderParenthesis;": "⏝",
-  	"Union;": "⋃",
-  	"UnionPlus;": "⊎",
-  	"Uogon;": "Ų",
-  	"uogon;": "ų",
-  	"Uopf;": "𝕌",
-  	"uopf;": "𝕦",
-  	"UpArrow;": "↑",
-  	"Uparrow;": "⇑",
-  	"uparrow;": "↑",
-  	"UpArrowBar;": "⤒",
-  	"UpArrowDownArrow;": "⇅",
-  	"UpDownArrow;": "↕",
-  	"Updownarrow;": "⇕",
-  	"updownarrow;": "↕",
-  	"UpEquilibrium;": "⥮",
-  	"upharpoonleft;": "↿",
-  	"upharpoonright;": "↾",
-  	"uplus;": "⊎",
-  	"UpperLeftArrow;": "↖",
-  	"UpperRightArrow;": "↗",
-  	"Upsi;": "ϒ",
-  	"upsi;": "υ",
-  	"upsih;": "ϒ",
-  	"Upsilon;": "Υ",
-  	"upsilon;": "υ",
-  	"UpTee;": "⊥",
-  	"UpTeeArrow;": "↥",
-  	"upuparrows;": "⇈",
-  	"urcorn;": "⌝",
-  	"urcorner;": "⌝",
-  	"urcrop;": "⌎",
-  	"Uring;": "Ů",
-  	"uring;": "ů",
-  	"urtri;": "◹",
-  	"Uscr;": "𝒰",
-  	"uscr;": "𝓊",
-  	"utdot;": "⋰",
-  	"Utilde;": "Ũ",
-  	"utilde;": "ũ",
-  	"utri;": "▵",
-  	"utrif;": "▴",
-  	"uuarr;": "⇈",
-  	"Uuml;": "Ü",
-  	Uuml: Uuml$1,
-  	"uuml;": "ü",
-  	uuml: uuml$1,
-  	"uwangle;": "⦧",
-  	"vangrt;": "⦜",
-  	"varepsilon;": "ϵ",
-  	"varkappa;": "ϰ",
-  	"varnothing;": "∅",
-  	"varphi;": "ϕ",
-  	"varpi;": "ϖ",
-  	"varpropto;": "∝",
-  	"vArr;": "⇕",
-  	"varr;": "↕",
-  	"varrho;": "ϱ",
-  	"varsigma;": "ς",
-  	"varsubsetneq;": "⊊︀",
-  	"varsubsetneqq;": "⫋︀",
-  	"varsupsetneq;": "⊋︀",
-  	"varsupsetneqq;": "⫌︀",
-  	"vartheta;": "ϑ",
-  	"vartriangleleft;": "⊲",
-  	"vartriangleright;": "⊳",
-  	"Vbar;": "⫫",
-  	"vBar;": "⫨",
-  	"vBarv;": "⫩",
-  	"Vcy;": "В",
-  	"vcy;": "в",
-  	"VDash;": "⊫",
-  	"Vdash;": "⊩",
-  	"vDash;": "⊨",
-  	"vdash;": "⊢",
-  	"Vdashl;": "⫦",
-  	"Vee;": "⋁",
-  	"vee;": "∨",
-  	"veebar;": "⊻",
-  	"veeeq;": "≚",
-  	"vellip;": "⋮",
-  	"Verbar;": "‖",
-  	"verbar;": "|",
-  	"Vert;": "‖",
-  	"vert;": "|",
-  	"VerticalBar;": "∣",
-  	"VerticalLine;": "|",
-  	"VerticalSeparator;": "❘",
-  	"VerticalTilde;": "≀",
-  	"VeryThinSpace;": " ",
-  	"Vfr;": "𝔙",
-  	"vfr;": "𝔳",
-  	"vltri;": "⊲",
-  	"vnsub;": "⊂⃒",
-  	"vnsup;": "⊃⃒",
-  	"Vopf;": "𝕍",
-  	"vopf;": "𝕧",
-  	"vprop;": "∝",
-  	"vrtri;": "⊳",
-  	"Vscr;": "𝒱",
-  	"vscr;": "𝓋",
-  	"vsubnE;": "⫋︀",
-  	"vsubne;": "⊊︀",
-  	"vsupnE;": "⫌︀",
-  	"vsupne;": "⊋︀",
-  	"Vvdash;": "⊪",
-  	"vzigzag;": "⦚",
-  	"Wcirc;": "Ŵ",
-  	"wcirc;": "ŵ",
-  	"wedbar;": "⩟",
-  	"Wedge;": "⋀",
-  	"wedge;": "∧",
-  	"wedgeq;": "≙",
-  	"weierp;": "℘",
-  	"Wfr;": "𝔚",
-  	"wfr;": "𝔴",
-  	"Wopf;": "𝕎",
-  	"wopf;": "𝕨",
-  	"wp;": "℘",
-  	"wr;": "≀",
-  	"wreath;": "≀",
-  	"Wscr;": "𝒲",
-  	"wscr;": "𝓌",
-  	"xcap;": "⋂",
-  	"xcirc;": "◯",
-  	"xcup;": "⋃",
-  	"xdtri;": "▽",
-  	"Xfr;": "𝔛",
-  	"xfr;": "𝔵",
-  	"xhArr;": "⟺",
-  	"xharr;": "⟷",
-  	"Xi;": "Ξ",
-  	"xi;": "ξ",
-  	"xlArr;": "⟸",
-  	"xlarr;": "⟵",
-  	"xmap;": "⟼",
-  	"xnis;": "⋻",
-  	"xodot;": "⨀",
-  	"Xopf;": "𝕏",
-  	"xopf;": "𝕩",
-  	"xoplus;": "⨁",
-  	"xotime;": "⨂",
-  	"xrArr;": "⟹",
-  	"xrarr;": "⟶",
-  	"Xscr;": "𝒳",
-  	"xscr;": "𝓍",
-  	"xsqcup;": "⨆",
-  	"xuplus;": "⨄",
-  	"xutri;": "△",
-  	"xvee;": "⋁",
-  	"xwedge;": "⋀",
-  	"Yacute;": "Ý",
-  	Yacute: Yacute$1,
-  	"yacute;": "ý",
-  	yacute: yacute$1,
-  	"YAcy;": "Я",
-  	"yacy;": "я",
-  	"Ycirc;": "Ŷ",
-  	"ycirc;": "ŷ",
-  	"Ycy;": "Ы",
-  	"ycy;": "ы",
-  	"yen;": "¥",
-  	yen: yen$2,
-  	"Yfr;": "𝔜",
-  	"yfr;": "𝔶",
-  	"YIcy;": "Ї",
-  	"yicy;": "ї",
-  	"Yopf;": "𝕐",
-  	"yopf;": "𝕪",
-  	"Yscr;": "𝒴",
-  	"yscr;": "𝓎",
-  	"YUcy;": "Ю",
-  	"yucy;": "ю",
-  	"Yuml;": "Ÿ",
-  	"yuml;": "ÿ",
-  	yuml: yuml$1,
-  	"Zacute;": "Ź",
-  	"zacute;": "ź",
-  	"Zcaron;": "Ž",
-  	"zcaron;": "ž",
-  	"Zcy;": "З",
-  	"zcy;": "з",
-  	"Zdot;": "Ż",
-  	"zdot;": "ż",
-  	"zeetrf;": "ℨ",
-  	"ZeroWidthSpace;": "​",
-  	"Zeta;": "Ζ",
-  	"zeta;": "ζ",
-  	"Zfr;": "ℨ",
-  	"zfr;": "𝔷",
-  	"ZHcy;": "Ж",
-  	"zhcy;": "ж",
-  	"zigrarr;": "⇝",
-  	"Zopf;": "ℤ",
-  	"zopf;": "𝕫",
-  	"Zscr;": "𝒵",
-  	"zscr;": "𝓏",
-  	"zwj;": "‍",
-  	"zwnj;": "‌"
-  };
-
-  var entities$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    Aacute: Aacute$1,
-    aacute: aacute$1,
-    Acirc: Acirc$1,
-    acirc: acirc$1,
-    acute: acute$2,
-    AElig: AElig$1,
-    aelig: aelig$1,
-    Agrave: Agrave$1,
-    agrave: agrave$1,
-    AMP: AMP$1,
-    amp: amp$2,
-    Aring: Aring$2,
-    aring: aring$2,
-    Atilde: Atilde$1,
-    atilde: atilde$2,
-    Auml: Auml$1,
-    auml: auml$1,
-    brvbar: brvbar$1,
-    Ccedil: Ccedil$1,
-    ccedil: ccedil$1,
-    cedil: cedil$2,
-    cent: cent$2,
-    COPY: COPY$2,
-    copy: copy$2,
-    curren: curren$1,
-    deg: deg$2,
-    divide: divide$2,
-    Eacute: Eacute$1,
-    eacute: eacute$1,
-    Ecirc: Ecirc$1,
-    ecirc: ecirc$1,
-    Egrave: Egrave$1,
-    egrave: egrave$2,
-    ETH: ETH$2,
-    eth: eth$2,
-    Euml: Euml$1,
-    euml: euml$1,
-    frac12: frac12$1,
-    frac14: frac14$1,
-    frac34: frac34$1,
-    GT: GT$2,
-    gt: gt$2,
-    Iacute: Iacute$1,
-    iacute: iacute$1,
-    Icirc: Icirc$1,
-    icirc: icirc$1,
-    iexcl: iexcl$1,
-    Igrave: Igrave$1,
-    igrave: igrave$1,
-    iquest: iquest$1,
-    Iuml: Iuml$1,
-    iuml: iuml$1,
-    laquo: laquo$1,
-    LT: LT$2,
-    lt: lt$2,
-    macr: macr$1,
-    micro: micro$1,
-    middot: middot$1,
-    nbsp: nbsp$1,
-    not: not$2,
-    Ntilde: Ntilde$1,
-    ntilde: ntilde$1,
-    Oacute: Oacute$1,
-    oacute: oacute$1,
-    Ocirc: Ocirc$1,
-    ocirc: ocirc$1,
-    Ograve: Ograve$1,
-    ograve: ograve$1,
-    ordf: ordf$1,
-    ordm: ordm$1,
-    Oslash: Oslash$1,
-    oslash: oslash$1,
-    Otilde: Otilde$1,
-    otilde: otilde$1,
-    Ouml: Ouml$1,
-    ouml: ouml$1,
-    para: para$2,
-    plusmn: plusmn$1,
-    pound: pound$2,
-    QUOT: QUOT$2,
-    quot: quot$2,
-    raquo: raquo$1,
-    REG: REG$2,
-    reg: reg$2,
-    sect: sect$2,
-    shy: shy$2,
-    sup1: sup1$1,
-    sup2: sup2$1,
-    sup3: sup3$1,
-    szlig: szlig$1,
-    THORN: THORN$2,
-    thorn: thorn$2,
-    times: times$2,
-    Uacute: Uacute$1,
-    uacute: uacute$1,
-    Ucirc: Ucirc$1,
-    ucirc: ucirc$1,
-    Ugrave: Ugrave$1,
-    ugrave: ugrave$1,
-    uml: uml$2,
-    Uuml: Uuml$1,
-    uuml: uuml$1,
-    Yacute: Yacute$1,
-    yacute: yacute$1,
-    yen: yen$2,
-    yuml: yuml$1,
-    'default': entities
-  });
-
-  var entities$2 = getCjsExportFromNamespace(entities$1);
-
-  var decode_1 = decode$2;
-
-  function decode$2(str) {
-    if (typeof str !== 'string') {
-      throw new TypeError('Expected a String');
-    }
-
-    return str.replace(/&(#?[^;\W]+;?)/g, function (_, match) {
-      var m;
-
-      if (m = /^#(\d+);?$/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
-      } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
-      } else {
-        // named entity
-        var hasSemi = /;$/.test(match);
-        var withoutSemi = hasSemi ? match.replace(/;$/, '') : match;
-        var target = entities$2[withoutSemi] || hasSemi && entities$2[match];
-
-        if (typeof target === 'number') {
-          return punycode$2.ucs2.encode([target]);
-        } else if (typeof target === 'string') {
-          return target;
-        } else {
-          return '&' + match;
-        }
-      }
-    });
-  }
-
-  var encode$2 = encode_1;
-  var decode$3 = decode_1;
-  var ent = {
-    encode: encode$2,
-    decode: decode$3
-  };
-
-  /**
-   * string-strip-html
-   * Strips HTML tags from strings. No parser, accepts mixed sources.
-   * Version: 4.3.22
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
-   */
-
-  function stripHtml(str, originalOpts) {
-    const isArr = Array.isArray;
-    const definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
-    const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
-    const punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"]);
-    const stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]);
-    let tag = {
-      attributes: []
-    };
-    let chunkOfWhitespaceStartsAt = null;
-    let chunkOfSpacesStartsAt = null;
-    const rangedOpeningTags = [];
-    let attrObj = {};
-    let hrefDump = {};
-    let stringToInsertAfter = "";
-    let hrefInsertionActive;
-    let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
-
-    function existy(x) {
-      return x != null;
-    }
-
-    function isValidAttributeCharacter(char) {
-      if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-        return false;
-      } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-        return false;
-      } else if (char.charCodeAt(0) === 32) {
-        return false;
-      } else if (char.charCodeAt(0) === 34) {
-        return false;
-      } else if (char.charCodeAt(0) === 39) {
-        return false;
-      } else if (char.charCodeAt(0) === 62) {
-        return false;
-      } else if (char.charCodeAt(0) === 47) {
-        return false;
-      } else if (char.charCodeAt(0) === 61) {
-        return false;
-      } else if (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 || char.charCodeAt(0) === 65534 || char.charCodeAt(0) === 65535 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343) {
-        return false;
-      }
-
-      return true;
-    }
-
-    function treatRangedTags(i) {
-      if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
-        if (isArr(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
-          for (let y = rangedOpeningTags.length; y--;) {
-            if (rangedOpeningTags[y].name === tag.name) {
-              if (punctuation.has(str[i])) {
-                opts.cb({
-                  tag,
-                  deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
-                  deleteTo: i,
-                  insert: null,
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
-                });
-              } else {
-                opts.cb({
-                  tag,
-                  deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
-                  deleteTo: i,
-                  insert: "",
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
-                });
-              }
-
-              rangedOpeningTags.splice(y, 1);
-              break;
-            }
-          }
-        } else {
-          rangedOpeningTags.push(tag);
-        }
-      }
-    }
-
-    function calculateWhitespaceToInsert(str, currCharIdx, fromIdx, toIdx, lastOpeningBracketAt, lastClosingBracketAt) {
-      let strToEvaluateForLineBreaks = "";
-
-      if (fromIdx < lastOpeningBracketAt) {
-        strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
-      }
-
-      if (toIdx > lastClosingBracketAt + 1) {
-        const temp = str.slice(lastClosingBracketAt + 1, toIdx);
-
-        if (temp.includes("\n") && str[toIdx] === "<") {
-          strToEvaluateForLineBreaks += " ";
-        } else {
-          strToEvaluateForLineBreaks += temp;
-        }
-      }
-
-      if (!punctuation.has(str[currCharIdx]) && str[currCharIdx] !== "!") {
-        const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
-
-        if (isArr(foundLineBreaks) && foundLineBreaks.length) {
-          if (foundLineBreaks.length === 1) {
-            return "\n";
-          } else if (foundLineBreaks.length === 2) {
-            return "\n\n";
-          }
-
-          return "\n\n\n";
-        }
-
-        return " ";
-      }
-
-      return "";
-    }
-
-    function calculateHrefToBeInserted() {
-      if (opts.dumpLinkHrefsNearby.enabled && Object.keys(hrefDump).length && hrefDump.tagName === tag.name && tag.lastOpeningBracketAt && (hrefDump.openingTagEnds && tag.lastOpeningBracketAt > hrefDump.openingTagEnds || !hrefDump.openingTagEnds)) {
-        hrefInsertionActive = true;
-      }
-
-      if (hrefInsertionActive) {
-        const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
-        stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
-      }
-    }
-
-    function characterSuitableForNames(char) {
-      return /[-_A-Za-z0-9]/.test(char);
-    }
-
-    if (typeof str !== "string") {
-      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
-    }
-
-    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
-      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    function prepHopefullyAnArray(something, name) {
-      if (!something) {
-        return [];
-      } else if (isArr(something)) {
-        return something.filter(val => isStr(val) && val.trim());
-      } else if (isStr(something)) {
-        if (something.length) {
-          return [something];
-        }
-
-        return [];
-      } else if (!isArr(something)) {
-        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
-      }
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
-    function resetHrefMarkers() {
-      if (hrefInsertionActive) {
-        hrefDump = {};
-        hrefInsertionActive = false;
-      }
-    }
-
-    const defaults = {
-      ignoreTags: [],
-      onlyStripTags: [],
-      stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
-      skipHtmlDecoding: false,
-      returnRangesOnly: false,
-      trimOnlySpaces: false,
-      dumpLinkHrefsNearby: {
-        enabled: false,
-        putOnNewLine: false,
-        wrapHeads: "",
-        wrapTails: ""
-      },
-      cb: null
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
-    opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
-    const onlyStripTagsMode = !!opts.onlyStripTags.length;
-
-    if (opts.onlyStripTags.length && opts.ignoreTags.length) {
-      opts.onlyStripTags = lodash_without(opts.onlyStripTags, ...opts.ignoreTags);
-    }
-
-    if (!lodash_isplainobject(opts.dumpLinkHrefsNearby)) {
-      opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
-    }
-
-    if (typeof opts.ignoreTags === "string") {
-      if (opts.ignoreTags.length === 0) {
-        opts.ignoreTags = [];
-      } else {
-        opts.ignoreTags = [opts.ignoreTags];
-      }
-    }
-
-    opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
-
-    if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
-      if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
-        opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby, originalOpts.dumpLinkHrefsNearby);
-      } else if (originalOpts.dumpLinkHrefsNearby) {
-        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4)}. The only allowed value is a plain object. See the API reference.`);
-      }
-    }
-
-    if (!opts.stripTogetherWithTheirContents) {
-      opts.stripTogetherWithTheirContents = [];
-    } else if (typeof opts.stripTogetherWithTheirContents === "string" && opts.stripTogetherWithTheirContents.length > 0) {
-      opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
-    }
-
-    if (!opts.dumpLinkHrefsNearby || lodash_isplainobject(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-      opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
-    }
-
-    if (!isArr(opts.stripTogetherWithTheirContents)) {
-      opts.stripTogetherWithTheirContents = [];
-    }
-
-    const somethingCaught = {};
-
-    if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every((el, i) => {
-      if (!(typeof el === "string")) {
-        somethingCaught.el = el;
-        somethingCaught.i = i;
-        return false;
-      }
-
-      return true;
-    })) {
-      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${somethingCaught.i} has a value ${somethingCaught.el} which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`);
-    }
-
-    if (!opts.cb) {
-      opts.cb = ({
-        rangesArr,
-        proposedReturn
-      }) => {
-        rangesArr.push(...proposedReturn);
-      };
-    }
-
-    const rangesToDelete = new Ranges({
-      limitToBeAddedWhitespace: true,
-      limitLinebreaksCount: 2
-    });
-
-    if (str === "" || str.trim() === "") {
-      return str;
-    }
-
-    if (!opts.skipHtmlDecoding) {
-      while (str !== ent.decode(str)) {
-        str = ent.decode(str);
-      }
-    }
-
-    if (!opts.trimOnlySpaces) {
-      str = str.trim();
-    }
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
-        spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
-      }
-
-      if (str[i] === ">") {
-        if ((!tag || Object.keys(tag).length < 2) && i > 1) {
-          for (let y = i; y--;) {
-            if (str[y - 1] === undefined || str[y] === ">") {
-              const startingPoint = str[y - 1] === undefined ? y : y + 1;
-              const culprit = str.slice(startingPoint, i + 1);
-
-              if (str !== `<${lodash_trim(culprit.trim(), "/>")}>` && [...definitelyTagNames].some(val => lodash_trim(culprit.trim().split(" ").filter(val => val.trim()).filter((val, i) => i === 0), "/>").toLowerCase() === val) && stripHtml(`<${culprit.trim()}>`, opts) === "") {
-                const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
-                let deleteUpTo = i + 1;
-
-                if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
-                  for (let z = deleteUpTo; z < len; z++) {
-                    if (str[z].trim()) {
-                      deleteUpTo = z;
-                      break;
-                    }
-
-                    if (!str[z + 1]) {
-                      deleteUpTo = z + 1;
-                      break;
-                    }
-                  }
-                }
-
-                opts.cb({
-                  tag,
-                  deleteFrom: startingPoint,
-                  deleteTo: deleteUpTo,
-                  insert: whiteSpaceCompensation,
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [startingPoint, deleteUpTo, whiteSpaceCompensation]
-                });
-              }
-
-              break;
-            }
-          }
-        }
-      }
-
-      if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
-        tag.slashPresent = i;
-      }
-
-      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt) {
-        tag = {};
-        tag.attributes = [];
-        attrObj = {};
-      }
-
-      if (str[i] === '"' || str[i] === "'") {
-        if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
-          attrObj.valueEnds = i;
-          attrObj.value = str.slice(attrObj.valueStarts, i);
-          tag.attributes.push(attrObj);
-          attrObj = {};
-          tag.quotes = undefined;
-          let hrefVal;
-
-          if (opts.dumpLinkHrefsNearby.enabled && tag.attributes.some(obj => {
-            if (obj.name && obj.name.toLowerCase() === "href") {
-              hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${obj.value}${opts.dumpLinkHrefsNearby.wrapTails || ""}`;
-              return true;
-            }
-          })) {
-            hrefDump = {
-              tagName: tag.name,
-              hrefValue: hrefVal
-            };
-          }
-        } else if (!tag.quotes && tag.nameStarts) {
-          tag.quotes = {};
-          tag.quotes.value = str[i];
-          tag.quotes.start = i;
-
-          if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
-            attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-          }
-        }
-      }
-
-      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
-        tag.nameEnds = i;
-        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
-
-        if (str[tag.nameStarts - 1] !== "!" && !tag.name.replace(/-/g, "").length) {
-          tag = {};
-          continue;
-        }
-
-        if (str[i] === "<") {
-          calculateHrefToBeInserted();
-          const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
-          opts.cb({
-            tag,
-            deleteFrom: tag.leftOuterWhitespace,
-            deleteTo: i,
-            insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-            rangesArr: rangesToDelete,
-            proposedReturn: [tag.leftOuterWhitespace, i, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
-          });
-          resetHrefMarkers();
-          treatRangedTags(i);
-        }
-      }
-
-      if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-        if (attrObj.valueEnds) ;else {
-          attrObj.valueStarts = i;
-        }
-      }
-
-      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
-        if (!attrObj.equalsAt) {
-          attrObj.equalsAt = i;
-        }
-      }
-
-      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
-        tag.attributes.push(attrObj);
-        attrObj = {};
-      }
-
-      if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-        if (!str[i].trim()) {
-          attrObj.nameEnds = i;
-          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        } else if (str[i] === "=") {
-          if (!attrObj.equalsAt) {
-            attrObj.nameEnds = i;
-            attrObj.equalsAt = i;
-            attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-          }
-        } else if (str[i] === "/" || str[i] === ">") {
-          attrObj.nameEnds = i;
-          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-          tag.attributes.push(attrObj);
-          attrObj = {};
-        } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
-          attrObj.nameEnds = i;
-          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-          tag.attributes.push(attrObj);
-          attrObj = {};
-        }
-      }
-
-      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-        if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`) && str[i] !== "<") {
-          attrObj.nameStarts = i;
-        } else if (tag.onlyPlausible && str[i] !== "<") {
-          tag = {};
-        }
-      }
-
-      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
-        tag.onlyPlausible = false;
-      }
-
-      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/") {
-        if (tag.onlyPlausible === undefined) {
-          if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
-            tag.onlyPlausible = true;
-          } else {
-            tag.onlyPlausible = false;
-          }
-        }
-
-        if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
-          tag.nameStarts = i;
-          tag.nameContainsLetters = false;
-        }
-      }
-
-      if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
-        tag.nameContainsLetters = true;
-      }
-
-      if (str[i] === ">") {
-        if (tag.lastOpeningBracketAt !== undefined) {
-          tag.lastClosingBracketAt = i;
-          spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
-
-          if (Object.keys(attrObj).length) {
-            tag.attributes.push(attrObj);
-            attrObj = {};
-          }
-
-          if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
-            hrefDump.openingTagEnds = i;
-          }
-        }
-      }
-
-      if (tag.lastOpeningBracketAt !== undefined) {
-        if (tag.lastClosingBracketAt === undefined) {
-          if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
-            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
-
-            if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
-              tag = {};
-              attrObj = {};
-              continue;
-            }
-
-            if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
-              calculateHrefToBeInserted();
-              const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
-              opts.cb({
-                tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i + 1,
-                insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-                rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i + 1, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
-              });
-              resetHrefMarkers();
-              treatRangedTags(i);
-            }
-          }
-        } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
-          let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
-
-          if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
-            endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
-          }
-
-          if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
-            opts.cb({
-              tag,
-              deleteFrom: null,
-              deleteTo: null,
-              insert: null,
-              rangesArr: rangesToDelete,
-              proposedReturn: []
-            });
-            tag = {};
-            attrObj = {};
-          } else if (!tag.onlyPlausible || tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || tag.attributes && tag.attributes.some(attrObj => attrObj.equalsAt)) {
-            const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
-            stringToInsertAfter = "";
-            hrefInsertionActive = false;
-            calculateHrefToBeInserted();
-            let insert;
-
-            if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
-              insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
-            } else {
-              insert = whiteSpaceCompensation;
-            }
-
-            if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
-              insert = "";
-            }
-
-            if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
-              insert = " ";
-            }
-
-            opts.cb({
-              tag,
-              deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: endingRangeIndex,
-              insert,
-              rangesArr: rangesToDelete,
-              proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
-            });
-            resetHrefMarkers();
-            treatRangedTags(i);
-          } else {
-            tag = {};
-          }
-
-          if (str[i] !== ">") {
-            tag = {};
-          }
-        }
-      }
-
-      if (str[i] === "<" && str[i - 1] !== "<") {
-        if (str[right(str, i)] === ">") {
-          continue;
-        } else {
-          if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
-            if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
-              const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
-              opts.cb({
-                tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i,
-                insert: whiteSpaceCompensation,
-                rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i, whiteSpaceCompensation]
-              });
-              treatRangedTags(i);
-              tag = {};
-              attrObj = {};
-            } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
-              tag = {};
-              attrObj = {};
-            }
-          }
-
-          if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
-            tag.lastOpeningBracketAt = undefined;
-            tag.onlyPlausible = false;
-          }
-
-          if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
-            tag.lastOpeningBracketAt = i;
-            tag.slashPresent = false;
-            tag.attributes = [];
-
-            if (chunkOfWhitespaceStartsAt === null) {
-              tag.leftOuterWhitespace = i;
-            } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
-              tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
-            } else {
-              tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
-            }
-
-            if (`${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" || `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${str[i + 6]}${str[i + 7]}${str[i + 8]}` === "![CDATA[") {
-              let cdata = true;
-
-              if (str[i + 2] === "-") {
-                cdata = false;
-              }
-
-              let closingFoundAt = undefined;
-
-              for (let y = i; y < len; y++) {
-                if (!closingFoundAt && cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>" || !cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->") {
-                  closingFoundAt = y;
-                }
-
-                if (closingFoundAt && (closingFoundAt < y && str[y].trim() || str[y + 1] === undefined)) {
-                  let rangeEnd = y;
-
-                  if (str[y + 1] === undefined && !str[y].trim() || str[y] === ">") {
-                    rangeEnd += 1;
-                  }
-
-                  const whiteSpaceCompensation = calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
-                  opts.cb({
-                    tag,
-                    deleteFrom: tag.leftOuterWhitespace,
-                    deleteTo: rangeEnd,
-                    insert: whiteSpaceCompensation,
-                    rangesArr: rangesToDelete,
-                    proposedReturn: [tag.leftOuterWhitespace, rangeEnd, whiteSpaceCompensation]
-                  });
-                  i = y - 1;
-
-                  if (str[y] === ">") {
-                    i = y;
-                  }
-
-                  tag = {};
-                  attrObj = {};
-                  break;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      if (str[i].trim() === "") {
-        if (chunkOfWhitespaceStartsAt === null) {
-          chunkOfWhitespaceStartsAt = i;
-
-          if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 && !rangedOpeningTags.some(rangedTagObj => rangedTagObj.name === tag.name)) {
-            tag.onlyPlausible = true;
-            tag.name = undefined;
-            tag.nameStarts = undefined;
-          }
-        }
-      } else if (chunkOfWhitespaceStartsAt !== null) {
-        if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
-          if (lodash_isplainobject(attrObj)) {
-            tag.attributes.push(attrObj);
-          }
-
-          attrObj = {};
-          tag.equalsSpottedAt = undefined;
-        }
-
-        chunkOfWhitespaceStartsAt = null;
-      }
-
-      if (str[i] === " ") {
-        if (chunkOfSpacesStartsAt === null) {
-          chunkOfSpacesStartsAt = i;
-        }
-      } else if (chunkOfSpacesStartsAt !== null) {
-        chunkOfSpacesStartsAt = null;
-      }
-    }
-
-    if (rangesToDelete.current()) {
-      if (opts.returnRangesOnly) {
-        return rangesToDelete.current();
-      }
-
-      const untrimmedRes = rangesApply(str, rangesToDelete.current());
-
-      if (opts.trimOnlySpaces) {
-        return lodash_trim(untrimmedRes, " ");
-      }
-
-      return untrimmedRes.trim();
-    } else if (opts.returnRangesOnly) {
-      return [];
-    }
-
-    if (opts.trimOnlySpaces) {
-      return lodash_trim(str, " ");
-    }
-
-    return str.trim();
-  }
-
-  var ansiRegex = ({
-    onlyFirst = false
-  } = {}) => {
-    const pattern = ['[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)', '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'].join('|');
-    return new RegExp(pattern, onlyFirst ? undefined : 'g');
-  };
-
   function det(str, inputOpts) {
     //
     // input validation
@@ -27144,7 +27281,7 @@
       throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
     }
 
-    var opts = Object.assign({}, defaultOpts, inputOpts);
+    var opts = _objectSpread2({}, defaultOpts$1, {}, inputOpts);
 
     if (!["lf", "crlf", "cr"].includes(opts.eol)) {
       opts.eol = "lf";
@@ -27156,7 +27293,7 @@
 
 
     var applicableOpts = {};
-    Object.keys(defaultOpts).sort().filter(function (val) {
+    Object.keys(defaultOpts$1).sort().filter(function (val) {
       return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags", "cb"].includes(val);
     }).forEach(function (singleOption) {
       applicableOpts[singleOption] = false;
@@ -27260,7 +27397,7 @@
         // REPLACEMENT CHARACTER, \uFFFD, or "�"
         // Delete/fix all cases of Replacement character, \uFFFD, or "�":
         // It usually comes from Windows.
-        if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber(str[i + 1]))) {
+        if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber$1(str[i + 1]))) {
           // 1. case of n�t, for example, couldn�t (n + � + t),
           // or case of <letter>�s, for example your�s (letter + � + s).
           // 2. case of we�re, you�re, they�re
@@ -27419,20 +27556,18 @@
                   finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
                 }
               }
-            } else {
-              //
-              // IF NOT A VOID TAG
-              //
-              // 6. if it's not a void tag and there's slash on a wrong side, correct it
-              if (tag.slashPresent && str[left(str, tag.lastClosingBracketAt)] === "/") {
+            } //
+            // IF NOT A VOID TAG
+            //
+            // 6. if it's not a void tag and there's slash on a wrong side, correct it
+            else if (tag.slashPresent && str[left(str, tag.lastClosingBracketAt)] === "/") {
                 // 6-1. remove the wrong slash
                 finalIndexesToDelete.push(chompLeft(str, tag.lastClosingBracketAt, {
                   mode: 2
                 }, "/"), tag.lastClosingBracketAt); // 6-2. add where it needs to be
 
                 finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
-              }
-            } // 7. tackle wrong letter case
+              } // 7. tackle wrong letter case
 
 
             if (tag.name.toLowerCase() !== tag.name) {
@@ -27566,8 +27701,8 @@
    // -----------------------------------------------------------------------------
 
   exports.det = det;
-  exports.opts = defaultOpts;
-  exports.version = version;
+  exports.opts = defaultOpts$1;
+  exports.version = version$1;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

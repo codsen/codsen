@@ -1,8 +1,7 @@
-const t = require("tap");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-const { det, mixer, allCombinations } = require("../t-util/util");
-const {
+import tap from "tap";
+import { det as det1 } from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
+import {
   // rawReplacementMark,
   rawNDash,
   rawMDash,
@@ -13,13 +12,13 @@ const {
   rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
-} = require("../src/util.js");
+} from "../src/util";
 
 // -----------------------------------------------------------------------------
 
 // following test is according to the Butterick's practical typography
 // http://practicaltypography.com/hyphens-and-dashes.html
-t.test(
+tap.test(
   `01.01 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - converts dashes into N dashes: +dashes+entities-widows`,
   (t) => {
     mixer({
@@ -37,7 +36,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - converts dashes into N dashes: +dashes-entities-widows`,
   (t) => {
     mixer({
@@ -55,7 +54,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - doesn't convert N dashes when is not asked to: -dashes-widows`,
   (t) => {
     mixer({
@@ -73,7 +72,7 @@ t.test(
 );
 
 // example from Oxford A-Z Grammar and Punctuation
-t.test(
+tap.test(
   `01.04 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - A-Z - hyphen`,
   (t) => {
     mixer({
@@ -102,7 +101,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - A-Z - raw n-dash`,
   (t) => {
     mixer({
@@ -137,7 +136,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`n-dash`}\u001b[${39}m - A-Z - encoded n-dash`,
   (t) => {
     mixer({
@@ -171,7 +170,7 @@ t.test(
 //                                 m dashes
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - converts with encoding entities: +dashes-widows+entities`,
   (t) => {
     mixer({
@@ -189,7 +188,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - converts without encoding entities: +dashes-widows-entities`,
   (t) => {
     mixer({
@@ -207,7 +206,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - does not convert: -dashes-widows`,
   (t) => {
     mixer({
@@ -225,7 +224,7 @@ t.test(
 );
 
 // example adapted from Oxford A-Z Grammar and Punctuation, p.46
-t.test(
+tap.test(
   `02.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - adds between two words`,
   (t) => {
     mixer({
@@ -248,7 +247,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - curly - convert entities on`,
   (t) => {
     mixer({
@@ -272,7 +271,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - curly - convert entities off`,
   (t) => {
     mixer({
@@ -296,7 +295,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - curly - convert entities on`,
   (t) => {
     mixer({
@@ -320,7 +319,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - curly - convert entities off`,
   (t) => {
     mixer({
@@ -344,7 +343,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities on`,
   (t) => {
     mixer({
@@ -363,7 +362,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities on`,
   (t) => {
     mixer({
@@ -382,7 +381,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities on`,
   (t) => {
     mixer({
@@ -401,7 +400,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities on`,
   (t) => {
     mixer({
@@ -420,7 +419,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities off`,
   (t) => {
     mixer({
@@ -439,7 +438,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities off`,
   (t) => {
     mixer({
@@ -458,7 +457,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities off`,
   (t) => {
     mixer({
@@ -477,7 +476,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - direct speech breaks off - straight - convert entities off`,
   (t) => {
     mixer({
@@ -500,7 +499,7 @@ t.test(
 // "off" means there won't be any m-dashes - any findings will be converted to hyphens
 // "on" means there will be only m-dashes (where applicable)
 
-t.test(
+tap.test(
   `02.17 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     const res = `a &mdash; b`;
@@ -515,7 +514,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -529,7 +528,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.19 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     const res = `a &mdash; b`;
@@ -548,7 +547,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.20 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -562,7 +561,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.21 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     const res = `a &mdash; b`;
@@ -581,7 +580,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.22 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -595,7 +594,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.23 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     const res = `a &mdash; b`;
@@ -614,7 +613,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.24 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -628,7 +627,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.25 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     const res = `a &mdash; b`;
@@ -647,7 +646,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.26 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -661,7 +660,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.27 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded dash`,
   (t) => {
     const res = `a &mdash; b`;
@@ -681,7 +680,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.28 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded dash`,
   (t) => {
     mixer({
@@ -695,7 +694,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.29 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded n-dash`,
   (t) => {
     const res = `a &mdash; b`;
@@ -715,7 +714,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.30 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded n-dash`,
   (t) => {
     mixer({
@@ -729,7 +728,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.31 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded m-dash`,
   (t) => {
     const res = `a &mdash; b`;
@@ -749,7 +748,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.32 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${32}m${`on`}\u001b[${39}m`}, numerically-encoded m-dash`,
   (t) => {
     mixer({
@@ -763,7 +762,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.33 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     const res = `a - b`;
@@ -778,7 +777,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.34 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -792,7 +791,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.35 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     const res = `a - b`;
@@ -811,7 +810,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.36 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -825,7 +824,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.37 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     const res = `a - b`;
@@ -844,7 +843,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.38 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -858,7 +857,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.39 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     const res = `a - b`;
@@ -877,7 +876,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.40 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -891,7 +890,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.41 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     const res = `a - b`;
@@ -910,7 +909,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.42 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}`,
   (t) => {
     mixer({
@@ -924,7 +923,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.43 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded dash`,
   (t) => {
     const res = `a - b`;
@@ -943,7 +942,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.44 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded dash`,
   (t) => {
     mixer({
@@ -957,7 +956,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.45 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded n-dash`,
   (t) => {
     const res = `a - b`;
@@ -977,7 +976,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.46 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded n-dash`,
   (t) => {
     mixer({
@@ -991,7 +990,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.47 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded m-dash`,
   (t) => {
     const res = `a - b`;
@@ -1011,7 +1010,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.48 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - opts are interpreted explicitly - convertDashes=${`\u001b[${31}m${`off`}\u001b[${39}m`}, numerically-encoded m-dash`,
   (t) => {
     mixer({
@@ -1025,7 +1024,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.49 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - quick ad-hoc 1`,
   (t) => {
     t.equal(det1(`abc def ghi jkl`).res, "abc def ghi&nbsp;jkl");
@@ -1033,7 +1032,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.50 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - dash conversion off, widow removal on`,
   (t) => {
     t.equal(
@@ -1051,7 +1050,7 @@ t.test(
 //                              insurance
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - if statements`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1065,7 +1064,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - variables`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1079,7 +1078,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - if statements`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1094,7 +1093,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - collapsing variables`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1108,7 +1107,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - raw m-dash sanity check`,
   (t) => {
     mixer({
@@ -1135,7 +1134,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - leaves minuses alone with convert entities option off`,
   (t) => {
     mixer({
@@ -1147,7 +1146,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - leaves the m-dashes intact`,
   (t) => {
     mixer({
@@ -1173,7 +1172,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 1`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1197,7 +1196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 2`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1213,7 +1212,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 3`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1233,7 +1232,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 4`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1253,7 +1252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.12 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 5`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1273,7 +1272,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.13 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 6`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1293,7 +1292,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.14 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 7`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1313,7 +1312,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.15 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - reporting of M-dashes that follow nunj IF-ELSE blocks 8`,
   (t) => {
     const source = `{% if x %}a{% endif %} a &mdash; b`;
@@ -1336,7 +1335,7 @@ t.test(
 //                                 minuses
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - leaves minuses alone with convert entities option on`,
   (t) => {
     mixer({
@@ -1348,7 +1347,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - legit minus between two numbers`,
   (t) => {
     mixer({
@@ -1364,7 +1363,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - minus and number, too short to widow removal`,
   (t) => {
     mixer({
@@ -1385,7 +1384,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - deg HTML entity`,
   (t) => {
     mixer({
@@ -1406,7 +1405,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - deg HTML entity in a sentence - widows=on`,
   (t) => {
     mixer({
@@ -1428,7 +1427,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - deg HTML entity in a sentence - widows=off`,
   (t) => {
     mixer({
@@ -1450,7 +1449,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - minus and number, clashing with widow removal - widows=on, entities=off`,
   (t) => {
     mixer({
@@ -1472,7 +1471,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - minus and number, clashing with widow removal - widows=off, entities=off`,
   (t) => {
     mixer({
@@ -1497,7 +1496,7 @@ t.test(
 //                                 hyphens
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - no full stop`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1511,7 +1510,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - no full stop, longer sentence`,
   (t) => {
     mixer({
@@ -1528,7 +1527,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - full stop`,
   (t) => {
     mixer({
@@ -1545,7 +1544,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - no full stop, widows=off`,
   (t) => {
     mixer({
@@ -1561,7 +1560,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - full stop, widows=off`,
   (t) => {
     mixer({
@@ -1577,7 +1576,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - when dashes are off, widow removal still works`,
   (t) => {
     t.equal(

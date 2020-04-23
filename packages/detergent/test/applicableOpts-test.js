@@ -1,13 +1,12 @@
-const t = require("tap");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-// const { det, mixer, allCombinations } = require("../t-util/util");
+import tap from "tap";
+import { det as det1 } from "../dist/detergent.esm";
+// const { det, mixer, allCombinations } from "../t-util/util";
 
 // ================================================
 // 01. Only real applicable rules keys are reported
 // ================================================
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     t.same(

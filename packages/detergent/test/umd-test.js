@@ -1,7 +1,7 @@
-const t = require("tap");
-const { det, opts, version } = require("../dist/detergent.umd");
+import tap from "tap";
+import { det, opts, version } from "../dist/detergent.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.equal(det("").res, "");
   t.equal(det("£").res, "&pound;");
   t.match(version, /\d+\.\d+\.\d+/);

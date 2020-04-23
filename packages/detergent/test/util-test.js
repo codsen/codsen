@@ -1,16 +1,16 @@
-const t = require("tap");
-const { opts } = require("../dist/detergent.cjs");
-const {
+import tap from "tap";
+import { opts } from "../dist/detergent.esm";
+import {
   isLowercaseLetter,
   isUppercaseLetter,
   doConvertEntities,
   defaultOpts,
   isLetter,
-} = require("../src/util.js");
+} from "../src/util";
 
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "01 - isLowercaseLetter() - detects the case of the given character",
   (t) => {
     t.equal(isLowercaseLetter("a"), true, "01.01");
@@ -22,7 +22,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02 - isUppercaseLetter() - detects the case of the given character",
   (t) => {
     t.equal(isUppercaseLetter("a"), false, "02.01");
@@ -34,7 +34,7 @@ t.test(
   }
 );
 
-t.test("03 - detects is the character a letter", (t) => {
+tap.test("03 - detects is the character a letter", (t) => {
   t.equal(isLetter("a"), true, "03.01");
   t.equal(isLetter("A"), true, "03.02");
   t.equal(isLetter(" "), false, "03.03");
@@ -43,12 +43,12 @@ t.test("03 - detects is the character a letter", (t) => {
   t.end();
 });
 
-t.test("04 - package exports the options object", (t) => {
+tap.test("04 - package exports the options object", (t) => {
   t.same(opts, defaultOpts, "04");
   t.end();
 });
 
-t.test("05 - doConvertEntities() - converts correctly", (t) => {
+tap.test("05 - doConvertEntities() - converts correctly", (t) => {
   t.equal(doConvertEntities("a"), "a", "05.01");
   t.equal(doConvertEntities("£"), "&pound;", "05.02");
   t.equal(doConvertEntities("'"), "&apos;", "05.03");

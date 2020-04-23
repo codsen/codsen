@@ -1,22 +1,20 @@
-const t = require("tap");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-const { det, mixer, allCombinations } = require("../t-util/util");
-
-const he = require("he");
-const {
+import tap from "tap";
+import he from "he";
+import { det as det1 } from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
+import {
   rawReplacementMark,
   rightSingleQuote,
   leftSingleQuote,
   rawhairspace,
   rawMDash,
   rawNbsp,
-} = require("../src/util.js");
+} from "../src/util";
 
 // 01. opts.convertEntities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound - convertEntities=on`,
   (t) => {
     mixer({
@@ -32,7 +30,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound - convertEntities=off`,
   (t) => {
     mixer({
@@ -48,7 +46,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
@@ -65,7 +63,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
@@ -81,7 +79,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
@@ -98,7 +96,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
@@ -114,7 +112,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`,
   (t) => {
     mixer({
@@ -132,7 +130,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`,
   (t) => {
     mixer({
@@ -149,7 +147,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
@@ -160,7 +158,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
@@ -171,7 +169,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
@@ -182,7 +180,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.12 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     mixer({
@@ -212,7 +210,7 @@ t.test(
 // 02. mixed cases
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, right single q.`,
   (t) => {
     mixer({
@@ -236,7 +234,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, left single q.`,
   (t) => {
     mixer({
@@ -260,7 +258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=off`,
   (t) => {
     mixer({
@@ -279,7 +277,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`,
   (t) => {
     mixer({
@@ -299,7 +297,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - left single q.`,
   (t) => {
     mixer({
@@ -319,7 +317,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - left single q.`,
   (t) => {
     mixer({
@@ -339,7 +337,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - right single q.`,
   (t) => {
     mixer({
@@ -359,7 +357,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - left single q.`,
   (t) => {
     mixer({
@@ -379,7 +377,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - left single q.`,
   (t) => {
     mixer({
@@ -399,7 +397,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - right single q.`,
   (t) => {
     mixer({
@@ -419,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - right single q.`,
   (t) => {
     mixer({
@@ -439,7 +437,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.12 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`,
   (t) => {
     mixer({
@@ -472,7 +470,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`,
   (t) => {
     mixer({
@@ -505,7 +503,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`,
   (t) => {
     mixer({
@@ -538,7 +536,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.15 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`,
   (t) => {
     mixer({
@@ -562,7 +560,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.16 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`,
   (t) => {
     mixer({
@@ -586,7 +584,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.17 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`,
   (t) => {
     mixer({
@@ -610,7 +608,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.18 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`,
   (t) => {
     mixer({
@@ -637,7 +635,7 @@ t.test(
 // 03. m-dash
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.01 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -652,7 +650,7 @@ t.test(`03.01 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 0,
     removeWidows: 1,
@@ -667,7 +665,7 @@ t.test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 0,
     removeWidows: 0,
@@ -681,7 +679,7 @@ t.test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -711,7 +709,7 @@ t.test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -728,7 +726,7 @@ t.test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -745,7 +743,7 @@ t.test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -762,7 +760,7 @@ t.test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -779,7 +777,7 @@ t.test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -796,7 +794,7 @@ t.test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -813,7 +811,7 @@ t.test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -830,7 +828,7 @@ t.test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -847,7 +845,7 @@ t.test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -864,7 +862,7 @@ t.test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -881,7 +879,7 @@ t.test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -898,7 +896,7 @@ t.test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -915,7 +913,7 @@ t.test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -932,7 +930,7 @@ t.test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -949,7 +947,7 @@ t.test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -966,7 +964,7 @@ t.test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 0,
     removeWidows: 0,
@@ -981,7 +979,7 @@ t.test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
     mixer({
@@ -1007,7 +1005,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.22 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
     mixer({
@@ -1024,7 +1022,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.23 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1038,7 +1036,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.24 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=on`,
   (t) => {
     mixer({
@@ -1057,7 +1055,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.25 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=off`,
   (t) => {
     mixer({
@@ -1076,7 +1074,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.26 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=on`,
   (t) => {
     mixer({
@@ -1099,7 +1097,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.27 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=off`,
   (t) => {
     mixer({
@@ -1122,7 +1120,7 @@ t.test(
   }
 );
 
-t.test(`03.28 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
+tap.test(`03.28 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -1142,7 +1140,7 @@ t.test(`03.28 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 // 04. astral chars
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - trigram char converted into entity, convertEntities=on`,
   (t) => {
     mixer({
@@ -1158,7 +1156,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - trigram char converted into entity, convertEntities=off`,
   (t) => {
     mixer({
@@ -1174,7 +1172,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - paired surrogate encoding, convertEntities=on`,
   (t) => {
     mixer({
@@ -1190,7 +1188,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - paired surrogate encoding, convertEntities=off`,
   (t) => {
     mixer({
@@ -1206,7 +1204,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1220,7 +1218,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1234,7 +1232,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1244,7 +1242,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -1254,7 +1252,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.09 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     mixer({
@@ -1273,7 +1271,7 @@ t.test(
 // 05. opts.convertApostrophes
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - German characters`,
   (t) => {
     mixer({
@@ -1289,7 +1287,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single raw apostrophes are not encoded`,
   (t) => {
     mixer({
@@ -1301,7 +1299,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single encoded apostrophes are decoded`,
   (t) => {
     mixer({
@@ -1314,7 +1312,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
@@ -1336,7 +1334,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
@@ -1358,7 +1356,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
@@ -1379,7 +1377,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
@@ -1396,7 +1394,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
@@ -1413,7 +1411,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
@@ -1429,7 +1427,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.10 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
@@ -1446,7 +1444,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.11 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
@@ -1463,7 +1461,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.12 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
@@ -1480,7 +1478,7 @@ t.test(
 );
 
 // rawReplacementMark === �
-t.test(
+tap.test(
   `05.13 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "one's"`,
   (t) => {
     mixer({
@@ -1497,7 +1495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.14 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "one's"`,
   (t) => {
     mixer({
@@ -1514,7 +1512,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.15 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to non-fancy which is never encoded`,
   (t) => {
     mixer({
@@ -1530,7 +1528,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.16 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to fancy, encoded`,
   (t) => {
     mixer({
@@ -1547,7 +1545,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.17 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to fancy but leaves unencoded`,
   (t) => {
     mixer({
@@ -1564,7 +1562,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.18 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to non-fancy which is never encoded`,
   (t) => {
     mixer({
@@ -1584,7 +1582,7 @@ t.test(
 // -----------------------------------------------------------------------------
 // ${rawReplacementMark} = �
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1601,7 +1599,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1618,7 +1616,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1635,7 +1633,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1652,7 +1650,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.05 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1669,7 +1667,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.06 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1686,7 +1684,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.07 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1703,7 +1701,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.08 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1720,7 +1718,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.09 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1737,7 +1735,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.10 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1754,7 +1752,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.11 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1771,7 +1769,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.12 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1788,7 +1786,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.13 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1805,7 +1803,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.14 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1822,7 +1820,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.15 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1839,7 +1837,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.16 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1856,7 +1854,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.17 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1873,7 +1871,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.18 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1890,7 +1888,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.19 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1907,7 +1905,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.20 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1924,7 +1922,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.21 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1941,7 +1939,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.22 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1958,7 +1956,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.23 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1975,7 +1973,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.24 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -1993,7 +1991,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.25 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2011,7 +2009,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.26 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2029,7 +2027,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.27 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2047,7 +2045,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.28 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2065,7 +2063,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.29 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2083,7 +2081,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.30 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2101,7 +2099,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.31 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
@@ -2122,7 +2120,7 @@ t.test(
 // 07. numeric entities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - numeric entities`,
   (t) => {
     t.equal(
@@ -2134,7 +2132,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - named entities`,
   (t) => {
     t.equal(
@@ -2146,7 +2144,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - raw characters`,
   (t) => {
     t.equal(
@@ -2161,7 +2159,7 @@ t.test(
 // 08. erroneous entities
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities - precaution &fnof; (\\u0192)`,
   (t) => {
     t.equal(det(t, 0, `aaa&fnof;aaa`).res, "aaa&fnof;aaa");
@@ -2169,7 +2167,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.02 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(det(t, 0, `aaa&thinsp;aaa`).res, "aaa aaa");
@@ -2177,7 +2175,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.03 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(det(t, 0, `aaa&zwnjaaa`).res, "aaa&zwnj;aaa");
@@ -2185,7 +2183,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.04 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(
@@ -2198,7 +2196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.05 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(
@@ -2212,7 +2210,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.06 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
@@ -2233,7 +2231,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.07 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(
@@ -2244,7 +2242,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.08 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(
@@ -2257,7 +2255,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `08.09 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`,
   (t) => {
     t.equal(
@@ -2271,7 +2269,7 @@ t.test(
 // 09. sanity checks
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(det(t, 0, `aaa&lt;bbb ccc`).res, "aaa&lt;bbb ccc");
@@ -2279,7 +2277,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(
@@ -2292,7 +2290,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.03 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(
@@ -2305,7 +2303,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.04 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(det(t, 0, `aaa<bbb ccc`).res, "aaa&lt;bbb ccc");
@@ -2313,7 +2311,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.05 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(
@@ -2325,7 +2323,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.06 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`,
   (t) => {
     t.equal(
@@ -2337,7 +2335,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.07 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
@@ -2358,7 +2356,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.08 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
@@ -2384,17 +2382,17 @@ t.test(
 // 10. some HTML entitities can't be sent in named entities format, only in numeric
 // ============================================================================
 
-t.test(`10.01 - email-not-friendly entities`, (t) => {
+tap.test(`10.01 - email-not-friendly entities`, (t) => {
   t.equal(det(t, 0, `&Breve;`, { convertEntities: 1 }).res, "&#x2D8;");
   t.end();
 });
 
-t.test(`10.02 - email-not-friendly entities`, (t) => {
+tap.test(`10.02 - email-not-friendly entities`, (t) => {
   t.equal(det(t, 0, `&Breve;`, { convertEntities: 0 }).res, "\u02D8");
   t.end();
 });
 
-t.test(`10.03 - numeric entities`, (t) => {
+tap.test(`10.03 - numeric entities`, (t) => {
   mixer({
     convertEntities: 1,
   }).forEach((opt, n) => {
@@ -2413,7 +2411,7 @@ t.test(`10.03 - numeric entities`, (t) => {
   t.end();
 });
 
-t.test(`10.04 - wrong named entity QUOT into quot`, (t) => {
+tap.test(`10.04 - wrong named entity QUOT into quot`, (t) => {
   mixer({
     convertEntities: 1,
   }).forEach((opt, n) => {
@@ -2427,7 +2425,7 @@ t.test(`10.04 - wrong named entity QUOT into quot`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `10.05 - enforce spaces after semicolons - semicol between letters, addMissingSpaces=on`,
   (t) => {
     mixer({
@@ -2443,7 +2441,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.06 - enforce spaces after semicolons - semicol between letters, addMissingSpaces=off`,
   (t) => {
     mixer({
@@ -2459,7 +2457,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.07 - enforce spaces after semicolons - semicol between letters, ends with semicol`,
   (t) => {
     mixer({
@@ -2475,7 +2473,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.08 - enforce spaces after semicolons - semicol between letters, ends with semicol`,
   (t) => {
     mixer({
@@ -2491,7 +2489,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.09 - enforce spaces after semicolons - semicol fixes must not affect HTML entities`,
   (t) => {
     mixer({
@@ -2507,21 +2505,24 @@ t.test(
   }
 );
 
-t.test(`10.10 - enforce spaces after dot if upper-case letter follows`, (t) => {
-  mixer({
-    addMissingSpaces: 1,
-  }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `aaa.Aaa`, opt).res,
-      "aaa. Aaa",
-      JSON.stringify(opt, null, 4)
-    );
-  });
+tap.test(
+  `10.10 - enforce spaces after dot if upper-case letter follows`,
+  (t) => {
+    mixer({
+      addMissingSpaces: 1,
+    }).forEach((opt, n) => {
+      t.equal(
+        det(t, n, `aaa.Aaa`, opt).res,
+        "aaa. Aaa",
+        JSON.stringify(opt, null, 4)
+      );
+    });
 
-  t.end();
-});
+    t.end();
+  }
+);
 
-t.test(`10.11 - does not touch dots among lowercase letters`, (t) => {
+tap.test(`10.11 - does not touch dots among lowercase letters`, (t) => {
   allCombinations.forEach((opt, n) => {
     t.equal(
       det(t, n, `aaa.aaa`, opt).res,
@@ -2533,7 +2534,7 @@ t.test(`10.11 - does not touch dots among lowercase letters`, (t) => {
   t.end();
 });
 
-t.test(`10.12 - letters within ASCII are decoded if come encoded`, (t) => {
+tap.test(`10.12 - letters within ASCII are decoded if come encoded`, (t) => {
   allCombinations.forEach((opt, n) => {
     t.equal(det(t, n, `&#x61;`, opt).res, "a", JSON.stringify(opt, null, 4));
   });

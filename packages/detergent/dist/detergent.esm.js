@@ -9,11 +9,6 @@
 
 import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
-import { notEmailFriendly } from 'html-entities-not-email-friendly';
-import { allNamedEntities } from 'all-named-html-entities';
-import rangesExpander from 'string-range-expander';
-import { convertOne } from 'string-apostrophes';
-import he from 'he';
 import { removeWidows } from 'string-remove-widows';
 import processOutside from 'ranges-process-outside';
 import collapse from 'string-collapse-white-space';
@@ -23,6 +18,13 @@ import invertRanges from 'ranges-invert';
 import rangesApply from 'ranges-apply';
 import ansiRegex from 'ansi-regex';
 import Ranges from 'ranges-push';
+import he from 'he';
+import { notEmailFriendly } from 'html-entities-not-email-friendly';
+import { allNamedEntities } from 'all-named-html-entities';
+import rangesExpander from 'string-range-expander';
+import { convertOne } from 'string-apostrophes';
+
+var version = "5.8.15";
 
 const defaultOpts = {
   fixBrokenEntities: true,
@@ -881,77 +883,64 @@ function processCharacter(
             str[y] === " " &&
             isNumber(str[left(str, i)]) &&
             isNumber(str[right(str, y)])
-          ) ; else {
-            if (
-              (str[i - 1] === rawNbsp || str[i - 1] === " ") &&
-              str[y] !== "$" &&
-              str[y] !== "£" &&
-              str[y] !== "€" &&
-              str[y] !== "₽" &&
-              str[y] !== "0" &&
-              str[y] !== "1" &&
-              str[y] !== "2" &&
-              str[y] !== "3" &&
-              str[y] !== "4" &&
-              str[y] !== "5" &&
-              str[y] !== "6" &&
-              str[y] !== "7" &&
-              str[y] !== "8" &&
-              str[y] !== "9" &&
-              str[y] !== "-" &&
-              str[y] !== ">" &&
-              str[y] !== " "
-            ) {
-              applicableOpts.addMissingSpaces = true;
-              if (opts.addMissingSpaces) {
-                rangesArr.push(y, y, " ");
-              }
-            } else if (
-              str[i - 1] &&
-              str[y] &&
-              ((isNumber(str[i - 1]) && isNumber(str[y])) ||
-                (str[i - 1].toLowerCase() === "a" &&
-                  str[y].toLowerCase() === "z"))
-            ) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(
-                  i,
-                  y,
-                  opts.convertEntities ? "&ndash;" : "\u2013"
-                );
-              }
-            } else if (
-              str[i - 1] &&
-              str[y] &&
-              ((str[i - 1].trim().length === 0 && str[y].trim().length === 0) ||
-                (isLowercaseLetter(str[i - 1]) && str[y] === "'"))
-            ) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(
-                  i,
-                  y,
-                  opts.convertEntities ? "&mdash;" : rawMDash
-                );
-              }
-            } else if (
-              str[i - 1] &&
-              str[y] &&
-              isLetter(str[i - 1]) &&
-              isQuote(str[y])
-            ) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(
-                  i,
-                  y,
-                  opts.convertEntities ? "&mdash;" : rawMDash
-                );
-              }
+          ) ;
+          else if (
+            (str[i - 1] === rawNbsp || str[i - 1] === " ") &&
+            str[y] !== "$" &&
+            str[y] !== "£" &&
+            str[y] !== "€" &&
+            str[y] !== "₽" &&
+            str[y] !== "0" &&
+            str[y] !== "1" &&
+            str[y] !== "2" &&
+            str[y] !== "3" &&
+            str[y] !== "4" &&
+            str[y] !== "5" &&
+            str[y] !== "6" &&
+            str[y] !== "7" &&
+            str[y] !== "8" &&
+            str[y] !== "9" &&
+            str[y] !== "-" &&
+            str[y] !== ">" &&
+            str[y] !== " "
+          ) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          } else if (
+            str[i - 1] &&
+            str[y] &&
+            ((isNumber(str[i - 1]) && isNumber(str[y])) ||
+              (str[i - 1].toLowerCase() === "a" &&
+                str[y].toLowerCase() === "z"))
+          ) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
+            }
+          } else if (
+            str[i - 1] &&
+            str[y] &&
+            ((str[i - 1].trim().length === 0 && str[y].trim().length === 0) ||
+              (isLowercaseLetter(str[i - 1]) && str[y] === "'"))
+          ) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+            }
+          } else if (
+            str[i - 1] &&
+            str[y] &&
+            isLetter(str[i - 1]) &&
+            isQuote(str[y])
+          ) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
             }
           }
           if (
@@ -1286,13 +1275,13 @@ function processCharacter(
         });
         if (tempRes && tempRes.length) {
           applicableOpts.convertApostrophes = true;
-          const tempRes = convertOne(str, {
+          const tempRes2 = convertOne(str, {
             from: i,
             to: y,
             convertEntities: true,
             convertApostrophes: true,
           });
-          if (tempRes) {
+          if (tempRes2) {
             if (opts.convertApostrophes) {
               applicableOpts.convertEntities = true;
             }
@@ -1388,8 +1377,6 @@ function processCharacter(
   }
 }
 
-var version = "5.8.15";
-
 function det(str, inputOpts) {
   if (typeof str !== "string") {
     throw new Error(
@@ -1410,7 +1397,7 @@ function det(str, inputOpts) {
       )})`
     );
   }
-  const opts = Object.assign({}, defaultOpts, inputOpts);
+  const opts = { ...defaultOpts, ...inputOpts };
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
   }
@@ -1692,21 +1679,20 @@ function det(str, inputOpts) {
                 );
               }
             }
-          } else {
-            if (
-              tag.slashPresent &&
-              str[left(str, tag.lastClosingBracketAt)] === "/"
-            ) {
-              finalIndexesToDelete.push(
-                chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
-                tag.lastClosingBracketAt
-              );
-              finalIndexesToDelete.push(
-                tag.lastOpeningBracketAt + 1,
-                tag.lastOpeningBracketAt + 1,
-                "/"
-              );
-            }
+          }
+          else if (
+            tag.slashPresent &&
+            str[left(str, tag.lastClosingBracketAt)] === "/"
+          ) {
+            finalIndexesToDelete.push(
+              chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
+              tag.lastClosingBracketAt
+            );
+            finalIndexesToDelete.push(
+              tag.lastOpeningBracketAt + 1,
+              tag.lastOpeningBracketAt + 1,
+              "/"
+            );
           }
           if (tag.name.toLowerCase() !== tag.name) {
             finalIndexesToDelete.push(
@@ -1799,9 +1785,7 @@ function det(str, inputOpts) {
         brClosingBracketIndexesArr,
         state,
         applicableOpts,
-        endOfLine,
-        opts.cb
-      ),
+        endOfLine),
     true
   );
   applyAndWipe();

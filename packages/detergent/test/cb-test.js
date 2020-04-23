@@ -1,13 +1,12 @@
-const t = require("tap");
-const detergent = require("../dist/detergent.cjs");
-const det1 = detergent.det;
-const { det, mixer, allCombinations } = require("../t-util/util");
+import tap from "tap";
+import { det as det1 } from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
 
 // ==============================
 // 01. main functionality
 // ==============================
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
   (t) => {
     t.equal(
@@ -19,7 +18,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - turns into an uppercase`,
   (t) => {
     t.equal(
@@ -33,7 +32,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
   (t) => {
     t.equal(
@@ -47,7 +46,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
   (t) => {
     allCombinations.forEach((opt, n) => {
@@ -68,22 +67,15 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
   (t) => {
     // warmup:
     t.equal(
-      det1(
-        `AbC<z>dEf`,
-        Object.assign(
-          {
-            stripHtml: true,
-          },
-          {
-            cb: (str) => str.toUpperCase(),
-          }
-        )
-      ).res,
+      det1(`AbC<z>dEf`, {
+        stripHtml: true,
+        cb: (str) => str.toUpperCase(),
+      }).res,
       "ABC DEF"
     );
     // now mixer:
