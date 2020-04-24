@@ -12,7 +12,8 @@ import traverse from 'ast-monkey-traverse';
 function containsOnlyEmptySpace(input) {
   if (typeof input === "string") {
     return !input.trim();
-  } else if (!["object", "string"].includes(typeof input) || !input) {
+  }
+  if (!["object", "string"].includes(typeof input) || !input) {
     return false;
   }
   let found = true;

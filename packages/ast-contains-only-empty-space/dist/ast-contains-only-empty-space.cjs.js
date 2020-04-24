@@ -32,7 +32,8 @@ function _typeof(obj) {
 function containsOnlyEmptySpace(input) {
   if (typeof input === "string") {
     return !input.trim();
-  } else if (!["object", "string"].includes(_typeof(input)) || !input) {
+  }
+  if (!["object", "string"].includes(_typeof(input)) || !input) {
     return false;
   }
   var found = true;

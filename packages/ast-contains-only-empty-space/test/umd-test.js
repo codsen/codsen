@@ -1,5 +1,5 @@
-const t = require("tap");
-const empty1 = require("../dist/ast-contains-only-empty-space.umd");
+import tap from "tap";
+import empty1 from "../dist/ast-contains-only-empty-space.umd";
 
 const source = [
   "   ",
@@ -11,7 +11,7 @@ const source = [
   "\n\n\n\n\n\n   \t   ",
 ];
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.ok(empty1(source));
   t.end();
 });
