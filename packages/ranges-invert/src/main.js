@@ -33,7 +33,8 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       return [];
     }
     return [[0, strLen]];
-  } else if (arrOfRanges.length === 0) {
+  }
+  if (arrOfRanges.length === 0) {
     return [];
   }
 
@@ -45,7 +46,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     skipChecks: false,
   };
   // fill any settings with defaults if missing:
-  const opts = Object.assign({}, defaults, originalOptions);
+  const opts = { ...defaults, ...originalOptions };
   // arrOfRanges validation
 
   let culpritsIndex;
@@ -141,7 +142,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
 
   console.log(
-    `144 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `145 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -156,12 +157,12 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
     console.log(`i = ${i}`);
 
-    const res = [];
+    const res2 = [];
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`163 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
-      res.push([0, arr[0][0]]);
+      console.log(`164 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      res2.push([0, arr[0][0]]);
     }
 
     // Now, for every range, add inverted range that follows. For example,
@@ -170,7 +171,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `173 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `174 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:
@@ -185,10 +186,10 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
           )}`
         );
       }
-      res.push([currArr[1], endingIndex]);
+      res2.push([currArr[1], endingIndex]);
     }
 
-    return accum.concat(res);
+    return accum.concat(res2);
   }, []);
 
   console.log(

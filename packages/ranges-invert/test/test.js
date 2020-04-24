@@ -1,12 +1,12 @@
-const t = require("tap");
-const i = require("../dist/ranges-invert.cjs");
+import tap from "tap";
+import i from "../dist/ranges-invert.esm";
 // import fs from "fs";
 
 // ==============================
 // 0. THROWS
 // ==============================
 
-t.test("00.01 - not array", (t) => {
+tap.test("00.01 - not array", (t) => {
   // throw pinning:
   t.throws(() => {
     i(null);
@@ -35,7 +35,7 @@ t.test("00.01 - not array", (t) => {
   t.end();
 });
 
-t.test("00.02 - not two arguments in one of ranges", (t) => {
+tap.test("00.02 - not two arguments in one of ranges", (t) => {
   t.throws(() => {
     i([[1, 2, 3]], 4, { strictlyTwoElementsInRangeArrays: true });
   }, /THROW_ID_04/g);
@@ -137,7 +137,7 @@ t.test("00.02 - not two arguments in one of ranges", (t) => {
   t.end();
 });
 
-t.test("00.03 - some/all range indexes are not natural numbers", (t) => {
+tap.test("00.03 - some/all range indexes are not natural numbers", (t) => {
   t.doesNotThrow(() => {
     i([[0, 3]], 3);
   });
@@ -172,7 +172,7 @@ t.test("00.03 - some/all range indexes are not natural numbers", (t) => {
   t.end();
 });
 
-t.test("00.04 - second arg, strLen is wrong", (t) => {
+tap.test("00.04 - second arg, strLen is wrong", (t) => {
   t.doesNotThrow(() => {
     i([[0, 0]], 0);
   });
@@ -187,7 +187,7 @@ t.test("00.04 - second arg, strLen is wrong", (t) => {
   t.end();
 });
 
-t.test("00.05 - zero-length ranges array", (t) => {
+tap.test("00.05 - zero-length ranges array", (t) => {
   t.doesNotThrow(() => {
     i([], 0);
     i([], 1);
@@ -201,7 +201,7 @@ t.test("00.05 - zero-length ranges array", (t) => {
 // 01. BAU - inverting
 // ==============================
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string covers the range`,
   (t) => {
     const ref = "abcdefghij";
@@ -227,7 +227,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`,
   (t) => {
     // good:
@@ -239,7 +239,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - same element range invert`,
   (t) => {
     t.same(i([[0, 0]], 3), [[0, 3]], "01.03.01 - yields everything");
@@ -248,7 +248,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string covers the ranges`,
   (t) => {
     const ref = "abcdefghij";
@@ -280,7 +280,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each other`,
   (t) => {
     t.same(
@@ -419,7 +419,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`,
   (t) => {
     t.same(
@@ -477,7 +477,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`,
   (t) => {
     t.same(
@@ -495,7 +495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`,
   (t) => {
     t.same(i(null, 0), [], "01.08.01");
@@ -504,7 +504,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`,
   (t) => {
     t.same(i([[100, 200]], 10), [[0, 10]], "01.09");
@@ -512,7 +512,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`,
   (t) => {
     t.same(
@@ -530,7 +530,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`,
   (t) => {
     t.same(

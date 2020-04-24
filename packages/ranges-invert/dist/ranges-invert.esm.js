@@ -35,14 +35,15 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       return [];
     }
     return [[0, strLen]];
-  } else if (arrOfRanges.length === 0) {
+  }
+  if (arrOfRanges.length === 0) {
     return [];
   }
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false,
   };
-  const opts = Object.assign({}, defaults, originalOptions);
+  const opts = { ...defaults, ...originalOptions };
   let culpritsIndex;
   let culpritsLen;
   if (
@@ -118,9 +119,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     return [[0, strLen]];
   }
   const res = prep.reduce((accum, currArr, i, arr) => {
-    const res = [];
+    const res2 = [];
     if (i === 0 && arr[0][0] !== 0) {
-      res.push([0, arr[0][0]]);
+      res2.push([0, arr[0][0]]);
     }
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
@@ -135,9 +136,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
           )}`
         );
       }
-      res.push([currArr[1], endingIndex]);
+      res2.push([currArr[1], endingIndex]);
     }
-    return accum.concat(res);
+    return accum.concat(res2);
   }, []);
   return rangesCrop(res, strLen);
 }

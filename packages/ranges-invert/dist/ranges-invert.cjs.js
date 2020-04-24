@@ -30,6 +30,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 var isArr = Array.isArray;
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
   if (!isArr(arrOfRanges) && arrOfRanges !== null) {
@@ -43,14 +92,15 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       return [];
     }
     return [[0, strLen]];
-  } else if (arrOfRanges.length === 0) {
+  }
+  if (arrOfRanges.length === 0) {
     return [];
   }
   var defaults = {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false
   };
-  var opts = Object.assign({}, defaults, originalOptions);
+  var opts = _objectSpread2({}, defaults, {}, originalOptions);
   var culpritsIndex;
   var culpritsLen;
   if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
@@ -92,18 +142,18 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     return [[0, strLen]];
   }
   var res = prep.reduce(function (accum, currArr, i, arr) {
-    var res = [];
+    var res2 = [];
     if (i === 0 && arr[0][0] !== 0) {
-      res.push([0, arr[0][0]]);
+      res2.push([0, arr[0][0]]);
     }
     var endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       if (opts.skipChecks && currArr[1] > endingIndex) {
         throw new TypeError("ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [".concat(currArr[1], ", ").concat(endingIndex, "] which is backwards. For investigation, whole ranges array is:\n").concat(JSON.stringify(arr, null, 0)));
       }
-      res.push([currArr[1], endingIndex]);
+      res2.push([currArr[1], endingIndex]);
     }
-    return accum.concat(res);
+    return accum.concat(res2);
   }, []);
   return rangesCrop(res, strLen);
 }
