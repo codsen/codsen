@@ -20,7 +20,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   const defaults = {
     arrayVsArrayAllMustBeFound: "any",
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (arguments.length === 0) {
     throw new Error(
       "array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!"

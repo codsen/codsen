@@ -15,7 +15,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     arrayVsArrayAllMustBeFound: "any", // two options: 'any' or 'all'
   };
 
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // insurance
   if (arguments.length === 0) {
@@ -30,6 +30,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
   if (!isArr(originalInput)) {
     if (isStr(originalInput)) {
+      // eslint-disable-next-line no-param-reassign
       originalInput = [originalInput];
     } else {
       throw new Error(
