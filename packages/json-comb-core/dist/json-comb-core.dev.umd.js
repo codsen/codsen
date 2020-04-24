@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -4170,7 +4219,9 @@
     const defaults = {
       flattenArraysContainingStringsToBeEmpty: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     const incommingObj = lodash_clonedeep(originalIncommingObj);
     let isFirstObj;
     let combinedObj;
@@ -4323,7 +4374,9 @@
     const defaults = {
       arrayVsArrayAllMustBeFound: "any"
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (arguments.length === 0) {
       throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
@@ -6136,11 +6189,17 @@
   function nonEmpty(input) {
     if (arguments.length === 0 || input === undefined) {
       return false;
-    } else if (isArr$2(input) || isStr(input)) {
+    }
+
+    if (isArr$2(input) || isStr(input)) {
       return input.length > 0;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       return Object.keys(input).length > 0;
-    } else if (isNum(input)) {
+    }
+
+    if (isNum(input)) {
       return true;
     }
 
@@ -6227,7 +6286,9 @@
   function getType(something) {
     if (isObj(something)) {
       return "object";
-    } else if (isArr$3(something)) {
+    }
+
+    if (isArr$3(something)) {
       return "array";
     }
 
@@ -6398,7 +6459,9 @@
             key: infoObj.key,
             type: infoObj.type
           }) : currentResult;
-        } else if (isObj(i2)) {
+        }
+
+        if (isObj(i2)) {
           Object.keys(i2).forEach(key => {
             currPath = infoObj.path && infoObj.path.length ? `${infoObj.path}.${key}` : `${key}`;
 
@@ -6406,31 +6469,31 @@
               if (arrayIncludesWithGlob(key, opts.ignoreKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   ignoreEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardMergeEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardArrayConcat: true
-                }));
+                });
               } else {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
                 }, i1[key], i2[key], opts);
               }
@@ -6531,7 +6594,9 @@
           key: infoObj.key,
           type: infoObj.type
         }) : currentResult;
-      } else if (i2 != null) {
+      }
+
+      if (i2 != null) {
         const currentResult = uni ? uniRes : i2;
         return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
@@ -8541,7 +8606,9 @@
       }
 
       return true;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       const keys = Object.keys(input);
 
       if (keys.length === 0) {
@@ -8576,7 +8643,9 @@
     const defaults = {
       arraysMustNotContainPlaceholders: true
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     return allValuesEqualTo(inputOriginal, valueOriginal, opts);
   }
 
@@ -8592,7 +8661,9 @@
   function typ(something) {
     if (lodash_isplainobject(something)) {
       return "plain object";
-    } else if (isArr$5(something)) {
+    }
+
+    if (Array.isArray(something)) {
       return "array";
     }
 
@@ -8681,7 +8752,9 @@
       doNotFillThesePathsIfTheyContainPlaceholders: [],
       useNullAsExplicitFalse: true
     };
-    const opts = Object.assign({}, defaults, originalOptsWrapper);
+    const opts = { ...defaults,
+      ...originalOptsWrapper
+    };
     opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
     let culpritsVal = null;
     let culpritsIndex = null;
@@ -8865,7 +8938,9 @@
     const defaults = {
       mode: 2
     };
-    const optsOuter = Object.assign({}, defaults, originalOptsOuter);
+    const optsOuter = { ...defaults,
+      ...originalOptsOuter
+    };
 
     if (typeof optsOuter.mode === "string" && ["1", "2"].includes(optsOuter.mode)) {
       if (optsOuter.mode === "1") {
@@ -9544,11 +9619,32 @@
     return typeof something === "string";
   }
 
-  var isArr$7 = Array.isArray; // -----------------------------------------------------------------------------
+  var isArr$7 = Array.isArray; // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
+
+  function toString(obj) {
+    if (obj === null) {
+      return "null";
+    }
+
+    if (typeof obj === "boolean" || typeof obj === "number") {
+      return obj.toString();
+    }
+
+    if (typeof obj === "string") {
+      return obj;
+    }
+
+    if (_typeof(obj) === "symbol") {
+      throw new TypeError();
+    }
+
+    return obj.toString();
+  } // -----------------------------------------------------------------------------
   // SORT THEM THINGIES
-  //INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-  //ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
+  // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+  // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
   // from https://stackoverflow.com/a/47349064/3943954
+
 
   function defaultCompare(x, y) {
     if (x === undefined && y === undefined) {
@@ -9575,27 +9671,6 @@
     }
 
     return 0;
-  } //ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
-
-
-  function toString(obj) {
-    if (obj === null) {
-      return "null";
-    }
-
-    if (typeof obj === "boolean" || typeof obj === "number") {
-      return obj.toString();
-    }
-
-    if (typeof obj === "string") {
-      return obj;
-    }
-
-    if (_typeof(obj) === "symbol") {
-      throw new TypeError();
-    }
-
-    return obj.toString();
   } // compareFunction
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Parameters
 
@@ -9634,7 +9709,9 @@
     var defaults = {
       placeholder: false
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var culpritIndex;
     var culpritVal;
     return new Promise(function (resolve, reject) {
@@ -9696,7 +9773,9 @@
     var defaults = {
       placeholder: false
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var fOpts = {
       flattenArraysContainingStringsToBeEmpty: true
     };
@@ -9728,7 +9807,8 @@
       placeholder: false,
       useNullAsExplicitFalse: true
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
       return isStr$3(val);
@@ -9778,7 +9858,8 @@
       placeholder: false,
       useNullAsExplicitFalse: true
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
       return isStr$3(val);
@@ -9833,7 +9914,8 @@
       placeholder: false,
       comments: "__comment__"
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (opts.comments === 1 || opts.comments === "1") {
       throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix.");
@@ -9859,17 +9941,12 @@
       });
     }
 
-    function findUnusedSyncInner(arr1, opts1, res, path) {
+    function findUnusedSyncInner(arr1, opts1) {
+      var res = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+      var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+
       if (isArr$7(arr1) && arr1.length === 0) {
         return res;
-      }
-
-      if (res === undefined) {
-        res = [];
-      }
-
-      if (path === undefined) {
-        path = "";
       }
 
       var keySet;

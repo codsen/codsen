@@ -27,11 +27,28 @@ function isStr(something) {
 }
 const isArr = Array.isArray;
 
+// ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
+function toString(obj) {
+  if (obj === null) {
+    return "null";
+  }
+  if (typeof obj === "boolean" || typeof obj === "number") {
+    return obj.toString();
+  }
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (typeof obj === "symbol") {
+    throw new TypeError();
+  }
+  return obj.toString();
+}
+
 // -----------------------------------------------------------------------------
 // SORT THEM THINGIES
 
-//INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-//ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
+// INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+// ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
 // from https://stackoverflow.com/a/47349064/3943954
 function defaultCompare(x, y) {
   if (x === undefined && y === undefined) {
@@ -52,23 +69,6 @@ function defaultCompare(x, y) {
     return 1;
   }
   return 0;
-}
-
-//ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
-function toString(obj) {
-  if (obj === null) {
-    return "null";
-  }
-  if (typeof obj === "boolean" || typeof obj === "number") {
-    return obj.toString();
-  }
-  if (typeof obj === "string") {
-    return obj;
-  }
-  if (typeof obj === "symbol") {
-    throw new TypeError();
-  }
-  return obj.toString();
 }
 
 // compareFunction
@@ -108,7 +108,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   const defaults = {
     placeholder: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   console.log(
     `113 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
@@ -211,7 +211,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   const defaults = {
     placeholder: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   const fOpts = {
     flattenArraysContainingStringsToBeEmpty: true,
@@ -257,7 +257,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -349,7 +349,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -428,7 +428,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     placeholder: false,
     comments: "__comment__",
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.comments === 1 || opts.comments === "1") {
     throw new TypeError(
       "json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix."
@@ -455,15 +455,9 @@ function findUnusedSync(arrOriginal, originalOpts) {
     );
   }
 
-  function findUnusedSyncInner(arr1, opts1, res, path) {
+  function findUnusedSyncInner(arr1, opts1, res = [], path = "") {
     if (isArr(arr1) && arr1.length === 0) {
       return res;
-    }
-    if (res === undefined) {
-      res = [];
-    }
-    if (path === undefined) {
-      path = "";
     }
     let keySet;
     if (arr1.every((el) => isObj(el))) {

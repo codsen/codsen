@@ -42,6 +42,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -127,6 +176,21 @@ function isStr(something) {
   return typeof something === "string";
 }
 var isArr = Array.isArray;
+function toString(obj) {
+  if (obj === null) {
+    return "null";
+  }
+  if (typeof obj === "boolean" || typeof obj === "number") {
+    return obj.toString();
+  }
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (_typeof(obj) === "symbol") {
+    throw new TypeError();
+  }
+  return obj.toString();
+}
 function defaultCompare(x, y) {
   if (x === undefined && y === undefined) {
     return 0;
@@ -146,21 +210,6 @@ function defaultCompare(x, y) {
     return 1;
   }
   return 0;
-}
-function toString(obj) {
-  if (obj === null) {
-    return "null";
-  }
-  if (typeof obj === "boolean" || typeof obj === "number") {
-    return obj.toString();
-  }
-  if (typeof obj === "string") {
-    return obj;
-  }
-  if (_typeof(obj) === "symbol") {
-    throw new TypeError();
-  }
-  return obj.toString();
 }
 function compare(firstEl, secondEl) {
   var semverRegex = /^\d+\.\d+\.\d+$/g;
@@ -188,7 +237,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   var defaults = {
     placeholder: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var culpritIndex;
   var culpritVal;
   return new Promise(function (resolve, reject) {
@@ -238,7 +287,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   var defaults = {
     placeholder: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
   };
@@ -265,7 +314,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -304,7 +353,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -342,7 +391,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     placeholder: false,
     comments: "__comment__"
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.comments === 1 || opts.comments === "1") {
     throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix.");
   }
@@ -361,15 +410,11 @@ function findUnusedSync(arrOriginal, originalOpts) {
       return finding.charAt(0) === "." ? finding.slice(1) : finding;
     });
   }
-  function findUnusedSyncInner(arr1, opts1, res, path) {
+  function findUnusedSyncInner(arr1, opts1) {
+    var res = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+    var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
     if (isArr(arr1) && arr1.length === 0) {
       return res;
-    }
-    if (res === undefined) {
-      res = [];
-    }
-    if (path === undefined) {
-      path = "";
     }
     var keySet;
     if (arr1.every(function (el) {
