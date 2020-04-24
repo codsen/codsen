@@ -47,7 +47,8 @@ function equalOrSubsetKeys(obj1, obj2) {
 function getType(something) {
   if (isObj(something)) {
     return "object";
-  } else if (isArr(something)) {
+  }
+  if (isArr(something)) {
     return "array";
   }
   return typeof something;
@@ -259,7 +260,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               type: infoObj.type,
             })
           : currentResult;
-      } else if (isObj(i2)) {
+      }
+      if (isObj(i2)) {
         Object.keys(i2).forEach((key) => {
           currPath =
             infoObj.path && infoObj.path.length
@@ -270,40 +272,40 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
-                Object.assign({}, opts, { ignoreEverything: true })
+                { ...opts, ignoreEverything: true }
               );
             } else if (includes(key, opts.hardMergeKeys)) {
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
-                Object.assign({}, opts, { hardMergeEverything: true })
+                { ...opts, hardMergeEverything: true }
               );
             } else if (includes(key, opts.hardArrayConcatKeys)) {
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)],
                 },
                 i1[key],
                 i2[key],
-                Object.assign({}, opts, { hardArrayConcat: true })
+                { ...opts, hardArrayConcat: true }
               );
             } else {
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)],
                 },
                 i1[key],
@@ -422,7 +424,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             type: infoObj.type,
           })
         : currentResult;
-    } else if (i2 != null) {
+    }
+    if (i2 != null) {
       const currentResult = uni ? uniRes : i2;
       return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {

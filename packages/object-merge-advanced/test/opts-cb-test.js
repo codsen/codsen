@@ -1,10 +1,10 @@
 /* eslint max-len:0 */
 
-const t = require("tap");
-const mergeAdvanced = require("../dist/object-merge-advanced.cjs");
-const equal = require("deep-equal");
+import tap from "tap";
+import equal from "deep-equal";
+import mergeAdvanced from "../dist/object-merge-advanced.esm";
 
-t.test(
+tap.test(
   "18.01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
   (t) => {
     // control:
@@ -215,7 +215,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "18.02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
   (t) => {
     // control:
@@ -340,7 +340,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "18.03 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
   (t) => {
     // control:
@@ -421,7 +421,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "18.04 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values",
   (t) => {
     const tester = mergeAdvanced(
@@ -499,7 +499,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "18.05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
   (t) => {
     t.same(
@@ -601,7 +601,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "18.06 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays",
   (t) => {
     // control:

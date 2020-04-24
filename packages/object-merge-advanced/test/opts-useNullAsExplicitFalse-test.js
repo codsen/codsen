@@ -1,11 +1,11 @@
 /* eslint max-len:0 */
 
-const t = require("tap");
-// const clone = require("lodash.clonedeep");
-const mergeAdvanced = require("../dist/object-merge-advanced.cjs");
-// const equal = require("deep-equal");
+import tap from "tap";
+// import clone from "lodash.clonedeep";
+import mergeAdvanced from "../dist/object-merge-advanced.esm";
+// import equal from "deep-equal";
 
-t.test(
+tap.test(
   "17.01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges",
   (t) => {
     //
@@ -155,7 +155,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "17.02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90",
   (t) => {
     t.same(
@@ -349,7 +349,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "17.03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99",
   (t) => {
     t.same(
@@ -543,7 +543,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "17.04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases",
   (t) => {
     t.same(

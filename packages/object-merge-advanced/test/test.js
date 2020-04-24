@@ -1,9 +1,9 @@
 /* eslint max-len:0 */
 
-const t = require("tap");
-const clone = require("lodash.clonedeep");
-const mergeAdvanced = require("../dist/object-merge-advanced.cjs");
-// const equal = require("deep-equal");
+import tap from "tap";
+import clone from "lodash.clonedeep";
+import mergeAdvanced from "../dist/object-merge-advanced.esm";
+// import equal from "deep-equal");
 
 //
 //                           ____
@@ -20,7 +20,7 @@ const mergeAdvanced = require("../dist/object-merge-advanced.cjs");
 // Edge cases
 // ==============================
 
-t.test("02.01 - missing second arg", (t) => {
+tap.test("02.01 - missing second arg", (t) => {
   t.same(
     mergeAdvanced({
       a: "a",
@@ -33,7 +33,7 @@ t.test("02.01 - missing second arg", (t) => {
   t.end();
 });
 
-t.test("02.02 - missing first arg", (t) => {
+tap.test("02.02 - missing first arg", (t) => {
   t.same(
     mergeAdvanced(undefined, {
       a: "a",
@@ -55,14 +55,14 @@ t.test("02.02 - missing first arg", (t) => {
   t.end();
 });
 
-t.test("02.03 - both args missing - throws", (t) => {
+tap.test("02.03 - both args missing - throws", (t) => {
   t.throws(() => {
     mergeAdvanced();
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test("02.04 - various, mixed", (t) => {
+tap.test("02.04 - various, mixed", (t) => {
   t.same(mergeAdvanced(null, null), null, "02.04.01");
   t.same(mergeAdvanced(undefined, undefined), undefined, "02.04.02");
   t.same(mergeAdvanced(true, false), true, "02.04.03");
@@ -71,7 +71,7 @@ t.test("02.04 - various, mixed", (t) => {
   t.end();
 });
 
-t.test("02.05 - third arg is not a plain object - throws", (t) => {
+tap.test("02.05 - third arg is not a plain object - throws", (t) => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, "c");
   }, /THROW_ID_02/g);
@@ -82,7 +82,7 @@ t.test("02.05 - third arg is not a plain object - throws", (t) => {
 // Input argument mutation
 // ==============================
 
-t.test("03.01 - testing for mutation of the input args", (t) => {
+tap.test("03.01 - testing for mutation of the input args", (t) => {
   const obj1 = {
     a: "a",
     b: "b",
@@ -101,7 +101,7 @@ t.test("03.01 - testing for mutation of the input args", (t) => {
 // does not introduce non-unique values into arrays
 // ================================================
 
-t.test("04.01 - arrays, checking against dupes being added", (t) => {
+tap.test("04.01 - arrays, checking against dupes being added", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -197,7 +197,7 @@ t.test("04.01 - arrays, checking against dupes being added", (t) => {
 // does not introduce non-unique values into arrays
 // ================================================
 
-t.test(
+tap.test(
   "05.01 - merges objects within arrays if keyset and position within array matches",
   (t) => {
     t.same(
@@ -245,7 +245,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "05.02 - concats instead if objects within arrays are in a wrong order",
   (t) => {
     t.same(
@@ -301,7 +301,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "05.03 - concats instead if objects within arrays are in a wrong order",
   (t) => {
     t.same(
@@ -361,7 +361,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "05.04 - merges objects within arrays, key sets are a subset of one another",
   (t) => {
     t.same(
@@ -407,7 +407,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "05.05 - merges objects within arrays, subset and no match, mixed case",
   (t) => {
     t.same(
@@ -458,7 +458,7 @@ t.test(
   }
 );
 
-t.test("05.06 - opts.mergeObjectsOnlyWhenKeysetMatches", (t) => {
+tap.test("05.06 - opts.mergeObjectsOnlyWhenKeysetMatches", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -611,7 +611,7 @@ t.test("05.06 - opts.mergeObjectsOnlyWhenKeysetMatches", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "05.07 - README example: opts.mergeObjectsOnlyWhenKeysetMatches",
   (t) => {
     const obj1 = {
@@ -677,7 +677,7 @@ t.test(
 // 06. Real world tests
 // ==============================
 
-t.test("06.01 - real world use case", (t) => {
+tap.test("06.01 - real world use case", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -753,7 +753,7 @@ t.test("06.01 - real world use case", (t) => {
   t.end();
 });
 
-t.test("06.02 - real world use case, mini", (t) => {
+tap.test("06.02 - real world use case, mini", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -806,7 +806,7 @@ t.test("06.02 - real world use case, mini", (t) => {
 // 07. Merging arrays
 // ==============================
 
-t.test("07.01 - merges two arrays of equal length", (t) => {
+tap.test("07.01 - merges two arrays of equal length", (t) => {
   t.same(
     mergeAdvanced(["a", "b", "c"], ["d", "e", "f"]),
     ["a", "d", "b", "e", "c", "f"],
@@ -815,7 +815,7 @@ t.test("07.01 - merges two arrays of equal length", (t) => {
   t.end();
 });
 
-t.test("07.02 - merges two arrays of different length", (t) => {
+tap.test("07.02 - merges two arrays of different length", (t) => {
   t.same(
     mergeAdvanced(["a", "b", "c", "d"], ["e", "f"]),
     ["a", "e", "b", "f", "c", "d"],
@@ -829,7 +829,7 @@ t.test("07.02 - merges two arrays of different length", (t) => {
   t.end();
 });
 
-t.test("07.03 - merges non-empty array with an empty array", (t) => {
+tap.test("07.03 - merges non-empty array with an empty array", (t) => {
   t.same(
     mergeAdvanced(["a", "b", "c", "d"], []),
     ["a", "b", "c", "d"],
@@ -867,7 +867,7 @@ t.test("07.03 - merges non-empty array with an empty array", (t) => {
 // 08. Merging arrays
 // ==============================
 
-t.test("08.01 - arrays in objects", (t) => {
+tap.test("08.01 - arrays in objects", (t) => {
   t.same(
     mergeAdvanced({ a: ["b", "c"] }, { d: ["e", "f"] }),
     {
@@ -879,7 +879,7 @@ t.test("08.01 - arrays in objects", (t) => {
   t.end();
 });
 
-t.test("08.02 - arrays in objects, deeper", (t) => {
+tap.test("08.02 - arrays in objects, deeper", (t) => {
   t.same(
     mergeAdvanced({ a: ["b", "c"] }, { a: ["e", "f"] }),
     {
@@ -890,7 +890,7 @@ t.test("08.02 - arrays in objects, deeper", (t) => {
   t.end();
 });
 
-t.test("08.03 - objects in arrays in objects", (t) => {
+tap.test("08.03 - objects in arrays in objects", (t) => {
   t.same(
     mergeAdvanced({ a: [{ b: "b" }] }, { a: [{ c: "c" }] }),
     {
@@ -901,7 +901,7 @@ t.test("08.03 - objects in arrays in objects", (t) => {
   t.end();
 });
 
-t.test("08.04 - objects in arrays in objects", (t) => {
+tap.test("08.04 - objects in arrays in objects", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -940,25 +940,25 @@ t.test("08.04 - objects in arrays in objects", (t) => {
 // 09. Various
 // ==============================
 
-t.test("09.01 - empty string vs boolean #58", (t) => {
+tap.test("09.01 - empty string vs boolean #58", (t) => {
   t.same(mergeAdvanced("", true), "", "09.01.01");
   t.same(mergeAdvanced(true, ""), "", "09.01.02");
   t.end();
 });
 
-t.test("09.02 - empty string vs undefined #59", (t) => {
+tap.test("09.02 - empty string vs undefined #59", (t) => {
   t.same(mergeAdvanced("", null), "", "09.02.01");
   t.same(mergeAdvanced(null, ""), "", "09.02.02");
   t.end();
 });
 
-t.test("09.03 - empty string vs undefined #60", (t) => {
+tap.test("09.03 - empty string vs undefined #60", (t) => {
   t.same(mergeAdvanced("", undefined), "", "09.03.01");
   t.same(mergeAdvanced(undefined, ""), "", "09.03.02");
   t.end();
 });
 
-t.test("09.04 - number - #81-90", (t) => {
+tap.test("09.04 - number - #81-90", (t) => {
   t.same(mergeAdvanced(1, ["a"]), ["a"], "09.04.01");
   t.same(mergeAdvanced(["a"], 1), ["a"], "09.04.02");
   t.same(mergeAdvanced(1, "a"), "a", "09.04.03");
@@ -968,7 +968,7 @@ t.test("09.04 - number - #81-90", (t) => {
   t.end();
 });
 
-t.test("09.05 - empty string vs undefined #60", (t) => {
+tap.test("09.05 - empty string vs undefined #60", (t) => {
   t.same(mergeAdvanced("", undefined), "", "09.05.01");
   t.same(mergeAdvanced(undefined, ""), "", "09.05.02");
   t.end();
@@ -978,7 +978,7 @@ t.test("09.05 - empty string vs undefined #60", (t) => {
 // 10. opts.ignoreKeys
 // ==============================
 
-t.test(
+tap.test(
   "10.01 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - basic cases",
   (t) => {
     t.same(
@@ -1087,7 +1087,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "10.02 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - multiple keys ignored, multiple merged",
   (t) => {
     t.same(
@@ -1127,7 +1127,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "10.03 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcards",
   (t) => {
     t.same(
@@ -1157,7 +1157,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "10.04 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcard, but not found",
   (t) => {
     t.same(
@@ -1191,7 +1191,7 @@ t.test(
 // 11. opts.hardMergeKeys
 // ==============================
 
-t.test("11.01 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys", (t) => {
+tap.test("11.01 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1326,7 +1326,7 @@ t.test("11.01 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "11.02 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys and opts.ignoreKeys together",
   (t) => {
     t.same(
@@ -1366,7 +1366,7 @@ t.test(
   }
 );
 
-t.test("11.03 - case #10", (t) => {
+tap.test("11.03 - case #10", (t) => {
   t.same(mergeAdvanced(["a"], undefined), ["a"], "11.03.01 - default");
   t.same(
     mergeAdvanced({ a: ["a"] }, { a: undefined }),
@@ -1386,7 +1386,7 @@ t.test("11.03 - case #10", (t) => {
   t.end();
 });
 
-t.test("11.04 - case #91", (t) => {
+tap.test("11.04 - case #91", (t) => {
   t.same(
     mergeAdvanced({ a: undefined }, { a: ["a"] }, { hardMergeKeys: "*" }),
     { a: ["a"] },
@@ -1400,7 +1400,7 @@ t.test("11.04 - case #91", (t) => {
   t.end();
 });
 
-t.test("11.05 - case #81", (t) => {
+tap.test("11.05 - case #81", (t) => {
   t.same(
     mergeAdvanced({ a: null }, { a: ["a"] }, { hardMergeKeys: "*" }),
     { a: ["a"] },
@@ -1414,7 +1414,7 @@ t.test("11.05 - case #81", (t) => {
   t.end();
 });
 
-t.test("11.06 - case #9 (mirror to #81)", (t) => {
+tap.test("11.06 - case #9 (mirror to #81)", (t) => {
   t.same(
     mergeAdvanced({ a: ["a"] }, { a: null }, { hardMergeKeys: "*" }),
     { a: null },
@@ -1423,7 +1423,7 @@ t.test("11.06 - case #9 (mirror to #81)", (t) => {
   t.end();
 });
 
-t.test("11.07 - case #8 and its mirror, #71", (t) => {
+tap.test("11.07 - case #8 and its mirror, #71", (t) => {
   t.same(
     mergeAdvanced({ a: ["a"] }, { a: true }, { hardMergeKeys: "*" }),
     { a: true },
@@ -1437,7 +1437,7 @@ t.test("11.07 - case #8 and its mirror, #71", (t) => {
   t.end();
 });
 
-t.test("11.08 - case #7 and its mirror, #61", (t) => {
+tap.test("11.08 - case #7 and its mirror, #61", (t) => {
   t.same(
     mergeAdvanced({ a: ["a"] }, { a: 1 }, { hardMergeKeys: "*" }),
     { a: 1 },
@@ -1456,7 +1456,7 @@ t.test("11.08 - case #7 and its mirror, #61", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "11.09 - #27 and its mirror #63 - full obj vs number + hardMerge/ignore",
   (t) => {
     t.same(
@@ -1473,7 +1473,7 @@ t.test(
   }
 );
 
-t.test("11.10 - #23 two full objects", (t) => {
+tap.test("11.10 - #23 two full objects", (t) => {
   t.same(
     mergeAdvanced({ a: { b: "c" } }, { a: { b: "d" } }),
     { a: { b: "d" } },
@@ -1496,7 +1496,7 @@ t.test("11.10 - #23 two full objects", (t) => {
 // 12. opts.oneToManyArrayObjectMerge
 // ==================================
 
-t.test(
+tap.test(
   "12.01 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge",
   (t) => {
     t.same(
@@ -1677,7 +1677,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.02 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge - two-to-many does not work",
   (t) => {
     t.same(
@@ -1748,7 +1748,7 @@ t.test(
 // 13. throws of all kinds
 // ==============================
 
-t.test(
+tap.test(
   "13.01 - \u001b[33mOPTS\u001b[39m - third argument is not a plain object",
   (t) => {
     t.throws(() => {
@@ -1761,7 +1761,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "13.02 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work",
   (t) => {
     t.throws(() => {
@@ -1783,7 +1783,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "13.03 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys type checks work",
   (t) => {
     t.throws(() => {
@@ -1809,7 +1809,7 @@ t.test(
 // 14. ad-hoc
 // ==============================
 
-t.test("14.01 - objects within arrays", (t) => {
+tap.test("14.01 - objects within arrays", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -2055,7 +2055,7 @@ t.test("14.01 - objects within arrays", (t) => {
 // either opts.ignoreKeys, opts.hardMergeKeys, opts.hardMergeEverything or opts.ignoreEverything
 // ==============================
 
-t.test("15.01 - hard merge on clashing keys only case #1", (t) => {
+tap.test("15.01 - hard merge on clashing keys only case #1", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -2228,7 +2228,7 @@ t.test("15.01 - hard merge on clashing keys only case #1", (t) => {
 // We test their various merge cases.
 // ==============================
 
-t.test("16.01 - values as arrays that contain strings", (t) => {
+tap.test("16.01 - values as arrays that contain strings", (t) => {
   t.same(
     mergeAdvanced(
       {

@@ -35,6 +35,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -62,7 +111,8 @@ function equalOrSubsetKeys(obj1, obj2) {
 function getType(something) {
   if (isObj(something)) {
     return "object";
-  } else if (isArr(something)) {
+  }
+  if (isArr(something)) {
     return "array";
   }
   return _typeof(something);
@@ -216,7 +266,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
           key: infoObj.key,
           type: infoObj.type
         }) : _currentResult8;
-      } else if (isObj(i2)) {
+      }
+      if (isObj(i2)) {
         Object.keys(i2).forEach(function (key) {
           currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
           if (i1.hasOwnProperty(key)) {
@@ -225,7 +276,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, {
+              }, i1[key], i2[key], _objectSpread2({}, opts, {
                 ignoreEverything: true
               }));
             } else if (includes(key, opts.hardMergeKeys)) {
@@ -233,7 +284,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, {
+              }, i1[key], i2[key], _objectSpread2({}, opts, {
                 hardMergeEverything: true
               }));
             } else if (includes(key, opts.hardArrayConcatKeys)) {
@@ -241,7 +292,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, {
+              }, i1[key], i2[key], _objectSpread2({}, opts, {
                 hardArrayConcat: true
               }));
             } else {
@@ -340,7 +391,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult18;
-    } else if (i2 != null) {
+    }
+    if (i2 != null) {
       var _currentResult20 = uni ? uniRes : i2;
       return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult20, {
         path: infoObj.path,
