@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 01. simple cases
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one tag only`,
   (t) => {
     const gatheredErr = [];
@@ -42,7 +42,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is text-type`,
   (t) => {
     const gatheredErr = [];
@@ -93,7 +93,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is tag-type`,
   (t) => {
     const gatheredErr = [];
@@ -142,7 +142,7 @@ t.test(
 // 02. all variations of a rogue tag, placed in other tag's formation
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening`,
   (t) => {
     const gatheredErr = [];
@@ -220,7 +220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing`,
   (t) => {
     const gatheredErr = [];
@@ -303,7 +303,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void`,
   (t) => {
     const gatheredErr = [];
@@ -387,7 +387,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void, legit`,
   (t) => {
     const gatheredErr = [];
@@ -470,7 +470,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - text`,
   (t) => {
     const gatheredErr = [];
@@ -551,7 +551,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace`,
   (t) => {
     const gatheredErr = [];
@@ -671,7 +671,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace - insurance`,
   (t) => {
     const gatheredErr = [];
@@ -793,7 +793,7 @@ t.test(
   }
 );
 
-t.todo(
+tap.todo(
   `02.08 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing - with whitespace`,
   (t) => {
     const gatheredErr = [];
@@ -831,7 +831,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `02.09 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void - with whitespace`,
   (t) => {
     const gatheredErr = [];
@@ -872,7 +872,7 @@ t.todo(
 // 03. rogue tag between tags
 // -----------------------------------------------------------------------------
 
-t.todo(
+tap.todo(
   `03.01 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - opening`,
   (t) => {
     const gatheredErr = [];
@@ -910,7 +910,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.02 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - closing`,
   (t) => {
     const gatheredErr = [];
@@ -948,7 +948,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.03 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - void`,
   (t) => {
     const gatheredErr = [];

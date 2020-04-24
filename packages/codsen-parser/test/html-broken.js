@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 01. void tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`,
   (t) => {
     const gatheredErr = [];

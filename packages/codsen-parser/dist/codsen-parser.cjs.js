@@ -124,7 +124,7 @@ function cparser(str, originalOpts) {
     charCb: null,
     errCb: null
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var layers = [];
   var res = [];
   var path;
@@ -220,7 +220,7 @@ function cparser(str, originalOpts) {
       if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
         nestNext = true;
         if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-          layers.push(Object.assign({}, tokenObj));
+          layers.push(_objectSpread2({}, tokenObj));
         }
       }
       var previousPath = astMonkeyUtil.pathPrev(path);
@@ -245,7 +245,7 @@ function cparser(str, originalOpts) {
         var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
         var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
         if (suspiciousEndingStartsAt > 0) {
-          op.set(res, path, Object.assign({}, tokenObj, {
+          op.set(res, path, _objectSpread2({}, tokenObj, {
             end: tokenObj.start + suspiciousEndingStartsAt,
             value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
           }));
@@ -288,21 +288,21 @@ function cparser(str, originalOpts) {
                 tokenObj.children = [];
               }
               path = previousPath;
-              op.set(res, path, Object.assign({}, tokenObj, {
+              op.set(res, path, _objectSpread2({}, tokenObj, {
                 start: malformedRange.idxFrom + previousTagsToken.start,
                 kind: "not",
                 value: "".concat(previousTagsToken.value).concat(tokenObj.value)
               }));
               tokenTakenCareOf = true;
             } else if (previousPath && isObj(previousTagsToken)) {
-              op.set(res, previousPath, Object.assign({}, previousTagsToken, {
+              op.set(res, previousPath, _objectSpread2({}, previousTagsToken, {
                 end: malformedRange.idxFrom + previousTagsToken.start,
                 value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
               }));
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(res, path, Object.assign({}, tokenObj, {
+              op.set(res, path, _objectSpread2({}, tokenObj, {
                 start: malformedRange.idxFrom + previousTagsToken.start,
                 kind: "not",
                 value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
@@ -323,7 +323,7 @@ function cparser(str, originalOpts) {
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(res, path, Object.assign({}, tokenObj, {
+              op.set(res, path, _objectSpread2({}, tokenObj, {
                 start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                 kind: "not",
                 value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
@@ -331,14 +331,14 @@ function cparser(str, originalOpts) {
               op.del(res, "".concat(previousPath, ".children.").concat(op.get(res, previousPath).children.length - 1));
               tokenTakenCareOf = true;
             } else if (previousPath && isObj(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-              op.set(res, parentsLastChildTokenPath, Object.assign({}, parentsLastChildTokenValue, {
+              op.set(res, parentsLastChildTokenPath, _objectSpread2({}, parentsLastChildTokenValue, {
                 end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                 value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
               }));
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(res, path, Object.assign({}, tokenObj, {
+              op.set(res, path, _objectSpread2({}, tokenObj, {
                 start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                 kind: "not",
                 value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)

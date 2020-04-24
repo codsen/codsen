@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 00. no error
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
     t.same(
@@ -51,7 +51,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     t.same(
@@ -105,7 +105,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     t.same(
@@ -162,7 +162,7 @@ t.test(
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - extra closing tag`,
   (t) => {
     const gatheredErr = [];
@@ -231,7 +231,7 @@ t.test(
 // 02. comment tag, "simple"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`comment "simple"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];
@@ -282,7 +282,7 @@ t.test(
 // 03. (outlook) conditional, "only"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`conditional "only"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];
@@ -333,7 +333,7 @@ t.test(
 // 04. outlook conditional, "not"
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`conditional "not"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];

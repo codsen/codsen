@@ -123,7 +123,7 @@ function cparser(str, originalOpts) {
     charCb: null,
     errCb: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const layers = [];
   const res = [];
   let path;
@@ -266,7 +266,7 @@ function cparser(str, originalOpts) {
       ) {
         nestNext = true;
         if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-          layers.push(Object.assign({}, tokenObj));
+          layers.push({ ...tokenObj });
         }
       }
       const previousPath = pathPrev(path);
@@ -311,14 +311,11 @@ function cparser(str, originalOpts) {
           tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
           1;
         if (suspiciousEndingStartsAt > 0) {
-          op.set(
-            res,
-            path,
-            Object.assign({}, tokenObj, {
-              end: tokenObj.start + suspiciousEndingStartsAt,
-              value: tokenObj.value.slice(0, suspiciousEndingStartsAt),
-            })
-          );
+          op.set(res, path, {
+            ...tokenObj,
+            end: tokenObj.start + suspiciousEndingStartsAt,
+            value: tokenObj.value.slice(0, suspiciousEndingStartsAt),
+          });
           if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
@@ -389,42 +386,30 @@ function cparser(str, originalOpts) {
                 tokenObj.children = [];
               }
               path = previousPath;
-              op.set(
-                res,
-                path,
-                Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: `${previousTagsToken.value}${tokenObj.value}`,
-                })
-              );
+              op.set(res, path, {
+                ...tokenObj,
+                start: malformedRange.idxFrom + previousTagsToken.start,
+                kind: "not",
+                value: `${previousTagsToken.value}${tokenObj.value}`,
+              });
               tokenTakenCareOf = true;
             } else if (previousPath && isObj(previousTagsToken)) {
-              op.set(
-                res,
-                previousPath,
-                Object.assign({}, previousTagsToken, {
-                  end: malformedRange.idxFrom + previousTagsToken.start,
-                  value: previousTagsToken.value.slice(
-                    0,
-                    malformedRange.idxFrom
-                  ),
-                })
-              );
+              op.set(res, previousPath, {
+                ...previousTagsToken,
+                end: malformedRange.idxFrom + previousTagsToken.start,
+                value: previousTagsToken.value.slice(0, malformedRange.idxFrom),
+              });
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(
-                res,
-                path,
-                Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: `${previousTagsToken.value.slice(
-                    malformedRange.idxFrom
-                  )}${tokenObj.value}`,
-                })
-              );
+              op.set(res, path, {
+                ...tokenObj,
+                start: malformedRange.idxFrom + previousTagsToken.start,
+                kind: "not",
+                value: `${previousTagsToken.value.slice(
+                  malformedRange.idxFrom
+                )}${tokenObj.value}`,
+              });
               tokenTakenCareOf = true;
             }
           }
@@ -469,16 +454,13 @@ function cparser(str, originalOpts) {
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(
-                res,
-                path,
-                Object.assign({}, tokenObj, {
-                  start:
-                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`,
-                })
-              );
+              op.set(res, path, {
+                ...tokenObj,
+                start:
+                  malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                kind: "not",
+                value: `${parentsLastChildTokenValue.value}${tokenObj.value}`,
+              });
               op.del(
                 res,
                 `${previousPath}.children.${
@@ -491,33 +473,26 @@ function cparser(str, originalOpts) {
               isObj(parentsLastChildTokenValue) &&
               parentsLastChildTokenPath
             ) {
-              op.set(
-                res,
-                parentsLastChildTokenPath,
-                Object.assign({}, parentsLastChildTokenValue, {
-                  end:
-                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  value: parentsLastChildTokenValue.value.slice(
-                    0,
-                    malformedRange.idxFrom
-                  ),
-                })
-              );
+              op.set(res, parentsLastChildTokenPath, {
+                ...parentsLastChildTokenValue,
+                end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                value: parentsLastChildTokenValue.value.slice(
+                  0,
+                  malformedRange.idxFrom
+                ),
+              });
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
               }
-              op.set(
-                res,
-                path,
-                Object.assign({}, tokenObj, {
-                  start:
-                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: `${parentsLastChildTokenValue.value.slice(
-                    malformedRange.idxFrom
-                  )}${tokenObj.value}`,
-                })
-              );
+              op.set(res, path, {
+                ...tokenObj,
+                start:
+                  malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                kind: "not",
+                value: `${parentsLastChildTokenValue.value.slice(
+                  malformedRange.idxFrom
+                )}${tokenObj.value}`,
+              });
               tokenTakenCareOf = true;
             }
           }

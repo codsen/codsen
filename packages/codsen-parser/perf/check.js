@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const ct = require("../");
+const ct = require("..");
+
 const testme = () => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {

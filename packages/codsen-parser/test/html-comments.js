@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 01. simple HTML comments
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
     t.match(
@@ -46,7 +46,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
     t.match(
@@ -96,7 +96,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
   (t) => {
     t.match(
@@ -188,7 +188,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
   (t) => {
     t.match(
@@ -220,7 +220,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
   (t) => {
     t.match(
@@ -265,7 +265,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
   (t) => {
     t.match(
@@ -310,7 +310,7 @@ t.test(
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
+tap.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
     [
@@ -354,7 +354,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
+tap.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
     [
@@ -395,7 +395,7 @@ t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
   (t) => {
     t.match(
@@ -420,7 +420,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
   (t) => {
     t.match(
@@ -445,7 +445,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
   (t) => {
     t.match(
@@ -470,7 +470,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
@@ -495,7 +495,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
@@ -528,7 +528,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
@@ -558,7 +558,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
   (t) => {
     // below, two tokens,
@@ -633,7 +633,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
   (t) => {
     // below, two tokens,
@@ -715,82 +715,85 @@ t.test(
   }
 );
 
-t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
-  // clauses are triggered but nothing's found from characters: <, ! and -
-  t.same(
-    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
-    [
-      {
-        type: "comment",
-        start: 0,
-        end: 19,
-        value: "<!--[if !mso]><!-->",
-        kind: "not",
-        closing: false,
-        children: [
-          {
-            type: "tag",
-            start: 19,
-            end: 35,
-            value: '<img src="gif"/>',
-            tagNameStartsAt: 20,
-            tagNameEndsAt: 23,
-            tagName: "img",
-            recognised: true,
-            closing: false,
-            void: true,
-            pureHTML: true,
+tap.test(
+  `03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`,
+  (t) => {
+    // clauses are triggered but nothing's found from characters: <, ! and -
+    t.same(
+      cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--[if !mso]><!-->",
+          kind: "not",
+          closing: false,
+          children: [
+            {
+              type: "tag",
+              start: 19,
+              end: 35,
+              value: '<img src="gif"/>',
+              tagNameStartsAt: 20,
+              tagNameEndsAt: 23,
+              tagName: "img",
+              recognised: true,
+              closing: false,
+              void: true,
+              pureHTML: true,
 
-            kind: null,
-            attribs: [
-              {
-                attribName: "src",
-                attribNameRecognised: true,
-                attribNameStartsAt: 24,
-                attribNameEndsAt: 27,
-                attribOpeningQuoteAt: 28,
-                attribClosingQuoteAt: 32,
-                attribValueRaw: "gif",
-                attribValue: [
-                  {
-                    type: "text",
-                    start: 29,
-                    end: 32,
-                    value: "gif",
-                  },
-                ],
-                attribValueStartsAt: 29,
-                attribValueEndsAt: 32,
-                attribStart: 24,
-                attribEnd: 33,
-              },
-            ],
-            children: [],
-          },
-          {
-            type: "text",
-            start: 35,
-            end: 39,
-            value: "zzz-",
-          },
-        ],
-      },
-      {
-        type: "comment",
-        start: 39,
-        end: 51,
-        value: "<![endif]-->",
-        kind: "only",
-        closing: true,
-        children: [],
-      },
-    ],
-    "03.10"
-  );
-  t.end();
-});
+              kind: null,
+              attribs: [
+                {
+                  attribName: "src",
+                  attribNameRecognised: true,
+                  attribNameStartsAt: 24,
+                  attribNameEndsAt: 27,
+                  attribOpeningQuoteAt: 28,
+                  attribClosingQuoteAt: 32,
+                  attribValueRaw: "gif",
+                  attribValue: [
+                    {
+                      type: "text",
+                      start: 29,
+                      end: 32,
+                      value: "gif",
+                    },
+                  ],
+                  attribValueStartsAt: 29,
+                  attribValueEndsAt: 32,
+                  attribStart: 24,
+                  attribEnd: 33,
+                },
+              ],
+              children: [],
+            },
+            {
+              type: "text",
+              start: 35,
+              end: 39,
+              value: "zzz-",
+            },
+          ],
+        },
+        {
+          type: "comment",
+          start: 39,
+          end: 51,
+          value: "<![endif]-->",
+          kind: "only",
+          closing: true,
+          children: [],
+        },
+      ],
+      "03.10"
+    );
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `03.11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
   (t) => {
     // clauses are triggered but nothing's found from characters: <, ! and -

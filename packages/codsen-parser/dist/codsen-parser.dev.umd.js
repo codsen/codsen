@@ -93,7 +93,9 @@
 
     if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
       return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
-    } else if (/^\d*$/.test(str)) {
+    }
+
+    if (/^\d*$/.test(str)) {
       return `${+str + 1}`;
     }
 
@@ -109,9 +111,13 @@
 
     if (extractedValue === "0") {
       return null;
-    } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+    }
+
+    if (str.includes(".") && /^\d*$/.test(extractedValue)) {
       return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
-    } else if (/^\d*$/.test(str)) {
+    }
+
+    if (/^\d*$/.test(str)) {
       return `${+str - 1}`;
     }
 
@@ -128,7 +134,7 @@
 
       for (let i = str.length; i--;) {
         if (str[i] === ".") {
-          dotsCount++;
+          dotsCount += 1;
         }
 
         if (dotsCount === 2) {
@@ -2030,9 +2036,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2060,9 +2070,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -2122,7 +2136,9 @@
       maxDistance: 1,
       ignoreWhitespace: true
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
       opts.stringOffset = Number(opts.stringOffset);
@@ -2151,9 +2167,9 @@
           wasThisLetterMatched = true;
           pendingMatchesArr[z].pendingToCheck.shift();
           pendingMatchesArr[z].pendingToCheck.shift();
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1;
+          pendingMatchesArr[z].patienceLeft -= 1;
         } else {
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1;
+          pendingMatchesArr[z].patienceLeft -= 1;
 
           if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
             pendingMatchesArr[z].pendingToCheck.shift();
@@ -2298,7 +2314,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -2341,7 +2357,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -2363,13 +2381,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$1(el) ? el : String(el));
 
     if (!isStr$1(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -2482,12 +2504,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -2536,83 +2558,6 @@
   }
 
   /**
-   * is-html-tag-opening
-   * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.5
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
-   */
-  const BACKSLASH = "\u005C";
-  const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
-
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
-  function isNotLetter(char) {
-    return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
-  }
-
-  function isOpening(str, idx = 0, originalOpts) {
-    const defaults = {
-      allowCustomTagNames: false,
-      skipOpeningBracket: false
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
-    const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
-    const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
-    const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
-    const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
-    const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
-    const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
-    const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
-    const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const whatToTest = idx ? str.slice(idx) : str;
-    let passed = false;
-    const matchingOptions = {
-      cb: isNotLetter,
-      i: true,
-      trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-    };
-
-    if (opts.allowCustomTagNames) {
-      if (r5.test(whatToTest)) {
-        passed = true;
-      } else if (r6.test(whatToTest)) {
-        passed = true;
-      } else if (r7.test(whatToTest)) {
-        passed = true;
-      } else if (r8.test(whatToTest)) {
-        passed = true;
-      }
-    } else if (matchRightIncl(str, idx, knownHtmlTags, {
-      cb: isNotLetter,
-      i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-    })) {
-      if (r1.test(whatToTest)) {
-        passed = true;
-      } else if (r2.test(whatToTest)) {
-        passed = true;
-      } else if (r3.test(whatToTest)) {
-        passed = true;
-      } else if (r4.test(whatToTest)) {
-        passed = true;
-      }
-    }
-
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
-      passed = true;
-    }
-
-    const res = isStr$2(str) && idx < str.length && passed;
-    return res;
-  }
-
-  /**
    * html-all-known-attributes
    * All HTML attributes known to the Humanity
    * Version: 2.0.0
@@ -2649,7 +2594,9 @@
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: false
     };
-    const opts = Object.assign(Object.assign({}, defaults), originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (!isArr(rangesArr)) {
       return false;
@@ -2687,7 +2634,9 @@
     const defaults = {
       ignoreRanges: []
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
       throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
@@ -2732,7 +2681,9 @@
     for (let i = startingIdx, len = str.length; i < len; i++) {
       if (y.some(oneOfStr => str.startsWith(oneOfStr, i))) {
         return true;
-      } else if (str[i] === x) {
+      }
+
+      if (str[i] === x) {
         return false;
       }
     }
@@ -2744,7 +2695,9 @@
     for (let i = startingIdx, len = str.length; i < len; i++) {
       if (str.startsWith(x, i)) {
         return true;
-      } else if (str.startsWith(y, i)) {
+      }
+
+      if (str.startsWith(y, i)) {
         return false;
       }
     }
@@ -2878,7 +2831,9 @@
           const B24 = lastQuoteAt + 1 >= i;
           const B25 = !split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
-        } else if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+        }
+
+        if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
           return true;
         }
       }
@@ -2890,7 +2845,9 @@
         const R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
         const R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
         return R0 && !(R1 && R2 && R3 && R4);
-      } else if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
+      }
+
+      if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
         const W1 = i > isThisClosingIdx;
         const W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
         return W1 && W2;
@@ -2908,7 +2865,9 @@
 
         if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
           return false;
-        } else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+        }
+
+        if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
           const R0 = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
           const R11 = quotesCount.get(`matchedPairs`) < 2;
           const attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
@@ -2979,6 +2938,85 @@
   }
 
   /**
+   * is-html-tag-opening
+   * Is given opening bracket a beginning of a tag?
+   * Version: 1.7.5
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
+   */
+  const BACKSLASH = "\u005C";
+  const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
+
+  function isStr$2(something) {
+    return typeof something === "string";
+  }
+
+  function isNotLetter(char) {
+    return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
+  }
+
+  function isOpening(str, idx = 0, originalOpts) {
+    const defaults = {
+      allowCustomTagNames: false,
+      skipOpeningBracket: false
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
+    const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
+    const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
+    const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
+    const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
+    const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
+    const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
+    const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
+    const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+    const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+    const whatToTest = idx ? str.slice(idx) : str;
+    let passed = false;
+    const matchingOptions = {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    };
+
+    if (opts.allowCustomTagNames) {
+      if (r5.test(whatToTest)) {
+        passed = true;
+      } else if (r6.test(whatToTest)) {
+        passed = true;
+      } else if (r7.test(whatToTest)) {
+        passed = true;
+      } else if (r8.test(whatToTest)) {
+        passed = true;
+      }
+    } else if (matchRightIncl(str, idx, knownHtmlTags, {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    })) {
+      if (r1.test(whatToTest)) {
+        passed = true;
+      } else if (r2.test(whatToTest)) {
+        passed = true;
+      } else if (r3.test(whatToTest)) {
+        passed = true;
+      } else if (r4.test(whatToTest)) {
+        passed = true;
+      }
+    }
+
+    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+      passed = true;
+    }
+
+    const res = isStr$2(str) && idx < str.length && passed;
+    return res;
+  }
+
+  /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
    * Version: 2.14.0
@@ -2986,6 +3024,28 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
    */
+
+  function startsComment(str, i, token) {
+    return (str[i] === "<" && (matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
+      trimBeforeMatching: true
+    }) || matchRight(str, i, ["![endif]"], {
+      i: true,
+      maxMismatches: 2,
+      trimBeforeMatching: true
+    })) && !matchRight(str, i, ["![cdata", "<"], {
+      i: true,
+      maxMismatches: 1,
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["-", "!"]
+    })) && (token.type !== "esp" || token.tail.includes(str[i]));
+  }
+
   const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
   const espChars = `{}%-$_()*|`;
   const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
@@ -3028,16 +3088,14 @@
     for (let i = startingIdx, len = str.length; i < len; i++) {
       if (str.startsWith(x, i)) {
         return true;
-      } else if (str.startsWith(y, i)) {
+      }
+
+      if (str.startsWith(y, i)) {
         return false;
       }
     }
 
     return false;
-  }
-
-  function startsEsp(str, i, token, layers, styleStarts) {
-    return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
   }
 
   const BACKSLASH$1 = "\u005C";
@@ -3055,25 +3113,8 @@
     })) && (token.type !== "esp" || token.tail.includes(str[i]));
   }
 
-  function startsComment(str, i, token) {
-    return (str[i] === "<" && (matchRight(str, i, ["!--"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
-      trimBeforeMatching: true
-    }) || matchRight(str, i, ["![endif]"], {
-      i: true,
-      maxMismatches: 2,
-      trimBeforeMatching: true
-    })) && !matchRight(str, i, ["![cdata", "<"], {
-      i: true,
-      maxMismatches: 1,
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["-", "!"]
-    })) && (token.type !== "esp" || token.tail.includes(str[i]));
+  function startsEsp(str, i, token, layers, styleStarts) {
+    return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
   }
 
   function isObj$2(something) {
@@ -3119,7 +3160,9 @@
       reportProgressFuncFrom: 0,
       reportProgressFuncTo: 100
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     let currentPercentageDone;
     let lastPercentage = 0;
     const len = str.length;
@@ -3168,7 +3211,7 @@
     let attribToBackup;
     let layers = [];
 
-    function matchLayerLast(str, i, matchFirstInstead) {
+    function matchLayerLast(str2, i, matchFirstInstead) {
       if (!layers.length) {
         return false;
       }
@@ -3176,18 +3219,19 @@
       const whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
 
       if (whichLayerToMatch.type === "simple") {
-        return !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value);
-      } else if (whichLayerToMatch.type === "esp") {
-        if (!espChars.includes(str[i])) {
+        return !whichLayerToMatch.value || str2[i] === flipEspTag(whichLayerToMatch.value);
+      }
+
+      if (whichLayerToMatch.type === "esp") {
+        if (!espChars.includes(str2[i])) {
           return false;
         }
 
         let wholeEspTagLump = "";
-        const len = str.length;
 
         for (let y = i; y < len; y++) {
-          if (espChars.includes(str[y])) {
-            wholeEspTagLump = wholeEspTagLump + str[y];
+          if (espChars.includes(str2[y])) {
+            wholeEspTagLump += str2[y];
           } else {
             break;
           }
@@ -3207,7 +3251,7 @@
             }
 
             if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])) {
-              found++;
+              found += 1;
               uniqueCharsListFromGuessedClosingLumpArr = new Set([...uniqueCharsListFromGuessedClosingLumpArr].filter(el => el !== wholeEspTagLump[y]));
             }
           }
@@ -3217,8 +3261,8 @@
       }
     }
 
-    function matchLayerFirst(str, i) {
-      return matchLayerLast(str, i, true);
+    function matchLayerFirst(str2, i) {
+      return matchLayerLast(str2, i, true);
     }
 
     function reportFirstFromStash(stash, cb, lookaheadLength) {
@@ -3256,27 +3300,27 @@
       }
     }
 
-    function dumpCurrentToken(token, i) {
-      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
-        token.end = left(str, i) + 1;
-        token.value = str.slice(token.start, token.end);
+    function dumpCurrentToken(incomingToken, i) {
+      if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
+        incomingToken.end = left(str, i) + 1;
+        incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
-        if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
-          let cutOffIndex = token.tagNameEndsAt || i;
+        if (incomingToken.type === "tag" && !"/>".includes(str[incomingToken.end - 1])) {
+          let cutOffIndex = incomingToken.tagNameEndsAt || i;
 
-          if (Array.isArray(token.attribs) && token.attribs.length) {
-            for (let i = 0, len = token.attribs.length; i < len; i++) {
-              if (token.attribs[i].attribNameRecognised) {
-                cutOffIndex = token.attribs[i].attribEnd;
+          if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
+            for (let i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
+              if (incomingToken.attribs[i2].attribNameRecognised) {
+                cutOffIndex = incomingToken.attribs[i2].attribEnd;
 
                 if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
-                  cutOffIndex++;
+                  cutOffIndex += 1;
                 }
               } else {
-                if (i === 0) {
-                  token.attribs = [];
+                if (i2 === 0) {
+                  incomingToken.attribs = [];
                 } else {
-                  token.attribs = token.attribs.splice(0, i);
+                  incomingToken.attribs = incomingToken.attribs.splice(0, i2);
                 }
 
                 break;
@@ -3284,23 +3328,23 @@
             }
           }
 
-          token.end = cutOffIndex;
-          token.value = str.slice(token.start, token.end);
+          incomingToken.end = cutOffIndex;
+          incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
-          if (!token.tagNameEndsAt) {
-            token.tagNameEndsAt = cutOffIndex;
+          if (!incomingToken.tagNameEndsAt) {
+            incomingToken.tagNameEndsAt = cutOffIndex;
           }
 
-          if (Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.tagNameEndsAt) && !token.tagName) {
-            token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
-            token.recognised = isTagNameRecognised(token.tagName);
+          if (Number.isInteger(incomingToken.tagNameStartsAt) && Number.isInteger(incomingToken.tagNameEndsAt) && !incomingToken.tagName) {
+            incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
+            incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
           }
 
-          pingTagCb(token);
+          pingTagCb(incomingToken);
           token = tokenReset();
           initToken("text", cutOffIndex);
         } else {
-          pingTagCb(token);
+          pingTagCb(incomingToken);
           token = tokenReset();
 
           if (str[i - 1] && !str[i - 1].trim()) {
@@ -3327,12 +3371,12 @@
       return layers.length && layers[layers.length - 1].type === "at" && isObj$2(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
     }
 
-    function initToken(type, start) {
+    function initToken(type, startVal) {
       attribReset();
 
       if (type === "tag") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         token.tagNameStartsAt = null;
@@ -3359,7 +3403,7 @@
         delete token.tail;
       } else if (type === "comment") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         delete token.tagNameStartsAt;
@@ -3386,7 +3430,7 @@
         delete token.tail;
       } else if (type === "rule") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         delete token.tagNameStartsAt;
@@ -3413,7 +3457,7 @@
         delete token.tail;
       } else if (type === "at") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         delete token.tagNameStartsAt;
@@ -3440,7 +3484,7 @@
         delete token.tail;
       } else if (type === "text") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         delete token.tagNameStartsAt;
@@ -3467,7 +3511,7 @@
         delete token.tail;
       } else if (type === "esp") {
         token.type = type;
-        token.start = start;
+        token.start = startVal;
         token.end = null;
         token.value = null;
         delete token.tagNameStartsAt;
@@ -3713,7 +3757,7 @@
 
           for (let y = i; y < len; y++) {
             if (espChars.includes(str[y])) {
-              wholeEspTagLump = wholeEspTagLump + str[y];
+              wholeEspTagLump += str[y];
             } else {
               break;
             }
@@ -3814,7 +3858,7 @@
               }
             }
 
-            doNothing = i + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
+            doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLump.length);
           }
         } else if (token.start === null || token.end === i) {
           if (styleStarts) {
@@ -3935,7 +3979,7 @@
 
           for (let y = i; y < len; y++) {
             if (espChars.includes(str[y])) {
-              wholeEspTagClosing = wholeEspTagClosing + str[y];
+              wholeEspTagClosing += str[y];
             } else {
               break;
             }
@@ -4262,13 +4306,13 @@
     }
 
     if (charStash.length) {
-      for (let i = 0, len = charStash.length; i < len; i++) {
+      for (let i = 0, len2 = charStash.length; i < len2; i++) {
         reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
       }
     }
 
     if (tagStash.length) {
-      for (let i = 0, len = tagStash.length; i < len; i++) {
+      for (let i = 0, len2 = tagStash.length; i < len2; i++) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
       }
     }
@@ -4668,7 +4712,8 @@
       charCb: null,
       errCb: null
     };
-    var opts = Object.assign({}, defaults, originalOpts); //
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); //
     //
     //
     //
@@ -4679,6 +4724,7 @@
     // ---------------------------------------------------------------------------
     // layers keep track of tag heads, so that when we hit their tails, we know
     // where both parts are:
+
 
     var layers = [];
     var res = []; // this flag is used to give notice
@@ -4877,7 +4923,7 @@
           nestNext = true;
 
           if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-            layers.push(Object.assign({}, tokenObj));
+            layers.push(_objectSpread2({}, tokenObj));
           }
         } // check, does this closing tag have an
         // opening counterpart
@@ -4928,7 +4974,7 @@
           // at this level, under this path:
 
           if (suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, Object.assign({}, tokenObj, {
+            objectPath.set(res, path, _objectSpread2({}, tokenObj, {
               end: tokenObj.start + suspiciousEndingStartsAt,
               value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
             }));
@@ -5008,7 +5054,7 @@
 
 
                 path = previousPath;
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value).concat(tokenObj.value)
@@ -5019,7 +5065,7 @@
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
-                objectPath.set(res, previousPath, Object.assign({}, previousTagsToken, {
+                objectPath.set(res, previousPath, _objectSpread2({}, previousTagsToken, {
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
                 })); // 2. tweak the current "comment" token
@@ -5028,7 +5074,7 @@
                   tokenObj.children = [];
                 }
 
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
@@ -5075,7 +5121,7 @@
                 // the previous token's children tokens
 
 
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
@@ -5088,7 +5134,7 @@
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
-                objectPath.set(res, parentsLastChildTokenPath, Object.assign({}, parentsLastChildTokenValue, {
+                objectPath.set(res, parentsLastChildTokenPath, _objectSpread2({}, parentsLastChildTokenValue, {
                   end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
                 })); // 2. tweak the current "comment" token
@@ -5097,7 +5143,7 @@
                   tokenObj.children = [];
                 }
 
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)

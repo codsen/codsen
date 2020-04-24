@@ -1,7 +1,7 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
-t.throws(
+tap.throws(
   "00.01 - 1st arg missing",
   () => {
     cparser();
@@ -10,7 +10,7 @@ t.throws(
   "00.01"
 );
 
-t.throws(
+tap.throws(
   "00.02 - 1st arg of a wrong type",
   () => {
     cparser(true);
@@ -19,7 +19,7 @@ t.throws(
   "00.02"
 );
 
-t.throws(
+tap.throws(
   "00.03 - 2nd arg (opts) is wrong",
   () => {
     cparser("a", "z");
@@ -28,7 +28,7 @@ t.throws(
   "00.03"
 );
 
-t.throws(
+tap.throws(
   () => {
     cparser("a", { tagCb: "z" });
   },
@@ -36,7 +36,7 @@ t.throws(
   "00.04 - opts.tagCb() is wrong"
 );
 
-t.throws(
+tap.throws(
   () => {
     cparser("a", { charCb: "z" });
   },
@@ -44,7 +44,7 @@ t.throws(
   "00.05 - opts.charCb() is wrong"
 );
 
-t.throws(
+tap.throws(
   "00.06 - opts.reportProgressFunc is wrong",
   () => {
     cparser("a", { reportProgressFunc: "z" });
@@ -53,7 +53,7 @@ t.throws(
   "00.06"
 );
 
-t.throws(
+tap.throws(
   "00.07 - opts.errCb is wrong",
   () => {
     cparser("a", { errCb: "z" });
@@ -62,7 +62,7 @@ t.throws(
   "00.07"
 );
 
-t.test("00.08 - opts.tagCb", (t) => {
+tap.test("00.08 - opts.tagCb", (t) => {
   const gathered = [];
   cparser("  <a>z", {
     tagCb: (obj) => {
@@ -94,7 +94,7 @@ t.test("00.08 - opts.tagCb", (t) => {
   t.end();
 });
 
-t.test("00.09 - opts.charCb", (t) => {
+tap.test("00.09 - opts.charCb", (t) => {
   const gathered = [];
   cparser("<a>z1", {
     charCb: (obj) => {

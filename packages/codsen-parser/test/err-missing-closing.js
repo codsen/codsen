@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 00. no error
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
     const gatheredErr = [];
@@ -16,7 +16,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     const gatheredErr = [];
@@ -28,7 +28,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     const gatheredErr = [];
@@ -43,7 +43,7 @@ t.test(
 // 01. basic
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -113,7 +113,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -183,7 +183,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
   (t) => {
     const gatheredErr = [];
@@ -256,7 +256,7 @@ t.test(
 // 02. false alerts
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
   (t) => {
     const gatheredErr = [];

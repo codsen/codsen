@@ -1,10 +1,10 @@
-const t = require("tap");
-const cparser = require("../dist/codsen-parser.cjs");
+import tap from "tap";
+import cparser from "../dist/codsen-parser.esm";
 
 // 01. basics
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - basics - two tags", (t) => {
+tap.test("01.01 - basics - two tags", (t) => {
   t.match(
     cparser("<div><div>"),
     [
@@ -29,7 +29,7 @@ t.test("01.01 - basics - two tags", (t) => {
   t.end();
 });
 
-t.test("01.02 - basics - text and tag", (t) => {
+tap.test("01.02 - basics - text and tag", (t) => {
   t.match(
     cparser("z<div>"),
     [
@@ -51,7 +51,7 @@ t.test("01.02 - basics - text and tag", (t) => {
   t.end();
 });
 
-t.test("01.03 - basics - tag text tag", (t) => {
+tap.test("01.03 - basics - tag text tag", (t) => {
   t.match(
     cparser("<div>a<div>"),
     [
@@ -81,7 +81,7 @@ t.test("01.03 - basics - tag text tag", (t) => {
   t.end();
 });
 
-t.test("01.04 - basics - two div pairs", (t) => {
+tap.test("01.04 - basics - two div pairs", (t) => {
   t.match(
     cparser("<div>a</div><div>b</div>"),
     [
@@ -135,7 +135,7 @@ t.test("01.04 - basics - two div pairs", (t) => {
   t.end();
 });
 
-t.test("01.05 - basics - mixed combo", (t) => {
+tap.test("01.05 - basics - mixed combo", (t) => {
   t.match(
     cparser("<br>z</a>"),
     [
@@ -166,7 +166,7 @@ t.test("01.05 - basics - mixed combo", (t) => {
   t.end();
 });
 
-t.test("01.06 - basics - two nested pairs", (t) => {
+tap.test("01.06 - basics - two nested pairs", (t) => {
   t.match(
     cparser("<div>1<a>2</a>3</div>"),
     [
@@ -225,7 +225,7 @@ t.test("01.06 - basics - two nested pairs", (t) => {
   t.end();
 });
 
-t.test("01.07 - basics - three nested pairs, empty", (t) => {
+tap.test("01.07 - basics - three nested pairs, empty", (t) => {
   t.match(
     cparser("<table><tr><td></td></tr></table>"),
     [
