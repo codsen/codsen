@@ -115,7 +115,7 @@ function expander(originalOpts) {
     wipeAllWhitespaceOnRight: false,
     addSingleSpaceToPreventAccidentalConcatenation: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
@@ -227,14 +227,14 @@ function expander(originalOpts) {
       isWhitespace(str[from - 1]) &&
       !opts.wipeAllWhitespaceOnLeft
     ) {
-      from--;
+      from -= 1;
     }
     if (
       opts.extendToOneSide !== "left" &&
       isWhitespace(str[to]) &&
       !opts.wipeAllWhitespaceOnRight
     ) {
-      to++;
+      to += 1;
     }
   }
   if (

@@ -118,7 +118,7 @@ function expander(originalOpts) {
     wipeAllWhitespaceOnRight: false,
     addSingleSpaceToPreventAccidentalConcatenation: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
@@ -261,7 +261,7 @@ function expander(originalOpts) {
       isWhitespace(str[from - 1]) &&
       !opts.wipeAllWhitespaceOnLeft
     ) {
-      from--;
+      from -= 1;
       console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
     }
     if (
@@ -270,7 +270,7 @@ function expander(originalOpts) {
       !opts.wipeAllWhitespaceOnRight
     ) {
       console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
-      to++;
+      to += 1;
     }
   }
 

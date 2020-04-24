@@ -1,45 +1,45 @@
-const t = require("tap");
-const e = require("../dist/string-range-expander.cjs");
+import tap from "tap";
+import e from "../dist/string-range-expander.esm";
 
 // 00. THROWS.
 // -----------------------------------------------------------------------------
 
-t.test("00.01 - throws on Boolean input", (t) => {
+tap.test("00.01 - throws on Boolean input", (t) => {
   t.throws(() => {
     e(true);
   }, /THROW_ID_01/);
   t.end();
 });
 
-t.test("00.02 - throws on missing input", (t) => {
+tap.test("00.02 - throws on missing input", (t) => {
   t.throws(() => {
     e();
   }, /missing completely/);
   t.end();
 });
 
-t.test("00.03 - throws on null input", (t) => {
+tap.test("00.03 - throws on null input", (t) => {
   t.throws(() => {
     e(null);
   }, /THROW_ID_01/);
   t.end();
 });
 
-t.test("00.03 - throws on string input", (t) => {
+tap.test("00.03 - throws on string input", (t) => {
   t.throws(() => {
     e("zzz");
   }, /THROW_ID_01/);
   t.end();
 });
 
-t.only("00.04 - throws on empty plain object", (t) => {
+tap.only("00.04 - throws on empty plain object", (t) => {
   t.throws(() => {
     e({});
   }, /THROW_ID_02/);
   t.end();
 });
 
-t.test('00.05 - throws when "from" is not a number', (t) => {
+tap.test('00.05 - throws when "from" is not a number', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -50,7 +50,7 @@ t.test('00.05 - throws when "from" is not a number', (t) => {
   t.end();
 });
 
-t.test('00.06 - throws when "to" is not a number', (t) => {
+tap.test('00.06 - throws when "to" is not a number', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -61,7 +61,7 @@ t.test('00.06 - throws when "to" is not a number', (t) => {
   t.end();
 });
 
-t.test('00.07 - throws when "from" is outside the str boundaries', (t) => {
+tap.test('00.07 - throws when "from" is outside the str boundaries', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -72,7 +72,7 @@ t.test('00.07 - throws when "from" is outside the str boundaries', (t) => {
   t.end();
 });
 
-t.test('00.08 - throws when "to" is way outside the str boundaries', (t) => {
+tap.test('00.08 - throws when "to" is way outside the str boundaries', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -92,7 +92,7 @@ t.test('00.08 - throws when "to" is way outside the str boundaries', (t) => {
   t.end();
 });
 
-t.test("00.09 - throws when opts.extendToOneSide is unrecognised", (t) => {
+tap.test("00.09 - throws when opts.extendToOneSide is unrecognised", (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -117,7 +117,7 @@ t.test("00.09 - throws when opts.extendToOneSide is unrecognised", (t) => {
 // 01. BAU.
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - nothing to expand", (t) => {
+tap.test("01.01 - nothing to expand", (t) => {
   // reference
   t.same(
     e({
@@ -319,7 +319,7 @@ t.test("01.01 - nothing to expand", (t) => {
   t.end();
 });
 
-t.test("01.02 - expanding from the middle of a gap", (t) => {
+tap.test("01.02 - expanding from the middle of a gap", (t) => {
   t.same(
     e({
       str: "a     b",
@@ -451,7 +451,7 @@ t.test("01.02 - expanding from the middle of a gap", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.03 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled",
   (t) => {
     t.same(
@@ -494,7 +494,7 @@ t.test(
   }
 );
 
-t.test("01.04 - both ends are equal", (t) => {
+tap.test("01.04 - both ends are equal", (t) => {
   t.same(
     e({
       str: "ab",
@@ -516,7 +516,7 @@ t.test("01.04 - both ends are equal", (t) => {
   t.end();
 });
 
-t.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
+tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   t.same(
     e({
       str: "aaaaa aaaaaaa",
@@ -619,7 +619,7 @@ t.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
@@ -670,7 +670,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
@@ -721,7 +721,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
@@ -788,7 +788,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored",
   (t) => {
     t.same(
@@ -925,7 +925,7 @@ t.test(
 // 02. opts.ifLeftSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
     t.same(
@@ -972,7 +972,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
     t.same(
@@ -1039,7 +1039,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
     t.same(
@@ -1079,7 +1079,7 @@ t.test(
 // 03. opts.ifRightSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
     t.same(
@@ -1126,7 +1126,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
     t.same(
@@ -1193,7 +1193,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
     t.same(
@@ -1233,7 +1233,7 @@ t.test(
 // 04. combos with opts.if***SideIncludesThisCropItToo
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}m`} - combo with tight crop`,
   (t) => {
     t.same(
@@ -1308,7 +1308,7 @@ t.test(
 // 05. extendToOneSide
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side only`,
   (t) => {
     t.same(
@@ -1357,7 +1357,7 @@ t.test(
 // 06. opts.wipeAllWhitespaceOnLeft & opts.wipeAllWhitespaceOnRight
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`,
   (t) => {
     t.same(
@@ -1407,7 +1407,7 @@ t.test(
 // 07. Various
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`,
   (t) => {
     const str = `<head>
@@ -1433,7 +1433,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`,
   (t) => {
     const str = `<head>
@@ -1460,7 +1460,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`,
   (t) => {
     const str = `<head>

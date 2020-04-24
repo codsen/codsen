@@ -53,7 +53,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-range-expander.cjs.js` | 8 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-range-expander.cjs.js` | 9 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-range-expander.esm.js` | 8 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-range-expander.umd.js` | 6 KB |
 
@@ -163,7 +163,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
-[cov-img]: https://img.shields.io/badge/coverage-80%25-yellow.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-80.88%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/string-range-expander?activeTab=dependencies
