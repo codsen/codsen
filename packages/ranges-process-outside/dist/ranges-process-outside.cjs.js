@@ -88,16 +88,16 @@ function _nonIterableRest() {
 }
 
 var isArr = Array.isArray;
-function processOutside(str, originalRanges, cb) {
+function processOutside(originalStr, originalRanges, cb) {
   var skipChecks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   function isFunction(functionToCheck) {
     return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
   }
-  if (typeof str !== "string") {
-    if (str === undefined) {
+  if (typeof originalStr !== "string") {
+    if (originalStr === undefined) {
       throw new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!");
     } else {
-      throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
+      throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(originalStr, null, 4), " (type ").concat(_typeof(originalStr), ")"));
     }
   }
   if (originalRanges && !isArr(originalRanges)) {
@@ -114,6 +114,7 @@ function processOutside(str, originalRanges, cb) {
       for (var i = fromIdx; i < toIdx; i++) {
         var charLength = runes(str.slice(i))[0].length;
         cb(i, i + charLength, function (offsetValue) {
+          /* istanbul ignore else */
           if (offsetValue != null) {
             i += offsetValue;
           }
@@ -125,12 +126,12 @@ function processOutside(str, originalRanges, cb) {
     });
   }
   if (originalRanges && originalRanges.length) {
-    var temp = crop(invert(skipChecks ? originalRanges : originalRanges, str.length, {
+    var temp = crop(invert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
       skipChecks: !!skipChecks
-    }), str.length);
-    iterator(str, temp);
+    }), originalStr.length);
+    iterator(originalStr, temp);
   } else {
-    iterator(str, [[0, str.length]]);
+    iterator(originalStr, [[0, originalStr.length]]);
   }
 }
 

@@ -12,25 +12,25 @@ import crop from 'ranges-crop';
 import runes from 'runes';
 
 const isArr = Array.isArray;
-function processOutside(str, originalRanges, cb, skipChecks = false) {
+function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   function isFunction(functionToCheck) {
     return (
       functionToCheck &&
       {}.toString.call(functionToCheck) === "[object Function]"
     );
   }
-  if (typeof str !== "string") {
-    if (str === undefined) {
+  if (typeof originalStr !== "string") {
+    if (originalStr === undefined) {
       throw new Error(
         `ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`
       );
     } else {
       throw new Error(
         `ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(
-          str,
+          originalStr,
           null,
           4
-        )} (type ${typeof str})`
+        )} (type ${typeof originalStr})`
       );
     }
   }
@@ -57,6 +57,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       for (let i = fromIdx; i < toIdx; i++) {
         const charLength = runes(str.slice(i))[0].length;
         cb(i, i + charLength, (offsetValue) => {
+          /* istanbul ignore else */
           if (offsetValue != null) {
             i += offsetValue;
           }
@@ -69,14 +70,14 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
   }
   if (originalRanges && originalRanges.length) {
     const temp = crop(
-      invert(skipChecks ? originalRanges : originalRanges, str.length, {
+      invert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
         skipChecks: !!skipChecks,
       }),
-      str.length
+      originalStr.length
     );
-    iterator(str, temp);
+    iterator(originalStr, temp);
   } else {
-    iterator(str, [[0, str.length]]);
+    iterator(originalStr, [[0, originalStr.length]]);
   }
 }
 

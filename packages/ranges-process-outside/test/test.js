@@ -1,5 +1,6 @@
-const t = require("tap");
-const p = require("../dist/ranges-process-outside.cjs");
+import tap from "tap";
+import p from "../dist/ranges-process-outside.esm";
+
 const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 
 // ==============================
@@ -7,7 +8,7 @@ const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 // ==============================
 
 // throw pinning:
-t.test(
+tap.test(
   `00.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #1`,
   (t) => {
     t.throws(() => {
@@ -17,7 +18,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #2`,
   (t) => {
     t.throws(() => {
@@ -27,7 +28,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #3`,
   (t) => {
     t.throws(() => {
@@ -37,7 +38,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #4`,
   (t) => {
     // throw pinning:
@@ -48,7 +49,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #5`,
   (t) => {
     t.throws(() => {
@@ -58,7 +59,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg null means absence of ranges`,
   (t) => {
     t.doesNotThrow(() => {
@@ -68,7 +69,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.07 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - third arg wrong`,
   (t) => {
     // throw pinning:
@@ -83,7 +84,7 @@ t.test(
 // 01. Normal use
 // ==============================
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - not touching zero - checks`,
   (t) => {
     const gather = [];
@@ -95,7 +96,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - not touching zero - skip checks`,
   (t) => {
     const gather2 = [];
@@ -112,7 +113,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - checks`,
   (t) => {
     const gather = [];
@@ -124,7 +125,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - skip checks`,
   (t) => {
     const gathe2 = [];
@@ -141,7 +142,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - 2 ranges`,
   (t) => {
     const gather = [];
@@ -160,7 +161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - opposite order (testing ranges-merge)`,
   (t) => {
     const gather2 = [];
@@ -188,7 +189,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - throws`,
   (t) => {
     // skipping checking/merges/sorts will trigger safety latches and cause a throw
@@ -211,7 +212,7 @@ t.test(
 );
 
 // range outside the string length
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks`,
   (t) => {
     const gather = [];
@@ -230,7 +231,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks skip`,
   (t) => {
     const gather = [];
@@ -257,7 +258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - empty array given`,
   (t) => {
     const gather = [];
@@ -269,7 +270,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.11 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - null given`,
   (t) => {
     const gather2 = [];
@@ -281,7 +282,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.12 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - null given + true (skip checks)`,
   (t) => {
     const gather = [];
@@ -298,7 +299,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.13 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges completely cover str`,
   (t) => {
     const gather1 = [];
@@ -310,7 +311,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.14 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges not cover str at all`,
   (t) => {
     const gather = [];
@@ -322,7 +323,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.15 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`,
   (t) => {
     const gather = [];
@@ -348,7 +349,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.16 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`,
   (t) => {
     t.equal(femaleWhiteSleuthEmoji.length, 7, "01.16 - sanity check");
@@ -379,7 +380,7 @@ t.test(
 // 02. Index offsets
 // ==============================
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 5`,
   (t) => {
     const gather = [];
@@ -394,7 +395,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 6`,
   (t) => {
     const gather = [];
@@ -409,7 +410,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - sequential offsets`,
   (t) => {
     const gather = [];

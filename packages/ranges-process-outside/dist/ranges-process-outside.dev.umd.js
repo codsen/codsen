@@ -106,7 +106,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -137,7 +139,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -192,7 +194,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -217,7 +221,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -378,7 +383,9 @@
       }
 
       return [[0, strLen]];
-    } else if (arrOfRanges.length === 0) {
+    }
+
+    if (arrOfRanges.length === 0) {
       return [];
     }
 
@@ -386,7 +393,9 @@
       strictlyTwoElementsInRangeArrays: false,
       skipChecks: false
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -434,10 +443,10 @@
     }
 
     const res = prep.reduce((accum, currArr, i, arr) => {
-      const res = [];
+      const res2 = [];
 
       if (i === 0 && arr[0][0] !== 0) {
-        res.push([0, arr[0][0]]);
+        res2.push([0, arr[0][0]]);
       }
 
       const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
@@ -447,10 +456,10 @@
           throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${currArr[1]}, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(arr, null, 0)}`);
         }
 
-        res.push([currArr[1], endingIndex]);
+        res2.push([currArr[1], endingIndex]);
       }
 
-      return accum.concat(res);
+      return accum.concat(res2);
     }, []);
     return rangesCrop(res, strLen);
   }
@@ -625,7 +634,7 @@
 
   var isArr$2 = Array.isArray;
 
-  function processOutside(str, originalRanges, cb) {
+  function processOutside(originalStr, originalRanges, cb) {
     var skipChecks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
     //
@@ -638,11 +647,11 @@
     //
 
 
-    if (typeof str !== "string") {
-      if (str === undefined) {
+    if (typeof originalStr !== "string") {
+      if (originalStr === undefined) {
         throw new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!");
       } else {
-        throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
+        throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(originalStr, null, 4), " (type ").concat(_typeof(originalStr), ")"));
       }
     }
 
@@ -665,6 +674,7 @@
         for (var i = fromIdx; i < toIdx; i++) {
           var charLength = runes_1(str.slice(i))[0].length;
           cb(i, i + charLength, function (offsetValue) {
+            /* istanbul ignore else */
             if (offsetValue != null) {
               i += offsetValue;
             }
@@ -679,13 +689,13 @@
 
     if (originalRanges && originalRanges.length) {
       // if ranges are given, invert and run callback against each character
-      var temp = rangesCrop(rangesInvert(skipChecks ? originalRanges : originalRanges, str.length, {
+      var temp = rangesCrop(rangesInvert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
         skipChecks: !!skipChecks
-      }), str.length);
-      iterator(str, temp);
+      }), originalStr.length);
+      iterator(originalStr, temp);
     } else {
       // otherwise, run callback on everything
-      iterator(str, [[0, str.length]]);
+      iterator(originalStr, [[0, originalStr.length]]);
     }
   }
 

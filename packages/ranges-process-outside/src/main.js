@@ -4,7 +4,7 @@ import runes from "runes";
 
 const isArr = Array.isArray;
 
-function processOutside(str, originalRanges, cb, skipChecks = false) {
+function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   //
   // internal functions:
   //
@@ -17,18 +17,18 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
   //
   // insurance:
   //
-  if (typeof str !== "string") {
-    if (str === undefined) {
+  if (typeof originalStr !== "string") {
+    if (originalStr === undefined) {
       throw new Error(
         `ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`
       );
     } else {
       throw new Error(
         `ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(
-          str,
+          originalStr,
           null,
           4
-        )} (type ${typeof str})`
+        )} (type ${typeof originalStr})`
       );
     }
   }
@@ -75,45 +75,46 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
 
         console.log(`076 charLength = ${charLength}`);
         cb(i, i + charLength, (offsetValue) => {
+          /* istanbul ignore else */
           if (offsetValue != null) {
-            console.log(`079 offset i by "${offsetValue}" requested`);
-            console.log(`080 old i = ${i}`);
+            console.log(`080 offset i by "${offsetValue}" requested`);
+            console.log(`081 old i = ${i}`);
             i += offsetValue;
-            console.log(`082 new i = ${i}`);
+            console.log(`083 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          console.log(`086 old i = ${i}`);
+          console.log(`087 old i = ${i}`);
           i += charLength - 1;
-          console.log(`088 new i = ${i}`);
+          console.log(`089 new i = ${i}`);
         }
       }
     });
     console.log(
-      `093 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+      `094 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
     );
   }
 
   if (originalRanges && originalRanges.length) {
     // if ranges are given, invert and run callback against each character
     const temp = crop(
-      invert(skipChecks ? originalRanges : originalRanges, str.length, {
+      invert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
         skipChecks: !!skipChecks,
       }),
-      str.length
+      originalStr.length
     );
     console.log(
-      `106 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `107 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
         0
       )}`
     );
 
-    iterator(str, temp);
+    iterator(originalStr, temp);
   } else {
     // otherwise, run callback on everything
-    iterator(str, [[0, str.length]]);
+    iterator(originalStr, [[0, originalStr.length]]);
   }
 }
 
