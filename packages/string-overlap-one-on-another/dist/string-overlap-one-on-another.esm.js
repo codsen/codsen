@@ -42,7 +42,7 @@ function overlap(str1, str2, originalOpts) {
       )}, which is type "${typeof originalOpts}"`
     );
   } else {
-    opts = Object.assign({}, defaults, originalOpts);
+    opts = { ...defaults, ...originalOpts };
     if (!opts.offset) {
       opts.offset = 0;
     } else if (!Number.isInteger(Math.abs(opts.offset))) {
@@ -60,7 +60,8 @@ function overlap(str1, str2, originalOpts) {
   }
   if (str2.length === 0) {
     return str1;
-  } else if (str1.length === 0) {
+  }
+  if (str1.length === 0) {
     return str2;
   }
   if (opts.offset < 0) {
@@ -74,7 +75,8 @@ function overlap(str1, str2, originalOpts) {
         : 0
     );
     return str2 + part2 + part3;
-  } else if (opts.offset > 0) {
+  }
+  if (opts.offset > 0) {
     const par1 =
       str1.slice(0, opts.offset) +
       (opts.offset > str1.length

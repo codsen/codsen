@@ -1,11 +1,11 @@
-const t = require("tap");
-const overlap = require("../dist/string-overlap-one-on-another.cjs");
+import tap from "tap";
+import overlap from "../dist/string-overlap-one-on-another.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - wrong inputs throw", (t) => {
+tap.test("01.01 - wrong inputs throw", (t) => {
   t.throws(() => {
     overlap(true, "z");
   }, /THROW_ID_01/);
@@ -33,7 +33,7 @@ t.test("01.01 - wrong inputs throw", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - no offset", (t) => {
+tap.test("02.01 - no offset", (t) => {
   t.equal(overlap("123", "b"), "b23", "02.01.01");
   t.equal(overlap("123", "bb"), "bb3", "02.01.02");
   t.equal(overlap("123", "bbb"), "bbb", "02.01.03");
@@ -47,7 +47,7 @@ t.test("02.01 - no offset", (t) => {
   t.end();
 });
 
-t.test("02.02 - empty strings", (t) => {
+tap.test("02.02 - empty strings", (t) => {
   // str2
   t.equal(overlap("123", ""), "123", "02.02.01");
   t.equal(overlap("123", "", { offset: 0 }), "123", "02.02.02");
@@ -67,7 +67,7 @@ t.test("02.02 - empty strings", (t) => {
   t.end();
 });
 
-t.test("02.03 - positive offset", (t) => {
+tap.test("02.03 - positive offset", (t) => {
   t.equal(overlap("123", "b", { offset: 1 }), "1b3", "02.03.01");
   t.equal(overlap("123", "b", { offset: 2 }), "12b", "02.03.02");
   t.equal(overlap("123", "b", { offset: 3 }), "123b", "02.03.03");
@@ -106,7 +106,7 @@ t.test("02.03 - positive offset", (t) => {
   t.end();
 });
 
-t.test("02.04 - negative offset", (t) => {
+tap.test("02.04 - negative offset", (t) => {
   t.equal(overlap("123", "b", { offset: -2 }), "b 123", "02.04.01");
   t.equal(
     overlap("123", "b", { offset: -2, offsetFillerCharacter: "-" }),
