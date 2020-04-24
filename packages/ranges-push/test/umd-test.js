@@ -1,7 +1,7 @@
-const t = require("tap");
-const Ranges1 = require("../dist/ranges-push.umd");
+import tap from "tap";
+import Ranges1 from "../dist/ranges-push.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   const ranges = new Ranges1();
   ranges.push(1, 2);
   ranges.push(3, 4);

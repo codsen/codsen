@@ -28,7 +28,7 @@ class Ranges {
       limitLinebreaksCount: 1,
       mergeType: 1,
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults, ...originalOpts };
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
         opts.mergeType = 1;
@@ -71,7 +71,8 @@ class Ranges {
     if (!existy(originalFrom) && !existy(originalTo)) {
       console.log(`072 nothing happens`);
       return;
-    } else if (existy(originalFrom) && !existy(originalTo)) {
+    }
+    if (existy(originalFrom) && !existy(originalTo)) {
       if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
           if (originalFrom.some((el) => Array.isArray(el))) {
@@ -79,7 +80,7 @@ class Ranges {
               if (Array.isArray(thing)) {
                 // recursively feed this subarray, hopefully it's an array
                 console.log(
-                  `082 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+                  `083 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                     thing,
                     null,
                     4
@@ -87,20 +88,21 @@ class Ranges {
                 );
                 this.add(...thing);
                 console.log("\n\n\n");
-                console.log("090 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+                console.log("091 ██ END OF RECURSION, BACK TO NORMAL FLOW");
                 console.log("\n\n\n");
               }
               // just skip other cases
             });
             return;
-          } else if (
+          }
+          if (
             originalFrom.length > 1 &&
             isNum(prepNumStr(originalFrom[0])) &&
             isNum(prepNumStr(originalFrom[1]))
           ) {
             // recursively pass in those values
             console.log(
-              `103 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+              `105 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                 originalFrom,
                 null,
                 4
@@ -108,7 +110,7 @@ class Ranges {
             );
             this.add(...originalFrom);
             console.log("\n\n\n");
-            console.log("111 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+            console.log("113 ██ END OF RECURSION, BACK TO NORMAL FLOW");
             console.log("\n\n\n");
           }
         }
@@ -145,13 +147,14 @@ class Ranges {
     const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
 
     if (isNum(addVal)) {
+      // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
     }
 
     // validation
     if (isNum(from) && isNum(to)) {
       console.log(
-        `154 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
+        `157 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
       );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
@@ -164,7 +167,7 @@ class Ranges {
         );
       }
       console.log(
-        `167 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+        `170 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
           addVal,
           null,
           4
@@ -179,7 +182,7 @@ class Ranges {
         from === this.last()[1]
       ) {
         console.log(
-          `182 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
+          `185 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
         );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -187,12 +190,12 @@ class Ranges {
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) {
-          console.log(`190 this.last()[2] = ${this.last()[2]}`);
-          console.log(`191 addVal = ${addVal}`);
+          console.log(`193 this.last()[2] = ${this.last()[2]}`);
+          console.log(`194 addVal = ${addVal}`);
         }
 
         if (this.last()[2] !== null && existy(addVal)) {
-          console.log(`195`);
+          console.log(`198`);
           let calculatedVal =
             existy(this.last()[2]) &&
             this.last()[2].length > 0 &&
@@ -200,7 +203,7 @@ class Ranges {
               ? this.last()[2] + addVal
               : addVal;
           console.log(
-            `203 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `206 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -213,7 +216,7 @@ class Ranges {
             );
           }
           console.log(
-            `216 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `219 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -224,10 +227,10 @@ class Ranges {
             this.last()[2] = calculatedVal;
           }
         }
-        console.log(`227`);
+        console.log(`230`);
       } else {
         console.log(
-          `230 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
+          `233 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
         );
         if (!this.slices) {
           this.slices = [];
@@ -246,16 +249,16 @@ class Ranges {
               ]
             : [from, to];
         console.log(
-          `249 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
+          `252 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
         );
         this.slices.push(whatToPush);
         console.log(
-          `253 this.slices = ${JSON.stringify(this.slices, null, 4)};`
+          `256 this.slices = ${JSON.stringify(this.slices, null, 4)};`
         );
       }
     } else {
       console.log(
-        `258 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
+        `261 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
       );
       // Error somewhere!
       // Let's find out where.
@@ -280,7 +283,7 @@ class Ranges {
         );
       }
     }
-    console.log(`283`);
+    console.log(`286`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()

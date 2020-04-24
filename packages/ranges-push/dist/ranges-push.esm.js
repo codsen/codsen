@@ -29,7 +29,7 @@ class Ranges {
       limitLinebreaksCount: 1,
       mergeType: 1,
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults, ...originalOpts };
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
         opts.mergeType = 1;
@@ -59,7 +59,8 @@ class Ranges {
     }
     if (!existy(originalFrom) && !existy(originalTo)) {
       return;
-    } else if (existy(originalFrom) && !existy(originalTo)) {
+    }
+    if (existy(originalFrom) && !existy(originalTo)) {
       if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
           if (originalFrom.some((el) => Array.isArray(el))) {
@@ -69,7 +70,8 @@ class Ranges {
               }
             });
             return;
-          } else if (
+          }
+          if (
             originalFrom.length > 1 &&
             isNum(prepNumStr(originalFrom[0])) &&
             isNum(prepNumStr(originalFrom[1]))
