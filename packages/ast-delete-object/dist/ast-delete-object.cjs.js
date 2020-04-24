@@ -31,6 +31,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
@@ -48,7 +97,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     matchKeysStrictly: false,
     hungryForWhitespace: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var input = clone(originalInput);
   var current;
   if (compare(input, objToDelete, {
@@ -62,7 +111,8 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     if (isObj(current)) {
       if (isObj(objToDelete) && isObj(current) && !Object.keys(objToDelete).length && !Object.keys(current).length) {
         return NaN;
-      } else if (compare(current, objToDelete, {
+      }
+      if (compare(current, objToDelete, {
         hungryForWhitespace: opts.hungryForWhitespace,
         matchStrictly: opts.matchKeysStrictly
       })) {

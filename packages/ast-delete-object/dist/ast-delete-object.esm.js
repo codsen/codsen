@@ -36,7 +36,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     matchKeysStrictly: false,
     hungryForWhitespace: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   let input = clone(originalInput);
   let current;
   if (
@@ -57,7 +57,8 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
         !Object.keys(current).length
       ) {
         return NaN;
-      } else if (
+      }
+      if (
         compare(current, objToDelete, {
           hungryForWhitespace: opts.hungryForWhitespace,
           matchStrictly: opts.matchKeysStrictly,

@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -2303,19 +2352,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -2329,11 +2379,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -2359,11 +2409,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -2376,7 +2426,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   /**
@@ -2391,7 +2441,9 @@
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
       return !input.trim();
-    } else if (!["object", "string"].includes(typeof input) || !input) {
+    }
+
+    if (!["object", "string"].includes(typeof input) || !input) {
       return false;
     }
 
@@ -2526,7 +2578,9 @@
   function isBlank(something) {
     if (isObj$1(something)) {
       return Object.keys(something).length === 0;
-    } else if (isArr(something) || isStr(something)) {
+    }
+
+    if (isArr(something) || isStr(something)) {
       return something.length === 0;
     }
 
@@ -2568,7 +2622,9 @@
       verboseWhenMismatches: false,
       useWildcards: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (opts.hungryForWhitespace && opts.matchStrictly && isObj$1(b) && containsOnlyEmptySpace(b) && isObj$1(s) && !Object.keys(s).length) {
       return true;
@@ -2590,7 +2646,9 @@
       return opts.useWildcards ? matcher.isMatch(b, s, {
         caseSensitive: true
       }) : b === s;
-    } else if (isArr(b) && isArr(s)) {
+    }
+
+    if (isArr(b) && isArr(s)) {
       if (opts.hungryForWhitespace && containsOnlyEmptySpace(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
         return true;
       }
@@ -2660,7 +2718,9 @@
             }
 
             return `The given object has key "${sKey}" which the other-one does not have.`;
-          } else if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
+          }
+
+          if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
             caseSensitive: true
           }))) {
             return true;
@@ -2671,7 +2731,9 @@
           }
 
           return `The given object has key "${sKey}" which the other-one does not have.`;
-        } else if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+        }
+
+        if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
           if (!(containsOnlyEmptySpace(b[sKey]) && containsOnlyEmptySpace(s[sKey]) && opts.hungryForWhitespace)) {
             if (!opts.verboseWhenMismatches) {
               return false;
@@ -2719,7 +2781,9 @@
       matchKeysStrictly: false,
       hungryForWhitespace: false
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var input = lodash_clonedeep(originalInput);
     var current; // compare input itself
 
@@ -2737,7 +2801,9 @@
       if (isObj$2(current)) {
         if (isObj$2(objToDelete) && isObj$2(current) && !Object.keys(objToDelete).length && !Object.keys(current).length) {
           return NaN;
-        } else if (compare(current, objToDelete, {
+        }
+
+        if (compare(current, objToDelete, {
           hungryForWhitespace: opts.hungryForWhitespace,
           matchStrictly: opts.matchKeysStrictly
         })) {
