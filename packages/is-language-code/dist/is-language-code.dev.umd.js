@@ -9068,7 +9068,9 @@
           res: false,
           message: "Not a string given."
         };
-      } else if (!str.trim()) {
+      }
+
+      if (!str.trim()) {
         return {
           res: false,
           message: "Empty language tag string given."
@@ -9354,7 +9356,7 @@
             if (!split[i + 1].match(singletonRegex)) {
               allOK = true;
               extlangMatched = split[i];
-              i++;
+              i += 1;
               continue;
             } else {
               return {

@@ -22,7 +22,7 @@ console.log(
 // PROCESS ianaSpec
 // ████████████████
 
-const tag_types = [];
+const tagTypes = [];
 
 const language = [];
 const extlang = [];
@@ -37,7 +37,7 @@ ianaSpec
   .split("%%")
   .filter((val) => val.trim().length && val.includes("Type:"))
   .forEach((val) => {
-    const splitLinesArr = val.split("\n").filter((val) => val.trim().length);
+    const splitLinesArr = val.split("\n").filter((val2) => val2.trim().length);
 
     let type;
     let value;
@@ -87,9 +87,9 @@ ianaSpec
       });
     }
 
-    // 3. compile unique types array "tag_types"
-    if (!tag_types.includes(type.toLowerCase())) {
-      tag_types.push(type.toLowerCase());
+    // 3. compile unique types array "tagTypes"
+    if (!tagTypes.includes(type.toLowerCase())) {
+      tagTypes.push(type.toLowerCase());
     }
   });
 
@@ -97,8 +97,8 @@ ianaSpec
 // ------------------------------------------------------------------------
 
 fs.writeFileSync(
-  path.resolve("src/tag_types.json"),
-  JSON.stringify(tag_types.sort(), null, 4)
+  path.resolve("src/tagTypes.json"),
+  JSON.stringify(tagTypes.sort(), null, 4)
 );
 //
 fs.writeFileSync(

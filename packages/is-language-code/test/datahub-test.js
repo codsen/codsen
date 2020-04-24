@@ -1,5 +1,5 @@
-const t = require("tap");
-const isLangCode = require("../dist/is-language-code.cjs");
+import tap from "tap";
+import isLangCode from "../dist/is-language-code.esm";
 
 // https://datahub.io/core/language-codes
 const datahubLangCodes = [
@@ -762,7 +762,7 @@ const datahubLangCodes = [
   "zu-ZA",
 ];
 
-t.test(`${`\u001b[${32}m${`datahub language codes`}\u001b[${39}m`}`, (t) => {
+tap.test(`${`\u001b[${32}m${`datahub language codes`}\u001b[${39}m`}`, (t) => {
   datahubLangCodes.forEach((codeStr) => {
     t.ok(isLangCode(codeStr), codeStr);
   });

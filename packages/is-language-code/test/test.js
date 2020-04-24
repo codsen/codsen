@@ -1,10 +1,10 @@
-const t = require("tap");
-const isLangCode = require("../dist/is-language-code.cjs");
+import tap from "tap";
+import isLangCode from "../dist/is-language-code.esm";
 
 // 01. simple language subtag
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - German`, (t) => {
+tap.test(`01.01 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - German`, (t) => {
   t.match(isLangCode(`de`), {
     res: true,
     message: null,
@@ -12,7 +12,7 @@ t.test(`01.01 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - German`, (t) => {
   t.end();
 });
 
-t.test(`01.02 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - French`, (t) => {
+tap.test(`01.02 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - French`, (t) => {
   t.match(isLangCode(`fr`), {
     res: true,
     message: null,
@@ -20,18 +20,21 @@ t.test(`01.02 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - French`, (t) => {
   t.end();
 });
 
-t.test(`01.03 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - Japanese`, (t) => {
-  t.match(isLangCode(`ja`), {
-    res: true,
-    message: null,
-  });
-  t.end();
-});
+tap.test(
+  `01.03 - ${`\u001b[${32}m${`simple`}\u001b[${39}m`} - Japanese`,
+  (t) => {
+    t.match(isLangCode(`ja`), {
+      res: true,
+      message: null,
+    });
+    t.end();
+  }
+);
 
 // 02. grandfathered tags
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${32}m${`grandfathered`}\u001b[${39}m`} - Enochian`,
   (t) => {
     t.match(isLangCode(`i-enochian`), {
@@ -43,7 +46,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${32}m${`grandfathered`}\u001b[${39}m`} - Klingon`,
   (t) => {
     t.match(isLangCode(`i-klingon`), {
@@ -57,7 +60,7 @@ t.test(
 // 03.
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${32}m${`language + script`}\u001b[${39}m`} - Chinese written using the Traditional Chinese script`,
   (t) => {
     t.match(isLangCode(`zh-Hant`), {
@@ -68,7 +71,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${32}m${`language + script`}\u001b[${39}m`} - Chinese written using the Simplified Chinese script`,
   (t) => {
     t.match(isLangCode(`zh-Hans`), {
@@ -79,7 +82,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${32}m${`language + script`}\u001b[${39}m`} - Serbian written using the Cyrillic script`,
   (t) => {
     t.match(isLangCode(`sr-Cyrl`), {
@@ -90,7 +93,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${32}m${`language + script`}\u001b[${39}m`} - Serbian written using the Latin script`,
   (t) => {
     t.match(isLangCode(`sr-Latn`), {
@@ -104,7 +107,7 @@ t.test(
 // 04
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${32}m${`language + primary language`}\u001b[${39}m`} - Chinese, Mandarin, Simplified script, as used in China`,
   (t) => {
     t.match(isLangCode(`zh-cmn-Hans-CN`), {
@@ -115,7 +118,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${32}m${`language + primary language`}\u001b[${39}m`} - Mandarin Chinese, Simplified script, as used in China`,
   (t) => {
     t.match(isLangCode(`cmn-Hans-CN`), {
@@ -126,7 +129,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${32}m${`language + primary language`}\u001b[${39}m`} - Chinese, Cantonese, as used in Hong Kong SAR`,
   (t) => {
     t.match(isLangCode(`zh-yue-HK`), {
@@ -137,7 +140,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${32}m${`language + primary language`}\u001b[${39}m`} - Cantonese Chinese, as used in Hong Kong SAR`,
   (t) => {
     t.match(isLangCode(`yue-HK`), {
@@ -151,7 +154,7 @@ t.test(
 // 05
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${32}m${`language + script + region`}\u001b[${39}m`} - Chinese written using the Simplified script as used in mainland China`,
   (t) => {
     t.match(isLangCode(`zh-Hans-CN`), {
@@ -162,7 +165,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${32}m${`language + script + region`}\u001b[${39}m`} - Serbian written using the Latin script as used in Serbia`,
   (t) => {
     t.match(isLangCode(`sr-Latn-RS`), {
@@ -176,7 +179,7 @@ t.test(
 // 06
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${32}m${`language + variant`}\u001b[${39}m`} - Resian dialect of Slovenian`,
   (t) => {
     t.match(isLangCode(`sl-rozaj`), {
@@ -187,7 +190,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - ${`\u001b[${32}m${`language + variant`}\u001b[${39}m`} - two variants: San Giorgio dialect of Resian dialect of Slovenian`,
   (t) => {
     t.match(isLangCode(`sl-rozaj-biske`), {
@@ -198,7 +201,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - ${`\u001b[${32}m${`language + variant`}\u001b[${39}m`} - Nadiza dialect of Slovenian`,
   (t) => {
     t.match(isLangCode(`sl-nedis`), {
@@ -209,7 +212,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - ${`\u001b[${32}m${`language + variant`}\u001b[${39}m`} - repeated variant is not OK`,
   (t) => {
     t.match(isLangCode(`de-DE-1901-1901`), {
@@ -220,7 +223,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.05 - ${`\u001b[${32}m${`language + variant`}\u001b[${39}m`} - multiple variant subtags not in a sequence`,
   (t) => {
     t.match(isLangCode(`sl-rozaj-SL-biske`), {
@@ -234,7 +237,7 @@ t.test(
 // 07
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${32}m${`language + region + variant`}\u001b[${39}m`} - German as used in Switzerland using the 1901 variant [orthography]`,
   (t) => {
     t.match(isLangCode(`de-CH-1901`), {
@@ -245,7 +248,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - ${`\u001b[${32}m${`language + region + variant`}\u001b[${39}m`} - Slovenian as used in Italy, Nadiza dialect`,
   (t) => {
     t.match(isLangCode(`sl-IT-nedis`), {
@@ -256,7 +259,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.03 - ${`\u001b[${32}m${`language + region + variant`}\u001b[${39}m`} - Catalan, Spain region, variant Valencia`,
   (t) => {
     t.match(isLangCode(`ca-ES-VALENCIA`), {
@@ -270,7 +273,7 @@ t.test(
 // 08
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `08.01 - ${`\u001b[${32}m${`language + script + region + variant`}\u001b[${39}m`} - Eastern Armenian written in Latin script, as used in Italy`,
   (t) => {
     t.match(isLangCode(`hy-Latn-IT-arevela`), {
@@ -284,7 +287,7 @@ t.test(
 // 09
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `09.01 - ${`\u001b[${32}m${`language - region`}\u001b[${39}m`} - German for Germany`,
   (t) => {
     t.match(isLangCode(`de-DE`), {
@@ -295,7 +298,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.02 - ${`\u001b[${32}m${`language - region`}\u001b[${39}m`} - English as used in the United States`,
   (t) => {
     t.match(isLangCode(`en-US`), {
@@ -306,7 +309,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `09.03 - ${`\u001b[${32}m${`language - region`}\u001b[${39}m`} - Spanish appropriate for the Latin America and Caribbean region using the UN region code`,
   (t) => {
     t.match(isLangCode(`es-419`), {
@@ -320,7 +323,7 @@ t.test(
 // 10
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `10.01 - ${`\u001b[${32}m${`private use subtags`}\u001b[${39}m`} - 1`,
   (t) => {
     t.match(isLangCode(`de-CH-x-phonebk`), {
@@ -331,7 +334,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `10.02 - ${`\u001b[${32}m${`private use subtags`}\u001b[${39}m`} - 2`,
   (t) => {
     t.match(isLangCode(`az-Arab-x-AZE-derbend`), {
@@ -345,7 +348,7 @@ t.test(
 // 11
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `11.01 - ${`\u001b[${32}m${`private use registry values`}\u001b[${39}m`} - private use using the singleton 'x'`,
   (t) => {
     t.match(isLangCode(`x-whatever`), {
@@ -356,7 +359,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.02 - ${`\u001b[${32}m${`private use registry values`}\u001b[${39}m`} - all private tags`,
   (t) => {
     t.match(isLangCode(`qaa-Qaaa-QM-x-southern`), {
@@ -367,7 +370,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.03 - ${`\u001b[${32}m${`private use registry values`}\u001b[${39}m`} - German, with a private script`,
   (t) => {
     t.match(isLangCode(`de-Qaaa`), {
@@ -378,7 +381,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.04 - ${`\u001b[${32}m${`private use registry values`}\u001b[${39}m`} - Serbian, Latin script, private region`,
   (t) => {
     t.match(isLangCode(`sr-Latn-QM`), {
@@ -389,7 +392,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `11.05 - ${`\u001b[${32}m${`private use registry values`}\u001b[${39}m`} - Serbian, private script, for Serbia`,
   (t) => {
     t.match(isLangCode(`sr-Qaaa-RS`), {
@@ -403,7 +406,7 @@ t.test(
 // 12
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `12.01 - ${`\u001b[${32}m${`tags that use extensions`}\u001b[${39}m`} - 1`,
   (t) => {
     t.match(isLangCode(`en-US-u-islamcal`), {
@@ -414,7 +417,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `12.02 - ${`\u001b[${32}m${`tags that use extensions`}\u001b[${39}m`} - 2`,
   (t) => {
     t.match(isLangCode(`zh-CN-a-myext-x-private`), {
@@ -425,7 +428,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `12.01 - ${`\u001b[${32}m${`tags that use extensions`}\u001b[${39}m`} - 3`,
   (t) => {
     t.match(isLangCode(`en-a-myext-b-another`), {
@@ -439,7 +442,7 @@ t.test(
 // 13 negative answer
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `13.01 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - two region tags`,
   (t) => {
     t.match(isLangCode(`de-419-DE`), {
@@ -450,7 +453,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.02 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - use of a single-character subtag in primary position`,
   (t) => {
     // "use of a single-character subtag in primary position; note
@@ -465,7 +468,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.03 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - two extensions with same single-letter prefix`,
   (t) => {
     t.match(isLangCode(`ar-a-aaa-b-bbb-a-ccc`), {
@@ -476,7 +479,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.04 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - failing initial regex`,
   (t) => {
     t.match(isLangCode(`something like this`), {
@@ -487,7 +490,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.05 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - two singletons repeated`,
   (t) => {
     t.match(isLangCode(`tlh-a-b-foo`), {
@@ -498,7 +501,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.07 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - language tag unrecognised`,
   (t) => {
     t.match(isLangCode(`html`), {
@@ -509,7 +512,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.08 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - language tag unrecognised`,
   (t) => {
     t.match(isLangCode(`zzz`), {
@@ -520,7 +523,7 @@ t.test(
   }
 );
 
-t.test(`13.09 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
+tap.test(`13.09 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
   t.match(isLangCode(``), {
     res: false,
     message: `Empty language tag string given.`,
@@ -528,7 +531,7 @@ t.test(`13.09 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`13.10 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
+tap.test(`13.10 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
   t.match(isLangCode(`\t\t`), {
     res: false,
     message: `Empty language tag string given.`,
@@ -536,7 +539,7 @@ t.test(`13.10 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `13.11 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - ends with private use sequence's subtag x`,
   (t) => {
     t.match(isLangCode(`en-Latn-GB-boont-x`), {
@@ -547,7 +550,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `13.12 - ${`\u001b[${32}m${`failing`}\u001b[${39}m`} - ends with private use sequence's subtag x`,
   (t) => {
     t.match(isLangCode(`en-Latn-GB-boont-a`), {
@@ -561,7 +564,7 @@ t.test(
 // 14 adhoc
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `14.01 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`} - Windows XP is not legal but in private it is fine`,
   (t) => {
     t.match(isLangCode(`en-US-Windows-x-XP`), {
@@ -572,7 +575,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `14.02 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`} - POSIX is not registered with IANA`,
   (t) => {
     t.match(isLangCode(`en-US-POSIX`), {
@@ -583,7 +586,7 @@ t.test(
   }
 );
 
-t.test(`14.03 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
+tap.test(`14.03 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   t.match(isLangCode(`de-CH-1996`), {
     res: true,
     message: null,
@@ -591,7 +594,7 @@ t.test(`14.03 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`14.04 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
+tap.test(`14.04 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   // the second appearance of the singleton 'a' is in a private use sequence, so it's OK
   t.match(isLangCode(`en-a-bbb-x-a-ccc`), {
     res: true,
@@ -600,7 +603,7 @@ t.test(`14.04 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`14.05 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
+tap.test(`14.05 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   // an extension were defined for the singleton 'r' and it defined the subtag
   t.match(isLangCode(`en-Latn-GB-boont-r-extended-sequence-x-private`), {
     res: true,
@@ -609,7 +612,7 @@ t.test(`14.05 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`14.06 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
+tap.test(`14.06 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   // an extension were defined for the singleton 'r' and it defined the subtag
   t.match(isLangCode(`a-Latn`), {
     res: false,
@@ -618,7 +621,7 @@ t.test(`14.06 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   t.end();
 });
 
-t.test(`14.07 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
+tap.test(`14.07 - ${`\u001b[${32}m${`adhoc`}\u001b[${39}m`}`, (t) => {
   // an extension were defined for the singleton 'r' and it defined the subtag
   t.match(isLangCode(`en-Latn-GB-boont-r`), {
     res: false,
