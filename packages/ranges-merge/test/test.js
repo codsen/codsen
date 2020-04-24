@@ -1,17 +1,17 @@
-const t = require("tap");
-const mergeRanges = require("../dist/ranges-merge.cjs");
+import tap from "tap";
 import clone from "lodash.clonedeep";
+import mergeRanges from "../dist/ranges-merge.esm";
 
 // 00. throws
 // ==========================
 
-t.test("00.00 - does not throw when the first arg is wrong", (t) => {
+tap.test("00.00 - does not throw when the first arg is wrong", (t) => {
   t.same(mergeRanges("z"), "z", "00.01.01");
   t.same(mergeRanges(true), true, "00.01.02");
   t.end();
 });
 
-t.test("00.01 - throws when opts.progressFn is wrong", (t) => {
+tap.test("00.01 - throws when opts.progressFn is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -24,7 +24,7 @@ t.test("00.01 - throws when opts.progressFn is wrong", (t) => {
   t.end();
 });
 
-t.test("00.02 - throws when opts.mergeType is wrong", (t) => {
+tap.test("00.02 - throws when opts.mergeType is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -37,7 +37,7 @@ t.test("00.02 - throws when opts.mergeType is wrong", (t) => {
   t.end();
 });
 
-t.test("00.03 - throws when the second arg is wrong", (t) => {
+tap.test("00.03 - throws when the second arg is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -50,7 +50,7 @@ t.test("00.03 - throws when the second arg is wrong", (t) => {
   t.end();
 });
 
-t.test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
+tap.test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -65,7 +65,7 @@ t.test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
   t.end();
 });
 
-t.test("00.05", (t) => {
+tap.test("00.05", (t) => {
   t.doesNotThrow(() => {
     mergeRanges(
       [
@@ -83,7 +83,7 @@ t.test("00.05", (t) => {
 // 01. mergeRanges()
 // ==========================
 
-t.test("01.01 - simples: merges three overlapping ranges", (t) => {
+tap.test("01.01 - simples: merges three overlapping ranges", (t) => {
   const input = [
     [3, 8],
     [1, 4],
@@ -104,7 +104,7 @@ t.test("01.01 - simples: merges three overlapping ranges", (t) => {
   t.end();
 });
 
-t.test("01.02 - nothing to merge", (t) => {
+tap.test("01.02 - nothing to merge", (t) => {
   t.same(
     mergeRanges([
       [3, 8],
@@ -135,7 +135,7 @@ t.test("01.02 - nothing to merge", (t) => {
   t.end();
 });
 
-t.test("01.03 - empty input", (t) => {
+tap.test("01.03 - empty input", (t) => {
   t.same(mergeRanges([]), [], "01.03.01 - empty array");
   t.same(mergeRanges(null), null, "01.03.02 - null");
   // with opts
@@ -156,7 +156,7 @@ t.test("01.03 - empty input", (t) => {
   t.end();
 });
 
-t.test("01.04 - more complex case", (t) => {
+tap.test("01.04 - more complex case", (t) => {
   let counter = 0;
   t.same(
     mergeRanges([
@@ -223,7 +223,7 @@ t.test("01.04 - more complex case", (t) => {
         progressFn: (perc) => {
           // console.log(`done: ${perc}`);
           t.ok(typeof perc === "number");
-          counter++;
+          counter += 1;
         },
       }
     ),
@@ -280,7 +280,7 @@ t.test("01.04 - more complex case", (t) => {
   t.end();
 });
 
-t.test("01.05 - even more complex case", (t) => {
+tap.test("01.05 - even more complex case", (t) => {
   let last;
   const counter = 0;
   t.same(
@@ -331,7 +331,7 @@ t.test("01.05 - even more complex case", (t) => {
   t.end();
 });
 
-t.test("01.06 - more merging examples", (t) => {
+tap.test("01.06 - more merging examples", (t) => {
   t.same(
     mergeRanges([
       [7, 14],
@@ -349,7 +349,7 @@ t.test("01.06 - more merging examples", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.07 - superset range discards to-add content of their subset ranges #1",
   (t) => {
     t.same(
@@ -364,7 +364,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.08 - superset range discards to-add content of their subset ranges #2",
   (t) => {
     t.same(
@@ -381,7 +381,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.09 - superset range discards to-add content of their subset ranges #3",
   (t) => {
     t.same(
@@ -435,7 +435,7 @@ t.test(
   }
 );
 
-t.test("01.10 - third arg is null", (t) => {
+tap.test("01.10 - third arg is null", (t) => {
   t.same(
     mergeRanges([
       [3, 8, "c"],
@@ -480,13 +480,13 @@ t.test("01.10 - third arg is null", (t) => {
   t.end();
 });
 
-t.test("01.11 - only one range, nothing to merge", (t) => {
+tap.test("01.11 - only one range, nothing to merge", (t) => {
   t.same(mergeRanges([[1, 4, null]]), [[1, 4, null]], "01.11.01");
   t.same(mergeRanges([[1, 4]]), [[1, 4]], "01.11.02");
   t.end();
 });
 
-t.test("01.12 - input arg mutation prevention", (t) => {
+tap.test("01.12 - input arg mutation prevention", (t) => {
   const originalInput = [
     [5, 7, " "],
     [1, 3, " "],
@@ -501,7 +501,7 @@ t.test("01.12 - input arg mutation prevention", (t) => {
   t.end();
 });
 
-t.test("01.13 - only two identical args in the range", (t) => {
+tap.test("01.13 - only two identical args in the range", (t) => {
   t.same(
     mergeRanges([
       [1, 1],
@@ -536,7 +536,7 @@ t.test("01.13 - only two identical args in the range", (t) => {
   t.end();
 });
 
-t.test("01.14 - third arg", (t) => {
+tap.test("01.14 - third arg", (t) => {
   // opts.mergeType === 1
   t.same(
     mergeRanges([
@@ -630,7 +630,7 @@ t.test("01.14 - third arg", (t) => {
 // 02. opts.mergeType === 2
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - few ranges starting at the same index", (t) => {
+tap.test("02.01 - few ranges starting at the same index", (t) => {
   // hors d'oeuvres - opts.mergeType === 1
   t.same(
     mergeRanges([
@@ -711,7 +711,7 @@ t.test("02.01 - few ranges starting at the same index", (t) => {
 // 3. opts.joinRangesThatTouchEdges
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - third arg", (t) => {
+tap.test("03.01 - third arg", (t) => {
   const inp1 = [
     [1, 3, "a"],
     [3, 6, "b"],

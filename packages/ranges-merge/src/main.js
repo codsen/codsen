@@ -37,7 +37,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   let opts;
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = { ...defaults, ...originalOpts };
       // 1. validate opts.progressFn
       if (
         opts.progressFn &&
@@ -90,7 +90,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       );
     }
   } else {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   }
 
   console.log(

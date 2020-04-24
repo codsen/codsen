@@ -29,7 +29,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   let opts;
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = { ...defaults, ...originalOpts };
       if (
         opts.progressFn &&
         isObj(opts.progressFn) &&
@@ -79,7 +79,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       );
     }
   } else {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   }
   const filtered = arrOfRanges
     .map((subarr) => [...subarr])
