@@ -29,6 +29,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -73,12 +122,12 @@ function isObj(something) {
 }
 function astMonkeyTraverseWithLookahead(tree1, cb1) {
   var lookahead = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var stop = {
+  var stop1 = {
     now: false
   };
   var stash = [];
   function traverseInner(tree, callback, innerObj, stop) {
-    innerObj = Object.assign({
+    innerObj = _objectSpread2({
       depth: -1,
       path: ""
     }, innerObj);
@@ -91,10 +140,10 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
         var path = "".concat(innerObj.path, ".").concat(i);
         innerObj.parent = clone(tree);
         innerObj.parentType = "array";
-        callback(tree[i], undefined, Object.assign({}, innerObj, {
+        callback(tree[i], undefined, _objectSpread2({}, innerObj, {
           path: trimFirstDot(path)
         }), stop);
-        traverseInner(tree[i], callback, Object.assign({}, innerObj, {
+        traverseInner(tree[i], callback, _objectSpread2({}, innerObj, {
           path: trimFirstDot(path)
         }), stop);
       }
@@ -109,10 +158,10 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
-        callback(key, tree[key], Object.assign({}, innerObj, {
+        callback(key, tree[key], _objectSpread2({}, innerObj, {
           path: trimFirstDot(_path)
         }), stop);
-        traverseInner(tree[key], callback, Object.assign({}, innerObj, {
+        traverseInner(tree[key], callback, _objectSpread2({}, innerObj, {
           path: trimFirstDot(_path)
         }), stop);
       }
@@ -140,7 +189,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
       reportFirstFromStash();
     }
   }
-  traverseInner(tree1, intermediary, {}, stop);
+  traverseInner(tree1, intermediary, {}, stop1);
   if (stash.length) {
     for (var i = 0, len = stash.length; i < len; i++) {
       reportFirstFromStash();

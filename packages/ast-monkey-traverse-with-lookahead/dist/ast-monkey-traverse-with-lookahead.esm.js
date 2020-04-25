@@ -21,10 +21,10 @@ function isObj(something) {
   );
 }
 function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
-  const stop = { now: false };
+  const stop1 = { now: false };
   const stash = [];
   function traverseInner(tree, callback, innerObj, stop) {
-    innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
+    innerObj = { depth: -1, path: "", ...innerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
       for (let i = 0, len = tree.length; i < len; i++) {
@@ -37,13 +37,13 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
         callback(
           tree[i],
           undefined,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
         traverseInner(
           tree[i],
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
       }
@@ -61,13 +61,13 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
         callback(
           key,
           tree[key],
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
         traverseInner(
           tree[key],
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
       }
@@ -94,7 +94,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       reportFirstFromStash();
     }
   }
-  traverseInner(tree1, intermediary, {}, stop);
+  traverseInner(tree1, intermediary, {}, stop1);
   if (stash.length) {
     for (let i = 0, len = stash.length; i < len; i++) {
       reportFirstFromStash();

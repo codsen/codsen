@@ -1,7 +1,7 @@
-const t = require("tap");
-const traverse1 = require("../dist/ast-monkey-traverse-with-lookahead.umd");
+import tap from "tap";
+import traverse1 from "../dist/ast-monkey-traverse-with-lookahead.umd";
 
-t.test(`"UMD build works fine"`, (t) => {
+tap.test(`"UMD build works fine"`, (t) => {
   const input = [
     {
       a: "b",

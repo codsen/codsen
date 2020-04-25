@@ -1,13 +1,15 @@
-const t = require("tap");
-// const isEqual = require("lodash.isequal");
-// const objectPath = require("object-path");
-const traverse = require("../dist/ast-monkey-traverse-with-lookahead.cjs");
+/* eslint no-param-reassign:0 */
+
+import tap from "tap";
+// import isEqual from "lodash.isequal");
+// import objectPath from "object-path");
+import traverse from "../dist/ast-monkey-traverse-with-lookahead.esm";
 
 // -----------------------------------------------------------------------------
 // traverse
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 0`,
   (t) => {
     const input = [
@@ -159,7 +161,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 1`,
   (t) => {
     const input = [
@@ -400,7 +402,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 2`,
   (t) => {
     const input = [
@@ -709,7 +711,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 3`,
   (t) => {
     const input = [
@@ -1064,7 +1066,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 5`,
   (t) => {
     const input = [
@@ -1465,7 +1467,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 6`,
   (t) => {
     const input = [
@@ -1866,7 +1868,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 99`,
   (t) => {
     const input = [
@@ -2270,7 +2272,7 @@ t.test(
 // 02. arrays
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -2330,7 +2332,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 1`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -2416,7 +2418,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 2`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -2512,7 +2514,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 3`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -2608,7 +2610,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 4`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -2707,7 +2709,7 @@ t.test(
 // 03. objects-only
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects`,
   (t) => {
     const input = {
@@ -2790,7 +2792,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - object key's value is an array`,
   (t) => {
     const input = {
@@ -2872,7 +2874,7 @@ t.test(
 // 04. more complex AST
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`,
   (t) => {
     const input = {
@@ -3366,7 +3368,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`,
   (t) => {
     const input = ["1", "2", { a: "3" }];
@@ -3461,7 +3463,7 @@ t.test(
 // 05. stopping the traversal upon request
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
@@ -3476,7 +3478,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
@@ -3494,7 +3496,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`,
   (t) => {
     const input = ["a", ["b", "c"]];
@@ -3509,7 +3511,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`,
   (t) => {
     const input = ["a", ["b", "c"]];

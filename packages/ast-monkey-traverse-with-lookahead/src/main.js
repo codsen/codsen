@@ -19,7 +19,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       4
     )}`
   );
-  const stop = { now: false };
+  const stop1 = { now: false };
 
   // that's where we stash the arguments that the callback function tries
   // to ping; we keep them until enough of them is gathered to set them as
@@ -40,7 +40,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       )}`
     );
 
-    innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
+    innerObj = { depth: -1, path: "", ...innerObj };
     innerObj.depth += 1;
 
     if (Array.isArray(tree)) {
@@ -72,30 +72,31 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
         callback(
           tree[i],
           undefined,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
 
         traverseInner(
           tree[i],
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
       }
     } else if (isObj(tree)) {
       console.log(`087 tree is object`);
+      // eslint-disable-next-line
       for (const key in tree) {
         console.log(
-          `090: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`
+          `091: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`
         );
         if (stop.now && key != null) {
-          console.log(`093 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`094 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         const path = `${innerObj.path}.${key}`;
         console.log(
-          `098 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+          `099 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
             path,
             null,
             4
@@ -110,19 +111,19 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
         callback(
           key,
           tree[key],
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
 
         traverseInner(
           tree[key],
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
       }
     }
-    console.log(`125 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    console.log(`126 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
 
@@ -130,7 +131,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
   // from the stash and removes that element.
   function reportFirstFromStash() {
     console.log(
-      `133 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
+      `134 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
     );
     // start to assemble node we're report to the callback cb1()
     const currentElem = stash.shift();
@@ -148,7 +149,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
           clone([stash[i][0], stash[i][1], stash[i][2]])
         );
         console.log(
-          `151 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
+          `152 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
             currentElem[2].next,
             null,
             4
@@ -156,7 +157,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
         );
       } else {
         console.log(
-          `159 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
+          `160 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
         );
         break;
       }
@@ -164,7 +165,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
 
     // finally, ping the callback with assembled element:
     console.log(
-      `167 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+      `168 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
         [...[currentElem[0], currentElem[1], currentElem[2]]],
         null,
         4
@@ -177,7 +178,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
   // nodes
   function intermediary(...incoming) {
     console.log(
-      `180 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
+      `181 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
         incoming,
         null,
         4
@@ -190,7 +191,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
 
     stash.push([...incoming]);
     console.log(
-      `193 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+      `194 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
         stash,
         null,
         4
@@ -200,7 +201,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
     // 2. if there are enough things gathered in stash, report the first one
     // from the stash:
     console.log(
-      `203 ${
+      `204 ${
         stash.length > lookahead
           ? `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN STASH`}\u001b[${39}m`}`
           : `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN STASH, MOVE ON`}\u001b[${39}m`}`
@@ -208,7 +209,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
     );
     if (stash.length > lookahead) {
       console.log(
-        `211 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: stash.length=${
+        `212 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: stash.length=${
           stash.length
         } >= lookahead=${lookahead} - ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}`
       );
@@ -216,7 +217,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       // the stash:
       reportFirstFromStash();
       console.log(
-        `219 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+        `220 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
           stash,
           null,
           4
@@ -225,23 +226,23 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
     }
   }
 
-  traverseInner(tree1, intermediary, {}, stop);
+  traverseInner(tree1, intermediary, {}, stop1);
 
-  console.log(`230 ███████████████████████████████████████`);
   console.log(`231 ███████████████████████████████████████`);
   console.log(`232 ███████████████████████████████████████`);
   console.log(`233 ███████████████████████████████████████`);
+  console.log(`234 ███████████████████████████████████████`);
 
   // once the end is reached, clean up the stash - that's the remaining elements
   // that will have less "future" reported in them, compared to what was
   // requested by "lookahead"
   if (stash.length) {
-    console.log(`239 REMAINING STASH`);
+    console.log(`240 REMAINING STASH`);
     for (let i = 0, len = stash.length; i < len; i++) {
-      console.log(`241 report ${i + 1}/${stash.length} stash element`);
+      console.log(`242 report ${i + 1}/${stash.length} stash element`);
       reportFirstFromStash();
       console.log(
-        `244 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+        `245 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
           stash,
           null,
           4
