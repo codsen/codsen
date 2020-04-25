@@ -88,7 +88,7 @@ function march(
       }
     } else {
       if (opts.maxMismatches && patience && i) {
-        patience--;
+        patience -= 1;
         for (let y = 0; y <= patience; y++) {
           const nextCharToCompareAgainst =
             nextIdx > i
@@ -157,10 +157,8 @@ function march(
   if (charsToCheckCount > 0) {
     if (special && whatToMatchValVal === "EOL") {
       return true;
-    } else if (
-      opts.maxMismatches >= charsToCheckCount &&
-      atLeastSomethingWasMatched
-    ) {
+    }
+    if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
       return lastWasMismatched || 0;
     }
     return false;
@@ -188,14 +186,15 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       }`
     );
   }
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map((el) =>
     isStr(el) ? el : String(el)
   );
   if (!isStr(str)) {
     return false;
-  } else if (!str.length) {
+  }
+  if (!str.length) {
     return false;
   }
   if (!Number.isInteger(position) || position < 0) {
@@ -339,9 +338,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     let restOfStringInFront = "";
     let startingPosition = position;
     if (mode === "matchRight") {
-      startingPosition++;
+      startingPosition += 1;
     } else if (mode === "matchLeft") {
-      startingPosition--;
+      startingPosition -= 1;
     }
     const found = march(
       str,
@@ -349,7 +348,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       whatToMatchVal,
       opts,
       special,
-      (i) => (mode[5] === "L" ? i - 1 : i + 1)
+      (i2) => (mode[5] === "L" ? i2 - 1 : i2 + 1)
     );
     if (
       found &&

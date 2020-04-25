@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const { matchRightIncl } = require("../");
+const { matchRightIncl } = require("..");
+
 const testme = () => matchRightIncl("abcdef", 2, ["gjd", "cy", "cdz", "cde"]);
 
 // action

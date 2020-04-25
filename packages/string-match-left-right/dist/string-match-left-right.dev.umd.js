@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
@@ -55,7 +104,8 @@
 
   function isStr(something) {
     return typeof something === "string";
-  }
+  } // eslint-disable-next-line consistent-return
+
 
   function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
     var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
@@ -132,7 +182,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--; // the bigger the maxMismatches, the further away we must check for
+          patience -= 1; // the bigger the maxMismatches, the further away we must check for
           // alternative matches
 
           for (var y = 0; y <= patience; y++) {
@@ -193,7 +243,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -252,7 +304,8 @@
       throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
     }
 
-    var opts = Object.assign({}, defaults, originalOpts);
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
       return isStr(el) ? el : String(el);
@@ -260,7 +313,9 @@
 
     if (!isStr(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -389,13 +444,13 @@
       var _startingPosition = position;
 
       if (mode === "matchRight") {
-        _startingPosition++;
+        _startingPosition += 1;
       } else if (mode === "matchLeft") {
-        _startingPosition--;
+        _startingPosition -= 1;
       }
 
-      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i) {
-        return mode[5] === "L" ? i - 1 : i + 1;
+      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
+        return mode[5] === "L" ? i2 - 1 : i2 + 1;
       }); // if march() returned positive result and it was "special" case,
       // Bob's your uncle, here's the result:
 
