@@ -1,7 +1,7 @@
-const t = require("tap");
-const deepContains1 = require("../dist/ast-deep-contains.umd");
+import tap from "tap";
+import deepContains1 from "../dist/ast-deep-contains.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   const gathered = [];
   const errors = [];
 

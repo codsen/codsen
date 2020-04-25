@@ -1,10 +1,10 @@
-const t = require("tap");
-const deepContains = require("../dist/ast-deep-contains.cjs");
+import tap from "tap";
+import deepContains from "../dist/ast-deep-contains.esm";
 
 // 01. basic functionality
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of the first`,
   (t) => {
     const gathered = [];
@@ -34,7 +34,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the second (error)`,
   (t) => {
     const gathered = [];
@@ -65,7 +65,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`,
   (t) => {
     const gathered = [];
@@ -90,7 +90,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, OK`,
   (t) => {
     const gathered = [];
@@ -121,7 +121,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, not OK`,
   (t) => {
     const gathered = [];
@@ -152,7 +152,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
   (t) => {
     const gathered = [];
@@ -181,7 +181,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`,
   (t) => {
     const gathered = [];
@@ -215,7 +215,7 @@ t.test(
 // 02. opts.arrayStrictComparison
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -256,7 +256,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -317,7 +317,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -358,7 +358,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -402,7 +402,7 @@ t.test(
 // 03. further combinations
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -465,7 +465,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
@@ -506,7 +506,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
   (t) => {
     const gathered = [];
@@ -537,7 +537,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
   (t) => {
     const gathered = [];
@@ -645,7 +645,7 @@ t.test(
 // skip current branch and continue further at same level, 2) to skip current
 // and go up and continue, thus skipping all further siblings
 //
-// t.test(`04.01 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - extra key - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`, t => {
+// tap.test(`04.01 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - extra key - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`, t => {
 //   const gathered = [];
 //   const errors = [];
 //
@@ -695,7 +695,7 @@ t.test(
 // 05. tree1 is superset
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - tree 1 has one more than tree 2`,
   (t) => {
     const gathered = [];

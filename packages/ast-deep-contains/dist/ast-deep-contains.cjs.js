@@ -30,6 +30,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 var isArr = Array.isArray;
 function typeDetect(something) {
   if (something === null) {
@@ -58,7 +107,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
     skipContainers: true,
     arrayStrictComparison: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb("the first input arg is of a type ".concat(typeDetect(tree1).toLowerCase(), " but the second is ").concat(typeDetect(tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
   } else {
@@ -87,16 +136,16 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                   var pickedVal = tree1RefSource[i];
                   var disposableArr1 = dropIth(tree1RefSource, i);
                   currArr.push(pickedVal);
-                  disposableArr1.forEach(function (key) {
-                    secondDigits.push(Array.from(currArr).concat(key));
+                  disposableArr1.forEach(function (key1) {
+                    secondDigits.push(Array.from(currArr).concat(key1));
                   });
                 };
                 for (var i = 0, len = tree1RefSource.length; i < len; i++) {
                   _loop(i);
                 }
                 var finalCombined = secondDigits.map(function (arr) {
-                  return arr.map(function (val, i) {
-                    return [i, val];
+                  return arr.map(function (val2, i) {
+                    return [i, val2];
                   });
                 });
                 var maxScore = 0;
@@ -104,10 +153,10 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                   var score = 0;
                   finalCombined[_i].forEach(function (mapping) {
                     if (isObj(arr2[mapping[0]]) && isObj(arr1[mapping[1]])) {
-                      Object.keys(arr2[mapping[0]]).forEach(function (key) {
-                        if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                      Object.keys(arr2[mapping[0]]).forEach(function (key2) {
+                        if (Object.keys(arr1[mapping[1]]).includes(key2)) {
                           score += 1;
-                          if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                          if (arr1[mapping[1]][key2] === arr2[mapping[0]][key2]) {
                             score += 5;
                           }
                         }

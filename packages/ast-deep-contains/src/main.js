@@ -1,5 +1,6 @@
 import objectPath from "object-path";
 import traverse from "ast-monkey-traverse";
+
 const isArr = Array.isArray;
 function typeDetect(something) {
   if (something === null) {
@@ -30,7 +31,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
     skipContainers: true,
     arrayStrictComparison: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb(
       `the first input arg is of a type ${typeDetect(
@@ -51,7 +52,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
       // retrieve the path of the current node from the monkey
       console.log("\n");
       console.log(
-        `054 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+        `055 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
           0
@@ -66,7 +67,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
       // );
 
       if (objectPath.has(tree1, path)) {
-        console.log(`069 tree1 does have the path "${path}"`);
+        console.log(`070 tree1 does have the path "${path}"`);
         if (
           !opts.arrayStrictComparison &&
           isObj(current) &&
@@ -74,9 +75,10 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
           innerObj.parent.length > 1
         ) {
           console.log(
-            `077 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`
+            `078 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`
           );
           // stop the monkey, we'll go further recursively
+          // eslint-disable-next-line no-param-reassign
           stop.now = true;
 
           const arr1 = Array.from(
@@ -180,13 +182,13 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
               const disposableArr1 = dropIth(tree1RefSource, i);
               currArr.push(pickedVal);
               // iterate what's left
-              disposableArr1.forEach((key) => {
-                secondDigits.push(Array.from(currArr).concat(key));
+              disposableArr1.forEach((key1) => {
+                secondDigits.push(Array.from(currArr).concat(key1));
               });
             }
 
             const finalCombined = secondDigits.map((arr) => {
-              return arr.map((val, i) => [i, val]);
+              return arr.map((val2, i) => [i, val2]);
             });
 
             console.log(
@@ -218,7 +220,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
               console.log(`\n-----\n#${i + 1}:`);
               finalCombined[i].forEach((mapping) => {
                 console.log(
-                  `221 ${JSON.stringify(
+                  `223 ${JSON.stringify(
                     arr2[mapping[0]],
                     null,
                     4
@@ -226,10 +228,10 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                 );
 
                 if (isObj(arr2[mapping[0]]) && isObj(arr1[mapping[1]])) {
-                  Object.keys(arr2[mapping[0]]).forEach((key) => {
-                    if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                  Object.keys(arr2[mapping[0]]).forEach((key2) => {
+                    if (Object.keys(arr1[mapping[1]]).includes(key2)) {
                       score += 1;
-                      if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                      if (arr1[mapping[1]][key2] === arr2[mapping[0]][key2]) {
                         score += 5;
                       }
                     }
@@ -263,7 +265,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             for (let i = 0, len = finalCombined.length; i < len; i++) {
               if (finalCombined[i][2] === maxScore) {
                 console.log(
-                  `266 ${`\u001b[${35}m${`PING:`}\u001b[${39}m`} ${JSON.stringify(
+                  `268 ${`\u001b[${35}m${`PING:`}\u001b[${39}m`} ${JSON.stringify(
                     [finalCombined[i][0], finalCombined[i][1]],
                     null,
                     0
@@ -305,18 +307,18 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             //
           }
         } else {
-          console.log(`308 it is not an object inside an array`);
+          console.log(`310 it is not an object inside an array`);
           // if tree1 has that path on tree2, call the callback
           const retrieved = objectPath.get(tree1, path);
           console.log(
-            `312 ${`\u001b[${33}m${`opts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
+            `314 ${`\u001b[${33}m${`opts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
               opts.skipContainers,
               null,
               4
             )}`
           );
           console.log(
-            `319 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
+            `321 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
               retrieved,
               null,
               4
@@ -326,7 +328,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             !opts.skipContainers ||
             (!isObj(retrieved) && !isArr(retrieved))
           ) {
-            console.log(`329 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
+            console.log(`331 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
             cb(retrieved, current, path);
           }
         }

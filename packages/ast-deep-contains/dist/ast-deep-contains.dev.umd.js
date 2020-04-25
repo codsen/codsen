@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -2216,19 +2265,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -2242,11 +2292,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -2272,11 +2322,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -2289,7 +2339,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   var isArr = Array.isArray;
@@ -2330,7 +2380,8 @@
       skipContainers: true,
       arrayStrictComparison: false
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (typeDetect(tree1) !== typeDetect(tree2)) {
       errCb("the first input arg is of a type ".concat(typeDetect(tree1).toLowerCase(), " but the second is ").concat(typeDetect(tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
@@ -2351,6 +2402,7 @@
           if (!opts.arrayStrictComparison && isObj$1(current) && innerObj.parentType === "array" && innerObj.parent.length > 1) {
             (function () {
               // stop the monkey, we'll go further recursively
+              // eslint-disable-next-line no-param-reassign
               stop.now = true;
               var arr1 = Array.from(innerObj.path.includes(".") ? objectPath.get(tree1, goUp(path)) : tree1);
 
@@ -2423,8 +2475,8 @@
                     var disposableArr1 = dropIth(tree1RefSource, i);
                     currArr.push(pickedVal); // iterate what's left
 
-                    disposableArr1.forEach(function (key) {
-                      secondDigits.push(Array.from(currArr).concat(key));
+                    disposableArr1.forEach(function (key1) {
+                      secondDigits.push(Array.from(currArr).concat(key1));
                     });
                   };
 
@@ -2433,8 +2485,8 @@
                   }
 
                   var finalCombined = secondDigits.map(function (arr) {
-                    return arr.map(function (val, i) {
-                      return [i, val];
+                    return arr.map(function (val2, i) {
+                      return [i, val2];
                     });
                   }); // now, use the "finalCombined" as a guidance which objects to match against which, and array-push the comparison score as third element into each. Whichever comparison gathers highest score, gets pinged to the callback.
 
@@ -2447,11 +2499,11 @@
 
                     finalCombined[_i].forEach(function (mapping) {
                       if (isObj$1(arr2[mapping[0]]) && isObj$1(arr1[mapping[1]])) {
-                        Object.keys(arr2[mapping[0]]).forEach(function (key) {
-                          if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                        Object.keys(arr2[mapping[0]]).forEach(function (key2) {
+                          if (Object.keys(arr1[mapping[1]]).includes(key2)) {
                             score += 1;
 
-                            if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                            if (arr1[mapping[1]][key2] === arr2[mapping[0]][key2]) {
                               score += 5;
                             }
                           }

@@ -36,7 +36,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
     skipContainers: true,
     arrayStrictComparison: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb(
       `the first input arg is of a type ${typeDetect(
@@ -88,22 +88,22 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
               const pickedVal = tree1RefSource[i];
               const disposableArr1 = dropIth(tree1RefSource, i);
               currArr.push(pickedVal);
-              disposableArr1.forEach((key) => {
-                secondDigits.push(Array.from(currArr).concat(key));
+              disposableArr1.forEach((key1) => {
+                secondDigits.push(Array.from(currArr).concat(key1));
               });
             }
             const finalCombined = secondDigits.map((arr) => {
-              return arr.map((val, i) => [i, val]);
+              return arr.map((val2, i) => [i, val2]);
             });
             let maxScore = 0;
             for (let i = 0, len = finalCombined.length; i < len; i++) {
               let score = 0;
               finalCombined[i].forEach((mapping) => {
                 if (isObj(arr2[mapping[0]]) && isObj(arr1[mapping[1]])) {
-                  Object.keys(arr2[mapping[0]]).forEach((key) => {
-                    if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                  Object.keys(arr2[mapping[0]]).forEach((key2) => {
+                    if (Object.keys(arr1[mapping[1]]).includes(key2)) {
                       score += 1;
-                      if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                      if (arr1[mapping[1]][key2] === arr2[mapping[0]][key2]) {
                         score += 5;
                       }
                     }
