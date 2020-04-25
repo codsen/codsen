@@ -49,7 +49,6 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
       cb({
         i,
         val: str[i],
-        push: (received) => received,
       });
     }
   } else {
@@ -75,11 +74,11 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
               i: finalIdx,
               val: rangeArr[2][y],
             });
-            finalIdx++;
+            finalIdx += 1;
           }
         }
         while (currentIdx < rangeArr[1]) {
-          currentIdx++;
+          currentIdx += 1;
         }
         let loopUntil = str.length;
         if (ranges[rangeArrIdx + 1]) {

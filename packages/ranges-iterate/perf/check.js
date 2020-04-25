@@ -1,13 +1,15 @@
 #!/usr/bin/env node
-/*eslint no-unused-vars:0*/
+/* eslint no-unused-vars:0 */
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("../");
+const f = require("..");
+
 let pinged = "";
 let index = 0;
 const testme = () =>
@@ -19,7 +21,7 @@ const testme = () =>
     ],
     ({ i, val }) => {
       pinged += val;
-      index++;
+      index += 1;
     }
   );
 

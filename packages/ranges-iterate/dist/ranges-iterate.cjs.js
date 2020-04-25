@@ -45,10 +45,7 @@ function rangesIterate(str, originalRanges, cb) {
     for (var i = 0; i < str.length; i++) {
       cb({
         i: i,
-        val: str[i],
-        push: function push(received) {
-          return received;
-        }
+        val: str[i]
       });
     }
   } else {
@@ -74,11 +71,11 @@ function rangesIterate(str, originalRanges, cb) {
               i: finalIdx,
               val: rangeArr[2][y]
             });
-            finalIdx++;
+            finalIdx += 1;
           }
         }
         while (currentIdx < rangeArr[1]) {
-          currentIdx++;
+          currentIdx += 1;
         }
         var loopUntil = str.length;
         if (ranges[rangeArrIdx + 1]) {

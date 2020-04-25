@@ -66,10 +66,8 @@
         // push converter simply returns range that was given, no changes needed
         cb({
           i: i,
-          val: str[i],
-          push: function push(received) {
-            return received;
-          }
+          val: str[i] // push: (received) => received,
+
         });
       }
     } else {
@@ -85,6 +83,7 @@
       var finalIdx = offset; // cover the first characters up to starting range
 
       if (finalIdx < ranges[0][0]) {
+        // eslint-disable-next-line
         for (; finalIdx < ranges[0][0]; finalIdx++, currentIdx++) {
           // insurange against gaps:
           if (!str[finalIdx]) {
@@ -115,13 +114,13 @@
                 i: finalIdx,
                 val: rangeArr[2][y]
               });
-              finalIdx++;
+              finalIdx += 1;
             }
           } // 2. skip all characters in the range because those will be deleted
 
 
           while (currentIdx < rangeArr[1]) {
-            currentIdx++;
+            currentIdx += 1;
           } // 3. if next range is present, ping all characters up to its start OR
           // if it's not present, ping up to the end of the string
 
@@ -130,7 +129,8 @@
 
           if (ranges[rangeArrIdx + 1]) {
             loopUntil = ranges[rangeArrIdx + 1][0];
-          }
+          } // eslint-disable-next-line
+
 
           for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
             cb({
