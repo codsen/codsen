@@ -1,11 +1,11 @@
-const t = require("tap");
-const strFindHeadsTails = require("../dist/string-find-heads-tails.cjs");
+import tap from "tap";
+import strFindHeadsTails from "../dist/string-find-heads-tails.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "01.01 - throws when the first argument, source string, is not a string",
   (t) => {
     t.throws(() => {
@@ -18,14 +18,14 @@ t.test(
   }
 );
 
-t.test("01.02 - throws when there's no input", (t) => {
+tap.test("01.02 - throws when there's no input", (t) => {
   t.throws(() => {
     strFindHeadsTails();
   }, /THROW_ID_02/);
   t.end();
 });
 
-t.test(
+tap.test(
   "01.03 - throws when the second argument, heads, is not a string",
   (t) => {
     t.throws(() => {
@@ -68,7 +68,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.04 - throws when the third argument, tails, is not a string",
   (t) => {
     t.throws(() => {
@@ -111,7 +111,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.05 - throws when the fourth argument, opts, is of a wrong type",
   (t) => {
     t.throws(() => {
@@ -134,7 +134,7 @@ t.test(
   }
 );
 
-t.test("01.06 - opts.fromIndex is not a natural number", (t) => {
+tap.test("01.06 - opts.fromIndex is not a natural number", (t) => {
   // not a natural number
   t.throws(() => {
     strFindHeadsTails("a", "a", "a", { fromIndex: 1.5 });
@@ -142,7 +142,7 @@ t.test("01.06 - opts.fromIndex is not a natural number", (t) => {
   t.end();
 });
 
-t.test("01.07 - opts.fromIndex is not a natural number", (t) => {
+tap.test("01.07 - opts.fromIndex is not a natural number", (t) => {
   // not a natural number
   t.throws(() => {
     strFindHeadsTails("a", "a", "a", { fromIndex: 1.5, source: "TEST 1.8:" });
@@ -150,7 +150,7 @@ t.test("01.07 - opts.fromIndex is not a natural number", (t) => {
   t.end();
 });
 
-t.test("01.08 - unmatched heads and tails", (t) => {
+tap.test("01.08 - unmatched heads and tails", (t) => {
   t.throws(() => {
     strFindHeadsTails("abc%%_def_%ghi", "%%_", "_%%");
   }, /THROW_ID_22/); // sneaky - tails' second percentage char is missing, hence unrecognised and throws
@@ -192,7 +192,7 @@ t.test("01.08 - unmatched heads and tails", (t) => {
   t.end();
 });
 
-t.test("01.09 - both heads and tails found but wrong order", (t) => {
+tap.test("01.09 - both heads and tails found but wrong order", (t) => {
   t.throws(() => {
     strFindHeadsTails("abc___def---ghi", "---", "___"); // opposite order
   }, /THROW_ID_22/);
@@ -226,7 +226,7 @@ t.test("01.09 - both heads and tails found but wrong order", (t) => {
   t.end();
 });
 
-t.test("01.10 - heads of one type, tails of another", (t) => {
+tap.test("01.10 - heads of one type, tails of another", (t) => {
   t.same(
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
@@ -252,7 +252,7 @@ t.test("01.10 - heads of one type, tails of another", (t) => {
   t.end();
 });
 
-t.test("01.11 - heads of one type, tails of another", (t) => {
+tap.test("01.11 - heads of one type, tails of another", (t) => {
   t.throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
@@ -266,7 +266,7 @@ t.test("01.11 - heads of one type, tails of another", (t) => {
   t.end();
 });
 
-t.test("01.12 - heads of one type, tails of another", (t) => {
+tap.test("01.12 - heads of one type, tails of another", (t) => {
   t.throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
@@ -281,7 +281,7 @@ t.test("01.12 - heads of one type, tails of another", (t) => {
   t.end();
 });
 
-t.test("01.13 - heads of one type, tails of another", (t) => {
+tap.test("01.13 - heads of one type, tails of another", (t) => {
   // let's just prove that it error message is not about empty opts.source but
   // still about the same index mismatch as the tests above
   t.throws(() => {
@@ -298,7 +298,7 @@ t.test("01.13 - heads of one type, tails of another", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.14 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder",
   (t) => {
     t.same(
@@ -403,7 +403,7 @@ t.test(
 // 02. normal use, no third arg in the input
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - single char markers", (t) => {
+tap.test("02.01 - single char markers", (t) => {
   t.same(
     strFindHeadsTails("abcdef", "b", "e"),
     [
@@ -431,7 +431,7 @@ t.test("02.01 - single char markers", (t) => {
   t.end();
 });
 
-t.test("02.02 - multi-char markers", (t) => {
+tap.test("02.02 - multi-char markers", (t) => {
   t.same(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%"),
     [
@@ -495,7 +495,7 @@ t.test("02.02 - multi-char markers", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   '02.03 - sneaky "casual" underscores try to blend in with legit heads/tails',
   (t) => {
     t.same(
@@ -514,7 +514,7 @@ t.test(
   }
 );
 
-t.test("02.04 - sneaky tails precede heads", (t) => {
+tap.test("02.04 - sneaky tails precede heads", (t) => {
   t.throws(() => {
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%");
   }, /THROW_ID_22/);
@@ -529,7 +529,7 @@ t.test("02.04 - sneaky tails precede heads", (t) => {
   t.end();
 });
 
-t.test("02.05 - arrays of heads and tails", (t) => {
+tap.test("02.05 - arrays of heads and tails", (t) => {
   t.same(
     strFindHeadsTails(
       "zzz_%%-zz_cmp_id-%%_%%-lnk_id-%%",
@@ -555,7 +555,7 @@ t.test("02.05 - arrays of heads and tails", (t) => {
   t.end();
 });
 
-t.test("02.06 - input is equal to heads or tails", (t) => {
+tap.test("02.06 - input is equal to heads or tails", (t) => {
   t.same(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
@@ -629,7 +629,7 @@ t.test("02.06 - input is equal to heads or tails", (t) => {
   t.end();
 });
 
-t.test("02.07 - more clashing with outside characters", (t) => {
+tap.test("02.07 - more clashing with outside characters", (t) => {
   t.same(
     strFindHeadsTails(
       "aaa_%%-bbb-%%_%%-ccc-%%",
@@ -684,7 +684,7 @@ t.test("02.07 - more clashing with outside characters", (t) => {
 // 03. opts.relaxedAPI
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - opts.relaxedAPI - input string", (t) => {
+tap.test("03.01 - opts.relaxedAPI - input string", (t) => {
   t.same(
     strFindHeadsTails(undefined, "%%_", "_%%", { relaxedAPI: true }),
     [],
@@ -703,7 +703,7 @@ t.test("03.01 - opts.relaxedAPI - input string", (t) => {
   t.end();
 });
 
-t.test("03.02 - opts.relaxedAPI - heads", (t) => {
+tap.test("03.02 - opts.relaxedAPI - heads", (t) => {
   t.same(
     strFindHeadsTails("aaa", undefined, "_%%", { relaxedAPI: true }),
     [],
@@ -754,7 +754,7 @@ t.test("03.02 - opts.relaxedAPI - heads", (t) => {
   t.end();
 });
 
-t.test("03.03 - opts.relaxedAPI - tails", (t) => {
+tap.test("03.03 - opts.relaxedAPI - tails", (t) => {
   t.same(
     strFindHeadsTails("aaa", "%%_", undefined, { relaxedAPI: true }),
     [],
