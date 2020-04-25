@@ -13,6 +13,55 @@
   (global = global || self, global.isHtmlTagOpening = factory());
 }(this, (function () { 'use strict';
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
@@ -115,7 +164,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -158,7 +207,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -180,13 +231,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
 
     if (!isStr(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -299,12 +354,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -363,7 +418,9 @@
       allowCustomTagNames: false,
       skipOpeningBracket: false
     };
-    var opts = Object.assign({}, defaults, originalOpts); // =======
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // =======
+
 
     var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
 
