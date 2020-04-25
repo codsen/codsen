@@ -1,11 +1,11 @@
-const t = require("tap");
-const fillMissingKeys = require("../dist/object-fill-missing-keys.cjs");
+import tap from "tap";
+import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
 
 // ==============================
 // 1. Adds missing keys
 // ==============================
 
-t.test("01.01 - filling in missing keys, simple plain object", (t) => {
+tap.test("01.01 - filling in missing keys, simple plain object", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -27,7 +27,7 @@ t.test("01.01 - filling in missing keys, simple plain object", (t) => {
   t.end();
 });
 
-t.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
+tap.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -91,7 +91,7 @@ t.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
   t.end();
 });
 
-t.test("01.03 - multiple values, sorting as well", (t) => {
+tap.test("01.03 - multiple values, sorting as well", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -114,7 +114,7 @@ t.test("01.03 - multiple values, sorting as well", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.04 - nested arrays as values (array in schema overwrites Boolean)",
   (t) => {
     t.same(
@@ -143,7 +143,7 @@ t.test(
   }
 );
 
-t.test("01.05 - more complex nested arrays", (t) => {
+tap.test("01.05 - more complex nested arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -175,7 +175,7 @@ t.test("01.05 - more complex nested arrays", (t) => {
   t.end();
 });
 
-t.test("01.06 - ridiculously deep nesting", (t) => {
+tap.test("01.06 - ridiculously deep nesting", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -273,7 +273,7 @@ t.test("01.06 - ridiculously deep nesting", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.07 - cheeky case, custom placeholder on schema has value null",
   (t) => {
     t.same(
@@ -303,7 +303,7 @@ t.test(
 // 2. Normalises array contents
 // ==============================
 
-t.test("02.01 - array one level-deep", (t) => {
+tap.test("02.01 - array one level-deep", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -366,7 +366,7 @@ t.test("02.01 - array one level-deep", (t) => {
   t.end();
 });
 
-t.test("02.02 - multiple levels of nested arrays", (t) => {
+tap.test("02.02 - multiple levels of nested arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -414,7 +414,7 @@ t.test("02.02 - multiple levels of nested arrays", (t) => {
 // 3. String vs array clashes
 // ==============================
 
-t.test("03.01 - string vs array clash", (t) => {
+tap.test("03.01 - string vs array clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -440,7 +440,7 @@ t.test("03.01 - string vs array clash", (t) => {
   t.end();
 });
 
-t.test("03.02 - string vs object clash", (t) => {
+tap.test("03.02 - string vs object clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -462,7 +462,7 @@ t.test("03.02 - string vs object clash", (t) => {
   t.end();
 });
 
-t.test("03.03 - object vs array clash", (t) => {
+tap.test("03.03 - object vs array clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -490,7 +490,7 @@ t.test("03.03 - object vs array clash", (t) => {
   t.end();
 });
 
-t.test("03.04 - array vs empty array", (t) => {
+tap.test("03.04 - array vs empty array", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -523,7 +523,7 @@ t.test("03.04 - array vs empty array", (t) => {
   t.end();
 });
 
-t.test("03.05 - array vs string", (t) => {
+tap.test("03.05 - array vs string", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -556,7 +556,7 @@ t.test("03.05 - array vs string", (t) => {
   t.end();
 });
 
-t.test("03.06 - array vs bool", (t) => {
+tap.test("03.06 - array vs bool", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -589,7 +589,7 @@ t.test("03.06 - array vs bool", (t) => {
   t.end();
 });
 
-t.test("03.06 - multiple levels of nested arrays #1", (t) => {
+tap.test("03.06 - multiple levels of nested arrays #1", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -634,7 +634,7 @@ t.test("03.06 - multiple levels of nested arrays #1", (t) => {
   t.end();
 });
 
-t.test("03.07 - multiple levels of nested arrays #2", (t) => {
+tap.test("03.07 - multiple levels of nested arrays #2", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -699,7 +699,7 @@ t.test("03.07 - multiple levels of nested arrays #2", (t) => {
 // 4. Contingencies
 // ==============================
 
-t.test("04.01 - number as input", (t) => {
+tap.test("04.01 - number as input", (t) => {
   t.throws(() => {
     fillMissingKeys(1, {
       a: {
@@ -710,7 +710,7 @@ t.test("04.01 - number as input", (t) => {
   t.end();
 });
 
-t.test("04.02 - boolean as input", (t) => {
+tap.test("04.02 - boolean as input", (t) => {
   t.throws(() => {
     fillMissingKeys(true, {
       a: {
@@ -721,7 +721,7 @@ t.test("04.02 - boolean as input", (t) => {
   t.end();
 });
 
-t.test("04.03 - null as input", (t) => {
+tap.test("04.03 - null as input", (t) => {
   t.throws(() => {
     fillMissingKeys(null, {
       a: {
@@ -732,28 +732,28 @@ t.test("04.03 - null as input", (t) => {
   t.end();
 });
 
-t.test("04.04 - both args missing (as in hardcoded undefined)", (t) => {
+tap.test("04.04 - both args missing (as in hardcoded undefined)", (t) => {
   t.throws(() => {
     fillMissingKeys(undefined, undefined);
   }, /THROW_ID_02/g);
   t.end();
 });
 
-t.test("04.05 - both args completely missing", (t) => {
+tap.test("04.05 - both args completely missing", (t) => {
   t.throws(() => {
     fillMissingKeys();
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test("04.06 - second arg is not a plain object", (t) => {
+tap.test("04.06 - second arg is not a plain object", (t) => {
   t.throws(() => {
     fillMissingKeys({ a: "b" }, 1);
   }, /THROW_ID_03/g);
   t.end();
 });
 
-t.test("04.07 - opts is not a plain object", (t) => {
+tap.test("04.07 - opts is not a plain object", (t) => {
   t.throws(() => {
     fillMissingKeys({ a: "c" }, { a: "b" }, 1);
   }, /THROW_ID_04/g);
@@ -763,7 +763,7 @@ t.test("04.07 - opts is not a plain object", (t) => {
   t.end();
 });
 
-t.test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
+tap.test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
   t.throws(() => {
     fillMissingKeys(
       { a: "c" },
@@ -794,7 +794,7 @@ t.test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
 // 5. Input arg mutation prevention
 // ================================
 
-t.test("05.01 - does not mutate the input args", (t) => {
+tap.test("05.01 - does not mutate the input args", (t) => {
   const testObj = {
     a: "a",
   };
@@ -818,7 +818,7 @@ t.test("05.01 - does not mutate the input args", (t) => {
 // 6. opts.doNotFillThesePathsIfTheyContainPlaceholders
 // ========================================================
 
-t.test(
+tap.test(
   "06.01 - some keys filled, some ignored because they have placeholders-only",
   (t) => {
     // baseline behaviour
@@ -1075,7 +1075,7 @@ t.test(
 // 7. opts.useNullAsExplicitFalse
 // ========================================================
 
-t.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
+tap.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -1147,7 +1147,7 @@ t.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
   t.end();
 });
 
-t.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
+tap.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -1185,7 +1185,7 @@ t.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
   t.end();
 });
 
-t.test("07.03 - opts.useNullAsExplicitFalse - case #3", (t) => {
+tap.test("07.03 - opts.useNullAsExplicitFalse - case #3", (t) => {
   t.same(
     fillMissingKeys(
       {

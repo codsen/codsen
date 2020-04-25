@@ -15,7 +15,8 @@ import isObj from "lodash.isplainobject";
 function typ(something) {
   if (isObj(something)) {
     return "plain object";
-  } else if (isArr(something)) {
+  }
+  if (Array.isArray(something)) {
     return "array";
   }
   return typeof something;
@@ -163,7 +164,7 @@ function fillMissingKeysWrapper(
     useNullAsExplicitFalse: true,
   };
   // fill any settings with defaults if missing:
-  const opts = Object.assign({}, defaults, originalOptsWrapper);
+  const opts = { ...defaults, ...originalOptsWrapper };
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(
     opts.doNotFillThesePathsIfTheyContainPlaceholders

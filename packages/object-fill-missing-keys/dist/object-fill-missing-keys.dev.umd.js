@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -1982,7 +2031,9 @@
     const defaults = {
       arrayVsArrayAllMustBeFound: "any"
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (arguments.length === 0) {
       throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
@@ -3941,11 +3992,17 @@
   function nonEmpty(input) {
     if (arguments.length === 0 || input === undefined) {
       return false;
-    } else if (isArr$1(input) || isStr(input)) {
+    }
+
+    if (isArr$1(input) || isStr(input)) {
       return input.length > 0;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       return Object.keys(input).length > 0;
-    } else if (isNum(input)) {
+    }
+
+    if (isNum(input)) {
       return true;
     }
 
@@ -4032,7 +4089,9 @@
   function getType(something) {
     if (isObj(something)) {
       return "object";
-    } else if (isArr$2(something)) {
+    }
+
+    if (isArr$2(something)) {
       return "array";
     }
 
@@ -4203,7 +4262,9 @@
             key: infoObj.key,
             type: infoObj.type
           }) : currentResult;
-        } else if (isObj(i2)) {
+        }
+
+        if (isObj(i2)) {
           Object.keys(i2).forEach(key => {
             currPath = infoObj.path && infoObj.path.length ? `${infoObj.path}.${key}` : `${key}`;
 
@@ -4211,31 +4272,31 @@
               if (arrayIncludesWithGlob(key, opts.ignoreKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   ignoreEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardMergeEverything: true
-                }));
+                });
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], Object.assign({}, opts, {
+                }, i1[key], i2[key], { ...opts,
                   hardArrayConcat: true
-                }));
+                });
               } else {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key: key,
+                  key,
                   type: [getType(i1), getType(i2)]
                 }, i1[key], i2[key], opts);
               }
@@ -4336,7 +4397,9 @@
           key: infoObj.key,
           type: infoObj.type
         }) : currentResult;
-      } else if (i2 != null) {
+      }
+
+      if (i2 != null) {
         const currentResult = uni ? uniRes : i2;
         return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
@@ -6346,7 +6409,9 @@
       }
 
       return true;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       const keys = Object.keys(input);
 
       if (keys.length === 0) {
@@ -6381,7 +6446,9 @@
     const defaults = {
       arraysMustNotContainPlaceholders: true
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     return allValuesEqualTo(inputOriginal, valueOriginal, opts);
   }
 
@@ -6390,7 +6457,9 @@
   function typ(something) {
     if (lodash_isplainobject(something)) {
       return "plain object";
-    } else if (isArr$4(something)) {
+    }
+
+    if (Array.isArray(something)) {
       return "array";
     }
 
@@ -6496,7 +6565,8 @@
       useNullAsExplicitFalse: true
     }; // fill any settings with defaults if missing:
 
-    var opts = Object.assign({}, defaults, originalOptsWrapper);
+    var opts = _objectSpread2({}, defaults, {}, originalOptsWrapper);
+
     opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
     var culpritsVal = null;
     var culpritsIndex = null;
