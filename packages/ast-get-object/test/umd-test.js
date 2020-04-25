@@ -1,5 +1,5 @@
-const t = require("tap");
-const get1 = require("../dist/ast-get-object.umd");
+import tap from "tap";
+import get1 from "../dist/ast-get-object.umd";
 
 const source = [
   {
@@ -23,7 +23,7 @@ const res = [
   },
 ];
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.same(get1(source, target), res);
   t.end();
 });

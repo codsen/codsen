@@ -1,11 +1,11 @@
-const t = require("tap");
-const getObj = require("../dist/ast-get-object.cjs");
+import tap from "tap";
+import getObj from "../dist/ast-get-object.esm";
 
 // ==============================
 // GET
 // ==============================
 
-t.test("01.01 - get - one plain object as result", (t) => {
+tap.test("01.01 - get - one plain object as result", (t) => {
   t.same(
     getObj(
       [
@@ -34,7 +34,7 @@ t.test("01.01 - get - one plain object as result", (t) => {
   t.end();
 });
 
-t.test("01.02 - get - two plain object as result", (t) => {
+tap.test("01.02 - get - two plain object as result", (t) => {
   t.same(
     getObj(
       [
@@ -69,7 +69,7 @@ t.test("01.02 - get - two plain object as result", (t) => {
   t.end();
 });
 
-t.test("01.03 - get - topmost level container is object", (t) => {
+tap.test("01.03 - get - topmost level container is object", (t) => {
   t.same(
     getObj(
       {
@@ -114,7 +114,7 @@ t.test("01.03 - get - topmost level container is object", (t) => {
   t.end();
 });
 
-t.test("01.04 - get - search value is object", (t) => {
+tap.test("01.04 - get - search value is object", (t) => {
   t.same(
     getObj(
       [
@@ -143,7 +143,7 @@ t.test("01.04 - get - search value is object", (t) => {
   t.end();
 });
 
-t.test("01.05 - get - search value is array", (t) => {
+tap.test("01.05 - get - search value is array", (t) => {
   t.same(
     getObj(
       [
@@ -172,7 +172,7 @@ t.test("01.05 - get - search value is array", (t) => {
   t.end();
 });
 
-t.test("01.06 - get - search value is nested array", (t) => {
+tap.test("01.06 - get - search value is nested array", (t) => {
   t.same(
     getObj(
       [
@@ -201,7 +201,7 @@ t.test("01.06 - get - search value is nested array", (t) => {
   t.end();
 });
 
-t.test("01.07 - get - search value is nested object", (t) => {
+tap.test("01.07 - get - search value is nested object", (t) => {
   t.same(
     getObj(
       [
@@ -250,7 +250,7 @@ t.test("01.07 - get - search value is nested object", (t) => {
   t.end();
 });
 
-t.test("01.08 - get - numerous everything", (t) => {
+tap.test("01.08 - get - numerous everything", (t) => {
   t.same(
     getObj(
       [
@@ -296,7 +296,7 @@ t.test("01.08 - get - numerous everything", (t) => {
   t.end();
 });
 
-t.test("01.09 - rogue 4th input arg given", (t) => {
+tap.test("01.09 - rogue 4th input arg given", (t) => {
   t.same(
     getObj(
       [
@@ -335,7 +335,7 @@ t.test("01.09 - rogue 4th input arg given", (t) => {
 // SET
 // ==============================
 
-t.test("02.01 - set - one plain object", (t) => {
+tap.test("02.01 - set - one plain object", (t) => {
   t.same(
     getObj(
       [
@@ -375,7 +375,7 @@ t.test("02.01 - set - one plain object", (t) => {
   t.end();
 });
 
-t.test("02.02 - set - two plain object", (t) => {
+tap.test("02.02 - set - two plain object", (t) => {
   t.same(
     getObj(
       [
@@ -425,7 +425,7 @@ t.test("02.02 - set - two plain object", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.03 - set - topmost level object, one value deleted, one changed",
   (t) => {
     t.same(
@@ -493,7 +493,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.04 - set - search val object, updated val from plain obj to nested arr",
   (t) => {
     t.same(
@@ -536,7 +536,7 @@ t.test(
   }
 );
 
-t.test("02.05 - set - search value is array - updated value array", (t) => {
+tap.test("02.05 - set - search value is array - updated value array", (t) => {
   t.same(
     getObj(
       [
@@ -576,12 +576,34 @@ t.test("02.05 - set - search value is array - updated value array", (t) => {
   t.end();
 });
 
-t.test("02.06 - set - search value is nested array - deleted finding", (t) => {
-  t.same(
-    getObj(
-      [
+tap.test(
+  "02.06 - set - search value is nested array - deleted finding",
+  (t) => {
+    t.same(
+      getObj(
+        [
+          {
+            tag: [["two", "values"]],
+            content: "UTF-8",
+            something: "else",
+          },
+          {
+            tag: [["two"]],
+            attrs: "Text of the title",
+          },
+        ],
         {
           tag: [["two", "values"]],
+        },
+        [
+          {
+            content: "UTF-8",
+            something: "else",
+          },
+        ]
+      ),
+      [
+        {
           content: "UTF-8",
           something: "else",
         },
@@ -589,32 +611,13 @@ t.test("02.06 - set - search value is nested array - deleted finding", (t) => {
           tag: [["two"]],
           attrs: "Text of the title",
         },
-      ],
-      {
-        tag: [["two", "values"]],
-      },
-      [
-        {
-          content: "UTF-8",
-          something: "else",
-        },
       ]
-    ),
-    [
-      {
-        content: "UTF-8",
-        something: "else",
-      },
-      {
-        tag: [["two"]],
-        attrs: "Text of the title",
-      },
-    ]
-  );
-  t.end();
-});
+    );
+    t.end();
+  }
+);
 
-t.test("02.07 - set - edit skipping similar, false search result", (t) => {
+tap.test("02.07 - set - edit skipping similar, false search result", (t) => {
   t.same(
     getObj(
       [
@@ -684,7 +687,7 @@ t.test("02.07 - set - edit skipping similar, false search result", (t) => {
   t.end();
 });
 
-t.test("02.08 - set - numerous everything, wrong order", (t) => {
+tap.test("02.08 - set - numerous everything, wrong order", (t) => {
   t.same(
     getObj(
       [
@@ -752,7 +755,7 @@ t.test("02.08 - set - numerous everything, wrong order", (t) => {
   t.end();
 });
 
-t.test("02.09 - rogue 4th input arg", (t) => {
+tap.test("02.09 - rogue 4th input arg", (t) => {
   t.same(
     getObj(
       [
@@ -801,14 +804,14 @@ t.test("02.09 - rogue 4th input arg", (t) => {
 // EDGE CASES
 // ==============================
 
-t.test("03.01 - missing inputs - throws", (t) => {
+tap.test("03.01 - missing inputs - throws", (t) => {
   t.throws(() => {
     getObj();
   }, /THROW_ID_01/g);
   t.end();
 });
 
-t.test("03.02 - missing keyValPair", (t) => {
+tap.test("03.02 - missing keyValPair", (t) => {
   t.throws(() => {
     getObj([
       {
