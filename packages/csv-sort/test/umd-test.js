@@ -1,7 +1,7 @@
-const t = require("tap");
-const csvSort1 = require("../dist/csv-sort.umd");
+import tap from "tap";
+import csvSort1 from "../dist/csv-sort.umd";
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.same(csvSort1(""), [[""]]);
   t.end();
 });

@@ -42,13 +42,15 @@ function findtype(something) {
   }
   if (isNumeric(something)) {
     return "numeric";
-  } else if (currencySigns.some(function (singleSign) {
+  }
+  if (currencySigns.some(function (singleSign) {
     return (
       isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
     );
   })) {
     return "numeric";
-  } else if (!something.trim()) {
+  }
+  if (!something.trim()) {
     return "empty";
   }
   return "text";

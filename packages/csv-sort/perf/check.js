@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("../");
+const f = require("..");
+
 const source = `
 Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
