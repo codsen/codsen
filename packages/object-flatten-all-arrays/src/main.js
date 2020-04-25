@@ -19,7 +19,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   const defaults = {
     flattenArraysContainingStringsToBeEmpty: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   const incommingObj = clone(originalIncommingObj);
   let isFirstObj;
