@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -1952,9 +2001,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -2010,12 +2063,14 @@
       maxDistance: 1,
       ignoreWhitespace: true
     };
-    var opts = Object.assign({}, defaults, originalOpts); // we perform the validation upon Object-assigned "opts" instead
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // we perform the validation upon Object-assigned "opts" instead
     // of incoming "originalOpts" because we don't want to mutate the
     // "originalOpts" and making note of fixed values, Object-assigning
     // "opts" and then putting those noted fixed values on top is more
     // tedious than letting Object-assign to do the job, then validating
     // it, then trying to salvage the value (if possible).
+
 
     if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
       opts.stringOffset = Number(opts.stringOffset);
@@ -2078,9 +2133,9 @@
 
           pendingMatchesArr[z].pendingToCheck.shift();
           pendingMatchesArr[z].pendingToCheck.shift();
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1; //
+          pendingMatchesArr[z].patienceLeft -= 1; //
         } else {
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1; // we look up the next character, if it matches, we don't pop it
+          pendingMatchesArr[z].patienceLeft -= 1; // we look up the next character, if it matches, we don't pop it
 
           if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
             pendingMatchesArr[z].pendingToCheck.shift(); // after popping, match the current character at str[i] is it

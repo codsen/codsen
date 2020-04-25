@@ -47,7 +47,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     maxDistance: 1,
     ignoreWhitespace: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (
     typeof opts.stringOffset === "string" &&
     /^\d*$/.test(opts.stringOffset)
@@ -84,11 +84,9 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         wasThisLetterMatched = true;
         pendingMatchesArr[z].pendingToCheck.shift();
         pendingMatchesArr[z].pendingToCheck.shift();
-        pendingMatchesArr[z].patienceLeft =
-          pendingMatchesArr[z].patienceLeft - 1;
+        pendingMatchesArr[z].patienceLeft -= 1;
       } else {
-        pendingMatchesArr[z].patienceLeft =
-          pendingMatchesArr[z].patienceLeft - 1;
+        pendingMatchesArr[z].patienceLeft -= 1;
         if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
           pendingMatchesArr[z].pendingToCheck.shift();
           if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {

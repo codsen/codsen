@@ -1,11 +1,11 @@
-const t = require("tap");
-const strFindMalformed = require("../dist/string-find-malformed.cjs");
+import tap from "tap";
+import strFindMalformed from "../dist/string-find-malformed.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "01.01 - throws when the first argument, source string, is not a string",
   (t) => {
     t.throws(() => {
@@ -27,7 +27,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.02 - throws when the second argument, ref string, is not a string",
   (t) => {
     t.throws(() => {
@@ -49,7 +49,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.03 - throws when the third argument, callback, is not a function",
   (t) => {
     t.throws(() => {
@@ -63,7 +63,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.04 - throws when the fourth argument, optional options object, is not a plain object",
   (t) => {
     t.throws(() => {
@@ -73,14 +73,14 @@ t.test(
   }
 );
 
-t.test("01.05 - throws when opts.stringOffset is not a number", (t) => {
+tap.test("01.05 - throws when opts.stringOffset is not a number", (t) => {
   t.throws(() => {
     strFindMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
   }, /THROW_ID_05/);
   t.end();
 });
 
-t.test(`01.06 - empty string`, (t) => {
+tap.test(`01.06 - empty string`, (t) => {
   const gathered = [];
   strFindMalformed("", "bde", (obj) => {
     gathered.push(obj);
@@ -89,7 +89,7 @@ t.test(`01.06 - empty string`, (t) => {
   t.end();
 });
 
-t.test(`01.07 - empty string`, (t) => {
+tap.test(`01.07 - empty string`, (t) => {
   const gathered = [];
   strFindMalformed("abc", "", (obj) => {
     gathered.push(obj);
@@ -102,7 +102,7 @@ t.test(`01.07 - empty string`, (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - rogue character, "c"`, (t) => {
+tap.test(`02.01 - rogue character, "c"`, (t) => {
   const gathered = [];
   strFindMalformed("abcdef", "bde", (obj) => {
     gathered.push(obj);
@@ -120,7 +120,7 @@ t.test(`02.01 - rogue character, "c"`, (t) => {
   t.end();
 });
 
-t.test(`02.02 - overlapping and extended maxDistance`, (t) => {
+tap.test(`02.02 - overlapping and extended maxDistance`, (t) => {
   const gathered = [];
   strFindMalformed(
     "abcabcd.f",
@@ -145,7 +145,7 @@ t.test(`02.02 - overlapping and extended maxDistance`, (t) => {
   t.end();
 });
 
-t.test(`02.03 - with opts.stringOffset`, (t) => {
+tap.test(`02.03 - with opts.stringOffset`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!-something--></div>",
@@ -171,7 +171,7 @@ t.test(`02.03 - with opts.stringOffset`, (t) => {
   t.end();
 });
 
-t.test(`02.04 - correct, fully matching value is not pinged`, (t) => {
+tap.test(`02.04 - correct, fully matching value is not pinged`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!--something--></div>",
@@ -188,7 +188,7 @@ t.test(`02.04 - correct, fully matching value is not pinged`, (t) => {
   t.end();
 });
 
-t.test(`02.05 - like before but strings in opts`, (t) => {
+tap.test(`02.05 - like before but strings in opts`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!-\n\n\n-something--></div>",
@@ -214,7 +214,7 @@ t.test(`02.05 - like before but strings in opts`, (t) => {
   t.end();
 });
 
-t.test(`02.06 - whitespace`, (t) => {
+tap.test(`02.06 - whitespace`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div>< ! - -something--></div>",
@@ -237,7 +237,7 @@ t.test(`02.06 - whitespace`, (t) => {
   t.end();
 });
 
-t.test(`02.07 - repeated characters after failed match`, (t) => {
+tap.test(`02.07 - repeated characters after failed match`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<--z",
@@ -260,7 +260,7 @@ t.test(`02.07 - repeated characters after failed match`, (t) => {
   t.end();
 });
 
-t.test(`02.08 - repeated characters after failed match`, (t) => {
+tap.test(`02.08 - repeated characters after failed match`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<!-[if mso]>",
