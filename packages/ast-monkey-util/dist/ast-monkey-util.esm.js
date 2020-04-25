@@ -15,7 +15,8 @@ function pathNext(str) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${
       +str.slice(str.lastIndexOf(".") + 1) + 1
     }`;
-  } else if (/^\d*$/.test(str)) {
+  }
+  if (/^\d*$/.test(str)) {
     return `${+str + 1}`;
   }
   return str;
@@ -28,11 +29,13 @@ function pathPrev(str) {
   const extractedValue = str.slice(str.lastIndexOf(".") + 1);
   if (extractedValue === "0") {
     return null;
-  } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+  }
+  if (str.includes(".") && /^\d*$/.test(extractedValue)) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${
       +str.slice(str.lastIndexOf(".") + 1) - 1
     }`;
-  } else if (/^\d*$/.test(str)) {
+  }
+  if (/^\d*$/.test(str)) {
     return `${+str - 1}`;
   }
   return null;
@@ -46,7 +49,7 @@ function pathUp(str) {
     let dotsCount = 0;
     for (let i = str.length; i--; ) {
       if (str[i] === ".") {
-        dotsCount++;
+        dotsCount += 1;
       }
       if (dotsCount === 2) {
         return str.slice(0, i);

@@ -10,7 +10,7 @@ function pathUp(str) {
     for (let i = str.length; i--; ) {
       // console.log(`010 str[${i}] = ${str[i]}`);
       if (str[i] === ".") {
-        dotsCount++;
+        dotsCount += 1;
       }
       if (dotsCount === 2) {
         return str.slice(0, i);

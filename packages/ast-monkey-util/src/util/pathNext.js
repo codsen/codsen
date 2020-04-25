@@ -11,7 +11,8 @@ function pathNext(str) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${
       +str.slice(str.lastIndexOf(".") + 1) + 1
     }`;
-  } else if (/^\d*$/.test(str)) {
+  }
+  if (/^\d*$/.test(str)) {
     return `${+str + 1}`;
   }
   return str;

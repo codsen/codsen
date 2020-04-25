@@ -25,7 +25,9 @@
 
     if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
       return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) + 1);
-    } else if (/^\d*$/.test(str)) {
+    }
+
+    if (/^\d*$/.test(str)) {
       return "".concat(+str + 1);
     }
 
@@ -46,9 +48,13 @@
 
     if (extractedValue === "0") {
       return null;
-    } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+    }
+
+    if (str.includes(".") && /^\d*$/.test(extractedValue)) {
       return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) - 1);
-    } else if (/^\d*$/.test(str)) {
+    }
+
+    if (/^\d*$/.test(str)) {
       return "".concat(+str - 1);
     }
 
@@ -69,7 +75,7 @@
       for (var i = str.length; i--;) {
         // console.log(`010 str[${i}] = ${str[i]}`);
         if (str[i] === ".") {
-          dotsCount++;
+          dotsCount += 1;
         }
 
         if (dotsCount === 2) {
