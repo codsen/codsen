@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -4245,7 +4294,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -4276,7 +4327,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -4331,7 +4382,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -4356,7 +4409,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -4436,7 +4490,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -4448,18 +4502,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -4494,7 +4554,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -4588,7 +4648,7 @@
         Array.from(str).forEach(char => {
           if (char !== "\n" || limit) {
             if (char === "\n") {
-              limit--;
+              limit -= 1;
             }
 
             push(resArr, true, char);
@@ -4609,14 +4669,12 @@
         for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(startCharacter, true, str[i]);
           }
         }
       }
@@ -4628,14 +4686,12 @@
         for (let i = str.length; i--;) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(endCharacter, false, str[i]);
           }
         }
       }
@@ -4682,7 +4738,9 @@
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = Object.assign({}, defaults, originalOpts);
+      const opts = { ...defaults,
+        ...originalOpts
+      };
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -4704,7 +4762,9 @@
 
       if (!existy$2(originalFrom) && !existy$2(originalTo)) {
         return;
-      } else if (existy$2(originalFrom) && !existy$2(originalTo)) {
+      }
+
+      if (existy$2(originalFrom) && !existy$2(originalTo)) {
         if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(el => Array.isArray(el))) {
@@ -4714,7 +4774,9 @@
                 }
               });
               return;
-            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+            }
+
+            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
               this.add(...originalFrom);
             }
           }
@@ -7320,19 +7382,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -7346,11 +7409,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -7376,11 +7439,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -7393,7 +7456,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   /**
@@ -8986,9 +9049,12 @@
     let opts;
 
     if (existy(originalOptions) && isObj(originalOptions)) {
-      opts = Object.assign({}, defaults, originalOptions);
+      opts = { ...defaults,
+        ...originalOptions
+      };
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
@@ -9343,7 +9409,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     var defaults = {
       unfancyTheAltContents: true
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     externalApi(opts, defaults, {
       msg: "html-img-alt/alts(): [THROW_ID_03]"
     }); // traverse the string

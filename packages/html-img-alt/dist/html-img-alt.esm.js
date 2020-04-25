@@ -53,7 +53,7 @@ function alts(str, originalOpts) {
   const defaults = {
     unfancyTheAltContents: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   checkTypes(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
   for (let i = 0, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
