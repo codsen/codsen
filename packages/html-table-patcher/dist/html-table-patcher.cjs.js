@@ -17,6 +17,55 @@ var parser = _interopDefault(require('html-dom-parser'));
 var domUtils = _interopDefault(require('domutils-bastardised'));
 var renderer = _interopDefault(require('dom-serializer'));
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 var version = "1.1.49";
 
 var replaceElement = domUtils.replaceElement,
@@ -46,13 +95,13 @@ function patcher(html, generalOpts) {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
-  var opts = Object.assign({}, defaults, generalOpts);
+  var opts = _objectSpread2({}, defaults, {}, generalOpts);
   if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())) {
     opts.cssStylesContent = undefined;
   }
   var dom = parser(html);
   traverse(dom, function (node) {
-    if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim()) {
+    if (node.type === "text" && node.parent && node.parent.type === "tag" && node.parent.name === "table" && isStr(node.data) && node.data.trim()) {
       (function () {
         var colspan = 1;
         var centered = !!opts.alwaysCenter;
@@ -60,9 +109,9 @@ function patcher(html, generalOpts) {
         if (isArr(siblings) && siblings.length) {
           for (var i = 0, len = siblings.length; i < len; i++) {
             if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-              var tdcount = getChildren(siblings[i]).reduce(function (acc, node) {
-                if (node.name === "td" && node.type === "tag") {
-                  if (!centered && node.attribs && (node.attribs.align && node.attribs.align === "center" || isStr(node.attribs.style) && node.attribs.style.match(/text-align:\s*center/gi) && node.attribs.style.match(/text-align:\s*center/gi).length)) {
+              var tdcount = getChildren(siblings[i]).reduce(function (acc, currNode) {
+                if (currNode.name === "td" && currNode.type === "tag") {
+                  if (!centered && currNode.attribs && (currNode.attribs.align && currNode.attribs.align === "center" || isStr(currNode.attribs.style) && currNode.attribs.style.match(/text-align:\s*center/gi) && currNode.attribs.style.match(/text-align:\s*center/gi).length)) {
                     centered = true;
                   }
                   return acc + 1;
@@ -87,19 +136,19 @@ function patcher(html, generalOpts) {
           children: [node]
         };
         if (colspan && colspan > 1) {
-          if (!replacementTd["attribs"]) {
-            replacementTd["attribs"] = {};
+          if (!replacementTd.attribs) {
+            replacementTd.attribs = {};
           }
-          replacementTd["attribs"].colspan = String(colspan);
+          replacementTd.attribs.colspan = String(colspan);
         }
         if (centered) {
-          if (!replacementTd["attribs"]) {
-            replacementTd["attribs"] = {};
+          if (!replacementTd.attribs) {
+            replacementTd.attribs = {};
           }
-          replacementTd["attribs"].align = "center";
+          replacementTd.attribs.align = "center";
         }
         if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-          replacementTd["attribs"].style = opts.cssStylesContent;
+          replacementTd.attribs.style = opts.cssStylesContent;
         }
         var linebreak = {
           type: "text",
@@ -109,8 +158,8 @@ function patcher(html, generalOpts) {
         appendChild(replacementTr, linebreak);
         replaceElement(node, replacementTr);
       })();
-    } else if (node.type === "tag" && node.name === "table" && node.children && node.children.some(function (node) {
-      return node.type === "tag" && node.name === "tr" && node.children && node.children.some(function (childNode) {
+    } else if (node.type === "tag" && node.name === "table" && node.children && node.children.some(function (currNode) {
+      return currNode.type === "tag" && currNode.name === "tr" && currNode.children && currNode.children.some(function (childNode) {
         return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim();
       });
     })) {
@@ -131,7 +180,7 @@ function patcher(html, generalOpts) {
               if (!lastWasTd) {
                 lastWasTd = true;
               } else {
-                consecutiveTDs++;
+                consecutiveTDs += 1;
               }
             } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim())) {
               lastWasTd = false;
@@ -175,13 +224,13 @@ function patcher(html, generalOpts) {
                   replacementTd.attribs.colspan = String(consecutiveTDs + 1);
                 }
                 if (centered) {
-                  if (!replacementTd["attribs"]) {
-                    replacementTd["attribs"] = {};
+                  if (!replacementTd.attribs) {
+                    replacementTd.attribs = {};
                   }
-                  replacementTd["attribs"].align = "center";
+                  replacementTd.attribs.align = "center";
                 }
                 if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-                  replacementTd["attribs"].style = opts.cssStylesContent;
+                  replacementTd.attribs.style = opts.cssStylesContent;
                 }
                 appendChild(replacementTr, replacementTd);
                 newChildren.push(replacementTr);

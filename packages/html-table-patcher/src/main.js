@@ -2,6 +2,7 @@ import parser from "html-dom-parser";
 import domUtils from "domutils-bastardised";
 import renderer from "dom-serializer";
 import { version } from "../package.json";
+
 const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;
 
 function isStr(something) {
@@ -28,7 +29,7 @@ function patcher(html, generalOpts) {
     return html;
   }
 
-  const opts = Object.assign({}, defaults, generalOpts);
+  const opts = { ...defaults, ...generalOpts };
   if (
     opts.cssStylesContent &&
     (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())
@@ -40,9 +41,9 @@ function patcher(html, generalOpts) {
   traverse(dom, (node) => {
     if (
       node.type === "text" &&
-      node["parent"] &&
-      node["parent"].type === "tag" &&
-      node["parent"].name === "table" &&
+      node.parent &&
+      node.parent.type === "tag" &&
+      node.parent.name === "table" &&
       isStr(node.data) &&
       node.data.trim()
     ) {
@@ -58,15 +59,16 @@ function patcher(html, generalOpts) {
       if (isArr(siblings) && siblings.length) {
         for (let i = 0, len = siblings.length; i < len; i++) {
           if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-            const tdcount = getChildren(siblings[i]).reduce((acc, node) => {
-              if (node.name === "td" && node.type === "tag") {
+            const tdcount = getChildren(siblings[i]).reduce((acc, currNode) => {
+              if (currNode.name === "td" && currNode.type === "tag") {
                 if (
                   !centered &&
-                  node.attribs &&
-                  ((node.attribs.align && node.attribs.align === "center") ||
-                    (isStr(node.attribs.style) &&
-                      node.attribs.style.match(/text-align:\s*center/gi) &&
-                      node.attribs.style.match(/text-align:\s*center/gi)
+                  currNode.attribs &&
+                  ((currNode.attribs.align &&
+                    currNode.attribs.align === "center") ||
+                    (isStr(currNode.attribs.style) &&
+                      currNode.attribs.style.match(/text-align:\s*center/gi) &&
+                      currNode.attribs.style.match(/text-align:\s*center/gi)
                         .length))
                 ) {
                   centered = true;
@@ -96,19 +98,19 @@ function patcher(html, generalOpts) {
         children: [node],
       };
       if (colspan && colspan > 1) {
-        if (!replacementTd["attribs"]) {
-          replacementTd["attribs"] = {};
+        if (!replacementTd.attribs) {
+          replacementTd.attribs = {};
         }
-        replacementTd["attribs"].colspan = String(colspan);
+        replacementTd.attribs.colspan = String(colspan);
       }
       if (centered) {
-        if (!replacementTd["attribs"]) {
-          replacementTd["attribs"] = {};
+        if (!replacementTd.attribs) {
+          replacementTd.attribs = {};
         }
-        replacementTd["attribs"].align = "center";
+        replacementTd.attribs.align = "center";
       }
       if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-        replacementTd["attribs"].style = opts.cssStylesContent;
+        replacementTd.attribs.style = opts.cssStylesContent;
       }
       const linebreak = {
         type: "text",
@@ -122,11 +124,11 @@ function patcher(html, generalOpts) {
       node.name === "table" &&
       node.children &&
       node.children.some(
-        (node) =>
-          node.type === "tag" &&
-          node.name === "tr" &&
-          node.children &&
-          node.children.some(
+        (currNode) =>
+          currNode.type === "tag" &&
+          currNode.name === "tr" &&
+          currNode.children &&
+          currNode.children.some(
             (childNode) =>
               childNode.type === "text" &&
               isStr(childNode.data) &&
@@ -212,7 +214,7 @@ function patcher(html, generalOpts) {
               if (!lastWasTd) {
                 lastWasTd = true;
               } else {
-                consecutiveTDs++;
+                consecutiveTDs += 1;
               }
             } else if (
               lastWasTd &&
@@ -283,16 +285,16 @@ function patcher(html, generalOpts) {
                   replacementTd.attribs.colspan = String(consecutiveTDs + 1);
                 }
                 if (centered) {
-                  if (!replacementTd["attribs"]) {
-                    replacementTd["attribs"] = {};
+                  if (!replacementTd.attribs) {
+                    replacementTd.attribs = {};
                   }
-                  replacementTd["attribs"].align = "center";
+                  replacementTd.attribs.align = "center";
                 }
                 if (
                   isStr(opts.cssStylesContent) &&
                   opts.cssStylesContent.trim()
                 ) {
-                  replacementTd["attribs"].style = opts.cssStylesContent;
+                  replacementTd.attribs.style = opts.cssStylesContent;
                 }
                 appendChild(replacementTr, replacementTd);
                 newChildren.push(replacementTr);
@@ -330,6 +332,7 @@ function patcher(html, generalOpts) {
         }
       });
 
+      // eslint-disable-next-line no-param-reassign
       node.children = newChildren;
     }
   });
