@@ -35,7 +35,8 @@ function isNull(something) {
 function isBlank(something) {
   if (isObj(something)) {
     return Object.keys(something).length === 0;
-  } else if (isArr(something) || isStr(something)) {
+  }
+  if (isArr(something) || isStr(something)) {
     return something.length === 0;
   }
   return false;
@@ -92,7 +93,7 @@ function compare(b, s, originalOpts) {
     verboseWhenMismatches: false,
     useWildcards: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (
     opts.hungryForWhitespace &&
     opts.matchStrictly &&
@@ -127,7 +128,8 @@ function compare(b, s, originalOpts) {
     return opts.useWildcards
       ? matcher.isMatch(b, s, { caseSensitive: true })
       : b === s;
-  } else if (isArr(b) && isArr(s)) {
+  }
+  if (isArr(b) && isArr(s)) {
     if (
       opts.hungryForWhitespace &&
       empty(s) &&
@@ -217,7 +219,7 @@ function compare(b, s, originalOpts) {
           }
           return `The given object has key "${sKey}" which the other-one does not have.`;
         }
-        else if (
+        if (
           Object.keys(b).some((bKey) =>
             matcher.isMatch(bKey, sKey, { caseSensitive: true })
           )
@@ -228,10 +230,8 @@ function compare(b, s, originalOpts) {
           return false;
         }
         return `The given object has key "${sKey}" which the other-one does not have.`;
-      } else if (
-        existy(b[sKey]) &&
-        typeDetect(b[sKey]) !== typeDetect(s[sKey])
-      ) {
+      }
+      if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
         if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
           if (!opts.verboseWhenMismatches) {
             return false;

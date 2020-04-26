@@ -31,6 +31,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -141,7 +190,8 @@ function isNull(something) {
 function isBlank(something) {
   if (isObj(something)) {
     return Object.keys(something).length === 0;
-  } else if (isArr(something) || isStr(something)) {
+  }
+  if (isArr(something) || isStr(something)) {
     return something.length === 0;
   }
   return false;
@@ -175,7 +225,7 @@ function compare(b, s, originalOpts) {
     verboseWhenMismatches: false,
     useWildcards: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty(b) && isObj(s) && !Object.keys(s).length) {
     return true;
   }
@@ -192,7 +242,8 @@ function compare(b, s, originalOpts) {
     return opts.useWildcards ? matcher.isMatch(b, s, {
       caseSensitive: true
     }) : b === s;
-  } else if (isArr(b) && isArr(s)) {
+  }
+  if (isArr(b) && isArr(s)) {
     if (opts.hungryForWhitespace && empty(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
       return true;
     }
@@ -260,15 +311,15 @@ function compare(b, s, originalOpts) {
               v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
             };
           }
-          else if (Object.keys(b).some(function (bKey) {
-              return matcher.isMatch(bKey, sKey, {
-                caseSensitive: true
-              });
-            })) {
-              return {
-                v: true
-              };
-            }
+          if (Object.keys(b).some(function (bKey) {
+            return matcher.isMatch(bKey, sKey, {
+              caseSensitive: true
+            });
+          })) {
+            return {
+              v: true
+            };
+          }
           if (!opts.verboseWhenMismatches) {
             return {
               v: false
@@ -277,7 +328,8 @@ function compare(b, s, originalOpts) {
           return {
             v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
           };
-        } else if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+        }
+        if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
           if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
             if (!opts.verboseWhenMismatches) {
               return {
