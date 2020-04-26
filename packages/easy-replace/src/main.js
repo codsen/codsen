@@ -80,7 +80,8 @@ function stringise(incoming) {
   }
   if (!existy(incoming) || typeof incoming === "boolean") {
     return [""];
-  } else if (Array.isArray(incoming)) {
+  }
+  if (Array.isArray(incoming)) {
     return incoming
       .filter((el) => existy(el) && typeof el !== "boolean")
       .map((el) => String(el))
@@ -161,7 +162,7 @@ function er(originalSource, options, originalReplacement) {
       rightOutsideNot: false,
     },
   };
-  const opts = Object.assign({}, defaults, options);
+  const opts = { ...defaults, ...options };
 
   // enforce the peace and order:
   const source = stringise(originalSource);
