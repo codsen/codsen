@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.1.5](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.1.4...ranges-apply@3.1.5) (2020-04-26)
-
+## 3.1.5 (2020-04-26)
 
 ### Bug Fixes
 
-* harden the eslint rules set and make all tests pass ([3b593b4](https://gitlab.com/codsen/codsen/commit/3b593b495f645005780a26ab8d719aa7d1846dd0))
-
-
-
-
+- harden the eslint rules set and make all tests pass ([3b593b4](https://gitlab.com/codsen/codsen/commit/3b593b495f645005780a26ab8d719aa7d1846dd0))
 
 ## 3.1.0 (2020-01-26)
 

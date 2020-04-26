@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.2](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.6.1...codsen-parser@0.6.2) (2020-04-26)
-
+## 0.6.2 (2020-04-26)
 
 ### Bug Fixes
 
-* harden the eslint rules set, make all tests pass and rebase a little ([40cf4b9](https://gitlab.com/codsen/codsen/commit/40cf4b9dcb2dd1beca40d4ad4f72a9c9b07c5ad4))
-
-
-
-
+- harden the eslint rules set, make all tests pass and rebase a little ([40cf4b9](https://gitlab.com/codsen/codsen/commit/40cf4b9dcb2dd1beca40d4ad4f72a9c9b07c5ad4))
 
 ## 0.6.0 (2020-04-19)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.9.0](https://gitlab.com/codsen/codsen/compare/detergent@5.8.15...detergent@5.9.0) (2020-04-26)
-
+## 5.9.0 (2020-04-26)
 
 ### Features
 
-* harden the eslint rules set and rebase a little ([5f5e0a8](https://gitlab.com/codsen/codsen/commit/5f5e0a877cadc370baa8d415fac3174476bb1248))
-
-
-
-
+- harden the eslint rules set and rebase a little ([5f5e0a8](https://gitlab.com/codsen/codsen/commit/5f5e0a877cadc370baa8d415fac3174476bb1248))
 
 ## 5.8.1 (2019-11-27)
 

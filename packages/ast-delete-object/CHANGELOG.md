@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.63](https://gitlab.com/codsen/codsen/compare/ast-delete-object@1.8.62...ast-delete-object@1.8.63) (2020-04-26)
-
+## 1.8.63 (2020-04-26)
 
 ### Bug Fixes
 
-* harden the eslint rules set, make all tests pass and rebase a little ([c84365e](https://gitlab.com/codsen/codsen/commit/c84365e8aa37ce253d5b6a0a700128db6ee2a3fb))
-
-
-
-
+- harden the eslint rules set, make all tests pass and rebase a little ([c84365e](https://gitlab.com/codsen/codsen/commit/c84365e8aa37ce253d5b6a0a700128db6ee2a3fb))
 
 ## 1.8.0 (2019-01-20)
 

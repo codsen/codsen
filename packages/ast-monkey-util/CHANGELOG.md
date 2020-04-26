@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.4](https://gitlab.com/codsen/codsen/compare/ast-monkey-util@1.1.3...ast-monkey-util@1.1.4) (2020-04-26)
-
-**Note:** Version bump only for package ast-monkey-util
-
-
-
-
-
 ## 1.1.2 (2020-04-04)
 
 ### Bug Fixes

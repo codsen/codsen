@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.58](https://gitlab.com/codsen/codsen/compare/util-array-object-or-both@2.7.57...util-array-object-or-both@2.7.58) (2020-04-26)
-
+## 2.7.58 (2020-04-26)
 
 ### Bug Fixes
 
-* harden the eslint rules set and make all unit tests pass ([8821ee5](https://gitlab.com/codsen/codsen/commit/8821ee5ecbe697217133c7dce03f5dc119770591))
-
-
-
-
+- harden the eslint rules set and make all unit tests pass ([8821ee5](https://gitlab.com/codsen/codsen/commit/8821ee5ecbe697217133c7dce03f5dc119770591))
 
 ## 2.7.44 (2019-10-02)
 

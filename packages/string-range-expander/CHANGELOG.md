@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.11.2](https://gitlab.com/codsen/codsen/compare/string-range-expander@1.11.1...string-range-expander@1.11.2) (2020-04-26)
-
-**Note:** Version bump only for package string-range-expander
-
-
-
-
-
 ## 1.11.0 (2020-04-18)
 
 ### Features
