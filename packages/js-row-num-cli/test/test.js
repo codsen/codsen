@@ -1,8 +1,8 @@
-const fs = require("fs-extra");
-const t = require("tap");
-const path = require("path");
-const execa = require("execa");
-const tempy = require("tempy");
+import fs from "fs-extra";
+import tap from "tap";
+import path from "path";
+import execa from "execa";
+import tempy from "tempy";
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
@@ -22,7 +22,7 @@ const letterC = "\x63";
 //                                  *
 //                                  *
 
-t.test("01.01 - there are no usable files at all", async (t) => {
+tap.test("01.01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), "zzz")
@@ -52,7 +52,7 @@ t.test("01.01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-t.test("01.02 - cli.js in the root", async (t) => {
+tap.test("01.02 - cli.js in the root", async (t) => {
   const originalFile = `${letterC}onsole.log('052 zzz');\n${letterC}onsole.log('052 zzz');`;
   const intendedFile = `${letterC}onsole.log('001 zzz');\n${letterC}onsole.log('002 zzz');`;
 
@@ -93,7 +93,7 @@ t.test("01.02 - cli.js in the root", async (t) => {
 //                                  *
 //                                  *
 
-t.test("01.03/1 - pad override, -p", async (t) => {
+tap.test("01.03/1 - pad override, -p", async (t) => {
   const originalFile = `${letterC}onsole.log('094 zzz');\n${letterC}onsole.log('094 zzz');`;
   const intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
@@ -123,7 +123,7 @@ t.test("01.03/1 - pad override, -p", async (t) => {
   t.end();
 });
 
-t.test("01.03/2 - pad override, --pad", async (t) => {
+tap.test("01.03/2 - pad override, --pad", async (t) => {
   const originalFile = `${letterC}onsole.log('125 zzz');\n${letterC}onsole.log('125 zzz');`;
   const intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
@@ -167,7 +167,7 @@ t.test("01.03/2 - pad override, --pad", async (t) => {
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   "01.04 - one file called with glob, another not processed",
   async (t) => {
     const originalFile = `${letterC}onsole.log('170 zzz');\n${letterC}onsole.log('170 zzz');`;
@@ -225,7 +225,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   "01.05 - two files processed by calling glob with wildcard",
   async (t) => {
     const originalFile = `${letterC}onsole.log('225 zzz');\n${letterC}onsole.log('225 zzz');`;
@@ -283,7 +283,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test('01.06/1 - "t" flag, -t', async (t) => {
+tap.test('01.06/1 - "t" flag, -t', async (t) => {
   const originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   const intendedFile = "log('001 zzz');\nlog('002 zzz');";
@@ -314,7 +314,7 @@ t.test('01.06/1 - "t" flag, -t', async (t) => {
   t.end();
 });
 
-t.test('01.06/2 - "t" flag, --trigger', async (t) => {
+tap.test('01.06/2 - "t" flag, --trigger', async (t) => {
   const originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   const intendedFile = "log('001 zzz');\nlog('002 zzz');";

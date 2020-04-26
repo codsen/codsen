@@ -3,8 +3,8 @@ no-loop-func:0, prefer-destructuring:0 */
 
 const fs = require("fs-extra");
 const objectPath = require("object-path");
-const pify = require("pify");
-const request = pify(require("request"));
+const { promisify } = require("util");
+const request = promisify(require("request"));
 const trim = require("lodash.trim");
 const isObj = require("lodash.isplainobject");
 const filesize = require("filesize");

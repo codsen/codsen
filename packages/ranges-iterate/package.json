@@ -134,7 +134,7 @@
     "lect": "^0.12.7",
     "ranges-apply": "^3.1.4",
     "ranges-merge": "^4.3.3",
-    "rollup": "^2.7.1",
+    "rollup": "^2.7.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",

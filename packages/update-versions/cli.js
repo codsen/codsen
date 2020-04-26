@@ -19,6 +19,7 @@ const isObj = require("lodash.isplainobject");
 const pacote = require("pacote");
 const objectPath = require("object-path");
 const diff = require("ansi-diff-stream")();
+
 const isArr = Array.isArray;
 const { set, del } = require("edit-package-json");
 const isOnline = require("is-online");

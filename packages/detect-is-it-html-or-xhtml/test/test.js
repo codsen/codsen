@@ -1,11 +1,11 @@
-const t = require("tap");
-const detect = require("../dist/detect-is-it-html-or-xhtml.cjs");
+import tap from "tap";
+import detect from "../dist/detect-is-it-html-or-xhtml.esm";
 
 // ==============================
 // Doctype
 // ==============================
 
-t.test("01.01 - recognised HTML5 doctype", (t) => {
+tap.test("01.01 - recognised HTML5 doctype", (t) => {
   t.equal(
     detect("<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE HTML> aaaa zzzzzz"),
     "html",
@@ -14,7 +14,7 @@ t.test("01.01 - recognised HTML5 doctype", (t) => {
   t.end();
 });
 
-t.test("01.02 - recognised all HTML4 doctypes", (t) => {
+tap.test("01.02 - recognised all HTML4 doctypes", (t) => {
   t.equal(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
@@ -39,7 +39,7 @@ t.test("01.02 - recognised all HTML4 doctypes", (t) => {
   t.end();
 });
 
-t.test("01.03 - recognised XHTML doctypes", (t) => {
+tap.test("01.03 - recognised XHTML doctypes", (t) => {
   t.equal(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
@@ -141,7 +141,7 @@ t.test("01.03 - recognised XHTML doctypes", (t) => {
   t.end();
 });
 
-t.test("01.04 - recognises old HTML doctypes", (t) => {
+tap.test("01.04 - recognises old HTML doctypes", (t) => {
   t.equal(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
@@ -170,7 +170,7 @@ t.test("01.04 - recognises old HTML doctypes", (t) => {
 // No doctype
 // ==============================
 
-t.test("02.01 - detects by image tags only, one closed image", (t) => {
+tap.test("02.01 - detects by image tags only, one closed image", (t) => {
   t.equal(
     detect(
       'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss'
@@ -181,18 +181,21 @@ t.test("02.01 - detects by image tags only, one closed image", (t) => {
   t.end();
 });
 
-t.test("02.02 - detects by images, one closed image and two unclosed", (t) => {
-  t.equal(
-    detect(
-      'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss<img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">aksdhsfhk skjfhjkdhg dkfjghjf <img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">'
-    ),
-    "html",
-    "02.02"
-  );
-  t.end();
-});
+tap.test(
+  "02.02 - detects by images, one closed image and two unclosed",
+  (t) => {
+    t.equal(
+      detect(
+        'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss<img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">aksdhsfhk skjfhjkdhg dkfjghjf <img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">'
+      ),
+      "html",
+      "02.02"
+    );
+    t.end();
+  }
+);
 
-t.test("02.03 - one closed, one unclosed image - leans to HTML side", (t) => {
+tap.test("02.03 - one closed, one unclosed image - leans to HTML side", (t) => {
   t.equal(
     detect(
       'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss<img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">'
@@ -203,7 +206,7 @@ t.test("02.03 - one closed, one unclosed image - leans to HTML side", (t) => {
   t.end();
 });
 
-t.test("02.04 - detects by br tags only, one unclosed br", (t) => {
+tap.test("02.04 - detects by br tags only, one unclosed br", (t) => {
   t.equal(
     detect("alsdlasdslfh dfg dfjlgdf jldj <br > alhdf lsdhfldlh gllf dlgd"),
     "html",
@@ -234,7 +237,7 @@ t.test("02.04 - detects by br tags only, one unclosed br", (t) => {
   t.end();
 });
 
-t.test("02.05 - detects by br tags only, one closed br", (t) => {
+tap.test("02.05 - detects by br tags only, one closed br", (t) => {
   t.equal(
     detect("alsdlasdslfh dfg dfjlgdf jldj <br /> alhdf lsdhfldlh gllf dlgd"),
     "xhtml",
@@ -265,7 +268,7 @@ t.test("02.05 - detects by br tags only, one closed br", (t) => {
   t.end();
 });
 
-t.test("02.06 - detects by hr tags only, one unclosed hr", (t) => {
+tap.test("02.06 - detects by hr tags only, one unclosed hr", (t) => {
   t.equal(
     detect("alsdlasdslfh dfg dfjlgdf jldj <hr > alhdf lsdhfldlh gllf dlgd"),
     "html",
@@ -296,7 +299,7 @@ t.test("02.06 - detects by hr tags only, one unclosed hr", (t) => {
   t.end();
 });
 
-t.test("02.07 - detects by hr tags only, one closed hr", (t) => {
+tap.test("02.07 - detects by hr tags only, one closed hr", (t) => {
   t.equal(
     detect("alsdlasdslfh dfg dfjlgdf jldj <hr /> alhdf lsdhfldlh gllf dlgd"),
     "xhtml",
@@ -327,27 +330,25 @@ t.test("02.07 - detects by hr tags only, one closed hr", (t) => {
   t.end();
 });
 
-t.test("02.08 - real-life code", (t) => {
+tap.test("02.08 - real-life code", (t) => {
   t.equal(
     detect(
-      '\
-            <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\
-            <html xmlns="http://www.w3.org/1999/xhtml">\
-            <head>\
-              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\
-              <title>Tile</title>\
-            </head>\
-            <body>\
-            <table width="100%" border="0" cellpadding="0" cellspacing="0">\
-              <tr>\
-                <td>\
-                  <img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>\
-                </td>\
-              </tr>\
-            </table>\
-            </body>\
-            </html>\
-      '
+      `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Tile</title>
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>
+    </td>
+  </tr>
+</table>
+</body>
+</html>`
     ),
     "xhtml",
     "02.08"
@@ -359,7 +360,7 @@ t.test("02.08 - real-life code", (t) => {
 // Undecided and can't-identify cases
 // ==============================
 
-t.test("03.01 - no tags at all, text string only", (t) => {
+tap.test("03.01 - no tags at all, text string only", (t) => {
   t.equal(
     detect(
       "fhgkd  gjflkgjhlfjl gh;kj;lghj;jklkdjgj hsdkffj jagfg hdkghjkdfhg khkfg sjdgfg gfjdsgfjdhgj kf gfjhk fgkj"
@@ -370,22 +371,22 @@ t.test("03.01 - no tags at all, text string only", (t) => {
   t.end();
 });
 
-t.test("03.02 - unrecognised meta tag - counts as HTML", (t) => {
+tap.test("03.02 - unrecognised meta tag - counts as HTML", (t) => {
   t.equal(detect("<!DOCTYPE rubbish>"), "html", "03.02");
   t.end();
 });
 
-t.test("03.03 - no meta tag, no single tags", (t) => {
+tap.test("03.03 - no meta tag, no single tags", (t) => {
   t.equal(detect("<table><tr><td>text</td></tr></table>"), null, "03.03");
   t.end();
 });
 
-t.test("03.04 - missing input", (t) => {
+tap.test("03.04 - missing input", (t) => {
   t.equal(detect(), null, "03.04");
   t.end();
 });
 
-t.test("03.05 - input is not string - throws", (t) => {
+tap.test("03.05 - input is not string - throws", (t) => {
   t.throws(() => {
     detect({
       a: "a",

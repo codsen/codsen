@@ -61,7 +61,8 @@ var isArr = Array.isArray;
 function isFooterLink(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError("chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string");
   }
   return str.length > 0 && existy(str.match(versionWithBracketsRegex)) && aContainsB(str, "]:");
@@ -69,7 +70,8 @@ function isFooterLink(str) {
 function isTitle(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ".concat(JSON.stringify(str, null, 4), " (").concat(_typeof(str), ")"));
   }
   var stringInFrontOfVersion;
@@ -218,7 +220,8 @@ function getSetFooterLink(str) {
   }
   if (o.type === "github") {
     return "[".concat(res.version, "]: https://github.com/").concat(res.user, "/").concat(res.project, "/compare/v").concat(res.versBefore, "...v").concat(res.versAfter);
-  } else if (o.type === "bitbucket") {
+  }
+  if (o.type === "bitbucket") {
     return "[".concat(res.version, "]: https://bitbucket.org/").concat(res.user, "/").concat(res.project, "/branches/compare/v").concat(res.versAfter, "%0Dv").concat(res.versBefore, "#diff");
   }
 }
@@ -253,7 +256,7 @@ function existy$1(x) {
   return x != null;
 }
 function chlu(changelogContents, gitTags, packageJsonContents) {
-  if (arguments.length === 0 || !existy$1(changelogContents)) {
+  if (!arguments.length || !existy$1(changelogContents)) {
     return;
   }
   var processedGitTags;
@@ -374,9 +377,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   if (footerLinks.length > 1) {
     for (var _i2 = 0, _len2 = footerLinks.length; _i2 < _len2 - 1; _i2++) {
       if (semverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
-        descendingFooterLinkCount++;
+        descendingFooterLinkCount += 1;
       } else {
-        ascendingFooterLinkCount++;
+        ascendingFooterLinkCount += 1;
       }
     }
   }
@@ -460,7 +463,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
     if (newLinesArr[_i5] === "" || typeof newLinesArr[_i5] === "string" && newLinesArr[_i5].trim() === "") {
       newLinesArr.splice(_i5, 1);
-      _i5--;
+      _i5 -= 1;
     }
   }
   if (newLinesArr[newLinesArr.length - 1] !== "") {

@@ -1,5 +1,6 @@
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+
 const isArr = Array.isArray;
 
 /**

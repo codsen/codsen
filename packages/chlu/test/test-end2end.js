@@ -1,7 +1,7 @@
-const { readFileSync } = require("fs");
-const path = require("path");
-const t = require("tap");
-const c = require("../dist/chlu.cjs");
+import { readFileSync } from "fs";
+import path from "path";
+import tap from "tap";
+import c from "../dist/chlu.esm";
 
 const fixtures = path.join(__dirname, "fixtures");
 
@@ -47,77 +47,83 @@ function throws(t, name, gitTags = null) {
 
 // -----------------------------------------------------------------------------
 
-t.test("00. if no input, will silently return indefined", (t) => {
+tap.test("00. if no input, will silently return indefined", (t) => {
   t.same(c(), undefined, "00.01");
   t.end();
 });
 
-t.test("01. ascending order, with wrong package names", (t) => {
+tap.test("01. ascending order, with wrong package names", (t) => {
   compare(t, "01_asc_order_wrong_package");
   t.end();
 });
 
-t.test("02. ascending order, with correct package names", (t) => {
+tap.test("02. ascending order, with correct package names", (t) => {
   compare(t, "02_asc_order_correct_package");
   t.end();
 });
 
-t.test("03. correct package names, no footer links at all", (t) => {
+tap.test("03. correct package names, no footer links at all", (t) => {
   compare(t, "03_no_footer_links");
   t.end();
 });
 
-t.test("04. descending order, with wrong package names", (t) => {
+tap.test("04. descending order, with wrong package names", (t) => {
   compare(t, "04_desc_order_wrong_package");
   t.end();
 });
 
-t.test("05. descending order, with correct package names", (t) => {
+tap.test("05. descending order, with correct package names", (t) => {
   compare(t, "05_desc_order_correct_package");
   t.end();
 });
 
-t.test("06. there are no linked titles", (t) => {
+tap.test("06. there are no linked titles", (t) => {
   compare(t, "06_not_linked_titles");
   t.end();
 });
 
-t.test("07. non-GitHub package.json - throws", (t) => {
+tap.test("07. non-GitHub package.json - throws", (t) => {
   throws(t, "07_gitlab_package_json");
   t.end();
 });
 
-t.test("08. mid links missing in changelog.md", (t) => {
+tap.test("08. mid links missing in changelog.md", (t) => {
   compare(t, "08_mid_links_missing");
   t.end();
 });
 
-t.test("09. sneaky cases with tight spacing", (t) => {
+tap.test("09. sneaky cases with tight spacing", (t) => {
   compare(t, "09_tight_spacing");
   t.end();
 });
 
-t.test("10. redundant footer links present, no git logs in context", (t) => {
+tap.test("10. redundant footer links present, no git logs in context", (t) => {
   compare(t, "10_redundant_links");
   t.end();
 });
 
-t.test("11. title dates are in wrong formats, no git logs in context", (t) => {
-  compare(t, "11_wrong_dates");
-  t.end();
-});
+tap.test(
+  "11. title dates are in wrong formats, no git logs in context",
+  (t) => {
+    compare(t, "11_wrong_dates");
+    t.end();
+  }
+);
 
-t.test("12. footer links match titles but have wrong versions in URLs", (t) => {
-  compare(t, "12_wrong_footer_link_versions");
-  t.end();
-});
+tap.test(
+  "12. footer links match titles but have wrong versions in URLs",
+  (t) => {
+    compare(t, "12_wrong_footer_link_versions");
+    t.end();
+  }
+);
 
-t.test("13. Real world case - https://github.com/guigrpa/giu/", (t) => {
+tap.test("13. Real world case - https://github.com/guigrpa/giu/", (t) => {
   compare(t, "13_real_world");
   t.end();
 });
 
-t.test(
+tap.test(
   "14. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/",
   (t) => {
     compare(t, "14_slashes");
@@ -125,12 +131,12 @@ t.test(
   }
 );
 
-t.test("15. Unrecogniseable date - version gets still linked!", (t) => {
+tap.test("15. Unrecogniseable date - version gets still linked!", (t) => {
   compare(t, "15_bad_date");
   t.end();
 });
 
-t.test("16. Git Tags supplemented", (t) => {
+tap.test("16. Git Tags supplemented", (t) => {
   const tags = {
     latest: "2017-04-18|v1.3.5",
     all: [
@@ -159,7 +165,7 @@ t.test("16. Git Tags supplemented", (t) => {
   t.end();
 });
 
-t.test("17. Unit test from chlu-cli", (t) => {
+tap.test("17. Unit test from chlu-cli", (t) => {
   const tags = {
     latest: "2018-06-14|v1.3.1",
     all: [
@@ -176,7 +182,7 @@ t.test("17. Unit test from chlu-cli", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `18. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`,
   (t) => {
     const original = `# Seed Change Log
@@ -287,7 +293,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   }
 );
 
-t.test(
+tap.test(
   `19. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`,
   (t) => {
     const original = `# Seed Change Log

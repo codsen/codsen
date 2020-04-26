@@ -1,10 +1,10 @@
-const fs = require("fs-extra");
-const path = require("path");
-const t = require("tap");
-const execa = require("execa");
-const tempy = require("tempy");
-const pMap = require("p-map");
-const pack = require("../package.json");
+import fs from "fs-extra";
+import path from "path";
+import tap from "tap";
+import execa from "execa";
+import tempy from "tempy";
+import pMap from "p-map";
+import pack from "../package.json";
 
 // Test file contents
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 // Quick, general unit tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mode`,
   async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-v"]);
@@ -72,7 +72,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`,
   async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-h"]);
@@ -85,7 +85,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`,
   async (t) => {
     // fetch us a random temp folder
@@ -105,7 +105,7 @@ t.test(
 // Main unit tests
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file`,
   async (t) => {
     // 1. fetch us an empty, random, temporary folder:
@@ -150,7 +150,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`,
   async (t) => {
     // 1. set up in which folder to write:

@@ -1,12 +1,12 @@
-const t = require("tap");
-const get = require("../dist/ast-get-values-by-key.cjs");
-const objectPath = require("object-path");
+import tap from "tap";
+import objectPath from "object-path";
+import get from "../dist/ast-get-values-by-key.esm";
 
 // ==============================
 // GET
 // ==============================
 
-t.test("01.01 - just a plain object", (t) => {
+tap.test("01.01 - just a plain object", (t) => {
   const source = {
     tag: "html",
   };
@@ -38,7 +38,7 @@ t.test("01.01 - just a plain object", (t) => {
   t.end();
 });
 
-t.test("01.02 - single plain object within array", (t) => {
+tap.test("01.02 - single plain object within array", (t) => {
   const source = [
     {
       tag: "html",
@@ -60,7 +60,7 @@ t.test("01.02 - single plain object within array", (t) => {
   t.end();
 });
 
-t.test("01.03 - string in array as result", (t) => {
+tap.test("01.03 - string in array as result", (t) => {
   const source = {
     tag: ["html"],
   };
@@ -77,7 +77,7 @@ t.test("01.03 - string in array as result", (t) => {
   t.end();
 });
 
-t.test("01.04 - two strings as result", (t) => {
+tap.test("01.04 - two strings as result", (t) => {
   t.same(
     get(
       [
@@ -110,7 +110,7 @@ t.test("01.04 - two strings as result", (t) => {
   t.end();
 });
 
-t.test("01.05 - query by key, returns mixed results", (t) => {
+tap.test("01.05 - query by key, returns mixed results", (t) => {
   t.same(
     get(
       [
@@ -148,7 +148,7 @@ t.test("01.05 - query by key, returns mixed results", (t) => {
   t.end();
 });
 
-t.test("01.06 - deep tree", (t) => {
+tap.test("01.06 - deep tree", (t) => {
   const source = [
     {
       a: {
@@ -191,7 +191,7 @@ t.test("01.06 - deep tree", (t) => {
   t.end();
 });
 
-t.test("01.07 - query returns an array", (t) => {
+tap.test("01.07 - query returns an array", (t) => {
   t.same(
     get(
       [
@@ -207,7 +207,7 @@ t.test("01.07 - query returns an array", (t) => {
   t.end();
 });
 
-t.test("01.08 - query returns a string", (t) => {
+tap.test("01.08 - query returns a string", (t) => {
   t.same(
     get(
       [
@@ -223,7 +223,7 @@ t.test("01.08 - query returns a string", (t) => {
   t.end();
 });
 
-t.test("01.09 - query returns array with two objects", (t) => {
+tap.test("01.09 - query returns array with two objects", (t) => {
   const source = [
     {
       tag: [
@@ -269,7 +269,7 @@ t.test("01.09 - query returns array with two objects", (t) => {
 // GET WITH NO RESULTS
 // ==============================
 
-t.test("02.01 - no results query", (t) => {
+tap.test("02.01 - no results query", (t) => {
   t.same(
     get(
       {
@@ -287,7 +287,7 @@ t.test("02.01 - no results query", (t) => {
 // SET
 // ==============================
 
-t.test("03.01 - string replaced", (t) => {
+tap.test("03.01 - string replaced", (t) => {
   t.same(
     get(
       {
@@ -304,7 +304,7 @@ t.test("03.01 - string replaced", (t) => {
   t.end();
 });
 
-t.test("03.02 - string within array replaced", (t) => {
+tap.test("03.02 - string within array replaced", (t) => {
   t.same(
     get(
       {
@@ -321,7 +321,7 @@ t.test("03.02 - string within array replaced", (t) => {
   t.end();
 });
 
-t.test("03.03 - value is object and is replaced", (t) => {
+tap.test("03.03 - value is object and is replaced", (t) => {
   t.same(
     get(
       {
@@ -346,7 +346,7 @@ t.test("03.03 - value is object and is replaced", (t) => {
   t.end();
 });
 
-t.test("03.04 - two objects replaced", (t) => {
+tap.test("03.04 - two objects replaced", (t) => {
   t.same(
     get(
       [
@@ -388,7 +388,7 @@ t.test("03.04 - two objects replaced", (t) => {
   t.end();
 });
 
-t.test("03.05 - simple edit", (t) => {
+tap.test("03.05 - simple edit", (t) => {
   t.same(
     get(
       [
@@ -431,7 +431,7 @@ t.test("03.05 - simple edit", (t) => {
   t.end();
 });
 
-t.test("03.06 - replaced to an empty string", (t) => {
+tap.test("03.06 - replaced to an empty string", (t) => {
   t.same(
     get(
       {
@@ -448,7 +448,7 @@ t.test("03.06 - replaced to an empty string", (t) => {
   t.end();
 });
 
-t.test("03.07 - not enough replacement values given", (t) => {
+tap.test("03.07 - not enough replacement values given", (t) => {
   t.same(
     get(
       {
@@ -489,7 +489,7 @@ t.test("03.07 - not enough replacement values given", (t) => {
 // SET WITH NO RESULTS
 // ==============================
 
-t.test("04.01 - no results replacement", (t) => {
+tap.test("04.01 - no results replacement", (t) => {
   t.same(
     get(
       {
@@ -510,7 +510,7 @@ t.test("04.01 - no results replacement", (t) => {
 // EDGE CASES
 // ==============================
 
-t.test("05.02 - input is plain object, replacement is string", (t) => {
+tap.test("05.02 - input is plain object, replacement is string", (t) => {
   t.same(
     get(
       {
@@ -531,7 +531,7 @@ t.test("05.02 - input is plain object, replacement is string", (t) => {
 // THROWS
 // ==============================
 
-t.test("06.01 - wrong type of second argument", (t) => {
+tap.test("06.01 - wrong type of second argument", (t) => {
   // throw pinning:
   const error1 = t.throws(() => {
     get(
@@ -546,7 +546,7 @@ t.test("06.01 - wrong type of second argument", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "06.02 - input is plain object, replacement is unrecognised (is a function)",
   (t) => {
     function f() {
@@ -565,7 +565,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "06.03 - one of the whatToFind array values is a sneaky non-string",
   (t) => {
     t.throws(() => {
@@ -581,7 +581,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "06.04 - one of the replacement array values is a sneaky non-string",
   (t) => {
     t.doesNotThrow(() => {
@@ -597,12 +597,12 @@ t.test(
   }
 );
 
-t.test("06.05.01 - input present but non-container sort", (t) => {
+tap.test("06.05.01 - input present but non-container sort", (t) => {
   t.same(get(1, "style", "meta"), 1, "05.05.01");
   t.end();
 });
 
-t.test("06.05.02 - input completely missing", (t) => {
+tap.test("06.05.02 - input completely missing", (t) => {
   t.throws(() => {
     get();
   }, /THROW_ID_01/g);
@@ -617,7 +617,7 @@ t.test("06.05.02 - input completely missing", (t) => {
   t.end();
 });
 
-t.test("06.06 - second argument is completely missing", (t) => {
+tap.test("06.06 - second argument is completely missing", (t) => {
   t.throws(() => {
     get({
       style: "meta",

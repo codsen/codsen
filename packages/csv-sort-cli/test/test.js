@@ -1,8 +1,8 @@
-const fs = require("fs-extra");
-const t = require("tap");
-const path = require("path");
-const execa = require("execa");
-const tempy = require("tempy");
+import fs from "fs-extra";
+import tap from "tap";
+import path from "path";
+import execa from "execa";
+import tempy from "tempy";
 
 //                                  *
 //                                  *
@@ -18,7 +18,7 @@ const tempy = require("tempy");
 //                                  *
 //                                  *
 
-t.test("01.01 - there are no usable files at all", async (t) => {
+tap.test("01.01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
@@ -49,7 +49,7 @@ t.test("01.01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-t.test("01.02 - sorts a file", async (t) => {
+tap.test("01.02 - sorts a file", async (t) => {
   const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950

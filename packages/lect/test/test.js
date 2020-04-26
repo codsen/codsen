@@ -1,6 +1,6 @@
-const t = require("tap");
+import tap from "tap";
 
-t.test("01", (t) => {
+tap.test("01", (t) => {
   t.ok("some day");
   t.end();
 });

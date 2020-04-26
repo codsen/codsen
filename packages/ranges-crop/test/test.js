@@ -1,13 +1,13 @@
-const t = require("tap");
-const crop = require("../dist/ranges-crop.cjs");
-const rangesApply = require("ranges-apply");
-const clone = require("lodash.clonedeep");
+import tap from "tap";
+import rangesApply from "ranges-apply";
+import clone from "lodash.clonedeep";
+import crop from "../dist/ranges-crop.esm";
 
 // ==============================
 // 0. THROWS
 // ==============================
 
-t.test("00.01 - ranges array is not array", (t) => {
+tap.test("00.01 - ranges array is not array", (t) => {
   // throw pinning:
   t.throws(() => {
     crop(null);
@@ -15,7 +15,7 @@ t.test("00.01 - ranges array is not array", (t) => {
   t.end();
 });
 
-t.test("00.02 - str len is not a number", (t) => {
+tap.test("00.02 - str len is not a number", (t) => {
   t.throws(() => {
     crop([[1, 2]], null);
   }, /THROW_ID_02/);
@@ -34,7 +34,7 @@ t.test("00.02 - str len is not a number", (t) => {
   t.end();
 });
 
-t.test("00.03 - array of ranges is actually a single range", (t) => {
+tap.test("00.03 - array of ranges is actually a single range", (t) => {
   t.throws(() => {
     crop([1, 2], 3);
   }, /THROW_ID_03/);
@@ -45,7 +45,7 @@ t.test("00.03 - array of ranges is actually a single range", (t) => {
   t.end();
 });
 
-t.test("00.04 - something's wrong with range arrays's contents", (t) => {
+tap.test("00.04 - something's wrong with range arrays's contents", (t) => {
   t.throws(() => {
     crop([[1, "2"]], 3);
   }, /THROW_ID_04/);
@@ -80,7 +80,7 @@ t.test("00.04 - something's wrong with range arrays's contents", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "00.05 - third argument within one of given ranges if of a wrong type",
   (t) => {
     t.throws(() => {
@@ -94,7 +94,7 @@ t.test(
 // 01. crop, two arguments only
 // ==============================
 
-t.test(`01.01 - crops out few ranges outside the strlen`, (t) => {
+tap.test(`01.01 - crops out few ranges outside the strlen`, (t) => {
   const length = 7;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -124,7 +124,7 @@ t.test(`01.01 - crops out few ranges outside the strlen`, (t) => {
   t.end();
 });
 
-t.test(`01.02 - overlap on one of ranges`, (t) => {
+tap.test(`01.02 - overlap on one of ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -153,7 +153,7 @@ t.test(`01.02 - overlap on one of ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.03 - overlap on one of ranges plus some extra ranges`, (t) => {
+tap.test(`01.03 - overlap on one of ranges plus some extra ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -185,7 +185,7 @@ t.test(`01.03 - overlap on one of ranges plus some extra ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.04 - string length on the beginning of one of ranges`, (t) => {
+tap.test(`01.04 - string length on the beginning of one of ranges`, (t) => {
   const length = 12;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -217,7 +217,7 @@ t.test(`01.04 - string length on the beginning of one of ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.05 - string length on the ending of one of ranges`, (t) => {
+tap.test(`01.05 - string length on the ending of one of ranges`, (t) => {
   const length = 15;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -250,7 +250,7 @@ t.test(`01.05 - string length on the ending of one of ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.06 - string length beyond any of given ranges`, (t) => {
+tap.test(`01.06 - string length beyond any of given ranges`, (t) => {
   const length = 99;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -279,7 +279,7 @@ t.test(`01.06 - string length beyond any of given ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.07 - no ranges`, (t) => {
+tap.test(`01.07 - no ranges`, (t) => {
   const length = 99;
   const testStr = "z".repeat(length);
   const sourceRange = [];
@@ -305,7 +305,7 @@ t.test(`01.07 - no ranges`, (t) => {
 
 // now, exact the same tests but with ranges not in sorted order:
 
-t.test(`01.08 - unsorted ranges`, (t) => {
+tap.test(`01.08 - unsorted ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -334,7 +334,7 @@ t.test(`01.08 - unsorted ranges`, (t) => {
   t.end();
 });
 
-t.test(`01.09 - lots of overlapping, unsorted and futile ranges`, (t) => {
+tap.test(`01.09 - lots of overlapping, unsorted and futile ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -377,7 +377,7 @@ t.test(`01.09 - lots of overlapping, unsorted and futile ranges`, (t) => {
 // 02. crop, three arguments only
 // ==============================
 
-t.test(
+tap.test(
   `02.01 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 14;
@@ -413,7 +413,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 12;
@@ -449,7 +449,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 15;

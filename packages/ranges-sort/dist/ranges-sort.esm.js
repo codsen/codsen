@@ -24,7 +24,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     strictlyTwoElementsInRangeArrays: false,
     progressFn: null,
   };
-  const opts = Object.assign({}, defaults, originalOptions);
+  const opts = { ...defaults, ...originalOptions };
   let culpritsIndex;
   let culpritsLen;
   if (
@@ -72,7 +72,7 @@ function rangesSort(arrOfRanges, originalOptions) {
   let counter = 0;
   return Array.from(arrOfRanges).sort((range1, range2) => {
     if (opts.progressFn) {
-      counter++;
+      counter += 1;
       opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
     }
     if (range1[0] === range2[0]) {

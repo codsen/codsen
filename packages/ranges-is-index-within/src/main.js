@@ -6,7 +6,7 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     returnMatchedRangeInsteadOfTrue: false,
   };
 
-  const opts = Object.assign(Object.assign({}, defaults), originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (!isArr(rangesArr)) {
     return false;
   }

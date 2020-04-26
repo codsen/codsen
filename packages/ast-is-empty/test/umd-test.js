@@ -1,5 +1,5 @@
-const t = require("tap");
-const isEmpty1 = require("../dist/ast-is-empty.umd");
+import tap from "tap";
+import isEmpty1 from "../dist/ast-is-empty.umd";
 
 const source = [
   {
@@ -8,7 +8,7 @@ const source = [
   },
 ];
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.ok(isEmpty1(source));
   t.end();
 });

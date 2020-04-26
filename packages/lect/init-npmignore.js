@@ -90,7 +90,8 @@ const encodingStr = "dhe1o2r3t4e5h6j7d8f9g";
 function encodeDot(something) {
   if (typeof something === "string") {
     return something.replace(/\./g, encodingStr);
-  } else if (isArr(something)) {
+  }
+  if (isArr(something)) {
     return something.map((val) => val.replace(/\./g, encodingStr));
   }
   throw new Error("lect/init-npmignore.js > encodeDot(): bad input");
@@ -99,7 +100,8 @@ function encodeDot(something) {
 function decodeDot(something) {
   if (typeof something === "string") {
     return something.replace(RegExp(encodingStr, "g"), ".");
-  } else if (isArr(something)) {
+  }
+  if (isArr(something)) {
     return something.map((val) => val.replace(RegExp(encodingStr, "g"), "."));
   }
   throw new Error(

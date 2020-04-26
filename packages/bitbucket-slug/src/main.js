@@ -8,6 +8,7 @@ function bSlug(str) {
 
   // decode entities
   while (str !== ent.decode(str)) {
+    // eslint-disable-next-line no-param-reassign
     str = ent.decode(str);
   }
 

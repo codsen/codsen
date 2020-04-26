@@ -1,28 +1,28 @@
-import t from "tap";
-import e from "../dist/string-extract-sass-vars.esm";
+import tap from "tap";
 import fs from "fs";
+import e from "../dist/string-extract-sass-vars.esm";
 
 // 00. API
 // -----------------------------------------------------------------------------
 
-t.test("00.01 - api - first arg is not string", (t) => {
+tap.test("00.01 - api - first arg is not string", (t) => {
   t.same(Object.keys(e(null)).length, 0, "00.01");
   t.end();
 });
 
-t.test("00.02 - api - first arg is empty string", (t) => {
+tap.test("00.02 - api - first arg is empty string", (t) => {
   t.same(Object.keys(e("")).length, 0, "00.02");
   t.end();
 });
 
-t.test("00.02 - api - opts is wrong", (t) => {
+tap.test("00.02 - api - opts is wrong", (t) => {
   t.throws(() => {
     e("z", true);
   }, /THROW_ID_01/gm);
   t.end();
 });
 
-t.test("00.03 - api - opts.cb", (t) => {
+tap.test("00.03 - api - opts.cb", (t) => {
   t.throws(() => {
     e("z", {
       cb: true,
@@ -31,7 +31,7 @@ t.test("00.03 - api - opts.cb", (t) => {
   t.end();
 });
 
-t.test("00.04 - api - opts.throwIfEmpty", (t) => {
+tap.test("00.04 - api - opts.throwIfEmpty", (t) => {
   t.throws(() => {
     e("z", {
       throwIfEmpty: true,
@@ -43,7 +43,7 @@ t.test("00.04 - api - opts.throwIfEmpty", (t) => {
 // 01. let's do the basics
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - basics - one pair, value without quotes", (t) => {
+tap.test("01.01 - basics - one pair, value without quotes", (t) => {
   const source = `$blue: #08f0fd;`;
   t.same(
     e(source),
@@ -55,7 +55,7 @@ t.test("01.01 - basics - one pair, value without quotes", (t) => {
   t.end();
 });
 
-t.test("01.02 - basics - one pair, value with quotes", (t) => {
+tap.test("01.02 - basics - one pair, value with quotes", (t) => {
   const source = `$blue: "#08f0fd";`;
   t.same(
     e(source),
@@ -67,7 +67,7 @@ t.test("01.02 - basics - one pair, value with quotes", (t) => {
   t.end();
 });
 
-t.test("01.03 - basics - two pairs", (t) => {
+tap.test("01.03 - basics - two pairs", (t) => {
   const source = `$red: #ff6565;\n$blue: #08f0fd;`;
   t.same(
     e(source),
@@ -80,7 +80,7 @@ t.test("01.03 - basics - two pairs", (t) => {
   t.end();
 });
 
-t.test("01.04 - basics - quoted value with semicolon", (t) => {
+tap.test("01.04 - basics - quoted value with semicolon", (t) => {
   const source = `$red: "a; b";`;
   t.same(
     e(source),
@@ -92,7 +92,7 @@ t.test("01.04 - basics - quoted value with semicolon", (t) => {
   t.end();
 });
 
-t.test("01.05 - basics - value with colon", (t) => {
+tap.test("01.05 - basics - value with colon", (t) => {
   const source = `$red: "a: b";`;
   t.same(
     e(source),
@@ -104,37 +104,37 @@ t.test("01.05 - basics - value with colon", (t) => {
   t.end();
 });
 
-t.test("01.06 - basics - value as positive integer", (t) => {
+tap.test("01.06 - basics - value as positive integer", (t) => {
   const source = `$abc: 9;`;
   t.is(e(source).abc, 9, "01.06");
   t.end();
 });
 
-t.test("01.07 - basics - value as positive integer", (t) => {
+tap.test("01.07 - basics - value as positive integer", (t) => {
   const source = `$abc: 0;`;
   t.is(e(source).abc, 0, "01.07");
   t.end();
 });
 
-t.test("01.08 - basics - value as negative integer", (t) => {
+tap.test("01.08 - basics - value as negative integer", (t) => {
   const source = `$abc: -9;`;
   t.is(e(source).abc, -9, "01.08");
   t.end();
 });
 
-t.test("01.09 - basics - value as positive float", (t) => {
+tap.test("01.09 - basics - value as positive float", (t) => {
   const source = `$abc: 1.333;`;
   t.is(e(source).abc, 1.333, "01.09");
   t.end();
 });
 
-t.test("01.10 - basics - value as negative float", (t) => {
+tap.test("01.10 - basics - value as negative float", (t) => {
   const source = `$abc: -1.333;`;
   t.is(e(source).abc, -1.333, "01.10");
   t.end();
 });
 
-t.test("01.11 - basics - value as digit", (t) => {
+tap.test("01.11 - basics - value as digit", (t) => {
   const source = `$a: bcd: ef;`;
   t.same(
     e(source),
@@ -146,7 +146,7 @@ t.test("01.11 - basics - value as digit", (t) => {
   t.end();
 });
 
-t.test("01.12 - basics - value as digit", (t) => {
+tap.test("01.12 - basics - value as digit", (t) => {
   const source = `// don't mind this comment about #ff6565;
 $customValue4: 10;`;
   t.same(
@@ -159,7 +159,7 @@ $customValue4: 10;`;
   t.end();
 });
 
-t.test("01.13 - basics - slash-asterisk comments", (t) => {
+tap.test("01.13 - basics - slash-asterisk comments", (t) => {
   const source = `$red: #ff6565; /* this is red
   $green: #63ffbd;
   $yellow: #ffff65; */
@@ -175,7 +175,7 @@ t.test("01.13 - basics - slash-asterisk comments", (t) => {
   t.end();
 });
 
-t.test("01.14 - basics - slash-excl. mark-asterisk comments", (t) => {
+tap.test("01.14 - basics - slash-excl. mark-asterisk comments", (t) => {
   const source = `$red: #ff6565; /*! this is red
   $green: #63ffbd;
   $yellow: #ffff65; */
@@ -191,7 +191,7 @@ t.test("01.14 - basics - slash-excl. mark-asterisk comments", (t) => {
   t.end();
 });
 
-t.test("01.15 - basics - nothing", (t) => {
+tap.test("01.15 - basics - nothing", (t) => {
   const source = `   \t\t\t`;
   t.same(Object.keys(e(source)).length, 0, "01.15");
   t.end();
@@ -200,7 +200,7 @@ t.test("01.15 - basics - nothing", (t) => {
 // 02. let's do the fixtures
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - fixture 01 - a healthy file", (t) => {
+tap.test("02.01 - fixture 01 - a healthy file", (t) => {
   const f01 = fs.readFileSync("test/fixtures/01.scss", { encoding: "utf8" });
   t.same(
     e(f01),
@@ -221,7 +221,7 @@ t.test("02.01 - fixture 01 - a healthy file", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.02 - fixture 02 - lots of comments and some styling unrelated to variables",
   (t) => {
     const f02 = fs.readFileSync("test/fixtures/02.scss", { encoding: "utf8" });
@@ -237,7 +237,7 @@ t.test(
   }
 );
 
-t.test("02.03 - fixture 03 - curlies", (t) => {
+tap.test("02.03 - fixture 03 - curlies", (t) => {
   const f03 = fs.readFileSync("test/fixtures/03.scss", { encoding: "utf8" });
   t.same(
     e(f03),
@@ -251,13 +251,13 @@ t.test("02.03 - fixture 03 - curlies", (t) => {
   t.end();
 });
 
-t.test("02.04 - fixture 04 - file of comments only", (t) => {
+tap.test("02.04 - fixture 04 - file of comments only", (t) => {
   const f04 = fs.readFileSync("test/fixtures/04.scss", { encoding: "utf8" });
   t.same(e(f04), {}, "02.04");
   t.end();
 });
 
-t.test("02.05 - fixture 05 - inline comments", (t) => {
+tap.test("02.05 - fixture 05 - inline comments", (t) => {
   const f05 = fs.readFileSync("test/fixtures/05.scss", { encoding: "utf8" });
   t.same(
     e(f05),
@@ -272,7 +272,7 @@ t.test("02.05 - fixture 05 - inline comments", (t) => {
 // 03. opts.cb
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - opts.cb - custom override of a value", (t) => {
+tap.test("03.01 - opts.cb - custom override of a value", (t) => {
   t.same(
     e(`$grey: #ccc;`, {
       cb: (val) => {

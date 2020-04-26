@@ -56,6 +56,7 @@ function rangesRegex(regx, str, replacement) {
     replacement === null ||
     (typeof replacement === "string" && replacement.length > 0)
   ) {
+    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regx.exec(str)) !== null) {
       resRange.push([
         regx.lastIndex - tempArr[0].length,
@@ -64,6 +65,7 @@ function rangesRegex(regx, str, replacement) {
       ]);
     }
   } else {
+    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regx.exec(str)) !== null) {
       resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex]);
     }

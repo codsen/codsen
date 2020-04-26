@@ -86,7 +86,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      `${oneOfPaths} - ${err}`;
+      console.log(`${oneOfPaths} - ${err}`);
     });
 }
 
@@ -117,10 +117,13 @@ if (isArr(cli.input) && cli.input.length) {
       process.exit(0);
     }
 
-    return pFilter(preppedPathsArr, (onePath) =>
-      fs.stat(path.resolve(onePath)).catch(() => {
-        return Promise.resolve(false);
-      })
+    return pFilter(
+      preppedPathsArr,
+      (onePath) =>
+        fs.stat(path.resolve(onePath)).catch(() => {
+          return Promise.resolve(false);
+        })
+      // eslint-disable-next-line
     ).then((resultArr) => {
       if (!isArr(resultArr) || !resultArr.length) {
         // spinner.warn("no changelogs found");
@@ -151,6 +154,7 @@ thePromise.then((received) => {
     (counter, currentPath) =>
       readSortAndWriteOverFile(currentPath)
         .then((res) =>
+          // eslint-disable-next-line no-nested-ternary
           res
             ? res === "ok"
               ? {
@@ -194,27 +198,25 @@ thePromise.then((received) => {
       if (counter.ignored && counter.ignored.length) {
         // some files were written, but there were some skipped/ignored
         writtenAndSkippedMsg = `${counter.good.length} updated, ${counter.ignored.length} skipped`;
+      }
+      // only written files, no skipped/ignored
+      else if (counter.good.length === 1) {
+        writtenAndSkippedMsg = `1 updated`;
       } else {
-        // only written files, no skipped/ignored
-        if (counter.good.length === 1) {
-          writtenAndSkippedMsg = `1 updated`;
-        } else {
-          writtenAndSkippedMsg = `All ${counter.good.length} updated`;
-        }
+        writtenAndSkippedMsg = `All ${counter.good.length} updated`;
+      }
+    }
+    // no files were written
+    else if (counter.ignored && counter.ignored.length) {
+      // no files were written, there were some skipped/ignored
+      if (counter.ignored.length === 1) {
+        writtenAndSkippedMsg = `1 skipped`;
+      } else {
+        writtenAndSkippedMsg = `All ${counter.ignored.length} skipped`;
       }
     } else {
-      // no files were written
-      if (counter.ignored && counter.ignored.length) {
-        // no files were written, there were some skipped/ignored
-        if (counter.ignored.length === 1) {
-          writtenAndSkippedMsg = `1 skipped`;
-        } else {
-          writtenAndSkippedMsg = `All ${counter.ignored.length} skipped`;
-        }
-      } else {
-        // no written files, no skipped/ignored
-        writtenAndSkippedMsg = ``;
-      }
+      // no written files, no skipped/ignored
+      writtenAndSkippedMsg = ``;
     }
 
     // -------------------------------------------------------------------------

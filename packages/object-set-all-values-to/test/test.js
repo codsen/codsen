@@ -1,11 +1,11 @@
-const t = require("tap");
-const setAllValuesTo = require("../dist/object-set-all-values-to.cjs");
+import tap from "tap";
+import setAllValuesTo from "../dist/object-set-all-values-to.esm";
 
 // ==============================
 // Normal assignments with default value, false
 // ==============================
 
-t.test("01.01 - input simple plain object, default", (t) => {
+tap.test("01.01 - input simple plain object, default", (t) => {
   t.same(
     setAllValuesTo({
       a: "a",
@@ -24,7 +24,7 @@ t.test("01.01 - input simple plain object, default", (t) => {
   t.end();
 });
 
-t.test("01.02 - two level nested plain object, default", (t) => {
+tap.test("01.02 - two level nested plain object, default", (t) => {
   t.same(
     setAllValuesTo({
       a: "a",
@@ -53,7 +53,7 @@ t.test("01.02 - two level nested plain object, default", (t) => {
   t.end();
 });
 
-t.test("01.03 - topmost level input is array, default", (t) => {
+tap.test("01.03 - topmost level input is array, default", (t) => {
   t.same(
     setAllValuesTo([
       {
@@ -86,7 +86,7 @@ t.test("01.03 - topmost level input is array, default", (t) => {
   t.end();
 });
 
-t.test("01.04 - many levels of nested arrays, default", (t) => {
+tap.test("01.04 - many levels of nested arrays, default", (t) => {
   t.same(
     setAllValuesTo([
       [
@@ -203,7 +203,7 @@ t.test("01.04 - many levels of nested arrays, default", (t) => {
   t.end();
 });
 
-t.test("01.05 - array-object-array-object, default", (t) => {
+tap.test("01.05 - array-object-array-object, default", (t) => {
   t.same(
     setAllValuesTo([
       {
@@ -228,7 +228,7 @@ t.test("01.05 - array-object-array-object, default", (t) => {
   t.end();
 });
 
-t.test("01.06 - array has array which has object, default", (t) => {
+tap.test("01.06 - array has array which has object, default", (t) => {
   t.same(
     setAllValuesTo([
       [
@@ -263,7 +263,7 @@ t.test("01.06 - array has array which has object, default", (t) => {
   t.end();
 });
 
-t.test("01.07 - object has object value, default", (t) => {
+tap.test("01.07 - object has object value, default", (t) => {
   t.same(
     setAllValuesTo({
       a: {
@@ -296,7 +296,7 @@ t.test("01.07 - object has object value, default", (t) => {
   t.end();
 });
 
-t.test("01.08 - input is object with only values — arrays, default", (t) => {
+tap.test("01.08 - input is object with only values — arrays, default", (t) => {
   t.same(
     setAllValuesTo({
       a: ["a"],
@@ -315,7 +315,7 @@ t.test("01.08 - input is object with only values — arrays, default", (t) => {
   t.end();
 });
 
-t.test("01.09 - ops within an array, default", (t) => {
+tap.test("01.09 - ops within an array, default", (t) => {
   t.same(
     setAllValuesTo([["a", { b: "b" }, "c"]]),
     [["a", { b: false }, "c"]],
@@ -324,7 +324,7 @@ t.test("01.09 - ops within an array, default", (t) => {
   t.end();
 });
 
-t.test("01.10 - lots of empty things, default", (t) => {
+tap.test("01.10 - lots of empty things, default", (t) => {
   t.same(
     setAllValuesTo([{}, {}, {}, { a: "a" }, {}]),
     [{}, {}, {}, { a: false }, {}],
@@ -337,7 +337,7 @@ t.test("01.10 - lots of empty things, default", (t) => {
 // Custom value assignments
 // ==============================
 
-t.test("02.01 - input simple plain object, assigning a string", (t) => {
+tap.test("02.01 - input simple plain object, assigning a string", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -359,7 +359,7 @@ t.test("02.01 - input simple plain object, assigning a string", (t) => {
   t.end();
 });
 
-t.test("02.02 - input simple plain object, assigning a plain object", (t) => {
+tap.test("02.02 - input simple plain object, assigning a plain object", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -381,7 +381,7 @@ t.test("02.02 - input simple plain object, assigning a plain object", (t) => {
   t.end();
 });
 
-t.test("02.03 - input simple plain object, assigning an array", (t) => {
+tap.test("02.03 - input simple plain object, assigning an array", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -403,7 +403,7 @@ t.test("02.03 - input simple plain object, assigning an array", (t) => {
   t.end();
 });
 
-t.test("02.04 - input simple plain object, assigning a null", (t) => {
+tap.test("02.04 - input simple plain object, assigning a null", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -425,7 +425,7 @@ t.test("02.04 - input simple plain object, assigning a null", (t) => {
   t.end();
 });
 
-t.test("02.05 - input simple plain object, assigning a Boolean true", (t) => {
+tap.test("02.05 - input simple plain object, assigning a Boolean true", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -447,7 +447,7 @@ t.test("02.05 - input simple plain object, assigning a Boolean true", (t) => {
   t.end();
 });
 
-t.test("02.06 - input simple plain object, assigning a function", (t) => {
+tap.test("02.06 - input simple plain object, assigning a function", (t) => {
   function f() {
     return 1;
   }
@@ -482,7 +482,7 @@ t.test("02.06 - input simple plain object, assigning a function", (t) => {
   t.end();
 });
 
-t.test("02.07 - input simple plain object, assigning a plain object", (t) => {
+tap.test("02.07 - input simple plain object, assigning a plain object", (t) => {
   t.same(
     setAllValuesTo(
       {
@@ -510,17 +510,17 @@ t.test("02.07 - input simple plain object, assigning a plain object", (t) => {
 // Edge cases
 // ==============================
 
-t.test("03.01 - input is string, default value", (t) => {
+tap.test("03.01 - input is string, default value", (t) => {
   t.same(setAllValuesTo("nothing"), "nothing", "03.01");
   t.end();
 });
 
-t.test("03.02 - input is string, value provided", (t) => {
+tap.test("03.02 - input is string, value provided", (t) => {
   t.same(setAllValuesTo("nothing", "something"), "nothing", "03.02");
   t.end();
 });
 
-t.test("03.03 - input is missing but value provided", (t) => {
+tap.test("03.03 - input is missing but value provided", (t) => {
   t.same(setAllValuesTo(undefined, "a"), undefined, "03.04");
   t.end();
 });
@@ -529,7 +529,7 @@ t.test("03.03 - input is missing but value provided", (t) => {
 // Input arg mutation
 // ==============================
 
-t.test("04.01 - does not mutate input args", (t) => {
+tap.test("04.01 - does not mutate input args", (t) => {
   const inp = {
     a: "a",
     b: "b",

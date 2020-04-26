@@ -48,7 +48,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   const defaults = {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const data = { id: 0 };
   let toDoList = [];
   if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {

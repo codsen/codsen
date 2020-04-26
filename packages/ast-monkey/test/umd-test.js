@@ -1,5 +1,5 @@
-const t = require("tap");
-const { find } = require("../dist/ast-monkey.umd");
+import tap from "tap";
+import { find } from "../dist/ast-monkey.umd";
 
 const input = {
   a1: {
@@ -31,7 +31,7 @@ const intended = [
   },
 ];
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.same(find(input, { key: "a*" }), intended);
   t.end();
 });

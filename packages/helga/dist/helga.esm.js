@@ -15,7 +15,7 @@ const defaults = {
   targetJSON: false,
 };
 function helga(str, originalOpts) {
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const beautified = unescapeJs(str);
   let minified = unescapeJs(str);
   if (opts.targetJSON) {

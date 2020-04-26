@@ -9,6 +9,7 @@ const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
 const writeFileAtomic = require("write-file-atomic");
 const { promisify } = require("util");
+
 const write = promisify(writeFileAtomic);
 
 const { genAtomic, version } = require("generate-atomic-css");
@@ -48,13 +49,15 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
+      console.log(
+        `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
+      );
     });
 }
 
-function processPaths(paths) {
+function processPaths(incomingPaths) {
   return (
-    globby(paths)
+    globby(incomingPaths)
       .then((paths) =>
         pReduce(
           paths,

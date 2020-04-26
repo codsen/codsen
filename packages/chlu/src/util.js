@@ -38,7 +38,8 @@ const isArr = Array.isArray;
 function isFooterLink(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError(
       "chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string"
     );
@@ -56,7 +57,8 @@ function isFooterLink(str) {
 function isTitle(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError(
       `chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ${JSON.stringify(
         str,
@@ -216,6 +218,8 @@ function getRow(rowsArray, index) {
 // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
 // or
 // "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
+
+// eslint-disable-next-line consistent-return
 function getSetFooterLink(str, o = {}) {
   // console.log(`\n\u001b[${35}m${`==== getSetFooterLink() ====`}\u001b[${39}m`);
   // console.log(
@@ -333,7 +337,8 @@ function getSetFooterLink(str, o = {}) {
   }
   if (o.type === "github") {
     return `[${res.version}]: https://github.com/${res.user}/${res.project}/compare/v${res.versBefore}...v${res.versAfter}`;
-  } else if (o.type === "bitbucket") {
+  }
+  if (o.type === "bitbucket") {
     return `[${res.version}]: https://bitbucket.org/${res.user}/${res.project}/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
   }
 }

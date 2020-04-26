@@ -1,8 +1,8 @@
-const fs = require("fs-extra");
-const t = require("tap");
-const path = require("path");
-const execa = require("execa");
-const tempy = require("tempy");
+import fs from "fs-extra";
+import tap from "tap";
+import path from "path";
+import execa from "execa";
+import tempy from "tempy";
 
 //                                  *
 //                                  *
@@ -18,7 +18,7 @@ const tempy = require("tempy");
 //                                  *
 //                                  *
 
-t.test("01.01 - there are no usable files at all", async (t) => {
+tap.test("01.01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   fs.ensureDirSync(path.resolve(tempFolder));
   const processedFileContents = fs
@@ -49,7 +49,7 @@ t.test("01.01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   "01.02 - only changelog present in the root - default (not --loud)",
   async (t) => {
     const originalChangelog = `# Seed Change Log
@@ -194,7 +194,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   "01.03 - package + changelog in the root - default (not --loud)",
   async (t) => {
     const originalChangelog = `# Seed Change Log
@@ -373,7 +373,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-t.test("01.04 - only changelog present in the root - loud", async (t) => {
+tap.test("01.04 - only changelog present in the root - loud", async (t) => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -516,7 +516,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-t.test("01.05 - package + changelog in the root - loud", async (t) => {
+tap.test("01.05 - package + changelog in the root - loud", async (t) => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 

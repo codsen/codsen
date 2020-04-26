@@ -1,3 +1,5 @@
+/* eslint no-param-reassign:0 */
+
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -17,7 +19,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   const defaults = {
     mode: 2,
   };
-  const optsOuter = Object.assign({}, defaults, originalOptsOuter);
+  const optsOuter = { ...defaults, ...originalOptsOuter };
   if (
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)

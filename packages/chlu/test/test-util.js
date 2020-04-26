@@ -1,5 +1,5 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   isTitle,
   isFooterLink,
   getPreviousVersion,
@@ -7,12 +7,12 @@ const {
   getSetFooterLink,
   getRow,
   filterDate,
-} = require("../src/util.js");
+} from "../src/util";
 
 // 01. isTitle
 // -------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - negative result`,
   (t) => {
     t.same(isTitle(""), false, "01.01.01");
@@ -55,7 +55,7 @@ whatever
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - positive result`,
   (t) => {
     t.same(isTitle("## [1.2.0] - 2017-04-24"), true, "01.02.01");
@@ -68,7 +68,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - non-semver, 2 digits only`,
   (t) => {
     t.same(isTitle("## [1.2] - 2017-04-24"), true, "01.03.01");
@@ -85,7 +85,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - three hashes, H3`,
   (t) => {
     t.same(isTitle("### [1.2.0] - 2017-04-24"), true, "01.04.01");
@@ -95,7 +95,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - four hashes, H4`,
   (t) => {
     t.same(isTitle("#### [1.2.0] - 2017-04-24"), true, "01.05.01");
@@ -105,7 +105,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - all kinds of throws`,
   (t) => {
     t.throws(() => isTitle(1));
@@ -120,7 +120,7 @@ t.test(
 // 02. isFooterLink
 // ------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - negative result`,
   (t) => {
     t.same(isFooterLink(""), false, "02.01.01");
@@ -133,7 +133,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - positive result`,
   (t) => {
     t.same(
@@ -148,7 +148,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - all kinds of throws`,
   (t) => {
     t.throws(() => isFooterLink(1));
@@ -163,7 +163,7 @@ t.test(
 // 03. getPreviousVersion
 // ------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - various throws`,
   (t) => {
     t.throws(() => getPreviousVersion());
@@ -177,7 +177,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.02 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - BAU`,
   (t) => {
     // without "v."
@@ -234,7 +234,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.03 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - requesting previous of a first`,
   (t) => {
     t.same(
@@ -249,7 +249,7 @@ t.test(
 // 04. aContainsB
 // ------------------
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${33}m${`aContainsB()`}\u001b[${39}m`} - BAU`,
   (t) => {
     t.same(aContainsB("aaaaaabcdddddd", "bc"), true, "04.01.01");
@@ -262,7 +262,7 @@ t.test(
 // 05. getSetFooterLink
 // -----------
 
-t.test(
+tap.test(
   `05.01 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly GitHub`,
   (t) => {
     t.same(
@@ -381,7 +381,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly GitHub`,
   (t) => {
     t.same(
@@ -466,7 +466,7 @@ t.test(
 // https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.4
 // https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
 
-t.test(
+tap.test(
   `05.03 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly Bitbucket`,
   (t) => {
     t.same(
@@ -585,7 +585,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - without diff`,
   (t) => {
     // passing {mode: "get"}:
@@ -720,7 +720,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - without diff`,
   (t) => {
     t.same(
@@ -795,7 +795,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - with diff`,
   (t) => {
     // with explicit {mode: "get"} object passed:
@@ -929,7 +929,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - with diff`,
   (t) => {
     // with explicit {mode: "get"} object being passed:
@@ -1063,7 +1063,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${36}m${`get`}\u001b[${39}m`} errors-out, returning null, when link is erroneous`,
   (t) => {
     t.same(
@@ -1083,7 +1083,7 @@ t.test(
 // 06. getRow
 // ------
 
-t.test(
+tap.test(
   `06.01 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - all kinds of throws`,
   (t) => {
     t.throws(() => getRow(1));
@@ -1094,7 +1094,7 @@ t.test(
   }
 );
 
-t.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
+tap.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
   t.same(getRow(["aaa", "bbb", "ccc"], 2), "ccc", "07.02.01 - found");
   t.same(getRow(["aaa", "bbb", "ccc"], 99), null, "07.02.01 - not found");
   t.end();
@@ -1103,7 +1103,7 @@ t.test(`06.02 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
 // 07. filterDate
 // ----------
 
-t.test(
+tap.test(
   `07.01 - ${`\u001b[${35}m${`filterDate()`}\u001b[${39}m`} - filters out date string`,
   (t) => {
     t.same(filterDate(" ]  (March 1st, 2017)"), "March 1st 2017", "07.01.01");

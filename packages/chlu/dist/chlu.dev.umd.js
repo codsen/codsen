@@ -3572,19 +3572,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -3598,11 +3599,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -3628,11 +3629,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -3645,7 +3646,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   /**
@@ -3660,7 +3661,9 @@
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
       return !input.trim();
-    } else if (!["object", "string"].includes(typeof input) || !input) {
+    }
+
+    if (!["object", "string"].includes(typeof input) || !input) {
       return false;
     }
 
@@ -4697,7 +4700,9 @@
 
     if (!existy(incoming) || typeof incoming === "boolean") {
       return [""];
-    } else if (Array.isArray(incoming)) {
+    }
+
+    if (Array.isArray(incoming)) {
       return incoming.filter(el => existy(el) && typeof el !== "boolean").map(el => String(el)).filter(el => el.length > 0);
     }
 
@@ -4754,7 +4759,9 @@
         rightOutsideNot: false
       }
     };
-    const opts = Object.assign({}, defaults, options);
+    const opts = { ...defaults,
+      ...options
+    };
     const source = stringise(originalSource);
     opts.leftOutsideNot = stringise(opts.leftOutsideNot);
     opts.leftOutside = stringise(opts.leftOutside);
@@ -4962,7 +4969,9 @@
   function isFooterLink(str) {
     if (str === undefined) {
       return false;
-    } else if (!isStr(str)) {
+    }
+
+    if (!isStr(str)) {
       throw new TypeError("chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string");
     }
 
@@ -4975,7 +4984,9 @@
   function isTitle(str) {
     if (str === undefined) {
       return false;
-    } else if (!isStr(str)) {
+    }
+
+    if (!isStr(str)) {
       throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ".concat(JSON.stringify(str, null, 4), " (").concat(_typeof(str), ")"));
     }
 
@@ -5110,6 +5121,7 @@
   // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
   // or
   // "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
+  // eslint-disable-next-line consistent-return
 
 
   function getSetFooterLink(str) {
@@ -5199,7 +5211,9 @@
 
     if (o.type === "github") {
       return "[".concat(res.version, "]: https://github.com/").concat(res.user, "/").concat(res.project, "/compare/v").concat(res.versBefore, "...v").concat(res.versAfter);
-    } else if (o.type === "bitbucket") {
+    }
+
+    if (o.type === "bitbucket") {
       return "[".concat(res.version, "]: https://bitbucket.org/").concat(res.user, "/").concat(res.project, "/branches/compare/v").concat(res.versAfter, "%0Dv").concat(res.versBefore, "#diff");
     }
   }
@@ -5231,7 +5245,7 @@
     return res;
   } // FIN
 
-  var isArr$1 = Array.isArray;
+  var isArr$1 = Array.isArray; // F'S
   // -----------------------------------------------------------------------------
 
   function existy$1(x) {
@@ -5252,7 +5266,7 @@
 
 
   function chlu(changelogContents, gitTags, packageJsonContents) {
-    if (arguments.length === 0 || !existy$1(changelogContents)) {
+    if (!arguments.length || !existy$1(changelogContents)) {
       return;
     } // process the gitTags input.
     // result will be in the following format:
@@ -5440,9 +5454,9 @@
     if (footerLinks.length > 1) {
       for (var _i2 = 0, _len2 = footerLinks.length; _i2 < _len2 - 1; _i2++) {
         if (semverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
-          descendingFooterLinkCount++;
+          descendingFooterLinkCount += 1;
         } else {
-          ascendingFooterLinkCount++;
+          ascendingFooterLinkCount += 1;
         }
       }
     }
@@ -5584,7 +5598,7 @@
     for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
       if (newLinesArr[_i5] === "" || typeof newLinesArr[_i5] === "string" && newLinesArr[_i5].trim() === "") {
         newLinesArr.splice(_i5, 1);
-        _i5--;
+        _i5 -= 1;
       }
     } // ========
     // stage 13: add trailing empty line if it's missing:

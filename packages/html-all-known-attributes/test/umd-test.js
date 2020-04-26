@@ -1,7 +1,7 @@
-const t = require("tap");
-const { allHtmlAttribs } = require("../dist/html-all-known-attributes.umd");
+import tap from "tap";
+import { allHtmlAttribs } from "../dist/html-all-known-attributes.umd";
 
-t.test(`1 - umd - there are 702 attrib names`, (t) => {
+tap.test(`1 - umd - there are 702 attrib names`, (t) => {
   t.ok(allHtmlAttribs.has("href"));
   t.end();
 });

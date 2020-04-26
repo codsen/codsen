@@ -1,5 +1,5 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   left,
   leftStopAtNewLines,
   right,
@@ -8,12 +8,12 @@ const {
   rightSeq,
   chompLeft,
   chompRight,
-} = require("../dist/string-left-right.cjs");
+} from "../dist/string-left-right.esm";
 
 // 00. EDGE CASES (there are no throws as it's an internal library)
 // -----------------------------------------------------------------------------
 
-t.test(`00.01 - \u001b[${33}m${`null`}\u001b[${39}m - missing input`, (t) => {
+tap.test(`00.01 - \u001b[${33}m${`null`}\u001b[${39}m - missing input`, (t) => {
   t.equal(left(), null, "00.01.01");
   t.equal(right(), null, "00.01.02");
   t.equal(leftSeq(), null, "00.01.03");
@@ -21,7 +21,7 @@ t.test(`00.01 - \u001b[${33}m${`null`}\u001b[${39}m - missing input`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `00.02 - \u001b[${33}m${`null`}\u001b[${39}m - non-string input`,
   (t) => {
     t.equal(left(1), null, "00.02.01");
@@ -32,7 +32,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `00.03 - \u001b[${33}m${`null`}\u001b[${39}m - non-string input`,
   (t) => {
     t.equal(left(null), null, "00.03.01");
@@ -50,7 +50,7 @@ t.test(
 // 01. left()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - \u001b[${31}m${`left`}\u001b[${39}m - null result cases`,
   (t) => {
     t.equal(left("abc"), null, "01.01.01 - assumed default");
@@ -67,7 +67,7 @@ t.test(
   }
 );
 
-t.test(`01.02 - \u001b[${31}m${`left`}\u001b[${39}m - normal use`, (t) => {
+tap.test(`01.02 - \u001b[${31}m${`left`}\u001b[${39}m - normal use`, (t) => {
   t.notOk(!!left(""), "01.02.01");
   t.notOk(!!left("a"), "01.02.02");
   t.equal(left("ab", 1), 0, "01.02.03");
@@ -84,7 +84,7 @@ t.test(`01.02 - \u001b[${31}m${`left`}\u001b[${39}m - normal use`, (t) => {
 // 02. right()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - \u001b[${34}m${`right`}\u001b[${39}m - calling at string length`,
   (t) => {
     t.equal(right(""), null, "02.01.01");
@@ -99,7 +99,7 @@ t.test(
   }
 );
 
-t.test(`02.02 - \u001b[${34}m${`right`}\u001b[${39}m - normal use`, (t) => {
+tap.test(`02.02 - \u001b[${34}m${`right`}\u001b[${39}m - normal use`, (t) => {
   t.notOk(!!right(""), "02.02.01");
   t.notOk(!!right("a"), "02.02.02");
 
@@ -119,48 +119,54 @@ t.test(`02.02 - \u001b[${34}m${`right`}\u001b[${39}m - normal use`, (t) => {
 // 03. rightSeq()
 // -----------------------------------------------------------------------------
 
-t.test(`03.01 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, (t) => {
-  // starts at "c":
-  t.same(
-    rightSeq("abcdefghijklmnop", 2, "d"),
-    {
-      gaps: [],
-      leftmostChar: 3,
-      rightmostChar: 3,
-    },
-    "03.01.01"
-  );
-  t.same(
-    rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
-    {
-      gaps: [],
-      leftmostChar: 3,
-      rightmostChar: 5,
-    },
-    "03.01.02"
-  );
-  t.same(
-    rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
-    {
-      gaps: [
-        [7, 9],
-        [10, 12],
-        [13, 15],
-      ],
-      leftmostChar: 9,
-      rightmostChar: 15,
-    },
-    "03.01.03"
-  );
-  t.end();
-});
+tap.test(
+  `03.01 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`,
+  (t) => {
+    // starts at "c":
+    t.same(
+      rightSeq("abcdefghijklmnop", 2, "d"),
+      {
+        gaps: [],
+        leftmostChar: 3,
+        rightmostChar: 3,
+      },
+      "03.01.01"
+    );
+    t.same(
+      rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
+      {
+        gaps: [],
+        leftmostChar: 3,
+        rightmostChar: 5,
+      },
+      "03.01.02"
+    );
+    t.same(
+      rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
+      {
+        gaps: [
+          [7, 9],
+          [10, 12],
+          [13, 15],
+        ],
+        leftmostChar: 9,
+        rightmostChar: 15,
+      },
+      "03.01.03"
+    );
+    t.end();
+  }
+);
 
-t.test(`03.02 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "03.02.01");
-  t.end();
-});
+tap.test(
+  `03.02 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`,
+  (t) => {
+    t.equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "03.02.01");
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `03.03 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - absent skips to right()`,
   (t) => {
     t.equal(rightSeq("abcdefghijklmnop", 0, "", ""), null, "03.03.01");
@@ -186,7 +192,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no sequence arguments - turns into right()`,
   (t) => {
     t.equal(rightSeq("abcdefghijklmnop", 0), 1, "03.04.01");
@@ -196,7 +202,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - starting point outside of the range`,
   (t) => {
     t.equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.05");
@@ -204,7 +210,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - optional - existing`,
   (t) => {
     t.same(
@@ -220,7 +226,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.07 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`,
   (t) => {
     t.same(
@@ -236,7 +242,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`,
   (t) => {
     t.same(
@@ -255,7 +261,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.09 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`,
   (t) => {
     t.same(
@@ -271,7 +277,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.10 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, existing`,
   (t) => {
     t.same(
@@ -287,7 +293,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.11 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, not existing`,
   (t) => {
     t.equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "03.11.01");
@@ -301,24 +307,27 @@ t.test(
   }
 );
 
-t.test(`03.12 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, (t) => {
-  t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "03.12");
-  t.same(
-    rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
-    {
-      gaps: [],
-      leftmostChar: 1,
-      rightmostChar: 3,
-    },
-    "03.12"
-  );
-  t.end();
-});
+tap.test(
+  `03.12 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`,
+  (t) => {
+    t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "03.12");
+    t.same(
+      rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
+      {
+        gaps: [],
+        leftmostChar: 1,
+        rightmostChar: 3,
+      },
+      "03.12"
+    );
+    t.end();
+  }
+);
 
 // 04. leftSeq()
 // -----------------------------------------------------------------------------
 
-t.test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
+tap.test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
   // starts at "f":
   t.same(
     leftSeq("abcdefghijk", 5, "c", "d", "e"),
@@ -371,32 +380,35 @@ t.test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
   t.end();
 });
 
-t.test(`04.02 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no findings`, (t) => {
-  t.equal(leftSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "04.02.01");
-  t.equal(leftSeq("abcdefghijklmnop", 2, "d", "e", "f"), null, "04.02.02");
-  t.equal(leftSeq("abcdefghijklmnop", 2, "", ""), null, "04.02.03");
-  t.same(
-    leftSeq("abcdefghijklmnop", 2, "b", ""),
-    {
-      gaps: [],
-      leftmostChar: 1,
-      rightmostChar: 1,
-    },
-    "04.02.04"
-  );
-  t.same(
-    leftSeq("abcdefghijklmnop", 2, "", "b"),
-    {
-      gaps: [],
-      leftmostChar: 1,
-      rightmostChar: 1,
-    },
-    "04.02.05"
-  );
-  t.end();
-});
+tap.test(
+  `04.02 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no findings`,
+  (t) => {
+    t.equal(leftSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "04.02.01");
+    t.equal(leftSeq("abcdefghijklmnop", 2, "d", "e", "f"), null, "04.02.02");
+    t.equal(leftSeq("abcdefghijklmnop", 2, "", ""), null, "04.02.03");
+    t.same(
+      leftSeq("abcdefghijklmnop", 2, "b", ""),
+      {
+        gaps: [],
+        leftmostChar: 1,
+        rightmostChar: 1,
+      },
+      "04.02.04"
+    );
+    t.same(
+      leftSeq("abcdefghijklmnop", 2, "", "b"),
+      {
+        gaps: [],
+        leftmostChar: 1,
+        rightmostChar: 1,
+      },
+      "04.02.05"
+    );
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   `04.03 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no sequence arguments`,
   (t) => {
     t.equal(leftSeq("abcdefghijklmnop", 0), null, "04.03.01");
@@ -408,7 +420,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - starting point outside of the range`,
   (t) => {
     t.equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.04");
@@ -416,7 +428,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - case insensitive`,
   (t) => {
     t.equal(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "04.05.01");
@@ -436,7 +448,7 @@ t.test(
 // 05. chompRight()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `05.01 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 0`,
   (t) => {
     t.equal(chompRight("a b c d  c dx", 2, "c", "d"), 12, "05.01.01");
@@ -475,7 +487,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.02 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`,
   (t) => {
     // mode 1: stop at first space, leave the whitespace alone
@@ -495,7 +507,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.03 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 2`,
   (t) => {
     // mode 2: hungrily chomp all whitespace except newlines
@@ -515,7 +527,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.04 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 3`,
   (t) => {
     // mode 3: aggressively chomp all whitespace
@@ -535,7 +547,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.05 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`not found`}\u001b[${39}m`} - all modes`,
   (t) => {
     t.equal(chompRight("a b c d  c dx", 2), null, "05.05.00");
@@ -600,7 +612,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.06 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`throws`}\u001b[${39}m`}`,
   (t) => {
     t.throws(() => {
@@ -610,7 +622,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.07 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #1`,
   (t) => {
     // stop at \n
@@ -619,7 +631,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.08 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #2`,
   (t) => {
     // stop at \n
@@ -628,7 +640,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.09 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #3`,
   (t) => {
     t.equal(chompRight(1, 0, null, "x"), null, "05.09");
@@ -636,7 +648,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.10 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #4`,
   (t) => {
     t.equal(
@@ -658,7 +670,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.11 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`adhoc`}\u001b[${39}m`} #5 - real life`,
   (t) => {
     t.equal(chompRight(`<a bcd="ef">`, 6, "="), null, "05.11.01");
@@ -727,7 +739,7 @@ t.test(
 // 06. chompLeft()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 0`,
   (t) => {
     t.equal(chompLeft("ab c b c  x y", 10, "b", "c"), 1, "06.01.01");
@@ -773,7 +785,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 1`,
   (t) => {
     // mode 1: stop at first space, leave the whitespace alone
@@ -792,7 +804,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.03 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 2`,
   (t) => {
     // mode 2: hungrily chomp all whitespace except newlines
@@ -811,7 +823,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.04 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 3`,
   (t) => {
     // mode 3: aggressively chomp all whitespace
@@ -835,7 +847,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.05 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${31}m${`not found`}\u001b[${39}m`} - all modes`,
   (t) => {
     t.equal(chompLeft("ab c b c  x y", -1), null, "06.05.00");
@@ -918,7 +930,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.06 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`throws`}\u001b[${39}m`}`,
   (t) => {
     t.throws(() => {
@@ -928,7 +940,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.07 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #1`,
   (t) => {
     // stop at \n
@@ -941,7 +953,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.08 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #2`,
   (t) => {
     t.equal(
@@ -953,7 +965,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.09 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #3`,
   (t) => {
     t.equal(
@@ -970,7 +982,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.10 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #4`,
   (t) => {
     t.equal(chompLeft(1, 22, { mode: 2 }, "b", "c"), null, "06.10");
@@ -978,7 +990,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.11 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #5`,
   (t) => {
     t.equal(
@@ -1000,7 +1012,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.12 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #5`,
   (t) => {
     t.equal(
@@ -1022,7 +1034,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.13 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #6 - real life`,
   (t) => {
     t.equal(chompLeft(`<a bcd="ef">`, 6, "="), null, "05.13.01");
@@ -1062,7 +1074,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.14 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #7 - real life`,
   (t) => {
     t.equal(
@@ -1089,7 +1101,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.15 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`hungry`}\u001b[${39}m`} sequence`,
   (t) => {
     t.equal(chompLeft(`. . . . . ....   . x`, 19, ".*"), 0, "05.15");
@@ -1097,7 +1109,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `05.16 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`hungry`}\u001b[${39}m`} sequence`,
   (t) => {
     t.equal(
@@ -1112,7 +1124,7 @@ t.test(
 // 06. leftStopAtNewLines()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `06.01 - \u001b[${35}m${`leftStopAtNewLines`}\u001b[${39}m - null result cases`,
   (t) => {
     t.equal(leftStopAtNewLines("abc"), null, "06.01.01 - assumed default");
@@ -1137,7 +1149,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `06.02 - \u001b[${35}m${`leftStopAtNewLines`}\u001b[${39}m - normal use`,
   (t) => {
     t.notOk(!!leftStopAtNewLines(""), "06.02.01");
@@ -1163,7 +1175,7 @@ t.test(
 // 07. rightStopAtNewLines()
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `07.01 - \u001b[${36}m${`rirightStopAtNewLinesght`}\u001b[${39}m - calling at string length`,
   (t) => {
     t.equal(rightStopAtNewLines(""), null, "07.01.01");
@@ -1178,7 +1190,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `07.02 - \u001b[${36}m${`rightStopAtNewLines`}\u001b[${39}m - normal use`,
   (t) => {
     t.notOk(!!rightStopAtNewLines(""), "07.02.01");

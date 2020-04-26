@@ -38,6 +38,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 var has = Object.prototype.hasOwnProperty;
 function isStr(something) {
   return typeof something === "string";
@@ -143,7 +192,8 @@ function wrap(placementValue, opts) {
   }) && (
   !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
-  } else if (dontWrapTheseVars) {
+  }
+  if (dontWrapTheseVars) {
     if (!isStr(placementValue)) {
       return placementValue;
     }
@@ -335,7 +385,8 @@ function resolveString(input, string, path, opts) {
   var temp1 = processHeadsAndTails(foundHeadsAndTails, false, wholeValueIsVariable);
   if (isBool(temp1)) {
     return temp1;
-  } else if (isNull(temp1)) {
+  }
+  if (isNull(temp1)) {
     return temp1;
   }
   try {
@@ -352,7 +403,8 @@ function resolveString(input, string, path, opts) {
   var temp2 = processHeadsAndTails(foundHeadsAndTails, true, wholeValueIsVariable);
   if (isBool(temp2)) {
     return temp2;
-  } else if (isNull(temp2)) {
+  }
+  if (isNull(temp2)) {
     return temp2;
   }
   if (finalRangesArr && finalRangesArr.current()) {
@@ -389,7 +441,7 @@ function jsonVariables(input) {
     throwWhenNonStringInsertedInString: false,
     allowUnresolved: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
   } else if (!Array.isArray(opts.dontWrapVars)) {

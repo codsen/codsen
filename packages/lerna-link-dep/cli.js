@@ -11,6 +11,7 @@ const meow = require("meow");
 const path = require("path");
 const updateNotifier = require("update-notifier");
 const execa = require("execa");
+
 const messagePrefix = `\u001b[${90}m${"✨ lerna-link-dep: "}\u001b[${39}m`;
 
 const cli = meow(
@@ -255,7 +256,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     } else if (isCLI.length) {
       // if CLI dependency
 
-      for (let y = 0, len = isCLI.length; y < len; y++) {
+      for (let y = 0, len2 = isCLI.length; y < len2; y++) {
         const binName = isCLI[y];
         console.log(
           `${messagePrefix} processing ${`\u001b[${33}m${binName}\u001b[${39}m`} bin entry of a ${`\u001b[${35}m${

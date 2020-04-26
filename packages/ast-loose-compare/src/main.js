@@ -1,4 +1,5 @@
 import empty from "ast-contains-only-empty-space";
+
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)

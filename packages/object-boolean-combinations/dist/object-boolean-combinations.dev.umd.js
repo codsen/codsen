@@ -3458,6 +3458,7 @@
 	  module.exports = cloneDeep;
 	});
 
+	/* eslint no-bitwise:0 */
 	/**
 	 * Checks if input is a true Object (checking against null and Array)
 	 * @param {Object} a reference object to use the properties from. Values don't
@@ -3557,6 +3558,7 @@
 	  if (override) {
 	    outcomingObjectsArray.forEach(function (elem3) {
 	      return propertiesToBeOverridden.forEach(function (elem4) {
+	        // eslint-disable-next-line no-param-reassign
 	        elem3[elem4] = overrideObject[elem4];
 	      });
 	    });

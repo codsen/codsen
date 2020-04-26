@@ -140,7 +140,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
-[cov-img]: https://img.shields.io/badge/coverage-95.12%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/str-indexes-of-plus?activeTab=dependencies

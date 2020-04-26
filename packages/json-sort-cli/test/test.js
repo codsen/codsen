@@ -1,10 +1,10 @@
-const fs = require("fs-extra");
-const path = require("path");
-const t = require("tap");
-const execa = require("execa");
-const tempy = require("tempy");
-const pMap = require("p-map");
-const pack = require("../package.json");
+import fs from "fs-extra";
+import path from "path";
+import tap from "tap";
+import execa from "execa";
+import tempy from "tempy";
+import pMap from "p-map";
+import pack from "../package.json";
 
 // -----------------------------------------------------------------------------
 
@@ -339,7 +339,7 @@ const prettifiedContents = `{
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - default sort, called on the whole folder", async (t) => {
+tap.test("01.01 - default sort, called on the whole folder", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -397,7 +397,7 @@ t.test("01.01 - default sort, called on the whole folder", async (t) => {
   t.end();
 });
 
-t.test("01.02 - sort, -t (tabs) mode", async (t) => {
+tap.test("01.02 - sort, -t (tabs) mode", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -440,7 +440,7 @@ t.test("01.02 - sort, -t (tabs) mode", async (t) => {
   t.end();
 });
 
-t.test("01.03 - sort, there's a broken JSON among files", async (t) => {
+tap.test("01.03 - sort, there's a broken JSON among files", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -502,7 +502,7 @@ t.test("01.03 - sort, there's a broken JSON among files", async (t) => {
   t.end();
 });
 
-t.test("01.04 - silent mode", async (t) => {
+tap.test("01.04 - silent mode", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -565,7 +565,7 @@ t.test("01.04 - silent mode", async (t) => {
   t.end();
 });
 
-t.test("01.05 - fixes minified dotfiles in JSON format", async (t) => {
+tap.test("01.05 - fixes minified dotfiles in JSON format", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -587,7 +587,7 @@ t.test("01.05 - fixes minified dotfiles in JSON format", async (t) => {
   t.end();
 });
 
-t.test("01.06 - topmost level is array", async (t) => {
+tap.test("01.06 - topmost level is array", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -637,7 +637,7 @@ t.test("01.06 - topmost level is array", async (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.07 - when asked, sorts arrays which contain only strings",
   async (t) => {
     const tempFolder = tempy.directory();
@@ -675,7 +675,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.08 - when not asked, does not sort arrays which contain only strings",
   async (t) => {
     const tempFolder = tempy.directory();
@@ -703,7 +703,7 @@ t.test(
   }
 );
 
-t.test("01.09 - array in deeper levels sorted (upon request)", async (t) => {
+tap.test("01.09 - array in deeper levels sorted (upon request)", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -757,7 +757,7 @@ t.test("01.09 - array in deeper levels sorted (upon request)", async (t) => {
   t.end();
 });
 
-t.test("01.10 - version output mode", async (t) => {
+tap.test("01.10 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.equal(reportedVersion1.stdout, pack.version);
 
@@ -766,7 +766,7 @@ t.test("01.10 - version output mode", async (t) => {
   t.end();
 });
 
-t.test("01.11 - help output mode", async (t) => {
+tap.test("01.11 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.match(reportedVersion1.stdout, /Usage/);
   t.match(reportedVersion1.stdout, /Options/);
@@ -779,7 +779,7 @@ t.test("01.11 - help output mode", async (t) => {
   t.end();
 });
 
-t.test("01.12 - no files found in the given directory", async (t) => {
+tap.test("01.12 - no files found in the given directory", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -794,7 +794,7 @@ t.test("01.12 - no files found in the given directory", async (t) => {
   t.end();
 });
 
-t.test("01.13 - package.json is sorted by default", async (t) => {
+tap.test("01.13 - package.json is sorted by default", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -832,7 +832,7 @@ t.test("01.13 - package.json is sorted by default", async (t) => {
   t.end();
 });
 
-t.test("01.14 - package.json is not sorted under -p flag", async (t) => {
+tap.test("01.14 - package.json is not sorted under -p flag", async (t) => {
   const tempFolder = tempy.directory();
   const source = `{
   "dependencies": {
@@ -864,7 +864,7 @@ t.test("01.14 - package.json is not sorted under -p flag", async (t) => {
 // 02. opts: -c or --ci - the CI mode
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - CI mode, something to sort, -c flag", async (t) => {
+tap.test("02.01 - CI mode, something to sort, -c flag", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -905,7 +905,7 @@ t.test("02.01 - CI mode, something to sort, -c flag", async (t) => {
   t.end();
 });
 
-t.test("02.02 - CI mode, something to sort, --ci flag", async (t) => {
+tap.test("02.02 - CI mode, something to sort, --ci flag", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";

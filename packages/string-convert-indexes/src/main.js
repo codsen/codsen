@@ -47,7 +47,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   const defaults = {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   // this simple counter will later act as the "address" to each finding and will
   // be used in set() method to convert the value at this "address" within tree:
@@ -71,6 +71,8 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   } else {
     // traverse the indexes and compile the sorted list of them, along with their "addresses",
     // or id numbers, by which they can later be called using "ast-monkey":
+
+    // eslint-disable-next-line no-param-reassign
     indexes = traverse(indexes, (key, val) => {
       data.id += 1;
       data.val = val !== undefined ? val : key;
@@ -111,7 +113,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`
     );
     console.log(
-      `114 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
+      `116 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
     );
     //
     //    PART 1. Bean-counting
@@ -131,11 +133,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       if (surrogateDetected !== true) {
         unicodeIndex += 1;
         console.log(
-          `134 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+          `136 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
         );
         surrogateDetected = true;
         console.log(
-          `138 ! surrogateDetected now ${JSON.stringify(
+          `140 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -147,7 +149,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
         // but reset the flag, because astral symbols come in pairs
         surrogateDetected = false;
         console.log(
-          `150 ! surrogateDetected now ${JSON.stringify(
+          `152 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -160,13 +162,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       // bump the counter:
       unicodeIndex += 1;
       console.log(
-        `163 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+        `165 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
       );
       // reset the flag:
       if (surrogateDetected === true) {
         surrogateDetected = false;
         console.log(
-          `169 ! surrogateDetected now ${JSON.stringify(
+          `171 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -248,7 +250,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   //       ==============
 
   console.log("\n\n\n");
-  console.log(`251 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
+  console.log(`253 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
   if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
@@ -256,7 +258,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
 
   // The result's base is original indexes from the input. Clone it.
   console.log(
-    `259 ███████████████████████████████████████ CLONING indexes = ${indexes}, typeof ${
+    `261 ███████████████████████████████████████ CLONING indexes = ${indexes}, typeof ${
       Array.isArray(indexes) ? "array" : `${typeof indexes}`
     }`
   );

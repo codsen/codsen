@@ -7,6 +7,7 @@ const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
 const writeFileAtomic = require("write-file-atomic");
 const { promisify } = require("util");
+
 const write = promisify(writeFileAtomic);
 const arrayiffy = require("arrayiffy-if-string");
 
@@ -83,16 +84,18 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
+      console.log(
+        `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
+      );
     });
 }
 
 function processPaths(paths) {
   return (
     globby(paths)
-      .then((paths) =>
+      .then((receivedPaths) =>
         pReduce(
-          paths,
+          receivedPaths,
           (concattedTotal, singleDirOrFilePath) =>
             concattedTotal.concat(
               isDirectory(singleDirOrFilePath).then((bool) =>

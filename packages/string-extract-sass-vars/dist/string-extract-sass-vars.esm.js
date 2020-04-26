@@ -25,7 +25,7 @@ function extractVars(str, originalOpts) {
     throwIfEmpty: false,
     cb: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.cb && typeof opts.cb !== "function") {
     throw new Error(
       `string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ${JSON.stringify(

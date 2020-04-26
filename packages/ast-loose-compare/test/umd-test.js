@@ -1,5 +1,5 @@
-const t = require("tap");
-const compare1 = require("../dist/ast-loose-compare.umd");
+import tap from "tap";
+import compare1 from "../dist/ast-loose-compare.umd";
 
 const source = {
   a: "a",
@@ -13,7 +13,7 @@ const target = {
   b: undefined,
 };
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   t.false(compare1(source, target));
   t.end();
 });

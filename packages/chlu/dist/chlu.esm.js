@@ -41,7 +41,8 @@ const isArr = Array.isArray;
 function isFooterLink(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError(
       "chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string"
     );
@@ -55,7 +56,8 @@ function isFooterLink(str) {
 function isTitle(str) {
   if (str === undefined) {
     return false;
-  } else if (!isStr(str)) {
+  }
+  if (!isStr(str)) {
     throw new TypeError(
       `chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ${JSON.stringify(
         str,
@@ -275,7 +277,8 @@ function getSetFooterLink(str, o = {}) {
   }
   if (o.type === "github") {
     return `[${res.version}]: https://github.com/${res.user}/${res.project}/compare/v${res.versBefore}...v${res.versAfter}`;
-  } else if (o.type === "bitbucket") {
+  }
+  if (o.type === "bitbucket") {
     return `[${res.version}]: https://bitbucket.org/${res.user}/${res.project}/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
   }
 }
@@ -310,7 +313,7 @@ function existy$1(x) {
   return x != null;
 }
 function chlu(changelogContents, gitTags, packageJsonContents) {
-  if (arguments.length === 0 || !existy$1(changelogContents)) {
+  if (!arguments.length || !existy$1(changelogContents)) {
     return;
   }
   let processedGitTags;
@@ -471,9 +474,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       if (
         semverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1
       ) {
-        descendingFooterLinkCount++;
+        descendingFooterLinkCount += 1;
       } else {
-        ascendingFooterLinkCount++;
+        ascendingFooterLinkCount += 1;
       }
     }
   }
@@ -600,7 +603,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       (typeof newLinesArr[i] === "string" && newLinesArr[i].trim() === "")
     ) {
       newLinesArr.splice(i, 1);
-      i--;
+      i -= 1;
     }
   }
   if (newLinesArr[newLinesArr.length - 1] !== "") {

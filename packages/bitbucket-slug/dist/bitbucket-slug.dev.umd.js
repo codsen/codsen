@@ -4795,6 +4795,7 @@
 
 
 	  while (str !== ent.decode(str)) {
+	    // eslint-disable-next-line no-param-reassign
 	    str = ent.decode(str);
 	  } // characters which will be deleted:
 

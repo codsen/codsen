@@ -1,5 +1,5 @@
-const t = require("tap");
-const r = require("../dist/regex-empty-conditional-comments.cjs");
+import tap from "tap";
+import r from "../dist/regex-empty-conditional-comments.esm";
 
 const fixture = [
   // outlook-only:
@@ -32,7 +32,8 @@ const fixture = [
 <!--<![endif]-->`,
 ];
 
-t.test("matches each of comments", (t) => {
+tap.test("matches each of comments", (t) => {
+  // eslint-disable-next-line
   for (const comment of fixture) {
     t.match(comment, r());
   }
@@ -72,7 +73,7 @@ zzz
   t.end();
 });
 
-t.test("returns comment on match", (t) => {
+tap.test("returns comment on match", (t) => {
   t.same("<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()), [
     "<!--[if (gte mso 9)|(IE)]><![endif]-->",
   ]);
@@ -96,7 +97,7 @@ t.test("returns comment on match", (t) => {
   t.end();
 });
 
-t.test("deletes comments from code", (t) => {
+tap.test("deletes comments from code", (t) => {
   t.equal(
     `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
       r(),

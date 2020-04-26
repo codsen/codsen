@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint no-console:0 */
+/* eslint no-console:0, no-param-reassign: 0, no-nested-ternary: 0 */
 
 // -----------------------------------------------------------------------------
 // SETUP
@@ -26,23 +26,26 @@ const camelCase = require("lodash.camelcase");
 // const semverCompare = require("semver-compare");
 // const bSlug = require("bitbucket-slug");
 const GithubSlugger = require("github-slugger");
+
+const pull1 = require("array-pull-all-with-glob");
+
 const slugger = new GithubSlugger();
 
 const findRecursivelyUp = require("find-file-recursively-up");
 const inquirer = require("inquirer");
 // const matcher = require('matcher')
+
+function pull(arg1, arg2) {
+  return pull1(arg1, arg2, { caseSensitive: false });
+}
+const arrayiffy = require("arrayiffy-if-string");
+
 const {
   // initNpmIgnore,
   npmWillTakeCareOfThese,
   encodeDot,
   decodeDot,
 } = require("./init-npmignore");
-const pull1 = require("array-pull-all-with-glob");
-
-function pull(arg1, arg2) {
-  return pull1(arg1, arg2, { caseSensitive: false });
-}
-const arrayiffy = require("arrayiffy-if-string");
 
 // const flow = require('lodash.flow')
 
@@ -867,7 +870,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     // This will be the correct default object.
 
     let defaultlectKeys = {};
-    defaultlectKeys = Object.assign({}, {}); // to trick ESLint to accept that it's used
+    defaultlectKeys = {}; // to trick ESLint to accept that it's used
     // and to stop suggesting to set it as const
     objectPath.set(defaultlectKeys, "lect", packageJsonlectKeyDefaults);
     defaultlectKeys.lect.various.travisVersionsOverride = defaultlectKeys.lect.various.travisVersionsOverride.filter(
@@ -1024,7 +1027,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1027 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1030 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1186,11 +1189,10 @@ async function step10() {
       const defaultDevDeps = get("package.devDependencies");
       if (defaultDevDeps) {
         // objectPath.set(finalThing, "devDependencies", defaultDevDeps);
-        finalThing.devDependencies = Object.assign(
-          {},
-          defaultDevDeps.devDependencies,
-          finalThing.devDependencies
-        );
+        finalThing.devDependencies = {
+          ...defaultDevDeps.devDependencies,
+          ...finalThing.devDependencies,
+        };
       }
     }
 
@@ -1269,13 +1271,13 @@ function step8() {
   // log(`${chalk.white("\nSTEP 8 - ad-hoc delete files")}`);
 
   const thingsToDelete = get("files.delete").filter((val) => val.trim() !== "");
-  pMap(thingsToDelete, (path) => {
-    fs.access(path, fs.constants.F_OK)
+  pMap(thingsToDelete, (currPath) => {
+    fs.access(currPath, fs.constants.F_OK)
       .then(() =>
         fs
-          .remove(path)
+          .remove(currPath)
           .then(
-            log(chalk.green(logSymbols.success, path), chalk.red("DELETED"))
+            log(chalk.green(logSymbols.success, currPath), chalk.red("DELETED"))
           )
       )
       .catch(() => {});
@@ -1531,7 +1533,8 @@ function step6() {
         // not or setting is missing (means "on")
         if (!pack.dependencies && name === "deps2d") {
           return `${res}[no-deps-img]: ${noDepsBadge}\n[no-deps-url]: ${noDepsUrl}\n\n`;
-        } else if (
+        }
+        if (
           !objectPath.has(pack, `lect.badges.${name}`) ||
           pack.lect.badges[name]
         ) {
@@ -1570,6 +1573,7 @@ function step6() {
 
   let existingContributorsBackup = null;
 
+  // eslint-disable-next-line consistent-return
   readmeData.forEach((readmePiece, indx) => {
     // console.log(
     //   `1613 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
@@ -1664,7 +1668,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1667 clause #3`);
+        console.log(`1671 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

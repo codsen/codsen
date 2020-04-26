@@ -1902,19 +1902,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -1928,11 +1929,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -1958,11 +1959,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -1975,7 +1976,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;

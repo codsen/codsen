@@ -1,3 +1,5 @@
+/* eslint no-bitwise:0 */
+
 import intersection from "lodash.intersection";
 import pull from "lodash.pull";
 import isObject from "lodash.isplainobject";
@@ -109,6 +111,7 @@ function objectBooleanCombinations(
   if (override) {
     outcomingObjectsArray.forEach((elem3) =>
       propertiesToBeOverridden.forEach((elem4) => {
+        // eslint-disable-next-line no-param-reassign
         elem3[elem4] = overrideObject[elem4];
       })
     );

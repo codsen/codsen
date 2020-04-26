@@ -55,6 +55,7 @@
     }
 
     if (/^\d*$/.test(fromIndex)) {
+      // eslint-disable-next-line no-param-reassign
       fromIndex = Number(fromIndex);
     }
 
@@ -66,6 +67,7 @@
     }
 
     if (!existy(fromIndex)) {
+      // eslint-disable-next-line no-param-reassign
       fromIndex = 0;
     }
 

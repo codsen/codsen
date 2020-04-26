@@ -55,7 +55,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       Array.from(str).forEach(function (char) {
         if (char !== "\n" || limit) {
           if (char === "\n") {
-            limit--;
+            limit -= 1;
           }
           push(resArr, true, char);
         }
@@ -71,13 +71,11 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       for (var i = 0, len = str.length; i < len; i++) {
         if (str[i].trim()) {
           break;
-        } else {
-          if (str[i] !== "\n" || limit) {
-            if (str[i] === "\n") {
-              limit--;
-            }
-            push(startCharacter, true, str[i]);
+        } else if (str[i] !== "\n" || limit) {
+          if (str[i] === "\n") {
+            limit -= 1;
           }
+          push(startCharacter, true, str[i]);
         }
       }
     }
@@ -87,13 +85,11 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       for (var _i = str.length; _i--;) {
         if (str[_i].trim()) {
           break;
-        } else {
-          if (str[_i] !== "\n" || limit) {
-            if (str[_i] === "\n") {
-              limit--;
-            }
-            push(endCharacter, false, str[_i]);
+        } else if (str[_i] !== "\n" || limit) {
+          if (str[_i] === "\n") {
+            limit -= 1;
           }
+          push(endCharacter, false, str[_i]);
         }
       }
     }

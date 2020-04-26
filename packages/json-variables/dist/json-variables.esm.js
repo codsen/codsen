@@ -151,7 +151,8 @@ function wrap(
         !placementValue.includes(opts.wrapTailsWith)))
   ) {
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
-  } else if (dontWrapTheseVars) {
+  }
+  if (dontWrapTheseVars) {
     if (!isStr(placementValue)) {
       return placementValue;
     }
@@ -447,7 +448,8 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   );
   if (isBool(temp1)) {
     return temp1;
-  } else if (isNull(temp1)) {
+  }
+  if (isNull(temp1)) {
     return temp1;
   }
   try {
@@ -478,7 +480,8 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   );
   if (isBool(temp2)) {
     return temp2;
-  } else if (isNull(temp2)) {
+  }
+  if (isNull(temp2)) {
     return temp2;
   }
   if (finalRangesArr && finalRangesArr.current()) {
@@ -524,7 +527,7 @@ function jsonVariables(input, originalOpts = {}) {
     throwWhenNonStringInsertedInString: false,
     allowUnresolved: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
   } else if (!Array.isArray(opts.dontWrapVars)) {

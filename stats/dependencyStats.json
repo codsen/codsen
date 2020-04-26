@@ -74,7 +74,7 @@
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 25,
+        "lodash.isplainobject": 24,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
@@ -176,6 +176,7 @@
         "eslint-plugin-row-num": 14,
         "execa": 10,
         "fs-extra": 3,
+        "globby": 1,
         "html-crush": 1,
         "is-ci": 1,
         "json-stringify-safe": 1,
@@ -202,12 +203,12 @@
         "rollup-plugin-terser": 101,
         "string-find-heads-tails": 1,
         "tap": 114,
-        "tempy": 12,
+        "tempy": 13,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 25
+            "lodash.isplainobject": 24
         },
         {
             "lodash.clonedeep": 20

@@ -4,6 +4,7 @@
     "node": true
   },
   "extends": [
+    "airbnb/base",
     "eslint:recommended",
     "plugin:prettier/recommended",
     "plugin:import/errors",
@@ -21,6 +22,8 @@
     "**/tap/**"
   ],
   "rules": {
+    "array-callback-return": 0,
+    "consistent-return": 0,
     "curly": "error",
     "no-constant-condition": [
       "error",
@@ -28,8 +31,27 @@
         "checkLoops": false
       }
     ],
+    "import/prefer-default-export": 0,
     "no-else-return": "error",
     "no-inner-declarations": "error",
+    "no-loop-func": 0,
+    "no-nested-ternary": 0,
+    "no-continue": 0,
+    "no-use-before-define": ["error", { "functions": false }],
+    "no-param-reassign": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/rollup.config.js",
+          "**/test/**",
+          "**/t-util/**",
+          "**/*test.js",
+          "**/*.spec.js"
+        ]
+      }
+    ],
     "no-unneeded-ternary": "error",
     "no-useless-return": "error",
     "no-var": "error",
@@ -39,6 +61,7 @@
     ],
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
+    "prefer-destructuring": 0,
     "prefer-template": "error",
     "row-num/correct-row-num": "error",
     "strict": "error",

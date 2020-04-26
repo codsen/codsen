@@ -40,7 +40,8 @@ function isEmpty(input) {
       res = isEmpty(input[i]);
       if (res === null) {
         return null;
-      } else if (!res) {
+      }
+      if (!res) {
         return false;
       }
     }
@@ -52,7 +53,8 @@ function isEmpty(input) {
       res = isEmpty(input[Object.keys(input)[i]]);
       if (res === null) {
         return null;
-      } else if (!res) {
+      }
+      if (!res) {
         return false;
       }
     }

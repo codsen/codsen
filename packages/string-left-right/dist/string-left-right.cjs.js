@@ -32,6 +32,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -99,9 +148,11 @@ function rightMain(str, idx, stopAtNewlines) {
   }
   if (!str[idx + 1]) {
     return null;
-  } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+  }
+  if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
     return idx + 1;
-  } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+  }
+  if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
     return idx + 2;
   }
   for (var i = idx + 1, len = str.length; i < len; i++) {
@@ -126,9 +177,11 @@ function leftMain(str, idx, stopAtNewlines) {
   }
   if (idx < 1) {
     return null;
-  } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+  }
+  if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
     return idx - 1;
-  } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+  }
+  if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
     return idx - 2;
   }
   for (var i = idx; i--;) {
@@ -162,7 +215,7 @@ function seq(direction, str, idx, opts, args) {
   var i = 0;
   while (i < args.length) {
     if (!isStr(args[i]) || !args[i].length) {
-      i++;
+      i += 1;
       continue;
     }
     var _x = x(args[i]),
@@ -175,7 +228,7 @@ function seq(direction, str, idx, opts, args) {
       if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
         satiated = true;
       } else {
-        i++;
+        i += 1;
       }
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
@@ -195,10 +248,10 @@ function seq(direction, str, idx, opts, args) {
         leftmostChar = whattsOnTheSide;
       }
     } else if (optional) {
-      i++;
+      i += 1;
       continue;
     } else if (satiated) {
-      i++;
+      i += 1;
       satiated = undefined;
       continue;
     } else {
@@ -226,7 +279,7 @@ function leftSeq(str, idx) {
   };
   var opts;
   if (isObj(args[0])) {
-    opts = Object.assign({}, defaults, args.shift());
+    opts = _objectSpread2({}, defaults, {}, args.shift());
   } else {
     opts = defaults;
   }
@@ -244,7 +297,7 @@ function rightSeq(str, idx) {
   };
   var opts;
   if (isObj(args[0])) {
-    opts = Object.assign({}, defaults, args.shift());
+    opts = _objectSpread2({}, defaults, {}, args.shift());
   } else {
     opts = defaults;
   }
@@ -269,7 +322,7 @@ function chomp(direction, str, idx, opts, args) {
     }
   } while (lastRes);
   if (lastIdx != null && direction === "right") {
-    lastIdx++;
+    lastIdx += 1;
   }
   if (lastIdx === null) {
     return null;
@@ -282,7 +335,8 @@ function chomp(direction, str, idx, opts, args) {
     if (opts.mode === 0) {
       if (whatsOnTheRight === lastIdx + 1) {
         return lastIdx;
-      } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+      }
+      if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
         for (var y = lastIdx, len = str.length; y < len; y++) {
           if ("\n\r".includes(str[y])) {
             return y;
@@ -304,7 +358,7 @@ function chomp(direction, str, idx, opts, args) {
       }
       return str.length;
     }
-    return whatsOnTheRight ? whatsOnTheRight : str.length;
+    return whatsOnTheRight || str.length;
   }
   if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
     return lastIdx;
@@ -313,7 +367,8 @@ function chomp(direction, str, idx, opts, args) {
   if (opts.mode === 0) {
     if (whatsOnTheLeft === lastIdx - 2) {
       return lastIdx;
-    } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+    }
+    if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
       for (var _y2 = lastIdx; _y2--;) {
         if ("\n\r".includes(str[_y2]) || str[_y2].trim()) {
           return _y2 + 1 + (str[_y2].trim() ? 1 : 0);
@@ -321,9 +376,11 @@ function chomp(direction, str, idx, opts, args) {
       }
     }
     return 0;
-  } else if (opts.mode === 1) {
+  }
+  if (opts.mode === 1) {
     return lastIdx;
-  } else if (opts.mode === 2) {
+  }
+  if (opts.mode === 2) {
     var _remainderString = str.slice(0, lastIdx);
     if (_remainderString.trim() || _remainderString.includes("\n") || _remainderString.includes("\r")) {
       for (var _y3 = lastIdx; _y3--;) {
@@ -347,7 +404,7 @@ function chompLeft(str, idx) {
     mode: 0
   };
   if (isObj(args[0])) {
-    var opts = Object.assign({}, defaults, clone(args[0]));
+    var opts = _objectSpread2({}, defaults, {}, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -356,7 +413,8 @@ function chompLeft(str, idx) {
       throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
     return chomp("left", str, idx, opts, clone(args).slice(1));
-  } else if (!isStr(args[0])) {
+  }
+  if (!isStr(args[0])) {
     return chomp("left", str, idx, defaults, clone(args).slice(1));
   }
   return chomp("left", str, idx, defaults, clone(args));
@@ -372,7 +430,7 @@ function chompRight(str, idx) {
     mode: 0
   };
   if (isObj(args[0])) {
-    var opts = Object.assign({}, defaults, clone(args[0]));
+    var opts = _objectSpread2({}, defaults, {}, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -381,7 +439,8 @@ function chompRight(str, idx) {
       throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
     return chomp("right", str, idx, opts, clone(args).slice(1));
-  } else if (!isStr(args[0])) {
+  }
+  if (!isStr(args[0])) {
     return chomp("right", str, idx, defaults, clone(args).slice(1));
   }
   return chomp("right", str, idx, defaults, clone(args));

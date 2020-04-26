@@ -1,12 +1,12 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   find,
   get,
   set,
   drop,
   del,
   arrayFirstOnly,
-} = require("../dist/ast-monkey.cjs");
+} from "../dist/ast-monkey.esm";
 
 const defaultInput = {
   a: { b: [{ c: { d: "e" } }] },
@@ -17,7 +17,7 @@ const defaultInput = {
 // all throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - find - throws when there's no input", (t) => {
+tap.test("01.01 - find - throws when there's no input", (t) => {
   t.throws(() => {
     find();
   }, /THROW_ID_02/g);
@@ -27,7 +27,7 @@ t.test("01.01 - find - throws when there's no input", (t) => {
   t.end();
 });
 
-t.test("01.02 - get -  throws when there's no input", (t) => {
+tap.test("01.02 - get -  throws when there's no input", (t) => {
   t.throws(() => {
     get();
   }, /THROW_ID_06/g);
@@ -37,7 +37,7 @@ t.test("01.02 - get -  throws when there's no input", (t) => {
   t.end();
 });
 
-t.test("01.03 - set -  throws when there's no input", (t) => {
+tap.test("01.03 - set -  throws when there's no input", (t) => {
   t.throws(() => {
     set();
   }, /THROW_ID_12/g);
@@ -47,7 +47,7 @@ t.test("01.03 - set -  throws when there's no input", (t) => {
   t.end();
 });
 
-t.test("01.04 - drop - throws when there's no input", (t) => {
+tap.test("01.04 - drop - throws when there's no input", (t) => {
   t.throws(() => {
     drop();
   }, /THROW_ID_19/g);
@@ -57,7 +57,7 @@ t.test("01.04 - drop - throws when there's no input", (t) => {
   t.end();
 });
 
-t.test("01.06 - get/set - throws when opts.index is missing", (t) => {
+tap.test("01.06 - get/set - throws when opts.index is missing", (t) => {
   t.throws(() => {
     get(defaultInput);
   }, /THROW_ID_07/g);
@@ -73,7 +73,7 @@ t.test("01.06 - get/set - throws when opts.index is missing", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.07 - get/set/drop - throws when opts.index is not a natural number (both string or number)",
   (t) => {
     t.throws(() => {
@@ -98,24 +98,27 @@ t.test(
   }
 );
 
-t.test("01.08 - set - throws when opts.key and opts.val are missing", (t) => {
+tap.test("01.08 - set - throws when opts.key and opts.val are missing", (t) => {
   t.throws(() => {
     set(defaultInput, { index: "3" });
   }, /THROW_ID_14/g);
   t.end();
 });
 
-t.test("01.09 - find - throws when opts.key and opts.val are missing", (t) => {
-  t.throws(() => {
-    find(defaultInput, { index: "3" });
-  }, /THROW_ID_03/g);
-  t.throws(() => {
-    find(defaultInput, { index: 3 });
-  }, /THROW_ID_03/g);
-  t.end();
-});
+tap.test(
+  "01.09 - find - throws when opts.key and opts.val are missing",
+  (t) => {
+    t.throws(() => {
+      find(defaultInput, { index: "3" });
+    }, /THROW_ID_03/g);
+    t.throws(() => {
+      find(defaultInput, { index: 3 });
+    }, /THROW_ID_03/g);
+    t.end();
+  }
+);
 
-t.test("01.10 - del - throws when opts.key and opts.val are missing", (t) => {
+tap.test("01.10 - del - throws when opts.key and opts.val are missing", (t) => {
   t.throws(() => {
     del(defaultInput, { index: "3" });
   }, /THROW_ID_28/g);
@@ -125,7 +128,7 @@ t.test("01.10 - del - throws when opts.key and opts.val are missing", (t) => {
   t.end();
 });
 
-t.test("01.10 - drop - throws when there's no index", (t) => {
+tap.test("01.10 - drop - throws when there's no index", (t) => {
   t.throws(() => {
     drop(["a"], "a");
   }, /THROW_ID_20/g);
@@ -139,7 +142,7 @@ t.test("01.10 - drop - throws when there's no index", (t) => {
 // find
 // -----------------------------------------------------------------------------
 
-t.test("02.01.pt1 - finds by key in a simple object #1", (t) => {
+tap.test("02.01.pt1 - finds by key in a simple object #1", (t) => {
   const input = {
     a: {
       b: "c",
@@ -169,7 +172,7 @@ t.test("02.01.pt1 - finds by key in a simple object #1", (t) => {
   t.end();
 });
 
-t.test("02.01.pt2 - finds by key in a simple object, with glob", (t) => {
+tap.test("02.01.pt2 - finds by key in a simple object, with glob", (t) => {
   const input = {
     a1: {
       b1: "c1",
@@ -213,7 +216,7 @@ t.test("02.01.pt2 - finds by key in a simple object, with glob", (t) => {
   t.end();
 });
 
-t.test("02.02.pt1 - finds by key in a simple object #2", (t) => {
+tap.test("02.02.pt1 - finds by key in a simple object #2", (t) => {
   const input = {
     a: {
       b: "c",
@@ -238,7 +241,7 @@ t.test("02.02.pt1 - finds by key in a simple object #2", (t) => {
   t.end();
 });
 
-t.test("02.02.pt2 - finds by key in a simple object, with glob", (t) => {
+tap.test("02.02.pt2 - finds by key in a simple object, with glob", (t) => {
   const input = {
     a: {
       b1: "c1",
@@ -271,7 +274,7 @@ t.test("02.02.pt2 - finds by key in a simple object, with glob", (t) => {
   t.end();
 });
 
-t.test("02.03.pt1 - does not find by key in a simple object", (t) => {
+tap.test("02.03.pt1 - does not find by key in a simple object", (t) => {
   const input = {
     a: {
       b: "c",
@@ -285,7 +288,7 @@ t.test("02.03.pt1 - does not find by key in a simple object", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.03.pt2 - does not find by key in a simple object, with glob",
   (t) => {
     const input = {
@@ -302,7 +305,7 @@ t.test(
   }
 );
 
-t.test("02.04.pt1 - finds by key in simple arrays #1", (t) => {
+tap.test("02.04.pt1 - finds by key in simple arrays #1", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "a";
   const actual = find(input, { key });
@@ -318,7 +321,7 @@ t.test("02.04.pt1 - finds by key in simple arrays #1", (t) => {
   t.end();
 });
 
-t.test("02.04.pt2 - finds by key in simple arrays, with glob", (t) => {
+tap.test("02.04.pt2 - finds by key in simple arrays, with glob", (t) => {
   const input = ["a", "azzz", [["b"], "c"]];
   const key = "a*";
   const actual = find(input, { key });
@@ -340,7 +343,7 @@ t.test("02.04.pt2 - finds by key in simple arrays, with glob", (t) => {
   t.end();
 });
 
-t.test("02.05.pt1 - finds by key in simple arrays #2", (t) => {
+tap.test("02.05.pt1 - finds by key in simple arrays #2", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "b";
   const actual = find(input, { key });
@@ -356,7 +359,7 @@ t.test("02.05.pt1 - finds by key in simple arrays #2", (t) => {
   t.end();
 });
 
-t.test("02.05.pt2 - finds by key in simple arrays, with globs", (t) => {
+tap.test("02.05.pt2 - finds by key in simple arrays, with globs", (t) => {
   const input = ["a", [["zzz", "b", "bbb"], "c"]];
   const key = "b*";
   const actual = find(input, { key });
@@ -378,7 +381,7 @@ t.test("02.05.pt2 - finds by key in simple arrays, with globs", (t) => {
   t.end();
 });
 
-t.test("02.06.pt1 - finds by key in simple arrays #3", (t) => {
+tap.test("02.06.pt1 - finds by key in simple arrays #3", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "c";
   const actual = find(input, { key, val: undefined });
@@ -394,7 +397,7 @@ t.test("02.06.pt1 - finds by key in simple arrays #3", (t) => {
   t.end();
 });
 
-t.test("02.06.pt2 - finds by key in simple arrays, with glob", (t) => {
+tap.test("02.06.pt2 - finds by key in simple arrays, with glob", (t) => {
   const input = ["apples", [["hackles"], "crackles"]];
   const key = "*ackles";
   const actual = find(input, { key, val: undefined });
@@ -416,7 +419,7 @@ t.test("02.06.pt2 - finds by key in simple arrays, with glob", (t) => {
   t.end();
 });
 
-t.test("02.07.pt1 - does not find by key in simple arrays", (t) => {
+tap.test("02.07.pt1 - does not find by key in simple arrays", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "d";
   const actual = find(input, { key });
@@ -425,16 +428,19 @@ t.test("02.07.pt1 - does not find by key in simple arrays", (t) => {
   t.end();
 });
 
-t.test("02.07.pt2 - does not find by key in simple arrays, with globs", (t) => {
-  const input = ["a", [["b"], "c"]];
-  const key = "lexicographer*";
-  const actual = find(input, { key });
-  const intended = null;
-  t.same(actual, intended, "02.07.02");
-  t.end();
-});
+tap.test(
+  "02.07.pt2 - does not find by key in simple arrays, with globs",
+  (t) => {
+    const input = ["a", [["b"], "c"]];
+    const key = "lexicographer*";
+    const actual = find(input, { key });
+    const intended = null;
+    t.same(actual, intended, "02.07.02");
+    t.end();
+  }
+);
 
-t.test("02.08 - finds by key in simple arrays #3", (t) => {
+tap.test("02.08 - finds by key in simple arrays #3", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "c";
   const actual = find(input, { key });
@@ -450,7 +456,7 @@ t.test("02.08 - finds by key in simple arrays #3", (t) => {
   t.end();
 });
 
-t.test("02.09 - finds by value in a simple object - string", (t) => {
+tap.test("02.09 - finds by value in a simple object - string", (t) => {
   const input = {
     a: {
       b: "c",
@@ -471,7 +477,7 @@ t.test("02.09 - finds by value in a simple object - string", (t) => {
   t.end();
 });
 
-t.test("02.10.pt1 - finds by value in a simple object - object", (t) => {
+tap.test("02.10.pt1 - finds by value in a simple object - object", (t) => {
   const input = {
     a: {
       b: "c",
@@ -492,7 +498,7 @@ t.test("02.10.pt1 - finds by value in a simple object - object", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.10.pt2 - finds by value in a simple object - object, with globs",
   (t) => {
     const input = {
@@ -528,7 +534,7 @@ t.test(
   }
 );
 
-t.test("02.11 - finds by value in a simple object - array", (t) => {
+tap.test("02.11 - finds by value in a simple object - array", (t) => {
   const input = {
     a: {
       b: ["c"],
@@ -549,7 +555,7 @@ t.test("02.11 - finds by value in a simple object - array", (t) => {
   t.end();
 });
 
-t.test("02.12 - finds by value in a simple object - empty array", (t) => {
+tap.test("02.12 - finds by value in a simple object - empty array", (t) => {
   const input = {
     a: {
       b: [],
@@ -577,7 +583,7 @@ t.test("02.12 - finds by value in a simple object - empty array", (t) => {
   t.end();
 });
 
-t.test("02.13 - finds by value in a simple object - empty object", (t) => {
+tap.test("02.13 - finds by value in a simple object - empty object", (t) => {
   const input = {
     a: {
       b: {},
@@ -605,7 +611,7 @@ t.test("02.13 - finds by value in a simple object - empty object", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.14 - finds multiple nested keys by key and value in mixed #1",
   (t) => {
     const input = {
@@ -638,7 +644,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.15 - finds multiple nested keys by key and value in mixed #2",
   (t) => {
     const input = {
@@ -765,7 +771,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.16 - like 02.15, but with sneaky objects where values are null, tricking the algorithm",
   (t) => {
     const input = {
@@ -890,7 +896,7 @@ t.test(
 // get
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - gets from a simple object #1", (t) => {
+tap.test("03.01 - gets from a simple object #1", (t) => {
   const input = {
     a: {
       b: "c",
@@ -905,7 +911,7 @@ t.test("03.01 - gets from a simple object #1", (t) => {
   t.end();
 });
 
-t.test("03.02 - gets from a simple object #2", (t) => {
+tap.test("03.02 - gets from a simple object #2", (t) => {
   const input = {
     a: {
       b: "c",
@@ -920,7 +926,7 @@ t.test("03.02 - gets from a simple object #2", (t) => {
   t.end();
 });
 
-t.test("03.03 - gets from a simple object #3", (t) => {
+tap.test("03.03 - gets from a simple object #3", (t) => {
   const input = {
     a: {
       b: ["c"],
@@ -933,7 +939,7 @@ t.test("03.03 - gets from a simple object #3", (t) => {
   t.end();
 });
 
-t.test("03.04 - does not get", (t) => {
+tap.test("03.04 - does not get", (t) => {
   const input = {
     a: {
       b: ["c"],
@@ -946,7 +952,7 @@ t.test("03.04 - does not get", (t) => {
   t.end();
 });
 
-t.test("03.05 - gets from a simple array", (t) => {
+tap.test("03.05 - gets from a simple array", (t) => {
   const input = ["a", [["b"], "c"]];
   const index = 4;
   const actual = get(input, { index });
@@ -955,7 +961,7 @@ t.test("03.05 - gets from a simple array", (t) => {
   t.end();
 });
 
-t.test("03.06 - gets from mixed nested things, index string", (t) => {
+tap.test("03.06 - gets from mixed nested things, index string", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -970,7 +976,7 @@ t.test("03.06 - gets from mixed nested things, index string", (t) => {
   t.end();
 });
 
-t.test("03.07 - gets from a simple object, index is string", (t) => {
+tap.test("03.07 - gets from a simple object, index is string", (t) => {
   const input = {
     a: {
       b: "c",
@@ -985,7 +991,7 @@ t.test("03.07 - gets from a simple object, index is string", (t) => {
   t.end();
 });
 
-t.test("03.08 - index is real number as string - throws", (t) => {
+tap.test("03.08 - index is real number as string - throws", (t) => {
   t.throws(() => {
     get(
       {
@@ -1005,7 +1011,7 @@ t.test("03.08 - index is real number as string - throws", (t) => {
 // set
 // -----------------------------------------------------------------------------
 
-t.test("04.01 - sets in mixed nested things #1", (t) => {
+tap.test("04.01 - sets in mixed nested things #1", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1022,7 +1028,7 @@ t.test("04.01 - sets in mixed nested things #1", (t) => {
   t.end();
 });
 
-t.test("04.02 - sets in mixed nested things #2", (t) => {
+tap.test("04.02 - sets in mixed nested things #2", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1039,7 +1045,7 @@ t.test("04.02 - sets in mixed nested things #2", (t) => {
   t.end();
 });
 
-t.test("04.03 - does not set", (t) => {
+tap.test("04.03 - does not set", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1056,7 +1062,7 @@ t.test("04.03 - does not set", (t) => {
   t.end();
 });
 
-t.test("04.04 - sets when only key given instead, index as string", (t) => {
+tap.test("04.04 - sets when only key given instead, index as string", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1073,7 +1079,7 @@ t.test("04.04 - sets when only key given instead, index as string", (t) => {
   t.end();
 });
 
-t.test("04.05 - sets when only key given, numeric index", (t) => {
+tap.test("04.05 - sets when only key given, numeric index", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1090,7 +1096,7 @@ t.test("04.05 - sets when only key given, numeric index", (t) => {
   t.end();
 });
 
-t.test("04.06 - throws when inputs are wrong", (t) => {
+tap.test("04.06 - throws when inputs are wrong", (t) => {
   t.throws(() => {
     set(
       { a: "a", b: ["c"] },
@@ -1132,7 +1138,7 @@ t.test("04.06 - throws when inputs are wrong", (t) => {
 // drop
 // -----------------------------------------------------------------------------
 
-t.test("05.01 - drops in mixed things #1 - index string", (t) => {
+tap.test("05.01 - drops in mixed things #1 - index string", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1148,7 +1154,7 @@ t.test("05.01 - drops in mixed things #1 - index string", (t) => {
   t.end();
 });
 
-t.test("05.02 - drops in mixed things #2 - index number", (t) => {
+tap.test("05.02 - drops in mixed things #2 - index number", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1164,7 +1170,7 @@ t.test("05.02 - drops in mixed things #2 - index number", (t) => {
   t.end();
 });
 
-t.test("05.03 - does not drop - zero", (t) => {
+tap.test("05.03 - does not drop - zero", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1180,7 +1186,7 @@ t.test("05.03 - does not drop - zero", (t) => {
   t.end();
 });
 
-t.test("05.04 - does not drop - 99", (t) => {
+tap.test("05.04 - does not drop - 99", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
@@ -1196,7 +1202,7 @@ t.test("05.04 - does not drop - 99", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "05.05 - drops in mixed things #3 - index is not a natural number",
   (t) => {
     const input = {
@@ -1215,7 +1221,7 @@ t.test(
 // del
 // -----------------------------------------------------------------------------
 
-t.test("07.01 - deletes by key, multiple findings", (t) => {
+tap.test("07.01 - deletes by key, multiple findings", (t) => {
   const input = {
     a: { b: [{ c: { d: "e" } }] },
     c: { d: ["h"] },
@@ -1252,22 +1258,25 @@ t.test("07.01 - deletes by key, multiple findings", (t) => {
   t.end();
 });
 
-t.test("07.02 - deletes by key, multiple findings at the same branch", (t) => {
-  const input = {
-    a: { b: [{ c: { c: "e" } }] },
-    c: { d: ["h"] },
-  };
-  t.same(
-    del(input, { key: "c" }),
-    {
-      a: { b: [{}] },
-    },
-    "07.02"
-  );
-  t.end();
-});
+tap.test(
+  "07.02 - deletes by key, multiple findings at the same branch",
+  (t) => {
+    const input = {
+      a: { b: [{ c: { c: "e" } }] },
+      c: { d: ["h"] },
+    };
+    t.same(
+      del(input, { key: "c" }),
+      {
+        a: { b: [{}] },
+      },
+      "07.02"
+    );
+    t.end();
+  }
+);
 
-t.test("07.03 - can't find any to delete by key", (t) => {
+tap.test("07.03 - can't find any to delete by key", (t) => {
   const input = {
     a: { b: [{ c: { c: "e" } }] },
     c: { d: ["h"] },
@@ -1283,7 +1292,7 @@ t.test("07.03 - can't find any to delete by key", (t) => {
   t.end();
 });
 
-t.test("07.04 - deletes by value only from mixed", (t) => {
+tap.test("07.04 - deletes by value only from mixed", (t) => {
   const input = {
     a: { b: [{ ktjyklrjtyjlkl: { c: "e" } }] },
     dflshgdlfgh: { c: "e" },
@@ -1298,13 +1307,13 @@ t.test("07.04 - deletes by value only from mixed", (t) => {
   t.end();
 });
 
-t.test("07.05 - deletes by value only from arrays", (t) => {
+tap.test("07.05 - deletes by value only from arrays", (t) => {
   const input = ["a", "b", "c", ["a", ["b"], "c"]];
   t.same(del(input, { key: "b" }), ["a", "c", ["a", [], "c"]], "07.05");
   t.end();
 });
 
-t.test("07.06 - deletes by key and value from mixed", (t) => {
+tap.test("07.06 - deletes by key and value from mixed", (t) => {
   const input = {
     a: { b: [{ c: { d: { e: "f" } } }] },
     f: { d: { zzz: "f" } },
@@ -1320,7 +1329,7 @@ t.test("07.06 - deletes by key and value from mixed", (t) => {
   t.end();
 });
 
-t.test("07.07 - does not delete by key and value from arrays", (t) => {
+tap.test("07.07 - does not delete by key and value from arrays", (t) => {
   const input = ["a", "b", "c", ["a", ["b"], "c"]];
   t.same(
     del(input, { key: "b", val: "zzz" }),
@@ -1330,7 +1339,7 @@ t.test("07.07 - does not delete by key and value from arrays", (t) => {
   t.end();
 });
 
-t.test("07.08 - deletes by key and value from mixed", (t) => {
+tap.test("07.08 - deletes by key and value from mixed", (t) => {
   const input = {
     a: {
       b: "",
@@ -1351,7 +1360,7 @@ t.test("07.08 - deletes by key and value from mixed", (t) => {
   t.end();
 });
 
-t.test("07.09 - sneaky-one: object keys have values as null", (t) => {
+tap.test("07.09 - sneaky-one: object keys have values as null", (t) => {
   const input = {
     a: { b: [{ c: null }] },
     c: null,
@@ -1382,7 +1391,7 @@ t.test("07.09 - sneaky-one: object keys have values as null", (t) => {
 // arrayFirstOnly
 // -----------------------------------------------------------------------------
 
-t.test("08.01 - arrayFirstOnly - nested arrays", (t) => {
+tap.test("08.01 - arrayFirstOnly - nested arrays", (t) => {
   const input = {
     a: { b: ["c", "d", "e"] },
     f: ["g", "h"],
@@ -1398,7 +1407,7 @@ t.test("08.01 - arrayFirstOnly - nested arrays", (t) => {
   t.end();
 });
 
-t.test("08.02 - arrayFirstOnly - arrays within arrays only, no obj", (t) => {
+tap.test("08.02 - arrayFirstOnly - arrays within arrays only, no obj", (t) => {
   const input = [
     ["a", "b", "c"],
     ["d", ["e"]],
@@ -1420,7 +1429,7 @@ t.test("08.02 - arrayFirstOnly - arrays within arrays only, no obj", (t) => {
   t.end();
 });
 
-t.test("08.03 - arrayFirstOnly - nested arrays #2", (t) => {
+tap.test("08.03 - arrayFirstOnly - nested arrays #2", (t) => {
   const input = [
     {
       a: "a",
@@ -1440,7 +1449,7 @@ t.test("08.03 - arrayFirstOnly - nested arrays #2", (t) => {
   t.end();
 });
 
-t.test("08.04 - arrayFirstOnly leaves objects alone", (t) => {
+tap.test("08.04 - arrayFirstOnly leaves objects alone", (t) => {
   const input = {
     a: "a",
     b: {
@@ -1459,7 +1468,7 @@ t.test("08.04 - arrayFirstOnly leaves objects alone", (t) => {
   t.end();
 });
 
-t.test("08.05 - arrayFirstOnly leaves strings alone", (t) => {
+tap.test("08.05 - arrayFirstOnly leaves strings alone", (t) => {
   const input = "zzz";
   const actual = arrayFirstOnly(input);
   const intended = "zzz";

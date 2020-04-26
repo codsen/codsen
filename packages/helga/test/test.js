@@ -1,10 +1,10 @@
-const t = require("tap");
-const { helga } = require("../dist/helga.cjs");
+import tap from "tap";
+import { helga } from "../dist/helga.esm";
 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - just a single word", (t) => {
+tap.test("01.01 - just a single word", (t) => {
   t.same(
     helga("abc"),
     {
@@ -16,7 +16,7 @@ t.test("01.01 - just a single word", (t) => {
   t.end();
 });
 
-t.test("01.02 - converts line breaks - JSON off", (t) => {
+tap.test("01.02 - converts line breaks - JSON off", (t) => {
   t.same(
     helga("abc\ndef", { targetJSON: false }),
     {
@@ -28,7 +28,7 @@ t.test("01.02 - converts line breaks - JSON off", (t) => {
   t.end();
 });
 
-t.test("01.03 - converts line breaks - JSON on", (t) => {
+tap.test("01.03 - converts line breaks - JSON on", (t) => {
   // beautified as input:
   t.same(
     helga("abc\ndef", { targetJSON: true }),

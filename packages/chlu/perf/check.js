@@ -2,11 +2,13 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("../");
+const f = require("..");
+
 const source = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 

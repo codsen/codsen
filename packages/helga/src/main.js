@@ -6,7 +6,7 @@ const defaults = {
 };
 
 function helga(str, originalOpts) {
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   // console.log(
   //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,

@@ -2,11 +2,12 @@
 
 // deps
 const path = require("path");
+
 const callerDir = path.resolve(".");
-const runPerf = require(path.resolve("../../scripts/run-perf.js"));
+const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const { find } = require("../");
+const { find } = require("..");
 
 // find()
 const testme = () =>

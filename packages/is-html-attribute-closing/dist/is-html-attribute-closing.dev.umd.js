@@ -1925,9 +1925,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -1955,9 +1959,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -1989,7 +1997,9 @@
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: false
     };
-    const opts = Object.assign(Object.assign({}, defaults), originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (!isArr(rangesArr)) {
       return false;
@@ -2027,7 +2037,9 @@
     const defaults = {
       ignoreRanges: []
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
       throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
@@ -2161,7 +2173,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -2204,7 +2216,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -2226,13 +2240,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
 
     if (!isStr(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -2345,12 +2363,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;

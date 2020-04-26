@@ -50,7 +50,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -81,7 +83,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -136,7 +138,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -161,7 +165,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);

@@ -34,7 +34,7 @@ function rangesSort(arrOfRanges, originalOptions) {
   };
 
   // fill any settings with defaults if missing:
-  const opts = Object.assign({}, defaults, originalOptions);
+  const opts = { ...defaults, ...originalOptions };
 
   // arrOfRanges validation
   let culpritsIndex;
@@ -90,7 +90,7 @@ function rangesSort(arrOfRanges, originalOptions) {
 
   return Array.from(arrOfRanges).sort((range1, range2) => {
     if (opts.progressFn) {
-      counter++;
+      counter += 1;
       opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
     }
     if (range1[0] === range2[0]) {

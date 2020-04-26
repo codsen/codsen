@@ -1,11 +1,11 @@
-const t = require("tap");
-const wthn = require("../dist/ranges-is-index-within.cjs");
+import tap from "tap";
+import wthn from "../dist/ranges-is-index-within.esm";
 
 // ==============================
 // 01. One range
 // ==============================
 
-t.test("01.01 - one range, both defaults and inclusive", (t) => {
+tap.test("01.01 - one range, both defaults and inclusive", (t) => {
   t.same(wthn(1, [[0, 3]]), true, "01.01.01 - within range");
   t.same(wthn(0, [[0, 3]]), false, "01.01.02 - on the starting of the range");
   t.same(
@@ -34,7 +34,7 @@ t.test("01.01 - one range, both defaults and inclusive", (t) => {
   t.end();
 });
 
-t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
+tap.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
   t.same(
     wthn(1, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     [0, 3],
@@ -86,7 +86,7 @@ t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
 // 02. Two ranges
 // ==============================
 
-t.test("02.01 - two ranges, edges on defaults", (t) => {
+tap.test("02.01 - two ranges, edges on defaults", (t) => {
   t.same(
     wthn(1, [
       [2, 4],
@@ -130,7 +130,7 @@ t.test("02.01 - two ranges, edges on defaults", (t) => {
   t.end();
 });
 
-t.test("02.02 - two ranges, edges inclusive", (t) => {
+tap.test("02.02 - two ranges, edges inclusive", (t) => {
   // same as 02.01
   t.same(
     wthn(
@@ -245,7 +245,7 @@ t.test("02.02 - two ranges, edges inclusive", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
   (t) => {
     t.same(
@@ -312,7 +312,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive",
   (t) => {
     // same as 02.01
@@ -475,7 +475,7 @@ t.test(
 // 03. Many ranges
 // ==============================
 
-t.test("03.01 - more than two ranges, uneven count, not inclusive", (t) => {
+tap.test("03.01 - more than two ranges, uneven count, not inclusive", (t) => {
   t.same(
     wthn(5, [
       [2, 4],
@@ -543,7 +543,7 @@ t.test("03.01 - more than two ranges, uneven count, not inclusive", (t) => {
   t.end();
 });
 
-t.test("03.02 - even more ranges, not inclusive", (t) => {
+tap.test("03.02 - even more ranges, not inclusive", (t) => {
   t.same(
     wthn(0, [
       [5, 10],
@@ -3760,7 +3760,7 @@ t.test("03.02 - even more ranges, not inclusive", (t) => {
   t.end();
 });
 
-t.test("03.03 - small ranges - zero", (t) => {
+tap.test("03.03 - small ranges - zero", (t) => {
   t.same(wthn(0, [[0, 1]]), false, "03.03.01 - no opts");
   t.same(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: false }),
@@ -3933,7 +3933,7 @@ t.test("03.03 - small ranges - zero", (t) => {
   t.end();
 });
 
-t.test("03.04 - small ranges - one", (t) => {
+tap.test("03.04 - small ranges - one", (t) => {
   t.same(wthn(1, [[0, 1]]), false, "03.04.01 - no opts");
   t.same(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: false }),
@@ -3971,7 +3971,7 @@ t.test("03.04 - small ranges - one", (t) => {
   t.end();
 });
 
-t.test("03.05 - identical range endings", (t) => {
+tap.test("03.05 - identical range endings", (t) => {
   t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: false }), false, "03.05.01");
   t.same(wthn(1, [[1, 1]], { inclusiveRangeEnds: false }), false, "03.05.02");
   t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "03.05.03");
@@ -4288,7 +4288,7 @@ t.test("03.05 - identical range endings", (t) => {
 // 4. AD-HOC
 // ==============================
 
-t.test("Ad-hoc #1", (t) => {
+tap.test("Ad-hoc #1", (t) => {
   t.same(
     wthn(
       130,
@@ -4341,7 +4341,7 @@ t.test("Ad-hoc #1", (t) => {
   t.end();
 });
 
-t.test("Ad-hoc #2", (t) => {
+tap.test("Ad-hoc #2", (t) => {
   t.same(
     wthn(21, [
       [5, 10],
@@ -4364,7 +4364,7 @@ t.test("Ad-hoc #2", (t) => {
   t.end();
 });
 
-t.test("Ad-hoc #3", (t) => {
+tap.test("Ad-hoc #3", (t) => {
   t.same(
     wthn(6, [
       [5, 10],

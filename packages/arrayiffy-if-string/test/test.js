@@ -1,17 +1,17 @@
-const t = require("tap");
-const a = require("../dist/arrayiffy-if-string.cjs");
+import tap from "tap";
+import a from "../dist/arrayiffy-if-string.esm";
 
 // -----------------------------------------------------------------------------
 // 02. BAU
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - string input", (t) => {
+tap.test("01.01 - string input", (t) => {
   t.same(a("aaa"), ["aaa"], "01.01.01");
   t.same(a(""), [], "01.01.02");
   t.end();
 });
 
-t.test("01.02 - non-string input", (t) => {
+tap.test("01.02 - non-string input", (t) => {
   t.same(a(1), 1, "01.02.01");
   t.same(a(null), null, "01.02.02");
   t.same(a(undefined), undefined, "01.02.03");

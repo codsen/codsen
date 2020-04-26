@@ -1,8 +1,8 @@
-const t = require("tap");
-const vs = require("vinyl-string");
+import tap from "tap";
+import vs from "vinyl-string";
 // Lets us write in-line functions in our pipe:
-const map = require("map-stream");
-const geruc = require("../index");
+import map from "map-stream";
+import geruc from "../index";
 
 // https://snugug.com/musings/unit-testing-gulp-tasks/
 // * @param {string} input - String contents of the "file"
@@ -31,7 +31,7 @@ function fromString(input, path, func) {
   });
 }
 
-t.test("removes unused CSS", async (t) => {
+tap.test("removes unused CSS", async (t) => {
   const source = `
 <!DOCTYPE html>
 <head>

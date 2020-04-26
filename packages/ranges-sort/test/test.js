@@ -1,11 +1,11 @@
-const t = require("tap");
-const srt = require("../dist/ranges-sort.cjs");
+import tap from "tap";
+import srt from "../dist/ranges-sort.esm";
 
 // ==============================
 // 0. THROWS
 // ==============================
 
-t.test("00.01 - not array", (t) => {
+tap.test("00.01 - not array", (t) => {
   t.throws(() => {
     srt(null);
   });
@@ -21,7 +21,7 @@ t.test("00.01 - not array", (t) => {
   t.end();
 });
 
-t.test("00.02 - not two arguments in one of ranges", (t) => {
+tap.test("00.02 - not two arguments in one of ranges", (t) => {
   t.throws(() => {
     srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true });
   });
@@ -76,7 +76,7 @@ t.test("00.02 - not two arguments in one of ranges", (t) => {
   t.end();
 });
 
-t.test("00.03 - some/all range indexes are not natural numbers", (t) => {
+tap.test("00.03 - some/all range indexes are not natural numbers", (t) => {
   t.doesNotThrow(() => {
     srt([[0, 3]]);
   });
@@ -105,18 +105,18 @@ t.test("00.03 - some/all range indexes are not natural numbers", (t) => {
 // 01. Sorting
 // ==============================
 
-t.test("01.01 - no ranges given", (t) => {
+tap.test("01.01 - no ranges given", (t) => {
   t.same(srt([]), [], "01.01 - copes fine");
   t.end();
 });
 
-t.test("01.02 - only one range given", (t) => {
+tap.test("01.02 - only one range given", (t) => {
   t.same(srt([[0, 3]]), [[0, 3]], "01.02.01");
   t.same(srt([[0, 3, "zzz"]]), [[0, 3, "zzz"]], "01.02.02");
   t.end();
 });
 
-t.test("01.03 - two ranges", (t) => {
+tap.test("01.03 - two ranges", (t) => {
   t.same(
     srt([
       [0, 3],
@@ -164,7 +164,7 @@ t.test("01.03 - two ranges", (t) => {
   t.end();
 });
 
-t.test("01.04 - many ranges", (t) => {
+tap.test("01.04 - many ranges", (t) => {
   t.same(
     srt([
       [0, 3],
@@ -253,7 +253,7 @@ t.test("01.04 - many ranges", (t) => {
 // 02. Ad-Hoc
 // ==============================
 
-t.test("02.01 - does not mutate the input arg", (t) => {
+tap.test("02.01 - does not mutate the input arg", (t) => {
   const original = [
     [5, 6],
     [3, 4],
@@ -276,7 +276,7 @@ t.test("02.01 - does not mutate the input arg", (t) => {
 // 3. EXAMPLES FROM README
 // ==============================
 
-t.test("03.01 - readme example #1", (t) => {
+tap.test("03.01 - readme example #1", (t) => {
   t.same(
     srt([
       [5, 6],
@@ -291,7 +291,7 @@ t.test("03.01 - readme example #1", (t) => {
   t.end();
 });
 
-t.test("03.02 - readme example #2", (t) => {
+tap.test("03.02 - readme example #2", (t) => {
   t.same(
     srt([
       [5, 6],
@@ -308,35 +308,35 @@ t.test("03.02 - readme example #2", (t) => {
   t.end();
 });
 
-t.test("03.03 - readme example #3", (t) => {
+tap.test("03.03 - readme example #3", (t) => {
   t.throws(() => {
     srt([[1, 2], []]); // throws, because there's at least one empty range
   });
   t.end();
 });
 
-t.test("03.04 - readme example #4", (t) => {
+tap.test("03.04 - readme example #4", (t) => {
   t.throws(() => {
     srt([["a"]]); // throws, because range is given as string
   });
   t.end();
 });
 
-t.test("03.05 - an extra for readme example #4", (t) => {
+tap.test("03.05 - an extra for readme example #4", (t) => {
   t.throws(() => {
     srt([[1, "a"]]); // throws, because range is given as string
   });
   t.end();
 });
 
-t.test("03.06 readme example #5", (t) => {
+tap.test("03.06 readme example #5", (t) => {
   t.throws(() => {
     srt([[1], [2]]); // throws, because one index is not a range
   });
   t.end();
 });
 
-t.test("03.07 readme example #6", (t) => {
+tap.test("03.07 readme example #6", (t) => {
   t.same(
     srt([
       [3, 4, "aaa", "bbb"],
@@ -356,7 +356,7 @@ t.test("03.07 readme example #6", (t) => {
 // ==============================
 
 // TODO:
-t.test("04.01 - calls progress callback correctly", (t) => {
+tap.test("04.01 - calls progress callback correctly", (t) => {
   t.same(
     srt(
       [

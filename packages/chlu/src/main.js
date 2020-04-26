@@ -1,3 +1,5 @@
+/* eslint consistent-return:0, no-loop-func:0 */
+
 import getPkgRepo from "get-pkg-repo";
 import semverCompare from "semver-compare";
 import empty from "ast-contains-only-empty-space";
@@ -5,7 +7,6 @@ import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
 import min from "lodash.min";
 import dd from "dehumanize-date";
-const isArr = Array.isArray;
 
 import {
   getPreviousVersion,
@@ -16,6 +17,8 @@ import {
   versionSort,
   filterDate,
 } from "./util";
+
+const isArr = Array.isArray;
 
 // F'S
 // -----------------------------------------------------------------------------
@@ -40,12 +43,12 @@ function existy(x) {
 // }
 
 function chlu(changelogContents, gitTags, packageJsonContents) {
-  if (arguments.length === 0 || !existy(changelogContents)) {
+  if (!arguments.length || !existy(changelogContents)) {
     return;
   }
 
   console.log(
-    `048 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+    `051 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
       gitTags,
       null,
       4
@@ -107,7 +110,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // package.json might come in falsey in case it's unavailable
   if (packageJsonContents) {
     console.log(
-      `110 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
+      `113 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
         packageJsonContents,
         null,
         4
@@ -147,7 +150,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       );
     }
     console.log(
-      `150 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
+      `153 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
         packageJson,
         null,
         4
@@ -326,9 +329,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       if (
         semverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1
       ) {
-        descendingFooterLinkCount++;
+        descendingFooterLinkCount += 1;
       } else {
-        ascendingFooterLinkCount++;
+        ascendingFooterLinkCount += 1;
       }
     }
   }
@@ -486,7 +489,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             processedGitTags.versionsOnly.length - 1
           ];
         console.log(
-          `489 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+          `492 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
             processedGitTags.versionsOnly,
             null,
             4
@@ -498,12 +501,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly
         );
         console.log(
-          `501 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+          `504 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
         );
       }
     } else {
       console.log(
-        `506 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+        `509 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
       );
       // if the Git data is not available, use existing parsed Changelog data.
 
@@ -563,7 +566,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       mode: "set",
     });
     console.log(
-      `566 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+      `569 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
         footerLinks[i].content,
         null,
         4
@@ -604,7 +607,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       (typeof newLinesArr[i] === "string" && newLinesArr[i].trim() === "")
     ) {
       newLinesArr.splice(i, 1);
-      i--;
+      i -= 1;
     }
   }
 

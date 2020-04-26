@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -1902,19 +1951,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -1928,11 +1978,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -1958,11 +2008,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -1975,7 +2025,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
@@ -2474,7 +2524,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -2517,7 +2567,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -2539,13 +2591,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
 
     if (!isStr(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -2658,12 +2714,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -2733,7 +2789,9 @@
       matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
       relaxedAPI: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
       opts.fromIndex = Number(opts.fromIndex);
@@ -3092,7 +3150,7 @@
         Array.from(str).forEach(char => {
           if (char !== "\n" || limit) {
             if (char === "\n") {
-              limit--;
+              limit -= 1;
             }
 
             push(resArr, true, char);
@@ -3113,14 +3171,12 @@
         for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(startCharacter, true, str[i]);
           }
         }
       }
@@ -3132,14 +3188,12 @@
         for (let i = str.length; i--;) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(endCharacter, false, str[i]);
           }
         }
       }
@@ -3175,7 +3229,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -3206,7 +3262,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -3261,7 +3317,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -3286,7 +3344,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -3381,7 +3440,9 @@
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = Object.assign({}, defaults, originalOpts);
+      const opts = { ...defaults,
+        ...originalOpts
+      };
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -3403,7 +3464,9 @@
 
       if (!existy$1(originalFrom) && !existy$1(originalTo)) {
         return;
-      } else if (existy$1(originalFrom) && !existy$1(originalTo)) {
+      }
+
+      if (existy$1(originalFrom) && !existy$1(originalTo)) {
         if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(el => Array.isArray(el))) {
@@ -3413,7 +3476,9 @@
                 }
               });
               return;
-            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+            }
+
+            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
               this.add(...originalFrom);
             }
           }
@@ -3539,7 +3604,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -3551,18 +3616,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -3597,7 +3668,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {
@@ -3802,7 +3873,9 @@
       space: true,
       nbsp: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     function check(char) {
       return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\u00a0");
@@ -3929,7 +4002,9 @@
       heads: ["{{"],
       tails: ["}}"]
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.heads = opts.heads.map(el => el.trim());
     opts.tails = opts.tails.map(el => el.trim());
     let firstNonMarkerChunkFound = false;
@@ -4257,10 +4332,12 @@
 
     // opts validation
     if (!opts.wrapHeadsWith) {
+      // eslint-disable-next-line no-param-reassign
       opts.wrapHeadsWith = "";
     }
 
     if (!opts.wrapTailsWith) {
+      // eslint-disable-next-line no-param-reassign
       opts.wrapTailsWith = "";
     } // main opts
 
@@ -4270,7 +4347,9 @@
     }) && ( // considering double-wrapping prevention setting:
     !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr$5(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
       return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
-    } else if (dontWrapTheseVars) {
+    }
+
+    if (dontWrapTheseVars) {
       if (!isStr$5(placementValue)) {
         return placementValue;
       }
@@ -4559,7 +4638,9 @@
 
     if (isBool(temp1)) {
       return temp1;
-    } else if (isNull(temp1)) {
+    }
+
+    if (isNull(temp1)) {
       return temp1;
     } // 2. Process opts.headsNoWrap, opts.tailsNoWrap as well
 
@@ -4583,7 +4664,9 @@
 
     if (isBool(temp2)) {
       return temp2;
-    } else if (isNull(temp2)) {
+    }
+
+    if (isNull(temp2)) {
       return temp2;
     } // 3. Then, work the finalRangesArr list
     // ================================
@@ -4641,7 +4724,8 @@
       allowUnresolved: false // Allow value to not have a resolved variable
 
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
 
     if (!opts.dontWrapVars) {
       opts.dontWrapVars = [];

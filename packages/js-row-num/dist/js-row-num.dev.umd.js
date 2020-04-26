@@ -85,7 +85,7 @@
         Array.from(str).forEach(char => {
           if (char !== "\n" || limit) {
             if (char === "\n") {
-              limit--;
+              limit -= 1;
             }
 
             push(resArr, true, char);
@@ -106,14 +106,12 @@
         for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(startCharacter, true, str[i]);
           }
         }
       }
@@ -125,14 +123,12 @@
         for (let i = str.length; i--;) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(endCharacter, false, str[i]);
           }
         }
       }
@@ -168,7 +164,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -199,7 +197,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -254,7 +252,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -279,7 +279,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -374,7 +375,9 @@
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = Object.assign({}, defaults, originalOpts);
+      const opts = { ...defaults,
+        ...originalOpts
+      };
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -396,7 +399,9 @@
 
       if (!existy(originalFrom) && !existy(originalTo)) {
         return;
-      } else if (existy(originalFrom) && !existy(originalTo)) {
+      }
+
+      if (existy(originalFrom) && !existy(originalTo)) {
         if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(el => Array.isArray(el))) {
@@ -406,7 +411,9 @@
                 }
               });
               return;
-            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+            }
+
+            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
               this.add(...originalFrom);
             }
           }
@@ -532,7 +539,7 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, rangesArr, progressFn) {
+  function rangesApply(str, originalRangesArr, progressFn) {
     let percentageDone = 0;
     let lastPercentageDone = 0;
 
@@ -544,18 +551,24 @@
       throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
     }
 
-    if (rangesArr === null) {
+    if (originalRangesArr === null) {
       return str;
-    } else if (!Array.isArray(rangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(rangesArr, null, 4)}`);
+    }
+
+    if (!Array.isArray(originalRangesArr)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
     }
 
     if (progressFn && typeof progressFn !== "function") {
       throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
     }
 
-    if (Array.isArray(rangesArr) && (Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0 || /^\d*$/.test(rangesArr[0])) && (Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0 || /^\d*$/.test(rangesArr[1]))) {
-      rangesArr = [rangesArr];
+    let rangesArr;
+
+    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
+      rangesArr = [Array.from(originalRangesArr)];
+    } else {
+      rangesArr = Array.from(originalRangesArr);
     }
 
     const len = rangesArr.length;
@@ -590,7 +603,7 @@
         }
       }
 
-      counter++;
+      counter += 1;
     });
     const workingRanges = mergeRanges(rangesArr, {
       progressFn: perc => {

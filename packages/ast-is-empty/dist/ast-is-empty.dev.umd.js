@@ -48,7 +48,9 @@
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }
@@ -62,7 +64,9 @@
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }

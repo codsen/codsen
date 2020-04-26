@@ -1,8 +1,8 @@
-const fs = require("fs-extra");
-const t = require("tap");
-const path = require("path");
-const execa = require("execa");
-const tempy = require("tempy");
+import fs from "fs-extra";
+import tap from "tap";
+import path from "path";
+import execa from "execa";
+import tempy from "tempy";
 
 const aPackageJson = `{
   "name": "a",
@@ -42,7 +42,7 @@ const cPackageJson = `{
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does not exist (ERROR_01)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -101,7 +101,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -159,7 +159,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -217,7 +217,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -287,7 +287,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -352,7 +352,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -428,7 +428,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -492,7 +492,7 @@ t.test(
 //                                  *
 //                                  *
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -543,7 +543,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -600,7 +600,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
@@ -652,7 +652,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when

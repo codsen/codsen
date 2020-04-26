@@ -161,7 +161,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
-[cov-img]: https://img.shields.io/badge/coverage-94.64%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-94.34%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/string-collapse-leading-whitespace?activeTab=dependencies

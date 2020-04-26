@@ -104,7 +104,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       Array.from(str).forEach((char) => {
         if (char !== "\n" || limit) {
           if (char === "\n") {
-            limit--;
+            limit -= 1;
             console.log(`108 limit now set to ${limit}`);
           }
           push(resArr, true, char);
@@ -154,16 +154,14 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
         if (str[i].trim()) {
           console.log(`155 break`);
           break;
-        } else {
-          if (str[i] !== "\n" || limit) {
-            // limit the amount of linebreaks to "limitLinebreaksCount"
-            if (str[i] === "\n") {
-              limit--;
-              console.log(`162 limit now set to ${limit}`);
-            }
-            console.log(`164 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
-            push(startCharacter, true, str[i]);
+        } else if (str[i] !== "\n" || limit) {
+          // limit the amount of linebreaks to "limitLinebreaksCount"
+          if (str[i] === "\n") {
+            limit -= 1;
+            console.log(`161 limit now set to ${limit}`);
           }
+          console.log(`163 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
+          push(startCharacter, true, str[i]);
         }
         console.log(
           `${`\u001b[${90}m${`----------\nending limit = ${limit}`}\u001b[${39}m`}`
@@ -183,7 +181,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     limit = limitLinebreaksCount;
     // if there's some trailing whitespace
     if (str.slice(-1).trim() === "") {
-      console.log(`186 the last char is whitespace`);
+      console.log(`184 the last char is whitespace`);
       for (let i = str.length; i--; ) {
         console.log(
           `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
@@ -193,18 +191,16 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
           )}`}\u001b[${39}m`}`
         );
         if (str[i].trim()) {
-          console.log(`196 break`);
+          console.log(`194 break`);
           break;
-        } else {
-          if (str[i] !== "\n" || limit) {
-            // limit the amount of linebreaks to "limitLinebreaksCount"
-            if (str[i] === "\n") {
-              limit--;
-              console.log(`203 limit now set to ${limit}`);
-            }
-            console.log(`205 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
-            push(endCharacter, false, str[i]);
+        } else if (str[i] !== "\n" || limit) {
+          // limit the amount of linebreaks to "limitLinebreaksCount"
+          if (str[i] === "\n") {
+            limit -= 1;
+            console.log(`200 limit now set to ${limit}`);
           }
+          console.log(`202 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
+          push(endCharacter, false, str[i]);
         }
       }
       console.log(
@@ -215,14 +211,14 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     // -------------------------------------------------------------------------
 
     console.log(
-      `218 ${`\u001b[${33}m${`startCharacter`}\u001b[${39}m`} = ${JSON.stringify(
+      `214 ${`\u001b[${33}m${`startCharacter`}\u001b[${39}m`} = ${JSON.stringify(
         startCharacter.join(""),
         null,
         4
       )}`
     );
     console.log(
-      `225 ${`\u001b[${33}m${`endCharacter`}\u001b[${39}m`} = ${JSON.stringify(
+      `221 ${`\u001b[${33}m${`endCharacter`}\u001b[${39}m`} = ${JSON.stringify(
         endCharacter.join(""),
         null,
         4
@@ -231,7 +227,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
 
     if (!windowsEol) {
       console.log(
-        `234 RETURN ${JSON.stringify(
+        `230 RETURN ${JSON.stringify(
           startCharacter.join("") + str.trim() + endCharacter.join(""),
           null,
           4
@@ -243,7 +239,7 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       ""
     )}`.replace(/\n/g, "\r\n");
   }
-  console.log(`246 just return whatever was given`);
+  console.log(`242 just return whatever was given`);
   return str;
 }
 

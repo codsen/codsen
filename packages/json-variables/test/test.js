@@ -1,13 +1,13 @@
-/* eslint no-template-curly-in-string: 0, padded-blocks: 0 */
+/* eslint no-template-curly-in-string: 0 */
 
-const t = require("tap");
-const jv = require("../dist/json-variables.cjs");
+import tap from "tap";
+import jv from "../dist/json-variables.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - basic throws related to wrong input", (t) => {
+tap.test("01.01 - basic throws related to wrong input", (t) => {
   t.throws(() => {
     jv();
   }, /THROW_ID_01/);
@@ -30,7 +30,7 @@ t.test("01.01 - basic throws related to wrong input", (t) => {
   t.end();
 });
 
-t.test("01.02 - throws when options heads and/or tails are empty", (t) => {
+tap.test("01.02 - throws when options heads and/or tails are empty", (t) => {
   t.throws(() => {
     jv(
       {
@@ -61,7 +61,7 @@ t.test("01.02 - throws when options heads and/or tails are empty", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.03 - throws when data container key lookup is enabled and container tails are given blank",
   (t) => {
     t.throws(() => {
@@ -99,7 +99,7 @@ t.test(
   }
 );
 
-t.test("01.04 - throws when heads and tails are equal", (t) => {
+tap.test("01.04 - throws when heads and tails are equal", (t) => {
   t.throws(() => {
     jv(
       {
@@ -112,7 +112,7 @@ t.test("01.04 - throws when heads and tails are equal", (t) => {
   t.end();
 });
 
-t.test("01.05 - throws when input is not a plain object", (t) => {
+tap.test("01.05 - throws when input is not a plain object", (t) => {
   t.throws(() => {
     jv(["zzz"], { heads: "%%", tails: "%%" });
   }, /THROW_ID_02/);
@@ -120,7 +120,7 @@ t.test("01.05 - throws when input is not a plain object", (t) => {
   t.end();
 });
 
-t.test("01.06 - throws when keys contain variables", (t) => {
+tap.test("01.06 - throws when keys contain variables", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "some text %%_var1_%% more text",
@@ -146,7 +146,7 @@ t.test("01.06 - throws when keys contain variables", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.07 - throws when there are unequal number of marker heads and tails",
   (t) => {
     t.same(
@@ -185,7 +185,7 @@ t.test(
   }
 );
 
-t.test("01.08 - throws when data is missing", (t) => {
+tap.test("01.08 - throws when data is missing", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "some text %%_var1_%% more text",
@@ -289,7 +289,7 @@ t.test("01.08 - throws when data is missing", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.09 - throws when data container lookup is turned off and var is missing",
   (t) => {
     const err1 = t.throws(() => {
@@ -425,7 +425,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.10 - not throws when data container name append is given empty, but data container lookup is turned off",
   (t) => {
     t.doesNotThrow(() => {
@@ -441,31 +441,34 @@ t.test(
   }
 );
 
-t.test("01.11 - throws when data container name append is given empty", (t) => {
-  const err1 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something",
-      },
-      { lookForDataContainers: true, dataContainerIdentifierTails: "" }
-    );
-  });
-  t.match(err1.message, /THROW_ID_08/);
-  const err2 = t.throws(() => {
-    jv(
-      {
-        a: "some text, more text",
-        b: "something",
-      },
-      { lookForDataContainers: true, dataContainerIdentifierTails: "" }
-    );
-  });
-  t.match(err2.message, /THROW_ID_08/);
-  t.end();
-});
+tap.test(
+  "01.11 - throws when data container name append is given empty",
+  (t) => {
+    const err1 = t.throws(() => {
+      jv(
+        {
+          a: "some text %%_var1_%% more text",
+          b: "something",
+        },
+        { lookForDataContainers: true, dataContainerIdentifierTails: "" }
+      );
+    });
+    t.match(err1.message, /THROW_ID_08/);
+    const err2 = t.throws(() => {
+      jv(
+        {
+          a: "some text, more text",
+          b: "something",
+        },
+        { lookForDataContainers: true, dataContainerIdentifierTails: "" }
+      );
+    });
+    t.match(err2.message, /THROW_ID_08/);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   "01.13 - throws when opts.wrapHeadsWith is customised to anything other than string",
   (t) => {
     const err1 = t.throws(() => {
@@ -482,21 +485,24 @@ t.test(
   }
 );
 
-t.test("01.14 - opts.wrapHeadsWith does not affect failing resolving", (t) => {
-  const err1 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something",
-      },
-      { wrapHeadsWith: "" }
-    );
-  });
-  t.match(err1.message, /THROW_ID_18/);
-  t.end();
-});
+tap.test(
+  "01.14 - opts.wrapHeadsWith does not affect failing resolving",
+  (t) => {
+    const err1 = t.throws(() => {
+      jv(
+        {
+          a: "some text %%_var1_%% more text",
+          b: "something",
+        },
+        { wrapHeadsWith: "" }
+      );
+    });
+    t.match(err1.message, /THROW_ID_18/);
+    t.end();
+  }
+);
 
-t.test(
+tap.test(
   "01.15 - throws when opts.wrapTailsWith is customised to anything other than string",
   (t) => {
     const err1 = t.throws(() => {
@@ -513,7 +519,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.16 - not throws when opts.wrapTailsWith is customised to an empty string",
   (t) => {
     t.doesNotThrow(() => {
@@ -529,7 +535,7 @@ t.test(
   }
 );
 
-t.test("01.17 - throws when opts.heads is not string", (t) => {
+tap.test("01.17 - throws when opts.heads is not string", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -543,7 +549,7 @@ t.test("01.17 - throws when opts.heads is not string", (t) => {
   t.end();
 });
 
-t.test("01.18 - throws when opts.tails is not string", (t) => {
+tap.test("01.18 - throws when opts.tails is not string", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -557,7 +563,7 @@ t.test("01.18 - throws when opts.tails is not string", (t) => {
   t.end();
 });
 
-t.test("01.19 - throws when all args are missing", (t) => {
+tap.test("01.19 - throws when all args are missing", (t) => {
   const err1 = t.throws(() => {
     jv();
   });
@@ -565,7 +571,7 @@ t.test("01.19 - throws when all args are missing", (t) => {
   t.end();
 });
 
-t.test("01.20 - throws when key references itself", (t) => {
+tap.test("01.20 - throws when key references itself", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "%%_a_%%",
@@ -582,7 +588,7 @@ t.test("01.20 - throws when key references itself", (t) => {
   t.end();
 });
 
-t.test("01.21 - throws when key references itself", (t) => {
+tap.test("01.21 - throws when key references itself", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "a",
@@ -594,7 +600,7 @@ t.test("01.21 - throws when key references itself", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.22 - throws when key references key which references itself",
   (t) => {
     const err1 = t.throws(() => {
@@ -608,7 +614,7 @@ t.test(
   }
 );
 
-t.test("01.23 - throws when there's recursion (with distraction)", (t) => {
+tap.test("01.23 - throws when there's recursion (with distraction)", (t) => {
   const err1 = t.throws(() => {
     jv({
       b: "%%_a_%%",
@@ -664,7 +670,7 @@ t.test("01.23 - throws when there's recursion (with distraction)", (t) => {
   t.end();
 });
 
-t.test("01.24 - throws when there's a longer recursion", (t) => {
+tap.test("01.24 - throws when there's a longer recursion", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "%%_b_%%",
@@ -678,7 +684,7 @@ t.test("01.24 - throws when there's a longer recursion", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal",
   (t) => {
     const err1 = t.throws(() => {
@@ -726,7 +732,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be equal",
   (t) => {
     const err1 = t.throws(() => {
@@ -774,7 +780,7 @@ t.test(
   }
 );
 
-t.test("01.29 - empty nowraps", (t) => {
+tap.test("01.29 - empty nowraps", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -831,7 +837,7 @@ t.test("01.29 - empty nowraps", (t) => {
   t.end();
 });
 
-t.test("01.30 - equal nowraps", (t) => {
+tap.test("01.30 - equal nowraps", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -875,7 +881,7 @@ t.test("01.30 - equal nowraps", (t) => {
   t.end();
 });
 
-t.test("01.31 - throws there's simple recursion loop in array", (t) => {
+tap.test("01.31 - throws there's simple recursion loop in array", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "%%_a_%%",
@@ -919,7 +925,7 @@ t.test("01.31 - throws there's simple recursion loop in array", (t) => {
   t.end();
 });
 
-t.test("01.32 - throws referencing what does not exist", (t) => {
+tap.test("01.32 - throws referencing what does not exist", (t) => {
   const err1 = t.throws(() => {
     jv({
       a: "%%_b_%%",
@@ -935,7 +941,7 @@ t.test("01.32 - throws referencing what does not exist", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "01.33 - throws when referencing the multi-level object keys that don't exist",
   (t) => {
     const err1 = t.throws(() => {
@@ -977,7 +983,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "01.34 - throws when opts are given truthy but not a plain object",
   (t) => {
     const err1 = t.throws(() => {
@@ -998,7 +1004,7 @@ t.test(
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - two variables in an object's key", (t) => {
+tap.test("02.01 - two variables in an object's key", (t) => {
   t.same(
     jv({
       a: "some text %%_var1_%% more text %%_var2_%%",
@@ -1017,7 +1023,7 @@ t.test("02.01 - two variables in an object's key", (t) => {
   t.end();
 });
 
-t.test("02.02 - two variables with paths in an object's key", (t) => {
+tap.test("02.02 - two variables with paths in an object's key", (t) => {
   t.same(
     jv({
       a: "some text %%_var1.key1.0_%% more text %%_var2.key2.key3.1_%%",
@@ -1036,7 +1042,7 @@ t.test("02.02 - two variables with paths in an object's key", (t) => {
   t.end();
 });
 
-t.test("02.03 - two variables, with wrapping", (t) => {
+tap.test("02.03 - two variables, with wrapping", (t) => {
   t.same(
     jv(
       {
@@ -1061,7 +1067,7 @@ t.test("02.03 - two variables, with wrapping", (t) => {
   t.end();
 });
 
-t.test("02.04 - variables with paths being wrapped", (t) => {
+tap.test("02.04 - variables with paths being wrapped", (t) => {
   t.same(
     jv(
       {
@@ -1086,7 +1092,7 @@ t.test("02.04 - variables with paths being wrapped", (t) => {
   t.end();
 });
 
-t.test("02.05 - custom heads and tails", (t) => {
+tap.test("02.05 - custom heads and tails", (t) => {
   t.same(
     jv(
       {
@@ -1111,7 +1117,7 @@ t.test("02.05 - custom heads and tails", (t) => {
   t.end();
 });
 
-t.test("02.06 - custom heads and tails being wrapped", (t) => {
+tap.test("02.06 - custom heads and tails being wrapped", (t) => {
   t.same(
     jv(
       {
@@ -1136,7 +1142,7 @@ t.test("02.06 - custom heads and tails being wrapped", (t) => {
   t.end();
 });
 
-t.test("02.07 - whitespace within custom heads and tails", (t) => {
+tap.test("02.07 - whitespace within custom heads and tails", (t) => {
   t.same(
     jv(
       {
@@ -1161,7 +1167,7 @@ t.test("02.07 - whitespace within custom heads and tails", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.08 - whitespace within variables containing paths and custom heads/tails",
   (t) => {
     t.same(
@@ -1189,7 +1195,7 @@ t.test(
   }
 );
 
-t.test("02.09 - some values are equal to heads or tails", (t) => {
+tap.test("02.09 - some values are equal to heads or tails", (t) => {
   t.same(
     jv({
       a: "some text %%_var1_%% more text %%_var2_%%",
@@ -1214,7 +1220,7 @@ t.test("02.09 - some values are equal to heads or tails", (t) => {
   t.end();
 });
 
-t.test("02.10 - opts.noSingleMarkers - off", (t) => {
+tap.test("02.10 - opts.noSingleMarkers - off", (t) => {
   t.same(
     jv(
       {
@@ -1244,7 +1250,7 @@ t.test("02.10 - opts.noSingleMarkers - off", (t) => {
   t.end();
 });
 
-t.test("02.11 - opts.noSingleMarkers - on", (t) => {
+tap.test("02.11 - opts.noSingleMarkers - on", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -1265,7 +1271,7 @@ t.test("02.11 - opts.noSingleMarkers - on", (t) => {
   t.end();
 });
 
-t.test("02.12 - opts.noSingleMarkers - off - more throw tests", (t) => {
+tap.test("02.12 - opts.noSingleMarkers - off - more throw tests", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -1284,7 +1290,7 @@ t.test("02.12 - opts.noSingleMarkers - off - more throw tests", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.13 - custom heads/tails, values equal to them are present in data",
   (t) => {
     t.same(
@@ -1318,7 +1324,7 @@ t.test(
   }
 );
 
-t.test("02.14 - custom heads/tails - noSingleMarkers = false", (t) => {
+tap.test("02.14 - custom heads/tails - noSingleMarkers = false", (t) => {
   t.same(
     jv(
       {
@@ -1350,7 +1356,7 @@ t.test("02.14 - custom heads/tails - noSingleMarkers = false", (t) => {
   t.end();
 });
 
-t.test("02.15 - value in an array", (t) => {
+tap.test("02.15 - value in an array", (t) => {
   t.same(
     jv({
       z: {
@@ -1373,7 +1379,7 @@ t.test("02.15 - value in an array", (t) => {
   t.end();
 });
 
-t.test("02.16 - data stores #1", (t) => {
+tap.test("02.16 - data stores #1", (t) => {
   t.same(
     jv({
       a: "some text %%_var1_%% more text %%_var3_%%.",
@@ -1459,7 +1465,7 @@ t.test("02.16 - data stores #1", (t) => {
   t.end();
 });
 
-t.test("02.17 - top-level key and data stash clash", (t) => {
+tap.test("02.17 - top-level key and data stash clash", (t) => {
   t.same(
     jv({
       a: "some text %%_var1_%% more text %%_var3_%%.",
@@ -1550,7 +1556,7 @@ t.test("02.17 - top-level key and data stash clash", (t) => {
   t.end();
 });
 
-t.test("02.18 - emoji in values", (t) => {
+tap.test("02.18 - emoji in values", (t) => {
   t.same(
     jv({
       a: "some🦄 text %%_var1_%% more text %%_var2_%%.",
@@ -1573,7 +1579,7 @@ t.test("02.18 - emoji in values", (t) => {
   t.end();
 });
 
-t.test("02.19 - emoji in keys", (t) => {
+tap.test("02.19 - emoji in keys", (t) => {
   t.same(
     jv({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
@@ -1596,7 +1602,7 @@ t.test("02.19 - emoji in keys", (t) => {
   t.end();
 });
 
-t.test("02.20 - emoji in variable keys", (t) => {
+tap.test("02.20 - emoji in variable keys", (t) => {
   t.same(
     jv({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
@@ -1619,7 +1625,7 @@ t.test("02.20 - emoji in variable keys", (t) => {
   t.end();
 });
 
-t.test("02.21 - empty strings in the input AST", (t) => {
+tap.test("02.21 - empty strings in the input AST", (t) => {
   t.same(
     jv({
       a: "some text %%_var1_%% more text %%_var2_%%",
@@ -1640,7 +1646,7 @@ t.test("02.21 - empty strings in the input AST", (t) => {
   t.end();
 });
 
-t.test("02.22 - fetching variables from parent node's level", (t) => {
+tap.test("02.22 - fetching variables from parent node's level", (t) => {
   t.same(
     jv({
       a: {
@@ -1669,7 +1675,7 @@ t.test("02.22 - fetching variables from parent node's level", (t) => {
   t.end();
 });
 
-t.test("02.23 - fetching variables from two levels above", (t) => {
+tap.test("02.23 - fetching variables from two levels above", (t) => {
   const input = {
     a: {
       b: {
@@ -1711,7 +1717,7 @@ t.test("02.23 - fetching variables from two levels above", (t) => {
   t.end();
 });
 
-t.test("02.24 - fetching variables from root, three levels above", (t) => {
+tap.test("02.24 - fetching variables from root, three levels above", (t) => {
   const input = {
     a: {
       b: {
@@ -1753,7 +1759,7 @@ t.test("02.24 - fetching variables from root, three levels above", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.25 - fetching variables from parent node's level data store",
   (t) => {
     t.same(
@@ -1789,7 +1795,7 @@ t.test(
   }
 );
 
-t.test("02.26 - fetching variables from data store two levels above", (t) => {
+tap.test("02.26 - fetching variables from data store two levels above", (t) => {
   t.same(
     jv({
       a: {
@@ -1822,7 +1828,7 @@ t.test("02.26 - fetching variables from data store two levels above", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.27 - fetching variables from data store as high as the root",
   (t) => {
     t.same(
@@ -1860,7 +1866,7 @@ t.test(
 
 // in the unit test below, there are two "eee"s to check can we really use
 // parent keys in the path to make keys unique
-t.test("02.28 - three level references", (t) => {
+tap.test("02.28 - three level references", (t) => {
   t.same(
     jv({
       aaa: {
@@ -1901,7 +1907,7 @@ t.test("02.28 - three level references", (t) => {
   t.end();
 });
 
-t.test("02.29 - resolves to a string", (t) => {
+tap.test("02.29 - resolves to a string", (t) => {
   t.same(
     jv({
       a: "%%_b_%%",
@@ -1936,7 +1942,7 @@ t.test("02.29 - resolves to a string", (t) => {
 // group 03. sneaky-ones, like recursion
 // -----------------------------------------------------------------------------
 
-t.test("03.01 - two-level variables resolved", (t) => {
+tap.test("03.01 - two-level variables resolved", (t) => {
   t.same(
     jv({
       a: "%%_b_%%",
@@ -1966,7 +1972,7 @@ t.test("03.01 - two-level variables resolved", (t) => {
   t.end();
 });
 
-t.test("03.02 - two-level redirects, backwards order", (t) => {
+tap.test("03.02 - two-level redirects, backwards order", (t) => {
   t.same(
     jv({
       x: "val",
@@ -1996,7 +2002,7 @@ t.test("03.02 - two-level redirects, backwards order", (t) => {
   t.end();
 });
 
-t.test("03.03 - two-level variables resolved, mixed", (t) => {
+tap.test("03.03 - two-level variables resolved, mixed", (t) => {
   t.same(
     jv({
       a: "Some text %%_b_%% some more text %%_c_%%",
@@ -2030,7 +2036,7 @@ t.test("03.03 - two-level variables resolved, mixed", (t) => {
   t.end();
 });
 
-t.test("03.04 - three-level variables resolved", (t) => {
+tap.test("03.04 - three-level variables resolved", (t) => {
   t.same(
     jv({
       a: "%%_b_%% %%_d_%%",
@@ -2064,7 +2070,7 @@ t.test("03.04 - three-level variables resolved", (t) => {
   t.end();
 });
 
-t.test("03.05 - another three-level var resolving", (t) => {
+tap.test("03.05 - another three-level var resolving", (t) => {
   t.same(
     jv({
       a: "%%_b_%% %%_c_%%",
@@ -2083,7 +2089,7 @@ t.test("03.05 - another three-level var resolving", (t) => {
   t.end();
 });
 
-t.test("03.06 - multiple variables resolved", (t) => {
+tap.test("03.06 - multiple variables resolved", (t) => {
   t.same(
     jv({
       a: "%%_e_%% %%_d_%%",
@@ -2129,7 +2135,7 @@ t.test("03.06 - multiple variables resolved", (t) => {
   t.end();
 });
 
-t.test("03.07 - preventDoubleWrapping: on & off", (t) => {
+tap.test("03.07 - preventDoubleWrapping: on & off", (t) => {
   t.same(
     jv(
       {
@@ -2250,7 +2256,7 @@ t.test("03.07 - preventDoubleWrapping: on & off", (t) => {
   t.end();
 });
 
-t.test("03.08 - empty variable", (t) => {
+tap.test("03.08 - empty variable", (t) => {
   t.same(
     jv({
       a: "%%__%%",
@@ -2269,7 +2275,7 @@ t.test("03.08 - empty variable", (t) => {
 // 04. variable whitelisting
 // -----------------------------------------------------------------------------
 
-t.test("04.01 - wrap flipswitch works", (t) => {
+tap.test("04.01 - wrap flipswitch works", (t) => {
   t.same(
     jv(
       {
@@ -2305,7 +2311,7 @@ t.test("04.01 - wrap flipswitch works", (t) => {
   t.end();
 });
 
-t.test("04.02 - global wrap flipswitch and dontWrapVars combo", (t) => {
+tap.test("04.02 - global wrap flipswitch and dontWrapVars combo", (t) => {
   t.same(
     jv(
       {
@@ -2393,7 +2399,7 @@ t.test("04.02 - global wrap flipswitch and dontWrapVars combo", (t) => {
   t.end();
 });
 
-t.test("04.03 - opts.dontWrapVars", (t) => {
+tap.test("04.03 - opts.dontWrapVars", (t) => {
   t.same(
     jv(
       {
@@ -2471,7 +2477,7 @@ t.test("04.03 - opts.dontWrapVars", (t) => {
   t.end();
 });
 
-t.test("04.04 - opts.dontWrapVars, real key names", (t) => {
+tap.test("04.04 - opts.dontWrapVars, real key names", (t) => {
   t.same(
     jv(
       {
@@ -2523,7 +2529,7 @@ t.test("04.04 - opts.dontWrapVars, real key names", (t) => {
   t.end();
 });
 
-t.test("04.05 - multiple dontWrapVars values", (t) => {
+tap.test("04.05 - multiple dontWrapVars values", (t) => {
   t.same(
     jv(
       {
@@ -2547,7 +2553,7 @@ t.test("04.05 - multiple dontWrapVars values", (t) => {
   t.end();
 });
 
-t.test("04.06 - one level var querying and whitelisting", (t) => {
+tap.test("04.06 - one level var querying and whitelisting", (t) => {
   t.same(
     jv(
       {
@@ -2589,7 +2595,7 @@ t.test("04.06 - one level var querying and whitelisting", (t) => {
   t.end();
 });
 
-t.test("04.07 - opts.dontWrapVars, real key names", (t) => {
+tap.test("04.07 - opts.dontWrapVars, real key names", (t) => {
   t.same(
     jv(
       {
@@ -2649,7 +2655,7 @@ t.test("04.07 - opts.dontWrapVars, real key names", (t) => {
 // 05. involving arrays
 // -----------------------------------------------------------------------------
 
-t.test("05.01 - arrays referencing values which are strings", (t) => {
+tap.test("05.01 - arrays referencing values which are strings", (t) => {
   t.same(
     jv({
       a: ["Some text %%_d_%% some more text %%_c_%%"],
@@ -2668,7 +2674,7 @@ t.test("05.01 - arrays referencing values which are strings", (t) => {
   t.end();
 });
 
-t.test("05.02 - arrays referencing values which are arrays", (t) => {
+tap.test("05.02 - arrays referencing values which are arrays", (t) => {
   t.same(
     jv({
       a: ["Some text %%_b_%% some more text %%_c_%%", "%%_c_%%", "%%_d_%%"],
@@ -2691,7 +2697,7 @@ t.test("05.02 - arrays referencing values which are arrays", (t) => {
   t.end();
 });
 
-t.test("05.03 - arrays, whitelisting as string", (t) => {
+tap.test("05.03 - arrays, whitelisting as string", (t) => {
   t.same(
     jv(
       {
@@ -2757,7 +2763,7 @@ t.test("05.03 - arrays, whitelisting as string", (t) => {
   t.end();
 });
 
-t.test("05.04 - arrays, whitelisting as array #1", (t) => {
+tap.test("05.04 - arrays, whitelisting as array #1", (t) => {
   t.same(
     jv(
       {
@@ -2885,7 +2891,7 @@ t.test("05.04 - arrays, whitelisting as array #1", (t) => {
   t.end();
 });
 
-t.test("05.05 - arrays, whitelisting as array #2", (t) => {
+tap.test("05.05 - arrays, whitelisting as array #2", (t) => {
   t.same(
     jv(
       {
@@ -3086,7 +3092,7 @@ t.test("05.05 - arrays, whitelisting as array #2", (t) => {
 // 06. opts.noSingleMarkers
 // -----------------------------------------------------------------------------
 
-t.test("06.01 - UTIL > single markers in the values", (t) => {
+tap.test("06.01 - UTIL > single markers in the values", (t) => {
   t.doesNotThrow(() => {
     jv({
       a: "z",
@@ -3155,7 +3161,7 @@ t.test("06.01 - UTIL > single markers in the values", (t) => {
 // 07. opts.headsNoWrap & opts.tailsNoWrap
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars",
   (t) => {
     t.same(
@@ -3252,7 +3258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "07.02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars",
   (t) => {
     t.same(
@@ -3322,7 +3328,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "07.03 - triple linking with resolving arrays and trailing new lines",
   (t) => {
     t.same(
@@ -3584,7 +3590,7 @@ t.test(
 // 08. non-string values - still valid JSON
 // -----------------------------------------------------------------------------
 
-t.test("08.01 - Boolean values inserted into a middle of a string", (t) => {
+tap.test("08.01 - Boolean values inserted into a middle of a string", (t) => {
   t.same(
     jv({
       a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
@@ -3670,7 +3676,7 @@ t.test("08.01 - Boolean values inserted into a middle of a string", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "08.02 - Boolean values inserted instead of other values, in whole",
   (t) => {
     t.same(
@@ -3716,7 +3722,7 @@ t.test(
   }
 );
 
-t.test("08.03 - null values inserted into a middle of a string", (t) => {
+tap.test("08.03 - null values inserted into a middle of a string", (t) => {
   t.same(
     jv({
       a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
@@ -3737,7 +3743,7 @@ t.test("08.03 - null values inserted into a middle of a string", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "08.04 - null values inserted instead of other values, in whole",
   (t) => {
     t.same(
@@ -3826,7 +3832,7 @@ t.test(
 // 09. opts.resolveToBoolIfAnyValuesContainBool
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix",
   (t) => {
     // False
@@ -3941,7 +3947,7 @@ t.test(
 // 10. variable resolving on a deeper levels, other than root
 // -----------------------------------------------------------------------------
 
-t.test("10.01 - variables resolve being in deeper levels", (t) => {
+tap.test("10.01 - variables resolve being in deeper levels", (t) => {
   t.same(
     jv({
       a: [
@@ -3966,7 +3972,7 @@ t.test("10.01 - variables resolve being in deeper levels", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "10.02 - deeper level variables not found, bubble up and are found",
   (t) => {
     t.same(
@@ -3994,7 +4000,7 @@ t.test(
   }
 );
 
-t.test("10.03 - third level resolves at its level", (t) => {
+tap.test("10.03 - third level resolves at its level", (t) => {
   t.same(
     jv({
       a: [
@@ -4027,7 +4033,7 @@ t.test("10.03 - third level resolves at its level", (t) => {
   t.end();
 });
 
-t.test("10.04 - third level falls back to root", (t) => {
+tap.test("10.04 - third level falls back to root", (t) => {
   t.same(
     jv({
       a: [
@@ -4060,7 +4066,7 @@ t.test("10.04 - third level falls back to root", (t) => {
   t.end();
 });
 
-t.test("10.05 - third level uses data container key", (t) => {
+tap.test("10.05 - third level uses data container key", (t) => {
   t.same(
     jv({
       a: [
@@ -4101,7 +4107,7 @@ t.test("10.05 - third level uses data container key", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "10.06 - third level uses data container key, but there's nothing there so falls back to root (successfully)",
   (t) => {
     t.same(
@@ -4143,7 +4149,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "10.07 - third level uses data container key, but there's nothing there so falls back to root data container (successfully)",
   (t) => {
     t.same(
@@ -4232,7 +4238,7 @@ t.test(
 // 11. two-level querying
 // -----------------------------------------------------------------------------
 
-t.test("11.01 - two-level querying, normal keys in the root", (t) => {
+tap.test("11.01 - two-level querying, normal keys in the root", (t) => {
   t.same(
     jv({
       a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
@@ -4271,7 +4277,7 @@ t.test("11.01 - two-level querying, normal keys in the root", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "11.02 - two-level querying, normal keys in the root + wrapping & opts",
   (t) => {
     t.same(
@@ -4510,7 +4516,7 @@ t.test(
   }
 );
 
-t.test("11.03 - opts.throwWhenNonStringInsertedInString", (t) => {
+tap.test("11.03 - opts.throwWhenNonStringInsertedInString", (t) => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -4590,50 +4596,53 @@ t.test("11.03 - opts.throwWhenNonStringInsertedInString", (t) => {
   t.end();
 });
 
-t.test("11.04 - multi-level + from array + root data store + ignores", (t) => {
-  t.same(
-    jv(
+tap.test(
+  "11.04 - multi-level + from array + root data store + ignores",
+  (t) => {
+    t.same(
+      jv(
+        {
+          title: [
+            "something",
+            "Some text %%_subtitle.aaa_%%",
+            "%%_submarine.bbb_%%",
+            "anything",
+          ],
+          title_data: {
+            subtitle: { aaa: "text" },
+            submarine: { bbb: "ship" },
+          },
+        },
+        {
+          heads: "%%_",
+          tails: "_%%",
+          lookForDataContainers: true,
+          dataContainerIdentifierTails: "_data",
+          wrapHeadsWith: "{",
+          wrapTailsWith: "}",
+          dontWrapVars: ["*zzz", "*.aaa", "*yyy"],
+          preventDoubleWrapping: true,
+          wrapGlobalFlipSwitch: true,
+        }
+      ),
       {
-        title: [
-          "something",
-          "Some text %%_subtitle.aaa_%%",
-          "%%_submarine.bbb_%%",
-          "anything",
-        ],
+        title: ["something", "Some text text", "{ship}", "anything"],
         title_data: {
           subtitle: { aaa: "text" },
           submarine: { bbb: "ship" },
         },
       },
-      {
-        heads: "%%_",
-        tails: "_%%",
-        lookForDataContainers: true,
-        dataContainerIdentifierTails: "_data",
-        wrapHeadsWith: "{",
-        wrapTailsWith: "}",
-        dontWrapVars: ["*zzz", "*.aaa", "*yyy"],
-        preventDoubleWrapping: true,
-        wrapGlobalFlipSwitch: true,
-      }
-    ),
-    {
-      title: ["something", "Some text text", "{ship}", "anything"],
-      title_data: {
-        subtitle: { aaa: "text" },
-        submarine: { bbb: "ship" },
-      },
-    },
-    "11.04 - two ignores in an array, data store, multi-level"
-  );
-  t.end();
-});
+      "11.04 - two ignores in an array, data store, multi-level"
+    );
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // 12. Potentially clashing combos of characters
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   "12.01 - surrounding underscores - sneaky similarity with wrong side brackets #1",
   (t) => {
     t.same(
@@ -4655,7 +4664,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.02 - surrounding underscores - sneaky similarity with wrong side brackets #2",
   (t) => {
     t.same(
@@ -4677,7 +4686,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.03 - surrounding underscores - sneaky similarity with wrong side brackets #3",
   (t) => {
     t.same(
@@ -4699,7 +4708,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.04 - surrounding underscores - sneaky similarity with wrong side brackets #4",
   (t) => {
     t.same(
@@ -4721,7 +4730,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.05 - surrounding dashes - sneaky similarity with wrong side brackets #1",
   (t) => {
     t.same(
@@ -4743,7 +4752,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "12.06 - surrounding dashes - sneaky similarity with wrong side brackets #2",
   (t) => {
     t.same(

@@ -9912,9 +9912,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -9942,9 +9946,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -9983,7 +9991,7 @@
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
-        i++;
+        i += 1;
         continue;
       }
 
@@ -10000,7 +10008,7 @@
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
         } else {
-          i++;
+          i += 1;
         }
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
@@ -10025,10 +10033,10 @@
           leftmostChar = whattsOnTheSide;
         }
       } else if (optional) {
-        i++;
+        i += 1;
         continue;
       } else if (satiated) {
-        i++;
+        i += 1;
         satiated = undefined;
         continue;
       } else {
@@ -10058,7 +10066,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -10077,7 +10087,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -10110,7 +10122,7 @@
     } while (lastRes);
 
     if (lastIdx != null && direction === "right") {
-      lastIdx++;
+      lastIdx += 1;
     }
 
     if (lastIdx === null) {
@@ -10127,7 +10139,9 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        }
+
+        if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -10152,7 +10166,7 @@
         return str.length;
       }
 
-      return whatsOnTheRight ? whatsOnTheRight : str.length;
+      return whatsOnTheRight || str.length;
     }
 
     if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
@@ -10164,7 +10178,9 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      }
+
+      if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
           if (`\n\r`.includes(str[y]) || str[y].trim()) {
             return y + 1 + (str[y].trim() ? 1 : 0);
@@ -10173,9 +10189,13 @@
       }
 
       return 0;
-    } else if (opts.mode === 1) {
+    }
+
+    if (opts.mode === 1) {
       return lastIdx;
-    } else if (opts.mode === 2) {
+    }
+
+    if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
@@ -10202,7 +10222,9 @@
     };
 
     if (lodash_isplainobject(args[0])) {
-      const opts = Object.assign({}, defaults, lodash_clonedeep(args[0]));
+      const opts = { ...defaults,
+        ...lodash_clonedeep(args[0])
+      };
 
       if (!opts.mode) {
         opts.mode = 0;
@@ -10213,7 +10235,9 @@
       }
 
       return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
-    } else if (!isStr(args[0])) {
+    }
+
+    if (!isStr(args[0])) {
       return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
     }
 

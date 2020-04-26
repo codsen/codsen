@@ -16,6 +16,7 @@ const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
 const format = require("format-package");
+
 const isArr = Array.isArray;
 
 function isStr(something) {
@@ -124,6 +125,18 @@ const badFiles = [
 //   )}`
 // );
 
+// settle indentations type and count
+
+// 1. set defaults:
+let indentationCount = 2;
+if (cli.flags.tabs) {
+  indentationCount = 1;
+}
+// 2. overwrite defaults with explicitly set value:
+if (cli.flags.indentationCount) {
+  indentationCount = Number.parseInt(cli.flags.indentationCount, 10);
+}
+
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
@@ -204,7 +217,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
               const current = val !== undefined ? val : key;
               if (isObj(current)) {
                 return sortObject(current);
-              } else if (
+              }
+              if (
                 cli.flags.arrays &&
                 isArr(current) &&
                 current.length > 1 &&
@@ -240,7 +254,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
               const current = val !== undefined ? val : key;
               if (isObj(current)) {
                 return sortObject(current);
-              } else if (
+              }
+              if (
                 cli.flags.arrays &&
                 isArr(current) &&
                 current.length > 1 &&
@@ -270,7 +285,9 @@ function readSortAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
+      console.log(
+        `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
+      );
     });
 }
 
@@ -299,18 +316,6 @@ if (cli.flags) {
       input = input.concat(cli.flags[flag]);
     }
   });
-}
-
-// settle indentations type and count
-
-// 1. set defaults:
-let indentationCount = 2;
-if (cli.flags.tabs) {
-  indentationCount = 1;
-}
-// 2. overwrite defaults with explicitly set value:
-if (cli.flags.indentationCount) {
-  indentationCount = Number.parseInt(cli.flags.indentationCount, 10);
 }
 
 // Step #2. query the glob and follow the pipeline
@@ -429,6 +434,7 @@ globby(input, { dot: true })
     // );
     return tempRez;
   })
+  // eslint-disable-next-line consistent-return
   .then((received) => {
     if (cli.flags.dry && !cli.flags.silent) {
       log(
@@ -479,16 +485,16 @@ globby(input, { dot: true })
         received,
         (counter, currentPath) =>
           readSortAndWriteOverFile(currentPath)
-            .then((received) => {
-              // console.log(
-              //   `484 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
-              //     received,
-              //     null,
-              //     4
-              //   )}`
-              // );
-              return received;
-            })
+            // .then((received2) => {
+            //   // console.log(
+            //   //   `484 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+            //   //     received,
+            //   //     null,
+            //   //     4
+            //   //   )}`
+            //   // );
+            //   return received2;
+            // })
             .then((res) =>
               res
                 ? {

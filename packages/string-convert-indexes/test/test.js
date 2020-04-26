@@ -1,14 +1,14 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   nativeToUnicode,
   unicodeToNative,
-} = require("../dist/string-convert-indexes.cjs");
+} from "../dist/string-convert-indexes.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - empty string", (t) => {
+tap.test("01.01 - empty string", (t) => {
   t.throws(() => {
     unicodeToNative("", 0);
   }, /THROW_ID_02/g);
@@ -18,7 +18,7 @@ t.test("01.01 - empty string", (t) => {
   t.end();
 });
 
-t.test("01.02 - indexes outside of the reference string", (t) => {
+tap.test("01.02 - indexes outside of the reference string", (t) => {
   // Case: The first character outside of a string.
   // For example, if you have a string "a".
   // If you described its contents as a String.slice() range, that would be [0, 1].
@@ -82,7 +82,7 @@ t.test("01.02 - indexes outside of the reference string", (t) => {
   t.end();
 });
 
-t.test("01.03 - negative indexes are ignored", (t) => {
+tap.test("01.03 - negative indexes are ignored", (t) => {
   t.same(nativeToUnicode("a", "-1"), "-1", "01.03.01");
   t.same(unicodeToNative("a", "-1"), "-1", "01.03.02");
   t.same(nativeToUnicode("a", -1), -1, "01.03.03");
@@ -90,7 +90,7 @@ t.test("01.03 - negative indexes are ignored", (t) => {
   t.end();
 });
 
-t.test("01.04 - opts is not a plain object", (t) => {
+tap.test("01.04 - opts is not a plain object", (t) => {
   t.throws(() => {
     nativeToUnicode("a", 1, 1);
   }, /THROW_ID_03/g);
@@ -100,7 +100,7 @@ t.test("01.04 - opts is not a plain object", (t) => {
   t.end();
 });
 
-t.test("01.05 - missing input args", (t) => {
+tap.test("01.05 - missing input args", (t) => {
   t.throws(() => {
     nativeToUnicode();
   }, /THROW_ID_01/g);
@@ -120,7 +120,7 @@ t.test("01.05 - missing input args", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test("02.01 - two astral characters offsetting the rest", (t) => {
+tap.test("02.01 - two astral characters offsetting the rest", (t) => {
   t.same(
     nativeToUnicode("\uD834\uDF06aa", [0, 1, 2, 3]),
     [0, 0, 1, 2],
@@ -197,7 +197,7 @@ t.test("02.01 - two astral characters offsetting the rest", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.02 - a stray astral surrogate without second counterpart counts as symbol",
   (t) => {
     t.same(
@@ -209,13 +209,13 @@ t.test(
   }
 );
 
-t.test("02.03 - one letter string", (t) => {
+tap.test("02.03 - one letter string", (t) => {
   t.same(nativeToUnicode("a", 0), 0, "02.03.01");
   t.same(unicodeToNative("a", 0), 0, "02.03.02");
   t.end();
 });
 
-t.test("02.04 - single astral symbol", (t) => {
+tap.test("02.04 - single astral symbol", (t) => {
   t.same(nativeToUnicode("\uD834\uDF06", 0), 0, "02.04.01");
   t.same(unicodeToNative("\uD834\uDF06", 0), 0, "02.04.02");
   t.same(nativeToUnicode("\uD834\uDF06", 1), 0, "02.04.03");
@@ -230,7 +230,7 @@ t.test("02.04 - single astral symbol", (t) => {
   t.end();
 });
 
-t.test("02.05 - multiple consecutive astral symbols", (t) => {
+tap.test("02.05 - multiple consecutive astral symbols", (t) => {
   t.same(nativeToUnicode("\uD834\uDF06\uD834\uDF06", 0), 0, "02.05.01");
   t.same(unicodeToNative("\uD834\uDF06\uD834\uDF06", 0), 0, "02.05.02");
   t.same(nativeToUnicode("\uD834\uDF06\uD834\uDF06", 1), 0, "02.05.03");

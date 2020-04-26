@@ -29,6 +29,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
     );
   }
   if (/^\d*$/.test(fromIndex)) {
+    // eslint-disable-next-line no-param-reassign
     fromIndex = Number(fromIndex);
   }
   const strArr = Array.from(str);
@@ -41,6 +42,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
     return [];
   }
   if (!existy(fromIndex)) {
+    // eslint-disable-next-line no-param-reassign
     fromIndex = 0;
   }
 

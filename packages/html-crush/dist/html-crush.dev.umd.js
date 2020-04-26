@@ -317,7 +317,9 @@
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = Object.assign({}, defaults, originalOptions);
+    const opts = { ...defaults,
+      ...originalOptions
+    };
     let culpritsIndex;
     let culpritsLen;
 
@@ -348,7 +350,7 @@
     let counter = 0;
     return Array.from(arrOfRanges).sort((range1, range2) => {
       if (opts.progressFn) {
-        counter++;
+        counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
       }
 
@@ -403,7 +405,9 @@
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
@@ -428,7 +432,8 @@
         throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
       }
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
@@ -666,7 +671,7 @@
         Array.from(str).forEach(char => {
           if (char !== "\n" || limit) {
             if (char === "\n") {
-              limit--;
+              limit -= 1;
             }
 
             push(resArr, true, char);
@@ -687,14 +692,12 @@
         for (let i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(startCharacter, true, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(startCharacter, true, str[i]);
           }
         }
       }
@@ -706,14 +709,12 @@
         for (let i = str.length; i--;) {
           if (str[i].trim()) {
             break;
-          } else {
-            if (str[i] !== "\n" || limit) {
-              if (str[i] === "\n") {
-                limit--;
-              }
-
-              push(endCharacter, false, str[i]);
+          } else if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit -= 1;
             }
+
+            push(endCharacter, false, str[i]);
           }
         }
       }
@@ -760,7 +761,9 @@
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = Object.assign({}, defaults, originalOpts);
+      const opts = { ...defaults,
+        ...originalOpts
+      };
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -782,7 +785,9 @@
 
       if (!existy$1(originalFrom) && !existy$1(originalTo)) {
         return;
-      } else if (existy$1(originalFrom) && !existy$1(originalTo)) {
+      }
+
+      if (existy$1(originalFrom) && !existy$1(originalTo)) {
         if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(el => Array.isArray(el))) {
@@ -792,7 +797,9 @@
                 }
               });
               return;
-            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+            }
+
+            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
               this.add(...originalFrom);
             }
           }
@@ -1003,7 +1010,7 @@
         }
       } else {
         if (opts.maxMismatches && patience && i) {
-          patience--;
+          patience -= 1;
 
           for (let y = 0; y <= patience; y++) {
             const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -1046,7 +1053,9 @@
     if (charsToCheckCount > 0) {
       if (special && whatToMatchValVal === "EOL") {
         return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
         return lastWasMismatched || 0;
       }
 
@@ -1068,13 +1077,17 @@
       throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
     }
 
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
     opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
 
     if (!isStr$2(str)) {
       return false;
-    } else if (!str.length) {
+    }
+
+    if (!str.length) {
       return false;
     }
 
@@ -1187,12 +1200,12 @@
       let startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition++;
+        startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition--;
+        startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -1312,7 +1325,9 @@
       wipeAllWhitespaceOnRight: false,
       addSingleSpaceToPreventAccidentalConcatenation: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
       let culpritsIndex;
@@ -1377,11 +1392,11 @@
 
     if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
       if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
-        from--;
+        from -= 1;
       }
 
       if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
-        to++;
+        to += 1;
       }
     }
 
@@ -3263,9 +3278,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -3293,9 +3312,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
