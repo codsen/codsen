@@ -1,5 +1,5 @@
-const t = require("tap");
-const splitEasy = require("../dist/csv-split-easy.cjs");
+import tap from "tap";
+import splitEasy from "../dist/csv-split-easy.esm";
 
 // some art first
 //
@@ -30,7 +30,7 @@ const splitEasy = require("../dist/csv-split-easy.cjs");
 // group 01 - concentrating on line breaks: varying amounts and different types
 // ============================================================================
 //
-t.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
+tap.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
   t.same(
     splitEasy("a,b,c\nd,e,f"),
     [
@@ -70,7 +70,7 @@ t.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
   t.end();
 });
 
-t.test("01.02 - breaks lines that have empty values", (t) => {
+tap.test("01.02 - breaks lines that have empty values", (t) => {
   t.same(
     splitEasy(",,\na,b,c"),
     [["a", "b", "c"]],
@@ -126,7 +126,7 @@ t.test("01.02 - breaks lines that have empty values", (t) => {
   t.end();
 });
 
-t.test("01.03 - copes with leading/trailing empty space", (t) => {
+tap.test("01.03 - copes with leading/trailing empty space", (t) => {
   t.same(
     splitEasy(`Description,Debit Amount,Credit Amount,Balance
 Client #1 payment,,1000,1940
@@ -168,7 +168,7 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
 // group 02 - concentrating on values wrapped with duoble quotes
 // =============================================================
 //
-t.test("02.01 - breaks lines correctly leaving no empty lines", (t) => {
+tap.test("02.01 - breaks lines correctly leaving no empty lines", (t) => {
   t.same(
     splitEasy('"a,b",c,d\ne,f,g'),
     [
@@ -190,7 +190,7 @@ t.test("02.01 - breaks lines correctly leaving no empty lines", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.02 - particular attention of combos of line breaks and double quotes",
   (t) => {
     t.same(
@@ -205,7 +205,7 @@ t.test(
   }
 );
 
-t.test("02.03 - particular attention of double quotes at the end", (t) => {
+tap.test("02.03 - particular attention of double quotes at the end", (t) => {
   t.same(
     splitEasy('"a,b",c,d\n\re,f,"g,h"'),
     [
@@ -217,7 +217,7 @@ t.test("02.03 - particular attention of double quotes at the end", (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   "02.04 - all values are wrapped with double quotes, some trailing white space",
   (t) => {
     t.same(
@@ -234,7 +234,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   "02.05 - values wrapped in double quotes that contain double quotes",
   (t) => {
     t.same(
@@ -253,7 +253,7 @@ t.test(
 // group 03 - input type validation
 // =============================================================
 //
-t.test("03.01 - wrong input types causes throwing up", (t) => {
+tap.test("03.01 - wrong input types causes throwing up", (t) => {
   t.throws(() => {
     splitEasy(null);
   });
@@ -293,7 +293,7 @@ t.test("03.01 - wrong input types causes throwing up", (t) => {
 // =============================================================
 //
 
-t.test(
+tap.test(
   "04.01 - deals with (or does not) thousand separators in numbers",
   (t) => {
     t.same(
@@ -328,7 +328,7 @@ t.test(
 // =============================================================
 //
 
-t.test("05.01 - to pad or not to pad", (t) => {
+tap.test("05.01 - to pad or not to pad", (t) => {
   t.same(
     splitEasy(
       'Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"'
@@ -360,7 +360,7 @@ t.test("05.01 - to pad or not to pad", (t) => {
 // =============================================================
 //
 
-t.test(
+tap.test(
   "06.01 - Russian/Lithuanian/continental decimal notation style CSV that uses commas",
   (t) => {
     t.same(

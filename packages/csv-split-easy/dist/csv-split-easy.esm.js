@@ -30,7 +30,7 @@ function splitEasy(str, originalOpts) {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (typeof str !== "string") {
     throw new TypeError(
       `csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(

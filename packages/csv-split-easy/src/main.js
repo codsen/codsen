@@ -29,7 +29,7 @@ function splitEasy(str, originalOpts) {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   if (typeof str !== "string") {
     throw new TypeError(
