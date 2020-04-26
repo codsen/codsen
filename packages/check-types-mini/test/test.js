@@ -1,7 +1,7 @@
-const t = require("tap");
-const checkTypes = require("../dist/check-types-mini.cjs");
+import tap from "tap";
+import checkTypes from "../dist/check-types-mini.esm";
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when all/first args are missing`,
   (t) => {
     t.throws(() => {
@@ -11,7 +11,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when one of the arguments is of a wrong type`,
   (t) => {
     t.throws(() => {
@@ -51,7 +51,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.msg or opts.optsVarName args are wrong-type`,
   (t) => {
     t.throws(() => {
@@ -95,7 +95,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - if fourth argument is missing`,
   (t) => {
     t.throws(() => {
@@ -156,7 +156,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when opts are set wrong`,
   (t) => {
     t.doesNotThrow(() => {
@@ -211,7 +211,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - nested options`,
   (t) => {
     t.throws(() => {
@@ -258,7 +258,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths`,
   (t) => {
     // control:
@@ -533,7 +533,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths with wildcards`,
   (t) => {
     // paths ignored - given as string:
@@ -623,7 +623,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.09 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignoreKeys with wildcards not referenced by schema/reference obj.`,
   (t) => {
     // the control
@@ -691,7 +691,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.10 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - some keys bailed through ignoreKeys, some through ignorePaths and as a result it does not throw`,
   (t) => {
     // the control:
@@ -807,7 +807,7 @@ t.test(
 // 02. Arrays
 // ======================
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strings+arrays`,
   (t) => {
     const err1 = t.throws(() => {
@@ -877,7 +877,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, Booleans+arrays`,
   (t) => {
     const err1 = t.throws(() => {
@@ -994,7 +994,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`,
   (t) => {
     t.doesNotThrow(() => {
@@ -1100,7 +1100,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.05 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`,
   (t) => {
     const err = t.throws(() => {
@@ -1126,7 +1126,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.06 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when keysets mismatch`,
   (t) => {
     t.throws(() => {
@@ -1192,7 +1192,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.07 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset set to a wrong thing`,
   (t) => {
     t.throws(() => {
@@ -1217,7 +1217,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.08 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`,
   (t) => {
     t.throws(() => {
@@ -1235,7 +1235,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.09 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`,
   (t) => {
     // control
@@ -1361,7 +1361,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`,
   (t) => {
     const err1 = t.throws(() => {
@@ -1389,7 +1389,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customising keys`,
   (t) => {
     // default mode (strict) - root level
@@ -1498,7 +1498,7 @@ t.test(
 // 03. opts.enforceStrictKeyset
 // ======================
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arrays`,
   (t) => {
     t.throws(() => {
@@ -1539,7 +1539,7 @@ t.test(
 // 04. opts.schema
 // ======================
 
-t.test(
+tap.test(
   `04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in root`,
   (t) => {
     const err1 = t.throws(() => {
@@ -1934,7 +1934,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.02 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`,
   (t) => {
     const err1 = t.throws(() => {
@@ -2002,7 +2002,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.03 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`,
   (t) => {
     // control - make it throw:
@@ -2057,7 +2057,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper`,
   (t) => {
     const err2 = t.throws(() => {
@@ -2120,7 +2120,7 @@ t.test(
     );
 
     // make error message mention a missing deeper-level path:
-    const err3_2 = t.throws(() => {
+    const err32 = t.throws(() => {
       checkTypes(
         {
           option1: { option2: "setting1" },
@@ -2137,7 +2137,7 @@ t.test(
       );
     });
     t.match(
-      err3_2.message,
+      err32.message,
       /check-types-mini: opts\.option1\.option2 is neither covered by reference object/gi
     );
 
@@ -2443,7 +2443,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.05 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "whatever" keys`,
   (t) => {
     const err1 = t.throws(() => {
@@ -2565,7 +2565,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.06 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`,
   (t) => {
     // with throwing consequences:
@@ -2614,7 +2614,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.07 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} is set to a wrong thing - throws`,
   (t) => {
     const err1 = t.throws(() => {
@@ -2658,7 +2658,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.08 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acceptArrays`,
   (t) => {
     const err1 = t.throws(() => {
@@ -2796,7 +2796,7 @@ t.test(
   }
 );
 
-t.test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
+tap.test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -2850,7 +2850,7 @@ t.test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
   t.end();
 });
 
-t.test(
+tap.test(
   `04.10 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`,
   (t) => {
     // root level "placeholder" gets flagged up, deeper levels given in "ignorePaths"
@@ -2919,7 +2919,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.11 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`,
   (t) => {
     t.doesNotThrow(() => {
@@ -2983,7 +2983,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `04.12 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`,
   (t) => {
     const err2 = t.throws(() => {

@@ -1,5 +1,5 @@
-const t = require("tap");
-const check1 = require("../dist/check-types-mini.umd");
+import tap from "tap";
+import check1 from "../dist/check-types-mini.umd";
 
 const obj1 = {
   option1: "setting1",
@@ -18,7 +18,7 @@ const opts = {
   optsVarName: "zzz",
 };
 
-t.test("UMD build works fine", (t) => {
+tap.test("UMD build works fine", (t) => {
   const err = t.throws(() => {
     check1(obj1, obj2, opts);
   });

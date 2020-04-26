@@ -66,9 +66,9 @@ function checkTypesMini(
   };
   let opts;
   if (existy(originalOptions) && isObj(originalOptions)) {
-    opts = Object.assign({}, defaults, originalOptions);
+    opts = { ...defaults, ...originalOptions };
   } else {
-    opts = Object.assign({}, defaults);
+    opts = { ...defaults };
   }
   if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
     opts.ignoreKeys = [];
