@@ -13,6 +13,55 @@
   (global = global || self, global.objectDeleteKey = factory());
 }(this, (function () { 'use strict';
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -964,7 +1013,9 @@
       msg: "",
       optsVarName: "given variable"
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (existy(opts.msg) && opts.msg.length > 0) {
       opts.msg = `${opts.msg.trim()} `;
@@ -976,9 +1027,13 @@
 
     if (lodash_includes(onlyObjectValues, str.toLowerCase().trim())) {
       return "object";
-    } else if (lodash_includes(onlyArrayValues, str.toLowerCase().trim())) {
+    }
+
+    if (lodash_includes(onlyArrayValues, str.toLowerCase().trim())) {
       return "array";
-    } else if (lodash_includes(onlyAnyValues, str.toLowerCase().trim())) {
+    }
+
+    if (lodash_includes(onlyAnyValues, str.toLowerCase().trim())) {
       return "any";
     }
 
@@ -3488,19 +3543,20 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
+    const stop2 = {
       now: false
     };
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       const tree = lodash_clonedeep(treeOriginal);
       let i;
       let len;
       let res;
-      innerObj = Object.assign({
+      const innerObj = {
         depth: -1,
-        path: ""
-      }, innerObj);
+        path: "",
+        ...originalInnerObj
+      };
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -3514,11 +3570,11 @@
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }, stop), callback, { ...innerObj,
               path: trimFirstDot(path)
-            }), stop);
+            }, stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -3544,11 +3600,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
             path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }, stop), callback, { ...innerObj,
             path: trimFirstDot(path)
-          }), stop);
+          }, stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -3561,7 +3617,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   }
 
   /**
@@ -5154,9 +5210,12 @@
     let opts;
 
     if (existy(originalOptions) && isObj(originalOptions)) {
-      opts = Object.assign({}, defaults, originalOptions);
+      opts = { ...defaults,
+        ...originalOptions
+      };
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
@@ -5333,7 +5392,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
       return !input.trim();
-    } else if (!["object", "string"].includes(typeof input) || !input) {
+    }
+
+    if (!["object", "string"].includes(typeof input) || !input) {
       return false;
     }
 
@@ -5388,7 +5449,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   function isBlank(something) {
     if (isObj$1(something)) {
       return Object.keys(something).length === 0;
-    } else if (isArr(something) || isStr(something)) {
+    }
+
+    if (isArr(something) || isStr(something)) {
       return something.length === 0;
     }
 
@@ -5430,7 +5493,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       verboseWhenMismatches: false,
       useWildcards: false
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (opts.hungryForWhitespace && opts.matchStrictly && isObj$1(b) && containsOnlyEmptySpace(b) && isObj$1(s) && !Object.keys(s).length) {
       return true;
@@ -5452,7 +5517,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       return opts.useWildcards ? matcher.isMatch(b, s, {
         caseSensitive: true
       }) : b === s;
-    } else if (isArr(b) && isArr(s)) {
+    }
+
+    if (isArr(b) && isArr(s)) {
       if (opts.hungryForWhitespace && containsOnlyEmptySpace(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
         return true;
       }
@@ -5522,7 +5589,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
             }
 
             return `The given object has key "${sKey}" which the other-one does not have.`;
-          } else if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
+          }
+
+          if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
             caseSensitive: true
           }))) {
             return true;
@@ -5533,7 +5602,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
           }
 
           return `The given object has key "${sKey}" which the other-one does not have.`;
-        } else if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+        }
+
+        if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
           if (!(containsOnlyEmptySpace(b[sKey]) && containsOnlyEmptySpace(s[sKey]) && opts.hungryForWhitespace)) {
             if (!opts.verboseWhenMismatches) {
               return false;
@@ -5592,15 +5663,16 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     return something && typeof something === "object" && !Array.isArray(something);
   }
 
-  function monkey(input, opts) {
-    if (!existy$1(input)) {
+  function monkey(originalInput, originalOpts) {
+    if (!existy$1(originalInput)) {
       throw new Error("ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input");
     }
 
-    opts = Object.assign({
+    const opts = {
       key: null,
-      val: undefined
-    }, opts);
+      val: undefined,
+      ...originalOpts
+    };
     const data = {
       count: 0,
       gatherPath: [],
@@ -5617,6 +5689,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     if (!existy$1(opts.key) && notUndef(opts.val)) {
       vo = true;
     }
+
+    let input = originalInput;
 
     if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length > 0) {
       input = [input[0]];
@@ -5656,12 +5730,18 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
       if (opts.mode === "set" && data.count === opts.index) {
         return opts.val;
-      } else if (opts.mode === "drop" && data.count === opts.index) {
+      }
+
+      if (opts.mode === "drop" && data.count === opts.index) {
         return NaN;
-      } else if (opts.mode === "arrayFirstOnly") {
+      }
+
+      if (opts.mode === "arrayFirstOnly") {
         if (notUndef(val) && Array.isArray(val)) {
           return [val[0]];
-        } else if (existy$1(key) && Array.isArray(key)) {
+        }
+
+        if (existy$1(key) && Array.isArray(key)) {
           return [key[0]];
         }
 
@@ -5673,22 +5753,26 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
     if (opts.mode === "get") {
       return data.finding;
-    } else if (opts.mode === "find") {
+    }
+
+    if (opts.mode === "find") {
       return findings.length > 0 ? findings : null;
     }
 
     return input;
   }
 
-  function find(input, opts) {
+  function find(input, originalOpts) {
     if (!existy$1(input)) {
       throw new Error("ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input");
     }
 
-    if (!isObj$2(opts) || opts.key === undefined && opts.val === undefined) {
+    if (!isObj$2(originalOpts) || originalOpts.key === undefined && originalOpts.val === undefined) {
       throw new Error("ast-monkey/main.js/find(): [THROW_ID_03] Please provide opts.key or opts.val");
     }
 
+    const opts = { ...originalOpts
+    };
     externalApi(opts, null, {
       schema: {
         key: ["null", "string"],
@@ -5707,23 +5791,26 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       opts.only = "any";
     }
 
-    return monkey(input, Object.assign({}, opts, {
+    return monkey(input, { ...opts,
       mode: "find"
-    }));
+    });
   }
 
-  function get(input, opts) {
+  function get(input, originalOpts) {
     if (!existy$1(input)) {
       throw new Error("ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input");
     }
 
-    if (!isObj$2(opts)) {
+    if (!isObj$2(originalOpts)) {
       throw new Error("ast-monkey/main.js/get(): [THROW_ID_07] Please provide the opts");
     }
 
-    if (!existy$1(opts.index)) {
+    if (!existy$1(originalOpts.index)) {
       throw new Error("ast-monkey/main.js/get(): [THROW_ID_08] Please provide opts.index");
     }
+
+    const opts = { ...originalOpts
+    };
 
     if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
       opts.index = parseInt(opts.index, 10);
@@ -5731,23 +5818,26 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       throw new Error(`ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ${opts.index} (type ${typeof opts.index})`);
     }
 
-    return monkey(input, Object.assign({}, opts, {
+    return monkey(input, { ...opts,
       mode: "get"
-    }));
+    });
   }
 
-  function drop(input, opts) {
+  function drop(input, originalOpts) {
     if (!existy$1(input)) {
       throw new Error("ast-monkey/main.js/drop(): [THROW_ID_19] Please provide the input");
     }
 
-    if (!isObj$2(opts)) {
+    if (!isObj$2(originalOpts)) {
       throw new Error("ast-monkey/main.js/drop(): [THROW_ID_20] Please provide the input");
     }
 
-    if (!existy$1(opts.index)) {
+    if (!existy$1(originalOpts.index)) {
       throw new Error("ast-monkey/main.js/drop(): [THROW_ID_21] Please provide opts.index");
     }
+
+    const opts = { ...originalOpts
+    };
 
     if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
       opts.index = parseInt(opts.index, 10);
@@ -5755,24 +5845,26 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       throw new Error(`ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ${opts.index}`);
     }
 
-    return monkey(input, Object.assign({}, opts, {
+    return monkey(input, { ...opts,
       mode: "drop"
-    }));
+    });
   }
 
-  function del(input, opts) {
+  function del(input, originalOpts) {
     if (!existy$1(input)) {
       throw new Error("ast-monkey/main.js/del(): [THROW_ID_26] Please provide the input");
     }
 
-    if (!isObj$2(opts)) {
+    if (!isObj$2(originalOpts)) {
       throw new Error("ast-monkey/main.js/del(): [THROW_ID_27] Please provide the opts object");
     }
 
-    if (!existy$1(opts.key) && !notUndef(opts.val)) {
+    if (!existy$1(originalOpts.key) && !notUndef(originalOpts.val)) {
       throw new Error("ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val");
     }
 
+    const opts = { ...originalOpts
+    };
     externalApi(opts, null, {
       schema: {
         key: [null, "string"],
@@ -5791,9 +5883,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       opts.only = "any";
     }
 
-    return monkey(input, Object.assign({}, opts, {
+    return monkey(input, { ...opts,
       mode: "del"
-    }));
+    });
   }
 
   /**
@@ -5823,7 +5915,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }
@@ -5837,7 +5931,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
         if (res === null) {
           return null;
-        } else if (!res) {
+        }
+
+        if (!res) {
           return false;
         }
       }
@@ -5869,7 +5965,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       cleanup: true,
       only: "any"
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     opts.only = arrObjOrBoth(opts.only, {
       msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
       optsVarName: "opts.only"
