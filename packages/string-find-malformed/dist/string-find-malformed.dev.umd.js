@@ -1,7 +1,7 @@
 /**
  * string-find-malformed
  * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 1.1.4
+ * Version: 1.1.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -1984,7 +1984,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.20
+   * Version: 2.3.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right

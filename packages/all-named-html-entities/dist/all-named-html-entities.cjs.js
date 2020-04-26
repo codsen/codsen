@@ -1,7 +1,7 @@
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.2.18
+ * Version: 1.2.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities

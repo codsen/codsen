@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.53](https://gitlab.com/codsen/codsen/compare/lerna-clean-changelogs@1.3.52...lerna-clean-changelogs@1.3.53) (2020-04-26)
+
+
+### Bug Fixes
+
+* harden the eslint rules set and make all tests pass again ([29df39e](https://gitlab.com/codsen/codsen/commit/29df39eb787ff5b3a0636ed4ea7df6056f5a0451))
+
+
+
+
+
 ## 1.2.0 (2019-02-01)
 
 ### Features

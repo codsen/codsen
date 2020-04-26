@@ -1,7 +1,7 @@
 /**
  * ast-contains-only-empty-space
  * Returns Boolean depending if passed AST contain only empty space
- * Version: 1.9.4
+ * Version: 1.9.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://gitlab.com/codsen/codsen/compare/string-remove-widows@1.5.19...string-remove-widows@1.6.0) (2020-04-26)
+
+
+### Features
+
+* harden the linting rules set and rebase a little ([2988292](https://gitlab.com/codsen/codsen/commit/29882925c521853f4458112b72669ec8b2a0cb5b))
+
+
+
+
+
 ## 1.5.2 (2019-10-21)
 
 ### Bug Fixes

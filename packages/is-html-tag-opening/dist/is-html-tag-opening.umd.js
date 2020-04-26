@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Is given opening bracket a beginning of a tag?
- * Version: 1.7.5
+ * Version: 1.7.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening

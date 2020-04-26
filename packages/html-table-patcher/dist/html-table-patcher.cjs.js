@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 1.1.49
+ * Version: 1.1.50
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -66,7 +66,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "1.1.49";
+var version = "1.1.50";
 
 var replaceElement = domUtils.replaceElement,
     appendChild = domUtils.appendChild,

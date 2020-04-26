@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.3
+ * Version: 2.17.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -14,9 +14,12 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
-var defineLazyProp = _interopDefault(require('define-lazy-prop'));
+var traverse = _interopDefault(require('ast-monkey-traverse'));
+var lineColumn = _interopDefault(require('line-column'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var parser = _interopDefault(require('codsen-parser'));
 var matcher = _interopDefault(require('matcher'));
+var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var processCommaSeparated = _interopDefault(require('string-process-comma-separated'));
 var stringLeftRight = require('string-left-right');
 var isRegExp = _interopDefault(require('lodash.isregexp'));
@@ -31,11 +34,8 @@ var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly')
 var he = _interopDefault(require('he'));
 var findMalformed = _interopDefault(require('string-find-malformed'));
 var stringMatchLeftRight = require('string-match-left-right');
-var traverse = _interopDefault(require('ast-monkey-traverse'));
 var astMonkeyUtil = require('ast-monkey-util');
 var op = _interopDefault(require('object-path'));
-var lineColumn = _interopDefault(require('line-column'));
-var parser = _interopDefault(require('codsen-parser'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -73,6 +73,55 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
 }
 
 function _inherits(subClass, superClass) {
@@ -224,59 +273,319 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-function _createForOfIteratorHelper(o) {
-  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-    if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
-      var i = 0;
-
-      var F = function () {};
-
-      return {
-        s: F,
-        n: function () {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function (e) {
-          throw e;
-        },
-        f: F
-      };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+var domain;
+function EventHandlers() {}
+EventHandlers.prototype = Object.create(null);
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+EventEmitter.EventEmitter = EventEmitter;
+EventEmitter.usingDomains = false;
+EventEmitter.prototype.domain = undefined;
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+EventEmitter.defaultMaxListeners = 10;
+EventEmitter.init = function () {
+  this.domain = null;
+  if (EventEmitter.usingDomains) {
+    if (domain.active ) ;
   }
-
-  var it,
-      normalCompletion = true,
-      didErr = false,
-      err;
-  return {
-    s: function () {
-      it = o[Symbol.iterator]();
-    },
-    n: function () {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function (e) {
-      didErr = true;
-      err = e;
-    },
-    f: function () {
-      try {
-        if (!normalCompletion && it.return != null) it.return();
-      } finally {
-        if (didErr) throw err;
+  if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
+    this._events = new EventHandlers();
+    this._eventsCount = 0;
+  }
+  this._maxListeners = this._maxListeners || undefined;
+};
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+function $getMaxListeners(that) {
+  if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return $getMaxListeners(this);
+};
+function emitNone(handler, isFn, self) {
+  if (isFn) handler.call(self);else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i) listeners[i].call(self);
+  }
+}
+function emitOne(handler, isFn, self, arg1) {
+  if (isFn) handler.call(self, arg1);else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
+  }
+}
+function emitTwo(handler, isFn, self, arg1, arg2) {
+  if (isFn) handler.call(self, arg1, arg2);else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
+  }
+}
+function emitThree(handler, isFn, self, arg1, arg2, arg3) {
+  if (isFn) handler.call(self, arg1, arg2, arg3);else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
+  }
+}
+function emitMany(handler, isFn, self, args) {
+  if (isFn) handler.apply(self, args);else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
+  }
+}
+EventEmitter.prototype.emit = function emit(type) {
+  var er, handler, len, args, i, events, domain;
+  var doError = type === 'error';
+  events = this._events;
+  if (events) doError = doError && events.error == null;else if (!doError) return false;
+  domain = this.domain;
+  if (doError) {
+    er = arguments[1];
+    if (domain) {
+      if (!er) er = new Error('Uncaught, unspecified "error" event');
+      er.domainEmitter = this;
+      er.domain = domain;
+      er.domainThrown = false;
+      domain.emit('error', er);
+    } else if (er instanceof Error) {
+      throw er;
+    } else {
+      var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+      err.context = er;
+      throw err;
+    }
+    return false;
+  }
+  handler = events[type];
+  if (!handler) return false;
+  var isFn = typeof handler === 'function';
+  len = arguments.length;
+  switch (len) {
+    case 1:
+      emitNone(handler, isFn, this);
+      break;
+    case 2:
+      emitOne(handler, isFn, this, arguments[1]);
+      break;
+    case 3:
+      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
+      break;
+    case 4:
+      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
+      break;
+    default:
+      args = new Array(len - 1);
+      for (i = 1; i < len; i++) args[i - 1] = arguments[i];
+      emitMany(handler, isFn, this, args);
+  }
+  return true;
+};
+function _addListener(target, type, listener, prepend) {
+  var m;
+  var events;
+  var existing;
+  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+  events = target._events;
+  if (!events) {
+    events = target._events = new EventHandlers();
+    target._eventsCount = 0;
+  } else {
+    if (events.newListener) {
+      target.emit('newListener', type, listener.listener ? listener.listener : listener);
+      events = target._events;
+    }
+    existing = events[type];
+  }
+  if (!existing) {
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      existing = events[type] = prepend ? [listener, existing] : [existing, listener];
+    } else {
+      if (prepend) {
+        existing.unshift(listener);
+      } else {
+        existing.push(listener);
       }
     }
-  };
+    if (!existing.warned) {
+      m = $getMaxListeners(target);
+      if (m && m > 0 && existing.length > m) {
+        existing.warned = true;
+        var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
+        w.name = 'MaxListenersExceededWarning';
+        w.emitter = target;
+        w.type = type;
+        w.count = existing.length;
+        emitWarning(w);
+      }
+    }
+  }
+  return target;
+}
+function emitWarning(e) {
+  typeof console.warn === 'function' ? console.warn(e) : console.log(e);
+}
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
+};
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+  return _addListener(this, type, listener, true);
+};
+function _onceWrap(target, type, listener) {
+  var fired = false;
+  function g() {
+    target.removeListener(type, g);
+    if (!fired) {
+      fired = true;
+      listener.apply(target, arguments);
+    }
+  }
+  g.listener = listener;
+  return g;
+}
+EventEmitter.prototype.once = function once(type, listener) {
+  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+  this.on(type, _onceWrap(this, type, listener));
+  return this;
+};
+EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+  this.prependListener(type, _onceWrap(this, type, listener));
+  return this;
+};
+EventEmitter.prototype.removeListener = function removeListener(type, listener) {
+  var list, events, position, i, originalListener;
+  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+  events = this._events;
+  if (!events) return this;
+  list = events[type];
+  if (!list) return this;
+  if (list === listener || list.listener && list.listener === listener) {
+    if (--this._eventsCount === 0) this._events = new EventHandlers();else {
+      delete events[type];
+      if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
+    }
+  } else if (typeof list !== 'function') {
+    position = -1;
+    for (i = list.length; i-- > 0;) {
+      if (list[i] === listener || list[i].listener && list[i].listener === listener) {
+        originalListener = list[i].listener;
+        position = i;
+        break;
+      }
+    }
+    if (position < 0) return this;
+    if (list.length === 1) {
+      list[0] = undefined;
+      if (--this._eventsCount === 0) {
+        this._events = new EventHandlers();
+        return this;
+      } else {
+        delete events[type];
+      }
+    } else {
+      spliceOne(list, position);
+    }
+    if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
+  }
+  return this;
+};
+EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
+  var listeners, events;
+  events = this._events;
+  if (!events) return this;
+  if (!events.removeListener) {
+    if (arguments.length === 0) {
+      this._events = new EventHandlers();
+      this._eventsCount = 0;
+    } else if (events[type]) {
+      if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
+    }
+    return this;
+  }
+  if (arguments.length === 0) {
+    var keys = Object.keys(events);
+    for (var i = 0, key; i < keys.length; ++i) {
+      key = keys[i];
+      if (key === 'removeListener') continue;
+      this.removeAllListeners(key);
+    }
+    this.removeAllListeners('removeListener');
+    this._events = new EventHandlers();
+    this._eventsCount = 0;
+    return this;
+  }
+  listeners = events[type];
+  if (typeof listeners === 'function') {
+    this.removeListener(type, listeners);
+  } else if (listeners) {
+    do {
+      this.removeListener(type, listeners[listeners.length - 1]);
+    } while (listeners[0]);
+  }
+  return this;
+};
+EventEmitter.prototype.listeners = function listeners(type) {
+  var evlistener;
+  var ret;
+  var events = this._events;
+  if (!events) ret = [];else {
+    evlistener = events[type];
+    if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
+  }
+  return ret;
+};
+EventEmitter.listenerCount = function (emitter, type) {
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
+};
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+  if (events) {
+    var evlistener = events[type];
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener) {
+      return evlistener.length;
+    }
+  }
+  return 0;
+}
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
+};
+function spliceOne(list, index) {
+  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
+  list.pop();
+}
+function arrayClone(arr, i) {
+  var copy = new Array(i);
+  while (i--) copy[i] = arr[i];
+  return copy;
+}
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
 }
 
 var allBadCharacterRules = [
@@ -526,7 +835,7 @@ function validateString(str, idxOffset, originalOpts) {
     quickPermittedValues: null,
     permittedValues: null
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
@@ -577,7 +886,8 @@ function isLetter(str) {
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
-  } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
+  }
+  if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
     return maybeARulesValue[0];
   }
   return 0;
@@ -588,9 +898,11 @@ function isObj(something) {
 function isAnEnabledRule(config, ruleId) {
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
     return config[ruleId];
-  } else if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
+  }
+  if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
     return config[ruleId.split("-")[0]];
-  } else if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
+  }
+  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
     return config.all;
   }
   return 0;
@@ -2996,7 +3308,7 @@ function tagClosingBackslash(context) {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           whatToInsert = " ".concat(whatToInsert);
           if (node.void && context.str[idxFrom + 1] === " ") {
-            idxFrom++;
+            idxFrom += 1;
             whatToInsert = whatToInsert.trim();
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
@@ -3207,7 +3519,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     from: 0,
     to: str.length
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var nameStartsAt = null;
   var whitespaceStartsAt = null;
   for (var i = opts.from; i < opts.to; i++) {
@@ -3300,29 +3612,20 @@ function attributeMalformed(context) {
     attribute: function attribute(node) {
       if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         var somethingMatched = false;
-        var _iterator = _createForOfIteratorHelper(htmlAllKnownAttributes.allHtmlAttribs),
-            _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var oneOfKnownAttribs = _step.value;
-            if (leven(oneOfKnownAttribs, node.attribName) === 1) {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Probably meant \"".concat(oneOfKnownAttribs, "\"."),
-                idxFrom: node.attribNameStartsAt,
-                idxTo: node.attribNameEndsAt,
-                fix: {
-                  ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, oneOfKnownAttribs]]
-                }
-              });
-              somethingMatched = true;
-              break;
-            }
+        for (var i = 0, len = htmlAllKnownAttributes.allHtmlAttribs.length; i < len; i++) {
+          if (leven(htmlAllKnownAttributes.allHtmlAttribs[i], node.attribName) === 1) {
+            context.report({
+              ruleId: "attribute-malformed",
+              message: "Probably meant \"".concat(htmlAllKnownAttributes.allHtmlAttribs[i], "\"."),
+              idxFrom: node.attribNameStartsAt,
+              idxTo: node.attribNameEndsAt,
+              fix: {
+                ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, htmlAllKnownAttributes.allHtmlAttribs[i]]]
+              }
+            });
+            somethingMatched = true;
+            break;
           }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
         }
         if (!somethingMatched) {
           context.report({
@@ -3348,7 +3651,7 @@ function attributeMalformed(context) {
           var toRange = node.attribOpeningQuoteAt;
           var whatToAdd = "=";
           if (context.str[fromRange] === "=") {
-            fromRange++;
+            fromRange += 1;
             whatToAdd = undefined;
           }
           context.report({
@@ -3423,7 +3726,7 @@ function attributeValidateAbbr(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-abbr"
           }));
         });
@@ -3625,7 +3928,7 @@ function attributeValidateAcceptCharset(context) {
           permittedValues: knownCharsets
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-accept-charset"
           }));
         });
@@ -3656,7 +3959,7 @@ function attributeValidateAccept(context) {
           noSpaceAfterComma: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-accept"
           }));
         });
@@ -3694,7 +3997,7 @@ function attributeValidateAccesskey(context) {
           }
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-accesskey"
           }));
         });
@@ -3709,7 +4012,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (str.slice(opts.from, opts.to) !== " ") {
     var ranges;
     if (str[opts.from] === " ") {
@@ -3739,7 +4042,7 @@ function validateValue$1(str, originalOpts, errorArr) {
     attribStart: 0,
     attribEnd: str.length
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var extractedValue = str.slice(opts.from, opts.to);
   var calcultedIsRel = isRel(extractedValue);
   if (Array.from(extractedValue).some(function (val) {
@@ -3813,7 +4116,7 @@ function validateUri(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var _checkForWhitespace = checkForWhitespace(str, opts.offset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
@@ -3834,7 +4137,7 @@ function validateUri(str, originalOpts) {
               fix: null
             });
           } else {
-            validateValue$1(str, Object.assign({}, opts, {
+            validateValue$1(str, _objectSpread2({}, opts, {
               from: charFrom,
               to: charTo,
               attribStart: charStart,
@@ -3863,7 +4166,7 @@ function validateUri(str, originalOpts) {
           trailingWhitespaceOK: true,
           cb: function cb(idxFrom, idxTo) {
             var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset);
-            validateValue$1(str, Object.assign({}, opts, {
+            validateValue$1(str, _objectSpread2({}, opts, {
               from: idxFrom - opts.offset,
               to: idxTo - opts.offset,
               attribStart: charStart,
@@ -3915,7 +4218,7 @@ function attributeValidateAction(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-action"
             }));
           });
@@ -3976,7 +4279,7 @@ function attributeValidateAlign(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-align"
           }));
         });
@@ -4076,7 +4379,7 @@ function attributeValidateAlink(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-alink"
           }));
         });
@@ -4101,7 +4404,7 @@ function attributeValidateAlt(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-alt"
           }));
         });
@@ -4122,14 +4425,14 @@ function attributeValidateArchive(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
-        } else {
-          if (node.parent.tagName === "applet") {
+        }
+        else if (node.parent.tagName === "applet") {
             validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-archive"
               }));
             });
@@ -4139,12 +4442,11 @@ function attributeValidateArchive(context) {
               separator: "space",
               multipleOK: true
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-archive"
               }));
             });
           }
-        }
       }
     }
   };
@@ -4166,7 +4468,7 @@ function attributeValidateAxis(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-axis"
           }));
         });
@@ -4192,7 +4494,7 @@ function attributeValidateBackground(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-background"
             }));
           });
@@ -4224,7 +4526,7 @@ function attributeValidateBgcolor(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-bgcolor"
           }));
         });
@@ -4253,15 +4555,13 @@ function validateValue$2(_ref) {
           fix: null
         });
       }
-    } else {
-      if ("0123456789".includes(str[charStart + 1])) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: "Number padded with zero.",
-          fix: null
-        });
-      }
+    } else if ("0123456789".includes(str[charStart + 1])) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Number padded with zero.",
+        fix: null
+      });
     }
   }
   if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
@@ -4367,7 +4667,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     customPxMessage: null,
     maxValue: null
   };
-  var opts = Object.assign({}, defaultOpts, originalOpts);
+  var opts = _objectSpread2({}, defaultOpts, {}, originalOpts);
   var charStart = 0;
   var charEnd = str.length;
   var errorArr = [];
@@ -4469,7 +4769,7 @@ function attributeValidateBorder(context) {
           theOnlyGoodUnits: []
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-border"
           }));
         });
@@ -4499,7 +4799,7 @@ function attributeValidateCellpadding(context) {
           customGenericValueError: "Should be integer, either no units or percentage."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-cellpadding"
           }));
         });
@@ -4529,7 +4829,7 @@ function attributeValidateCellspacing(context) {
           customGenericValueError: "Should be integer, either no units or percentage."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-cellspacing"
           }));
         });
@@ -4567,7 +4867,7 @@ function attributeValidateChar(context) {
           }
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-char"
           }));
         });
@@ -4606,7 +4906,7 @@ function attributeValidateCharoff(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-charoff"
           }));
         });
@@ -4635,7 +4935,7 @@ function attributeValidateCharset(context) {
           permittedValues: knownCharsets
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-charset"
           }));
         });
@@ -4649,7 +4949,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     xhtml: false,
     enforceSiblingAttributes: null
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   if (opts.xhtml) {
     var quotesType = "\"";
     if (node.attribOpeningQuoteAt !== null && context.str[node.attribOpeningQuoteAt] === "'") {
@@ -4738,7 +5038,7 @@ function attributeValidateChecked(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: {
               type: ["checkbox", "radio"]
             }
@@ -4746,7 +5046,7 @@ function attributeValidateChecked(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-checked"
             }));
           });
@@ -4773,7 +5073,7 @@ function attributeValidateCite(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-cite"
             }));
           });
@@ -4790,7 +5090,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = _objectSpread2({}, defaults, {}, originalOpts);
   var listOfUniqueNames = new Set();
   splitByWhitespace(
   str,
@@ -4867,7 +5167,7 @@ function attributeValidateClass(context) {
           }, errorArr
           );
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-class"
             }));
           });
@@ -4894,7 +5194,7 @@ function attributeValidateClassid(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-classid"
             }));
           });
@@ -4930,7 +5230,7 @@ function attributeValidateClassid$1(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-clear"
           }));
         });
@@ -4957,7 +5257,7 @@ function attributeValidateCode(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-code"
           }));
         });
@@ -4983,7 +5283,7 @@ function attributeValidateCodebase(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-codebase"
             }));
           });
@@ -5015,7 +5315,7 @@ function attributeValidateCodetype(context) {
           noSpaceAfterComma: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-codetype"
           }));
         });
@@ -5046,7 +5346,7 @@ function attributeValidateColor(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-color"
           }));
         });
@@ -5088,7 +5388,7 @@ function attributeValidateCols(context) {
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-cols"
             }));
           });
@@ -5117,7 +5417,7 @@ function attributeValidateColspan(context) {
           customGenericValueError: "Should be integer, no units."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-colspan"
           }));
         });
@@ -5150,13 +5450,13 @@ function attributeValidateCompact(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-compact"
             }));
           });
@@ -5184,7 +5484,7 @@ function attributeValidateContent(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-content"
           }));
         });
@@ -5240,7 +5540,7 @@ function attributeValidateCoords(context) {
             });
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-coords"
                 }));
               });
@@ -5269,7 +5569,7 @@ function attributeValidateData(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-data"
             }));
           });
@@ -5301,7 +5601,7 @@ function attributeValidateDatetime(context) {
           noSpaceAfterComma: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-datetime"
           }));
         });
@@ -5334,13 +5634,13 @@ function attributeValidateDeclare(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-declare"
             }));
           });
@@ -5374,13 +5674,13 @@ function attributeValidateDefer(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-defer"
             }));
           });
@@ -5410,7 +5710,7 @@ function attributeValidateDir(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-dir"
           }));
         });
@@ -5443,13 +5743,13 @@ function attributeValidateDisabled(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-disabled"
             }));
           });
@@ -5480,7 +5780,7 @@ function attributeValidateEnctype(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-enctype"
           }));
         });
@@ -5507,7 +5807,7 @@ function attributeValidateFace(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-face"
           }));
         });
@@ -5561,7 +5861,7 @@ function attributeValidateFor(context) {
             });
           }
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-for"
             }));
           });
@@ -5600,7 +5900,7 @@ function attributeValidateFrame(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-frame"
           }));
         });
@@ -5629,7 +5929,7 @@ function attributeValidateFrameborder(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-frameborder"
           }));
         });
@@ -5663,7 +5963,7 @@ function attributeValidateHeaders(context) {
           }, errorArr
           );
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-headers"
             }));
           });
@@ -5693,7 +5993,7 @@ function attributeValidateHeight(context) {
           customGenericValueError: "Should be \"pixels|%\"."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-height"
           }));
         });
@@ -5719,7 +6019,7 @@ function attributeValidateHref(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-href"
             }));
           });
@@ -5757,7 +6057,7 @@ function attributeValidateHreflang(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-hreflang"
           }));
         });
@@ -5784,7 +6084,7 @@ function attributeValidateHspace(context) {
           noUnitsIsFine: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-hspace"
           }));
         });
@@ -5814,7 +6114,7 @@ function attributeValidateHttpequiv(context) {
           caseInsensitive: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-http-equiv"
           }));
         });
@@ -5848,7 +6148,7 @@ function attributeValidateId(context) {
           }, errorArr
           );
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-id"
             }));
           });
@@ -5882,13 +6182,13 @@ function attributeValidateIsmap(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-ismap"
             }));
           });
@@ -5914,7 +6214,7 @@ function attributeValidateLabel(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-label"
           }));
         });
@@ -5951,7 +6251,7 @@ function attributeValidateLang(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-lang"
           }));
         });
@@ -5976,7 +6276,7 @@ function attributeValidateLanguage(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-language"
           }));
         });
@@ -6007,7 +6307,7 @@ function attributeValidateLink(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-link"
           }));
         });
@@ -6032,7 +6332,7 @@ function attributeValidateLongdesc(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-longdesc"
           }));
         });
@@ -6059,7 +6359,7 @@ function attributeValidateMarginheight(context) {
           noUnitsIsFine: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-marginheight"
           }));
         });
@@ -6086,7 +6386,7 @@ function attributeValidateMarginwidth(context) {
           noUnitsIsFine: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-marginwidth"
           }));
         });
@@ -6114,7 +6414,7 @@ function attributeValidateMaxlength(context) {
           customGenericValueError: "Should be integer, no units."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-maxlength"
           }));
         });
@@ -6143,7 +6443,7 @@ function attributeValidateMedia(context) {
         errorArr.concat(isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
           offset: node.attribValueStartsAt
         })).forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-media"
           }));
         });
@@ -6172,7 +6472,7 @@ function attributeValidateMethod(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-method"
           }));
         });
@@ -6205,13 +6505,13 @@ function attributeValidateMultiple(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-multiple"
             }));
           });
@@ -6237,7 +6537,7 @@ function attributeValidateName(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-name"
           }));
         });
@@ -6270,13 +6570,13 @@ function attributeValidateNohref(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-nohref"
             }));
           });
@@ -6310,13 +6610,13 @@ function attributeValidateNoresize(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-noresize"
             }));
           });
@@ -6350,13 +6650,13 @@ function attributeValidateNoshade(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-noshade"
             }));
           });
@@ -6390,13 +6690,13 @@ function attributeValidateNowrap(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-nowrap"
             }));
           });
@@ -6422,7 +6722,7 @@ function attributeValidateObject(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-object"
           }));
         });
@@ -6438,12 +6738,8 @@ function validateScript(str, idxOffset, opts) {
 }
 
 function attributeValidateOnblur(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onblur") {
         if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -6456,7 +6752,7 @@ function attributeValidateOnblur(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onblur"
             }));
           });
@@ -6467,12 +6763,8 @@ function attributeValidateOnblur(context) {
 }
 
 function attributeValidateOnchange(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onchange") {
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -6485,7 +6777,7 @@ function attributeValidateOnchange(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onchange"
             }));
           });
@@ -6496,12 +6788,8 @@ function attributeValidateOnchange(context) {
 }
 
 function attributeValidateOnclick(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onclick") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6514,7 +6802,7 @@ function attributeValidateOnclick(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onclick"
             }));
           });
@@ -6525,12 +6813,8 @@ function attributeValidateOnclick(context) {
 }
 
 function attributeValidateOndblclick(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "ondblclick") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6543,7 +6827,7 @@ function attributeValidateOndblclick(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-ondblclick"
             }));
           });
@@ -6554,12 +6838,8 @@ function attributeValidateOndblclick(context) {
 }
 
 function attributeValidateOnfocus(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onfocus") {
         if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -6572,7 +6852,7 @@ function attributeValidateOnfocus(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onfocus"
             }));
           });
@@ -6583,12 +6863,8 @@ function attributeValidateOnfocus(context) {
 }
 
 function attributeValidateOnkeydown(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeydown") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6601,7 +6877,7 @@ function attributeValidateOnkeydown(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onkeydown"
             }));
           });
@@ -6612,12 +6888,8 @@ function attributeValidateOnkeydown(context) {
 }
 
 function attributeValidateOnkeypress(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeypress") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6630,7 +6902,7 @@ function attributeValidateOnkeypress(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onkeypress"
             }));
           });
@@ -6641,12 +6913,8 @@ function attributeValidateOnkeypress(context) {
 }
 
 function attributeValidateOnkeyup(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeyup") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6659,7 +6927,7 @@ function attributeValidateOnkeyup(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onkeyup"
             }));
           });
@@ -6670,12 +6938,8 @@ function attributeValidateOnkeyup(context) {
 }
 
 function attributeValidateOnload(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
@@ -6688,7 +6952,7 @@ function attributeValidateOnload(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onload"
             }));
           });
@@ -6699,12 +6963,8 @@ function attributeValidateOnload(context) {
 }
 
 function attributeValidateOnmousedown(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousedown") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6717,7 +6977,7 @@ function attributeValidateOnmousedown(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onmousedown"
             }));
           });
@@ -6728,12 +6988,8 @@ function attributeValidateOnmousedown(context) {
 }
 
 function attributeValidateOnmousemove(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousemove") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6746,7 +7002,7 @@ function attributeValidateOnmousemove(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onmousemove"
             }));
           });
@@ -6757,12 +7013,8 @@ function attributeValidateOnmousemove(context) {
 }
 
 function attributeValidateOnmouseout(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseout") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6775,7 +7027,7 @@ function attributeValidateOnmouseout(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onmouseout"
             }));
           });
@@ -6786,12 +7038,8 @@ function attributeValidateOnmouseout(context) {
 }
 
 function attributeValidateOnmouseover(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseover") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6804,7 +7052,7 @@ function attributeValidateOnmouseover(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onmouseover"
             }));
           });
@@ -6815,12 +7063,8 @@ function attributeValidateOnmouseover(context) {
 }
 
 function attributeValidateOnmouseup(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseup") {
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -6833,7 +7077,7 @@ function attributeValidateOnmouseup(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onmouseup"
             }));
           });
@@ -6844,12 +7088,8 @@ function attributeValidateOnmouseup(context) {
 }
 
 function attributeValidateOnreset(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onreset") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6862,7 +7102,7 @@ function attributeValidateOnreset(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onreset"
             }));
           });
@@ -6873,12 +7113,8 @@ function attributeValidateOnreset(context) {
 }
 
 function attributeValidateOnsubmit(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onsubmit") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6891,7 +7127,7 @@ function attributeValidateOnsubmit(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onsubmit"
             }));
           });
@@ -6902,12 +7138,8 @@ function attributeValidateOnsubmit(context) {
 }
 
 function attributeValidateOnselect(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onselect") {
         if (!["input", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -6920,7 +7152,7 @@ function attributeValidateOnselect(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onselect"
             }));
           });
@@ -6931,12 +7163,8 @@ function attributeValidateOnselect(context) {
 }
 
 function attributeValidateOnunload(context) {
-  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    originalOpts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
-      var opts = Object.assign({}, originalOpts);
       if (node.attribName === "onunload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
@@ -6949,7 +7177,7 @@ function attributeValidateOnunload(context) {
         } else {
           var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-onunload"
             }));
           });
@@ -6976,7 +7204,7 @@ function attributeValidateProfile(context) {
             offset: node.attribValueStartsAt,
             multipleOK: true
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-profile"
             }));
           });
@@ -7002,7 +7230,7 @@ function attributeValidatePrompt(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-prompt"
           }));
         });
@@ -7035,13 +7263,13 @@ function attributeValidateReadonly(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-readonly"
             }));
           });
@@ -7076,7 +7304,7 @@ function attributeValidateRel(context) {
           caseInsensitive: caseInsensitive
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-rel"
           }));
         });
@@ -7110,7 +7338,7 @@ function attributeValidateRev(context) {
           caseInsensitive: caseInsensitive
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-rev"
           }));
         });
@@ -7152,7 +7380,7 @@ function attributeValidateRows(context) {
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-rows"
             }));
           });
@@ -7181,7 +7409,7 @@ function attributeValidateRowspan(context) {
           customGenericValueError: "Should be integer, no units."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-rowspan"
           }));
         });
@@ -7210,7 +7438,7 @@ function attributeValidateRules(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-rules"
           }));
         });
@@ -7235,7 +7463,7 @@ function attributeValidateScheme(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-scheme"
           }));
         });
@@ -7264,7 +7492,7 @@ function attributeValidateScope(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-scope"
           }));
         });
@@ -7293,7 +7521,7 @@ function attributeValidateScrolling(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-scrolling"
           }));
         });
@@ -7326,13 +7554,13 @@ function attributeValidateSelected(context) {
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+          validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
             enforceSiblingAttributes: null
           }));
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-selected"
             }));
           });
@@ -7362,7 +7590,7 @@ function attributeValidateShape(context) {
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-shape"
           }));
         });
@@ -7389,7 +7617,7 @@ function attributeValidateSize(context) {
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-size"
             }));
           });
@@ -7402,7 +7630,7 @@ function attributeValidateSize(context) {
                 theOnlyGoodUnits: [],
                 skipWhitespaceChecks: true
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-size"
                 }));
               });
@@ -7424,7 +7652,7 @@ function attributeValidateSize(context) {
                   });
                 }
                 errorArr2.forEach(function (errorObj) {
-                  context.report(Object.assign({}, errorObj, {
+                  context.report(_objectSpread2({}, errorObj, {
                     ruleId: "attribute-validate-size"
                   }));
                 });
@@ -7458,7 +7686,7 @@ function attributeValidateSpan(context) {
           customPxMessage: "Columns number is not in pixels."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-span"
           }));
         });
@@ -7484,7 +7712,7 @@ function attributeValidateSrc(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-src"
             }));
           });
@@ -7510,7 +7738,7 @@ function attributeValidateStandby(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-standby"
           }));
         });
@@ -7540,7 +7768,7 @@ function attributeValidateStart(context) {
           customPxMessage: "Starting sequence number is not in pixels."
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-start"
           }));
         });
@@ -7570,7 +7798,7 @@ function attributeValidateStyle(context) {
         }
         var errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-style"
           }));
         });
@@ -7595,7 +7823,7 @@ function attributeValidateSummary(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-summary"
           }));
         });
@@ -7626,7 +7854,7 @@ function attributeValidateTabindex(context) {
           maxValue: 32767
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-tabindex"
           }));
         });
@@ -7651,7 +7879,7 @@ function attributeValidateTarget(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-target"
           }));
         });
@@ -7682,7 +7910,7 @@ function attributeValidateText(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-text"
           }));
         });
@@ -7707,7 +7935,7 @@ function attributeValidateTitle(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-title"
           }));
         });
@@ -7728,8 +7956,8 @@ function attributeValidateType(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
-        } else {
-          if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
+        }
+        else if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
             validateString(node.attribValueRaw,
             node.attribValueStartsAt,
             {
@@ -7738,7 +7966,7 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
@@ -7751,7 +7979,7 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
@@ -7764,7 +7992,7 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
@@ -7777,7 +8005,7 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
@@ -7790,7 +8018,7 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
@@ -7803,12 +8031,11 @@ function attributeValidateType(context) {
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-type"
               }));
             });
           }
-        }
       }
     }
   };
@@ -7831,7 +8058,7 @@ function attributeValidateUsemap(context) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-usemap"
             }));
           });
@@ -7860,7 +8087,7 @@ function attributeValidateValign(context) {
             permittedValues: ["top", "middle", "bottom", "baseline"],
             canBeCommaSeparated: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-valign"
             }));
           });
@@ -7882,8 +8109,8 @@ function attributeValidateValue(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
-        } else {
-          if (node.parent.tagName === "li") {
+        }
+        else if (node.parent.tagName === "li") {
             validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
@@ -7891,7 +8118,7 @@ function attributeValidateValue(context) {
               zeroOK: false,
               customPxMessage: "Sequence number should not be in pixels."
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-value"
               }));
             });
@@ -7899,12 +8126,11 @@ function attributeValidateValue(context) {
             var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
                 errorArr = _checkForWhitespace.errorArr;
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-value"
               }));
             });
           }
-        }
       }
     }
   };
@@ -7929,7 +8155,7 @@ function attributeValidateValuetype(context) {
             permittedValues: ["data", "ref", "object"],
             canBeCommaSeparated: false
           }).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-valuetype"
             }));
           });
@@ -7955,7 +8181,7 @@ function attributeValidateVersion(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
             errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-version"
           }));
         });
@@ -7986,7 +8212,7 @@ function attributeValidateVlink(context) {
           hexEightOK: false
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-vlink"
           }));
         });
@@ -8013,7 +8239,7 @@ function attributeValidateVspace(context) {
           noUnitsIsFine: true
         });
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "attribute-validate-vspace"
           }));
         });
@@ -8034,36 +8260,34 @@ function attributeValidateWidth(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
             fix: null
           });
+        } else if (node.parent.tagName === "pre") {
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            theOnlyGoodUnits: [],
+            noUnitsIsFine: true
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread2({}, errorObj, {
+              ruleId: "attribute-validate-width"
+            }));
+          });
+        } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            badUnits: ["px"],
+            theOnlyGoodUnits: ["*", "%"],
+            noUnitsIsFine: true
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread2({}, errorObj, {
+              ruleId: "attribute-validate-width"
+            }));
+          });
         } else {
-          if (node.parent.tagName === "pre") {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              theOnlyGoodUnits: [],
-              noUnitsIsFine: true
-            }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-width"
-              }));
-            });
-          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              theOnlyGoodUnits: ["*", "%"],
-              noUnitsIsFine: true
-            }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-width"
-              }));
-            });
-          } else {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              badUnits: ["px"],
-              noUnitsIsFine: true
-            }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-width"
-              }));
-            });
-          }
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            badUnits: ["px"],
+            noUnitsIsFine: true
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread2({}, errorObj, {
+              ruleId: "attribute-validate-width"
+            }));
+          });
         }
       }
     }
@@ -8175,9 +8399,9 @@ function characterUnspacedPunctuation(context) {
           whitespaceRight: "always"
         }
       };
-      var opts = Object.assign({}, defaults);
+      var opts = _objectSpread2({}, defaults);
       if (Array.isArray(originalOpts) && originalOpts.length && _typeof(originalOpts[0]) === "object" && originalOpts[0] !== null) {
-        opts = Object.assign({}, defaults, originalOpts[0]);
+        opts = _objectSpread2({}, defaults, {}, originalOpts[0]);
       }
       for (var i = node.start; i < node.end; i++) {
         var charCode = context.str[i].charCodeAt(0);
@@ -8244,7 +8468,7 @@ function mediaMalformed(context) {
           offset: node.queryStartsAt
         });
         errors.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "media-malformed"
           }));
         });
@@ -8303,7 +8527,7 @@ function commentClosingMalformed(context) {
       if (node.closing) {
         var errorArr = validateCommentClosing(node) || [];
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             keepSeparateWhenFixing: true,
             ruleId: "comment-closing-malformed"
           }));
@@ -8360,7 +8584,7 @@ function validateCommentOpening(token) {
           trimBeforeMatching: true
         })) {
           wrongBracketType = true;
-          finalIdxTo++;
+          finalIdxTo += 1;
         }
         errorArr.push({
           idxFrom: token.start,
@@ -8380,7 +8604,7 @@ function validateCommentOpening(token) {
       var finalIdxFrom = idxFrom;
       if ("})".includes(token.value[idxFrom - 1]) &&
       wrongBracketType) {
-        finalIdxFrom--;
+        finalIdxFrom -= 1;
       }
       errorArr.push({
         idxFrom: token.start,
@@ -8396,7 +8620,7 @@ function validateCommentOpening(token) {
       if (token.value[i].trim().length && !">]".includes(token.value[i])) {
         var rangeStart = i + 1;
         if ("})".includes(token.value[i]) && wrongBracketType) {
-          rangeStart--;
+          rangeStart -= 1;
         }
         if (token.value.slice(i + 1) !== "]>") {
           errorArr.push({
@@ -8419,7 +8643,7 @@ function commentOpeningMalformed(context) {
   return {
     text: function text(node) {
       findMalformed(node.value, "<!--", function (errorObj) {
-        context.report(Object.assign({}, errorObj, {
+        context.report(_objectSpread2({}, errorObj, {
           message: "Malformed opening comment tag.",
           ruleId: "comment-opening-malformed",
           fix: {
@@ -8434,7 +8658,7 @@ function commentOpeningMalformed(context) {
       if (!node.closing) {
         var errorArr = validateCommentOpening(node) || [];
         errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             ruleId: "comment-opening-malformed"
           }));
         });
@@ -9286,6 +9510,7 @@ function normaliseRequestedRules(opts) {
         temp = ruleName;
         return true;
       }
+      return false;
     })) {
       allBadCharacterRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
@@ -9296,6 +9521,7 @@ function normaliseRequestedRules(opts) {
         temp = ruleName;
         return true;
       }
+      return false;
     })) {
       allTagRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
@@ -9306,6 +9532,7 @@ function normaliseRequestedRules(opts) {
         temp = ruleName;
         return true;
       }
+      return false;
     })) {
       allAttribRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
@@ -9331,321 +9558,6 @@ function normaliseRequestedRules(opts) {
     });
   }
   return res;
-}
-
-var domain;
-function EventHandlers() {}
-EventHandlers.prototype = Object.create(null);
-function EventEmitter() {
-  EventEmitter.init.call(this);
-}
-EventEmitter.EventEmitter = EventEmitter;
-EventEmitter.usingDomains = false;
-EventEmitter.prototype.domain = undefined;
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-EventEmitter.defaultMaxListeners = 10;
-EventEmitter.init = function () {
-  this.domain = null;
-  if (EventEmitter.usingDomains) {
-    if (domain.active ) ;
-  }
-  if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
-    this._events = new EventHandlers();
-    this._eventsCount = 0;
-  }
-  this._maxListeners = this._maxListeners || undefined;
-};
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-  if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-function $getMaxListeners(that) {
-  if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
-  return that._maxListeners;
-}
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-  return $getMaxListeners(this);
-};
-function emitNone(handler, isFn, self) {
-  if (isFn) handler.call(self);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self);
-  }
-}
-function emitOne(handler, isFn, self, arg1) {
-  if (isFn) handler.call(self, arg1);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
-  }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-  if (isFn) handler.call(self, arg1, arg2);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
-  }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-  if (isFn) handler.call(self, arg1, arg2, arg3);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
-  }
-}
-function emitMany(handler, isFn, self, args) {
-  if (isFn) handler.apply(self, args);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
-  }
-}
-EventEmitter.prototype.emit = function emit(type) {
-  var er, handler, len, args, i, events, domain;
-  var doError = type === 'error';
-  events = this._events;
-  if (events) doError = doError && events.error == null;else if (!doError) return false;
-  domain = this.domain;
-  if (doError) {
-    er = arguments[1];
-    if (domain) {
-      if (!er) er = new Error('Uncaught, unspecified "error" event');
-      er.domainEmitter = this;
-      er.domain = domain;
-      er.domainThrown = false;
-      domain.emit('error', er);
-    } else if (er instanceof Error) {
-      throw er;
-    } else {
-      var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-      err.context = er;
-      throw err;
-    }
-    return false;
-  }
-  handler = events[type];
-  if (!handler) return false;
-  var isFn = typeof handler === 'function';
-  len = arguments.length;
-  switch (len) {
-    case 1:
-      emitNone(handler, isFn, this);
-      break;
-    case 2:
-      emitOne(handler, isFn, this, arguments[1]);
-      break;
-    case 3:
-      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-      break;
-    case 4:
-      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-      break;
-    default:
-      args = new Array(len - 1);
-      for (i = 1; i < len; i++) args[i - 1] = arguments[i];
-      emitMany(handler, isFn, this, args);
-  }
-  return true;
-};
-function _addListener(target, type, listener, prepend) {
-  var m;
-  var events;
-  var existing;
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  events = target._events;
-  if (!events) {
-    events = target._events = new EventHandlers();
-    target._eventsCount = 0;
-  } else {
-    if (events.newListener) {
-      target.emit('newListener', type, listener.listener ? listener.listener : listener);
-      events = target._events;
-    }
-    existing = events[type];
-  }
-  if (!existing) {
-    existing = events[type] = listener;
-    ++target._eventsCount;
-  } else {
-    if (typeof existing === 'function') {
-      existing = events[type] = prepend ? [listener, existing] : [existing, listener];
-    } else {
-      if (prepend) {
-        existing.unshift(listener);
-      } else {
-        existing.push(listener);
-      }
-    }
-    if (!existing.warned) {
-      m = $getMaxListeners(target);
-      if (m && m > 0 && existing.length > m) {
-        existing.warned = true;
-        var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
-        w.name = 'MaxListenersExceededWarning';
-        w.emitter = target;
-        w.type = type;
-        w.count = existing.length;
-        emitWarning(w);
-      }
-    }
-  }
-  return target;
-}
-function emitWarning(e) {
-  typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-}
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-  return _addListener(this, type, listener, false);
-};
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-EventEmitter.prototype.prependListener = function prependListener(type, listener) {
-  return _addListener(this, type, listener, true);
-};
-function _onceWrap(target, type, listener) {
-  var fired = false;
-  function g() {
-    target.removeListener(type, g);
-    if (!fired) {
-      fired = true;
-      listener.apply(target, arguments);
-    }
-  }
-  g.listener = listener;
-  return g;
-}
-EventEmitter.prototype.once = function once(type, listener) {
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  this.on(type, _onceWrap(this, type, listener));
-  return this;
-};
-EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  this.prependListener(type, _onceWrap(this, type, listener));
-  return this;
-};
-EventEmitter.prototype.removeListener = function removeListener(type, listener) {
-  var list, events, position, i, originalListener;
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  events = this._events;
-  if (!events) return this;
-  list = events[type];
-  if (!list) return this;
-  if (list === listener || list.listener && list.listener === listener) {
-    if (--this._eventsCount === 0) this._events = new EventHandlers();else {
-      delete events[type];
-      if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-    }
-  } else if (typeof list !== 'function') {
-    position = -1;
-    for (i = list.length; i-- > 0;) {
-      if (list[i] === listener || list[i].listener && list[i].listener === listener) {
-        originalListener = list[i].listener;
-        position = i;
-        break;
-      }
-    }
-    if (position < 0) return this;
-    if (list.length === 1) {
-      list[0] = undefined;
-      if (--this._eventsCount === 0) {
-        this._events = new EventHandlers();
-        return this;
-      } else {
-        delete events[type];
-      }
-    } else {
-      spliceOne(list, position);
-    }
-    if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
-  }
-  return this;
-};
-EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
-  var listeners, events;
-  events = this._events;
-  if (!events) return this;
-  if (!events.removeListener) {
-    if (arguments.length === 0) {
-      this._events = new EventHandlers();
-      this._eventsCount = 0;
-    } else if (events[type]) {
-      if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
-    }
-    return this;
-  }
-  if (arguments.length === 0) {
-    var keys = Object.keys(events);
-    for (var i = 0, key; i < keys.length; ++i) {
-      key = keys[i];
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = new EventHandlers();
-    this._eventsCount = 0;
-    return this;
-  }
-  listeners = events[type];
-  if (typeof listeners === 'function') {
-    this.removeListener(type, listeners);
-  } else if (listeners) {
-    do {
-      this.removeListener(type, listeners[listeners.length - 1]);
-    } while (listeners[0]);
-  }
-  return this;
-};
-EventEmitter.prototype.listeners = function listeners(type) {
-  var evlistener;
-  var ret;
-  var events = this._events;
-  if (!events) ret = [];else {
-    evlistener = events[type];
-    if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
-  }
-  return ret;
-};
-EventEmitter.listenerCount = function (emitter, type) {
-  if (typeof emitter.listenerCount === 'function') {
-    return emitter.listenerCount(type);
-  } else {
-    return listenerCount.call(emitter, type);
-  }
-};
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-  var events = this._events;
-  if (events) {
-    var evlistener = events[type];
-    if (typeof evlistener === 'function') {
-      return 1;
-    } else if (evlistener) {
-      return evlistener.length;
-    }
-  }
-  return 0;
-}
-EventEmitter.prototype.eventNames = function eventNames() {
-  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-};
-function spliceOne(list, index) {
-  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
-  list.pop();
-}
-function arrayClone(arr, i) {
-  var copy = new Array(i);
-  while (i--) copy[i] = arr[i];
-  return copy;
-}
-function unwrapListeners(arr) {
-  var ret = new Array(arr.length);
-  for (var i = 0; i < ret.length; ++i) {
-    ret[i] = arr[i].listener || arr[i];
-  }
-  return ret;
 }
 
 EventEmitter.defaultMaxListeners = 0;
@@ -9684,9 +9596,11 @@ var Linter = function (_EventEmitter) {
       .filter(function (ruleName) {
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
-        } else if (Array.isArray(processedRulesConfig[ruleName])) {
+        }
+        if (Array.isArray(processedRulesConfig[ruleName])) {
           return processedRulesConfig[ruleName][0] > 0;
         }
+        return false;
       }).forEach(function (rule) {
         var rulesFunction;
         if (Array.isArray(processedRulesConfig[rule]) && processedRulesConfig[rule].length > 1) {
@@ -9712,7 +9626,7 @@ var Linter = function (_EventEmitter) {
             if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
               message = astErrMessages[obj.ruleId];
             }
-            _this.report(Object.assign({
+            _this.report(_objectSpread2({
               message: message,
               severity: currentRulesSeverity,
               fix: null
@@ -9726,8 +9640,8 @@ var Linter = function (_EventEmitter) {
           _this.emit(current.type, current);
           if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {
             current.attribs.forEach(function (attribObj) {
-              _this.emit("attribute", Object.assign({}, attribObj, {
-                parent: Object.assign({}, current)
+              _this.emit("attribute", _objectSpread2({}, attribObj, {
+                parent: _objectSpread2({}, current)
               }));
             });
           }
@@ -9756,6 +9670,7 @@ var Linter = function (_EventEmitter) {
                 matchedRulesName = rulesName;
                 return true;
               }
+              return false;
             })) {
               if (obj.ruleName === "bad-named-html-entity-unrecognised" && config.rules["bad-named-html-entity-unrecognised"] === undefined) {
                 severity = 1;
@@ -9819,14 +9734,13 @@ var Linter = function (_EventEmitter) {
       } else if (!Number.isInteger(obj.severity) && Array.isArray(this.processedRulesConfig[obj.ruleId])) {
         severity = this.processedRulesConfig[obj.ruleId][0];
       }
-      this.messages.push(Object.assign({
+      this.messages.push(_objectSpread2({
         fix: null,
-        keepSeparateWhenFixing: false
-      }, {
+        keepSeparateWhenFixing: false,
         line: line,
         column: col,
         severity: severity
-      }, obj, this.hasBeenCalledWithKeepSeparateWhenFixing ? {
+      }, obj, {}, this.hasBeenCalledWithKeepSeparateWhenFixing ? {
         fix: null
       } : {}));
       if (obj.keepSeparateWhenFixing && !this.hasBeenCalledWithKeepSeparateWhenFixing && obj.fix) {
@@ -9837,7 +9751,7 @@ var Linter = function (_EventEmitter) {
   return Linter;
 }(EventEmitter);
 
-var version = "2.17.3";
+var version = "2.17.4";
 
 exports.Linter = Linter;
 exports.version = version;

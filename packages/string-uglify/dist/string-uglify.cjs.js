@@ -1,7 +1,7 @@
 /**
  * string-uglify
  * Uglify - generate unique short names for sets of strings
- * Version: 1.2.35
+ * Version: 1.2.36
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "1.2.35";
+var version = "1.2.36";
 
 var isArr = Array.isArray;
 function tellcp(str, idNum) {

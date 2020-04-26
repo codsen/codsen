@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://gitlab.com/codsen/codsen/compare/string-find-malformed@1.1.4...string-find-malformed@1.1.5) (2020-04-26)
+
+
+### Bug Fixes
+
+* harden the eslint rules set and make all unit tests pass again and rebase a little ([52328ea](https://gitlab.com/codsen/codsen/commit/52328ea1f1a691513676d5bac259705ed61444d4))
+
+
+
+
+
 ## 1.1.0 (2020-03-16)
 
 ### Bug Fixes

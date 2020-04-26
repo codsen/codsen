@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.5.14...string-fix-broken-named-entities@2.6.0) (2020-04-26)
+
+
+### Features
+
+* add more eslint rules and make them pass, rebase a little as well ([6e5e19f](https://gitlab.com/codsen/codsen/commit/6e5e19ff3487e35dda79ad0a03e2117bc759c05d))
+
+
+
+
+
 ## 2.5.0 (2019-11-21)
 
 ### Features

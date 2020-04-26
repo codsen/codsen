@@ -1,7 +1,7 @@
 /**
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 2.5.14
+ * Version: 2.6.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -1965,7 +1965,7 @@
   /**
    * all-named-html-entities
    * List of all named HTML entities
-   * Version: 1.2.18
+   * Version: 1.2.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -9865,7 +9865,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.20
+   * Version: 2.3.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right

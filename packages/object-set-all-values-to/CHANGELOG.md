@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.57](https://gitlab.com/codsen/codsen/compare/object-set-all-values-to@3.9.56...object-set-all-values-to@3.9.57) (2020-04-26)
+
+**Note:** Version bump only for package object-set-all-values-to
+
+
+
+
+
 ## 3.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

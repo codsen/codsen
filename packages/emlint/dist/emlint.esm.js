@@ -1,16 +1,19 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.3
+ * Version: 2.17.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
-import defineLazyProp from 'define-lazy-prop';
+import traverse from 'ast-monkey-traverse';
+import lineColumn from 'line-column';
 import clone from 'lodash.clonedeep';
+import parser from 'codsen-parser';
 import matcher from 'matcher';
+import defineLazyProp from 'define-lazy-prop';
 import processCommaSeparated from 'string-process-comma-separated';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isRegExp from 'lodash.isregexp';
@@ -25,11 +28,379 @@ import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import findMalformed from 'string-find-malformed';
 import { matchRight } from 'string-match-left-right';
-import traverse from 'ast-monkey-traverse';
 import { pathPrev } from 'ast-monkey-util';
 import op from 'object-path';
-import lineColumn from 'line-column';
-import parser from 'codsen-parser';
+
+var domain;
+function EventHandlers() {}
+EventHandlers.prototype = Object.create(null);
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+EventEmitter.EventEmitter = EventEmitter;
+EventEmitter.usingDomains = false;
+EventEmitter.prototype.domain = undefined;
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+EventEmitter.defaultMaxListeners = 10;
+EventEmitter.init = function() {
+  this.domain = null;
+  if (EventEmitter.usingDomains) {
+    if (domain.active ) ;
+  }
+  if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
+    this._events = new EventHandlers();
+    this._eventsCount = 0;
+  }
+  this._maxListeners = this._maxListeners || undefined;
+};
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || isNaN(n))
+    throw new TypeError('"n" argument must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+function $getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return $getMaxListeners(this);
+};
+function emitNone(handler, isFn, self) {
+  if (isFn)
+    handler.call(self);
+  else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      listeners[i].call(self);
+  }
+}
+function emitOne(handler, isFn, self, arg1) {
+  if (isFn)
+    handler.call(self, arg1);
+  else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      listeners[i].call(self, arg1);
+  }
+}
+function emitTwo(handler, isFn, self, arg1, arg2) {
+  if (isFn)
+    handler.call(self, arg1, arg2);
+  else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      listeners[i].call(self, arg1, arg2);
+  }
+}
+function emitThree(handler, isFn, self, arg1, arg2, arg3) {
+  if (isFn)
+    handler.call(self, arg1, arg2, arg3);
+  else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      listeners[i].call(self, arg1, arg2, arg3);
+  }
+}
+function emitMany(handler, isFn, self, args) {
+  if (isFn)
+    handler.apply(self, args);
+  else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      listeners[i].apply(self, args);
+  }
+}
+EventEmitter.prototype.emit = function emit(type) {
+  var er, handler, len, args, i, events, domain;
+  var doError = (type === 'error');
+  events = this._events;
+  if (events)
+    doError = (doError && events.error == null);
+  else if (!doError)
+    return false;
+  domain = this.domain;
+  if (doError) {
+    er = arguments[1];
+    if (domain) {
+      if (!er)
+        er = new Error('Uncaught, unspecified "error" event');
+      er.domainEmitter = this;
+      er.domain = domain;
+      er.domainThrown = false;
+      domain.emit('error', er);
+    } else if (er instanceof Error) {
+      throw er;
+    } else {
+      var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+      err.context = er;
+      throw err;
+    }
+    return false;
+  }
+  handler = events[type];
+  if (!handler)
+    return false;
+  var isFn = typeof handler === 'function';
+  len = arguments.length;
+  switch (len) {
+    case 1:
+      emitNone(handler, isFn, this);
+      break;
+    case 2:
+      emitOne(handler, isFn, this, arguments[1]);
+      break;
+    case 3:
+      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
+      break;
+    case 4:
+      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
+      break;
+    default:
+      args = new Array(len - 1);
+      for (i = 1; i < len; i++)
+        args[i - 1] = arguments[i];
+      emitMany(handler, isFn, this, args);
+  }
+  return true;
+};
+function _addListener(target, type, listener, prepend) {
+  var m;
+  var events;
+  var existing;
+  if (typeof listener !== 'function')
+    throw new TypeError('"listener" argument must be a function');
+  events = target._events;
+  if (!events) {
+    events = target._events = new EventHandlers();
+    target._eventsCount = 0;
+  } else {
+    if (events.newListener) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
+      events = target._events;
+    }
+    existing = events[type];
+  }
+  if (!existing) {
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      existing = events[type] = prepend ? [listener, existing] :
+                                          [existing, listener];
+    } else {
+      if (prepend) {
+        existing.unshift(listener);
+      } else {
+        existing.push(listener);
+      }
+    }
+    if (!existing.warned) {
+      m = $getMaxListeners(target);
+      if (m && m > 0 && existing.length > m) {
+        existing.warned = true;
+        var w = new Error('Possible EventEmitter memory leak detected. ' +
+                            existing.length + ' ' + type + ' listeners added. ' +
+                            'Use emitter.setMaxListeners() to increase limit');
+        w.name = 'MaxListenersExceededWarning';
+        w.emitter = target;
+        w.type = type;
+        w.count = existing.length;
+        emitWarning(w);
+      }
+    }
+  }
+  return target;
+}
+function emitWarning(e) {
+  typeof console.warn === 'function' ? console.warn(e) : console.log(e);
+}
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
+};
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
+function _onceWrap(target, type, listener) {
+  var fired = false;
+  function g() {
+    target.removeListener(type, g);
+    if (!fired) {
+      fired = true;
+      listener.apply(target, arguments);
+    }
+  }
+  g.listener = listener;
+  return g;
+}
+EventEmitter.prototype.once = function once(type, listener) {
+  if (typeof listener !== 'function')
+    throw new TypeError('"listener" argument must be a function');
+  this.on(type, _onceWrap(this, type, listener));
+  return this;
+};
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      if (typeof listener !== 'function')
+        throw new TypeError('"listener" argument must be a function');
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+      if (typeof listener !== 'function')
+        throw new TypeError('"listener" argument must be a function');
+      events = this._events;
+      if (!events)
+        return this;
+      list = events[type];
+      if (!list)
+        return this;
+      if (list === listener || (list.listener && list.listener === listener)) {
+        if (--this._eventsCount === 0)
+          this._events = new EventHandlers();
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+        for (i = list.length; i-- > 0;) {
+          if (list[i] === listener ||
+              (list[i].listener && list[i].listener === listener)) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+        if (position < 0)
+          return this;
+        if (list.length === 1) {
+          list[0] = undefined;
+          if (--this._eventsCount === 0) {
+            this._events = new EventHandlers();
+            return this;
+          } else {
+            delete events[type];
+          }
+        } else {
+          spliceOne(list, position);
+        }
+        if (events.removeListener)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+      return this;
+    };
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events;
+      events = this._events;
+      if (!events)
+        return this;
+      if (!events.removeListener) {
+        if (arguments.length === 0) {
+          this._events = new EventHandlers();
+          this._eventsCount = 0;
+        } else if (events[type]) {
+          if (--this._eventsCount === 0)
+            this._events = new EventHandlers();
+          else
+            delete events[type];
+        }
+        return this;
+      }
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        for (var i = 0, key; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+        return this;
+      }
+      listeners = events[type];
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners) {
+        do {
+          this.removeListener(type, listeners[listeners.length - 1]);
+        } while (listeners[0]);
+      }
+      return this;
+    };
+EventEmitter.prototype.listeners = function listeners(type) {
+  var evlistener;
+  var ret;
+  var events = this._events;
+  if (!events)
+    ret = [];
+  else {
+    evlistener = events[type];
+    if (!evlistener)
+      ret = [];
+    else if (typeof evlistener === 'function')
+      ret = [evlistener.listener || evlistener];
+    else
+      ret = unwrapListeners(evlistener);
+  }
+  return ret;
+};
+EventEmitter.listenerCount = function(emitter, type) {
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
+};
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+  if (events) {
+    var evlistener = events[type];
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener) {
+      return evlistener.length;
+    }
+  }
+  return 0;
+}
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
+};
+function spliceOne(list, index) {
+  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1)
+    list[i] = list[k];
+  list.pop();
+}
+function arrayClone(arr, i) {
+  var copy = new Array(i);
+  while (i--)
+    copy[i] = arr[i];
+  return copy;
+}
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
+}
 
 var allBadCharacterRules = [
 	"bad-character-acknowledge",
@@ -298,7 +669,7 @@ function validateString(str, idxOffset, originalOpts) {
     quickPermittedValues: null,
     permittedValues: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
@@ -403,7 +774,8 @@ function isLetter(str) {
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
-  } else if (
+  }
+  if (
     Array.isArray(maybeARulesValue) &&
     maybeARulesValue.length &&
     Number.isInteger(maybeARulesValue[0]) &&
@@ -421,15 +793,14 @@ function isObj(something) {
 function isAnEnabledRule(config, ruleId) {
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
     return config[ruleId];
-  } else if (
+  }
+  if (
     ruleId.includes("-") &&
     Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])
   ) {
     return config[ruleId.split("-")[0]];
-  } else if (
-    isObj(config) &&
-    Object.prototype.hasOwnProperty.call(config, "all")
-  ) {
+  }
+  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
     return config.all;
   }
   return 0;
@@ -437,7 +808,7 @@ function isAnEnabledRule(config, ruleId) {
 
 function badCharacterNull(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -455,7 +826,7 @@ function badCharacterNull(context) {
 
 function badCharacterStartOfHeading(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 1) {
         context.report({
           ruleId: "bad-character-start-of-heading",
@@ -473,7 +844,7 @@ function badCharacterStartOfHeading(context) {
 
 function badCharacterStartOfText(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 2) {
         context.report({
           ruleId: "bad-character-start-of-text",
@@ -491,7 +862,7 @@ function badCharacterStartOfText(context) {
 
 function badCharacterEndOfText(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",
@@ -509,7 +880,7 @@ function badCharacterEndOfText(context) {
 
 function badCharacterEndOfTransmission(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 4) {
         context.report({
           ruleId: "bad-character-end-of-transmission",
@@ -527,7 +898,7 @@ function badCharacterEndOfTransmission(context) {
 
 function badCharacterEnquiry(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 5) {
         context.report({
           ruleId: "bad-character-enquiry",
@@ -545,7 +916,7 @@ function badCharacterEnquiry(context) {
 
 function badCharacterAcknowledge(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 6) {
         context.report({
           ruleId: "bad-character-acknowledge",
@@ -563,7 +934,7 @@ function badCharacterAcknowledge(context) {
 
 function badCharacterBell(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 7) {
         context.report({
           ruleId: "bad-character-bell",
@@ -581,7 +952,7 @@ function badCharacterBell(context) {
 
 function badCharacterBackspace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8) {
         context.report({
           ruleId: "bad-character-backspace",
@@ -608,7 +979,7 @@ function badCharacterTabulation(context, ...originalOpts) {
     mode = "indentationIsFine";
   }
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
         if (mode === "never") {
           context.report({
@@ -644,7 +1015,7 @@ function badCharacterTabulation(context, ...originalOpts) {
 
 function badCharacterLineTabulation(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 11) {
         context.report({
           ruleId: "bad-character-line-tabulation",
@@ -662,7 +1033,7 @@ function badCharacterLineTabulation(context) {
 
 function badCharacterFormFeed(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 12) {
         context.report({
           ruleId: "bad-character-form-feed",
@@ -680,7 +1051,7 @@ function badCharacterFormFeed(context) {
 
 function badCharacterShiftOut(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
@@ -698,7 +1069,7 @@ function badCharacterShiftOut(context) {
 
 function badCharacterShiftIn(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 15) {
         context.report({
           ruleId: "bad-character-shift-in",
@@ -716,7 +1087,7 @@ function badCharacterShiftIn(context) {
 
 function badCharacterDataLinkEscape(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 16) {
         context.report({
           ruleId: "bad-character-data-link-escape",
@@ -734,7 +1105,7 @@ function badCharacterDataLinkEscape(context) {
 
 function badCharacterDeviceControlOne(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 17) {
         context.report({
           ruleId: "bad-character-device-control-one",
@@ -752,7 +1123,7 @@ function badCharacterDeviceControlOne(context) {
 
 function badCharacterDeviceControlTwo(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 18) {
         context.report({
           ruleId: "bad-character-device-control-two",
@@ -770,7 +1141,7 @@ function badCharacterDeviceControlTwo(context) {
 
 function badCharacterDeviceControlThree(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 19) {
         context.report({
           ruleId: "bad-character-device-control-three",
@@ -788,7 +1159,7 @@ function badCharacterDeviceControlThree(context) {
 
 function badCharacterDeviceControlFour(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 20) {
         context.report({
           ruleId: "bad-character-device-control-four",
@@ -806,7 +1177,7 @@ function badCharacterDeviceControlFour(context) {
 
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",
@@ -824,7 +1195,7 @@ function badCharacterNegativeAcknowledge(context) {
 
 function badCharacterSynchronousIdle(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 22) {
         context.report({
           ruleId: "bad-character-synchronous-idle",
@@ -842,7 +1213,7 @@ function badCharacterSynchronousIdle(context) {
 
 function badCharacterEndOfTransmissionBlock(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 23) {
         context.report({
           ruleId: "bad-character-end-of-transmission-block",
@@ -860,7 +1231,7 @@ function badCharacterEndOfTransmissionBlock(context) {
 
 function badCharacterCancel(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 24) {
         context.report({
           ruleId: "bad-character-cancel",
@@ -878,7 +1249,7 @@ function badCharacterCancel(context) {
 
 function badCharacterEndOfMedium(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 25) {
         context.report({
           ruleId: "bad-character-end-of-medium",
@@ -896,7 +1267,7 @@ function badCharacterEndOfMedium(context) {
 
 function badCharacterSubstitute(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 26) {
         context.report({
           ruleId: "bad-character-substitute",
@@ -914,7 +1285,7 @@ function badCharacterSubstitute(context) {
 
 function badCharacterEscape(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 27) {
         context.report({
           ruleId: "bad-character-escape",
@@ -932,7 +1303,7 @@ function badCharacterEscape(context) {
 
 function badCharacterInformationSeparatorFour(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 28) {
         context.report({
           ruleId: "bad-character-information-separator-four",
@@ -950,7 +1321,7 @@ function badCharacterInformationSeparatorFour(context) {
 
 function badCharacterInformationSeparatorThree(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 29) {
         context.report({
           ruleId: "bad-character-information-separator-three",
@@ -968,7 +1339,7 @@ function badCharacterInformationSeparatorThree(context) {
 
 function badCharacterInformationSeparatorTwo(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 30) {
         context.report({
           ruleId: "bad-character-information-separator-two",
@@ -986,7 +1357,7 @@ function badCharacterInformationSeparatorTwo(context) {
 
 function badCharacterInformationSeparatorTwo$1(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 31) {
         context.report({
           ruleId: "bad-character-information-separator-one",
@@ -1004,7 +1375,7 @@ function badCharacterInformationSeparatorTwo$1(context) {
 
 function badCharacterDelete(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 127) {
         context.report({
           ruleId: "bad-character-delete",
@@ -1022,7 +1393,7 @@ function badCharacterDelete(context) {
 
 function badCharacterControl0080(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 128) {
         context.report({
           ruleId: "bad-character-control-0080",
@@ -1040,7 +1411,7 @@ function badCharacterControl0080(context) {
 
 function badCharacterControl0081(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 129) {
         context.report({
           ruleId: "bad-character-control-0081",
@@ -1058,7 +1429,7 @@ function badCharacterControl0081(context) {
 
 function badCharacterBreakPermittedHere(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 130) {
         context.report({
           ruleId: "bad-character-break-permitted-here",
@@ -1076,7 +1447,7 @@ function badCharacterBreakPermittedHere(context) {
 
 function badCharacterNoBreakHere(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 131) {
         context.report({
           ruleId: "bad-character-no-break-here",
@@ -1094,7 +1465,7 @@ function badCharacterNoBreakHere(context) {
 
 function badCharacterControl0084(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 132) {
         context.report({
           ruleId: "bad-character-control-0084",
@@ -1112,7 +1483,7 @@ function badCharacterControl0084(context) {
 
 function badCharacterNextLine(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 133) {
         context.report({
           ruleId: "bad-character-next-line",
@@ -1130,7 +1501,7 @@ function badCharacterNextLine(context) {
 
 function badCharacterStartOfSelectedArea(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 134) {
         context.report({
           ruleId: "bad-character-start-of-selected-area",
@@ -1148,7 +1519,7 @@ function badCharacterStartOfSelectedArea(context) {
 
 function badCharacterEndOfSelectedArea(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 135) {
         context.report({
           ruleId: "bad-character-end-of-selected-area",
@@ -1166,7 +1537,7 @@ function badCharacterEndOfSelectedArea(context) {
 
 function badCharacterCharacterTabulationSet(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 136) {
         context.report({
           ruleId: "bad-character-character-tabulation-set",
@@ -1184,7 +1555,7 @@ function badCharacterCharacterTabulationSet(context) {
 
 function badCharacterCharacterTabulationWithJustification(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 137) {
         context.report({
           ruleId: "bad-character-character-tabulation-with-justification",
@@ -1202,7 +1573,7 @@ function badCharacterCharacterTabulationWithJustification(context) {
 
 function badCharacterLineTabulationSet(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 138) {
         context.report({
           ruleId: "bad-character-line-tabulation-set",
@@ -1220,7 +1591,7 @@ function badCharacterLineTabulationSet(context) {
 
 function badCharacterPartialLineForward(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 139) {
         context.report({
           ruleId: "bad-character-partial-line-forward",
@@ -1238,7 +1609,7 @@ function badCharacterPartialLineForward(context) {
 
 function badCharacterPartialLineBackward(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 140) {
         context.report({
           ruleId: "bad-character-partial-line-backward",
@@ -1256,7 +1627,7 @@ function badCharacterPartialLineBackward(context) {
 
 function badCharacterReverseLineFeed(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 141) {
         context.report({
           ruleId: "bad-character-reverse-line-feed",
@@ -1274,7 +1645,7 @@ function badCharacterReverseLineFeed(context) {
 
 function badCharacterSingleShiftTwo(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 142) {
         context.report({
           ruleId: "bad-character-single-shift-two",
@@ -1292,7 +1663,7 @@ function badCharacterSingleShiftTwo(context) {
 
 function badCharacterSingleShiftTwo$1(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 143) {
         context.report({
           ruleId: "bad-character-single-shift-three",
@@ -1310,7 +1681,7 @@ function badCharacterSingleShiftTwo$1(context) {
 
 function badCharacterDeviceControlString(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 144) {
         context.report({
           ruleId: "bad-character-device-control-string",
@@ -1328,7 +1699,7 @@ function badCharacterDeviceControlString(context) {
 
 function badCharacterPrivateUseOne(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 145) {
         context.report({
           ruleId: "bad-character-private-use-1",
@@ -1346,7 +1717,7 @@ function badCharacterPrivateUseOne(context) {
 
 function badCharacterPrivateUseTwo(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 146) {
         context.report({
           ruleId: "bad-character-private-use-2",
@@ -1364,7 +1735,7 @@ function badCharacterPrivateUseTwo(context) {
 
 function badCharacterSetTransmitState(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 147) {
         context.report({
           ruleId: "bad-character-set-transmit-state",
@@ -1382,7 +1753,7 @@ function badCharacterSetTransmitState(context) {
 
 function badCharacterCancelCharacter(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 148) {
         context.report({
           ruleId: "bad-character-cancel-character",
@@ -1400,7 +1771,7 @@ function badCharacterCancelCharacter(context) {
 
 function badCharacterMessageWaiting(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 149) {
         context.report({
           ruleId: "bad-character-message-waiting",
@@ -1418,7 +1789,7 @@ function badCharacterMessageWaiting(context) {
 
 function badCharacterStartOfProtectedArea(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 150) {
         context.report({
           ruleId: "bad-character-start-of-protected-area",
@@ -1436,7 +1807,7 @@ function badCharacterStartOfProtectedArea(context) {
 
 function badCharacterEndOfProtectedArea(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 151) {
         context.report({
           ruleId: "bad-character-end-of-protected-area",
@@ -1454,7 +1825,7 @@ function badCharacterEndOfProtectedArea(context) {
 
 function badCharacterStartOfString(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 152) {
         context.report({
           ruleId: "bad-character-start-of-string",
@@ -1472,7 +1843,7 @@ function badCharacterStartOfString(context) {
 
 function badCharacterControl0099(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 153) {
         context.report({
           ruleId: "bad-character-control-0099",
@@ -1490,7 +1861,7 @@ function badCharacterControl0099(context) {
 
 function badCharacterSingleCharacterIntroducer(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 154) {
         context.report({
           ruleId: "bad-character-single-character-introducer",
@@ -1508,7 +1879,7 @@ function badCharacterSingleCharacterIntroducer(context) {
 
 function badCharacterControlSequenceIntroducer(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 155) {
         context.report({
           ruleId: "bad-character-control-sequence-introducer",
@@ -1526,7 +1897,7 @@ function badCharacterControlSequenceIntroducer(context) {
 
 function badCharacterStringTerminator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 156) {
         context.report({
           ruleId: "bad-character-string-terminator",
@@ -1544,7 +1915,7 @@ function badCharacterStringTerminator(context) {
 
 function badCharacterOperatingSystemCommand(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 157) {
         context.report({
           ruleId: "bad-character-operating-system-command",
@@ -1562,7 +1933,7 @@ function badCharacterOperatingSystemCommand(context) {
 
 function badCharacterPrivateMessage(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 158) {
         context.report({
           ruleId: "bad-character-private-message",
@@ -1580,7 +1951,7 @@ function badCharacterPrivateMessage(context) {
 
 function badCharacterApplicationProgramCommand(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 159) {
         context.report({
           ruleId: "bad-character-application-program-command",
@@ -1598,7 +1969,7 @@ function badCharacterApplicationProgramCommand(context) {
 
 function badCharacterSoftHyphen(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 173) {
         context.report({
           ruleId: "bad-character-soft-hyphen",
@@ -1616,7 +1987,7 @@ function badCharacterSoftHyphen(context) {
 
 function badCharacterNonBreakingSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 160) {
         context.report({
           ruleId: "bad-character-non-breaking-space",
@@ -1634,7 +2005,7 @@ function badCharacterNonBreakingSpace(context) {
 
 function badCharacterOghamSpaceMark(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 5760) {
         context.report({
           ruleId: "bad-character-ogham-space-mark",
@@ -1652,7 +2023,7 @@ function badCharacterOghamSpaceMark(context) {
 
 function badCharacterEnQuad(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8192) {
         context.report({
           ruleId: "bad-character-en-quad",
@@ -1670,7 +2041,7 @@ function badCharacterEnQuad(context) {
 
 function badCharacterEmQuad(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8193) {
         context.report({
           ruleId: "bad-character-em-quad",
@@ -1688,7 +2059,7 @@ function badCharacterEmQuad(context) {
 
 function badCharacterEnSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8194) {
         context.report({
           ruleId: "bad-character-en-space",
@@ -1706,7 +2077,7 @@ function badCharacterEnSpace(context) {
 
 function badCharacterEmSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8195) {
         context.report({
           ruleId: "bad-character-em-space",
@@ -1724,7 +2095,7 @@ function badCharacterEmSpace(context) {
 
 function badCharacterThreePerEmSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8196) {
         context.report({
           ruleId: "bad-character-three-per-em-space",
@@ -1742,7 +2113,7 @@ function badCharacterThreePerEmSpace(context) {
 
 function badCharacterFourPerEmSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8197) {
         context.report({
           ruleId: "bad-character-four-per-em-space",
@@ -1760,7 +2131,7 @@ function badCharacterFourPerEmSpace(context) {
 
 function badCharacterSixPerEmSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8198) {
         context.report({
           ruleId: "bad-character-six-per-em-space",
@@ -1778,7 +2149,7 @@ function badCharacterSixPerEmSpace(context) {
 
 function badCharacterFigureSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8199) {
         context.report({
           ruleId: "bad-character-figure-space",
@@ -1796,7 +2167,7 @@ function badCharacterFigureSpace(context) {
 
 function badCharacterPunctuationSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8200) {
         context.report({
           ruleId: "bad-character-punctuation-space",
@@ -1814,7 +2185,7 @@ function badCharacterPunctuationSpace(context) {
 
 function badCharacterThinSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8201) {
         context.report({
           ruleId: "bad-character-thin-space",
@@ -1832,7 +2203,7 @@ function badCharacterThinSpace(context) {
 
 function badCharacterHairSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8202) {
         context.report({
           ruleId: "bad-character-hair-space",
@@ -1850,7 +2221,7 @@ function badCharacterHairSpace(context) {
 
 function badCharacterZeroWidthSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8203) {
         context.report({
           ruleId: "bad-character-zero-width-space",
@@ -1868,7 +2239,7 @@ function badCharacterZeroWidthSpace(context) {
 
 function badCharacterZeroWidthNonJoiner(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8204) {
         context.report({
           ruleId: "bad-character-zero-width-non-joiner",
@@ -1886,7 +2257,7 @@ function badCharacterZeroWidthNonJoiner(context) {
 
 function badCharacterZeroWidthJoiner(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8205) {
         context.report({
           ruleId: "bad-character-zero-width-joiner",
@@ -1904,7 +2275,7 @@ function badCharacterZeroWidthJoiner(context) {
 
 function badCharacterLeftToRightMark(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8206) {
         context.report({
           ruleId: "bad-character-left-to-right-mark",
@@ -1922,7 +2293,7 @@ function badCharacterLeftToRightMark(context) {
 
 function badCharacterRightToLeftMark(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8207) {
         context.report({
           ruleId: "bad-character-right-to-left-mark",
@@ -1940,7 +2311,7 @@ function badCharacterRightToLeftMark(context) {
 
 function badCharacterLeftToRightEmbedding(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8234) {
         context.report({
           ruleId: "bad-character-left-to-right-embedding",
@@ -1958,7 +2329,7 @@ function badCharacterLeftToRightEmbedding(context) {
 
 function badCharacterRightToLeftEmbedding(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8235) {
         context.report({
           ruleId: "bad-character-right-to-left-embedding",
@@ -1976,7 +2347,7 @@ function badCharacterRightToLeftEmbedding(context) {
 
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",
@@ -1994,7 +2365,7 @@ function badCharacterPopDirectionalFormatting(context) {
 
 function badCharacterLeftToRightOverride(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8237) {
         context.report({
           ruleId: "bad-character-left-to-right-override",
@@ -2012,7 +2383,7 @@ function badCharacterLeftToRightOverride(context) {
 
 function badCharacterRightToLeftOverride(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8238) {
         context.report({
           ruleId: "bad-character-right-to-left-override",
@@ -2030,7 +2401,7 @@ function badCharacterRightToLeftOverride(context) {
 
 function badCharacterWordJoiner(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8288) {
         context.report({
           ruleId: "bad-character-word-joiner",
@@ -2048,7 +2419,7 @@ function badCharacterWordJoiner(context) {
 
 function badCharacterFunctionApplication(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8289) {
         context.report({
           ruleId: "bad-character-function-application",
@@ -2066,7 +2437,7 @@ function badCharacterFunctionApplication(context) {
 
 function badCharacterInvisibleTimes(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8290) {
         context.report({
           ruleId: "bad-character-invisible-times",
@@ -2084,7 +2455,7 @@ function badCharacterInvisibleTimes(context) {
 
 function badCharacterInvisibleSeparator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8291) {
         context.report({
           ruleId: "bad-character-invisible-separator",
@@ -2102,7 +2473,7 @@ function badCharacterInvisibleSeparator(context) {
 
 function badCharacterInvisiblePlus(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8292) {
         context.report({
           ruleId: "bad-character-invisible-plus",
@@ -2120,7 +2491,7 @@ function badCharacterInvisiblePlus(context) {
 
 function badCharacterLeftToRightIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8294) {
         context.report({
           ruleId: "bad-character-left-to-right-isolate",
@@ -2138,7 +2509,7 @@ function badCharacterLeftToRightIsolate(context) {
 
 function badCharacterRightToLeftIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8295) {
         context.report({
           ruleId: "bad-character-right-to-left-isolate",
@@ -2156,7 +2527,7 @@ function badCharacterRightToLeftIsolate(context) {
 
 function badCharacterFirstStrongIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8296) {
         context.report({
           ruleId: "bad-character-first-strong-isolate",
@@ -2174,7 +2545,7 @@ function badCharacterFirstStrongIsolate(context) {
 
 function badCharacterPopDirectionalIsolate(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8297) {
         context.report({
           ruleId: "bad-character-pop-directional-isolate",
@@ -2192,7 +2563,7 @@ function badCharacterPopDirectionalIsolate(context) {
 
 function badCharacterInhibitSymmetricSwapping(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8298) {
         context.report({
           ruleId: "bad-character-inhibit-symmetric-swapping",
@@ -2210,7 +2581,7 @@ function badCharacterInhibitSymmetricSwapping(context) {
 
 function badCharacterActivateSymmetricSwapping(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8299) {
         context.report({
           ruleId: "bad-character-activate-symmetric-swapping",
@@ -2228,7 +2599,7 @@ function badCharacterActivateSymmetricSwapping(context) {
 
 function badCharacterInhibitArabicFormShaping(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8300) {
         context.report({
           ruleId: "bad-character-inhibit-arabic-form-shaping",
@@ -2246,7 +2617,7 @@ function badCharacterInhibitArabicFormShaping(context) {
 
 function badCharacterActivateArabicFormShaping(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8301) {
         context.report({
           ruleId: "bad-character-activate-arabic-form-shaping",
@@ -2264,7 +2635,7 @@ function badCharacterActivateArabicFormShaping(context) {
 
 function badCharacterNationalDigitShapes(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8302) {
         context.report({
           ruleId: "bad-character-national-digit-shapes",
@@ -2282,7 +2653,7 @@ function badCharacterNationalDigitShapes(context) {
 
 function badCharacterNominalDigitShapes(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8303) {
         context.report({
           ruleId: "bad-character-nominal-digit-shapes",
@@ -2300,7 +2671,7 @@ function badCharacterNominalDigitShapes(context) {
 
 function badCharacterZeroWidthNoBreakSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65279) {
         context.report({
           ruleId: "bad-character-zero-width-no-break-space",
@@ -2318,7 +2689,7 @@ function badCharacterZeroWidthNoBreakSpace(context) {
 
 function badCharacterInterlinearAnnotationAnchor(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65529) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-anchor",
@@ -2336,7 +2707,7 @@ function badCharacterInterlinearAnnotationAnchor(context) {
 
 function badCharacterInterlinearAnnotationSeparator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65530) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-separator",
@@ -2354,7 +2725,7 @@ function badCharacterInterlinearAnnotationSeparator(context) {
 
 function badCharacterInterlinearAnnotationTerminator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65531) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-terminator",
@@ -2372,7 +2743,7 @@ function badCharacterInterlinearAnnotationTerminator(context) {
 
 function badCharacterLineSeparator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",
@@ -2390,7 +2761,7 @@ function badCharacterLineSeparator(context) {
 
 function badCharacterParagraphSeparator(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8233) {
         context.report({
           ruleId: "bad-character-paragraph-separator",
@@ -2408,7 +2779,7 @@ function badCharacterParagraphSeparator(context) {
 
 function badCharacterNarrowNoBreakSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8239) {
         context.report({
           ruleId: "bad-character-narrow-no-break-space",
@@ -2426,7 +2797,7 @@ function badCharacterNarrowNoBreakSpace(context) {
 
 function badCharacterMediumMathematicalSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 8287) {
         context.report({
           ruleId: "bad-character-medium-mathematical-space",
@@ -2444,7 +2815,7 @@ function badCharacterMediumMathematicalSpace(context) {
 
 function badCharacterIdeographicSpace(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 12288) {
         context.report({
           ruleId: "bad-character-ideographic-space",
@@ -2462,7 +2833,7 @@ function badCharacterIdeographicSpace(context) {
 
 function badCharacterReplacementCharacter(context) {
   return {
-    character: function ({ chr, i }) {
+    character({ chr, i }) {
       if (chr.charCodeAt(0) === 65533) {
         context.report({
           ruleId: "bad-character-replacement-character",
@@ -2480,7 +2851,7 @@ function badCharacterReplacementCharacter(context) {
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       const ranges = [];
       if (
         typeof context.str[node.start + 1] === "string" &&
@@ -2513,7 +2884,7 @@ function tagSpaceAfterOpeningBracket(context) {
 const BACKSLASH = "\u005C";
 function tagSpaceBeforeClosingBracket(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       const ranges = [];
       if (
         context.str[node.end - 1] === ">" &&
@@ -2537,7 +2908,7 @@ function tagSpaceBeforeClosingBracket(context) {
 
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
@@ -2579,7 +2950,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       if (
         Number.isInteger(node.end) &&
         context.str[node.end - 1] === ">" &&
@@ -2602,7 +2973,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
 const BACKSLASH$1 = "\u005C";
 function tagClosingBackslash(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       const ranges = [];
       if (
         Number.isInteger(node.start) &&
@@ -2657,7 +3028,7 @@ function tagClosingBackslash(context) {
           idxFrom = left(context.str, backSlashPos) + 1;
           whatToInsert = ` ${whatToInsert}`;
           if (node.void && context.str[idxFrom + 1] === " ") {
-            idxFrom++;
+            idxFrom += 1;
             whatToInsert = whatToInsert.trim();
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
@@ -2697,7 +3068,7 @@ function tagClosingBackslash(context) {
 const BACKSLASH$2 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       let mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
@@ -2787,7 +3158,7 @@ function tagNameCase(context) {
   const knownUpperCaseTags = ["CDATA"];
   const variableCaseTagNames = ["doctype"];
   return {
-    tag: function (node) {
+    tag(node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (
@@ -2832,7 +3203,7 @@ function tagNameCase(context) {
 
 function tagIsPresent(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       if (Array.isArray(opts) && opts.length) {
         const temp = matcher([node.tagName], opts);
         if (matcher([node.tagName], opts).length) {
@@ -2851,7 +3222,7 @@ function tagIsPresent(context, ...opts) {
 
 function tagBold(context, ...opts) {
   return {
-    tag: function (node) {
+    tag(node) {
       let suggested = "strong";
       if (
         Array.isArray(opts) &&
@@ -2877,7 +3248,7 @@ function tagBold(context, ...opts) {
 
 function tagBadSelfClosing(context) {
   return {
-    tag: function (node) {
+    tag(node) {
       if (
         !node.void &&
         node.value.endsWith(">") &&
@@ -2906,7 +3277,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     from: 0,
     to: str.length,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   let nameStartsAt = null;
   let whitespaceStartsAt = null;
   for (let i = opts.from; i < opts.to; i++) {
@@ -2943,7 +3314,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
 function attributeDuplicate(context, ...opts) {
   const attributesWhichCanBeMerged = ["id", "class"];
   return {
-    tag: function (node) {
+    tag(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         const attrsGatheredSoFar = [];
         const mergeableAttrsCaught = [];
@@ -3016,18 +3387,18 @@ function attributeDuplicate(context, ...opts) {
 function attributeMalformed(context, ...opts) {
   const blacklist = ["doctype"];
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (
         !node.attribNameRecognised &&
         !node.attribName.startsWith("xmlns:") &&
         !blacklist.includes(node.parent.tagName)
       ) {
         let somethingMatched = false;
-        for (const oneOfKnownAttribs of allHtmlAttribs) {
-          if (leven(oneOfKnownAttribs, node.attribName) === 1) {
+        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
+          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${oneOfKnownAttribs}".`,
+              message: `Probably meant "${allHtmlAttribs[i]}".`,
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt,
               fix: {
@@ -3035,7 +3406,7 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    oneOfKnownAttribs,
+                    allHtmlAttribs[i],
                   ],
                 ],
               },
@@ -3083,7 +3454,7 @@ function attributeMalformed(context, ...opts) {
           const toRange = node.attribOpeningQuoteAt;
           let whatToAdd = "=";
           if (context.str[fromRange] === "=") {
-            fromRange++;
+            fromRange += 1;
             whatToAdd = undefined;
           }
           context.report({
@@ -3199,7 +3570,7 @@ function attributeMalformed(context, ...opts) {
 
 function attributeValidateAbbr(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "abbr") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -3215,11 +3586,7 @@ function attributeValidateAbbr(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-abbr",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-abbr" });
         });
       }
     },
@@ -3675,7 +4042,7 @@ const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 
 function attributeValidateAcceptCharset(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "accept-charset") {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
@@ -3697,11 +4064,10 @@ function attributeValidateAcceptCharset(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept-charset",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-accept-charset",
+          });
         });
       }
     },
@@ -3710,7 +4076,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
 
 function attributeValidateAccept(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "accept") {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -3743,11 +4109,7 @@ function attributeValidateAccept(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-accept" });
         });
       }
     },
@@ -3756,7 +4118,7 @@ function attributeValidateAccept(context, ...opts) {
 
 function attributeValidateAccesskey(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "accesskey") {
         if (
           ![
@@ -3795,11 +4157,10 @@ function attributeValidateAccesskey(context, ...opts) {
           }
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accesskey",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-accesskey",
+          });
         });
       }
     },
@@ -3812,7 +4173,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (str.slice(opts.from, opts.to) !== " ") {
     let ranges;
     if (str[opts.from] === " ") {
@@ -3842,7 +4203,7 @@ function validateValue$1(str, originalOpts, errorArr) {
     attribStart: 0,
     attribEnd: str.length,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const extractedValue = str.slice(opts.from, opts.to);
   const calcultedIsRel = isRel(extractedValue);
   if (Array.from(extractedValue).some((val) => !val.trim().length)) {
@@ -3924,7 +4285,7 @@ function validateUri(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, opts.offset);
   if (Number.isInteger(charStart)) {
     if (opts.multipleOK) {
@@ -3943,13 +4304,14 @@ function validateUri(str, originalOpts) {
             } else {
               validateValue$1(
                 str,
-                Object.assign({}, opts, {
+                {
+                  ...opts,
                   from: charFrom,
                   to: charTo,
                   attribStart: charStart,
                   attribEnd: charEnd,
                   offset: opts.offset,
-                }),
+                },
                 errorArr
               );
             }
@@ -3982,13 +4344,14 @@ function validateUri(str, originalOpts) {
             );
             validateValue$1(
               str,
-              Object.assign({}, opts, {
+              {
+                ...opts,
                 from: idxFrom - opts.offset,
                 to: idxTo - opts.offset,
                 attribStart: charStart,
                 attribEnd: charEnd,
                 offset: opts.offset,
-              }),
+              },
               errorArr
             );
           },
@@ -4028,7 +4391,7 @@ function validateUri(str, originalOpts) {
 
 function attributeValidateAction(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "action") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -4043,11 +4406,10 @@ function attributeValidateAction(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-action",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-action",
+            });
           });
         }
       }
@@ -4057,7 +4419,7 @@ function attributeValidateAction(context, ...opts) {
 
 function attributeValidateAlign(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "align") {
         if (
           ![
@@ -4165,11 +4527,7 @@ function attributeValidateAlign(context, ...opts) {
           );
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-align",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-align" });
         });
       }
     },
@@ -4265,7 +4623,7 @@ function validateColor(str, idxOffset, opts) {
 
 function attributeValidateAlink(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "alink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -4289,11 +4647,7 @@ function attributeValidateAlink(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alink",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
         });
       }
     },
@@ -4302,7 +4656,7 @@ function attributeValidateAlink(context, ...opts) {
 
 function attributeValidateAlt(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "alt") {
         if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -4318,11 +4672,7 @@ function attributeValidateAlt(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-alt",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-alt" });
         });
       }
     },
@@ -4331,7 +4681,7 @@ function attributeValidateAlt(context, ...opts) {
 
 function attributeValidateArchive(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "archive") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4341,32 +4691,29 @@ function attributeValidateArchive(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
-        } else {
-          if (node.parent.tagName === "applet") {
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "comma",
-              multipleOK: true,
-            }).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive",
-                })
-              );
+        }
+        else if (node.parent.tagName === "applet") {
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "comma",
+            multipleOK: true,
+          }).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-archive",
             });
-          } else if (node.parent.tagName === "object") {
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "space",
-              multipleOK: true,
-            }).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-archive",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "object") {
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "space",
+            multipleOK: true,
+          }).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-archive",
             });
-          }
+          });
         }
       }
     },
@@ -4375,7 +4722,7 @@ function attributeValidateArchive(context, ...opts) {
 
 function attributeValidateAxis(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "axis") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -4391,11 +4738,7 @@ function attributeValidateAxis(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-axis",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-axis" });
         });
       }
     },
@@ -4404,7 +4747,7 @@ function attributeValidateAxis(context, ...opts) {
 
 function attributeValidateBackground(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "background") {
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -4419,11 +4762,10 @@ function attributeValidateBackground(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-background",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-background",
+            });
           });
         }
       }
@@ -4433,7 +4775,7 @@ function attributeValidateBackground(context, ...opts) {
 
 function attributeValidateBgcolor(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "bgcolor") {
         if (
           !["table", "tr", "td", "th", "body"].includes(node.parent.tagName)
@@ -4459,11 +4801,7 @@ function attributeValidateBgcolor(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-bgcolor",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-bgcolor" });
         });
       }
     },
@@ -4484,15 +4822,13 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
           fix: null,
         });
       }
-    } else {
-      if ("0123456789".includes(str[charStart + 1])) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Number padded with zero.`,
-          fix: null,
-        });
-      }
+    } else if ("0123456789".includes(str[charStart + 1])) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Number padded with zero.`,
+        fix: null,
+      });
     }
   }
   if (
@@ -4635,7 +4971,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     customPxMessage: null,
     maxValue: null,
   };
-  const opts = Object.assign({}, defaultOpts, originalOpts);
+  const opts = { ...defaultOpts, ...originalOpts };
   let charStart = 0;
   let charEnd = str.length;
   let errorArr = [];
@@ -4743,7 +5079,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 
 function attributeValidateBorder(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "border") {
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4764,11 +5100,7 @@ function attributeValidateBorder(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-border",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-border" });
         });
       }
     },
@@ -4777,7 +5109,7 @@ function attributeValidateBorder(context, ...opts) {
 
 function attributeValidateCellpadding(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "cellpadding") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4801,11 +5133,10 @@ function attributeValidateCellpadding(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellpadding",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-cellpadding",
+          });
         });
       }
     },
@@ -4814,7 +5145,7 @@ function attributeValidateCellpadding(context, ...opts) {
 
 function attributeValidateCellspacing(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "cellspacing") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4838,11 +5169,10 @@ function attributeValidateCellspacing(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-cellspacing",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-cellspacing",
+          });
         });
       }
     },
@@ -4851,7 +5181,7 @@ function attributeValidateCellspacing(context, ...opts) {
 
 function attributeValidateChar(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "char") {
         if (
           ![
@@ -4891,11 +5221,7 @@ function attributeValidateChar(context, ...opts) {
           }
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-char",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-char" });
         });
       }
     },
@@ -4904,7 +5230,7 @@ function attributeValidateChar(context, ...opts) {
 
 function attributeValidateCharoff(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "charoff") {
         if (
           ![
@@ -4949,11 +5275,7 @@ function attributeValidateCharoff(context, ...opts) {
           });
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charoff",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-charoff" });
         });
       }
     },
@@ -4962,7 +5284,7 @@ function attributeValidateCharoff(context, ...opts) {
 
 function attributeValidateCharset(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "charset") {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
@@ -4984,11 +5306,7 @@ function attributeValidateCharset(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-charset",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-charset" });
         });
       }
     },
@@ -5000,7 +5318,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     xhtml: false,
     enforceSiblingAttributes: null,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   if (opts.xhtml) {
     let quotesType = `"`;
     if (
@@ -5098,7 +5416,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
 
 function attributeValidateChecked(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -5119,24 +5437,19 @@ function attributeValidateChecked(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: {
-                type: ["checkbox", "radio"],
-              },
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: {
+              type: ["checkbox", "radio"],
+            },
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-checked",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-checked",
+            });
           });
         }
       }
@@ -5146,7 +5459,7 @@ function attributeValidateChecked(context, ...originalOpts) {
 
 function attributeValidateCite(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "cite") {
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -5161,11 +5474,7 @@ function attributeValidateCite(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cite",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-cite" });
           });
         }
       }
@@ -5180,7 +5489,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     to: str.length,
     offset: 0,
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
   const listOfUniqueNames = new Set();
   splitByWhitespace(
     str,
@@ -5235,7 +5544,7 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
 
 function attributeValidateClass(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "class") {
         if (
           [
@@ -5273,11 +5582,7 @@ function attributeValidateClass(context, ...opts) {
             errorArr
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-class",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-class" });
           });
         }
       }
@@ -5287,7 +5592,7 @@ function attributeValidateClass(context, ...opts) {
 
 function attributeValidateClassid(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "classid") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5302,11 +5607,10 @@ function attributeValidateClassid(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-classid",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-classid",
+            });
           });
         }
       }
@@ -5316,7 +5620,7 @@ function attributeValidateClassid(context, ...opts) {
 
 function attributeValidateClassid$1(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "clear") {
         if (node.parent.tagName !== "br") {
           context.report({
@@ -5347,11 +5651,7 @@ function attributeValidateClassid$1(context, ...opts) {
           });
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-clear",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-clear" });
         });
       }
     },
@@ -5360,7 +5660,7 @@ function attributeValidateClassid$1(context, ...opts) {
 
 function attributeValidateCode(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "code") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -5376,11 +5676,7 @@ function attributeValidateCode(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-code",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-code" });
         });
       }
     },
@@ -5389,7 +5685,7 @@ function attributeValidateCode(context, ...opts) {
 
 function attributeValidateCodebase(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "codebase") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -5404,11 +5700,10 @@ function attributeValidateCodebase(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-codebase",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-codebase",
+            });
           });
         }
       }
@@ -5418,7 +5713,7 @@ function attributeValidateCodebase(context, ...opts) {
 
 function attributeValidateCodetype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "codetype") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5470,11 +5765,10 @@ function attributeValidateCodetype(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-codetype",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-codetype",
+          });
         });
       }
     },
@@ -5483,7 +5777,7 @@ function attributeValidateCodetype(context, ...opts) {
 
 function attributeValidateColor(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "color") {
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
@@ -5507,11 +5801,7 @@ function attributeValidateColor(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-color",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-color" });
         });
       }
     },
@@ -5520,7 +5810,7 @@ function attributeValidateColor(context, ...opts) {
 
 function attributeValidateCols(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "cols") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -5559,11 +5849,7 @@ function attributeValidateCols(context, ...opts) {
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-cols",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-cols" });
           });
         }
       }
@@ -5573,7 +5859,7 @@ function attributeValidateCols(context, ...opts) {
 
 function attributeValidateColspan(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "colspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -5594,11 +5880,7 @@ function attributeValidateColspan(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-colspan",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-colspan" });
         });
       }
     },
@@ -5607,7 +5889,7 @@ function attributeValidateColspan(context, ...opts) {
 
 function attributeValidateCompact(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -5628,22 +5910,17 @@ function attributeValidateCompact(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-compact",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-compact",
+            });
           });
         }
       }
@@ -5653,7 +5930,7 @@ function attributeValidateCompact(context, ...originalOpts) {
 
 function attributeValidateContent(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "content") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -5669,11 +5946,7 @@ function attributeValidateContent(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-content",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-content" });
         });
       }
     },
@@ -5682,7 +5955,7 @@ function attributeValidateContent(context, ...opts) {
 
 function attributeValidateCoords(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "coords") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -5735,11 +6008,10 @@ function attributeValidateCoords(context, ...opts) {
             );
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach((errorObj) => {
-                context.report(
-                  Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-coords",
-                  })
-                );
+                context.report({
+                  ...errorObj,
+                  ruleId: "attribute-validate-coords",
+                });
               });
             }
           }
@@ -5751,7 +6023,7 @@ function attributeValidateCoords(context, ...opts) {
 
 function attributeValidateData(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "data") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5766,11 +6038,7 @@ function attributeValidateData(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-data",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-data" });
           });
         }
       }
@@ -5780,7 +6048,7 @@ function attributeValidateData(context, ...opts) {
 
 function attributeValidateDatetime(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "datetime") {
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -5802,11 +6070,10 @@ function attributeValidateDatetime(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-datetime",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-datetime",
+          });
         });
       }
     },
@@ -5815,7 +6082,7 @@ function attributeValidateDatetime(context, ...opts) {
 
 function attributeValidateDeclare(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -5836,22 +6103,17 @@ function attributeValidateDeclare(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-declare",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-declare",
+            });
           });
         }
       }
@@ -5861,7 +6123,7 @@ function attributeValidateDeclare(context, ...originalOpts) {
 
 function attributeValidateDefer(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -5882,22 +6144,14 @@ function attributeValidateDefer(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-defer",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-defer" });
           });
         }
       }
@@ -5907,7 +6161,7 @@ function attributeValidateDefer(context, ...originalOpts) {
 
 function attributeValidateDir(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "dir") {
         if (
           [
@@ -5939,11 +6193,7 @@ function attributeValidateDir(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-dir",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-dir" });
         });
       }
     },
@@ -5952,7 +6202,7 @@ function attributeValidateDir(context, ...opts) {
 
 function attributeValidateDisabled(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -5982,22 +6232,17 @@ function attributeValidateDisabled(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-disabled",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-disabled",
+            });
           });
         }
       }
@@ -6007,7 +6252,7 @@ function attributeValidateDisabled(context, ...originalOpts) {
 
 function attributeValidateEnctype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "enctype") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6032,11 +6277,7 @@ function attributeValidateEnctype(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-enctype",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-enctype" });
         });
       }
     },
@@ -6045,7 +6286,7 @@ function attributeValidateEnctype(context, ...opts) {
 
 function attributeValidateFace(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "face") {
         if (node.parent.tagName !== "font") {
           context.report({
@@ -6061,11 +6302,7 @@ function attributeValidateFace(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-face",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-face" });
         });
       }
     },
@@ -6074,7 +6311,7 @@ function attributeValidateFace(context, ...opts) {
 
 function attributeValidateFor(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "for") {
         if (node.parent.tagName !== "label") {
           context.report({
@@ -6123,11 +6360,7 @@ function attributeValidateFor(context, ...opts) {
             });
           }
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-for",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-for" });
           });
         }
       }
@@ -6137,7 +6370,7 @@ function attributeValidateFor(context, ...opts) {
 
 function attributeValidateFrame(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "frame") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -6167,11 +6400,7 @@ function attributeValidateFrame(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frame",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-frame" });
         });
       }
     },
@@ -6180,7 +6409,7 @@ function attributeValidateFrame(context, ...opts) {
 
 function attributeValidateFrameborder(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "frameborder") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6200,11 +6429,10 @@ function attributeValidateFrameborder(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-frameborder",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-frameborder",
+          });
         });
       }
     },
@@ -6213,7 +6441,7 @@ function attributeValidateFrameborder(context, ...opts) {
 
 function attributeValidateHeaders(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "headers") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -6239,11 +6467,10 @@ function attributeValidateHeaders(context, ...opts) {
             errorArr
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-headers",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-headers",
+            });
           });
         }
       }
@@ -6253,7 +6480,7 @@ function attributeValidateHeaders(context, ...opts) {
 
 function attributeValidateHeight(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "height") {
         if (
           !["iframe", "td", "th", "img", "object", "applet"].includes(
@@ -6279,11 +6506,7 @@ function attributeValidateHeight(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-height",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-height" });
         });
       }
     },
@@ -6292,7 +6515,7 @@ function attributeValidateHeight(context, ...opts) {
 
 function attributeValidateHref(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "href") {
         if (!["a", "area", "link", "base"].includes(node.parent.tagName)) {
           context.report({
@@ -6307,11 +6530,7 @@ function attributeValidateHref(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-href",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-href" });
           });
         }
       }
@@ -6321,7 +6540,7 @@ function attributeValidateHref(context, ...opts) {
 
 function attributeValidateHreflang(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "hreflang") {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6348,11 +6567,10 @@ function attributeValidateHreflang(context, ...opts) {
           });
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hreflang",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-hreflang",
+          });
         });
       }
     },
@@ -6361,7 +6579,7 @@ function attributeValidateHreflang(context, ...opts) {
 
 function attributeValidateHspace(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "hspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -6381,11 +6599,7 @@ function attributeValidateHspace(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-hspace",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-hspace" });
         });
       }
     },
@@ -6394,7 +6608,7 @@ function attributeValidateHspace(context, ...opts) {
 
 function attributeValidateHttpequiv(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "http-equiv") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -6420,11 +6634,10 @@ function attributeValidateHttpequiv(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-http-equiv",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-http-equiv",
+          });
         });
       }
     },
@@ -6433,7 +6646,7 @@ function attributeValidateHttpequiv(context, ...opts) {
 
 function attributeValidateId(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "id") {
         if (
           ["base", "head", "html", "meta", "script", "style", "title"].includes(
@@ -6463,11 +6676,7 @@ function attributeValidateId(context, ...opts) {
             errorArr
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-id",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-id" });
           });
         }
       }
@@ -6477,7 +6686,7 @@ function attributeValidateId(context, ...opts) {
 
 function attributeValidateIsmap(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -6498,22 +6707,14 @@ function attributeValidateIsmap(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ismap",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-ismap" });
           });
         }
       }
@@ -6523,7 +6724,7 @@ function attributeValidateIsmap(context, ...originalOpts) {
 
 function attributeValidateLabel(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "label") {
         if (!["option", "optgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -6539,11 +6740,7 @@ function attributeValidateLabel(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-label",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-label" });
         });
       }
     },
@@ -6552,7 +6749,7 @@ function attributeValidateLabel(context, ...opts) {
 
 function attributeValidateLang(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "lang") {
         if (
           [
@@ -6591,11 +6788,7 @@ function attributeValidateLang(context, ...opts) {
           });
         }
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-lang",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-lang" });
         });
       }
     },
@@ -6604,7 +6797,7 @@ function attributeValidateLang(context, ...opts) {
 
 function attributeValidateLanguage(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "language") {
         if (node.parent.tagName !== "script") {
           context.report({
@@ -6620,11 +6813,10 @@ function attributeValidateLanguage(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-language",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-language",
+          });
         });
       }
     },
@@ -6633,7 +6825,7 @@ function attributeValidateLanguage(context, ...opts) {
 
 function attributeValidateLink(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "link") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -6657,11 +6849,7 @@ function attributeValidateLink(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-link",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-link" });
         });
       }
     },
@@ -6670,7 +6858,7 @@ function attributeValidateLink(context, ...opts) {
 
 function attributeValidateLongdesc(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "longdesc") {
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6686,11 +6874,10 @@ function attributeValidateLongdesc(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-longdesc",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-longdesc",
+          });
         });
       }
     },
@@ -6699,7 +6886,7 @@ function attributeValidateLongdesc(context, ...opts) {
 
 function attributeValidateMarginheight(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "marginheight") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6719,11 +6906,10 @@ function attributeValidateMarginheight(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginheight",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-marginheight",
+          });
         });
       }
     },
@@ -6732,7 +6918,7 @@ function attributeValidateMarginheight(context, ...opts) {
 
 function attributeValidateMarginwidth(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "marginwidth") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6752,11 +6938,10 @@ function attributeValidateMarginwidth(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-marginwidth",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-marginwidth",
+          });
         });
       }
     },
@@ -6765,7 +6950,7 @@ function attributeValidateMarginwidth(context, ...opts) {
 
 function attributeValidateMaxlength(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "maxlength") {
         if (node.parent.tagName !== "input") {
           context.report({
@@ -6786,11 +6971,10 @@ function attributeValidateMaxlength(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-maxlength",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-maxlength",
+          });
         });
       }
     },
@@ -6799,7 +6983,7 @@ function attributeValidateMaxlength(context, ...opts) {
 
 function attributeValidateMedia(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "media") {
         if (!["style", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6821,11 +7005,7 @@ function attributeValidateMedia(context, ...opts) {
             })
           )
           .forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-media",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-media" });
           });
       }
     },
@@ -6834,7 +7014,7 @@ function attributeValidateMedia(context, ...opts) {
 
 function attributeValidateMethod(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "method") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6854,11 +7034,7 @@ function attributeValidateMethod(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-method",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-method" });
         });
       }
     },
@@ -6867,7 +7043,7 @@ function attributeValidateMethod(context, ...opts) {
 
 function attributeValidateMultiple(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -6888,22 +7064,17 @@ function attributeValidateMultiple(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-multiple",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-multiple",
+            });
           });
         }
       }
@@ -6913,7 +7084,7 @@ function attributeValidateMultiple(context, ...originalOpts) {
 
 function attributeValidateName(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "name") {
         if (
           ![
@@ -6946,11 +7117,7 @@ function attributeValidateName(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-name",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-name" });
         });
       }
     },
@@ -6959,7 +7126,7 @@ function attributeValidateName(context, ...opts) {
 
 function attributeValidateNohref(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -6980,22 +7147,17 @@ function attributeValidateNohref(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-nohref",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-nohref",
+            });
           });
         }
       }
@@ -7005,7 +7167,7 @@ function attributeValidateNohref(context, ...originalOpts) {
 
 function attributeValidateNoresize(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -7026,22 +7188,17 @@ function attributeValidateNoresize(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-noresize",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-noresize",
+            });
           });
         }
       }
@@ -7051,7 +7208,7 @@ function attributeValidateNoresize(context, ...originalOpts) {
 
 function attributeValidateNoshade(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -7072,22 +7229,17 @@ function attributeValidateNoshade(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-noshade",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-noshade",
+            });
           });
         }
       }
@@ -7097,7 +7249,7 @@ function attributeValidateNoshade(context, ...originalOpts) {
 
 function attributeValidateNowrap(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -7118,22 +7270,17 @@ function attributeValidateNowrap(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-nowrap",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-nowrap",
+            });
           });
         }
       }
@@ -7143,7 +7290,7 @@ function attributeValidateNowrap(context, ...originalOpts) {
 
 function attributeValidateObject(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "object") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -7159,11 +7306,7 @@ function attributeValidateObject(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-object",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-object" });
         });
       }
     },
@@ -7177,8 +7320,7 @@ function validateScript(str, idxOffset, opts) {
 
 function attributeValidateOnblur(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onblur") {
         if (
           ![
@@ -7204,11 +7346,10 @@ function attributeValidateOnblur(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onblur",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onblur",
+            });
           });
         }
       }
@@ -7218,8 +7359,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
 
 function attributeValidateOnchange(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onchange") {
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -7235,11 +7375,10 @@ function attributeValidateOnchange(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onchange",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onchange",
+            });
           });
         }
       }
@@ -7249,8 +7388,7 @@ function attributeValidateOnchange(context, ...originalOpts) {
 
 function attributeValidateOnclick(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onclick") {
         if (
           [
@@ -7286,11 +7424,10 @@ function attributeValidateOnclick(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onclick",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onclick",
+            });
           });
         }
       }
@@ -7300,8 +7437,7 @@ function attributeValidateOnclick(context, ...originalOpts) {
 
 function attributeValidateOndblclick(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "ondblclick") {
         if (
           [
@@ -7337,11 +7473,10 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-ondblclick",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-ondblclick",
+            });
           });
         }
       }
@@ -7351,8 +7486,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
 
 function attributeValidateOnfocus(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onfocus") {
         if (
           ![
@@ -7378,11 +7512,10 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onfocus",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onfocus",
+            });
           });
         }
       }
@@ -7392,8 +7525,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
 
 function attributeValidateOnkeydown(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onkeydown") {
         if (
           [
@@ -7429,11 +7561,10 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeydown",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onkeydown",
+            });
           });
         }
       }
@@ -7443,8 +7574,7 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
 
 function attributeValidateOnkeypress(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onkeypress") {
         if (
           [
@@ -7480,11 +7610,10 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeypress",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onkeypress",
+            });
           });
         }
       }
@@ -7494,8 +7623,7 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
 
 function attributeValidateOnkeyup(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onkeyup") {
         if (
           [
@@ -7531,11 +7659,10 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onkeyup",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onkeyup",
+            });
           });
         }
       }
@@ -7545,8 +7672,7 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
 
 function attributeValidateOnload(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
@@ -7562,11 +7688,10 @@ function attributeValidateOnload(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onload",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onload",
+            });
           });
         }
       }
@@ -7576,8 +7701,7 @@ function attributeValidateOnload(context, ...originalOpts) {
 
 function attributeValidateOnmousedown(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onmousedown") {
         if (
           [
@@ -7613,11 +7737,10 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmousedown",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmousedown",
+            });
           });
         }
       }
@@ -7627,8 +7750,7 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
 
 function attributeValidateOnmousemove(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onmousemove") {
         if (
           [
@@ -7664,11 +7786,10 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmousemove",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmousemove",
+            });
           });
         }
       }
@@ -7678,8 +7799,7 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
 
 function attributeValidateOnmouseout(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onmouseout") {
         if (
           [
@@ -7715,11 +7835,10 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseout",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmouseout",
+            });
           });
         }
       }
@@ -7729,8 +7848,7 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
 
 function attributeValidateOnmouseover(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onmouseover") {
         if (
           [
@@ -7766,11 +7884,10 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseover",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmouseover",
+            });
           });
         }
       }
@@ -7780,8 +7897,7 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
 
 function attributeValidateOnmouseup(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onmouseup") {
         if (
           [
@@ -7817,11 +7933,10 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onmouseup",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onmouseup",
+            });
           });
         }
       }
@@ -7831,8 +7946,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
 
 function attributeValidateOnreset(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onreset") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -7848,11 +7962,10 @@ function attributeValidateOnreset(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onreset",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onreset",
+            });
           });
         }
       }
@@ -7862,8 +7975,7 @@ function attributeValidateOnreset(context, ...originalOpts) {
 
 function attributeValidateOnsubmit(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onsubmit") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -7879,11 +7991,10 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onsubmit",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onsubmit",
+            });
           });
         }
       }
@@ -7893,8 +8004,7 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
 
 function attributeValidateOnselect(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onselect") {
         if (!["input", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -7910,11 +8020,10 @@ function attributeValidateOnselect(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onselect",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onselect",
+            });
           });
         }
       }
@@ -7924,8 +8033,7 @@ function attributeValidateOnselect(context, ...originalOpts) {
 
 function attributeValidateOnunload(context, ...originalOpts) {
   return {
-    attribute: function (node) {
-      const opts = Object.assign({}, originalOpts);
+    attribute(node) {
       if (node.attribName === "onunload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
@@ -7941,11 +8049,10 @@ function attributeValidateOnunload(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-onunload",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-onunload",
+            });
           });
         }
       }
@@ -7955,7 +8062,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
 
 function attributeValidateProfile(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "profile") {
         if (node.parent.tagName !== "head") {
           context.report({
@@ -7970,11 +8077,10 @@ function attributeValidateProfile(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: true,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-profile",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-profile",
+            });
           });
         }
       }
@@ -7984,7 +8090,7 @@ function attributeValidateProfile(context, ...opts) {
 
 function attributeValidatePrompt(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "prompt") {
         if (node.parent.tagName !== "isindex") {
           context.report({
@@ -8000,11 +8106,7 @@ function attributeValidatePrompt(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-prompt",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-prompt" });
         });
       }
     },
@@ -8013,7 +8115,7 @@ function attributeValidatePrompt(context, ...opts) {
 
 function attributeValidateReadonly(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -8034,22 +8136,17 @@ function attributeValidateReadonly(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-readonly",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-readonly",
+            });
           });
         }
       }
@@ -8059,7 +8156,7 @@ function attributeValidateReadonly(context, ...originalOpts) {
 
 function attributeValidateRel(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rel") {
@@ -8082,11 +8179,7 @@ function attributeValidateRel(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rel",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rel" });
         });
       }
     },
@@ -8095,7 +8188,7 @@ function attributeValidateRel(context, ...opts) {
 
 function attributeValidateRev(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rev") {
@@ -8118,11 +8211,7 @@ function attributeValidateRev(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rev",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rev" });
         });
       }
     },
@@ -8131,7 +8220,7 @@ function attributeValidateRev(context, ...opts) {
 
 function attributeValidateRows(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "rows") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -8170,11 +8259,7 @@ function attributeValidateRows(context, ...opts) {
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-rows",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-rows" });
           });
         }
       }
@@ -8184,7 +8269,7 @@ function attributeValidateRows(context, ...opts) {
 
 function attributeValidateRowspan(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "rowspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -8205,11 +8290,7 @@ function attributeValidateRowspan(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rowspan",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rowspan" });
         });
       }
     },
@@ -8218,7 +8299,7 @@ function attributeValidateRowspan(context, ...opts) {
 
 function attributeValidateRules(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "rules") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -8238,11 +8319,7 @@ function attributeValidateRules(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-rules",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-rules" });
         });
       }
     },
@@ -8251,7 +8328,7 @@ function attributeValidateRules(context, ...opts) {
 
 function attributeValidateScheme(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "scheme") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -8267,11 +8344,7 @@ function attributeValidateScheme(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scheme",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-scheme" });
         });
       }
     },
@@ -8280,7 +8353,7 @@ function attributeValidateScheme(context, ...opts) {
 
 function attributeValidateScope(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "scope") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -8300,11 +8373,7 @@ function attributeValidateScope(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scope",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-scope" });
         });
       }
     },
@@ -8313,7 +8382,7 @@ function attributeValidateScope(context, ...opts) {
 
 function attributeValidateScrolling(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "scrolling") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -8333,11 +8402,10 @@ function attributeValidateScrolling(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-scrolling",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-scrolling",
+          });
         });
       }
     },
@@ -8346,7 +8414,7 @@ function attributeValidateScrolling(context, ...opts) {
 
 function attributeValidateSelected(context, ...originalOpts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       const opts = {
         xhtml: false,
       };
@@ -8367,22 +8435,17 @@ function attributeValidateSelected(context, ...originalOpts) {
             fix: null,
           });
         } else {
-          validateVoid(
-            node,
-            context,
-            errorArr,
-            Object.assign({}, opts, {
-              enforceSiblingAttributes: null,
-            })
-          );
+          validateVoid(node, context, errorArr, {
+            ...opts,
+            enforceSiblingAttributes: null,
+          });
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-selected",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-selected",
+            });
           });
         }
       }
@@ -8392,7 +8455,7 @@ function attributeValidateSelected(context, ...originalOpts) {
 
 function attributeValidateShape(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "shape") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -8412,11 +8475,7 @@ function attributeValidateShape(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-shape",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-shape" });
         });
       }
     },
@@ -8425,7 +8484,7 @@ function attributeValidateShape(context, ...opts) {
 
 function attributeValidateSize(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "size") {
         if (
           !["hr", "font", "input", "basefont", "select"].includes(
@@ -8445,11 +8504,7 @@ function attributeValidateSize(context, ...opts) {
             node.attribValueStartsAt
           );
           errorArr.forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-size",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-size" });
           });
           if (Number.isInteger(charStart)) {
             const extractedVal = node.attribValueRaw.slice(charStart, charEnd);
@@ -8464,11 +8519,10 @@ function attributeValidateSize(context, ...opts) {
                   skipWhitespaceChecks: true,
                 }
               ).forEach((errorObj) => {
-                context.report(
-                  Object.assign({}, errorObj, {
-                    ruleId: "attribute-validate-size",
-                  })
-                );
+                context.report({
+                  ...errorObj,
+                  ruleId: "attribute-validate-size",
+                });
               });
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
               if (!extractedVal.match(fontSizeRegex)) {
@@ -8492,11 +8546,10 @@ function attributeValidateSize(context, ...opts) {
                   });
                 }
                 errorArr2.forEach((errorObj) => {
-                  context.report(
-                    Object.assign({}, errorObj, {
-                      ruleId: "attribute-validate-size",
-                    })
-                  );
+                  context.report({
+                    ...errorObj,
+                    ruleId: "attribute-validate-size",
+                  });
                 });
               }
             }
@@ -8509,7 +8562,7 @@ function attributeValidateSize(context, ...opts) {
 
 function attributeValidateSpan(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "span") {
         if (!["col", "colgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -8532,11 +8585,7 @@ function attributeValidateSpan(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-span",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-span" });
         });
       }
     },
@@ -8545,7 +8594,7 @@ function attributeValidateSpan(context, ...opts) {
 
 function attributeValidateSrc(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "src") {
         if (
           !["script", "input", "frame", "iframe", "img"].includes(
@@ -8564,11 +8613,7 @@ function attributeValidateSrc(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-src",
-              })
-            );
+            context.report({ ...errorObj, ruleId: "attribute-validate-src" });
           });
         }
       }
@@ -8578,7 +8623,7 @@ function attributeValidateSrc(context, ...opts) {
 
 function attributeValidateStandby(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "standby") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -8594,11 +8639,7 @@ function attributeValidateStandby(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-standby",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-standby" });
         });
       }
     },
@@ -8607,7 +8648,7 @@ function attributeValidateStandby(context, ...opts) {
 
 function attributeValidateStart(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "start") {
         if (node.parent.tagName !== "ol") {
           context.report({
@@ -8630,11 +8671,7 @@ function attributeValidateStart(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-start",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-start" });
         });
       }
     },
@@ -8648,7 +8685,7 @@ function validateInlineStyle(str, idxOffset, opts) {
 
 function attributeValidateStyle(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "style") {
         if (
           [
@@ -8675,11 +8712,7 @@ function attributeValidateStyle(context, ...opts) {
           node.attribValueRaw,
           node.attribValueStartsAt);
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-style",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-style" });
         });
       }
     },
@@ -8688,7 +8721,7 @@ function attributeValidateStyle(context, ...opts) {
 
 function attributeValidateSummary(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "summary") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -8704,11 +8737,7 @@ function attributeValidateSummary(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-summary",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-summary" });
         });
       }
     },
@@ -8717,7 +8746,7 @@ function attributeValidateSummary(context, ...opts) {
 
 function attributeValidateTabindex(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "tabindex") {
         if (
           ![
@@ -8751,11 +8780,10 @@ function attributeValidateTabindex(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-tabindex",
-            })
-          );
+          context.report({
+            ...errorObj,
+            ruleId: "attribute-validate-tabindex",
+          });
         });
       }
     },
@@ -8764,7 +8792,7 @@ function attributeValidateTabindex(context, ...opts) {
 
 function attributeValidateTarget(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "target") {
         if (
           !["a", "area", "base", "form", "link"].includes(node.parent.tagName)
@@ -8782,11 +8810,7 @@ function attributeValidateTarget(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-target",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-target" });
         });
       }
     },
@@ -8795,7 +8819,7 @@ function attributeValidateTarget(context, ...opts) {
 
 function attributeValidateText(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "text") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -8819,11 +8843,7 @@ function attributeValidateText(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-text",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-text" });
         });
       }
     },
@@ -8832,7 +8852,7 @@ function attributeValidateText(context, ...opts) {
 
 function attributeValidateTitle(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "title") {
         if (
           [
@@ -8859,11 +8879,7 @@ function attributeValidateTitle(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-title",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-title" });
         });
       }
     },
@@ -8872,7 +8888,7 @@ function attributeValidateTitle(context, ...opts) {
 
 function attributeValidateType(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "type") {
         if (
           ![
@@ -8896,164 +8912,157 @@ function attributeValidateType(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
-        } else {
-          if (
-            ["a", "link", "object", "param", "script", "style"].includes(
-              node.parent.tagName
-            )
-          ) {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: [
-                  "application/javascript",
-                  "application/json",
-                  "application/x-www-form-urlencoded",
-                  "application/xml",
-                  "application/zip",
-                  "application/pdf",
-                  "application/sql",
-                  "application/graphql",
-                  "application/ld+json",
-                  "application/msword",
-                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                  "application/vnd.ms-excel",
-                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                  "application/vnd.ms-powerpoint",
-                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                  "application/vnd.oasis.opendocument.text",
-                  "application/zstd",
-                  "audio/mpeg",
-                  "audio/ogg",
-                  "multipart/form-data",
-                  "text/css",
-                  "text/html",
-                  "text/xml",
-                  "text/csv",
-                  "text/plain",
-                  "image/png",
-                  "image/jpeg",
-                  "image/gif",
-                  "application/vnd.api+json",
-                ],
-                permittedValues: Object.keys(db),
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+        }
+        else if (
+          ["a", "link", "object", "param", "script", "style"].includes(
+            node.parent.tagName
+          )
+        ) {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: [
+                "application/javascript",
+                "application/json",
+                "application/x-www-form-urlencoded",
+                "application/xml",
+                "application/zip",
+                "application/pdf",
+                "application/sql",
+                "application/graphql",
+                "application/ld+json",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.oasis.opendocument.text",
+                "application/zstd",
+                "audio/mpeg",
+                "audio/ogg",
+                "multipart/form-data",
+                "text/css",
+                "text/html",
+                "text/xml",
+                "text/csv",
+                "text/plain",
+                "image/png",
+                "image/jpeg",
+                "image/gif",
+                "application/vnd.api+json",
+              ],
+              permittedValues: Object.keys(db),
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          } else if (node.parent.tagName === "input") {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: [
-                  "text",
-                  "password",
-                  "checkbox",
-                  "radio",
-                  "submit",
-                  "reset",
-                  "file",
-                  "hidden",
-                  "image",
-                  "button",
-                ],
-                permittedValues: null,
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "input") {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: [
+                "text",
+                "password",
+                "checkbox",
+                "radio",
+                "submit",
+                "reset",
+                "file",
+                "hidden",
+                "image",
+                "button",
+              ],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          } else if (node.parent.tagName === "li") {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: [
-                  "disc",
-                  "square",
-                  "circle",
-                  "1",
-                  "a",
-                  "A",
-                  "i",
-                  "I",
-                ],
-                permittedValues: null,
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "li") {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: [
+                "disc",
+                "square",
+                "circle",
+                "1",
+                "a",
+                "A",
+                "i",
+                "I",
+              ],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          } else if (node.parent.tagName === "ol") {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: ["1", "a", "A", "i", "I"],
-                permittedValues: null,
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "ol") {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: ["1", "a", "A", "i", "I"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          } else if (node.parent.tagName === "ul") {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: ["disc", "square", "circle"],
-                permittedValues: null,
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "ul") {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: ["disc", "square", "circle"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          } else if (node.parent.tagName === "button") {
-            validateString(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                quickPermittedValues: ["button", "submit", "reset"],
-                permittedValues: null,
-                canBeCommaSeparated: false,
-                noSpaceAfterComma: false,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-type",
-                })
-              );
+          });
+        } else if (node.parent.tagName === "button") {
+          validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              quickPermittedValues: ["button", "submit", "reset"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+            }
+          ).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-type",
             });
-          }
+          });
         }
       }
     },
@@ -9062,7 +9071,7 @@ function attributeValidateType(context, ...opts) {
 
 function attributeValidateUsemap(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "usemap") {
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -9077,11 +9086,10 @@ function attributeValidateUsemap(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false,
           }).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-usemap",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-usemap",
+            });
           });
         }
       }
@@ -9091,7 +9099,7 @@ function attributeValidateUsemap(context, ...opts) {
 
 function attributeValidateValign(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "valign") {
         if (
           ![
@@ -9121,11 +9129,10 @@ function attributeValidateValign(context, ...opts) {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valign",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-valign",
+            });
           });
         }
       }
@@ -9135,7 +9142,7 @@ function attributeValidateValign(context, ...opts) {
 
 function attributeValidateValue(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "value") {
         if (
           !["input", "option", "param", "button", "li"].includes(
@@ -9149,38 +9156,31 @@ function attributeValidateValue(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
+        }
+        else if (node.parent.tagName === "li") {
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: false,
+            customPxMessage: `Sequence number should not be in pixels.`,
+          }).forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-value",
+            });
+          });
         } else {
-          if (node.parent.tagName === "li") {
-            validateDigitAndUnit(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                type: "integer",
-                theOnlyGoodUnits: [],
-                customGenericValueError: "Should be integer, no units.",
-                zeroOK: false,
-                customPxMessage: `Sequence number should not be in pixels.`,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value",
-                })
-              );
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-value",
             });
-          } else {
-            const { errorArr } = checkForWhitespace(
-              node.attribValueRaw,
-              node.attribValueStartsAt
-            );
-            errorArr.forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-value",
-                })
-              );
-            });
-          }
+          });
         }
       }
     },
@@ -9189,7 +9189,7 @@ function attributeValidateValue(context, ...opts) {
 
 function attributeValidateValuetype(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "valuetype") {
         if (node.parent.tagName !== "param") {
           context.report({
@@ -9208,11 +9208,10 @@ function attributeValidateValuetype(context, ...opts) {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            context.report(
-              Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-valuetype",
-              })
-            );
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-valuetype",
+            });
           });
         }
       }
@@ -9222,7 +9221,7 @@ function attributeValidateValuetype(context, ...opts) {
 
 function attributeValidateVersion(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "version") {
         if (node.parent.tagName !== "html") {
           context.report({
@@ -9238,11 +9237,7 @@ function attributeValidateVersion(context, ...opts) {
           node.attribValueStartsAt
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-version",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-version" });
         });
       }
     },
@@ -9251,7 +9246,7 @@ function attributeValidateVersion(context, ...opts) {
 
 function attributeValidateVlink(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "vlink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -9275,11 +9270,7 @@ function attributeValidateVlink(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vlink",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
         });
       }
     },
@@ -9288,7 +9279,7 @@ function attributeValidateVlink(context, ...opts) {
 
 function attributeValidateVspace(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "vspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -9308,11 +9299,7 @@ function attributeValidateVspace(context, ...opts) {
           }
         );
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-vspace",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "attribute-validate-vspace" });
         });
       }
     },
@@ -9321,7 +9308,7 @@ function attributeValidateVspace(context, ...opts) {
 
 function attributeValidateWidth(context, ...opts) {
   return {
-    attribute: function (node) {
+    attribute(node) {
       if (node.attribName === "width") {
         if (
           ![
@@ -9345,54 +9332,28 @@ function attributeValidateWidth(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
+        } else if (node.parent.tagName === "pre") {
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            theOnlyGoodUnits: [],
+            noUnitsIsFine: true,
+          }).forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-width" });
+          });
+        } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            badUnits: ["px"],
+            theOnlyGoodUnits: ["*", "%"],
+            noUnitsIsFine: true,
+          }).forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-width" });
+          });
         } else {
-          if (node.parent.tagName === "pre") {
-            validateDigitAndUnit(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                theOnlyGoodUnits: [],
-                noUnitsIsFine: true,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width",
-                })
-              );
-            });
-          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-            validateDigitAndUnit(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                badUnits: ["px"],
-                theOnlyGoodUnits: ["*", "%"],
-                noUnitsIsFine: true,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width",
-                })
-              );
-            });
-          } else {
-            validateDigitAndUnit(
-              node.attribValueRaw,
-              node.attribValueStartsAt,
-              {
-                badUnits: ["px"],
-                noUnitsIsFine: true,
-              }
-            ).forEach((errorObj) => {
-              context.report(
-                Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width",
-                })
-              );
-            });
-          }
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            badUnits: ["px"],
+            noUnitsIsFine: true,
+          }).forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-width" });
+          });
         }
       }
     },
@@ -9401,7 +9362,7 @@ function attributeValidateWidth(context, ...opts) {
 
 function htmlEntitiesNotEmailFriendly(context) {
   return {
-    entity: function ({ idxFrom, idxTo }) {
+    entity({ idxFrom, idxTo }) {
       if (
         Object.keys(notEmailFriendly).includes(
           context.str.slice(idxFrom + 1, idxTo - 1)
@@ -9410,8 +9371,8 @@ function htmlEntitiesNotEmailFriendly(context) {
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
-          idxFrom: idxFrom,
-          idxTo: idxTo,
+          idxFrom,
+          idxTo,
           fix: {
             ranges: [
               [
@@ -9481,7 +9442,7 @@ function processStr(str, offset, context, mode) {
 }
 function characterEncode(context, ...opts) {
   return {
-    text: function (token) {
+    text(token) {
       let mode = "named";
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
@@ -9500,7 +9461,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
     "171": "leftDoubleAngleQuotMark",
   };
   return {
-    text: function (node) {
+    text(node) {
       const defaults = {
         questionMark: {
           whitespaceLeft: "never",
@@ -9523,14 +9484,14 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           whitespaceRight: "always",
         },
       };
-      let opts = Object.assign({}, defaults);
+      let opts = { ...defaults };
       if (
         Array.isArray(originalOpts) &&
         originalOpts.length &&
         typeof originalOpts[0] === "object" &&
         originalOpts[0] !== null
       ) {
-        opts = Object.assign({}, defaults, originalOpts[0]);
+        opts = { ...defaults, ...originalOpts[0] };
       }
       for (let i = node.start; i < node.end; i++) {
         const charCode = context.str[i].charCodeAt(0);
@@ -9611,17 +9572,13 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
 
 function mediaMalformed(context, ...opts) {
   return {
-    at: function (node) {
+    at(node) {
       if (node.identifier === "media") {
         const errors = isMediaD(node.query, {
           offset: node.queryStartsAt,
         });
         errors.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "media-malformed",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "media-malformed" });
         });
       }
     },
@@ -9683,16 +9640,15 @@ function validateCommentClosing(token) {
 
 function commentClosingMalformed(context, ...opts) {
   return {
-    comment: function (node) {
+    comment(node) {
       if (node.closing) {
         const errorArr = validateCommentClosing(node) || [];
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              keepSeparateWhenFixing: true,
-              ruleId: "comment-closing-malformed",
-            })
-          );
+          context.report({
+            ...errorObj,
+            keepSeparateWhenFixing: true,
+            ruleId: "comment-closing-malformed",
+          });
         });
       }
     },
@@ -9757,7 +9713,7 @@ function validateCommentOpening(token) {
           })
         ) {
           wrongBracketType = true;
-          finalIdxTo++;
+          finalIdxTo += 1;
         }
         errorArr.push({
           idxFrom: token.start,
@@ -9779,7 +9735,7 @@ function validateCommentOpening(token) {
         "})".includes(token.value[idxFrom - 1]) &&
         wrongBracketType
       ) {
-        finalIdxFrom--;
+        finalIdxFrom -= 1;
       }
       errorArr.push({
         idxFrom: token.start,
@@ -9797,7 +9753,7 @@ function validateCommentOpening(token) {
       if (token.value[i].trim().length && !">]".includes(token.value[i])) {
         let rangeStart = i + 1;
         if ("})".includes(token.value[i]) && wrongBracketType) {
-          rangeStart--;
+          rangeStart -= 1;
         }
         if (token.value.slice(i + 1) !== "]>") {
           errorArr.push({
@@ -9823,15 +9779,14 @@ function commentOpeningMalformed(context, ...opts) {
         node.value,
         "<!--",
         (errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              message: "Malformed opening comment tag.",
-              ruleId: "comment-opening-malformed",
-              fix: {
-                ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]],
-              },
-            })
-          );
+          context.report({
+            ...errorObj,
+            message: "Malformed opening comment tag.",
+            ruleId: "comment-opening-malformed",
+            fix: {
+              ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]],
+            },
+          });
         },
         {
           stringOffset: node.start,
@@ -9842,11 +9797,7 @@ function commentOpeningMalformed(context, ...opts) {
       if (!node.closing) {
         const errorArr = validateCommentOpening(node) || [];
         errorArr.forEach((errorObj) => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "comment-opening-malformed",
-            })
-          );
+          context.report({ ...errorObj, ruleId: "comment-opening-malformed" });
         });
       }
     },
@@ -9855,7 +9806,7 @@ function commentOpeningMalformed(context, ...opts) {
 
 function commentMismatchingPair(context, ...opts) {
   return {
-    ast: function (node) {
+    ast(node) {
       traverse(
         node,
         (key, val, innerObj) => {
@@ -9906,7 +9857,7 @@ function commentMismatchingPair(context, ...opts) {
 
 function commentConditionalNested(context) {
   return {
-    ast: function (node) {
+    ast(node) {
       const pathsWithOpeningComments = [];
       traverse(
         node,
@@ -11152,6 +11103,7 @@ function normaliseRequestedRules(opts) {
           temp = ruleName;
           return true;
         }
+        return false;
       })
     ) {
       allBadCharacterRules.forEach((ruleName) => {
@@ -11164,6 +11116,7 @@ function normaliseRequestedRules(opts) {
           temp = ruleName;
           return true;
         }
+        return false;
       })
     ) {
       allTagRules.forEach((ruleName) => {
@@ -11176,6 +11129,7 @@ function normaliseRequestedRules(opts) {
           temp = ruleName;
           return true;
         }
+        return false;
       })
     ) {
       allAttribRules.forEach((ruleName) => {
@@ -11219,377 +11173,6 @@ function normaliseRequestedRules(opts) {
   return res;
 }
 
-var domain;
-function EventHandlers() {}
-EventHandlers.prototype = Object.create(null);
-function EventEmitter() {
-  EventEmitter.init.call(this);
-}
-EventEmitter.EventEmitter = EventEmitter;
-EventEmitter.usingDomains = false;
-EventEmitter.prototype.domain = undefined;
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-EventEmitter.defaultMaxListeners = 10;
-EventEmitter.init = function() {
-  this.domain = null;
-  if (EventEmitter.usingDomains) {
-    if (domain.active ) ;
-  }
-  if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
-    this._events = new EventHandlers();
-    this._eventsCount = 0;
-  }
-  this._maxListeners = this._maxListeners || undefined;
-};
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-  if (typeof n !== 'number' || n < 0 || isNaN(n))
-    throw new TypeError('"n" argument must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-function $getMaxListeners(that) {
-  if (that._maxListeners === undefined)
-    return EventEmitter.defaultMaxListeners;
-  return that._maxListeners;
-}
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-  return $getMaxListeners(this);
-};
-function emitNone(handler, isFn, self) {
-  if (isFn)
-    handler.call(self);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self);
-  }
-}
-function emitOne(handler, isFn, self, arg1) {
-  if (isFn)
-    handler.call(self, arg1);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1);
-  }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-  if (isFn)
-    handler.call(self, arg1, arg2);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1, arg2);
-  }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-  if (isFn)
-    handler.call(self, arg1, arg2, arg3);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1, arg2, arg3);
-  }
-}
-function emitMany(handler, isFn, self, args) {
-  if (isFn)
-    handler.apply(self, args);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].apply(self, args);
-  }
-}
-EventEmitter.prototype.emit = function emit(type) {
-  var er, handler, len, args, i, events, domain;
-  var doError = (type === 'error');
-  events = this._events;
-  if (events)
-    doError = (doError && events.error == null);
-  else if (!doError)
-    return false;
-  domain = this.domain;
-  if (doError) {
-    er = arguments[1];
-    if (domain) {
-      if (!er)
-        er = new Error('Uncaught, unspecified "error" event');
-      er.domainEmitter = this;
-      er.domain = domain;
-      er.domainThrown = false;
-      domain.emit('error', er);
-    } else if (er instanceof Error) {
-      throw er;
-    } else {
-      var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-      err.context = er;
-      throw err;
-    }
-    return false;
-  }
-  handler = events[type];
-  if (!handler)
-    return false;
-  var isFn = typeof handler === 'function';
-  len = arguments.length;
-  switch (len) {
-    case 1:
-      emitNone(handler, isFn, this);
-      break;
-    case 2:
-      emitOne(handler, isFn, this, arguments[1]);
-      break;
-    case 3:
-      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-      break;
-    case 4:
-      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-      break;
-    default:
-      args = new Array(len - 1);
-      for (i = 1; i < len; i++)
-        args[i - 1] = arguments[i];
-      emitMany(handler, isFn, this, args);
-  }
-  return true;
-};
-function _addListener(target, type, listener, prepend) {
-  var m;
-  var events;
-  var existing;
-  if (typeof listener !== 'function')
-    throw new TypeError('"listener" argument must be a function');
-  events = target._events;
-  if (!events) {
-    events = target._events = new EventHandlers();
-    target._eventsCount = 0;
-  } else {
-    if (events.newListener) {
-      target.emit('newListener', type,
-                  listener.listener ? listener.listener : listener);
-      events = target._events;
-    }
-    existing = events[type];
-  }
-  if (!existing) {
-    existing = events[type] = listener;
-    ++target._eventsCount;
-  } else {
-    if (typeof existing === 'function') {
-      existing = events[type] = prepend ? [listener, existing] :
-                                          [existing, listener];
-    } else {
-      if (prepend) {
-        existing.unshift(listener);
-      } else {
-        existing.push(listener);
-      }
-    }
-    if (!existing.warned) {
-      m = $getMaxListeners(target);
-      if (m && m > 0 && existing.length > m) {
-        existing.warned = true;
-        var w = new Error('Possible EventEmitter memory leak detected. ' +
-                            existing.length + ' ' + type + ' listeners added. ' +
-                            'Use emitter.setMaxListeners() to increase limit');
-        w.name = 'MaxListenersExceededWarning';
-        w.emitter = target;
-        w.type = type;
-        w.count = existing.length;
-        emitWarning(w);
-      }
-    }
-  }
-  return target;
-}
-function emitWarning(e) {
-  typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-}
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-  return _addListener(this, type, listener, false);
-};
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-EventEmitter.prototype.prependListener =
-    function prependListener(type, listener) {
-      return _addListener(this, type, listener, true);
-    };
-function _onceWrap(target, type, listener) {
-  var fired = false;
-  function g() {
-    target.removeListener(type, g);
-    if (!fired) {
-      fired = true;
-      listener.apply(target, arguments);
-    }
-  }
-  g.listener = listener;
-  return g;
-}
-EventEmitter.prototype.once = function once(type, listener) {
-  if (typeof listener !== 'function')
-    throw new TypeError('"listener" argument must be a function');
-  this.on(type, _onceWrap(this, type, listener));
-  return this;
-};
-EventEmitter.prototype.prependOnceListener =
-    function prependOnceListener(type, listener) {
-      if (typeof listener !== 'function')
-        throw new TypeError('"listener" argument must be a function');
-      this.prependListener(type, _onceWrap(this, type, listener));
-      return this;
-    };
-EventEmitter.prototype.removeListener =
-    function removeListener(type, listener) {
-      var list, events, position, i, originalListener;
-      if (typeof listener !== 'function')
-        throw new TypeError('"listener" argument must be a function');
-      events = this._events;
-      if (!events)
-        return this;
-      list = events[type];
-      if (!list)
-        return this;
-      if (list === listener || (list.listener && list.listener === listener)) {
-        if (--this._eventsCount === 0)
-          this._events = new EventHandlers();
-        else {
-          delete events[type];
-          if (events.removeListener)
-            this.emit('removeListener', type, list.listener || listener);
-        }
-      } else if (typeof list !== 'function') {
-        position = -1;
-        for (i = list.length; i-- > 0;) {
-          if (list[i] === listener ||
-              (list[i].listener && list[i].listener === listener)) {
-            originalListener = list[i].listener;
-            position = i;
-            break;
-          }
-        }
-        if (position < 0)
-          return this;
-        if (list.length === 1) {
-          list[0] = undefined;
-          if (--this._eventsCount === 0) {
-            this._events = new EventHandlers();
-            return this;
-          } else {
-            delete events[type];
-          }
-        } else {
-          spliceOne(list, position);
-        }
-        if (events.removeListener)
-          this.emit('removeListener', type, originalListener || listener);
-      }
-      return this;
-    };
-EventEmitter.prototype.removeAllListeners =
-    function removeAllListeners(type) {
-      var listeners, events;
-      events = this._events;
-      if (!events)
-        return this;
-      if (!events.removeListener) {
-        if (arguments.length === 0) {
-          this._events = new EventHandlers();
-          this._eventsCount = 0;
-        } else if (events[type]) {
-          if (--this._eventsCount === 0)
-            this._events = new EventHandlers();
-          else
-            delete events[type];
-        }
-        return this;
-      }
-      if (arguments.length === 0) {
-        var keys = Object.keys(events);
-        for (var i = 0, key; i < keys.length; ++i) {
-          key = keys[i];
-          if (key === 'removeListener') continue;
-          this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-        return this;
-      }
-      listeners = events[type];
-      if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-      } else if (listeners) {
-        do {
-          this.removeListener(type, listeners[listeners.length - 1]);
-        } while (listeners[0]);
-      }
-      return this;
-    };
-EventEmitter.prototype.listeners = function listeners(type) {
-  var evlistener;
-  var ret;
-  var events = this._events;
-  if (!events)
-    ret = [];
-  else {
-    evlistener = events[type];
-    if (!evlistener)
-      ret = [];
-    else if (typeof evlistener === 'function')
-      ret = [evlistener.listener || evlistener];
-    else
-      ret = unwrapListeners(evlistener);
-  }
-  return ret;
-};
-EventEmitter.listenerCount = function(emitter, type) {
-  if (typeof emitter.listenerCount === 'function') {
-    return emitter.listenerCount(type);
-  } else {
-    return listenerCount.call(emitter, type);
-  }
-};
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-  var events = this._events;
-  if (events) {
-    var evlistener = events[type];
-    if (typeof evlistener === 'function') {
-      return 1;
-    } else if (evlistener) {
-      return evlistener.length;
-    }
-  }
-  return 0;
-}
-EventEmitter.prototype.eventNames = function eventNames() {
-  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-};
-function spliceOne(list, index) {
-  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1)
-    list[i] = list[k];
-  list.pop();
-}
-function arrayClone(arr, i) {
-  var copy = new Array(i);
-  while (i--)
-    copy[i] = arr[i];
-  return copy;
-}
-function unwrapListeners(arr) {
-  var ret = new Array(arr.length);
-  for (var i = 0; i < ret.length; ++i) {
-    ret[i] = arr[i].listener || arr[i];
-  }
-  return ret;
-}
-
 EventEmitter.defaultMaxListeners = 0;
 class Linter extends EventEmitter {
   verify(str, config) {
@@ -11627,9 +11210,11 @@ class Linter extends EventEmitter {
       .filter((ruleName) => {
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
-        } else if (Array.isArray(processedRulesConfig[ruleName])) {
+        }
+        if (Array.isArray(processedRulesConfig[ruleName])) {
           return processedRulesConfig[ruleName][0] > 0;
         }
+        return false;
       })
       .forEach((rule) => {
         let rulesFunction;
@@ -11670,16 +11255,12 @@ class Linter extends EventEmitter {
               ) {
                 message = astErrMessages[obj.ruleId];
               }
-              this.report(
-                Object.assign(
-                  {
-                    message,
-                    severity: currentRulesSeverity,
-                    fix: null,
-                  },
-                  obj
-                )
-              );
+              this.report({
+                message,
+                severity: currentRulesSeverity,
+                fix: null,
+                ...obj,
+              });
             }
           },
         }),
@@ -11693,12 +11274,10 @@ class Linter extends EventEmitter {
               current.attribs.length
             ) {
               current.attribs.forEach((attribObj) => {
-                this.emit(
-                  "attribute",
-                  Object.assign({}, attribObj, {
-                    parent: Object.assign({}, current),
-                  })
-                );
+                this.emit("attribute", {
+                  ...attribObj,
+                  parent: { ...current },
+                });
               });
             }
           }
@@ -11739,6 +11318,7 @@ class Linter extends EventEmitter {
                 matchedRulesName = rulesName;
                 return true;
               }
+              return false;
             })
           ) {
             if (
@@ -11807,7 +11387,7 @@ class Linter extends EventEmitter {
   }
   report(obj) {
     const { line, col } = lineColumn(this.str, obj.idxFrom);
-    let severity = obj.severity;
+    let { severity } = obj;
     if (
       !Number.isInteger(obj.severity) &&
       typeof this.processedRulesConfig[obj.ruleId] === "number"
@@ -11819,14 +11399,15 @@ class Linter extends EventEmitter {
     ) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
-    this.messages.push(
-      Object.assign(
-        { fix: null, keepSeparateWhenFixing: false },
-        { line, column: col, severity },
-        obj,
-        this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}
-      )
-    );
+    this.messages.push({
+      fix: null,
+      keepSeparateWhenFixing: false,
+      line,
+      column: col,
+      severity,
+      ...obj,
+      ...(this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}),
+    });
     if (
       obj.keepSeparateWhenFixing &&
       !this.hasBeenCalledWithKeepSeparateWhenFixing &&
@@ -11837,6 +11418,6 @@ class Linter extends EventEmitter {
   }
 }
 
-var version = "2.17.3";
+var version = "2.17.4";
 
 export { Linter, version };

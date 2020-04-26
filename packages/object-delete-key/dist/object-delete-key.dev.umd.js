@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 1.9.22
+ * Version: 1.9.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key
@@ -983,7 +983,7 @@
   /**
    * util-array-object-or-both
    * Validate and normalise user choice: array, object or both?
-   * Version: 2.7.57
+   * Version: 2.7.58
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
@@ -3524,7 +3524,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.8
+   * Version: 1.12.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -4752,7 +4752,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.29
+   * Version: 3.11.30
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -5166,7 +5166,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.59
+   * Version: 5.7.60
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
@@ -5383,7 +5383,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-contains-only-empty-space
    * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.4
+   * Version: 1.9.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
@@ -5415,7 +5415,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.4
+   * Version: 1.13.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
@@ -5634,7 +5634,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-monkey
    * Traverse and edit AST's (like parsed HTML or anything nested)
-   * Version: 7.11.6
+   * Version: 7.11.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
@@ -5891,7 +5891,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-is-empty
    * Find out, is nested array/object/string/AST tree is empty
-   * Version: 1.10.2
+   * Version: 1.10.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty

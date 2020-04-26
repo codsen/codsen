@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6](https://gitlab.com/codsen/codsen/compare/string-process-comma-separated@1.2.5...string-process-comma-separated@1.2.6) (2020-04-26)
+
+
+### Bug Fixes
+
+* harden the eslint rules set, make all tests pass again and rebase a little ([8c2c0a8](https://gitlab.com/codsen/codsen/commit/8c2c0a8d1b0a0c195c853460ac4de117cee15033))
+
+
+
+
+
 ## 1.2.0 (2020-01-01)
 
 ### Bug Fixes

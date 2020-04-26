@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "2.5.14",
+  "version": "2.6.0",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -127,9 +127,9 @@
     "timeout": 0
   },
   "dependencies": {
-    "all-named-html-entities": "^1.2.18",
+    "all-named-html-entities": "^1.2.19",
     "lodash.clonedeep": "^4.5.0",
-    "string-left-right": "^2.3.20"
+    "string-left-right": "^2.3.21"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -138,7 +138,7 @@
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.7",
+    "lect": "^0.12.8",
     "rollup": "^2.7.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",

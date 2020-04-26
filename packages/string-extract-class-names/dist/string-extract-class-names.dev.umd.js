@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extract class (or id) name from a string
- * Version: 5.9.21
+ * Version: 5.9.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
@@ -1902,7 +1902,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.20
+   * Version: 2.3.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right

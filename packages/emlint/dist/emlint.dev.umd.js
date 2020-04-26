@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.3
+ * Version: 2.17.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -49,6 +49,55 @@
     if (protoProps) _defineProperties(Constructor.prototype, protoProps);
     if (staticProps) _defineProperties(Constructor, staticProps);
     return Constructor;
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
   }
 
   function _inherits(subClass, superClass) {
@@ -199,207 +248,6 @@
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
-
-  function _createForOfIteratorHelper(o) {
-    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
-        var i = 0;
-
-        var F = function () {};
-
-        return {
-          s: F,
-          n: function () {
-            if (i >= o.length) return {
-              done: true
-            };
-            return {
-              done: false,
-              value: o[i++]
-            };
-          },
-          e: function (e) {
-            throw e;
-          },
-          f: F
-        };
-      }
-
-      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-
-    var it,
-        normalCompletion = true,
-        didErr = false,
-        err;
-    return {
-      s: function () {
-        it = o[Symbol.iterator]();
-      },
-      n: function () {
-        var step = it.next();
-        normalCompletion = step.done;
-        return step;
-      },
-      e: function (e) {
-        didErr = true;
-        err = e;
-      },
-      f: function () {
-        try {
-          if (!normalCompletion && it.return != null) it.return();
-        } finally {
-          if (didErr) throw err;
-        }
-      }
-    };
-  }
-
-  /**
-   * lodash (Custom Build) <https://lodash.com/>
-   * Build: `lodash modularize exports="npm" -o ./`
-   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-   * Released under MIT license <https://lodash.com/license>
-   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-   */
-
-  /** `Object#toString` result references. */
-  var objectTag = '[object Object]';
-  /**
-   * Checks if `value` is a host object in IE < 9.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-   */
-
-  function isHostObject(value) {
-    // Many host objects are `Object` objects that can coerce to strings
-    // despite having improperly defined `toString` methods.
-    var result = false;
-
-    if (value != null && typeof value.toString != 'function') {
-      try {
-        result = !!(value + '');
-      } catch (e) {}
-    }
-
-    return result;
-  }
-  /**
-   * Creates a unary function that invokes `func` with its argument transformed.
-   *
-   * @private
-   * @param {Function} func The function to wrap.
-   * @param {Function} transform The argument transform.
-   * @returns {Function} Returns the new function.
-   */
-
-
-  function overArg(func, transform) {
-    return function (arg) {
-      return func(transform(arg));
-    };
-  }
-  /** Used for built-in method references. */
-
-
-  var funcProto = Function.prototype,
-      objectProto = Object.prototype;
-  /** Used to resolve the decompiled source of functions. */
-
-  var funcToString = funcProto.toString;
-  /** Used to check objects for own properties. */
-
-  var hasOwnProperty = objectProto.hasOwnProperty;
-  /** Used to infer the `Object` constructor. */
-
-  var objectCtorString = funcToString.call(Object);
-  /**
-   * Used to resolve the
-   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-   * of values.
-   */
-
-  var objectToString = objectProto.toString;
-  /** Built-in value references. */
-
-  var getPrototype = overArg(Object.getPrototypeOf, Object);
-  /**
-   * Checks if `value` is object-like. A value is object-like if it's not `null`
-   * and has a `typeof` result of "object".
-   *
-   * @static
-   * @memberOf _
-   * @since 4.0.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-   * @example
-   *
-   * _.isObjectLike({});
-   * // => true
-   *
-   * _.isObjectLike([1, 2, 3]);
-   * // => true
-   *
-   * _.isObjectLike(_.noop);
-   * // => false
-   *
-   * _.isObjectLike(null);
-   * // => false
-   */
-
-  function isObjectLike(value) {
-    return !!value && typeof value == 'object';
-  }
-  /**
-   * Checks if `value` is a plain object, that is, an object created by the
-   * `Object` constructor or one with a `[[Prototype]]` of `null`.
-   *
-   * @static
-   * @memberOf _
-   * @since 0.8.0
-   * @category Lang
-   * @param {*} value The value to check.
-   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-   * @example
-   *
-   * function Foo() {
-   *   this.a = 1;
-   * }
-   *
-   * _.isPlainObject(new Foo);
-   * // => false
-   *
-   * _.isPlainObject([1, 2, 3]);
-   * // => false
-   *
-   * _.isPlainObject({ 'x': 0, 'y': 0 });
-   * // => true
-   *
-   * _.isPlainObject(Object.create(null));
-   * // => true
-   */
-
-
-  function isPlainObject(value) {
-    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
-      return false;
-    }
-
-    var proto = getPrototype(value);
-
-    if (proto === null) {
-      return true;
-    }
-
-    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-  }
-
-  var lodash_isplainobject = isPlainObject;
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2259,7 +2107,7 @@
   /**
    * all-named-html-entities
    * List of all named HTML entities
-   * Version: 1.2.18
+   * Version: 1.2.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -10011,9 +9859,155 @@
   const maxLength = 31;
 
   /**
+   * lodash (Custom Build) <https://lodash.com/>
+   * Build: `lodash modularize exports="npm" -o ./`
+   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   */
+
+  /** `Object#toString` result references. */
+  var objectTag = '[object Object]';
+  /**
+   * Checks if `value` is a host object in IE < 9.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+   */
+
+  function isHostObject(value) {
+    // Many host objects are `Object` objects that can coerce to strings
+    // despite having improperly defined `toString` methods.
+    var result = false;
+
+    if (value != null && typeof value.toString != 'function') {
+      try {
+        result = !!(value + '');
+      } catch (e) {}
+    }
+
+    return result;
+  }
+  /**
+   * Creates a unary function that invokes `func` with its argument transformed.
+   *
+   * @private
+   * @param {Function} func The function to wrap.
+   * @param {Function} transform The argument transform.
+   * @returns {Function} Returns the new function.
+   */
+
+
+  function overArg(func, transform) {
+    return function (arg) {
+      return func(transform(arg));
+    };
+  }
+  /** Used for built-in method references. */
+
+
+  var funcProto = Function.prototype,
+      objectProto = Object.prototype;
+  /** Used to resolve the decompiled source of functions. */
+
+  var funcToString = funcProto.toString;
+  /** Used to check objects for own properties. */
+
+  var hasOwnProperty = objectProto.hasOwnProperty;
+  /** Used to infer the `Object` constructor. */
+
+  var objectCtorString = funcToString.call(Object);
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString = objectProto.toString;
+  /** Built-in value references. */
+
+  var getPrototype = overArg(Object.getPrototypeOf, Object);
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+  function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+  }
+  /**
+   * Checks if `value` is a plain object, that is, an object created by the
+   * `Object` constructor or one with a `[[Prototype]]` of `null`.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.8.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+   * @example
+   *
+   * function Foo() {
+   *   this.a = 1;
+   * }
+   *
+   * _.isPlainObject(new Foo);
+   * // => false
+   *
+   * _.isPlainObject([1, 2, 3]);
+   * // => false
+   *
+   * _.isPlainObject({ 'x': 0, 'y': 0 });
+   * // => true
+   *
+   * _.isPlainObject(Object.create(null));
+   * // => true
+   */
+
+
+  function isPlainObject(value) {
+    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+      return false;
+    }
+
+    var proto = getPrototype(value);
+
+    if (proto === null) {
+      return true;
+    }
+
+    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  }
+
+  var lodash_isplainobject = isPlainObject;
+
+  /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.20
+   * Version: 2.3.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -10060,9 +10054,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -10090,9 +10088,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -10135,7 +10137,7 @@
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
-        i++;
+        i += 1;
         continue;
       }
 
@@ -10152,7 +10154,7 @@
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
         } else {
-          i++;
+          i += 1;
         }
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
@@ -10177,10 +10179,10 @@
           leftmostChar = whattsOnTheSide;
         }
       } else if (optional) {
-        i++;
+        i += 1;
         continue;
       } else if (satiated) {
-        i++;
+        i += 1;
         satiated = undefined;
         continue;
       } else {
@@ -10210,7 +10212,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -10229,7 +10233,9 @@
     let opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = Object.assign({}, defaults, args.shift());
+      opts = { ...defaults,
+        ...args.shift()
+      };
     } else {
       opts = defaults;
     }
@@ -10262,7 +10268,7 @@
     } while (lastRes);
 
     if (lastIdx != null && direction === "right") {
-      lastIdx++;
+      lastIdx += 1;
     }
 
     if (lastIdx === null) {
@@ -10279,7 +10285,9 @@
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
           return lastIdx;
-        } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        }
+
+        if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
           for (let y = lastIdx, len = str.length; y < len; y++) {
             if (`\n\r`.includes(str[y])) {
               return y;
@@ -10304,7 +10312,7 @@
         return str.length;
       }
 
-      return whatsOnTheRight ? whatsOnTheRight : str.length;
+      return whatsOnTheRight || str.length;
     }
 
     if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
@@ -10316,7 +10324,9 @@
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
         return lastIdx;
-      } else if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      }
+
+      if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
         for (let y = lastIdx; y--;) {
           if (`\n\r`.includes(str[y]) || str[y].trim()) {
             return y + 1 + (str[y].trim() ? 1 : 0);
@@ -10325,9 +10335,13 @@
       }
 
       return 0;
-    } else if (opts.mode === 1) {
+    }
+
+    if (opts.mode === 1) {
       return lastIdx;
-    } else if (opts.mode === 2) {
+    }
+
+    if (opts.mode === 2) {
       const remainderString = str.slice(0, lastIdx);
 
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
@@ -10354,7 +10368,9 @@
     };
 
     if (lodash_isplainobject(args[0])) {
-      const opts = Object.assign({}, defaults, lodash_clonedeep(args[0]));
+      const opts = { ...defaults,
+        ...lodash_clonedeep(args[0])
+      };
 
       if (!opts.mode) {
         opts.mode = 0;
@@ -10365,7 +10381,9 @@
       }
 
       return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
-    } else if (!isStr(args[0])) {
+    }
+
+    if (!isStr(args[0])) {
       return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
     }
 
@@ -10375,94 +10393,97 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 2.5.14
+   * Version: 2.6.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
    */
-  const isArr = Array.isArray;
+
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function onlyContainsNbsp(str, from, to) {
+    for (let i = from; i < to; i++) {
+      if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function isLatinLetterOrNumberOrHash(char) {
+    return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+  }
+
+  function isNumber(something) {
+    return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+  }
+
+  function isNotaLetter(str2) {
+    return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
+  }
+
+  function isStr$1(something) {
+    return typeof something === "string";
+  }
+
+  function isLatinLetter(something) {
+    return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
+  }
+
+  function resemblesNumericEntity(str2, from, to) {
+    let lettersCount = 0;
+    let numbersCount = 0;
+    let othersCount = 0;
+    let hashesCount = 0;
+    let whitespaceCount = 0;
+    let numbersValue = "";
+    let charTrimmed = "";
+
+    for (let i = from; i < to; i++) {
+      if (str2[i].trim().length) {
+        charTrimmed += str2[i];
+      } else {
+        whitespaceCount += 1;
+      }
+
+      if (isLatinLetter(str2[i])) {
+        lettersCount += 1;
+      } else if (isNumber(str2[i])) {
+        numbersCount += 1;
+        numbersValue += String(str2[i]);
+      } else if (str2[i] === "#") {
+        hashesCount += 1;
+      } else {
+        othersCount += 1;
+      }
+    }
+
+    let probablyNumeric = false;
+
+    if (!lettersCount && numbersCount > othersCount) {
+      probablyNumeric = "deci";
+    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+      probablyNumeric = "hexi";
+    }
+
+    return {
+      probablyNumeric,
+      lettersCount,
+      numbersCount,
+      numbersValue,
+      hashesCount,
+      othersCount,
+      charTrimmed,
+      whitespaceCount
+    };
+  }
 
   function stringFixBrokenNamedEntities(str, originalOpts) {
-    function resemblesNumericEntity(str, from, to) {
-      let lettersCount = 0;
-      let numbersCount = 0;
-      let othersCount = 0;
-      let hashesCount = 0;
-      let whitespaceCount = 0;
-      let numbersValue = "";
-      let charTrimmed = "";
-
-      for (let i = from; i < to; i++) {
-        if (str[i].trim().length) {
-          charTrimmed += str[i];
-        } else {
-          whitespaceCount++;
-        }
-
-        if (isLatinLetter(str[i])) {
-          lettersCount++;
-        } else if (isNumber(str[i])) {
-          numbersCount++;
-          numbersValue += String(str[i]);
-        } else if (str[i] === "#") {
-          hashesCount++;
-        } else {
-          othersCount++;
-        }
-      }
-
-      let probablyNumeric = false;
-
-      if (!lettersCount && numbersCount > othersCount) {
-        probablyNumeric = "deci";
-      } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
-        probablyNumeric = "hexi";
-      }
-
-      return {
-        probablyNumeric,
-        lettersCount,
-        numbersCount,
-        numbersValue,
-        hashesCount,
-        othersCount,
-        charTrimmed,
-        whitespaceCount
-      };
-    }
-
-    function isNotaLetter(str) {
-      return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
-    }
-
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
-    function isLatinLetter(something) {
-      return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
-    }
-
-    function isLatinLetterOrNumberOrHash(char) {
-      return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
-    }
-
-    function isNumber(something) {
-      return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-    }
-
-    function onlyContainsNbsp(str, from, to) {
-      for (let i = from; i < to; i++) {
-        if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
     function findLongest(temp1) {
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         if (temp1.length === 1) {
           return temp1[0];
         }
@@ -10482,15 +10503,15 @@
     function removeGappedFromMixedCases(temp1) {
       let copy;
 
-      if (isArr(temp1) && temp1.length) {
+      if (Array.isArray(temp1) && temp1.length) {
         copy = Array.from(temp1);
 
         if (copy.length > 1 && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";") && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] !== ";")) {
           copy = copy.filter(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";");
         }
 
-        if (!(copy.every(entObj => !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length) || copy.every(entObj => entObj && entObj.tempRes && entObj.tempRes.gaps && isArr(entObj.tempRes.gaps) && entObj.tempRes.gaps.length))) {
-          return findLongest(copy.filter(entObj => !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length));
+        if (!(copy.every(entObj => !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length) || copy.every(entObj => entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length))) {
+          return findLongest(copy.filter(entObj => !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length));
         }
       }
 
@@ -10508,17 +10529,19 @@
         rangeTo,
         rangeValEncoded,
         rangeValDecoded
-      }) => rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo],
+      }) => rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo],
       progressFn: null,
       entityCatcherCb: null
     };
     let opts;
 
     if (originalOpts != null) {
-      if (!lodash_isplainobject(originalOpts)) {
+      if (!isObj(originalOpts)) {
         throw new Error(`string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(originalOpts, null, 4)} (${typeof originalOpts}-type)`);
       } else {
-        opts = Object.assign({}, defaults, originalOpts);
+        opts = { ...defaults,
+          ...originalOpts
+        };
       }
     } else {
       opts = defaults;
@@ -10536,7 +10559,7 @@
       throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(opts.progressFn, null, 4)}`);
     }
 
-    let state_AmpersandNotNeeded = false;
+    let ampersandNotNeeded = false;
     const nbspDefault = {
       nameStartsAt: null,
       ampersandNecessary: null,
@@ -10567,7 +10590,7 @@
     let brokenNumericEntityStartAt = null;
     const falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"];
 
-    outerloop: for (let i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       if (opts.progressFn) {
         percentageDone = Math.floor(counter / len * 100);
 
@@ -10581,7 +10604,7 @@
         if (doNothingUntil !== true && i >= doNothingUntil) {
           doNothingUntil = null;
         } else {
-          counter++;
+          counter += 1;
           continue;
         }
       }
@@ -10595,7 +10618,7 @@
         i: true
       }, "s", "u", "p")) && str[right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
         const chompedAmpFromLeft = chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-        const beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
+        const beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt;
 
         if (!falsePositivesArr.some(val => str.slice(beginningOfTheRange).startsWith(val)) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
           rangesArr2.push({
@@ -10606,36 +10629,34 @@
             rangeValEncoded: "&nbsp;",
             rangeValDecoded: "\xA0"
           });
-        } else {
-          if (opts.decode) {
-            rangesArr2.push({
-              ruleName: "encoded-html-entity-nbsp",
-              entityName: "nbsp",
-              rangeFrom: beginningOfTheRange,
-              rangeTo: i,
-              rangeValEncoded: "&nbsp;",
-              rangeValDecoded: "\xA0"
-            });
-          } else if (opts.entityCatcherCb) {
-            opts.entityCatcherCb(beginningOfTheRange, i);
-          }
+        } else if (opts.decode) {
+          rangesArr2.push({
+            ruleName: "encoded-html-entity-nbsp",
+            entityName: "nbsp",
+            rangeFrom: beginningOfTheRange,
+            rangeTo: i,
+            rangeValEncoded: "&nbsp;",
+            rangeValDecoded: "\xA0"
+          });
+        } else if (opts.entityCatcherCb) {
+          opts.entityCatcherCb(beginningOfTheRange, i);
         }
 
         nbspWipe();
-        counter++;
+        counter += 1;
 
         if (str[i] === "&" && str[i + 1] !== "&") {
           nbsp.nameStartsAt = i;
           nbsp.ampersandNecessary = false;
         }
 
-        continue outerloop;
+        continue;
       }
 
       if (str[i] && str[i - 1] === ";" && !leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
         nbspWipe();
-        counter++;
-        continue outerloop;
+        counter += 1;
+        continue;
       }
 
       if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
@@ -10712,7 +10733,7 @@
                 } = temp1);
               }
 
-              if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || uncertain[tempEnt].addAmpIfSemiPresent === true || uncertain[tempEnt].addAmpIfSemiPresent && (!tempRes.leftmostChar || isStr(str[tempRes.leftmostChar - 1]) && !str[tempRes.leftmostChar - 1].trim().length))) {
+              if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || uncertain[tempEnt].addAmpIfSemiPresent === true || uncertain[tempEnt].addAmpIfSemiPresent && (!tempRes.leftmostChar || isStr$1(str[tempRes.leftmostChar - 1]) && !str[tempRes.leftmostChar - 1].trim().length))) {
                 const decodedEntity = decode(`&${tempEnt};`);
                 rangesArr2.push({
                   ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
@@ -10820,15 +10841,15 @@
 
                   if (tempEnt) {
                     let issue = false;
-                    const firstChar = tempRes.leftmostChar;
-                    const secondChar = right(str, firstChar);
+                    const firstChar2 = tempRes.leftmostChar;
+                    const secondChar2 = right(str, firstChar2);
 
-                    if (Object.keys(uncertain).includes(potentialEntity) && isStr(str[firstChar - 1]) && !str[firstChar - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
+                    if (Object.keys(uncertain).includes(potentialEntity) && isStr$1(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
                       letterSeqStartAt = null;
                       continue;
                     }
 
-                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar]], str[secondChar]) && startsWith[str[firstChar]][str[secondChar]].includes(situation.charTrimmed)) {
+                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar2]], str[secondChar2]) && startsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
                       entitysValue = situation.charTrimmed;
 
                       if (i - whatsOnTheLeft - 1 === tempEnt.length) {
@@ -10863,9 +10884,9 @@
                           const missingLetters = filterLongest.map(entity => {
                             let count = 0;
 
-                            for (let z = 0, len = entity.length; z < len; z++) {
+                            for (let z = 0, len2 = entity.length; z < len2; z++) {
                               if (entity[z] !== situation.charTrimmed[z]) {
-                                count++;
+                                count += 1;
                               }
                             }
 
@@ -11001,7 +11022,7 @@
                 rangesArr2.push({
                   ruleName: "bad-named-html-entity-multiple-encoding",
                   entityName: matchedTemp,
-                  rangeFrom: rangeFrom,
+                  rangeFrom,
                   rangeTo: doNothingUntil,
                   rangeValEncoded: `${spaceReplacement}&${matchedTemp};`,
                   rangeValDecoded: `${spaceReplacement}${decode(`&${matchedTemp};`)}`
@@ -11024,8 +11045,8 @@
       if (str[i] && str[i].toLowerCase() === "n") {
         if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
 
         if (nbsp.matchedN === null) {
@@ -11035,7 +11056,7 @@
         if (nbsp.nameStartsAt === null) {
           nbsp.nameStartsAt = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
@@ -11049,19 +11070,19 @@
             nbsp.matchedB = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedB = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -11071,19 +11092,19 @@
             nbsp.matchedS = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedS = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -11095,19 +11116,19 @@
             nbsp.matchedP = i;
           }
         } else if (nbsp.patience) {
-          nbsp.patience--;
+          nbsp.patience -= 1;
           nbsp.nameStartsAt = i;
           nbsp.matchedP = i;
 
-          if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
             nbsp.ampersandNecessary = true;
           } else if (nbsp.ampersandNecessary !== true) {
             nbsp.ampersandNecessary = false;
           }
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
@@ -11129,15 +11150,15 @@
 
       if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
         if (nbsp.patience) {
-          nbsp.patience = nbsp.patience - 1;
+          nbsp.patience -= 1;
         } else {
           nbspWipe();
-          counter++;
-          continue outerloop;
+          counter += 1;
+          continue;
         }
       }
 
-      counter++;
+      counter += 1;
     }
 
     if (!rangesArr2.length) {
@@ -11159,6 +11180,3751 @@
     }).map(opts.cb);
     return res;
   }
+
+  /**
+   * ast-monkey-traverse
+   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+   * Version: 1.12.9
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
+   */
+
+  function trimFirstDot(str) {
+    if (typeof str === "string" && str.length && str[0] === ".") {
+      return str.slice(1);
+    }
+
+    return str;
+  }
+
+  function isObj$1(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function astMonkeyTraverse(tree1, cb1) {
+    const stop2 = {
+      now: false
+    };
+
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
+      const tree = lodash_clonedeep(treeOriginal);
+      let i;
+      let len;
+      let res;
+      const innerObj = {
+        depth: -1,
+        path: "",
+        ...originalInnerObj
+      };
+      innerObj.depth += 1;
+
+      if (Array.isArray(tree)) {
+        for (i = 0, len = tree.length; i < len; i++) {
+          if (stop.now) {
+            break;
+          }
+
+          const path = `${innerObj.path}.${i}`;
+
+          if (tree[i] !== undefined) {
+            innerObj.parent = lodash_clonedeep(tree);
+            innerObj.parentType = "array";
+            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
+              path: trimFirstDot(path)
+            }, stop), callback, { ...innerObj,
+              path: trimFirstDot(path)
+            }, stop);
+
+            if (Number.isNaN(res) && i < tree.length) {
+              tree.splice(i, 1);
+              i -= 1;
+            } else {
+              tree[i] = res;
+            }
+          } else {
+            tree.splice(i, 1);
+          }
+        }
+      } else if (isObj$1(tree)) {
+        for (const key in tree) {
+          if (stop.now && key != null) {
+            break;
+          }
+
+          const path = `${innerObj.path}.${key}`;
+
+          if (innerObj.depth === 0 && key != null) {
+            innerObj.topmostKey = key;
+          }
+
+          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parentType = "object";
+          res = traverseInner(callback(key, tree[key], { ...innerObj,
+            path: trimFirstDot(path)
+          }, stop), callback, { ...innerObj,
+            path: trimFirstDot(path)
+          }, stop);
+
+          if (Number.isNaN(res)) {
+            delete tree[key];
+          } else {
+            tree[key] = res;
+          }
+        }
+      }
+
+      return tree;
+    }
+
+    return traverseInner(tree1, cb1, {}, stop2);
+  }
+
+  var toString = {}.toString;
+
+  var isarray = Array.isArray || function (arr) {
+    return toString.call(arr) == '[object Array]';
+  };
+
+  var isobject = function isObject(val) {
+    return val != null && typeof val === 'object' && isarray(val) === false;
+  };
+
+  var lineColumn = LineColumnFinder;
+  /**
+   * Finder for index and line-column from given string.
+   *
+   * You can call this without `new` operator as it returns an instance anyway.
+   *
+   * @class
+   * @param {string} str - A string to be parsed.
+   * @param {Object|number} [options] - Options.
+   *     This can be an index in the string for shorthand of `lineColumn(str, index)`.
+   * @param {number} [options.origin=1] - The origin value of line and column.
+   */
+
+  function LineColumnFinder(str, options) {
+    if (!(this instanceof LineColumnFinder)) {
+      if (typeof options === "number") {
+        return new LineColumnFinder(str).fromIndex(options);
+      }
+
+      return new LineColumnFinder(str, options);
+    }
+
+    this.str = str || "";
+    this.lineToIndex = buildLineToIndex(this.str);
+    options = options || {};
+    this.origin = typeof options.origin === "undefined" ? 1 : options.origin;
+  }
+  /**
+   * Find line and column from index in the string.
+   *
+   * @param  {number} index - Index in the string. (0-origin)
+   * @return {Object|null}
+   *     Found line number and column number in object `{ line: X, col: Y }`.
+   *     If the given index is out of range, it returns `null`.
+   */
+
+
+  LineColumnFinder.prototype.fromIndex = function (index) {
+    if (index < 0 || index >= this.str.length || isNaN(index)) {
+      return null;
+    }
+
+    var line = findLowerIndexInRangeArray(index, this.lineToIndex);
+    return {
+      line: line + this.origin,
+      col: index - this.lineToIndex[line] + this.origin
+    };
+  };
+  /**
+   * Find index from line and column in the string.
+   *
+   * @param  {number|Object|Array} line - Line number in the string.
+   *     This can be an Object of `{ line: X, col: Y }`, or
+   *     an Array of `[line, col]`.
+   * @param  {number} [column] - Column number in the string.
+   *     This must be omitted or undefined when Object or Array is given
+   *     to the first argument.
+   * @return {number}
+   *     Found index in the string. (always 0-origin)
+   *     If the given line or column is out of range, it returns `-1`.
+   */
+
+
+  LineColumnFinder.prototype.toIndex = function (line, column) {
+    if (typeof column === "undefined") {
+      if (isarray(line) && line.length >= 2) {
+        return this.toIndex(line[0], line[1]);
+      }
+
+      if (isobject(line) && "line" in line && ("col" in line || "column" in line)) {
+        return this.toIndex(line.line, "col" in line ? line.col : line.column);
+      }
+
+      return -1;
+    }
+
+    if (isNaN(line) || isNaN(column)) {
+      return -1;
+    }
+
+    line -= this.origin;
+    column -= this.origin;
+
+    if (line >= 0 && column >= 0 && line < this.lineToIndex.length) {
+      var lineIndex = this.lineToIndex[line];
+      var nextIndex = line === this.lineToIndex.length - 1 ? this.str.length : this.lineToIndex[line + 1];
+
+      if (column < nextIndex - lineIndex) {
+        return lineIndex + column;
+      }
+    }
+
+    return -1;
+  };
+  /**
+   * Build an array of indexes of each line from a string.
+   *
+   * @private
+   * @param   str {string}  An input string.
+   * @return  {number[]}    Built array of indexes. The key is line number.
+   */
+
+
+  function buildLineToIndex(str) {
+    var lines = str.split("\n"),
+        lineToIndex = new Array(lines.length),
+        index = 0;
+
+    for (var i = 0, l = lines.length; i < l; i++) {
+      lineToIndex[i] = index;
+      index += lines[i].length +
+      /* "\n".length */
+      1;
+    }
+
+    return lineToIndex;
+  }
+  /**
+   * Find a lower-bound index of a value in a sorted array of ranges.
+   *
+   * Assume `arr = [0, 5, 10, 15, 20]` and
+   * this returns `1` for `value = 7` (5 <= value < 10),
+   * and returns `3` for `value = 18` (15 <= value < 20).
+   *
+   * @private
+   * @param  arr   {number[]} An array of values representing ranges.
+   * @param  value {number}   A value to be searched.
+   * @return {number} Found index. If not found `-1`.
+   */
+
+
+  function findLowerIndexInRangeArray(value, arr) {
+    if (value >= arr[arr.length - 1]) {
+      return arr.length - 1;
+    }
+
+    var min = 0,
+        max = arr.length - 2,
+        mid;
+
+    while (min < max) {
+      mid = min + (max - min >> 1);
+
+      if (value < arr[mid]) {
+        max = mid - 1;
+      } else if (value >= arr[mid + 1]) {
+        min = mid + 1;
+      } else {
+        // value >= arr[mid] && value < arr[mid + 1]
+        min = mid;
+        break;
+      }
+    }
+
+    return min;
+  }
+
+  /**
+   * ast-monkey-util
+   * Utility library of AST helper functions
+   * Version: 1.1.4
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
+   */
+  function pathNext(str) {
+    if (typeof str !== "string" || !str.length) {
+      return str;
+    }
+
+    if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
+      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
+    }
+
+    if (/^\d*$/.test(str)) {
+      return `${+str + 1}`;
+    }
+
+    return str;
+  }
+
+  function pathPrev(str) {
+    if (typeof str !== "string" || !str.length) {
+      return null;
+    }
+
+    const extractedValue = str.slice(str.lastIndexOf(".") + 1);
+
+    if (extractedValue === "0") {
+      return null;
+    }
+
+    if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
+    }
+
+    if (/^\d*$/.test(str)) {
+      return `${+str - 1}`;
+    }
+
+    return null;
+  }
+
+  function pathUp(str) {
+    if (typeof str === "string") {
+      if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
+        return "0";
+      }
+
+      let dotsCount = 0;
+
+      for (let i = str.length; i--;) {
+        if (str[i] === ".") {
+          dotsCount += 1;
+        }
+
+        if (dotsCount === 2) {
+          return str.slice(0, i);
+        }
+      }
+    }
+
+    return str;
+  }
+
+  /**
+   * string-find-malformed
+   * Search for a malformed string. Think of Levenshtein distance but in search.
+   * Version: 1.1.5
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
+   */
+
+  function isObj$2(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function isStr$2(something) {
+    return typeof something === "string";
+  }
+
+  function strFindMalformed(str, refStr, cb, originalOpts) {
+    if (!isStr$2(str)) {
+      throw new TypeError(`string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ${str} (type: ${typeof str})`);
+    } else if (!str.length) {
+      return;
+    }
+
+    if (!isStr$2(refStr)) {
+      throw new TypeError(`string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ${refStr} (type: ${typeof refStr})`);
+    } else if (!refStr.length) {
+      return;
+    }
+
+    if (typeof cb !== "function") {
+      throw new TypeError(`string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`);
+    }
+
+    if (originalOpts && !isObj$2(originalOpts)) {
+      throw new TypeError(`string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${originalOpts} (type: ${typeof originalOpts})`);
+    }
+
+    const defaults = {
+      stringOffset: 0,
+      maxDistance: 1,
+      ignoreWhitespace: true
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
+      opts.stringOffset = Number(opts.stringOffset);
+    } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
+      throw new TypeError(`${opts.source} [THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.fromIndex}`);
+    }
+
+    const len = str.length;
+    const len2 = Math.min(refStr.length, opts.maxDistance + 1);
+    let pendingMatchesArr = [];
+    const patience = opts.maxDistance;
+    let wasThisLetterMatched;
+
+    for (let i = 0; i < len; i++) {
+      if (opts.ignoreWhitespace && !str[i].trim()) {
+        continue;
+      }
+
+      for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
+        wasThisLetterMatched = false;
+
+        if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
+          wasThisLetterMatched = true;
+          pendingMatchesArr[z].pendingToCheck.shift();
+        } else if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[1]) {
+          wasThisLetterMatched = true;
+          pendingMatchesArr[z].pendingToCheck.shift();
+          pendingMatchesArr[z].pendingToCheck.shift();
+          pendingMatchesArr[z].patienceLeft -= 1;
+        } else {
+          pendingMatchesArr[z].patienceLeft -= 1;
+
+          if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
+            pendingMatchesArr[z].pendingToCheck.shift();
+
+            if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
+              pendingMatchesArr[z].pendingToCheck.shift();
+            }
+          }
+        }
+      }
+
+      pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
+      const tempArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length === 0).map(obj => obj.startsAt);
+
+      if (Array.isArray(tempArr) && tempArr.length) {
+        const idxFrom = Math.min(...tempArr);
+        const idxTo = i + (wasThisLetterMatched ? 1 : 0);
+
+        if (str.slice(idxFrom, idxTo) !== refStr) {
+          cb({
+            idxFrom: idxFrom + opts.stringOffset,
+            idxTo: idxTo + opts.stringOffset
+          });
+        }
+
+        pendingMatchesArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length);
+      }
+
+      for (let y = 0; y < len2; y++) {
+        if (str[i] === refStr[y]) {
+          const whatToPush = {
+            startsAt: i,
+            patienceLeft: patience - y,
+            pendingToCheck: Array.from(refStr.slice(y + 1))
+          };
+          pendingMatchesArr.push(whatToPush);
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * arrayiffy-if-string
+   * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+   * Version: 3.11.30
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   */
+  function arrayiffyString(something) {
+    if (typeof something === "string") {
+      if (something.length > 0) {
+        return [something];
+      }
+
+      return [];
+    }
+
+    return something;
+  }
+
+  /**
+   * string-match-left-right
+   * Do substrings match what's on the left or right of a given index?
+   * Version: 4.0.5
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
+   */
+
+  function isObj$3(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function isStr$3(something) {
+    return typeof something === "string";
+  }
+
+  function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
+    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+
+    if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
+      return whatToMatchValVal;
+    }
+
+    if (fromIndexInclusive >= str.length && !special) {
+      return false;
+    }
+
+    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
+    let lastWasMismatched = false;
+    let atLeastSomethingWasMatched = false;
+    let patience = opts.maxMismatches;
+    let i = fromIndexInclusive;
+    let somethingFound = false;
+    let firstCharacterMatched = false;
+    let lastCharacterMatched = false;
+
+    while (str[i]) {
+      const nextIdx = getNextIdx(i);
+
+      if (opts.trimBeforeMatching && str[i].trim() === "") {
+        if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
+          return true;
+        }
+
+        i = getNextIdx(i);
+        continue;
+      }
+
+      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+        if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
+          return true;
+        }
+
+        i = getNextIdx(i);
+        continue;
+      }
+
+      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
+
+      if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+        if (!somethingFound) {
+          somethingFound = true;
+        }
+
+        if (!atLeastSomethingWasMatched) {
+          atLeastSomethingWasMatched = true;
+        }
+
+        if (charsToCheckCount === whatToMatchVal.length) {
+          firstCharacterMatched = true;
+        } else if (charsToCheckCount === 1) {
+          lastCharacterMatched = true;
+        }
+
+        charsToCheckCount -= 1;
+
+        if (charsToCheckCount < 1) {
+          return i;
+        }
+      } else {
+        if (opts.maxMismatches && patience && i) {
+          patience -= 1;
+
+          for (let y = 0; y <= patience; y++) {
+            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            const nextCharInSource = str[getNextIdx(i)];
+
+            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+              charsToCheckCount -= 2;
+              somethingFound = true;
+              break;
+            } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+              charsToCheckCount -= 1;
+              somethingFound = true;
+              break;
+            } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
+              return i;
+            }
+          }
+
+          if (!somethingFound) {
+            lastWasMismatched = i;
+          }
+        } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
+          return 0;
+        } else {
+          return false;
+        }
+      }
+
+      if (lastWasMismatched !== false && lastWasMismatched !== i) {
+        lastWasMismatched = false;
+      }
+
+      if (charsToCheckCount < 1) {
+        return i;
+      }
+
+      i = getNextIdx(i);
+    }
+
+    if (charsToCheckCount > 0) {
+      if (special && whatToMatchValVal === "EOL") {
+        return true;
+      }
+
+      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+        return lastWasMismatched || 0;
+      }
+
+      return false;
+    }
+  }
+
+  function main(mode, str, position, originalWhatToMatch, originalOpts) {
+    const defaults = {
+      i: false,
+      trimBeforeMatching: false,
+      trimCharsBeforeMatching: [],
+      maxMismatches: 0,
+      firstMustMatch: false,
+      lastMustMatch: false
+    };
+
+    if (isObj$3(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+    }
+
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
+    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$3(el) ? el : String(el));
+
+    if (!isStr$3(str)) {
+      return false;
+    }
+
+    if (!str.length) {
+      return false;
+    }
+
+    if (!Number.isInteger(position) || position < 0) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+    }
+
+    let whatToMatch;
+    let special;
+
+    if (isStr$3(originalWhatToMatch)) {
+      whatToMatch = [originalWhatToMatch];
+    } else if (Array.isArray(originalWhatToMatch)) {
+      whatToMatch = originalWhatToMatch;
+    } else if (!originalWhatToMatch) {
+      whatToMatch = originalWhatToMatch;
+    } else if (typeof originalWhatToMatch === "function") {
+      whatToMatch = [];
+      whatToMatch.push(originalWhatToMatch);
+    } else {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+    }
+
+    if (originalOpts && !isObj$3(originalOpts)) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    let culpritsIndex;
+    let culpritsVal;
+
+    if (opts.trimCharsBeforeMatching.some((el, i) => {
+      if (el.length > 1) {
+        culpritsIndex = i;
+        culpritsVal = el;
+        return true;
+      }
+
+      return false;
+    })) {
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+    }
+
+    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$3(whatToMatch[0]) && !whatToMatch[0].trim()) {
+      if (typeof opts.cb === "function") {
+        let firstCharOutsideIndex;
+        let startingPosition = position;
+
+        if (mode === "matchLeftIncl" || mode === "matchRight") {
+          startingPosition += 1;
+        }
+
+        if (mode[5] === "L") {
+          for (let y = startingPosition; y--;) {
+            const currentChar = str[y];
+
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        } else if (mode.startsWith("matchRight")) {
+          for (let y = startingPosition; y < str.length; y++) {
+            const currentChar = str[y];
+
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        }
+
+        if (firstCharOutsideIndex === undefined) {
+          return false;
+        }
+
+        const wholeCharacterOutside = str[firstCharOutsideIndex];
+        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        let theRemainderOfTheString = "";
+
+        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+        }
+
+        if (mode[5] === "L") {
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+        }
+
+        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
+        }
+
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+      }
+
+      let extraNote = "";
+
+      if (!originalOpts) {
+        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      }
+
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+    }
+
+    for (let i = 0, len = whatToMatch.length; i < len; i++) {
+      special = typeof whatToMatch[i] === "function";
+      const whatToMatchVal = whatToMatch[i];
+      let fullCharacterInFront;
+      let indexOfTheCharacterInFront;
+      let restOfStringInFront = "";
+      let startingPosition = position;
+
+      if (mode === "matchRight") {
+        startingPosition += 1;
+      } else if (mode === "matchLeft") {
+        startingPosition -= 1;
+      }
+
+      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+
+      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
+        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
+      }
+
+      if (Number.isInteger(found)) {
+        indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
+
+        if (mode[5] === "L") {
+          restOfStringInFront = str.slice(0, found);
+        } else {
+          restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+        }
+      }
+
+      if (indexOfTheCharacterInFront < 0) {
+        indexOfTheCharacterInFront = undefined;
+      }
+
+      if (str[indexOfTheCharacterInFront]) {
+        fullCharacterInFront = str[indexOfTheCharacterInFront];
+      }
+
+      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
+        return whatToMatchVal;
+      }
+    }
+
+    return false;
+  }
+
+  function matchLeftIncl(str, position, whatToMatch, opts) {
+    return main("matchLeftIncl", str, position, whatToMatch, opts);
+  }
+
+  function matchLeft(str, position, whatToMatch, opts) {
+    return main("matchLeft", str, position, whatToMatch, opts);
+  }
+
+  function matchRightIncl(str, position, whatToMatch, opts) {
+    return main("matchRightIncl", str, position, whatToMatch, opts);
+  }
+
+  function matchRight(str, position, whatToMatch, opts) {
+    return main("matchRight", str, position, whatToMatch, opts);
+  }
+
+  /**
+   * html-all-known-attributes
+   * All HTML attributes known to the Humanity
+   * Version: 2.0.1
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+   */
+  const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
+
+  /**
+   * is-char-suitable-for-html-attr-name
+   * Is given character suitable to be in an HTML attribute's name?
+   * Version: 1.1.2
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
+   */
+  function charSuitableForHTMLAttrName(char) {
+    return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+  }
+
+  /**
+   * ranges-is-index-within
+   * Efficiently checks if index is within any of the given ranges
+   * Version: 1.14.33
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
+   */
+  const isArr = Array.isArray;
+
+  function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
+    const defaults = {
+      inclusiveRangeEnds: false,
+      returnMatchedRangeInsteadOfTrue: false
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    if (!isArr(rangesArr)) {
+      return false;
+    }
+
+    if (opts.returnMatchedRangeInsteadOfTrue) {
+      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
+    }
+
+    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
+  }
+
+  /**
+   * string-split-by-whitespace
+   * Split string into array by chunks of whitespace
+   * Version: 1.6.62
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
+   */
+
+  function split(str, originalOpts) {
+    if (str === undefined) {
+      throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
+    }
+
+    if (typeof str !== "string") {
+      return str;
+    }
+
+    if (str.trim() === "") {
+      return [];
+    }
+
+    const defaults = {
+      ignoreRanges: []
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+
+    if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
+      throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
+    }
+
+    let nonWhitespaceSubStringStartsAt = null;
+    const res = [];
+
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
+        inclusiveRangeEnds: true
+      }))) {
+        nonWhitespaceSubStringStartsAt = i;
+      }
+
+      if (nonWhitespaceSubStringStartsAt !== null) {
+        if (str[i].trim() === "") {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
+          nonWhitespaceSubStringStartsAt = null;
+        } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
+          nonWhitespaceSubStringStartsAt = null;
+        } else if (str[i + 1] === undefined) {
+          res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
+        }
+      }
+    }
+
+    return res;
+  }
+
+  /**
+   * is-html-attribute-closing
+   * Is a character on a given index a closing of an HTML attribute?
+   * Version: 1.1.3
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
+   */
+
+  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
+    for (let i = startingIdx, len = str.length; i < len; i++) {
+      if (y.some(oneOfStr => str.startsWith(oneOfStr, i))) {
+        return true;
+      }
+
+      if (str[i] === x) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function xBeforeYOnTheRight(str, startingIdx, x, y) {
+    for (let i = startingIdx, len = str.length; i < len; i++) {
+      if (str.startsWith(x, i)) {
+        return true;
+      }
+
+      if (str.startsWith(y, i)) {
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  function plausibleAttrStartsAtX(str, start) {
+    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+      return false;
+    }
+
+    const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
+    return regex.test(str.slice(start));
+  }
+
+  function guaranteedAttrStartsAtX(str, start) {
+    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+      return false;
+    }
+
+    const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+    return regex.test(str.slice(start));
+  }
+
+  function findAttrNameCharsChunkOnTheLeft(str, i) {
+    if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
+      return;
+    }
+
+    for (let y = i; y--;) {
+      if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+        return str.slice(y + 1, i);
+      }
+    }
+  }
+
+  function makeTheQuoteOpposite(quoteChar) {
+    return quoteChar === `'` ? `"` : `'`;
+  }
+
+  function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
+    if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+      return false;
+    }
+
+    const openingQuote = `'"`.includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
+    let oppositeToOpeningQuote = null;
+
+    if (openingQuote) {
+      oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
+    }
+
+    let chunkStartsAt;
+    const quotesCount = new Map().set(`'`, 0).set(`"`, 0).set(`matchedPairs`, 0);
+    let lastQuoteAt = null;
+    let totalQuotesCount = 0;
+    let lastQuoteWasMatched = false;
+    let lastMatchedQuotesPairsStartIsAt = false;
+    let lastMatchedQuotesPairsEndIsAt = false;
+    let lastCapturedChunk;
+    let lastChunkWasCapturedAfterSuspectedClosing = false;
+    let closingBracketMet = false;
+    let openingBracketMet = false;
+
+    for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
+      if (`'"`.includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
+        const E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || `/>`.includes(str[right(str, i)]);
+        const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
+        const E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
+        const E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
+        let attrNameCharsChunkOnTheLeft;
+
+        if (i === isThisClosingIdx) {
+          attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+        }
+
+        const E34 = i === isThisClosingIdx && (!charSuitableForHTMLAttrName(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
+        const E41 = `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
+        const E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
+        const E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
+        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
+      }
+
+      if (`'"`.includes(str[i])) {
+        if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
+          quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
+          lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
+          lastMatchedQuotesPairsEndIsAt = i;
+          lastQuoteAt = null;
+          lastQuoteWasMatched = true;
+        } else {
+          lastQuoteWasMatched = false;
+        }
+
+        quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
+        totalQuotesCount = quotesCount.get(`"`) + quotesCount.get(`'`);
+      }
+
+      if (str[i] === ">" && !closingBracketMet) {
+        closingBracketMet = true;
+
+        if (totalQuotesCount && quotesCount.get(`matchedPairs`) && totalQuotesCount === quotesCount.get(`matchedPairs`) * 2 && i < isThisClosingIdx) {
+          return false;
+        }
+      }
+
+      if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+        openingBracketMet = true;
+        return false;
+      }
+
+      if (str[i].trim() && !chunkStartsAt) {
+        if (charSuitableForHTMLAttrName(str[i])) {
+          chunkStartsAt = i;
+        }
+      } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+        lastCapturedChunk = str.slice(chunkStartsAt, i);
+        lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
+
+        if (`'"`.includes(str[i]) && quotesCount.get(`matchedPairs`) === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
+          const A1 = i > isThisClosingIdx;
+          const A21 = !lastQuoteAt;
+          const A22 = lastQuoteAt + 1 >= i;
+          const A23 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          const B1 = i === isThisClosingIdx;
+          const B21 = totalQuotesCount < 3;
+          const B22 = !!lastQuoteWasMatched;
+          const B23 = !lastQuoteAt;
+          const B24 = lastQuoteAt + 1 >= i;
+          const B25 = !split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+        }
+
+        if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+          return true;
+        }
+      }
+
+      if (`'"`.includes(str[i]) && (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) && (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+        const R0 = i > isThisClosingIdx;
+        const R1 = !!openingQuote;
+        const R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
+        const R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
+        const R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
+        return R0 && !(R1 && R2 && R3 && R4);
+      }
+
+      if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
+        const W1 = i > isThisClosingIdx;
+        const W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+        return W1 && W2;
+      }
+
+      if (i > isThisClosingIdx) {
+        if (openingQuote && str[i] === openingQuote) {
+          const Y1 = !!lastQuoteAt;
+          const Y2 = lastQuoteAt === isThisClosingIdx;
+          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
+          const Y4 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          const Y5 = i >= isThisClosingIdx;
+          return Y1 && Y2 && Y3 && Y4 && Y5;
+        }
+
+        if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
+          return false;
+        }
+
+        if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+          const R0 = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
+          const R11 = quotesCount.get(`matchedPairs`) < 2;
+          const attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+          const R12 = (!attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get(`'`) && quotesCount.get(`"`) && quotesCount.get(`matchedPairs`) > 1) || `/>`.includes(str[right(str, i)]));
+          const R2 = totalQuotesCount < 3 || quotesCount.get(`"`) + quotesCount.get(`'`) - quotesCount.get(`matchedPairs`) * 2 !== 2;
+          const R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(char => charSuitableForHTMLAttrName(char)) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
+          const R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+          const R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+          const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [`='`, `="`]);
+          return R0 || (R11 || R12) && R2 && (R31 || R32 || R33 || R34);
+        }
+
+        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="]
+        })) {
+          return true;
+        }
+      } else {
+        let firstNonWhitespaceCharOnTheLeft;
+
+        if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
+          firstNonWhitespaceCharOnTheLeft = i - 1;
+        } else {
+          for (let y = i; y--;) {
+            if (str[y].trim() && str[y] !== "=") {
+              firstNonWhitespaceCharOnTheLeft = y;
+              break;
+            }
+          }
+        }
+
+        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
+          cb: char => !`/>`.includes(char),
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["="]
+        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+          return false;
+        }
+
+        if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
+          return true;
+        }
+
+        if (i < isThisClosingIdx && `'"`.includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
+          return false;
+        }
+      }
+
+      if (`'"`.includes(str[i]) && i > isThisClosingIdx) {
+        if (!lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || !allHtmlAttribs.has(lastCapturedChunk)) {
+          return false;
+        }
+
+        return true;
+      }
+
+      if (`'"`.includes(str[i])) {
+        lastQuoteAt = i;
+      }
+
+      if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+        chunkStartsAt = null;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * is-html-tag-opening
+   * Is given opening bracket a beginning of a tag?
+   * Version: 1.7.6
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
+   */
+  const BACKSLASH = "\u005C";
+  const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
+
+  function isStr$4(something) {
+    return typeof something === "string";
+  }
+
+  function isNotLetter(char) {
+    return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
+  }
+
+  function isOpening(str, idx = 0, originalOpts) {
+    const defaults = {
+      allowCustomTagNames: false,
+      skipOpeningBracket: false
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
+    const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
+    const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
+    const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
+    const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
+    const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
+    const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
+    const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
+    const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+    const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+    const whatToTest = idx ? str.slice(idx) : str;
+    let passed = false;
+    const matchingOptions = {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    };
+
+    if (opts.allowCustomTagNames) {
+      if (r5.test(whatToTest)) {
+        passed = true;
+      } else if (r6.test(whatToTest)) {
+        passed = true;
+      } else if (r7.test(whatToTest)) {
+        passed = true;
+      } else if (r8.test(whatToTest)) {
+        passed = true;
+      }
+    } else if (matchRightIncl(str, idx, knownHtmlTags, {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    })) {
+      if (r1.test(whatToTest)) {
+        passed = true;
+      } else if (r2.test(whatToTest)) {
+        passed = true;
+      } else if (r3.test(whatToTest)) {
+        passed = true;
+      } else if (r4.test(whatToTest)) {
+        passed = true;
+      }
+    }
+
+    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+      passed = true;
+    }
+
+    const res = isStr$4(str) && idx < str.length && passed;
+    return res;
+  }
+
+  /**
+   * codsen-tokenizer
+   * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+   * Version: 2.14.1
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
+   */
+
+  function startsComment(str, i, token) {
+    return (str[i] === "<" && (matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
+      trimBeforeMatching: true
+    }) || matchRight(str, i, ["![endif]"], {
+      i: true,
+      maxMismatches: 2,
+      trimBeforeMatching: true
+    })) && !matchRight(str, i, ["![cdata", "<"], {
+      i: true,
+      maxMismatches: 1,
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
+      trimBeforeMatching: true
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["-", "!"]
+    })) && (token.type !== "esp" || token.tail.includes(str[i]));
+  }
+
+  const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
+  const espChars = `{}%-$_()*|`;
+  const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
+
+  function isStr$5(something) {
+    return typeof something === "string";
+  }
+
+  function isLatinLetter$1(char) {
+    return isStr$5(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  }
+
+  function charSuitableForTagName(char) {
+    return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
+  }
+
+  function flipEspTag(str) {
+    let res = "";
+
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (str[i] === "[") {
+        res = `]${res}`;
+      } else if (str[i] === "{") {
+        res = `}${res}`;
+      } else if (str[i] === "(") {
+        res = `)${res}`;
+      } else {
+        res = `${str[i]}${res}`;
+      }
+    }
+
+    return res;
+  }
+
+  function isTagNameRecognised(tagName) {
+    return allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
+  }
+
+  function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+    for (let i = startingIdx, len = str.length; i < len; i++) {
+      if (str.startsWith(x, i)) {
+        return true;
+      }
+
+      if (str.startsWith(y, i)) {
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  const BACKSLASH$1 = "\u005C";
+
+  function startsTag(str, i, token, layers) {
+    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
+      allowCustomTagNames: true
+    }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+      i: true,
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+    })) || isLatinLetter$1(str[i]) && (!str[i - 1] || !isLatinLetter$1(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true
+    })) && (token.type !== "esp" || token.tail.includes(str[i]));
+  }
+
+  function startsEsp(str, i, token, layers, styleStarts) {
+    return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
+  }
+
+  function isObj$4(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  const voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
+  const charsThatEndCSSChunks = ["{", "}", ","];
+
+  function tokenizer(str, originalOpts) {
+    const start = Date.now();
+
+    if (!isStr$5(str)) {
+      if (str === undefined) {
+        throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+      } else {
+        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+      }
+    }
+
+    if (originalOpts && !isObj$4(originalOpts)) {
+      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    if (isObj$4(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
+    }
+
+    if (isObj$4(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
+    }
+
+    if (isObj$4(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
+    }
+
+    const defaults = {
+      tagCb: null,
+      tagCbLookahead: 0,
+      charCb: null,
+      charCbLookahead: 0,
+      reportProgressFunc: null,
+      reportProgressFuncFrom: 0,
+      reportProgressFuncTo: 100
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    let currentPercentageDone;
+    let lastPercentage = 0;
+    const len = str.length;
+    const midLen = Math.floor(len / 2);
+    let doNothing;
+    let styleStarts = false;
+    const tagStash = [];
+    const charStash = [];
+    let token = {};
+    const tokenDefault = {
+      type: null,
+      start: null,
+      end: null
+    };
+
+    function tokenReset() {
+      token = lodash_clonedeep(tokenDefault);
+      attribReset();
+      return token;
+    }
+
+    let attrib = {};
+    const attribDefault = {
+      attribName: null,
+      attribNameRecognised: null,
+      attribNameStartsAt: null,
+      attribNameEndsAt: null,
+      attribOpeningQuoteAt: null,
+      attribClosingQuoteAt: null,
+      attribValueRaw: null,
+      attribValue: [],
+      attribValueStartsAt: null,
+      attribValueEndsAt: null,
+      attribStart: null,
+      attribEnd: null
+    };
+
+    function attribReset() {
+      attrib = lodash_clonedeep(attribDefault);
+    }
+
+    tokenReset();
+    attribReset();
+    let selectorChunkStartedAt;
+    let parentTokenToBackup;
+    let attribToBackup;
+    let layers = [];
+
+    function matchLayerLast(str2, i, matchFirstInstead) {
+      if (!layers.length) {
+        return false;
+      }
+
+      const whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
+
+      if (whichLayerToMatch.type === "simple") {
+        return !whichLayerToMatch.value || str2[i] === flipEspTag(whichLayerToMatch.value);
+      }
+
+      if (whichLayerToMatch.type === "esp") {
+        if (!espChars.includes(str2[i])) {
+          return false;
+        }
+
+        let wholeEspTagLump = "";
+
+        for (let y = i; y < len; y++) {
+          if (espChars.includes(str2[y])) {
+            wholeEspTagLump += str2[y];
+          } else {
+            break;
+          }
+        }
+
+        if (wholeEspTagLump && whichLayerToMatch.openingLump && wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length) {
+          if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
+            return wholeEspTagLump.length - whichLayerToMatch.openingLump.length;
+          }
+
+          let uniqueCharsListFromGuessedClosingLumpArr = new Set(whichLayerToMatch.guessedClosingLump);
+          let found = 0;
+
+          for (let y = 0, len2 = wholeEspTagLump.length; y < len2; y++) {
+            if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y]) && found > 1) {
+              return y;
+            }
+
+            if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])) {
+              found += 1;
+              uniqueCharsListFromGuessedClosingLumpArr = new Set([...uniqueCharsListFromGuessedClosingLumpArr].filter(el => el !== wholeEspTagLump[y]));
+            }
+          }
+        } else if (whichLayerToMatch.guessedClosingLump.split("").every(char => wholeEspTagLump.includes(char))) {
+          return wholeEspTagLump.length;
+        }
+      }
+    }
+
+    function matchLayerFirst(str2, i) {
+      return matchLayerLast(str2, i, true);
+    }
+
+    function reportFirstFromStash(stash, cb, lookaheadLength) {
+      const currentElem = stash.shift();
+      const next = [];
+
+      for (let i = 0; i < lookaheadLength; i++) {
+        if (stash[i]) {
+          next.push(lodash_clonedeep(stash[i]));
+        } else {
+          break;
+        }
+      }
+
+      cb(currentElem, next);
+    }
+
+    function pingCharCb(incomingToken) {
+      if (opts.charCb) {
+        charStash.push(incomingToken);
+
+        if (charStash.length > opts.charCbLookahead) {
+          reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
+        }
+      }
+    }
+
+    function pingTagCb(incomingToken) {
+      if (opts.tagCb) {
+        tagStash.push(incomingToken);
+
+        if (tagStash.length > opts.tagCbLookahead) {
+          reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
+        }
+      }
+    }
+
+    function dumpCurrentToken(incomingToken, i) {
+      if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
+        incomingToken.end = left(str, i) + 1;
+        incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+
+        if (incomingToken.type === "tag" && !"/>".includes(str[incomingToken.end - 1])) {
+          let cutOffIndex = incomingToken.tagNameEndsAt || i;
+
+          if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
+            for (let i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
+              if (incomingToken.attribs[i2].attribNameRecognised) {
+                cutOffIndex = incomingToken.attribs[i2].attribEnd;
+
+                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
+                  cutOffIndex += 1;
+                }
+              } else {
+                if (i2 === 0) {
+                  incomingToken.attribs = [];
+                } else {
+                  incomingToken.attribs = incomingToken.attribs.splice(0, i2);
+                }
+
+                break;
+              }
+            }
+          }
+
+          incomingToken.end = cutOffIndex;
+          incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+
+          if (!incomingToken.tagNameEndsAt) {
+            incomingToken.tagNameEndsAt = cutOffIndex;
+          }
+
+          if (Number.isInteger(incomingToken.tagNameStartsAt) && Number.isInteger(incomingToken.tagNameEndsAt) && !incomingToken.tagName) {
+            incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
+            incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
+          }
+
+          pingTagCb(incomingToken);
+          token = tokenReset();
+          initToken("text", cutOffIndex);
+        } else {
+          pingTagCb(incomingToken);
+          token = tokenReset();
+
+          if (str[i - 1] && !str[i - 1].trim()) {
+            initToken("text", left(str, i) + 1);
+          }
+        }
+      }
+
+      if (token.start !== null) {
+        if (token.end === null && token.start !== i) {
+          token.end = i;
+          token.value = str.slice(token.start, token.end);
+        }
+
+        if (token.start !== null && token.end !== null) {
+          pingTagCb(token);
+        }
+
+        token = tokenReset();
+      }
+    }
+
+    function atRuleWaitingForClosingCurlie() {
+      return layers.length && layers[layers.length - 1].type === "at" && isObj$4(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
+    }
+
+    function initToken(type, startVal) {
+      attribReset();
+
+      if (type === "tag") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        token.tagNameStartsAt = null;
+        token.tagNameEndsAt = null;
+        token.tagName = null;
+        token.recognised = null;
+        token.closing = false;
+        token.void = false;
+        token.pureHTML = true;
+        token.kind = null;
+        token.attribs = [];
+        delete token.openingCurlyAt;
+        delete token.closingCurlyAt;
+        delete token.selectorsStart;
+        delete token.selectorsEnd;
+        delete token.selectors;
+        delete token.identifier;
+        delete token.identifierStartsAt;
+        delete token.identifierEndsAt;
+        delete token.query;
+        delete token.queryStartsAt;
+        delete token.queryEndsAt;
+        delete token.head;
+        delete token.tail;
+      } else if (type === "comment") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        delete token.tagNameStartsAt;
+        delete token.tagNameEndsAt;
+        delete token.tagName;
+        delete token.recognised;
+        token.closing = false;
+        delete token.void;
+        delete token.pureHTML;
+        token.kind = "simple";
+        delete token.attribs;
+        delete token.openingCurlyAt;
+        delete token.closingCurlyAt;
+        delete token.selectorsStart;
+        delete token.selectorsEnd;
+        delete token.selectors;
+        delete token.identifier;
+        delete token.identifierStartsAt;
+        delete token.identifierEndsAt;
+        delete token.query;
+        delete token.queryStartsAt;
+        delete token.queryEndsAt;
+        delete token.head;
+        delete token.tail;
+      } else if (type === "rule") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        delete token.tagNameStartsAt;
+        delete token.tagNameEndsAt;
+        delete token.tagName;
+        delete token.recognised;
+        delete token.closing;
+        delete token.void;
+        delete token.pureHTML;
+        delete token.kind;
+        delete token.attribs;
+        token.openingCurlyAt = null;
+        token.closingCurlyAt = null;
+        token.selectorsStart = null;
+        token.selectorsEnd = null;
+        token.selectors = [];
+        delete token.identifier;
+        delete token.identifierStartsAt;
+        delete token.identifierEndsAt;
+        delete token.query;
+        delete token.queryStartsAt;
+        delete token.queryEndsAt;
+        delete token.head;
+        delete token.tail;
+      } else if (type === "at") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        delete token.tagNameStartsAt;
+        delete token.tagNameEndsAt;
+        delete token.tagName;
+        delete token.recognised;
+        delete token.closing;
+        delete token.void;
+        delete token.pureHTML;
+        delete token.kind;
+        delete token.attribs;
+        token.openingCurlyAt = null;
+        token.closingCurlyAt = null;
+        delete token.selectorsStart;
+        delete token.selectorsEnd;
+        delete token.selectors;
+        token.identifier = null;
+        token.identifierStartsAt = null;
+        token.identifierEndsAt = null;
+        token.query = null;
+        token.queryStartsAt = null;
+        token.queryEndsAt = null;
+        delete token.head;
+        delete token.tail;
+      } else if (type === "text") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        delete token.tagNameStartsAt;
+        delete token.tagNameEndsAt;
+        delete token.tagName;
+        delete token.recognised;
+        delete token.closing;
+        delete token.void;
+        delete token.pureHTML;
+        delete token.kind;
+        delete token.attribs;
+        delete token.openingCurlyAt;
+        delete token.closingCurlyAt;
+        delete token.selectorsStart;
+        delete token.selectorsEnd;
+        delete token.selectors;
+        delete token.identifier;
+        delete token.identifierStartsAt;
+        delete token.identifierEndsAt;
+        delete token.query;
+        delete token.queryStartsAt;
+        delete token.queryEndsAt;
+        delete token.head;
+        delete token.tail;
+      } else if (type === "esp") {
+        token.type = type;
+        token.start = startVal;
+        token.end = null;
+        token.value = null;
+        delete token.tagNameStartsAt;
+        delete token.tagNameEndsAt;
+        delete token.tagName;
+        delete token.recognised;
+        delete token.closing;
+        delete token.void;
+        delete token.pureHTML;
+        token.kind = null;
+        delete token.attribs;
+        delete token.openingCurlyAt;
+        delete token.closingCurlyAt;
+        delete token.selectorsStart;
+        delete token.selectorsEnd;
+        delete token.selectors;
+        delete token.identifier;
+        delete token.identifierStartsAt;
+        delete token.identifierEndsAt;
+        delete token.query;
+        delete token.queryStartsAt;
+        delete token.queryEndsAt;
+        token.head = null;
+        token.tail = null;
+      }
+    }
+
+    for (let i = 0; i <= len; i++) {
+      if (!doNothing && str[i] && opts.reportProgressFunc) {
+        if (len > 1000 && len < 2000) {
+          if (i === midLen) {
+            opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
+          }
+        } else if (len >= 2000) {
+          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
+
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+          }
+        }
+      }
+
+      if (styleStarts && token.type && !["rule", "at", "text"].includes(token.type)) {
+        styleStarts = false;
+      }
+
+      if (Number.isInteger(doNothing) && i >= doNothing) {
+        doNothing = false;
+      }
+
+      if (!doNothing && atRuleWaitingForClosingCurlie()) {
+        if (str[i] === "}") {
+          if (token.type === null || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
+            if (token.type === "rule") {
+              token.end = left(str, i) + 1;
+              token.value = str.slice(token.start, token.end);
+              pingTagCb(token);
+              token = tokenReset();
+
+              if (left(str, i) < i - 1) {
+                initToken("text", left(str, i) + 1);
+              }
+            }
+
+            dumpCurrentToken(token, i);
+            const poppedToken = layers.pop();
+            token = poppedToken.token;
+            token.closingCurlyAt = i;
+            token.end = i + 1;
+            token.value = str.slice(token.start, token.end);
+            pingTagCb(token);
+            token = tokenReset();
+            doNothing = i + 1;
+          }
+        } else if (token.type === "text" && str[i] && str[i].trim()) {
+          token.end = i;
+          token.value = str.slice(token.start, token.end);
+          pingTagCb(token);
+          token = tokenReset();
+        }
+      }
+
+      if (token.end && token.end === i) {
+        if (token.tagName === "style" && !token.closing) {
+          styleStarts = true;
+        }
+
+        if (attribToBackup) {
+          attrib = attribToBackup;
+          attrib.attribValue.push(lodash_clonedeep(token));
+          token = lodash_clonedeep(parentTokenToBackup);
+          attribToBackup = undefined;
+          parentTokenToBackup = undefined;
+        } else {
+          dumpCurrentToken(token, i);
+          layers = [];
+        }
+      }
+
+      if (!doNothing) {
+        if (["tag", "esp", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+          if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
+            if (matchLayerLast(str, i)) {
+              layers.pop();
+            } else {
+              layers.push({
+                type: "simple",
+                value: str[i],
+                position: i
+              });
+            }
+          }
+        } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
+          if ([`[`, `]`].includes(str[i])) {
+            if (matchLayerLast(str, i)) {
+              layers.pop();
+            } else {
+              layers.push({
+                type: "simple",
+                value: str[i],
+                position: i
+              });
+            }
+          }
+        }
+      }
+
+      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[i] && str[i].trim() && str[i] !== "@") {
+        token.identifierStartsAt = i;
+      }
+
+      if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[i])) {
+        if (str[i - 1] && str[i - 1].trim()) {
+          token.queryEndsAt = i;
+        } else {
+          token.queryEndsAt = left(str, i) + 1;
+        }
+
+        token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
+      }
+
+      if (!doNothing && token.type === "at" && str[i] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
+        token.openingCurlyAt = i;
+        layers.push({
+          type: "at",
+          token
+        });
+        const charIdxOnTheRight = right(str, i);
+
+        if (str[charIdxOnTheRight] === "}") {
+          token.closingCurlyAt = charIdxOnTheRight;
+          pingTagCb(token);
+          doNothing = charIdxOnTheRight;
+        } else {
+          tokenReset();
+
+          if (charIdxOnTheRight > i + 1) {
+            initToken("text", i + 1);
+            token.end = charIdxOnTheRight;
+            token.value = str.slice(token.start, token.end);
+            pingTagCb(token);
+          }
+
+          tokenReset();
+          initToken("rule", charIdxOnTheRight);
+          doNothing = charIdxOnTheRight;
+        }
+      }
+
+      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !Number.isInteger(token.queryStartsAt)) {
+        token.queryStartsAt = i;
+      }
+
+      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !Number.isInteger(token.identifierEndsAt)) {
+        token.identifierEndsAt = i;
+        token.identifier = str.slice(token.identifierStartsAt, i);
+      }
+
+      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
+        token.selectors.push({
+          value: str.slice(selectorChunkStartedAt, i),
+          selectorStarts: selectorChunkStartedAt,
+          selectorEnds: i
+        });
+        selectorChunkStartedAt = undefined;
+        token.selectorsEnd = i;
+      }
+
+      if (!doNothing) {
+        if (startsTag(str, i, token, layers)) {
+          if (token.type && token.start !== null) {
+            dumpCurrentToken(token, i);
+            tokenReset();
+          }
+
+          initToken("tag", i);
+
+          if (styleStarts) {
+            styleStarts = false;
+          }
+
+          if (matchRight(str, i, "doctype", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })) {
+            token.kind = "doctype";
+          } else if (matchRight(str, i, "cdata", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })) {
+            token.kind = "cdata";
+          } else if (matchRight(str, i, "xml", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })) {
+            token.kind = "xml";
+          }
+        } else if (startsComment(str, i, token)) {
+          if (Number.isInteger(token.start)) {
+            dumpCurrentToken(token, i);
+          }
+
+          tokenReset();
+          initToken("comment", i);
+
+          if (str[i] === "-") {
+            token.closing = true;
+          } else if (matchRightIncl(str, i, ["<![endif]-->"], {
+            i: true,
+            trimBeforeMatching: true,
+            maxMismatches: 2
+          })) {
+            token.closing = true;
+            token.kind = "only";
+          }
+
+          if (styleStarts) {
+            styleStarts = false;
+          }
+        } else if (startsEsp(str, i, token, layers, styleStarts)) {
+          let wholeEspTagLump = "";
+
+          for (let y = i; y < len; y++) {
+            if (espChars.includes(str[y])) {
+              wholeEspTagLump += str[y];
+            } else {
+              break;
+            }
+          }
+
+          if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[i + wholeEspTagLump.length])) {
+            let lengthOfClosingEspChunk;
+
+            if (layers.length && matchLayerLast(str, i)) {
+              lengthOfClosingEspChunk = matchLayerLast(str, i);
+
+              if (token.type === "esp") {
+                if (!Number.isInteger(token.end)) {
+                  token.end = i + lengthOfClosingEspChunk;
+                  token.value = str.slice(token.start, token.end);
+                }
+
+                if (parentTokenToBackup) {
+                  if (!Array.isArray(parentTokenToBackup.attribs)) {
+                    parentTokenToBackup.attribs = [];
+                  }
+
+                  if (attribToBackup) {
+                    attrib = attribToBackup;
+                    attrib.attribValue.push(lodash_clonedeep(token));
+                  } else {
+                    parentTokenToBackup.attribs.push(lodash_clonedeep(token));
+                  }
+
+                  token = lodash_clonedeep(parentTokenToBackup);
+                  parentTokenToBackup = undefined;
+                  attribToBackup = undefined;
+                  layers.pop();
+                  continue;
+                } else {
+                  dumpCurrentToken(token, i);
+                }
+
+                tokenReset();
+              }
+
+              layers.pop();
+            } else if (layers.length && matchLayerFirst(str, i)) {
+              lengthOfClosingEspChunk = matchLayerFirst(str, i);
+
+              if (token.type === "esp") {
+                if (!Number.isInteger(token.end)) {
+                  token.end = i + lengthOfClosingEspChunk;
+                  token.value = str.slice(token.start, token.end);
+                }
+
+                dumpCurrentToken(token, i);
+                tokenReset();
+              }
+
+              layers = [];
+            } else {
+              layers.push({
+                type: "esp",
+                openingLump: wholeEspTagLump,
+                guessedClosingLump: flipEspTag(wholeEspTagLump),
+                position: i
+              });
+
+              if (token.start !== null) {
+                if (token.type === "tag") {
+                  if (!token.tagName || !token.tagNameEndsAt) {
+                    token.tagNameEndsAt = i;
+                    token.tagName = str.slice(token.tagNameStartsAt, i);
+                    token.recognised = isTagNameRecognised(token.tagName);
+                  }
+
+                  parentTokenToBackup = lodash_clonedeep(token);
+
+                  if (attrib.attribStart && !attrib.attribEnd) {
+                    attribToBackup = lodash_clonedeep(attrib);
+                  }
+                } else {
+                  dumpCurrentToken(token, i);
+                }
+              }
+
+              initToken("esp", i);
+              token.tail = flipEspTag(wholeEspTagLump);
+              token.head = wholeEspTagLump;
+
+              if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
+                parentTokenToBackup.pureHTML = false;
+              }
+
+              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
+                if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+                  attribToBackup.attribValue.pop();
+                } else if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = i;
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, i);
+                }
+              }
+            }
+
+            doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLump.length);
+          }
+        } else if (token.start === null || token.end === i) {
+          if (styleStarts) {
+            if (str[i] && !str[i].trim()) {
+              tokenReset();
+              initToken("text", i);
+              token.end = right(str, i) || str.length;
+              token.value = str.slice(token.start, token.end);
+              pingTagCb(token);
+              doNothing = token.end;
+              tokenReset();
+
+              if (right(str, i) && !["{", "}", "<"].includes(str[right(str, i)])) {
+                const idxOnTheRight = right(str, i);
+                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
+
+                if (str[i + 1] && !str[i + 1].trim()) {
+                  doNothing = right(str, i);
+                }
+              }
+            } else if (str[i]) {
+              tokenReset();
+
+              if ("}".includes(str[i])) {
+                initToken("text", i);
+                doNothing = i + 1;
+              } else {
+                initToken(str[i] === "@" ? "at" : "rule", i);
+              }
+            }
+          } else if (str[i]) {
+            if (i) {
+              token = tokenReset();
+            }
+
+            initToken("text", i);
+          }
+        } else if (token.type === "text" && styleStarts && str[i] && str[i].trim() && !"{},".includes(str[i])) {
+          dumpCurrentToken(token, i);
+          tokenReset();
+          initToken("rule", i);
+        }
+      }
+
+      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
+        if (!",".includes(str[i])) {
+          selectorChunkStartedAt = i;
+
+          if (token.selectorsStart === null) {
+            token.selectorsStart = i;
+          }
+        } else {
+          token.selectorsEnd = i + 1;
+        }
+      }
+
+      if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
+        if (str[i] === "[") ;
+      }
+
+      if (!doNothing) {
+        if (token.type === "tag" && !layers.length && str[i] === ">") {
+          token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
+        } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && (matchLeft(str, i, "!-", {
+          trimBeforeMatching: true
+        }) || matchLeftIncl(str, i, "!-", {
+          trimBeforeMatching: true
+        }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && matchLeft(str, i, "--", {
+          trimBeforeMatching: true,
+          maxMismatches: 1
+        }))) {
+          if (str[i] === "-" && (matchRight(str, i, ["[if", "(if", "{if"], {
+            i: true,
+            trimBeforeMatching: true
+          }) || matchRight(str, i, ["if"], {
+            i: true,
+            trimBeforeMatching: true
+          }) && (xBeforeYOnTheRight$1(str, i, "]", ">") || str.includes("mso", i) && !str.slice(i, str.indexOf("mso")).includes("<") && !str.slice(i, str.indexOf("mso")).includes(">")))) {
+            token.kind = "only";
+          } else if (str[token.start] !== "-" && matchRightIncl(str, i, ["-<![endif"], {
+            i: true,
+            trimBeforeMatching: true,
+            maxMismatches: 2
+          })) {
+            token.kind = "not";
+            token.closing = true;
+          } else if (token.kind === "simple" && !token.closing && str[right(str, i)] === ">") {
+            token.end = right(str, i) + 1;
+            token.kind = "simplet";
+            token.closing = null;
+          } else {
+            token.end = i + 1;
+
+            if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
+              token.end = right(str, i) + 1;
+            }
+
+            token.value = str.slice(token.start, token.end);
+          }
+        } else if (token.type === "comment" && str[i] === ">" && (!layers.length || str[right(str, i)] === "<")) {
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
+            layers.pop();
+          }
+
+          if (!["simplet", "not"].includes(token.kind) && matchRight(str, i, ["<!-->", "<!---->"], {
+            trimBeforeMatching: true,
+            maxMismatches: 1,
+            lastMustMatch: true
+          })) {
+            token.kind = "not";
+          } else {
+            token.end = i + 1;
+            token.value = str.slice(token.start, token.end);
+          }
+        } else if (token.type === "esp" && token.end === null && isStr$5(token.tail) && token.tail.includes(str[i])) {
+          let wholeEspTagClosing = "";
+
+          for (let y = i; y < len; y++) {
+            if (espChars.includes(str[y])) {
+              wholeEspTagClosing += str[y];
+            } else {
+              break;
+            }
+          }
+
+          if (wholeEspTagClosing.length > token.head.length) {
+            const headsFirstChar = token.head[0];
+
+            if (wholeEspTagClosing.endsWith(token.head)) {
+              token.end = i + wholeEspTagClosing.length - token.head.length;
+              token.value = str.slice(token.start, token.end);
+              doNothing = token.end;
+            } else if (wholeEspTagClosing.startsWith(token.tail)) {
+              token.end = i + token.tail.length;
+              token.value = str.slice(token.start, token.end);
+              doNothing = token.end;
+            } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
+              const firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
+              const secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
+
+              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(char => firstPartOfWholeEspTagClosing.includes(char))) {
+                token.end = i + firstPartOfWholeEspTagClosing.length;
+                token.value = str.slice(token.start, token.end);
+                doNothing = token.end;
+              }
+            } else {
+              token.end = i + wholeEspTagClosing.length;
+              token.value = str.slice(token.start, token.end);
+              doNothing = token.end;
+            }
+          } else {
+            token.end = i + wholeEspTagClosing.length;
+            token.value = str.slice(token.start, token.end);
+
+            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+              layers.pop();
+            }
+
+            doNothing = token.end;
+          }
+        }
+      }
+
+      if (!doNothing && token.type === "tag" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
+        if (!str[i] || !charSuitableForTagName(str[i])) {
+          token.tagNameEndsAt = i;
+          token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
+
+          if (token.tagName === "xml" && token.closing && !token.kind) {
+            token.kind = "xml";
+          }
+
+          if (voidTags.includes(token.tagName)) {
+            token.void = true;
+          }
+
+          token.recognised = isTagNameRecognised(token.tagName);
+        }
+      }
+
+      if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && (token.start < i || str[token.start] !== "<")) {
+        if (str[i] === "/") {
+          token.closing = true;
+        } else if (isLatinLetter$1(str[i])) {
+          token.tagNameStartsAt = i;
+
+          if (!token.closing) {
+            token.closing = false;
+          }
+        }
+      }
+
+      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
+        attrib.attribNameEndsAt = i;
+        attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
+        attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+        if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
+          if (`'"`.includes(str[right(str, i)])) ;else {
+            attrib.attribEnd = i;
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
+        }
+      }
+
+      if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
+        attrib.attribStart = i;
+        attrib.attribNameStartsAt = i;
+      }
+
+      if (!doNothing && token.type === "rule") {
+        if (str[i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
+          token.openingCurlyAt = i;
+        } else if (str[i] === "}" && Number.isInteger(token.openingCurlyAt) && !Number.isInteger(token.closingCurlyAt)) {
+          token.closingCurlyAt = i;
+          token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
+          pingTagCb(token);
+          tokenReset();
+        }
+      }
+
+      if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+        if (`'"`.includes(str[i])) {
+          if (str[left(str, i)] === str[i] && !`/>${espChars}`.includes(str[right(str, i)]) && !xBeforeYOnTheRight$1(str, i, "=", `"`) && !xBeforeYOnTheRight$1(str, i, "=", `'`) && (xBeforeYOnTheRight$1(str, i, `"`, `>`) || xBeforeYOnTheRight$1(str, i, `'`, `>`)) && (!str.slice(i + 1).includes("<") || !str.slice(0, str.indexOf("<")).includes("="))) {
+            attrib.attribOpeningQuoteAt = i;
+            attrib.attribValueStartsAt = i + 1;
+
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[attrib.attribValue.length - 1].start && !attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValueStartsAt > attrib.attribValue[attrib.attribValue.length - 1].start) {
+              attrib.attribValue[attrib.attribValue.length - 1].start = attrib.attribValueStartsAt;
+            }
+
+            layers.push({
+              type: "simple",
+              value: str[i],
+              position: i
+            });
+          } else if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
+            attrib.attribClosingQuoteAt = i;
+            attrib.attribValueEndsAt = i;
+
+            if (Number.isInteger(attrib.attribValueStartsAt)) {
+              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+            }
+
+            attrib.attribEnd = i + 1;
+
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+              attrib.attribValue[attrib.attribValue.length - 1].end = i;
+              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
+            }
+
+            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+              layers.pop();
+              layers.pop();
+            }
+
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
+        } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim() || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
+          attrib.attribValueEndsAt = i;
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+            attrib.attribValue[attrib.attribValue.length - 1].end = i;
+            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
+          }
+
+          attrib.attribEnd = i;
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset();
+          layers.pop();
+
+          if (str[i] === ">") {
+            token.end = i + 1;
+            token.value = str.slice(token.start, token.end);
+          }
+        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[i - 1] && isLatinLetter$1(str[i - 1]))) {
+          let whitespaceFound;
+          let attribClosingQuoteAt;
+
+          for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
+            if (!whitespaceFound && str[y] && !str[y].trim()) {
+              whitespaceFound = true;
+
+              if (attribClosingQuoteAt) {
+                const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
+              }
+            }
+
+            if (whitespaceFound && str[y] && str[y].trim()) {
+              whitespaceFound = false;
+
+              if (!attribClosingQuoteAt) {
+                attribClosingQuoteAt = y + 1;
+              }
+            }
+          }
+
+          if (attribClosingQuoteAt) {
+            attrib.attribValueEndsAt = attribClosingQuoteAt;
+
+            if (Number.isInteger(attrib.attribValueStartsAt)) {
+              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
+
+              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+                attrib.attribValue[attrib.attribValue.length - 1].end = attrib.attribValueEndsAt;
+                attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValueEndsAt);
+              }
+            }
+
+            attrib.attribEnd = attribClosingQuoteAt;
+
+            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+              layers.pop();
+            }
+
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+            i = attribClosingQuoteAt - 1;
+            continue;
+          } else if (attrib.attribOpeningQuoteAt && (`'"`.includes(str[right(str, i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()))) {
+            i = attrib.attribOpeningQuoteAt;
+            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+            attrib.attribValueStartsAt = null;
+            layers.pop();
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+            continue;
+          }
+        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= i)) {
+          attrib.attribValue.push({
+            type: "text",
+            start: i,
+            end: null,
+            value: null
+          });
+        }
+      }
+
+      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
+        if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
+          const firstCharOnTheRight = right(str, i);
+          const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
+
+          if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
+            attrib.attribEnd = i + 1;
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(char => `<>=`.includes(char))) {
+            attrib.attribValueStartsAt = firstCharOnTheRight;
+            layers.push({
+              type: "simple",
+              value: null,
+              position: attrib.attribValueStartsAt
+            });
+          }
+        } else if (`'"`.includes(str[i])) {
+          const nextCharIdx = right(str, i);
+
+          if (nextCharIdx && `'"`.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
+            layers.pop();
+          } else {
+            attrib.attribOpeningQuoteAt = i;
+
+            if (str[i + 1]) {
+              attrib.attribValueStartsAt = i + 1;
+            }
+
+            if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end)) {
+              attrib.attribValue.push({
+                type: "text",
+                start: attrib.attribValueStartsAt,
+                end: null,
+                value: null
+              });
+            }
+          }
+        }
+      }
+
+      if (str[i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
+        let thisIsRealEnding = false;
+
+        if (str[i + 1]) {
+          for (let y = i + 1; y < len; y++) {
+            if (attrib.attribOpeningQuoteAt !== null && str[y] === str[attrib.attribOpeningQuoteAt]) {
+              if (y !== i + 1 && str[y - 1] !== "=") {
+                thisIsRealEnding = true;
+              }
+
+              break;
+            } else if (str[y] === ">") {
+              break;
+            } else if (str[y] === "<") {
+              thisIsRealEnding = true;
+              layers.pop();
+              break;
+            } else if (!str[y + 1]) {
+              thisIsRealEnding = true;
+              break;
+            }
+          }
+        } else {
+          thisIsRealEnding = true;
+        }
+
+        if (thisIsRealEnding) {
+          token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
+
+          if (Number.isInteger(attrib.attribValueStartsAt) && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
+            attrib.attribValueEndsAt = i;
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
+              attrib.attribValue[attrib.attribValue.length - 1].end = i;
+              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
+            }
+          } else {
+            attrib.attribValueStartsAt = null;
+          }
+
+          attrib.attribEnd = i;
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset();
+        }
+      }
+
+      if (str[i] && opts.charCb) {
+        pingCharCb({
+          type: token.type,
+          chr: str[i],
+          i
+        });
+      }
+
+      if (!str[i] && token.start !== null) {
+        token.end = i;
+        token.value = str.slice(token.start, token.end);
+        pingTagCb(token);
+      }
+    }
+
+    if (charStash.length) {
+      for (let i = 0, len2 = charStash.length; i < len2; i++) {
+        reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
+      }
+    }
+
+    if (tagStash.length) {
+      for (let i = 0, len2 = tagStash.length; i < len2; i++) {
+        reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
+      }
+    }
+
+    return {
+      timeTakenInMilliseconds: Date.now() - start
+    };
+  }
+
+  var objectPath = createCommonjsModule(function (module) {
+    (function (root, factory) {
+      /*istanbul ignore next:cant test*/
+
+      {
+        module.exports = factory();
+      }
+    })(commonjsGlobal, function () {
+
+      var toStr = Object.prototype.toString;
+
+      function hasOwnProperty(obj, prop) {
+        if (obj == null) {
+          return false;
+        } //to handle objects with null prototypes (too edge case?)
+
+
+        return Object.prototype.hasOwnProperty.call(obj, prop);
+      }
+
+      function isEmpty(value) {
+        if (!value) {
+          return true;
+        }
+
+        if (isArray(value) && value.length === 0) {
+          return true;
+        } else if (typeof value !== 'string') {
+          for (var i in value) {
+            if (hasOwnProperty(value, i)) {
+              return false;
+            }
+          }
+
+          return true;
+        }
+
+        return false;
+      }
+
+      function toString(type) {
+        return toStr.call(type);
+      }
+
+      function isObject(obj) {
+        return typeof obj === 'object' && toString(obj) === "[object Object]";
+      }
+
+      var isArray = Array.isArray || function (obj) {
+        /*istanbul ignore next:cant test*/
+        return toStr.call(obj) === '[object Array]';
+      };
+
+      function isBoolean(obj) {
+        return typeof obj === 'boolean' || toString(obj) === '[object Boolean]';
+      }
+
+      function getKey(key) {
+        var intKey = parseInt(key);
+
+        if (intKey.toString() === key) {
+          return intKey;
+        }
+
+        return key;
+      }
+
+      function factory(options) {
+        options = options || {};
+
+        var objectPath = function (obj) {
+          return Object.keys(objectPath).reduce(function (proxy, prop) {
+            if (prop === 'create') {
+              return proxy;
+            }
+            /*istanbul ignore else*/
+
+
+            if (typeof objectPath[prop] === 'function') {
+              proxy[prop] = objectPath[prop].bind(objectPath, obj);
+            }
+
+            return proxy;
+          }, {});
+        };
+
+        function hasShallowProperty(obj, prop) {
+          return options.includeInheritedProps || typeof prop === 'number' && Array.isArray(obj) || hasOwnProperty(obj, prop);
+        }
+
+        function getShallowProperty(obj, prop) {
+          if (hasShallowProperty(obj, prop)) {
+            return obj[prop];
+          }
+        }
+
+        function set(obj, path, value, doNotReplace) {
+          if (typeof path === 'number') {
+            path = [path];
+          }
+
+          if (!path || path.length === 0) {
+            return obj;
+          }
+
+          if (typeof path === 'string') {
+            return set(obj, path.split('.').map(getKey), value, doNotReplace);
+          }
+
+          var currentPath = path[0];
+          var currentValue = getShallowProperty(obj, currentPath);
+
+          if (path.length === 1) {
+            if (currentValue === void 0 || !doNotReplace) {
+              obj[currentPath] = value;
+            }
+
+            return currentValue;
+          }
+
+          if (currentValue === void 0) {
+            //check if we assume an array
+            if (typeof path[1] === 'number') {
+              obj[currentPath] = [];
+            } else {
+              obj[currentPath] = {};
+            }
+          }
+
+          return set(obj[currentPath], path.slice(1), value, doNotReplace);
+        }
+
+        objectPath.has = function (obj, path) {
+          if (typeof path === 'number') {
+            path = [path];
+          } else if (typeof path === 'string') {
+            path = path.split('.');
+          }
+
+          if (!path || path.length === 0) {
+            return !!obj;
+          }
+
+          for (var i = 0; i < path.length; i++) {
+            var j = getKey(path[i]);
+
+            if (typeof j === 'number' && isArray(obj) && j < obj.length || (options.includeInheritedProps ? j in Object(obj) : hasOwnProperty(obj, j))) {
+              obj = obj[j];
+            } else {
+              return false;
+            }
+          }
+
+          return true;
+        };
+
+        objectPath.ensureExists = function (obj, path, value) {
+          return set(obj, path, value, true);
+        };
+
+        objectPath.set = function (obj, path, value, doNotReplace) {
+          return set(obj, path, value, doNotReplace);
+        };
+
+        objectPath.insert = function (obj, path, value, at) {
+          var arr = objectPath.get(obj, path);
+          at = ~~at;
+
+          if (!isArray(arr)) {
+            arr = [];
+            objectPath.set(obj, path, arr);
+          }
+
+          arr.splice(at, 0, value);
+        };
+
+        objectPath.empty = function (obj, path) {
+          if (isEmpty(path)) {
+            return void 0;
+          }
+
+          if (obj == null) {
+            return void 0;
+          }
+
+          var value, i;
+
+          if (!(value = objectPath.get(obj, path))) {
+            return void 0;
+          }
+
+          if (typeof value === 'string') {
+            return objectPath.set(obj, path, '');
+          } else if (isBoolean(value)) {
+            return objectPath.set(obj, path, false);
+          } else if (typeof value === 'number') {
+            return objectPath.set(obj, path, 0);
+          } else if (isArray(value)) {
+            value.length = 0;
+          } else if (isObject(value)) {
+            for (i in value) {
+              if (hasShallowProperty(value, i)) {
+                delete value[i];
+              }
+            }
+          } else {
+            return objectPath.set(obj, path, null);
+          }
+        };
+
+        objectPath.push = function (obj, path
+        /*, values */
+        ) {
+          var arr = objectPath.get(obj, path);
+
+          if (!isArray(arr)) {
+            arr = [];
+            objectPath.set(obj, path, arr);
+          }
+
+          arr.push.apply(arr, Array.prototype.slice.call(arguments, 2));
+        };
+
+        objectPath.coalesce = function (obj, paths, defaultValue) {
+          var value;
+
+          for (var i = 0, len = paths.length; i < len; i++) {
+            if ((value = objectPath.get(obj, paths[i])) !== void 0) {
+              return value;
+            }
+          }
+
+          return defaultValue;
+        };
+
+        objectPath.get = function (obj, path, defaultValue) {
+          if (typeof path === 'number') {
+            path = [path];
+          }
+
+          if (!path || path.length === 0) {
+            return obj;
+          }
+
+          if (obj == null) {
+            return defaultValue;
+          }
+
+          if (typeof path === 'string') {
+            return objectPath.get(obj, path.split('.'), defaultValue);
+          }
+
+          var currentPath = getKey(path[0]);
+          var nextObj = getShallowProperty(obj, currentPath);
+
+          if (nextObj === void 0) {
+            return defaultValue;
+          }
+
+          if (path.length === 1) {
+            return nextObj;
+          }
+
+          return objectPath.get(obj[currentPath], path.slice(1), defaultValue);
+        };
+
+        objectPath.del = function del(obj, path) {
+          if (typeof path === 'number') {
+            path = [path];
+          }
+
+          if (obj == null) {
+            return obj;
+          }
+
+          if (isEmpty(path)) {
+            return obj;
+          }
+
+          if (typeof path === 'string') {
+            return objectPath.del(obj, path.split('.'));
+          }
+
+          var currentPath = getKey(path[0]);
+
+          if (!hasShallowProperty(obj, currentPath)) {
+            return obj;
+          }
+
+          if (path.length === 1) {
+            if (isArray(obj)) {
+              obj.splice(currentPath, 1);
+            } else {
+              delete obj[currentPath];
+            }
+          } else {
+            return objectPath.del(obj[currentPath], path.slice(1));
+          }
+
+          return obj;
+        };
+
+        return objectPath;
+      }
+
+      var mod = factory();
+      mod.create = factory;
+      mod.withInheritedProps = factory({
+        includeInheritedProps: true
+      });
+      return mod;
+    });
+  });
+
+  /**
+   * codsen-parser
+   * Parser aiming at broken code, especially HTML & CSS
+   * Version: 0.6.2
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
+   */
+
+  function isObj$5(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+
+  function layerPending(layers, tokenObj) {
+    return tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing));
+  }
+
+  function cparser(str, originalOpts) {
+    if (typeof str !== "string") {
+      if (str === undefined) {
+        throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+      } else {
+        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+      }
+    }
+
+    if (originalOpts && !isObj$5(originalOpts)) {
+      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+    }
+
+    if (isObj$5(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
+    }
+
+    if (isObj$5(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
+    }
+
+    if (isObj$5(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
+    }
+
+    if (isObj$5(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
+      throw new Error(`codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ${typeof originalOpts.errCb}, equal to ${JSON.stringify(originalOpts.errCb, null, 4)}`);
+    }
+
+    const defaults = {
+      reportProgressFunc: null,
+      reportProgressFuncFrom: 0,
+      reportProgressFuncTo: 100,
+      tagCb: null,
+      charCb: null,
+      errCb: null
+    };
+    const opts = { ...defaults,
+      ...originalOpts
+    };
+    const layers = [];
+    const res = [];
+    let path;
+    let nestNext = false;
+    let lastProcessedToken = {};
+    const tokensWithChildren = ["tag", "comment"];
+    const tagNamesThatDontHaveClosings = ["doctype"];
+    tokenizer(str, {
+      reportProgressFunc: opts.reportProgressFunc,
+      reportProgressFuncFrom: opts.reportProgressFuncFrom,
+      reportProgressFuncTo: opts.reportProgressFuncTo,
+      tagCbLookahead: 2,
+      tagCb: (tokenObj, next) => {
+        if (typeof opts.tagCb === "function") {
+          opts.tagCb(tokenObj);
+        }
+
+        let prevToken = objectPath.get(res, path);
+
+        if (!isObj$5(prevToken)) {
+          prevToken = null;
+        }
+
+        if (nestNext && !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (!Array.isArray(next) || !next.length || !Array.isArray(layers) || !layers.length || layers.length < 3 || !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
+          nestNext = false;
+          path = `${path}.children.0`;
+        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
+          path = pathNext(pathUp(path));
+
+          if (layerPending(layers, tokenObj)) {
+            while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
+              layers.pop();
+            }
+
+            layers.pop();
+            nestNext = false;
+          } else {
+            if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
+              path = pathNext(pathUp(path));
+
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `${lastLayersToken.type}${lastLayersToken.type === "comment" ? `-${lastLayersToken.kind}` : ""}-missing-closing`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken
+                });
+              }
+
+              layers.pop();
+              layers.pop();
+            } else if (layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
+              path = pathNext(pathUp(path));
+
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `tag-rogue`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken
+                });
+              }
+
+              layers.pop();
+              layers.pop();
+              layers.pop();
+            } else if (layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `tag-rogue`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken
+                });
+              }
+
+              layers.pop();
+              layers.pop();
+            }
+          }
+        } else if (!path) {
+          path = "0";
+        } else {
+          path = pathNext(path);
+
+          if (layerPending(layers, tokenObj)) {
+            layers.pop();
+          }
+        }
+
+        if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
+          nestNext = true;
+
+          if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
+            layers.push({ ...tokenObj
+            });
+          }
+        }
+
+        const previousPath = pathPrev(path);
+        const parentPath = pathUp(path);
+        let parentTagsToken;
+
+        if (parentPath && path.includes(".")) {
+          parentTagsToken = objectPath.get(res, parentPath);
+        }
+
+        let previousTagsToken;
+
+        if (previousPath) {
+          previousTagsToken = objectPath.get(res, previousPath);
+        }
+
+        const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
+        let parentsLastChildTokenValue;
+        let parentsLastChildTokenPath;
+
+        if (isObj$5(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
+          parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
+          parentsLastChildTokenPath = `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`;
+        }
+
+        let tokenTakenCareOf = false;
+
+        if (tokenObj.type === "text" && isObj$5(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+          const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
+          const suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
+
+          if (suspiciousEndingStartsAt > 0) {
+            objectPath.set(res, path, { ...tokenObj,
+              end: tokenObj.start + suspiciousEndingStartsAt,
+              value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
+            });
+
+            if (tokensWithChildren.includes(tokenObj.type)) {
+              tokenObj.children = [];
+            }
+          }
+
+          path = pathNext(pathUp(path));
+          objectPath.set(res, path, {
+            type: "comment",
+            kind: "simple",
+            closing: true,
+            start: tokenObj.start + suspiciousEndingStartsAt,
+            end: tokenObj.start + suspiciousEndingEndsAt,
+            value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
+            children: []
+          });
+
+          if (suspiciousEndingEndsAt < tokenObj.value.length) {
+            path = pathNext(path);
+            objectPath.set(res, path, {
+              type: "text",
+              start: tokenObj.start + suspiciousEndingEndsAt,
+              end: tokenObj.end,
+              value: tokenObj.value.slice(suspiciousEndingEndsAt)
+            });
+          }
+
+          tokenTakenCareOf = true;
+        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$5(previousTagsToken)) {
+          if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
+            const capturedMalformedTagRanges = [];
+            strFindMalformed(previousTagsToken.value, "<!--", obj => {
+              capturedMalformedTagRanges.push(obj);
+            }, {
+              maxDistance: 2
+            });
+
+            if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+              const malformedRange = capturedMalformedTagRanges.pop();
+
+              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$5(previousTagsToken)) {
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+
+                path = previousPath;
+                objectPath.set(res, path, { ...tokenObj,
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value}${tokenObj.value}`
+                });
+                tokenTakenCareOf = true;
+              } else if (previousPath && isObj$5(previousTagsToken)) {
+                objectPath.set(res, previousPath, { ...previousTagsToken,
+                  end: malformedRange.idxFrom + previousTagsToken.start,
+                  value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
+                });
+
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+
+                objectPath.set(res, path, { ...tokenObj,
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
+                });
+                tokenTakenCareOf = true;
+              }
+            }
+          } else if (isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+            const capturedMalformedTagRanges = [];
+            strFindMalformed(parentsLastChildTokenValue.value, "<!--", obj => {
+              capturedMalformedTagRanges.push(obj);
+            }, {
+              maxDistance: 2
+            });
+
+            if (capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+              const malformedRange = capturedMalformedTagRanges.pop();
+
+              if (!left(parentsLastChildTokenValue.value, malformedRange.idxFrom) && previousPath && isObj$5(parentsLastChildTokenValue)) {
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+
+                objectPath.set(res, path, { ...tokenObj,
+                  start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
+                });
+                objectPath.del(res, `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`);
+                tokenTakenCareOf = true;
+              } else if (previousPath && isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
+                objectPath.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
+                  end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  value: parentsLastChildTokenValue.value.slice(0, malformedRange.idxFrom)
+                });
+
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+
+                objectPath.set(res, path, { ...tokenObj,
+                  start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
+                });
+                tokenTakenCareOf = true;
+              }
+            }
+          }
+        }
+
+        if (!tokenTakenCareOf) {
+          if (tokensWithChildren.includes(tokenObj.type)) {
+            tokenObj.children = [];
+          }
+
+          objectPath.set(res, path, tokenObj);
+        }
+
+        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$5(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+          if (tokenObj.void) {
+            if (opts.errCb) {
+              opts.errCb({
+                ruleId: `tag-void-frontal-slash`,
+                idxFrom: tokenObj.start,
+                idxTo: tokenObj.end,
+                fix: {
+                  ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
+                },
+                tokenObj
+              });
+            }
+          } else {
+            if (opts.errCb) {
+              opts.errCb({
+                ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-opening`,
+                idxFrom: tokenObj.start,
+                idxTo: tokenObj.end,
+                tokenObj
+              });
+            }
+          }
+        }
+
+        lastProcessedToken = { ...tokenObj
+        };
+      },
+      charCb: opts.charCb
+    });
+
+    if (layers.length) {
+      layers.forEach(tokenObj => {
+        if (opts.errCb) {
+          opts.errCb({
+            ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-closing`,
+            idxFrom: tokenObj.start,
+            idxTo: tokenObj.end,
+            tokenObj
+          });
+        }
+      });
+    }
+
+    return res;
+  }
+
+  var domain; // This constructor is used to store event handlers. Instantiating this is
+  // faster than explicitly calling `Object.create(null)` to get a "clean" empty
+  // object (tested with v8 v4.9).
+
+  function EventHandlers() {}
+
+  EventHandlers.prototype = Object.create(null);
+
+  function EventEmitter() {
+    EventEmitter.init.call(this);
+  }
+  // require('events') === require('events').EventEmitter
+
+  EventEmitter.EventEmitter = EventEmitter;
+  EventEmitter.usingDomains = false;
+  EventEmitter.prototype.domain = undefined;
+  EventEmitter.prototype._events = undefined;
+  EventEmitter.prototype._maxListeners = undefined; // By default EventEmitters will print a warning if more than 10 listeners are
+  // added to it. This is a useful default which helps finding memory leaks.
+
+  EventEmitter.defaultMaxListeners = 10;
+
+  EventEmitter.init = function () {
+    this.domain = null;
+
+    if (EventEmitter.usingDomains) {
+      // if there is an active domain, then attach to it.
+      if (domain.active ) ;
+    }
+
+    if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
+      this._events = new EventHandlers();
+      this._eventsCount = 0;
+    }
+
+    this._maxListeners = this._maxListeners || undefined;
+  }; // Obviously not all Emitters should be limited to 10. This function allows
+  // that to be increased. Set to zero for unlimited.
+
+
+  EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
+    this._maxListeners = n;
+    return this;
+  };
+
+  function $getMaxListeners(that) {
+    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
+    return that._maxListeners;
+  }
+
+  EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+    return $getMaxListeners(this);
+  }; // These standalone emit* functions are used to optimize calling of event
+  // handlers for fast cases because emit() itself often has a variable number of
+  // arguments and can be deoptimized because of that. These functions always have
+  // the same number of arguments and thus do not get deoptimized, so the code
+  // inside them can execute faster.
+
+
+  function emitNone(handler, isFn, self) {
+    if (isFn) handler.call(self);else {
+      var len = handler.length;
+      var listeners = arrayClone(handler, len);
+
+      for (var i = 0; i < len; ++i) listeners[i].call(self);
+    }
+  }
+
+  function emitOne(handler, isFn, self, arg1) {
+    if (isFn) handler.call(self, arg1);else {
+      var len = handler.length;
+      var listeners = arrayClone(handler, len);
+
+      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
+    }
+  }
+
+  function emitTwo(handler, isFn, self, arg1, arg2) {
+    if (isFn) handler.call(self, arg1, arg2);else {
+      var len = handler.length;
+      var listeners = arrayClone(handler, len);
+
+      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
+    }
+  }
+
+  function emitThree(handler, isFn, self, arg1, arg2, arg3) {
+    if (isFn) handler.call(self, arg1, arg2, arg3);else {
+      var len = handler.length;
+      var listeners = arrayClone(handler, len);
+
+      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
+    }
+  }
+
+  function emitMany(handler, isFn, self, args) {
+    if (isFn) handler.apply(self, args);else {
+      var len = handler.length;
+      var listeners = arrayClone(handler, len);
+
+      for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
+    }
+  }
+
+  EventEmitter.prototype.emit = function emit(type) {
+    var er, handler, len, args, i, events, domain;
+    var doError = type === 'error';
+    events = this._events;
+    if (events) doError = doError && events.error == null;else if (!doError) return false;
+    domain = this.domain; // If there is no 'error' event listener then throw.
+
+    if (doError) {
+      er = arguments[1];
+
+      if (domain) {
+        if (!er) er = new Error('Uncaught, unspecified "error" event');
+        er.domainEmitter = this;
+        er.domain = domain;
+        er.domainThrown = false;
+        domain.emit('error', er);
+      } else if (er instanceof Error) {
+        throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
+      }
+
+      return false;
+    }
+
+    handler = events[type];
+    if (!handler) return false;
+    var isFn = typeof handler === 'function';
+    len = arguments.length;
+
+    switch (len) {
+      // fast cases
+      case 1:
+        emitNone(handler, isFn, this);
+        break;
+
+      case 2:
+        emitOne(handler, isFn, this, arguments[1]);
+        break;
+
+      case 3:
+        emitTwo(handler, isFn, this, arguments[1], arguments[2]);
+        break;
+
+      case 4:
+        emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
+        break;
+      // slower
+
+      default:
+        args = new Array(len - 1);
+
+        for (i = 1; i < len; i++) args[i - 1] = arguments[i];
+
+        emitMany(handler, isFn, this, args);
+    }
+    return true;
+  };
+
+  function _addListener(target, type, listener, prepend) {
+    var m;
+    var events;
+    var existing;
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    events = target._events;
+
+    if (!events) {
+      events = target._events = new EventHandlers();
+      target._eventsCount = 0;
+    } else {
+      // To avoid recursion in the case that type === "newListener"! Before
+      // adding it to the listeners, first emit "newListener".
+      if (events.newListener) {
+        target.emit('newListener', type, listener.listener ? listener.listener : listener); // Re-assign `events` because a newListener handler could have caused the
+        // this._events to be assigned to a new object
+
+        events = target._events;
+      }
+
+      existing = events[type];
+    }
+
+    if (!existing) {
+      // Optimize the case of one listener. Don't need the extra array object.
+      existing = events[type] = listener;
+      ++target._eventsCount;
+    } else {
+      if (typeof existing === 'function') {
+        // Adding the second element, need to change to array.
+        existing = events[type] = prepend ? [listener, existing] : [existing, listener];
+      } else {
+        // If we've already got an array, just append.
+        if (prepend) {
+          existing.unshift(listener);
+        } else {
+          existing.push(listener);
+        }
+      } // Check for listener leak
+
+
+      if (!existing.warned) {
+        m = $getMaxListeners(target);
+
+        if (m && m > 0 && existing.length > m) {
+          existing.warned = true;
+          var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
+          w.name = 'MaxListenersExceededWarning';
+          w.emitter = target;
+          w.type = type;
+          w.count = existing.length;
+          emitWarning(w);
+        }
+      }
+    }
+
+    return target;
+  }
+
+  function emitWarning(e) {
+    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
+  }
+
+  EventEmitter.prototype.addListener = function addListener(type, listener) {
+    return _addListener(this, type, listener, false);
+  };
+
+  EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+  EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+    return _addListener(this, type, listener, true);
+  };
+
+  function _onceWrap(target, type, listener) {
+    var fired = false;
+
+    function g() {
+      target.removeListener(type, g);
+
+      if (!fired) {
+        fired = true;
+        listener.apply(target, arguments);
+      }
+    }
+
+    g.listener = listener;
+    return g;
+  }
+
+  EventEmitter.prototype.once = function once(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.on(type, _onceWrap(this, type, listener));
+    return this;
+  };
+
+  EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.prependListener(type, _onceWrap(this, type, listener));
+    return this;
+  }; // emits a 'removeListener' event iff the listener was removed
+
+
+  EventEmitter.prototype.removeListener = function removeListener(type, listener) {
+    var list, events, position, i, originalListener;
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    events = this._events;
+    if (!events) return this;
+    list = events[type];
+    if (!list) return this;
+
+    if (list === listener || list.listener && list.listener === listener) {
+      if (--this._eventsCount === 0) this._events = new EventHandlers();else {
+        delete events[type];
+        if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
+      }
+    } else if (typeof list !== 'function') {
+      position = -1;
+
+      for (i = list.length; i-- > 0;) {
+        if (list[i] === listener || list[i].listener && list[i].listener === listener) {
+          originalListener = list[i].listener;
+          position = i;
+          break;
+        }
+      }
+
+      if (position < 0) return this;
+
+      if (list.length === 1) {
+        list[0] = undefined;
+
+        if (--this._eventsCount === 0) {
+          this._events = new EventHandlers();
+          return this;
+        } else {
+          delete events[type];
+        }
+      } else {
+        spliceOne(list, position);
+      }
+
+      if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
+    }
+
+    return this;
+  };
+
+  EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
+    var listeners, events;
+    events = this._events;
+    if (!events) return this; // not listening for removeListener, no need to emit
+
+    if (!events.removeListener) {
+      if (arguments.length === 0) {
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+      } else if (events[type]) {
+        if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
+      }
+
+      return this;
+    } // emit removeListener for all listeners on all events
+
+
+    if (arguments.length === 0) {
+      var keys = Object.keys(events);
+
+      for (var i = 0, key; i < keys.length; ++i) {
+        key = keys[i];
+        if (key === 'removeListener') continue;
+        this.removeAllListeners(key);
+      }
+
+      this.removeAllListeners('removeListener');
+      this._events = new EventHandlers();
+      this._eventsCount = 0;
+      return this;
+    }
+
+    listeners = events[type];
+
+    if (typeof listeners === 'function') {
+      this.removeListener(type, listeners);
+    } else if (listeners) {
+      // LIFO order
+      do {
+        this.removeListener(type, listeners[listeners.length - 1]);
+      } while (listeners[0]);
+    }
+
+    return this;
+  };
+
+  EventEmitter.prototype.listeners = function listeners(type) {
+    var evlistener;
+    var ret;
+    var events = this._events;
+    if (!events) ret = [];else {
+      evlistener = events[type];
+      if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
+    }
+    return ret;
+  };
+
+  EventEmitter.listenerCount = function (emitter, type) {
+    if (typeof emitter.listenerCount === 'function') {
+      return emitter.listenerCount(type);
+    } else {
+      return listenerCount.call(emitter, type);
+    }
+  };
+
+  EventEmitter.prototype.listenerCount = listenerCount;
+
+  function listenerCount(type) {
+    var events = this._events;
+
+    if (events) {
+      var evlistener = events[type];
+
+      if (typeof evlistener === 'function') {
+        return 1;
+      } else if (evlistener) {
+        return evlistener.length;
+      }
+    }
+
+    return 0;
+  }
+
+  EventEmitter.prototype.eventNames = function eventNames() {
+    return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
+  }; // About 1.5x faster than the two-arg version of Array#splice().
+
+
+  function spliceOne(list, index) {
+    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
+
+    list.pop();
+  }
+
+  function arrayClone(arr, i) {
+    var copy = new Array(i);
+
+    while (i--) copy[i] = arr[i];
+
+    return copy;
+  }
+
+  function unwrapListeners(arr) {
+    var ret = new Array(arr.length);
+
+    for (var i = 0; i < ret.length; ++i) {
+      ret[i] = arr[i].listener || arr[i];
+    }
+
+    return ret;
+  }
+
+  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
+
+  var escapeStringRegexp = string => {
+    if (typeof string !== 'string') {
+      throw new TypeError('Expected a string');
+    }
+
+    return string.replace(matchOperatorsRegex, '\\$&');
+  };
+
+  const regexpCache = new Map();
+
+  function makeRegexp(pattern, options) {
+    options = {
+      caseSensitive: false,
+      ...options
+    };
+    const cacheKey = pattern + JSON.stringify(options);
+
+    if (regexpCache.has(cacheKey)) {
+      return regexpCache.get(cacheKey);
+    }
+
+    const negated = pattern[0] === '!';
+
+    if (negated) {
+      pattern = pattern.slice(1);
+    }
+
+    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
+    const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+    regexp.negated = negated;
+    regexpCache.set(cacheKey, regexp);
+    return regexp;
+  }
+
+  var matcher = (inputs, patterns, options) => {
+    if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
+      throw new TypeError(`Expected two arrays, got ${typeof inputs} ${typeof patterns}`);
+    }
+
+    if (patterns.length === 0) {
+      return inputs;
+    }
+
+    const firstNegated = patterns[0][0] === '!';
+    patterns = patterns.map(pattern => makeRegexp(pattern, options));
+    const result = [];
+
+    for (const input of inputs) {
+      // If first pattern is negated we include everything to match user expectation
+      let matches = firstNegated;
+
+      for (const pattern of patterns) {
+        if (pattern.test(input)) {
+          matches = !pattern.negated;
+        }
+      }
+
+      if (matches) {
+        result.push(input);
+      }
+    }
+
+    return result;
+  };
+
+  var isMatch = (input, pattern, options) => {
+    const inputArray = Array.isArray(input) ? input : [input];
+    const patternArray = Array.isArray(pattern) ? pattern : [pattern];
+    return inputArray.some(input => {
+      return patternArray.every(pattern => {
+        const regexp = makeRegexp(pattern, options);
+        const matches = regexp.test(input);
+        return regexp.negated ? !matches : matches;
+      });
+    });
+  };
+  matcher.isMatch = isMatch;
 
   var defineLazyProp = (object, propertyName, fn) => {
     const define = value => Object.defineProperty(object, propertyName, {
@@ -11330,90 +15096,10 @@
   	"bad-named-html-entity-unrecognised"
   ];
 
-  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
-
-  var escapeStringRegexp = string => {
-    if (typeof string !== 'string') {
-      throw new TypeError('Expected a string');
-    }
-
-    return string.replace(matchOperatorsRegex, '\\$&');
-  };
-
-  const regexpCache = new Map();
-
-  function makeRegexp(pattern, options) {
-    options = {
-      caseSensitive: false,
-      ...options
-    };
-    const cacheKey = pattern + JSON.stringify(options);
-
-    if (regexpCache.has(cacheKey)) {
-      return regexpCache.get(cacheKey);
-    }
-
-    const negated = pattern[0] === '!';
-
-    if (negated) {
-      pattern = pattern.slice(1);
-    }
-
-    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
-    const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
-    regexp.negated = negated;
-    regexpCache.set(cacheKey, regexp);
-    return regexp;
-  }
-
-  var matcher = (inputs, patterns, options) => {
-    if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
-      throw new TypeError(`Expected two arrays, got ${typeof inputs} ${typeof patterns}`);
-    }
-
-    if (patterns.length === 0) {
-      return inputs;
-    }
-
-    const firstNegated = patterns[0][0] === '!';
-    patterns = patterns.map(pattern => makeRegexp(pattern, options));
-    const result = [];
-
-    for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation
-      let matches = firstNegated;
-
-      for (const pattern of patterns) {
-        if (pattern.test(input)) {
-          matches = !pattern.negated;
-        }
-      }
-
-      if (matches) {
-        result.push(input);
-      }
-    }
-
-    return result;
-  };
-
-  var isMatch = (input, pattern, options) => {
-    const inputArray = Array.isArray(input) ? input : [input];
-    const patternArray = Array.isArray(pattern) ? pattern : [pattern];
-    return inputArray.some(input => {
-      return patternArray.every(pattern => {
-        const regexp = makeRegexp(pattern, options);
-        const matches = regexp.test(input);
-        return regexp.negated ? !matches : matches;
-      });
-    });
-  };
-  matcher.isMatch = isMatch;
-
   /**
    * string-process-comma-separated
    * Extracts chunks from possibly comma or whatever-separated string
-   * Version: 1.2.5
+   * Version: 1.2.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
@@ -11437,7 +15123,9 @@
       cb: null,
       errCb: null
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (!Number.isInteger(originalOpts.from)) {
       opts.from = 0;
@@ -11511,14 +15199,14 @@
           let endingIdx = i;
 
           if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
-            endingIdx++;
+            endingIdx += 1;
           }
 
           let whatToAdd = "";
 
           if (opts.oneSpaceAfterCommaOK) {
             if (str[whitespaceStartsAt] === " " && str[whitespaceStartsAt - 1] === opts.separator) {
-              startingIdx++;
+              startingIdx += 1;
             } else if (str[whitespaceStartsAt] !== " ") {
               whatToAdd = " ";
             }
@@ -11834,7 +15522,9 @@
       quickPermittedValues: null,
       permittedValues: null
     };
-    var opts = Object.assign({}, defaults, originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
 
     var _checkForWhitespace = checkForWhitespace(str, idxOffset),
         charStart = _checkForWhitespace.charStart,
@@ -11899,23 +15589,29 @@
   function isAnEnabledValue(maybeARulesValue) {
     if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
       return maybeARulesValue;
-    } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
+    }
+
+    if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
       return maybeARulesValue[0];
     }
 
     return 0;
   }
 
-  function isObj(something) {
+  function isObj$6(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isAnEnabledRule(config, ruleId) {
-    if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
+    if (isObj$6(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
       return config[ruleId];
-    } else if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
+    }
+
+    if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
       return config[ruleId.split("-")[0]];
-    } else if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
+    }
+
+    if (isObj$6(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
       return config.all;
     } // default return - rule's off:
 
@@ -14921,7 +18617,7 @@
   }
 
   // rule: tag-space-before-closing-bracket
-  var BACKSLASH = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+  var BACKSLASH$2 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
   // tag name letter:
   //
   // < table>
@@ -14939,7 +18635,7 @@
         !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
         // any kind (we don't want to step into rule's
         // "tag-space-between-slash-and-bracket" turf)
-        !"".concat(BACKSLASH, "/").includes(context.str[left(context.str, node.end - 1)])) {
+        !"".concat(BACKSLASH$2, "/").includes(context.str[left(context.str, node.end - 1)])) {
           ranges.push([left(context.str, node.end - 1) + 1, node.end - 1]);
         }
 
@@ -15032,7 +18728,7 @@
   }
 
   // rule: tag-closing-backslash
-  var BACKSLASH$1 = "\\";
+  var BACKSLASH$3 = "\\";
 
   function tagClosingBackslash(context) {
     return {
@@ -15047,10 +18743,10 @@
         //
         //
 
-        if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$1)) {
+        if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$3)) {
           for (var i = node.start; i < node.tagNameStartsAt; i++) {
             // fish-out all backslashes
-            if (context.str[i] === BACKSLASH$1) {
+            if (context.str[i] === BACKSLASH$3) {
               // just delete the backslash because it doesn't belong here
               // if there's a need for closing (left) slash, it will be added
               // by 3rd level rules which can "see" the surrounding tag layout.
@@ -15067,7 +18763,7 @@
 
 
         if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
-        context.str[left(context.str, node.end - 1)] === BACKSLASH$1) {
+        context.str[left(context.str, node.end - 1)] === BACKSLASH$3) {
           var message = node.void ? "Replace backslash with slash." : "Delete this.";
           var backSlashPos = left(context.str, node.end - 1); // So we confirmed there's left slash.
           // Is it completely rogue or is it meant to be self-closing tag's closing?
@@ -15088,7 +18784,7 @@
             // index left(context.str, backSlashPos) + 1, don't add one there
 
             if (node.void && context.str[idxFrom + 1] === " ") {
-              idxFrom++;
+              idxFrom += 1;
               whatToInsert = whatToInsert.trim();
             } else if (!node.void) {
               whatToInsert = whatToInsert.trim();
@@ -15130,7 +18826,7 @@
   }
 
   // rule: tag-void-slash
-  var BACKSLASH$2 = "\\";
+  var BACKSLASH$4 = "\\";
 
   function tagVoidSlash(context) {
     for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -15166,7 +18862,7 @@
             }
           });
         } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
-        !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+        !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$4 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
           // if slashes are requested on void tags, situation is more complex,
           // because we need to take into the account the rule
           // "tag-space-before-closing-slash"
@@ -15348,7 +19044,9 @@
       from: 0,
       to: str.length
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var nameStartsAt = null;
     var whitespaceStartsAt = null;
 
@@ -15509,16 +19207,6 @@
     };
   }
 
-  /**
-   * html-all-known-attributes
-   * All HTML attributes known to the Humanity
-   * Version: 2.0.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
-   */
-  const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
-
   const array = [];
   const charCodeCache = [];
 
@@ -15609,32 +19297,21 @@
         if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
           var somethingMatched = false;
 
-          var _iterator = _createForOfIteratorHelper(allHtmlAttribs),
-              _step;
-
-          try {
-            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-              var oneOfKnownAttribs = _step.value;
-
-              if (leven_1(oneOfKnownAttribs, node.attribName) === 1) {
-                context.report({
-                  ruleId: "attribute-malformed",
-                  message: "Probably meant \"".concat(oneOfKnownAttribs, "\"."),
-                  idxFrom: node.attribNameStartsAt,
-                  idxTo: node.attribNameEndsAt,
-                  // second elem. from last range
-                  fix: {
-                    ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, oneOfKnownAttribs]]
-                  }
-                });
-                somethingMatched = true;
-                break;
-              }
+          for (var i = 0, len = allHtmlAttribs.length; i < len; i++) {
+            if (leven_1(allHtmlAttribs[i], node.attribName) === 1) {
+              context.report({
+                ruleId: "attribute-malformed",
+                message: "Probably meant \"".concat(allHtmlAttribs[i], "\"."),
+                idxFrom: node.attribNameStartsAt,
+                idxTo: node.attribNameEndsAt,
+                // second elem. from last range
+                fix: {
+                  ranges: [[node.attribNameStartsAt, node.attribNameEndsAt, allHtmlAttribs[i]]]
+                }
+              });
+              somethingMatched = true;
+              break;
             }
-          } catch (err) {
-            _iterator.e(err);
-          } finally {
-            _iterator.f();
           }
 
           if (!somethingMatched) {
@@ -15668,7 +19345,7 @@
             var whatToAdd = "="; // if equals is in a correct place, don't replace it
 
             if (context.str[fromRange] === "=") {
-              fromRange++;
+              fromRange += 1;
               whatToAdd = undefined;
             }
 
@@ -15737,8 +19414,6 @@
     };
   }
 
-  // rule: attribute-validate-abbr
-
   function attributeValidateAbbr(context) {
     return {
       attribute: function attribute(node) {
@@ -15759,7 +19434,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-abbr"
             }));
           });
@@ -15945,8 +19620,6 @@
   var sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
   var classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 
-  // rule: attribute-validate-accept-charset
-
   function attributeValidateAcceptCharset(context) {
     return {
       attribute: function attribute(node) {
@@ -15972,7 +19645,7 @@
             permittedValues: knownCharsets
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-accept-charset"
             }));
           });
@@ -15987,6 +19660,7 @@
   },
   	"application/3gpdash-qoe-report+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/3gpp-ims+xml": {
@@ -16040,6 +19714,14 @@
   	compressible: true
   },
   	"application/alto-networkmapfilter+json": {
+  	source: "iana",
+  	compressible: true
+  },
+  	"application/alto-updatestreamcontrol+json": {
+  	source: "iana",
+  	compressible: true
+  },
+  	"application/alto-updatestreamparams+json": {
   	source: "iana",
   	compressible: true
   },
@@ -16105,6 +19787,9 @@
   		"dwd"
   	]
   },
+  	"application/atsc-dynamic-event-message": {
+  	source: "iana"
+  },
   	"application/atsc-held+xml": {
   	source: "iana",
   	compressible: true,
@@ -16145,6 +19830,7 @@
   },
   	"application/beep+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/calendar+json": {
@@ -16163,6 +19849,11 @@
   },
   	"application/cals-1840": {
   	source: "iana"
+  },
+  	"application/cap+xml": {
+  	source: "iana",
+  	charset: "UTF-8",
+  	compressible: true
   },
   	"application/cbor": {
   	source: "iana"
@@ -16374,6 +20065,9 @@
   		"dbk"
   	]
   },
+  	"application/dots+cbor": {
+  	source: "iana"
+  },
   	"application/dskpp+xml": {
   	source: "iana",
   	compressible: true
@@ -16503,10 +20197,12 @@
   },
   	"application/fhir+json": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/fhir+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/fido.trusted-apps+json": {
@@ -16619,6 +20315,7 @@
   },
   	"application/im-iscomposing+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/index": {
@@ -16791,6 +20488,10 @@
   	"application/lostsync+xml": {
   	source: "iana",
   	compressible: true
+  },
+  	"application/lpf+zip": {
+  	source: "iana",
+  	compressible: false
   },
   	"application/lxf": {
   	source: "iana"
@@ -17031,10 +20732,12 @@
   },
   	"application/msc-ivr+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/msc-mixer+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/msword": {
@@ -17074,10 +20777,12 @@
   	source: "iana"
   },
   	"application/news-checkgroups": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "US-ASCII"
   },
   	"application/news-groupinfo": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "US-ASCII"
   },
   	"application/news-transmission": {
   	source: "iana"
@@ -17087,7 +20792,10 @@
   	compressible: true
   },
   	"application/node": {
-  	source: "iana"
+  	source: "iana",
+  	extensions: [
+  		"cjs"
+  	]
   },
   	"application/nss": {
   	source: "iana"
@@ -17236,10 +20944,12 @@
   },
   	"application/pidf+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/pidf-diff+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/pkcs10": {
@@ -17312,6 +21022,7 @@
   },
   	"application/poc-settings+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/postscript": {
@@ -17374,6 +21085,10 @@
   	extensions: [
   		"pskcxml"
   	]
+  },
+  	"application/pvd+json": {
+  	source: "iana",
+  	compressible: true
   },
   	"application/qsig": {
   	source: "iana"
@@ -17531,6 +21246,9 @@
   	source: "iana",
   	compressible: true
   },
+  	"application/sbe": {
+  	source: "iana"
+  },
   	"application/sbml+xml": {
   	source: "iana",
   	compressible: true,
@@ -17592,6 +21310,13 @@
   	extensions: [
   		"senmlx"
   	]
+  },
+  	"application/senml-etch+cbor": {
+  	source: "iana"
+  },
+  	"application/senml-etch+json": {
+  	source: "iana",
+  	compressible: true
   },
   	"application/senml-exi": {
   	source: "iana"
@@ -17800,6 +21525,10 @@
   	compressible: true
   },
   	"application/taxii+json": {
+  	source: "iana",
+  	compressible: true
+  },
+  	"application/td+json": {
   	source: "iana",
   	compressible: true
   },
@@ -18730,6 +22459,9 @@
   	source: "iana",
   	compressible: true
   },
+  	"application/vnd.dbf": {
+  	source: "iana"
+  },
   	"application/vnd.debian.binary-package": {
   	source: "iana"
   },
@@ -18841,6 +22573,10 @@
   	extensions: [
   		"ait"
   	]
+  },
+  	"application/vnd.dvb.dvbisl+xml": {
+  	source: "iana",
+  	compressible: true
   },
   	"application/vnd.dvb.dvbj": {
   	source: "iana"
@@ -20738,6 +24474,10 @@
   	"application/vnd.ocf+cbor": {
   	source: "iana"
   },
+  	"application/vnd.oci.image.manifest.v1+json": {
+  	source: "iana",
+  	compressible: true
+  },
   	"application/vnd.oftn.l10n+json": {
   	source: "iana",
   	compressible: true
@@ -20930,14 +24670,17 @@
   },
   	"application/vnd.omads-email+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/vnd.omads-file+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/vnd.omads-folder+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/vnd.omaloc-supl-init": {
@@ -21628,6 +25371,9 @@
   		"st"
   	]
   },
+  	"application/vnd.sar": {
+  	source: "iana"
+  },
   	"application/vnd.sbm.cid": {
   	source: "iana"
   },
@@ -21729,6 +25475,12 @@
   	source: "iana",
   	compressible: true
   },
+  	"application/vnd.shp": {
+  	source: "iana"
+  },
+  	"application/vnd.shx": {
+  	source: "iana"
+  },
   	"application/vnd.sigrok.session": {
   	source: "iana"
   },
@@ -21757,6 +25509,9 @@
   	extensions: [
   		"teacher"
   	]
+  },
+  	"application/vnd.snesdev-page-table": {
+  	source: "iana"
   },
   	"application/vnd.software602.filler.form+xml": {
   	source: "iana",
@@ -21944,6 +25699,7 @@
   },
   	"application/vnd.syncml+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true,
   	extensions: [
   		"xsm"
@@ -21951,12 +25707,14 @@
   },
   	"application/vnd.syncml.dm+wbxml": {
   	source: "iana",
+  	charset: "UTF-8",
   	extensions: [
   		"bdm"
   	]
   },
   	"application/vnd.syncml.dm+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true,
   	extensions: [
   		"xdm"
@@ -21970,6 +25728,7 @@
   },
   	"application/vnd.syncml.dmddf+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true,
   	extensions: [
   		"ddf"
@@ -21980,6 +25739,7 @@
   },
   	"application/vnd.syncml.dmtnds+xml": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true
   },
   	"application/vnd.syncml.ds.notification": {
@@ -22184,6 +25944,7 @@
   },
   	"application/vnd.wap.wbxml": {
   	source: "iana",
+  	charset: "UTF-8",
   	extensions: [
   		"wbxml"
   	]
@@ -23042,6 +26803,9 @@
   		"p7r"
   	]
   },
+  	"application/x-pki-message": {
+  	source: "iana"
+  },
   	"application/x-rar-compressed": {
   	source: "apache",
   	compressible: false,
@@ -23252,12 +27016,18 @@
   	compressible: true
   },
   	"application/x-x509-ca-cert": {
-  	source: "apache",
+  	source: "iana",
   	extensions: [
   		"der",
   		"crt",
   		"pem"
   	]
+  },
+  	"application/x-x509-ca-ra-cert": {
+  	source: "iana"
+  },
+  	"application/x-x509-next-ca-cert": {
+  	source: "iana"
   },
   	"application/x-xfig": {
   	source: "apache",
@@ -23734,6 +27504,9 @@
   	"audio/melp600": {
   	source: "iana"
   },
+  	"audio/mhas": {
+  	source: "iana"
+  },
   	"audio/midi": {
   	source: "apache",
   	extensions: [
@@ -23878,6 +27651,9 @@
   	source: "iana"
   },
   	"audio/tetra_acelp": {
+  	source: "iana"
+  },
+  	"audio/tetra_acelp_bb": {
   	source: "iana"
   },
   	"audio/tone": {
@@ -24936,6 +28712,18 @@
   		"silo"
   	]
   },
+  	"model/mtl": {
+  	source: "iana",
+  	extensions: [
+  		"mtl"
+  	]
+  },
+  	"model/obj": {
+  	source: "iana",
+  	extensions: [
+  		"obj"
+  	]
+  },
   	"model/stl": {
   	source: "iana",
   	extensions: [
@@ -25253,13 +29041,15 @@
   },
   	"text/n3": {
   	source: "iana",
+  	charset: "UTF-8",
   	compressible: true,
   	extensions: [
   		"n3"
   	]
   },
   	"text/parameters": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "UTF-8"
   },
   	"text/parityfec": {
   	source: "iana"
@@ -25279,7 +29069,8 @@
   	]
   },
   	"text/provenance-notation": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "UTF-8"
   },
   	"text/prs.fallenstein.rst": {
   	source: "iana"
@@ -25433,7 +29224,8 @@
   	]
   },
   	"text/vnd.debian.copyright": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "UTF-8"
   },
   	"text/vnd.dmclientscript": {
   	source: "iana"
@@ -25445,7 +29237,8 @@
   	]
   },
   	"text/vnd.esmertec.theme-descriptor": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "UTF-8"
   },
   	"text/vnd.ficlab.flt": {
   	source: "iana"
@@ -25518,12 +29311,14 @@
   },
   	"text/vnd.sun.j2me.app-descriptor": {
   	source: "iana",
+  	charset: "UTF-8",
   	extensions: [
   		"jad"
   	]
   },
   	"text/vnd.trolltech.linguist": {
-  	source: "iana"
+  	source: "iana",
+  	charset: "UTF-8"
   },
   	"text/vnd.wap.si": {
   	source: "iana"
@@ -26184,8 +29979,6 @@
 
   var mimeDb = require$$0;
 
-  // rule: attribute-validate-accept
-
   function attributeValidateAccept(context) {
     return {
       attribute: function attribute(node) {
@@ -26214,7 +30007,7 @@
           // https://www.npmjs.com/package/mime-db
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-accept"
             }));
           });
@@ -26222,8 +30015,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-accesskey
 
   function attributeValidateAccesskey(context) {
     return {
@@ -26262,7 +30053,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-accesskey"
             }));
           });
@@ -26271,48 +30062,15 @@
     };
   }
 
-  function isSingleSpace(str, originalOpts, errorArr) {
-    var defaults = {
-      from: 0,
-      to: str.length,
-      offset: 0
-    };
-    var opts = Object.assign({}, defaults, originalOpts); // whitespace starts at "from" and ends at "to"
-
-    if (str.slice(opts.from, opts.to) !== " ") {
-      // remove the minimal amount of content - if spaces are there
-      // already, leave them
-      var ranges;
-
-      if (str[opts.from] === " ") {
-        ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
-      } else if (str[opts.to - 1] === " ") {
-        ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
-      } else {
-        ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
-      } // raise an error about this excessive/wrong whitespace
-
-
-      errorArr.push({
-        idxFrom: opts.offset + opts.from,
-        idxTo: opts.offset + opts.to,
-        message: "Should be a single space.",
-        fix: {
-          ranges: ranges
-        }
-      });
-    }
-  }
-
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.8
+   * Version: 1.0.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
    */
-  const BACKSLASH$3 = "\u005C";
+  const BACKSLASH$5 = "\u005C";
   const knownSchemes = ["aaa", "aaas", "about", "acap", "acct", "acd", "acr", "adiumxtra", "adt", "afp", "afs", "aim", "amss", "android", "appdata", "apt", "ark", "attachment", "aw", "barion", "beshare", "bitcoin", "bitcoincash", "blob", "bolo", "browserext", "calculator", "callto", "cap", "cast", "casts", "chrome", "chrome-extension", "cid", "coap", "coap+tcp", "coap+ws", "coaps", "coaps+tcp", "coaps+ws", "com-eventbrite-attendee", "content", "conti", "crid", "cvs", "dab", "dav", "diaspora", "dict", "did", "dis", "dlna-playcontainer", "dlna-playsingle", "dns", "dntp", "dpp", "drm", "drop", "dtn", "dvb", "ed2k", "elsi", "example", "facetime", "fax", "feed", "feedready", "filesystem", "finger", "first-run-pen-experience", "fish", "fm", "fuchsia-pkg", "geo", "gg", "git", "gizmoproject", "go", "gopher", "graph", "gtalk", "h323", "ham", "hcap", "hcp", "hxxp", "hxxps", "hydrazone", "iax", "icap", "icon", "im", "imap", "info", "iotdisco", "ipn", "ipp", "ipps", "irc6", "ircs", "iris", "iris.beep", "iris.lwz", "iris.xpc", "iris.xpcs", "isostore", "itms", "jabber", "jar", "jms", "keyparc", "lastfm", "ldap", "ldaps", "leaptofrogans", "lorawan", "lvlt", "magnet", "mailserver", "maps", "market", "message", "microsoft.windows.camera", "microsoft.windows.camera.multipicker", "microsoft.windows.camera.picker", "mid", "mms", "modem", "mongodb", "moz", "ms-access", "ms-browser-extension", "ms-calculator", "ms-drive-to", "ms-enrollment", "ms-excel", "ms-eyecontrolspeech", "ms-gamebarservices", "ms-gamingoverlay", "ms-getoffice", "ms-help", "ms-infopath", "ms-inputapp", "ms-lockscreencomponent-config", "ms-media-stream-id", "ms-mixedrealitycapture", "ms-mobileplans", "ms-officeapp", "ms-people", "ms-project", "ms-powerpoint", "ms-publisher", "ms-restoretabcompanion", "ms-screenclip", "ms-screensketch", "ms-search", "ms-search-repair", "ms-secondary-screen-controller", "ms-secondary-screen-setup", "ms-settings", "ms-settings-airplanemode", "ms-settings-bluetooth", "ms-settings-camera", "ms-settings-cellular", "ms-settings-cloudstorage", "ms-settings-connectabledevices", "ms-settings-displays-topology", "ms-settings-emailandaccounts", "ms-settings-language", "ms-settings-location", "ms-settings-lock", "ms-settings-nfctransactions", "ms-settings-notifications", "ms-settings-power", "ms-settings-privacy", "ms-settings-proximity", "ms-settings-screenrotation", "ms-settings-wifi", "ms-settings-workplace", "ms-spd", "ms-sttoverlay", "ms-transit-to", "ms-useractivityset", "ms-virtualtouchpad", "ms-visio", "ms-walk-to", "ms-whiteboard", "ms-whiteboard-cmd", "ms-word", "msnim", "msrp", "msrps", "mss", "mtqp", "mumble", "mupdate", "mvn", "news", "nfs", "ni", "nih", "nntp", "notes", "ocf", "oid", "onenote", "onenote-cmd", "opaquelocktoken", "openpgp4fpr", "pack", "palm", "paparazzi", "payment", "payto", "pkcs11", "platform", "pop", "pres", "prospero", "proxy", "pwid", "psyc", "pttp", "qb", "query", "quic-transport", "redis", "rediss", "reload", "res", "resource", "rmi", "rsync", "rtmfp", "rtmp", "rtsp", "rtsps", "rtspu", "secondlife", "service", "session", "sftp", "sgn", "shttp", "sieve", "simpleledger", "sip", "sips", "skype", "smb", "sms", "smtp", "snews", "snmp", "soap.beep", "soap.beeps", "soldat", "spiffe", "spotify", "ssh", "steam", "stun", "stuns", "submit", "svn", "tag", "teamspeak", "tel", "teliaeid", "telnet", "tftp", "things", "thismessage", "tip", "tn3270", "tool", "turn", "turns", "tv", "udp", "unreal", "urn", "ut2004", "v-event", "vemmi", "ventrilo", "videotex", "vnc", "view-source", "wais", "webcal", "wpid", "ws", "wss", "wtai", "wyciwyg", "xcon", "xcon-userid", "xfire", "xmlrpc.beep", "xmlrpc.beeps", "xmpp", "xri", "ymsgr", "z39.50", "z39.50r", "z39.50s"];
 
   function isRel(str, originalOpts) {
@@ -26330,9 +30088,12 @@
     let opts;
 
     if (originalOpts) {
-      opts = Object.assign({}, defaults, originalOpts);
+      opts = { ...defaults,
+        ...originalOpts
+      };
     } else {
-      opts = Object.assign({}, defaults);
+      opts = { ...defaults
+      };
     }
 
     if (opts.offset && !Number.isInteger(opts.offset)) {
@@ -26427,10 +30188,10 @@
       };
     }
 
-    if (str.includes(BACKSLASH$3)) {
+    if (str.includes(BACKSLASH$5)) {
       return {
         res: false,
-        message: `Unescaped backslash (${BACKSLASH$3}) character.`
+        message: `Unescaped backslash (${BACKSLASH$5}) character.`
       };
     }
 
@@ -26694,6 +30455,41 @@
     return options.exact ? new RegExp(`(?:^${regex}$)`, 'i') : new RegExp(regex, 'ig');
   };
 
+  function isSingleSpace(str, originalOpts, errorArr) {
+    var defaults = {
+      from: 0,
+      to: str.length,
+      offset: 0
+    };
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // whitespace starts at "from" and ends at "to"
+
+
+    if (str.slice(opts.from, opts.to) !== " ") {
+      // remove the minimal amount of content - if spaces are there
+      // already, leave them
+      var ranges;
+
+      if (str[opts.from] === " ") {
+        ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
+      } else if (str[opts.to - 1] === " ") {
+        ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
+      } else {
+        ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
+      } // raise an error about this excessive/wrong whitespace
+
+
+      errorArr.push({
+        idxFrom: opts.offset + opts.from,
+        idxTo: opts.offset + opts.to,
+        message: "Should be a single space.",
+        fix: {
+          ranges: ranges
+        }
+      });
+    }
+  }
+
   function validateValue$1(str, originalOpts, errorArr) {
     var defaults = {
       offset: 0,
@@ -26703,7 +30499,9 @@
       attribStart: 0,
       attribEnd: str.length
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var extractedValue = str.slice(opts.from, opts.to);
     var calcultedIsRel = isRel(extractedValue);
 
@@ -26794,8 +30592,10 @@
       leadingWhitespaceOK: false,
       trailingWhitespaceOK: false
     };
-    var opts = Object.assign({}, defaults, originalOpts); // checkForWhitespace() reports index range between the
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); // checkForWhitespace() reports index range between the
     // first last non-whitespace character; nulls otherwise
+
 
     var _checkForWhitespace = checkForWhitespace(str, opts.offset),
         charStart = _checkForWhitespace.charStart,
@@ -26824,7 +30624,7 @@
               });
             } else {
               // Object assign needed to retain opts.multipleOK
-              validateValue$1(str, Object.assign({}, opts, {
+              validateValue$1(str, _objectSpread2({}, opts, {
                 from: charFrom,
                 to: charTo,
                 attribStart: charStart,
@@ -26857,7 +30657,7 @@
               // pushing to it
               // Object assign needed to retain opts.multipleOK
 
-              validateValue$1(str, Object.assign({}, opts, {
+              validateValue$1(str, _objectSpread2({}, opts, {
                 from: idxFrom - opts.offset,
                 to: idxTo - opts.offset,
                 attribStart: charStart,
@@ -26898,8 +30698,6 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-action
-
   function attributeValidateAction(context) {
     return {
       attribute: function attribute(node) {
@@ -26920,7 +30718,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-action"
               }));
             });
@@ -26929,8 +30727,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-align
 
   function attributeValidateAlign(context) {
     return {
@@ -26993,7 +30789,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-align"
             }));
           });
@@ -27086,8 +30882,6 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-alink
-
   function attributeValidateAlink(context) {
     return {
       attribute: function attribute(node) {
@@ -27115,7 +30909,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-alink"
             }));
           });
@@ -27123,8 +30917,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-alt
 
   function attributeValidateAlt(context) {
     return {
@@ -27146,7 +30938,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-alt"
             }));
           });
@@ -27154,8 +30946,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-archive
 
   function attributeValidateArchive(context) {
     return {
@@ -27170,9 +30960,8 @@
               message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
               fix: null
             });
-          } else {
-            // it depends, which tag is this attribute on...
-            if (node.parent.tagName === "applet") {
+          } // it depends, which tag is this attribute on...
+          else if (node.parent.tagName === "applet") {
               // comma-separated list of archive URIs
               // Call validation upon the whole attribute's value. Validator includes
               // whitespace checks.
@@ -27181,7 +30970,7 @@
                 separator: "comma",
                 multipleOK: true
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-archive"
                 }));
               });
@@ -27195,18 +30984,15 @@
                 // or "comma"
                 multipleOK: true
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-archive"
                 }));
               });
             }
-          }
         }
       }
     };
   }
-
-  // rule: attribute-validate-axis
 
   function attributeValidateAxis(context) {
     return {
@@ -27228,7 +31014,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-axis"
             }));
           });
@@ -27236,8 +31022,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-background
 
   function attributeValidateBackground(context) {
     return {
@@ -27259,7 +31043,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-background"
               }));
             });
@@ -27268,8 +31052,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-bgcolor
 
   function attributeValidateBgcolor(context) {
     return {
@@ -27298,7 +31080,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-bgcolor"
             }));
           });
@@ -27334,17 +31116,14 @@
             fix: null
           });
         }
-      } else {
-        // so length !== 1
-        if ("0123456789".includes(str[charStart + 1])) {
-          // we have padded cases like 08
-          errorArr.push({
-            idxFrom: idxOffset + charStart,
-            idxTo: idxOffset + charEnd,
-            message: "Number padded with zero.",
-            fix: null
-          });
-        }
+      } else if ("0123456789".includes(str[charStart + 1])) {
+        // we have padded cases like 08
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Number padded with zero.",
+          fix: null
+        });
       }
     }
 
@@ -27386,7 +31165,7 @@
           // dash can be in the middle! For example, colspan="1-1"
           var endPart = str.slice(i, charEnd);
 
-          if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
+          if (isObj$6(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
             // special case for "px"
             if (endPart === "px") {
               var _message = opts.customPxMessage ? opts.customPxMessage : "Remove px.";
@@ -27487,7 +31266,9 @@
       customPxMessage: null,
       maxValue: null
     };
-    var opts = Object.assign({}, defaultOpts, originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
+    var opts = _objectSpread2({}, defaultOpts, {}, originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
 
     var charStart = 0;
     var charEnd = str.length;
@@ -27580,8 +31361,6 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-border
-
   function attributeValidateBorder(context) {
     return {
       attribute: function attribute(node) {
@@ -27607,7 +31386,7 @@
 
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-border"
             }));
           });
@@ -27615,8 +31394,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-cellspacing
 
   function attributeValidateCellpadding(context) {
     return {
@@ -27644,7 +31421,7 @@
             customGenericValueError: "Should be integer, either no units or percentage."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-cellpadding"
             }));
           });
@@ -27652,8 +31429,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-cellspacing
 
   function attributeValidateCellspacing(context) {
     return {
@@ -27681,7 +31456,7 @@
             customGenericValueError: "Should be integer, either no units or percentage."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-cellspacing"
             }));
           });
@@ -27689,8 +31464,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-char
 
   function attributeValidateChar(context) {
     return {
@@ -27727,7 +31500,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-char"
             }));
           });
@@ -27735,8 +31508,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-charoff
 
   function attributeValidateCharoff(context) {
     return {
@@ -27772,7 +31543,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-charoff"
             }));
           });
@@ -27780,8 +31551,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-charset
 
   function attributeValidateCharset(context) {
     return {
@@ -27808,7 +31577,7 @@
             permittedValues: knownCharsets
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-charset"
             }));
           });
@@ -27822,9 +31591,11 @@
       xhtml: false,
       enforceSiblingAttributes: null
     };
-    var opts = Object.assign({}, defaults, originalOpts); //
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts); //
     // further validation only applicable to input tags:
     //
+
 
     if (opts.xhtml) {
       // XHTML mode - enforcing node.attribName="node.attribName"
@@ -27859,7 +31630,7 @@
       });
     }
 
-    if (isObj(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
+    if (isObj$6(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
       Object.keys(opts.enforceSiblingAttributes).forEach(function (siblingAttr) {
         if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
           return attribObj.attribName === siblingAttr;
@@ -27904,8 +31675,6 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-checked
-
   function attributeValidateChecked(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       originalOpts[_key - 1] = arguments[_key];
@@ -27937,7 +31706,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: {
                 type: ["checkbox", "radio"]
               }
@@ -27947,7 +31716,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-checked"
               }));
             });
@@ -27956,8 +31725,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-cite
 
   function attributeValidateCite(context) {
     return {
@@ -27979,7 +31746,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-cite"
               }));
             });
@@ -27996,7 +31763,9 @@
       to: str.length,
       offset: 0
     };
-    var opts = Object.assign({}, defaults, originalOpts);
+
+    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+
     var listOfUniqueNames = new Set();
     splitByWhitespace( //
     //
@@ -28083,8 +31852,6 @@
     );
   }
 
-  // rule: attribute-validate-class
-
   function attributeValidateClass(context) {
     return {
       attribute: function attribute(node) {
@@ -28113,7 +31880,7 @@
             }, errorArr // might be mutated, more errors pushed into
             );
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-class"
               }));
             });
@@ -28122,8 +31889,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-classid
 
   function attributeValidateClassid(context) {
     return {
@@ -28145,7 +31910,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-classid"
               }));
             });
@@ -28154,8 +31919,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-clear
 
   function attributeValidateClassid$1(context) {
     return {
@@ -28190,7 +31953,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-clear"
             }));
           });
@@ -28198,8 +31961,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-code
 
   function attributeValidateCode(context) {
     return {
@@ -28223,7 +31984,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-code"
             }));
           });
@@ -28231,8 +31992,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-codebase
 
   function attributeValidateCodebase(context) {
     return {
@@ -28252,7 +32011,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-codebase"
               }));
             });
@@ -28261,8 +32020,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-codetype
 
   function attributeValidateCodetype(context) {
     return {
@@ -28292,7 +32049,7 @@
           // https://www.npmjs.com/package/mime-db
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-codetype"
             }));
           });
@@ -28300,8 +32057,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-color
 
   function attributeValidateColor(context) {
     return {
@@ -28330,7 +32085,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-color"
             }));
           });
@@ -28338,8 +32093,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-cols
 
   function attributeValidateCols(context) {
     return {
@@ -28382,7 +32135,7 @@
 
           if (Array.isArray(errorArr) && errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-cols"
               }));
             });
@@ -28391,8 +32144,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-colspan
 
   function attributeValidateColspan(context) {
     return {
@@ -28418,7 +32169,7 @@
             customGenericValueError: "Should be integer, no units."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-colspan"
             }));
           });
@@ -28426,8 +32177,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-compact
 
   function attributeValidateCompact(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -28460,7 +32209,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -28468,7 +32217,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-compact"
               }));
             });
@@ -28477,8 +32226,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-content
 
   function attributeValidateContent(context) {
     return {
@@ -28502,7 +32249,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-content"
             }));
           });
@@ -28510,8 +32257,6 @@
       }
     };
   } // TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-
-  // rule: attribute-validate-coords
 
   function attributeValidateCoords(context) {
     return {
@@ -28573,7 +32318,7 @@
 
               if (Array.isArray(errorArr) && errorArr.length) {
                 errorArr.forEach(function (errorObj) {
-                  context.report(Object.assign({}, errorObj, {
+                  context.report(_objectSpread2({}, errorObj, {
                     ruleId: "attribute-validate-coords"
                   }));
                 });
@@ -28584,8 +32329,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-data
 
   function attributeValidateData(context) {
     return {
@@ -28605,7 +32348,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-data"
               }));
             });
@@ -28614,8 +32357,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-datetime
 
   function attributeValidateDatetime(context) {
     return {
@@ -28645,7 +32386,7 @@
           // https://www.npmjs.com/package/mime-db
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-datetime"
             }));
           });
@@ -28653,8 +32394,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-declare
 
   function attributeValidateDeclare(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -28687,7 +32426,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -28695,7 +32434,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-declare"
               }));
             });
@@ -28704,8 +32443,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-defer
 
   function attributeValidateDefer(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -28738,7 +32475,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -28746,7 +32483,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-defer"
               }));
             });
@@ -28755,8 +32492,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-dir
 
   function attributeValidateDir(context) {
     return {
@@ -28781,7 +32516,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-dir"
             }));
           });
@@ -28789,8 +32524,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-disabled
 
   function attributeValidateDisabled(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -28823,7 +32556,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -28831,7 +32564,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-disabled"
               }));
             });
@@ -28840,8 +32573,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-enctype
 
   function attributeValidateEnctype(context) {
     return {
@@ -28867,7 +32598,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-enctype"
             }));
           });
@@ -28875,8 +32606,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-face
 
   function attributeValidateFace(context) {
     return {
@@ -28900,7 +32629,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-face"
             }));
           });
@@ -28908,8 +32637,6 @@
       }
     };
   } // TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-
-  // rule: attribute-validate-for
 
   function attributeValidateFor(context) {
     return {
@@ -28961,7 +32688,7 @@
             }
 
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-for"
               }));
             });
@@ -28970,8 +32697,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-frame
 
   function attributeValidateFrame(context) {
     return {
@@ -29005,7 +32730,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-frame"
             }));
           });
@@ -29013,8 +32738,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-frameborder
 
   function attributeValidateFrameborder(context) {
     return {
@@ -29039,7 +32762,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-frameborder"
             }));
           });
@@ -29047,8 +32770,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-headers
 
   function attributeValidateHeaders(context) {
     return {
@@ -29078,7 +32799,7 @@
             }, errorArr // might be mutated, more errors pushed into
             );
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-headers"
               }));
             });
@@ -29087,8 +32808,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-height
 
   function attributeValidateHeight(context) {
     return {
@@ -29112,7 +32831,7 @@
             customGenericValueError: "Should be \"pixels|%\"."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-height"
             }));
           });
@@ -29120,8 +32839,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-href
 
   function attributeValidateHref(context) {
     return {
@@ -29141,7 +32858,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-href"
               }));
             });
@@ -29154,7 +32871,7 @@
   /**
    * is-language-code
    * Is given string a language code (as per IANA)
-   * Version: 1.0.4
+   * Version: 1.0.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code
@@ -29184,7 +32901,9 @@
         res: false,
         message: `Not a string given.`
       };
-    } else if (!str.trim()) {
+    }
+
+    if (!str.trim()) {
       return {
         res: false,
         message: `Empty language tag string given.`
@@ -29362,7 +33081,7 @@
           if (!split[i + 1].match(singletonRegex)) {
             allOK = true;
             extlangMatched = split[i];
-            i++;
+            i += 1;
             continue;
           } else {
             return {
@@ -29419,8 +33138,6 @@
     };
   }
 
-  // rule: attribute-validate-hreflang
-
   function attributeValidateHreflang(context) {
     return {
       attribute: function attribute(node) {
@@ -29458,7 +33175,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-hreflang"
             }));
           });
@@ -29466,8 +33183,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-hspace
 
   function attributeValidateHspace(context) {
     return {
@@ -29493,7 +33208,7 @@
             noUnitsIsFine: true
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-hspace"
             }));
           });
@@ -29501,8 +33216,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-http-equiv
 
   function attributeValidateHttpequiv(context) {
     return {
@@ -29528,7 +33241,7 @@
             caseInsensitive: true
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-http-equiv"
             }));
           });
@@ -29536,8 +33249,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-id
 
   function attributeValidateId(context) {
     return {
@@ -29567,7 +33278,7 @@
             }, errorArr // might be mutated, more errors pushed into
             );
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-id"
               }));
             });
@@ -29576,8 +33287,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-ismap
 
   function attributeValidateIsmap(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -29610,7 +33319,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -29618,7 +33327,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-ismap"
               }));
             });
@@ -29627,8 +33336,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-label
 
   function attributeValidateLabel(context) {
     return {
@@ -29650,7 +33357,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-label"
             }));
           });
@@ -29658,8 +33365,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-lang
 
   function attributeValidateLang(context) {
     return {
@@ -29698,7 +33403,7 @@
           }
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-lang"
             }));
           });
@@ -29706,8 +33411,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-language
 
   function attributeValidateLanguage(context) {
     return {
@@ -29729,7 +33432,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-language"
             }));
           });
@@ -29737,8 +33440,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-link
 
   function attributeValidateLink(context) {
     return {
@@ -29767,7 +33468,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-link"
             }));
           });
@@ -29775,8 +33476,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-longdesc
 
   function attributeValidateLongdesc(context) {
     return {
@@ -29799,7 +33498,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-longdesc"
             }));
           });
@@ -29807,8 +33506,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-marginheight
 
   function attributeValidateMarginheight(context) {
     return {
@@ -29834,7 +33531,7 @@
             noUnitsIsFine: true
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-marginheight"
             }));
           });
@@ -29842,8 +33539,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-marginwidth
 
   function attributeValidateMarginwidth(context) {
     return {
@@ -29869,7 +33564,7 @@
             noUnitsIsFine: true
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-marginwidth"
             }));
           });
@@ -29877,8 +33572,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-maxlength
 
   function attributeValidateMaxlength(context) {
     return {
@@ -29904,7 +33597,7 @@
             customGenericValueError: "Should be integer, no units."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-maxlength"
             }));
           });
@@ -29916,7 +33609,7 @@
   /**
    * is-media-descriptor
    * Is given string a valid media descriptor (including media query)?
-   * Version: 1.2.6
+   * Version: 1.2.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -29987,10 +33680,10 @@
 
           if (whitespaceStartsAt !== i - 1) {
             if (str[whitespaceStartsAt] === " ") {
-              rangesFrom++;
+              rangesFrom += 1;
               rangesInsert = null;
             } else if (str[i - 1] === " ") {
-              rangesTo--;
+              rangesTo -= 1;
               rangesInsert = null;
             }
           }
@@ -30135,7 +33828,9 @@
     const defaults = {
       offset: 0
     };
-    const opts = Object.assign({}, defaults, originalOpts);
+    const opts = { ...defaults,
+      ...originalOpts
+    };
 
     if (opts.offset && !Number.isInteger(opts.offset)) {
       throw new Error(`is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ${opts.offset} (type ${typeof opts.offset})`);
@@ -30147,7 +33842,9 @@
 
     if (typeof originalStr !== "string") {
       return [];
-    } else if (!originalStr.trim()) {
+    }
+
+    if (!originalStr.trim()) {
       return [];
     }
 
@@ -30191,7 +33888,9 @@
 
     if (recognisedMediaTypes.includes(str)) {
       return res;
-    } else if (["only", "not"].includes(str)) {
+    }
+
+    if (["only", "not"].includes(str)) {
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
         idxTo: nonWhitespaceEnd + opts.offset,
@@ -30230,9 +33929,13 @@
           }
 
           return [acc[0], acc[1] + 1];
-        } else if (curr === "(") {
+        }
+
+        if (curr === "(") {
           return [acc[0] + 1, acc[1]];
-        } else if (curr === ";") {
+        }
+
+        if (curr === ";") {
           res.push({
             idxFrom: idx + opts.offset,
             idxTo: idx + 1 + opts.offset,
@@ -30306,10 +34009,10 @@
         innerWhitespaceAllowed: true,
         separator: ",",
         cb: (idxFrom, idxTo) => {
-          loop(str, Object.assign({}, opts, {
+          loop(str, { ...opts,
             idxFrom: idxFrom - opts.offset,
             idxTo: idxTo - opts.offset
-          }), res);
+          }, res);
         },
         errCb: (ranges, message) => {}
       });
@@ -30317,8 +34020,6 @@
 
     return res;
   }
-
-  // rule: attribute-validate-media
 
   function attributeValidateMedia(context) {
     return {
@@ -30347,7 +34048,7 @@
           errorArr.concat(isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
             offset: node.attribValueStartsAt
           })).forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-media"
             }));
           });
@@ -30355,8 +34056,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-method
 
   function attributeValidateMethod(context) {
     return {
@@ -30381,7 +34080,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-method"
             }));
           });
@@ -30389,8 +34088,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-multiple
 
   function attributeValidateMultiple(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -30423,7 +34120,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -30431,7 +34128,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-multiple"
               }));
             });
@@ -30440,8 +34137,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-name
 
   function attributeValidateName(context) {
     return {
@@ -30463,7 +34158,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-name"
             }));
           });
@@ -30471,8 +34166,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-nohref
 
   function attributeValidateNohref(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -30505,7 +34198,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -30513,7 +34206,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-nohref"
               }));
             });
@@ -30522,8 +34215,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-noresize
 
   function attributeValidateNoresize(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -30556,7 +34247,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -30564,7 +34255,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-noresize"
               }));
             });
@@ -30573,8 +34264,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-noshade
 
   function attributeValidateNoshade(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -30607,7 +34296,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -30615,7 +34304,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-noshade"
               }));
             });
@@ -30624,8 +34313,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-nowrap
 
   function attributeValidateNowrap(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -30658,7 +34345,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -30666,7 +34353,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-nowrap"
               }));
             });
@@ -30675,8 +34362,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-object
 
   function attributeValidateObject(context) {
     return {
@@ -30698,7 +34383,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-object"
             }));
           });
@@ -30720,18 +34405,11 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-onblur
-
   function attributeValidateOnblur(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onblur") {
           // validate the parent
           if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
@@ -30746,7 +34424,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onblur"
               }));
             });
@@ -30756,18 +34434,11 @@
     };
   }
 
-  // rule: attribute-validate-onchange
-
   function attributeValidateOnchange(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onchange") {
           // validate the parent
           if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
@@ -30782,7 +34453,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onchange"
               }));
             });
@@ -30792,18 +34463,11 @@
     };
   }
 
-  // rule: attribute-validate-onclick
-
   function attributeValidateOnclick(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onclick") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -30818,7 +34482,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onclick"
               }));
             });
@@ -30828,18 +34492,11 @@
     };
   }
 
-  // rule: attribute-validate-ondblclick
-
   function attributeValidateOndblclick(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "ondblclick") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -30854,7 +34511,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-ondblclick"
               }));
             });
@@ -30864,18 +34521,11 @@
     };
   }
 
-  // rule: attribute-validate-onfocus
-
   function attributeValidateOnfocus(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onfocus") {
           // validate the parent
           if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
@@ -30890,7 +34540,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onfocus"
               }));
             });
@@ -30900,18 +34550,11 @@
     };
   }
 
-  // rule: attribute-validate-onkeydown
-
   function attributeValidateOnkeydown(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onkeydown") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -30926,7 +34569,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onkeydown"
               }));
             });
@@ -30936,18 +34579,11 @@
     };
   }
 
-  // rule: attribute-validate-onkeypress
-
   function attributeValidateOnkeypress(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onkeypress") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -30962,7 +34598,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onkeypress"
               }));
             });
@@ -30972,18 +34608,11 @@
     };
   }
 
-  // rule: attribute-validate-onkeyup
-
   function attributeValidateOnkeyup(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onkeyup") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -30998,7 +34627,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onkeyup"
               }));
             });
@@ -31008,18 +34637,11 @@
     };
   }
 
-  // rule: attribute-validate-onload
-
   function attributeValidateOnload(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onload") {
           // validate the parent
           if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -31034,7 +34656,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onload"
               }));
             });
@@ -31044,18 +34666,11 @@
     };
   }
 
-  // rule: attribute-validate-onmousedown
-
   function attributeValidateOnmousedown(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onmousedown") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -31070,7 +34685,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onmousedown"
               }));
             });
@@ -31080,18 +34695,11 @@
     };
   }
 
-  // rule: attribute-validate-onmousemove
-
   function attributeValidateOnmousemove(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onmousemove") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -31106,7 +34714,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onmousemove"
               }));
             });
@@ -31116,18 +34724,11 @@
     };
   }
 
-  // rule: attribute-validate-onmouseout
-
   function attributeValidateOnmouseout(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onmouseout") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -31142,7 +34743,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onmouseout"
               }));
             });
@@ -31152,18 +34753,11 @@
     };
   }
 
-  // rule: attribute-validate-onmouseover
-
   function attributeValidateOnmouseover(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onmouseover") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -31178,7 +34772,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onmouseover"
               }));
             });
@@ -31188,18 +34782,11 @@
     };
   }
 
-  // rule: attribute-validate-onmouseup
-
   function attributeValidateOnmouseup(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onmouseup") {
           // validate the parent
           if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
@@ -31214,7 +34801,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onmouseup"
               }));
             });
@@ -31224,18 +34811,11 @@
     };
   }
 
-  // rule: attribute-validate-onreset
-
   function attributeValidateOnreset(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onreset") {
           // validate the parent
           if (node.parent.tagName !== "form") {
@@ -31250,7 +34830,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onreset"
               }));
             });
@@ -31260,18 +34840,11 @@
     };
   }
 
-  // rule: attribute-validate-onsubmit
-
   function attributeValidateOnsubmit(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onsubmit") {
           // validate the parent
           if (node.parent.tagName !== "form") {
@@ -31286,7 +34859,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onsubmit"
               }));
             });
@@ -31296,18 +34869,11 @@
     };
   }
 
-  // rule: attribute-validate-onselect
-
   function attributeValidateOnselect(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onselect") {
           // validate the parent
           if (!["input", "textarea"].includes(node.parent.tagName)) {
@@ -31322,7 +34888,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onselect"
               }));
             });
@@ -31332,18 +34898,11 @@
     };
   }
 
-  // rule: attribute-validate-onunload
-
   function attributeValidateOnunload(context) {
-    for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      originalOpts[_key - 1] = arguments[_key];
-    }
-
     return {
       attribute: function attribute(node) {
         // preparing for the future:
-        var opts = Object.assign({}, originalOpts);
-
+        // const opts = { ...originalOpts };
         if (node.attribName === "onunload") {
           // validate the parent
           if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -31358,7 +34917,7 @@
             // validate the script value
             var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-onunload"
               }));
             });
@@ -31367,8 +34926,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-profile
 
   function attributeValidateProfile(context) {
     return {
@@ -31390,7 +34947,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: true
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-profile"
               }));
             });
@@ -31399,8 +34956,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-prompt
 
   function attributeValidatePrompt(context) {
     return {
@@ -31422,7 +34977,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-prompt"
             }));
           });
@@ -31430,8 +34985,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-readonly
 
   function attributeValidateReadonly(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -31464,7 +35017,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -31472,7 +35025,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-readonly"
               }));
             });
@@ -31481,8 +35034,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-rel
 
   function attributeValidateRel(context) {
     for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -31514,7 +35065,7 @@
             caseInsensitive: caseInsensitive
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-rel"
             }));
           });
@@ -31522,8 +35073,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-rev
 
   function attributeValidateRev(context) {
     for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -31555,7 +35104,7 @@
             caseInsensitive: caseInsensitive
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-rev"
             }));
           });
@@ -31563,8 +35112,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-rows
 
   function attributeValidateRows(context) {
     return {
@@ -31607,7 +35154,7 @@
 
           if (Array.isArray(errorArr) && errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-rows"
               }));
             });
@@ -31616,8 +35163,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-rowspan
 
   function attributeValidateRowspan(context) {
     return {
@@ -31643,7 +35188,7 @@
             customGenericValueError: "Should be integer, no units."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-rowspan"
             }));
           });
@@ -31651,8 +35196,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-rules
 
   function attributeValidateRules(context) {
     return {
@@ -31677,7 +35220,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-rules"
             }));
           });
@@ -31685,8 +35228,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-scheme
 
   function attributeValidateScheme(context) {
     return {
@@ -31708,7 +35249,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-scheme"
             }));
           });
@@ -31716,8 +35257,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-scope
 
   function attributeValidateScope(context) {
     return {
@@ -31741,7 +35280,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-scope"
             }));
           });
@@ -31749,8 +35288,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-scrolling
 
   function attributeValidateScrolling(context) {
     return {
@@ -31774,7 +35311,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-scrolling"
             }));
           });
@@ -31782,8 +35319,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-selected
 
   function attributeValidateSelected(context) {
     for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -31816,7 +35351,7 @@
             });
           } else {
             // validate the value (or absence thereof)
-            validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            validateVoid(node, context, errorArr, _objectSpread2({}, opts, {
               enforceSiblingAttributes: null
             }));
           } // finally, report gathered errors:
@@ -31824,7 +35359,7 @@
 
           if (errorArr.length) {
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-selected"
               }));
             });
@@ -31833,8 +35368,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-shape
 
   function attributeValidateShape(context) {
     return {
@@ -31858,7 +35391,7 @@
             canBeCommaSeparated: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-shape"
             }));
           });
@@ -31866,8 +35399,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-size
 
   function attributeValidateSize(context) {
     return {
@@ -31895,7 +35426,7 @@
 
 
             errorArr.forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-size"
               }));
             }); //
@@ -31917,7 +35448,7 @@
                   // empty array means no units allowed
                   skipWhitespaceChecks: true
                 }).forEach(function (errorObj) {
-                  context.report(Object.assign({}, errorObj, {
+                  context.report(_objectSpread2({}, errorObj, {
                     ruleId: "attribute-validate-size"
                   }));
                 });
@@ -31946,7 +35477,7 @@
                   }
 
                   errorArr2.forEach(function (errorObj) {
-                    context.report(Object.assign({}, errorObj, {
+                    context.report(_objectSpread2({}, errorObj, {
                       ruleId: "attribute-validate-size"
                     }));
                   });
@@ -31958,8 +35489,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-span
 
   function attributeValidateSpan(context) {
     return {
@@ -31984,7 +35513,7 @@
             customPxMessage: "Columns number is not in pixels."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-span"
             }));
           });
@@ -31992,8 +35521,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-src
 
   function attributeValidateSrc(context) {
     return {
@@ -32013,7 +35540,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-src"
               }));
             });
@@ -32022,8 +35549,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-standby
 
   function attributeValidateStandby(context) {
     return {
@@ -32045,7 +35570,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-standby"
             }));
           });
@@ -32053,8 +35578,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-start
 
   function attributeValidateStart(context) {
     return {
@@ -32079,7 +35602,7 @@
             customPxMessage: "Starting sequence number is not in pixels."
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-start"
             }));
           });
@@ -32101,8 +35624,6 @@
     return errorArr;
   }
 
-  // rule: attribute-validate-style
-
   function attributeValidateStyle(context) {
     return {
       attribute: function attribute(node) {
@@ -32120,7 +35641,7 @@
 
           var errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-style"
             }));
           });
@@ -32128,8 +35649,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-summary
 
   function attributeValidateSummary(context) {
     return {
@@ -32151,7 +35670,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-summary"
             }));
           });
@@ -32159,8 +35678,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-tabindex
 
   function attributeValidateTabindex(context) {
     return {
@@ -32186,7 +35703,7 @@
             maxValue: 32767
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-tabindex"
             }));
           });
@@ -32194,8 +35711,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-target
 
   function attributeValidateTarget(context) {
     return {
@@ -32217,7 +35732,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-target"
             }));
           });
@@ -32225,8 +35740,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-text
 
   function attributeValidateText(context) {
     return {
@@ -32255,7 +35768,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-text"
             }));
           });
@@ -32263,8 +35776,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-title
 
   function attributeValidateTitle(context) {
     return {
@@ -32286,7 +35797,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-title"
             }));
           });
@@ -32294,8 +35805,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-type
 
   function attributeValidateType(context) {
     return {
@@ -32310,9 +35819,8 @@
               message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
               fix: null
             });
-          } else {
-            // validate depending on type
-            if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
+          } // validate depending on type
+          else if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
               validateString(node.attribValueRaw, // value
               node.attribValueStartsAt, // offset
               {
@@ -32321,7 +35829,7 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
@@ -32334,7 +35842,7 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
@@ -32347,7 +35855,7 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
@@ -32360,7 +35868,7 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
@@ -32373,7 +35881,7 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
@@ -32386,18 +35894,15 @@
                 canBeCommaSeparated: false,
                 noSpaceAfterComma: false
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-type"
                 }));
               });
             }
-          }
         }
       }
     };
   }
-
-  // rule: attribute-validate-usemap
 
   function attributeValidateUsemap(context) {
     return {
@@ -32417,7 +35922,7 @@
               offset: node.attribValueStartsAt,
               multipleOK: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-usemap"
               }));
             });
@@ -32426,8 +35931,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-valign
 
   function attributeValidateValign(context) {
     return {
@@ -32449,7 +35952,7 @@
               permittedValues: ["top", "middle", "bottom", "baseline"],
               canBeCommaSeparated: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-valign"
               }));
             });
@@ -32458,8 +35961,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-value
 
   function attributeValidateValue(context) {
     return {
@@ -32477,9 +35978,8 @@
               message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
               fix: null
             });
-          } else {
-            // if parent is OK
-            if (node.parent.tagName === "li") {
+          } // if parent is OK
+          else if (node.parent.tagName === "li") {
               // value is number
               validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
                 type: "integer",
@@ -32488,7 +35988,7 @@
                 zeroOK: false,
                 customPxMessage: "Sequence number should not be in pixels."
               }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-value"
                 }));
               });
@@ -32498,18 +35998,15 @@
                   errorArr = _checkForWhitespace.errorArr;
 
               errorArr.forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
+                context.report(_objectSpread2({}, errorObj, {
                   ruleId: "attribute-validate-value"
                 }));
               });
             }
-          }
         }
       }
     };
   }
-
-  // rule: attribute-validate-valuetype
 
   function attributeValidateValuetype(context) {
     return {
@@ -32531,7 +36028,7 @@
               permittedValues: ["data", "ref", "object"],
               canBeCommaSeparated: false
             }).forEach(function (errorObj) {
-              context.report(Object.assign({}, errorObj, {
+              context.report(_objectSpread2({}, errorObj, {
                 ruleId: "attribute-validate-valuetype"
               }));
             });
@@ -32540,8 +36037,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-version
 
   function attributeValidateVersion(context) {
     return {
@@ -32563,7 +36058,7 @@
               errorArr = _checkForWhitespace.errorArr;
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-version"
             }));
           });
@@ -32571,8 +36066,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-vlink
 
   function attributeValidateVlink(context) {
     return {
@@ -32601,7 +36094,7 @@
             hexEightOK: false
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-vlink"
             }));
           });
@@ -32609,8 +36102,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-vspace
 
   function attributeValidateVspace(context) {
     return {
@@ -32636,7 +36127,7 @@
             noUnitsIsFine: true
           });
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "attribute-validate-vspace"
             }));
           });
@@ -32644,8 +36135,6 @@
       }
     };
   }
-
-  // rule: attribute-validate-width
 
   function attributeValidateWidth(context) {
     return {
@@ -32663,39 +36152,37 @@
               message: "Tag \"".concat(node.parent.tagName, "\" can't have attribute \"").concat(node.attribName, "\"."),
               fix: null
             });
+          } else if (node.parent.tagName === "pre") {
+            // number only
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+              theOnlyGoodUnits: [],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread2({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
+          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+            // multilength type
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+              badUnits: ["px"],
+              theOnlyGoodUnits: ["*", "%"],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread2({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
           } else {
-            if (node.parent.tagName === "pre") {
-              // number only
-              validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-                theOnlyGoodUnits: [],
-                noUnitsIsFine: true
-              }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
-                }));
-              });
-            } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-              // multilength type
-              validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-                badUnits: ["px"],
-                theOnlyGoodUnits: ["*", "%"],
-                noUnitsIsFine: true
-              }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
-                }));
-              });
-            } else {
-              // normal length
-              validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-                badUnits: ["px"],
-                noUnitsIsFine: true
-              }).forEach(function (errorObj) {
-                context.report(Object.assign({}, errorObj, {
-                  ruleId: "attribute-validate-width"
-                }));
-              });
-            }
+            // normal length
+            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+              badUnits: ["px"],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread2({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
           }
         }
       }
@@ -32705,7 +36192,7 @@
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.1
+   * Version: 0.2.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -38835,10 +42322,12 @@
             whitespaceRight: "always"
           }
         };
-        var opts = Object.assign({}, defaults); // default opts above are the default
+
+        var opts = _objectSpread2({}, defaults); // default opts above are the default
+
 
         if (Array.isArray(originalOpts) && originalOpts.length && _typeof(originalOpts[0]) === "object" && originalOpts[0] !== null) {
-          opts = Object.assign({}, defaults, originalOpts[0]);
+          opts = _objectSpread2({}, defaults, {}, originalOpts[0]);
         } // plan: iterate each character from this text chunk/node, query each
         // caught character's surroundings as per config
 
@@ -38923,7 +42412,7 @@
             offset: node.queryStartsAt
           });
           errors.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "media-malformed"
             }));
           });
@@ -38998,8 +42487,6 @@
     return errorArr;
   }
 
-  // rule: comment-closing-malformed
-
   function commentClosingMalformed(context) {
     return {
       comment: function comment(node) {
@@ -39010,7 +42497,7 @@
           // This is to simplify the rule fix clashing.
 
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               keepSeparateWhenFixing: true,
               ruleId: "comment-closing-malformed"
             }));
@@ -39018,462 +42505,6 @@
         }
       }
     };
-  }
-
-  /**
-   * string-find-malformed
-   * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.4
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
-   */
-
-  function isObj$1(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  function isStr$1(something) {
-    return typeof something === "string";
-  }
-
-  function strFindMalformed(str, refStr, cb, originalOpts) {
-    if (!isStr$1(str)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ${str} (type: ${typeof str})`);
-    } else if (!str.length) {
-      return;
-    }
-
-    if (!isStr$1(refStr)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ${refStr} (type: ${typeof refStr})`);
-    } else if (!refStr.length) {
-      return;
-    }
-
-    if (typeof cb !== "function") {
-      throw new TypeError(`string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`);
-    }
-
-    if (originalOpts && !isObj$1(originalOpts)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${originalOpts} (type: ${typeof originalOpts})`);
-    }
-
-    const defaults = {
-      stringOffset: 0,
-      maxDistance: 1,
-      ignoreWhitespace: true
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-
-    if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
-      opts.stringOffset = Number(opts.stringOffset);
-    } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
-      throw new TypeError(`${opts.source} [THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.fromIndex}`);
-    }
-
-    const len = str.length;
-    const len2 = Math.min(refStr.length, opts.maxDistance + 1);
-    let pendingMatchesArr = [];
-    const patience = opts.maxDistance;
-    let wasThisLetterMatched;
-
-    for (let i = 0; i < len; i++) {
-      if (opts.ignoreWhitespace && !str[i].trim()) {
-        continue;
-      }
-
-      for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
-        wasThisLetterMatched = false;
-
-        if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
-          wasThisLetterMatched = true;
-          pendingMatchesArr[z].pendingToCheck.shift();
-        } else if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[1]) {
-          wasThisLetterMatched = true;
-          pendingMatchesArr[z].pendingToCheck.shift();
-          pendingMatchesArr[z].pendingToCheck.shift();
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1;
-        } else {
-          pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1;
-
-          if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
-            pendingMatchesArr[z].pendingToCheck.shift();
-
-            if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
-              pendingMatchesArr[z].pendingToCheck.shift();
-            }
-          }
-        }
-      }
-
-      pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
-      const tempArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length === 0).map(obj => obj.startsAt);
-
-      if (Array.isArray(tempArr) && tempArr.length) {
-        const idxFrom = Math.min(...tempArr);
-        const idxTo = i + (wasThisLetterMatched ? 1 : 0);
-
-        if (str.slice(idxFrom, idxTo) !== refStr) {
-          cb({
-            idxFrom: idxFrom + opts.stringOffset,
-            idxTo: idxTo + opts.stringOffset
-          });
-        }
-
-        pendingMatchesArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length);
-      }
-
-      for (let y = 0; y < len2; y++) {
-        if (str[i] === refStr[y]) {
-          const whatToPush = {
-            startsAt: i,
-            patienceLeft: patience - y,
-            pendingToCheck: Array.from(refStr.slice(y + 1))
-          };
-          pendingMatchesArr.push(whatToPush);
-          break;
-        }
-      }
-    }
-  }
-
-  /**
-   * arrayiffy-if-string
-   * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.29
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
-   */
-  function arrayiffyString(something) {
-    if (typeof something === "string") {
-      if (something.length > 0) {
-        return [something];
-      }
-
-      return [];
-    }
-
-    return something;
-  }
-
-  /**
-   * string-match-left-right
-   * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.4
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-   */
-
-  function isObj$2(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
-  function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
-
-    if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
-      return whatToMatchValVal;
-    }
-
-    if (fromIndexInclusive >= str.length && !special) {
-      return false;
-    }
-
-    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    let lastWasMismatched = false;
-    let atLeastSomethingWasMatched = false;
-    let patience = opts.maxMismatches;
-    let i = fromIndexInclusive;
-    let somethingFound = false;
-    let firstCharacterMatched = false;
-    let lastCharacterMatched = false;
-
-    while (str[i]) {
-      const nextIdx = getNextIdx(i);
-
-      if (opts.trimBeforeMatching && str[i].trim() === "") {
-        if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
-          return true;
-        }
-
-        i = getNextIdx(i);
-        continue;
-      }
-
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
-        if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-          return true;
-        }
-
-        i = getNextIdx(i);
-        continue;
-      }
-
-      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
-
-      if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
-        if (!somethingFound) {
-          somethingFound = true;
-        }
-
-        if (!atLeastSomethingWasMatched) {
-          atLeastSomethingWasMatched = true;
-        }
-
-        if (charsToCheckCount === whatToMatchVal.length) {
-          firstCharacterMatched = true;
-        } else if (charsToCheckCount === 1) {
-          lastCharacterMatched = true;
-        }
-
-        charsToCheckCount -= 1;
-
-        if (charsToCheckCount < 1) {
-          return i;
-        }
-      } else {
-        if (opts.maxMismatches && patience && i) {
-          patience--;
-
-          for (let y = 0; y <= patience; y++) {
-            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            const nextCharInSource = str[getNextIdx(i)];
-
-            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 2;
-              somethingFound = true;
-              break;
-            } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 1;
-              somethingFound = true;
-              break;
-            } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-              return i;
-            }
-          }
-
-          if (!somethingFound) {
-            lastWasMismatched = i;
-          }
-        } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
-          return 0;
-        } else {
-          return false;
-        }
-      }
-
-      if (lastWasMismatched !== false && lastWasMismatched !== i) {
-        lastWasMismatched = false;
-      }
-
-      if (charsToCheckCount < 1) {
-        return i;
-      }
-
-      i = getNextIdx(i);
-    }
-
-    if (charsToCheckCount > 0) {
-      if (special && whatToMatchValVal === "EOL") {
-        return true;
-      } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
-        return lastWasMismatched || 0;
-      }
-
-      return false;
-    }
-  }
-
-  function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    const defaults = {
-      i: false,
-      trimBeforeMatching: false,
-      trimCharsBeforeMatching: [],
-      maxMismatches: 0,
-      firstMustMatch: false,
-      lastMustMatch: false
-    };
-
-    if (isObj$2(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
-    }
-
-    const opts = Object.assign({}, defaults, originalOpts);
-    opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
-
-    if (!isStr$2(str)) {
-      return false;
-    } else if (!str.length) {
-      return false;
-    }
-
-    if (!Number.isInteger(position) || position < 0) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
-    }
-
-    let whatToMatch;
-    let special;
-
-    if (isStr$2(originalWhatToMatch)) {
-      whatToMatch = [originalWhatToMatch];
-    } else if (Array.isArray(originalWhatToMatch)) {
-      whatToMatch = originalWhatToMatch;
-    } else if (!originalWhatToMatch) {
-      whatToMatch = originalWhatToMatch;
-    } else if (typeof originalWhatToMatch === "function") {
-      whatToMatch = [];
-      whatToMatch.push(originalWhatToMatch);
-    } else {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
-    }
-
-    if (originalOpts && !isObj$2(originalOpts)) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    let culpritsIndex;
-    let culpritsVal;
-
-    if (opts.trimCharsBeforeMatching.some((el, i) => {
-      if (el.length > 1) {
-        culpritsIndex = i;
-        culpritsVal = el;
-        return true;
-      }
-
-      return false;
-    })) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
-    }
-
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
-      if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
-
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-
-        if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        }
-
-        if (firstCharOutsideIndex === undefined) {
-          return false;
-        }
-
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
-
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
-
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        }
-
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
-
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-      }
-
-      let extraNote = "";
-
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
-      }
-
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
-    }
-
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
-      special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
-
-      if (mode === "matchRight") {
-        startingPosition++;
-      } else if (mode === "matchLeft") {
-        startingPosition--;
-      }
-
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i => mode[5] === "L" ? i - 1 : i + 1);
-
-      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
-        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-      }
-
-      if (Number.isInteger(found)) {
-        indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
-
-        if (mode[5] === "L") {
-          restOfStringInFront = str.slice(0, found);
-        } else {
-          restOfStringInFront = str.slice(indexOfTheCharacterInFront);
-        }
-      }
-
-      if (indexOfTheCharacterInFront < 0) {
-        indexOfTheCharacterInFront = undefined;
-      }
-
-      if (str[indexOfTheCharacterInFront]) {
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-      }
-
-      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
-        return whatToMatchVal;
-      }
-    }
-
-    return false;
-  }
-
-  function matchLeftIncl(str, position, whatToMatch, opts) {
-    return main("matchLeftIncl", str, position, whatToMatch, opts);
-  }
-
-  function matchLeft(str, position, whatToMatch, opts) {
-    return main("matchLeft", str, position, whatToMatch, opts);
-  }
-
-  function matchRightIncl(str, position, whatToMatch, opts) {
-    return main("matchRightIncl", str, position, whatToMatch, opts);
-  }
-
-  function matchRight(str, position, whatToMatch, opts) {
-    return main("matchRight", str, position, whatToMatch, opts);
   }
 
   function validateCommentOpening(token) {
@@ -39542,7 +42573,7 @@
             trimBeforeMatching: true
           })) {
             wrongBracketType = true;
-            finalIdxTo++;
+            finalIdxTo += 1;
           }
 
           errorArr.push({
@@ -39568,7 +42599,7 @@
         if ("})".includes(token.value[idxFrom - 1]) && // also require that token would start with:
         // "<!--{if" or "<!--(if"
         wrongBracketType) {
-          finalIdxFrom--;
+          finalIdxFrom -= 1;
         }
 
         errorArr.push({
@@ -39591,7 +42622,7 @@
           var rangeStart = i + 1;
 
           if ("})".includes(token.value[i]) && wrongBracketType) {
-            rangeStart--;
+            rangeStart -= 1;
           }
 
           if (token.value.slice(i + 1) !== "]>") {
@@ -39613,13 +42644,11 @@
     return errorArr;
   }
 
-  // rule: comment-opening-malformed
-
   function commentOpeningMalformed(context) {
     return {
       text: function text(node) {
         strFindMalformed(node.value, "<!--", function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
+          context.report(_objectSpread2({}, errorObj, {
             message: "Malformed opening comment tag.",
             ruleId: "comment-opening-malformed",
             fix: {
@@ -39635,7 +42664,7 @@
           // run the tag's value past the validator function
           var errorArr = validateCommentOpening(node) || [];
           errorArr.forEach(function (errorObj) {
-            context.report(Object.assign({}, errorObj, {
+            context.report(_objectSpread2({}, errorObj, {
               ruleId: "comment-opening-malformed"
             }));
           });
@@ -39643,480 +42672,6 @@
       }
     };
   }
-
-  /**
-   * ast-monkey-traverse
-   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
-   */
-
-  function trimFirstDot(str) {
-    if (typeof str === "string" && str.length && str[0] === ".") {
-      return str.slice(1);
-    }
-
-    return str;
-  }
-
-  function isObj$3(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  function astMonkeyTraverse(tree1, cb1) {
-    const stop = {
-      now: false
-    };
-
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
-      const tree = lodash_clonedeep(treeOriginal);
-      let i;
-      let len;
-      let res;
-      innerObj = Object.assign({
-        depth: -1,
-        path: ""
-      }, innerObj);
-      innerObj.depth += 1;
-
-      if (Array.isArray(tree)) {
-        for (i = 0, len = tree.length; i < len; i++) {
-          if (stop.now) {
-            break;
-          }
-
-          const path = `${innerObj.path}.${i}`;
-
-          if (tree[i] !== undefined) {
-            innerObj.parent = lodash_clonedeep(tree);
-            innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
-              path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
-              path: trimFirstDot(path)
-            }), stop);
-
-            if (Number.isNaN(res) && i < tree.length) {
-              tree.splice(i, 1);
-              i -= 1;
-            } else {
-              tree[i] = res;
-            }
-          } else {
-            tree.splice(i, 1);
-          }
-        }
-      } else if (isObj$3(tree)) {
-        for (const key in tree) {
-          if (stop.now && key != null) {
-            break;
-          }
-
-          const path = `${innerObj.path}.${key}`;
-
-          if (innerObj.depth === 0 && key != null) {
-            innerObj.topmostKey = key;
-          }
-
-          innerObj.parent = lodash_clonedeep(tree);
-          innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
-            path: trimFirstDot(path)
-          }), stop), callback, Object.assign({}, innerObj, {
-            path: trimFirstDot(path)
-          }), stop);
-
-          if (Number.isNaN(res)) {
-            delete tree[key];
-          } else {
-            tree[key] = res;
-          }
-        }
-      }
-
-      return tree;
-    }
-
-    return traverseInner(tree1, cb1, {}, stop);
-  }
-
-  /**
-   * ast-monkey-util
-   * Utility library of AST helper functions
-   * Version: 1.1.3
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
-   */
-  function pathNext(str) {
-    if (typeof str !== "string" || !str.length) {
-      return str;
-    }
-
-    if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
-    } else if (/^\d*$/.test(str)) {
-      return `${+str + 1}`;
-    }
-
-    return str;
-  }
-
-  function pathPrev(str) {
-    if (typeof str !== "string" || !str.length) {
-      return null;
-    }
-
-    const extractedValue = str.slice(str.lastIndexOf(".") + 1);
-
-    if (extractedValue === "0") {
-      return null;
-    } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
-    } else if (/^\d*$/.test(str)) {
-      return `${+str - 1}`;
-    }
-
-    return null;
-  }
-
-  function pathUp(str) {
-    if (typeof str === "string") {
-      if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-        return "0";
-      }
-
-      let dotsCount = 0;
-
-      for (let i = str.length; i--;) {
-        if (str[i] === ".") {
-          dotsCount++;
-        }
-
-        if (dotsCount === 2) {
-          return str.slice(0, i);
-        }
-      }
-    }
-
-    return str;
-  }
-
-  var objectPath = createCommonjsModule(function (module) {
-    (function (root, factory) {
-      /*istanbul ignore next:cant test*/
-
-      {
-        module.exports = factory();
-      }
-    })(commonjsGlobal, function () {
-
-      var toStr = Object.prototype.toString;
-
-      function hasOwnProperty(obj, prop) {
-        if (obj == null) {
-          return false;
-        } //to handle objects with null prototypes (too edge case?)
-
-
-        return Object.prototype.hasOwnProperty.call(obj, prop);
-      }
-
-      function isEmpty(value) {
-        if (!value) {
-          return true;
-        }
-
-        if (isArray(value) && value.length === 0) {
-          return true;
-        } else if (typeof value !== 'string') {
-          for (var i in value) {
-            if (hasOwnProperty(value, i)) {
-              return false;
-            }
-          }
-
-          return true;
-        }
-
-        return false;
-      }
-
-      function toString(type) {
-        return toStr.call(type);
-      }
-
-      function isObject(obj) {
-        return typeof obj === 'object' && toString(obj) === "[object Object]";
-      }
-
-      var isArray = Array.isArray || function (obj) {
-        /*istanbul ignore next:cant test*/
-        return toStr.call(obj) === '[object Array]';
-      };
-
-      function isBoolean(obj) {
-        return typeof obj === 'boolean' || toString(obj) === '[object Boolean]';
-      }
-
-      function getKey(key) {
-        var intKey = parseInt(key);
-
-        if (intKey.toString() === key) {
-          return intKey;
-        }
-
-        return key;
-      }
-
-      function factory(options) {
-        options = options || {};
-
-        var objectPath = function (obj) {
-          return Object.keys(objectPath).reduce(function (proxy, prop) {
-            if (prop === 'create') {
-              return proxy;
-            }
-            /*istanbul ignore else*/
-
-
-            if (typeof objectPath[prop] === 'function') {
-              proxy[prop] = objectPath[prop].bind(objectPath, obj);
-            }
-
-            return proxy;
-          }, {});
-        };
-
-        function hasShallowProperty(obj, prop) {
-          return options.includeInheritedProps || typeof prop === 'number' && Array.isArray(obj) || hasOwnProperty(obj, prop);
-        }
-
-        function getShallowProperty(obj, prop) {
-          if (hasShallowProperty(obj, prop)) {
-            return obj[prop];
-          }
-        }
-
-        function set(obj, path, value, doNotReplace) {
-          if (typeof path === 'number') {
-            path = [path];
-          }
-
-          if (!path || path.length === 0) {
-            return obj;
-          }
-
-          if (typeof path === 'string') {
-            return set(obj, path.split('.').map(getKey), value, doNotReplace);
-          }
-
-          var currentPath = path[0];
-          var currentValue = getShallowProperty(obj, currentPath);
-
-          if (path.length === 1) {
-            if (currentValue === void 0 || !doNotReplace) {
-              obj[currentPath] = value;
-            }
-
-            return currentValue;
-          }
-
-          if (currentValue === void 0) {
-            //check if we assume an array
-            if (typeof path[1] === 'number') {
-              obj[currentPath] = [];
-            } else {
-              obj[currentPath] = {};
-            }
-          }
-
-          return set(obj[currentPath], path.slice(1), value, doNotReplace);
-        }
-
-        objectPath.has = function (obj, path) {
-          if (typeof path === 'number') {
-            path = [path];
-          } else if (typeof path === 'string') {
-            path = path.split('.');
-          }
-
-          if (!path || path.length === 0) {
-            return !!obj;
-          }
-
-          for (var i = 0; i < path.length; i++) {
-            var j = getKey(path[i]);
-
-            if (typeof j === 'number' && isArray(obj) && j < obj.length || (options.includeInheritedProps ? j in Object(obj) : hasOwnProperty(obj, j))) {
-              obj = obj[j];
-            } else {
-              return false;
-            }
-          }
-
-          return true;
-        };
-
-        objectPath.ensureExists = function (obj, path, value) {
-          return set(obj, path, value, true);
-        };
-
-        objectPath.set = function (obj, path, value, doNotReplace) {
-          return set(obj, path, value, doNotReplace);
-        };
-
-        objectPath.insert = function (obj, path, value, at) {
-          var arr = objectPath.get(obj, path);
-          at = ~~at;
-
-          if (!isArray(arr)) {
-            arr = [];
-            objectPath.set(obj, path, arr);
-          }
-
-          arr.splice(at, 0, value);
-        };
-
-        objectPath.empty = function (obj, path) {
-          if (isEmpty(path)) {
-            return void 0;
-          }
-
-          if (obj == null) {
-            return void 0;
-          }
-
-          var value, i;
-
-          if (!(value = objectPath.get(obj, path))) {
-            return void 0;
-          }
-
-          if (typeof value === 'string') {
-            return objectPath.set(obj, path, '');
-          } else if (isBoolean(value)) {
-            return objectPath.set(obj, path, false);
-          } else if (typeof value === 'number') {
-            return objectPath.set(obj, path, 0);
-          } else if (isArray(value)) {
-            value.length = 0;
-          } else if (isObject(value)) {
-            for (i in value) {
-              if (hasShallowProperty(value, i)) {
-                delete value[i];
-              }
-            }
-          } else {
-            return objectPath.set(obj, path, null);
-          }
-        };
-
-        objectPath.push = function (obj, path
-        /*, values */
-        ) {
-          var arr = objectPath.get(obj, path);
-
-          if (!isArray(arr)) {
-            arr = [];
-            objectPath.set(obj, path, arr);
-          }
-
-          arr.push.apply(arr, Array.prototype.slice.call(arguments, 2));
-        };
-
-        objectPath.coalesce = function (obj, paths, defaultValue) {
-          var value;
-
-          for (var i = 0, len = paths.length; i < len; i++) {
-            if ((value = objectPath.get(obj, paths[i])) !== void 0) {
-              return value;
-            }
-          }
-
-          return defaultValue;
-        };
-
-        objectPath.get = function (obj, path, defaultValue) {
-          if (typeof path === 'number') {
-            path = [path];
-          }
-
-          if (!path || path.length === 0) {
-            return obj;
-          }
-
-          if (obj == null) {
-            return defaultValue;
-          }
-
-          if (typeof path === 'string') {
-            return objectPath.get(obj, path.split('.'), defaultValue);
-          }
-
-          var currentPath = getKey(path[0]);
-          var nextObj = getShallowProperty(obj, currentPath);
-
-          if (nextObj === void 0) {
-            return defaultValue;
-          }
-
-          if (path.length === 1) {
-            return nextObj;
-          }
-
-          return objectPath.get(obj[currentPath], path.slice(1), defaultValue);
-        };
-
-        objectPath.del = function del(obj, path) {
-          if (typeof path === 'number') {
-            path = [path];
-          }
-
-          if (obj == null) {
-            return obj;
-          }
-
-          if (isEmpty(path)) {
-            return obj;
-          }
-
-          if (typeof path === 'string') {
-            return objectPath.del(obj, path.split('.'));
-          }
-
-          var currentPath = getKey(path[0]);
-
-          if (!hasShallowProperty(obj, currentPath)) {
-            return obj;
-          }
-
-          if (path.length === 1) {
-            if (isArray(obj)) {
-              obj.splice(currentPath, 1);
-            } else {
-              delete obj[currentPath];
-            }
-          } else {
-            return objectPath.del(obj[currentPath], path.slice(1));
-          }
-
-          return obj;
-        };
-
-        return objectPath;
-      }
-
-      var mod = factory();
-      mod.create = factory;
-      mod.withInheritedProps = factory({
-        includeInheritedProps: true
-      });
-      return mod;
-    });
-  });
 
   // rule: comment-mismatching-pair
 
@@ -40136,7 +42691,7 @@
         function (key, val, innerObj) {
           var current = val !== undefined ? val : key;
 
-          if (isObj(current)) {
+          if (isObj$6(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "comment"
             // console.log(
@@ -40149,7 +42704,7 @@
             if (current.type === "comment" && current.closing) {
               var previousToken = objectPath.get(node, pathPrev(innerObj.path));
 
-              if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
+              if (isObj$6(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
                 if (previousToken.kind === "not" && current.kind === "only") {
                   // turn tail into "not"-kind, add front part (<!--)
                   // Out of all raised errors, only one can have "ranges.fix" -
@@ -40202,7 +42757,7 @@
         function (key, val, innerObj) {
           var current = val !== undefined ? val : key;
 
-          if (isObj(current)) {
+          if (isObj$6(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "comment"
             if (current.type === "comment") {
@@ -40426,7 +42981,7 @@
   });
   defineLazyProp(builtInRules, "bad-character-soft-hyphen", function () {
     return badCharacterSoftHyphen;
-  }); // space characters:
+  });
   defineLazyProp(builtInRules, "bad-character-non-breaking-space", function () {
     return badCharacterNonBreakingSpace;
   });
@@ -40495,7 +43050,7 @@
   });
   defineLazyProp(builtInRules, "bad-character-right-to-left-override", function () {
     return badCharacterRightToLeftOverride;
-  }); //
+  });
   defineLazyProp(builtInRules, "bad-character-word-joiner", function () {
     return badCharacterWordJoiner;
   });
@@ -40558,7 +43113,7 @@
   });
   defineLazyProp(builtInRules, "bad-character-paragraph-separator", function () {
     return badCharacterParagraphSeparator;
-  }); //
+  });
   defineLazyProp(builtInRules, "bad-character-narrow-no-break-space", function () {
     return badCharacterNarrowNoBreakSpace;
   });
@@ -40570,7 +43125,7 @@
   });
   defineLazyProp(builtInRules, "bad-character-replacement-character", function () {
     return badCharacterReplacementCharacter;
-  }); // TAG-LEVEL rules
+  });
   defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
     return tagSpaceAfterOpeningBracket;
   });
@@ -40600,13 +43155,13 @@
   });
   defineLazyProp(builtInRules, "tag-bad-self-closing", function () {
     return tagBadSelfClosing;
-  }); // ATTRIBUTE rules
+  });
   defineLazyProp(builtInRules, "attribute-duplicate", function () {
     return attributeDuplicate;
   });
   defineLazyProp(builtInRules, "attribute-malformed", function () {
     return attributeMalformed;
-  }); // ATTRIBUTE-VALIDATE- rules
+  });
   defineLazyProp(builtInRules, "attribute-validate-abbr", function () {
     return attributeValidateAbbr;
   });
@@ -40963,19 +43518,19 @@
   });
   defineLazyProp(builtInRules, "attribute-validate-width", function () {
     return attributeValidateWidth;
-  }); // BAD-HTML-ENTITY rules
+  });
   defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
     return htmlEntitiesNotEmailFriendly;
-  }); // CHARACTER rules
+  });
   defineLazyProp(builtInRules, "character-encode", function () {
     return characterEncode;
   });
   defineLazyProp(builtInRules, "character-unspaced-punctuation", function () {
     return characterUnspacedPunctuation;
-  }); // MEDIA (QUERY) rules
+  });
   defineLazyProp(builtInRules, "media-malformed", function () {
     return mediaMalformed;
-  }); // COMMENT TAG rules
+  });
   defineLazyProp(builtInRules, "comment-closing-malformed", function () {
     return commentClosingMalformed;
   });
@@ -41020,6 +43575,8 @@
           temp = ruleName;
           return true;
         }
+
+        return false;
       })) {
         allBadCharacterRules.forEach(function (ruleName) {
           res[ruleName] = opts[temp];
@@ -41031,6 +43588,8 @@
           temp = ruleName;
           return true;
         }
+
+        return false;
       })) {
         allTagRules.forEach(function (ruleName) {
           res[ruleName] = opts[temp];
@@ -41042,6 +43601,8 @@
           temp = ruleName;
           return true;
         }
+
+        return false;
       })) {
         allAttribRules.forEach(function (ruleName) {
           res[ruleName] = opts[temp];
@@ -41082,2691 +43643,6 @@
     }
 
     return res;
-  }
-
-  var toString = {}.toString;
-
-  var isarray = Array.isArray || function (arr) {
-    return toString.call(arr) == '[object Array]';
-  };
-
-  var isobject = function isObject(val) {
-    return val != null && typeof val === 'object' && isarray(val) === false;
-  };
-
-  var lineColumn = LineColumnFinder;
-  /**
-   * Finder for index and line-column from given string.
-   *
-   * You can call this without `new` operator as it returns an instance anyway.
-   *
-   * @class
-   * @param {string} str - A string to be parsed.
-   * @param {Object|number} [options] - Options.
-   *     This can be an index in the string for shorthand of `lineColumn(str, index)`.
-   * @param {number} [options.origin=1] - The origin value of line and column.
-   */
-
-  function LineColumnFinder(str, options) {
-    if (!(this instanceof LineColumnFinder)) {
-      if (typeof options === "number") {
-        return new LineColumnFinder(str).fromIndex(options);
-      }
-
-      return new LineColumnFinder(str, options);
-    }
-
-    this.str = str || "";
-    this.lineToIndex = buildLineToIndex(this.str);
-    options = options || {};
-    this.origin = typeof options.origin === "undefined" ? 1 : options.origin;
-  }
-  /**
-   * Find line and column from index in the string.
-   *
-   * @param  {number} index - Index in the string. (0-origin)
-   * @return {Object|null}
-   *     Found line number and column number in object `{ line: X, col: Y }`.
-   *     If the given index is out of range, it returns `null`.
-   */
-
-
-  LineColumnFinder.prototype.fromIndex = function (index) {
-    if (index < 0 || index >= this.str.length || isNaN(index)) {
-      return null;
-    }
-
-    var line = findLowerIndexInRangeArray(index, this.lineToIndex);
-    return {
-      line: line + this.origin,
-      col: index - this.lineToIndex[line] + this.origin
-    };
-  };
-  /**
-   * Find index from line and column in the string.
-   *
-   * @param  {number|Object|Array} line - Line number in the string.
-   *     This can be an Object of `{ line: X, col: Y }`, or
-   *     an Array of `[line, col]`.
-   * @param  {number} [column] - Column number in the string.
-   *     This must be omitted or undefined when Object or Array is given
-   *     to the first argument.
-   * @return {number}
-   *     Found index in the string. (always 0-origin)
-   *     If the given line or column is out of range, it returns `-1`.
-   */
-
-
-  LineColumnFinder.prototype.toIndex = function (line, column) {
-    if (typeof column === "undefined") {
-      if (isarray(line) && line.length >= 2) {
-        return this.toIndex(line[0], line[1]);
-      }
-
-      if (isobject(line) && "line" in line && ("col" in line || "column" in line)) {
-        return this.toIndex(line.line, "col" in line ? line.col : line.column);
-      }
-
-      return -1;
-    }
-
-    if (isNaN(line) || isNaN(column)) {
-      return -1;
-    }
-
-    line -= this.origin;
-    column -= this.origin;
-
-    if (line >= 0 && column >= 0 && line < this.lineToIndex.length) {
-      var lineIndex = this.lineToIndex[line];
-      var nextIndex = line === this.lineToIndex.length - 1 ? this.str.length : this.lineToIndex[line + 1];
-
-      if (column < nextIndex - lineIndex) {
-        return lineIndex + column;
-      }
-    }
-
-    return -1;
-  };
-  /**
-   * Build an array of indexes of each line from a string.
-   *
-   * @private
-   * @param   str {string}  An input string.
-   * @return  {number[]}    Built array of indexes. The key is line number.
-   */
-
-
-  function buildLineToIndex(str) {
-    var lines = str.split("\n"),
-        lineToIndex = new Array(lines.length),
-        index = 0;
-
-    for (var i = 0, l = lines.length; i < l; i++) {
-      lineToIndex[i] = index;
-      index += lines[i].length +
-      /* "\n".length */
-      1;
-    }
-
-    return lineToIndex;
-  }
-  /**
-   * Find a lower-bound index of a value in a sorted array of ranges.
-   *
-   * Assume `arr = [0, 5, 10, 15, 20]` and
-   * this returns `1` for `value = 7` (5 <= value < 10),
-   * and returns `3` for `value = 18` (15 <= value < 20).
-   *
-   * @private
-   * @param  arr   {number[]} An array of values representing ranges.
-   * @param  value {number}   A value to be searched.
-   * @return {number} Found index. If not found `-1`.
-   */
-
-
-  function findLowerIndexInRangeArray(value, arr) {
-    if (value >= arr[arr.length - 1]) {
-      return arr.length - 1;
-    }
-
-    var min = 0,
-        max = arr.length - 2,
-        mid;
-
-    while (min < max) {
-      mid = min + (max - min >> 1);
-
-      if (value < arr[mid]) {
-        max = mid - 1;
-      } else if (value >= arr[mid + 1]) {
-        min = mid + 1;
-      } else {
-        // value >= arr[mid] && value < arr[mid + 1]
-        min = mid;
-        break;
-      }
-    }
-
-    return min;
-  }
-
-  /**
-   * is-html-tag-opening
-   * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.5
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
-   */
-  const BACKSLASH$4 = "\u005C";
-  const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
-
-  function isStr$3(something) {
-    return typeof something === "string";
-  }
-
-  function isNotLetter(char) {
-    return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
-  }
-
-  function isOpening(str, idx = 0, originalOpts) {
-    const defaults = {
-      allowCustomTagNames: false,
-      skipOpeningBracket: false
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
-    const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
-    const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
-    const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
-    const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
-    const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
-    const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
-    const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
-    const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const whatToTest = idx ? str.slice(idx) : str;
-    let passed = false;
-    const matchingOptions = {
-      cb: isNotLetter,
-      i: true,
-      trimCharsBeforeMatching: ["/", BACKSLASH$4, "!", " ", "\t", "\n", "\r"]
-    };
-
-    if (opts.allowCustomTagNames) {
-      if (r5.test(whatToTest)) {
-        passed = true;
-      } else if (r6.test(whatToTest)) {
-        passed = true;
-      } else if (r7.test(whatToTest)) {
-        passed = true;
-      } else if (r8.test(whatToTest)) {
-        passed = true;
-      }
-    } else if (matchRightIncl(str, idx, knownHtmlTags, {
-      cb: isNotLetter,
-      i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH$4, "!", " ", "\t", "\n", "\r"]
-    })) {
-      if (r1.test(whatToTest)) {
-        passed = true;
-      } else if (r2.test(whatToTest)) {
-        passed = true;
-      } else if (r3.test(whatToTest)) {
-        passed = true;
-      } else if (r4.test(whatToTest)) {
-        passed = true;
-      }
-    }
-
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
-      passed = true;
-    }
-
-    const res = isStr$3(str) && idx < str.length && passed;
-    return res;
-  }
-
-  /**
-   * is-char-suitable-for-html-attr-name
-   * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
-   */
-  function charSuitableForHTMLAttrName(char) {
-    return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
-  }
-
-  /**
-   * ranges-is-index-within
-   * Efficiently checks if index is within any of the given ranges
-   * Version: 1.14.32
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
-   */
-  const isArr$1 = Array.isArray;
-
-  function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-    const defaults = {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: false
-    };
-    const opts = Object.assign(Object.assign({}, defaults), originalOpts);
-
-    if (!isArr$1(rangesArr)) {
-      return false;
-    }
-
-    if (opts.returnMatchedRangeInsteadOfTrue) {
-      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
-    }
-
-    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
-  }
-
-  /**
-   * string-split-by-whitespace
-   * Split string into array by chunks of whitespace
-   * Version: 1.6.61
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
-   */
-
-  function split(str, originalOpts) {
-    if (str === undefined) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
-    }
-
-    if (typeof str !== "string") {
-      return str;
-    }
-
-    if (str.trim() === "") {
-      return [];
-    }
-
-    const defaults = {
-      ignoreRanges: []
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-
-    if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
-    }
-
-    let nonWhitespaceSubStringStartsAt = null;
-    const res = [];
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
-        inclusiveRangeEnds: true
-      }))) {
-        nonWhitespaceSubStringStartsAt = i;
-      }
-
-      if (nonWhitespaceSubStringStartsAt !== null) {
-        if (str[i].trim() === "") {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (str[i + 1] === undefined) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
-        }
-      }
-    }
-
-    return res;
-  }
-
-  /**
-   * is-html-attribute-closing
-   * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.2
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
-   */
-
-  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
-      if (y.some(oneOfStr => str.startsWith(oneOfStr, i))) {
-        return true;
-      } else if (str[i] === x) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  function xBeforeYOnTheRight(str, startingIdx, x, y) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
-      if (str.startsWith(x, i)) {
-        return true;
-      } else if (str.startsWith(y, i)) {
-        return false;
-      }
-    }
-
-    return false;
-  }
-
-  function plausibleAttrStartsAtX(str, start) {
-    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
-      return false;
-    }
-
-    const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
-    return regex.test(str.slice(start));
-  }
-
-  function guaranteedAttrStartsAtX(str, start) {
-    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
-      return false;
-    }
-
-    const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-    return regex.test(str.slice(start));
-  }
-
-  function findAttrNameCharsChunkOnTheLeft(str, i) {
-    if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
-      return;
-    }
-
-    for (let y = i; y--;) {
-      if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
-        return str.slice(y + 1, i);
-      }
-    }
-  }
-
-  function makeTheQuoteOpposite(quoteChar) {
-    return quoteChar === `'` ? `"` : `'`;
-  }
-
-  function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
-    if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
-      return false;
-    }
-
-    const openingQuote = `'"`.includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
-    let oppositeToOpeningQuote = null;
-
-    if (openingQuote) {
-      oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
-    }
-
-    let chunkStartsAt;
-    const quotesCount = new Map().set(`'`, 0).set(`"`, 0).set(`matchedPairs`, 0);
-    let lastQuoteAt = null;
-    let totalQuotesCount = 0;
-    let lastQuoteWasMatched = false;
-    let lastMatchedQuotesPairsStartIsAt = false;
-    let lastMatchedQuotesPairsEndIsAt = false;
-    let lastCapturedChunk;
-    let lastChunkWasCapturedAfterSuspectedClosing = false;
-    let closingBracketMet = false;
-    let openingBracketMet = false;
-
-    for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
-      if (`'"`.includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
-        const E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || `/>`.includes(str[right(str, i)]);
-        const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
-        const E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
-        const E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
-        let attrNameCharsChunkOnTheLeft;
-
-        if (i === isThisClosingIdx) {
-          attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-        }
-
-        const E34 = i === isThisClosingIdx && (!charSuitableForHTMLAttrName(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
-        const E41 = `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
-        const E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
-        const E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
-        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
-      }
-
-      if (`'"`.includes(str[i])) {
-        if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
-          quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
-          lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
-          lastMatchedQuotesPairsEndIsAt = i;
-          lastQuoteAt = null;
-          lastQuoteWasMatched = true;
-        } else {
-          lastQuoteWasMatched = false;
-        }
-
-        quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
-        totalQuotesCount = quotesCount.get(`"`) + quotesCount.get(`'`);
-      }
-
-      if (str[i] === ">" && !closingBracketMet) {
-        closingBracketMet = true;
-
-        if (totalQuotesCount && quotesCount.get(`matchedPairs`) && totalQuotesCount === quotesCount.get(`matchedPairs`) * 2 && i < isThisClosingIdx) {
-          return false;
-        }
-      }
-
-      if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
-        openingBracketMet = true;
-        return false;
-      }
-
-      if (str[i].trim() && !chunkStartsAt) {
-        if (charSuitableForHTMLAttrName(str[i])) {
-          chunkStartsAt = i;
-        }
-      } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        lastCapturedChunk = str.slice(chunkStartsAt, i);
-        lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-
-        if (`'"`.includes(str[i]) && quotesCount.get(`matchedPairs`) === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
-          const A1 = i > isThisClosingIdx;
-          const A21 = !lastQuoteAt;
-          const A22 = lastQuoteAt + 1 >= i;
-          const A23 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
-          const B1 = i === isThisClosingIdx;
-          const B21 = totalQuotesCount < 3;
-          const B22 = !!lastQuoteWasMatched;
-          const B23 = !lastQuoteAt;
-          const B24 = lastQuoteAt + 1 >= i;
-          const B25 = !split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
-          return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
-        } else if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
-          return true;
-        }
-      }
-
-      if (`'"`.includes(str[i]) && (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) && (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
-        const R0 = i > isThisClosingIdx;
-        const R1 = !!openingQuote;
-        const R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-        const R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
-        const R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
-        return R0 && !(R1 && R2 && R3 && R4);
-      } else if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
-        const W1 = i > isThisClosingIdx;
-        const W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
-        return W1 && W2;
-      }
-
-      if (i > isThisClosingIdx) {
-        if (openingQuote && str[i] === openingQuote) {
-          const Y1 = !!lastQuoteAt;
-          const Y2 = lastQuoteAt === isThisClosingIdx;
-          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-          const Y4 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
-          const Y5 = i >= isThisClosingIdx;
-          return Y1 && Y2 && Y3 && Y4 && Y5;
-        }
-
-        if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
-          return false;
-        } else if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-          const R0 = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
-          const R11 = quotesCount.get(`matchedPairs`) < 2;
-          const attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-          const R12 = (!attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get(`'`) && quotesCount.get(`"`) && quotesCount.get(`matchedPairs`) > 1) || `/>`.includes(str[right(str, i)]));
-          const R2 = totalQuotesCount < 3 || quotesCount.get(`"`) + quotesCount.get(`'`) - quotesCount.get(`matchedPairs`) * 2 !== 2;
-          const R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(char => charSuitableForHTMLAttrName(char)) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-          const R32 = !right(str, i) && totalQuotesCount % 2 === 0;
-          const R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
-          const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [`='`, `="`]);
-          return R0 || (R11 || R12) && R2 && (R31 || R32 || R33 || R34);
-        }
-
-        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["="]
-        })) {
-          return true;
-        }
-      } else {
-        let firstNonWhitespaceCharOnTheLeft;
-
-        if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
-          firstNonWhitespaceCharOnTheLeft = i - 1;
-        } else {
-          for (let y = i; y--;) {
-            if (str[y].trim() && str[y] !== "=") {
-              firstNonWhitespaceCharOnTheLeft = y;
-              break;
-            }
-          }
-        }
-
-        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
-          cb: char => !`/>`.includes(char),
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
-          return false;
-        }
-
-        if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
-          return true;
-        }
-
-        if (i < isThisClosingIdx && `'"`.includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
-          return false;
-        }
-      }
-
-      if (`'"`.includes(str[i]) && i > isThisClosingIdx) {
-        if (!lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || !allHtmlAttribs.has(lastCapturedChunk)) {
-          return false;
-        }
-
-        return true;
-      }
-
-      if (`'"`.includes(str[i])) {
-        lastQuoteAt = i;
-      }
-
-      if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        chunkStartsAt = null;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * codsen-tokenizer
-   * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.14.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
-   */
-  const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
-  const espChars = `{}%-$_()*|`;
-  const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
-
-  function isStr$4(something) {
-    return typeof something === "string";
-  }
-
-  function isLatinLetter(char) {
-    return isStr$4(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
-  }
-
-  function charSuitableForTagName(char) {
-    return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
-  }
-
-  function flipEspTag(str) {
-    let res = "";
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (str[i] === "[") {
-        res = `]${res}`;
-      } else if (str[i] === "{") {
-        res = `}${res}`;
-      } else if (str[i] === "(") {
-        res = `)${res}`;
-      } else {
-        res = `${str[i]}${res}`;
-      }
-    }
-
-    return res;
-  }
-
-  function isTagNameRecognised(tagName) {
-    return allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
-  }
-
-  function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
-      if (str.startsWith(x, i)) {
-        return true;
-      } else if (str.startsWith(y, i)) {
-        return false;
-      }
-    }
-
-    return false;
-  }
-
-  function startsEsp(str, i, token, layers, styleStarts) {
-    return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)])));
-  }
-
-  const BACKSLASH$5 = "\u005C";
-
-  function startsTag(str, i, token, layers) {
-    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
-      allowCustomTagNames: true
-    }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
-      i: true,
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-    })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$5].includes(str[left(str, i)])) && isOpening(str, i, {
-      allowCustomTagNames: false,
-      skipOpeningBracket: true
-    })) && (token.type !== "esp" || token.tail.includes(str[i]));
-  }
-
-  function startsComment(str, i, token) {
-    return (str[i] === "<" && (matchRight(str, i, ["!--"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
-      trimBeforeMatching: true
-    }) || matchRight(str, i, ["![endif]"], {
-      i: true,
-      maxMismatches: 2,
-      trimBeforeMatching: true
-    })) && !matchRight(str, i, ["![cdata", "<"], {
-      i: true,
-      maxMismatches: 1,
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["-", "!"]
-    })) && (token.type !== "esp" || token.tail.includes(str[i]));
-  }
-
-  function isObj$4(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  const voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
-  const charsThatEndCSSChunks = ["{", "}", ","];
-
-  function tokenizer(str, originalOpts) {
-    const start = Date.now();
-
-    if (!isStr$4(str)) {
-      if (str === undefined) {
-        throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
-      } else {
-        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
-      }
-    }
-
-    if (originalOpts && !isObj$4(originalOpts)) {
-      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    if (isObj$4(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
-    }
-
-    if (isObj$4(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
-    }
-
-    if (isObj$4(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
-    }
-
-    const defaults = {
-      tagCb: null,
-      tagCbLookahead: 0,
-      charCb: null,
-      charCbLookahead: 0,
-      reportProgressFunc: null,
-      reportProgressFuncFrom: 0,
-      reportProgressFuncTo: 100
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    let currentPercentageDone;
-    let lastPercentage = 0;
-    const len = str.length;
-    const midLen = Math.floor(len / 2);
-    let doNothing;
-    let styleStarts = false;
-    const tagStash = [];
-    const charStash = [];
-    let token = {};
-    const tokenDefault = {
-      type: null,
-      start: null,
-      end: null
-    };
-
-    function tokenReset() {
-      token = lodash_clonedeep(tokenDefault);
-      attribReset();
-      return token;
-    }
-
-    let attrib = {};
-    const attribDefault = {
-      attribName: null,
-      attribNameRecognised: null,
-      attribNameStartsAt: null,
-      attribNameEndsAt: null,
-      attribOpeningQuoteAt: null,
-      attribClosingQuoteAt: null,
-      attribValueRaw: null,
-      attribValue: [],
-      attribValueStartsAt: null,
-      attribValueEndsAt: null,
-      attribStart: null,
-      attribEnd: null
-    };
-
-    function attribReset() {
-      attrib = lodash_clonedeep(attribDefault);
-    }
-
-    tokenReset();
-    attribReset();
-    let selectorChunkStartedAt;
-    let parentTokenToBackup;
-    let attribToBackup;
-    let layers = [];
-
-    function matchLayerLast(str, i, matchFirstInstead) {
-      if (!layers.length) {
-        return false;
-      }
-
-      const whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
-
-      if (whichLayerToMatch.type === "simple") {
-        return !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value);
-      } else if (whichLayerToMatch.type === "esp") {
-        if (!espChars.includes(str[i])) {
-          return false;
-        }
-
-        let wholeEspTagLump = "";
-        const len = str.length;
-
-        for (let y = i; y < len; y++) {
-          if (espChars.includes(str[y])) {
-            wholeEspTagLump = wholeEspTagLump + str[y];
-          } else {
-            break;
-          }
-        }
-
-        if (wholeEspTagLump && whichLayerToMatch.openingLump && wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length) {
-          if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
-            return wholeEspTagLump.length - whichLayerToMatch.openingLump.length;
-          }
-
-          let uniqueCharsListFromGuessedClosingLumpArr = new Set(whichLayerToMatch.guessedClosingLump);
-          let found = 0;
-
-          for (let y = 0, len2 = wholeEspTagLump.length; y < len2; y++) {
-            if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y]) && found > 1) {
-              return y;
-            }
-
-            if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])) {
-              found++;
-              uniqueCharsListFromGuessedClosingLumpArr = new Set([...uniqueCharsListFromGuessedClosingLumpArr].filter(el => el !== wholeEspTagLump[y]));
-            }
-          }
-        } else if (whichLayerToMatch.guessedClosingLump.split("").every(char => wholeEspTagLump.includes(char))) {
-          return wholeEspTagLump.length;
-        }
-      }
-    }
-
-    function matchLayerFirst(str, i) {
-      return matchLayerLast(str, i, true);
-    }
-
-    function reportFirstFromStash(stash, cb, lookaheadLength) {
-      const currentElem = stash.shift();
-      const next = [];
-
-      for (let i = 0; i < lookaheadLength; i++) {
-        if (stash[i]) {
-          next.push(lodash_clonedeep(stash[i]));
-        } else {
-          break;
-        }
-      }
-
-      cb(currentElem, next);
-    }
-
-    function pingCharCb(incomingToken) {
-      if (opts.charCb) {
-        charStash.push(incomingToken);
-
-        if (charStash.length > opts.charCbLookahead) {
-          reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-        }
-      }
-    }
-
-    function pingTagCb(incomingToken) {
-      if (opts.tagCb) {
-        tagStash.push(incomingToken);
-
-        if (tagStash.length > opts.tagCbLookahead) {
-          reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-        }
-      }
-    }
-
-    function dumpCurrentToken(token, i) {
-      if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
-        token.end = left(str, i) + 1;
-        token.value = str.slice(token.start, token.end);
-
-        if (token.type === "tag" && !"/>".includes(str[token.end - 1])) {
-          let cutOffIndex = token.tagNameEndsAt || i;
-
-          if (Array.isArray(token.attribs) && token.attribs.length) {
-            for (let i = 0, len = token.attribs.length; i < len; i++) {
-              if (token.attribs[i].attribNameRecognised) {
-                cutOffIndex = token.attribs[i].attribEnd;
-
-                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
-                  cutOffIndex++;
-                }
-              } else {
-                if (i === 0) {
-                  token.attribs = [];
-                } else {
-                  token.attribs = token.attribs.splice(0, i);
-                }
-
-                break;
-              }
-            }
-          }
-
-          token.end = cutOffIndex;
-          token.value = str.slice(token.start, token.end);
-
-          if (!token.tagNameEndsAt) {
-            token.tagNameEndsAt = cutOffIndex;
-          }
-
-          if (Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.tagNameEndsAt) && !token.tagName) {
-            token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
-            token.recognised = isTagNameRecognised(token.tagName);
-          }
-
-          pingTagCb(token);
-          token = tokenReset();
-          initToken("text", cutOffIndex);
-        } else {
-          pingTagCb(token);
-          token = tokenReset();
-
-          if (str[i - 1] && !str[i - 1].trim()) {
-            initToken("text", left(str, i) + 1);
-          }
-        }
-      }
-
-      if (token.start !== null) {
-        if (token.end === null && token.start !== i) {
-          token.end = i;
-          token.value = str.slice(token.start, token.end);
-        }
-
-        if (token.start !== null && token.end !== null) {
-          pingTagCb(token);
-        }
-
-        token = tokenReset();
-      }
-    }
-
-    function atRuleWaitingForClosingCurlie() {
-      return layers.length && layers[layers.length - 1].type === "at" && isObj$4(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
-    }
-
-    function initToken(type, start) {
-      attribReset();
-
-      if (type === "tag") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        token.tagNameStartsAt = null;
-        token.tagNameEndsAt = null;
-        token.tagName = null;
-        token.recognised = null;
-        token.closing = false;
-        token.void = false;
-        token.pureHTML = true;
-        token.kind = null;
-        token.attribs = [];
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
-      } else if (type === "comment") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        token.closing = false;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = "simple";
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
-      } else if (type === "rule") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        token.selectorsStart = null;
-        token.selectorsEnd = null;
-        token.selectors = [];
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
-      } else if (type === "at") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        token.identifier = null;
-        token.identifierStartsAt = null;
-        token.identifierEndsAt = null;
-        token.query = null;
-        token.queryStartsAt = null;
-        token.queryEndsAt = null;
-        delete token.head;
-        delete token.tail;
-      } else if (type === "text") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
-      } else if (type === "esp") {
-        token.type = type;
-        token.start = start;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = null;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        token.head = null;
-        token.tail = null;
-      }
-    }
-
-    for (let i = 0; i <= len; i++) {
-      if (!doNothing && str[i] && opts.reportProgressFunc) {
-        if (len > 1000 && len < 2000) {
-          if (i === midLen) {
-            opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
-          }
-        } else if (len >= 2000) {
-          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
-
-          if (currentPercentageDone !== lastPercentage) {
-            lastPercentage = currentPercentageDone;
-            opts.reportProgressFunc(currentPercentageDone);
-          }
-        }
-      }
-
-      if (styleStarts && token.type && !["rule", "at", "text"].includes(token.type)) {
-        styleStarts = false;
-      }
-
-      if (Number.isInteger(doNothing) && i >= doNothing) {
-        doNothing = false;
-      }
-
-      if (!doNothing && atRuleWaitingForClosingCurlie()) {
-        if (str[i] === "}") {
-          if (token.type === null || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
-            if (token.type === "rule") {
-              token.end = left(str, i) + 1;
-              token.value = str.slice(token.start, token.end);
-              pingTagCb(token);
-              token = tokenReset();
-
-              if (left(str, i) < i - 1) {
-                initToken("text", left(str, i) + 1);
-              }
-            }
-
-            dumpCurrentToken(token, i);
-            const poppedToken = layers.pop();
-            token = poppedToken.token;
-            token.closingCurlyAt = i;
-            token.end = i + 1;
-            token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
-            token = tokenReset();
-            doNothing = i + 1;
-          }
-        } else if (token.type === "text" && str[i] && str[i].trim()) {
-          token.end = i;
-          token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
-          token = tokenReset();
-        }
-      }
-
-      if (token.end && token.end === i) {
-        if (token.tagName === "style" && !token.closing) {
-          styleStarts = true;
-        }
-
-        if (attribToBackup) {
-          attrib = attribToBackup;
-          attrib.attribValue.push(lodash_clonedeep(token));
-          token = lodash_clonedeep(parentTokenToBackup);
-          attribToBackup = undefined;
-          parentTokenToBackup = undefined;
-        } else {
-          dumpCurrentToken(token, i);
-          layers = [];
-        }
-      }
-
-      if (!doNothing) {
-        if (["tag", "esp", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-            if (matchLayerLast(str, i)) {
-              layers.pop();
-            } else {
-              layers.push({
-                type: "simple",
-                value: str[i],
-                position: i
-              });
-            }
-          }
-        } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-          if ([`[`, `]`].includes(str[i])) {
-            if (matchLayerLast(str, i)) {
-              layers.pop();
-            } else {
-              layers.push({
-                type: "simple",
-                value: str[i],
-                position: i
-              });
-            }
-          }
-        }
-      }
-
-      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[i] && str[i].trim() && str[i] !== "@") {
-        token.identifierStartsAt = i;
-      }
-
-      if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[i])) {
-        if (str[i - 1] && str[i - 1].trim()) {
-          token.queryEndsAt = i;
-        } else {
-          token.queryEndsAt = left(str, i) + 1;
-        }
-
-        token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-      }
-
-      if (!doNothing && token.type === "at" && str[i] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
-        token.openingCurlyAt = i;
-        layers.push({
-          type: "at",
-          token
-        });
-        const charIdxOnTheRight = right(str, i);
-
-        if (str[charIdxOnTheRight] === "}") {
-          token.closingCurlyAt = charIdxOnTheRight;
-          pingTagCb(token);
-          doNothing = charIdxOnTheRight;
-        } else {
-          tokenReset();
-
-          if (charIdxOnTheRight > i + 1) {
-            initToken("text", i + 1);
-            token.end = charIdxOnTheRight;
-            token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
-          }
-
-          tokenReset();
-          initToken("rule", charIdxOnTheRight);
-          doNothing = charIdxOnTheRight;
-        }
-      }
-
-      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !Number.isInteger(token.queryStartsAt)) {
-        token.queryStartsAt = i;
-      }
-
-      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !Number.isInteger(token.identifierEndsAt)) {
-        token.identifierEndsAt = i;
-        token.identifier = str.slice(token.identifierStartsAt, i);
-      }
-
-      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
-        token.selectors.push({
-          value: str.slice(selectorChunkStartedAt, i),
-          selectorStarts: selectorChunkStartedAt,
-          selectorEnds: i
-        });
-        selectorChunkStartedAt = undefined;
-        token.selectorsEnd = i;
-      }
-
-      if (!doNothing) {
-        if (startsTag(str, i, token, layers)) {
-          if (token.type && token.start !== null) {
-            dumpCurrentToken(token, i);
-            tokenReset();
-          }
-
-          initToken("tag", i);
-
-          if (styleStarts) {
-            styleStarts = false;
-          }
-
-          if (matchRight(str, i, "doctype", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
-            token.kind = "doctype";
-          } else if (matchRight(str, i, "cdata", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
-            token.kind = "cdata";
-          } else if (matchRight(str, i, "xml", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
-            token.kind = "xml";
-          }
-        } else if (startsComment(str, i, token)) {
-          if (Number.isInteger(token.start)) {
-            dumpCurrentToken(token, i);
-          }
-
-          tokenReset();
-          initToken("comment", i);
-
-          if (str[i] === "-") {
-            token.closing = true;
-          } else if (matchRightIncl(str, i, ["<![endif]-->"], {
-            i: true,
-            trimBeforeMatching: true,
-            maxMismatches: 2
-          })) {
-            token.closing = true;
-            token.kind = "only";
-          }
-
-          if (styleStarts) {
-            styleStarts = false;
-          }
-        } else if (startsEsp(str, i, token, layers, styleStarts)) {
-          let wholeEspTagLump = "";
-
-          for (let y = i; y < len; y++) {
-            if (espChars.includes(str[y])) {
-              wholeEspTagLump = wholeEspTagLump + str[y];
-            } else {
-              break;
-            }
-          }
-
-          if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[i + wholeEspTagLump.length])) {
-            let lengthOfClosingEspChunk;
-
-            if (layers.length && matchLayerLast(str, i)) {
-              lengthOfClosingEspChunk = matchLayerLast(str, i);
-
-              if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
-                  token.end = i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                }
-
-                if (parentTokenToBackup) {
-                  if (!Array.isArray(parentTokenToBackup.attribs)) {
-                    parentTokenToBackup.attribs = [];
-                  }
-
-                  if (attribToBackup) {
-                    attrib = attribToBackup;
-                    attrib.attribValue.push(lodash_clonedeep(token));
-                  } else {
-                    parentTokenToBackup.attribs.push(lodash_clonedeep(token));
-                  }
-
-                  token = lodash_clonedeep(parentTokenToBackup);
-                  parentTokenToBackup = undefined;
-                  attribToBackup = undefined;
-                  layers.pop();
-                  continue;
-                } else {
-                  dumpCurrentToken(token, i);
-                }
-
-                tokenReset();
-              }
-
-              layers.pop();
-            } else if (layers.length && matchLayerFirst(str, i)) {
-              lengthOfClosingEspChunk = matchLayerFirst(str, i);
-
-              if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
-                  token.end = i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                }
-
-                dumpCurrentToken(token, i);
-                tokenReset();
-              }
-
-              layers = [];
-            } else {
-              layers.push({
-                type: "esp",
-                openingLump: wholeEspTagLump,
-                guessedClosingLump: flipEspTag(wholeEspTagLump),
-                position: i
-              });
-
-              if (token.start !== null) {
-                if (token.type === "tag") {
-                  if (!token.tagName || !token.tagNameEndsAt) {
-                    token.tagNameEndsAt = i;
-                    token.tagName = str.slice(token.tagNameStartsAt, i);
-                    token.recognised = isTagNameRecognised(token.tagName);
-                  }
-
-                  parentTokenToBackup = lodash_clonedeep(token);
-
-                  if (attrib.attribStart && !attrib.attribEnd) {
-                    attribToBackup = lodash_clonedeep(attrib);
-                  }
-                } else {
-                  dumpCurrentToken(token, i);
-                }
-              }
-
-              initToken("esp", i);
-              token.tail = flipEspTag(wholeEspTagLump);
-              token.head = wholeEspTagLump;
-
-              if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
-                parentTokenToBackup.pureHTML = false;
-              }
-
-              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
-                if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
-                  attribToBackup.attribValue.pop();
-                } else if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = i;
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, i);
-                }
-              }
-            }
-
-            doNothing = i + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
-          }
-        } else if (token.start === null || token.end === i) {
-          if (styleStarts) {
-            if (str[i] && !str[i].trim()) {
-              tokenReset();
-              initToken("text", i);
-              token.end = right(str, i) || str.length;
-              token.value = str.slice(token.start, token.end);
-              pingTagCb(token);
-              doNothing = token.end;
-              tokenReset();
-
-              if (right(str, i) && !["{", "}", "<"].includes(str[right(str, i)])) {
-                const idxOnTheRight = right(str, i);
-                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
-
-                if (str[i + 1] && !str[i + 1].trim()) {
-                  doNothing = right(str, i);
-                }
-              }
-            } else if (str[i]) {
-              tokenReset();
-
-              if ("}".includes(str[i])) {
-                initToken("text", i);
-                doNothing = i + 1;
-              } else {
-                initToken(str[i] === "@" ? "at" : "rule", i);
-              }
-            }
-          } else if (str[i]) {
-            if (i) {
-              token = tokenReset();
-            }
-
-            initToken("text", i);
-          }
-        } else if (token.type === "text" && styleStarts && str[i] && str[i].trim() && !"{},".includes(str[i])) {
-          dumpCurrentToken(token, i);
-          tokenReset();
-          initToken("rule", i);
-        }
-      }
-
-      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
-        if (!",".includes(str[i])) {
-          selectorChunkStartedAt = i;
-
-          if (token.selectorsStart === null) {
-            token.selectorsStart = i;
-          }
-        } else {
-          token.selectorsEnd = i + 1;
-        }
-      }
-
-      if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        if (str[i] === "[") ;
-      }
-
-      if (!doNothing) {
-        if (token.type === "tag" && !layers.length && str[i] === ">") {
-          token.end = i + 1;
-          token.value = str.slice(token.start, token.end);
-        } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && (matchLeft(str, i, "!-", {
-          trimBeforeMatching: true
-        }) || matchLeftIncl(str, i, "!-", {
-          trimBeforeMatching: true
-        }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && matchLeft(str, i, "--", {
-          trimBeforeMatching: true,
-          maxMismatches: 1
-        }))) {
-          if (str[i] === "-" && (matchRight(str, i, ["[if", "(if", "{if"], {
-            i: true,
-            trimBeforeMatching: true
-          }) || matchRight(str, i, ["if"], {
-            i: true,
-            trimBeforeMatching: true
-          }) && (xBeforeYOnTheRight$1(str, i, "]", ">") || str.includes("mso", i) && !str.slice(i, str.indexOf("mso")).includes("<") && !str.slice(i, str.indexOf("mso")).includes(">")))) {
-            token.kind = "only";
-          } else if (str[token.start] !== "-" && matchRightIncl(str, i, ["-<![endif"], {
-            i: true,
-            trimBeforeMatching: true,
-            maxMismatches: 2
-          })) {
-            token.kind = "not";
-            token.closing = true;
-          } else if (token.kind === "simple" && !token.closing && str[right(str, i)] === ">") {
-            token.end = right(str, i) + 1;
-            token.kind = "simplet";
-            token.closing = null;
-          } else {
-            token.end = i + 1;
-
-            if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
-              token.end = right(str, i) + 1;
-            }
-
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (token.type === "comment" && str[i] === ">" && (!layers.length || str[right(str, i)] === "<")) {
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
-            layers.pop();
-          }
-
-          if (!["simplet", "not"].includes(token.kind) && matchRight(str, i, ["<!-->", "<!---->"], {
-            trimBeforeMatching: true,
-            maxMismatches: 1,
-            lastMustMatch: true
-          })) {
-            token.kind = "not";
-          } else {
-            token.end = i + 1;
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (token.type === "esp" && token.end === null && isStr$4(token.tail) && token.tail.includes(str[i])) {
-          let wholeEspTagClosing = "";
-
-          for (let y = i; y < len; y++) {
-            if (espChars.includes(str[y])) {
-              wholeEspTagClosing = wholeEspTagClosing + str[y];
-            } else {
-              break;
-            }
-          }
-
-          if (wholeEspTagClosing.length > token.head.length) {
-            const headsFirstChar = token.head[0];
-
-            if (wholeEspTagClosing.endsWith(token.head)) {
-              token.end = i + wholeEspTagClosing.length - token.head.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            } else if (wholeEspTagClosing.startsWith(token.tail)) {
-              token.end = i + token.tail.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
-              const firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-              const secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-
-              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(char => firstPartOfWholeEspTagClosing.includes(char))) {
-                token.end = i + firstPartOfWholeEspTagClosing.length;
-                token.value = str.slice(token.start, token.end);
-                doNothing = token.end;
-              }
-            } else {
-              token.end = i + wholeEspTagClosing.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            }
-          } else {
-            token.end = i + wholeEspTagClosing.length;
-            token.value = str.slice(token.start, token.end);
-
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
-              layers.pop();
-            }
-
-            doNothing = token.end;
-          }
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
-        if (!str[i] || !charSuitableForTagName(str[i])) {
-          token.tagNameEndsAt = i;
-          token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
-
-          if (token.tagName === "xml" && token.closing && !token.kind) {
-            token.kind = "xml";
-          }
-
-          if (voidTags.includes(token.tagName)) {
-            token.void = true;
-          }
-
-          token.recognised = isTagNameRecognised(token.tagName);
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && (token.start < i || str[token.start] !== "<")) {
-        if (str[i] === "/") {
-          token.closing = true;
-        } else if (isLatinLetter(str[i])) {
-          token.tagNameStartsAt = i;
-
-          if (!token.closing) {
-            token.closing = false;
-          }
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
-        attrib.attribNameEndsAt = i;
-        attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
-        attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
-        if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
-          if (`'"`.includes(str[right(str, i)])) ;else {
-            attrib.attribEnd = i;
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-          }
-        }
-      }
-
-      if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
-        attrib.attribStart = i;
-        attrib.attribNameStartsAt = i;
-      }
-
-      if (!doNothing && token.type === "rule") {
-        if (str[i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
-          token.openingCurlyAt = i;
-        } else if (str[i] === "}" && Number.isInteger(token.openingCurlyAt) && !Number.isInteger(token.closingCurlyAt)) {
-          token.closingCurlyAt = i;
-          token.end = i + 1;
-          token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
-          tokenReset();
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-        if (`'"`.includes(str[i])) {
-          if (str[left(str, i)] === str[i] && !`/>${espChars}`.includes(str[right(str, i)]) && !xBeforeYOnTheRight$1(str, i, "=", `"`) && !xBeforeYOnTheRight$1(str, i, "=", `'`) && (xBeforeYOnTheRight$1(str, i, `"`, `>`) || xBeforeYOnTheRight$1(str, i, `'`, `>`)) && (!str.slice(i + 1).includes("<") || !str.slice(0, str.indexOf("<")).includes("="))) {
-            attrib.attribOpeningQuoteAt = i;
-            attrib.attribValueStartsAt = i + 1;
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[attrib.attribValue.length - 1].start && !attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValueStartsAt > attrib.attribValue[attrib.attribValue.length - 1].start) {
-              attrib.attribValue[attrib.attribValue.length - 1].start = attrib.attribValueStartsAt;
-            }
-
-            layers.push({
-              type: "simple",
-              value: str[i],
-              position: i
-            });
-          } else if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
-            attrib.attribClosingQuoteAt = i;
-            attrib.attribValueEndsAt = i;
-
-            if (Number.isInteger(attrib.attribValueStartsAt)) {
-              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
-            }
-
-            attrib.attribEnd = i + 1;
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-              attrib.attribValue[attrib.attribValue.length - 1].end = i;
-              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
-            }
-
-            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
-              layers.pop();
-              layers.pop();
-            }
-
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-          }
-        } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim() || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
-          attrib.attribValueEndsAt = i;
-          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
-
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = i;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
-          }
-
-          attrib.attribEnd = i;
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
-          layers.pop();
-
-          if (str[i] === ">") {
-            token.end = i + 1;
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[i - 1] && isLatinLetter(str[i - 1]))) {
-          let whitespaceFound;
-          let attribClosingQuoteAt;
-
-          for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
-            if (!whitespaceFound && str[y] && !str[y].trim()) {
-              whitespaceFound = true;
-
-              if (attribClosingQuoteAt) {
-                const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
-              }
-            }
-
-            if (whitespaceFound && str[y] && str[y].trim()) {
-              whitespaceFound = false;
-
-              if (!attribClosingQuoteAt) {
-                attribClosingQuoteAt = y + 1;
-              }
-            }
-          }
-
-          if (attribClosingQuoteAt) {
-            attrib.attribValueEndsAt = attribClosingQuoteAt;
-
-            if (Number.isInteger(attrib.attribValueStartsAt)) {
-              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
-
-              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-                attrib.attribValue[attrib.attribValue.length - 1].end = attrib.attribValueEndsAt;
-                attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValueEndsAt);
-              }
-            }
-
-            attrib.attribEnd = attribClosingQuoteAt;
-
-            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
-              layers.pop();
-            }
-
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-            i = attribClosingQuoteAt - 1;
-            continue;
-          } else if (attrib.attribOpeningQuoteAt && (`'"`.includes(str[right(str, i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()))) {
-            i = attrib.attribOpeningQuoteAt;
-            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
-            attrib.attribValueStartsAt = null;
-            layers.pop();
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-            continue;
-          }
-        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= i)) {
-          attrib.attribValue.push({
-            type: "text",
-            start: i,
-            end: null,
-            value: null
-          });
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
-        if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
-          const firstCharOnTheRight = right(str, i);
-          const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
-
-          if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnd = i + 1;
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(char => `<>=`.includes(char))) {
-            attrib.attribValueStartsAt = firstCharOnTheRight;
-            layers.push({
-              type: "simple",
-              value: null,
-              position: attrib.attribValueStartsAt
-            });
-          }
-        } else if (`'"`.includes(str[i])) {
-          const nextCharIdx = right(str, i);
-
-          if (nextCharIdx && `'"`.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
-            layers.pop();
-          } else {
-            attrib.attribOpeningQuoteAt = i;
-
-            if (str[i + 1]) {
-              attrib.attribValueStartsAt = i + 1;
-            }
-
-            if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end)) {
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: null,
-                value: null
-              });
-            }
-          }
-        }
-      }
-
-      if (str[i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
-        let thisIsRealEnding = false;
-
-        if (str[i + 1]) {
-          for (let y = i + 1; y < len; y++) {
-            if (attrib.attribOpeningQuoteAt !== null && str[y] === str[attrib.attribOpeningQuoteAt]) {
-              if (y !== i + 1 && str[y - 1] !== "=") {
-                thisIsRealEnding = true;
-              }
-
-              break;
-            } else if (str[y] === ">") {
-              break;
-            } else if (str[y] === "<") {
-              thisIsRealEnding = true;
-              layers.pop();
-              break;
-            } else if (!str[y + 1]) {
-              thisIsRealEnding = true;
-              break;
-            }
-          }
-        } else {
-          thisIsRealEnding = true;
-        }
-
-        if (thisIsRealEnding) {
-          token.end = i + 1;
-          token.value = str.slice(token.start, token.end);
-
-          if (Number.isInteger(attrib.attribValueStartsAt) && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
-            attrib.attribValueEndsAt = i;
-            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-              attrib.attribValue[attrib.attribValue.length - 1].end = i;
-              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
-            }
-          } else {
-            attrib.attribValueStartsAt = null;
-          }
-
-          attrib.attribEnd = i;
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
-        }
-      }
-
-      if (str[i] && opts.charCb) {
-        pingCharCb({
-          type: token.type,
-          chr: str[i],
-          i
-        });
-      }
-
-      if (!str[i] && token.start !== null) {
-        token.end = i;
-        token.value = str.slice(token.start, token.end);
-        pingTagCb(token);
-      }
-    }
-
-    if (charStash.length) {
-      for (let i = 0, len = charStash.length; i < len; i++) {
-        reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-      }
-    }
-
-    if (tagStash.length) {
-      for (let i = 0, len = tagStash.length; i < len; i++) {
-        reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-      }
-    }
-
-    return {
-      timeTakenInMilliseconds: Date.now() - start
-    };
-  }
-
-  /**
-   * codsen-parser
-   * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
-   */
-
-  function isObj$5(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
-  }
-
-  function layerPending(layers, tokenObj) {
-    return tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing));
-  }
-
-  function cparser(str, originalOpts) {
-    if (typeof str !== "string") {
-      if (str === undefined) {
-        throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
-      } else {
-        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
-      }
-    }
-
-    if (originalOpts && !isObj$5(originalOpts)) {
-      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    if (isObj$5(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
-    }
-
-    if (isObj$5(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
-    }
-
-    if (isObj$5(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
-    }
-
-    if (isObj$5(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ${typeof originalOpts.errCb}, equal to ${JSON.stringify(originalOpts.errCb, null, 4)}`);
-    }
-
-    const defaults = {
-      reportProgressFunc: null,
-      reportProgressFuncFrom: 0,
-      reportProgressFuncTo: 100,
-      tagCb: null,
-      charCb: null,
-      errCb: null
-    };
-    const opts = Object.assign({}, defaults, originalOpts);
-    const layers = [];
-    const res = [];
-    let path;
-    let nestNext = false;
-    let lastProcessedToken = {};
-    const tokensWithChildren = ["tag", "comment"];
-    const tagNamesThatDontHaveClosings = ["doctype"];
-    tokenizer(str, {
-      reportProgressFunc: opts.reportProgressFunc,
-      reportProgressFuncFrom: opts.reportProgressFuncFrom,
-      reportProgressFuncTo: opts.reportProgressFuncTo,
-      tagCbLookahead: 2,
-      tagCb: (tokenObj, next) => {
-        if (typeof opts.tagCb === "function") {
-          opts.tagCb(tokenObj);
-        }
-
-        let prevToken = objectPath.get(res, path);
-
-        if (!isObj$5(prevToken)) {
-          prevToken = null;
-        }
-
-        if (nestNext && !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (!Array.isArray(next) || !next.length || !Array.isArray(layers) || !layers.length || layers.length < 3 || !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
-          nestNext = false;
-          path = `${path}.children.0`;
-        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
-          path = pathNext(pathUp(path));
-
-          if (layerPending(layers, tokenObj)) {
-            while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
-              layers.pop();
-            }
-
-            layers.pop();
-            nestNext = false;
-          } else {
-            if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
-              path = pathNext(pathUp(path));
-
-              if (opts.errCb) {
-                const lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: `${lastLayersToken.type}${lastLayersToken.type === "comment" ? `-${lastLayersToken.kind}` : ""}-missing-closing`,
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              }
-
-              layers.pop();
-              layers.pop();
-            } else if (layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
-              path = pathNext(pathUp(path));
-
-              if (opts.errCb) {
-                const lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: `tag-rogue`,
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              }
-
-              layers.pop();
-              layers.pop();
-              layers.pop();
-            } else if (layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
-              if (opts.errCb) {
-                const lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: `tag-rogue`,
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              }
-
-              layers.pop();
-              layers.pop();
-            }
-          }
-        } else if (!path) {
-          path = "0";
-        } else {
-          path = pathNext(path);
-
-          if (layerPending(layers, tokenObj)) {
-            layers.pop();
-          }
-        }
-
-        if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
-          nestNext = true;
-
-          if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-            layers.push(Object.assign({}, tokenObj));
-          }
-        }
-
-        const previousPath = pathPrev(path);
-        const parentPath = pathUp(path);
-        let parentTagsToken;
-
-        if (parentPath && path.includes(".")) {
-          parentTagsToken = objectPath.get(res, parentPath);
-        }
-
-        let previousTagsToken;
-
-        if (previousPath) {
-          previousTagsToken = objectPath.get(res, previousPath);
-        }
-
-        const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
-        let parentsLastChildTokenValue;
-        let parentsLastChildTokenPath;
-
-        if (isObj$5(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
-          parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-          parentsLastChildTokenPath = `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`;
-        }
-
-        let tokenTakenCareOf = false;
-
-        if (tokenObj.type === "text" && isObj$5(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
-          const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
-          const suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
-
-          if (suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, Object.assign({}, tokenObj, {
-              end: tokenObj.start + suspiciousEndingStartsAt,
-              value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
-            }));
-
-            if (tokensWithChildren.includes(tokenObj.type)) {
-              tokenObj.children = [];
-            }
-          }
-
-          path = pathNext(pathUp(path));
-          objectPath.set(res, path, {
-            type: "comment",
-            kind: "simple",
-            closing: true,
-            start: tokenObj.start + suspiciousEndingStartsAt,
-            end: tokenObj.start + suspiciousEndingEndsAt,
-            value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
-            children: []
-          });
-
-          if (suspiciousEndingEndsAt < tokenObj.value.length) {
-            path = pathNext(path);
-            objectPath.set(res, path, {
-              type: "text",
-              start: tokenObj.start + suspiciousEndingEndsAt,
-              end: tokenObj.end,
-              value: tokenObj.value.slice(suspiciousEndingEndsAt)
-            });
-          }
-
-          tokenTakenCareOf = true;
-        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$5(previousTagsToken)) {
-          if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
-            const capturedMalformedTagRanges = [];
-            strFindMalformed(previousTagsToken.value, "<!--", obj => {
-              capturedMalformedTagRanges.push(obj);
-            }, {
-              maxDistance: 2
-            });
-
-            if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              const malformedRange = capturedMalformedTagRanges.pop();
-
-              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$5(previousTagsToken)) {
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                path = previousPath;
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: `${previousTagsToken.value}${tokenObj.value}`
-                }));
-                tokenTakenCareOf = true;
-              } else if (previousPath && isObj$5(previousTagsToken)) {
-                objectPath.set(res, previousPath, Object.assign({}, previousTagsToken, {
-                  end: malformedRange.idxFrom + previousTagsToken.start,
-                  value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
-                }));
-
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: `${previousTagsToken.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
-                }));
-                tokenTakenCareOf = true;
-              }
-            }
-          } else if (isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
-            const capturedMalformedTagRanges = [];
-            strFindMalformed(parentsLastChildTokenValue.value, "<!--", obj => {
-              capturedMalformedTagRanges.push(obj);
-            }, {
-              maxDistance: 2
-            });
-
-            if (capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              const malformedRange = capturedMalformedTagRanges.pop();
-
-              if (!left(parentsLastChildTokenValue.value, malformedRange.idxFrom) && previousPath && isObj$5(parentsLastChildTokenValue)) {
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
-                }));
-                objectPath.del(res, `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`);
-                tokenTakenCareOf = true;
-              } else if (previousPath && isObj$5(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                objectPath.set(res, parentsLastChildTokenPath, Object.assign({}, parentsLastChildTokenValue, {
-                  end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  value: parentsLastChildTokenValue.value.slice(0, malformedRange.idxFrom)
-                }));
-
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                objectPath.set(res, path, Object.assign({}, tokenObj, {
-                  start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: `${parentsLastChildTokenValue.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
-                }));
-                tokenTakenCareOf = true;
-              }
-            }
-          }
-        }
-
-        if (!tokenTakenCareOf) {
-          if (tokensWithChildren.includes(tokenObj.type)) {
-            tokenObj.children = [];
-          }
-
-          objectPath.set(res, path, tokenObj);
-        }
-
-        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$5(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-          if (tokenObj.void) {
-            if (opts.errCb) {
-              opts.errCb({
-                ruleId: `tag-void-frontal-slash`,
-                idxFrom: tokenObj.start,
-                idxTo: tokenObj.end,
-                fix: {
-                  ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
-                },
-                tokenObj
-              });
-            }
-          } else {
-            if (opts.errCb) {
-              opts.errCb({
-                ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-opening`,
-                idxFrom: tokenObj.start,
-                idxTo: tokenObj.end,
-                tokenObj
-              });
-            }
-          }
-        }
-
-        lastProcessedToken = { ...tokenObj
-        };
-      },
-      charCb: opts.charCb
-    });
-
-    if (layers.length) {
-      layers.forEach(tokenObj => {
-        if (opts.errCb) {
-          opts.errCb({
-            ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-closing`,
-            idxFrom: tokenObj.start,
-            idxTo: tokenObj.end,
-            tokenObj
-          });
-        }
-      });
-    }
-
-    return res;
-  }
-
-  var domain; // This constructor is used to store event handlers. Instantiating this is
-  // faster than explicitly calling `Object.create(null)` to get a "clean" empty
-  // object (tested with v8 v4.9).
-
-  function EventHandlers() {}
-
-  EventHandlers.prototype = Object.create(null);
-
-  function EventEmitter() {
-    EventEmitter.init.call(this);
-  }
-  // require('events') === require('events').EventEmitter
-
-  EventEmitter.EventEmitter = EventEmitter;
-  EventEmitter.usingDomains = false;
-  EventEmitter.prototype.domain = undefined;
-  EventEmitter.prototype._events = undefined;
-  EventEmitter.prototype._maxListeners = undefined; // By default EventEmitters will print a warning if more than 10 listeners are
-  // added to it. This is a useful default which helps finding memory leaks.
-
-  EventEmitter.defaultMaxListeners = 10;
-
-  EventEmitter.init = function () {
-    this.domain = null;
-
-    if (EventEmitter.usingDomains) {
-      // if there is an active domain, then attach to it.
-      if (domain.active ) ;
-    }
-
-    if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
-      this._events = new EventHandlers();
-      this._eventsCount = 0;
-    }
-
-    this._maxListeners = this._maxListeners || undefined;
-  }; // Obviously not all Emitters should be limited to 10. This function allows
-  // that to be increased. Set to zero for unlimited.
-
-
-  EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
-    this._maxListeners = n;
-    return this;
-  };
-
-  function $getMaxListeners(that) {
-    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
-    return that._maxListeners;
-  }
-
-  EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-    return $getMaxListeners(this);
-  }; // These standalone emit* functions are used to optimize calling of event
-  // handlers for fast cases because emit() itself often has a variable number of
-  // arguments and can be deoptimized because of that. These functions always have
-  // the same number of arguments and thus do not get deoptimized, so the code
-  // inside them can execute faster.
-
-
-  function emitNone(handler, isFn, self) {
-    if (isFn) handler.call(self);else {
-      var len = handler.length;
-      var listeners = arrayClone(handler, len);
-
-      for (var i = 0; i < len; ++i) listeners[i].call(self);
-    }
-  }
-
-  function emitOne(handler, isFn, self, arg1) {
-    if (isFn) handler.call(self, arg1);else {
-      var len = handler.length;
-      var listeners = arrayClone(handler, len);
-
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
-    }
-  }
-
-  function emitTwo(handler, isFn, self, arg1, arg2) {
-    if (isFn) handler.call(self, arg1, arg2);else {
-      var len = handler.length;
-      var listeners = arrayClone(handler, len);
-
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
-    }
-  }
-
-  function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-    if (isFn) handler.call(self, arg1, arg2, arg3);else {
-      var len = handler.length;
-      var listeners = arrayClone(handler, len);
-
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
-    }
-  }
-
-  function emitMany(handler, isFn, self, args) {
-    if (isFn) handler.apply(self, args);else {
-      var len = handler.length;
-      var listeners = arrayClone(handler, len);
-
-      for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
-    }
-  }
-
-  EventEmitter.prototype.emit = function emit(type) {
-    var er, handler, len, args, i, events, domain;
-    var doError = type === 'error';
-    events = this._events;
-    if (events) doError = doError && events.error == null;else if (!doError) return false;
-    domain = this.domain; // If there is no 'error' event listener then throw.
-
-    if (doError) {
-      er = arguments[1];
-
-      if (domain) {
-        if (!er) er = new Error('Uncaught, unspecified "error" event');
-        er.domainEmitter = this;
-        er.domain = domain;
-        er.domainThrown = false;
-        domain.emit('error', er);
-      } else if (er instanceof Error) {
-        throw er; // Unhandled 'error' event
-      } else {
-        // At least give some kind of context to the user
-        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-        err.context = er;
-        throw err;
-      }
-
-      return false;
-    }
-
-    handler = events[type];
-    if (!handler) return false;
-    var isFn = typeof handler === 'function';
-    len = arguments.length;
-
-    switch (len) {
-      // fast cases
-      case 1:
-        emitNone(handler, isFn, this);
-        break;
-
-      case 2:
-        emitOne(handler, isFn, this, arguments[1]);
-        break;
-
-      case 3:
-        emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-        break;
-
-      case 4:
-        emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-        break;
-      // slower
-
-      default:
-        args = new Array(len - 1);
-
-        for (i = 1; i < len; i++) args[i - 1] = arguments[i];
-
-        emitMany(handler, isFn, this, args);
-    }
-    return true;
-  };
-
-  function _addListener(target, type, listener, prepend) {
-    var m;
-    var events;
-    var existing;
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    events = target._events;
-
-    if (!events) {
-      events = target._events = new EventHandlers();
-      target._eventsCount = 0;
-    } else {
-      // To avoid recursion in the case that type === "newListener"! Before
-      // adding it to the listeners, first emit "newListener".
-      if (events.newListener) {
-        target.emit('newListener', type, listener.listener ? listener.listener : listener); // Re-assign `events` because a newListener handler could have caused the
-        // this._events to be assigned to a new object
-
-        events = target._events;
-      }
-
-      existing = events[type];
-    }
-
-    if (!existing) {
-      // Optimize the case of one listener. Don't need the extra array object.
-      existing = events[type] = listener;
-      ++target._eventsCount;
-    } else {
-      if (typeof existing === 'function') {
-        // Adding the second element, need to change to array.
-        existing = events[type] = prepend ? [listener, existing] : [existing, listener];
-      } else {
-        // If we've already got an array, just append.
-        if (prepend) {
-          existing.unshift(listener);
-        } else {
-          existing.push(listener);
-        }
-      } // Check for listener leak
-
-
-      if (!existing.warned) {
-        m = $getMaxListeners(target);
-
-        if (m && m > 0 && existing.length > m) {
-          existing.warned = true;
-          var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
-          w.name = 'MaxListenersExceededWarning';
-          w.emitter = target;
-          w.type = type;
-          w.count = existing.length;
-          emitWarning(w);
-        }
-      }
-    }
-
-    return target;
-  }
-
-  function emitWarning(e) {
-    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-  }
-
-  EventEmitter.prototype.addListener = function addListener(type, listener) {
-    return _addListener(this, type, listener, false);
-  };
-
-  EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-  EventEmitter.prototype.prependListener = function prependListener(type, listener) {
-    return _addListener(this, type, listener, true);
-  };
-
-  function _onceWrap(target, type, listener) {
-    var fired = false;
-
-    function g() {
-      target.removeListener(type, g);
-
-      if (!fired) {
-        fired = true;
-        listener.apply(target, arguments);
-      }
-    }
-
-    g.listener = listener;
-    return g;
-  }
-
-  EventEmitter.prototype.once = function once(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.on(type, _onceWrap(this, type, listener));
-    return this;
-  };
-
-  EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.prependListener(type, _onceWrap(this, type, listener));
-    return this;
-  }; // emits a 'removeListener' event iff the listener was removed
-
-
-  EventEmitter.prototype.removeListener = function removeListener(type, listener) {
-    var list, events, position, i, originalListener;
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    events = this._events;
-    if (!events) return this;
-    list = events[type];
-    if (!list) return this;
-
-    if (list === listener || list.listener && list.listener === listener) {
-      if (--this._eventsCount === 0) this._events = new EventHandlers();else {
-        delete events[type];
-        if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-      }
-    } else if (typeof list !== 'function') {
-      position = -1;
-
-      for (i = list.length; i-- > 0;) {
-        if (list[i] === listener || list[i].listener && list[i].listener === listener) {
-          originalListener = list[i].listener;
-          position = i;
-          break;
-        }
-      }
-
-      if (position < 0) return this;
-
-      if (list.length === 1) {
-        list[0] = undefined;
-
-        if (--this._eventsCount === 0) {
-          this._events = new EventHandlers();
-          return this;
-        } else {
-          delete events[type];
-        }
-      } else {
-        spliceOne(list, position);
-      }
-
-      if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
-    }
-
-    return this;
-  };
-
-  EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
-    var listeners, events;
-    events = this._events;
-    if (!events) return this; // not listening for removeListener, no need to emit
-
-    if (!events.removeListener) {
-      if (arguments.length === 0) {
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-      } else if (events[type]) {
-        if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
-      }
-
-      return this;
-    } // emit removeListener for all listeners on all events
-
-
-    if (arguments.length === 0) {
-      var keys = Object.keys(events);
-
-      for (var i = 0, key; i < keys.length; ++i) {
-        key = keys[i];
-        if (key === 'removeListener') continue;
-        this.removeAllListeners(key);
-      }
-
-      this.removeAllListeners('removeListener');
-      this._events = new EventHandlers();
-      this._eventsCount = 0;
-      return this;
-    }
-
-    listeners = events[type];
-
-    if (typeof listeners === 'function') {
-      this.removeListener(type, listeners);
-    } else if (listeners) {
-      // LIFO order
-      do {
-        this.removeListener(type, listeners[listeners.length - 1]);
-      } while (listeners[0]);
-    }
-
-    return this;
-  };
-
-  EventEmitter.prototype.listeners = function listeners(type) {
-    var evlistener;
-    var ret;
-    var events = this._events;
-    if (!events) ret = [];else {
-      evlistener = events[type];
-      if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
-    }
-    return ret;
-  };
-
-  EventEmitter.listenerCount = function (emitter, type) {
-    if (typeof emitter.listenerCount === 'function') {
-      return emitter.listenerCount(type);
-    } else {
-      return listenerCount.call(emitter, type);
-    }
-  };
-
-  EventEmitter.prototype.listenerCount = listenerCount;
-
-  function listenerCount(type) {
-    var events = this._events;
-
-    if (events) {
-      var evlistener = events[type];
-
-      if (typeof evlistener === 'function') {
-        return 1;
-      } else if (evlistener) {
-        return evlistener.length;
-      }
-    }
-
-    return 0;
-  }
-
-  EventEmitter.prototype.eventNames = function eventNames() {
-    return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-  }; // About 1.5x faster than the two-arg version of Array#splice().
-
-
-  function spliceOne(list, index) {
-    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
-
-    list.pop();
-  }
-
-  function arrayClone(arr, i) {
-    var copy = new Array(i);
-
-    while (i--) copy[i] = arr[i];
-
-    return copy;
-  }
-
-  function unwrapListeners(arr) {
-    var ret = new Array(arr.length);
-
-    for (var i = 0; i < ret.length; ++i) {
-      ret[i] = arr[i].listener || arr[i];
-    }
-
-    return ret;
   }
 
   EventEmitter.defaultMaxListeners = 0;
@@ -43820,9 +43696,13 @@
           // same config like in ESLint - 0 is off, 1 is warning, 2 is error
           if (typeof processedRulesConfig[ruleName] === "number") {
             return processedRulesConfig[ruleName] > 0;
-          } else if (Array.isArray(processedRulesConfig[ruleName])) {
+          }
+
+          if (Array.isArray(processedRulesConfig[ruleName])) {
             return processedRulesConfig[ruleName][0] > 0;
           }
+
+          return false;
         }).forEach(function (rule) {
           // console.log(
           //   `086 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
@@ -43891,11 +43771,11 @@
             if (currentRulesSeverity) {
               var message = "Something is wrong.";
 
-              if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
+              if (isObj$6(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
                 message = astErrMessages[obj.ruleId];
               }
 
-              _this.report(Object.assign({
+              _this.report(_objectSpread2({
                 message: message,
                 severity: currentRulesSeverity,
                 fix: null
@@ -43906,7 +43786,7 @@
         function (key, val) {
           var current = val !== undefined ? val : key;
 
-          if (isObj(current)) {
+          if (isObj$6(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "tag", "comment" etc.
             // tag-level callback
@@ -43922,8 +43802,8 @@
 
             if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {
               current.attribs.forEach(function (attribObj) {
-                _this.emit("attribute", Object.assign({}, attribObj, {
-                  parent: Object.assign({}, current)
+                _this.emit("attribute", _objectSpread2({}, attribObj, {
+                  parent: _objectSpread2({}, current)
                 }));
               });
             }
@@ -43977,6 +43857,8 @@
                   matchedRulesName = rulesName;
                   return true;
                 }
+
+                return false;
               })) {
                 if (obj.ruleName === "bad-named-html-entity-unrecognised" && config.rules["bad-named-html-entity-unrecognised"] === undefined) {
                   // unless the rule was requested exactly, severity is 1.
@@ -44055,14 +43937,13 @@
           severity = this.processedRulesConfig[obj.ruleId][0];
         }
 
-        this.messages.push(Object.assign({
+        this.messages.push(_objectSpread2({
           fix: null,
-          keepSeparateWhenFixing: false
-        }, {
+          keepSeparateWhenFixing: false,
           line: line,
           column: col,
           severity: severity
-        }, obj, this.hasBeenCalledWithKeepSeparateWhenFixing ? {
+        }, obj, {}, this.hasBeenCalledWithKeepSeparateWhenFixing ? {
           fix: null
         } : {})); // After pushing, let's manage "keepSeparateWhenFixing" messages -
         // make a note of the first incoming message with "keepSeparateWhenFixing"
@@ -44079,7 +43960,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.17.3";
+  var version = "2.17.4";
 
   exports.Linter = Linter;
   exports.version = version;

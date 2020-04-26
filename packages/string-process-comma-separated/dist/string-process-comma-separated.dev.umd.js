@@ -1,7 +1,7 @@
 /**
  * string-process-comma-separated
  * Extracts chunks from possibly comma or whatever-separated string
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated

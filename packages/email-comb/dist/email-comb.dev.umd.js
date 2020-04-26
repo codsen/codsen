@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.10
+ * Version: 3.9.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -114,7 +114,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.29
+   * Version: 3.11.30
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -134,7 +134,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.4
+   * Version: 4.0.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -455,7 +455,7 @@
   /**
    * regex-empty-conditional-comments
    * Regular expression for matching HTML empty conditional comments
-   * Version: 1.8.54
+   * Version: 1.8.55
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments
@@ -545,7 +545,7 @@
   /**
    * array-pull-all-with-glob
    * pullAllWithGlob - like _.pullAll but pulling stronger, with globs
-   * Version: 4.12.63
+   * Version: 4.12.64
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-pull-all-with-glob
@@ -2492,7 +2492,7 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.20
+   * Version: 2.3.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -2569,7 +2569,7 @@
   /**
    * string-extract-class-names
    * Extract class (or id) name from a string
-   * Version: 5.9.21
+   * Version: 5.9.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
@@ -3780,7 +3780,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.1
+   * Version: 1.11.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
@@ -3938,7 +3938,7 @@
   /**
    * string-uglify
    * Uglify - generate unique short names for sets of strings
-   * Version: 1.2.35
+   * Version: 1.2.36
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
@@ -4135,7 +4135,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.2
+   * Version: 3.11.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -4213,7 +4213,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.3
+   * Version: 4.3.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -4335,7 +4335,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.4
+   * Version: 3.1.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -4683,7 +4683,7 @@
   /**
    * ast-is-empty
    * Find out, is nested array/object/string/AST tree is empty
-   * Version: 1.10.2
+   * Version: 1.10.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty
@@ -4743,7 +4743,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.17
+   * Version: 2.0.18
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -4857,7 +4857,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.6
+   * Version: 3.7.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -5980,7 +5980,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "3.9.10";
+  var version = "3.9.11";
 
   var isArr$1 = Array.isArray;
   var defaults = {

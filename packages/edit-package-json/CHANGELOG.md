@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.24](https://gitlab.com/codsen/codsen/compare/edit-package-json@0.1.23...edit-package-json@0.1.24) (2020-04-26)
+
+
+### Bug Fixes
+
+* harden the eslint rules set, make all tests pass and rebase a tad ([e3bee37](https://gitlab.com/codsen/codsen/commit/e3bee37319d31f480a7d25e74c0168dacb64addd))
+
+
+
+
+
 ## 0.1.5 (2019-10-23)
 
 ### Bug Fixes

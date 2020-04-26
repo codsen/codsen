@@ -1,7 +1,7 @@
 /**
  * js-row-num
  * Update all row numbers in all console.logs in JS code
- * Version: 2.7.11
+ * Version: 2.7.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num

@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.10
+ * Version: 3.9.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -126,7 +126,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var version = "3.9.10";
+var version = "3.9.11";
 
 var isArr = Array.isArray;
 var defaults = {

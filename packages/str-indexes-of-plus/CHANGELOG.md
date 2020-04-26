@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.3](https://gitlab.com/codsen/codsen/compare/str-indexes-of-plus@2.10.2...str-indexes-of-plus@2.10.3) (2020-04-26)
+
+**Note:** Version bump only for package str-indexes-of-plus
+
+
+
+
+
 ## 2.10.0 (2020-02-01)
 
 ### Features
