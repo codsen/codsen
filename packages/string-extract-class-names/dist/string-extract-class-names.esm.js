@@ -9,10 +9,7 @@
 
 import { left, right } from 'string-left-right';
 
-function stringExtractClassNames(input, returnRangesInstead) {
-  function existy(x) {
-    return x != null;
-  }
+function stringExtractClassNames(input, returnRangesInstead = false) {
   if (typeof input !== "string") {
     throw new TypeError(
       `string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(
@@ -22,9 +19,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       )}`
     );
   }
-  if (!existy(returnRangesInstead) || !returnRangesInstead) {
-    returnRangesInstead = false;
-  } else if (typeof returnRangesInstead !== "boolean") {
+  if (typeof returnRangesInstead !== "boolean") {
     throw new TypeError(
       `string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ${typeof input}, currently equal to ${JSON.stringify(
         input,
@@ -73,14 +68,14 @@ function stringExtractClassNames(input, returnRangesInstead) {
       input[left(input, i)] === "[" &&
       input[right(input, i + 4)] === "="
     ) {
+      /* istanbul ignore else */
       if (isLatinLetter(input[right(input, right(input, i + 4))])) {
         selectorStartsAt = right(input, right(input, i + 4));
-      } else if (`'"`.includes(input[right(input, right(input, i + 4))])) {
-        if (
-          isLatinLetter(input[right(input, right(input, right(input, i + 4)))])
-        ) {
-          selectorStartsAt = right(input, right(input, right(input, i + 4)));
-        }
+      } else if (
+        `'"`.includes(input[right(input, right(input, i + 4))]) &&
+        isLatinLetter(input[right(input, right(input, right(input, i + 4)))])
+      ) {
+        selectorStartsAt = right(input, right(input, right(input, i + 4)));
       }
       stateCurrentlyIs = ".";
     }
@@ -91,12 +86,11 @@ function stringExtractClassNames(input, returnRangesInstead) {
     ) {
       if (isLatinLetter(input[right(input, right(input, i + 1))])) {
         selectorStartsAt = right(input, right(input, i + 1));
-      } else if (`'"`.includes(input[right(input, right(input, i + 1))])) {
-        if (
-          isLatinLetter(input[right(input, right(input, right(input, i + 1)))])
-        ) {
-          selectorStartsAt = right(input, right(input, right(input, i + 1)));
-        }
+      } else if (
+        `'"`.includes(input[right(input, right(input, i + 1))]) &&
+        isLatinLetter(input[right(input, right(input, right(input, i + 1)))])
+      ) {
+        selectorStartsAt = right(input, right(input, right(input, i + 1)));
       }
       stateCurrentlyIs = "#";
     }

@@ -9,12 +9,9 @@ import { left, right } from "string-left-right";
  * @param  {String} input                input string
  * @return {Array}                       each detected class/id put into an array, as String or Range (array)
  */
-function stringExtractClassNames(input, returnRangesInstead) {
+function stringExtractClassNames(input, returnRangesInstead = false) {
   // insurance
   // =========
-  function existy(x) {
-    return x != null;
-  }
   if (typeof input !== "string") {
     throw new TypeError(
       `string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(
@@ -24,9 +21,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       )}`
     );
   }
-  if (!existy(returnRangesInstead) || !returnRangesInstead) {
-    returnRangesInstead = false;
-  } else if (typeof returnRangesInstead !== "boolean") {
+  if (typeof returnRangesInstead !== "boolean") {
     throw new TypeError(
       `string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ${typeof input}, currently equal to ${JSON.stringify(
         input,
@@ -66,12 +61,14 @@ function stringExtractClassNames(input, returnRangesInstead) {
     );
 
     // catch the ending of a selector's name:
+
     if (
       selectorStartsAt !== null &&
       i >= selectorStartsAt &&
       (badChars.includes(input[i]) || !input[i].trim())
     ) {
       // if selector is more than dot or hash:
+
       if (i > selectorStartsAt + 1) {
         // If we reached the last character and selector's beginning has not been
         // interrupted, extend the slice's ending by 1 character. If we terminate
@@ -79,14 +76,14 @@ function stringExtractClassNames(input, returnRangesInstead) {
         if (returnRangesInstead) {
           result.push([selectorStartsAt, i]);
           console.log(
-            `082 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] to result[]`
+            `079 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] to result[]`
           );
         } else {
           result.push(
             `${stateCurrentlyIs || ""}${input.slice(selectorStartsAt, i)}`
           );
           console.log(
-            `089 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] = "${input.slice(
+            `086 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] = "${input.slice(
               selectorStartsAt,
               i
             )}" to result[]`
@@ -94,12 +91,12 @@ function stringExtractClassNames(input, returnRangesInstead) {
         }
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
-          console.log(`097 SET stateCurrentlyIs = undefined`);
+          console.log(`094 SET stateCurrentlyIs = undefined`);
         }
       }
       selectorStartsAt = null;
       console.log(
-        `102 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+        `099 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
       );
     }
 
@@ -107,7 +104,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
     if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
       selectorStartsAt = i;
       console.log(
-        `110 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+        `107 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
       );
     }
 
@@ -117,18 +114,19 @@ function stringExtractClassNames(input, returnRangesInstead) {
       input[left(input, i)] === "[" &&
       input[right(input, i + 4)] === "="
     ) {
-      console.log(`120 [class= caught`);
+      console.log(`117 [class= caught`);
       // if it's zzz[class=something] (without quotes)
+
+      /* istanbul ignore else */
       if (isLatinLetter(input[right(input, right(input, i + 4))])) {
         selectorStartsAt = right(input, right(input, i + 4));
-        console.log(`124 SET selectorStartsAt = ${selectorStartsAt}`);
-      } else if (`'"`.includes(input[right(input, right(input, i + 4))])) {
-        if (
-          isLatinLetter(input[right(input, right(input, right(input, i + 4)))])
-        ) {
-          selectorStartsAt = right(input, right(input, right(input, i + 4)));
-          console.log(`130 SET selectorStartsAt = ${selectorStartsAt}`);
-        }
+        console.log(`123 SET selectorStartsAt = ${selectorStartsAt}`);
+      } else if (
+        `'"`.includes(input[right(input, right(input, i + 4))]) &&
+        isLatinLetter(input[right(input, right(input, right(input, i + 4)))])
+      ) {
+        selectorStartsAt = right(input, right(input, right(input, i + 4)));
+        console.log(`129 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -139,18 +137,17 @@ function stringExtractClassNames(input, returnRangesInstead) {
       input[left(input, i)] === "[" &&
       input[right(input, i + 1)] === "="
     ) {
-      console.log(`142 [id= caught`);
+      console.log(`140 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(input[right(input, right(input, i + 1))])) {
         selectorStartsAt = right(input, right(input, i + 1));
-        console.log(`146 SET selectorStartsAt = ${selectorStartsAt}`);
-      } else if (`'"`.includes(input[right(input, right(input, i + 1))])) {
-        if (
-          isLatinLetter(input[right(input, right(input, right(input, i + 1)))])
-        ) {
-          selectorStartsAt = right(input, right(input, right(input, i + 1)));
-          console.log(`152 SET selectorStartsAt = ${selectorStartsAt}`);
-        }
+        console.log(`144 SET selectorStartsAt = ${selectorStartsAt}`);
+      } else if (
+        `'"`.includes(input[right(input, right(input, i + 1))]) &&
+        isLatinLetter(input[right(input, right(input, right(input, i + 1)))])
+      ) {
+        selectorStartsAt = right(input, right(input, right(input, i + 1)));
+        console.log(`150 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
@@ -160,12 +157,12 @@ function stringExtractClassNames(input, returnRangesInstead) {
       if (returnRangesInstead) {
         result.push([selectorStartsAt, len]);
         console.log(
-          `163 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
+          `160 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
         );
       } else {
         result.push(input.slice(selectorStartsAt, len));
         console.log(
-          `168 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
+          `165 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
             selectorStartsAt,
             len
           )}" to result[]`

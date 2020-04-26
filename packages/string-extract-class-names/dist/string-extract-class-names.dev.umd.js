@@ -1919,9 +1919,13 @@
 
     if (!str[idx + 1]) {
       return null;
-    } else if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    }
+
+    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
       return idx + 1;
-    } else if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    }
+
+    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
       return idx + 2;
     }
 
@@ -1949,9 +1953,13 @@
 
     if (idx < 1) {
       return null;
-    } else if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    }
+
+    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
       return idx - 1;
-    } else if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    }
+
+    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
       return idx - 2;
     }
 
@@ -1978,20 +1986,16 @@
    * @return {Array}                       each detected class/id put into an array, as String or Range (array)
    */
 
-  function stringExtractClassNames(input, returnRangesInstead) {
+  function stringExtractClassNames(input) {
+    var returnRangesInstead = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
     // insurance
     // =========
-    function existy(x) {
-      return x != null;
-    }
-
     if (typeof input !== "string") {
       throw new TypeError("string-extract-class-names: [THROW_ID_02] first input should be string, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
     }
 
-    if (!existy(returnRangesInstead) || !returnRangesInstead) {
-      returnRangesInstead = false;
-    } else if (typeof returnRangesInstead !== "boolean") {
+    if (typeof returnRangesInstead !== "boolean") {
       throw new TypeError("string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
     }
 
@@ -2040,12 +2044,12 @@
 
       if (input.startsWith("class", i) && input[left(input, i)] === "[" && input[right(input, i + 4)] === "=") {
         // if it's zzz[class=something] (without quotes)
+
+        /* istanbul ignore else */
         if (isLatinLetter(input[right(input, right(input, i + 4))])) {
           selectorStartsAt = right(input, right(input, i + 4));
-        } else if ("'\"".includes(input[right(input, right(input, i + 4))])) {
-          if (isLatinLetter(input[right(input, right(input, right(input, i + 4)))])) {
-            selectorStartsAt = right(input, right(input, right(input, i + 4)));
-          }
+        } else if ("'\"".includes(input[right(input, right(input, i + 4))]) && isLatinLetter(input[right(input, right(input, right(input, i + 4)))])) {
+          selectorStartsAt = right(input, right(input, right(input, i + 4)));
         }
 
         stateCurrentlyIs = ".";
@@ -2056,10 +2060,8 @@
         // if it's zzz[id=something] (without quotes)
         if (isLatinLetter(input[right(input, right(input, i + 1))])) {
           selectorStartsAt = right(input, right(input, i + 1));
-        } else if ("'\"".includes(input[right(input, right(input, i + 1))])) {
-          if (isLatinLetter(input[right(input, right(input, right(input, i + 1)))])) {
-            selectorStartsAt = right(input, right(input, right(input, i + 1)));
-          }
+        } else if ("'\"".includes(input[right(input, right(input, i + 1))]) && isLatinLetter(input[right(input, right(input, right(input, i + 1)))])) {
+          selectorStartsAt = right(input, right(input, right(input, i + 1)));
         }
 
         stateCurrentlyIs = "#";
