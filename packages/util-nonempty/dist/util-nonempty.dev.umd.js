@@ -172,11 +172,17 @@
   function nonEmpty(input) {
     if (arguments.length === 0 || input === undefined) {
       return false;
-    } else if (isArr(input) || isStr(input)) {
+    }
+
+    if (isArr(input) || isStr(input)) {
       return input.length > 0;
-    } else if (lodash_isplainobject(input)) {
+    }
+
+    if (lodash_isplainobject(input)) {
       return Object.keys(input).length > 0;
-    } else if (isNum(input)) {
+    }
+
+    if (isNum(input)) {
       return true;
     }
 

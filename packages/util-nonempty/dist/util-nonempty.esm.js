@@ -19,11 +19,14 @@ function isNum(something) {
 function nonEmpty(input) {
   if (arguments.length === 0 || input === undefined) {
     return false;
-  } else if (isArr(input) || isStr(input)) {
+  }
+  if (isArr(input) || isStr(input)) {
     return input.length > 0;
-  } else if (isPlainObject(input)) {
+  }
+  if (isPlainObject(input)) {
     return Object.keys(input).length > 0;
-  } else if (isNum(input)) {
+  }
+  if (isNum(input)) {
     return true;
   }
   return false;
