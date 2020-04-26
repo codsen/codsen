@@ -1,14 +1,14 @@
-const t = require("tap");
-const {
+import tap from "tap";
+import {
   isHighSurrogate,
   isLowSurrogate,
-} = require("../dist/string-character-is-astral-surrogate.cjs");
+} from "../dist/string-character-is-astral-surrogate.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - wrong/missing input = throw", (t) => {
+tap.test("01.01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     isHighSurrogate(1);
   });
@@ -40,19 +40,19 @@ t.test("01.01 - wrong/missing input = throw", (t) => {
 // "false" and as far as the issue of surrogates is concerned, it's
 // "false". This will save us from otherwise unnecessary if-else
 // statements during traversal.
-t.test("02.01 - undefined yields false", (t) => {
+tap.test("02.01 - undefined yields false", (t) => {
   t.same(isHighSurrogate(undefined), false, "02.01.01");
   t.same(isLowSurrogate(undefined), false, "02.01.02");
   t.end();
 });
 
-t.test("02.02 - empty string yields false", (t) => {
+tap.test("02.02 - empty string yields false", (t) => {
   t.same(isHighSurrogate(""), false, "02.02.01");
   t.same(isLowSurrogate(""), false, "02.02.02");
   t.end();
 });
 
-t.test("02.03 - isHighSurrogate()", (t) => {
+tap.test("02.03 - isHighSurrogate()", (t) => {
   t.same(isHighSurrogate("zzz"), false, "02.03.01");
   // 🧢 = \uD83E\uDDE2
   t.same(isHighSurrogate("\uD83E"), true, "02.03.02");
@@ -65,7 +65,7 @@ t.test("02.03 - isHighSurrogate()", (t) => {
   t.end();
 });
 
-t.test("02.04 - isLowSurrogate()", (t) => {
+tap.test("02.04 - isLowSurrogate()", (t) => {
   t.same(isLowSurrogate("zzz"), false, "02.04.01");
   // 🧢 = \uD83E\uDDE2
   t.same(isLowSurrogate("\uD83E"), false, "02.04.02");

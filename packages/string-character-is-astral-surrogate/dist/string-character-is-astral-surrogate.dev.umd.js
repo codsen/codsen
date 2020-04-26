@@ -40,7 +40,9 @@
 
 
       return something.charCodeAt(0) >= 55296 && something.charCodeAt(0) <= 56319;
-    } else if (something === undefined) {
+    }
+
+    if (something === undefined) {
       return false;
     }
 
@@ -57,7 +59,9 @@
 
 
       return something.charCodeAt(0) >= 56320 && something.charCodeAt(0) <= 57343;
-    } else if (something === undefined) {
+    }
+
+    if (something === undefined) {
       return false;
     }
 
