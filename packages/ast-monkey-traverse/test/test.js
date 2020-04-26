@@ -1,13 +1,13 @@
-const t = require("tap");
-const isEqual = require("lodash.isequal");
-const objectPath = require("object-path");
-const traverse = require("../dist/ast-monkey-traverse.cjs");
+import tap from "tap";
+import isEqual from "lodash.isequal";
+import objectPath from "object-path";
+import traverse from "../dist/ast-monkey-traverse.esm";
 
 // -----------------------------------------------------------------------------
 // traverse
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `01.01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse to delete one key from an array`,
   (t) => {
     const input = [
@@ -75,7 +75,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arrays`,
   (t) => {
     const input = [
@@ -110,7 +110,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing null, write over values`,
   (t) => {
     const input = [
@@ -151,7 +151,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverse automatically patches up holes in arrays`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -170,7 +170,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair from plain object in root`,
   (t) => {
     const input = {
@@ -196,7 +196,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`,
   (t) => {
     const input = {
@@ -212,7 +212,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`,
   (t) => {
     const input = {
@@ -249,7 +249,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `01.08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`,
   (t) => {
     const input = ["1", "2", { a: "3" }];
@@ -266,7 +266,7 @@ t.test(
 // 02. stopping the traversal upon request
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `02.01 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
@@ -281,7 +281,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.02 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
@@ -290,6 +290,7 @@ t.test(
       const current = val1 !== undefined ? val1 : key1;
       gathered.push(innerObj.path);
       if (innerObj.path === "b") {
+        // eslint-disable-next-line no-param-reassign
         stop.now = true;
       }
       return current;
@@ -299,7 +300,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.03 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`,
   (t) => {
     const input = ["a", ["b", "c"]];
@@ -314,7 +315,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `02.04 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`,
   (t) => {
     const input = ["a", ["b", "c"]];
@@ -323,6 +324,7 @@ t.test(
       const current = val1 !== undefined ? val1 : key1;
       gathered.push(innerObj.path);
       if (innerObj.path === "1") {
+        // eslint-disable-next-line no-param-reassign
         stop.now = true;
       }
       return current;
@@ -335,7 +337,7 @@ t.test(
 // 03. traversal reporting
 // -----------------------------------------------------------------------------
 
-t.test(
+tap.test(
   `03.01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - array of objects, just traversing`,
   (t) => {
     const input = [
@@ -481,7 +483,7 @@ t.test(
   }
 );
 
-t.todo(
+tap.todo(
   `03.02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = ["a", undefined, "b"];
@@ -528,7 +530,7 @@ t.todo(
   }
 );
 
-t.todo(
+tap.todo(
   `03.03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole, deeper`,
   (t) => {
     const input = [{ a: "b" }, undefined, { x: "y" }];
@@ -537,7 +539,7 @@ t.todo(
   }
 );
 
-t.test(
+tap.test(
   `03.04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = {
@@ -613,7 +615,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = {
@@ -688,7 +690,7 @@ t.test(
   }
 );
 
-t.test(
+tap.test(
   `03.06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`,
   (t) => {
     const input = {
@@ -1163,7 +1165,7 @@ t.test(
   }
 );
 
-t.test(
+tap.only(
   `03.07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`,
   (t) => {
     const input = ["1", "2", { a: "3" }];

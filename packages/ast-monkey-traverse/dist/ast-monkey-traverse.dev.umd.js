@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
@@ -1893,21 +1942,23 @@
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    var stop = {
+    var stop2 = {
       now: false
     }; //
     // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
     //
 
-    function traverseInner(treeOriginal, callback, innerObj, stop) {
+    function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
       var tree = lodash_clonedeep(treeOriginal);
       var i;
       var len;
       var res;
-      innerObj = Object.assign({
+
+      var innerObj = _objectSpread2({
         depth: -1,
         path: ""
-      }, innerObj);
+      }, originalInnerObj);
+
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -1922,9 +1973,9 @@
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array"; // innerObj.path = `${innerObj.path}[${i}]`
 
-            res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, _objectSpread2({}, innerObj, {
               path: trimFirstDot(path)
-            }), stop), callback, Object.assign({}, innerObj, {
+            }), stop), callback, _objectSpread2({}, innerObj, {
               path: trimFirstDot(path)
             }), stop);
 
@@ -1939,6 +1990,7 @@
           }
         }
       } else if (isObj(tree)) {
+        // eslint-disable-next-line guard-for-in, no-restricted-syntax
         for (var key in tree) {
           if (stop.now && key != null) {
             break;
@@ -1952,9 +2004,9 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], _objectSpread2({}, innerObj, {
             path: trimFirstDot(_path)
-          }), stop), callback, Object.assign({}, innerObj, {
+          }), stop), callback, _objectSpread2({}, innerObj, {
             path: trimFirstDot(_path)
           }), stop);
 
@@ -1969,7 +2021,7 @@
       return tree;
     }
 
-    return traverseInner(tree1, cb1, {}, stop);
+    return traverseInner(tree1, cb1, {}, stop2);
   } // -----------------------------------------------------------------------------
 
   return astMonkeyTraverse;

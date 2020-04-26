@@ -12,18 +12,18 @@ function isObj(something) {
   );
 }
 function astMonkeyTraverse(tree1, cb1) {
-  const stop = { now: false };
+  const stop2 = { now: false };
   //
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
-  function traverseInner(treeOriginal, callback, innerObj, stop) {
+  function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     console.log(`020 ======= traverseInner() =======`);
     const tree = clone(treeOriginal);
 
     let i;
     let len;
     let res;
-    innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
+    const innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
       console.log(`029 tree is array!`);
@@ -44,11 +44,11 @@ function astMonkeyTraverse(tree1, cb1) {
             callback(
               tree[i],
               undefined,
-              Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+              { ...innerObj, path: trimFirstDot(path) },
               stop
             ),
             callback,
-            Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+            { ...innerObj, path: trimFirstDot(path) },
             stop
           );
           if (Number.isNaN(res) && i < tree.length) {
@@ -63,12 +63,13 @@ function astMonkeyTraverse(tree1, cb1) {
       }
     } else if (isObj(tree)) {
       console.log(`065 tree is object`);
+      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in tree) {
         console.log(
-          `068 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          `069 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
         if (stop.now && key != null) {
-          console.log(`071 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`072 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         const path = `${innerObj.path}.${key}`;
@@ -81,11 +82,11 @@ function astMonkeyTraverse(tree1, cb1) {
           callback(
             key,
             tree[key],
-            Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+            { ...innerObj, path: trimFirstDot(path) },
             stop
           ),
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          { ...innerObj, path: trimFirstDot(path) },
           stop
         );
         if (Number.isNaN(res)) {
@@ -95,10 +96,10 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     }
-    console.log(`098 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    console.log(`099 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
-  return traverseInner(tree1, cb1, {}, stop);
+  return traverseInner(tree1, cb1, {}, stop2);
 }
 
 // -----------------------------------------------------------------------------
