@@ -132,7 +132,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^1.12.9",
     "lodash.clonedeep": "^4.5.0",
-    "matcher": "^2.1.0"
+    "matcher": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -143,7 +143,7 @@
     "benchmark": "^2.1.4",
     "lect": "^0.12.8",
     "object-path": "^0.11.4",
-    "rollup": "^2.7.2",
+    "rollup": "^2.7.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",
