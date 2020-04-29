@@ -1,9 +1,12 @@
+/* eslint no-prototype-builtins: 0 */
+
 import tap from "tap";
 import { Linter } from "eslint";
-import correctRowNumRule from "../rules/correct-row-num";
+import api from "../dist/eslint-plugin-row-num.esm";
+import rule from "../src/rules/correct-row-num";
 
 const linter = new Linter();
-linter.defineRule("row-num/correct-row-num", correctRowNumRule);
+linter.defineRule("row-num/correct-row-num", rule);
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
@@ -11,6 +14,37 @@ const letterC = "\x63";
 const backtick = "\x60";
 
 console.log(`linter.version = ${linter.version}`);
+
+// 00. API wirings
+// -----------------------------------------------------------------------------
+
+tap.test(
+  `00.01 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
+  (t) => {
+    t.is(typeof api, "object", "00.01");
+    t.end();
+  }
+);
+
+tap.test(
+  `00.02 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
+  (t) => {
+    // eslint-disable-next-line no-prototype-builtins
+    t.true(api.hasOwnProperty("rules"), "00.02");
+    t.end();
+  }
+);
+
+tap.test(
+  `00.03 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - rule "correct-row-num" is exported`,
+  (t) => {
+    t.true(api.rules.hasOwnProperty("correct-row-num"), "00.03.01");
+    t.is(typeof api.rules["correct-row-num"], "object", "00.03.02");
+    t.true(api.rules["correct-row-num"].hasOwnProperty("create"), "00.03.03");
+    t.is(typeof api.rules["correct-row-num"].create, "function", "00.03.04");
+    t.end();
+  }
+);
 
 // 01. basic tests
 // -----------------------------------------------------------------------------

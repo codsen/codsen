@@ -24,21 +24,24 @@
     "update"
   ],
   "main": "dist/eslint-plugin-row-num.cjs.js",
+  "module": "dist/eslint-plugin-row-num.esm.js",
+  "browser": "dist/eslint-plugin-row-num.umd.js",
   "scripts": {
-    "build": "echo\"\"",
-    "dev": "echo\"\"",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+    "build": "rollup -c",
+    "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run format",
+    "dev": "rollup -c --dev",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
-    "perf": "echo\"\"",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+    "perf": "node perf/check",
     "prepare": "npm run build",
-    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run perf",
     "version": "npm run build && git add ."
   },
   "lect": {
@@ -90,7 +93,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "special": true,
+    "special": false,
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -108,24 +111,24 @@
       "text"
     ],
     "nyc-arg": [
-      "--exclude=**/*.umd.js"
+      "--exclude=**/*.umd.js",
+      "--exclude=dist/*.*"
     ],
     "timeout": 0
   },
   "dependencies": {
-    "import-modules": "^2.0.0",
     "js-row-num": "^2.7.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
     "eslint": "^6.8.0",
     "lect": "^0.12.8",
-    "rollup": "^2.7.3",
+    "rollup": "^2.7.6",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",

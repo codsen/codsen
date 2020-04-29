@@ -13,12 +13,15 @@
 
 .nyc_output
 coverage
-docs
 media
+perf
+src
 test
 
 # files:
 
+.babelrc
 .npmignore
 .prettierignore
+rollup.config.js
 testStats.md

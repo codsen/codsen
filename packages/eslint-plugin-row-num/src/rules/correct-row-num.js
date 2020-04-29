@@ -1,6 +1,5 @@
-// const stringify = require("json-stringify-safe");
-const fixRowNums = require("js-row-num");
-const getDocumentationUrl = require("./utils/get-docs-url");
+// import stringify from "json-stringify-safe";
+import fixRowNums from "js-row-num";
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
 const create = (context) => {
@@ -133,12 +132,12 @@ const create = (context) => {
   };
 };
 
-module.exports = {
+export default {
   create,
   meta: {
-    docs: {
-      url: getDocumentationUrl(__filename),
-    },
+    // docs: {
+    //   url: getDocumentationUrl(__filename),
+    // },
     type: "suggestion",
     messages: {
       correctRowNum: "Update the row number.",
