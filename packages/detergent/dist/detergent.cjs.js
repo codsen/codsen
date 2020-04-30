@@ -112,7 +112,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -781,7 +781,7 @@ function det(str, inputOpts) {
   if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
     throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
   }
-  var opts = _objectSpread2({}, defaultOpts, {}, inputOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
   }
