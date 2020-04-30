@@ -85,9 +85,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                  | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/all-named-html-entities.cjs.js` | 227 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/all-named-html-entities.esm.js` | 227 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/all-named-html-entities.umd.js` | 129 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/all-named-html-entities.cjs.js` | 268 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/all-named-html-entities.esm.js` | 275 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/all-named-html-entities.umd.js` | 166 KB |
 
 **[⬆ back to top](#)**
 

@@ -1,6 +1,8 @@
 import tap from "tap";
 import {
   allNamedEntities,
+  allNamedEntitiesSetOnly,
+  allNamedEntitiesSetOnlyCaseInsensitive,
   entStartsWith,
   entEndsWith,
   entStartsWithCaseInsensitive,
@@ -109,3 +111,18 @@ tap.test(`13 - uncertain list is set`, (t) => {
   t.ok(!!uncertain.and);
   t.end();
 });
+
+tap.test(`14 - allNamedEntitiesSetOnly is exported and is a set`, (t) => {
+  t.is(typeof allNamedEntitiesSetOnly, "object");
+  t.is(allNamedEntitiesSetOnly.size, 2125);
+  t.end();
+});
+
+tap.test(
+  `15 - allNamedEntitiesSetOnlyCaseInsensitive is exported and is a set`,
+  (t) => {
+    t.is(typeof allNamedEntitiesSetOnlyCaseInsensitive, "object");
+    t.is(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722);
+    t.end();
+  }
+);

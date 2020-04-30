@@ -28,5 +28,9 @@
   "zwng": "zwnj",
   "zwnh": "zwnj",
   "zwnk": "zwnj",
-  "zwnm": "zwnj"
+  "zwnm": "zwnj",
+  "bsp": "nbsp",
+  "nsp": "nbsp",
+  "nbp": "nbsp",
+  "nbs": "nbsp"
 }
