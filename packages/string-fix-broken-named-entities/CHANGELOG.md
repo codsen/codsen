@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.0
+
+Rebase.
+
+Previously, the `&nbsp;` detection was more sophisticated than the rest of the entities'. We were using a home-brew analogue of Levenshtein's distance but tuned to all the possible and impossible peculiarities of fat-finger cases.
+
+It was impossible to scale the algorithm to all other entities.
+
+We re-coded all the logic to use Levenshtein distance — **for all entities**, including `nbsp` — and removed all the DIY Levenshtein clauses of `nbsp`
+
+API doesn't change but we bump major because the code has been changed drastically and in theory that opens new opportunities to bugs.
+
+But all existing unit tests pass and more have been added.
+
 ## 2.6.0 (2020-04-26)
 
 ### Features
@@ -80,10 +94,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ Add `opts.progressFn` ([869e3f0](https://gitlab.com/codsen/codsen/commit/869e3f0))
 
 ## 1.6.0 (2019-01-27)
-
-- ✨ Add opts.decode ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
-
-## 1.5.0 (2019-01-27)
 
 - ✨ Add opts.decode ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
 

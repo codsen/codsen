@@ -3,8 +3,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
+import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
-import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -61,6 +61,7 @@ export default (commandLineArgs) => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "all-named-html-entities",
+        "leven",
         "lodash.clonedeep",
         "string-left-right",
       ],
@@ -80,6 +81,7 @@ export default (commandLineArgs) => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "all-named-html-entities",
+        "leven",
         "lodash.clonedeep",
         "string-left-right",
       ],

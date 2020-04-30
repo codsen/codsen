@@ -9,7 +9,7 @@ import fix from "../dist/string-fix-broken-named-entities.esm";
 tap.test(
   `${
     Object.keys(allNamedEntities).length
-  } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
+  } - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`}`,
   (t) => {
     Object.keys(allNamedEntities)
       .filter(
@@ -54,6 +54,63 @@ tap.test(
           );
         }
       });
+    t.end();
+  }
+);
+
+tap.test(
+  `101 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`,
+  (t) => {
+    const inp5 = "& nbsp;";
+    const outp5 = [
+      {
+        ruleName: "bad-named-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 0,
+        rangeTo: 7,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\xA0",
+      },
+    ];
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "101");
+    t.end();
+  }
+);
+
+tap.test(
+  `102 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`,
+  (t) => {
+    const inp5 = "&nbsp ;";
+    const outp5 = [
+      {
+        ruleName: "bad-named-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 0,
+        rangeTo: 7,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\xA0",
+      },
+    ];
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "102");
+    t.end();
+  }
+);
+
+tap.test(
+  `103 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`,
+  (t) => {
+    const inp5 = "& nbsp ;";
+    const outp5 = [
+      {
+        ruleName: "bad-named-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 0,
+        rangeTo: 8,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\xA0",
+      },
+    ];
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "103");
     t.end();
   }
 );

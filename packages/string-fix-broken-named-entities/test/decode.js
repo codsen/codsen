@@ -38,3 +38,27 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`,
+  (t) => {
+    t.same(
+      fix(`&EmptyVerySmallSquare;`, {
+        decode: true,
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `encoded-html-entity-EmptyVerySmallSquare`,
+          entityName: "EmptyVerySmallSquare",
+          rangeFrom: 0,
+          rangeTo: 22,
+          rangeValEncoded: `&EmptyVerySmallSquare;`,
+          rangeValDecoded: decode(`&EmptyVerySmallSquare;`),
+        },
+      ],
+      `02`
+    );
+    t.end();
+  }
+);

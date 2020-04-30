@@ -78,6 +78,10 @@
     return target;
   }
 
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -86,8 +90,39 @@
     if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
   }
 
   function _unsupportedIterableToArray(o, minLen) {
@@ -95,7 +130,7 @@
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -111,1856 +146,85 @@
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var lodash_clonedeep = createCommonjsModule(function (module, exports) {
-    /**
-     * lodash (Custom Build) <https://lodash.com/>
-     * Build: `lodash modularize exports="npm" -o ./`
-     * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-     * Released under MIT license <https://lodash.com/license>
-     * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-     * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-     */
+  const array = [];
+  const charCodeCache = [];
 
-    /** Used as the size to enable large array optimizations. */
-    var LARGE_ARRAY_SIZE = 200;
-    /** Used to stand-in for `undefined` hash values. */
-
-    var HASH_UNDEFINED = '__lodash_hash_undefined__';
-    /** Used as references for various `Number` constants. */
-
-    var MAX_SAFE_INTEGER = 9007199254740991;
-    /** `Object#toString` result references. */
-
-    var argsTag = '[object Arguments]',
-        arrayTag = '[object Array]',
-        boolTag = '[object Boolean]',
-        dateTag = '[object Date]',
-        errorTag = '[object Error]',
-        funcTag = '[object Function]',
-        genTag = '[object GeneratorFunction]',
-        mapTag = '[object Map]',
-        numberTag = '[object Number]',
-        objectTag = '[object Object]',
-        promiseTag = '[object Promise]',
-        regexpTag = '[object RegExp]',
-        setTag = '[object Set]',
-        stringTag = '[object String]',
-        symbolTag = '[object Symbol]',
-        weakMapTag = '[object WeakMap]';
-    var arrayBufferTag = '[object ArrayBuffer]',
-        dataViewTag = '[object DataView]',
-        float32Tag = '[object Float32Array]',
-        float64Tag = '[object Float64Array]',
-        int8Tag = '[object Int8Array]',
-        int16Tag = '[object Int16Array]',
-        int32Tag = '[object Int32Array]',
-        uint8Tag = '[object Uint8Array]',
-        uint8ClampedTag = '[object Uint8ClampedArray]',
-        uint16Tag = '[object Uint16Array]',
-        uint32Tag = '[object Uint32Array]';
-    /**
-     * Used to match `RegExp`
-     * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
-     */
-
-    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-    /** Used to match `RegExp` flags from their coerced string values. */
-
-    var reFlags = /\w*$/;
-    /** Used to detect host constructors (Safari). */
-
-    var reIsHostCtor = /^\[object .+?Constructor\]$/;
-    /** Used to detect unsigned integer values. */
-
-    var reIsUint = /^(?:0|[1-9]\d*)$/;
-    /** Used to identify `toStringTag` values supported by `_.clone`. */
-
-    var cloneableTags = {};
-    cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
-    cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
-    /** Detect free variable `global` from Node.js. */
-
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-    /** Detect free variable `self`. */
-
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-    /** Used as a reference to the global object. */
-
-    var root = freeGlobal || freeSelf || Function('return this')();
-    /** Detect free variable `exports`. */
-
-    var freeExports =  exports && !exports.nodeType && exports;
-    /** Detect free variable `module`. */
-
-    var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-    /** Detect the popular CommonJS extension `module.exports`. */
-
-    var moduleExports = freeModule && freeModule.exports === freeExports;
-    /**
-     * Adds the key-value `pair` to `map`.
-     *
-     * @private
-     * @param {Object} map The map to modify.
-     * @param {Array} pair The key-value pair to add.
-     * @returns {Object} Returns `map`.
-     */
-
-    function addMapEntry(map, pair) {
-      // Don't return `map.set` because it's not chainable in IE 11.
-      map.set(pair[0], pair[1]);
-      return map;
+  const leven = (left, right) => {
+    if (left === right) {
+      return 0;
     }
-    /**
-     * Adds `value` to `set`.
-     *
-     * @private
-     * @param {Object} set The set to modify.
-     * @param {*} value The value to add.
-     * @returns {Object} Returns `set`.
-     */
 
+    const swap = left; // Swapping the strings if `a` is longer than `b` so we know which one is the
+    // shortest & which one is the longest
 
-    function addSetEntry(set, value) {
-      // Don't return `set.add` because it's not chainable in IE 11.
-      set.add(value);
-      return set;
+    if (left.length > right.length) {
+      left = right;
+      right = swap;
     }
-    /**
-     * A specialized version of `_.forEach` for arrays without support for
-     * iteratee shorthands.
-     *
-     * @private
-     * @param {Array} [array] The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array} Returns `array`.
-     */
+
+    let leftLength = left.length;
+    let rightLength = right.length; // Performing suffix trimming:
+    // We can linearly drop suffix common to both strings since they
+    // don't increase distance at all
+    // Note: `~-` is the bitwise way to perform a `- 1` operation
+
+    while (leftLength > 0 && left.charCodeAt(~-leftLength) === right.charCodeAt(~-rightLength)) {
+      leftLength--;
+      rightLength--;
+    } // Performing prefix trimming
+    // We can linearly drop prefix common to both strings since they
+    // don't increase distance at all
 
 
-    function arrayEach(array, iteratee) {
-      var index = -1,
-          length = array ? array.length : 0;
+    let start = 0;
 
-      while (++index < length) {
-        if (iteratee(array[index], index, array) === false) {
-          break;
-        }
-      }
-
-      return array;
+    while (start < leftLength && left.charCodeAt(start) === right.charCodeAt(start)) {
+      start++;
     }
-    /**
-     * Appends the elements of `values` to `array`.
-     *
-     * @private
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to append.
-     * @returns {Array} Returns `array`.
-     */
 
+    leftLength -= start;
+    rightLength -= start;
 
-    function arrayPush(array, values) {
-      var index = -1,
-          length = values.length,
-          offset = array.length;
-
-      while (++index < length) {
-        array[offset + index] = values[index];
-      }
-
-      return array;
+    if (leftLength === 0) {
+      return rightLength;
     }
-    /**
-     * A specialized version of `_.reduce` for arrays without support for
-     * iteratee shorthands.
-     *
-     * @private
-     * @param {Array} [array] The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {*} [accumulator] The initial value.
-     * @param {boolean} [initAccum] Specify using the first element of `array` as
-     *  the initial value.
-     * @returns {*} Returns the accumulated value.
-     */
 
+    let bCharCode;
+    let result;
+    let temp;
+    let temp2;
+    let i = 0;
+    let j = 0;
 
-    function arrayReduce(array, iteratee, accumulator, initAccum) {
-      var index = -1,
-          length = array ? array.length : 0;
-
-      if (initAccum && length) {
-        accumulator = array[++index];
-      }
-
-      while (++index < length) {
-        accumulator = iteratee(accumulator, array[index], index, array);
-      }
-
-      return accumulator;
+    while (i < leftLength) {
+      charCodeCache[i] = left.charCodeAt(start + i);
+      array[i] = ++i;
     }
-    /**
-     * The base implementation of `_.times` without support for iteratee shorthands
-     * or max array length checks.
-     *
-     * @private
-     * @param {number} n The number of times to invoke `iteratee`.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array} Returns the array of results.
-     */
 
+    while (j < rightLength) {
+      bCharCode = right.charCodeAt(start + j);
+      temp = j++;
+      result = j;
 
-    function baseTimes(n, iteratee) {
-      var index = -1,
-          result = Array(n);
+      for (i = 0; i < leftLength; i++) {
+        temp2 = bCharCode === charCodeCache[i] ? temp : temp + 1;
+        temp = array[i]; // eslint-disable-next-line no-multi-assign
 
-      while (++index < n) {
-        result[index] = iteratee(index);
-      }
-
-      return result;
-    }
-    /**
-     * Gets the value at `key` of `object`.
-     *
-     * @private
-     * @param {Object} [object] The object to query.
-     * @param {string} key The key of the property to get.
-     * @returns {*} Returns the property value.
-     */
-
-
-    function getValue(object, key) {
-      return object == null ? undefined : object[key];
-    }
-    /**
-     * Checks if `value` is a host object in IE < 9.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-     */
-
-
-    function isHostObject(value) {
-      // Many host objects are `Object` objects that can coerce to strings
-      // despite having improperly defined `toString` methods.
-      var result = false;
-
-      if (value != null && typeof value.toString != 'function') {
-        try {
-          result = !!(value + '');
-        } catch (e) {}
-      }
-
-      return result;
-    }
-    /**
-     * Converts `map` to its key-value pairs.
-     *
-     * @private
-     * @param {Object} map The map to convert.
-     * @returns {Array} Returns the key-value pairs.
-     */
-
-
-    function mapToArray(map) {
-      var index = -1,
-          result = Array(map.size);
-      map.forEach(function (value, key) {
-        result[++index] = [key, value];
-      });
-      return result;
-    }
-    /**
-     * Creates a unary function that invokes `func` with its argument transformed.
-     *
-     * @private
-     * @param {Function} func The function to wrap.
-     * @param {Function} transform The argument transform.
-     * @returns {Function} Returns the new function.
-     */
-
-
-    function overArg(func, transform) {
-      return function (arg) {
-        return func(transform(arg));
-      };
-    }
-    /**
-     * Converts `set` to an array of its values.
-     *
-     * @private
-     * @param {Object} set The set to convert.
-     * @returns {Array} Returns the values.
-     */
-
-
-    function setToArray(set) {
-      var index = -1,
-          result = Array(set.size);
-      set.forEach(function (value) {
-        result[++index] = value;
-      });
-      return result;
-    }
-    /** Used for built-in method references. */
-
-
-    var arrayProto = Array.prototype,
-        funcProto = Function.prototype,
-        objectProto = Object.prototype;
-    /** Used to detect overreaching core-js shims. */
-
-    var coreJsData = root['__core-js_shared__'];
-    /** Used to detect methods masquerading as native. */
-
-    var maskSrcKey = function () {
-      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-      return uid ? 'Symbol(src)_1.' + uid : '';
-    }();
-    /** Used to resolve the decompiled source of functions. */
-
-
-    var funcToString = funcProto.toString;
-    /** Used to check objects for own properties. */
-
-    var hasOwnProperty = objectProto.hasOwnProperty;
-    /**
-     * Used to resolve the
-     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-     * of values.
-     */
-
-    var objectToString = objectProto.toString;
-    /** Used to detect if a method is native. */
-
-    var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
-    /** Built-in value references. */
-
-    var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
-        Uint8Array = root.Uint8Array,
-        getPrototype = overArg(Object.getPrototypeOf, Object),
-        objectCreate = Object.create,
-        propertyIsEnumerable = objectProto.propertyIsEnumerable,
-        splice = arrayProto.splice;
-    /* Built-in method references for those with the same name as other `lodash` methods. */
-
-    var nativeGetSymbols = Object.getOwnPropertySymbols,
-        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
-        nativeKeys = overArg(Object.keys, Object);
-    /* Built-in method references that are verified to be native. */
-
-    var DataView = getNative(root, 'DataView'),
-        Map = getNative(root, 'Map'),
-        Promise = getNative(root, 'Promise'),
-        Set = getNative(root, 'Set'),
-        WeakMap = getNative(root, 'WeakMap'),
-        nativeCreate = getNative(Object, 'create');
-    /** Used to detect maps, sets, and weakmaps. */
-
-    var dataViewCtorString = toSource(DataView),
-        mapCtorString = toSource(Map),
-        promiseCtorString = toSource(Promise),
-        setCtorString = toSource(Set),
-        weakMapCtorString = toSource(WeakMap);
-    /** Used to convert symbols to primitives and strings. */
-
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
-        symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
-    /**
-     * Creates a hash object.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function Hash(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
+        result = array[i] = temp > result ? temp2 > result ? result + 1 : temp2 : temp2 > temp ? temp + 1 : temp2;
       }
     }
-    /**
-     * Removes all key-value entries from the hash.
-     *
-     * @private
-     * @name clear
-     * @memberOf Hash
-     */
 
+    return result;
+  };
 
-    function hashClear() {
-      this.__data__ = nativeCreate ? nativeCreate(null) : {};
-    }
-    /**
-     * Removes `key` and its value from the hash.
-     *
-     * @private
-     * @name delete
-     * @memberOf Hash
-     * @param {Object} hash The hash to modify.
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
+  var leven_1 = leven; // TODO: Remove this for the next major release
 
-
-    function hashDelete(key) {
-      return this.has(key) && delete this.__data__[key];
-    }
-    /**
-     * Gets the hash value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf Hash
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function hashGet(key) {
-      var data = this.__data__;
-
-      if (nativeCreate) {
-        var result = data[key];
-        return result === HASH_UNDEFINED ? undefined : result;
-      }
-
-      return hasOwnProperty.call(data, key) ? data[key] : undefined;
-    }
-    /**
-     * Checks if a hash value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf Hash
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function hashHas(key) {
-      var data = this.__data__;
-      return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-    }
-    /**
-     * Sets the hash `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf Hash
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the hash instance.
-     */
-
-
-    function hashSet(key, value) {
-      var data = this.__data__;
-      data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
-      return this;
-    } // Add methods to `Hash`.
-
-
-    Hash.prototype.clear = hashClear;
-    Hash.prototype['delete'] = hashDelete;
-    Hash.prototype.get = hashGet;
-    Hash.prototype.has = hashHas;
-    Hash.prototype.set = hashSet;
-    /**
-     * Creates an list cache object.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function ListCache(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    /**
-     * Removes all key-value entries from the list cache.
-     *
-     * @private
-     * @name clear
-     * @memberOf ListCache
-     */
-
-
-    function listCacheClear() {
-      this.__data__ = [];
-    }
-    /**
-     * Removes `key` and its value from the list cache.
-     *
-     * @private
-     * @name delete
-     * @memberOf ListCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function listCacheDelete(key) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-
-      if (index < 0) {
-        return false;
-      }
-
-      var lastIndex = data.length - 1;
-
-      if (index == lastIndex) {
-        data.pop();
-      } else {
-        splice.call(data, index, 1);
-      }
-
-      return true;
-    }
-    /**
-     * Gets the list cache value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf ListCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function listCacheGet(key) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-      return index < 0 ? undefined : data[index][1];
-    }
-    /**
-     * Checks if a list cache value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf ListCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function listCacheHas(key) {
-      return assocIndexOf(this.__data__, key) > -1;
-    }
-    /**
-     * Sets the list cache `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf ListCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the list cache instance.
-     */
-
-
-    function listCacheSet(key, value) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-
-      if (index < 0) {
-        data.push([key, value]);
-      } else {
-        data[index][1] = value;
-      }
-
-      return this;
-    } // Add methods to `ListCache`.
-
-
-    ListCache.prototype.clear = listCacheClear;
-    ListCache.prototype['delete'] = listCacheDelete;
-    ListCache.prototype.get = listCacheGet;
-    ListCache.prototype.has = listCacheHas;
-    ListCache.prototype.set = listCacheSet;
-    /**
-     * Creates a map cache object to store key-value pairs.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function MapCache(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    /**
-     * Removes all key-value entries from the map.
-     *
-     * @private
-     * @name clear
-     * @memberOf MapCache
-     */
-
-
-    function mapCacheClear() {
-      this.__data__ = {
-        'hash': new Hash(),
-        'map': new (Map || ListCache)(),
-        'string': new Hash()
-      };
-    }
-    /**
-     * Removes `key` and its value from the map.
-     *
-     * @private
-     * @name delete
-     * @memberOf MapCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function mapCacheDelete(key) {
-      return getMapData(this, key)['delete'](key);
-    }
-    /**
-     * Gets the map value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf MapCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function mapCacheGet(key) {
-      return getMapData(this, key).get(key);
-    }
-    /**
-     * Checks if a map value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf MapCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function mapCacheHas(key) {
-      return getMapData(this, key).has(key);
-    }
-    /**
-     * Sets the map `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf MapCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the map cache instance.
-     */
-
-
-    function mapCacheSet(key, value) {
-      getMapData(this, key).set(key, value);
-      return this;
-    } // Add methods to `MapCache`.
-
-
-    MapCache.prototype.clear = mapCacheClear;
-    MapCache.prototype['delete'] = mapCacheDelete;
-    MapCache.prototype.get = mapCacheGet;
-    MapCache.prototype.has = mapCacheHas;
-    MapCache.prototype.set = mapCacheSet;
-    /**
-     * Creates a stack cache object to store key-value pairs.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function Stack(entries) {
-      this.__data__ = new ListCache(entries);
-    }
-    /**
-     * Removes all key-value entries from the stack.
-     *
-     * @private
-     * @name clear
-     * @memberOf Stack
-     */
-
-
-    function stackClear() {
-      this.__data__ = new ListCache();
-    }
-    /**
-     * Removes `key` and its value from the stack.
-     *
-     * @private
-     * @name delete
-     * @memberOf Stack
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function stackDelete(key) {
-      return this.__data__['delete'](key);
-    }
-    /**
-     * Gets the stack value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf Stack
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function stackGet(key) {
-      return this.__data__.get(key);
-    }
-    /**
-     * Checks if a stack value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf Stack
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function stackHas(key) {
-      return this.__data__.has(key);
-    }
-    /**
-     * Sets the stack `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf Stack
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the stack cache instance.
-     */
-
-
-    function stackSet(key, value) {
-      var cache = this.__data__;
-
-      if (cache instanceof ListCache) {
-        var pairs = cache.__data__;
-
-        if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
-          pairs.push([key, value]);
-          return this;
-        }
-
-        cache = this.__data__ = new MapCache(pairs);
-      }
-
-      cache.set(key, value);
-      return this;
-    } // Add methods to `Stack`.
-
-
-    Stack.prototype.clear = stackClear;
-    Stack.prototype['delete'] = stackDelete;
-    Stack.prototype.get = stackGet;
-    Stack.prototype.has = stackHas;
-    Stack.prototype.set = stackSet;
-    /**
-     * Creates an array of the enumerable property names of the array-like `value`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @param {boolean} inherited Specify returning inherited property names.
-     * @returns {Array} Returns the array of property names.
-     */
-
-    function arrayLikeKeys(value, inherited) {
-      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-      // Safari 9 makes `arguments.length` enumerable in strict mode.
-      var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
-      var length = result.length,
-          skipIndexes = !!length;
-
-      for (var key in value) {
-        if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
-          result.push(key);
-        }
-      }
-
-      return result;
-    }
-    /**
-     * Assigns `value` to `key` of `object` if the existing value is not equivalent
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
-     *
-     * @private
-     * @param {Object} object The object to modify.
-     * @param {string} key The key of the property to assign.
-     * @param {*} value The value to assign.
-     */
-
-
-    function assignValue(object, key, value) {
-      var objValue = object[key];
-
-      if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) || value === undefined && !(key in object)) {
-        object[key] = value;
-      }
-    }
-    /**
-     * Gets the index at which the `key` is found in `array` of key-value pairs.
-     *
-     * @private
-     * @param {Array} array The array to inspect.
-     * @param {*} key The key to search for.
-     * @returns {number} Returns the index of the matched value, else `-1`.
-     */
-
-
-    function assocIndexOf(array, key) {
-      var length = array.length;
-
-      while (length--) {
-        if (eq(array[length][0], key)) {
-          return length;
-        }
-      }
-
-      return -1;
-    }
-    /**
-     * The base implementation of `_.assign` without support for multiple sources
-     * or `customizer` functions.
-     *
-     * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function baseAssign(object, source) {
-      return object && copyObject(source, keys(source), object);
-    }
-    /**
-     * The base implementation of `_.clone` and `_.cloneDeep` which tracks
-     * traversed objects.
-     *
-     * @private
-     * @param {*} value The value to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @param {boolean} [isFull] Specify a clone including symbols.
-     * @param {Function} [customizer] The function to customize cloning.
-     * @param {string} [key] The key of `value`.
-     * @param {Object} [object] The parent object of `value`.
-     * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
-     * @returns {*} Returns the cloned value.
-     */
-
-
-    function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
-      var result;
-
-      if (customizer) {
-        result = object ? customizer(value, key, object, stack) : customizer(value);
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-
-      if (!isObject(value)) {
-        return value;
-      }
-
-      var isArr = isArray(value);
-
-      if (isArr) {
-        result = initCloneArray(value);
-
-        if (!isDeep) {
-          return copyArray(value, result);
-        }
-      } else {
-        var tag = getTag(value),
-            isFunc = tag == funcTag || tag == genTag;
-
-        if (isBuffer(value)) {
-          return cloneBuffer(value, isDeep);
-        }
-
-        if (tag == objectTag || tag == argsTag || isFunc && !object) {
-          if (isHostObject(value)) {
-            return object ? value : {};
-          }
-
-          result = initCloneObject(isFunc ? {} : value);
-
-          if (!isDeep) {
-            return copySymbols(value, baseAssign(result, value));
-          }
-        } else {
-          if (!cloneableTags[tag]) {
-            return object ? value : {};
-          }
-
-          result = initCloneByTag(value, tag, baseClone, isDeep);
-        }
-      } // Check for circular references and return its corresponding clone.
-
-
-      stack || (stack = new Stack());
-      var stacked = stack.get(value);
-
-      if (stacked) {
-        return stacked;
-      }
-
-      stack.set(value, result);
-
-      if (!isArr) {
-        var props = isFull ? getAllKeys(value) : keys(value);
-      }
-
-      arrayEach(props || value, function (subValue, key) {
-        if (props) {
-          key = subValue;
-          subValue = value[key];
-        } // Recursively populate clone (susceptible to call stack limits).
-
-
-        assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
-      });
-      return result;
-    }
-    /**
-     * The base implementation of `_.create` without support for assigning
-     * properties to the created object.
-     *
-     * @private
-     * @param {Object} prototype The object to inherit from.
-     * @returns {Object} Returns the new object.
-     */
-
-
-    function baseCreate(proto) {
-      return isObject(proto) ? objectCreate(proto) : {};
-    }
-    /**
-     * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
-     * `keysFunc` and `symbolsFunc` to get the enumerable property names and
-     * symbols of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @param {Function} keysFunc The function to get the keys of `object`.
-     * @param {Function} symbolsFunc The function to get the symbols of `object`.
-     * @returns {Array} Returns the array of property names and symbols.
-     */
-
-
-    function baseGetAllKeys(object, keysFunc, symbolsFunc) {
-      var result = keysFunc(object);
-      return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
-    }
-    /**
-     * The base implementation of `getTag`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
-     */
-
-
-    function baseGetTag(value) {
-      return objectToString.call(value);
-    }
-    /**
-     * The base implementation of `_.isNative` without bad shim checks.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a native function,
-     *  else `false`.
-     */
-
-
-    function baseIsNative(value) {
-      if (!isObject(value) || isMasked(value)) {
-        return false;
-      }
-
-      var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
-      return pattern.test(toSource(value));
-    }
-    /**
-     * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
-     */
-
-
-    function baseKeys(object) {
-      if (!isPrototype(object)) {
-        return nativeKeys(object);
-      }
-
-      var result = [];
-
-      for (var key in Object(object)) {
-        if (hasOwnProperty.call(object, key) && key != 'constructor') {
-          result.push(key);
-        }
-      }
-
-      return result;
-    }
-    /**
-     * Creates a clone of  `buffer`.
-     *
-     * @private
-     * @param {Buffer} buffer The buffer to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Buffer} Returns the cloned buffer.
-     */
-
-
-    function cloneBuffer(buffer, isDeep) {
-      if (isDeep) {
-        return buffer.slice();
-      }
-
-      var result = new buffer.constructor(buffer.length);
-      buffer.copy(result);
-      return result;
-    }
-    /**
-     * Creates a clone of `arrayBuffer`.
-     *
-     * @private
-     * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
-     * @returns {ArrayBuffer} Returns the cloned array buffer.
-     */
-
-
-    function cloneArrayBuffer(arrayBuffer) {
-      var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-      new Uint8Array(result).set(new Uint8Array(arrayBuffer));
-      return result;
-    }
-    /**
-     * Creates a clone of `dataView`.
-     *
-     * @private
-     * @param {Object} dataView The data view to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned data view.
-     */
-
-
-    function cloneDataView(dataView, isDeep) {
-      var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
-      return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
-    }
-    /**
-     * Creates a clone of `map`.
-     *
-     * @private
-     * @param {Object} map The map to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned map.
-     */
-
-
-    function cloneMap(map, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
-      return arrayReduce(array, addMapEntry, new map.constructor());
-    }
-    /**
-     * Creates a clone of `regexp`.
-     *
-     * @private
-     * @param {Object} regexp The regexp to clone.
-     * @returns {Object} Returns the cloned regexp.
-     */
-
-
-    function cloneRegExp(regexp) {
-      var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
-      result.lastIndex = regexp.lastIndex;
-      return result;
-    }
-    /**
-     * Creates a clone of `set`.
-     *
-     * @private
-     * @param {Object} set The set to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned set.
-     */
-
-
-    function cloneSet(set, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
-      return arrayReduce(array, addSetEntry, new set.constructor());
-    }
-    /**
-     * Creates a clone of the `symbol` object.
-     *
-     * @private
-     * @param {Object} symbol The symbol object to clone.
-     * @returns {Object} Returns the cloned symbol object.
-     */
-
-
-    function cloneSymbol(symbol) {
-      return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
-    }
-    /**
-     * Creates a clone of `typedArray`.
-     *
-     * @private
-     * @param {Object} typedArray The typed array to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned typed array.
-     */
-
-
-    function cloneTypedArray(typedArray, isDeep) {
-      var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-      return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-    }
-    /**
-     * Copies the values of `source` to `array`.
-     *
-     * @private
-     * @param {Array} source The array to copy values from.
-     * @param {Array} [array=[]] The array to copy values to.
-     * @returns {Array} Returns `array`.
-     */
-
-
-    function copyArray(source, array) {
-      var index = -1,
-          length = source.length;
-      array || (array = Array(length));
-
-      while (++index < length) {
-        array[index] = source[index];
-      }
-
-      return array;
-    }
-    /**
-     * Copies properties of `source` to `object`.
-     *
-     * @private
-     * @param {Object} source The object to copy properties from.
-     * @param {Array} props The property identifiers to copy.
-     * @param {Object} [object={}] The object to copy properties to.
-     * @param {Function} [customizer] The function to customize copied values.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function copyObject(source, props, object, customizer) {
-      object || (object = {});
-      var index = -1,
-          length = props.length;
-
-      while (++index < length) {
-        var key = props[index];
-        var newValue = customizer ? customizer(object[key], source[key], key, object, source) : undefined;
-        assignValue(object, key, newValue === undefined ? source[key] : newValue);
-      }
-
-      return object;
-    }
-    /**
-     * Copies own symbol properties of `source` to `object`.
-     *
-     * @private
-     * @param {Object} source The object to copy symbols from.
-     * @param {Object} [object={}] The object to copy symbols to.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function copySymbols(source, object) {
-      return copyObject(source, getSymbols(source), object);
-    }
-    /**
-     * Creates an array of own enumerable property names and symbols of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names and symbols.
-     */
-
-
-    function getAllKeys(object) {
-      return baseGetAllKeys(object, keys, getSymbols);
-    }
-    /**
-     * Gets the data for `map`.
-     *
-     * @private
-     * @param {Object} map The map to query.
-     * @param {string} key The reference key.
-     * @returns {*} Returns the map data.
-     */
-
-
-    function getMapData(map, key) {
-      var data = map.__data__;
-      return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
-    }
-    /**
-     * Gets the native function at `key` of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @param {string} key The key of the method to get.
-     * @returns {*} Returns the function if it's native, else `undefined`.
-     */
-
-
-    function getNative(object, key) {
-      var value = getValue(object, key);
-      return baseIsNative(value) ? value : undefined;
-    }
-    /**
-     * Creates an array of the own enumerable symbol properties of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of symbols.
-     */
-
-
-    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
-    /**
-     * Gets the `toStringTag` of `value`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
-     */
-
-    var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11,
-    // for data views in Edge < 14, and promises in Node.js.
-
-    if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
-        var result = objectToString.call(value),
-            Ctor = result == objectTag ? value.constructor : undefined,
-            ctorString = Ctor ? toSource(Ctor) : undefined;
-
-        if (ctorString) {
-          switch (ctorString) {
-            case dataViewCtorString:
-              return dataViewTag;
-
-            case mapCtorString:
-              return mapTag;
-
-            case promiseCtorString:
-              return promiseTag;
-
-            case setCtorString:
-              return setTag;
-
-            case weakMapCtorString:
-              return weakMapTag;
-          }
-        }
-
-        return result;
-      };
-    }
-    /**
-     * Initializes an array clone.
-     *
-     * @private
-     * @param {Array} array The array to clone.
-     * @returns {Array} Returns the initialized clone.
-     */
-
-
-    function initCloneArray(array) {
-      var length = array.length,
-          result = array.constructor(length); // Add properties assigned by `RegExp#exec`.
-
-      if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
-        result.index = array.index;
-        result.input = array.input;
-      }
-
-      return result;
-    }
-    /**
-     * Initializes an object clone.
-     *
-     * @private
-     * @param {Object} object The object to clone.
-     * @returns {Object} Returns the initialized clone.
-     */
-
-
-    function initCloneObject(object) {
-      return typeof object.constructor == 'function' && !isPrototype(object) ? baseCreate(getPrototype(object)) : {};
-    }
-    /**
-     * Initializes an object clone based on its `toStringTag`.
-     *
-     * **Note:** This function only supports cloning values with tags of
-     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
-     *
-     * @private
-     * @param {Object} object The object to clone.
-     * @param {string} tag The `toStringTag` of the object to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the initialized clone.
-     */
-
-
-    function initCloneByTag(object, tag, cloneFunc, isDeep) {
-      var Ctor = object.constructor;
-
-      switch (tag) {
-        case arrayBufferTag:
-          return cloneArrayBuffer(object);
-
-        case boolTag:
-        case dateTag:
-          return new Ctor(+object);
-
-        case dataViewTag:
-          return cloneDataView(object, isDeep);
-
-        case float32Tag:
-        case float64Tag:
-        case int8Tag:
-        case int16Tag:
-        case int32Tag:
-        case uint8Tag:
-        case uint8ClampedTag:
-        case uint16Tag:
-        case uint32Tag:
-          return cloneTypedArray(object, isDeep);
-
-        case mapTag:
-          return cloneMap(object, isDeep, cloneFunc);
-
-        case numberTag:
-        case stringTag:
-          return new Ctor(object);
-
-        case regexpTag:
-          return cloneRegExp(object);
-
-        case setTag:
-          return cloneSet(object, isDeep, cloneFunc);
-
-        case symbolTag:
-          return cloneSymbol(object);
-      }
-    }
-    /**
-     * Checks if `value` is a valid array-like index.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
-     * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
-     */
-
-
-    function isIndex(value, length) {
-      length = length == null ? MAX_SAFE_INTEGER : length;
-      return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
-    }
-    /**
-     * Checks if `value` is suitable for use as unique object key.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
-     */
-
-
-    function isKeyable(value) {
-      var type = typeof value;
-      return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
-    }
-    /**
-     * Checks if `func` has its source masked.
-     *
-     * @private
-     * @param {Function} func The function to check.
-     * @returns {boolean} Returns `true` if `func` is masked, else `false`.
-     */
-
-
-    function isMasked(func) {
-      return !!maskSrcKey && maskSrcKey in func;
-    }
-    /**
-     * Checks if `value` is likely a prototype object.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
-     */
-
-
-    function isPrototype(value) {
-      var Ctor = value && value.constructor,
-          proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
-      return value === proto;
-    }
-    /**
-     * Converts `func` to its source code.
-     *
-     * @private
-     * @param {Function} func The function to process.
-     * @returns {string} Returns the source code.
-     */
-
-
-    function toSource(func) {
-      if (func != null) {
-        try {
-          return funcToString.call(func);
-        } catch (e) {}
-
-        try {
-          return func + '';
-        } catch (e) {}
-      }
-
-      return '';
-    }
-    /**
-     * This method is like `_.clone` except that it recursively clones `value`.
-     *
-     * @static
-     * @memberOf _
-     * @since 1.0.0
-     * @category Lang
-     * @param {*} value The value to recursively clone.
-     * @returns {*} Returns the deep cloned value.
-     * @see _.clone
-     * @example
-     *
-     * var objects = [{ 'a': 1 }, { 'b': 2 }];
-     *
-     * var deep = _.cloneDeep(objects);
-     * console.log(deep[0] === objects[0]);
-     * // => false
-     */
-
-
-    function cloneDeep(value) {
-      return baseClone(value, true, true);
-    }
-    /**
-     * Performs a
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * comparison between two values to determine if they are equivalent.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
-     * @example
-     *
-     * var object = { 'a': 1 };
-     * var other = { 'a': 1 };
-     *
-     * _.eq(object, object);
-     * // => true
-     *
-     * _.eq(object, other);
-     * // => false
-     *
-     * _.eq('a', 'a');
-     * // => true
-     *
-     * _.eq('a', Object('a'));
-     * // => false
-     *
-     * _.eq(NaN, NaN);
-     * // => true
-     */
-
-
-    function eq(value, other) {
-      return value === other || value !== value && other !== other;
-    }
-    /**
-     * Checks if `value` is likely an `arguments` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
-     *  else `false`.
-     * @example
-     *
-     * _.isArguments(function() { return arguments; }());
-     * // => true
-     *
-     * _.isArguments([1, 2, 3]);
-     * // => false
-     */
-
-
-    function isArguments(value) {
-      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-      return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-    }
-    /**
-     * Checks if `value` is classified as an `Array` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
-     * @example
-     *
-     * _.isArray([1, 2, 3]);
-     * // => true
-     *
-     * _.isArray(document.body.children);
-     * // => false
-     *
-     * _.isArray('abc');
-     * // => false
-     *
-     * _.isArray(_.noop);
-     * // => false
-     */
-
-
-    var isArray = Array.isArray;
-    /**
-     * Checks if `value` is array-like. A value is considered array-like if it's
-     * not a function and has a `value.length` that's an integer greater than or
-     * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
-     * @example
-     *
-     * _.isArrayLike([1, 2, 3]);
-     * // => true
-     *
-     * _.isArrayLike(document.body.children);
-     * // => true
-     *
-     * _.isArrayLike('abc');
-     * // => true
-     *
-     * _.isArrayLike(_.noop);
-     * // => false
-     */
-
-    function isArrayLike(value) {
-      return value != null && isLength(value.length) && !isFunction(value);
-    }
-    /**
-     * This method is like `_.isArrayLike` except that it also checks if `value`
-     * is an object.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array-like object,
-     *  else `false`.
-     * @example
-     *
-     * _.isArrayLikeObject([1, 2, 3]);
-     * // => true
-     *
-     * _.isArrayLikeObject(document.body.children);
-     * // => true
-     *
-     * _.isArrayLikeObject('abc');
-     * // => false
-     *
-     * _.isArrayLikeObject(_.noop);
-     * // => false
-     */
-
-
-    function isArrayLikeObject(value) {
-      return isObjectLike(value) && isArrayLike(value);
-    }
-    /**
-     * Checks if `value` is a buffer.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.3.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
-     * @example
-     *
-     * _.isBuffer(new Buffer(2));
-     * // => true
-     *
-     * _.isBuffer(new Uint8Array(2));
-     * // => false
-     */
-
-
-    var isBuffer = nativeIsBuffer || stubFalse;
-    /**
-     * Checks if `value` is classified as a `Function` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a function, else `false`.
-     * @example
-     *
-     * _.isFunction(_);
-     * // => true
-     *
-     * _.isFunction(/abc/);
-     * // => false
-     */
-
-    function isFunction(value) {
-      // The use of `Object#toString` avoids issues with the `typeof` operator
-      // in Safari 8-9 which returns 'object' for typed array and other constructors.
-      var tag = isObject(value) ? objectToString.call(value) : '';
-      return tag == funcTag || tag == genTag;
-    }
-    /**
-     * Checks if `value` is a valid array-like length.
-     *
-     * **Note:** This method is loosely based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
-     * @example
-     *
-     * _.isLength(3);
-     * // => true
-     *
-     * _.isLength(Number.MIN_VALUE);
-     * // => false
-     *
-     * _.isLength(Infinity);
-     * // => false
-     *
-     * _.isLength('3');
-     * // => false
-     */
-
-
-    function isLength(value) {
-      return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-    }
-    /**
-     * Checks if `value` is the
-     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-     * @example
-     *
-     * _.isObject({});
-     * // => true
-     *
-     * _.isObject([1, 2, 3]);
-     * // => true
-     *
-     * _.isObject(_.noop);
-     * // => true
-     *
-     * _.isObject(null);
-     * // => false
-     */
-
-
-    function isObject(value) {
-      var type = typeof value;
-      return !!value && (type == 'object' || type == 'function');
-    }
-    /**
-     * Checks if `value` is object-like. A value is object-like if it's not `null`
-     * and has a `typeof` result of "object".
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-     * @example
-     *
-     * _.isObjectLike({});
-     * // => true
-     *
-     * _.isObjectLike([1, 2, 3]);
-     * // => true
-     *
-     * _.isObjectLike(_.noop);
-     * // => false
-     *
-     * _.isObjectLike(null);
-     * // => false
-     */
-
-
-    function isObjectLike(value) {
-      return !!value && typeof value == 'object';
-    }
-    /**
-     * Creates an array of the own enumerable property names of `object`.
-     *
-     * **Note:** Non-object values are coerced to objects. See the
-     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
-     * for more details.
-     *
-     * @static
-     * @since 0.1.0
-     * @memberOf _
-     * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
-     * @example
-     *
-     * function Foo() {
-     *   this.a = 1;
-     *   this.b = 2;
-     * }
-     *
-     * Foo.prototype.c = 3;
-     *
-     * _.keys(new Foo);
-     * // => ['a', 'b'] (iteration order is not guaranteed)
-     *
-     * _.keys('hi');
-     * // => ['0', '1']
-     */
-
-
-    function keys(object) {
-      return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-    }
-    /**
-     * This method returns a new empty array.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.13.0
-     * @category Util
-     * @returns {Array} Returns the new empty array.
-     * @example
-     *
-     * var arrays = _.times(2, _.stubArray);
-     *
-     * console.log(arrays);
-     * // => [[], []]
-     *
-     * console.log(arrays[0] === arrays[1]);
-     * // => false
-     */
-
-
-    function stubArray() {
-      return [];
-    }
-    /**
-     * This method returns `false`.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.13.0
-     * @category Util
-     * @returns {boolean} Returns `false`.
-     * @example
-     *
-     * _.times(2, _.stubFalse);
-     * // => [false, false]
-     */
-
-
-    function stubFalse() {
-      return false;
-    }
-
-    module.exports = cloneDeep;
-  });
+  var _default = leven;
+  leven_1.default = _default;
 
   /**
    * all-named-html-entities
@@ -6250,6 +4514,10 @@
   var zwnh = "zwnj";
   var zwnk = "zwnj";
   var zwnm = "zwnj";
+  var bsp = "nbsp";
+  var nsp = "nbsp";
+  var nbp = "nbsp";
+  var nbs = "nbsp";
   var brokenNamedEntities = {
     ound: ound,
     pond: pond,
@@ -6280,7 +4548,11 @@
     zwng: zwng,
     zwnh: zwnh,
     zwnk: zwnk,
-    zwnm: zwnm
+    zwnm: zwnm,
+    bsp: bsp,
+    nsp: nsp,
+    nbp: nbp,
+    nbs: nbs
   };
   var A = {
     a: ["Aacute"],
@@ -9705,6 +7977,8 @@
     Zeta: Zeta$1,
     zeta: zeta$1
   };
+  const allNamedEntitiesSetOnly = new Set(["Aacute", "aacute", "Abreve", "abreve", "ac", "acd", "acE", "Acirc", "acirc", "acute", "Acy", "acy", "AElig", "aelig", "af", "Afr", "afr", "Agrave", "agrave", "alefsym", "aleph", "Alpha", "alpha", "Amacr", "amacr", "amalg", "AMP", "amp", "And", "and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr", "Aogon", "aogon", "Aopf", "aopf", "ap", "apacir", "apE", "ape", "apid", "apos", "ApplyFunction", "approx", "approxeq", "Aring", "aring", "Ascr", "ascr", "Assign", "ast", "asymp", "asympeq", "Atilde", "atilde", "Auml", "auml", "awconint", "awint", "backcong", "backepsilon", "backprime", "backsim", "backsimeq", "Backslash", "Barv", "barvee", "Barwed", "barwed", "barwedge", "bbrk", "bbrktbrk", "bcong", "Bcy", "bcy", "bdquo", "becaus", "Because", "because", "bemptyv", "bepsi", "bernou", "Bernoullis", "Beta", "beta", "beth", "between", "Bfr", "bfr", "bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge", "bkarow", "blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block", "bne", "bnequiv", "bNot", "bnot", "Bopf", "bopf", "bot", "bottom", "bowtie", "boxbox", "boxDL", "boxDl", "boxdL", "boxdl", "boxDR", "boxDr", "boxdR", "boxdr", "boxH", "boxh", "boxHD", "boxHd", "boxhD", "boxhd", "boxHU", "boxHu", "boxhU", "boxhu", "boxminus", "boxplus", "boxtimes", "boxUL", "boxUl", "boxuL", "boxul", "boxUR", "boxUr", "boxuR", "boxur", "boxV", "boxv", "boxVH", "boxVh", "boxvH", "boxvh", "boxVL", "boxVl", "boxvL", "boxvl", "boxVR", "boxVr", "boxvR", "boxvr", "bprime", "Breve", "breve", "brvbar", "Bscr", "bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub", "bull", "bullet", "bump", "bumpE", "bumpe", "Bumpeq", "bumpeq", "Cacute", "cacute", "Cap", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "CapitalDifferentialD", "caps", "caret", "caron", "Cayleys", "ccaps", "Ccaron", "ccaron", "Ccedil", "ccedil", "Ccirc", "ccirc", "Cconint", "ccups", "ccupssm", "Cdot", "cdot", "cedil", "Cedilla", "cemptyv", "cent", "CenterDot", "centerdot", "Cfr", "cfr", "CHcy", "chcy", "check", "checkmark", "Chi", "chi", "cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "CircleDot", "circledR", "circledS", "CircleMinus", "CirclePlus", "CircleTimes", "cirE", "cire", "cirfnint", "cirmid", "cirscir", "ClockwiseContourIntegral", "CloseCurlyDoubleQuote", "CloseCurlyQuote", "clubs", "clubsuit", "Colon", "colon", "Colone", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "Congruent", "Conint", "conint", "ContourIntegral", "Copf", "copf", "coprod", "Coproduct", "COPY", "copy", "copysr", "CounterClockwiseContourIntegral", "crarr", "Cross", "cross", "Cscr", "cscr", "csub", "csube", "csup", "csupe", "ctdot", "cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "Cup", "cup", "cupbrcap", "CupCap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed", "cwconint", "cwint", "cylcty", "Dagger", "dagger", "daleth", "Darr", "dArr", "darr", "dash", "Dashv", "dashv", "dbkarow", "dblac", "Dcaron", "dcaron", "Dcy", "dcy", "DD", "dd", "ddagger", "ddarr", "DDotrahd", "ddotseq", "deg", "Del", "Delta", "delta", "demptyv", "dfisht", "Dfr", "dfr", "dHar", "dharl", "dharr", "DiacriticalAcute", "DiacriticalDot", "DiacriticalDoubleAcute", "DiacriticalGrave", "DiacriticalTilde", "diam", "Diamond", "diamond", "diamondsuit", "diams", "die", "DifferentialD", "digamma", "disin", "div", "divide", "divideontimes", "divonx", "DJcy", "djcy", "dlcorn", "dlcrop", "dollar", "Dopf", "dopf", "Dot", "dot", "DotDot", "doteq", "doteqdot", "DotEqual", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "DoubleContourIntegral", "DoubleDot", "DoubleDownArrow", "DoubleLeftArrow", "DoubleLeftRightArrow", "DoubleLeftTee", "DoubleLongLeftArrow", "DoubleLongLeftRightArrow", "DoubleLongRightArrow", "DoubleRightArrow", "DoubleRightTee", "DoubleUpArrow", "DoubleUpDownArrow", "DoubleVerticalBar", "DownArrow", "Downarrow", "downarrow", "DownArrowBar", "DownArrowUpArrow", "DownBreve", "downdownarrows", "downharpoonleft", "downharpoonright", "DownLeftRightVector", "DownLeftTeeVector", "DownLeftVector", "DownLeftVectorBar", "DownRightTeeVector", "DownRightVector", "DownRightVectorBar", "DownTee", "DownTeeArrow", "drbkarow", "drcorn", "drcrop", "Dscr", "dscr", "DScy", "dscy", "dsol", "Dstrok", "dstrok", "dtdot", "dtri", "dtrif", "duarr", "duhar", "dwangle", "DZcy", "dzcy", "dzigrarr", "Eacute", "eacute", "easter", "Ecaron", "ecaron", "ecir", "Ecirc", "ecirc", "ecolon", "Ecy", "ecy", "eDDot", "Edot", "eDot", "edot", "ee", "efDot", "Efr", "efr", "eg", "Egrave", "egrave", "egs", "egsdot", "el", "Element", "elinters", "ell", "els", "elsdot", "Emacr", "emacr", "empty", "emptyset", "EmptySmallSquare", "emptyv", "EmptyVerySmallSquare", "emsp", "emsp13", "emsp14", "ENG", "eng", "ensp", "Eogon", "eogon", "Eopf", "eopf", "epar", "eparsl", "eplus", "epsi", "Epsilon", "epsilon", "epsiv", "eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "Equal", "equals", "EqualTilde", "equest", "Equilibrium", "equiv", "equivDD", "eqvparsl", "erarr", "erDot", "Escr", "escr", "esdot", "Esim", "esim", "Eta", "eta", "ETH", "eth", "Euml", "euml", "euro", "excl", "exist", "Exists", "expectation", "ExponentialE", "exponentiale", "fallingdotseq", "Fcy", "fcy", "female", "ffilig", "fflig", "ffllig", "Ffr", "ffr", "filig", "FilledSmallSquare", "FilledVerySmallSquare", "fjlig", "flat", "fllig", "fltns", "fnof", "Fopf", "fopf", "ForAll", "forall", "fork", "forkv", "Fouriertrf", "fpartint", "frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown", "Fscr", "fscr", "gacute", "Gamma", "gamma", "Gammad", "gammad", "gap", "Gbreve", "gbreve", "Gcedil", "Gcirc", "gcirc", "Gcy", "gcy", "Gdot", "gdot", "gE", "ge", "gEl", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles", "Gfr", "gfr", "Gg", "gg", "ggg", "gimel", "GJcy", "gjcy", "gl", "gla", "glE", "glj", "gnap", "gnapprox", "gnE", "gne", "gneq", "gneqq", "gnsim", "Gopf", "gopf", "grave", "GreaterEqual", "GreaterEqualLess", "GreaterFullEqual", "GreaterGreater", "GreaterLess", "GreaterSlantEqual", "GreaterTilde", "Gscr", "gscr", "gsim", "gsime", "gsiml", "GT", "Gt", "gt", "gtcc", "gtcir", "gtdot", "gtlPar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim", "gvertneqq", "gvnE", "Hacek", "hairsp", "half", "hamilt", "HARDcy", "hardcy", "hArr", "harr", "harrcir", "harrw", "Hat", "hbar", "Hcirc", "hcirc", "hearts", "heartsuit", "hellip", "hercon", "Hfr", "hfr", "HilbertSpace", "hksearow", "hkswarow", "hoarr", "homtht", "hookleftarrow", "hookrightarrow", "Hopf", "hopf", "horbar", "HorizontalLine", "Hscr", "hscr", "hslash", "Hstrok", "hstrok", "HumpDownHump", "HumpEqual", "hybull", "hyphen", "Iacute", "iacute", "ic", "Icirc", "icirc", "Icy", "icy", "Idot", "IEcy", "iecy", "iexcl", "iff", "Ifr", "ifr", "Igrave", "igrave", "ii", "iiiint", "iiint", "iinfin", "iiota", "IJlig", "ijlig", "Im", "Imacr", "imacr", "image", "ImaginaryI", "imagline", "imagpart", "imath", "imof", "imped", "Implies", "in", "incare", "infin", "infintie", "inodot", "Int", "int", "intcal", "integers", "Integral", "intercal", "Intersection", "intlarhk", "intprod", "InvisibleComma", "InvisibleTimes", "IOcy", "iocy", "Iogon", "iogon", "Iopf", "iopf", "Iota", "iota", "iprod", "iquest", "Iscr", "iscr", "isin", "isindot", "isinE", "isins", "isinsv", "isinv", "it", "Itilde", "itilde", "Iukcy", "iukcy", "Iuml", "iuml", "Jcirc", "jcirc", "Jcy", "jcy", "Jfr", "jfr", "jmath", "Jopf", "jopf", "Jscr", "jscr", "Jsercy", "jsercy", "Jukcy", "jukcy", "Kappa", "kappa", "kappav", "Kcedil", "kcedil", "Kcy", "kcy", "Kfr", "kfr", "kgreen", "KHcy", "khcy", "KJcy", "kjcy", "Kopf", "kopf", "Kscr", "kscr", "lAarr", "Lacute", "lacute", "laemptyv", "lagran", "Lambda", "lambda", "Lang", "lang", "langd", "langle", "lap", "Laplacetrf", "laquo", "Larr", "lArr", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "lAtail", "latail", "late", "lates", "lBarr", "lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu", "Lcaron", "lcaron", "Lcedil", "lcedil", "lceil", "lcub", "Lcy", "lcy", "ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh", "lE", "le", "LeftAngleBracket", "LeftArrow", "Leftarrow", "leftarrow", "LeftArrowBar", "LeftArrowRightArrow", "leftarrowtail", "LeftCeiling", "LeftDoubleBracket", "LeftDownTeeVector", "LeftDownVector", "LeftDownVectorBar", "LeftFloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "LeftRightArrow", "Leftrightarrow", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "LeftRightVector", "LeftTee", "LeftTeeArrow", "LeftTeeVector", "leftthreetimes", "LeftTriangle", "LeftTriangleBar", "LeftTriangleEqual", "LeftUpDownVector", "LeftUpTeeVector", "LeftUpVector", "LeftUpVectorBar", "LeftVector", "LeftVectorBar", "lEg", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "LessEqualGreater", "LessFullEqual", "LessGreater", "lessgtr", "LessLess", "lesssim", "LessSlantEqual", "LessTilde", "lfisht", "lfloor", "Lfr", "lfr", "lg", "lgE", "lHar", "lhard", "lharu", "lharul", "lhblk", "LJcy", "ljcy", "Ll", "ll", "llarr", "llcorner", "Lleftarrow", "llhard", "lltri", "Lmidot", "lmidot", "lmoust", "lmoustache", "lnap", "lnapprox", "lnE", "lne", "lneq", "lneqq", "lnsim", "loang", "loarr", "lobrk", "LongLeftArrow", "Longleftarrow", "longleftarrow", "LongLeftRightArrow", "Longleftrightarrow", "longleftrightarrow", "longmapsto", "LongRightArrow", "Longrightarrow", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "Lopf", "lopf", "loplus", "lotimes", "lowast", "lowbar", "LowerLeftArrow", "LowerRightArrow", "loz", "lozenge", "lozf", "lpar", "lparlt", "lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri", "lsaquo", "Lscr", "lscr", "Lsh", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "Lstrok", "lstrok", "LT", "Lt", "lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrPar", "lurdshar", "luruhar", "lvertneqq", "lvnE", "macr", "male", "malt", "maltese", "Map", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker", "mcomma", "Mcy", "mcy", "mdash", "mDDot", "measuredangle", "MediumSpace", "Mellintrf", "Mfr", "mfr", "mho", "micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "MinusPlus", "mlcp", "mldr", "mnplus", "models", "Mopf", "mopf", "mp", "Mscr", "mscr", "mstpos", "Mu", "mu", "multimap", "mumap", "nabla", "Nacute", "nacute", "nang", "nap", "napE", "napid", "napos", "napprox", "natur", "natural", "naturals", "nbsp", "nbump", "nbumpe", "ncap", "Ncaron", "ncaron", "Ncedil", "ncedil", "ncong", "ncongdot", "ncup", "Ncy", "ncy", "ndash", "ne", "nearhk", "neArr", "nearr", "nearrow", "nedot", "NegativeMediumSpace", "NegativeThickSpace", "NegativeThinSpace", "NegativeVeryThinSpace", "nequiv", "nesear", "nesim", "NestedGreaterGreater", "NestedLessLess", "NewLine", "nexist", "nexists", "Nfr", "nfr", "ngE", "nge", "ngeq", "ngeqq", "ngeqslant", "nges", "nGg", "ngsim", "nGt", "ngt", "ngtr", "nGtv", "nhArr", "nharr", "nhpar", "ni", "nis", "nisd", "niv", "NJcy", "njcy", "nlArr", "nlarr", "nldr", "nlE", "nle", "nLeftarrow", "nleftarrow", "nLeftrightarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nLl", "nlsim", "nLt", "nlt", "nltri", "nltrie", "nLtv", "nmid", "NoBreak", "NonBreakingSpace", "Nopf", "nopf", "Not", "not", "NotCongruent", "NotCupCap", "NotDoubleVerticalBar", "NotElement", "NotEqual", "NotEqualTilde", "NotExists", "NotGreater", "NotGreaterEqual", "NotGreaterFullEqual", "NotGreaterGreater", "NotGreaterLess", "NotGreaterSlantEqual", "NotGreaterTilde", "NotHumpDownHump", "NotHumpEqual", "notin", "notindot", "notinE", "notinva", "notinvb", "notinvc", "NotLeftTriangle", "NotLeftTriangleBar", "NotLeftTriangleEqual", "NotLess", "NotLessEqual", "NotLessGreater", "NotLessLess", "NotLessSlantEqual", "NotLessTilde", "NotNestedGreaterGreater", "NotNestedLessLess", "notni", "notniva", "notnivb", "notnivc", "NotPrecedes", "NotPrecedesEqual", "NotPrecedesSlantEqual", "NotReverseElement", "NotRightTriangle", "NotRightTriangleBar", "NotRightTriangleEqual", "NotSquareSubset", "NotSquareSubsetEqual", "NotSquareSuperset", "NotSquareSupersetEqual", "NotSubset", "NotSubsetEqual", "NotSucceeds", "NotSucceedsEqual", "NotSucceedsSlantEqual", "NotSucceedsTilde", "NotSuperset", "NotSupersetEqual", "NotTilde", "NotTildeEqual", "NotTildeFullEqual", "NotTildeTilde", "NotVerticalBar", "npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq", "nrArr", "nrarr", "nrarrc", "nrarrw", "nRightarrow", "nrightarrow", "nrtri", "nrtrie", "nsc", "nsccue", "nsce", "Nscr", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsubE", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupE", "nsupe", "nsupset", "nsupseteq", "nsupseteqq", "ntgl", "Ntilde", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq", "Nu", "nu", "num", "numero", "numsp", "nvap", "nVDash", "nVdash", "nvDash", "nvdash", "nvge", "nvgt", "nvHarr", "nvinfin", "nvlArr", "nvle", "nvlt", "nvltrie", "nvrArr", "nvrtrie", "nvsim", "nwarhk", "nwArr", "nwarr", "nwarrow", "nwnear", "Oacute", "oacute", "oast", "ocir", "Ocirc", "ocirc", "Ocy", "ocy", "odash", "Odblac", "odblac", "odiv", "odot", "odsold", "OElig", "oelig", "ofcir", "Ofr", "ofr", "ogon", "Ograve", "ograve", "ogt", "ohbar", "ohm", "oint", "olarr", "olcir", "olcross", "oline", "olt", "Omacr", "omacr", "Omega", "omega", "Omicron", "omicron", "omid", "ominus", "Oopf", "oopf", "opar", "OpenCurlyDoubleQuote", "OpenCurlyQuote", "operp", "oplus", "Or", "or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv", "oS", "Oscr", "oscr", "Oslash", "oslash", "osol", "Otilde", "otilde", "Otimes", "otimes", "otimesas", "Ouml", "ouml", "ovbar", "OverBar", "OverBrace", "OverBracket", "OverParenthesis", "par", "para", "parallel", "parsim", "parsl", "part", "PartialD", "Pcy", "pcy", "percnt", "period", "permil", "perp", "pertenk", "Pfr", "pfr", "Phi", "phi", "phiv", "phmmat", "phone", "Pi", "pi", "pitchfork", "piv", "planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "PlusMinus", "plusmn", "plussim", "plustwo", "pm", "Poincareplane", "pointint", "Popf", "popf", "pound", "Pr", "pr", "prap", "prcue", "prE", "pre", "prec", "precapprox", "preccurlyeq", "Precedes", "PrecedesEqual", "PrecedesSlantEqual", "PrecedesTilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "Prime", "prime", "primes", "prnap", "prnE", "prnsim", "prod", "Product", "profalar", "profline", "profsurf", "prop", "Proportion", "Proportional", "propto", "prsim", "prurel", "Pscr", "pscr", "Psi", "psi", "puncsp", "Qfr", "qfr", "qint", "Qopf", "qopf", "qprime", "Qscr", "qscr", "quaternions", "quatint", "quest", "questeq", "QUOT", "quot", "rAarr", "race", "Racute", "racute", "radic", "raemptyv", "Rang", "rang", "rangd", "range", "rangle", "raquo", "Rarr", "rArr", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "Rarrtl", "rarrtl", "rarrw", "rAtail", "ratail", "ratio", "rationals", "RBarr", "rBarr", "rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu", "Rcaron", "rcaron", "Rcedil", "rcedil", "rceil", "rcub", "Rcy", "rcy", "rdca", "rdldhar", "rdquo", "rdquor", "rdsh", "Re", "real", "realine", "realpart", "reals", "rect", "REG", "reg", "ReverseElement", "ReverseEquilibrium", "ReverseUpEquilibrium", "rfisht", "rfloor", "Rfr", "rfr", "rHar", "rhard", "rharu", "rharul", "Rho", "rho", "rhov", "RightAngleBracket", "RightArrow", "Rightarrow", "rightarrow", "RightArrowBar", "RightArrowLeftArrow", "rightarrowtail", "RightCeiling", "RightDoubleBracket", "RightDownTeeVector", "RightDownVector", "RightDownVectorBar", "RightFloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "RightTee", "RightTeeArrow", "RightTeeVector", "rightthreetimes", "RightTriangle", "RightTriangleBar", "RightTriangleEqual", "RightUpDownVector", "RightUpTeeVector", "RightUpVector", "RightUpVectorBar", "RightVector", "RightVectorBar", "ring", "risingdotseq", "rlarr", "rlhar", "rlm", "rmoust", "rmoustache", "rnmid", "roang", "roarr", "robrk", "ropar", "Ropf", "ropf", "roplus", "rotimes", "RoundImplies", "rpar", "rpargt", "rppolint", "rrarr", "Rrightarrow", "rsaquo", "Rscr", "rscr", "Rsh", "rsh", "rsqb", "rsquo", "rsquor", "rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri", "RuleDelayed", "ruluhar", "rx", "Sacute", "sacute", "sbquo", "Sc", "sc", "scap", "Scaron", "scaron", "sccue", "scE", "sce", "Scedil", "scedil", "Scirc", "scirc", "scnap", "scnE", "scnsim", "scpolint", "scsim", "Scy", "scy", "sdot", "sdotb", "sdote", "searhk", "seArr", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext", "Sfr", "sfr", "sfrown", "sharp", "SHCHcy", "shchcy", "SHcy", "shcy", "ShortDownArrow", "ShortLeftArrow", "shortmid", "shortparallel", "ShortRightArrow", "ShortUpArrow", "shy", "Sigma", "sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simgE", "siml", "simlE", "simne", "simplus", "simrarr", "slarr", "SmallCircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes", "SOFTcy", "softcy", "sol", "solb", "solbar", "Sopf", "sopf", "spades", "spadesuit", "spar", "sqcap", "sqcaps", "sqcup", "sqcups", "Sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "Square", "square", "SquareIntersection", "SquareSubset", "SquareSubsetEqual", "SquareSuperset", "SquareSupersetEqual", "SquareUnion", "squarf", "squf", "srarr", "Sscr", "sscr", "ssetmn", "ssmile", "sstarf", "Star", "star", "starf", "straightepsilon", "straightphi", "strns", "Sub", "sub", "subdot", "subE", "sube", "subedot", "submult", "subnE", "subne", "subplus", "subrarr", "Subset", "subset", "subseteq", "subseteqq", "SubsetEqual", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "Succeeds", "SucceedsEqual", "SucceedsSlantEqual", "SucceedsTilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "SuchThat", "Sum", "sum", "sung", "Sup", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supE", "supe", "supedot", "Superset", "SupersetEqual", "suphsol", "suphsub", "suplarr", "supmult", "supnE", "supne", "supplus", "Supset", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup", "swarhk", "swArr", "swarr", "swarrow", "swnwar", "szlig", "Tab", "target", "Tau", "tau", "tbrk", "Tcaron", "tcaron", "Tcedil", "tcedil", "Tcy", "tcy", "tdot", "telrec", "Tfr", "tfr", "there4", "Therefore", "therefore", "Theta", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "ThickSpace", "thinsp", "ThinSpace", "thkap", "thksim", "THORN", "thorn", "Tilde", "tilde", "TildeEqual", "TildeFullEqual", "TildeTilde", "times", "timesb", "timesbar", "timesd", "tint", "toea", "top", "topbot", "topcir", "Topf", "topf", "topfork", "tosa", "tprime", "TRADE", "trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "TripleDot", "triplus", "trisb", "tritime", "trpezium", "Tscr", "tscr", "TScy", "tscy", "TSHcy", "tshcy", "Tstrok", "tstrok", "twixt", "twoheadleftarrow", "twoheadrightarrow", "Uacute", "uacute", "Uarr", "uArr", "uarr", "Uarrocir", "Ubrcy", "ubrcy", "Ubreve", "ubreve", "Ucirc", "ucirc", "Ucy", "ucy", "udarr", "Udblac", "udblac", "udhar", "ufisht", "Ufr", "ufr", "Ugrave", "ugrave", "uHar", "uharl", "uharr", "uhblk", "ulcorn", "ulcorner", "ulcrop", "ultri", "Umacr", "umacr", "uml", "UnderBar", "UnderBrace", "UnderBracket", "UnderParenthesis", "Union", "UnionPlus", "Uogon", "uogon", "Uopf", "uopf", "UpArrow", "Uparrow", "uparrow", "UpArrowBar", "UpArrowDownArrow", "UpDownArrow", "Updownarrow", "updownarrow", "UpEquilibrium", "upharpoonleft", "upharpoonright", "uplus", "UpperLeftArrow", "UpperRightArrow", "Upsi", "upsi", "upsih", "Upsilon", "upsilon", "UpTee", "UpTeeArrow", "upuparrows", "urcorn", "urcorner", "urcrop", "Uring", "uring", "urtri", "Uscr", "uscr", "utdot", "Utilde", "utilde", "utri", "utrif", "uuarr", "Uuml", "uuml", "uwangle", "vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "vArr", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright", "Vbar", "vBar", "vBarv", "Vcy", "vcy", "VDash", "Vdash", "vDash", "vdash", "Vdashl", "Vee", "vee", "veebar", "veeeq", "vellip", "Verbar", "verbar", "Vert", "vert", "VerticalBar", "VerticalLine", "VerticalSeparator", "VerticalTilde", "VeryThinSpace", "Vfr", "vfr", "vltri", "vnsub", "vnsup", "Vopf", "vopf", "vprop", "vrtri", "Vscr", "vscr", "vsubnE", "vsubne", "vsupnE", "vsupne", "Vvdash", "vzigzag", "Wcirc", "wcirc", "wedbar", "Wedge", "wedge", "wedgeq", "weierp", "Wfr", "wfr", "Wopf", "wopf", "wp", "wr", "wreath", "Wscr", "wscr", "xcap", "xcirc", "xcup", "xdtri", "Xfr", "xfr", "xhArr", "xharr", "Xi", "xi", "xlArr", "xlarr", "xmap", "xnis", "xodot", "Xopf", "xopf", "xoplus", "xotime", "xrArr", "xrarr", "Xscr", "xscr", "xsqcup", "xuplus", "xutri", "xvee", "xwedge", "Yacute", "yacute", "YAcy", "yacy", "Ycirc", "ycirc", "Ycy", "ycy", "yen", "Yfr", "yfr", "YIcy", "yicy", "Yopf", "yopf", "Yscr", "yscr", "YUcy", "yucy", "Yuml", "yuml", "Zacute", "zacute", "Zcaron", "zcaron", "Zcy", "zcy", "Zdot", "zdot", "zeetrf", "ZeroWidthSpace", "Zeta", "zeta", "Zfr", "zfr", "ZHcy", "zhcy", "zigrarr", "Zopf", "zopf", "Zscr", "zscr", "zwj", "zwnj"]);
+  const allNamedEntitiesSetOnlyCaseInsensitive = new Set(["aacute", "abreve", "ac", "acd", "ace", "acirc", "acute", "acy", "aelig", "af", "afr", "agrave", "alefsym", "aleph", "alpha", "amacr", "amalg", "amp", "and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr", "aogon", "aopf", "ap", "apacir", "ape", "apid", "apos", "applyfunction", "approx", "approxeq", "aring", "ascr", "assign", "ast", "asymp", "asympeq", "atilde", "auml", "awconint", "awint", "backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge", "bbrk", "bbrktbrk", "bcong", "bcy", "bdquo", "becaus", "because", "bemptyv", "bepsi", "bernou", "bernoullis", "beta", "beth", "between", "bfr", "bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge", "bkarow", "blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block", "bne", "bnequiv", "bnot", "bopf", "bot", "bottom", "bowtie", "boxbox", "boxdl", "boxdr", "boxh", "boxhd", "boxhu", "boxminus", "boxplus", "boxtimes", "boxul", "boxur", "boxv", "boxvh", "boxvl", "boxvr", "bprime", "breve", "brvbar", "bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub", "bull", "bullet", "bump", "bumpe", "bumpeq", "cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys", "ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm", "cdot", "cedil", "cedilla", "cemptyv", "cent", "centerdot", "cfr", "chcy", "check", "checkmark", "chi", "cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "circledot", "circledr", "circleds", "circleminus", "circleplus", "circletimes", "cire", "cirfnint", "cirmid", "cirscir", "clockwisecontourintegral", "closecurlydoublequote", "closecurlyquote", "clubs", "clubsuit", "colon", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "congruent", "conint", "contourintegral", "copf", "coprod", "coproduct", "copy", "copysr", "counterclockwisecontourintegral", "crarr", "cross", "cscr", "csub", "csube", "csup", "csupe", "ctdot", "cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "cup", "cupbrcap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed", "cwconint", "cwint", "cylcty", "dagger", "daleth", "darr", "dash", "dashv", "dbkarow", "dblac", "dcaron", "dcy", "dd", "ddagger", "ddarr", "ddotrahd", "ddotseq", "deg", "del", "delta", "demptyv", "dfisht", "dfr", "dhar", "dharl", "dharr", "diacriticalacute", "diacriticaldot", "diacriticaldoubleacute", "diacriticalgrave", "diacriticaltilde", "diam", "diamond", "diamondsuit", "diams", "die", "differentiald", "digamma", "disin", "div", "divide", "divideontimes", "divonx", "djcy", "dlcorn", "dlcrop", "dollar", "dopf", "dot", "dotdot", "doteq", "doteqdot", "dotequal", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "doublecontourintegral", "doubledot", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelefttee", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doublerighttee", "doubleuparrow", "doubleupdownarrow", "doubleverticalbar", "downarrow", "downarrowbar", "downarrowuparrow", "downbreve", "downdownarrows", "downharpoonleft", "downharpoonright", "downleftrightvector", "downleftteevector", "downleftvector", "downleftvectorbar", "downrightteevector", "downrightvector", "downrightvectorbar", "downtee", "downteearrow", "drbkarow", "drcorn", "drcrop", "dscr", "dscy", "dsol", "dstrok", "dtdot", "dtri", "dtrif", "duarr", "duhar", "dwangle", "dzcy", "dzigrarr", "eacute", "easter", "ecaron", "ecir", "ecirc", "ecolon", "ecy", "eddot", "edot", "ee", "efdot", "efr", "eg", "egrave", "egs", "egsdot", "el", "element", "elinters", "ell", "els", "elsdot", "emacr", "empty", "emptyset", "emptysmallsquare", "emptyv", "emptyverysmallsquare", "emsp", "emsp13", "emsp14", "eng", "ensp", "eogon", "eopf", "epar", "eparsl", "eplus", "epsi", "epsilon", "epsiv", "eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "equal", "equals", "equaltilde", "equest", "equilibrium", "equiv", "equivdd", "eqvparsl", "erarr", "erdot", "escr", "esdot", "esim", "eta", "eth", "euml", "euro", "excl", "exist", "exists", "expectation", "exponentiale", "fallingdotseq", "fcy", "female", "ffilig", "fflig", "ffllig", "ffr", "filig", "filledsmallsquare", "filledverysmallsquare", "fjlig", "flat", "fllig", "fltns", "fnof", "fopf", "forall", "fork", "forkv", "fouriertrf", "fpartint", "frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown", "fscr", "gacute", "gamma", "gammad", "gap", "gbreve", "gcedil", "gcirc", "gcy", "gdot", "ge", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles", "gfr", "gg", "ggg", "gimel", "gjcy", "gl", "gla", "gle", "glj", "gnap", "gnapprox", "gne", "gneq", "gneqq", "gnsim", "gopf", "grave", "greaterequal", "greaterequalless", "greaterfullequal", "greatergreater", "greaterless", "greaterslantequal", "greatertilde", "gscr", "gsim", "gsime", "gsiml", "gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim", "gvertneqq", "gvne", "hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat", "hbar", "hcirc", "hearts", "heartsuit", "hellip", "hercon", "hfr", "hilbertspace", "hksearow", "hkswarow", "hoarr", "homtht", "hookleftarrow", "hookrightarrow", "hopf", "horbar", "horizontalline", "hscr", "hslash", "hstrok", "humpdownhump", "humpequal", "hybull", "hyphen", "iacute", "ic", "icirc", "icy", "idot", "iecy", "iexcl", "iff", "ifr", "igrave", "ii", "iiiint", "iiint", "iinfin", "iiota", "ijlig", "im", "imacr", "image", "imaginaryi", "imagline", "imagpart", "imath", "imof", "imped", "implies", "in", "incare", "infin", "infintie", "inodot", "int", "intcal", "integers", "integral", "intercal", "intersection", "intlarhk", "intprod", "invisiblecomma", "invisibletimes", "iocy", "iogon", "iopf", "iota", "iprod", "iquest", "iscr", "isin", "isindot", "isine", "isins", "isinsv", "isinv", "it", "itilde", "iukcy", "iuml", "jcirc", "jcy", "jfr", "jmath", "jopf", "jscr", "jsercy", "jukcy", "kappa", "kappav", "kcedil", "kcy", "kfr", "kgreen", "khcy", "kjcy", "kopf", "kscr", "laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates", "lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu", "lcaron", "lcedil", "lceil", "lcub", "lcy", "ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh", "le", "leftanglebracket", "leftarrow", "leftarrowbar", "leftarrowrightarrow", "leftarrowtail", "leftceiling", "leftdoublebracket", "leftdownteevector", "leftdownvector", "leftdownvectorbar", "leftfloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "leftrightvector", "lefttee", "leftteearrow", "leftteevector", "leftthreetimes", "lefttriangle", "lefttrianglebar", "lefttriangleequal", "leftupdownvector", "leftupteevector", "leftupvector", "leftupvectorbar", "leftvector", "leftvectorbar", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "lessequalgreater", "lessfullequal", "lessgreater", "lessgtr", "lessless", "lesssim", "lessslantequal", "lesstilde", "lfisht", "lfloor", "lfr", "lg", "lge", "lhar", "lhard", "lharu", "lharul", "lhblk", "ljcy", "ll", "llarr", "llcorner", "lleftarrow", "llhard", "lltri", "lmidot", "lmoust", "lmoustache", "lnap", "lnapprox", "lne", "lneq", "lneqq", "lnsim", "loang", "loarr", "lobrk", "longleftarrow", "longleftrightarrow", "longmapsto", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "lopf", "loplus", "lotimes", "lowast", "lowbar", "lowerleftarrow", "lowerrightarrow", "loz", "lozenge", "lozf", "lpar", "lparlt", "lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri", "lsaquo", "lscr", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "lstrok", "lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrpar", "lurdshar", "luruhar", "lvertneqq", "lvne", "macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker", "mcomma", "mcy", "mdash", "mddot", "measuredangle", "mediumspace", "mellintrf", "mfr", "mho", "micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "minusplus", "mlcp", "mldr", "mnplus", "models", "mopf", "mp", "mscr", "mstpos", "mu", "multimap", "mumap", "nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals", "nbsp", "nbump", "nbumpe", "ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy", "ndash", "ne", "nearhk", "nearr", "nearrow", "nedot", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nequiv", "nesear", "nesim", "nestedgreatergreater", "nestedlessless", "newline", "nexist", "nexists", "nfr", "nge", "ngeq", "ngeqq", "ngeqslant", "nges", "ngg", "ngsim", "ngt", "ngtr", "ngtv", "nharr", "nhpar", "ni", "nis", "nisd", "niv", "njcy", "nlarr", "nldr", "nle", "nleftarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nll", "nlsim", "nlt", "nltri", "nltrie", "nltv", "nmid", "nobreak", "nonbreakingspace", "nopf", "not", "notcongruent", "notcupcap", "notdoubleverticalbar", "notelement", "notequal", "notequaltilde", "notexists", "notgreater", "notgreaterequal", "notgreaterfullequal", "notgreatergreater", "notgreaterless", "notgreaterslantequal", "notgreatertilde", "nothumpdownhump", "nothumpequal", "notin", "notindot", "notine", "notinva", "notinvb", "notinvc", "notlefttriangle", "notlefttrianglebar", "notlefttriangleequal", "notless", "notlessequal", "notlessgreater", "notlessless", "notlessslantequal", "notlesstilde", "notnestedgreatergreater", "notnestedlessless", "notni", "notniva", "notnivb", "notnivc", "notprecedes", "notprecedesequal", "notprecedesslantequal", "notreverseelement", "notrighttriangle", "notrighttrianglebar", "notrighttriangleequal", "notsquaresubset", "notsquaresubsetequal", "notsquaresuperset", "notsquaresupersetequal", "notsubset", "notsubsetequal", "notsucceeds", "notsucceedsequal", "notsucceedsslantequal", "notsucceedstilde", "notsuperset", "notsupersetequal", "nottilde", "nottildeequal", "nottildefullequal", "nottildetilde", "notverticalbar", "npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq", "nrarr", "nrarrc", "nrarrw", "nrightarrow", "nrtri", "nrtrie", "nsc", "nsccue", "nsce", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupe", "nsupset", "nsupseteq", "nsupseteqq", "ntgl", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq", "nu", "num", "numero", "numsp", "nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim", "nwarhk", "nwarr", "nwarrow", "nwnear", "oacute", "oast", "ocir", "ocirc", "ocy", "odash", "odblac", "odiv", "odot", "odsold", "oelig", "ofcir", "ofr", "ogon", "ograve", "ogt", "ohbar", "ohm", "oint", "olarr", "olcir", "olcross", "oline", "olt", "omacr", "omega", "omicron", "omid", "ominus", "oopf", "opar", "opencurlydoublequote", "opencurlyquote", "operp", "oplus", "or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv", "os", "oscr", "oslash", "osol", "otilde", "otimes", "otimesas", "ouml", "ovbar", "overbar", "overbrace", "overbracket", "overparenthesis", "par", "para", "parallel", "parsim", "parsl", "part", "partiald", "pcy", "percnt", "period", "permil", "perp", "pertenk", "pfr", "phi", "phiv", "phmmat", "phone", "pi", "pitchfork", "piv", "planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "plusminus", "plusmn", "plussim", "plustwo", "pm", "poincareplane", "pointint", "popf", "pound", "pr", "prap", "prcue", "pre", "prec", "precapprox", "preccurlyeq", "precedes", "precedesequal", "precedesslantequal", "precedestilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "prime", "primes", "prnap", "prne", "prnsim", "prod", "product", "profalar", "profline", "profsurf", "prop", "proportion", "proportional", "propto", "prsim", "prurel", "pscr", "psi", "puncsp", "qfr", "qint", "qopf", "qprime", "qscr", "quaternions", "quatint", "quest", "questeq", "quot", "raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals", "rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu", "rcaron", "rcedil", "rceil", "rcub", "rcy", "rdca", "rdldhar", "rdquo", "rdquor", "rdsh", "re", "real", "realine", "realpart", "reals", "rect", "reg", "reverseelement", "reverseequilibrium", "reverseupequilibrium", "rfisht", "rfloor", "rfr", "rhar", "rhard", "rharu", "rharul", "rho", "rhov", "rightanglebracket", "rightarrow", "rightarrowbar", "rightarrowleftarrow", "rightarrowtail", "rightceiling", "rightdoublebracket", "rightdownteevector", "rightdownvector", "rightdownvectorbar", "rightfloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "righttee", "rightteearrow", "rightteevector", "rightthreetimes", "righttriangle", "righttrianglebar", "righttriangleequal", "rightupdownvector", "rightupteevector", "rightupvector", "rightupvectorbar", "rightvector", "rightvectorbar", "ring", "risingdotseq", "rlarr", "rlhar", "rlm", "rmoust", "rmoustache", "rnmid", "roang", "roarr", "robrk", "ropar", "ropf", "roplus", "rotimes", "roundimplies", "rpar", "rpargt", "rppolint", "rrarr", "rrightarrow", "rsaquo", "rscr", "rsh", "rsqb", "rsquo", "rsquor", "rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri", "ruledelayed", "ruluhar", "rx", "sacute", "sbquo", "sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy", "sdot", "sdotb", "sdote", "searhk", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext", "sfr", "sfrown", "sharp", "shchcy", "shcy", "shortdownarrow", "shortleftarrow", "shortmid", "shortparallel", "shortrightarrow", "shortuparrow", "shy", "sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simge", "siml", "simle", "simne", "simplus", "simrarr", "slarr", "smallcircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes", "softcy", "sol", "solb", "solbar", "sopf", "spades", "spadesuit", "spar", "sqcap", "sqcaps", "sqcup", "sqcups", "sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "square", "squareintersection", "squaresubset", "squaresubsetequal", "squaresuperset", "squaresupersetequal", "squareunion", "squarf", "squf", "srarr", "sscr", "ssetmn", "ssmile", "sstarf", "star", "starf", "straightepsilon", "straightphi", "strns", "sub", "subdot", "sube", "subedot", "submult", "subne", "subplus", "subrarr", "subset", "subseteq", "subseteqq", "subsetequal", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "succeeds", "succeedsequal", "succeedsslantequal", "succeedstilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "suchthat", "sum", "sung", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supe", "supedot", "superset", "supersetequal", "suphsol", "suphsub", "suplarr", "supmult", "supne", "supplus", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup", "swarhk", "swarr", "swarrow", "swnwar", "szlig", "tab", "target", "tau", "tbrk", "tcaron", "tcedil", "tcy", "tdot", "telrec", "tfr", "there4", "therefore", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "thickspace", "thinsp", "thinspace", "thkap", "thksim", "thorn", "tilde", "tildeequal", "tildefullequal", "tildetilde", "times", "timesb", "timesbar", "timesd", "tint", "toea", "top", "topbot", "topcir", "topf", "topfork", "tosa", "tprime", "trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "tripledot", "triplus", "trisb", "tritime", "trpezium", "tscr", "tscy", "tshcy", "tstrok", "twixt", "twoheadleftarrow", "twoheadrightarrow", "uacute", "uarr", "uarrocir", "ubrcy", "ubreve", "ucirc", "ucy", "udarr", "udblac", "udhar", "ufisht", "ufr", "ugrave", "uhar", "uharl", "uharr", "uhblk", "ulcorn", "ulcorner", "ulcrop", "ultri", "umacr", "uml", "underbar", "underbrace", "underbracket", "underparenthesis", "union", "unionplus", "uogon", "uopf", "uparrow", "uparrowbar", "uparrowdownarrow", "updownarrow", "upequilibrium", "upharpoonleft", "upharpoonright", "uplus", "upperleftarrow", "upperrightarrow", "upsi", "upsih", "upsilon", "uptee", "upteearrow", "upuparrows", "urcorn", "urcorner", "urcrop", "uring", "urtri", "uscr", "utdot", "utilde", "utri", "utrif", "uuarr", "uuml", "uwangle", "vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright", "vbar", "vbarv", "vcy", "vdash", "vdashl", "vee", "veebar", "veeeq", "vellip", "verbar", "vert", "verticalbar", "verticalline", "verticalseparator", "verticaltilde", "verythinspace", "vfr", "vltri", "vnsub", "vnsup", "vopf", "vprop", "vrtri", "vscr", "vsubne", "vsupne", "vvdash", "vzigzag", "wcirc", "wedbar", "wedge", "wedgeq", "weierp", "wfr", "wopf", "wp", "wr", "wreath", "wscr", "xcap", "xcirc", "xcup", "xdtri", "xfr", "xharr", "xi", "xlarr", "xmap", "xnis", "xodot", "xopf", "xoplus", "xotime", "xrarr", "xscr", "xsqcup", "xuplus", "xutri", "xvee", "xwedge", "yacute", "yacy", "ycirc", "ycy", "yen", "yfr", "yicy", "yopf", "yscr", "yucy", "yuml", "zacute", "zcaron", "zcy", "zdot", "zeetrf", "zerowidthspace", "zeta", "zfr", "zhcy", "zigrarr", "zopf", "zscr", "zwj", "zwnj"]);
 
   function decode(ent) {
     if (typeof ent !== "string" || !ent.length || !ent.startsWith("&") || !ent.endsWith(";")) {
@@ -9862,6 +8136,1857 @@
 
   var lodash_isplainobject = isPlainObject;
 
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+
+  var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+    /**
+     * lodash (Custom Build) <https://lodash.com/>
+     * Build: `lodash modularize exports="npm" -o ./`
+     * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+     * Released under MIT license <https://lodash.com/license>
+     * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+     * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+     */
+
+    /** Used as the size to enable large array optimizations. */
+    var LARGE_ARRAY_SIZE = 200;
+    /** Used to stand-in for `undefined` hash values. */
+
+    var HASH_UNDEFINED = '__lodash_hash_undefined__';
+    /** Used as references for various `Number` constants. */
+
+    var MAX_SAFE_INTEGER = 9007199254740991;
+    /** `Object#toString` result references. */
+
+    var argsTag = '[object Arguments]',
+        arrayTag = '[object Array]',
+        boolTag = '[object Boolean]',
+        dateTag = '[object Date]',
+        errorTag = '[object Error]',
+        funcTag = '[object Function]',
+        genTag = '[object GeneratorFunction]',
+        mapTag = '[object Map]',
+        numberTag = '[object Number]',
+        objectTag = '[object Object]',
+        promiseTag = '[object Promise]',
+        regexpTag = '[object RegExp]',
+        setTag = '[object Set]',
+        stringTag = '[object String]',
+        symbolTag = '[object Symbol]',
+        weakMapTag = '[object WeakMap]';
+    var arrayBufferTag = '[object ArrayBuffer]',
+        dataViewTag = '[object DataView]',
+        float32Tag = '[object Float32Array]',
+        float64Tag = '[object Float64Array]',
+        int8Tag = '[object Int8Array]',
+        int16Tag = '[object Int16Array]',
+        int32Tag = '[object Int32Array]',
+        uint8Tag = '[object Uint8Array]',
+        uint8ClampedTag = '[object Uint8ClampedArray]',
+        uint16Tag = '[object Uint16Array]',
+        uint32Tag = '[object Uint32Array]';
+    /**
+     * Used to match `RegExp`
+     * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+     */
+
+    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+    /** Used to match `RegExp` flags from their coerced string values. */
+
+    var reFlags = /\w*$/;
+    /** Used to detect host constructors (Safari). */
+
+    var reIsHostCtor = /^\[object .+?Constructor\]$/;
+    /** Used to detect unsigned integer values. */
+
+    var reIsUint = /^(?:0|[1-9]\d*)$/;
+    /** Used to identify `toStringTag` values supported by `_.clone`. */
+
+    var cloneableTags = {};
+    cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+    cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
+    /** Detect free variable `global` from Node.js. */
+
+    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    /** Detect free variable `self`. */
+
+    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    /** Used as a reference to the global object. */
+
+    var root = freeGlobal || freeSelf || Function('return this')();
+    /** Detect free variable `exports`. */
+
+    var freeExports =  exports && !exports.nodeType && exports;
+    /** Detect free variable `module`. */
+
+    var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+    /** Detect the popular CommonJS extension `module.exports`. */
+
+    var moduleExports = freeModule && freeModule.exports === freeExports;
+    /**
+     * Adds the key-value `pair` to `map`.
+     *
+     * @private
+     * @param {Object} map The map to modify.
+     * @param {Array} pair The key-value pair to add.
+     * @returns {Object} Returns `map`.
+     */
+
+    function addMapEntry(map, pair) {
+      // Don't return `map.set` because it's not chainable in IE 11.
+      map.set(pair[0], pair[1]);
+      return map;
+    }
+    /**
+     * Adds `value` to `set`.
+     *
+     * @private
+     * @param {Object} set The set to modify.
+     * @param {*} value The value to add.
+     * @returns {Object} Returns `set`.
+     */
+
+
+    function addSetEntry(set, value) {
+      // Don't return `set.add` because it's not chainable in IE 11.
+      set.add(value);
+      return set;
+    }
+    /**
+     * A specialized version of `_.forEach` for arrays without support for
+     * iteratee shorthands.
+     *
+     * @private
+     * @param {Array} [array] The array to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @returns {Array} Returns `array`.
+     */
+
+
+    function arrayEach(array, iteratee) {
+      var index = -1,
+          length = array ? array.length : 0;
+
+      while (++index < length) {
+        if (iteratee(array[index], index, array) === false) {
+          break;
+        }
+      }
+
+      return array;
+    }
+    /**
+     * Appends the elements of `values` to `array`.
+     *
+     * @private
+     * @param {Array} array The array to modify.
+     * @param {Array} values The values to append.
+     * @returns {Array} Returns `array`.
+     */
+
+
+    function arrayPush(array, values) {
+      var index = -1,
+          length = values.length,
+          offset = array.length;
+
+      while (++index < length) {
+        array[offset + index] = values[index];
+      }
+
+      return array;
+    }
+    /**
+     * A specialized version of `_.reduce` for arrays without support for
+     * iteratee shorthands.
+     *
+     * @private
+     * @param {Array} [array] The array to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @param {*} [accumulator] The initial value.
+     * @param {boolean} [initAccum] Specify using the first element of `array` as
+     *  the initial value.
+     * @returns {*} Returns the accumulated value.
+     */
+
+
+    function arrayReduce(array, iteratee, accumulator, initAccum) {
+      var index = -1,
+          length = array ? array.length : 0;
+
+      if (initAccum && length) {
+        accumulator = array[++index];
+      }
+
+      while (++index < length) {
+        accumulator = iteratee(accumulator, array[index], index, array);
+      }
+
+      return accumulator;
+    }
+    /**
+     * The base implementation of `_.times` without support for iteratee shorthands
+     * or max array length checks.
+     *
+     * @private
+     * @param {number} n The number of times to invoke `iteratee`.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @returns {Array} Returns the array of results.
+     */
+
+
+    function baseTimes(n, iteratee) {
+      var index = -1,
+          result = Array(n);
+
+      while (++index < n) {
+        result[index] = iteratee(index);
+      }
+
+      return result;
+    }
+    /**
+     * Gets the value at `key` of `object`.
+     *
+     * @private
+     * @param {Object} [object] The object to query.
+     * @param {string} key The key of the property to get.
+     * @returns {*} Returns the property value.
+     */
+
+
+    function getValue(object, key) {
+      return object == null ? undefined : object[key];
+    }
+    /**
+     * Checks if `value` is a host object in IE < 9.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+     */
+
+
+    function isHostObject(value) {
+      // Many host objects are `Object` objects that can coerce to strings
+      // despite having improperly defined `toString` methods.
+      var result = false;
+
+      if (value != null && typeof value.toString != 'function') {
+        try {
+          result = !!(value + '');
+        } catch (e) {}
+      }
+
+      return result;
+    }
+    /**
+     * Converts `map` to its key-value pairs.
+     *
+     * @private
+     * @param {Object} map The map to convert.
+     * @returns {Array} Returns the key-value pairs.
+     */
+
+
+    function mapToArray(map) {
+      var index = -1,
+          result = Array(map.size);
+      map.forEach(function (value, key) {
+        result[++index] = [key, value];
+      });
+      return result;
+    }
+    /**
+     * Creates a unary function that invokes `func` with its argument transformed.
+     *
+     * @private
+     * @param {Function} func The function to wrap.
+     * @param {Function} transform The argument transform.
+     * @returns {Function} Returns the new function.
+     */
+
+
+    function overArg(func, transform) {
+      return function (arg) {
+        return func(transform(arg));
+      };
+    }
+    /**
+     * Converts `set` to an array of its values.
+     *
+     * @private
+     * @param {Object} set The set to convert.
+     * @returns {Array} Returns the values.
+     */
+
+
+    function setToArray(set) {
+      var index = -1,
+          result = Array(set.size);
+      set.forEach(function (value) {
+        result[++index] = value;
+      });
+      return result;
+    }
+    /** Used for built-in method references. */
+
+
+    var arrayProto = Array.prototype,
+        funcProto = Function.prototype,
+        objectProto = Object.prototype;
+    /** Used to detect overreaching core-js shims. */
+
+    var coreJsData = root['__core-js_shared__'];
+    /** Used to detect methods masquerading as native. */
+
+    var maskSrcKey = function () {
+      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+      return uid ? 'Symbol(src)_1.' + uid : '';
+    }();
+    /** Used to resolve the decompiled source of functions. */
+
+
+    var funcToString = funcProto.toString;
+    /** Used to check objects for own properties. */
+
+    var hasOwnProperty = objectProto.hasOwnProperty;
+    /**
+     * Used to resolve the
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+     * of values.
+     */
+
+    var objectToString = objectProto.toString;
+    /** Used to detect if a method is native. */
+
+    var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+    /** Built-in value references. */
+
+    var Buffer = moduleExports ? root.Buffer : undefined,
+        Symbol = root.Symbol,
+        Uint8Array = root.Uint8Array,
+        getPrototype = overArg(Object.getPrototypeOf, Object),
+        objectCreate = Object.create,
+        propertyIsEnumerable = objectProto.propertyIsEnumerable,
+        splice = arrayProto.splice;
+    /* Built-in method references for those with the same name as other `lodash` methods. */
+
+    var nativeGetSymbols = Object.getOwnPropertySymbols,
+        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+        nativeKeys = overArg(Object.keys, Object);
+    /* Built-in method references that are verified to be native. */
+
+    var DataView = getNative(root, 'DataView'),
+        Map = getNative(root, 'Map'),
+        Promise = getNative(root, 'Promise'),
+        Set = getNative(root, 'Set'),
+        WeakMap = getNative(root, 'WeakMap'),
+        nativeCreate = getNative(Object, 'create');
+    /** Used to detect maps, sets, and weakmaps. */
+
+    var dataViewCtorString = toSource(DataView),
+        mapCtorString = toSource(Map),
+        promiseCtorString = toSource(Promise),
+        setCtorString = toSource(Set),
+        weakMapCtorString = toSource(WeakMap);
+    /** Used to convert symbols to primitives and strings. */
+
+    var symbolProto = Symbol ? Symbol.prototype : undefined,
+        symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+    /**
+     * Creates a hash object.
+     *
+     * @private
+     * @constructor
+     * @param {Array} [entries] The key-value pairs to cache.
+     */
+
+    function Hash(entries) {
+      var index = -1,
+          length = entries ? entries.length : 0;
+      this.clear();
+
+      while (++index < length) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    /**
+     * Removes all key-value entries from the hash.
+     *
+     * @private
+     * @name clear
+     * @memberOf Hash
+     */
+
+
+    function hashClear() {
+      this.__data__ = nativeCreate ? nativeCreate(null) : {};
+    }
+    /**
+     * Removes `key` and its value from the hash.
+     *
+     * @private
+     * @name delete
+     * @memberOf Hash
+     * @param {Object} hash The hash to modify.
+     * @param {string} key The key of the value to remove.
+     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     */
+
+
+    function hashDelete(key) {
+      return this.has(key) && delete this.__data__[key];
+    }
+    /**
+     * Gets the hash value for `key`.
+     *
+     * @private
+     * @name get
+     * @memberOf Hash
+     * @param {string} key The key of the value to get.
+     * @returns {*} Returns the entry value.
+     */
+
+
+    function hashGet(key) {
+      var data = this.__data__;
+
+      if (nativeCreate) {
+        var result = data[key];
+        return result === HASH_UNDEFINED ? undefined : result;
+      }
+
+      return hasOwnProperty.call(data, key) ? data[key] : undefined;
+    }
+    /**
+     * Checks if a hash value for `key` exists.
+     *
+     * @private
+     * @name has
+     * @memberOf Hash
+     * @param {string} key The key of the entry to check.
+     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     */
+
+
+    function hashHas(key) {
+      var data = this.__data__;
+      return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+    }
+    /**
+     * Sets the hash `key` to `value`.
+     *
+     * @private
+     * @name set
+     * @memberOf Hash
+     * @param {string} key The key of the value to set.
+     * @param {*} value The value to set.
+     * @returns {Object} Returns the hash instance.
+     */
+
+
+    function hashSet(key, value) {
+      var data = this.__data__;
+      data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
+      return this;
+    } // Add methods to `Hash`.
+
+
+    Hash.prototype.clear = hashClear;
+    Hash.prototype['delete'] = hashDelete;
+    Hash.prototype.get = hashGet;
+    Hash.prototype.has = hashHas;
+    Hash.prototype.set = hashSet;
+    /**
+     * Creates an list cache object.
+     *
+     * @private
+     * @constructor
+     * @param {Array} [entries] The key-value pairs to cache.
+     */
+
+    function ListCache(entries) {
+      var index = -1,
+          length = entries ? entries.length : 0;
+      this.clear();
+
+      while (++index < length) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    /**
+     * Removes all key-value entries from the list cache.
+     *
+     * @private
+     * @name clear
+     * @memberOf ListCache
+     */
+
+
+    function listCacheClear() {
+      this.__data__ = [];
+    }
+    /**
+     * Removes `key` and its value from the list cache.
+     *
+     * @private
+     * @name delete
+     * @memberOf ListCache
+     * @param {string} key The key of the value to remove.
+     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     */
+
+
+    function listCacheDelete(key) {
+      var data = this.__data__,
+          index = assocIndexOf(data, key);
+
+      if (index < 0) {
+        return false;
+      }
+
+      var lastIndex = data.length - 1;
+
+      if (index == lastIndex) {
+        data.pop();
+      } else {
+        splice.call(data, index, 1);
+      }
+
+      return true;
+    }
+    /**
+     * Gets the list cache value for `key`.
+     *
+     * @private
+     * @name get
+     * @memberOf ListCache
+     * @param {string} key The key of the value to get.
+     * @returns {*} Returns the entry value.
+     */
+
+
+    function listCacheGet(key) {
+      var data = this.__data__,
+          index = assocIndexOf(data, key);
+      return index < 0 ? undefined : data[index][1];
+    }
+    /**
+     * Checks if a list cache value for `key` exists.
+     *
+     * @private
+     * @name has
+     * @memberOf ListCache
+     * @param {string} key The key of the entry to check.
+     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     */
+
+
+    function listCacheHas(key) {
+      return assocIndexOf(this.__data__, key) > -1;
+    }
+    /**
+     * Sets the list cache `key` to `value`.
+     *
+     * @private
+     * @name set
+     * @memberOf ListCache
+     * @param {string} key The key of the value to set.
+     * @param {*} value The value to set.
+     * @returns {Object} Returns the list cache instance.
+     */
+
+
+    function listCacheSet(key, value) {
+      var data = this.__data__,
+          index = assocIndexOf(data, key);
+
+      if (index < 0) {
+        data.push([key, value]);
+      } else {
+        data[index][1] = value;
+      }
+
+      return this;
+    } // Add methods to `ListCache`.
+
+
+    ListCache.prototype.clear = listCacheClear;
+    ListCache.prototype['delete'] = listCacheDelete;
+    ListCache.prototype.get = listCacheGet;
+    ListCache.prototype.has = listCacheHas;
+    ListCache.prototype.set = listCacheSet;
+    /**
+     * Creates a map cache object to store key-value pairs.
+     *
+     * @private
+     * @constructor
+     * @param {Array} [entries] The key-value pairs to cache.
+     */
+
+    function MapCache(entries) {
+      var index = -1,
+          length = entries ? entries.length : 0;
+      this.clear();
+
+      while (++index < length) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    /**
+     * Removes all key-value entries from the map.
+     *
+     * @private
+     * @name clear
+     * @memberOf MapCache
+     */
+
+
+    function mapCacheClear() {
+      this.__data__ = {
+        'hash': new Hash(),
+        'map': new (Map || ListCache)(),
+        'string': new Hash()
+      };
+    }
+    /**
+     * Removes `key` and its value from the map.
+     *
+     * @private
+     * @name delete
+     * @memberOf MapCache
+     * @param {string} key The key of the value to remove.
+     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     */
+
+
+    function mapCacheDelete(key) {
+      return getMapData(this, key)['delete'](key);
+    }
+    /**
+     * Gets the map value for `key`.
+     *
+     * @private
+     * @name get
+     * @memberOf MapCache
+     * @param {string} key The key of the value to get.
+     * @returns {*} Returns the entry value.
+     */
+
+
+    function mapCacheGet(key) {
+      return getMapData(this, key).get(key);
+    }
+    /**
+     * Checks if a map value for `key` exists.
+     *
+     * @private
+     * @name has
+     * @memberOf MapCache
+     * @param {string} key The key of the entry to check.
+     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     */
+
+
+    function mapCacheHas(key) {
+      return getMapData(this, key).has(key);
+    }
+    /**
+     * Sets the map `key` to `value`.
+     *
+     * @private
+     * @name set
+     * @memberOf MapCache
+     * @param {string} key The key of the value to set.
+     * @param {*} value The value to set.
+     * @returns {Object} Returns the map cache instance.
+     */
+
+
+    function mapCacheSet(key, value) {
+      getMapData(this, key).set(key, value);
+      return this;
+    } // Add methods to `MapCache`.
+
+
+    MapCache.prototype.clear = mapCacheClear;
+    MapCache.prototype['delete'] = mapCacheDelete;
+    MapCache.prototype.get = mapCacheGet;
+    MapCache.prototype.has = mapCacheHas;
+    MapCache.prototype.set = mapCacheSet;
+    /**
+     * Creates a stack cache object to store key-value pairs.
+     *
+     * @private
+     * @constructor
+     * @param {Array} [entries] The key-value pairs to cache.
+     */
+
+    function Stack(entries) {
+      this.__data__ = new ListCache(entries);
+    }
+    /**
+     * Removes all key-value entries from the stack.
+     *
+     * @private
+     * @name clear
+     * @memberOf Stack
+     */
+
+
+    function stackClear() {
+      this.__data__ = new ListCache();
+    }
+    /**
+     * Removes `key` and its value from the stack.
+     *
+     * @private
+     * @name delete
+     * @memberOf Stack
+     * @param {string} key The key of the value to remove.
+     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+     */
+
+
+    function stackDelete(key) {
+      return this.__data__['delete'](key);
+    }
+    /**
+     * Gets the stack value for `key`.
+     *
+     * @private
+     * @name get
+     * @memberOf Stack
+     * @param {string} key The key of the value to get.
+     * @returns {*} Returns the entry value.
+     */
+
+
+    function stackGet(key) {
+      return this.__data__.get(key);
+    }
+    /**
+     * Checks if a stack value for `key` exists.
+     *
+     * @private
+     * @name has
+     * @memberOf Stack
+     * @param {string} key The key of the entry to check.
+     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+     */
+
+
+    function stackHas(key) {
+      return this.__data__.has(key);
+    }
+    /**
+     * Sets the stack `key` to `value`.
+     *
+     * @private
+     * @name set
+     * @memberOf Stack
+     * @param {string} key The key of the value to set.
+     * @param {*} value The value to set.
+     * @returns {Object} Returns the stack cache instance.
+     */
+
+
+    function stackSet(key, value) {
+      var cache = this.__data__;
+
+      if (cache instanceof ListCache) {
+        var pairs = cache.__data__;
+
+        if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
+          pairs.push([key, value]);
+          return this;
+        }
+
+        cache = this.__data__ = new MapCache(pairs);
+      }
+
+      cache.set(key, value);
+      return this;
+    } // Add methods to `Stack`.
+
+
+    Stack.prototype.clear = stackClear;
+    Stack.prototype['delete'] = stackDelete;
+    Stack.prototype.get = stackGet;
+    Stack.prototype.has = stackHas;
+    Stack.prototype.set = stackSet;
+    /**
+     * Creates an array of the enumerable property names of the array-like `value`.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @param {boolean} inherited Specify returning inherited property names.
+     * @returns {Array} Returns the array of property names.
+     */
+
+    function arrayLikeKeys(value, inherited) {
+      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+      // Safari 9 makes `arguments.length` enumerable in strict mode.
+      var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
+      var length = result.length,
+          skipIndexes = !!length;
+
+      for (var key in value) {
+        if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+          result.push(key);
+        }
+      }
+
+      return result;
+    }
+    /**
+     * Assigns `value` to `key` of `object` if the existing value is not equivalent
+     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * for equality comparisons.
+     *
+     * @private
+     * @param {Object} object The object to modify.
+     * @param {string} key The key of the property to assign.
+     * @param {*} value The value to assign.
+     */
+
+
+    function assignValue(object, key, value) {
+      var objValue = object[key];
+
+      if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) || value === undefined && !(key in object)) {
+        object[key] = value;
+      }
+    }
+    /**
+     * Gets the index at which the `key` is found in `array` of key-value pairs.
+     *
+     * @private
+     * @param {Array} array The array to inspect.
+     * @param {*} key The key to search for.
+     * @returns {number} Returns the index of the matched value, else `-1`.
+     */
+
+
+    function assocIndexOf(array, key) {
+      var length = array.length;
+
+      while (length--) {
+        if (eq(array[length][0], key)) {
+          return length;
+        }
+      }
+
+      return -1;
+    }
+    /**
+     * The base implementation of `_.assign` without support for multiple sources
+     * or `customizer` functions.
+     *
+     * @private
+     * @param {Object} object The destination object.
+     * @param {Object} source The source object.
+     * @returns {Object} Returns `object`.
+     */
+
+
+    function baseAssign(object, source) {
+      return object && copyObject(source, keys(source), object);
+    }
+    /**
+     * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+     * traversed objects.
+     *
+     * @private
+     * @param {*} value The value to clone.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @param {boolean} [isFull] Specify a clone including symbols.
+     * @param {Function} [customizer] The function to customize cloning.
+     * @param {string} [key] The key of `value`.
+     * @param {Object} [object] The parent object of `value`.
+     * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+     * @returns {*} Returns the cloned value.
+     */
+
+
+    function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+      var result;
+
+      if (customizer) {
+        result = object ? customizer(value, key, object, stack) : customizer(value);
+      }
+
+      if (result !== undefined) {
+        return result;
+      }
+
+      if (!isObject(value)) {
+        return value;
+      }
+
+      var isArr = isArray(value);
+
+      if (isArr) {
+        result = initCloneArray(value);
+
+        if (!isDeep) {
+          return copyArray(value, result);
+        }
+      } else {
+        var tag = getTag(value),
+            isFunc = tag == funcTag || tag == genTag;
+
+        if (isBuffer(value)) {
+          return cloneBuffer(value, isDeep);
+        }
+
+        if (tag == objectTag || tag == argsTag || isFunc && !object) {
+          if (isHostObject(value)) {
+            return object ? value : {};
+          }
+
+          result = initCloneObject(isFunc ? {} : value);
+
+          if (!isDeep) {
+            return copySymbols(value, baseAssign(result, value));
+          }
+        } else {
+          if (!cloneableTags[tag]) {
+            return object ? value : {};
+          }
+
+          result = initCloneByTag(value, tag, baseClone, isDeep);
+        }
+      } // Check for circular references and return its corresponding clone.
+
+
+      stack || (stack = new Stack());
+      var stacked = stack.get(value);
+
+      if (stacked) {
+        return stacked;
+      }
+
+      stack.set(value, result);
+
+      if (!isArr) {
+        var props = isFull ? getAllKeys(value) : keys(value);
+      }
+
+      arrayEach(props || value, function (subValue, key) {
+        if (props) {
+          key = subValue;
+          subValue = value[key];
+        } // Recursively populate clone (susceptible to call stack limits).
+
+
+        assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+      });
+      return result;
+    }
+    /**
+     * The base implementation of `_.create` without support for assigning
+     * properties to the created object.
+     *
+     * @private
+     * @param {Object} prototype The object to inherit from.
+     * @returns {Object} Returns the new object.
+     */
+
+
+    function baseCreate(proto) {
+      return isObject(proto) ? objectCreate(proto) : {};
+    }
+    /**
+     * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+     * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+     * symbols of `object`.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @param {Function} keysFunc The function to get the keys of `object`.
+     * @param {Function} symbolsFunc The function to get the symbols of `object`.
+     * @returns {Array} Returns the array of property names and symbols.
+     */
+
+
+    function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+      var result = keysFunc(object);
+      return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+    }
+    /**
+     * The base implementation of `getTag`.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @returns {string} Returns the `toStringTag`.
+     */
+
+
+    function baseGetTag(value) {
+      return objectToString.call(value);
+    }
+    /**
+     * The base implementation of `_.isNative` without bad shim checks.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a native function,
+     *  else `false`.
+     */
+
+
+    function baseIsNative(value) {
+      if (!isObject(value) || isMasked(value)) {
+        return false;
+      }
+
+      var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+      return pattern.test(toSource(value));
+    }
+    /**
+     * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @returns {Array} Returns the array of property names.
+     */
+
+
+    function baseKeys(object) {
+      if (!isPrototype(object)) {
+        return nativeKeys(object);
+      }
+
+      var result = [];
+
+      for (var key in Object(object)) {
+        if (hasOwnProperty.call(object, key) && key != 'constructor') {
+          result.push(key);
+        }
+      }
+
+      return result;
+    }
+    /**
+     * Creates a clone of  `buffer`.
+     *
+     * @private
+     * @param {Buffer} buffer The buffer to clone.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Buffer} Returns the cloned buffer.
+     */
+
+
+    function cloneBuffer(buffer, isDeep) {
+      if (isDeep) {
+        return buffer.slice();
+      }
+
+      var result = new buffer.constructor(buffer.length);
+      buffer.copy(result);
+      return result;
+    }
+    /**
+     * Creates a clone of `arrayBuffer`.
+     *
+     * @private
+     * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+     * @returns {ArrayBuffer} Returns the cloned array buffer.
+     */
+
+
+    function cloneArrayBuffer(arrayBuffer) {
+      var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+      new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+      return result;
+    }
+    /**
+     * Creates a clone of `dataView`.
+     *
+     * @private
+     * @param {Object} dataView The data view to clone.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned data view.
+     */
+
+
+    function cloneDataView(dataView, isDeep) {
+      var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+      return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+    }
+    /**
+     * Creates a clone of `map`.
+     *
+     * @private
+     * @param {Object} map The map to clone.
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned map.
+     */
+
+
+    function cloneMap(map, isDeep, cloneFunc) {
+      var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+      return arrayReduce(array, addMapEntry, new map.constructor());
+    }
+    /**
+     * Creates a clone of `regexp`.
+     *
+     * @private
+     * @param {Object} regexp The regexp to clone.
+     * @returns {Object} Returns the cloned regexp.
+     */
+
+
+    function cloneRegExp(regexp) {
+      var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+      result.lastIndex = regexp.lastIndex;
+      return result;
+    }
+    /**
+     * Creates a clone of `set`.
+     *
+     * @private
+     * @param {Object} set The set to clone.
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned set.
+     */
+
+
+    function cloneSet(set, isDeep, cloneFunc) {
+      var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+      return arrayReduce(array, addSetEntry, new set.constructor());
+    }
+    /**
+     * Creates a clone of the `symbol` object.
+     *
+     * @private
+     * @param {Object} symbol The symbol object to clone.
+     * @returns {Object} Returns the cloned symbol object.
+     */
+
+
+    function cloneSymbol(symbol) {
+      return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+    }
+    /**
+     * Creates a clone of `typedArray`.
+     *
+     * @private
+     * @param {Object} typedArray The typed array to clone.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the cloned typed array.
+     */
+
+
+    function cloneTypedArray(typedArray, isDeep) {
+      var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+      return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+    }
+    /**
+     * Copies the values of `source` to `array`.
+     *
+     * @private
+     * @param {Array} source The array to copy values from.
+     * @param {Array} [array=[]] The array to copy values to.
+     * @returns {Array} Returns `array`.
+     */
+
+
+    function copyArray(source, array) {
+      var index = -1,
+          length = source.length;
+      array || (array = Array(length));
+
+      while (++index < length) {
+        array[index] = source[index];
+      }
+
+      return array;
+    }
+    /**
+     * Copies properties of `source` to `object`.
+     *
+     * @private
+     * @param {Object} source The object to copy properties from.
+     * @param {Array} props The property identifiers to copy.
+     * @param {Object} [object={}] The object to copy properties to.
+     * @param {Function} [customizer] The function to customize copied values.
+     * @returns {Object} Returns `object`.
+     */
+
+
+    function copyObject(source, props, object, customizer) {
+      object || (object = {});
+      var index = -1,
+          length = props.length;
+
+      while (++index < length) {
+        var key = props[index];
+        var newValue = customizer ? customizer(object[key], source[key], key, object, source) : undefined;
+        assignValue(object, key, newValue === undefined ? source[key] : newValue);
+      }
+
+      return object;
+    }
+    /**
+     * Copies own symbol properties of `source` to `object`.
+     *
+     * @private
+     * @param {Object} source The object to copy symbols from.
+     * @param {Object} [object={}] The object to copy symbols to.
+     * @returns {Object} Returns `object`.
+     */
+
+
+    function copySymbols(source, object) {
+      return copyObject(source, getSymbols(source), object);
+    }
+    /**
+     * Creates an array of own enumerable property names and symbols of `object`.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @returns {Array} Returns the array of property names and symbols.
+     */
+
+
+    function getAllKeys(object) {
+      return baseGetAllKeys(object, keys, getSymbols);
+    }
+    /**
+     * Gets the data for `map`.
+     *
+     * @private
+     * @param {Object} map The map to query.
+     * @param {string} key The reference key.
+     * @returns {*} Returns the map data.
+     */
+
+
+    function getMapData(map, key) {
+      var data = map.__data__;
+      return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+    }
+    /**
+     * Gets the native function at `key` of `object`.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @param {string} key The key of the method to get.
+     * @returns {*} Returns the function if it's native, else `undefined`.
+     */
+
+
+    function getNative(object, key) {
+      var value = getValue(object, key);
+      return baseIsNative(value) ? value : undefined;
+    }
+    /**
+     * Creates an array of the own enumerable symbol properties of `object`.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @returns {Array} Returns the array of symbols.
+     */
+
+
+    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+    /**
+     * Gets the `toStringTag` of `value`.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @returns {string} Returns the `toStringTag`.
+     */
+
+    var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11,
+    // for data views in Edge < 14, and promises in Node.js.
+
+    if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
+      getTag = function (value) {
+        var result = objectToString.call(value),
+            Ctor = result == objectTag ? value.constructor : undefined,
+            ctorString = Ctor ? toSource(Ctor) : undefined;
+
+        if (ctorString) {
+          switch (ctorString) {
+            case dataViewCtorString:
+              return dataViewTag;
+
+            case mapCtorString:
+              return mapTag;
+
+            case promiseCtorString:
+              return promiseTag;
+
+            case setCtorString:
+              return setTag;
+
+            case weakMapCtorString:
+              return weakMapTag;
+          }
+        }
+
+        return result;
+      };
+    }
+    /**
+     * Initializes an array clone.
+     *
+     * @private
+     * @param {Array} array The array to clone.
+     * @returns {Array} Returns the initialized clone.
+     */
+
+
+    function initCloneArray(array) {
+      var length = array.length,
+          result = array.constructor(length); // Add properties assigned by `RegExp#exec`.
+
+      if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+        result.index = array.index;
+        result.input = array.input;
+      }
+
+      return result;
+    }
+    /**
+     * Initializes an object clone.
+     *
+     * @private
+     * @param {Object} object The object to clone.
+     * @returns {Object} Returns the initialized clone.
+     */
+
+
+    function initCloneObject(object) {
+      return typeof object.constructor == 'function' && !isPrototype(object) ? baseCreate(getPrototype(object)) : {};
+    }
+    /**
+     * Initializes an object clone based on its `toStringTag`.
+     *
+     * **Note:** This function only supports cloning values with tags of
+     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+     *
+     * @private
+     * @param {Object} object The object to clone.
+     * @param {string} tag The `toStringTag` of the object to clone.
+     * @param {Function} cloneFunc The function to clone values.
+     * @param {boolean} [isDeep] Specify a deep clone.
+     * @returns {Object} Returns the initialized clone.
+     */
+
+
+    function initCloneByTag(object, tag, cloneFunc, isDeep) {
+      var Ctor = object.constructor;
+
+      switch (tag) {
+        case arrayBufferTag:
+          return cloneArrayBuffer(object);
+
+        case boolTag:
+        case dateTag:
+          return new Ctor(+object);
+
+        case dataViewTag:
+          return cloneDataView(object, isDeep);
+
+        case float32Tag:
+        case float64Tag:
+        case int8Tag:
+        case int16Tag:
+        case int32Tag:
+        case uint8Tag:
+        case uint8ClampedTag:
+        case uint16Tag:
+        case uint32Tag:
+          return cloneTypedArray(object, isDeep);
+
+        case mapTag:
+          return cloneMap(object, isDeep, cloneFunc);
+
+        case numberTag:
+        case stringTag:
+          return new Ctor(object);
+
+        case regexpTag:
+          return cloneRegExp(object);
+
+        case setTag:
+          return cloneSet(object, isDeep, cloneFunc);
+
+        case symbolTag:
+          return cloneSymbol(object);
+      }
+    }
+    /**
+     * Checks if `value` is a valid array-like index.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+     * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+     */
+
+
+    function isIndex(value, length) {
+      length = length == null ? MAX_SAFE_INTEGER : length;
+      return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
+    }
+    /**
+     * Checks if `value` is suitable for use as unique object key.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+     */
+
+
+    function isKeyable(value) {
+      var type = typeof value;
+      return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
+    }
+    /**
+     * Checks if `func` has its source masked.
+     *
+     * @private
+     * @param {Function} func The function to check.
+     * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+     */
+
+
+    function isMasked(func) {
+      return !!maskSrcKey && maskSrcKey in func;
+    }
+    /**
+     * Checks if `value` is likely a prototype object.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+     */
+
+
+    function isPrototype(value) {
+      var Ctor = value && value.constructor,
+          proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
+      return value === proto;
+    }
+    /**
+     * Converts `func` to its source code.
+     *
+     * @private
+     * @param {Function} func The function to process.
+     * @returns {string} Returns the source code.
+     */
+
+
+    function toSource(func) {
+      if (func != null) {
+        try {
+          return funcToString.call(func);
+        } catch (e) {}
+
+        try {
+          return func + '';
+        } catch (e) {}
+      }
+
+      return '';
+    }
+    /**
+     * This method is like `_.clone` except that it recursively clones `value`.
+     *
+     * @static
+     * @memberOf _
+     * @since 1.0.0
+     * @category Lang
+     * @param {*} value The value to recursively clone.
+     * @returns {*} Returns the deep cloned value.
+     * @see _.clone
+     * @example
+     *
+     * var objects = [{ 'a': 1 }, { 'b': 2 }];
+     *
+     * var deep = _.cloneDeep(objects);
+     * console.log(deep[0] === objects[0]);
+     * // => false
+     */
+
+
+    function cloneDeep(value) {
+      return baseClone(value, true, true);
+    }
+    /**
+     * Performs a
+     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+     * comparison between two values to determine if they are equivalent.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to compare.
+     * @param {*} other The other value to compare.
+     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+     * @example
+     *
+     * var object = { 'a': 1 };
+     * var other = { 'a': 1 };
+     *
+     * _.eq(object, object);
+     * // => true
+     *
+     * _.eq(object, other);
+     * // => false
+     *
+     * _.eq('a', 'a');
+     * // => true
+     *
+     * _.eq('a', Object('a'));
+     * // => false
+     *
+     * _.eq(NaN, NaN);
+     * // => true
+     */
+
+
+    function eq(value, other) {
+      return value === other || value !== value && other !== other;
+    }
+    /**
+     * Checks if `value` is likely an `arguments` object.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+     *  else `false`.
+     * @example
+     *
+     * _.isArguments(function() { return arguments; }());
+     * // => true
+     *
+     * _.isArguments([1, 2, 3]);
+     * // => false
+     */
+
+
+    function isArguments(value) {
+      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+      return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+    }
+    /**
+     * Checks if `value` is classified as an `Array` object.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+     * @example
+     *
+     * _.isArray([1, 2, 3]);
+     * // => true
+     *
+     * _.isArray(document.body.children);
+     * // => false
+     *
+     * _.isArray('abc');
+     * // => false
+     *
+     * _.isArray(_.noop);
+     * // => false
+     */
+
+
+    var isArray = Array.isArray;
+    /**
+     * Checks if `value` is array-like. A value is considered array-like if it's
+     * not a function and has a `value.length` that's an integer greater than or
+     * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+     * @example
+     *
+     * _.isArrayLike([1, 2, 3]);
+     * // => true
+     *
+     * _.isArrayLike(document.body.children);
+     * // => true
+     *
+     * _.isArrayLike('abc');
+     * // => true
+     *
+     * _.isArrayLike(_.noop);
+     * // => false
+     */
+
+    function isArrayLike(value) {
+      return value != null && isLength(value.length) && !isFunction(value);
+    }
+    /**
+     * This method is like `_.isArrayLike` except that it also checks if `value`
+     * is an object.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an array-like object,
+     *  else `false`.
+     * @example
+     *
+     * _.isArrayLikeObject([1, 2, 3]);
+     * // => true
+     *
+     * _.isArrayLikeObject(document.body.children);
+     * // => true
+     *
+     * _.isArrayLikeObject('abc');
+     * // => false
+     *
+     * _.isArrayLikeObject(_.noop);
+     * // => false
+     */
+
+
+    function isArrayLikeObject(value) {
+      return isObjectLike(value) && isArrayLike(value);
+    }
+    /**
+     * Checks if `value` is a buffer.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.3.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+     * @example
+     *
+     * _.isBuffer(new Buffer(2));
+     * // => true
+     *
+     * _.isBuffer(new Uint8Array(2));
+     * // => false
+     */
+
+
+    var isBuffer = nativeIsBuffer || stubFalse;
+    /**
+     * Checks if `value` is classified as a `Function` object.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+     * @example
+     *
+     * _.isFunction(_);
+     * // => true
+     *
+     * _.isFunction(/abc/);
+     * // => false
+     */
+
+    function isFunction(value) {
+      // The use of `Object#toString` avoids issues with the `typeof` operator
+      // in Safari 8-9 which returns 'object' for typed array and other constructors.
+      var tag = isObject(value) ? objectToString.call(value) : '';
+      return tag == funcTag || tag == genTag;
+    }
+    /**
+     * Checks if `value` is a valid array-like length.
+     *
+     * **Note:** This method is loosely based on
+     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+     * @example
+     *
+     * _.isLength(3);
+     * // => true
+     *
+     * _.isLength(Number.MIN_VALUE);
+     * // => false
+     *
+     * _.isLength(Infinity);
+     * // => false
+     *
+     * _.isLength('3');
+     * // => false
+     */
+
+
+    function isLength(value) {
+      return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+    }
+    /**
+     * Checks if `value` is the
+     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+     * @example
+     *
+     * _.isObject({});
+     * // => true
+     *
+     * _.isObject([1, 2, 3]);
+     * // => true
+     *
+     * _.isObject(_.noop);
+     * // => true
+     *
+     * _.isObject(null);
+     * // => false
+     */
+
+
+    function isObject(value) {
+      var type = typeof value;
+      return !!value && (type == 'object' || type == 'function');
+    }
+    /**
+     * Checks if `value` is object-like. A value is object-like if it's not `null`
+     * and has a `typeof` result of "object".
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+     * @example
+     *
+     * _.isObjectLike({});
+     * // => true
+     *
+     * _.isObjectLike([1, 2, 3]);
+     * // => true
+     *
+     * _.isObjectLike(_.noop);
+     * // => false
+     *
+     * _.isObjectLike(null);
+     * // => false
+     */
+
+
+    function isObjectLike(value) {
+      return !!value && typeof value == 'object';
+    }
+    /**
+     * Creates an array of the own enumerable property names of `object`.
+     *
+     * **Note:** Non-object values are coerced to objects. See the
+     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+     * for more details.
+     *
+     * @static
+     * @since 0.1.0
+     * @memberOf _
+     * @category Object
+     * @param {Object} object The object to query.
+     * @returns {Array} Returns the array of property names.
+     * @example
+     *
+     * function Foo() {
+     *   this.a = 1;
+     *   this.b = 2;
+     * }
+     *
+     * Foo.prototype.c = 3;
+     *
+     * _.keys(new Foo);
+     * // => ['a', 'b'] (iteration order is not guaranteed)
+     *
+     * _.keys('hi');
+     * // => ['0', '1']
+     */
+
+
+    function keys(object) {
+      return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+    }
+    /**
+     * This method returns a new empty array.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.13.0
+     * @category Util
+     * @returns {Array} Returns the new empty array.
+     * @example
+     *
+     * var arrays = _.times(2, _.stubArray);
+     *
+     * console.log(arrays);
+     * // => [[], []]
+     *
+     * console.log(arrays[0] === arrays[1]);
+     * // => false
+     */
+
+
+    function stubArray() {
+      return [];
+    }
+    /**
+     * This method returns `false`.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.13.0
+     * @category Util
+     * @returns {boolean} Returns `false`.
+     * @example
+     *
+     * _.times(2, _.stubFalse);
+     * // => [false, false]
+     */
+
+
+    function stubFalse() {
+      return false;
+    }
+
+    module.exports = cloneDeep;
+  });
+
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
@@ -9891,10 +10016,6 @@
     }
 
     return res;
-  }
-
-  function isNum(something) {
-    return typeof something === "number";
   }
 
   function isStr(something) {
@@ -10097,166 +10218,8 @@
     return seq("right", str, idx, opts, args);
   }
 
-  function chomp(direction, str, idx, opts, args) {
-    if (typeof str !== "string" || !str.length) {
-      return null;
-    }
-
-    if (!idx || typeof idx !== "number") {
-      idx = 0;
-    }
-
-    if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
-      return null;
-    }
-
-    let lastRes = null;
-    let lastIdx = null;
-
-    do {
-      lastRes = direction === "right" ? rightSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args) : leftSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args);
-
-      if (lastRes !== null) {
-        lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
-      }
-    } while (lastRes);
-
-    if (lastIdx != null && direction === "right") {
-      lastIdx += 1;
-    }
-
-    if (lastIdx === null) {
-      return null;
-    }
-
-    if (direction === "right") {
-      if (str[lastIdx] && str[lastIdx].trim()) {
-        return lastIdx;
-      }
-
-      const whatsOnTheRight = right(str, lastIdx);
-
-      if (opts.mode === 0) {
-        if (whatsOnTheRight === lastIdx + 1) {
-          return lastIdx;
-        }
-
-        if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
-          for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (`\n\r`.includes(str[y])) {
-              return y;
-            }
-          }
-        } else {
-          return whatsOnTheRight ? whatsOnTheRight - 1 : str.length;
-        }
-      } else if (opts.mode === 1) {
-        return lastIdx;
-      } else if (opts.mode === 2) {
-        const remainderString = str.slice(lastIdx);
-
-        if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-          for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (str[y].trim() || `\n\r`.includes(str[y])) {
-              return y;
-            }
-          }
-        }
-
-        return str.length;
-      }
-
-      return whatsOnTheRight || str.length;
-    }
-
-    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
-      return lastIdx;
-    }
-
-    const whatsOnTheLeft = left(str, lastIdx);
-
-    if (opts.mode === 0) {
-      if (whatsOnTheLeft === lastIdx - 2) {
-        return lastIdx;
-      }
-
-      if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
-        for (let y = lastIdx; y--;) {
-          if (`\n\r`.includes(str[y]) || str[y].trim()) {
-            return y + 1 + (str[y].trim() ? 1 : 0);
-          }
-        }
-      }
-
-      return 0;
-    }
-
-    if (opts.mode === 1) {
-      return lastIdx;
-    }
-
-    if (opts.mode === 2) {
-      const remainderString = str.slice(0, lastIdx);
-
-      if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-        for (let y = lastIdx; y--;) {
-          if (str[y].trim() || `\n\r`.includes(str[y])) {
-            return y + 1;
-          }
-        }
-      }
-
-      return 0;
-    }
-
-    return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
-  }
-
-  function chompLeft(str, idx, ...args) {
-    if (!args.length || args.length === 1 && lodash_isplainobject(args[0])) {
-      return null;
-    }
-
-    const defaults = {
-      mode: 0
-    };
-
-    if (lodash_isplainobject(args[0])) {
-      const opts = { ...defaults,
-        ...lodash_clonedeep(args[0])
-      };
-
-      if (!opts.mode) {
-        opts.mode = 0;
-      } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
-        opts.mode = Number.parseInt(opts.mode, 10);
-      } else if (!isNum(opts.mode)) {
-        throw new Error(`string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${opts.mode} (type ${typeof opts.mode})`);
-      }
-
-      return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
-    }
-
-    if (!isStr(args[0])) {
-      return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
-    }
-
-    return chomp("left", str, idx, defaults, lodash_clonedeep(args));
-  }
-
   function isObj(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
-  } // checks, are there any other non-whitespace characters besides n, b, s or p
-
-
-  function onlyContainsNbsp(str, from, to) {
-    for (var i = from; i < to; i++) {
-      if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   function isLatinLetterOrNumberOrHash(char) {
@@ -10270,10 +10233,6 @@
 
   function isNumber(something) {
     return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-  }
-
-  function isNotaLetter(str2) {
-    return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
   }
 
   function isStr$1(something) {
@@ -10338,6 +10297,152 @@
     };
   }
 
+  function findLongest(temp1) {
+    // we are filtering something like this:
+    // [
+    //   {
+    //       "tempEnt": "acute",
+    //       "tempRes": {
+    //           "gaps": [],
+    //           "leftmostChar": 2,
+    //           "rightmostChar": 6
+    //       }
+    //   },
+    //   {
+    //       "tempEnt": "zacute",
+    //       "tempRes": {
+    //           "gaps": [],
+    //           "leftmostChar": 0,
+    //           "rightmostChar": 6
+    //       }
+    //   }
+    // ]
+    //
+    // we find the object which represents the longest matched entity, that is,
+    // object which "tempEnt" key value's length is the longest.
+    if (Array.isArray(temp1) && temp1.length) {
+      if (temp1.length === 1) {
+        // quick ending - only one value anyway
+        return temp1[0];
+      } // filter-out and return the longest-one
+
+
+      return temp1.reduce(function (accum, tempObj) {
+        if (tempObj.tempEnt.length > accum.tempEnt.length) {
+          return tempObj;
+        }
+
+        return accum;
+      });
+    }
+
+    return temp1;
+  }
+
+  function removeGappedFromMixedCases(str, temp1) {
+    if (arguments.length !== 2) {
+      throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
+    } // If there is one without gaps and all others with gaps, gapless
+    // wins, regardless of length.
+    // The longest of gapless-one wins, trumping all the ones with gaps.
+    // If all are with gaps, the longest one wins.
+    // [
+    //   {
+    //       "tempEnt": "acute",
+    //       "tempRes": {
+    //           "gaps": [],
+    //           "leftmostChar": 2,
+    //           "rightmostChar": 6
+    //       }
+    //   },
+    //   {
+    //       "tempEnt": "zacute",
+    //       "tempRes": {
+    //           "gaps": [
+    //               [
+    //                   1,
+    //                   2
+    //               ]
+    //           ],
+    //           "leftmostChar": 0,
+    //           "rightmostChar": 6
+    //       }
+    //   }
+    // ]
+    // For example, entity "zacute" record above shows it has gaps, while the
+    // "acute" does not have gaps. This is a mixed case scenario and we remove
+    // all gapped entities, that is, in this case, "zacute".
+    // Imagine we have string "zzzzzz acute; yyyyyy". That z on the left of
+    // "acute" is legit. That's why we exclude matched gapped entities in
+    // mixed cases.
+    // But, semicolon also matters, for example, &acd; vs. &ac; in:
+    // &ac d;
+    // case picks &acd; as winner
+
+
+    var copy;
+
+    if (Array.isArray(temp1) && temp1.length) {
+      // prevent mutation:
+      copy = Array.from(temp1); // 1. if some matches have semicolon to the right of rightmostChar and
+      // some matches don't, exclude those that don't.
+      // If at any moment we've left with one match, Bob's your uncle here's
+      // the final result.
+      // For example, we might be working on something like this:
+      // [
+      //     {
+      //         "tempEnt": "ac",
+      //         "tempRes": {
+      //             "gaps": [],
+      //             "leftmostChar": 1,
+      //             "rightmostChar": 2
+      //         }
+      //     },
+      //     {
+      //         "tempEnt": "acd",
+      //         "tempRes": {
+      //             "gaps": [
+      //                 [
+      //                     3,
+      //                     4
+      //                 ]
+      //             ],
+      //             "leftmostChar": 1,
+      //             "rightmostChar": 4
+      //         }
+      //     }
+      // ]
+
+      if (copy.length > 1 && copy.some(function (entityObj) {
+        return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
+      }) && copy.some(function (entityObj) {
+        return str[right(str, entityObj.tempRes.rightmostChar)] !== ";";
+      })) {
+        // filter out those with semicolon to the right of the last character:
+        copy = copy.filter(function (entityObj) {
+          return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
+        });
+      } // 2. if still there is more than one match, first exclude gapped if
+      // there is mix of gapped vs. gapless. Then, return longest.
+      // If all are either gapped or gapless, return longest.
+
+
+      if (!(copy.every(function (entObj) {
+        return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+      }) || copy.every(function (entObj) {
+        return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
+      }))) {
+        // filter out entities with gaps, leave gapless-ones
+        return findLongest(copy.filter(function (entObj) {
+          return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+        }));
+      }
+    } // else if all entries don't have gaps, return longest
+
+
+    return findLongest(temp1);
+  }
+
   /**
    * stringFixBrokenNamedEntities - fixes broken named HTML entities
    *
@@ -10346,147 +10451,7 @@
    */
 
   function stringFixBrokenNamedEntities(str, originalOpts) {
-    function findLongest(temp1) {
-      // we are filtering something like this:
-      // [
-      //   {
-      //       "tempEnt": "acute",
-      //       "tempRes": {
-      //           "gaps": [],
-      //           "leftmostChar": 2,
-      //           "rightmostChar": 6
-      //       }
-      //   },
-      //   {
-      //       "tempEnt": "zacute",
-      //       "tempRes": {
-      //           "gaps": [],
-      //           "leftmostChar": 0,
-      //           "rightmostChar": 6
-      //       }
-      //   }
-      // ]
-      //
-      // we find the object which represents the longest matched entity, that is,
-      // object which "tempEnt" key value's length is the longest.
-      if (Array.isArray(temp1) && temp1.length) {
-        if (temp1.length === 1) {
-          // quick ending - only one value anyway
-          return temp1[0];
-        } // filter-out and return the longest-one
-
-
-        return temp1.reduce(function (accum, tempObj) {
-          if (tempObj.tempEnt.length > accum.tempEnt.length) {
-            return tempObj;
-          }
-
-          return accum;
-        });
-      }
-
-      return temp1;
-    }
-
-    function removeGappedFromMixedCases(temp1) {
-      // If there is one without gaps and all others with gaps, gapless
-      // wins, regardless of length.
-      // The longest of gapless-one wins, trumping all the ones with gaps.
-      // If all are with gaps, the longest one wins.
-      // [
-      //   {
-      //       "tempEnt": "acute",
-      //       "tempRes": {
-      //           "gaps": [],
-      //           "leftmostChar": 2,
-      //           "rightmostChar": 6
-      //       }
-      //   },
-      //   {
-      //       "tempEnt": "zacute",
-      //       "tempRes": {
-      //           "gaps": [
-      //               [
-      //                   1,
-      //                   2
-      //               ]
-      //           ],
-      //           "leftmostChar": 0,
-      //           "rightmostChar": 6
-      //       }
-      //   }
-      // ]
-      // For example, entity "zacute" record above shows it has gaps, while the
-      // "acute" does not have gaps. This is a mixed case scenario and we remove
-      // all gapped entities, that is, in this case, "zacute".
-      // Imagine we have string "zzzzzz acute; yyyyyy". That z on the left of
-      // "acute" is legit. That's why we exclude matched gapped entities in
-      // mixed cases.
-      // But, semicolon also matters, for example, &acd; vs. &ac; in:
-      // &ac d;
-      // case picks &acd; as winner
-      var copy;
-
-      if (Array.isArray(temp1) && temp1.length) {
-        // prevent mutation:
-        copy = Array.from(temp1); // 1. if some matches have semicolon to the right of rightmostChar and
-        // some matches don't, exclude those that don't.
-        // If at any moment we've left with one match, Bob's your uncle here's
-        // the final result.
-        // For example, we might be working on something like this:
-        // [
-        //     {
-        //         "tempEnt": "ac",
-        //         "tempRes": {
-        //             "gaps": [],
-        //             "leftmostChar": 1,
-        //             "rightmostChar": 2
-        //         }
-        //     },
-        //     {
-        //         "tempEnt": "acd",
-        //         "tempRes": {
-        //             "gaps": [
-        //                 [
-        //                     3,
-        //                     4
-        //                 ]
-        //             ],
-        //             "leftmostChar": 1,
-        //             "rightmostChar": 4
-        //         }
-        //     }
-        // ]
-
-        if (copy.length > 1 && copy.some(function (entityObj) {
-          return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
-        }) && copy.some(function (entityObj) {
-          return str[right(str, entityObj.tempRes.rightmostChar)] !== ";";
-        })) {
-          // filter out those with semicolon to the right of the last character:
-          copy = copy.filter(function (entityObj) {
-            return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
-          });
-        } // 2. if still there is more than one match, first exclude gapped if
-        // there is mix of gapped vs. gapless. Then, return longest.
-        // If all are either gapped or gapless, return longest.
-
-
-        if (!(copy.every(function (entObj) {
-          return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
-        }) || copy.every(function (entObj) {
-          return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
-        }))) {
-          // filter out entities with gaps, leave gapless-ones
-          return findLongest(copy.filter(function (entObj) {
-            return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
-          }));
-        }
-      } // else if all entries don't have gaps, return longest
-
-
-      return findLongest(temp1);
-    } //
+    //
     //
     //
     //
@@ -10499,8 +10464,6 @@
     //
     // insurance:
     // ---------------------------------------------------------------------------
-
-
     if (typeof str !== "string") {
       throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (").concat(_typeof(str), "-type)"));
     }
@@ -10523,7 +10486,7 @@
       if (!isObj(originalOpts)) {
         throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), "-type)"));
       } else {
-        opts = _objectSpread2({}, defaults, {}, originalOpts);
+        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
       }
     } else {
       opts = defaults;
@@ -10541,47 +10504,10 @@
       throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
     } // state flags
     // ---------------------------------------------------------------------------
-    // this one is to mark the exception when current character is not ampersand
-    // where should be one, but it is not necessary to add an ampersand here.
-    // For example, there was ampersand and bunch of rubbish in between it and
-    // current character. Current character should have ampersand in front of it.
-    // We don't add one though, because we consult with this flag.
-
-
-    var ampersandNotNeeded = false; // markers:
-    // define defaults so that we can reset to objects with keys, not empty objects
-    // * nbsp tracking:
-
-    var nbspDefault = {
-      nameStartsAt: null,
-      // when we'll insert range, we'll use this or "this - 1"
-      ampersandNecessary: null,
-      // default is not Boolean, to mark the state it needs tending
-      patience: 1,
-      // one letter can be omitted from name
-      matchedN: null,
-      // set the index of the first catch
-      matchedB: null,
-      // set the index of the first catch
-      matchedS: null,
-      // set the index of the first catch
-      matchedP: null,
-      // set the index of the first catch
-      matchedSemicol: null // set the index of the first catch
-
-    };
-    var nbsp = lodash_clonedeep(nbspDefault);
-
-    var nbspWipe = function nbspWipe() {
-      nbsp = lodash_clonedeep(nbspDefault);
-    }; // this is what we'll return, process by default callback or user's custom-one
+    // this is what we'll return, process by default callback or user's custom-one
 
 
     var rangesArr2 = [];
-    var smallestCharFromTheSetAt;
-    var largestCharFromTheSetAt;
-    var matchedLettersCount;
-    var setOfValues;
     var percentageDone;
     var lastPercentageDone; // allocate all 100 of progress to the main loop below
 
@@ -10596,8 +10522,7 @@
     // for example, nbsp from "&nbsp;"
 
     var letterSeqStartAt = null;
-    var brokenNumericEntityStartAt = null;
-    var falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"]; //                                      |
+    var brokenNumericEntityStartAt = null; //                                      |
     //                                      |
     //                                      |
     //                                      |
@@ -10654,71 +10579,6 @@
           counter += 1;
           return "continue";
         }
-      } // Catch ending of an nbsp (or messed up set of its characters)
-      // It's the character after semicolon or whatever is the last when semicolon
-      // itself is missing.
-
-
-      matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
-      setOfValues = [nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP].filter(function (val) {
-        return val !== null;
-      });
-      smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
-      largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues)); // in principle, there has to be either ampersand or semicolon on an entity.
-      // There are requirements for the length between characters of a set n-b-s-p.
-      // If both ampersand and semicolon is missing, on both sides there must be a
-      // non-letter.
-      // largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4
-
-      if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[right(str, i)] !== ";") && (nbsp.matchedB !== null || !(str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[left(str, smallestCharFromTheSetAt)] && str[left(str, smallestCharFromTheSetAt)].toLowerCase() === "e") && !(nbsp.matchedN !== null && rightSeq(str, nbsp.matchedN, {
-        i: true
-      }, "s", "u", "p")) && str[right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
-        // chomp all &amp; where ampersand is optional if sandwitched
-        var chompedAmpFromLeft = chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-        var beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt; // if our nbsp has problems:
-
-        if (!falsePositivesArr.some(function (val) {
-          return str.slice(beginningOfTheRange).startsWith(val);
-        }) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
-          rangesArr2.push({
-            ruleName: "bad-named-html-entity-malformed-nbsp",
-            entityName: "nbsp",
-            rangeFrom: beginningOfTheRange,
-            rangeTo: i,
-            rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0"
-          });
-        } // also, if it must be decoded this healthy nbsp is wrong
-        else if (opts.decode) {
-            rangesArr2.push({
-              ruleName: "encoded-html-entity-nbsp",
-              entityName: "nbsp",
-              rangeFrom: beginningOfTheRange,
-              rangeTo: i,
-              rangeValEncoded: "&nbsp;",
-              rangeValDecoded: "\xA0"
-            });
-          } else if (opts.entityCatcherCb) {
-            // call the general entity callback if it's given
-            opts.entityCatcherCb(beginningOfTheRange, i);
-          }
-
-        nbspWipe();
-        counter += 1; // if we are on an ampersand currently, start a new record
-
-        if (str[i] === "&" && str[i + 1] !== "&") {
-          nbsp.nameStartsAt = i;
-          nbsp.ampersandNecessary = false;
-        }
-
-        return "continue";
-      } // If semicolon was passed and tag is not closing, wipe:
-
-
-      if (str[i] && str[i - 1] === ";" && !leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
-        nbspWipe();
-        counter += 1;
-        return "continue";
       } //            |
       //            |
       //            |
@@ -10734,7 +10594,7 @@
 
 
       if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
-        if (i > letterSeqStartAt + 1 && str.slice(letterSeqStartAt - 1, i + 1) !== "&nbsp;") {
+        if (i > letterSeqStartAt + 1) {
           var potentialEntity = str.slice(letterSeqStartAt, i);
           var whatsOnTheLeft = left(str, letterSeqStartAt);
           var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : ""; //
@@ -10771,9 +10631,9 @@
                 // find all entities that match on the right of here
                 // rightSeq could theoretically give positive answer, zero index,
                 // but it's impossible here, so we're fine to match "if true".
-                var tempRes = rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+                tempRes = rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
 
-                if (tempRes && oneOfKnownEntities !== "nbsp") {
+                if (tempRes) {
                   return gatheredSoFar.concat([{
                     tempEnt: oneOfKnownEntities,
                     tempRes: tempRes
@@ -10782,7 +10642,7 @@
 
                 return gatheredSoFar;
               }, []);
-              temp1 = removeGappedFromMixedCases(temp1);
+              temp1 = removeGappedFromMixedCases(str, temp1);
 
               if (temp1) {
                 var _temp = temp1;
@@ -10832,19 +10692,19 @@
                 // find all entities that match on the right of here
                 // rightSeq could theoretically give positive answer, zero index,
                 // but it's impossible here, so we're fine to match "if true".
-                var tempRes = leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+                _tempRes = leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
 
-                if (tempRes && oneOfKnownEntities !== "nbsp" && !(oneOfKnownEntities === "block" && str[left(str, letterSeqStartAt)] === ":")) {
+                if (_tempRes && !(oneOfKnownEntities === "block" && str[left(str, letterSeqStartAt)] === ":")) {
                   return gatheredSoFar.concat([{
                     tempEnt: oneOfKnownEntities,
-                    tempRes: tempRes
+                    tempRes: _tempRes
                   }]);
                 }
 
                 return gatheredSoFar;
               }, []);
 
-              _temp2 = removeGappedFromMixedCases(_temp2);
+              _temp2 = removeGappedFromMixedCases(str, _temp2);
 
               if (_temp2) {
                 var _temp3 = _temp2;
@@ -10879,7 +10739,7 @@
 
               brokenNumericEntityStartAt = null;
             }
-          } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
+          } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
             //
             //
             //
@@ -10955,7 +10815,6 @@
                   opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                 }
               } else {
-                // it's either named or some sort of messed up HTML entity
                 //
                 //
                 //
@@ -10965,13 +10824,88 @@
                 //
                 //
                 //
-                // First, match against case-insensitive list
+                // happy path:
+                // we don't want to filter whole chapter of text...
+                if (potentialEntity.length <= 50) {
+                  var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
+                    return char.trim().length;
+                  }).join("");
+
+                  if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                    if ( // first, check is the letter case allright
+                    !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                      var matchingEntitiesOfCorrectCaseArr = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (ent) {
+                        return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
+                      });
+
+                      if (matchingEntitiesOfCorrectCaseArr.length === 1) {
+                        rangesArr2.push({
+                          ruleName: "bad-named-html-entity-malformed-".concat(matchingEntitiesOfCorrectCaseArr[0]),
+                          entityName: matchingEntitiesOfCorrectCaseArr[0],
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: i + 1,
+                          rangeValEncoded: "&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"),
+                          rangeValDecoded: decode("&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"))
+                        });
+                      } else {
+                        rangesArr2.push({
+                          ruleName: "bad-named-html-entity-unrecognised",
+                          entityName: null,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: i + 1,
+                          rangeValEncoded: null,
+                          rangeValDecoded: null
+                        });
+                      }
+                    } else if ( // is it really healthy? measuring distance is a way to find out
+                    // any present whitespace characters will bloat the length...
+                    i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
+                      var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
+
+                      if ( // if it's a dubious entity
+                      Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && // and there's space after ampersand
+                      !str[rangeFrom + 1].trim().length) {
+                        letterSeqStartAt = null;
+                        return "continue";
+                      }
+
+                      rangesArr2.push({
+                        ruleName: "bad-named-html-entity-malformed-".concat(potentialEntityOnlyNonWhitespaceChars),
+                        entityName: potentialEntityOnlyNonWhitespaceChars,
+                        rangeFrom: rangeFrom,
+                        rangeTo: i + 1,
+                        rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                        rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                      });
+                    } else if (opts.decode) {
+                      // last thing, if decode is required, we've got an error still...
+                      rangesArr2.push({
+                        ruleName: "encoded-html-entity-".concat(potentialEntityOnlyNonWhitespaceChars),
+                        entityName: potentialEntityOnlyNonWhitespaceChars,
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                        rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                      });
+                    } else if (opts.entityCatcherCb) {
+                      // it's healthy - so at least ping the entity catcher
+                      opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                    }
+
+                    letterSeqStartAt = null;
+                    return "continue";
+                  }
+                } // First, match against case-insensitive list
                 // 1. check, maybe it's a known HTML entity
+
+
                 var _firstChar = letterSeqStartAt;
 
                 var _secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
 
                 var _tempEnt2;
+
+                var temp;
 
                 if (Object.prototype.hasOwnProperty.call(brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
                   //
@@ -10989,6 +10923,57 @@
                     rangeValEncoded: "&".concat(brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"),
                     rangeValDecoded: _decodedEntity2
                   });
+                } else if ( // idea being, if length of suspected chunk is less or equal to
+                // the length of the longest entity (add 1 for Levenshtein distance)
+                // we still consider that whole chunk (from ampersand to semi)
+                // might be a value of an entity
+                potentialEntity.length < maxLength + 2 && ( // a) either one character is different:
+                (temp = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (curr) {
+                  return leven_1(curr, potentialEntity) === 1;
+                })) && temp.length || //
+                // OR
+                //
+                // b) two are different but entity is at least 4 chars long:
+                (temp = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (curr) {
+                  return leven_1(curr, potentialEntity) === 2 && curr.length > 3;
+                })) && temp.length)) {
+                  // now the problem: what if there were multiple entities matched?
+                  if (temp.length === 1) {
+                    var _temp4 = temp;
+
+                    var _temp5 = _slicedToArray(_temp4, 1);
+
+                    _tempEnt2 = _temp5[0];
+                    rangesArr2.push({
+                      ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt2),
+                      entityName: _tempEnt2,
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                      rangeValDecoded: decode("&".concat(_tempEnt2, ";"))
+                    });
+                  } else {
+                    // we've got problem
+                    // find longest, drop all shorter than longest
+                    var lengthOfLongestCaughtEnt = temp.reduce(function (acc, curr) {
+                      return curr.length > acc ? curr.length : acc;
+                    }, 0); // filter only max-length-ones
+
+                    temp = temp.filter(function (ent) {
+                      return ent.length === lengthOfLongestCaughtEnt;
+                    }); // again, if there's one left, Bob's your uncle here's the result
+
+                    if (temp.length === 1) {
+                      rangesArr2.push({
+                        ruleName: "bad-named-html-entity-malformed-".concat(temp[0]),
+                        entityName: temp[0],
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: "&".concat(temp[0], ";"),
+                        rangeValDecoded: decode("&".concat(temp[0], ";"))
+                      });
+                    }
+                  }
                 } else if (Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive, str[_firstChar].toLowerCase()) && Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive[str[_firstChar].toLowerCase()], str[_secondChar].toLowerCase())) {
                   //
                   //                          case II.
@@ -10999,21 +10984,21 @@
                     // find all entities that match on the right of here
                     // rightSeq could theoretically give positive answer, zero index,
                     // but it's impossible here, so we're fine to match "if true".
-                    var tempRes = rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
+                    _tempRes2 = rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
                       i: true
                     }].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
 
-                    if (tempRes && oneOfKnownEntities !== "nbsp") {
+                    if (_tempRes2) {
                       return gatheredSoFar.concat([{
                         tempEnt: oneOfKnownEntities,
-                        tempRes: tempRes
+                        tempRes: _tempRes2
                       }]);
                     }
 
                     return gatheredSoFar;
                   }, []);
 
-                  matchedEntity = removeGappedFromMixedCases(matchedEntity);
+                  matchedEntity = removeGappedFromMixedCases(str, matchedEntity);
 
                   if (matchedEntity) {
                     var _matchedEntity = matchedEntity;
@@ -11161,26 +11146,15 @@
 
 
                 if (!_tempEnt2) {
-                  // check case-insensitively, is it a known broken entity,
-                  // for example &poun; (instead of &pound;) - this comes from
-                  // an ad-hoc object "brokenNamedEntities" from
-                  // package "all-named-html-entities".
-                  if (situation.charTrimmed.toLowerCase() !== "&nbsp;") {
-                    // it's an unrecognised entity:
-                    rangesArr2.push({
-                      ruleName: "bad-named-html-entity-unrecognised",
-                      entityName: null,
-                      rangeFrom: whatsOnTheLeft,
-                      rangeTo: i + 1,
-                      rangeValEncoded: null,
-                      rangeValDecoded: null
-                    }); // entity catcher is pinged only with healthy entities -
-                    // it's either cb() with broken or catcher - not both.
-                    // if (opts.entityCatcherCb) {
-                    //   console.log(`1831 call opts.entityCatcherCb()`);
-                    //   opts.entityCatcherCb(whatsOnTheLeft, i + 1);
-                    // }
-                  }
+                  // it's an unrecognised entity:
+                  rangesArr2.push({
+                    ruleName: "bad-named-html-entity-unrecognised",
+                    entityName: null,
+                    rangeFrom: whatsOnTheLeft,
+                    rangeTo: i + 1,
+                    rangeValEncoded: null,
+                    rangeValDecoded: null
+                  });
                 } //
                 //
                 //
@@ -11246,15 +11220,16 @@
 
           if (nextAmpOnTheRight) {
             toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
-            var temp;
+
+            var _temp6;
 
             do {
-              temp = rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
+              _temp6 = rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
 
-              if (temp) {
-                toDeleteAllAmpEndHere = temp.rightmostChar + 1;
+              if (_temp6) {
+                toDeleteAllAmpEndHere = _temp6.rightmostChar + 1;
               }
-            } while (temp);
+            } while (_temp6);
           } // What we have is toDeleteAllAmpEndHere which marks where the last amp;
           // semicolon ends (were we to delete the whole thing).
           // For example, in:
@@ -11296,7 +11271,7 @@
               // we need to add the ampersand as well. Now, another consideration
               // appears: whitespace and where exactly to put it. Algorithmically,
               // right here, at this first letter "a" from "amp;&<some-entity>;"
-              var rangeFrom = i;
+              var _rangeFrom = i;
               var spaceReplacement = "";
 
               if (str[i - 1] === " ") ;
@@ -11305,7 +11280,7 @@
                 rangesArr2.push({
                   ruleName: "bad-named-html-entity-multiple-encoding",
                   entityName: matchedTemp,
-                  rangeFrom: rangeFrom,
+                  rangeFrom: _rangeFrom,
                   rangeTo: doNothingUntil,
                   rangeValEncoded: "".concat(spaceReplacement, "&").concat(matchedTemp, ";"),
                   rangeValDecoded: "".concat(spaceReplacement).concat(decode("&".concat(matchedTemp, ";")))
@@ -11314,177 +11289,6 @@
             }
           }
         }
-      } // catch ampersand
-
-
-      if (str[i] === "&") {
-        // 1. Tackle false positives, where ampersand follows the caught characters
-        if (nbsp.nameStartsAt && nbsp.nameStartsAt < i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
-          nbspWipe();
-        } // 2. mark the potential beginning of an nbsp:
-        // if (nbsp.nameStartsAt === null) {
-        //   // 2-1. Tag beginning has not been marked.
-        //   if (nbsp.ampersandNecessary === null) {
-        //     // The check above is for not false but null.
-        //
-        //     // mark the beginning
-        //     nbsp.nameStartsAt = i;
-        //     console.log(
-        //       `2170 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
-        //         nbsp.nameStartsAt
-        //       }`
-        //     );
-        //     nbsp.ampersandNecessary = false;
-        //     console.log(
-        //       `2176 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
-        //         nbsp.ampersandNecessary
-        //       }`
-        //     );
-        //   }
-        // }
-
-
-        nbsp.nameStartsAt = i;
-        nbsp.ampersandNecessary = false;
-      } // catch "n"
-
-
-      if (str[i] && str[i].toLowerCase() === "n") {
-        // failsafe
-        if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
-          nbspWipe();
-          counter += 1;
-          return "continue";
-        } // action
-
-
-        if (nbsp.matchedN === null) {
-          nbsp.matchedN = i;
-        }
-
-        if (nbsp.nameStartsAt === null) {
-          // 1. mark it
-          nbsp.nameStartsAt = i; // 2. tend the ampersand situation
-
-          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-            // if by now there are signs of ampersand records, it must be added later:
-            nbsp.ampersandNecessary = true;
-          } else if (nbsp.ampersandNecessary !== true) {
-            // in all other cases, set it as not needed
-            nbsp.ampersandNecessary = false;
-          }
-        }
-      } // catch "b"
-
-
-      if (str[i] && str[i].toLowerCase() === "b") {
-        if (nbsp.nameStartsAt !== null) {
-          // clean code, N was already detected
-          if (nbsp.matchedB === null) {
-            nbsp.matchedB = i;
-          }
-        } else if (nbsp.patience) {
-          // dirty code case because ampersand or "n" are missing so far
-          // 1. Patience is reduced for every single character missing. There can
-          // be only one character missing out of n-b-s-p.
-          nbsp.patience -= 1; // 2. mark the start
-
-          nbsp.nameStartsAt = i;
-          nbsp.matchedB = i; // 3. tend the ampersand situation
-
-          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-            // if by now there are signs of ampersand records, it must be added later:
-            nbsp.ampersandNecessary = true;
-          } else if (nbsp.ampersandNecessary !== true) {
-            // in all other cases, set it as not needed
-            nbsp.ampersandNecessary = false;
-          }
-        } else {
-          // wipe
-          nbspWipe();
-          counter += 1;
-          return "continue";
-        }
-      } // catch "s"
-
-
-      if (str[i] && str[i].toLowerCase() === "s") {
-        if (nbsp.nameStartsAt !== null) {
-          // clean code
-          if (nbsp.matchedS === null) {
-            nbsp.matchedS = i;
-          }
-        } else if (nbsp.patience) {
-          // dirty code case because ampersand or "n" are missing so far
-          // 1. Patience is reduced for every single character missing. There can
-          // be only one character missing out of n-b-s-p.
-          nbsp.patience -= 1; // 2. mark the start
-
-          nbsp.nameStartsAt = i;
-          nbsp.matchedS = i; // 3. tend the ampersand situation
-
-          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-            // if by now there are signs of ampersand records, it must be added later:
-            nbsp.ampersandNecessary = true;
-          } else if (nbsp.ampersandNecessary !== true) {
-            // in all other cases, set it as not needed
-            nbsp.ampersandNecessary = false;
-          }
-        } else {
-          // wipe
-          nbspWipe();
-          counter += 1;
-          return "continue";
-        }
-      } // catch "p"
-
-
-      if (str[i] && str[i].toLowerCase() === "p") {
-        if (leftSeq(str, i, "t", "h", "i", "n", "s")) {
-          nbspWipe();
-        } else if (nbsp.nameStartsAt !== null) {
-          // clean code
-          if (nbsp.matchedP === null) {
-            nbsp.matchedP = i;
-          }
-        } else if (nbsp.patience) {
-          // dirty code case because ampersand or "n" are missing so far
-          // 1. Patience is reduced for every single character missing. There can
-          // be only one character missing out of n-b-s-p.
-          nbsp.patience -= 1; // 2. mark the start
-
-          nbsp.nameStartsAt = i;
-          nbsp.matchedP = i; // 3. tend the ampersand situation
-
-          if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-            // if by now there are signs of ampersand records, it must be added later:
-            nbsp.ampersandNecessary = true;
-          } else if (nbsp.ampersandNecessary !== true) {
-            // in all other cases, set it as not needed
-            nbsp.ampersandNecessary = false;
-          }
-        } else {
-          // wipe
-          nbspWipe();
-          counter += 1;
-          return "continue";
-        }
-      } // catch semicolon
-
-
-      if (str[i] === ";") {
-        if (nbsp.nameStartsAt !== null) {
-          nbsp.matchedSemicol = i; // ensure semicolon doesn't precede the n-b-s-p letters, but this applies
-          // only if one letter is caught before the semicolon
-
-          if (nbsp.matchedN && // <---- just n
-          !nbsp.matchedB && !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && nbsp.matchedB && // <---- just b
-          !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && nbsp.matchedS && // <---- just s
-          !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP // <---- just p
-          ) {
-              nbspWipe();
-            }
-        }
       } // catch #x of messed up entities without ampersand (like #x26;)
 
 
@@ -11492,46 +11296,17 @@
         if (isNumber(str[right(str, right(str, i))])) {
           brokenNumericEntityStartAt = i;
         }
-      } // // catch whitespace
-      // ["n", "b", "s", "p"] set, reduce "patience" for each character in a
-      // sequence as long as it's not from the set.
-
-
-      if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
-        if (nbsp.patience) {
-          nbsp.patience -= 1;
-        } else {
-          nbspWipe();
-          counter += 1;
-          return "continue";
-        }
       } //            |
       //            |
       //            |
       //            |
       //            |
-      // PART 4. LOGGING:
+      // PART 3. RULES AT THE BOTTOM
       //            |
       //            |
       //            |
       //            |
       //            |
-      // console.log(`ampersandNotNeeded = ${ampersandNotNeeded}`);
-      // console.log(
-      //   `${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} = ${JSON.stringify(
-      //     nbsp,
-      //     null,
-      //     4
-      //   )}${
-      //     Array.isArray(rangesArr2) && rangesArr2.length
-      //       ? `\n${`\u001b[${32}m${`rangesArr2`}\u001b[${39}m`} = ${JSON.stringify(
-      //           rangesArr2,
-      //           null,
-      //           4
-      //         )}`
-      //       : ""
-      //   }`
-      // );
 
 
       counter += 1;

@@ -11,7 +11,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var clone = _interopDefault(require('lodash.clonedeep'));
+var leven = _interopDefault(require('leven'));
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringLeftRight = require('string-left-right');
 
@@ -80,6 +80,10 @@ function _objectSpread2(target) {
   return target;
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -88,8 +92,39 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
 }
 
 function _unsupportedIterableToArray(o, minLen) {
@@ -97,7 +132,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -113,25 +148,18 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
-}
-function onlyContainsNbsp(str, from, to) {
-  for (var i = from; i < to; i++) {
-    if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
-      return false;
-    }
-  }
-  return true;
 }
 function isLatinLetterOrNumberOrHash(char) {
   return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
 }
 function isNumber(something) {
   return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
-}
-function isNotaLetter(str2) {
-  return !(typeof str2 === "string" && str2.length === 1 && str2.toUpperCase() !== str2.toLowerCase());
 }
 function isStr(something) {
   return typeof something === "string";
@@ -181,47 +209,50 @@ function resemblesNumericEntity(str2, from, to) {
     whitespaceCount: whitespaceCount
   };
 }
-
-function stringFixBrokenNamedEntities(str, originalOpts) {
-  function findLongest(temp1) {
-    if (Array.isArray(temp1) && temp1.length) {
-      if (temp1.length === 1) {
-        return temp1[0];
+function findLongest(temp1) {
+  if (Array.isArray(temp1) && temp1.length) {
+    if (temp1.length === 1) {
+      return temp1[0];
+    }
+    return temp1.reduce(function (accum, tempObj) {
+      if (tempObj.tempEnt.length > accum.tempEnt.length) {
+        return tempObj;
       }
-      return temp1.reduce(function (accum, tempObj) {
-        if (tempObj.tempEnt.length > accum.tempEnt.length) {
-          return tempObj;
-        }
-        return accum;
+      return accum;
+    });
+  }
+  return temp1;
+}
+function removeGappedFromMixedCases(str, temp1) {
+  if (arguments.length !== 2) {
+    throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
+  }
+  var copy;
+  if (Array.isArray(temp1) && temp1.length) {
+    copy = Array.from(temp1);
+    if (copy.length > 1 && copy.some(function (entityObj) {
+      return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
+    }) && copy.some(function (entityObj) {
+      return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] !== ";";
+    })) {
+      copy = copy.filter(function (entityObj) {
+        return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
       });
     }
-    return temp1;
-  }
-  function removeGappedFromMixedCases(temp1) {
-    var copy;
-    if (Array.isArray(temp1) && temp1.length) {
-      copy = Array.from(temp1);
-      if (copy.length > 1 && copy.some(function (entityObj) {
-        return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
-      }) && copy.some(function (entityObj) {
-        return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] !== ";";
-      })) {
-        copy = copy.filter(function (entityObj) {
-          return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
-        });
-      }
-      if (!(copy.every(function (entObj) {
-        return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
-      }) || copy.every(function (entObj) {
-        return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
-      }))) {
-        return findLongest(copy.filter(function (entObj) {
-          return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
-        }));
-      }
+    if (!(copy.every(function (entObj) {
+      return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+    }) || copy.every(function (entObj) {
+      return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
+    }))) {
+      return findLongest(copy.filter(function (entObj) {
+        return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
+      }));
     }
-    return findLongest(temp1);
   }
+  return findLongest(temp1);
+}
+
+function stringFixBrokenNamedEntities(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (").concat(_typeof(str), "-type)"));
   }
@@ -242,7 +273,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (!isObj(originalOpts)) {
       throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), "-type)"));
     } else {
-      opts = _objectSpread2({}, defaults, {}, originalOpts);
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
     }
   } else {
     opts = defaults;
@@ -256,26 +287,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
   }
-  var ampersandNotNeeded = false;
-  var nbspDefault = {
-    nameStartsAt: null,
-    ampersandNecessary: null,
-    patience: 1,
-    matchedN: null,
-    matchedB: null,
-    matchedS: null,
-    matchedP: null,
-    matchedSemicol: null
-  };
-  var nbsp = clone(nbspDefault);
-  var nbspWipe = function nbspWipe() {
-    nbsp = clone(nbspDefault);
-  };
   var rangesArr2 = [];
-  var smallestCharFromTheSetAt;
-  var largestCharFromTheSetAt;
-  var matchedLettersCount;
-  var setOfValues;
   var percentageDone;
   var lastPercentageDone;
   var len = str.length + 1;
@@ -283,7 +295,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var doNothingUntil = null;
   var letterSeqStartAt = null;
   var brokenNumericEntityStartAt = null;
-  var falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"];
   var _loop = function _loop(i) {
     if (opts.progressFn) {
       percentageDone = Math.floor(counter / len * 100);
@@ -300,56 +311,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         return "continue";
       }
     }
-    matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
-    setOfValues = [nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP].filter(function (val) {
-      return val !== null;
-    });
-    smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
-    largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";") && (nbsp.matchedB !== null || !(str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[stringLeftRight.left(str, smallestCharFromTheSetAt)] && str[stringLeftRight.left(str, smallestCharFromTheSetAt)].toLowerCase() === "e") && !(nbsp.matchedN !== null && stringLeftRight.rightSeq(str, nbsp.matchedN, {
-      i: true
-    }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
-      var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-      var beginningOfTheRange = chompedAmpFromLeft || nbsp.nameStartsAt;
-      if (!falsePositivesArr.some(function (val) {
-        return str.slice(beginningOfTheRange).startsWith(val);
-      }) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
-        rangesArr2.push({
-          ruleName: "bad-named-html-entity-malformed-nbsp",
-          entityName: "nbsp",
-          rangeFrom: beginningOfTheRange,
-          rangeTo: i,
-          rangeValEncoded: "&nbsp;",
-          rangeValDecoded: "\xA0"
-        });
-      }
-      else if (opts.decode) {
-          rangesArr2.push({
-            ruleName: "encoded-html-entity-nbsp",
-            entityName: "nbsp",
-            rangeFrom: beginningOfTheRange,
-            rangeTo: i,
-            rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0"
-          });
-        } else if (opts.entityCatcherCb) {
-          opts.entityCatcherCb(beginningOfTheRange, i);
-        }
-      nbspWipe();
-      counter += 1;
-      if (str[i] === "&" && str[i + 1] !== "&") {
-        nbsp.nameStartsAt = i;
-        nbsp.ampersandNecessary = false;
-      }
-      return "continue";
-    }
-    if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
-      nbspWipe();
-      counter += 1;
-      return "continue";
-    }
     if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
-      if (i > letterSeqStartAt + 1 && str.slice(letterSeqStartAt - 1, i + 1) !== "&nbsp;") {
+      if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = stringLeftRight.left(str, letterSeqStartAt);
         var whatsEvenMoreToTheLeft = whatsOnTheLeft ? stringLeftRight.left(str, whatsOnTheLeft) : "";
@@ -360,8 +323,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             var tempEnt;
             var tempRes;
             var temp1 = allNamedHtmlEntities.entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
-              if (tempRes && oneOfKnownEntities !== "nbsp") {
+              tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+              if (tempRes) {
                 return gatheredSoFar.concat([{
                   tempEnt: oneOfKnownEntities,
                   tempRes: tempRes
@@ -369,7 +332,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               }
               return gatheredSoFar;
             }, []);
-            temp1 = removeGappedFromMixedCases(temp1);
+            temp1 = removeGappedFromMixedCases(str, temp1);
             if (temp1) {
               var _temp = temp1;
               tempEnt = _temp.tempEnt;
@@ -394,16 +357,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             var _tempEnt;
             var _tempRes;
             var _temp2 = allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              var tempRes = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
-              if (tempRes && oneOfKnownEntities !== "nbsp" && !(oneOfKnownEntities === "block" && str[stringLeftRight.left(str, letterSeqStartAt)] === ":")) {
+              _tempRes = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+              if (_tempRes && !(oneOfKnownEntities === "block" && str[stringLeftRight.left(str, letterSeqStartAt)] === ":")) {
                 return gatheredSoFar.concat([{
                   tempEnt: oneOfKnownEntities,
-                  tempRes: tempRes
+                  tempRes: _tempRes
                 }]);
               }
               return gatheredSoFar;
             }, []);
-            _temp2 = removeGappedFromMixedCases(_temp2);
+            _temp2 = removeGappedFromMixedCases(str, _temp2);
             if (_temp2) {
               var _temp3 = _temp2;
               _tempEnt = _temp3.tempEnt;
@@ -431,7 +394,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             });
             brokenNumericEntityStartAt = null;
           }
-        } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
+        } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             var situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
             if (situation.probablyNumeric) {
@@ -472,9 +435,72 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 opts.entityCatcherCb(whatsOnTheLeft, i + 1);
               }
             } else {
+              if (potentialEntity.length <= 50) {
+                var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
+                  return char.trim().length;
+                }).join("");
+                if (potentialEntityOnlyNonWhitespaceChars.length <= allNamedHtmlEntities.maxLength && allNamedHtmlEntities.allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                  if (
+                  !allNamedHtmlEntities.allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                    var matchingEntitiesOfCorrectCaseArr = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (ent) {
+                      return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
+                    });
+                    if (matchingEntitiesOfCorrectCaseArr.length === 1) {
+                      rangesArr2.push({
+                        ruleName: "bad-named-html-entity-malformed-".concat(matchingEntitiesOfCorrectCaseArr[0]),
+                        entityName: matchingEntitiesOfCorrectCaseArr[0],
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: "&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"),
+                        rangeValDecoded: allNamedHtmlEntities.decode("&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"))
+                      });
+                    } else {
+                      rangesArr2.push({
+                        ruleName: "bad-named-html-entity-unrecognised",
+                        entityName: null,
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: null,
+                        rangeValDecoded: null
+                      });
+                    }
+                  } else if (
+                  i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
+                    var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
+                    if (
+                    Object.keys(allNamedHtmlEntities.uncertain).includes(potentialEntityOnlyNonWhitespaceChars) &&
+                    !str[rangeFrom + 1].trim().length) {
+                      letterSeqStartAt = null;
+                      return "continue";
+                    }
+                    rangesArr2.push({
+                      ruleName: "bad-named-html-entity-malformed-".concat(potentialEntityOnlyNonWhitespaceChars),
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom: rangeFrom,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                      rangeValDecoded: allNamedHtmlEntities.decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                    });
+                  } else if (opts.decode) {
+                    rangesArr2.push({
+                      ruleName: "encoded-html-entity-".concat(potentialEntityOnlyNonWhitespaceChars),
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                      rangeValDecoded: allNamedHtmlEntities.decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                    });
+                  } else if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
+                  letterSeqStartAt = null;
+                  return "continue";
+                }
+              }
               var _firstChar = letterSeqStartAt;
               var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
               var _tempEnt2;
+              var temp;
               if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
                 _tempEnt2 = situation.charTrimmed;
                 var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"));
@@ -486,21 +512,59 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"),
                   rangeValDecoded: _decodedEntity2
                 });
+              } else if (
+              potentialEntity.length < allNamedHtmlEntities.maxLength + 2 && (
+              (temp = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
+                return leven(curr, potentialEntity) === 1;
+              })) && temp.length ||
+              (temp = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
+                return leven(curr, potentialEntity) === 2 && curr.length > 3;
+              })) && temp.length)) {
+                if (temp.length === 1) {
+                  var _temp4 = temp;
+                  var _temp5 = _slicedToArray(_temp4, 1);
+                  _tempEnt2 = _temp5[0];
+                  rangesArr2.push({
+                    ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt2),
+                    entityName: _tempEnt2,
+                    rangeFrom: whatsOnTheLeft,
+                    rangeTo: i + 1,
+                    rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                    rangeValDecoded: allNamedHtmlEntities.decode("&".concat(_tempEnt2, ";"))
+                  });
+                } else {
+                  var lengthOfLongestCaughtEnt = temp.reduce(function (acc, curr) {
+                    return curr.length > acc ? curr.length : acc;
+                  }, 0);
+                  temp = temp.filter(function (ent) {
+                    return ent.length === lengthOfLongestCaughtEnt;
+                  });
+                  if (temp.length === 1) {
+                    rangesArr2.push({
+                      ruleName: "bad-named-html-entity-malformed-".concat(temp[0]),
+                      entityName: temp[0],
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(temp[0], ";"),
+                      rangeValDecoded: allNamedHtmlEntities.decode("&".concat(temp[0], ";"))
+                    });
+                  }
+                }
               } else if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWithCaseInsensitive, str[_firstChar].toLowerCase()) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()], str[_secondChar].toLowerCase())) {
                 var _tempRes2;
                 var matchedEntity = allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()][str[_secondChar].toLowerCase()].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-                  var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
+                  _tempRes2 = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
                     i: true
                   }].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
-                  if (tempRes && oneOfKnownEntities !== "nbsp") {
+                  if (_tempRes2) {
                     return gatheredSoFar.concat([{
                       tempEnt: oneOfKnownEntities,
-                      tempRes: tempRes
+                      tempRes: _tempRes2
                     }]);
                   }
                   return gatheredSoFar;
                 }, []);
-                matchedEntity = removeGappedFromMixedCases(matchedEntity);
+                matchedEntity = removeGappedFromMixedCases(str, matchedEntity);
                 if (matchedEntity) {
                   var _matchedEntity = matchedEntity;
                   _tempEnt2 = _matchedEntity.tempEnt;
@@ -591,16 +655,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 }
               }
               if (!_tempEnt2) {
-                if (situation.charTrimmed.toLowerCase() !== "&nbsp;") {
-                  rangesArr2.push({
-                    ruleName: "bad-named-html-entity-unrecognised",
-                    entityName: null,
-                    rangeFrom: whatsOnTheLeft,
-                    rangeTo: i + 1,
-                    rangeValEncoded: null,
-                    rangeValDecoded: null
-                  });
-                }
+                rangesArr2.push({
+                  ruleName: "bad-named-html-entity-unrecognised",
+                  entityName: null,
+                  rangeFrom: whatsOnTheLeft,
+                  rangeTo: i + 1,
+                  rangeValEncoded: null,
+                  rangeValDecoded: null
+                });
               }
             }
           }
@@ -628,13 +690,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         var nextAmpOnTheRight = stringLeftRight.rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
         if (nextAmpOnTheRight) {
           toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
-          var temp;
+          var _temp6;
           do {
-            temp = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
-            if (temp) {
-              toDeleteAllAmpEndHere = temp.rightmostChar + 1;
+            _temp6 = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
+            if (_temp6) {
+              toDeleteAllAmpEndHere = _temp6.rightmostChar + 1;
             }
-          } while (temp);
+          } while (_temp6);
         }
         var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
         var secondCharThatFollows = firstCharThatFollows ? stringLeftRight.right(str, firstCharThatFollows) : null;
@@ -658,14 +720,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               rangeValDecoded: allNamedHtmlEntities.decode("&".concat(matchedTemp, ";"))
             });
           } else if (_whatsOnTheLeft) {
-            var rangeFrom = i;
+            var _rangeFrom = i;
             var spaceReplacement = "";
             if (str[i - 1] === " ") ;
             if (opts.cb) {
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",
                 entityName: matchedTemp,
-                rangeFrom: rangeFrom,
+                rangeFrom: _rangeFrom,
                 rangeTo: doNothingUntil,
                 rangeValEncoded: "".concat(spaceReplacement, "&").concat(matchedTemp, ";"),
                 rangeValDecoded: "".concat(spaceReplacement).concat(allNamedHtmlEntities.decode("&".concat(matchedTemp, ";")))
@@ -675,117 +737,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       }
     }
-    if (str[i] === "&") {
-      if (nbsp.nameStartsAt && nbsp.nameStartsAt < i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
-        nbspWipe();
-      }
-      nbsp.nameStartsAt = i;
-      nbsp.ampersandNecessary = false;
-    }
-    if (str[i] && str[i].toLowerCase() === "n") {
-      if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
-        nbspWipe();
-        counter += 1;
-        return "continue";
-      }
-      if (nbsp.matchedN === null) {
-        nbsp.matchedN = i;
-      }
-      if (nbsp.nameStartsAt === null) {
-        nbsp.nameStartsAt = i;
-        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-          nbsp.ampersandNecessary = true;
-        } else if (nbsp.ampersandNecessary !== true) {
-          nbsp.ampersandNecessary = false;
-        }
-      }
-    }
-    if (str[i] && str[i].toLowerCase() === "b") {
-      if (nbsp.nameStartsAt !== null) {
-        if (nbsp.matchedB === null) {
-          nbsp.matchedB = i;
-        }
-      } else if (nbsp.patience) {
-        nbsp.patience -= 1;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedB = i;
-        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-          nbsp.ampersandNecessary = true;
-        } else if (nbsp.ampersandNecessary !== true) {
-          nbsp.ampersandNecessary = false;
-        }
-      } else {
-        nbspWipe();
-        counter += 1;
-        return "continue";
-      }
-    }
-    if (str[i] && str[i].toLowerCase() === "s") {
-      if (nbsp.nameStartsAt !== null) {
-        if (nbsp.matchedS === null) {
-          nbsp.matchedS = i;
-        }
-      } else if (nbsp.patience) {
-        nbsp.patience -= 1;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedS = i;
-        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-          nbsp.ampersandNecessary = true;
-        } else if (nbsp.ampersandNecessary !== true) {
-          nbsp.ampersandNecessary = false;
-        }
-      } else {
-        nbspWipe();
-        counter += 1;
-        return "continue";
-      }
-    }
-    if (str[i] && str[i].toLowerCase() === "p") {
-      if (stringLeftRight.leftSeq(str, i, "t", "h", "i", "n", "s")) {
-        nbspWipe();
-      } else if (nbsp.nameStartsAt !== null) {
-        if (nbsp.matchedP === null) {
-          nbsp.matchedP = i;
-        }
-      } else if (nbsp.patience) {
-        nbsp.patience -= 1;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedP = i;
-        if (nbsp.ampersandNecessary === null && !ampersandNotNeeded) {
-          nbsp.ampersandNecessary = true;
-        } else if (nbsp.ampersandNecessary !== true) {
-          nbsp.ampersandNecessary = false;
-        }
-      } else {
-        nbspWipe();
-        counter += 1;
-        return "continue";
-      }
-    }
-    if (str[i] === ";") {
-      if (nbsp.nameStartsAt !== null) {
-        nbsp.matchedSemicol = i;
-        if (nbsp.matchedN &&
-        !nbsp.matchedB && !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && nbsp.matchedB &&
-        !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && nbsp.matchedS &&
-        !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP
-        ) {
-            nbspWipe();
-          }
-      }
-    }
     if (str[i] === "#" && stringLeftRight.right(str, i) && str[stringLeftRight.right(str, i)].toLowerCase() === "x" && (!str[i - 1] || !stringLeftRight.left(str, i) || str[stringLeftRight.left(str, i)] !== "&")) {
       if (isNumber(str[stringLeftRight.right(str, stringLeftRight.right(str, i))])) {
         brokenNumericEntityStartAt = i;
-      }
-    }
-    if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
-      if (nbsp.patience) {
-        nbsp.patience -= 1;
-      } else {
-        nbspWipe();
-        counter += 1;
-        return "continue";
       }
     }
     counter += 1;
