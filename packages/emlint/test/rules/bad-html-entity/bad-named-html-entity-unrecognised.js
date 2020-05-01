@@ -19,7 +19,7 @@ tap.test(
         "bad-html-entity": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
+    t.equal(applyFixes(str, messages), str, "01.01.01");
     t.match(messages, [
       {
         ruleId: "bad-named-html-entity-unrecognised",

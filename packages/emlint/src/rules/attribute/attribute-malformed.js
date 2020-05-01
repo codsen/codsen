@@ -40,12 +40,12 @@ function attributeMalformed(context, ...opts) {
 
         let somethingMatched = false;
 
-        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
-          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
+        for (const oneOfAttribs of allHtmlAttribs.values()) {
+          if (leven(oneOfAttribs, node.attribName) === 1) {
             console.log(`045 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${allHtmlAttribs[i]}".`,
+              message: `Probably meant "${oneOfAttribs}".`,
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt, // second elem. from last range
               fix: {
@@ -53,7 +53,7 @@ function attributeMalformed(context, ...opts) {
                   [
                     node.attribNameStartsAt,
                     node.attribNameEndsAt,
-                    allHtmlAttribs[i],
+                    oneOfAttribs,
                   ],
                 ],
               },
