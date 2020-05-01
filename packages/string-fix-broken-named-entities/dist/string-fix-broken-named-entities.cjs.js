@@ -518,7 +518,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 return leven(curr, potentialEntity) === 1;
               })) && temp.length ||
               (temp = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
-                return leven(curr, potentialEntity) === 2 && curr.length > 3;
+                return leven(curr, potentialEntity) === 2 && potentialEntity.length > 3;
               })) && temp.length)) {
                 if (temp.length === 1) {
                   var _temp4 = temp;

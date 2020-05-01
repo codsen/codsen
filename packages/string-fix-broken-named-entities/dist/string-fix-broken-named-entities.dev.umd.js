@@ -10935,7 +10935,7 @@
                 //
                 // b) two are different but entity is at least 4 chars long:
                 (temp = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (curr) {
-                  return leven_1(curr, potentialEntity) === 2 && curr.length > 3;
+                  return leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3;
                 })) && temp.length)) {
                   // now the problem: what if there were multiple entities matched?
                   if (temp.length === 1) {

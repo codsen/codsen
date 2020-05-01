@@ -587,7 +587,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   temp.length) ||
                   ((temp = [...allNamedEntitiesSetOnly].filter(
                     (curr) =>
-                      leven(curr, potentialEntity) === 2 && curr.length > 3
+                      leven(curr, potentialEntity) === 2 &&
+                      potentialEntity.length > 3
                   )) &&
                     temp.length))
               ) {
