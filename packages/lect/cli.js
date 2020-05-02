@@ -539,8 +539,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
+import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
-import babel from "rollup-plugin-babel";
 ${
   pack.devDependencies["@rollup/plugin-json"]
     ? `import json from "@rollup/plugin-json";\n`
@@ -1732,7 +1732,7 @@ function step6() {
           : sourceContainsDefaultExport
           ? camelCase(pack.name)
           : !pack.name.startsWith("gulp-") &&
-            !pack.name.startsWith("eslint-plugin-") &&
+            // !pack.name.startsWith("eslint-plugin-") &&
             !isCLI
           ? process.exit(1)
           : "";
