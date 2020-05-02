@@ -12,7 +12,7 @@
     "plugin:row-num/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 11,
     "sourceType": "module"
   },
   "plugins": ["row-num"],
@@ -48,10 +48,13 @@
           "**/test/**",
           "**/t-util/**",
           "**/*test.js",
-          "**/*.spec.js"
+          "**/*.spec.js",
+          "**/perf/**",
+          "scripts/run-perf*.js"
         ]
       }
     ],
+    "no-restricted-syntax": 0,
     "no-unneeded-ternary": "error",
     "no-useless-return": "error",
     "no-var": "error",
