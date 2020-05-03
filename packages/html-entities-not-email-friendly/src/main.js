@@ -3686,6 +3686,68 @@ const notEmailFriendlySetOnly = new Set([
   "zscr",
 ]);
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                                   S E T
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 const notEmailFriendlyLowercaseSetOnly = new Set([
   "abreve",
   "ac",
@@ -5227,13 +5289,13 @@ const notEmailFriendlyMinLength = 2;
 const notEmailFriendlyMaxLength = 31;
 
 console.log(
-  `5230 notEmailFriendly - total keys: ${Object.keys(notEmailFriendly).length}`
+  `5292 notEmailFriendly - total keys: ${Object.keys(notEmailFriendly).length}`
 );
 console.log(
-  `5233 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
+  `5295 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
 );
 console.log(
-  `5236 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
+  `5298 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
 );
 
 // -------------------------------------------------------------------------

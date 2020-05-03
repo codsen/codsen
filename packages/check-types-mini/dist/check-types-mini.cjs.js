@@ -104,7 +104,7 @@ function checkTypesMini(obj, ref, originalOptions) {
   };
   var opts;
   if (existy(originalOptions) && isObj(originalOptions)) {
-    opts = _objectSpread2({}, defaults, {}, originalOptions);
+    opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
   } else {
     opts = _objectSpread2({}, defaults);
   }

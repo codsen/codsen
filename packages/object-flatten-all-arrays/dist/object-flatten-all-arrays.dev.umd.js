@@ -4131,7 +4131,7 @@
       flattenArraysContainingStringsToBeEmpty: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     var incommingObj = lodash_clonedeep(originalIncommingObj);
     var isFirstObj;

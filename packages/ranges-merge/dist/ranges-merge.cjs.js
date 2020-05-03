@@ -95,7 +95,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -129,7 +129,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   var opts;
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2({}, defaults, {}, originalOpts);
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {

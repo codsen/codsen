@@ -1021,7 +1021,7 @@
       optsVarName: "given variable"
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (existy(opts.msg) && opts.msg.length > 0) {
       opts.msg = "".concat(opts.msg.trim(), " ");

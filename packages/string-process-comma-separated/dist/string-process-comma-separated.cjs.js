@@ -92,7 +92,7 @@ function processCommaSeparated(str, originalOpts) {
     cb: null,
     errCb: null
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (!Number.isInteger(originalOpts.from)) {
     opts.from = 0;
   }

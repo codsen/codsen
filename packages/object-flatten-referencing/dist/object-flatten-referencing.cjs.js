@@ -214,7 +214,7 @@ function outer(originalInput1, originalReference1, opts1) {
       mergeWithoutTrailingBrIfLineContainsBr: true,
       enforceStrictKeyset: true
     };
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
     opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
     opts.preventWrappingIfContains = arrayiffyString(opts.preventWrappingIfContains);
     opts.dontWrapPaths = arrayiffyString(opts.dontWrapPaths);
@@ -271,7 +271,7 @@ function outer(originalInput1, originalReference1, opts1) {
               if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 input[key] = flattenArr(flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
-                input[key] = ofr(input[key], reference[key], _objectSpread2({}, opts, {
+                input[key] = ofr(input[key], reference[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   wrapGlobalFlipSwitch: false
                 }), wrap, joinArraysUsingBrs, currentPath);
               } else {

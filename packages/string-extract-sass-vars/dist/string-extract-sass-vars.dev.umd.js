@@ -96,7 +96,7 @@
       cb: null
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.cb && typeof opts.cb !== "function") {
       throw new Error("string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));

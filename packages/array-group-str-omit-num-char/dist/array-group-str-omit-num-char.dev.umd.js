@@ -1349,7 +1349,7 @@
     }; // deliberate != below, we check for undefined and null:
 
     if (originalOpts != null) {
-      opts = _objectSpread2({}, defaults, {}, originalOpts);
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
     } else {
       opts = _objectSpread2({}, defaults);
     }

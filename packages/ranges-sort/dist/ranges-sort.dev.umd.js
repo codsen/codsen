@@ -105,7 +105,7 @@
       progressFn: null
     }; // fill any settings with defaults if missing:
 
-    var opts = _objectSpread2({}, defaults, {}, originalOptions); // arrOfRanges validation
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
 
 
     var culpritsIndex;

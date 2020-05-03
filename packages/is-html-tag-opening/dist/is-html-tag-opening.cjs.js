@@ -76,7 +76,7 @@ function isOpening(str) {
     allowCustomTagNames: false,
     skipOpeningBracket: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
   var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
   var r1 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, ">"), "g");

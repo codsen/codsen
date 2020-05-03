@@ -111,7 +111,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   var defaults = {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var data = {
     id: 0
   };

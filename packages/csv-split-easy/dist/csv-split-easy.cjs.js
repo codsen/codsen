@@ -93,7 +93,7 @@ function splitEasy(str, originalOpts) {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (typeof str !== "string") {
     throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   } else {

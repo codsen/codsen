@@ -22,7 +22,6 @@
 ```bash
 npm i arrayiffy-if-string
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`arrayiffy`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -50,11 +49,11 @@ const arrayiffy = arrayiffyIfString;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                              | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/arrayiffy-if-string.cjs.js` | 518 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/arrayiffy-if-string.esm.js` | 501 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/arrayiffy-if-string.umd.js` | 555 B |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/arrayiffy-if-string.cjs.js` | 518 B
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/arrayiffy-if-string.esm.js` | 501 B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/arrayiffy-if-string.umd.js` | 555 B
 
 **[⬆ back to top](#)**
 

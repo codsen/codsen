@@ -94,7 +94,7 @@
       nbsp: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     function check(char) {
       return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");

@@ -4590,7 +4590,7 @@
     if (!originalOpts) {
       opts = defaults;
     } else {
-      opts = _objectSpread2({}, defaults, {}, originalOpts);
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
     } // vars
     // ---------------------------------------------------------------------------
     // single, non-recursively encoded entity:

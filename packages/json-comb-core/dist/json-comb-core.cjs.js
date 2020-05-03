@@ -143,7 +143,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -237,7 +237,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   var defaults = {
     placeholder: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var culpritIndex;
   var culpritVal;
   return new Promise(function (resolve, reject) {
@@ -287,7 +287,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   var defaults = {
     placeholder: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
   };
@@ -314,7 +314,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -353,7 +353,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     placeholder: false,
     useNullAsExplicitFalse: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -391,7 +391,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     placeholder: false,
     comments: "__comment__"
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (opts.comments === 1 || opts.comments === "1") {
     throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix.");
   }

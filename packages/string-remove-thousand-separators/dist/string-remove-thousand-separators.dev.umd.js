@@ -1313,7 +1313,7 @@
       forceUKStyle: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // trim whitespace and wrapping double quotes:
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // trim whitespace and wrapping double quotes:
 
 
     var res = lodash_trim(str.trim(), '"'); // end sooner if it's an empty string:

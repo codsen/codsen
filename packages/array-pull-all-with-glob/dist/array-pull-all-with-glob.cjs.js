@@ -127,7 +127,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   if (originalOpts === null) {
     opts = _objectSpread2({}, defaults);
   } else {
-    opts = _objectSpread2({}, defaults, {}, originalOpts);
+    opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   }
   return Array.from(originalInput).filter(function (originalVal) {
     return !toBeRemoved.some(function (remVal) {

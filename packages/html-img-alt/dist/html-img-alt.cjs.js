@@ -110,7 +110,7 @@ function alts(str, originalOpts) {
   var defaults = {
     unfancyTheAltContents: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   checkTypes(opts, defaults, {
     msg: "html-img-alt/alts(): [THROW_ID_03]"
   });

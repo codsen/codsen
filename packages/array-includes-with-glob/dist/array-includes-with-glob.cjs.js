@@ -89,7 +89,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   var defaults = {
     arrayVsArrayAllMustBeFound: "any"
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (arguments.length === 0) {
     throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
   }

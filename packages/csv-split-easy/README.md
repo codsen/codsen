@@ -24,7 +24,6 @@
 ```bash
 npm i csv-split-easy
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`splitEasy`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -52,11 +51,11 @@ const splitEasy = csvSplitEasy;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                         | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-split-easy.cjs.js` | 6 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 5 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 17 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 6 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 5 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 17 KB
 
 **[⬆ back to top](#)**
 

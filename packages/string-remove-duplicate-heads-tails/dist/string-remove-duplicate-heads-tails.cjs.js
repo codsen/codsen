@@ -128,7 +128,7 @@ function removeDuplicateHeadsTails(str) {
     heads: ["{{"],
     tails: ["}}"]
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   opts.heads = opts.heads.map(function (el) {
     return el.trim();
   });

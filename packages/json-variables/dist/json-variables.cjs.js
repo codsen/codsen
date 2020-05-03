@@ -441,7 +441,7 @@ function jsonVariables(input) {
     throwWhenNonStringInsertedInString: false,
     allowUnresolved: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
   } else if (!Array.isArray(opts.dontWrapVars)) {

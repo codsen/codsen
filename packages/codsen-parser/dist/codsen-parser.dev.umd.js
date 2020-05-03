@@ -4713,7 +4713,7 @@
       errCb: null
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); //
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); //
     //
     //
     //
@@ -4974,7 +4974,7 @@
           // at this level, under this path:
 
           if (suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, _objectSpread2({}, tokenObj, {
+            objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
               end: tokenObj.start + suspiciousEndingStartsAt,
               value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
             }));
@@ -5054,7 +5054,7 @@
 
 
                 path = previousPath;
-                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value).concat(tokenObj.value)
@@ -5065,7 +5065,7 @@
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
-                objectPath.set(res, previousPath, _objectSpread2({}, previousTagsToken, {
+                objectPath.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
                 })); // 2. tweak the current "comment" token
@@ -5074,7 +5074,7 @@
                   tokenObj.children = [];
                 }
 
-                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
@@ -5121,7 +5121,7 @@
                 // the previous token's children tokens
 
 
-                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
@@ -5134,7 +5134,7 @@
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
-                objectPath.set(res, parentsLastChildTokenPath, _objectSpread2({}, parentsLastChildTokenValue, {
+                objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
                   end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
                 })); // 2. tweak the current "comment" token
@@ -5143,7 +5143,7 @@
                   tokenObj.children = [];
                 }
 
-                objectPath.set(res, path, _objectSpread2({}, tokenObj, {
+                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)

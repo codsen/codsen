@@ -100,7 +100,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -241,7 +241,7 @@ function find(input, originalOpts) {
   } else {
     opts.only = "any";
   }
-  return monkey(input, _objectSpread2({}, opts, {
+  return monkey(input, _objectSpread2(_objectSpread2({}, opts), {}, {
     mode: "find"
   }));
 }
@@ -261,7 +261,7 @@ function get(input, originalOpts) {
   } else if (!Number.isInteger(opts.index)) {
     throw new Error("ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ".concat(opts.index, " (type ").concat(_typeof(opts.index), ")"));
   }
-  return monkey(input, _objectSpread2({}, opts, {
+  return monkey(input, _objectSpread2(_objectSpread2({}, opts), {}, {
     mode: "get"
   }));
 }
@@ -295,7 +295,7 @@ function set(input, originalOpts) {
     },
     msg: "ast-monkey/set(): [THROW_ID_18*]"
   });
-  return monkey(input, _objectSpread2({}, opts, {
+  return monkey(input, _objectSpread2(_objectSpread2({}, opts), {}, {
     mode: "set"
   }));
 }
@@ -315,7 +315,7 @@ function drop(input, originalOpts) {
   } else if (!Number.isInteger(opts.index)) {
     throw new Error("ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
-  return monkey(input, _objectSpread2({}, opts, {
+  return monkey(input, _objectSpread2(_objectSpread2({}, opts), {}, {
     mode: "drop"
   }));
 }
@@ -346,7 +346,7 @@ function del(input, originalOpts) {
   } else {
     opts.only = "any";
   }
-  return monkey(input, _objectSpread2({}, opts, {
+  return monkey(input, _objectSpread2(_objectSpread2({}, opts), {}, {
     mode: "del"
   }));
 }

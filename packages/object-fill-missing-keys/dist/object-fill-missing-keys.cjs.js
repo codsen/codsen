@@ -159,7 +159,7 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     useNullAsExplicitFalse: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOptsWrapper);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptsWrapper);
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
   var culpritsVal = null;
   var culpritsIndex = null;

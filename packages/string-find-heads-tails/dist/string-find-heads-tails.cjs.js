@@ -97,7 +97,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
     relaxedAPI: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
     opts.fromIndex = Number(opts.fromIndex);
   } else if (!Number.isInteger(opts.fromIndex) || opts.fromIndex < 0) {

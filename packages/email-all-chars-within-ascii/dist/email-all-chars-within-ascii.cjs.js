@@ -92,7 +92,7 @@ function within(str, originalOpts) {
     messageOnly: false,
     checkLineLength: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var counter = 0;
   for (var i = 0, len = str.length; i < len; i++) {
     counter += 1;

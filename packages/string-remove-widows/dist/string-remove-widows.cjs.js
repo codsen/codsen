@@ -175,7 +175,7 @@ function removeWidows(str, originalOpts) {
   var lastEncodedNbspEndedAt;
   var doNothingUntil;
   var bumpWordCountAt;
-  var opts = _objectSpread2({}, defaultOpts, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts);
   var whatWasDone = {
     removeWidows: false,
     convertEntities: false

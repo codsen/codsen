@@ -1,6 +1,6 @@
 /**
  * eslint-plugin-row-num
- * ESLint rule to update row numbers on each console.log
+ * ESLint plugin to update row numbers on each console.log
  * Version: 1.1.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

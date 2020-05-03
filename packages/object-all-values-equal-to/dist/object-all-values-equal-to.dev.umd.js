@@ -2221,7 +2221,7 @@
       arraysMustNotContainPlaceholders: true
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // and finally,
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // and finally,
 
 
     return allValuesEqualTo(inputOriginal, valueOriginal, opts);

@@ -22,7 +22,6 @@
 ```bash
 npm i helga
 ```
-
 Consume via a `require()`:
 
 ```js
@@ -48,11 +47,11 @@ const { helga, defaults, version } = helga;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/helga.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/helga.esm.js` | 723 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/helga.umd.js` | 3 KB  |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/helga.cjs.js` | 2 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/helga.esm.js` | 723 B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/helga.umd.js` | 3 KB
 
 **[⬆ back to top](#)**
 

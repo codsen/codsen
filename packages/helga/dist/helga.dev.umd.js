@@ -230,7 +230,7 @@
   };
 
   function helga(str, originalOpts) {
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // console.log(
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // console.log(
     //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
     //     opts,
     //     null,

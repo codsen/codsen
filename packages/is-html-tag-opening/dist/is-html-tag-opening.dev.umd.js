@@ -419,7 +419,7 @@
       skipOpeningBracket: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // =======
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // =======
 
 
     var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -

@@ -1,6 +1,6 @@
 /**
  * eslint-plugin-row-num
- * ESLint rule to update row numbers on each console.log
+ * ESLint plugin to update row numbers on each console.log
  * Version: 1.1.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -842,12 +842,12 @@
 
   var create = function create(context) {
     // console.log(
-    //   `009 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    //   `007 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
     // );
     return {
       CallExpression: function CallExpression(node) {
         // console.log(stringify(node, null, 4));
-        // console.log(`014 node.callee.type = ${node.callee.type}`);
+        // console.log(`012 node.callee.type = ${node.callee.type}`);
 
         /* istanbul ignore else */
         if (node.callee && node.callee.type === "MemberExpression" && node.callee.object && node.callee.object.type === "Identifier" && node.callee.object.name === "console" && node.callee.property && node.callee.property.type === "Identifier" && node.callee.property.name === "log" && node.arguments && Array.isArray(node.arguments) && node.arguments.length) {

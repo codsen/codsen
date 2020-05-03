@@ -97,7 +97,7 @@ function remSep(str, originalOpts) {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var res = trimChars(str.trim(), '"');
   if (res === "") {
     return res;

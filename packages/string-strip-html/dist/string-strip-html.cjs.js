@@ -101,7 +101,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -335,7 +335,7 @@ function stripHtml(str, originalOpts) {
     },
     cb: null
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
   opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
   var onlyStripTagsMode = !!opts.onlyStripTags.length;
@@ -355,7 +355,7 @@ function stripHtml(str, originalOpts) {
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
-      opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby, {}, originalOpts.dumpLinkHrefsNearby);
+      opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
     }

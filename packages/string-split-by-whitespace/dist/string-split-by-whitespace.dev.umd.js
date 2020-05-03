@@ -110,7 +110,7 @@
       ignoreRanges: []
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(function (arr) {
       return Array.isArray(arr);

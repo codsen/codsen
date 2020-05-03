@@ -243,7 +243,7 @@
       checkLineLength: true
     }; // fill any settings with defaults if missing:
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // -----------------------------------------------------------------------------
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // -----------------------------------------------------------------------------
     // allowed ASCII control characters:
     //
     // #9  - HT, horizontal tab

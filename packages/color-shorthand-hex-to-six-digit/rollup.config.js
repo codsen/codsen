@@ -3,8 +3,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
+import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
-import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -59,7 +59,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject"],
+      external: [
+        "hex-color-regex",
+        "lodash.clonedeep",
+        "lodash.isplainobject",
+      ],
       plugins: [
         strip({
           sourceMap: false,
@@ -74,7 +78,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject"],
+      external: [
+        "hex-color-regex",
+        "lodash.clonedeep",
+        "lodash.isplainobject",
+      ],
       plugins: [
         strip({
           sourceMap: false,

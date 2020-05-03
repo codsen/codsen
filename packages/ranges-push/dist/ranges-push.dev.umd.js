@@ -117,7 +117,7 @@
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -328,7 +328,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.3
+   * Version: 4.3.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -478,7 +478,7 @@
         mergeType: 1
       };
 
-      var opts = _objectSpread2({}, defaults, {}, originalOpts);
+      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {

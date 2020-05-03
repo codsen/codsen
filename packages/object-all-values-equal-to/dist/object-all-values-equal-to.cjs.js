@@ -124,7 +124,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   var defaults = {
     arraysMustNotContainPlaceholders: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 

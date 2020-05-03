@@ -1,7 +1,7 @@
 const Benchmark = require("benchmark");
-const { sortAllObjectsSync } = require("../packages/json-comb-core");
 const fs = require("fs");
 const path = require("path");
+const { sortAllObjectsSync } = require("../packages/json-comb-core");
 
 function runPerf(cb, callerDir) {
   const logThreshold = 1000;
@@ -57,7 +57,7 @@ function runPerf(cb, callerDir) {
     .add("t1", () => {
       cb();
     })
-    .on("complete", function() {
+    .on("complete", function () {
       //                                  |
       //                                  |
       //                                  |
@@ -71,13 +71,13 @@ function runPerf(cb, callerDir) {
       if (optsPerSec) {
         if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
           historicalData[version] = optsPerSec;
-          historicalData["lastPublished"] = optsPerSec;
+          historicalData.lastPublished = optsPerSec;
         }
-        historicalData["lastRan"] = historicalData[version];
+        historicalData.lastRan = historicalData[version];
         fs.writeFile(
           path.resolve(callerDir, "./perf/historical.json"),
           JSON.stringify(sortAllObjectsSync(historicalData), null, 4),
-          err => {
+          (err) => {
             if (err) {
               throw err;
             }

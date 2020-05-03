@@ -3212,7 +3212,7 @@
 
     var bumpWordCountAt; // prep the opts
 
-    var opts = _objectSpread2({}, defaultOpts, {}, originalOpts); // Now, strictly speaking, this program can remove widow words but also
+    var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // Now, strictly speaking, this program can remove widow words but also
     // it will decode any entities it encounters if option convertEntities is off.
     // We need an interface to report what actions were taken:
 

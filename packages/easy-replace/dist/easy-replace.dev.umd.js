@@ -215,7 +215,7 @@
       }
     };
 
-    var opts = _objectSpread2({}, defaults, {}, options); // enforce the peace and order:
+    var opts = _objectSpread2(_objectSpread2({}, defaults), options); // enforce the peace and order:
 
 
     var source = stringise(originalSource);

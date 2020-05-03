@@ -77,7 +77,7 @@ function groupStr(originalArr, originalOpts) {
     dedupePlease: true
   };
   if (originalOpts != null) {
-    opts = _objectSpread2({}, defaults, {}, originalOpts);
+    opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   } else {
     opts = _objectSpread2({}, defaults);
   }

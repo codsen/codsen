@@ -4140,14 +4140,14 @@
     });
   });
 
-  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
-
   var escapeStringRegexp = string => {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
-    }
+    } // Escape characters with special meaning either inside or outside character sets.
+    // Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
 
-    return string.replace(matchOperatorsRegex, '\\$&');
+
+    return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
   const regexpCache = new Map();
@@ -4169,7 +4169,7 @@
       pattern = pattern.slice(1);
     }
 
-    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
+    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
     const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
@@ -4185,13 +4185,13 @@
       return inputs;
     }
 
-    const firstNegated = patterns[0][0] === '!';
+    const isFirstPatternNegated = patterns[0][0] === '!';
     patterns = patterns.map(pattern => makeRegexp(pattern, options));
     const result = [];
 
     for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation
-      let matches = firstNegated;
+      // If first pattern is negated we include everything to match user expectation.
+      let matches = isFirstPatternNegated;
 
       for (const pattern of patterns) {
         if (pattern.test(input)) {
@@ -4911,7 +4911,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // this simple counter will later act as the "address" to each finding and will
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // this simple counter will later act as the "address" to each finding and will
     // be used in set() method to convert the value at this "address" within tree:
 
 

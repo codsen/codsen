@@ -95,7 +95,7 @@
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -8995,7 +8995,7 @@
       cb: null
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // filter non-string or whitespace entries from the following arrays or turn
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // filter non-string or whitespace entries from the following arrays or turn
     // them into arrays:
 
 
@@ -9028,7 +9028,7 @@
 
     if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
       if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
-        opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby, {}, originalOpts.dumpLinkHrefsNearby);
+        opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
       } else if (originalOpts.dumpLinkHrefsNearby) {
         // checking to omit value as number zero
         throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));

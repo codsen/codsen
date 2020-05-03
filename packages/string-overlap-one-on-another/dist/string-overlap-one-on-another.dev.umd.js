@@ -101,7 +101,7 @@
     } else if (_typeof(originalOpts) !== "object") {
       throw new Error("string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof(originalOpts), "\""));
     } else {
-      opts = _objectSpread2({}, defaults, {}, originalOpts);
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (!opts.offset) {
         opts.offset = 0;

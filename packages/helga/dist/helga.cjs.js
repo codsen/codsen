@@ -70,7 +70,7 @@ var defaults = {
   targetJSON: false
 };
 function helga(str, originalOpts) {
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var beautified = unescapeJs(str);
   var minified = unescapeJs(str);
   if (opts.targetJSON) {

@@ -78,7 +78,7 @@ function deleteKey(originalInput, originalOpts) {
     cleanup: true,
     only: "any"
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   opts.only = validateTheOnly(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"

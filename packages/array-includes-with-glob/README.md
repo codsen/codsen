@@ -1,6 +1,6 @@
 # array-includes-with-glob
 
-> like \_.includes but with wildcards
+> like _.includes but with wildcards
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -15,7 +15,6 @@
 ```bash
 npm i array-includes-with-glob
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`includesWithGlob`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -43,11 +42,11 @@ const includesWithGlob = arrayIncludesWithGlob;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-includes-with-glob.cjs.js` | 4 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-includes-with-glob.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-includes-with-glob.umd.js` | 4 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/array-includes-with-glob.cjs.js` | 4 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/array-includes-with-glob.esm.js` | 3 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/array-includes-with-glob.umd.js` | 4 KB
 
 **[⬆ back to top](#)**
 

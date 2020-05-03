@@ -95,7 +95,7 @@
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -2004,10 +2004,10 @@
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array"; // innerObj.path = `${innerObj.path}[${i}]`
 
-          callback(tree[i], undefined, _objectSpread2({}, innerObj, {
+          callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(path)
           }), stop);
-          traverseInner(tree[i], callback, _objectSpread2({}, innerObj, {
+          traverseInner(tree[i], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(path)
           }), stop);
         }
@@ -2026,10 +2026,10 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          callback(key, tree[key], _objectSpread2({}, innerObj, {
+          callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(_path)
           }), stop);
-          traverseInner(tree[key], callback, _objectSpread2({}, innerObj, {
+          traverseInner(tree[key], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(_path)
           }), stop);
         }

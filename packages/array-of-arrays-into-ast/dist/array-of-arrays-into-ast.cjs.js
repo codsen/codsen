@@ -95,7 +95,7 @@ function generateAst(input, originalOpts) {
   var defaults = {
     dedupe: true
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   checkTypes(opts, defaults, {
     msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
     optsVarName: "opts"

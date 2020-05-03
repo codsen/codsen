@@ -130,7 +130,7 @@
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -4272,14 +4272,14 @@
     return incommingObj;
   }
 
-  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
-
   var escapeStringRegexp = string => {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
-    }
+    } // Escape characters with special meaning either inside or outside character sets.
+    // Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
 
-    return string.replace(matchOperatorsRegex, '\\$&');
+
+    return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
   const regexpCache = new Map();
@@ -4301,7 +4301,7 @@
       pattern = pattern.slice(1);
     }
 
-    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
+    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
     const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
@@ -4317,13 +4317,13 @@
       return inputs;
     }
 
-    const firstNegated = patterns[0][0] === '!';
+    const isFirstPatternNegated = patterns[0][0] === '!';
     patterns = patterns.map(pattern => makeRegexp(pattern, options));
     const result = [];
 
     for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation
-      let matches = firstNegated;
+      // If first pattern is negated we include everything to match user expectation.
+      let matches = isFirstPatternNegated;
 
       for (const pattern of patterns) {
         if (pattern.test(input)) {
@@ -9710,7 +9710,7 @@
       placeholder: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     var culpritIndex;
     var culpritVal;
@@ -9774,7 +9774,7 @@
       placeholder: false
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     var fOpts = {
       flattenArraysContainingStringsToBeEmpty: true
@@ -9808,7 +9808,7 @@
       useNullAsExplicitFalse: true
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
       return isStr$3(val);
@@ -9859,7 +9859,7 @@
       useNullAsExplicitFalse: true
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
       return isStr$3(val);
@@ -9915,7 +9915,7 @@
       comments: "__comment__"
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.comments === 1 || opts.comments === "1") {
       throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix.");

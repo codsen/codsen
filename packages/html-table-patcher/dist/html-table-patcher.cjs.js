@@ -95,7 +95,7 @@ function patcher(html, generalOpts) {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
-  var opts = _objectSpread2({}, defaults, {}, generalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), generalOpts);
   if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())) {
     opts.cssStylesContent = undefined;
   }

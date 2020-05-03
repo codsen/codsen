@@ -85,7 +85,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     strictlyTwoElementsInRangeArrays: false,
     progressFn: null
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOptions);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
   var culpritsIndex;
   var culpritsLen;
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {

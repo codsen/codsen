@@ -101,7 +101,7 @@
       errCb: null
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // patch from/to values, they might have been given as nulls etc.
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // patch from/to values, they might have been given as nulls etc.
 
 
     if (!Number.isInteger(originalOpts.from)) {

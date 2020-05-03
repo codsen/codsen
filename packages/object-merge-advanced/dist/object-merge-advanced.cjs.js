@@ -276,7 +276,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], _objectSpread2({}, opts, {
+              }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                 ignoreEverything: true
               }));
             } else if (includes(key, opts.hardMergeKeys)) {
@@ -284,7 +284,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], _objectSpread2({}, opts, {
+              }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                 hardMergeEverything: true
               }));
             } else if (includes(key, opts.hardArrayConcatKeys)) {
@@ -292,7 +292,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], _objectSpread2({}, opts, {
+              }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                 hardArrayConcat: true
               }));
             } else {

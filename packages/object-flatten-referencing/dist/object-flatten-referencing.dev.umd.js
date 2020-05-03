@@ -2008,14 +2008,14 @@
     return res;
   }
 
-  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
-
   var escapeStringRegexp = string => {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
-    }
+    } // Escape characters with special meaning either inside or outside character sets.
+    // Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
 
-    return string.replace(matchOperatorsRegex, '\\$&');
+
+    return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
   const regexpCache = new Map();
@@ -2037,7 +2037,7 @@
       pattern = pattern.slice(1);
     }
 
-    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
+    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
     const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
@@ -2053,13 +2053,13 @@
       return inputs;
     }
 
-    const firstNegated = patterns[0][0] === '!';
+    const isFirstPatternNegated = patterns[0][0] === '!';
     patterns = patterns.map(pattern => makeRegexp(pattern, options));
     const result = [];
 
     for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation
-      let matches = firstNegated;
+      // If first pattern is negated we include everything to match user expectation.
+      let matches = isFirstPatternNegated;
 
       for (const pattern of patterns) {
         if (pattern.test(input)) {
@@ -2450,7 +2450,7 @@
 
       };
 
-      var opts = _objectSpread2({}, defaults, {}, originalOpts);
+      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
       opts.preventWrappingIfContains = arrayiffyString(opts.preventWrappingIfContains);
@@ -2548,7 +2548,7 @@
                   // to prevent that, we flip the switch on the global wrap
                   // setting for all deeper child nodes.
                   // we also clone the options object so as not to mutate it.
-                  input[key] = ofr(input[key], reference[key], _objectSpread2({}, opts, {
+                  input[key] = ofr(input[key], reference[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                     wrapGlobalFlipSwitch: false
                   }), wrap, joinArraysUsingBrs, currentPath);
                 } else {

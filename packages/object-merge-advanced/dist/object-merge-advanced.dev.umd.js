@@ -1929,14 +1929,14 @@
     module.exports = cloneDeep;
   });
 
-  const matchOperatorsRegex = /[|\\{}()[\]^$+*?.-]/g;
-
   var escapeStringRegexp = string => {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
-    }
+    } // Escape characters with special meaning either inside or outside character sets.
+    // Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
 
-    return string.replace(matchOperatorsRegex, '\\$&');
+
+    return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
   const regexpCache = new Map();
@@ -1958,7 +1958,7 @@
       pattern = pattern.slice(1);
     }
 
-    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '.*');
+    pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
     const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
@@ -1974,13 +1974,13 @@
       return inputs;
     }
 
-    const firstNegated = patterns[0][0] === '!';
+    const isFirstPatternNegated = patterns[0][0] === '!';
     patterns = patterns.map(pattern => makeRegexp(pattern, options));
     const result = [];
 
     for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation
-      let matches = firstNegated;
+      // If first pattern is negated we include everything to match user expectation.
+      let matches = isFirstPatternNegated;
 
       for (const pattern of patterns) {
         if (pattern.test(input)) {
@@ -4338,7 +4338,7 @@
                   path: currPath,
                   key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], _objectSpread2({}, opts, {
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   ignoreEverything: true
                 }));
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
@@ -4352,7 +4352,7 @@
                   path: currPath,
                   key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], _objectSpread2({}, opts, {
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardMergeEverything: true
                 }));
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
@@ -4364,7 +4364,7 @@
                   path: currPath,
                   key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], _objectSpread2({}, opts, {
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardArrayConcat: true
                 }));
               } else {

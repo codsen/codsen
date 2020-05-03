@@ -100,7 +100,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOptions);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
   var culpritsIndex;
   var culpritsLen;
   if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {

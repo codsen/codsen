@@ -64,7 +64,7 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     inclusiveRangeEnds: false,
     returnMatchedRangeInsteadOfTrue: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   if (!isArr(rangesArr)) {
     return false;
   }

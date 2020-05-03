@@ -4,12 +4,12 @@ import fixRowNums from "js-row-num";
 
 const create = (context) => {
   // console.log(
-  //   `009 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+  //   `007 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
   // );
   return {
     CallExpression(node) {
       // console.log(stringify(node, null, 4));
-      // console.log(`014 node.callee.type = ${node.callee.type}`);
+      // console.log(`012 node.callee.type = ${node.callee.type}`);
 
       /* istanbul ignore else */
       if (

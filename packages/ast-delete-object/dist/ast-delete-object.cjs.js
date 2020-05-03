@@ -97,7 +97,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     matchKeysStrictly: false,
     hungryForWhitespace: false
   };
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var input = clone(originalInput);
   var current;
   if (compare(input, objToDelete, {

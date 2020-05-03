@@ -160,7 +160,7 @@ function er(originalSource, options, originalReplacement) {
       rightOutsideNot: false
     }
   };
-  var opts = _objectSpread2({}, defaults, {}, options);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), options);
   var source = stringise(originalSource);
   opts.leftOutsideNot = stringise(opts.leftOutsideNot);
   opts.leftOutside = stringise(opts.leftOutside);

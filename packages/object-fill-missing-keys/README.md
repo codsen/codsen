@@ -25,7 +25,6 @@
 ```bash
 npm i object-fill-missing-keys
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`fillMissingKeysWrapper`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -53,11 +52,11 @@ const fillMissingKeysWrapper = objectFillMissingKeys;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-fill-missing-keys.cjs.js` | 7 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-fill-missing-keys.esm.js` | 5 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-fill-missing-keys.umd.js` | 38 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-fill-missing-keys.cjs.js` | 7 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-fill-missing-keys.esm.js` | 5 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-fill-missing-keys.umd.js` | 38 KB
 
 **[⬆ back to top](#)**
 

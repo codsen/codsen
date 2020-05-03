@@ -92,7 +92,7 @@
       mode: 2
     };
 
-    var optsOuter = _objectSpread2({}, defaults, {}, originalOptsOuter);
+    var optsOuter = _objectSpread2(_objectSpread2({}, defaults), originalOptsOuter);
 
     if (typeof optsOuter.mode === "string" && ["1", "2"].includes(optsOuter.mode)) {
       if (optsOuter.mode === "1") {

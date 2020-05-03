@@ -23,7 +23,6 @@
 ```bash
 npm i util-nonempty
 ```
-
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`nonEmpty`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -51,11 +50,11 @@ const nonEmpty = utilNonempty;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                        | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-nonempty.cjs.js` | 954 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-nonempty.esm.js` | 803 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 1 KB  |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 954 B
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 803 B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 1 KB
 
 **[⬆ back to top](#)**
 

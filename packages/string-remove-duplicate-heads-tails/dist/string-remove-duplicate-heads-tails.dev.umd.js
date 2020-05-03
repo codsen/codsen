@@ -1324,7 +1324,7 @@
       tails: ["}}"]
     };
 
-    var opts = _objectSpread2({}, defaults, {}, originalOpts); // first, let's trim heads and tails' array elements:
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // first, let's trim heads and tails' array elements:
 
 
     opts.heads = opts.heads.map(function (el) {

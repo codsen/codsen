@@ -1973,9 +1973,9 @@
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array"; // innerObj.path = `${innerObj.path}[${i}]`
 
-            res = traverseInner(callback(tree[i], undefined, _objectSpread2({}, innerObj, {
+            res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }), stop), callback, _objectSpread2({}, innerObj, {
+            }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
             }), stop);
 
@@ -2004,9 +2004,9 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], _objectSpread2({}, innerObj, {
+          res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(_path)
-          }), stop), callback, _objectSpread2({}, innerObj, {
+          }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(_path)
           }), stop);
 

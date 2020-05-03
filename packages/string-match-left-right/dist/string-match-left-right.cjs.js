@@ -196,7 +196,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
-  var opts = _objectSpread2({}, defaults, {}, originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);

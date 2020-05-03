@@ -95,7 +95,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
@@ -140,10 +140,10 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
         var path = "".concat(innerObj.path, ".").concat(i);
         innerObj.parent = clone(tree);
         innerObj.parentType = "array";
-        callback(tree[i], undefined, _objectSpread2({}, innerObj, {
+        callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(path)
         }), stop);
-        traverseInner(tree[i], callback, _objectSpread2({}, innerObj, {
+        traverseInner(tree[i], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(path)
         }), stop);
       }
@@ -158,10 +158,10 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
-        callback(key, tree[key], _objectSpread2({}, innerObj, {
+        callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(_path)
         }), stop);
-        traverseInner(tree[key], callback, _objectSpread2({}, innerObj, {
+        traverseInner(tree[key], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(_path)
         }), stop);
       }
