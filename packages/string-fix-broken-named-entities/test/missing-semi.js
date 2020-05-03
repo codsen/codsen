@@ -40,7 +40,21 @@ tap.test(
 );
 
 tap.test("02 - single pi", (t) => {
-  t.same(fix("&pi"), [[0, 3, "&pi;"]], "02");
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
+  t.same(
+    fix("&pi", {
+      cb: (obj) => {
+        gatheredBroken.push([obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]);
+        return [obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded];
+      },
+      entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
+    }),
+    [[0, 3, "&pi;"]],
+    "02"
+  );
+  t.is(gatheredBroken.length, 1);
+  t.is(gatheredHealthy.length, 0);
   t.end();
 });
 

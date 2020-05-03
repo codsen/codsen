@@ -140,9 +140,11 @@ tap.test(
   `10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`,
   (t) => {
     const inp1 = "&Poun;";
+    const gatheredHealthy = [];
     t.same(
       fix(inp1, {
         cb: (obj) => obj,
+        entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       }),
       [
         {
@@ -156,6 +158,7 @@ tap.test(
       ],
       "10"
     );
+    t.is(gatheredHealthy.length, 0);
     t.end();
   }
 );
@@ -466,6 +469,78 @@ tap.test(
   `26 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
     t.same(fix("the &;ang;100"), [[4, 10, "&ang;"]], "26");
+    t.end();
+  }
+);
+
+tap.test(
+  `27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.same(fix("&Ifz;"), [[0, 5, "&Ifr;"]], "27");
+    t.end();
+  }
+);
+
+tap.test(
+  `28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.same(fix("&ifz;"), [[0, 5]], "28");
+    t.end();
+  }
+);
+
+tap.test(
+  `29 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.same(fix("&ifz;&"), [[0, 5]], "29");
+    t.end();
+  }
+);
+
+tap.test(
+  `30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
+  (t) => {
+    t.same(
+      fix("&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
+      [],
+      "30"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
+  (t) => {
+    t.same(
+      fix(
+        "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      ),
+      [],
+      "31"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `32 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
+  (t) => {
+    t.same(
+      fix(
+        "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      ),
+      [[0, 5, "&nbsp;"]],
+      "31"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `33 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - just checking`,
+  (t) => {
+    t.same(fix("&; &; &;"), [], "33");
     t.end();
   }
 );

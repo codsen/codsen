@@ -5800,442 +5800,6 @@
     z: z$1,
     N: N$1
   };
-  var a$2 = {
-    a: ["aacute"],
-    b: ["abreve"],
-    c: ["ac", "acd", "ace", "acirc", "acute", "acy"],
-    e: ["aelig"],
-    f: ["af", "afr"],
-    g: ["agrave"],
-    l: ["alefsym", "aleph", "alpha"],
-    m: ["amacr", "amalg", "amp"],
-    n: ["and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr"],
-    o: ["aogon", "aopf"],
-    p: ["ap", "apacir", "ape", "apid", "apos", "applyfunction", "approx", "approxeq"],
-    r: ["aring"],
-    s: ["ascr", "assign", "ast", "asymp", "asympeq"],
-    t: ["atilde"],
-    u: ["auml"],
-    w: ["awconint", "awint"]
-  };
-  var b$2 = {
-    a: ["backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge"],
-    b: ["bbrk", "bbrktbrk"],
-    c: ["bcong", "bcy"],
-    d: ["bdquo"],
-    e: ["becaus", "because", "bemptyv", "bepsi", "bernou", "bernoullis", "beta", "beth", "between"],
-    f: ["bfr"],
-    i: ["bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge"],
-    k: ["bkarow"],
-    l: ["blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block"],
-    n: ["bne", "bnequiv", "bnot"],
-    o: ["bopf", "bot", "bottom", "bowtie", "boxbox", "boxdl", "boxdr", "boxh", "boxhd", "boxhu", "boxminus", "boxplus", "boxtimes", "boxul", "boxur", "boxv", "boxvh", "boxvl", "boxvr"],
-    p: ["bprime"],
-    r: ["breve", "brvbar"],
-    s: ["bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub"],
-    u: ["bull", "bullet", "bump", "bumpe", "bumpeq"]
-  };
-  var c$2 = {
-    a: ["cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys"],
-    c: ["ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm"],
-    d: ["cdot"],
-    e: ["cedil", "cedilla", "cemptyv", "cent", "centerdot"],
-    f: ["cfr"],
-    h: ["chcy", "check", "checkmark", "chi"],
-    i: ["cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "circledot", "circledr", "circleds", "circleminus", "circleplus", "circletimes", "cire", "cirfnint", "cirmid", "cirscir"],
-    l: ["clockwisecontourintegral", "closecurlydoublequote", "closecurlyquote", "clubs", "clubsuit"],
-    o: ["colon", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "congruent", "conint", "contourintegral", "copf", "coprod", "coproduct", "copy", "copysr", "counterclockwisecontourintegral"],
-    r: ["crarr", "cross"],
-    s: ["cscr", "csub", "csube", "csup", "csupe"],
-    t: ["ctdot"],
-    u: ["cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "cup", "cupbrcap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed"],
-    w: ["cwconint", "cwint"],
-    y: ["cylcty"]
-  };
-  var d$2 = {
-    a: ["dagger", "daleth", "darr", "dash", "dashv"],
-    b: ["dbkarow", "dblac"],
-    c: ["dcaron", "dcy"],
-    d: ["dd", "ddagger", "ddarr", "ddotrahd", "ddotseq"],
-    e: ["deg", "del", "delta", "demptyv"],
-    f: ["dfisht", "dfr"],
-    h: ["dhar", "dharl", "dharr"],
-    i: ["diacriticalacute", "diacriticaldot", "diacriticaldoubleacute", "diacriticalgrave", "diacriticaltilde", "diam", "diamond", "diamondsuit", "diams", "die", "differentiald", "digamma", "disin", "div", "divide", "divideontimes", "divonx"],
-    j: ["djcy"],
-    l: ["dlcorn", "dlcrop"],
-    o: ["dollar", "dopf", "dot", "dotdot", "doteq", "doteqdot", "dotequal", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "doublecontourintegral", "doubledot", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelefttee", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doublerighttee", "doubleuparrow", "doubleupdownarrow", "doubleverticalbar", "downarrow", "downarrowbar", "downarrowuparrow", "downbreve", "downdownarrows", "downharpoonleft", "downharpoonright", "downleftrightvector", "downleftteevector", "downleftvector", "downleftvectorbar", "downrightteevector", "downrightvector", "downrightvectorbar", "downtee", "downteearrow"],
-    r: ["drbkarow", "drcorn", "drcrop"],
-    s: ["dscr", "dscy", "dsol", "dstrok"],
-    t: ["dtdot", "dtri", "dtrif"],
-    u: ["duarr", "duhar"],
-    w: ["dwangle"],
-    z: ["dzcy", "dzigrarr"]
-  };
-  var e$2 = {
-    a: ["eacute", "easter"],
-    c: ["ecaron", "ecir", "ecirc", "ecolon", "ecy"],
-    d: ["eddot", "edot"],
-    e: ["ee"],
-    f: ["efdot", "efr"],
-    g: ["eg", "egrave", "egs", "egsdot"],
-    l: ["el", "element", "elinters", "ell", "els", "elsdot"],
-    m: ["emacr", "empty", "emptyset", "emptysmallsquare", "emptyv", "emptyverysmallsquare", "emsp", "emsp13", "emsp14"],
-    n: ["eng", "ensp"],
-    o: ["eogon", "eopf"],
-    p: ["epar", "eparsl", "eplus", "epsi", "epsilon", "epsiv"],
-    q: ["eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "equal", "equals", "equaltilde", "equest", "equilibrium", "equiv", "equivdd", "eqvparsl"],
-    r: ["erarr", "erdot"],
-    s: ["escr", "esdot", "esim"],
-    t: ["eta", "eth"],
-    u: ["euml", "euro"],
-    x: ["excl", "exist", "exists", "expectation", "exponentiale"]
-  };
-  var f$2 = {
-    a: ["fallingdotseq"],
-    c: ["fcy"],
-    e: ["female"],
-    f: ["ffilig", "fflig", "ffllig", "ffr"],
-    i: ["filig", "filledsmallsquare", "filledverysmallsquare"],
-    j: ["fjlig"],
-    l: ["flat", "fllig", "fltns"],
-    n: ["fnof"],
-    o: ["fopf", "forall", "fork", "forkv", "fouriertrf"],
-    p: ["fpartint"],
-    r: ["frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown"],
-    s: ["fscr"]
-  };
-  var g$2 = {
-    a: ["gacute", "gamma", "gammad", "gap"],
-    b: ["gbreve"],
-    c: ["gcedil", "gcirc", "gcy"],
-    d: ["gdot"],
-    e: ["ge", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles"],
-    f: ["gfr"],
-    g: ["gg", "ggg"],
-    i: ["gimel"],
-    j: ["gjcy"],
-    l: ["gl", "gla", "gle", "glj"],
-    n: ["gnap", "gnapprox", "gne", "gneq", "gneqq", "gnsim"],
-    o: ["gopf"],
-    r: ["grave", "greaterequal", "greaterequalless", "greaterfullequal", "greatergreater", "greaterless", "greaterslantequal", "greatertilde"],
-    s: ["gscr", "gsim", "gsime", "gsiml"],
-    t: ["gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim"],
-    v: ["gvertneqq", "gvne"]
-  };
-  var h$2 = {
-    a: ["hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat"],
-    b: ["hbar"],
-    c: ["hcirc"],
-    e: ["hearts", "heartsuit", "hellip", "hercon"],
-    f: ["hfr"],
-    i: ["hilbertspace"],
-    k: ["hksearow", "hkswarow"],
-    o: ["hoarr", "homtht", "hookleftarrow", "hookrightarrow", "hopf", "horbar", "horizontalline"],
-    s: ["hscr", "hslash", "hstrok"],
-    u: ["humpdownhump", "humpequal"],
-    y: ["hybull", "hyphen"]
-  };
-  var i$2 = {
-    a: ["iacute"],
-    c: ["ic", "icirc", "icy"],
-    d: ["idot"],
-    e: ["iecy", "iexcl"],
-    f: ["iff", "ifr"],
-    g: ["igrave"],
-    i: ["ii", "iiiint", "iiint", "iinfin", "iiota"],
-    j: ["ijlig"],
-    m: ["im", "imacr", "image", "imaginaryi", "imagline", "imagpart", "imath", "imof", "imped", "implies"],
-    n: ["in", "incare", "infin", "infintie", "inodot", "int", "intcal", "integers", "integral", "intercal", "intersection", "intlarhk", "intprod", "invisiblecomma", "invisibletimes"],
-    o: ["iocy", "iogon", "iopf", "iota"],
-    p: ["iprod"],
-    q: ["iquest"],
-    s: ["iscr", "isin", "isindot", "isine", "isins", "isinsv", "isinv"],
-    t: ["it", "itilde"],
-    u: ["iukcy", "iuml"]
-  };
-  var j$2 = {
-    c: ["jcirc", "jcy"],
-    f: ["jfr"],
-    m: ["jmath"],
-    o: ["jopf"],
-    s: ["jscr", "jsercy"],
-    u: ["jukcy"]
-  };
-  var k$2 = {
-    a: ["kappa", "kappav"],
-    c: ["kcedil", "kcy"],
-    f: ["kfr"],
-    g: ["kgreen"],
-    h: ["khcy"],
-    j: ["kjcy"],
-    o: ["kopf"],
-    s: ["kscr"]
-  };
-  var l$2 = {
-    a: ["laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates"],
-    b: ["lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu"],
-    c: ["lcaron", "lcedil", "lceil", "lcub", "lcy"],
-    d: ["ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh"],
-    e: ["le", "leftanglebracket", "leftarrow", "leftarrowbar", "leftarrowrightarrow", "leftarrowtail", "leftceiling", "leftdoublebracket", "leftdownteevector", "leftdownvector", "leftdownvectorbar", "leftfloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "leftrightvector", "lefttee", "leftteearrow", "leftteevector", "leftthreetimes", "lefttriangle", "lefttrianglebar", "lefttriangleequal", "leftupdownvector", "leftupteevector", "leftupvector", "leftupvectorbar", "leftvector", "leftvectorbar", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "lessequalgreater", "lessfullequal", "lessgreater", "lessgtr", "lessless", "lesssim", "lessslantequal", "lesstilde"],
-    f: ["lfisht", "lfloor", "lfr"],
-    g: ["lg", "lge"],
-    h: ["lhar", "lhard", "lharu", "lharul", "lhblk"],
-    j: ["ljcy"],
-    l: ["ll", "llarr", "llcorner", "lleftarrow", "llhard", "lltri"],
-    m: ["lmidot", "lmoust", "lmoustache"],
-    n: ["lnap", "lnapprox", "lne", "lneq", "lneqq", "lnsim"],
-    o: ["loang", "loarr", "lobrk", "longleftarrow", "longleftrightarrow", "longmapsto", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "lopf", "loplus", "lotimes", "lowast", "lowbar", "lowerleftarrow", "lowerrightarrow", "loz", "lozenge", "lozf"],
-    p: ["lpar", "lparlt"],
-    r: ["lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri"],
-    s: ["lsaquo", "lscr", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "lstrok"],
-    t: ["lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrpar"],
-    u: ["lurdshar", "luruhar"],
-    v: ["lvertneqq", "lvne"]
-  };
-  var m$2 = {
-    a: ["macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker"],
-    c: ["mcomma", "mcy"],
-    d: ["mdash", "mddot"],
-    e: ["measuredangle", "mediumspace", "mellintrf"],
-    f: ["mfr"],
-    h: ["mho"],
-    i: ["micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "minusplus"],
-    l: ["mlcp", "mldr"],
-    n: ["mnplus"],
-    o: ["models", "mopf"],
-    p: ["mp"],
-    s: ["mscr", "mstpos"],
-    u: ["mu", "multimap", "mumap"]
-  };
-  var n$2 = {
-    a: ["nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals"],
-    b: ["nbsp", "nbump", "nbumpe"],
-    c: ["ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy"],
-    d: ["ndash"],
-    e: ["ne", "nearhk", "nearr", "nearrow", "nedot", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nequiv", "nesear", "nesim", "nestedgreatergreater", "nestedlessless", "newline", "nexist", "nexists"],
-    f: ["nfr"],
-    g: ["nge", "ngeq", "ngeqq", "ngeqslant", "nges", "ngg", "ngsim", "ngt", "ngtr", "ngtv"],
-    h: ["nharr", "nhpar"],
-    i: ["ni", "nis", "nisd", "niv"],
-    j: ["njcy"],
-    l: ["nlarr", "nldr", "nle", "nleftarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nll", "nlsim", "nlt", "nltri", "nltrie", "nltv"],
-    m: ["nmid"],
-    o: ["nobreak", "nonbreakingspace", "nopf", "not", "notcongruent", "notcupcap", "notdoubleverticalbar", "notelement", "notequal", "notequaltilde", "notexists", "notgreater", "notgreaterequal", "notgreaterfullequal", "notgreatergreater", "notgreaterless", "notgreaterslantequal", "notgreatertilde", "nothumpdownhump", "nothumpequal", "notin", "notindot", "notine", "notinva", "notinvb", "notinvc", "notlefttriangle", "notlefttrianglebar", "notlefttriangleequal", "notless", "notlessequal", "notlessgreater", "notlessless", "notlessslantequal", "notlesstilde", "notnestedgreatergreater", "notnestedlessless", "notni", "notniva", "notnivb", "notnivc", "notprecedes", "notprecedesequal", "notprecedesslantequal", "notreverseelement", "notrighttriangle", "notrighttrianglebar", "notrighttriangleequal", "notsquaresubset", "notsquaresubsetequal", "notsquaresuperset", "notsquaresupersetequal", "notsubset", "notsubsetequal", "notsucceeds", "notsucceedsequal", "notsucceedsslantequal", "notsucceedstilde", "notsuperset", "notsupersetequal", "nottilde", "nottildeequal", "nottildefullequal", "nottildetilde", "notverticalbar"],
-    p: ["npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq"],
-    r: ["nrarr", "nrarrc", "nrarrw", "nrightarrow", "nrtri", "nrtrie"],
-    s: ["nsc", "nsccue", "nsce", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupe", "nsupset", "nsupseteq", "nsupseteqq"],
-    t: ["ntgl", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq"],
-    u: ["nu", "num", "numero", "numsp"],
-    v: ["nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim"],
-    w: ["nwarhk", "nwarr", "nwarrow", "nwnear"]
-  };
-  var o$2 = {
-    a: ["oacute", "oast"],
-    c: ["ocir", "ocirc", "ocy"],
-    d: ["odash", "odblac", "odiv", "odot", "odsold"],
-    e: ["oelig"],
-    f: ["ofcir", "ofr"],
-    g: ["ogon", "ograve", "ogt"],
-    h: ["ohbar", "ohm"],
-    i: ["oint"],
-    l: ["olarr", "olcir", "olcross", "oline", "olt"],
-    m: ["omacr", "omega", "omicron", "omid", "ominus"],
-    o: ["oopf"],
-    p: ["opar", "opencurlydoublequote", "opencurlyquote", "operp", "oplus"],
-    r: ["or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv"],
-    s: ["os", "oscr", "oslash", "osol"],
-    t: ["otilde", "otimes", "otimesas"],
-    u: ["ouml"],
-    v: ["ovbar", "overbar", "overbrace", "overbracket", "overparenthesis"]
-  };
-  var p$2 = {
-    a: ["par", "para", "parallel", "parsim", "parsl", "part", "partiald"],
-    c: ["pcy"],
-    e: ["percnt", "period", "permil", "perp", "pertenk"],
-    f: ["pfr"],
-    h: ["phi", "phiv", "phmmat", "phone"],
-    i: ["pi", "pitchfork", "piv"],
-    l: ["planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "plusminus", "plusmn", "plussim", "plustwo"],
-    m: ["pm"],
-    o: ["poincareplane", "pointint", "popf", "pound"],
-    r: ["pr", "prap", "prcue", "pre", "prec", "precapprox", "preccurlyeq", "precedes", "precedesequal", "precedesslantequal", "precedestilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "prime", "primes", "prnap", "prne", "prnsim", "prod", "product", "profalar", "profline", "profsurf", "prop", "proportion", "proportional", "propto", "prsim", "prurel"],
-    s: ["pscr", "psi"],
-    u: ["puncsp"]
-  };
-  var q$2 = {
-    f: ["qfr"],
-    i: ["qint"],
-    o: ["qopf"],
-    p: ["qprime"],
-    s: ["qscr"],
-    u: ["quaternions", "quatint", "quest", "questeq", "quot"]
-  };
-  var r$2 = {
-    a: ["raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals"],
-    b: ["rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu"],
-    c: ["rcaron", "rcedil", "rceil", "rcub", "rcy"],
-    d: ["rdca", "rdldhar", "rdquo", "rdquor", "rdsh"],
-    e: ["re", "real", "realine", "realpart", "reals", "rect", "reg", "reverseelement", "reverseequilibrium", "reverseupequilibrium"],
-    f: ["rfisht", "rfloor", "rfr"],
-    h: ["rhar", "rhard", "rharu", "rharul", "rho", "rhov"],
-    i: ["rightanglebracket", "rightarrow", "rightarrowbar", "rightarrowleftarrow", "rightarrowtail", "rightceiling", "rightdoublebracket", "rightdownteevector", "rightdownvector", "rightdownvectorbar", "rightfloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "righttee", "rightteearrow", "rightteevector", "rightthreetimes", "righttriangle", "righttrianglebar", "righttriangleequal", "rightupdownvector", "rightupteevector", "rightupvector", "rightupvectorbar", "rightvector", "rightvectorbar", "ring", "risingdotseq"],
-    l: ["rlarr", "rlhar", "rlm"],
-    m: ["rmoust", "rmoustache"],
-    n: ["rnmid"],
-    o: ["roang", "roarr", "robrk", "ropar", "ropf", "roplus", "rotimes", "roundimplies"],
-    p: ["rpar", "rpargt", "rppolint"],
-    r: ["rrarr", "rrightarrow"],
-    s: ["rsaquo", "rscr", "rsh", "rsqb", "rsquo", "rsquor"],
-    t: ["rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri"],
-    u: ["ruledelayed", "ruluhar"],
-    x: ["rx"]
-  };
-  var s$2 = {
-    a: ["sacute"],
-    b: ["sbquo"],
-    c: ["sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy"],
-    d: ["sdot", "sdotb", "sdote"],
-    e: ["searhk", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext"],
-    f: ["sfr", "sfrown"],
-    h: ["sharp", "shchcy", "shcy", "shortdownarrow", "shortleftarrow", "shortmid", "shortparallel", "shortrightarrow", "shortuparrow", "shy"],
-    i: ["sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simge", "siml", "simle", "simne", "simplus", "simrarr"],
-    l: ["slarr"],
-    m: ["smallcircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes"],
-    o: ["softcy", "sol", "solb", "solbar", "sopf"],
-    p: ["spades", "spadesuit", "spar"],
-    q: ["sqcap", "sqcaps", "sqcup", "sqcups", "sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "square", "squareintersection", "squaresubset", "squaresubsetequal", "squaresuperset", "squaresupersetequal", "squareunion", "squarf", "squf"],
-    r: ["srarr"],
-    s: ["sscr", "ssetmn", "ssmile", "sstarf"],
-    t: ["star", "starf", "straightepsilon", "straightphi", "strns"],
-    u: ["sub", "subdot", "sube", "subedot", "submult", "subne", "subplus", "subrarr", "subset", "subseteq", "subseteqq", "subsetequal", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "succeeds", "succeedsequal", "succeedsslantequal", "succeedstilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "suchthat", "sum", "sung", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supe", "supedot", "superset", "supersetequal", "suphsol", "suphsub", "suplarr", "supmult", "supne", "supplus", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup"],
-    w: ["swarhk", "swarr", "swarrow", "swnwar"],
-    z: ["szlig"]
-  };
-  var t$2 = {
-    a: ["tab", "target", "tau"],
-    b: ["tbrk"],
-    c: ["tcaron", "tcedil", "tcy"],
-    d: ["tdot"],
-    e: ["telrec"],
-    f: ["tfr"],
-    h: ["there4", "therefore", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "thickspace", "thinsp", "thinspace", "thkap", "thksim", "thorn"],
-    i: ["tilde", "tildeequal", "tildefullequal", "tildetilde", "times", "timesb", "timesbar", "timesd", "tint"],
-    o: ["toea", "top", "topbot", "topcir", "topf", "topfork", "tosa"],
-    p: ["tprime"],
-    r: ["trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "tripledot", "triplus", "trisb", "tritime", "trpezium"],
-    s: ["tscr", "tscy", "tshcy", "tstrok"],
-    w: ["twixt", "twoheadleftarrow", "twoheadrightarrow"]
-  };
-  var u$2 = {
-    a: ["uacute", "uarr", "uarrocir"],
-    b: ["ubrcy", "ubreve"],
-    c: ["ucirc", "ucy"],
-    d: ["udarr", "udblac", "udhar"],
-    f: ["ufisht", "ufr"],
-    g: ["ugrave"],
-    h: ["uhar", "uharl", "uharr", "uhblk"],
-    l: ["ulcorn", "ulcorner", "ulcrop", "ultri"],
-    m: ["umacr", "uml"],
-    n: ["underbar", "underbrace", "underbracket", "underparenthesis", "union", "unionplus"],
-    o: ["uogon", "uopf"],
-    p: ["uparrow", "uparrowbar", "uparrowdownarrow", "updownarrow", "upequilibrium", "upharpoonleft", "upharpoonright", "uplus", "upperleftarrow", "upperrightarrow", "upsi", "upsih", "upsilon", "uptee", "upteearrow", "upuparrows"],
-    r: ["urcorn", "urcorner", "urcrop", "uring", "urtri"],
-    s: ["uscr"],
-    t: ["utdot", "utilde", "utri", "utrif"],
-    u: ["uuarr", "uuml"],
-    w: ["uwangle"]
-  };
-  var v$2 = {
-    a: ["vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright"],
-    b: ["vbar", "vbarv"],
-    c: ["vcy"],
-    d: ["vdash", "vdashl"],
-    e: ["vee", "veebar", "veeeq", "vellip", "verbar", "vert", "verticalbar", "verticalline", "verticalseparator", "verticaltilde", "verythinspace"],
-    f: ["vfr"],
-    l: ["vltri"],
-    n: ["vnsub", "vnsup"],
-    o: ["vopf"],
-    p: ["vprop"],
-    r: ["vrtri"],
-    s: ["vscr", "vsubne", "vsupne"],
-    v: ["vvdash"],
-    z: ["vzigzag"]
-  };
-  var w$2 = {
-    c: ["wcirc"],
-    e: ["wedbar", "wedge", "wedgeq", "weierp"],
-    f: ["wfr"],
-    o: ["wopf"],
-    p: ["wp"],
-    r: ["wr", "wreath"],
-    s: ["wscr"]
-  };
-  var x$2 = {
-    c: ["xcap", "xcirc", "xcup"],
-    d: ["xdtri"],
-    f: ["xfr"],
-    h: ["xharr"],
-    i: ["xi"],
-    l: ["xlarr"],
-    m: ["xmap"],
-    n: ["xnis"],
-    o: ["xodot", "xopf", "xoplus", "xotime"],
-    r: ["xrarr"],
-    s: ["xscr", "xsqcup"],
-    u: ["xuplus", "xutri"],
-    v: ["xvee"],
-    w: ["xwedge"]
-  };
-  var y$2 = {
-    a: ["yacute", "yacy"],
-    c: ["ycirc", "ycy"],
-    e: ["yen"],
-    f: ["yfr"],
-    i: ["yicy"],
-    o: ["yopf"],
-    s: ["yscr"],
-    u: ["yucy", "yuml"]
-  };
-  var z$2 = {
-    a: ["zacute"],
-    c: ["zcaron", "zcy"],
-    d: ["zdot"],
-    e: ["zeetrf", "zerowidthspace", "zeta"],
-    f: ["zfr"],
-    h: ["zhcy"],
-    i: ["zigrarr"],
-    o: ["zopf"],
-    s: ["zscr"],
-    w: ["zwj", "zwnj"]
-  };
-  var startsWithCaseInsensitive = {
-    a: a$2,
-    b: b$2,
-    c: c$2,
-    d: d$2,
-    e: e$2,
-    f: f$2,
-    g: g$2,
-    h: h$2,
-    i: i$2,
-    j: j$2,
-    k: k$2,
-    l: l$2,
-    m: m$2,
-    n: n$2,
-    o: o$2,
-    p: p$2,
-    q: q$2,
-    r: r$2,
-    s: s$2,
-    t: t$2,
-    u: u$2,
-    v: v$2,
-    w: w$2,
-    x: x$2,
-    y: y$2,
-    z: z$2
-  };
   var ac$1 = {
     addAmpIfSemiPresent: "edge only",
     addSemiIfAmpPresent: false
@@ -9996,7 +9560,7 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
    */
 
-  function x$3(something) {
+  function x$2(something) {
     const res = {
       value: something,
       hungry: false,
@@ -10120,7 +9684,7 @@
         value,
         optional,
         hungry
-      } = x$3(args[i]);
+      } = x$2(args[i]);
       const whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
       if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
@@ -10340,6 +9904,7 @@
   }
 
   function removeGappedFromMixedCases(str, temp1) {
+    /* istanbul ignore if */
     if (arguments.length !== 2) {
       throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
     } // If there is one without gaps and all others with gaps, gapless
@@ -10412,6 +9977,8 @@
       //         }
       //     }
       // ]
+
+      /* istanbul ignore if */
 
       if (copy.length > 1 && copy.some(function (entityObj) {
         return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
@@ -10497,11 +10064,11 @@
     }
 
     if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
-      throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.entityCatcherCb), ", equal to: ").concat(JSON.stringify(opts.entityCatcherCb, null, 4)));
+      throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.entityCatcherCb), ", equal to: ").concat(JSON.stringify(opts.entityCatcherCb, null, 4)));
     }
 
     if (opts.progressFn && typeof opts.progressFn !== "function") {
-      throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
+      throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
     } // state flags
     // ---------------------------------------------------------------------------
     // this is what we'll return, process by default callback or user's custom-one
@@ -10543,6 +10110,7 @@
     var _loop = function _loop(i) {
       if (opts.progressFn) {
         percentageDone = Math.floor(counter / len * 100);
+        /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -10590,7 +10158,12 @@
       //            |
       //            |
       //            |
-      // Catch the end of a latin letter sequence.
+      // escape latch for text chunks
+
+
+      if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
+        letterSeqStartAt = null;
+      } // Catch the end of a latin letter sequence.
 
 
       if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
@@ -10611,6 +10184,8 @@
             // check, what's the index of the character to the right of
             // str[whatsOnTheLeft], is it any of the known named HTML entities.
             var firstChar = letterSeqStartAt;
+            /* istanbul ignore next */
+
             var secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null; // we'll tap the "entStartsWith" from npm package "all-named-html-entities"
             // which gives a plain object of named entities, all grouped by first
             // and second character first. This reduces amount of matching needed.
@@ -10623,6 +10198,8 @@
             // The only way around this is to match all entities that start here
             // and pick the one with the biggest character length.
             // TODO - set up case insensitive matching here:
+
+            /* istanbul ignore else */
 
             if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar]], str[secondChar])) {
               var tempEnt;
@@ -10643,6 +10220,7 @@
                 return gatheredSoFar;
               }, []);
               temp1 = removeGappedFromMixedCases(str, temp1);
+              /* istanbul ignore else */
 
               if (temp1) {
                 var _temp = temp1;
@@ -10678,10 +10256,9 @@
             // two characters. For posterity, we assume there can be any amount of
             // whitespace between characters and we need to tackle it as well.
             var lastChar = left(str, i);
-            var secondToLast = lastChar ? left(str, lastChar) : null; // we'll tap the "entEndsWith" from npm package "all-named-html-entities"
+            var secondToLast = left(str, lastChar); // we'll tap the "entEndsWith" from npm package "all-named-html-entities"
             // which gives a plain object of named entities, all grouped by first
             // and second character first. This reduces amount of matching needed.
-            // TODO - match case-insensitive first, then match case-sensitive:
 
             if (secondToLast !== null && Object.prototype.hasOwnProperty.call(endsWith, str[lastChar]) && Object.prototype.hasOwnProperty.call(endsWith[str[lastChar]], str[secondToLast])) {
               var _tempEnt;
@@ -10705,6 +10282,7 @@
               }, []);
 
               _temp2 = removeGappedFromMixedCases(str, _temp2);
+              /* istanbul ignore else */
 
               if (_temp2) {
                 var _temp3 = _temp2;
@@ -10750,6 +10328,8 @@
             //
             //
             // find out more: is it legit, unrecognised or numeric...
+
+            /* istanbul ignore else */
             if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
               // Maybe it's a numeric entity?
               // we can simply check, does entity start with a hash but that
@@ -10772,7 +10352,9 @@
 
               if (situation.probablyNumeric) {
                 // 1. TACKLE HEALTHY DECIMAL NUMERIC CHARACTER REFERENCE ENTITIES:
-                if (situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && ( // decimal:
+                if (
+                /* istanbul ignore next */
+                situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && ( // decimal:
                 !situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || // hexidecimal:
                 (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
                   // if it's a healthy decimal numeric character reference:
@@ -10825,81 +10407,75 @@
                 //
                 //
                 // happy path:
-                // we don't want to filter whole chapter of text...
-                if (potentialEntity.length <= 50) {
-                  var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
-                    return char.trim().length;
-                  }).join("");
+                var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
+                  return char.trim().length;
+                }).join("");
 
-                  if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                    if ( // first, check is the letter case allright
-                    !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
-                      var matchingEntitiesOfCorrectCaseArr = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (ent) {
-                        return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
-                      });
+                if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                  if ( // first, check is the letter case allright
+                  !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                    var matchingEntitiesOfCorrectCaseArr = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (ent) {
+                      return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
+                    });
 
-                      if (matchingEntitiesOfCorrectCaseArr.length === 1) {
-                        rangesArr2.push({
-                          ruleName: "bad-named-html-entity-malformed-".concat(matchingEntitiesOfCorrectCaseArr[0]),
-                          entityName: matchingEntitiesOfCorrectCaseArr[0],
-                          rangeFrom: whatsOnTheLeft,
-                          rangeTo: i + 1,
-                          rangeValEncoded: "&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"),
-                          rangeValDecoded: decode("&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"))
-                        });
-                      } else {
-                        rangesArr2.push({
-                          ruleName: "bad-named-html-entity-unrecognised",
-                          entityName: null,
-                          rangeFrom: whatsOnTheLeft,
-                          rangeTo: i + 1,
-                          rangeValEncoded: null,
-                          rangeValDecoded: null
-                        });
-                      }
-                    } else if ( // is it really healthy? measuring distance is a way to find out
-                    // any present whitespace characters will bloat the length...
-                    i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
-                      var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
-
-                      if ( // if it's a dubious entity
-                      Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && // and there's space after ampersand
-                      !str[rangeFrom + 1].trim().length) {
-                        letterSeqStartAt = null;
-                        return "continue";
-                      }
-
+                    if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                       rangesArr2.push({
-                        ruleName: "bad-named-html-entity-malformed-".concat(potentialEntityOnlyNonWhitespaceChars),
-                        entityName: potentialEntityOnlyNonWhitespaceChars,
-                        rangeFrom: rangeFrom,
-                        rangeTo: i + 1,
-                        rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
-                        rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
-                      });
-                    } else if (opts.decode) {
-                      // last thing, if decode is required, we've got an error still...
-                      rangesArr2.push({
-                        ruleName: "encoded-html-entity-".concat(potentialEntityOnlyNonWhitespaceChars),
-                        entityName: potentialEntityOnlyNonWhitespaceChars,
+                        ruleName: "bad-named-html-entity-malformed-".concat(matchingEntitiesOfCorrectCaseArr[0]),
+                        entityName: matchingEntitiesOfCorrectCaseArr[0],
                         rangeFrom: whatsOnTheLeft,
                         rangeTo: i + 1,
-                        rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
-                        rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                        rangeValEncoded: "&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"),
+                        rangeValDecoded: decode("&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"))
                       });
-                    } else if (opts.entityCatcherCb) {
-                      // it's healthy - so at least ping the entity catcher
-                      opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                    } else {
+                      rangesArr2.push({
+                        ruleName: "bad-named-html-entity-unrecognised",
+                        entityName: null,
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: null,
+                        rangeValDecoded: null
+                      });
+                    }
+                  } else if ( // is it really healthy? measuring distance is a way to find out
+                  // any present whitespace characters will bloat the length...
+                  i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
+                    var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
+
+                    if ( // if it's a dubious entity
+                    Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && // and there's space after ampersand
+                    !str[rangeFrom + 1].trim().length) {
+                      letterSeqStartAt = null;
+                      return "continue";
                     }
 
-                    letterSeqStartAt = null;
-                    return "continue";
+                    rangesArr2.push({
+                      ruleName: "bad-named-html-entity-malformed-".concat(potentialEntityOnlyNonWhitespaceChars),
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom: rangeFrom,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                      rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                    });
+                  } else if (opts.decode) {
+                    // last thing, if decode is required, we've got an error still...
+                    rangesArr2.push({
+                      ruleName: "encoded-html-entity-".concat(potentialEntityOnlyNonWhitespaceChars),
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                      rangeValDecoded: decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
+                    });
+                  } else if (opts.entityCatcherCb) {
+                    // it's healthy - so at least ping the entity catcher
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                   }
+
+                  letterSeqStartAt = null;
+                  return "continue";
                 } // First, match against case-insensitive list
-                // 1. check, maybe it's a known HTML entity
-
-
-                var _firstChar = letterSeqStartAt;
+                /* istanbul ignore next */
 
                 var _secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
 
@@ -10935,7 +10511,10 @@
                 //
                 // b) two are different but entity is at least 4 chars long:
                 (temp = _toConsumableArray(allNamedEntitiesSetOnly).filter(function (curr) {
-                  return leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3;
+                  return (
+                    /* istanbul ignore next */
+                    leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3
+                  );
                 })) && temp.length)) {
                   // now the problem: what if there were multiple entities matched?
                   if (temp.length === 1) {
@@ -10952,196 +10531,52 @@
                       rangeValEncoded: "&".concat(_tempEnt2, ";"),
                       rangeValDecoded: decode("&".concat(_tempEnt2, ";"))
                     });
-                  } else {
-                    // we've got problem
-                    // find longest, drop all shorter than longest
-                    var lengthOfLongestCaughtEnt = temp.reduce(function (acc, curr) {
-                      return curr.length > acc ? curr.length : acc;
-                    }, 0); // filter only max-length-ones
-
-                    temp = temp.filter(function (ent) {
-                      return ent.length === lengthOfLongestCaughtEnt;
-                    }); // again, if there's one left, Bob's your uncle here's the result
-
-                    if (temp.length === 1) {
-                      rangesArr2.push({
-                        ruleName: "bad-named-html-entity-malformed-".concat(temp[0]),
-                        entityName: temp[0],
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: i + 1,
-                        rangeValEncoded: "&".concat(temp[0], ";"),
-                        rangeValDecoded: decode("&".concat(temp[0], ";"))
-                      });
-                    }
-                  }
-                } else if (Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive, str[_firstChar].toLowerCase()) && Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive[str[_firstChar].toLowerCase()], str[_secondChar].toLowerCase())) {
+                  } // TODO - remove if really not reachable:
+                  // else {
+                  //   // we've got problem
+                  //   console.log(
+                  //     `980 ${`\u001b[${31}m${`!!! multiple matched`}\u001b[${39}m`}: ${JSON.stringify(
+                  //       temp,
+                  //       null,
+                  //       4
+                  //     )}`
+                  //   );
                   //
-                  //                          case II.
+                  //   // find longest, drop all shorter than longest
+                  //   const lengthOfLongestCaughtEnt = temp.reduce((acc, curr) => {
+                  //     return curr.length > acc ? curr.length : acc;
+                  //   }, 0);
+                  //   console.log(
+                  //     `992 ${`\u001b[${33}m${`lengthOfLongestCaughtEnt`}\u001b[${39}m`} = ${JSON.stringify(
+                  //       lengthOfLongestCaughtEnt,
+                  //       null,
+                  //       4
+                  //     )}`
+                  //   );
                   //
-                  var _tempRes2;
-
-                  var matchedEntity = startsWithCaseInsensitive[str[_firstChar].toLowerCase()][str[_secondChar].toLowerCase()].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-                    // find all entities that match on the right of here
-                    // rightSeq could theoretically give positive answer, zero index,
-                    // but it's impossible here, so we're fine to match "if true".
-                    _tempRes2 = rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
-                      i: true
-                    }].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
-
-                    if (_tempRes2) {
-                      return gatheredSoFar.concat([{
-                        tempEnt: oneOfKnownEntities,
-                        tempRes: _tempRes2
-                      }]);
-                    }
-
-                    return gatheredSoFar;
-                  }, []);
-
-                  matchedEntity = removeGappedFromMixedCases(str, matchedEntity);
-
-                  if (matchedEntity) {
-                    var _matchedEntity = matchedEntity;
-                    _tempEnt2 = _matchedEntity.tempEnt;
-                    _tempRes2 = _matchedEntity.tempRes;
-                  } // The matching was case insensitive so if anything was found,
-                  // it could contain whitespace, or it could contain wrong case.
-                  // If no matches were found, it's definitely an unrecognised entity.
+                  //   // filter only max-length-ones
+                  //   temp = temp.filter(
+                  //     (ent) => ent.length === lengthOfLongestCaughtEnt
+                  //   );
                   //
-                  // Another consideration is chunks starting with entity's ampersand,
-                  // missing semicolon and chunk ends with legit semicolon:
-                  // "We spent &pound5;" -> "We spent &pound;5;"
-                  //                                        ^ ^
-                  //                                       /   \
-                  //                                 missing   legit semicol.
-                  //                                   added
+                  //   // again, if there's one left, Bob's your uncle here's the result
+                  //   if (temp.length === 1) {
+                  //     console.log(
+                  //       `1007 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+                  //     );
+                  //     rangesArr2.push({
+                  //       ruleName: `bad-named-html-entity-malformed-${temp[0]}`,
+                  //       entityName: temp[0],
+                  //       rangeFrom: whatsOnTheLeft,
+                  //       rangeTo: i + 1,
+                  //       rangeValEncoded: `&${temp[0]};`,
+                  //       rangeValDecoded: decode(`&${temp[0]};`),
+                  //     });
+                  //   } else {
+                  //     // TODO
+                  //   }
+                  // }
 
-
-                  var entitysValue;
-
-                  if (_tempEnt2) {
-                    var issue = false;
-                    var firstChar2 = _tempRes2.leftmostChar;
-                    var secondChar2 = right(str, firstChar2); // precaution against false positives
-                    // catch the bail cases:
-                    // if it's among uncertain entities, if there is whitespace
-                    // around the entity's characters, bail, unless values
-                    // un uncertain.json are set to true on that side (amp or
-                    // semicol respectively).
-
-                    if (Object.keys(uncertain).includes(potentialEntity) && isStr$1(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
-                      letterSeqStartAt = null;
-                      return "continue";
-                    } // 1. check case-insensitive matched entity "tempEnt"
-                    // case-sensitively
-
-
-                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar2]], str[secondChar2]) && startsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
-                      entitysValue = situation.charTrimmed; // so entity's case is right, but what about whitespace
-                      // between characters?
-
-                      if (i - whatsOnTheLeft - 1 === _tempEnt2.length) {
-                        // but it's still an issue if decoding was requested:
-                        if (opts.decode) {
-                          issue = "encoded-html-entity";
-                        }
-                      } else {
-                        issue = "bad-named-html-entity-malformed";
-                      }
-                    } else {
-                      // case is wrong
-                      issue = "bad-named-html-entity-malformed"; // entitysValue = potentialEntity;
-                      // Now, we know that our entity "situation.charTrimmed" does exist but
-                      // in different character case.
-                      // Let's first gather entities that match case-insensitively,
-                      // then pick the one that our matched resembles most.
-
-                      var matchingEntities = Object.keys(allNamedEntities).filter(function (entity) {
-                        return situation.charTrimmed.toLowerCase().startsWith(entity.toLowerCase());
-                      });
-
-                      if (matchingEntities.length === 1) {
-                        // if there is one match, Bob's your uncle here's your result
-                        entitysValue = matchingEntities[0];
-                      } else {
-                        // let's pick one.
-                        // first, filter the longest entity by length:
-                        var filterLongest = matchingEntities.reduce(function (accum, curr) {
-                          if (!accum.length || curr.length === accum[0].length) {
-                            return accum.concat([curr]);
-                          }
-
-                          if (curr.length > accum[0].length) {
-                            return [curr];
-                          }
-
-                          return accum;
-                        }, []);
-
-                        if (filterLongest.length === 1) {
-                          entitysValue = filterLongest[0];
-                        } else {
-                          var missingLetters = filterLongest.map(function (entity) {
-                            var count = 0;
-
-                            for (var z = 0, len2 = entity.length; z < len2; z++) {
-                              if (entity[z] !== situation.charTrimmed[z]) {
-                                count += 1;
-                              }
-                            }
-
-                            return count;
-                          }); // catch ambiguous cases - if there are multiple cases of
-                          // minimum missing letter matches, it's inconclusive.
-                          // For example, &Aelig; can be either:
-                          // * &AElig; accidentally with E in lowercase
-                          // * &aelig; accidentally with A in uppercase
-
-                          if (missingLetters.filter(function (val) {
-                            return val === Math.min.apply(Math, _toConsumableArray(missingLetters));
-                          }).length > 1) {
-                            rangesArr2.push({
-                              ruleName: "bad-named-html-entity-unrecognised",
-                              entityName: null,
-                              rangeFrom: whatsOnTheLeft,
-                              rangeTo: _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1,
-                              rangeValEncoded: null,
-                              rangeValDecoded: null
-                            });
-                            issue = false;
-                          }
-
-                          entitysValue = filterLongest[missingLetters.indexOf(Math.min.apply(Math, _toConsumableArray(missingLetters)))];
-                        }
-                      }
-                    } // let endingIdx = Math.max(i + 1, tempRes.rightmostChar + 1);
-                    // was:
-
-
-                    var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1; // 2. submit the issue
-
-                    if (issue) {
-                      var _decodedEntity3 = decode("&".concat(entitysValue, ";"));
-
-                      if (str[endingIdx] && str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[right(str, endingIdx)] === ";") {
-                        endingIdx = right(str, endingIdx) + 1;
-                      }
-
-                      rangesArr2.push({
-                        ruleName: "".concat(issue, "-").concat(entitysValue),
-                        entityName: entitysValue,
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: endingIdx,
-                        rangeValEncoded: "&".concat(entitysValue, ";"),
-                        rangeValDecoded: _decodedEntity3
-                      });
-                    } // 3. ping the entity callback anyway
-
-
-                    if (opts.entityCatcherCb) {
-                      opts.entityCatcherCb(whatsOnTheLeft, endingIdx);
-                    }
-                  }
                 } // if "tempEnt" was not set by now, it is not a known HTML entity
 
 
@@ -11181,7 +10616,9 @@
 
 
             rangesArr2.push({
-              ruleName: "".concat(_situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"),
+              ruleName: "".concat(
+              /* istanbul ignore next */
+              _situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"),
               entityName: null,
               rangeFrom: whatsEvenMoreToTheLeft,
               rangeTo: i + 1,
@@ -11203,7 +10640,6 @@
 
 
       if (str[i] === "a") {
-        // TODO - rebase with chomp()
         // // 1. catch recursively-encoded cases. They're easy actually, the task will
         // // be deleting sequence of repeated "amp;" between ampersand and letter.
         // For example, we have this:
@@ -11248,6 +10684,7 @@
           if (secondCharThatFollows && Object.prototype.hasOwnProperty.call(startsWith, str[firstCharThatFollows]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstCharThatFollows]], str[secondCharThatFollows]) && startsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
             // if (str.entStartsWith(`${entity};`, firstCharThatFollows)) {
             var matchEntityOnTheRight = rightSeq.apply(void 0, [str, toDeleteAllAmpEndHere - 1].concat(_toConsumableArray(entity.slice(""))));
+            /* istanbul ignore else */
 
             if (matchEntityOnTheRight) {
               matchedTemp = entity;
@@ -11257,6 +10694,8 @@
             doNothingUntil = firstCharThatFollows + matchedTemp.length + 1; // is there ampersand on the left of "i", the first amp;?
 
             var _whatsOnTheLeft = left(str, i);
+            /* istanbul ignore else */
+
 
             if (str[_whatsOnTheLeft] === "&") {
               rangesArr2.push({
@@ -11355,17 +10794,23 @@
       return rangesArr2.every(function (oneOfEveryObj, y) {
         return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
       });
-    }).filter(function (filteredRangeObj, i, allRangesArr) {
-      if (filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" && allRangesArr.some(function (oneRangeObj, y) {
-        return i !== y && // prevent matching itself
-        oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom && oneRangeObj.rangeTo === filteredRangeObj.rangeTo;
-      })) {
-        return false;
-      } // ELSE
-
-
-      return true;
-    }).map(opts.cb); // filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom ||
+    }) // .filter((filteredRangeObj, i, allRangesArr) => {
+    //   if (
+    //     filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" &&
+    //     allRangesArr.some((oneRangeObj, y) => {
+    //       return (
+    //         i !== y && // prevent matching itself
+    //         oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom &&
+    //         oneRangeObj.rangeTo === filteredRangeObj.rangeTo
+    //       );
+    //     })
+    //   ) {
+    //     return false;
+    //   }
+    //   // ELSE
+    //   return true;
+    // })
+    .map(opts.cb); // filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom ||
     // filteredRangeObj.rangeTo > oneOfEveryObj.rangeTo
 
     return res;

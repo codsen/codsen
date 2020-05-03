@@ -68,11 +68,21 @@ tap.test(
 );
 
 tap.test(
-  `04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`,
+  `04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.entityCatcherCb is not function`,
+  (t) => {
+    t.throws(() => {
+      fix("aaa", { entityCatcherCb: "bbb" });
+    }, /THROW_ID_04/);
+    t.end();
+  }
+);
+
+tap.test(
+  `05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`,
   (t) => {
     t.throws(() => {
       fix("aaa", { progressFn: "bbb" });
-    }, /THROW_ID_04/);
+    }, /THROW_ID_05/);
     t.end();
   }
 );

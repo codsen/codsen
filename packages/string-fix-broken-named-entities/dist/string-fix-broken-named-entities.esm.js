@@ -8,7 +8,7 @@
  */
 
 import leven from 'leven';
-import { entStartsWith, decode, uncertain, entEndsWith, maxLength, allNamedEntitiesSetOnlyCaseInsensitive, allNamedEntitiesSetOnly, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities } from 'all-named-html-entities';
+import { entStartsWith, decode, uncertain, entEndsWith, maxLength, allNamedEntitiesSetOnlyCaseInsensitive, allNamedEntitiesSetOnly, brokenNamedEntities } from 'all-named-html-entities';
 import { right, rightSeq, left, leftSeq } from 'string-left-right';
 
 function isObj(something) {
@@ -106,12 +106,14 @@ function findLongest(temp1) {
   return temp1;
 }
 function removeGappedFromMixedCases(str, temp1) {
+  /* istanbul ignore if */
   if (arguments.length !== 2) {
     throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
   }
   let copy;
   if (Array.isArray(temp1) && temp1.length) {
     copy = Array.from(temp1);
+    /* istanbul ignore if */
     if (
       copy.length > 1 &&
       copy.some(
@@ -210,7 +212,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
     throw new TypeError(
-      `string-fix-broken-named-entities: [THROW_ID_03] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.entityCatcherCb}, equal to: ${JSON.stringify(
+      `string-fix-broken-named-entities: [THROW_ID_04] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.entityCatcherCb}, equal to: ${JSON.stringify(
         opts.entityCatcherCb,
         null,
         4
@@ -219,7 +221,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError(
-      `string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(
+      `string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(
         opts.progressFn,
         null,
         4
@@ -237,6 +239,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   for (let i = 0; i < len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
+      /* istanbul ignore else */
       if (percentageDone !== lastPercentageDone) {
         lastPercentageDone = percentageDone;
         opts.progressFn(percentageDone);
@@ -249,6 +252,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         counter += 1;
         continue;
       }
+    }
+    if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
+      letterSeqStartAt = null;
     }
     if (
       letterSeqStartAt !== null &&
@@ -263,9 +269,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           : "";
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           const firstChar = letterSeqStartAt;
+          /* istanbul ignore next */
           const secondChar = letterSeqStartAt
             ? right(str, letterSeqStartAt)
             : null;
+          /* istanbul ignore else */
           if (
             Object.prototype.hasOwnProperty.call(
               entStartsWith,
@@ -295,6 +303,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               []
             );
             temp1 = removeGappedFromMixedCases(str, temp1);
+            /* istanbul ignore else */
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
@@ -326,7 +335,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           str[i] === ";"
         ) {
           const lastChar = left(str, i);
-          const secondToLast = lastChar ? left(str, lastChar) : null;
+          const secondToLast = left(str, lastChar);
           if (
             secondToLast !== null &&
             Object.prototype.hasOwnProperty.call(entEndsWith, str[lastChar]) &&
@@ -356,6 +365,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               []
             );
             temp1 = removeGappedFromMixedCases(str, temp1);
+            /* istanbul ignore else */
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
@@ -395,6 +405,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               str[whatsEvenMoreToTheLeft] === "&")) &&
           str[i] === ";"
         ) {
+          /* istanbul ignore else */
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             const situation = resemblesNumericEntity(
               str,
@@ -403,6 +414,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             );
             if (situation.probablyNumeric) {
               if (
+                /* istanbul ignore next */
                 situation.probablyNumeric &&
                 situation.charTrimmed[0] === "#" &&
                 !situation.whitespaceCount &&
@@ -457,98 +469,96 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 opts.entityCatcherCb(whatsOnTheLeft, i + 1);
               }
             } else {
-              if (potentialEntity.length <= 50) {
-                const potentialEntityOnlyNonWhitespaceChars = Array.from(
-                  potentialEntity
+              const potentialEntityOnlyNonWhitespaceChars = Array.from(
+                potentialEntity
+              )
+                .filter((char) => char.trim().length)
+                .join("");
+              if (
+                potentialEntityOnlyNonWhitespaceChars.length <= maxLength &&
+                allNamedEntitiesSetOnlyCaseInsensitive.has(
+                  potentialEntityOnlyNonWhitespaceChars.toLowerCase()
                 )
-                  .filter((char) => char.trim().length)
-                  .join("");
+              ) {
                 if (
-                  potentialEntityOnlyNonWhitespaceChars.length <= maxLength &&
-                  allNamedEntitiesSetOnlyCaseInsensitive.has(
-                    potentialEntityOnlyNonWhitespaceChars.toLowerCase()
+                  !allNamedEntitiesSetOnly.has(
+                    potentialEntityOnlyNonWhitespaceChars
                   )
                 ) {
-                  if (
-                    !allNamedEntitiesSetOnly.has(
-                      potentialEntityOnlyNonWhitespaceChars
-                    )
-                  ) {
-                    const matchingEntitiesOfCorrectCaseArr = [
-                      ...allNamedEntitiesSetOnly,
-                    ].filter(
-                      (ent) =>
-                        ent.toLowerCase() ===
-                        potentialEntityOnlyNonWhitespaceChars.toLowerCase()
-                    );
-                    if (matchingEntitiesOfCorrectCaseArr.length === 1) {
-                      rangesArr2.push({
-                        ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
-                        entityName: matchingEntitiesOfCorrectCaseArr[0],
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: i + 1,
-                        rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
-                        rangeValDecoded: decode(
-                          `&${matchingEntitiesOfCorrectCaseArr[0]};`
-                        ),
-                      });
-                    } else {
-                      rangesArr2.push({
-                        ruleName: `bad-named-html-entity-unrecognised`,
-                        entityName: null,
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: i + 1,
-                        rangeValEncoded: null,
-                        rangeValDecoded: null,
-                      });
-                    }
-                  } else if (
-                    i - whatsOnTheLeft - 1 !==
-                      potentialEntityOnlyNonWhitespaceChars.length ||
-                    str[whatsOnTheLeft] !== "&"
-                  ) {
-                    const rangeFrom =
-                      str[whatsOnTheLeft] === "&"
-                        ? whatsOnTheLeft
-                        : whatsEvenMoreToTheLeft;
-                    if (
-                      Object.keys(uncertain).includes(
-                        potentialEntityOnlyNonWhitespaceChars
-                      ) &&
-                      !str[rangeFrom + 1].trim().length
-                    ) {
-                      letterSeqStartAt = null;
-                      continue;
-                    }
+                  const matchingEntitiesOfCorrectCaseArr = [
+                    ...allNamedEntitiesSetOnly,
+                  ].filter(
+                    (ent) =>
+                      ent.toLowerCase() ===
+                      potentialEntityOnlyNonWhitespaceChars.toLowerCase()
+                  );
+                  if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
-                      ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
-                      entityName: potentialEntityOnlyNonWhitespaceChars,
-                      rangeFrom,
-                      rangeTo: i + 1,
-                      rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
-                      rangeValDecoded: decode(
-                        `&${potentialEntityOnlyNonWhitespaceChars};`
-                      ),
-                    });
-                  } else if (opts.decode) {
-                    rangesArr2.push({
-                      ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
-                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
+                      entityName: matchingEntitiesOfCorrectCaseArr[0],
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
-                      rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
+                      rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
                       rangeValDecoded: decode(
-                        `&${potentialEntityOnlyNonWhitespaceChars};`
+                        `&${matchingEntitiesOfCorrectCaseArr[0]};`
                       ),
                     });
-                  } else if (opts.entityCatcherCb) {
-                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  } else {
+                    rangesArr2.push({
+                      ruleName: `bad-named-html-entity-unrecognised`,
+                      entityName: null,
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: null,
+                      rangeValDecoded: null,
+                    });
                   }
-                  letterSeqStartAt = null;
-                  continue;
+                } else if (
+                  i - whatsOnTheLeft - 1 !==
+                    potentialEntityOnlyNonWhitespaceChars.length ||
+                  str[whatsOnTheLeft] !== "&"
+                ) {
+                  const rangeFrom =
+                    str[whatsOnTheLeft] === "&"
+                      ? whatsOnTheLeft
+                      : whatsEvenMoreToTheLeft;
+                  if (
+                    Object.keys(uncertain).includes(
+                      potentialEntityOnlyNonWhitespaceChars
+                    ) &&
+                    !str[rangeFrom + 1].trim().length
+                  ) {
+                    letterSeqStartAt = null;
+                    continue;
+                  }
+                  rangesArr2.push({
+                    ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
+                    entityName: potentialEntityOnlyNonWhitespaceChars,
+                    rangeFrom,
+                    rangeTo: i + 1,
+                    rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
+                    rangeValDecoded: decode(
+                      `&${potentialEntityOnlyNonWhitespaceChars};`
+                    ),
+                  });
+                } else if (opts.decode) {
+                  rangesArr2.push({
+                    ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
+                    entityName: potentialEntityOnlyNonWhitespaceChars,
+                    rangeFrom: whatsOnTheLeft,
+                    rangeTo: i + 1,
+                    rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
+                    rangeValDecoded: decode(
+                      `&${potentialEntityOnlyNonWhitespaceChars};`
+                    ),
+                  });
+                } else if (opts.entityCatcherCb) {
+                  opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                 }
+                letterSeqStartAt = null;
+                continue;
               }
-              const firstChar = letterSeqStartAt;
+              /* istanbul ignore next */
               const secondChar = letterSeqStartAt
                 ? right(str, letterSeqStartAt)
                 : null;
@@ -587,6 +597,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   temp.length) ||
                   ((temp = [...allNamedEntitiesSetOnly].filter(
                     (curr) =>
+                      /* istanbul ignore next */
                       leven(curr, potentialEntity) === 2 &&
                       potentialEntity.length > 3
                   )) &&
@@ -602,185 +613,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeValEncoded: `&${tempEnt};`,
                     rangeValDecoded: decode(`&${tempEnt};`),
                   });
-                } else {
-                  const lengthOfLongestCaughtEnt = temp.reduce((acc, curr) => {
-                    return curr.length > acc ? curr.length : acc;
-                  }, 0);
-                  temp = temp.filter(
-                    (ent) => ent.length === lengthOfLongestCaughtEnt
-                  );
-                  if (temp.length === 1) {
-                    rangesArr2.push({
-                      ruleName: `bad-named-html-entity-malformed-${temp[0]}`,
-                      entityName: temp[0],
-                      rangeFrom: whatsOnTheLeft,
-                      rangeTo: i + 1,
-                      rangeValEncoded: `&${temp[0]};`,
-                      rangeValDecoded: decode(`&${temp[0]};`),
-                    });
-                  }
-                }
-              } else if (
-                Object.prototype.hasOwnProperty.call(
-                  entStartsWithCaseInsensitive,
-                  str[firstChar].toLowerCase()
-                ) &&
-                Object.prototype.hasOwnProperty.call(
-                  entStartsWithCaseInsensitive[str[firstChar].toLowerCase()],
-                  str[secondChar].toLowerCase()
-                )
-              ) {
-                let tempRes;
-                let matchedEntity = entStartsWithCaseInsensitive[
-                  str[firstChar].toLowerCase()
-                ][str[secondChar].toLowerCase()].reduce(
-                  (gatheredSoFar, oneOfKnownEntities) => {
-                    tempRes = rightSeq(
-                      str,
-                      letterSeqStartAt - 1,
-                      {
-                        i: true,
-                      },
-                      ...oneOfKnownEntities.split("")
-                    );
-                    if (tempRes) {
-                      return gatheredSoFar.concat([
-                        { tempEnt: oneOfKnownEntities, tempRes },
-                      ]);
-                    }
-                    return gatheredSoFar;
-                  },
-                  []
-                );
-                matchedEntity = removeGappedFromMixedCases(str, matchedEntity);
-                if (matchedEntity) {
-                  ({ tempEnt, tempRes } = matchedEntity);
-                }
-                let entitysValue;
-                if (tempEnt) {
-                  let issue = false;
-                  const firstChar2 = tempRes.leftmostChar;
-                  const secondChar2 = right(str, firstChar2);
-                  if (
-                    Object.keys(uncertain).includes(potentialEntity) &&
-                    isStr(str[firstChar2 - 1]) &&
-                    !str[firstChar2 - 1].trim().length &&
-                    uncertain[potentialEntity].addAmpIfSemiPresent !== true
-                  ) {
-                    letterSeqStartAt = null;
-                    continue;
-                  }
-                  if (
-                    Object.prototype.hasOwnProperty.call(
-                      entStartsWith,
-                      str[firstChar2]
-                    ) &&
-                    Object.prototype.hasOwnProperty.call(
-                      entStartsWith[str[firstChar2]],
-                      str[secondChar2]
-                    ) &&
-                    entStartsWith[str[firstChar2]][str[secondChar2]].includes(
-                      situation.charTrimmed
-                    )
-                  ) {
-                    entitysValue = situation.charTrimmed;
-                    if (i - whatsOnTheLeft - 1 === tempEnt.length) {
-                      if (opts.decode) {
-                        issue = "encoded-html-entity";
-                      }
-                    } else {
-                      issue = "bad-named-html-entity-malformed";
-                    }
-                  } else {
-                    issue = "bad-named-html-entity-malformed";
-                    const matchingEntities = Object.keys(
-                      allNamedEntities
-                    ).filter((entity) =>
-                      situation.charTrimmed
-                        .toLowerCase()
-                        .startsWith(entity.toLowerCase())
-                    );
-                    if (matchingEntities.length === 1) {
-                      entitysValue = matchingEntities[0];
-                    } else {
-                      const filterLongest = matchingEntities.reduce(
-                        (accum, curr) => {
-                          if (
-                            !accum.length ||
-                            curr.length === accum[0].length
-                          ) {
-                            return accum.concat([curr]);
-                          }
-                          if (curr.length > accum[0].length) {
-                            return [curr];
-                          }
-                          return accum;
-                        },
-                        []
-                      );
-                      if (filterLongest.length === 1) {
-                        entitysValue = filterLongest[0];
-                      } else {
-                        const missingLetters = filterLongest.map((entity) => {
-                          let count = 0;
-                          for (let z = 0, len2 = entity.length; z < len2; z++) {
-                            if (entity[z] !== situation.charTrimmed[z]) {
-                              count += 1;
-                            }
-                          }
-                          return count;
-                        });
-                        if (
-                          missingLetters.filter(
-                            (val) => val === Math.min(...missingLetters)
-                          ).length > 1
-                        ) {
-                          rangesArr2.push({
-                            ruleName: `bad-named-html-entity-unrecognised`,
-                            entityName: null,
-                            rangeFrom: whatsOnTheLeft,
-                            rangeTo:
-                              tempRes.rightmostChar + 1 === i
-                                ? i + 1
-                                : tempRes.rightmostChar + 1,
-                            rangeValEncoded: null,
-                            rangeValDecoded: null,
-                          });
-                          issue = false;
-                        }
-                        entitysValue =
-                          filterLongest[
-                            missingLetters.indexOf(Math.min(...missingLetters))
-                          ];
-                      }
-                    }
-                  }
-                  let endingIdx =
-                    tempRes.rightmostChar + 1 === i
-                      ? i + 1
-                      : tempRes.rightmostChar + 1;
-                  if (issue) {
-                    const decodedEntity = decode(`&${entitysValue};`);
-                    if (
-                      str[endingIdx] &&
-                      str[endingIdx] !== ";" &&
-                      !str[endingIdx].trim().length &&
-                      str[right(str, endingIdx)] === ";"
-                    ) {
-                      endingIdx = right(str, endingIdx) + 1;
-                    }
-                    rangesArr2.push({
-                      ruleName: `${issue}-${entitysValue}`,
-                      entityName: entitysValue,
-                      rangeFrom: whatsOnTheLeft,
-                      rangeTo: endingIdx,
-                      rangeValEncoded: `&${entitysValue};`,
-                      rangeValDecoded: decodedEntity,
-                    });
-                  }
-                  if (opts.entityCatcherCb) {
-                    opts.entityCatcherCb(whatsOnTheLeft, endingIdx);
-                  }
                 }
               }
               if (!tempEnt) {
@@ -807,6 +639,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           );
           rangesArr2.push({
             ruleName: `${
+              /* istanbul ignore next */
               situation.probablyNumeric
                 ? "bad-malformed-numeric-character-entity"
                 : "bad-named-html-entity-unrecognised"
@@ -873,6 +706,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               toDeleteAllAmpEndHere - 1,
               ...entity.slice("")
             );
+            /* istanbul ignore else */
             if (matchEntityOnTheRight) {
               matchedTemp = entity;
               return true;
@@ -881,6 +715,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         ) {
           doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
           const whatsOnTheLeft = left(str, i);
+          /* istanbul ignore else */
           if (str[whatsOnTheLeft] === "&") {
             rangesArr2.push({
               ruleName: "bad-named-html-entity-multiple-encoding",
@@ -936,21 +771,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           )
         );
       });
-    })
-    .filter((filteredRangeObj, i, allRangesArr) => {
-      if (
-        filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" &&
-        allRangesArr.some((oneRangeObj, y) => {
-          return (
-            i !== y &&
-            oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom &&
-            oneRangeObj.rangeTo === filteredRangeObj.rangeTo
-          );
-        })
-      ) {
-        return false;
-      }
-      return true;
     })
     .map(opts.cb);
   return res;
