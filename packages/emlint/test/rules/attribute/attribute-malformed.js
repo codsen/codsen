@@ -186,7 +186,7 @@ tap.test(
 // 02. mis-typed
 // -----------------------------------------------------------------------------
 
-tap.only(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = `<td clas="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
