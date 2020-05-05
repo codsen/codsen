@@ -66,6 +66,16 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## Purpose
+
+This program detects and fixes broken named HTML entities. The algorithm is Levenshtein distance, for smaller entities, we match by distance `1`, for longer entities we allow distance `2`.
+
+In practice, this means we can catch errors like: `&nbp;` (mistyped `&nbsp;`).
+
+This program also works as a healthy entities catcher - broken entities are fed to one callback (`opts.cb`), healthy entities are fed to another callback (opts.entityCatcherCb).
+
+There is a decoding function; the algorithm is aware of numeric HTML entities as well.
+
 ## API - Input
 
 The `fixEnt` you required/imported is a function and it has two input arguments:
@@ -94,7 +104,7 @@ console.log(JSON.stringify(result, null, 4));
 | `decode`                         | Boolean           | `false`   | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                           |
 | `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output                                                                            |
 | `entityCatcherCb`                | Function          | `null`    | If you set a function here, every encountered entity will be passed to it, see a dedicated chapter below                                              |
-| `progressFn`                     | Function          | `null`    | Used in web worker setups. You pass a function and it gets called one for each natural number `0` to `99`, meaning percentage of the work done so far |
+| `progressFn`                     | Function          | `null`    | Used in web worker setups. You pass a function and it gets called once for each natural number `0` to `99`, meaning a percentage of the work done so far |
 | }                                |                   |           |
 
 Here it is in one place:
@@ -115,7 +125,7 @@ Here it is in one place:
 
 ## API - Output
 
-**Output**: array of zero or more arrays (_ranges_).
+**Output**: an array of zero or more arrays (_ranges_).
 
 For example, four fixed `nbsp`'s:
 
@@ -130,7 +140,7 @@ For example, four fixed `nbsp`'s:
 
 ## `opts.decode`
 
-If you set `opts.decode` and there are healthy encoded entities, those will not be decoded. Only if there are broken entities, those will be set in ranges as decoded values. If you want full decoding, consider filter the input with [normal decoding library](https://www.npmjs.com/package/ranges-ent-decode) right after filtering using this library.
+If you set `opts.decode` and there are healthy encoded entities, those will not be decoded. Only if there are broken entities, those will be set in ranges as decoded values. If you want full decoding, consider filtering the input with [normal decoding library](https://www.npmjs.com/package/ranges-ent-decode) right after filtering using this library.
 
 For example, you'd first filter the string using this library, `string-fix-broken-named-entities`. Then you'd filter the same input skipping already recorded ranges, using [ranges-ent-decode](https://www.npmjs.com/package/ranges-ent-decode). Then you'd merge the ranges.
 
@@ -156,7 +166,7 @@ So, normally, the output of this library is **an array** of zero or more arrays 
 ]
 ```
 
-Above means, delete string from index `1` to `2` and from `3` to `4`.
+Above means, delete the string from index `1` to `2` and from `3` to `4`.
 
 However, for example, in [`emlint`](https://www.npmjs.com/package/emlint), I need slightly different format, not only ranges but also **issue titles**:
 
@@ -175,7 +185,7 @@ However, for example, in [`emlint`](https://www.npmjs.com/package/emlint), I nee
 
 **Callback function** via `opts.cb` allows you to change the output of this library.
 
-The concept is, you pass a function in option object's key `cb`. That function will receive a plain object with all "ingredients" under various keys. Whatever you return, will be pushed into results array. For each result application is about to push, it will call your function with findings, all neatly put in the plain object.
+The concept is, you pass a function in options object's key `cb`. That function will receive a plain object with all "ingredients" under various keys. Whatever you return, will be pushed into a results array. For each result application is about to push, it will call your function with findings, all neatly put in the plain object.
 
 For example, to solve the example above, we would do:
 
@@ -230,7 +240,7 @@ Here's the detailed description of all the keys, values and their types:
 
 ### `opts.decode` in relation to `opts.cb`
 
-Even though it might seem that when callback is used, `opts.decode` does not matter (because we serve both encoded and decoded values in callback), but **it does matter**.
+Even though it might seem that when a callback is used, `opts.decode` does not matter (because we serve both encoded and decoded values in a callback), but **it does matter**.
 
 For example, consider this case, where we have non-breaking spaces without semicolons:
 
@@ -328,13 +338,7 @@ There are [other libraries](https://gitlab.com/codsen/codsen/tree/master#-11-ran
 
 ## Why not regexes?
 
-Our algorithm is way waay more complex than anything that can be achieved using regexes. We tackle the task using mix of different algorithms: looking for known entity names, counting letters (in nbsp case only) and calculating the minimum-sample which would pass as an nbsp, looking for known broken patterns — many ways. It would be impossible to achieve this using regexes.
-
-**[⬆ back to top](#)**
-
-## Practical use
-
-This library was initially part of [Detergent.js](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) and was taken out, rewritten; its unit tests were beefed up and consolidated and appropriately organised. Almost any tool that deals with HTML can make use of this library, especially, since it **only reports what was done** (instead of returning a mutated string which is up to you to compare and see what was done). It's easy to catch false positives this way.
+Our algorithm is way waay more complex than anything that can be achieved using regexes. We tackle the task using a mix of different algorithms: looking for known entity names, counting letters (in nbsp case only) and calculating the minimum-sample which would pass as an nbsp, looking for known broken patterns — many ways. It would be impossible to achieve this using regexp.
 
 **[⬆ back to top](#)**
 
