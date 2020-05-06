@@ -59,11 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "hex-color-regex",
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-      ],
+      external: ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,
@@ -78,11 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "hex-color-regex",
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-      ],
+      external: ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,

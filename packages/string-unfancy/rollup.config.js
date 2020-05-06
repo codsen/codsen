@@ -59,9 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "he",
-      ],
+      external: ["he"],
       plugins: [
         strip({
           sourceMap: false,
@@ -76,9 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "he",
-      ],
+      external: ["he"],
       plugins: [
         strip({
           sourceMap: false,

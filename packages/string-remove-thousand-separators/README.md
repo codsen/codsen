@@ -15,6 +15,7 @@
 ```bash
 npm i string-remove-thousand-separators
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`remSep`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -42,11 +43,11 @@ const remSep = stringRemoveThousandSeparators;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-remove-thousand-separators.cjs.js` | 5 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-thousand-separators.esm.js` | 4 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-thousand-separators.umd.js` | 15 KB
+| Type                                                                                                    | Key in `package.json` | Path                                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-thousand-separators.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-thousand-separators.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-thousand-separators.umd.js` | 15 KB |
 
 **[⬆ back to top](#)**
 

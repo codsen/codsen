@@ -59,10 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "check-types-mini",
-        "lodash.isplainobject",
-      ],
+      external: ["check-types-mini", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,
@@ -77,10 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "check-types-mini",
-        "lodash.isplainobject",
-      ],
+      external: ["check-types-mini", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false,

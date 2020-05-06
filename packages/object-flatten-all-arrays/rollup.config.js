@@ -59,11 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-        "lodash.merge",
-      ],
+      external: ["lodash.clonedeep", "lodash.isplainobject", "lodash.merge"],
       plugins: [
         strip({
           sourceMap: false,
@@ -78,11 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-        "lodash.merge",
-      ],
+      external: ["lodash.clonedeep", "lodash.isplainobject", "lodash.merge"],
       plugins: [
         strip({
           sourceMap: false,

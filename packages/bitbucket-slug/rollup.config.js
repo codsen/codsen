@@ -65,10 +65,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ent",
-        "lodash.deburr",
-      ],
+      external: ["ent", "lodash.deburr"],
       plugins: [
         strip({
           sourceMap: false,
@@ -85,10 +82,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ent",
-        "lodash.deburr",
-      ],
+      external: ["ent", "lodash.deburr"],
       plugins: [
         strip({
           sourceMap: false,

@@ -59,11 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ast-monkey-traverse",
-        "lodash.clonedeep",
-        "matcher",
-      ],
+      external: ["ast-monkey-traverse", "lodash.clonedeep", "matcher"],
       plugins: [
         strip({
           sourceMap: false,
@@ -78,11 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ast-monkey-traverse",
-        "lodash.clonedeep",
-        "matcher",
-      ],
+      external: ["ast-monkey-traverse", "lodash.clonedeep", "matcher"],
       plugins: [
         strip({
           sourceMap: false,

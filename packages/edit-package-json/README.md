@@ -25,6 +25,7 @@
 ```bash
 npm i edit-package-json
 ```
+
 Consume via a `require()`:
 
 ```js
@@ -50,11 +51,11 @@ const { set, del } = editPackageJson;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/edit-package-json.cjs.js` | 17 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/edit-package-json.esm.js` | 18 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/edit-package-json.umd.js` | 27 KB
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 17 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 18 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 27 KB |
 
 **[⬆ back to top](#)**
 
@@ -224,7 +225,6 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
-
 
 Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 

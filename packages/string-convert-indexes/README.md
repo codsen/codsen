@@ -25,6 +25,7 @@
 ```bash
 npm i string-convert-indexes
 ```
+
 Consume via a `require()`:
 
 ```js
@@ -50,11 +51,11 @@ const { nativeToUnicode, unicodeToNative } = stringConvertIndexes;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-convert-indexes.cjs.js` | 7 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-convert-indexes.esm.js` | 5 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-convert-indexes.umd.js` | 36 KB
+| Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-convert-indexes.cjs.js` | 7 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-convert-indexes.esm.js` | 5 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-convert-indexes.umd.js` | 36 KB |
 
 **[⬆ back to top](#)**
 

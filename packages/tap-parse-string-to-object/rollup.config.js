@@ -62,11 +62,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "isstream",
-        "split2",
-        "through2",
-      ],
+      external: ["isstream", "split2", "through2"],
       plugins: [
         strip({
           sourceMap: false,
@@ -82,11 +78,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "isstream",
-        "split2",
-        "through2",
-      ],
+      external: ["isstream", "split2", "through2"],
       plugins: [
         strip({
           sourceMap: false,

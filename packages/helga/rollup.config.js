@@ -62,9 +62,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "unescape-js",
-      ],
+      external: ["unescape-js"],
       plugins: [
         strip({
           sourceMap: false,
@@ -80,9 +78,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "unescape-js",
-      ],
+      external: ["unescape-js"],
       plugins: [
         strip({
           sourceMap: false,

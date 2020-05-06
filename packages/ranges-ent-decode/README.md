@@ -15,6 +15,7 @@
 ```bash
 npm i ranges-ent-decode
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`decode`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -42,11 +43,11 @@ const decode = rangesEntDecode;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-ent-decode.cjs.js` | 5 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-ent-decode.esm.js` | 3 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-ent-decode.umd.js` | 80 KB
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-ent-decode.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-ent-decode.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-ent-decode.umd.js` | 80 KB |
 
 **[⬆ back to top](#)**
 
@@ -184,7 +185,6 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
-
 
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>

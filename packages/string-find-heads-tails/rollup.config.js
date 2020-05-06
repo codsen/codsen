@@ -59,10 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "arrayiffy-if-string",
-        "string-match-left-right",
-      ],
+      external: ["arrayiffy-if-string", "string-match-left-right"],
       plugins: [
         strip({
           sourceMap: false,
@@ -77,10 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "arrayiffy-if-string",
-        "string-match-left-right",
-      ],
+      external: ["arrayiffy-if-string", "string-match-left-right"],
       plugins: [
         strip({
           sourceMap: false,

@@ -29,6 +29,7 @@ Other siblings of this package:
 ```bash
 npm i csv-sort
 ```
+
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`cSort`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
@@ -56,11 +57,11 @@ const cSort = csvSort;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/csv-sort.cjs.js` | 13 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-sort.esm.js` | 14 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-sort.umd.js` | 24 KB
+| Type                                                                                                    | Key in `package.json` | Path                   | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-sort.cjs.js` | 13 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 24 KB |
 
 **[⬆ back to top](#)**
 
@@ -145,7 +146,6 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
-
 
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 

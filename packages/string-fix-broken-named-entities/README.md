@@ -13,6 +13,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Purpose](#purpose)
 - [API - Input](#api-input)
 - [API - Output](#api-output)
 - [`opts.decode`](#optsdecode)
@@ -21,7 +22,6 @@
 - [`opts.progressFn` - progress callback](#optsprogressfn-progress-callback)
 - [Tips](#tips)
 - [Why not regexes?](#why-not-regexes)
-- [Practical use](#practical-use)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -76,6 +76,8 @@ This program also works as a healthy entities catcher - broken entities are fed 
 
 There is a decoding function; the algorithm is aware of numeric HTML entities as well.
 
+**[⬆ back to top](#)**
+
 ## API - Input
 
 The `fixEnt` you required/imported is a function and it has two input arguments:
@@ -98,12 +100,12 @@ console.log(JSON.stringify(result, null, 4));
 
 ### Optional Options Object
 
-| An Optional Options Object's key | Type of its value | Default   | Description                                                                                                                                           |
-| -------------------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| An Optional Options Object's key | Type of its value | Default   | Description                                                                                                                                              |
+| -------------------------------- | ----------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                |                   |           |
-| `decode`                         | Boolean           | `false`   | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                           |
-| `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output                                                                            |
-| `entityCatcherCb`                | Function          | `null`    | If you set a function here, every encountered entity will be passed to it, see a dedicated chapter below                                              |
+| `decode`                         | Boolean           | `false`   | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                              |
+| `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output                                                                               |
+| `entityCatcherCb`                | Function          | `null`    | If you set a function here, every encountered entity will be passed to it, see a dedicated chapter below                                                 |
 | `progressFn`                     | Function          | `null`    | Used in web worker setups. You pass a function and it gets called once for each natural number `0` to `99`, meaning a percentage of the work done so far |
 | }                                |                   |           |
 
