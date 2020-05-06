@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.6.21
+ * Version: 6.6.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
@@ -4204,7 +4204,7 @@
   /**
    * object-flatten-all-arrays
    * Merge and flatten any arrays found in all values within plain objects
-   * Version: 4.8.13
+   * Version: 4.8.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-all-arrays
@@ -4355,7 +4355,7 @@
   /**
    * array-includes-with-glob
    * like _.includes but with wildcards
-   * Version: 2.12.34
+   * Version: 2.12.35
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
@@ -6151,7 +6151,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.30
+   * Version: 3.11.31
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -6171,7 +6171,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.57
+   * Version: 2.9.58
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
@@ -6247,7 +6247,7 @@
   /**
    * object-merge-advanced
    * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.17
+   * Version: 10.11.18
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
@@ -8582,7 +8582,7 @@
   /**
    * object-all-values-equal-to
    * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
-   * Version: 1.8.14
+   * Version: 1.8.15
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to
@@ -8652,7 +8652,7 @@
   /**
    * object-fill-missing-keys
    * Add missing keys into plain objects, according to a reference object
-   * Version: 7.10.15
+   * Version: 7.10.16
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
@@ -8777,7 +8777,7 @@
   /**
    * object-set-all-values-to
    * Recursively walk the input and set all found values in plain objects to something
-   * Version: 3.9.57
+   * Version: 3.9.58
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
@@ -8921,7 +8921,7 @@
   /**
    * object-no-new-keys
    * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
-   * Version: 2.9.3
+   * Version: 2.9.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys

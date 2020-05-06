@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.17.4
+ * Version: 2.18.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -385,7 +385,7 @@
   /**
    * all-named-html-entities
    * List of all named HTML entities
-   * Version: 1.2.19
+   * Version: 1.3.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -5956,442 +5956,6 @@
     z: z$1,
     N: N$1
   };
-  var a$2 = {
-    a: ["aacute"],
-    b: ["abreve"],
-    c: ["ac", "acd", "ace", "acirc", "acute", "acy"],
-    e: ["aelig"],
-    f: ["af", "afr"],
-    g: ["agrave"],
-    l: ["alefsym", "aleph", "alpha"],
-    m: ["amacr", "amalg", "amp"],
-    n: ["and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr"],
-    o: ["aogon", "aopf"],
-    p: ["ap", "apacir", "ape", "apid", "apos", "applyfunction", "approx", "approxeq"],
-    r: ["aring"],
-    s: ["ascr", "assign", "ast", "asymp", "asympeq"],
-    t: ["atilde"],
-    u: ["auml"],
-    w: ["awconint", "awint"]
-  };
-  var b$2 = {
-    a: ["backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge"],
-    b: ["bbrk", "bbrktbrk"],
-    c: ["bcong", "bcy"],
-    d: ["bdquo"],
-    e: ["becaus", "because", "bemptyv", "bepsi", "bernou", "bernoullis", "beta", "beth", "between"],
-    f: ["bfr"],
-    i: ["bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge"],
-    k: ["bkarow"],
-    l: ["blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block"],
-    n: ["bne", "bnequiv", "bnot"],
-    o: ["bopf", "bot", "bottom", "bowtie", "boxbox", "boxdl", "boxdr", "boxh", "boxhd", "boxhu", "boxminus", "boxplus", "boxtimes", "boxul", "boxur", "boxv", "boxvh", "boxvl", "boxvr"],
-    p: ["bprime"],
-    r: ["breve", "brvbar"],
-    s: ["bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub"],
-    u: ["bull", "bullet", "bump", "bumpe", "bumpeq"]
-  };
-  var c$2 = {
-    a: ["cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys"],
-    c: ["ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm"],
-    d: ["cdot"],
-    e: ["cedil", "cedilla", "cemptyv", "cent", "centerdot"],
-    f: ["cfr"],
-    h: ["chcy", "check", "checkmark", "chi"],
-    i: ["cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "circledot", "circledr", "circleds", "circleminus", "circleplus", "circletimes", "cire", "cirfnint", "cirmid", "cirscir"],
-    l: ["clockwisecontourintegral", "closecurlydoublequote", "closecurlyquote", "clubs", "clubsuit"],
-    o: ["colon", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "congruent", "conint", "contourintegral", "copf", "coprod", "coproduct", "copy", "copysr", "counterclockwisecontourintegral"],
-    r: ["crarr", "cross"],
-    s: ["cscr", "csub", "csube", "csup", "csupe"],
-    t: ["ctdot"],
-    u: ["cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "cup", "cupbrcap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed"],
-    w: ["cwconint", "cwint"],
-    y: ["cylcty"]
-  };
-  var d$2 = {
-    a: ["dagger", "daleth", "darr", "dash", "dashv"],
-    b: ["dbkarow", "dblac"],
-    c: ["dcaron", "dcy"],
-    d: ["dd", "ddagger", "ddarr", "ddotrahd", "ddotseq"],
-    e: ["deg", "del", "delta", "demptyv"],
-    f: ["dfisht", "dfr"],
-    h: ["dhar", "dharl", "dharr"],
-    i: ["diacriticalacute", "diacriticaldot", "diacriticaldoubleacute", "diacriticalgrave", "diacriticaltilde", "diam", "diamond", "diamondsuit", "diams", "die", "differentiald", "digamma", "disin", "div", "divide", "divideontimes", "divonx"],
-    j: ["djcy"],
-    l: ["dlcorn", "dlcrop"],
-    o: ["dollar", "dopf", "dot", "dotdot", "doteq", "doteqdot", "dotequal", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "doublecontourintegral", "doubledot", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelefttee", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doublerighttee", "doubleuparrow", "doubleupdownarrow", "doubleverticalbar", "downarrow", "downarrowbar", "downarrowuparrow", "downbreve", "downdownarrows", "downharpoonleft", "downharpoonright", "downleftrightvector", "downleftteevector", "downleftvector", "downleftvectorbar", "downrightteevector", "downrightvector", "downrightvectorbar", "downtee", "downteearrow"],
-    r: ["drbkarow", "drcorn", "drcrop"],
-    s: ["dscr", "dscy", "dsol", "dstrok"],
-    t: ["dtdot", "dtri", "dtrif"],
-    u: ["duarr", "duhar"],
-    w: ["dwangle"],
-    z: ["dzcy", "dzigrarr"]
-  };
-  var e$2 = {
-    a: ["eacute", "easter"],
-    c: ["ecaron", "ecir", "ecirc", "ecolon", "ecy"],
-    d: ["eddot", "edot"],
-    e: ["ee"],
-    f: ["efdot", "efr"],
-    g: ["eg", "egrave", "egs", "egsdot"],
-    l: ["el", "element", "elinters", "ell", "els", "elsdot"],
-    m: ["emacr", "empty", "emptyset", "emptysmallsquare", "emptyv", "emptyverysmallsquare", "emsp", "emsp13", "emsp14"],
-    n: ["eng", "ensp"],
-    o: ["eogon", "eopf"],
-    p: ["epar", "eparsl", "eplus", "epsi", "epsilon", "epsiv"],
-    q: ["eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "equal", "equals", "equaltilde", "equest", "equilibrium", "equiv", "equivdd", "eqvparsl"],
-    r: ["erarr", "erdot"],
-    s: ["escr", "esdot", "esim"],
-    t: ["eta", "eth"],
-    u: ["euml", "euro"],
-    x: ["excl", "exist", "exists", "expectation", "exponentiale"]
-  };
-  var f$2 = {
-    a: ["fallingdotseq"],
-    c: ["fcy"],
-    e: ["female"],
-    f: ["ffilig", "fflig", "ffllig", "ffr"],
-    i: ["filig", "filledsmallsquare", "filledverysmallsquare"],
-    j: ["fjlig"],
-    l: ["flat", "fllig", "fltns"],
-    n: ["fnof"],
-    o: ["fopf", "forall", "fork", "forkv", "fouriertrf"],
-    p: ["fpartint"],
-    r: ["frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown"],
-    s: ["fscr"]
-  };
-  var g$2 = {
-    a: ["gacute", "gamma", "gammad", "gap"],
-    b: ["gbreve"],
-    c: ["gcedil", "gcirc", "gcy"],
-    d: ["gdot"],
-    e: ["ge", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles"],
-    f: ["gfr"],
-    g: ["gg", "ggg"],
-    i: ["gimel"],
-    j: ["gjcy"],
-    l: ["gl", "gla", "gle", "glj"],
-    n: ["gnap", "gnapprox", "gne", "gneq", "gneqq", "gnsim"],
-    o: ["gopf"],
-    r: ["grave", "greaterequal", "greaterequalless", "greaterfullequal", "greatergreater", "greaterless", "greaterslantequal", "greatertilde"],
-    s: ["gscr", "gsim", "gsime", "gsiml"],
-    t: ["gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim"],
-    v: ["gvertneqq", "gvne"]
-  };
-  var h$2 = {
-    a: ["hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat"],
-    b: ["hbar"],
-    c: ["hcirc"],
-    e: ["hearts", "heartsuit", "hellip", "hercon"],
-    f: ["hfr"],
-    i: ["hilbertspace"],
-    k: ["hksearow", "hkswarow"],
-    o: ["hoarr", "homtht", "hookleftarrow", "hookrightarrow", "hopf", "horbar", "horizontalline"],
-    s: ["hscr", "hslash", "hstrok"],
-    u: ["humpdownhump", "humpequal"],
-    y: ["hybull", "hyphen"]
-  };
-  var i$2 = {
-    a: ["iacute"],
-    c: ["ic", "icirc", "icy"],
-    d: ["idot"],
-    e: ["iecy", "iexcl"],
-    f: ["iff", "ifr"],
-    g: ["igrave"],
-    i: ["ii", "iiiint", "iiint", "iinfin", "iiota"],
-    j: ["ijlig"],
-    m: ["im", "imacr", "image", "imaginaryi", "imagline", "imagpart", "imath", "imof", "imped", "implies"],
-    n: ["in", "incare", "infin", "infintie", "inodot", "int", "intcal", "integers", "integral", "intercal", "intersection", "intlarhk", "intprod", "invisiblecomma", "invisibletimes"],
-    o: ["iocy", "iogon", "iopf", "iota"],
-    p: ["iprod"],
-    q: ["iquest"],
-    s: ["iscr", "isin", "isindot", "isine", "isins", "isinsv", "isinv"],
-    t: ["it", "itilde"],
-    u: ["iukcy", "iuml"]
-  };
-  var j$2 = {
-    c: ["jcirc", "jcy"],
-    f: ["jfr"],
-    m: ["jmath"],
-    o: ["jopf"],
-    s: ["jscr", "jsercy"],
-    u: ["jukcy"]
-  };
-  var k$2 = {
-    a: ["kappa", "kappav"],
-    c: ["kcedil", "kcy"],
-    f: ["kfr"],
-    g: ["kgreen"],
-    h: ["khcy"],
-    j: ["kjcy"],
-    o: ["kopf"],
-    s: ["kscr"]
-  };
-  var l$2 = {
-    a: ["laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates"],
-    b: ["lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu"],
-    c: ["lcaron", "lcedil", "lceil", "lcub", "lcy"],
-    d: ["ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh"],
-    e: ["le", "leftanglebracket", "leftarrow", "leftarrowbar", "leftarrowrightarrow", "leftarrowtail", "leftceiling", "leftdoublebracket", "leftdownteevector", "leftdownvector", "leftdownvectorbar", "leftfloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "leftrightvector", "lefttee", "leftteearrow", "leftteevector", "leftthreetimes", "lefttriangle", "lefttrianglebar", "lefttriangleequal", "leftupdownvector", "leftupteevector", "leftupvector", "leftupvectorbar", "leftvector", "leftvectorbar", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "lessequalgreater", "lessfullequal", "lessgreater", "lessgtr", "lessless", "lesssim", "lessslantequal", "lesstilde"],
-    f: ["lfisht", "lfloor", "lfr"],
-    g: ["lg", "lge"],
-    h: ["lhar", "lhard", "lharu", "lharul", "lhblk"],
-    j: ["ljcy"],
-    l: ["ll", "llarr", "llcorner", "lleftarrow", "llhard", "lltri"],
-    m: ["lmidot", "lmoust", "lmoustache"],
-    n: ["lnap", "lnapprox", "lne", "lneq", "lneqq", "lnsim"],
-    o: ["loang", "loarr", "lobrk", "longleftarrow", "longleftrightarrow", "longmapsto", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "lopf", "loplus", "lotimes", "lowast", "lowbar", "lowerleftarrow", "lowerrightarrow", "loz", "lozenge", "lozf"],
-    p: ["lpar", "lparlt"],
-    r: ["lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri"],
-    s: ["lsaquo", "lscr", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "lstrok"],
-    t: ["lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrpar"],
-    u: ["lurdshar", "luruhar"],
-    v: ["lvertneqq", "lvne"]
-  };
-  var m$2 = {
-    a: ["macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker"],
-    c: ["mcomma", "mcy"],
-    d: ["mdash", "mddot"],
-    e: ["measuredangle", "mediumspace", "mellintrf"],
-    f: ["mfr"],
-    h: ["mho"],
-    i: ["micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "minusplus"],
-    l: ["mlcp", "mldr"],
-    n: ["mnplus"],
-    o: ["models", "mopf"],
-    p: ["mp"],
-    s: ["mscr", "mstpos"],
-    u: ["mu", "multimap", "mumap"]
-  };
-  var n$2 = {
-    a: ["nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals"],
-    b: ["nbsp", "nbump", "nbumpe"],
-    c: ["ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy"],
-    d: ["ndash"],
-    e: ["ne", "nearhk", "nearr", "nearrow", "nedot", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nequiv", "nesear", "nesim", "nestedgreatergreater", "nestedlessless", "newline", "nexist", "nexists"],
-    f: ["nfr"],
-    g: ["nge", "ngeq", "ngeqq", "ngeqslant", "nges", "ngg", "ngsim", "ngt", "ngtr", "ngtv"],
-    h: ["nharr", "nhpar"],
-    i: ["ni", "nis", "nisd", "niv"],
-    j: ["njcy"],
-    l: ["nlarr", "nldr", "nle", "nleftarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nll", "nlsim", "nlt", "nltri", "nltrie", "nltv"],
-    m: ["nmid"],
-    o: ["nobreak", "nonbreakingspace", "nopf", "not", "notcongruent", "notcupcap", "notdoubleverticalbar", "notelement", "notequal", "notequaltilde", "notexists", "notgreater", "notgreaterequal", "notgreaterfullequal", "notgreatergreater", "notgreaterless", "notgreaterslantequal", "notgreatertilde", "nothumpdownhump", "nothumpequal", "notin", "notindot", "notine", "notinva", "notinvb", "notinvc", "notlefttriangle", "notlefttrianglebar", "notlefttriangleequal", "notless", "notlessequal", "notlessgreater", "notlessless", "notlessslantequal", "notlesstilde", "notnestedgreatergreater", "notnestedlessless", "notni", "notniva", "notnivb", "notnivc", "notprecedes", "notprecedesequal", "notprecedesslantequal", "notreverseelement", "notrighttriangle", "notrighttrianglebar", "notrighttriangleequal", "notsquaresubset", "notsquaresubsetequal", "notsquaresuperset", "notsquaresupersetequal", "notsubset", "notsubsetequal", "notsucceeds", "notsucceedsequal", "notsucceedsslantequal", "notsucceedstilde", "notsuperset", "notsupersetequal", "nottilde", "nottildeequal", "nottildefullequal", "nottildetilde", "notverticalbar"],
-    p: ["npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq"],
-    r: ["nrarr", "nrarrc", "nrarrw", "nrightarrow", "nrtri", "nrtrie"],
-    s: ["nsc", "nsccue", "nsce", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupe", "nsupset", "nsupseteq", "nsupseteqq"],
-    t: ["ntgl", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq"],
-    u: ["nu", "num", "numero", "numsp"],
-    v: ["nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim"],
-    w: ["nwarhk", "nwarr", "nwarrow", "nwnear"]
-  };
-  var o$2 = {
-    a: ["oacute", "oast"],
-    c: ["ocir", "ocirc", "ocy"],
-    d: ["odash", "odblac", "odiv", "odot", "odsold"],
-    e: ["oelig"],
-    f: ["ofcir", "ofr"],
-    g: ["ogon", "ograve", "ogt"],
-    h: ["ohbar", "ohm"],
-    i: ["oint"],
-    l: ["olarr", "olcir", "olcross", "oline", "olt"],
-    m: ["omacr", "omega", "omicron", "omid", "ominus"],
-    o: ["oopf"],
-    p: ["opar", "opencurlydoublequote", "opencurlyquote", "operp", "oplus"],
-    r: ["or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv"],
-    s: ["os", "oscr", "oslash", "osol"],
-    t: ["otilde", "otimes", "otimesas"],
-    u: ["ouml"],
-    v: ["ovbar", "overbar", "overbrace", "overbracket", "overparenthesis"]
-  };
-  var p$2 = {
-    a: ["par", "para", "parallel", "parsim", "parsl", "part", "partiald"],
-    c: ["pcy"],
-    e: ["percnt", "period", "permil", "perp", "pertenk"],
-    f: ["pfr"],
-    h: ["phi", "phiv", "phmmat", "phone"],
-    i: ["pi", "pitchfork", "piv"],
-    l: ["planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "plusminus", "plusmn", "plussim", "plustwo"],
-    m: ["pm"],
-    o: ["poincareplane", "pointint", "popf", "pound"],
-    r: ["pr", "prap", "prcue", "pre", "prec", "precapprox", "preccurlyeq", "precedes", "precedesequal", "precedesslantequal", "precedestilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "prime", "primes", "prnap", "prne", "prnsim", "prod", "product", "profalar", "profline", "profsurf", "prop", "proportion", "proportional", "propto", "prsim", "prurel"],
-    s: ["pscr", "psi"],
-    u: ["puncsp"]
-  };
-  var q$2 = {
-    f: ["qfr"],
-    i: ["qint"],
-    o: ["qopf"],
-    p: ["qprime"],
-    s: ["qscr"],
-    u: ["quaternions", "quatint", "quest", "questeq", "quot"]
-  };
-  var r$2 = {
-    a: ["raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals"],
-    b: ["rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu"],
-    c: ["rcaron", "rcedil", "rceil", "rcub", "rcy"],
-    d: ["rdca", "rdldhar", "rdquo", "rdquor", "rdsh"],
-    e: ["re", "real", "realine", "realpart", "reals", "rect", "reg", "reverseelement", "reverseequilibrium", "reverseupequilibrium"],
-    f: ["rfisht", "rfloor", "rfr"],
-    h: ["rhar", "rhard", "rharu", "rharul", "rho", "rhov"],
-    i: ["rightanglebracket", "rightarrow", "rightarrowbar", "rightarrowleftarrow", "rightarrowtail", "rightceiling", "rightdoublebracket", "rightdownteevector", "rightdownvector", "rightdownvectorbar", "rightfloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "righttee", "rightteearrow", "rightteevector", "rightthreetimes", "righttriangle", "righttrianglebar", "righttriangleequal", "rightupdownvector", "rightupteevector", "rightupvector", "rightupvectorbar", "rightvector", "rightvectorbar", "ring", "risingdotseq"],
-    l: ["rlarr", "rlhar", "rlm"],
-    m: ["rmoust", "rmoustache"],
-    n: ["rnmid"],
-    o: ["roang", "roarr", "robrk", "ropar", "ropf", "roplus", "rotimes", "roundimplies"],
-    p: ["rpar", "rpargt", "rppolint"],
-    r: ["rrarr", "rrightarrow"],
-    s: ["rsaquo", "rscr", "rsh", "rsqb", "rsquo", "rsquor"],
-    t: ["rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri"],
-    u: ["ruledelayed", "ruluhar"],
-    x: ["rx"]
-  };
-  var s$2 = {
-    a: ["sacute"],
-    b: ["sbquo"],
-    c: ["sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy"],
-    d: ["sdot", "sdotb", "sdote"],
-    e: ["searhk", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext"],
-    f: ["sfr", "sfrown"],
-    h: ["sharp", "shchcy", "shcy", "shortdownarrow", "shortleftarrow", "shortmid", "shortparallel", "shortrightarrow", "shortuparrow", "shy"],
-    i: ["sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simge", "siml", "simle", "simne", "simplus", "simrarr"],
-    l: ["slarr"],
-    m: ["smallcircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes"],
-    o: ["softcy", "sol", "solb", "solbar", "sopf"],
-    p: ["spades", "spadesuit", "spar"],
-    q: ["sqcap", "sqcaps", "sqcup", "sqcups", "sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "square", "squareintersection", "squaresubset", "squaresubsetequal", "squaresuperset", "squaresupersetequal", "squareunion", "squarf", "squf"],
-    r: ["srarr"],
-    s: ["sscr", "ssetmn", "ssmile", "sstarf"],
-    t: ["star", "starf", "straightepsilon", "straightphi", "strns"],
-    u: ["sub", "subdot", "sube", "subedot", "submult", "subne", "subplus", "subrarr", "subset", "subseteq", "subseteqq", "subsetequal", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "succeeds", "succeedsequal", "succeedsslantequal", "succeedstilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "suchthat", "sum", "sung", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supe", "supedot", "superset", "supersetequal", "suphsol", "suphsub", "suplarr", "supmult", "supne", "supplus", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup"],
-    w: ["swarhk", "swarr", "swarrow", "swnwar"],
-    z: ["szlig"]
-  };
-  var t$2 = {
-    a: ["tab", "target", "tau"],
-    b: ["tbrk"],
-    c: ["tcaron", "tcedil", "tcy"],
-    d: ["tdot"],
-    e: ["telrec"],
-    f: ["tfr"],
-    h: ["there4", "therefore", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "thickspace", "thinsp", "thinspace", "thkap", "thksim", "thorn"],
-    i: ["tilde", "tildeequal", "tildefullequal", "tildetilde", "times", "timesb", "timesbar", "timesd", "tint"],
-    o: ["toea", "top", "topbot", "topcir", "topf", "topfork", "tosa"],
-    p: ["tprime"],
-    r: ["trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "tripledot", "triplus", "trisb", "tritime", "trpezium"],
-    s: ["tscr", "tscy", "tshcy", "tstrok"],
-    w: ["twixt", "twoheadleftarrow", "twoheadrightarrow"]
-  };
-  var u$2 = {
-    a: ["uacute", "uarr", "uarrocir"],
-    b: ["ubrcy", "ubreve"],
-    c: ["ucirc", "ucy"],
-    d: ["udarr", "udblac", "udhar"],
-    f: ["ufisht", "ufr"],
-    g: ["ugrave"],
-    h: ["uhar", "uharl", "uharr", "uhblk"],
-    l: ["ulcorn", "ulcorner", "ulcrop", "ultri"],
-    m: ["umacr", "uml"],
-    n: ["underbar", "underbrace", "underbracket", "underparenthesis", "union", "unionplus"],
-    o: ["uogon", "uopf"],
-    p: ["uparrow", "uparrowbar", "uparrowdownarrow", "updownarrow", "upequilibrium", "upharpoonleft", "upharpoonright", "uplus", "upperleftarrow", "upperrightarrow", "upsi", "upsih", "upsilon", "uptee", "upteearrow", "upuparrows"],
-    r: ["urcorn", "urcorner", "urcrop", "uring", "urtri"],
-    s: ["uscr"],
-    t: ["utdot", "utilde", "utri", "utrif"],
-    u: ["uuarr", "uuml"],
-    w: ["uwangle"]
-  };
-  var v$2 = {
-    a: ["vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright"],
-    b: ["vbar", "vbarv"],
-    c: ["vcy"],
-    d: ["vdash", "vdashl"],
-    e: ["vee", "veebar", "veeeq", "vellip", "verbar", "vert", "verticalbar", "verticalline", "verticalseparator", "verticaltilde", "verythinspace"],
-    f: ["vfr"],
-    l: ["vltri"],
-    n: ["vnsub", "vnsup"],
-    o: ["vopf"],
-    p: ["vprop"],
-    r: ["vrtri"],
-    s: ["vscr", "vsubne", "vsupne"],
-    v: ["vvdash"],
-    z: ["vzigzag"]
-  };
-  var w$2 = {
-    c: ["wcirc"],
-    e: ["wedbar", "wedge", "wedgeq", "weierp"],
-    f: ["wfr"],
-    o: ["wopf"],
-    p: ["wp"],
-    r: ["wr", "wreath"],
-    s: ["wscr"]
-  };
-  var x$2 = {
-    c: ["xcap", "xcirc", "xcup"],
-    d: ["xdtri"],
-    f: ["xfr"],
-    h: ["xharr"],
-    i: ["xi"],
-    l: ["xlarr"],
-    m: ["xmap"],
-    n: ["xnis"],
-    o: ["xodot", "xopf", "xoplus", "xotime"],
-    r: ["xrarr"],
-    s: ["xscr", "xsqcup"],
-    u: ["xuplus", "xutri"],
-    v: ["xvee"],
-    w: ["xwedge"]
-  };
-  var y$2 = {
-    a: ["yacute", "yacy"],
-    c: ["ycirc", "ycy"],
-    e: ["yen"],
-    f: ["yfr"],
-    i: ["yicy"],
-    o: ["yopf"],
-    s: ["yscr"],
-    u: ["yucy", "yuml"]
-  };
-  var z$2 = {
-    a: ["zacute"],
-    c: ["zcaron", "zcy"],
-    d: ["zdot"],
-    e: ["zeetrf", "zerowidthspace", "zeta"],
-    f: ["zfr"],
-    h: ["zhcy"],
-    i: ["zigrarr"],
-    o: ["zopf"],
-    s: ["zscr"],
-    w: ["zwj", "zwnj"]
-  };
-  var startsWithCaseInsensitive = {
-    a: a$2,
-    b: b$2,
-    c: c$2,
-    d: d$2,
-    e: e$2,
-    f: f$2,
-    g: g$2,
-    h: h$2,
-    i: i$2,
-    j: j$2,
-    k: k$2,
-    l: l$2,
-    m: m$2,
-    n: n$2,
-    o: o$2,
-    p: p$2,
-    q: q$2,
-    r: r$2,
-    s: s$2,
-    t: t$2,
-    u: u$2,
-    v: v$2,
-    w: w$2,
-    x: x$2,
-    y: y$2,
-    z: z$2
-  };
   var ac$1 = {
     addAmpIfSemiPresent: "edge only",
     addSemiIfAmpPresent: false
@@ -10150,13 +9714,13 @@
   /**
    * string-left-right
    * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.21
+   * Version: 2.3.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
    */
 
-  function x$3(something) {
+  function x$2(something) {
     const res = {
       value: something,
       hungry: false,
@@ -10284,7 +9848,7 @@
         value,
         optional,
         hungry
-      } = x$3(args[i]);
+      } = x$2(args[i]);
       const whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
       if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
@@ -10385,7 +9949,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 2.6.0
+   * Version: 3.0.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10478,6 +10042,7 @@
   }
 
   function removeGappedFromMixedCases(str, temp1) {
+    /* istanbul ignore if */
     if (arguments.length !== 2) {
       throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
     }
@@ -10486,6 +10051,7 @@
 
     if (Array.isArray(temp1) && temp1.length) {
       copy = Array.from(temp1);
+      /* istanbul ignore if */
 
       if (copy.length > 1 && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";") && copy.some(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] !== ";")) {
         copy = copy.filter(entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";");
@@ -10534,11 +10100,11 @@
     }
 
     if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
-      throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_03] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.entityCatcherCb}, equal to: ${JSON.stringify(opts.entityCatcherCb, null, 4)}`);
+      throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_04] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.entityCatcherCb}, equal to: ${JSON.stringify(opts.entityCatcherCb, null, 4)}`);
     }
 
     if (opts.progressFn && typeof opts.progressFn !== "function") {
-      throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(opts.progressFn, null, 4)}`);
+      throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(opts.progressFn, null, 4)}`);
     }
 
     const rangesArr2 = [];
@@ -10553,6 +10119,7 @@
     for (let i = 0; i < len; i++) {
       if (opts.progressFn) {
         percentageDone = Math.floor(counter / len * 100);
+        /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -10569,6 +10136,10 @@
         }
       }
 
+      if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
+        letterSeqStartAt = null;
+      }
+
       if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
         if (i > letterSeqStartAt + 1) {
           const potentialEntity = str.slice(letterSeqStartAt, i);
@@ -10577,7 +10148,10 @@
 
           if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
             const firstChar = letterSeqStartAt;
+            /* istanbul ignore next */
+
             const secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
+            /* istanbul ignore else */
 
             if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar]], str[secondChar])) {
               let tempEnt;
@@ -10595,6 +10169,7 @@
                 return gatheredSoFar;
               }, []);
               temp1 = removeGappedFromMixedCases(str, temp1);
+              /* istanbul ignore else */
 
               if (temp1) {
                 ({
@@ -10617,7 +10192,7 @@
             }
           } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
             const lastChar = left(str, i);
-            const secondToLast = lastChar ? left(str, lastChar) : null;
+            const secondToLast = left(str, lastChar);
 
             if (secondToLast !== null && Object.prototype.hasOwnProperty.call(endsWith, str[lastChar]) && Object.prototype.hasOwnProperty.call(endsWith[str[lastChar]], str[secondToLast])) {
               let tempEnt;
@@ -10635,6 +10210,7 @@
                 return gatheredSoFar;
               }, []);
               temp1 = removeGappedFromMixedCases(str, temp1);
+              /* istanbul ignore else */
 
               if (temp1) {
                 ({
@@ -10666,11 +10242,14 @@
               brokenNumericEntityStartAt = null;
             }
           } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+            /* istanbul ignore else */
             if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
               const situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
 
               if (situation.probablyNumeric) {
-                if (situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && (!situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
+                if (
+                /* istanbul ignore next */
+                situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && (!situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
                   const decodedEntitysValue = String.fromCharCode(parseInt(situation.charTrimmed.slice(situation.probablyNumeric === "deci" ? 1 : 2), situation.probablyNumeric === "deci" ? 10 : 16));
 
                   if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
@@ -10707,67 +10286,66 @@
                   opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                 }
               } else {
-                if (potentialEntity.length <= 50) {
-                  const potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(char => char.trim().length).join("");
+                const potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(char => char.trim().length).join("");
 
-                  if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                    if (!allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
-                      const matchingEntitiesOfCorrectCaseArr = [...allNamedEntitiesSetOnly].filter(ent => ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase());
+                if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                  if (!allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                    const matchingEntitiesOfCorrectCaseArr = [...allNamedEntitiesSetOnly].filter(ent => ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase());
 
-                      if (matchingEntitiesOfCorrectCaseArr.length === 1) {
-                        rangesArr2.push({
-                          ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
-                          entityName: matchingEntitiesOfCorrectCaseArr[0],
-                          rangeFrom: whatsOnTheLeft,
-                          rangeTo: i + 1,
-                          rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
-                          rangeValDecoded: decode(`&${matchingEntitiesOfCorrectCaseArr[0]};`)
-                        });
-                      } else {
-                        rangesArr2.push({
-                          ruleName: `bad-named-html-entity-unrecognised`,
-                          entityName: null,
-                          rangeFrom: whatsOnTheLeft,
-                          rangeTo: i + 1,
-                          rangeValEncoded: null,
-                          rangeValDecoded: null
-                        });
-                      }
-                    } else if (i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
-                      const rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
-
-                      if (Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && !str[rangeFrom + 1].trim().length) {
-                        letterSeqStartAt = null;
-                        continue;
-                      }
-
+                    if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                       rangesArr2.push({
-                        ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
-                        entityName: potentialEntityOnlyNonWhitespaceChars,
-                        rangeFrom,
-                        rangeTo: i + 1,
-                        rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
-                        rangeValDecoded: decode(`&${potentialEntityOnlyNonWhitespaceChars};`)
-                      });
-                    } else if (opts.decode) {
-                      rangesArr2.push({
-                        ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
-                        entityName: potentialEntityOnlyNonWhitespaceChars,
+                        ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
+                        entityName: matchingEntitiesOfCorrectCaseArr[0],
                         rangeFrom: whatsOnTheLeft,
                         rangeTo: i + 1,
-                        rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
-                        rangeValDecoded: decode(`&${potentialEntityOnlyNonWhitespaceChars};`)
+                        rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
+                        rangeValDecoded: decode(`&${matchingEntitiesOfCorrectCaseArr[0]};`)
                       });
-                    } else if (opts.entityCatcherCb) {
-                      opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                    } else {
+                      rangesArr2.push({
+                        ruleName: `bad-named-html-entity-unrecognised`,
+                        entityName: null,
+                        rangeFrom: whatsOnTheLeft,
+                        rangeTo: i + 1,
+                        rangeValEncoded: null,
+                        rangeValDecoded: null
+                      });
+                    }
+                  } else if (i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
+                    const rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
+
+                    if (Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && !str[rangeFrom + 1].trim().length) {
+                      letterSeqStartAt = null;
+                      continue;
                     }
 
-                    letterSeqStartAt = null;
-                    continue;
+                    rangesArr2.push({
+                      ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom,
+                      rangeTo: i + 1,
+                      rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
+                      rangeValDecoded: decode(`&${potentialEntityOnlyNonWhitespaceChars};`)
+                    });
+                  } else if (opts.decode) {
+                    rangesArr2.push({
+                      ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
+                      entityName: potentialEntityOnlyNonWhitespaceChars,
+                      rangeFrom: whatsOnTheLeft,
+                      rangeTo: i + 1,
+                      rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
+                      rangeValDecoded: decode(`&${potentialEntityOnlyNonWhitespaceChars};`)
+                    });
+                  } else if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                   }
-                }
 
-                const firstChar = letterSeqStartAt;
+                  letterSeqStartAt = null;
+                  continue;
+                }
+                /* istanbul ignore next */
+
+
                 const secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
                 let tempEnt;
                 let temp;
@@ -10783,7 +10361,9 @@
                     rangeValEncoded: `&${brokenNamedEntities[situation.charTrimmed.toLowerCase()]};`,
                     rangeValDecoded: decodedEntity
                   });
-                } else if (potentialEntity.length < maxLength + 2 && ((temp = [...allNamedEntitiesSetOnly].filter(curr => leven_1(curr, potentialEntity) === 1)) && temp.length || (temp = [...allNamedEntitiesSetOnly].filter(curr => leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
+                } else if (potentialEntity.length < maxLength + 2 && ((temp = [...allNamedEntitiesSetOnly].filter(curr => leven_1(curr, potentialEntity) === 1)) && temp.length || (temp = [...allNamedEntitiesSetOnly].filter(curr =>
+                /* istanbul ignore next */
+                leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
                   if (temp.length === 1) {
                     [tempEnt] = temp;
                     rangesArr2.push({
@@ -10794,143 +10374,6 @@
                       rangeValEncoded: `&${tempEnt};`,
                       rangeValDecoded: decode(`&${tempEnt};`)
                     });
-                  } else {
-                    const lengthOfLongestCaughtEnt = temp.reduce((acc, curr) => {
-                      return curr.length > acc ? curr.length : acc;
-                    }, 0);
-                    temp = temp.filter(ent => ent.length === lengthOfLongestCaughtEnt);
-
-                    if (temp.length === 1) {
-                      rangesArr2.push({
-                        ruleName: `bad-named-html-entity-malformed-${temp[0]}`,
-                        entityName: temp[0],
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: i + 1,
-                        rangeValEncoded: `&${temp[0]};`,
-                        rangeValDecoded: decode(`&${temp[0]};`)
-                      });
-                    }
-                  }
-                } else if (Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive, str[firstChar].toLowerCase()) && Object.prototype.hasOwnProperty.call(startsWithCaseInsensitive[str[firstChar].toLowerCase()], str[secondChar].toLowerCase())) {
-                  let tempRes;
-                  let matchedEntity = startsWithCaseInsensitive[str[firstChar].toLowerCase()][str[secondChar].toLowerCase()].reduce((gatheredSoFar, oneOfKnownEntities) => {
-                    tempRes = rightSeq(str, letterSeqStartAt - 1, {
-                      i: true
-                    }, ...oneOfKnownEntities.split(""));
-
-                    if (tempRes) {
-                      return gatheredSoFar.concat([{
-                        tempEnt: oneOfKnownEntities,
-                        tempRes
-                      }]);
-                    }
-
-                    return gatheredSoFar;
-                  }, []);
-                  matchedEntity = removeGappedFromMixedCases(str, matchedEntity);
-
-                  if (matchedEntity) {
-                    ({
-                      tempEnt,
-                      tempRes
-                    } = matchedEntity);
-                  }
-
-                  let entitysValue;
-
-                  if (tempEnt) {
-                    let issue = false;
-                    const firstChar2 = tempRes.leftmostChar;
-                    const secondChar2 = right(str, firstChar2);
-
-                    if (Object.keys(uncertain).includes(potentialEntity) && isStr$1(str[firstChar2 - 1]) && !str[firstChar2 - 1].trim().length && uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
-                      letterSeqStartAt = null;
-                      continue;
-                    }
-
-                    if (Object.prototype.hasOwnProperty.call(startsWith, str[firstChar2]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstChar2]], str[secondChar2]) && startsWith[str[firstChar2]][str[secondChar2]].includes(situation.charTrimmed)) {
-                      entitysValue = situation.charTrimmed;
-
-                      if (i - whatsOnTheLeft - 1 === tempEnt.length) {
-                        if (opts.decode) {
-                          issue = "encoded-html-entity";
-                        }
-                      } else {
-                        issue = "bad-named-html-entity-malformed";
-                      }
-                    } else {
-                      issue = "bad-named-html-entity-malformed";
-                      const matchingEntities = Object.keys(allNamedEntities).filter(entity => situation.charTrimmed.toLowerCase().startsWith(entity.toLowerCase()));
-
-                      if (matchingEntities.length === 1) {
-                        entitysValue = matchingEntities[0];
-                      } else {
-                        const filterLongest = matchingEntities.reduce((accum, curr) => {
-                          if (!accum.length || curr.length === accum[0].length) {
-                            return accum.concat([curr]);
-                          }
-
-                          if (curr.length > accum[0].length) {
-                            return [curr];
-                          }
-
-                          return accum;
-                        }, []);
-
-                        if (filterLongest.length === 1) {
-                          entitysValue = filterLongest[0];
-                        } else {
-                          const missingLetters = filterLongest.map(entity => {
-                            let count = 0;
-
-                            for (let z = 0, len2 = entity.length; z < len2; z++) {
-                              if (entity[z] !== situation.charTrimmed[z]) {
-                                count += 1;
-                              }
-                            }
-
-                            return count;
-                          });
-
-                          if (missingLetters.filter(val => val === Math.min(...missingLetters)).length > 1) {
-                            rangesArr2.push({
-                              ruleName: `bad-named-html-entity-unrecognised`,
-                              entityName: null,
-                              rangeFrom: whatsOnTheLeft,
-                              rangeTo: tempRes.rightmostChar + 1 === i ? i + 1 : tempRes.rightmostChar + 1,
-                              rangeValEncoded: null,
-                              rangeValDecoded: null
-                            });
-                            issue = false;
-                          }
-
-                          entitysValue = filterLongest[missingLetters.indexOf(Math.min(...missingLetters))];
-                        }
-                      }
-                    }
-
-                    let endingIdx = tempRes.rightmostChar + 1 === i ? i + 1 : tempRes.rightmostChar + 1;
-
-                    if (issue) {
-                      const decodedEntity = decode(`&${entitysValue};`);
-
-                      if (str[endingIdx] && str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[right(str, endingIdx)] === ";") {
-                        endingIdx = right(str, endingIdx) + 1;
-                      }
-
-                      rangesArr2.push({
-                        ruleName: `${issue}-${entitysValue}`,
-                        entityName: entitysValue,
-                        rangeFrom: whatsOnTheLeft,
-                        rangeTo: endingIdx,
-                        rangeValEncoded: `&${entitysValue};`,
-                        rangeValDecoded: decodedEntity
-                      });
-                    }
-
-                    if (opts.entityCatcherCb) {
-                      opts.entityCatcherCb(whatsOnTheLeft, endingIdx);
-                    }
                   }
                 }
 
@@ -10949,7 +10392,9 @@
           } else if (str[whatsEvenMoreToTheLeft] === "&" && str[i] === ";" && i - whatsEvenMoreToTheLeft < maxLength) {
             const situation = resemblesNumericEntity(str, whatsEvenMoreToTheLeft + 1, i);
             rangesArr2.push({
-              ruleName: `${situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"}`,
+              ruleName: `${
+            /* istanbul ignore next */
+            situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"}`,
               entityName: null,
               rangeFrom: whatsEvenMoreToTheLeft,
               rangeTo: i + 1,
@@ -10992,6 +10437,7 @@
 
           if (secondCharThatFollows && Object.prototype.hasOwnProperty.call(startsWith, str[firstCharThatFollows]) && Object.prototype.hasOwnProperty.call(startsWith[str[firstCharThatFollows]], str[secondCharThatFollows]) && startsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(entity => {
             const matchEntityOnTheRight = rightSeq(str, toDeleteAllAmpEndHere - 1, ...entity.slice(""));
+            /* istanbul ignore else */
 
             if (matchEntityOnTheRight) {
               matchedTemp = entity;
@@ -11000,6 +10446,7 @@
           })) {
             doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
             const whatsOnTheLeft = left(str, i);
+            /* istanbul ignore else */
 
             if (str[whatsOnTheLeft] === "&") {
               rangesArr2.push({
@@ -11047,14 +10494,6 @@
       return rangesArr2.every((oneOfEveryObj, y) => {
         return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
       });
-    }).filter((filteredRangeObj, i, allRangesArr) => {
-      if (filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" && allRangesArr.some((oneRangeObj, y) => {
-        return i !== y && oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom && oneRangeObj.rangeTo === filteredRangeObj.rangeTo;
-      })) {
-        return false;
-      }
-
-      return true;
     }).map(opts.cb);
     return res;
   }
@@ -11062,7 +10501,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.9
+   * Version: 1.12.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -11328,7 +10767,7 @@
   /**
    * ast-monkey-util
    * Utility library of AST helper functions
-   * Version: 1.1.4
+   * Version: 1.1.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
@@ -11396,7 +10835,7 @@
   /**
    * string-find-malformed
    * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.5
+   * Version: 1.1.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -11515,7 +10954,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.30
+   * Version: 3.11.31
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -11535,7 +10974,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.5
+   * Version: 4.0.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -11860,7 +11299,7 @@
   /**
    * html-all-known-attributes
    * All HTML attributes known to the Humanity
-   * Version: 2.0.1
+   * Version: 2.0.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -11870,7 +11309,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.2
+   * Version: 1.1.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
@@ -11882,7 +11321,7 @@
   /**
    * ranges-is-index-within
    * Efficiently checks if index is within any of the given ranges
-   * Version: 1.14.33
+   * Version: 1.14.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
@@ -11912,7 +11351,7 @@
   /**
    * string-split-by-whitespace
    * Split string into array by chunks of whitespace
-   * Version: 1.6.62
+   * Version: 1.6.63
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -11971,7 +11410,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.3
+   * Version: 1.1.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -12240,7 +11679,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.6
+   * Version: 1.7.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -12319,7 +11758,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.14.1
+   * Version: 2.14.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -13939,7 +13378,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.2
+   * Version: 0.6.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -14977,7 +14416,7 @@
   /**
    * string-process-comma-separated
    * Extracts chunks from possibly comma or whatever-separated string
-   * Version: 1.2.6
+   * Version: 1.2.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
@@ -29878,7 +29317,7 @@
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.9
+   * Version: 1.0.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -30072,7 +29511,7 @@
 
   const word = '[a-fA-F\\d:]';
 
-  const b$3 = options => options && options.includeBoundaries ? `(?:(?<=\\s|^)(?=${word})|(?<=${word})(?=\\s|$))` : '';
+  const b$2 = options => options && options.includeBoundaries ? `(?:(?<=\\s|^)(?=${word})|(?<=${word})(?=\\s|$))` : '';
 
   const v4 = '(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}';
   const v6seg = '[a-fA-F\\d]{1,4}';
@@ -30089,11 +29528,11 @@
 )(%[0-9a-zA-Z]{1,})?                                           // %eth0            %1
 `.replace(/\s*\/\/.*$/gm, '').replace(/\n/g, '').trim();
 
-  const ip = options => options && options.exact ? new RegExp(`(?:^${v4}$)|(?:^${v6}$)`) : new RegExp(`(?:${b$3(options)}${v4}${b$3(options)})|(?:${b$3(options)}${v6}${b$3(options)})`, 'g');
+  const ip = options => options && options.exact ? new RegExp(`(?:^${v4}$)|(?:^${v6}$)`) : new RegExp(`(?:${b$2(options)}${v4}${b$2(options)})|(?:${b$2(options)}${v6}${b$2(options)})`, 'g');
 
-  ip.v4 = options => options && options.exact ? new RegExp(`^${v4}$`) : new RegExp(`${b$3(options)}${v4}${b$3(options)}`, 'g');
+  ip.v4 = options => options && options.exact ? new RegExp(`^${v4}$`) : new RegExp(`${b$2(options)}${v4}${b$2(options)}`, 'g');
 
-  ip.v6 = options => options && options.exact ? new RegExp(`^${v6}$`) : new RegExp(`${b$3(options)}${v6}${b$3(options)}`, 'g');
+  ip.v6 = options => options && options.exact ? new RegExp(`^${v6}$`) : new RegExp(`${b$2(options)}${v6}${b$2(options)}`, 'g');
 
   var ipRegex = ip;
 
@@ -32684,7 +32123,7 @@
   /**
    * is-language-code
    * Is given string a language code (as per IANA)
-   * Version: 1.0.5
+   * Version: 1.0.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code
@@ -33422,7 +32861,7 @@
   /**
    * is-media-descriptor
    * Is given string a valid media descriptor (including media query)?
-   * Version: 1.2.7
+   * Version: 1.2.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -36005,7 +35444,7 @@
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.2
+   * Version: 0.2.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -43773,7 +43212,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.17.4";
+  var version = "2.18.0";
 
   exports.Linter = Linter;
   exports.version = version;

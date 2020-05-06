@@ -1,7 +1,7 @@
 /**
  * array-pull-all-with-glob
  * pullAllWithGlob - like _.pullAll but pulling stronger, with globs
- * Version: 4.12.64
+ * Version: 4.12.65
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-pull-all-with-glob

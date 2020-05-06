@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0](https://gitlab.com/codsen/codsen/compare/detergent@5.9.0...detergent@5.10.0) (2020-05-06)
+
+
+### Features
+
+* update to the latest deps ([bfd94e8](https://gitlab.com/codsen/codsen/commit/bfd94e88adbd9c3258c4a8f730f84f5a3ebd4882))
+
+
+
+
+
 ## 5.9.0 (2020-04-26)
 
 ### Features

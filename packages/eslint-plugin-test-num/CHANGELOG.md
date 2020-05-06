@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2020-05-06)
+
+
+### Features
+
+* init ([928bb73](https://gitlab.com/codsen/codsen/commit/928bb73e3d2a036b5da65ed192f4982e5e8b60a7))
+
+
+
+
+
 ## 1.2.0
 
 Normally, here, all non-CLI packages have sources in ES Modules and are being bundled using Rollup into CJS, ESM and UMD builds. Up to now, I kept the setup in CJS, keeping the file setup the same as some influential people on the npm.

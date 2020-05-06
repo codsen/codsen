@@ -1,7 +1,7 @@
 /**
  * check-types-mini
  * Check the types of your options object's values after user has customised them
- * Version: 5.7.60
+ * Version: 5.7.61
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini

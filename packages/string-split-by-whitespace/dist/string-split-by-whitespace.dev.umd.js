@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 1.6.62
+ * Version: 1.6.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -65,7 +65,7 @@
   /**
    * ranges-is-index-within
    * Efficiently checks if index is within any of the given ranges
-   * Version: 1.14.33
+   * Version: 1.14.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within

@@ -1,7 +1,7 @@
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities

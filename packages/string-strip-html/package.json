@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -132,9 +132,9 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
-    "ranges-apply": "^3.1.5",
-    "ranges-push": "^3.7.7",
-    "string-left-right": "^2.3.21"
+    "ranges-apply": "^3.1.6",
+    "ranges-push": "^3.7.8",
+    "string-left-right": "^2.3.22"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -145,7 +145,7 @@
     "@rollup/plugin-node-resolve": "^7.1.3",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.8",
+    "lect": "^0.13.0",
     "rollup": "^2.8.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

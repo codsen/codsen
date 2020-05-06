@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.19](https://gitlab.com/codsen/codsen/compare/string-collapse-leading-whitespace@2.0.18...string-collapse-leading-whitespace@2.0.19) (2020-05-06)
+
+**Note:** Version bump only for package string-collapse-leading-whitespace
+
+
+
+
+
 ## 2.0.0 (2019-09-14)
 
 ### Features

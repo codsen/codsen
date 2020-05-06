@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://gitlab.com/codsen/codsen/compare/all-named-html-entities@1.2.19...all-named-html-entities@1.3.0) (2020-05-06)
+
+
+### Features
+
+* add sets `allNamedEntitiesSetOnly` and `allNamedEntitiesSetOnlyCaseInsensitive` ([84de965](https://gitlab.com/codsen/codsen/commit/84de965ae31eee50d3c08733f9750a8fbe8a7299))
+
+
+
+
+
 ## 1.2.3 (2019-09-11)
 
 ### Bug Fixes
