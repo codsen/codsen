@@ -23,7 +23,8 @@
     "range",
     "ranges",
     "return",
-    "string"
+    "string",
+    "levenshtein"
   ],
   "main": "dist/string-fix-broken-named-entities.cjs.js",
   "module": "dist/string-fix-broken-named-entities.esm.js",
