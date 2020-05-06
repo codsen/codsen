@@ -1,7 +1,7 @@
 [
     {
         "name": "all-named-html-entities",
-        "size": 232538,
+        "size": 281978,
         "imports": []
     },
     {
@@ -50,7 +50,7 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 5067,
+        "size": 5068,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -189,7 +189,7 @@
     },
     {
         "name": "detergent",
-        "size": 53954,
+        "size": 53952,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -253,7 +253,7 @@
     },
     {
         "name": "emlint",
-        "size": 320417,
+        "size": 308006,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -272,7 +272,7 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 350,
+        "size": 3471,
         "imports": [
             "js-row-num"
         ]
@@ -427,7 +427,7 @@
     },
     {
         "name": "lect",
-        "size": 74444,
+        "size": 74448,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -640,7 +640,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 37908,
+        "size": 27115,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -690,7 +690,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17774,
+        "size": 17772,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -708,7 +708,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33869,
+        "size": 33868,
         "imports": [
             "ranges-apply",
             "ranges-push",

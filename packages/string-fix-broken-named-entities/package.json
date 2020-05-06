@@ -19,12 +19,12 @@
     "fix",
     "fixer",
     "html",
+    "levenshtein",
     "named",
     "range",
     "ranges",
     "return",
-    "string",
-    "levenshtein"
+    "string"
   ],
   "main": "dist/string-fix-broken-named-entities.cjs.js",
   "module": "dist/string-fix-broken-named-entities.esm.js",
