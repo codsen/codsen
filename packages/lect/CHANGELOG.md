@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.13.0](https://gitlab.com/codsen/codsen/compare/lect@0.12.8...lect@0.13.0) (2020-05-06)
-
+## 0.13.0 (2020-05-06)
 
 ### Features
 
-* tap @rollup/plugin-babel instead in the generator ([05dd7d9](https://gitlab.com/codsen/codsen/commit/05dd7d9b16f7882cf9ec8548db8e6ca02f86e0a7))
-
-
-
-
+- tap @rollup/plugin-babel instead in the generator ([05dd7d9](https://gitlab.com/codsen/codsen/commit/05dd7d9b16f7882cf9ec8548db8e6ca02f86e0a7))
 
 ## 0.12.0 (2020-01-26)
 

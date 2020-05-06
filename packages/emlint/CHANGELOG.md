@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.18.0](https://gitlab.com/codsen/codsen/compare/emlint@2.17.4...emlint@2.18.0) (2020-05-06)
-
+## 2.18.0 (2020-05-06)
 
 ### Features
 
-* update the deps ([01ac915](https://gitlab.com/codsen/codsen/commit/01ac915b0e703c59f502a4ffffcffb7ff969001f))
-
-
-
-
+- update the deps ([01ac915](https://gitlab.com/codsen/codsen/commit/01ac915b0e703c59f502a4ffffcffb7ff969001f))
 
 ## 2.17.0 (2020-04-13)
 

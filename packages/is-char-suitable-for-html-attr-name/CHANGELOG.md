@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.3](https://gitlab.com/codsen/codsen/compare/is-char-suitable-for-html-attr-name@1.1.2...is-char-suitable-for-html-attr-name@1.1.3) (2020-05-06)
-
-**Note:** Version bump only for package is-char-suitable-for-html-attr-name
-
-
-
-
-
 ## 1.1.0 (2020-04-13)
 
 ### Features

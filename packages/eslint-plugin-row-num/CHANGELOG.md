@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://gitlab.com/codsen/codsen/compare/eslint-plugin-row-num@1.1.13...eslint-plugin-row-num@1.2.0) (2020-05-06)
-
+## 1.2.0 (2020-05-06)
 
 ### Features
 
-* rebase in ES modules and set up Rollup ([f8f9298](https://gitlab.com/codsen/codsen/commit/f8f929842cc5870fa4fcaf93cc2da2d6ba09466f))
-
-
-
-
+- rebase in ES modules and set up Rollup ([f8f9298](https://gitlab.com/codsen/codsen/commit/f8f929842cc5870fa4fcaf93cc2da2d6ba09466f))
 
 ## 1.2.0
 

@@ -3,32 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.6.0...string-fix-broken-named-entities@3.0.0) (2020-05-06)
-
+## 3.0.0 (2020-05-06)
 
 ### Bug Fixes
 
-* measure distance on more lenient Levenshtein l=2 by source entity which is present ([afb99d6](https://gitlab.com/codsen/codsen/commit/afb99d681813bd9c13d53b7ab3b6d3bb1ac5539f))
-
+- measure distance on more lenient Levenshtein l=2 by source entity which is present ([afb99d6](https://gitlab.com/codsen/codsen/commit/afb99d681813bd9c13d53b7ab3b6d3bb1ac5539f))
 
 ### Features
 
-* big refactor, levenshtein on all entities, more tests ([671dd5e](https://gitlab.com/codsen/codsen/commit/671dd5e5b157e0f0419e438ed9113ebcb788133b))
-
-
-### Performance Improvements
-
-* beef up code sample used in perf tests to cover more cases + wipe historical perf records ([39998c6](https://gitlab.com/codsen/codsen/commit/39998c6073d0f89aa74444da393f942868fe6c49))
-
+- big refactor, levenshtein on all entities, more tests ([671dd5e](https://gitlab.com/codsen/codsen/commit/671dd5e5b157e0f0419e438ed9113ebcb788133b))
 
 ### BREAKING CHANGES
 
-* less of crazy nbsp cases will be covered, essentially nbsp's from now on are like
+- less of crazy nbsp cases will be covered, essentially nbsp's from now on are like
 all other entities - treated the same
-
-
-
-
 
 ## 3.0.0
 
