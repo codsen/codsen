@@ -138,22 +138,6 @@ It will be published once the API stabilises.
 
 **[⬆ back to top](#)**
 
-## More thoughts
-
-Conceptually, good tooling should be user-oriented. For example, if you make a code checker which says "The parser got a fatal error", this is not a user-oriented program. As a user, I don't care about innards of your program — its parser especially. Tell me what _I_ did wrong and _how to fix it_ — don't tell me cryptic meaningless messages about parsers.
-
-For example, humanity is pouring money into OpenJS Foundation. People work on ESLint full-time. But ESLint is still based on a parser — if your code error manages to break that parser, it won't tell you where the error is, only that _you broke the parser_!
-
-For example, it is possible to omit the semicolon in ESLint causing a fatal parser error and you won't find where it is omitted. Good luck trawling 1000 lines of code!
-
-In order to find the fatal code errors, the tokenizer has to be _by magnitude more lenient_ than the code spec (in this case ECMA standard).
-
-Theoretically, parser should not have fatal errors _in order to be able to fix_ fatal errors.
-
-In other words, if an source code error is fatal and it breaks parser, tooling running on such parser will never be able to correctly identify such error. The bar has to be raised.
-
-**[⬆ back to top](#)**
-
 ## Perf
 
 I admit, the more we beef up the algorithms the more the performance drops. A stupid, fragile parser which only follows the code language spec will be faster than a smart parser which calculates a hundred types of possible errors supporting handful of languages properly and way more heuristically.
