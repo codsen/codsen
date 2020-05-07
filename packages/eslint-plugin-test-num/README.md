@@ -1,7 +1,3 @@
-<div align="center">
-  <img alt="eslint-plugin-test-num" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/eslint-plugin-test-num/media/repo_logo.gif" width="603" align="center">
-</div>
-
 <div align="center"><p>ESLint plugin to update unit test numbers automatically</p></div>
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
