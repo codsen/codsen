@@ -68,7 +68,7 @@
     "prefer-destructuring": 0,
     "prefer-template": "error",
     "row-num/correct-row-num": "error",
-    "test-num/correct-test-num": "error",
+    "test-num/correct-test-num": 0,
     "strict": "error",
     "symbol-description": "error",
     "yoda": [
