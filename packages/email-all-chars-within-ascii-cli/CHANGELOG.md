@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.65](https://gitlab.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@1.10.64...email-all-chars-within-ascii-cli@1.10.65) (2020-05-07)
+
+**Note:** Version bump only for package email-all-chars-within-ascii-cli
+
+
+
+
+
 ## 1.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

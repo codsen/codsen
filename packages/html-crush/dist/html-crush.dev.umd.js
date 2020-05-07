@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 1.9.29
+ * Version: 1.9.30
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -732,7 +732,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.8
+   * Version: 3.7.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3335,7 +3335,7 @@
     return leftMain(str, idx, false);
   }
 
-  var version = "1.9.29";
+  var version = "1.9.30";
 
   var isArr = Array.isArray;
   var finalIndexesToDelete = new Ranges({

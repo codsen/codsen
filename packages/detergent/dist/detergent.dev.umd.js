@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.10.0
+ * Version: 5.10.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -11112,7 +11112,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.8
+   * Version: 3.7.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -11410,7 +11410,7 @@
   /**
    * string-remove-widows
    * Helps to prevent widow words in a text
-   * Version: 1.6.1
+   * Version: 1.6.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -18618,7 +18618,7 @@
   /**
    * string-strip-html
    * Strips HTML tags from strings. No parser, accepts mixed sources.
-   * Version: 4.4.1
+   * Version: 4.4.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -23486,7 +23486,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.10.0";
+  var version$1 = "5.10.1";
 
   /**
    * html-entities-not-email-friendly
@@ -25501,7 +25501,7 @@
   /**
    * string-apostrophes
    * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
-   * Version: 1.2.19
+   * Version: 1.2.20
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes

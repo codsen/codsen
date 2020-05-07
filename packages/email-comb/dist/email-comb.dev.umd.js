@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.12
+ * Version: 3.9.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -4857,7 +4857,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.8
+   * Version: 3.7.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -5980,7 +5980,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "3.9.12";
+  var version = "3.9.13";
 
   var isArr$1 = Array.isArray;
   var defaults = {
