@@ -548,6 +548,7 @@
     } else if (["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && ["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
       // IF DOUBLE QUOTE (") OR OTHER TYPES OF DOUBLE QUOTES
       if (str[from - 1] && isDigitStr(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
+        // 0.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
           // replace double quotes meaning inches with double prime symbol:
           rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
@@ -555,7 +556,7 @@
           rangesArr.push([from, to, "\""]);
         }
       } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-        // 1. if there's punctuation on the left and space/quote on the right:
+        // 1.
         if (!str[to].trim()) {
           if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
             rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
@@ -579,14 +580,14 @@
           }
         }
       } else if (from === 0 && str[to] && str.slice(to).trim()) {
-        // 2. if it's the beginning of a string
+        // 2.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
       } else if (!str[to] && str.slice(0, from).trim()) {
-        // 3. if it's the beginning of a string
+        // 3.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
@@ -594,7 +595,7 @@
         }
       } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
         // equivalent of /"\b/g
-        // 4. alphanumeric follows
+        // 4.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
@@ -602,21 +603,21 @@
         }
       } else if (str[from - 1] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))) {
         // equivalent of /"\b/g
-        // 5. alphanumeric precedes
+        // 5.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
       } else if (str[from - 1] && !str[from - 1].trim()) {
-        // 6. whitespace in front
+        // 6.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
       } else if (str[to] && !str[to].trim()) {
-        // 7. whitespace after
+        // 7.
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {

@@ -235,3 +235,38 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`,
+  (t) => {
+    t.same(
+      convertOne(`${leftDoubleQuote}developers${rightDoubleQuote}`, {
+        from: 0,
+        convertApostrophes: 0,
+        convertEntities: 1,
+      }),
+      [[0, 1, `"`]]
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `16 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - all, off`,
+  (t) => {
+    t.same(
+      convertAll(` ${leftDoubleQuote}developers${rightDoubleQuote} `, {
+        convertApostrophes: 0,
+        convertEntities: 1,
+      }),
+      {
+        result: ` "developers" `,
+        ranges: [
+          [1, 2, `"`],
+          [12, 13, `"`],
+        ],
+      }
+    );
+    t.end();
+  }
+);

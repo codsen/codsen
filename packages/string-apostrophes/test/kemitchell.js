@@ -511,3 +511,35 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `35 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - mixed quotes within a single sentence`,
+  (t) => {
+    t.same(
+      convertAll(
+        `"Hello," said the spider. "'Shelob'" abruptly she announced.`,
+        {
+          convertApostrophes: 1,
+          convertEntities: 0,
+        }
+      ).result,
+      `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote}${rightDoubleQuote} abruptly she announced.`
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `36 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - all off, nothing fancy to start with`,
+  (t) => {
+    const input = `"Hello," said the spider. "'Shelob'" abruptly she announced.`;
+    t.same(
+      convertAll(input, {
+        convertApostrophes: 0,
+        convertEntities: 0,
+      }).result,
+      input
+    );
+    t.end();
+  }
+);
