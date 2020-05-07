@@ -209,13 +209,17 @@ const create = (context) => {
           op.get(node, "expression.arguments.1.body.body").length
         ) {
           let subTestCount = "multiple";
+          let filteredExpressionStatements = {};
           if (
-            op.get(node, "expression.arguments.1.body.body").length === 2 &&
-            op.get(node, "expression.arguments.1.body.body.1.type") ===
-              "ExpressionStatement" &&
+            (filteredExpressionStatements = op
+              .get(node, "expression.arguments.1.body.body")
+              .filter((nodeObj) => nodeObj.type === "ExpressionStatement"))
+              .length === 2 &&
             op.get(
-              node,
-              "expression.arguments.1.body.body.1.expression.callee.property.name"
+              filteredExpressionStatements[
+                filteredExpressionStatements.length - 1
+              ],
+              "expression.callee.property.name"
             ) === "end"
           ) {
             subTestCount = "single";
@@ -291,7 +295,7 @@ const create = (context) => {
                   subTestCount === "single"
                     ? testOrderNumber
                     : `${testOrderNumber}.${`${i + 1}`.padStart(2, "0")}`;
-                if (pathToMsgArgValue !== newValue) {
+                if (prep(pathToMsgArgValue).value !== newValue) {
                   context.report({
                     node,
                     messageId: "correctTestNum",

@@ -1,6 +1,9 @@
+/* eslint no-cond-assign: 0 */
+
 // import stringify from "json-stringify-safe";
 import op from "object-path";
 import prep from "../util/prep";
+
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
 // compiled from https://node-tap.org/docs/api/asserts/
@@ -111,7 +114,7 @@ const messageIsThirdArg = new Set([
 
 const create = (context) => {
   // console.log(
-  //   `115 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+  //   `117 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
   // );
 
   let counter = 0;
@@ -161,11 +164,11 @@ const create = (context) => {
           // console.log(" ");
           // console.log(" ");
           // console.log(
-          //   `165 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+          //   `167 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
           // );
           //
           // console.log(
-          //   `169 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+          //   `171 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
           // );
 
           const { start, end, value } =
@@ -222,7 +225,7 @@ const create = (context) => {
           if (start && end && value && value !== testOrderNumber) {
             finalDigitChunk = { start, end, value: testOrderNumber };
             // console.log(
-            //   `227 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            //   `228 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
             //     finalDigitChunk,
             //     null,
             //     4
@@ -253,24 +256,30 @@ const create = (context) => {
           // console.log(" ");
           // console.log(" ");
           // console.log(
-          //   `258 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+          //   `259 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
           // );
 
           // let's find out, is it a single test clause or there are multiple
           let subTestCount = "multiple";
+
+          let filteredExpressionStatements = {};
           if (
-            op.get(node, "expression.arguments.1.body.body").length === 2 &&
-            op.get(node, "expression.arguments.1.body.body.1.type") ===
-              "ExpressionStatement" &&
+            (filteredExpressionStatements = op
+              .get(node, "expression.arguments.1.body.body")
+              .filter((nodeObj) => nodeObj.type === "ExpressionStatement"))
+              .length === 2 &&
+            // ensure last expression is t.end:
             op.get(
-              node,
-              "expression.arguments.1.body.body.1.expression.callee.property.name"
+              filteredExpressionStatements[
+                filteredExpressionStatements.length - 1
+              ],
+              "expression.callee.property.name"
             ) === "end"
           ) {
             subTestCount = "single";
           }
           // console.log(
-          //   `${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `282 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${JSON.stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -287,7 +296,7 @@ const create = (context) => {
             // loop through expression statements, t.* calls inside the (t) => {...}
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               // console.log(
-              //   `296 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              //   `299 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               // );
               const assertsName = op.get(
                 exprStatements[i],
@@ -295,13 +304,13 @@ const create = (context) => {
               );
               if (!assertsName) {
                 // console.log(
-                //   `304 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                //   `307 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                 // );
                 continue;
               }
 
               // console.log(
-              //   `310 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+              //   `313 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
               //     messageIsThirdArg.has(assertsName)
               //       ? "III"
               //       : messageIsSecondArg.has(assertsName)
@@ -330,7 +339,7 @@ const create = (context) => {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               }
               // console.log(
-              //   `339 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `342 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -339,7 +348,7 @@ const create = (context) => {
 
               if (messageArgsPositionWeWillAimFor) {
                 // console.log(
-                //   `348 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                //   `351 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                 // );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -386,10 +395,19 @@ const create = (context) => {
 
                 if (!start || !end) {
                   // console.log(
-                  //   `405 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                  //   `398 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                   // );
                   continue;
                 }
+
+                // console.log(
+                //   `404 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                // );
+                // console.log(
+                //   `407 old prepped value: ${`\u001b[${35}m${
+                //     prep(pathToMsgArgValue).value
+                //   }\u001b[${39}m`}`
+                // );
 
                 const newValue =
                   subTestCount === "single"
@@ -397,12 +415,12 @@ const create = (context) => {
                     : `${testOrderNumber}.${`${i + 1}`.padStart(2, "0")}`;
 
                 // console.log(
-                //   `420 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
+                //   `418 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
                 // );
 
-                if (pathToMsgArgValue !== newValue) {
+                if (prep(pathToMsgArgValue).value !== newValue) {
                   // console.log(
-                  //   `425 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                  //   `423 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   // );
                   context.report({
                     node,
@@ -415,14 +433,14 @@ const create = (context) => {
               }
             }
             // console.log(
-            //   `438 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+            //   `436 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             // );
           }
         }
 
         // console.log(" ");
         // console.log(
-        //   `444 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `443 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
         //     finalDigitChunk,
         //     null,
         //     4
@@ -431,7 +449,7 @@ const create = (context) => {
 
         if (finalDigitChunk) {
           // console.log(
-          //   `453 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+          //   `452 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
           //     finalDigitChunk.start
           //   }, ${
           //     finalDigitChunk.end

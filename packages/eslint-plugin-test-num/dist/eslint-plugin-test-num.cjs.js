@@ -154,7 +154,11 @@ var create = function create(context) {
         }
         if (!finalDigitChunk && op.get(node, "expression.arguments.1.type") === "ArrowFunctionExpression" && op.get(node, "expression.arguments.1.body.type") === "BlockStatement" && op.get(node, "expression.arguments.1.body.body").length) {
           var subTestCount = "multiple";
-          if (op.get(node, "expression.arguments.1.body.body").length === 2 && op.get(node, "expression.arguments.1.body.body.1.type") === "ExpressionStatement" && op.get(node, "expression.arguments.1.body.body.1.expression.callee.property.name") === "end") {
+          var filteredExpressionStatements = {};
+          if ((filteredExpressionStatements = op.get(node, "expression.arguments.1.body.body").filter(function (nodeObj) {
+            return nodeObj.type === "ExpressionStatement";
+          })).length === 2 &&
+          op.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
             subTestCount = "single";
           }
           var exprStatements = op.get(node, "expression.arguments.1.body.body");
@@ -197,7 +201,7 @@ var create = function create(context) {
                     return "continue";
                   }
                   var newValue = subTestCount === "single" ? testOrderNumber : "".concat(testOrderNumber, ".").concat("".concat(i + 1).padStart(2, "0"));
-                  if (pathToMsgArgValue !== newValue) {
+                  if (prep(pathToMsgArgValue).value !== newValue) {
                     context.report({
                       node: node,
                       messageId: "correctTestNum",
