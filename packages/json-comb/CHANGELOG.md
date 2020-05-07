@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.49](https://gitlab.com/codsen/codsen/compare/json-comb@0.2.48...json-comb@0.2.49) (2020-05-07)
-
-**Note:** Version bump only for package json-comb
-
-
-
-
-
 ## 0.2.31 (2019-11-20)
 
 ### Bug Fixes
