@@ -16,7 +16,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - less of crazy nbsp cases will be covered, essentially nbsp's from now on are like
-all other entities - treated the same
+  all other entities - treated the same
 
 ## 3.0.0
 

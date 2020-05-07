@@ -1,7 +1,7 @@
 [
     {
         "name": "all-named-html-entities",
-        "size": 281978,
+        "size": 281977,
         "imports": []
     },
     {
@@ -101,7 +101,7 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2610,
+        "size": 2611,
         "imports": []
     },
     {
@@ -189,7 +189,7 @@
     },
     {
         "name": "detergent",
-        "size": 53952,
+        "size": 53954,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -272,7 +272,7 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 3471,
+        "size": 3470,
         "imports": [
             "js-row-num"
         ]
@@ -367,7 +367,7 @@
     },
     {
         "name": "is-relative-uri",
-        "size": 8366,
+        "size": 8367,
         "imports": []
     },
     {

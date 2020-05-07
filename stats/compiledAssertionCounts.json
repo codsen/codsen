@@ -39,7 +39,7 @@
         "email-comb": 371,
         "email-homey": 9,
         "eslint-plugin-row-num": 17,
-        "eslint-plugin-test-num": 9,
+        "eslint-plugin-test-num": 15,
         "generate-atomic-css": 233,
         "generate-atomic-css-cli": 4,
         "gulp-email-remove-unused-css": 1,
@@ -87,7 +87,7 @@
         "ranges-sort": 49,
         "regex-empty-conditional-comments": 25,
         "str-indexes-of-plus": 68,
-        "string-apostrophes": 77,
+        "string-apostrophes": 93,
         "string-character-is-astral-surrogate": 18,
         "string-collapse-leading-whitespace": 140,
         "string-collapse-white-space": 11546,
@@ -116,12 +116,12 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 115,
-    "totalAssertsCount": 807917,
+    "totalAssertsCount": 807939,
     "minAssertsCount": 3,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 741598,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 49.5,
-    "assertsCountArithmeticMean": 7025,
+    "assertsCountArithmeticMean": 7026,
     "assertsCountGeometricMean": 63
 }
