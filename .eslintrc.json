@@ -9,13 +9,14 @@
     "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:row-num/recommended"
+    "plugin:row-num/recommended",
+    "plugin:test-num/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["row-num"],
+  "plugins": ["row-num", "test-num"],
   "ignorePatterns": [
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
@@ -67,6 +68,7 @@
     "prefer-destructuring": 0,
     "prefer-template": "error",
     "row-num/correct-row-num": "error",
+    "test-num/correct-test-num": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [
