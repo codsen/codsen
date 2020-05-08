@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.61](https://gitlab.com/codsen/codsen/compare/email-all-chars-within-ascii@2.9.60...email-all-chars-within-ascii@2.9.61) (2020-05-08)
+
+**Note:** Version bump only for package email-all-chars-within-ascii
+
+
+
+
+
 ## 2.9.45 (2019-10-05)
 
 ### Performance Improvements

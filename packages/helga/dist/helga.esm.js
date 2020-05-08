@@ -1,7 +1,7 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.1.31
+ * Version: 1.1.32
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/helga
@@ -9,7 +9,7 @@
 
 import unescapeJs from 'unescape-js';
 
-var version = "1.1.31";
+var version = "1.1.32";
 
 const defaults = {
   targetJSON: false,

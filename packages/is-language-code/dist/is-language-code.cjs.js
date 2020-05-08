@@ -1,7 +1,7 @@
 /**
  * is-language-code
  * Is given string a language code (as per IANA)
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code

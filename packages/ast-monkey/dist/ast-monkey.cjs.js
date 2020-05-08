@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST's (like parsed HTML or anything nested)
- * Version: 7.11.8
+ * Version: 7.11.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
