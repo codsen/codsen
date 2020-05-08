@@ -2417,7 +2417,7 @@
 
 	var create = function create(context) {
 	  // console.log(
-	  //   `118 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+	  //   `119 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
 	  // );
 	  var counter = 0;
 	  return {
@@ -2449,11 +2449,11 @@
 	          // console.log(" ");
 	          // console.log(" ");
 	          // console.log(
-	          //   `168 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+	          //   `169 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
 	          // );
 	          //
 	          // console.log(
-	          //   `172 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+	          //   `173 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
 	          // );
 	          var _ref = prep(objectPath.get(node, "expression.arguments.0.quasis.0.value.raw"), {
 	            offset: objectPath.get(node, "expression.arguments.0.quasis.0.start"),
@@ -2465,7 +2465,7 @@
 
 	          if (start && end && value && value !== testOrderNumber) {
 	            // console.log(
-	            //   `183 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
+	            //   `184 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${stringify(
 	            //     value,
 	            //     null,
 	            //     4
@@ -2473,7 +2473,7 @@
 	            // );
 	            // console.log("!==");
 	            // console.log(
-	            //   `191 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${JSON.stringify(
+	            //   `192 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${stringify(
 	            //     testOrderNumber,
 	            //     null,
 	            //     4
@@ -2482,10 +2482,11 @@
 	            finalDigitChunk = {
 	              start: start,
 	              end: end,
-	              value: testOrderNumber
+	              value: testOrderNumber,
+	              node: objectPath.get(node, "expression.arguments.0.quasis.0")
 	            }; // console.log(
-	            //   `200 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
-	            //     finalDigitChunk,
+	            //   `206 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+	            //     finalDigitChunk.node.loc,
 	            //     null,
 	            //     4
 	            //   )}`
@@ -2497,7 +2498,7 @@
 	          // console.log(" ");
 	          // console.log(" ");
 	          // console.log(
-	          //   `217 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
+	          //   `223 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
 	          // );
 	          var _ref2 = prep(node.expression.arguments[0].raw, {
 	            offset: node.expression.arguments[0].start,
@@ -2511,10 +2512,11 @@
 	            finalDigitChunk = {
 	              start: _start,
 	              end: _end,
-	              value: testOrderNumber
+	              value: testOrderNumber,
+	              node: node.expression.arguments[0]
 	            }; // console.log(
-	            //   `229 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
-	            //     finalDigitChunk,
+	            //   `240 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+	            //     finalDigitChunk.node.loc,
 	            //     null,
 	            //     4
 	            //   )}`
@@ -2536,7 +2538,7 @@
 	          // console.log(" ");
 	          // console.log(" ");
 	          // console.log(
-	          //   `260 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+	          //   `271 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
 	          // );
 	          // let's find out, is it a single test clause or there are multiple
 	          var subTestCount = "multiple";
@@ -2548,7 +2550,7 @@
 	          objectPath.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
 	            subTestCount = "single";
 	          } // console.log(
-	          //   `283 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${JSON.stringify(
+	          //   `294 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
 	          //     subTestCount,
 	          //     null,
 	          //     4
@@ -2584,17 +2586,17 @@
 
 	            for (var i = 0, len = exprStatements.length; i < len; i++) {
 	              // console.log(
-	              //   `322 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+	              //   `333 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
 	              // );
 	              var assertsName = objectPath.get(exprStatements[i], "expression.callee.property.name");
 
 	              if (!assertsName) {
 	                // console.log(
-	                //   `330 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+	                //   `341 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
 	                // );
 	                continue;
 	              } // console.log(
-	              //   `336 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+	              //   `347 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
 	              //     messageIsThirdArg.has(assertsName)
 	              //       ? "III"
 	              //       : messageIsSecondArg.has(assertsName)
@@ -2617,7 +2619,7 @@
 	              objectPath.has(exprStatements[i], "expression.arguments.1")) {
 	                messageArgsPositionWeWillAimFor = 1; // zero-based count
 	              } // console.log(
-	              //   `365 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
+	              //   `376 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
 	              //     messageArgsPositionWeWillAimFor,
 	              //     null,
 	              //     4
@@ -2628,25 +2630,29 @@
 	              if (messageArgsPositionWeWillAimFor) {
 	                var _ret = function () {
 	                  // console.log(
-	                  //   `374 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+	                  //   `385 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
 	                  // );
 	                  //
 	                  // console.log(
-	                  //   `378 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+	                  //   `389 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
 	                  // );
 	                  // the "message" can be Literal (single/double quotes) or
 	                  // TemplateLiteral (backticks)
 	                  var pathToMsgArgValue = void 0;
+	                  var rawPathToMsgArgValue = void 0; // used later in eslint reporting
+
 	                  var pathToMsgArgStart = void 0;
 	                  /* istanbul ignore else */
 
 	                  if (objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "TemplateLiteral") {
-	                    pathToMsgArgValue = objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0.value.raw"));
-	                    pathToMsgArgStart = objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0.start"));
+	                    rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0");
+	                    pathToMsgArgValue = objectPath.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".value.raw"));
+	                    pathToMsgArgStart = objectPath.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
 	                    counter2 += 1;
 	                  } else if (objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "Literal") {
-	                    pathToMsgArgValue = objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".raw"));
-	                    pathToMsgArgStart = objectPath.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".start"));
+	                    rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor);
+	                    pathToMsgArgValue = objectPath.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".raw"));
+	                    pathToMsgArgStart = objectPath.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
 	                    counter2 += 1;
 	                  }
 
@@ -2659,29 +2665,29 @@
 
 	                  if (!start || !end) {
 	                    // console.log(
-	                    //   `427 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+	                    //   `441 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
 	                    // );
 	                    return "continue";
 	                  } // console.log(
-	                  //   `433 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+	                  //   `447 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
 	                  // );
 	                  // console.log(
-	                  //   `436 old prepped value: ${`\u001b[${35}m${
+	                  //   `450 old prepped value: ${`\u001b[${35}m${
 	                  //     prep(pathToMsgArgValue).value
 	                  //   }\u001b[${39}m`}`
 	                  // );
 
 
 	                  var newValue = getNewValue(subTestCount, testOrderNumber, counter2); // console.log(
-	                  //   `448 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
+	                  //   `462 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
 	                  // );
 
 	                  if (prep(pathToMsgArgValue).value !== newValue) {
 	                    // console.log(
-	                    //   `453 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+	                    //   `467 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
 	                    // );
 	                    context.report({
-	                      node: node,
+	                      node: objectPath.get(exprStatements[i], rawPathToMsgArgValue),
 	                      messageId: "correctTestNum",
 	                      fix: function fix(fixerObj) {
 	                        return fixerObj.replaceTextRange([start, end], newValue);
@@ -2693,7 +2699,7 @@
 	                if (_ret === "continue") continue;
 	              } else {
 	                // console.log(
-	                //   `465 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+	                //   `479 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
 	                // );
 	                // First, find out at which index position should message
 	                // argument be on this given assertion. Keep in mind, there
@@ -2713,7 +2719,7 @@
 	                if (positionDecided) {
 	                  (function () {
 	                    // console.log(
-	                    //   `497 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+	                    //   `511 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
 	                    //     positionDecided,
 	                    //     null,
 	                    //     4
@@ -2721,17 +2727,24 @@
 	                    // );
 	                    // insert the value
 	                    var positionToInsertAt = objectPath.get(exprStatements[i], "expression.end") - 1; // console.log(
-	                    //   `508 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+	                    //   `522 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
 	                    // );
 
 	                    var newValue = getNewValue(subTestCount, testOrderNumber, counter2); // there might be whitespace, so comma we're about to add
 	                    // must sit on a different line!!!
 
-	                    var wholeAssertAsText = context.getSourceCode().getText(node);
+	                    var wholeSourceStr = context.getSourceCode().getText();
 	                    var endIdx = positionToInsertAt; // left() finds the index of the first non-whitespace on the
 	                    // left, then we add +1 to not include it
 
-	                    var startIdx = left(wholeAssertAsText, positionToInsertAt) + 1;
+	                    var startIdx = left(wholeSourceStr, endIdx) + 1; // console.log(
+	                    //   `541 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+	                    //     startIdx,
+	                    //     null,
+	                    //     4
+	                    //   )}`
+	                    // );
+
 	                    var valueToInsert = ", \"".concat(newValue, "\"");
 
 	                    if ( // if there's a linebreak between closing bracket inside
@@ -2745,17 +2758,24 @@
 	                    //   },
 	                    //   "01.01" <----- we're about to add this line and that comma
 	                    // );
-	                    wholeAssertAsText.slice(startIdx, endIdx).includes("\n")) {
-	                      // console.log(`548 we've got a multi-line case`);
-	                      // console.log(`549 slice [${startIdx}, ${endIdx}]`);
-	                      var frontalIndentation = Array.from(wholeAssertAsText.slice(startIdx, endIdx)).filter(function (char) {
+	                    wholeSourceStr.slice(startIdx, endIdx).includes("\n")) {
+	                      // console.log(`566 we've got a multi-line case`);
+	                      // console.log(`567 slice [${startIdx}, ${endIdx}]`);
+	                      var frontalIndentation = Array.from(wholeSourceStr.slice(startIdx, endIdx)).filter(function (char) {
 	                        return !"\r\n".includes(char);
 	                      }).join("");
 	                      valueToInsert = ",\n".concat(frontalIndentation, "  \"").concat(newValue, "\"\n").concat(frontalIndentation);
-	                    }
+	                    } // console.log(
+	                    //   `578 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+	                    //     [startIdx, endIdx, valueToInsert],
+	                    //     null,
+	                    //     4
+	                    //   )}`
+	                    // );
+
 
 	                    context.report({
-	                      node: node,
+	                      node: exprStatements[i],
 	                      messageId: "correctTestNum",
 	                      fix: function fix(fixerObj) {
 	                        return fixerObj.replaceTextRange([startIdx, endIdx], valueToInsert);
@@ -2765,23 +2785,16 @@
 	                }
 	              }
 	            } // console.log(
-	            //   `535 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+	            //   `603 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
 	            // );
 
 	          }
 	        } // console.log(" ");
-	        // console.log(
-	        //   `542 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
-	        //     finalDigitChunk,
-	        //     null,
-	        //     4
-	        //   )}`
-	        // );
 
 
 	        if (finalDigitChunk) {
 	          // console.log(
-	          //   `551 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+	          //   `612 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
 	          //     finalDigitChunk.start
 	          //   }, ${
 	          //     finalDigitChunk.end
@@ -2789,9 +2802,11 @@
 	          //     finalDigitChunk.value
 	          //   }\u001b[${39}m`}"`
 	          // );
+
+	          /* istanbul ignore next */
 	          context.report({
-	            node: node,
 	            messageId: "correctTestNum",
+	            node: finalDigitChunk.node || node,
 	            fix: function fix(fixerObj) {
 	              return fixerObj.replaceTextRange([finalDigitChunk.start, finalDigitChunk.end], finalDigitChunk.value);
 	            }

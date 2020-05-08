@@ -137,7 +137,8 @@ var create = function create(context) {
             finalDigitChunk = {
               start: start,
               end: end,
-              value: testOrderNumber
+              value: testOrderNumber,
+              node: op.get(node, "expression.arguments.0.quasis.0")
             };
           }
         }
@@ -153,7 +154,8 @@ var create = function create(context) {
             finalDigitChunk = {
               start: _start,
               end: _end,
-              value: testOrderNumber
+              value: testOrderNumber,
+              node: node.expression.arguments[0]
             };
           }
         }
@@ -188,15 +190,18 @@ var create = function create(context) {
               if (messageArgsPositionWeWillAimFor) {
                 var _ret = function () {
                   var pathToMsgArgValue = void 0;
+                  var rawPathToMsgArgValue = void 0;
                   var pathToMsgArgStart = void 0;
                   /* istanbul ignore else */
                   if (op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "TemplateLiteral") {
-                    pathToMsgArgValue = op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0.value.raw"));
-                    pathToMsgArgStart = op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0.start"));
+                    rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0");
+                    pathToMsgArgValue = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".value.raw"));
+                    pathToMsgArgStart = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
                     counter2 += 1;
                   } else if (op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "Literal") {
-                    pathToMsgArgValue = op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".raw"));
-                    pathToMsgArgStart = op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".start"));
+                    rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor);
+                    pathToMsgArgValue = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".raw"));
+                    pathToMsgArgStart = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
                     counter2 += 1;
                   }
                   var _ref3 = prep(pathToMsgArgValue, {
@@ -211,7 +216,7 @@ var create = function create(context) {
                   var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
                   if (prep(pathToMsgArgValue).value !== newValue) {
                     context.report({
-                      node: node,
+                      node: op.get(exprStatements[i], rawPathToMsgArgValue),
                       messageId: "correctTestNum",
                       fix: function fix(fixerObj) {
                         return fixerObj.replaceTextRange([start, end], newValue);
@@ -233,19 +238,19 @@ var create = function create(context) {
                   (function () {
                     var positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1;
                     var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
-                    var wholeAssertAsText = context.getSourceCode().getText(node);
+                    var wholeSourceStr = context.getSourceCode().getText();
                     var endIdx = positionToInsertAt;
-                    var startIdx = stringLeftRight.left(wholeAssertAsText, positionToInsertAt) + 1;
+                    var startIdx = stringLeftRight.left(wholeSourceStr, endIdx) + 1;
                     var valueToInsert = ", \"".concat(newValue, "\"");
                     if (
-                    wholeAssertAsText.slice(startIdx, endIdx).includes("\n")) {
-                      var frontalIndentation = Array.from(wholeAssertAsText.slice(startIdx, endIdx)).filter(function (char) {
+                    wholeSourceStr.slice(startIdx, endIdx).includes("\n")) {
+                      var frontalIndentation = Array.from(wholeSourceStr.slice(startIdx, endIdx)).filter(function (char) {
                         return !"\r\n".includes(char);
                       }).join("");
                       valueToInsert = ",\n".concat(frontalIndentation, "  \"").concat(newValue, "\"\n").concat(frontalIndentation);
                     }
                     context.report({
-                      node: node,
+                      node: exprStatements[i],
                       messageId: "correctTestNum",
                       fix: function fix(fixerObj) {
                         return fixerObj.replaceTextRange([startIdx, endIdx], valueToInsert);
@@ -258,9 +263,10 @@ var create = function create(context) {
           }
         }
         if (finalDigitChunk) {
+          /* istanbul ignore next */
           context.report({
-            node: node,
             messageId: "correctTestNum",
+            node: finalDigitChunk.node || node,
             fix: function fix(fixerObj) {
               return fixerObj.replaceTextRange([finalDigitChunk.start, finalDigitChunk.end], finalDigitChunk.value);
             }

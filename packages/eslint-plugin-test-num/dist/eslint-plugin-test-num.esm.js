@@ -189,7 +189,12 @@ const create = (context) => {
               returnRangesOnly: true,
             }) || {};
           if (start && end && value && value !== testOrderNumber) {
-            finalDigitChunk = { start, end, value: testOrderNumber };
+            finalDigitChunk = {
+              start,
+              end,
+              value: testOrderNumber,
+              node: op.get(node, "expression.arguments.0.quasis.0"),
+            };
           }
         }
         if (
@@ -203,7 +208,12 @@ const create = (context) => {
               returnRangesOnly: true,
             }) || {};
           if (start && end && value && value !== testOrderNumber) {
-            finalDigitChunk = { start, end, value: testOrderNumber };
+            finalDigitChunk = {
+              start,
+              end,
+              value: testOrderNumber,
+              node: node.expression.arguments[0],
+            };
           }
         }
         if (
@@ -259,6 +269,7 @@ const create = (context) => {
               }
               if (messageArgsPositionWeWillAimFor) {
                 let pathToMsgArgValue;
+                let rawPathToMsgArgValue;
                 let pathToMsgArgStart;
                 /* istanbul ignore else */
                 if (
@@ -267,13 +278,14 @@ const create = (context) => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "TemplateLiteral"
                 ) {
+                  rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0`;
                   pathToMsgArgValue = op.get(
                     exprStatements[i],
-                    `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0.value.raw`
+                    `${rawPathToMsgArgValue}.value.raw`
                   );
                   pathToMsgArgStart = op.get(
                     exprStatements[i],
-                    `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0.start`
+                    `${rawPathToMsgArgValue}.start`
                   );
                   counter2 += 1;
                 } else if (
@@ -282,13 +294,14 @@ const create = (context) => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "Literal"
                 ) {
+                  rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
                   pathToMsgArgValue = op.get(
                     exprStatements[i],
-                    `expression.arguments.${messageArgsPositionWeWillAimFor}.raw`
+                    `${rawPathToMsgArgValue}.raw`
                   );
                   pathToMsgArgStart = op.get(
                     exprStatements[i],
-                    `expression.arguments.${messageArgsPositionWeWillAimFor}.start`
+                    `${rawPathToMsgArgValue}.start`
                   );
                   counter2 += 1;
                 }
@@ -307,7 +320,7 @@ const create = (context) => {
                 );
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   context.report({
-                    node,
+                    node: op.get(exprStatements[i], rawPathToMsgArgValue),
                     messageId: "correctTestNum",
                     fix: (fixerObj) => {
                       return fixerObj.replaceTextRange([start, end], newValue);
@@ -341,25 +354,22 @@ const create = (context) => {
                     testOrderNumber,
                     counter2
                   );
-                  const wholeAssertAsText = context
-                    .getSourceCode()
-                    .getText(node);
+                  const wholeSourceStr = context.getSourceCode().getText();
                   const endIdx = positionToInsertAt;
-                  const startIdx =
-                    left(wholeAssertAsText, positionToInsertAt) + 1;
+                  const startIdx = left(wholeSourceStr, endIdx) + 1;
                   let valueToInsert = `, "${newValue}"`;
                   if (
-                    wholeAssertAsText.slice(startIdx, endIdx).includes(`\n`)
+                    wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
                     const frontalIndentation = Array.from(
-                      wholeAssertAsText.slice(startIdx, endIdx)
+                      wholeSourceStr.slice(startIdx, endIdx)
                     )
                       .filter((char) => !`\r\n`.includes(char))
                       .join("");
                     valueToInsert = `,\n${frontalIndentation}  "${newValue}"\n${frontalIndentation}`;
                   }
                   context.report({
-                    node,
+                    node: exprStatements[i],
                     messageId: "correctTestNum",
                     fix: (fixerObj) => {
                       return fixerObj.replaceTextRange(
@@ -374,9 +384,10 @@ const create = (context) => {
           }
         }
         if (finalDigitChunk) {
+          /* istanbul ignore next */
           context.report({
-            node,
             messageId: "correctTestNum",
+            node: finalDigitChunk.node || node,
             fix: (fixerObj) => {
               return fixerObj.replaceTextRange(
                 [finalDigitChunk.start, finalDigitChunk.end],

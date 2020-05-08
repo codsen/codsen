@@ -52,3 +52,17 @@ tap.test(
     t.end();
   }
 );
+
+tap.only(
+  `03 - ${`\u001b[${33}m${`adds the "message" arg`}\u001b[${39}m`} - adds 3rd arg, ends with array value`,
+  (t) => {
+    // ensure "in" is fixed
+    const resIn = linter.verifyAndFix(read("09-in"), c);
+    t.is(resIn.output, read("09-out"), "03");
+
+    // // ensure no more errors are raised about "out"
+    // const messages = linter.verify(read("09-out"), c);
+    // t.same(messages, [], `03.02`);
+    t.end();
+  }
+);
