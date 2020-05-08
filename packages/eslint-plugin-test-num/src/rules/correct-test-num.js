@@ -2,7 +2,9 @@
 
 // import stringify from "json-stringify-safe";
 import op from "object-path";
+import { left } from "string-left-right";
 import prep from "../util/prep";
+import getNewValue from "../util/getNewValue";
 
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
@@ -114,7 +116,7 @@ const messageIsThirdArg = new Set([
 
 const create = (context) => {
   // console.log(
-  //   `117 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+  //   `118 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
   // );
 
   let counter = 0;
@@ -164,11 +166,11 @@ const create = (context) => {
           // console.log(" ");
           // console.log(" ");
           // console.log(
-          //   `167 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+          //   `168 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
           // );
           //
           // console.log(
-          //   `171 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+          //   `172 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
           // );
 
           const { start, end, value } =
@@ -179,7 +181,7 @@ const create = (context) => {
 
           if (start && end && value && value !== testOrderNumber) {
             // console.log(
-            //   `182 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
+            //   `183 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
             //     value,
             //     null,
             //     4
@@ -187,7 +189,7 @@ const create = (context) => {
             // );
             // console.log("!==");
             // console.log(
-            //   `190 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${JSON.stringify(
+            //   `191 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${JSON.stringify(
             //     testOrderNumber,
             //     null,
             //     4
@@ -196,7 +198,7 @@ const create = (context) => {
 
             finalDigitChunk = { start, end, value: testOrderNumber };
             // console.log(
-            //   `199 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            //   `200 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
             //     finalDigitChunk,
             //     null,
             //     4
@@ -213,7 +215,7 @@ const create = (context) => {
           // console.log(" ");
           // console.log(" ");
           // console.log(
-          //   `216 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
+          //   `217 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
           // );
 
           const { start, end, value } =
@@ -225,7 +227,7 @@ const create = (context) => {
           if (start && end && value && value !== testOrderNumber) {
             finalDigitChunk = { start, end, value: testOrderNumber };
             // console.log(
-            //   `228 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            //   `229 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
             //     finalDigitChunk,
             //     null,
             //     4
@@ -256,7 +258,7 @@ const create = (context) => {
           // console.log(" ");
           // console.log(" ");
           // console.log(
-          //   `259 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+          //   `260 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
           // );
 
           // let's find out, is it a single test clause or there are multiple
@@ -279,7 +281,7 @@ const create = (context) => {
             subTestCount = "single";
           }
           // console.log(
-          //   `282 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `283 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${JSON.stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -318,7 +320,7 @@ const create = (context) => {
 
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               // console.log(
-              //   `321 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              //   `322 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               // );
               const assertsName = op.get(
                 exprStatements[i],
@@ -326,13 +328,13 @@ const create = (context) => {
               );
               if (!assertsName) {
                 // console.log(
-                //   `329 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                //   `330 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                 // );
                 continue;
               }
 
               // console.log(
-              //   `335 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+              //   `336 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
               //     messageIsThirdArg.has(assertsName)
               //       ? "III"
               //       : messageIsSecondArg.has(assertsName)
@@ -361,7 +363,7 @@ const create = (context) => {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               }
               // console.log(
-              //   `364 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `365 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -370,7 +372,11 @@ const create = (context) => {
 
               if (messageArgsPositionWeWillAimFor) {
                 // console.log(
-                //   `373 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                //   `374 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                // );
+                //
+                // console.log(
+                //   `378 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                 // );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -419,32 +425,33 @@ const create = (context) => {
 
                 if (!start || !end) {
                   // console.log(
-                  //   `422 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                  //   `427 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                   // );
                   continue;
                 }
 
                 // console.log(
-                //   `428 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                //   `433 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                 // );
                 // console.log(
-                //   `431 old prepped value: ${`\u001b[${35}m${
+                //   `436 old prepped value: ${`\u001b[${35}m${
                 //     prep(pathToMsgArgValue).value
                 //   }\u001b[${39}m`}`
                 // );
 
-                const newValue =
-                  subTestCount === "single"
-                    ? testOrderNumber
-                    : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
+                const newValue = getNewValue(
+                  subTestCount,
+                  testOrderNumber,
+                  counter2
+                );
 
                 // console.log(
-                //   `442 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
+                //   `448 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
                 // );
 
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   // console.log(
-                  //   `447 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                  //   `453 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   // );
                   context.report({
                     node,
@@ -454,17 +461,127 @@ const create = (context) => {
                     },
                   });
                 }
+              } else {
+                // console.log(
+                //   `465 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                // );
+
+                // First, find out at which index position should message
+                // argument be on this given assertion. Keep in mind, there
+                // can be wrong args present at desired argument position or not
+                // enough arguments to reach that argument position
+
+                let positionDecided;
+                if (
+                  // if assert's API takes three input arguments, the last arg
+                  // being the message's value
+                  messageIsThirdArg.has(assertsName) &&
+                  // there are two arguments currently present in this assert
+                  Array.isArray(
+                    op.get(exprStatements[i], "expression.arguments")
+                  ) &&
+                  op.get(exprStatements[i], "expression.arguments").length === 2
+                ) {
+                  positionDecided = 2; // counting from zero, means 3rd in a row
+                } else if (
+                  messageIsSecondArg.has(assertsName) &&
+                  Array.isArray(
+                    op.get(exprStatements[i], "expression.arguments")
+                  ) &&
+                  op.get(exprStatements[i], "expression.arguments").length === 1
+                ) {
+                  positionDecided = 1; // counting from zero, means 2nd in a row
+                }
+
+                if (positionDecided) {
+                  // console.log(
+                  //   `497 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                  //     positionDecided,
+                  //     null,
+                  //     4
+                  //   )}`
+                  // );
+
+                  // insert the value
+                  const positionToInsertAt =
+                    op.get(exprStatements[i], "expression.end") - 1;
+                  // console.log(
+                  //   `508 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                  // );
+
+                  const newValue = getNewValue(
+                    subTestCount,
+                    testOrderNumber,
+                    counter2
+                  );
+
+                  // there might be whitespace, so comma we're about to add
+                  // must sit on a different line!!!
+                  const wholeAssertAsText = context
+                    .getSourceCode()
+                    .getText(node);
+                  const endIdx = positionToInsertAt;
+
+                  // left() finds the index of the first non-whitespace on the
+                  // left, then we add +1 to not include it
+                  const startIdx =
+                    left(wholeAssertAsText, positionToInsertAt) + 1;
+
+                  let valueToInsert = `, "${newValue}"`;
+                  if (
+                    // if there's a linebreak between closing bracket inside
+                    // the assetion and the last expression statement
+
+                    // imagine:
+
+                    // t.match(
+                    //   resIn,
+                    //   {
+                    //     fixed: true,
+                    //     output: read("out"),
+                    //   },
+                    //   "01.01" <----- we're about to add this line and that comma
+                    // );
+
+                    wholeAssertAsText.slice(startIdx, endIdx).includes(`\n`)
+                  ) {
+                    // console.log(`548 we've got a multi-line case`);
+                    // console.log(`549 slice [${startIdx}, ${endIdx}]`);
+
+                    const frontalIndentation = Array.from(
+                      wholeAssertAsText.slice(startIdx, endIdx)
+                    )
+                      .filter((char) => !`\r\n`.includes(char))
+                      .join("");
+                    valueToInsert = `,\n${frontalIndentation}  "${newValue}"\n${frontalIndentation}`;
+                  }
+
+                  context.report({
+                    node,
+                    messageId: "correctTestNum",
+                    fix: (fixerObj) => {
+                      return fixerObj.replaceTextRange(
+                        [startIdx, endIdx],
+                        valueToInsert
+                      );
+                    },
+                  });
+                } else {
+                  // console.log(
+                  //   `529 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                  // );
+                }
               }
             }
             // console.log(
-            //   `460 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+            //   `535 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             // );
           }
         }
 
         // console.log(" ");
         // console.log(
-        //   `467 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `542 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
         //     finalDigitChunk,
         //     null,
         //     4
@@ -473,7 +590,7 @@ const create = (context) => {
 
         if (finalDigitChunk) {
           // console.log(
-          //   `476 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+          //   `551 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
           //     finalDigitChunk.start
           //   }, ${
           //     finalDigitChunk.end

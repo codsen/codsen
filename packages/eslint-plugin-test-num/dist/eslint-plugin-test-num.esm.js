@@ -8,6 +8,7 @@
  */
 
 import op from 'object-path';
+import { left } from 'string-left-right';
 
 function prep(str, originalOpts) {
   /* istanbul ignore if */
@@ -53,6 +54,11 @@ function prep(str, originalOpts) {
     }
   }
 }
+
+const getNewValue = (subTestCount, testOrderNumber, counter2) =>
+  subTestCount === "single"
+    ? testOrderNumber
+    : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
 
 const messageIsSecondArg = new Set([
   "ok",
@@ -294,16 +300,72 @@ const create = (context) => {
                 if (!start || !end) {
                   continue;
                 }
-                const newValue =
-                  subTestCount === "single"
-                    ? testOrderNumber
-                    : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
+                const newValue = getNewValue(
+                  subTestCount,
+                  testOrderNumber,
+                  counter2
+                );
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   context.report({
                     node,
                     messageId: "correctTestNum",
                     fix: (fixerObj) => {
                       return fixerObj.replaceTextRange([start, end], newValue);
+                    },
+                  });
+                }
+              } else {
+                let positionDecided;
+                if (
+                  messageIsThirdArg.has(assertsName) &&
+                  Array.isArray(
+                    op.get(exprStatements[i], "expression.arguments")
+                  ) &&
+                  op.get(exprStatements[i], "expression.arguments").length === 2
+                ) {
+                  positionDecided = 2;
+                } else if (
+                  messageIsSecondArg.has(assertsName) &&
+                  Array.isArray(
+                    op.get(exprStatements[i], "expression.arguments")
+                  ) &&
+                  op.get(exprStatements[i], "expression.arguments").length === 1
+                ) {
+                  positionDecided = 1;
+                }
+                if (positionDecided) {
+                  const positionToInsertAt =
+                    op.get(exprStatements[i], "expression.end") - 1;
+                  const newValue = getNewValue(
+                    subTestCount,
+                    testOrderNumber,
+                    counter2
+                  );
+                  const wholeAssertAsText = context
+                    .getSourceCode()
+                    .getText(node);
+                  const endIdx = positionToInsertAt;
+                  const startIdx =
+                    left(wholeAssertAsText, positionToInsertAt) + 1;
+                  let valueToInsert = `, "${newValue}"`;
+                  if (
+                    wholeAssertAsText.slice(startIdx, endIdx).includes(`\n`)
+                  ) {
+                    const frontalIndentation = Array.from(
+                      wholeAssertAsText.slice(startIdx, endIdx)
+                    )
+                      .filter((char) => !`\r\n`.includes(char))
+                      .join("");
+                    valueToInsert = `,\n${frontalIndentation}  "${newValue}"\n${frontalIndentation}`;
+                  }
+                  context.report({
+                    node,
+                    messageId: "correctTestNum",
+                    fix: (fixerObj) => {
+                      return fixerObj.replaceTextRange(
+                        [startIdx, endIdx],
+                        valueToInsert
+                      );
                     },
                   });
                 }

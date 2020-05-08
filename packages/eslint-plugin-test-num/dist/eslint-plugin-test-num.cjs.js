@@ -12,6 +12,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var op = _interopDefault(require('object-path'));
+var stringLeftRight = require('string-left-right');
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -101,6 +102,10 @@ function prep(str, originalOpts) {
     }
   }
 }
+
+var getNewValue = function getNewValue(subTestCount, testOrderNumber, counter2) {
+  return subTestCount === "single" ? testOrderNumber : "".concat(testOrderNumber, ".").concat("".concat(counter2).padStart(2, "0"));
+};
 
 var messageIsSecondArg = new Set(["ok", "notOk", "true", "false", "assert", "assertNot", "error", "ifErr", "ifError", "rejects",
 "resolves", "resolveMatchSnapshot", "throws",
@@ -203,7 +208,7 @@ var create = function create(context) {
                   if (!start || !end) {
                     return "continue";
                   }
-                  var newValue = subTestCount === "single" ? testOrderNumber : "".concat(testOrderNumber, ".").concat("".concat(counter2).padStart(2, "0"));
+                  var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
                   if (prep(pathToMsgArgValue).value !== newValue) {
                     context.report({
                       node: node,
@@ -215,6 +220,39 @@ var create = function create(context) {
                   }
                 }();
                 if (_ret === "continue") continue;
+              } else {
+                var positionDecided = void 0;
+                if (
+                messageIsThirdArg.has(assertsName) &&
+                Array.isArray(op.get(exprStatements[i], "expression.arguments")) && op.get(exprStatements[i], "expression.arguments").length === 2) {
+                  positionDecided = 2;
+                } else if (messageIsSecondArg.has(assertsName) && Array.isArray(op.get(exprStatements[i], "expression.arguments")) && op.get(exprStatements[i], "expression.arguments").length === 1) {
+                  positionDecided = 1;
+                }
+                if (positionDecided) {
+                  (function () {
+                    var positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1;
+                    var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
+                    var wholeAssertAsText = context.getSourceCode().getText(node);
+                    var endIdx = positionToInsertAt;
+                    var startIdx = stringLeftRight.left(wholeAssertAsText, positionToInsertAt) + 1;
+                    var valueToInsert = ", \"".concat(newValue, "\"");
+                    if (
+                    wholeAssertAsText.slice(startIdx, endIdx).includes("\n")) {
+                      var frontalIndentation = Array.from(wholeAssertAsText.slice(startIdx, endIdx)).filter(function (char) {
+                        return !"\r\n".includes(char);
+                      }).join("");
+                      valueToInsert = ",\n".concat(frontalIndentation, "  \"").concat(newValue, "\"\n").concat(frontalIndentation);
+                    }
+                    context.report({
+                      node: node,
+                      messageId: "correctTestNum",
+                      fix: function fix(fixerObj) {
+                        return fixerObj.replaceTextRange([startIdx, endIdx], valueToInsert);
+                      }
+                    });
+                  })();
+                }
               }
             }
           }

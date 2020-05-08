@@ -121,7 +121,8 @@
   },
   "dependencies": {
     "json-stringify-safe": "^5.0.1",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.4",
+    "string-left-right": "^2.3.22"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

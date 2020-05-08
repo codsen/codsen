@@ -59,7 +59,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["json-stringify-safe", "object-path"],
+      external: ["json-stringify-safe", "object-path", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false,
@@ -74,7 +74,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["json-stringify-safe", "object-path"],
+      external: ["json-stringify-safe", "object-path", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false,
