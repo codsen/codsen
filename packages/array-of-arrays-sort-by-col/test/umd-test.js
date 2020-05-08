@@ -6,6 +6,6 @@ const idx = "1";
 const res = [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(sortByCol1(source, idx), res);
+  t.same(sortByCol1(source, idx), res, "01");
   t.end();
 });

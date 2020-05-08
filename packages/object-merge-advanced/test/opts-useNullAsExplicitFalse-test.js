@@ -6,7 +6,7 @@ import mergeAdvanced from "../dist/object-merge-advanced.esm";
 // import equal from "deep-equal";
 
 tap.test(
-  "17.01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges",
+  "01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges",
   (t) => {
     //
     // ===
@@ -26,7 +26,7 @@ tap.test(
       {
         a: false,
       },
-      "17.01.01.01 - control, case #79 - false. Null is lower in rank than any Boolean."
+      "01.01 - control, case #79 - false. Null is lower in rank than any Boolean."
     );
     t.same(
       mergeAdvanced(
@@ -40,7 +40,7 @@ tap.test(
       {
         a: true,
       },
-      "17.01.01.02 - control, case #79 - true. Null is lower in rank than any Boolean."
+      "01.02 - control, case #79 - true. Null is lower in rank than any Boolean."
     );
 
     // ===
@@ -57,7 +57,7 @@ tap.test(
       {
         a: false,
       },
-      "17.01.02.01 - control, case #88 - false"
+      "01.03 - control, case #88 - false"
     );
     t.same(
       mergeAdvanced(
@@ -71,7 +71,7 @@ tap.test(
       {
         a: true,
       },
-      "17.01.02.02 - control, case #88 - true"
+      "01.04 - control, case #88 - true"
     );
 
     // ===
@@ -95,7 +95,7 @@ tap.test(
       {
         a: null,
       },
-      "17.01.03.01 - null-as-explicit-false, case #79 - false"
+      "01.05 - null-as-explicit-false, case #79 - false"
     );
     t.same(
       mergeAdvanced(
@@ -112,7 +112,7 @@ tap.test(
       {
         a: null,
       },
-      "17.01.03.02 - null-as-explicit-false, case #79 - true"
+      "01.06 - null-as-explicit-false, case #79 - true"
     );
 
     // ===
@@ -132,7 +132,7 @@ tap.test(
       {
         a: null,
       },
-      "17.01.04.01 - null-as-explicit-false, case #88 - false"
+      "01.07 - null-as-explicit-false, case #88 - false"
     );
     t.same(
       mergeAdvanced(
@@ -149,14 +149,14 @@ tap.test(
       {
         a: null,
       },
-      "17.01.04.02 - null-as-explicit-false, case #88 - true"
+      "01.08 - null-as-explicit-false, case #88 - true"
     );
     t.end();
   }
 );
 
 tap.test(
-  "17.02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90",
+  "02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90",
   (t) => {
     t.same(
       mergeAdvanced(
@@ -173,7 +173,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.01 - #81 - null vs non-empty array"
+      "02.01 - #81 - null vs non-empty array"
     );
     t.same(
       mergeAdvanced(
@@ -190,7 +190,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.02 - #82 - null vs. empty array"
+      "02.02 - #82 - null vs. empty array"
     );
     t.same(
       mergeAdvanced(
@@ -207,7 +207,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.03 - #83 - null vs. non-empty plain object"
+      "02.03 - #83 - null vs. non-empty plain object"
     );
     t.same(
       mergeAdvanced(
@@ -224,7 +224,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.04 - #84 - null vs. empty plain object"
+      "02.04 - #84 - null vs. empty plain object"
     );
     t.same(
       mergeAdvanced(
@@ -241,7 +241,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.05 - #85 - null vs. non-empty string"
+      "02.05 - #85 - null vs. non-empty string"
     );
     t.same(
       mergeAdvanced(
@@ -258,7 +258,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.06 - #86 - null vs. non-empty string"
+      "02.06 - #86 - null vs. non-empty string"
     );
     t.same(
       mergeAdvanced(
@@ -275,7 +275,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.07 - #87 - null vs. num"
+      "02.07 - #87 - null vs. num"
     );
     t.same(
       mergeAdvanced(
@@ -292,7 +292,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.08.01 - #88 - null vs. bool, true"
+      "02.08 - #88 - null vs. bool, true"
     );
     t.same(
       mergeAdvanced(
@@ -309,7 +309,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.08.02 - #88 - null vs. bool, false"
+      "02.09 - #88 - null vs. bool, false"
     );
     t.same(
       mergeAdvanced(
@@ -326,7 +326,7 @@ tap.test(
       {
         a: null,
       },
-      "17.02.09 - #89 - null vs. null"
+      "02.10 - #89 - null vs. null"
     );
     t.same(
       mergeAdvanced(
@@ -343,14 +343,14 @@ tap.test(
       {
         a: null,
       },
-      "17.02.10 - #90 - null vs. null"
+      "02.11 - #90 - null vs. null"
     );
     t.end();
   }
 );
 
 tap.test(
-  "17.03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99",
+  "03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99",
   (t) => {
     t.same(
       mergeAdvanced(
@@ -367,7 +367,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.01 - #9 - null vs non-empty array"
+      "03.01 - #9 - null vs non-empty array"
     );
     t.same(
       mergeAdvanced(
@@ -384,7 +384,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.02 - #19 - null vs. empty array"
+      "03.02 - #19 - null vs. empty array"
     );
     t.same(
       mergeAdvanced(
@@ -401,7 +401,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.03 - #29 - null vs. non-empty plain object"
+      "03.03 - #29 - null vs. non-empty plain object"
     );
     t.same(
       mergeAdvanced(
@@ -418,7 +418,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.04 - #39 - null vs. empty plain object"
+      "03.04 - #39 - null vs. empty plain object"
     );
     t.same(
       mergeAdvanced(
@@ -435,7 +435,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.05 - #49 - null vs. non-empty string"
+      "03.05 - #49 - null vs. non-empty string"
     );
     t.same(
       mergeAdvanced(
@@ -452,7 +452,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.06 - #59 - null vs. non-empty string"
+      "03.06 - #59 - null vs. non-empty string"
     );
     t.same(
       mergeAdvanced(
@@ -469,7 +469,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.07 - #69 - null vs. num"
+      "03.07 - #69 - null vs. num"
     );
     t.same(
       mergeAdvanced(
@@ -486,7 +486,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.08.01 - #79 - null vs. bool, true"
+      "03.08 - #79 - null vs. bool, true"
     );
     t.same(
       mergeAdvanced(
@@ -503,7 +503,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.08.02 - #79 - null vs. bool, false"
+      "03.09 - #79 - null vs. bool, false"
     );
     t.same(
       mergeAdvanced(
@@ -520,7 +520,7 @@ tap.test(
       {
         a: null,
       },
-      "17.03.09 - #89 - null vs. null"
+      "03.10 - #89 - null vs. null"
     );
     t.same(
       mergeAdvanced(
@@ -537,14 +537,14 @@ tap.test(
       {
         a: null,
       },
-      "17.03.10 - #99 - null vs. null"
+      "03.11 - #99 - null vs. null"
     );
     t.end();
   }
 );
 
 tap.test(
-  "17.04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases",
+  "04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases",
   (t) => {
     t.same(
       mergeAdvanced(
@@ -561,7 +561,7 @@ tap.test(
       {
         a: [0, 1, 2, 3, 4, 5],
       },
-      "17.04.01"
+      "04.01"
     );
     t.same(
       mergeAdvanced(
@@ -578,7 +578,7 @@ tap.test(
       {
         a: [{ a: 0 }, { a: 1 }, { a: 2 }, { a: 0 }, { a: 1 }, { a: 2 }],
       },
-      "17.04.02"
+      "04.02"
     );
     t.same(
       mergeAdvanced(
@@ -601,7 +601,7 @@ tap.test(
         b: [1, 4, 2, 5, 3, 6], // no objects, so an "orderer" concat happend
         c: [{ a: 4 }, { a: 5 }, { a: 6 }], // objects so
       },
-      "17.04.03"
+      "04.03"
     );
     t.same(
       mergeAdvanced(
@@ -624,7 +624,7 @@ tap.test(
         b: [1, 2, 3, 4, 5, 6],
         c: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }], // objects so
       },
-      "17.04.03"
+      "04.04"
     );
     t.end();
   }

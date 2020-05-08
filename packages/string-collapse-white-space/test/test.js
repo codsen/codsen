@@ -162,58 +162,58 @@ function nothingToCollapseGenerator() {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input = throw`,
+  `01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input = throw`,
   (t) => {
     t.throws(() => {
       collapse();
-    });
+    }, "01.01");
     t.throws(() => {
       collapse(1);
-    });
+    }, "01.02");
     t.throws(() => {
       collapse(null);
-    });
+    }, "01.03");
     t.throws(() => {
       collapse(undefined);
-    });
+    }, "01.04");
     t.throws(() => {
       collapse(true);
-    });
+    }, "01.05");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`,
+  `02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`,
   (t) => {
     t.throws(() => {
       collapse("aaaa", true); // not object but bool
-    });
+    }, "02.01");
     t.throws(() => {
       collapse("aaaa", 1); // not object but number
-    });
+    }, "02.02");
     t.doesNotThrow(() => {
       collapse("aaaa", undefined); // hardcoded "nothing" is ok!
-    });
+    }, "02.03");
     t.doesNotThrow(() => {
       collapse("aaaa", null); // null fine too - that's hardcoded "nothing"
-    });
+    }, "02.04");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - empty string`,
+  `03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - empty string`,
   (t) => {
-    t.equal(collapse(""), "", "01.03");
+    t.equal(collapse(""), "", "03");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - only letter characters, no white space`,
+  `04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - only letter characters, no white space`,
   (t) => {
-    t.equal(collapse("aaa"), "aaa", "01.04");
+    t.equal(collapse("aaa"), "aaa", "04");
     t.end();
   }
 );
@@ -223,112 +223,112 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
+  `05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
   (t) => {
-    t.equal(collapse("a b"), "a b", "02.01.01 - nothing to collapse");
+    t.equal(collapse("a b"), "a b", "05 - nothing to collapse");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
+  `06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
   (t) => {
-    t.equal(collapse("a  b"), "a b");
+    t.equal(collapse("a  b"), "a b", "06");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
+  `07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
   (t) => {
-    t.equal(collapse("aaa     bbb    ccc   dddd"), "aaa bbb ccc dddd");
+    t.equal(collapse("aaa     bbb    ccc   dddd"), "aaa bbb ccc dddd", "07");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  `08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  (t) => {
+    t.equal(collapse("  a b  "), "a b", "08 - nothing to collapse, only trim");
+    t.end();
+  }
+);
+
+tap.test(
+  `09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  (t) => {
+    t.equal(collapse(" a b "), "a b", "09 - trims single spaces");
+    t.end();
+  }
+);
+
+tap.test(
+  `10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  (t) => {
+    t.equal(collapse("\ta b\t"), "a b", "10 - trims single tabs");
+    t.end();
+  }
+);
+
+tap.test(
+  `11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  (t) => {
+    t.equal(collapse("  a  b  "), "a b", "11");
+    t.end();
+  }
+);
+
+tap.test(
+  `12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
     t.equal(
-      collapse("  a b  "),
-      "a b",
-      "02.02.01 - nothing to collapse, only trim"
+      collapse("  aaa     bbb    ccc   dddd  "),
+      "aaa bbb ccc dddd",
+      "12"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.equal(collapse(" a b "), "a b", "02.02.02 - trims single spaces");
-    t.end();
-  }
-);
-
-tap.test(
-  `02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.equal(collapse("\ta b\t"), "a b", "02.02.03 - trims single tabs");
-    t.end();
-  }
-);
-
-tap.test(
-  `02.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.equal(collapse("  a  b  "), "a b");
-    t.end();
-  }
-);
-
-tap.test(
-  `02.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.equal(collapse("  aaa     bbb    ccc   dddd  "), "aaa bbb ccc dddd");
-    t.end();
-  }
-);
-
-tap.test(
-  `02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     // opts.trimStart
     t.equal(
       collapse("  a b  ", { trimStart: false }),
       " a b",
-      "02.03.01 - nothing to collapse, only trim"
+      "13 - nothing to collapse, only trim"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     t.equal(
       collapse(" a b ", { trimStart: false }),
       " a b",
-      "02.03.02 - trims single spaces"
+      "14 - trims single spaces"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     t.equal(
       collapse("\ta b\t", { trimStart: false }),
       "\ta b",
-      "02.03.03 - trims single tabs"
+      "15 - trims single tabs"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -344,63 +344,64 @@ tap.test(
 );
 
 tap.test(
-  `02.13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
-    t.equal(collapse("  a  b  ", { trimStart: false }), " a b");
+    t.equal(collapse("  a  b  ", { trimStart: false }), " a b", "17");
     t.end();
   }
 );
 
 tap.test(
-  `02.14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     t.equal(
       collapse("  aaa     bbb    ccc   dddd  ", { trimStart: false }),
-      " aaa bbb ccc dddd"
+      " aaa bbb ccc dddd",
+      "18"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     // opts.trimEnd
     t.equal(
       collapse("  a b  ", { trimEnd: false }),
       "a b ",
-      "02.04.01 - nothing to collapse, only trim"
+      "19 - nothing to collapse, only trim"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     t.equal(
       collapse(" a b ", { trimEnd: false }),
       "a b ",
-      "02.04.02 - trims single spaces"
+      "20 - trims single spaces"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     t.equal(
       collapse("\ta b\t", { trimEnd: false }),
       "a b\t",
-      "02.04.03 - trims single tabs"
+      "21 - trims single tabs"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -416,7 +417,7 @@ tap.test(
 );
 
 tap.test(
-  `02.19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -432,26 +433,27 @@ tap.test(
 );
 
 tap.test(
-  `02.20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
-    t.equal(collapse(`  a  b  `, { trimEnd: false }), `a b `);
+    t.equal(collapse(`  a  b  `, { trimEnd: false }), `a b `, "24");
     t.end();
   }
 );
 
 tap.test(
-  `02.21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     t.equal(
       collapse(`  aaa     bbb    ccc   dddd  `, { trimEnd: false }),
-      `aaa bbb ccc dddd `
+      `aaa bbb ccc dddd `,
+      "25"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
+  `26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -467,7 +469,7 @@ tap.test(
 );
 
 tap.test(
-  `02.23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
+  `27 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -483,7 +485,7 @@ tap.test(
 );
 
 tap.test(
-  `02.24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `28 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -497,7 +499,7 @@ tap.test(
 );
 
 tap.test(
-  `02.25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `29 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -511,7 +513,7 @@ tap.test(
 );
 
 tap.test(
-  `02.26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `30 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -531,31 +533,31 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
+  `31 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
   (t) => {
-    t.equal(collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`), `aaa`);
+    t.equal(collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`), `aaa`, "31");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
+  `32 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
   (t) => {
-    t.equal(collapse(`   \t\t\t   aaa   \t\t\t   `), `aaa`);
+    t.equal(collapse(`   \t\t\t   aaa   \t\t\t   `), `aaa`, "32");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
+  `33 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
   (t) => {
-    t.equal(collapse(`   \t \t \t   aaa   \t \t \t   `), `aaa`);
+    t.equal(collapse(`   \t \t \t   aaa   \t \t \t   `), `aaa`, "33");
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
+  `34 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -571,31 +573,31 @@ tap.test(
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
+  `35 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
   (t) => {
-    t.equal(collapse("      "), "");
+    t.equal(collapse("      "), "", "35");
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
+  `36 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
   (t) => {
-    t.equal(collapse("\t\t\t   \t\t\t"), "");
+    t.equal(collapse("\t\t\t   \t\t\t"), "", "36");
     t.end();
   }
 );
 
 tap.test(
-  `03.07 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
+  `37 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
   (t) => {
-    t.equal(collapse("\t\t\t"), "");
+    t.equal(collapse("\t\t\t"), "", "37");
     t.end();
   }
 );
 
 tap.test(
-  `03.08 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
+  `38 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -609,125 +611,129 @@ tap.test(
 );
 
 tap.test(
-  `03.09 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
+  `39 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
   (t) => {
-    t.equal(collapse(`\xa0   a   \xa0`), `\xa0 a \xa0`);
+    t.equal(collapse(`\xa0   a   \xa0`), `\xa0 a \xa0`, "39");
     t.end();
   }
 );
 
 tap.test(
-  `03.10 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
+  `40 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
   (t) => {
-    t.equal(collapse(`    \xa0     a     \xa0      `), `\xa0 a \xa0`);
+    t.equal(collapse(`    \xa0     a     \xa0      `), `\xa0 a \xa0`, "40");
     t.end();
   }
 );
 
 tap.test(
-  `03.11 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
+  `41 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
   (t) => {
     t.equal(
       collapse(` \xa0 `, {
         trimStart: false,
         trimEnd: false,
       }),
-      ` \xa0 `
+      ` \xa0 `,
+      "41"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.12 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
+  `42 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`,
   (t) => {
     t.equal(
       collapse(`  \xa0  `, {
         trimStart: false,
         trimEnd: false,
       }),
-      ` \xa0 `
+      ` \xa0 `,
+      "42"
     );
     t.end();
   }
 );
 
-tap.test(
-  `03.13 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`,
-  (t) => {
-    t.equal(
-      collapse(`a > b`, {
-        trimLines: true,
-        recogniseHTML: true,
-      }),
-      `a > b`
-    );
-    t.equal(
-      collapse(`a > b`, {
-        trimLines: false,
-        recogniseHTML: true,
-      }),
-      `a > b`
-    );
-    t.equal(
-      collapse(`a > b`, {
-        trimLines: true,
-        recogniseHTML: false,
-      }),
-      `a > b`
-    );
-    t.equal(
-      collapse(`a > b`, {
-        trimLines: false,
-        recogniseHTML: false,
-      }),
-      `a > b`
-    );
-    t.end();
-  }
-);
+tap.test(`43 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, (t) => {
+  t.equal(
+    collapse(`a > b`, {
+      trimLines: true,
+      recogniseHTML: true,
+    }),
+    `a > b`,
+    "43.01"
+  );
+  t.equal(
+    collapse(`a > b`, {
+      trimLines: false,
+      recogniseHTML: true,
+    }),
+    `a > b`,
+    "43.02"
+  );
+  t.equal(
+    collapse(`a > b`, {
+      trimLines: true,
+      recogniseHTML: false,
+    }),
+    `a > b`,
+    "43.03"
+  );
+  t.equal(
+    collapse(`a > b`, {
+      trimLines: false,
+      recogniseHTML: false,
+    }),
+    `a > b`,
+    "43.04"
+  );
+  t.end();
+});
 
-tap.test(
-  `03.14 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`,
-  (t) => {
-    t.equal(
-      collapse(`<span>zzz</span> abc def ghij klm`, {
-        trimLines: 1,
-        recogniseHTML: 1,
-      }),
-      `<span>zzz</span> abc def ghij klm`
-    );
-    t.equal(
-      collapse(`<span>zzz</span> abc def ghij klm`, {
-        trimLines: 0,
-        recogniseHTML: 1,
-      }),
-      `<span>zzz</span> abc def ghij klm`
-    );
-    t.equal(
-      collapse(`<span>zzz</span> abc def ghij klm`, {
-        trimLines: 1,
-        recogniseHTML: 0,
-      }),
-      `<span>zzz</span> abc def ghij klm`
-    );
-    t.equal(
-      collapse(`<span>zzz</span> abc def ghij klm`, {
-        trimLines: 0,
-        recogniseHTML: 0,
-      }),
-      `<span>zzz</span> abc def ghij klm`
-    );
-    t.end();
-  }
-);
+tap.test(`44 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, (t) => {
+  t.equal(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 1,
+      recogniseHTML: 1,
+    }),
+    `<span>zzz</span> abc def ghij klm`,
+    "44.01"
+  );
+  t.equal(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 0,
+      recogniseHTML: 1,
+    }),
+    `<span>zzz</span> abc def ghij klm`,
+    "44.02"
+  );
+  t.equal(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 1,
+      recogniseHTML: 0,
+    }),
+    `<span>zzz</span> abc def ghij klm`,
+    "44.03"
+  );
+  t.equal(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 0,
+      recogniseHTML: 0,
+    }),
+    `<span>zzz</span> abc def ghij klm`,
+    "44.04"
+  );
+  t.end();
+});
 
 // -----------------------------------------------------------------------------
 // 04. Line trimming
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - does not trim each lines because it's default setting`,
+  `45 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - does not trim each lines because it's default setting`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -741,7 +747,7 @@ tap.test(
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - trim setting on, trims every line`,
+  `46 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - trim setting on, trims every line`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -764,7 +770,7 @@ tap.test(
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and non-breaking spaces`,
+  `47 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and non-breaking spaces`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -797,7 +803,7 @@ tap.test(
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and \\r`,
+  `48 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and \\r`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -830,7 +836,7 @@ tap.test(
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims`,
+  `49 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -851,42 +857,47 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: whitespace everywhere`,
-  (t) => {
-    t.equal(collapse('   <   html    abc="cde"    >  '), '<html abc="cde">');
-    t.end();
-  }
-);
-
-tap.test(
-  `05.02 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - longer`,
+  `50 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: whitespace everywhere`,
   (t) => {
     t.equal(
-      collapse('    <    html      blablabla="zzz"    >  '),
-      '<html blablabla="zzz">'
+      collapse('   <   html    abc="cde"    >  '),
+      '<html abc="cde">',
+      "50"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: as 01, but no trim`,
+  `51 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - longer`,
   (t) => {
-    t.equal(collapse("<   html   >"), "<html>");
+    t.equal(
+      collapse('    <    html      blablabla="zzz"    >  '),
+      '<html blablabla="zzz">',
+      "51"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: tab and carriage return within html tag. Pretty messed up, isn't it?`,
+  `52 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: as 01, but no trim`,
   (t) => {
-    t.equal(collapse("<\thtml\r>"), "<html>");
+    t.equal(collapse("<   html   >"), "<html>", "52");
     t.end();
   }
 );
 
 tap.test(
-  `05.05 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 03, but with more non-space white space for trimming`,
+  `53 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: tab and carriage return within html tag. Pretty messed up, isn't it?`,
+  (t) => {
+    t.equal(collapse("<\thtml\r>"), "<html>", "53");
+    t.end();
+  }
+);
+
+tap.test(
+  `54 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 03, but with more non-space white space for trimming`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -902,7 +913,7 @@ tap.test(
 );
 
 tap.test(
-  `05.06 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 04 but with sprinkled spaces`,
+  `55 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 04 but with sprinkled spaces`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -918,47 +929,57 @@ tap.test(
 );
 
 tap.test(
-  `05.07 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - defaults`,
+  `56 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - defaults`,
   (t) => {
     t.equal(
       collapse('   <   html    abc="cde"    >  ', { recogniseHTML: false }),
-      '< html abc="cde" >'
+      '< html abc="cde" >',
+      "56"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.08 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - HTML`,
+  `57 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - HTML`,
   (t) => {
     t.equal(
       collapse('    <    html      blablabla="zzz"    >  ', {
         recogniseHTML: false,
       }),
-      '< html blablabla="zzz" >'
+      '< html blablabla="zzz" >',
+      "57"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.09 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but no trim`,
+  `58 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but no trim`,
   (t) => {
-    t.equal(collapse("<   html   >", { recogniseHTML: false }), "< html >");
+    t.equal(
+      collapse("<   html   >", { recogniseHTML: false }),
+      "< html >",
+      "58"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.10 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - tab and carriage return within html tag`,
+  `59 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - tab and carriage return within html tag`,
   (t) => {
-    t.equal(collapse("<\thtml\r>", { recogniseHTML: false }), "<\thtml\r>");
+    t.equal(
+      collapse("<\thtml\r>", { recogniseHTML: false }),
+      "<\thtml\r>",
+      "59"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.11 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with more non-space white space for trimming`,
+  `60 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with more non-space white space for trimming`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -974,7 +995,7 @@ tap.test(
 );
 
 tap.test(
-  `05.12 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with sprinkled spaces`,
+  `61 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with sprinkled spaces`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -991,50 +1012,51 @@ tap.test(
 );
 
 tap.test(
-  `05.13 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - no attr`,
+  `62 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - no attr`,
   (t) => {
-    t.equal(collapse("   <   html  /  >  "), "<html/>");
+    t.equal(collapse("   <   html  /  >  "), "<html/>", "62");
     t.end();
   }
 );
 
 tap.test(
-  `05.14 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - with attr`,
+  `63 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - with attr`,
   (t) => {
     t.equal(
       collapse('    <    html      blablabla="zzz"  /  >  '),
-      '<html blablabla="zzz"/>'
+      '<html blablabla="zzz"/>',
+      "63"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.15 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, just spaces`,
+  `64 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, just spaces`,
   (t) => {
-    t.equal(collapse("<   html  / >"), "<html/>");
+    t.equal(collapse("<   html  / >"), "<html/>", "64");
     t.end();
   }
 );
 
 tap.test(
-  `05.16 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, CR before slash`,
+  `65 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, CR before slash`,
   (t) => {
-    t.equal(collapse("<\thtml\r/>"), "<html/>");
+    t.equal(collapse("<\thtml\r/>"), "<html/>", "65");
     t.end();
   }
 );
 
 tap.test(
-  `05.17 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, CR after slash`,
+  `66 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, CR after slash`,
   (t) => {
-    t.equal(collapse("<\thtml/\r>"), "<html/>");
+    t.equal(collapse("<\thtml/\r>"), "<html/>", "66");
     t.end();
   }
 );
 
 tap.test(
-  `05.18 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #1`,
+  `67 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #1`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1048,7 +1070,7 @@ tap.test(
 );
 
 tap.test(
-  `05.19 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #2`,
+  `68 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #2`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1062,7 +1084,7 @@ tap.test(
 );
 
 tap.test(
-  `05.20 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #3`,
+  `69 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #3`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1076,7 +1098,7 @@ tap.test(
 );
 
 tap.test(
-  `05.21 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #4`,
+  `70 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #4`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1092,47 +1114,57 @@ tap.test(
 );
 
 tap.test(
-  `05.22 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - basic`,
+  `71 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - basic`,
   (t) => {
     t.equal(
       collapse("   <   html  /  >  ", { recogniseHTML: false }),
-      "< html / >"
+      "< html / >",
+      "71"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.23 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - basic with attr`,
+  `72 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - basic with attr`,
   (t) => {
     t.equal(
       collapse('    <    html      blablabla="zzz"  /  >  ', {
         recogniseHTML: false,
       }),
-      '< html blablabla="zzz" / >'
+      '< html blablabla="zzz" / >',
+      "72"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.24 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - inner tag whitespace, spaces`,
+  `73 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - inner tag whitespace, spaces`,
   (t) => {
-    t.equal(collapse("<   html  / >", { recogniseHTML: false }), "< html / >");
+    t.equal(
+      collapse("<   html  / >", { recogniseHTML: false }),
+      "< html / >",
+      "73"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.25 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - inner tag whitespace, tab and CR before slash`,
+  `74 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - inner tag whitespace, tab and CR before slash`,
   (t) => {
-    t.equal(collapse("<\thtml\r/>", { recogniseHTML: false }), "<\thtml\r/>");
+    t.equal(
+      collapse("<\thtml\r/>", { recogniseHTML: false }),
+      "<\thtml\r/>",
+      "74"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.27 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #1`,
+  `75 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #1`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1148,7 +1180,7 @@ tap.test(
 );
 
 tap.test(
-  `05.28 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #2`,
+  `76 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #2`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1164,7 +1196,7 @@ tap.test(
 );
 
 tap.test(
-  `05.29 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #3`,
+  `77 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #3`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1180,7 +1212,7 @@ tap.test(
 );
 
 tap.test(
-  `05.30 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #4`,
+  `78 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #4`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1197,7 +1229,7 @@ tap.test(
 );
 
 tap.test(
-  `05.31 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - inner whitespace`,
+  `79 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - inner whitespace`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(collapse(`   <   ${tag}    >  `), `<${tag}>`, `05.31.${i}`);
@@ -1207,7 +1239,7 @@ tap.test(
 );
 
 tap.test(
-  `05.32 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - inner whitespace`,
+  `80 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - inner whitespace`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(collapse(`   <   ${tag}  /  >  `), `<${tag}/>`, `05.32.${i}`);
@@ -1217,7 +1249,7 @@ tap.test(
 );
 
 tap.test(
-  `05.33 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, spaces`,
+  `81 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, spaces`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1231,7 +1263,7 @@ tap.test(
 );
 
 tap.test(
-  `05.34 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, tight`,
+  `82 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, tight`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1245,7 +1277,7 @@ tap.test(
 );
 
 tap.test(
-  `05.35 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, tight`,
+  `83 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - letter in front, inner whitespace, tight`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(collapse(`   <   z${tag}>  `), `< z${tag}>`, `05.35.${i}`);
@@ -1255,7 +1287,7 @@ tap.test(
 );
 
 tap.test(
-  `05.36 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - no opening bracket`,
+  `84 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - no opening bracket`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1269,7 +1301,7 @@ tap.test(
 );
 
 tap.test(
-  `05.37 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - space-tag name`,
+  `85 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - space-tag name`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1283,7 +1315,7 @@ tap.test(
 );
 
 tap.test(
-  `05.38 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - string starts with tagname`,
+  `86 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - string starts with tagname`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1297,7 +1329,7 @@ tap.test(
 );
 
 tap.test(
-  `05.39 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - checking case when tag is at the end of string`,
+  `87 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - checking case when tag is at the end of string`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1311,7 +1343,7 @@ tap.test(
 );
 
 tap.test(
-  `05.40 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - checking case when tag is at the end of string`,
+  `88 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - checking case when tag is at the end of string`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1325,7 +1357,7 @@ tap.test(
 );
 
 tap.test(
-  `05.41 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - two closing brackets`,
+  `89 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - two closing brackets`,
   (t) => {
     htmlTags.forEach((tag, i) => {
       t.equal(
@@ -1338,23 +1370,24 @@ tap.test(
   }
 );
 
-tap.test("05.42 - testing against false positives #1", (t) => {
-  t.equal(collapse("zz a < b and c > d yy"), "zz a < b and c > d yy");
+tap.test("90 - testing against false positives #1", (t) => {
+  t.equal(collapse("zz a < b and c > d yy"), "zz a < b and c > d yy", "90");
   t.end();
 });
 
 tap.test(
-  `05.43 - testing against false positives #2 - the "< b" part is sneaky close to the real thing`,
+  `91 - testing against false positives #2 - the "< b" part is sneaky close to the real thing`,
   (t) => {
     t.equal(
       collapse("We have equations: a < b and c > d not to be mangled."),
-      "We have equations: a < b and c > d not to be mangled."
+      "We have equations: a < b and c > d not to be mangled.",
+      "91"
     );
     t.end();
   }
 );
 
-tap.test("05.44 - testing against false positives #3 - with asterisks", (t) => {
+tap.test("92 - testing against false positives #3 - with asterisks", (t) => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     t.equal(
       collapse(
@@ -1368,85 +1401,91 @@ tap.test("05.44 - testing against false positives #3 - with asterisks", (t) => {
 });
 
 tap.test(
-  "05.45 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left",
+  "93 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left",
   (t) => {
     t.equal(
       collapse('    < zzz   form      blablabla="zzz"  /  >  '),
-      '< zzz form blablabla="zzz" / >'
+      '< zzz form blablabla="zzz" / >',
+      "93"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.46 - going from right to left, tag was recognised but string follows to the left - even valid HTML tag to the left",
+  "94 - going from right to left, tag was recognised but string follows to the left - even valid HTML tag to the left",
   (t) => {
     t.equal(
       collapse('    < form   form      blablabla="zzz"  /  >  '),
-      '< form form blablabla="zzz" / >'
+      '< form form blablabla="zzz" / >',
+      "94"
     );
     t.end();
   }
 );
 
-tap.test("05.47 - HTML closing tag", (t) => {
+tap.test("95 - HTML closing tag", (t) => {
   t.equal(
     collapse('    <   a    class="h"  style="display:  block;"  >'),
-    '<a class="h" style="display: block;">'
+    '<a class="h" style="display: block;">',
+    "95"
   );
   t.end();
 });
 
-tap.test("05.48 - HTML closing tag, more attrs", (t) => {
+tap.test("96 - HTML closing tag, more attrs", (t) => {
   t.equal(
     collapse(
       '    <   a    class="h"  style="display:  block;"  >    Something   here   < / a  >    '
     ),
-    '<a class="h" style="display: block;"> Something here </a>'
+    '<a class="h" style="display: block;"> Something here </a>',
+    "96"
   );
   t.end();
 });
 
-tap.test("05.49 - HTML closing tag, word wrapped", (t) => {
-  t.equal(collapse("< a > zzz < / a >"), "<a> zzz </a>");
+tap.test("97 - HTML closing tag, word wrapped", (t) => {
+  t.equal(collapse("< a > zzz < / a >"), "<a> zzz </a>", "97");
   t.end();
 });
 
-tap.test("05.50 - some weird letter casing", (t) => {
+tap.test("98 - some weird letter casing", (t) => {
   t.equal(
     collapse(
       'test text is being < StRoNg >set in bold<   StRoNg class="wrong1" / > here'
     ),
-    'test text is being <StRoNg>set in bold<StRoNg class="wrong1"/> here'
+    'test text is being <StRoNg>set in bold<StRoNg class="wrong1"/> here',
+    "98"
   );
   t.end();
 });
 
-tap.test("05.51 - adhoc case #1", (t) => {
+tap.test("99 - adhoc case #1", (t) => {
   t.equal(
     collapse("test text is being < b >set in bold< /  b > here"),
-    "test text is being <b>set in bold</b> here"
+    "test text is being <b>set in bold</b> here",
+    "99"
   );
   t.end();
 });
 
-tap.test("05.52 - adhoc case #2", (t) => {
-  t.equal(collapse("aaa<bbb"), "aaa<bbb");
+tap.test("100 - adhoc case #2", (t) => {
+  t.equal(collapse("aaa<bbb"), "aaa<bbb", "100");
   t.end();
 });
 
-tap.test("05.53 - adhoc case #3", (t) => {
-  t.equal(collapse("aaa<bbb", { trimLines: false }), "aaa<bbb");
+tap.test("101 - adhoc case #3", (t) => {
+  t.equal(collapse("aaa<bbb", { trimLines: false }), "aaa<bbb", "101");
   t.end();
 });
 
-tap.test("05.54 - adhoc case #4", (t) => {
-  t.equal(collapse("aaa<bbb", { trimLines: true }), "aaa<bbb");
+tap.test("102 - adhoc case #4", (t) => {
+  t.equal(collapse("aaa<bbb", { trimLines: true }), "aaa<bbb", "102");
   t.end();
 });
 
 tap.test(
-  "05.55 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition",
+  "103 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition",
   (t) => {
     // what will happen is, error space after equal in HTML attribute will cause
     // the algorithm to freak out and that tag will be skipped, even though the
@@ -1455,21 +1494,23 @@ tap.test(
       collapse(
         '   <   html    abc= "cde"    ><   html    fgh="hij"    ><   html    abc= "cde"    ><   html    fgh="hij"    >  '
       ),
-      '< html abc= "cde" ><html fgh="hij">< html abc= "cde" ><html fgh="hij">'
+      '< html abc= "cde" ><html fgh="hij">< html abc= "cde" ><html fgh="hij">',
+      "103"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.56 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition, recogniseHTML=off",
+  "104 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition, recogniseHTML=off",
   (t) => {
     t.equal(
       collapse(
         '   <   html    abc= "cde"    ><   html    fgh="hij"    ><   html    abc= "cde"    ><   html    fgh="hij"    >  ',
         { recogniseHTML: false }
       ),
-      '< html abc= "cde" >< html fgh="hij" >< html abc= "cde" >< html fgh="hij" >'
+      '< html abc= "cde" >< html fgh="hij" >< html abc= "cde" >< html fgh="hij" >',
+      "104"
     );
     t.end();
   }
@@ -1480,7 +1521,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - remove`,
+  `105 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - remove`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1498,7 +1539,7 @@ tap.test(
 );
 
 tap.test(
-  `06.02 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - don't remove`,
+  `106 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - don't remove`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1516,7 +1557,7 @@ tap.test(
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - remove`,
+  `107 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - remove`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1534,7 +1575,7 @@ tap.test(
 );
 
 tap.test(
-  `06.04 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - don't remove`,
+  `108 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - don't remove`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1552,7 +1593,7 @@ tap.test(
 );
 
 tap.test(
-  `06.05 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - empty lines removal off + per-line trimming off`,
+  `109 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - empty lines removal off + per-line trimming off`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1570,7 +1611,7 @@ tap.test(
 );
 
 tap.test(
-  `06.06 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`,
+  `110 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1588,7 +1629,7 @@ tap.test(
 );
 
 tap.test(
-  `06.07 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`,
+  `111 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1605,7 +1646,7 @@ tap.test(
 );
 
 tap.test(
-  `06.08 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines`,
+  `112 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1630,7 +1671,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `07.01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`,
+  `113 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1646,7 +1687,7 @@ tap.test(
 );
 
 tap.test(
-  `07.02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`,
+  `114 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1662,7 +1703,7 @@ tap.test(
 );
 
 tap.test(
-  `07.05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
+  `115 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1682,7 +1723,7 @@ tap.test(
 );
 
 tap.test(
-  `07.06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
+  `116 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1699,7 +1740,7 @@ tap.test(
 );
 
 tap.test(
-  `07.07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`,
+  `117 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1716,7 +1757,7 @@ tap.test(
 );
 
 tap.test(
-  `07.08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`,
+  `118 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1733,7 +1774,7 @@ tap.test(
 );
 
 tap.test(
-  `07.09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`,
+  `119 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1750,7 +1791,7 @@ tap.test(
 );
 
 tap.test(
-  `07.10 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`,
+  `120 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1768,7 +1809,7 @@ tap.test(
 );
 
 tap.test(
-  `07.11 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`,
+  `121 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1790,7 +1831,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `08.01 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`,
+  `122 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1811,36 +1852,40 @@ tap.test(
 );
 
 tap.test(
-  `08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`,
+  `123 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`,
   (t) => {
-    t.same(collapse(`   a   bbb  \n   c   d   `, { returnRangesOnly: true }), [
-      [0, 3],
-      [4, 6],
-      [10, 11],
-      [13, 15],
-      [17, 19],
-      [21, 24],
-    ]);
+    t.same(
+      collapse(`   a   bbb  \n   c   d   `, { returnRangesOnly: true }),
+      [
+        [0, 3],
+        [4, 6],
+        [10, 11],
+        [13, 15],
+        [17, 19],
+        [21, 24],
+      ],
+      "123"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `08.03 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`,
+  `124 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`,
   (t) => {
-    t.equal(collapse("a b"), "a b", "08.02.01 - defaults");
+    t.equal(collapse("a b"), "a b", "124.01 - defaults");
     t.equal(
       collapse("a b", { returnRangesOnly: false }),
       "a b",
-      "08.02.02 - hardcoded default"
+      "124.02 - hardcoded default"
     );
-    t.same(collapse("a b", { returnRangesOnly: true }), []);
+    t.same(collapse("a b", { returnRangesOnly: true }), [], "124.03");
     t.end();
   }
 );
 
 tap.test(
-  `08.04 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`,
+  `125 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.equal(
@@ -1867,11 +1912,14 @@ tap.test(
 // 09. check a ten thousand randomly-generated strings that don't need collapsing
 // -----------------------------------------------------------------------------
 
-tap.test(`09.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`, (t) => {
-  for (let i = 10000; i--; ) {
-    let temp = nothingToCollapseGenerator();
-    t.equal(collapse(temp), temp);
-    temp = undefined;
+tap.test(
+  `126.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`,
+  (t) => {
+    for (let i = 10000; i--; ) {
+      let temp = nothingToCollapseGenerator();
+      t.equal(collapse(temp), temp);
+      temp = undefined;
+    }
+    t.end();
   }
-  t.end();
-});
+);

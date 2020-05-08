@@ -9,77 +9,77 @@ function dummyFunction() {
 // Tests
 // ==============================
 
-tap.test("1.1 - plain object - true", (t) => {
+tap.test("01 - plain object - true", (t) => {
   t.equal(
     isEmpty({
       a: "",
       b: "",
     }),
     true,
-    "1.1.1"
+    "01.01"
   );
-  t.equal(isEmpty({}), true, "1.1.2");
+  t.equal(isEmpty({}), true, "01.02");
   t.end();
 });
 
-tap.test("1.2 - plain object - false", (t) => {
+tap.test("02 - plain object - false", (t) => {
   t.equal(
     isEmpty({
       a: "",
       b: "a",
     }),
     false,
-    "1.2"
+    "02"
   );
   t.end();
 });
 
-tap.test("1.3 - array - true", (t) => {
-  t.equal(isEmpty(["", ""]), true, "1.3.1");
-  t.equal(isEmpty([]), true, "1.3.2");
+tap.test("03 - array - true", (t) => {
+  t.equal(isEmpty(["", ""]), true, "03.01");
+  t.equal(isEmpty([]), true, "03.02");
   t.end();
 });
 
-tap.test("1.4 - array - false", (t) => {
-  t.equal(isEmpty(["", " "]), false, "1.4");
+tap.test("04 - array - false", (t) => {
+  t.equal(isEmpty(["", " "]), false, "04");
   t.end();
 });
 
-tap.test("1.5 - nested array - true", (t) => {
-  t.equal(isEmpty(["", [""]]), true, "1.5");
+tap.test("05 - nested array - true", (t) => {
+  t.equal(isEmpty(["", [""]]), true, "05");
   t.end();
 });
 
-tap.test("1.6 - nested array - false", (t) => {
-  t.equal(isEmpty(["", [" "]]), false, "1.6");
+tap.test("06 - nested array - false", (t) => {
+  t.equal(isEmpty(["", [" "]]), false, "06");
   t.end();
 });
 
-tap.test("1.7 - nested plain object - true", (t) => {
+tap.test("07 - nested plain object - true", (t) => {
   t.equal(
     isEmpty({
       a: "",
       b: { c: "" },
     }),
     true,
-    "1.7"
+    "07"
   );
   t.end();
 });
 
-tap.test("1.8 - nested plain object - true", (t) => {
+tap.test("08 - nested plain object - true", (t) => {
   t.equal(
     isEmpty({
       a: "",
       b: { c: "" },
     }),
     true,
-    "1.8"
+    "08"
   );
   t.end();
 });
 
-tap.test("1.9 - nested many things - true", (t) => {
+tap.test("09 - nested many things - true", (t) => {
   t.equal(
     isEmpty([
       {
@@ -88,12 +88,12 @@ tap.test("1.9 - nested many things - true", (t) => {
       },
     ]),
     true,
-    "1.9"
+    "09"
   );
   t.end();
 });
 
-tap.test("1.10 - nested many things - true", (t) => {
+tap.test("10 - nested many things - true", (t) => {
   t.equal(
     isEmpty([
       {
@@ -102,18 +102,18 @@ tap.test("1.10 - nested many things - true", (t) => {
       },
     ]),
     false,
-    "1.10"
+    "10"
   );
   t.end();
 });
 
-tap.test("1.11 - string - true", (t) => {
-  t.equal(isEmpty(""), true, "1.11");
+tap.test("11 - string - true", (t) => {
+  t.equal(isEmpty(""), true, "11");
   t.end();
 });
 
-tap.test("1.12 - string - false", (t) => {
-  t.equal(isEmpty("."), false, "1.12");
+tap.test("12 - string - false", (t) => {
+  t.equal(isEmpty("."), false, "12");
   t.end();
 });
 
@@ -121,18 +121,18 @@ tap.test("1.12 - string - false", (t) => {
 // Retruns Null
 // ==============================
 
-tap.test("2.13 - function as input - returns null", (t) => {
-  t.equal(isEmpty(dummyFunction), null, "2.13");
+tap.test("13 - function as input - returns null", (t) => {
+  t.equal(isEmpty(dummyFunction), null, "13");
   t.end();
 });
 
-tap.test("2.14 - function as input - returns null", (t) => {
-  t.equal(isEmpty([dummyFunction]), null, "2.14.1");
-  t.equal(isEmpty({ method: dummyFunction }), null, "2.14.2");
+tap.test("14 - function as input - returns null", (t) => {
+  t.equal(isEmpty([dummyFunction]), null, "14.01");
+  t.equal(isEmpty({ method: dummyFunction }), null, "14.02");
   t.end();
 });
 
-tap.test("2.15 - null - returns null", (t) => {
-  t.equal(isEmpty(null), null, "2.15");
+tap.test("15 - null - returns null", (t) => {
+  t.equal(isEmpty(null), null, "15");
   t.end();
 });

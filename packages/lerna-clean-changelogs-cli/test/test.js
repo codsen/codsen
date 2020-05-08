@@ -61,32 +61,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mode`,
+  `01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mode`,
   async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-v"]);
-    t.equal(reportedVersion1.stdout, pack.version);
+    t.equal(reportedVersion1.stdout, pack.version, "01.01");
 
     const reportedVersion2 = await execa("./cli.js", ["--version"]);
-    t.equal(reportedVersion2.stdout, pack.version);
+    t.equal(reportedVersion2.stdout, pack.version, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`,
+  `02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`,
   async (t) => {
     const reportedVersion1 = await execa("./cli.js", ["-h"]);
-    t.match(reportedVersion1.stdout, /Usage/);
-    t.match(reportedVersion1.stdout, /Options/);
+    t.match(reportedVersion1.stdout, /Usage/, "02.01");
+    t.match(reportedVersion1.stdout, /Options/, "02.02");
 
     const reportedVersion2 = await execa("./cli.js", ["--help"]);
-    t.match(reportedVersion2.stdout, /Usage/);
-    t.match(reportedVersion2.stdout, /Options/);
+    t.match(reportedVersion2.stdout, /Usage/, "02.03");
+    t.match(reportedVersion2.stdout, /Options/, "02.04");
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`,
+  `03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`,
   async (t) => {
     // fetch us a random temp folder
     // const tempFolder = "temp";
@@ -96,7 +96,7 @@ tap.test(
     // call execa on that empty folder
     const stdOutContents = await execa("./cli.js", [tempFolder]);
     // CLI will complain no files could be found
-    t.match(stdOutContents.stdout, /no changelogs found/);
+    t.match(stdOutContents.stdout, /no changelogs found/, "03.01");
 
     await execa.command(`rm -rf ${path.resolve(__dirname, "../temp")}`);
   }
@@ -106,7 +106,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file`,
+  `04 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file`,
   async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
@@ -146,12 +146,12 @@ tap.test(
           .then(() => received)
       );
 
-    t.same(await processedFileContents, changelog1Fixed);
+    t.same(await processedFileContents, changelog1Fixed, "04.01");
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`,
+  `05 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`,
   async (t) => {
     // 1. set up in which folder to write:
     // const tempFolder = "temp";

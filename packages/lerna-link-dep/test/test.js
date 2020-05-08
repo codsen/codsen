@@ -43,7 +43,7 @@ const cPackageJson = `{
 //                                  *
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does not exist (ERROR_01)`,
+  `01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does not exist (ERROR_01)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -82,7 +82,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.01.03");
+    t.same(cleanupMsg.exitCode, 0, "01.01");
     t.end();
   }
 );
@@ -102,7 +102,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`,
+  `02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -139,7 +139,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.02.04");
+    t.same(cleanupMsg.exitCode, 0, "02.01");
 
     t.end();
   }
@@ -160,7 +160,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`,
+  `03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -197,7 +197,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.03.04");
+    t.same(cleanupMsg.exitCode, 0, "03.01");
 
     t.end();
   }
@@ -218,7 +218,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`,
+  `04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -267,7 +267,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.04.03");
+    t.same(cleanupMsg.exitCode, 0, "04.01");
 
     t.end();
   }
@@ -288,7 +288,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`,
+  `05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -332,7 +332,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.05.04");
+    t.same(cleanupMsg.exitCode, 0, "05.01");
 
     t.end();
   }
@@ -353,7 +353,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`,
+  `06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -408,7 +408,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.06.04");
+    t.same(cleanupMsg.exitCode, 0, "06.01");
 
     t.end();
   }
@@ -429,7 +429,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `01.07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`,
+  `07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -472,7 +472,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.07.04");
+    t.same(cleanupMsg.exitCode, 0, "07.01");
 
     t.end();
   }
@@ -493,7 +493,7 @@ tap.test(
 //                                  *
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps`,
+  `08 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -537,14 +537,14 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "02.01.05");
+    t.same(cleanupMsg.exitCode, 0, "08.01");
 
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`,
+  `09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -594,14 +594,14 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "02.02.06");
+    t.same(cleanupMsg.exitCode, 0, "09.01");
 
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`,
+  `10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -646,14 +646,14 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "02.03.06");
+    t.same(cleanupMsg.exitCode, 0, "10.01");
 
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`,
+  `11 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`,
   async (t) => {
     // Re-route the test files into `temp/` folder instead for easier access when
     // troubleshooting. Just comment out one of two:
@@ -698,7 +698,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "02.04.06");
+    t.same(cleanupMsg.exitCode, 0, "11.01");
 
     t.end();
   }

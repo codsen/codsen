@@ -105,7 +105,7 @@ tap.test(
         },
       }),
       [[4, 14, "&nbsp;"]],
-      "08.02 - double encoded"
+      "08 - double encoded"
     );
     t.end();
   }
@@ -145,22 +145,22 @@ tap.test(
   `11 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`,
   (t) => {
     const inp1 = "textamp;nbsp;text";
-    t.same(fix(inp1), [[4, 13, "&nbsp;"]], "11.01");
+    t.same(fix(inp1), [[4, 13, "&nbsp;"]], "11");
     t.end();
   }
 );
 
 tap.test(
-  `14 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`,
+  `12 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`,
   (t) => {
     const inp1 = "abc &nbs;";
-    t.same(fix(inp1), [[4, 9, "&nbsp;"]], "14");
+    t.same(fix(inp1), [[4, 9, "&nbsp;"]], "12");
     t.end();
   }
 );
 
 tap.test(
-  `15 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`,
+  `13 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`,
   (t) => {
     const inp1 = "abc &nbs;";
     t.same(
@@ -182,17 +182,17 @@ tap.test(
         },
       }),
       [[4, 9, "&nbsp;"]],
-      "15.02"
+      "13"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`,
+  `14 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`,
   (t) => {
     const inp1 = "abc &nbs; xyz";
-    t.same(fix(inp1), [[4, 9, "&nbsp;"]], "16.01");
+    t.same(fix(inp1), [[4, 9, "&nbsp;"]], "14.01");
     t.same(
       fix(inp1, {
         cb: (received) => {
@@ -212,11 +212,11 @@ tap.test(
         },
       }),
       [[4, 9, "&nbsp;"]],
-      "16.02"
+      "14.02"
     );
 
     const inp2 = "&nbs; xyz";
-    t.same(fix(inp2), [[0, 5, "&nbsp;"]], "16.03");
+    t.same(fix(inp2), [[0, 5, "&nbsp;"]], "14.03");
     t.same(
       fix(inp2, {
         cb: (received) => {
@@ -236,23 +236,23 @@ tap.test(
         },
       }),
       [[0, 5, "&nbsp;"]],
-      "16.05"
+      "14.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`,
+  `15 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`,
   (t) => {
     const inp1 = "abc&nbs;";
-    t.same(fix(inp1), [[3, 8, "&nbsp;"]], "17");
+    t.same(fix(inp1), [[3, 8, "&nbsp;"]], "15");
     t.end();
   }
 );
 
 tap.test(
-  `18 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`,
+  `16 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`,
   (t) => {
     const inp1 = "abc&nbs;";
     t.same(
@@ -274,17 +274,17 @@ tap.test(
         },
       }),
       [[3, 8, "&nbsp;"]],
-      "18.02"
+      "16"
     );
     t.end();
   }
 );
 
 tap.test(
-  `19 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`,
+  `17 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`,
   (t) => {
     const inp1 = "abc&nbs; xyz";
-    t.same(fix(inp1), [[3, 8, "&nbsp;"]], "19.01");
+    t.same(fix(inp1), [[3, 8, "&nbsp;"]], "17.01");
     t.same(
       fix(inp1, {
         cb: (received) => {
@@ -304,11 +304,11 @@ tap.test(
         },
       }),
       [[3, 8, "&nbsp;"]],
-      "19.03"
+      "17.02"
     );
 
     const inp2 = "&nbs; xyz";
-    t.same(fix(inp2), [[0, 5, "&nbsp;"]], "19.04");
+    t.same(fix(inp2), [[0, 5, "&nbsp;"]], "17.03");
     t.same(
       fix(inp2, {
         cb: (received) => {
@@ -328,7 +328,7 @@ tap.test(
         },
       }),
       [[0, 5, "&nbsp;"]],
-      "19.06"
+      "17.04"
     );
     t.end();
   }

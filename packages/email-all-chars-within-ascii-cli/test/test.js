@@ -4,7 +4,7 @@ import tap from "tap";
 import execa from "execa";
 import tempy from "tempy";
 
-tap.test("01.01 - called upon a single file which is healthy", async (t) => {
+tap.test("01 - called upon a single file which is healthy", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -29,12 +29,12 @@ tap.test("01.01 - called upon a single file which is healthy", async (t) => {
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
     { shell: true }
   );
-  t.match(stdOutContents.stdout, /ALL OK/);
+  t.match(stdOutContents.stdout, /ALL OK/, "01.01");
   t.end();
 });
 
 tap.test(
-  "01.02 - called upon a single file which contains non-ASCII symbol",
+  "02 - called upon a single file which contains non-ASCII symbol",
   async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
@@ -62,29 +62,29 @@ tap.test(
   }
 );
 
-tap.test("01.03 - version output mode", async (t) => {
+tap.test("03 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.match(reportedVersion1.stdout.trim(), /\d\.\d/);
+  t.match(reportedVersion1.stdout.trim(), /\d\.\d/, "03.01");
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.match(reportedVersion2.stdout.trim(), /\d\.\d/);
+  t.match(reportedVersion2.stdout.trim(), /\d\.\d/, "03.02");
   t.end();
 });
 
-tap.test("01.04 - help output mode", async (t) => {
+tap.test("04 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/);
-  t.match(reportedVersion1.stdout, /Options/);
-  t.match(reportedVersion1.stdout, /Instructions/);
+  t.match(reportedVersion1.stdout, /Usage/, "04.01");
+  t.match(reportedVersion1.stdout, /Options/, "04.02");
+  t.match(reportedVersion1.stdout, /Instructions/, "04.03");
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/);
-  t.match(reportedVersion2.stdout, /Options/);
-  t.match(reportedVersion2.stdout, /Instructions/);
+  t.match(reportedVersion2.stdout, /Usage/, "04.04");
+  t.match(reportedVersion2.stdout, /Options/, "04.05");
+  t.match(reportedVersion2.stdout, /Instructions/, "04.06");
   t.end();
 });
 
-tap.test("01.05 - no files found in the given directory", async (t) => {
+tap.test("05 - no files found in the given directory", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder

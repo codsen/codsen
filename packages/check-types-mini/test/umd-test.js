@@ -22,6 +22,6 @@ tap.test("UMD build works fine", (t) => {
   const err = t.throws(() => {
     check1(obj1, obj2, opts);
   });
-  t.match(err.message, /opts\.msg/g);
+  t.match(err.message, /opts\.msg/g, "01");
   t.end();
 });

@@ -14,6 +14,6 @@ const target = {
 };
 
 tap.test("UMD build works fine", (t) => {
-  t.false(compare1(source, target));
+  t.false(compare1(source, target), "01");
   t.end();
 });

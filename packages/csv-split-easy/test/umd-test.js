@@ -5,6 +5,6 @@ const input = ",,\na,b,c";
 const result = [["a", "b", "c"]];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(splitEasy1(input), result);
+  t.same(splitEasy1(input), result, "01");
   t.end();
 });

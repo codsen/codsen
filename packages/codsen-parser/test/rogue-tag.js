@@ -5,7 +5,7 @@ import cparser from "../dist/codsen-parser.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one tag only`,
+  `01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one tag only`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -24,7 +24,7 @@ tap.test(
           children: [],
         },
       ],
-      "01.01.01"
+      "01.01"
     );
     t.match(
       gatheredErr,
@@ -35,15 +35,15 @@ tap.test(
           idxTo: 4,
         },
       ],
-      "01.01.02"
+      "01.02"
     );
-    t.is(gatheredErr.length, 1, "01.01.03");
+    t.is(gatheredErr.length, 1, "01.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is text-type`,
+  `02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is text-type`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -75,7 +75,7 @@ tap.test(
           children: [],
         },
       ],
-      "01.02.01"
+      "02.01"
     );
     t.match(
       gatheredErr,
@@ -86,15 +86,15 @@ tap.test(
           idxTo: 9,
         },
       ],
-      "01.02.02"
+      "02.02"
     );
-    t.is(gatheredErr.length, 1, "01.02.03");
+    t.is(gatheredErr.length, 1, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is tag-type`,
+  `03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is tag-type`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -121,7 +121,7 @@ tap.test(
           children: [],
         },
       ],
-      "01.03.01"
+      "03.01"
     );
     t.match(
       gatheredErr,
@@ -132,9 +132,9 @@ tap.test(
           idxTo: 8,
         },
       ],
-      "01.03.02"
+      "03.02"
     );
-    t.is(gatheredErr.length, 1, "01.03.03");
+    t.is(gatheredErr.length, 1, "03.03");
     t.end();
   }
 );
@@ -143,7 +143,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening`,
+  `04 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -202,7 +202,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.01.01"
+      "04.01"
     );
     t.match(
       gatheredErr,
@@ -213,15 +213,15 @@ tap.test(
           idxTo: 24,
         },
       ],
-      "02.01.02"
+      "04.02"
     );
-    t.is(gatheredErr.length, 1, "02.01.03");
+    t.is(gatheredErr.length, 1, "04.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing`,
+  `05 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -280,7 +280,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.02.01"
+      "05.01"
     );
     t.match(
       gatheredErr,
@@ -296,15 +296,15 @@ tap.test(
           idxTo: 11,
         },
       ],
-      "02.02.02"
+      "05.02"
     );
-    t.is(gatheredErr.length, 2, "02.02.03");
+    t.is(gatheredErr.length, 2, "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void`,
+  `06 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -363,7 +363,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.03.01"
+      "06.01"
     );
     t.match(
       gatheredErr,
@@ -380,15 +380,15 @@ tap.test(
           },
         },
       ],
-      "02.03.02"
+      "06.02"
     );
-    t.is(gatheredErr.length, 1, "02.03.03");
+    t.is(gatheredErr.length, 1, "06.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void, legit`,
+  `07 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void, legit`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -449,7 +449,7 @@ tap.test(
           ],
         },
       ],
-      "02.04.01"
+      "07.01"
     );
     t.match(
       gatheredErr,
@@ -463,15 +463,15 @@ tap.test(
           },
         },
       ],
-      "02.04.02"
+      "07.02"
     );
-    t.is(gatheredErr.length, 1, "02.04.03");
+    t.is(gatheredErr.length, 1, "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - text`,
+  `08 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - text`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -530,7 +530,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.05.01"
+      "08.01"
     );
     t.match(
       gatheredErr,
@@ -544,15 +544,15 @@ tap.test(
           },
         },
       ],
-      "02.05.02"
+      "08.02"
     );
-    t.is(gatheredErr.length, 1, "02.05.03");
+    t.is(gatheredErr.length, 1, "08.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace`,
+  `09 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -650,7 +650,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.06.01"
+      "09.01"
     );
     t.match(
       gatheredErr,
@@ -664,15 +664,15 @@ tap.test(
           },
         },
       ],
-      "02.06.02"
+      "09.02"
     );
-    t.is(gatheredErr.length, 1, "02.06.03");
+    t.is(gatheredErr.length, 1, "09.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.07 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace - insurance`,
+  `10 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - opening - with whitespace - insurance`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -772,7 +772,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "02.07.01"
+      "10.01"
     );
     t.match(
       gatheredErr,
@@ -786,9 +786,9 @@ tap.test(
           },
         },
       ],
-      "02.07.02"
+      "10.02"
     );
-    t.is(gatheredErr.length, 1, "02.07.03");
+    t.is(gatheredErr.length, 1, "10.03");
     t.end();
   }
 );

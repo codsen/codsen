@@ -106,39 +106,39 @@ const testFilePaths = [
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - version output mode", async (t) => {
+tap.test("01 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.equal(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version, "01.01");
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.equal(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version, "01.02");
   t.end();
 });
 
-tap.test("01.02 - help output mode", async (t) => {
+tap.test("02 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/g);
-  t.match(reportedVersion1.stdout, /Options/g);
+  t.match(reportedVersion1.stdout, /Usage/g, "02.01");
+  t.match(reportedVersion1.stdout, /Options/g, "02.02");
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/g);
-  t.match(reportedVersion2.stdout, /Options/g);
+  t.match(reportedVersion2.stdout, /Usage/g, "02.03");
+  t.match(reportedVersion2.stdout, /Options/g, "02.04");
   t.end();
 });
 
-tap.test("01.03 - no files found in the given directory [ID_1]", async (t) => {
+tap.test("03 - no files found in the given directory [ID_1]", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
-  t.match(stdOutContents.stdout, /Nothing found!/g);
-  t.match(stdOutContents.stdout, /ID_1/g);
+  t.match(stdOutContents.stdout, /Nothing found!/g, "03.01");
+  t.match(stdOutContents.stdout, /ID_1/g, "03.02");
   t.end();
 });
 
 tap.test(
-  "01.04 - normalisation, called on the directory with subdirectories",
+  "04 - normalisation, called on the directory with subdirectories",
   async (t) => {
     // 1. fetch us an empty, random, temporary folder:
 
@@ -185,31 +185,28 @@ tap.test(
       )
       .catch((err) => t.fail(err));
 
-    t.same(await processedFileContents, normalisedFileContents);
+    t.same(await processedFileContents, normalisedFileContents, "04.01");
     t.end();
   }
 );
 
-tap.test(
-  "01.05 - normalisation stops if one file is given [ID_2]",
-  async (t) => {
-    // fetch us a random temp folder
-    // const tempFolder = "temp";
-    // fs.ensureDirSync(path.join(tempFolder));
-    const tempFolder = tempy.directory();
+tap.test("05 - normalisation stops if one file is given [ID_2]", async (t) => {
+  // fetch us a random temp folder
+  // const tempFolder = "temp";
+  // fs.ensureDirSync(path.join(tempFolder));
+  const tempFolder = tempy.directory();
 
-    const stdOutContents = await fs
-      .writeJson(path.join(tempFolder, "data.json"), {
-        a: "b",
-        c: "d",
-      })
-      .then(() => execa("./cli.js", ["--normalise", tempFolder]))
-      .catch((err) => t.fail(err));
+  const stdOutContents = await fs
+    .writeJson(path.join(tempFolder, "data.json"), {
+      a: "b",
+      c: "d",
+    })
+    .then(() => execa("./cli.js", ["--normalise", tempFolder]))
+    .catch((err) => t.fail(err));
 
-    // CLI will complain no files could be found
-    t.match(stdOutContents.stdout, /ID_2/g);
-    t.end();
-  }
-);
+  // CLI will complain no files could be found
+  t.match(stdOutContents.stdout, /ID_2/g, "05");
+  t.end();
+});
 
 // tap.todo("01.05 - sort, there's a broken JSON among files");

@@ -20,7 +20,7 @@ import mergeAdvanced from "../dist/object-merge-advanced.esm";
 // Normal assignments with default value, false
 // ==============================
 
-tap.test("01.01 - simple objects, no key clash", (t) => {
+tap.test("01 - simple objects, no key clash", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -34,7 +34,7 @@ tap.test("01.01 - simple objects, no key clash", (t) => {
       a: "a",
       b: "b",
     },
-    "01.01.01"
+    "01.01"
   );
   t.same(
     mergeAdvanced(
@@ -49,7 +49,7 @@ tap.test("01.01 - simple objects, no key clash", (t) => {
       a: "a",
       b: "b",
     },
-    "01.01.02"
+    "01.02"
   );
 
   // https://stackoverflow.com/a/51148924/3943954
@@ -63,12 +63,12 @@ tap.test("01.01 - simple objects, no key clash", (t) => {
         b: 1,
       },
     },
-    "01.01.03"
+    "01.03"
   );
   t.end();
 });
 
-tap.test("01.02 - different types, no key clash", (t) => {
+tap.test("02 - different types, no key clash", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -86,7 +86,7 @@ tap.test("01.02 - different types, no key clash", (t) => {
       c: { c: "c" },
       d: null,
     },
-    "01.02.01"
+    "02.01"
   );
   t.same(
     mergeAdvanced(
@@ -105,12 +105,12 @@ tap.test("01.02 - different types, no key clash", (t) => {
       c: { c: "c" },
       d: null,
     },
-    "01.02.02"
+    "02.02"
   );
   t.end();
 });
 
-tap.test("01.03 - string vs string value clash", (t) => {
+tap.test("03 - string vs string value clash", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -125,7 +125,7 @@ tap.test("01.03 - string vs string value clash", (t) => {
       a: "c",
       b: "b",
     },
-    "01.03.01"
+    "03.01"
   );
   t.same(
     mergeAdvanced(
@@ -141,12 +141,12 @@ tap.test("01.03 - string vs string value clash", (t) => {
       a: "a",
       b: "b",
     },
-    "01.03.02"
+    "03.02"
   );
   t.end();
 });
 
-tap.test("01.04 - array vs array value clash", (t) => {
+tap.test("04 - array vs array value clash", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -161,7 +161,7 @@ tap.test("01.04 - array vs array value clash", (t) => {
       a: ["a", "c"],
       b: "b",
     },
-    "01.04.01"
+    "04"
   );
   // t.same(
   //   mergeAdvanced(
@@ -181,7 +181,7 @@ tap.test("01.04 - array vs array value clash", (t) => {
   t.end();
 });
 
-tap.test("01.05 - object vs object value clash", (t) => {
+tap.test("05 - object vs object value clash", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -199,12 +199,12 @@ tap.test("01.05 - object vs object value clash", (t) => {
       },
       b: "b",
     },
-    "01.05"
+    "05"
   );
   t.end();
 });
 
-tap.test("01.06 - array vs empty array", (t) => {
+tap.test("06 - array vs empty array", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -219,7 +219,7 @@ tap.test("01.06 - array vs empty array", (t) => {
       a: ["a1", "a2"],
       b: "b",
     },
-    "01.06.01"
+    "06.01"
   );
   t.same(
     mergeAdvanced(
@@ -235,12 +235,12 @@ tap.test("01.06 - array vs empty array", (t) => {
       a: ["a1", "a2"],
       b: "b",
     },
-    "01.06.02"
+    "06.02"
   );
   t.end();
 });
 
-tap.test("01.07 - object vs empty array - object wins", (t) => {
+tap.test("07 - object vs empty array - object wins", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -255,7 +255,7 @@ tap.test("01.07 - object vs empty array - object wins", (t) => {
       a: { x: "y" },
       b: "b",
     },
-    "01.07.01"
+    "07.01"
   );
   t.same(
     mergeAdvanced(
@@ -271,12 +271,12 @@ tap.test("01.07 - object vs empty array - object wins", (t) => {
       a: { x: "y" },
       b: "b",
     },
-    "01.07.02"
+    "07.02"
   );
   t.end();
 });
 
-tap.test("01.08 - string vs empty array - string wins", (t) => {
+tap.test("08 - string vs empty array - string wins", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -291,7 +291,7 @@ tap.test("01.08 - string vs empty array - string wins", (t) => {
       a: "a",
       b: "b",
     },
-    "01.08.01"
+    "08.01"
   );
   t.same(
     mergeAdvanced(
@@ -307,12 +307,12 @@ tap.test("01.08 - string vs empty array - string wins", (t) => {
       a: "a",
       b: "b",
     },
-    "01.08.02"
+    "08.02"
   );
   t.end();
 });
 
-tap.test("01.09 - empty array vs empty array", (t) => {
+tap.test("09 - empty array vs empty array", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -327,7 +327,7 @@ tap.test("01.09 - empty array vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.09.01"
+    "09.01"
   );
   t.same(
     mergeAdvanced(
@@ -343,12 +343,12 @@ tap.test("01.09 - empty array vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.09.02"
+    "09.02"
   );
   t.end();
 });
 
-tap.test("01.10 - string vs array", (t) => {
+tap.test("10 - string vs array", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -363,7 +363,7 @@ tap.test("01.10 - string vs array", (t) => {
       a: ["a"],
       b: "b",
     },
-    "01.10.01"
+    "10.01"
   );
   t.same(
     mergeAdvanced(
@@ -379,7 +379,7 @@ tap.test("01.10 - string vs array", (t) => {
       a: ["a"],
       b: "b",
     },
-    "01.10.02"
+    "10.02"
   );
   t.same(
     mergeAdvanced(
@@ -395,7 +395,7 @@ tap.test("01.10 - string vs array", (t) => {
       a: ["a"],
       b: "b",
     },
-    "01.10.03"
+    "10.03"
   );
   t.same(
     mergeAdvanced(
@@ -411,12 +411,12 @@ tap.test("01.10 - string vs array", (t) => {
       a: ["a"],
       b: "b",
     },
-    "01.10.04"
+    "10.04"
   );
   t.end();
 });
 
-tap.test("01.11 - string vs object", (t) => {
+tap.test("11 - string vs object", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -431,7 +431,7 @@ tap.test("01.11 - string vs object", (t) => {
       a: { c: "c" },
       b: "b",
     },
-    "01.11.01"
+    "11.01"
   );
   t.same(
     mergeAdvanced(
@@ -447,7 +447,7 @@ tap.test("01.11 - string vs object", (t) => {
       a: { c: "c" },
       b: "b",
     },
-    "01.11.02"
+    "11.02"
   );
   t.same(
     mergeAdvanced(
@@ -463,7 +463,7 @@ tap.test("01.11 - string vs object", (t) => {
       a: { c: "c" },
       b: "b",
     },
-    "01.11.03"
+    "11.03"
   );
   t.same(
     mergeAdvanced(
@@ -479,12 +479,12 @@ tap.test("01.11 - string vs object", (t) => {
       a: { c: "c" },
       b: "b",
     },
-    "01.11.04"
+    "11.04"
   );
   t.end();
 });
 
-tap.test("01.12 - object vs array", (t) => {
+tap.test("12 - object vs array", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -501,7 +501,7 @@ tap.test("01.12 - object vs array", (t) => {
       a: ["c"],
       b: "b",
     },
-    "01.12.01"
+    "12.01"
   );
   t.same(
     mergeAdvanced(
@@ -519,7 +519,7 @@ tap.test("01.12 - object vs array", (t) => {
       a: ["c"],
       b: "b",
     },
-    "01.12.02"
+    "12.02"
   );
   t.same(
     mergeAdvanced(
@@ -537,7 +537,7 @@ tap.test("01.12 - object vs array", (t) => {
       a: ["c"],
       b: "b",
     },
-    "01.12.03"
+    "12.03"
   );
   t.same(
     mergeAdvanced(
@@ -555,12 +555,12 @@ tap.test("01.12 - object vs array", (t) => {
       a: ["c"],
       b: "b",
     },
-    "01.12.04"
+    "12.04"
   );
   t.end();
 });
 
-tap.test("01.13 - empty object vs empty array", (t) => {
+tap.test("13 - empty object vs empty array", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -575,7 +575,7 @@ tap.test("01.13 - empty object vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.13.01"
+    "13.01"
   );
   t.same(
     mergeAdvanced(
@@ -591,7 +591,7 @@ tap.test("01.13 - empty object vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.13.02"
+    "13.02"
   );
   t.same(
     mergeAdvanced(
@@ -607,7 +607,7 @@ tap.test("01.13 - empty object vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.13.03"
+    "13.03"
   );
   t.same(
     mergeAdvanced(
@@ -623,12 +623,12 @@ tap.test("01.13 - empty object vs empty array", (t) => {
       a: [],
       b: "b",
     },
-    "01.13.04"
+    "13.04"
   );
   t.end();
 });
 
-tap.test("01.14 - empty string vs object", (t) => {
+tap.test("14 - empty string vs object", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -647,7 +647,7 @@ tap.test("01.14 - empty string vs object", (t) => {
       },
       b: "b",
     },
-    "01.14.01"
+    "14.01"
   );
   t.same(
     mergeAdvanced(
@@ -667,7 +667,7 @@ tap.test("01.14 - empty string vs object", (t) => {
       },
       b: "b",
     },
-    "01.14.02"
+    "14.02"
   );
   t.same(
     mergeAdvanced(
@@ -687,7 +687,7 @@ tap.test("01.14 - empty string vs object", (t) => {
       },
       b: "b",
     },
-    "01.14.03"
+    "14.03"
   );
   t.same(
     mergeAdvanced(
@@ -707,12 +707,12 @@ tap.test("01.14 - empty string vs object", (t) => {
       },
       b: "b",
     },
-    "01.14.04"
+    "14.04"
   );
   t.end();
 });
 
-tap.test("01.15 - object values are arrays and get merged", (t) => {
+tap.test("15 - object values are arrays and get merged", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -748,12 +748,12 @@ tap.test("01.15 - object values are arrays and get merged", (t) => {
       ],
       b: "b",
     },
-    "01.15.01"
+    "15"
   );
   t.end();
 });
 
-tap.test("01.16 - object values are objects and get merged", (t) => {
+tap.test("16 - object values are objects and get merged", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -777,7 +777,7 @@ tap.test("01.16 - object values are objects and get merged", (t) => {
       },
       b: "b",
     },
-    "01.16.01"
+    "16.01"
   );
   t.same(
     mergeAdvanced(
@@ -802,7 +802,7 @@ tap.test("01.16 - object values are objects and get merged", (t) => {
       },
       b: "b",
     },
-    "01.16.02"
+    "16.02"
   );
   t.same(
     mergeAdvanced(
@@ -827,7 +827,7 @@ tap.test("01.16 - object values are objects and get merged", (t) => {
       },
       b: "b",
     },
-    "01.16.03"
+    "16.03"
   );
   t.same(
     mergeAdvanced(
@@ -852,12 +852,12 @@ tap.test("01.16 - object values are objects and get merged", (t) => {
       },
       b: "b",
     },
-    "01.16.04"
+    "16.04"
   );
   t.end();
 });
 
-tap.test("01.17 - merging booleans", (t) => {
+tap.test("17 - merging booleans", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -878,7 +878,7 @@ tap.test("01.17 - merging booleans", (t) => {
         },
       ],
     },
-    "01.17.01"
+    "17.01"
   );
   t.same(
     mergeAdvanced(
@@ -900,12 +900,12 @@ tap.test("01.17 - merging booleans", (t) => {
         },
       ],
     },
-    "01.17.02"
+    "17.02"
   );
   t.end();
 });
 
-tap.test("01.18 - merging undefined", (t) => {
+tap.test("18 - merging undefined", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -918,7 +918,7 @@ tap.test("01.18 - merging undefined", (t) => {
     {
       a: "a",
     },
-    "01.18.01"
+    "18.01"
   );
   t.same(
     mergeAdvanced(
@@ -932,12 +932,12 @@ tap.test("01.18 - merging undefined", (t) => {
     {
       a: "a",
     },
-    "01.18.02"
+    "18.02"
   );
   t.end();
 });
 
-tap.test("01.19 - merging null", (t) => {
+tap.test("19 - merging null", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -950,7 +950,7 @@ tap.test("01.19 - merging null", (t) => {
     {
       a: "a",
     },
-    "01.19.01"
+    "19.01"
   );
   t.same(
     mergeAdvanced(
@@ -964,12 +964,12 @@ tap.test("01.19 - merging null", (t) => {
     {
       a: "a",
     },
-    "01.19.02"
+    "19.02"
   );
   t.end();
 });
 
-tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
+tap.test("20 - boolean vs boolean merge (#78)", (t) => {
   // base 2^2 combinations, default behaviour - OR logical operation
   t.same(
     mergeAdvanced(
@@ -985,7 +985,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: true,
       b: "b",
     },
-    "01.20.01"
+    "20.01"
   );
   t.same(
     mergeAdvanced(
@@ -1001,7 +1001,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: true,
       b: "b",
     },
-    "01.20.02"
+    "20.02"
   );
   t.same(
     mergeAdvanced(
@@ -1017,7 +1017,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: false,
       b: "b",
     },
-    "01.20.03"
+    "20.03"
   );
   t.same(
     mergeAdvanced(
@@ -1033,7 +1033,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: true,
       b: "b",
     },
-    "01.20.04"
+    "20.04"
   );
   // !opts.mergeBoolsUsingOrNotAnd - AND logical operation
   t.same(
@@ -1053,7 +1053,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: false,
       b: "b",
     },
-    "01.20.05"
+    "20.05"
   );
   t.same(
     mergeAdvanced(
@@ -1072,7 +1072,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: false,
       b: "b",
     },
-    "01.20.06"
+    "20.06"
   );
   t.same(
     mergeAdvanced(
@@ -1091,7 +1091,7 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: false,
       b: "b",
     },
-    "01.20.07"
+    "20.07"
   );
   t.same(
     mergeAdvanced(
@@ -1110,12 +1110,12 @@ tap.test("01.20 - boolean vs boolean merge (#78)", (t) => {
       a: true,
       b: "b",
     },
-    "01.20.08"
+    "20.08"
   );
   t.end();
 });
 
-tap.test("01.21 - boolean vs undefined merge (#80)", (t) => {
+tap.test("21 - boolean vs undefined merge (#80)", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1130,7 +1130,7 @@ tap.test("01.21 - boolean vs undefined merge (#80)", (t) => {
       a: true,
       b: "b",
     },
-    "01.21.01"
+    "21.01"
   );
   t.same(
     mergeAdvanced(
@@ -1146,7 +1146,7 @@ tap.test("01.21 - boolean vs undefined merge (#80)", (t) => {
       a: true,
       b: "b",
     },
-    "01.21.02"
+    "21.02"
   );
   t.same(
     mergeAdvanced(
@@ -1162,7 +1162,7 @@ tap.test("01.21 - boolean vs undefined merge (#80)", (t) => {
       a: false,
       b: "b",
     },
-    "01.21.03"
+    "21.03"
   );
   t.same(
     mergeAdvanced(
@@ -1178,12 +1178,12 @@ tap.test("01.21 - boolean vs undefined merge (#80)", (t) => {
       a: false,
       b: "b",
     },
-    "01.21.04"
+    "21.04"
   );
   t.end();
 });
 
-tap.test("01.22 - null vs empty object merge (#84)", (t) => {
+tap.test("22 - null vs empty object merge (#84)", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1198,7 +1198,7 @@ tap.test("01.22 - null vs empty object merge (#84)", (t) => {
       a: {},
       b: "b",
     },
-    "01.22.01"
+    "22.01"
   );
   t.same(
     mergeAdvanced(
@@ -1214,12 +1214,12 @@ tap.test("01.22 - null vs empty object merge (#84)", (t) => {
       a: {},
       b: "b",
     },
-    "01.22.02"
+    "22.02"
   );
   t.end();
 });
 
-tap.test("01.23 - null vs. undefined (#90)", (t) => {
+tap.test("23 - null vs. undefined (#90)", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1234,7 +1234,7 @@ tap.test("01.23 - null vs. undefined (#90)", (t) => {
       a: null,
       b: "b",
     },
-    "01.23.01"
+    "23.01"
   );
   t.same(
     mergeAdvanced(
@@ -1250,12 +1250,12 @@ tap.test("01.23 - null vs. undefined (#90)", (t) => {
       a: null,
       b: "b",
     },
-    "01.23.02"
+    "23.02"
   );
   t.end();
 });
 
-tap.test("01.24 - no clash, just filling missing values", (t) => {
+tap.test("24 - no clash, just filling missing values", (t) => {
   function f() {
     return null;
   }
@@ -1272,7 +1272,7 @@ tap.test("01.24 - no clash, just filling missing values", (t) => {
       a: f,
       b: "b",
     },
-    "01.24.01"
+    "24.01"
   );
   t.same(
     mergeAdvanced(
@@ -1287,12 +1287,12 @@ tap.test("01.24 - no clash, just filling missing values", (t) => {
       a: f,
       b: "b",
     },
-    "01.24.02"
+    "24.02"
   );
   t.end();
 });
 
-tap.test("01.25 - arrays and opts.ignoreKeys", (t) => {
+tap.test("25 - arrays and opts.ignoreKeys", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1308,12 +1308,12 @@ tap.test("01.25 - arrays and opts.ignoreKeys", (t) => {
     {
       a: [1, 2, 3],
     },
-    "01.25.01"
+    "25"
   );
   t.end();
 });
 
-tap.test("01.26 - arrays and opts.ignoreKeys", (t) => {
+tap.test("26 - arrays and opts.ignoreKeys", (t) => {
   t.same(
     mergeAdvanced(
       {
@@ -1329,7 +1329,7 @@ tap.test("01.26 - arrays and opts.ignoreKeys", (t) => {
     {
       a: [4, 5, 6],
     },
-    "01.26.01"
+    "26"
   );
   t.end();
 });

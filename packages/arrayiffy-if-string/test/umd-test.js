@@ -5,6 +5,6 @@ const source = "aaa";
 const res = ["aaa"];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(a1(source), res);
+  t.same(a1(source), res, "01");
   t.end();
 });

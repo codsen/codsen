@@ -17,7 +17,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      input
+      input,
+      "01"
     );
     t.end();
   }
@@ -32,7 +33,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      input
+      input,
+      "02"
     );
     t.end();
   }
@@ -47,7 +49,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      input
+      input,
+      "03"
     );
     t.end();
   }
@@ -62,7 +65,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      ` "-" `
+      ` "-" `,
+      "04"
     );
     t.end();
   }
@@ -77,7 +81,8 @@ tap.only(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      ` a"`
+      ` a"`,
+      "05"
     );
     t.end();
   }

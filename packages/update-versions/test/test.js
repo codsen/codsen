@@ -299,28 +299,28 @@ tap.test(
   }
 );
 
-tap.test("92 - version output mode", async (t) => {
+tap.test("04 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.equal(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version, "04.01");
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.equal(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version, "04.02");
   t.end();
 });
 
-tap.test("91 - help output mode", async (t) => {
+tap.test("05 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/);
-  t.match(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Usage/, "05.01");
+  t.match(reportedVersion1.stdout, /Options/, "05.02");
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/);
-  t.match(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Usage/, "05.03");
+  t.match(reportedVersion2.stdout, /Options/, "05.04");
 
   t.end();
 });
 
-tap.test("93 - no files found in the given directory", async (t) => {
+tap.test("06 - no files found in the given directory", async (t) => {
   const tempFolder = tempy.directory();
   // create folder:
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -332,7 +332,7 @@ tap.test("93 - no files found in the given directory", async (t) => {
   );
 
   // CLI should exit with a non-error code zero:
-  t.equal(stdOutContents.exitCode, 0);
+  t.equal(stdOutContents.exitCode, 0, "06.01");
 
   // delete folder:
   await execa.command(`rm -rf ${path.join(__dirname, "../temp")}`);

@@ -7,7 +7,7 @@ import iterate from "../dist/ranges-iterate.esm";
 // ==============================
 
 tap.test(
-  `00.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`,
+  `01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`,
   (t) => {
     t.throws(() => {
       iterate(1);
@@ -17,7 +17,7 @@ tap.test(
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`,
+  `02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`,
   (t) => {
     t.throws(() => {
       iterate("");
@@ -27,7 +27,7 @@ tap.test(
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`,
+  `03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`,
   (t) => {
     t.throws(() => {
       iterate("z", 1);
@@ -37,7 +37,7 @@ tap.test(
 );
 
 tap.test(
-  `00.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`,
+  `04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`,
   (t) => {
     t.throws(() => {
       iterate("z", [[0, 1]]);
@@ -47,7 +47,7 @@ tap.test(
 );
 
 tap.test(
-  `00.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback function`,
+  `05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback function`,
   (t) => {
     t.throws(() => {
       iterate("z", [[0, 1]], 1);
@@ -61,7 +61,7 @@ tap.test(
 // ==============================
 
 tap.test(
-  `01.01 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, middle`,
+  `06 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, middle`,
   (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
@@ -75,13 +75,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abxyzhij`, "01.01");
+    t.equal(pinged, `abxyzhij`, "06.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert, middle`,
+  `07 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert, middle`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -93,13 +93,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abxyzcdefghij`, "01.02");
+    t.equal(pinged, `abxyzcdefghij`, "07.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, start`,
+  `08 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, start`,
   (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
@@ -113,13 +113,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `xyzhij`, "01.03");
+    t.equal(pinged, `xyzhij`, "08.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert at the end`,
+  `09 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert at the end`,
   (t) => {
     // we'll concatenate all pinged characters into one string, then compare
     // were all intended characters pinged
@@ -133,13 +133,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghijxyz`, "01.04");
+    t.equal(pinged, `abcdefghijxyz`, "09.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined character that is located just after end`,
+  `10 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined character that is located just after end`,
   (t) => {
     // still fine
     let pinged = "";
@@ -152,13 +152,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghijxyz`, "01.05");
+    t.equal(pinged, `abcdefghijxyz`, "10.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string end`,
+  `11 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string end`,
   (t) => {
     // not fine, won't be inserted because it's not clear what to put at str[10]
     let pinged = "";
@@ -171,13 +171,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghij`, "01.06");
+    t.equal(pinged, `abcdefghij`, "11.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`,
+  `12 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -196,13 +196,13 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, `abxyzhi_`, "01.07");
+    t.equal(pinged, `abxyzhi_`, "12.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`,
+  `13 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -214,13 +214,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `xyz`, "01.08");
+    t.equal(pinged, `xyz`, "13.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.09 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`,
+  `14 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -232,13 +232,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "", "01.09");
+    t.equal(pinged, "", "14.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.10 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`,
+  `15 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -250,13 +250,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "abcdefghij", "01.10");
+    t.equal(pinged, "abcdefghij", "15.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.11 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`,
+  `16 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -268,13 +268,13 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "abcdefghij", "01.11");
+    t.equal(pinged, "abcdefghij", "16.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.12 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete, adding up to everything`,
+  `17 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete, adding up to everything`,
   (t) => {
     // this should not happen, two ranges have not been merged, it's not a clean
     // input
@@ -295,13 +295,13 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, "", "01.12");
+    t.equal(pinged, "", "17.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.13 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to delete, adding up to everything`,
+  `18 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to delete, adding up to everything`,
   (t) => {
     // this should not happen, two ranges have not been merged, it's not a clean
     // input
@@ -322,13 +322,13 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, "", "01.13");
+    t.equal(pinged, "", "18.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.14 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`,
+  `19 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`,
   (t) => {
     iterate(
       "abcdefghij",
@@ -349,7 +349,7 @@ tap.test(
 );
 
 tap.test(
-  `01.15 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`,
+  `20 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`,
   (t) => {
     // not fine, won't be inserted because it's not clear what to put at str[10]
     let pinged = "";
@@ -370,13 +370,13 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, source, "01.15");
+    t.equal(pinged, source, "20.01");
     t.end();
   }
 );
 
 tap.test(
-  `01.16 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ranges`,
+  `21 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ranges`,
   (t) => {
     let pinged = "";
     let index = 0;
@@ -396,7 +396,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, source, "01.16");
+    t.equal(pinged, source, "21.01");
     t.end();
   }
 );

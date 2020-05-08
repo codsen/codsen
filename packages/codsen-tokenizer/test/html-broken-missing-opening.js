@@ -6,7 +6,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 attr`,
+  `01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 attr`,
   (t) => {
     const gathered = [];
     ct(`<a>img src="z"/><a>`, {
@@ -55,15 +55,15 @@ tap.test(
           end: 19,
         },
       ],
-      "01.01.01"
+      "01.01"
     );
-    t.is(gathered.length, 3, "01.01.02");
+    t.is(gathered.length, 3, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`,
+  `02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`,
   (t) => {
     const gathered = [];
     ct(`<a>  img src="z"/><a>`, {
@@ -96,15 +96,15 @@ tap.test(
           end: 21,
         },
       ],
-      "01.02.01"
+      "02.01"
     );
-    t.is(gathered.length, 4, "01.02.02");
+    t.is(gathered.length, 4, "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`,
+  `03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`,
   (t) => {
     const gathered = [];
     ct(`<a>bc img src="z"/>de<a>`, {
@@ -142,15 +142,15 @@ tap.test(
           end: 24,
         },
       ],
-      "01.03.01"
+      "03.01"
     );
-    t.is(gathered.length, 5, "01.03.02");
+    t.is(gathered.length, 5, "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tags`,
+  `04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tags`,
   (t) => {
     const gathered = [];
     ct(`<a>bc img src="x"/>de img src="y">fg<a>`, {
@@ -198,9 +198,9 @@ tap.test(
           end: 39,
         },
       ],
-      "01.03.01"
+      "04.01"
     );
-    t.is(gathered.length, 7, "01.03.02");
+    t.is(gathered.length, 7, "04.02");
     t.end();
   }
 );
@@ -208,85 +208,82 @@ tap.test(
 // 02. two tags
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `02.01 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`,
-  (t) => {
-    const gathered = [];
-    ct(`<a>img src="z"/>img src="y"><a>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+tap.test(`05 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, (t) => {
+  const gathered = [];
+  ct(`<a>img src="z"/>img src="y"><a>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 3,
       },
-    });
+      {
+        type: "tag",
+        start: 3,
+        end: 16,
+        value: `img src="z"/>`,
+        tagNameStartsAt: 3,
+        tagNameEndsAt: 6,
+        tagName: "img",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
 
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 3,
-        },
-        {
-          type: "tag",
-          start: 3,
-          end: 16,
-          value: `img src="z"/>`,
-          tagNameStartsAt: 3,
-          tagNameEndsAt: 6,
-          tagName: "img",
-          recognised: true,
-          closing: false,
-          void: true,
-          pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "src",
+            attribValueRaw: "z",
+            attribValue: [
+              {
+                value: "z",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 16,
+        end: 28,
+        value: `img src="y">`,
+        tagNameStartsAt: 16,
+        tagNameEndsAt: 19,
+        tagName: "img",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
 
-          kind: null,
-          attribs: [
-            {
-              attribName: "src",
-              attribValueRaw: "z",
-              attribValue: [
-                {
-                  value: "z",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "tag",
-          start: 16,
-          end: 28,
-          value: `img src="y">`,
-          tagNameStartsAt: 16,
-          tagNameEndsAt: 19,
-          tagName: "img",
-          recognised: true,
-          closing: false,
-          void: true,
-          pureHTML: true,
-
-          kind: null,
-          attribs: [
-            {
-              attribName: "src",
-              attribValueRaw: "y",
-              attribValue: [
-                {
-                  value: "y",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "tag",
-          start: 28,
-          end: 31,
-        },
-      ],
-      "02.01.01"
-    );
-    t.is(gathered.length, 4, "02.01.02");
-    t.end();
-  }
-);
+        kind: null,
+        attribs: [
+          {
+            attribName: "src",
+            attribValueRaw: "y",
+            attribValue: [
+              {
+                value: "y",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 28,
+        end: 31,
+      },
+    ],
+    "05.01"
+  );
+  t.is(gathered.length, 4, "05.02");
+  t.end();
+});

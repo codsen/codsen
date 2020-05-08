@@ -23,7 +23,7 @@ function tiny(something) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`,
+  `01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -46,14 +46,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "01.01 - str before tr - 1 col"
+      "01 - str before tr - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`,
+  `02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -76,14 +76,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "01.02 - string after the tr - 1 col"
+      "02 - string after the tr - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`,
+  `03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -116,14 +116,14 @@ zzz
 </td>
 </tr>
 </table>`),
-      "01.03 - string between the tr's - 1 col"
+      "03 - string between the tr's - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`,
+  `04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -148,14 +148,14 @@ tap.test(
     zzz
   </tr>-->
 </table>`),
-      "01.04 - notice comment is never closed, yet wrapping occurs before it"
+      "04 - notice comment is never closed, yet wrapping occurs before it"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`,
+  `05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -188,14 +188,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "01.05 - code + comments"
+      "05 - code + comments"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`,
+  `06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -224,14 +224,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "01.06"
+      "06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`,
+  `07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -264,14 +264,14 @@ zzz
 </td>
 </tr>
 </table>`),
-      "01.07 - string between the tr's - 1 col"
+      "07 - string between the tr's - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`,
+  `08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -304,14 +304,14 @@ zzz
 </td>
 </tr>
 </table>`),
-      "01.08 - string between the tr's - 1 col"
+      "08 - string between the tr's - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`,
+  `09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -328,14 +328,14 @@ tap.test(
 <tr><td>{{ 1 }}</td></tr>
 <tr><td>s</td></tr>
 </table>`),
-      "01.09"
+      "09"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`,
+  `10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`,
   (t) => {
     t.same(
       processThis(
@@ -359,14 +359,14 @@ tap.test(
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 1 }}</td></tr>
 <tr><td>s</td></tr>
 </table>`),
-      "01.10"
+      "10"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`,
+  `11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`,
   (t) => {
     t.same(
       processThis(
@@ -394,14 +394,14 @@ tap.test(
 <tr><td>c</td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 3 }}</td></tr>
 </table>`),
-      "01.11"
+      "11"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`,
+  `12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`,
   (t) => {
     t.same(
       processThis(
@@ -425,14 +425,14 @@ tap.test(
 </td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
-      "01.12"
+      "12"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
+  `13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.same(
       processThis(
@@ -456,14 +456,14 @@ tap.test(
 </td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
-      "01.13"
+      "13"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
+  `14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.same(
       processThis(
@@ -495,7 +495,7 @@ tap.test(
 </td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
-      "01.14"
+      "14"
     );
     t.end();
   }
@@ -505,7 +505,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - first TD after TR`,
+  `15 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - first TD after TR`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -528,14 +528,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "02.01 - str before tr - 1 col"
+      "15 - str before tr - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - colspan=2`,
+  `16 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - colspan=2`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -564,14 +564,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "02.02 - str before tr - colspan=2"
+      "16 - str before tr - colspan=2"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center", one TD`,
+  `17 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center", one TD`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -594,14 +594,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "02.03"
+      "17"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center" on one of two TD's`,
+  `18 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center" on one of two TD's`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -630,7 +630,7 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "02.04"
+      "18"
     );
     t.end();
   }
@@ -640,7 +640,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`,
+  `19 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -671,14 +671,14 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "03.01 - str before tr - 1 col"
+      "19 - str before tr - 1 col"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`,
+  `20 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -707,7 +707,7 @@ z
 <td>z</td>
 </tr>
 </table>`),
-      "03.02"
+      "20"
     );
     t.end();
   }
@@ -717,7 +717,7 @@ z
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - code closing TD and closing TR`}\u001b[${39}m`} - two tags`,
+  `21 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - code closing TD and closing TR`}\u001b[${39}m`} - two tags`,
   (t) => {
     t.same(
       processThis(`<table>
@@ -740,7 +740,7 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "04.01 - 1 col"
+      "21 - 1 col"
     );
     t.end();
   }
@@ -750,7 +750,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - various HTML comments`,
+  `22 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - various HTML comments`,
   (t) => {
     const str1 = `<!--zzz--><table><!--zzz-->
   <tr><!--zzz-->
@@ -762,7 +762,7 @@ tap.test(
     </td><!--zzz-->
   </tr><!--zzz-->
   </table><!--zzz-->`;
-    t.same(patcher(str1), str1, "05.01.01 - tight comments");
+    t.same(patcher(str1), str1, "22.01 - tight comments");
 
     const str2 = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
   <tr><!--zzz\nyyy-->
@@ -774,7 +774,7 @@ tap.test(
     </td><!--zzz\nyyy-->
   </tr><!--zzz\nyyy-->
   </table><!--zzz\nyyy-->`;
-    t.same(patcher(str2), str2, "05.01.02 - comments include line breaks");
+    t.same(patcher(str2), str2, "22.02 - comments include line breaks");
 
     const str3 = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
 <tr><!--zzz<table>zzz<tr>yyy-->
@@ -786,7 +786,7 @@ tap.test(
   </td><!--zzz<td></td>yyy-->
 </tr><!--zzz<tr></tr><tr></tr><table>zzz</table>yyy-->
 </table><!--zzz\nyyy-->`;
-    t.same(patcher(str3), str3, "05.01.03 - comments include line breaks");
+    t.same(patcher(str3), str3, "22.03 - comments include line breaks");
     t.end();
   }
 );
@@ -795,18 +795,15 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`,
+  `23 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`,
   (t) => {
-    t.ok(typeof defaults === "object", "06.01.01");
-    t.ok(Object.keys(defaults).length > 0, "06.01.02");
+    t.ok(typeof defaults === "object", "23.01");
+    t.ok(Object.keys(defaults).length > 0, "23.02");
     t.end();
   }
 );
 
-tap.test(
-  `06.02 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`,
-  (t) => {
-    t.match(version, /\d*\.\d*\.\d*/, "06.02.01");
-    t.end();
-  }
-);
+tap.test(`24 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`, (t) => {
+  t.match(version, /\d*\.\d*\.\d*/, "24");
+  t.end();
+});

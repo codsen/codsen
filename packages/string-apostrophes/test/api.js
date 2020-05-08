@@ -23,7 +23,7 @@ tap.test(
   (t) => {
     t.throws(() => {
       c11(`aa`, {});
-    });
+    }, "01");
     t.end();
   }
 );
@@ -36,7 +36,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What!${rightSingleQuote} he said`
+      `${leftSingleQuote}What!${rightSingleQuote} he said`,
+      "02"
     );
     t.end();
   }
@@ -50,7 +51,7 @@ tap.test(
   (t) => {
     t.throws(() => {
       c21(`aa`, {});
-    });
+    }, "03");
     t.end();
   }
 );
@@ -63,7 +64,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What!${rightSingleQuote} he said`
+      `${leftSingleQuote}What!${rightSingleQuote} he said`,
+      "04"
     );
     t.end();
   }
@@ -77,7 +79,7 @@ tap.test(
   (t) => {
     t.throws(() => {
       c31(`aa`, {});
-    });
+    }, "05");
     t.end();
   }
 );
@@ -90,7 +92,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What!${rightSingleQuote} he said`
+      `${leftSingleQuote}What!${rightSingleQuote} he said`,
+      "06"
     );
     t.end();
   }

@@ -5,375 +5,372 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-tap.test("01.01 - string is whole (opening) tag - no ignore", (t) => {
-  t.same(stripHtml("<a>"), "", "01.01");
+tap.test("01 - string is whole (opening) tag - no ignore", (t) => {
+  t.same(stripHtml("<a>"), "", "01");
   t.end();
 });
 
-tap.test("01.02 - string is whole (opening) tag - ignore but wrong", (t) => {
+tap.test("02 - string is whole (opening) tag - ignore but wrong", (t) => {
   t.same(
     stripHtml("<a>", {
       ignoreTags: ["b"],
     }),
     "",
-    "01.02"
+    "02"
   );
   t.end();
 });
 
-tap.test("01.03 - string is whole (opening) tag - ignore", (t) => {
+tap.test("03 - string is whole (opening) tag - ignore", (t) => {
   t.same(
     stripHtml("<a>", {
       ignoreTags: ["a"],
     }),
     "<a>",
-    "01.03"
+    "03"
   );
   t.end();
 });
 
 tap.test(
-  "01.04 - string is whole (opening) tag - whitespace after opening bracket",
+  "04 - string is whole (opening) tag - whitespace after opening bracket",
   (t) => {
-    t.same(stripHtml("< a>"), "", "01.04");
+    t.same(stripHtml("< a>"), "", "04");
     t.end();
   }
 );
 
 tap.test(
-  "01.05 - string is whole (opening) tag - whitespace before closing bracket",
+  "05 - string is whole (opening) tag - whitespace before closing bracket",
   (t) => {
-    t.same(stripHtml("<a >"), "", "01.05");
+    t.same(stripHtml("<a >"), "", "05");
     t.end();
   }
 );
 
 tap.test(
-  "01.06 - string is whole (opening) tag - whitespace inside on both sides",
+  "06 - string is whole (opening) tag - whitespace inside on both sides",
   (t) => {
-    t.same(stripHtml("< a >"), "", "01.06");
+    t.same(stripHtml("< a >"), "", "06");
     t.end();
   }
 );
 
 tap.test(
-  "01.07 - string is whole (opening) tag - copious whitespace inside on both sides",
+  "07 - string is whole (opening) tag - copious whitespace inside on both sides",
   (t) => {
-    t.same(stripHtml("<     a     >"), "", "01.07");
+    t.same(stripHtml("<     a     >"), "", "07");
     t.end();
   }
 );
 
 tap.test(
-  "01.08 - string is whole (opening) tag - leading space is not retained",
+  "08 - string is whole (opening) tag - leading space is not retained",
   (t) => {
-    t.same(stripHtml(" <a>"), "", "01.08");
+    t.same(stripHtml(" <a>"), "", "08");
     t.end();
   }
 );
 
 tap.test(
-  "01.09 - string is whole (opening) tag - trailing space is not retained",
+  "09 - string is whole (opening) tag - trailing space is not retained",
   (t) => {
-    t.same(stripHtml("< a> "), "", "01.09");
+    t.same(stripHtml("< a> "), "", "09");
     t.end();
   }
 );
 
 tap.test(
-  "01.10 - string is whole (opening) tag - surrounding whitespace outside",
+  "10 - string is whole (opening) tag - surrounding whitespace outside",
   (t) => {
-    t.same(stripHtml("  <a >  "), "", "01.10");
+    t.same(stripHtml("  <a >  "), "", "10");
     t.end();
   }
 );
 
-tap.test("01.11 - string is whole (opening) tag - raw tab in front", (t) => {
-  t.same(stripHtml("\t< a >"), "", "01.11");
+tap.test("11 - string is whole (opening) tag - raw tab in front", (t) => {
+  t.same(stripHtml("\t< a >"), "", "11");
   t.end();
 });
 
 tap.test(
-  "01.12 - string is whole (opening) tag - lots of different whitespace chars",
+  "12 - string is whole (opening) tag - lots of different whitespace chars",
   (t) => {
-    t.same(stripHtml("    \t   <     a     >      \n\n   "), "", "01.12");
+    t.same(stripHtml("    \t   <     a     >      \n\n   "), "", "12");
     t.end();
   }
 );
 
 tap.test(
-  "01.13 - string is whole (opening) tag - whitespace between tags is deleted too",
+  "13 - string is whole (opening) tag - whitespace between tags is deleted too",
   (t) => {
-    t.same(stripHtml("<a>         <a>"), "", "01.13");
+    t.same(stripHtml("<a>         <a>"), "", "13");
     t.end();
   }
 );
 
 tap.test(
-  "01.14 - string is whole (opening) tag - whitespace between tag and text is removed",
+  "14 - string is whole (opening) tag - whitespace between tag and text is removed",
   (t) => {
-    t.same(stripHtml("<a>         z"), "z", "01.14");
+    t.same(stripHtml("<a>         z"), "z", "14");
     t.end();
   }
 );
 
 tap.test(
-  "01.15 - string is whole (opening) tag - leading/trailing spaces",
+  "15 - string is whole (opening) tag - leading/trailing spaces",
   (t) => {
-    t.same(stripHtml("   <b>text</b>   "), "text", "01.15");
+    t.same(stripHtml("   <b>text</b>   "), "text", "15");
     t.end();
   }
 );
 
 tap.test(
-  "01.16 - string is whole (opening) tag - but leading/trailing line breaks are deleted",
+  "16 - string is whole (opening) tag - but leading/trailing line breaks are deleted",
   (t) => {
-    t.same(stripHtml("\n\n\n<b>text</b>\r\r\r"), "text", "01.16");
+    t.same(stripHtml("\n\n\n<b>text</b>\r\r\r"), "text", "16");
     t.end();
   }
 );
 
 tap.test(
-  "01.17 - string is whole (opening) tag - HTML tag with attributes",
+  "17 - string is whole (opening) tag - HTML tag with attributes",
   (t) => {
     t.same(
       stripHtml(
         'z<a href="https://codsen.com" target="_blank">z<a href="xxx" target="_blank">z'
       ),
       "z z z",
-      "01.17"
+      "17"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.18 - string is whole (opening) tag - custom tag names, healthy",
+  "18 - string is whole (opening) tag - custom tag names, healthy",
   (t) => {
-    t.same(stripHtml("<custom>"), "", "01.18");
+    t.same(stripHtml("<custom>"), "", "18");
     t.end();
   }
 );
 
 tap.test(
-  "01.19 - string is whole (opening) tag - custom tag names, missing closing bracket",
+  "19 - string is whole (opening) tag - custom tag names, missing closing bracket",
   (t) => {
-    t.same(stripHtml("<custom"), "", "01.19");
+    t.same(stripHtml("<custom"), "", "19");
     t.end();
   }
 );
 
 tap.test(
-  "01.20 - string is whole (opening) tag - custom tag names, dash in the name",
+  "20 - string is whole (opening) tag - custom tag names, dash in the name",
   (t) => {
-    t.same(stripHtml("<custom-tag>"), "", "01.20");
+    t.same(stripHtml("<custom-tag>"), "", "20");
     t.end();
   }
 );
 
 tap.test(
-  "01.21 - string is whole (opening) tag - dash is name's first character",
+  "21 - string is whole (opening) tag - dash is name's first character",
   (t) => {
-    t.same(stripHtml("<-tag>"), "", "01.21");
+    t.same(stripHtml("<-tag>"), "", "21");
     t.end();
   }
 );
 
-tap.test("01.22 - string is whole (opening) tag - multiple custom", (t) => {
-  t.same(stripHtml("<custom><custom><custom>"), "", "01.01.22");
+tap.test("22 - string is whole (opening) tag - multiple custom", (t) => {
+  t.same(stripHtml("<custom><custom><custom>"), "", "22");
   t.end();
 });
 
 tap.test(
-  "01.23 - string is whole (opening) tag - multiple custom with dashes",
+  "23 - string is whole (opening) tag - multiple custom with dashes",
   (t) => {
-    t.same(stripHtml("<custom-tag><custom-tag><custom-tag>"), "", "01.23");
+    t.same(stripHtml("<custom-tag><custom-tag><custom-tag>"), "", "23");
     t.end();
   }
 );
 
 tap.test(
-  "01.24 - string is whole (opening) tag - multiple custom with names starting with dashes",
+  "24 - string is whole (opening) tag - multiple custom with names starting with dashes",
   (t) => {
-    t.same(stripHtml("<-tag><-tag><-tag>"), "", "01.24");
+    t.same(stripHtml("<-tag><-tag><-tag>"), "", "24");
     t.end();
   }
 );
 
 tap.test(
-  "01.25 - string is whole (opening) tag - multiple custom with surroundings",
+  "25 - string is whole (opening) tag - multiple custom with surroundings",
   (t) => {
-    t.same(stripHtml("a<custom><custom><custom>b"), "a b", "01.25");
+    t.same(stripHtml("a<custom><custom><custom>b"), "a b", "25");
     t.end();
   }
 );
 
 tap.test(
-  "01.26 - string is whole (opening) tag - multiple custom with surroundings with dashes",
+  "26 - string is whole (opening) tag - multiple custom with surroundings with dashes",
   (t) => {
-    t.same(stripHtml("a<custom-tag><custom-tag><custom-tag>b"), "a b", "01.26");
+    t.same(stripHtml("a<custom-tag><custom-tag><custom-tag>b"), "a b", "26");
     t.end();
   }
 );
 
 tap.test(
-  "01.27 - string is whole (opening) tag - multiple custom with surroundings starting with dashes",
+  "27 - string is whole (opening) tag - multiple custom with surroundings starting with dashes",
   (t) => {
-    t.same(stripHtml("a<-tag><-tag><-tag>b"), "a b", "01.27");
+    t.same(stripHtml("a<-tag><-tag><-tag>b"), "a b", "27");
     t.end();
   }
 );
 
 tap.test(
-  "01.28 - string is whole (opening) tag - self-closing - multiple with surroundings, inner whitespace",
+  "28 - string is whole (opening) tag - self-closing - multiple with surroundings, inner whitespace",
   (t) => {
-    t.same(stripHtml("a</custom>< /custom><custom/>b"), "a b", "01.28");
+    t.same(stripHtml("a</custom>< /custom><custom/>b"), "a b", "28");
     t.end();
   }
 );
 
 tap.test(
-  "01.29 - string is whole (opening) tag - self-closing - multiple",
+  "29 - string is whole (opening) tag - self-closing - multiple",
   (t) => {
     t.same(
       stripHtml("a<custom-tag /></ custom-tag>< /custom-tag>b"),
       "a b",
-      "01.29"
+      "29"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.30 - string is whole (opening) tag - self-closing - multiple names start with dash",
+  "30 - string is whole (opening) tag - self-closing - multiple names start with dash",
   (t) => {
-    t.same(stripHtml("a</ -tag>< /-tag><-tag / >   b"), "a b", "01.30");
+    t.same(stripHtml("a</ -tag>< /-tag><-tag / >   b"), "a b", "30");
     t.end();
   }
 );
 
 tap.test(
-  "01.31 - string is whole (opening) tag - custom, outer whitespace",
+  "31 - string is whole (opening) tag - custom, outer whitespace",
   (t) => {
-    t.same(stripHtml("a  </custom>< /custom><custom/>   b"), "a b", "01.31");
+    t.same(stripHtml("a  </custom>< /custom><custom/>   b"), "a b", "31");
     t.end();
   }
 );
 
-tap.test("01.32 - string is whole (opening) tag - custom, line breaks", (t) => {
+tap.test("32 - string is whole (opening) tag - custom, line breaks", (t) => {
   t.same(
     stripHtml("a\n<custom-tag /></ custom-tag>\n< /custom-tag>\n\nb"),
     "a\n\nb",
-    "01.32"
+    "32"
   );
   t.end();
 });
 
-tap.test("01.33 - string is whole (opening) tag - custom, outer tabs", (t) => {
-  t.same(stripHtml("a\t\t</ -tag>< /-tag><-tag / >   \t b"), "a b", "01.33");
+tap.test("33 - string is whole (opening) tag - custom, outer tabs", (t) => {
+  t.same(stripHtml("a\t\t</ -tag>< /-tag><-tag / >   \t b"), "a b", "33");
+  t.end();
+});
+
+tap.test("34 - string is whole (closing) tag - self-closing - single", (t) => {
+  t.same(stripHtml("</a>"), "", "34");
   t.end();
 });
 
 tap.test(
-  "01.34 - string is whole (closing) tag - self-closing - single",
+  "35 - string is whole (closing) tag - self-closing - whitespace before slash",
   (t) => {
-    t.same(stripHtml("</a>"), "", "01.34");
+    t.same(stripHtml("< /a>"), "", "35");
     t.end();
   }
 );
 
 tap.test(
-  "01.35 - string is whole (closing) tag - self-closing - whitespace before slash",
+  "36 - string is whole (closing) tag - self-closing - whitespace after slash",
   (t) => {
-    t.same(stripHtml("< /a>"), "", "01.35");
+    t.same(stripHtml("</ a>"), "", "36");
     t.end();
   }
 );
 
 tap.test(
-  "01.36 - string is whole (closing) tag - self-closing - whitespace after slash",
+  "37 - string is whole (closing) tag - self-closing - whitespace after name",
   (t) => {
-    t.same(stripHtml("</ a>"), "", "01.36");
+    t.same(stripHtml("</a >"), "", "37");
     t.end();
   }
 );
 
 tap.test(
-  "01.37 - string is whole (closing) tag - self-closing - whitespace after name",
+  "38 - string is whole (closing) tag - self-closing - surrounding whitespace",
   (t) => {
-    t.same(stripHtml("</a >"), "", "01.37");
+    t.same(stripHtml("< /a >"), "", "38");
     t.end();
   }
 );
 
 tap.test(
-  "01.38 - string is whole (closing) tag - self-closing - surrounding whitespace",
+  "39 - string is whole (closing) tag - self-closing - surrounding whitespace #2",
   (t) => {
-    t.same(stripHtml("< /a >"), "", "01.38");
+    t.same(stripHtml("</ a >"), "", "39");
     t.end();
   }
 );
 
 tap.test(
-  "01.39 - string is whole (closing) tag - self-closing - surrounding whitespace #2",
+  "40 - string is whole (closing) tag - self-closing - whitespace everywhere",
   (t) => {
-    t.same(stripHtml("</ a >"), "", "01.39");
+    t.same(stripHtml("< / a >"), "", "40");
     t.end();
   }
 );
 
 tap.test(
-  "01.40 - string is whole (closing) tag - self-closing - whitespace everywhere",
+  "41 - string is whole (closing) tag - self-closing - copious whitespace everywhere",
   (t) => {
-    t.same(stripHtml("< / a >"), "", "01.40");
+    t.same(stripHtml("<  /   a     >"), "", "41");
     t.end();
   }
 );
 
 tap.test(
-  "01.41 - string is whole (closing) tag - self-closing - copious whitespace everywhere",
+  "42 - string is whole (closing) tag - self-closing - leading outside whitespace",
   (t) => {
-    t.same(stripHtml("<  /   a     >"), "", "01.41");
+    t.same(stripHtml(" </a>"), "", "42");
     t.end();
   }
 );
 
 tap.test(
-  "01.42 - string is whole (closing) tag - self-closing - leading outside whitespace",
+  "43 - string is whole (closing) tag - self-closing - trailing outside whitespace",
   (t) => {
-    t.same(stripHtml(" </a>"), "", "01.42");
+    t.same(stripHtml("< /a> "), "", "43");
     t.end();
   }
 );
 
 tap.test(
-  "01.43 - string is whole (closing) tag - self-closing - trailing outside whitespace",
+  "44 - string is whole (closing) tag - self-closing - outside whitespace on both sides",
   (t) => {
-    t.same(stripHtml("< /a> "), "", "01.43");
+    t.same(stripHtml("  </a >  "), "", "44");
     t.end();
   }
 );
 
 tap.test(
-  "01.44 - string is whole (closing) tag - self-closing - outside whitespace on both sides",
+  "45 - string is whole (closing) tag - self-closing - copious outside whitespace on both sides",
   (t) => {
-    t.same(stripHtml("  </a >  "), "", "01.44");
+    t.same(stripHtml("\t< /a >"), "", "45");
     t.end();
   }
 );
 
 tap.test(
-  "01.45 - string is whole (closing) tag - self-closing - copious outside whitespace on both sides",
+  "46 - string is whole (closing) tag - self-closing - even more copious outside whitespace on both sides",
   (t) => {
-    t.same(stripHtml("\t< /a >"), "", "01.45");
-    t.end();
-  }
-);
-
-tap.test(
-  "01.46 - string is whole (closing) tag - self-closing - even more copious outside whitespace on both sides",
-  (t) => {
-    t.same(stripHtml("    \t   <   /  a     >      \n\n   "), "", "01.46");
+    t.same(stripHtml("    \t   <   /  a     >      \n\n   "), "", "46");
     t.end();
   }
 );
@@ -381,247 +378,240 @@ tap.test(
 // 02. tag pairs vs content
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - single tag pair - tight", (t) => {
-  t.same(stripHtml("<a>zzz</a>"), "zzz", "02.01");
+tap.test("47 - single tag pair - tight", (t) => {
+  t.same(stripHtml("<a>zzz</a>"), "zzz", "47");
   t.end();
 });
 
-tap.test("02.02 - single tag pair - outer whitespace", (t) => {
-  t.same(stripHtml(" <a>zzz</a> "), "zzz", "02.02");
+tap.test("48 - single tag pair - outer whitespace", (t) => {
+  t.same(stripHtml(" <a>zzz</a> "), "zzz", "48");
   t.end();
 });
 
-tap.test("02.03 - single tag pair - inner and outer whitespace", (t) => {
-  t.same(stripHtml(" <a> zzz </a> "), "zzz", "02.03");
+tap.test("49 - single tag pair - inner and outer whitespace", (t) => {
+  t.same(stripHtml(" <a> zzz </a> "), "zzz", "49");
   t.end();
 });
 
-tap.test("02.04 - single tag pair - inner line break retained", (t) => {
-  t.same(stripHtml(" <a> zz\nz </a> "), "zz\nz", "02.04");
+tap.test("50 - single tag pair - inner line break retained", (t) => {
+  t.same(stripHtml(" <a> zz\nz </a> "), "zz\nz", "50");
   t.end();
 });
 
-tap.test("02.05 - multiple tag pairs - adds spaces - #1", (t) => {
+tap.test("51 - multiple tag pairs - adds spaces - #1", (t) => {
   t.same(
     stripHtml("rrr <a>zzz</a> something\nelse<img/>zzz<div>yyy</div>uuu"),
     "rrr zzz something\nelse zzz yyy uuu",
-    "02.05"
+    "51"
   );
   t.end();
 });
 
-tap.test("02.06 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.same(stripHtml("aaaaaaa<a>bbbbbbbb"), "aaaaaaa bbbbbbbb", "02.06");
+tap.test("52 - multiple tag pairs - adds spaces - #2", (t) => {
+  t.same(stripHtml("aaaaaaa<a>bbbbbbbb"), "aaaaaaa bbbbbbbb", "52");
   t.end();
 });
 
-tap.test("02.07 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.same(stripHtml("<a>bbbbbbbb"), "bbbbbbbb", "02.07");
+tap.test("53 - multiple tag pairs - adds spaces - #2", (t) => {
+  t.same(stripHtml("<a>bbbbbbbb"), "bbbbbbbb", "53");
   t.end();
 });
 
-tap.test("02.08 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.same(stripHtml("aaaaaaa<a>"), "aaaaaaa", "02.08");
+tap.test("54 - multiple tag pairs - adds spaces - #2", (t) => {
+  t.same(stripHtml("aaaaaaa<a>"), "aaaaaaa", "54");
   t.end();
 });
 
 tap.test(
-  "02.09 - deletion while being on sensitive mode - recognised tag name, pair",
+  "55 - deletion while being on sensitive mode - recognised tag name, pair",
   (t) => {
-    t.same(stripHtml("< div >x</div>"), "x", "02.09");
+    t.same(stripHtml("< div >x</div>"), "x", "55");
     t.end();
   }
 );
 
 tap.test(
-  "02.10 - deletion while being on sensitive mode - recognised tag name, singleton",
+  "56 - deletion while being on sensitive mode - recognised tag name, singleton",
   (t) => {
-    t.same(stripHtml("aaaaaaa< br >bbbbbbbb"), "aaaaaaa bbbbbbbb", "02.10");
+    t.same(stripHtml("aaaaaaa< br >bbbbbbbb"), "aaaaaaa bbbbbbbb", "56");
     t.end();
   }
 );
 
 tap.test(
-  "02.11 - deletion while being on sensitive mode - recognised tag name, pair, tight outer content",
+  "57 - deletion while being on sensitive mode - recognised tag name, pair, tight outer content",
   (t) => {
-    t.same(stripHtml("aaaaaaa< div >x</div>"), "aaaaaaa x", "02.11");
+    t.same(stripHtml("aaaaaaa< div >x</div>"), "aaaaaaa x", "57");
     t.end();
   }
 );
 
 tap.test(
-  "02.12 - deletion while being on sensitive mode - recognised tag name, pair, spaced outer content",
+  "58 - deletion while being on sensitive mode - recognised tag name, pair, spaced outer content",
   (t) => {
-    t.same(stripHtml("aaaaaaa < div >x</div>"), "aaaaaaa x", "02.12");
+    t.same(stripHtml("aaaaaaa < div >x</div>"), "aaaaaaa x", "58");
     t.end();
   }
 );
 
 tap.test(
-  "02.13 - deletion while being on sensitive mode - recognised tag name, pair, trailing whitespace",
+  "59 - deletion while being on sensitive mode - recognised tag name, pair, trailing whitespace",
   (t) => {
-    t.same(stripHtml("aaaaaaa< div >x</div> "), "aaaaaaa x", "02.13");
+    t.same(stripHtml("aaaaaaa< div >x</div> "), "aaaaaaa x", "59");
     t.end();
   }
 );
 
-tap.test("02.14 - tags with attributes - tight inside tag", (t) => {
+tap.test("60 - tags with attributes - tight inside tag", (t) => {
   t.same(
     stripHtml('aaaaaaa<div class="zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "02.14"
+    "60"
   );
   t.end();
 });
 
-tap.test("02.15 - tags with attributes - rogue spaces inside tag", (t) => {
+tap.test("61 - tags with attributes - rogue spaces inside tag", (t) => {
   t.same(
     stripHtml('aaaaaaa< br class="zzzz">bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "02.15"
+    "61"
   );
   t.end();
 });
 
-tap.test(
-  "02.16 - tags with attributes - rogue spaces inside tag, pair",
-  (t) => {
-    t.same(
-      stripHtml('aaaaaaa< div class="zzzz">x</div>'),
-      "aaaaaaa x",
-      "02.16"
-    );
-    t.end();
-  }
-);
-
-tap.test("02.17 - tags with attributes", (t) => {
-  t.same(stripHtml('aaaaaaa < div class="zzzz">x</div>'), "aaaaaaa x", "02.17");
+tap.test("62 - tags with attributes - rogue spaces inside tag, pair", (t) => {
+  t.same(stripHtml('aaaaaaa< div class="zzzz">x</div>'), "aaaaaaa x", "62");
   t.end();
 });
 
-tap.test("02.18 - tags with attributes", (t) => {
-  t.same(stripHtml('aaaaaaa< div class="zzzz">x</div>'), "aaaaaaa x", "02.18");
+tap.test("63 - tags with attributes", (t) => {
+  t.same(stripHtml('aaaaaaa < div class="zzzz">x</div>'), "aaaaaaa x", "63");
   t.end();
 });
 
-tap.test("02.19 - tags with attributes", (t) => {
-  t.same(stripHtml('< div class="zzzz">x</div>'), "x", "02.19");
+tap.test("64 - tags with attributes", (t) => {
+  t.same(stripHtml('aaaaaaa< div class="zzzz">x</div>'), "aaaaaaa x", "64");
   t.end();
 });
 
-tap.test("02.20 - multiple brackets repeated", (t) => {
+tap.test("65 - tags with attributes", (t) => {
+  t.same(stripHtml('< div class="zzzz">x</div>'), "x", "65");
+  t.end();
+});
+
+tap.test("66 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa<<<<<<div>>>>something</div>bbbbb"),
     "aaaa something bbbbb",
-    "02.20"
+    "66"
   );
   t.end();
 });
 
-tap.test("02.21 - multiple brackets repeated", (t) => {
+tap.test("67 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa<<<<<<div>something</div>bbbbb"),
     "aaaa something bbbbb",
-    "02.21"
+    "67"
   );
   t.end();
 });
 
-tap.test("02.22 - multiple brackets repeated", (t) => {
+tap.test("68 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>bbbbb"),
     "aaaa something bbbbb",
-    "02.22"
+    "68"
   );
   t.end();
 });
 
-tap.test("02.23 - multiple brackets repeated", (t) => {
+tap.test("69 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>>>>>>>bbbbb"),
     "aaaa something bbbbb",
-    "02.23"
+    "69"
   );
   t.end();
 });
 
-tap.test("02.24 - multiple brackets repeated", (t) => {
+tap.test("70 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa something<<<</div>>>>>>>bbbbb"),
     "aaaa something bbbbb",
-    "02.24"
+    "70"
   );
   t.end();
 });
 
-tap.test("02.25 - multiple brackets repeated", (t) => {
+tap.test("71 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa something<<<<  / div>>>>>>>bbbbb"),
     "aaaa something bbbbb",
-    "02.25"
+    "71"
   );
   t.end();
 });
 
-tap.test("02.26 - multiple brackets repeated", (t) => {
+tap.test("72 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa something<<<<  //// div /// >>>>>>>bbbbb"),
     "aaaa something bbbbb",
-    "02.26"
+    "72"
   );
   t.end();
 });
 
-tap.test("02.27 - multiple brackets repeated", (t) => {
+tap.test("73 - multiple brackets repeated", (t) => {
   t.same(
     stripHtml("aaaa< <  <   <    <     <     div>>>>something<<<</div>bbbbb"),
     "aaaa something bbbbb",
-    "02.27"
+    "73"
   );
   t.end();
 });
 
-tap.test("02.28 - checking can script slip through in any way", (t) => {
+tap.test("74 - checking can script slip through in any way", (t) => {
   t.same(
     stripHtml("x<b>y</b>z", {
       stripTogetherWithTheirContents: ["b"],
     }),
     "x z",
-    "02.28"
+    "74"
   );
   t.end();
 });
 
-tap.test("02.29 - checking can script slip through in any way", (t) => {
+tap.test("75 - checking can script slip through in any way", (t) => {
   t.same(
     stripHtml(
       'some text <script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ),
     "some text more text",
-    "02.29"
+    "75"
   );
   t.end();
 });
 
-tap.test("02.30 - checking can script slip through in any way", (t) => {
+tap.test("76 - checking can script slip through in any way", (t) => {
   t.same(
     stripHtml(
       'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ),
     "some text more text",
-    "02.30"
+    "76"
   );
   t.end();
 });
 
-tap.test("02.31 - checking can script slip through in any way", (t) => {
+tap.test("77 - checking can script slip through in any way", (t) => {
   t.same(
     stripHtml(
       'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text'
     ),
     "some text more text",
-    "02.31 - sneaky HTML character-encoded brackets"
+    "77 - sneaky HTML character-encoded brackets"
   );
   t.end();
 });
@@ -630,7 +620,7 @@ tap.test("02.31 - checking can script slip through in any way", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "03.01 - tag pairs including content - healthy, typical style tag pair",
+  "78 - tag pairs including content - healthy, typical style tag pair",
   (t) => {
     t.same(
       stripHtml(`<html><head>
@@ -643,14 +633,14 @@ tap.test(
 <body>aaa</body>
 </html>`),
       "aaa",
-      "03.01"
+      "78"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - tag pairs including content - mismatching quotes "text/css'`,
+  `79 - tag pairs including content - mismatching quotes "text/css'`,
   (t) => {
     // Ranged tags are sensitive to slash detection.
     // Slash detection works checking is slash not within quoted attribute values.
@@ -667,14 +657,14 @@ tap.test(
 <body>aaa</body>
 </html>`),
       "aaa",
-      `03.02`
+      `79`
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - tag pairs including content - mismatching quotes 'text/css"`,
+  `80 - tag pairs including content - mismatching quotes 'text/css"`,
   (t) => {
     t.same(
       stripHtml(`<html><head>
@@ -687,153 +677,153 @@ tap.test(
 <body>aaa</body>
 </html>`),
       "aaa",
-      "03.03"
+      "80"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.04 - tag pairs including content - via opts.stripTogetherWithTheirContents - tight inside",
+  "81 - tag pairs including content - via opts.stripTogetherWithTheirContents - tight inside",
   (t) => {
     t.same(
       stripHtml("a<b>c</b>d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.04"
+      "81"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.05 - tag pairs including content - via opts.stripTogetherWithTheirContents - copious inner whitespace",
+  "82 - tag pairs including content - via opts.stripTogetherWithTheirContents - copious inner whitespace",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<   /   b   >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.05 - whitespace within the tag"
+      "82 - whitespace within the tag"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.06 - tag pairs including content - via opts.stripTogetherWithTheirContents - closing slash wrong side",
+  "83 - tag pairs including content - via opts.stripTogetherWithTheirContents - closing slash wrong side",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<     b   /    >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.06"
+      "83"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.07 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "84 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<   /    b   /    >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.07 - two closing slashes"
+      "84 - two closing slashes"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.08 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "85 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<   //    b   //    >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.08 - multiple duplicated closing slashes"
+      "85 - multiple duplicated closing slashes"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.09 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "86 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<   //  <  b   // >   >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.09 - multiple duplicated closing slashes"
+      "86 - multiple duplicated closing slashes"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.10 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "87 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<    b    >c<   /    b   /    >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a d",
-      "03.10 - no closing slashes"
+      "87 - no closing slashes"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.11 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "88 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<    b    >     c \n\n\n        <   /    b   /    >d", {
         stripTogetherWithTheirContents: ["e", "b"],
       }),
       "a\n\nd",
-      "03.11 - no closing slashes"
+      "88 - no closing slashes"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.12 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "89 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<b>c</b>d<e>f</e>g", {
         stripTogetherWithTheirContents: ["b", "e"],
       }),
       "a d g",
-      "03.12"
+      "89"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.13 - tag pairs including content - via opts.stripTogetherWithTheirContents",
+  "90 - tag pairs including content - via opts.stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml("a<bro>c</bro>d<e>f</e>g", {
         stripTogetherWithTheirContents: ["b", "e"],
       }),
       "a c d g",
-      "03.13 - sneaky similarity, bro starts with b"
+      "90 - sneaky similarity, bro starts with b"
     );
     t.end();
   }
 );
 
-tap.test("03.14 - tag pairs including content - ", (t) => {
+tap.test("91 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml(
       'Text <div class="" id="3" >here</div> and some more <article>text</article>.',
@@ -842,12 +832,12 @@ tap.test("03.14 - tag pairs including content - ", (t) => {
       }
     ),
     "Text and some more.",
-    "03.14 - strips with attributes. Now resembling real life."
+    "91 - strips with attributes. Now resembling real life."
   );
   t.end();
 });
 
-tap.test("03.15 - tag pairs including content - ", (t) => {
+tap.test("92 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml(
       'Text < div class="" id="3"  >here<  / div > and some more < article >text<    / article >.',
@@ -856,56 +846,56 @@ tap.test("03.15 - tag pairs including content - ", (t) => {
       }
     ),
     "Text and some more.",
-    "03.15 - lots of spaces within tags"
+    "92 - lots of spaces within tags"
   );
   t.end();
 });
 
-tap.test("03.16 - tag pairs including content - ", (t) => {
+tap.test("93 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: [],
     }),
     "a c d",
-    "03.16 - override stripTogetherWithTheirContents to an empty array"
+    "93 - override stripTogetherWithTheirContents to an empty array"
   );
   t.end();
 });
 
-tap.test("03.17 - tag pairs including content - ", (t) => {
+tap.test("94 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: null,
     }),
     "a c d",
-    "03.17 - override stripTogetherWithTheirContents to an empty array"
+    "94 - override stripTogetherWithTheirContents to an empty array"
   );
   t.end();
 });
 
-tap.test("03.18 - tag pairs including content - ", (t) => {
+tap.test("95 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: false,
     }),
     "a c d",
-    "03.18 - override stripTogetherWithTheirContents to an empty array"
+    "95 - override stripTogetherWithTheirContents to an empty array"
   );
   t.end();
 });
 
-tap.test("03.19 - tag pairs including content - ", (t) => {
+tap.test("96 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml("a<    b    >c<   //  <  b   // >   >d", {
       stripTogetherWithTheirContents: "b",
     }),
     "a d",
-    "03.19 - opts.stripTogetherWithTheirContents is not array but string"
+    "96 - opts.stripTogetherWithTheirContents is not array but string"
   );
   t.end();
 });
 
-tap.test("03.20 - tag pairs including content - ", (t) => {
+tap.test("97 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml(
       'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
@@ -914,23 +904,23 @@ tap.test("03.20 - tag pairs including content - ", (t) => {
       }
     ),
     "a d",
-    "03.20"
+    "97"
   );
   t.end();
 });
 
-tap.test("03.21 - tag pairs including content - ", (t) => {
+tap.test("98 - tag pairs including content - ", (t) => {
   t.same(
     stripHtml("a<    b    >c", {
       stripTogetherWithTheirContents: ["e", "b"],
     }),
     "a c",
-    "03.21 - single custom range tag"
+    "98 - single custom range tag"
   );
   t.end();
 });
 
-tap.test("03.22 - tag pairs including content - ", (t) => {
+tap.test("99 - tag pairs including content - ", (t) => {
   t.throws(() => {
     stripHtml(
       'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
@@ -938,92 +928,88 @@ tap.test("03.22 - tag pairs including content - ", (t) => {
         stripTogetherWithTheirContents: ["zzz", true, "b"],
       }
     );
-  });
+  }, "99");
   t.end();
 });
 
 // 04. whacky inputs
 // -----------------------------------------------------------------------------
 
-tap.test("04.01 - whacky - sequence of empty <> - single", (t) => {
-  t.same(stripHtml("<>"), "<>", "04.01");
+tap.test("100 - whacky - sequence of empty <> - single", (t) => {
+  t.same(stripHtml("<>"), "<>", "100");
   t.end();
 });
 
-tap.test("04.02 - whacky - sequence of empty <> - tight outside EOL", (t) => {
-  t.same(stripHtml("<><>"), "<><>", "04.02");
+tap.test("101 - whacky - sequence of empty <> - tight outside EOL", (t) => {
+  t.same(stripHtml("<><>"), "<><>", "101");
   t.end();
 });
 
 tap.test(
-  "04.03 - whacky - sequence of empty <> - tight outside, content",
+  "102 - whacky - sequence of empty <> - tight outside, content",
   (t) => {
-    t.same(stripHtml("a<><>b"), "a<><>b", "04.03");
+    t.same(stripHtml("a<><>b"), "a<><>b", "102");
     t.end();
   }
 );
 
-tap.test("04.04 - whacky - sequence of empty <> - just trimmed", (t) => {
-  t.same(stripHtml("\na<><>b\n"), "a<><>b", "04.04");
+tap.test("103 - whacky - sequence of empty <> - just trimmed", (t) => {
+  t.same(stripHtml("\na<><>b\n"), "a<><>b", "103");
   t.end();
 });
 
 tap.test(
-  "04.05 - whacky - brackets used for expressive purposes (very very suspicious but possible)",
+  "104 - whacky - brackets used for expressive purposes (very very suspicious but possible)",
   (t) => {
-    t.same(
-      stripHtml("text <<<<<<<<<<< text"),
-      "text <<<<<<<<<<< text",
-      "04.05"
-    );
+    t.same(stripHtml("text <<<<<<<<<<< text"), "text <<<<<<<<<<< text", "104");
     t.end();
   }
 );
 
 tap.test(
-  "04.06 - brackets used for expressive purposes (very very suspicious but possible)",
+  "105 - brackets used for expressive purposes (very very suspicious but possible)",
   (t) => {
     t.same(
       stripHtml("text <<<<<<<<<<< text <<<<<<<<<<< text"),
       "text <<<<<<<<<<< text <<<<<<<<<<< text",
-      "04.06"
+      "105"
     );
     t.end();
   }
 );
 
 tap.test(
-  "04.07 - brackets used for expressive purposes (very very suspicious but possible)",
+  "106 - brackets used for expressive purposes (very very suspicious but possible)",
   (t) => {
     t.same(
       stripHtml("<article> text <<<<<<<<<<< text </article>"),
       "text <<<<<<<<<<< text",
-      "04.07"
+      "106"
     );
     t.end();
   }
 );
 
 tap.test(
-  "04.08 - brackets used for expressive purposes (very very suspicious but possible)",
+  "107 - brackets used for expressive purposes (very very suspicious but possible)",
   (t) => {
     // will not remove
     t.same(
       stripHtml("text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3"),
       "text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3",
-      "04.08"
+      "107"
     );
     t.end();
   }
 );
 
 tap.test(
-  "04.09 - brackets used for expressive purposes (very very suspicious but possible)",
+  "108 - brackets used for expressive purposes (very very suspicious but possible)",
   (t) => {
     t.same(
       stripHtml("<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>"),
       "text1 <<<<<<<<<<< text2 >>>>>>>>> text3",
-      "04.09"
+      "108"
     );
     t.end();
   }
@@ -1032,58 +1018,58 @@ tap.test(
 // 05. multiple ranged tags
 // -----------------------------------------------------------------------------
 
-tap.test("05.01 - multiple ranged tags - with text in between", (t) => {
+tap.test("109 - multiple ranged tags - with text in between", (t) => {
   t.same(
     stripHtml(
       "code here and here <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more"
     ),
     "code here and here and also some here and finally here some more and also some here and finally here some more and also some here and finally here some more",
-    "05.01"
+    "109"
   );
   t.end();
 });
 
-tap.test("05.02 - multiple ranged tags - tags touching each other", (t) => {
+tap.test("110 - multiple ranged tags - tags touching each other", (t) => {
   t.same(
     stripHtml(
       "code here and here <style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script> and finally here some more"
     ),
     "code here and here and finally here some more",
-    "05.02"
+    "110"
   );
   t.end();
 });
 
 tap.test(
-  "05.03 - multiple ranged tags - lots of dodgy slashes around and within tags",
+  "111 - multiple ranged tags - lots of dodgy slashes around and within tags",
   (t) => {
     t.same(
       stripHtml(
         "///</a>///<a/>///</ a>///< /a></ a>///< /a>///</ a />///</a/>///< / a / >///"
       ),
       "/// /// /// /// /// /// /// /// ///",
-      "05.03"
+      "111"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.04 - multiple ranged tags - this time repeated slashes inside",
+  "112 - multiple ranged tags - this time repeated slashes inside",
   (t) => {
     t.same(
       stripHtml(
         "///<///a>///<a/////>///<//// a>///< ///a><// a>///< ///a>///<// a //>///<///a///>///< //// a //// >///"
       ),
       "/// /// /// /// /// /// /// /// ///",
-      "05.04"
+      "112"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.05 - multiple ranged tags - and the same but with bunch of line breaks and tabs",
+  "113 - multiple ranged tags - and the same but with bunch of line breaks and tabs",
   (t) => {
     // line breaks within tag doesn't count - the new line breaks should not be introduced!
     t.same(
@@ -1091,49 +1077,49 @@ tap.test(
         "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
       ),
       "/// /// /// /// /// /// /// /// ///",
-      "05.05"
+      "113"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.06 - multiple ranged tags - lots of dodgy exclamation marks around and within tags",
+  "114 - multiple ranged tags - lots of dodgy exclamation marks around and within tags",
   (t) => {
     t.same(
       stripHtml(
         "zzz<!a>zzz<a!>zzz<! a>zzz< !a><! a>zzz< !a>zzz<! a !>zzz<!a!>zzz< ! a ! >zzz"
       ),
       "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-      "05.06"
+      "114"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.07 - multiple ranged tags - this time repeated exclamation marks inside",
+  "115 - multiple ranged tags - this time repeated exclamation marks inside",
   (t) => {
     t.same(
       stripHtml(
         "zzz<!!!a>zzz<a!!!!!>zzz<!!!! a>zzz< !!!a><!! a>zzz< !!!a>zzz<!! a !!>zzz<!!!a!!!>zzz< !!!! a !!!! >zzz"
       ),
       "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-      "05.07"
+      "115"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.08 - multiple ranged tags - and the same but with bunch of line breaks and tabs",
+  "116 - multiple ranged tags - and the same but with bunch of line breaks and tabs",
   (t) => {
     t.same(
       stripHtml(
         "zzz<!\n!\n!\ta>zzz<a\n!!!\n!!\t>zzz<\n!!!!\t a>zzz< !\n!!\na><!! \ta>zzz<\n\n\n\n !!!a>zzz<\t\t\t\t!! \n\n\na !!>zzz<\n\n\n!!!a\n!!!\n>zzz<\n !!!! \na\n !!!! \n>zzz"
       ),
       "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-      "05.08"
+      "116"
     );
     t.end();
   }
@@ -1142,74 +1128,74 @@ tap.test(
 // 06. whitespace control
 // -----------------------------------------------------------------------------
 
-tap.test("06.01 - whitespace control - line breaks between tags", (t) => {
+tap.test("117 - whitespace control - line breaks between tags", (t) => {
   t.same(
     stripHtml("something <a> \n\n to <a> put here to test"),
     "something\n\nto put here to test",
-    "06.01"
+    "117"
   );
   t.end();
 });
 
-tap.test("06.02 - whitespace control - line breaks within tag", (t) => {
+tap.test("118 - whitespace control - line breaks within tag", (t) => {
   t.same(
     stripHtml("something <a\n\n>  to <a> put here to test"),
     "something to put here to test",
-    "06.02"
+    "118"
   );
   t.end();
 });
 
-tap.test("06.03 - whitespace control - leading inner tag linebreaks", (t) => {
+tap.test("119 - whitespace control - leading inner tag linebreaks", (t) => {
   t.same(
     stripHtml("something <\n\na>  to <a> put here to test"),
     "something to put here to test",
-    "06.03"
+    "119"
   );
   t.end();
 });
 
 tap.test(
-  "06.04 - whitespace control - multiple tags, inner trailing linebreaks",
+  "120 - whitespace control - multiple tags, inner trailing linebreaks",
   (t) => {
     t.same(
       stripHtml("something <a>  to <a\n\n> put here to test"),
       "something to put here to test",
-      "06.04"
+      "120"
     );
     t.end();
   }
 );
 
 tap.test(
-  "06.05 - whitespace control - multiple tags, inner leading linebreaks",
+  "121 - whitespace control - multiple tags, inner leading linebreaks",
   (t) => {
     t.same(
       stripHtml("something <a>  to <\n\na> put here to test"),
       "something to put here to test",
-      "06.05"
+      "121"
     );
     t.end();
   }
 );
 
 tap.test(
-  "06.06 - whitespace control - tabs and linebreaks inside, multiple tags",
+  "122 - whitespace control - tabs and linebreaks inside, multiple tags",
   (t) => {
     t.same(
       stripHtml("something <\t\na\n>  to <a\n\n> put here to test"),
       "something to put here to test",
-      "06.06"
+      "122"
     );
     t.end();
   }
 );
 
-tap.test("06.07 - whitespace control - even this", (t) => {
+tap.test("123 - whitespace control - even this", (t) => {
   t.same(
     stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test"),
     "something to put here to test",
-    "06.07"
+    "123"
   );
   t.end();
 });
@@ -1217,7 +1203,7 @@ tap.test("06.07 - whitespace control - even this", (t) => {
 // 07. CDATA
 // -----------------------------------------------------------------------------
 
-tap.test("07.01 - CDATA - tight", (t) => {
+tap.test("124 - CDATA - tight", (t) => {
   // surroundings are not a linebreaks
   t.same(
     stripHtml(`a<![CDATA[
@@ -1225,36 +1211,36 @@ tap.test("07.01 - CDATA - tight", (t) => {
     *and* %MyParamEntity; can be expanded.
   ]]>b`),
     "a b",
-    "07.01"
+    "124"
   );
   t.end();
 });
 
-tap.test("07.02 - CDATA - normal", (t) => {
+tap.test("125 - CDATA - normal", (t) => {
   t.same(
     stripHtml(`a <![CDATA[
   The <, &, ', and " can be used,
   *and* %MyParamEntity; can be expanded.
 ]]> b`),
     "a b",
-    "07.02"
+    "125"
   );
   t.end();
 });
 
-tap.test("07.03 - CDATA - loose", (t) => {
+tap.test("126 - CDATA - loose", (t) => {
   t.same(
     stripHtml(`a \t\t<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>       b`),
     "a b",
-    "07.03"
+    "126"
   );
   t.end();
 });
 
-tap.test("07.04 - CDATA - single linebreaks", (t) => {
+tap.test("127 - CDATA - single linebreaks", (t) => {
   // surroundings are linebreaks
   t.same(
     stripHtml(`a\n<![CDATA[
@@ -1262,31 +1248,31 @@ tap.test("07.04 - CDATA - single linebreaks", (t) => {
     *and* %MyParamEntity; can be expanded.
   ]]>\nb`),
     "a\n\nb",
-    "07.04"
+    "127"
   );
   t.end();
 });
 
-tap.test("07.05 - CDATA - excessive linebreaks", (t) => {
+tap.test("128 - CDATA - excessive linebreaks", (t) => {
   t.same(
     stripHtml(`a\n\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\nb`),
     "a\n\nb",
-    "07.05"
+    "128"
   );
   t.end();
 });
 
-tap.test("07.06 - CDATA - mixed linebreaks", (t) => {
+tap.test("129 - CDATA - mixed linebreaks", (t) => {
   t.same(
     stripHtml(`a\n \t\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\n\t b`),
     "a\n\nb",
-    "07.06"
+    "129"
   );
   t.end();
 });
@@ -1294,216 +1280,184 @@ tap.test("07.06 - CDATA - mixed linebreaks", (t) => {
 // 08. punctuation
 // -----------------------------------------------------------------------------
 
-tap.test("08.01 - punctuation after tag - simplified, question mark", (t) => {
-  t.same(stripHtml("a<b>?</b> c"), "a? c", "08.01");
+tap.test("130 - punctuation after tag - simplified, question mark", (t) => {
+  t.same(stripHtml("a<b>?</b> c"), "a? c", "130");
   t.end();
 });
 
-tap.test("08.02 - punctuation after tag - simplified, question mark", (t) => {
-  t.same(stripHtml("a<b>?</b> c", { trimOnlySpaces: true }), "a? c", "08.02");
+tap.test("131 - punctuation after tag - simplified, question mark", (t) => {
+  t.same(stripHtml("a<b>?</b> c", { trimOnlySpaces: true }), "a? c", "131");
   t.end();
 });
 
-tap.test("08.03 - punctuation after tag - simplified, question mark", (t) => {
+tap.test("132 - punctuation after tag - simplified, question mark", (t) => {
   t.same(
     stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     "a? c",
-    "08.03"
+    "132"
   );
   t.end();
 });
 
-tap.test("08.04 - punctuation after tag - simplified, question mark", (t) => {
+tap.test("133 - punctuation after tag - simplified, question mark", (t) => {
   t.same(
     stripHtml("a<b>?</b> c", { stripTogetherWithTheirContents: false }),
     "a? c",
-    "08.04"
+    "133"
   );
   t.end();
 });
 
-tap.test("08.05 - punctuation after tag - simplified, question mark", (t) => {
-  t.same(stripHtml("a<b>?</b> c", { ignoreTags: ["zzz"] }), "a? c", "08.05");
+tap.test("134 - punctuation after tag - simplified, question mark", (t) => {
+  t.same(stripHtml("a<b>?</b> c", { ignoreTags: ["zzz"] }), "a? c", "134");
   t.end();
 });
 
-tap.test("08.06 - punctuation after tag - simplified, question mark", (t) => {
+tap.test("135 - punctuation after tag - simplified, question mark", (t) => {
   t.same(
     stripHtml("a<b>?</b> c", { returnRangesOnly: true }),
     [
       [1, 4],
       [5, 10, " "],
     ],
-    "08.06"
+    "135"
   );
   t.end();
 });
 
-tap.test("08.07 - punctuation after tag - simplified, question mark", (t) => {
-  t.same(stripHtml("a<b>?</b> c", { ignoreTags: null }), "a? c", "08.07");
+tap.test("136 - punctuation after tag - simplified, question mark", (t) => {
+  t.same(stripHtml("a<b>?</b> c", { ignoreTags: null }), "a? c", "136");
   t.end();
 });
 
-tap.test(
-  "08.08 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(stripHtml("a<b>!</b> c"), "a! c", "08.08");
-    t.end();
-  }
-);
-
-tap.test(
-  "08.09 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(stripHtml("a<b>!</b> c", { trimOnlySpaces: true }), "a! c", "08.09");
-    t.end();
-  }
-);
-
-tap.test(
-  "08.10 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(
-      stripHtml(" \t a<b>!</b> c \t ", { trimOnlySpaces: true }),
-      "\t a! c \t",
-      "08.10"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "08.11 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(
-      stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
-      "a! c",
-      "08.11"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "08.12 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(
-      stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
-      "a! c",
-      "08.12"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "08.13 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }), "a! c", "08.13");
-    t.end();
-  }
-);
-
-tap.test(
-  "08.14 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(
-      stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
-      [
-        [1, 4],
-        [5, 10, " "],
-      ],
-      "08.14"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "08.15 - punctuation after tag - simplified, exclamation mark",
-  (t) => {
-    t.same(stripHtml("a<b>!</b>c"), "a! c", "08.15");
-    t.end();
-  }
-);
-
-tap.test("08.16 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.same(stripHtml("a<b>...</b> c"), "a... c", "08.16");
+tap.test("137 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(stripHtml("a<b>!</b> c"), "a! c", "137");
   t.end();
 });
 
-tap.test("08.17 - punctuation after tag - simplified, ellipsis", (t) => {
+tap.test("138 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(stripHtml("a<b>!</b> c", { trimOnlySpaces: true }), "a! c", "138");
+  t.end();
+});
+
+tap.test("139 - punctuation after tag - simplified, exclamation mark", (t) => {
   t.same(
-    stripHtml("a<b>...</b> c", { trimOnlySpaces: true }),
-    "a... c",
-    "08.17"
+    stripHtml(" \t a<b>!</b> c \t ", { trimOnlySpaces: true }),
+    "\t a! c \t",
+    "139"
   );
   t.end();
 });
 
-tap.test("08.18 - punctuation after tag - simplified, ellipsis", (t) => {
+tap.test("140 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(
+    stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
+    "a! c",
+    "140"
+  );
+  t.end();
+});
+
+tap.test("141 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(
+    stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
+    "a! c",
+    "141"
+  );
+  t.end();
+});
+
+tap.test("142 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }), "a! c", "142");
+  t.end();
+});
+
+tap.test("143 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(
+    stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
+    [
+      [1, 4],
+      [5, 10, " "],
+    ],
+    "143"
+  );
+  t.end();
+});
+
+tap.test("144 - punctuation after tag - simplified, exclamation mark", (t) => {
+  t.same(stripHtml("a<b>!</b>c"), "a! c", "144");
+  t.end();
+});
+
+tap.test("145 - punctuation after tag - simplified, ellipsis", (t) => {
+  t.same(stripHtml("a<b>...</b> c"), "a... c", "145");
+  t.end();
+});
+
+tap.test("146 - punctuation after tag - simplified, ellipsis", (t) => {
+  t.same(stripHtml("a<b>...</b> c", { trimOnlySpaces: true }), "a... c", "146");
+  t.end();
+});
+
+tap.test("147 - punctuation after tag - simplified, ellipsis", (t) => {
   t.same(
     stripHtml("a<b>...</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     "a... c",
-    "08.18"
+    "147"
   );
   t.end();
 });
 
-tap.test("08.19 - punctuation after tag - simplified, ellipsis", (t) => {
+tap.test("148 - punctuation after tag - simplified, ellipsis", (t) => {
   t.same(
     stripHtml("a<b>...</b> c", { stripTogetherWithTheirContents: false }),
     "a... c",
-    "08.19"
+    "148"
   );
   t.end();
 });
 
-tap.test("08.20 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.same(
-    stripHtml("a<b>...</b> c", { ignoreTags: ["zzz"] }),
-    "a... c",
-    "08.20"
-  );
+tap.test("149 - punctuation after tag - simplified, ellipsis", (t) => {
+  t.same(stripHtml("a<b>...</b> c", { ignoreTags: ["zzz"] }), "a... c", "149");
   t.end();
 });
 
-tap.test("08.21 - punctuation after tag - simplified, ellipsis", (t) => {
+tap.test("150 - punctuation after tag - simplified, ellipsis", (t) => {
   t.same(
     stripHtml("a<b>...</b> c", { returnRangesOnly: true }),
     [
       [1, 4],
       [7, 12, " "],
     ],
-    "08.21"
+    "150"
   );
   t.end();
 });
 
-tap.test("08.22 - punctuation after tag - real-life", (t) => {
+tap.test("151 - punctuation after tag - real-life", (t) => {
   // control
   t.same(
     stripHtml(
       '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      '
     ),
     "Hi! Would you like to shop now?",
-    "08.22"
+    "151"
   );
   t.end();
 });
 
-tap.test("08.23 - punctuation after tag - real-life", (t) => {
+tap.test("152 - punctuation after tag - real-life", (t) => {
   t.same(
     stripHtml(
       "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
     ),
     "Hi! Please shop now!",
-    "08.23"
+    "152"
   );
   t.end();
 });
 
-tap.test("08.24 - punctuation after tag - real-life", (t) => {
+tap.test("153 - punctuation after tag - real-life", (t) => {
   // opts.trimOnlySpaces
   t.same(
     stripHtml(
@@ -1511,19 +1465,19 @@ tap.test("08.24 - punctuation after tag - real-life", (t) => {
       { trimOnlySpaces: true }
     ),
     "\u00A0     Hi! Would you like to shop now?      \u00A0",
-    "08.24"
+    "153"
   );
   t.end();
 });
 
-tap.test("08.25 - punctuation after tag - real-life", (t) => {
+tap.test("154 - punctuation after tag - real-life", (t) => {
   t.same(
     stripHtml(
       "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      ",
       { trimOnlySpaces: true }
     ),
     "\u00A0     Hi! Please shop now!      \u00A0",
-    "08.25"
+    "154"
   );
   t.end();
 });
@@ -1532,90 +1486,90 @@ tap.test("08.25 - punctuation after tag - real-life", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "09.01 - opts.ignoreTags - empty string, whitespace string and null in the array",
+  "155 - opts.ignoreTags - empty string, whitespace string and null in the array",
   (t) => {
     t.same(
       stripHtml("<a>", {
         ignoreTags: ["", " ", "a", "b", null],
       }),
       "<a>",
-      "09.01"
+      "155"
     );
     t.end();
   }
 );
 
-tap.test("09.02 - opts.ignoreTags - null inside opts.ignoreTags array", (t) => {
+tap.test("156 - opts.ignoreTags - null inside opts.ignoreTags array", (t) => {
   t.same(
     stripHtml("<a>", {
       ignoreTags: [null],
     }),
     "",
-    "09.02"
+    "156"
   );
   t.end();
 });
 
-tap.test("09.03 - opts.ignoreTags - null among opts.ignoreTags values", (t) => {
+tap.test("157 - opts.ignoreTags - null among opts.ignoreTags values", (t) => {
   t.same(
     stripHtml("<a>", {
       ignoreTags: [null, "a"],
     }),
     "<a>",
-    "09.03"
+    "157"
   );
   t.end();
 });
 
 tap.test(
-  "09.04 - opts.ignoreTags - whitespace-only blanks inside opts.ignoreTags",
+  "158 - opts.ignoreTags - whitespace-only blanks inside opts.ignoreTags",
   (t) => {
     t.same(
       stripHtml("a<a>", {
         ignoreTags: ["\t", "\n\n"],
       }),
       "a",
-      "09.04"
+      "158"
     );
     t.end();
   }
 );
 
 tap.test(
-  "09.05 - opts.ignoreTags - some whitespace-only inside opts.ignoreTags",
+  "159 - opts.ignoreTags - some whitespace-only inside opts.ignoreTags",
   (t) => {
     t.same(
       stripHtml("a<a>", {
         ignoreTags: ["\t", "\n\n", "a", " "],
       }),
       "a<a>",
-      "09.05"
+      "159"
     );
     t.end();
   }
 );
 
 tap.test(
-  "09.06 - opts.ignoreTags - space before and after attribute's equal character",
+  "160 - opts.ignoreTags - space before and after attribute's equal character",
   (t) => {
     t.same(
       stripHtml("<article  whatnot  =  whatyes = >zzz< / article>"),
       "zzz",
-      "09.06"
+      "160"
     );
     t.end();
   }
 );
 
 tap.test(
-  "09.07 - opts.ignoreTags - space before and after attribute's equal character",
+  "161 - opts.ignoreTags - space before and after attribute's equal character",
   (t) => {
     t.same(
       stripHtml(
         "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>"
       ),
       "xxx yyy zzz",
-      "09.07"
+      "161"
     );
     t.end();
   }
@@ -1624,7 +1578,7 @@ tap.test(
 // 10. XML (sprinkled within HTML)
 // -----------------------------------------------------------------------------
 
-tap.test("10.01 - strips XML - strips Outlook XML fix block, tight", (t) => {
+tap.test("162 - strips XML - strips Outlook XML fix block, tight", (t) => {
   t.same(
     stripHtml(`abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
@@ -1633,13 +1587,13 @@ tap.test("10.01 - strips XML - strips Outlook XML fix block, tight", (t) => {
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`),
     "abc def",
-    "10.01"
+    "162"
   );
   t.end();
 });
 
 tap.test(
-  "10.02 - strips XML - strips Outlook XML fix block, leading space",
+  "163 - strips XML - strips Outlook XML fix block, leading space",
   (t) => {
     t.same(
       stripHtml(`abc <!--[if gte mso 9]><xml>
@@ -1649,14 +1603,14 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`),
       "abc def",
-      "10.02"
+      "163"
     );
     t.end();
   }
 );
 
 tap.test(
-  "10.03 - strips XML - strips Outlook XML fix block, trailing space",
+  "164 - strips XML - strips Outlook XML fix block, trailing space",
   (t) => {
     t.same(
       stripHtml(`abc<!--[if gte mso 9]><xml>
@@ -1666,14 +1620,14 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`),
       "abc def",
-      "10.03"
+      "164"
     );
     t.end();
   }
 );
 
 tap.test(
-  "10.04 - strips XML - strips Outlook XML fix block, spaces around",
+  "165 - strips XML - strips Outlook XML fix block, spaces around",
   (t) => {
     t.same(
       stripHtml(`abc <!--[if gte mso 9]><xml>
@@ -1683,13 +1637,13 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`),
       "abc def",
-      "10.04"
+      "165"
     );
     t.end();
   }
 );
 
-tap.test("10.05 - strips XML - generous trailing space", (t) => {
+tap.test("166 - strips XML - generous trailing space", (t) => {
   t.same(
     stripHtml(`abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
@@ -1700,12 +1654,12 @@ tap.test("10.05 - strips XML - generous trailing space", (t) => {
 
   def`),
     "abc\n\ndef",
-    "10.05"
+    "166"
   );
   t.end();
 });
 
-tap.test("10.06 - strips XML - trailing linebreaks", (t) => {
+tap.test("167 - strips XML - trailing linebreaks", (t) => {
   t.same(
     stripHtml(`abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
@@ -1716,12 +1670,12 @@ tap.test("10.06 - strips XML - trailing linebreaks", (t) => {
 
   `),
     "abc",
-    "10.06"
+    "167"
   );
   t.end();
 });
 
-tap.test("10.07 - strips XML - leading content", (t) => {
+tap.test("168 - strips XML - leading content", (t) => {
   t.same(
     stripHtml(`abc <xml>
 <o:OfficeDocumentSettings>
@@ -1732,12 +1686,12 @@ tap.test("10.07 - strips XML - leading content", (t) => {
 
   `),
     "abc",
-    "10.07"
+    "168"
   );
   t.end();
 });
 
-tap.test("10.08 - strips XML - leading content", (t) => {
+tap.test("169 - strips XML - leading content", (t) => {
   t.same(
     stripHtml(`      <xml>
 <o:OfficeDocumentSettings>
@@ -1748,7 +1702,7 @@ tap.test("10.08 - strips XML - leading content", (t) => {
 
   abc`),
     "abc",
-    "10.08"
+    "169"
   );
   t.end();
 });
@@ -1757,90 +1711,86 @@ tap.test("10.08 - strips XML - leading content", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "11.01 - false positives - equations: very sneaky considering b is a legit tag name",
+  "170 - false positives - equations: very sneaky considering b is a legit tag name",
   (t) => {
     t.same(
       stripHtml("Equations are: a < b and c > d"),
       "Equations are: a < b and c > d",
-      "11.01"
+      "170"
     );
     t.end();
   }
 );
 
-tap.test("11.02 - false positives - inwards-pointing arrows", (t) => {
-  t.same(
-    stripHtml("Look here: ---> a <---"),
-    "Look here: ---> a <---",
-    "11.02"
-  );
+tap.test("171 - false positives - inwards-pointing arrows", (t) => {
+  t.same(stripHtml("Look here: ---> a <---"), "Look here: ---> a <---", "171");
   t.end();
 });
 
-tap.test("11.03 - false positives - arrows mixed with tags", (t) => {
+tap.test("172 - false positives - arrows mixed with tags", (t) => {
   t.same(
     stripHtml(
       "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
     ),
     "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
-    "11.03"
+    "172"
   );
   t.end();
 });
 
-tap.test("11.04 - false positives - opening bracket", (t) => {
-  t.same(stripHtml("<"), "<", "03.03.01");
+tap.test("173 - false positives - opening bracket", (t) => {
+  t.same(stripHtml("<"), "<", "173");
   t.end();
 });
 
-tap.test("11.05 - false positives - closing bracket", (t) => {
-  t.same(stripHtml(">"), ">", "11.05");
+tap.test("174 - false positives - closing bracket", (t) => {
+  t.same(stripHtml(">"), ">", "174");
   t.end();
 });
 
-tap.test("11.06 - false positives - three openings", (t) => {
-  t.same(stripHtml(">>>"), ">>>", "11.06");
+tap.test("175 - false positives - three openings", (t) => {
+  t.same(stripHtml(">>>"), ">>>", "175");
   t.end();
 });
 
-tap.test("11.07 - false positives - three closings", (t) => {
-  t.same(stripHtml("<<<"), "<<<", "11.07");
+tap.test("176 - false positives - three closings", (t) => {
+  t.same(stripHtml("<<<"), "<<<", "176");
   t.end();
 });
 
-tap.test("11.08 - false positives - spaced three openings", (t) => {
-  t.same(stripHtml(" <<< "), "<<<", "11.08");
+tap.test("177 - false positives - spaced three openings", (t) => {
+  t.same(stripHtml(" <<< "), "<<<", "177");
   t.end();
 });
 
 tap.test(
-  "11.09 - false positives - tight recognised opening tag name, missing closing",
+  "178 - false positives - tight recognised opening tag name, missing closing",
   (t) => {
-    t.same(stripHtml("<a"), "", "11.09");
+    t.same(stripHtml("<a"), "", "178");
     t.end();
   }
 );
 
 tap.test(
-  "11.10 - false positives - unrecognised opening tag, missing closing",
+  "179 - false positives - unrecognised opening tag, missing closing",
   (t) => {
-    t.same(stripHtml("<yo"), "", "11.10");
+    t.same(stripHtml("<yo"), "", "179");
     t.end();
   }
 );
 
-tap.test("11.11 - false positives - missing opening, recognised tag", (t) => {
-  t.same(stripHtml("a>"), "a>", "11.11");
+tap.test("180 - false positives - missing opening, recognised tag", (t) => {
+  t.same(stripHtml("a>"), "a>", "180");
   t.end();
 });
 
-tap.test("11.12 - false positives - missing opening, unrecognised tag", (t) => {
-  t.same(stripHtml("yo>"), "yo>", "11.12");
+tap.test("181 - false positives - missing opening, unrecognised tag", (t) => {
+  t.same(stripHtml("yo>"), "yo>", "181");
   t.end();
 });
 
 tap.test(
-  "11.13 - false positives - conditionals that appear on Outlook only",
+  "182 - false positives - conditionals that appear on Outlook only",
   (t) => {
     t.same(
       stripHtml(`<!--[if (gte mso 9)|(IE)]>
@@ -1855,42 +1805,42 @@ zzz
   </table>
 <![endif]-->`),
       "zzz",
-      "11.13"
+      "182"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.14 - false positives - conditionals that are visible for Outlook only",
+  "183 - false positives - conditionals that are visible for Outlook only",
   (t) => {
     t.same(
       stripHtml(`<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->`),
       "shown for everything except Outlook",
-      "11.14 - checking also for whitespace control"
+      "183 - checking also for whitespace control"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.15 - false positives - conditionals that are visible for Outlook only",
+  "184 - false positives - conditionals that are visible for Outlook only",
   (t) => {
     t.same(
       stripHtml(`a<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->b`),
       "a\nshown for everything except Outlook\nb",
-      "11.15 - checking also for whitespace control"
+      "184 - checking also for whitespace control"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.16 - false positives - conditionals that are visible for Outlook only",
+  "185 - false positives - conditionals that are visible for Outlook only",
   (t) => {
     t.same(
       stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -1901,19 +1851,19 @@ tap.test(
     </tr>
   </table><!--<![endif]-->`),
       "shown for everything except Outlook",
-      "11.16 - all those line breaks in-between the tags need to be taken care of too"
+      "185 - all those line breaks in-between the tags need to be taken care of too"
     );
     t.end();
   }
 );
 
-tap.test("11.17 - false positives - consecutive tags", (t) => {
+tap.test("186 - false positives - consecutive tags", (t) => {
   t.same(
     stripHtml(
       "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"
     ),
     "Text First point Second point Third point Text straight after",
-    "11.17"
+    "186"
   );
   t.end();
 });
@@ -1922,88 +1872,85 @@ tap.test("11.17 - false positives - consecutive tags", (t) => {
 // 12. opts.ignoreTags
 // ==============================
 
-tap.test("12.01 - opts.ignoreTags - ignores single letter tag", (t) => {
+tap.test("187 - opts.ignoreTags - ignores single letter tag", (t) => {
   t.same(
     stripHtml("Some <b>text</b> and some more <i>text</i>.", {
       ignoreTags: ["b"],
     }),
     "Some <b>text</b> and some more text.",
-    "12.01"
+    "187"
   );
   t.end();
 });
 
-tap.test("12.02 - opts.ignoreTags - ignores singleton tag", (t) => {
+tap.test("188 - opts.ignoreTags - ignores singleton tag", (t) => {
   t.same(
     stripHtml("Some text <hr> some more <i>text</i>.", {
       ignoreTags: ["hr"],
     }),
     "Some text <hr> some more text.",
-    "12.02"
+    "188"
   );
   t.end();
 });
 
-tap.test("12.03 - opts.ignoreTags - ignores singleton tag, XHTML", (t) => {
+tap.test("189 - opts.ignoreTags - ignores singleton tag, XHTML", (t) => {
   t.same(
     stripHtml("Some text <hr/> some more <i>text</i>.", {
       ignoreTags: ["hr"],
     }),
     "Some text <hr/> some more text.",
-    "12.03"
+    "189"
   );
   t.end();
 });
 
-tap.test(
-  "12.04 - opts.ignoreTags - ignores singleton tag, spaced XHTML",
-  (t) => {
-    t.same(
-      stripHtml("Some text <hr / > some more <i>text</i>.", {
-        ignoreTags: ["hr"],
-      }),
-      "Some text <hr / > some more text.",
-      "12.04"
-    );
-    t.end();
-  }
-);
+tap.test("190 - opts.ignoreTags - ignores singleton tag, spaced XHTML", (t) => {
+  t.same(
+    stripHtml("Some text <hr / > some more <i>text</i>.", {
+      ignoreTags: ["hr"],
+    }),
+    "Some text <hr / > some more text.",
+    "190"
+  );
+  t.end();
+});
 
-tap.test("12.05 - opts.ignoreTags - ignores single zzz tag", (t) => {
+tap.test("191 - opts.ignoreTags - ignores single zzz tag", (t) => {
   t.same(
     stripHtml("Some <zzz>text</zzz> and some more <i>text</i>.", {
       ignoreTags: ["zzz"],
     }),
     "Some <zzz>text</zzz> and some more text.",
-    "12.05"
+    "191"
   );
   t.end();
 });
 
-tap.test("12.06 - opts.ignoreTags - ignores zzz singleton tag", (t) => {
+tap.test("192 - opts.ignoreTags - ignores zzz singleton tag", (t) => {
   t.same(
     stripHtml("Some text <zzz> some more <i>text</i>.", {
       ignoreTags: ["zzz"],
     }),
     "Some text <zzz> some more text.",
-    "12.06"
+    "192"
   );
   t.end();
 });
 
-tap.test("12.07 - opts.ignoreTags - ignores default ranged tag", (t) => {
+tap.test("193 - opts.ignoreTags - ignores default ranged tag", (t) => {
   t.same(
     stripHtml("Some <script>text</script> and some more <i>text</i>.", {
       ignoreTags: ["script"],
     }),
     "Some <script>text</script> and some more text.",
-    "12.07"
+    "193"
   );
   t.end();
 });
 
 tap.test(
-  "12.08 - opts.ignoreTags - ignored tag unclosed, ending with EOF",
+  "194 - opts.ignoreTags - ignored tag unclosed, ending with EOF",
   (t) => {
     // just for kicks:
     t.same(
@@ -2011,134 +1958,128 @@ tap.test(
         ignoreTags: ["b"],
       }),
       "Some <b>text</b",
-      "12.08 - if user insists, that missing bracket must be intentional"
+      "194 - if user insists, that missing bracket must be intentional"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.09 - opts.ignoreTags - recognised unclosed singleton tag, HTML",
+  "195 - opts.ignoreTags - recognised unclosed singleton tag, HTML",
   (t) => {
     t.same(
       stripHtml("Some text <hr", {
         ignoreTags: ["hr"],
       }),
       "Some text <hr",
-      "12.09"
+      "195"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.10 - opts.ignoreTags - recognised unclosed singleton tag, XHTML",
+  "196 - opts.ignoreTags - recognised unclosed singleton tag, XHTML",
   (t) => {
     t.same(
       stripHtml("Some text <hr/", {
         ignoreTags: ["hr"],
       }),
       "Some text <hr/",
-      "12.10"
+      "196"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.11 - opts.ignoreTags - kept the tag and the slash, just trimmed",
+  "197 - opts.ignoreTags - kept the tag and the slash, just trimmed",
   (t) => {
     t.same(
       stripHtml("Some text <hr / ", {
         ignoreTags: ["hr"],
       }),
       "Some text <hr /",
-      "12.11"
+      "197"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.12 - opts.ignoreTags - ignores unclosed self-closing zzz tag",
+  "198 - opts.ignoreTags - ignores unclosed self-closing zzz tag",
   (t) => {
     t.same(
       stripHtml("Some <zzz>text</zzz", {
         ignoreTags: ["zzz"],
       }),
       "Some <zzz>text</zzz",
-      "12.12"
+      "198"
     );
     t.end();
   }
 );
 
-tap.test(
-  "12.13 - opts.ignoreTags - ignores unclosed zzz singleton tag",
-  (t) => {
-    t.same(
-      stripHtml("Some text <zzz", {
-        ignoreTags: ["zzz"],
-      }),
-      "Some text <zzz",
-      "12.13"
-    );
-    t.end();
-  }
-);
+tap.test("199 - opts.ignoreTags - ignores unclosed zzz singleton tag", (t) => {
+  t.same(
+    stripHtml("Some text <zzz", {
+      ignoreTags: ["zzz"],
+    }),
+    "Some text <zzz",
+    "199"
+  );
+  t.end();
+});
 
-tap.test(
-  "12.14 - opts.ignoreTags - ignores default unclosed ranged tag",
-  (t) => {
-    t.same(
-      stripHtml("Some <script>text</script", {
-        ignoreTags: ["script"],
-      }),
-      "Some <script>text</script",
-      "12.14"
-    );
-    t.end();
-  }
-);
+tap.test("200 - opts.ignoreTags - ignores default unclosed ranged tag", (t) => {
+  t.same(
+    stripHtml("Some <script>text</script", {
+      ignoreTags: ["script"],
+    }),
+    "Some <script>text</script",
+    "200"
+  );
+  t.end();
+});
 
 // ==============================
 // 13. whitespace control
 // ==============================
 
 tap.test(
-  "13.01 - whitespace control - adds a space in place of stripped tags, tight",
+  "201 - whitespace control - adds a space in place of stripped tags, tight",
   (t) => {
-    t.same(stripHtml("a<div>b</div>c"), "a b c", "13.01");
+    t.same(stripHtml("a<div>b</div>c"), "a b c", "201");
     t.end();
   }
 );
 
 tap.test(
-  "13.02 - whitespace control - adds a space in place of stripped tags, loose",
+  "202 - whitespace control - adds a space in place of stripped tags, loose",
   (t) => {
     t.same(
       stripHtml("a <div>   b    </div>    c"),
       "a b c",
-      "13.02 - stays on one line because it was on one line"
+      "202 - stays on one line because it was on one line"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.03 - whitespace control - adds a space in place of stripped tags, tabs and LF's",
+  "203 - whitespace control - adds a space in place of stripped tags, tabs and LF's",
   (t) => {
     t.same(
       stripHtml("\t\t\ta <div>   b    </div>    c\n\n\n"),
       "a b c",
-      "13.03 - like 02 above but with trimming"
+      "203 - like 02 above but with trimming"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.04 - whitespace control - adds a linebreak between each substring piece",
+  "204 - whitespace control - adds a linebreak between each substring piece",
   (t) => {
     t.same(
       stripHtml(`a
@@ -2149,18 +2090,18 @@ tap.test(
   </div>
 c`),
       "a\n\nb\n\nc",
-      "13.04"
+      "204"
     );
     t.end();
   }
 );
 
-tap.test("13.05 - whitespace control - multiple tag combo case #1", (t) => {
-  t.same(stripHtml("z<a><b>c</b></a>y"), "z c y", "13.05");
+tap.test("205 - whitespace control - multiple tag combo case #1", (t) => {
+  t.same(stripHtml("z<a><b>c</b></a>y"), "z c y", "205");
   t.end();
 });
 
-tap.test("13.06 - whitespace control - multiple tag combo case #2", (t) => {
+tap.test("206 - whitespace control - multiple tag combo case #2", (t) => {
   t.same(
     stripHtml(`
       z
@@ -2171,131 +2112,92 @@ tap.test("13.06 - whitespace control - multiple tag combo case #2", (t) => {
         </a>
       y`),
     "z\n\nc\n\ny",
-    "13.06"
+    "206"
   );
   t.end();
 });
 
-tap.test("13.07 - whitespace control - dirty html, trailing space", (t) => {
+tap.test("207 - whitespace control - dirty html, trailing space", (t) => {
   t.same(
     stripHtml("something <article>article> here"),
     "something here",
-    "13.07"
+    "207"
   );
   t.end();
 });
 
-tap.test(
-  "13.08 - whitespace control - dirty html, few trailing spaces",
-  (t) => {
-    t.same(
-      stripHtml("something <article>article>   here"),
-      "something here",
-      "13.08"
-    );
-    t.end();
-  }
-);
+tap.test("208 - whitespace control - dirty html, few trailing spaces", (t) => {
+  t.same(
+    stripHtml("something <article>article>   here"),
+    "something here",
+    "208"
+  );
+  t.end();
+});
 
 // 14. comments
 // -----------------------------------------------------------------------------
 
-tap.test("14.01 - strips HTML comments", (t) => {
+tap.test("209 - strips HTML comments", (t) => {
   // group #1. spaces on both outsides
   t.same(
     stripHtml("aaa <!-- <tr> --> bbb"),
     "aaa bbb",
-    "14.01.01 - double space"
+    "209.01 - double space"
   );
-  t.same(
-    stripHtml("aaa <!-- <tr>--> bbb"),
-    "aaa bbb",
-    "14.01.02 - single space"
-  );
-  t.same(
-    stripHtml("aaa <!--<tr> --> bbb"),
-    "aaa bbb",
-    "14.01.03 - single space"
-  );
-  t.same(stripHtml("aaa <!--<tr>--> bbb"), "aaa bbb", "14.01.04 - no space");
+  t.same(stripHtml("aaa <!-- <tr>--> bbb"), "aaa bbb", "209.02 - single space");
+  t.same(stripHtml("aaa <!--<tr> --> bbb"), "aaa bbb", "209.03 - single space");
+  t.same(stripHtml("aaa <!--<tr>--> bbb"), "aaa bbb", "209.04 - no space");
 
   // group #2. spaces on right only
-  t.same(
-    stripHtml("aaa<!-- <tr> --> bbb"),
-    "aaa bbb",
-    "14.01.05 - double space"
-  );
-  t.same(
-    stripHtml("aaa<!-- <tr>--> bbb"),
-    "aaa bbb",
-    "14.01.06 - single space"
-  );
-  t.same(
-    stripHtml("aaa<!--<tr> --> bbb"),
-    "aaa bbb",
-    "14.01.07 - single space"
-  );
-  t.same(stripHtml("aaa<!--<tr>--> bbb"), "aaa bbb", "14.01.08 - no space");
+  t.same(stripHtml("aaa<!-- <tr> --> bbb"), "aaa bbb", "209.05 - double space");
+  t.same(stripHtml("aaa<!-- <tr>--> bbb"), "aaa bbb", "209.06 - single space");
+  t.same(stripHtml("aaa<!--<tr> --> bbb"), "aaa bbb", "209.07 - single space");
+  t.same(stripHtml("aaa<!--<tr>--> bbb"), "aaa bbb", "209.08 - no space");
 
   // group #3. spaces on left only
-  t.same(
-    stripHtml("aaa <!-- <tr> -->bbb"),
-    "aaa bbb",
-    "14.01.09 - double space"
-  );
-  t.same(
-    stripHtml("aaa <!-- <tr>-->bbb"),
-    "aaa bbb",
-    "14.01.10 - single space"
-  );
-  t.same(
-    stripHtml("aaa <!--<tr> -->bbb"),
-    "aaa bbb",
-    "14.01.11 - single space"
-  );
-  t.same(stripHtml("aaa <!--<tr>-->bbb"), "aaa bbb", "14.01.12 - no space");
+  t.same(stripHtml("aaa <!-- <tr> -->bbb"), "aaa bbb", "209.09 - double space");
+  t.same(stripHtml("aaa <!-- <tr>-->bbb"), "aaa bbb", "209.10 - single space");
+  t.same(stripHtml("aaa <!--<tr> -->bbb"), "aaa bbb", "209.11 - single space");
+  t.same(stripHtml("aaa <!--<tr>-->bbb"), "aaa bbb", "209.12 - no space");
 
   // group #4. no spaces outside
-  t.same(
-    stripHtml("aaa<!-- <tr> -->bbb"),
-    "aaa bbb",
-    "14.01.13 - double space"
-  );
-  t.same(stripHtml("aaa<!-- <tr>-->bbb"), "aaa bbb", "14.01.14 - single space");
-  t.same(stripHtml("aaa<!--<tr> -->bbb"), "aaa bbb", "14.01.15 - single space");
-  t.same(stripHtml("aaa<!--<tr>-->bbb"), "aaa bbb", "14.01.16 - no space");
+  t.same(stripHtml("aaa<!-- <tr> -->bbb"), "aaa bbb", "209.13 - double space");
+  t.same(stripHtml("aaa<!-- <tr>-->bbb"), "aaa bbb", "209.14 - single space");
+  t.same(stripHtml("aaa<!--<tr> -->bbb"), "aaa bbb", "209.15 - single space");
+  t.same(stripHtml("aaa<!--<tr>-->bbb"), "aaa bbb", "209.16 - no space");
   t.end();
 });
 
-tap.test("14.02 - HTML comments around string edges", (t) => {
-  t.same(stripHtml("aaa <!-- <tr> --> "), "aaa", "14.02.01");
-  t.same(stripHtml("aaa <!-- <tr> -->"), "aaa", "14.02.02");
+tap.test("210 - HTML comments around string edges", (t) => {
+  t.same(stripHtml("aaa <!-- <tr> --> "), "aaa", "210.01");
+  t.same(stripHtml("aaa <!-- <tr> -->"), "aaa", "210.02");
 
-  t.same(stripHtml(" <!-- <tr> --> aaa"), "aaa", "14.02.03");
-  t.same(stripHtml("<!-- <tr> -->aaa"), "aaa", "14.02.04");
+  t.same(stripHtml(" <!-- <tr> --> aaa"), "aaa", "210.03");
+  t.same(stripHtml("<!-- <tr> -->aaa"), "aaa", "210.04");
 
-  t.same(stripHtml(" <!-- <tr> --> aaa <!-- <tr> -->"), "aaa", "14.02.05");
-  t.same(stripHtml("<!-- <tr> -->aaa<!-- <tr> -->"), "aaa", "14.02.06");
-  t.same(stripHtml("   <!-- <tr> -->aaa<!-- <tr> -->   "), "aaa", "14.02.07");
+  t.same(stripHtml(" <!-- <tr> --> aaa <!-- <tr> -->"), "aaa", "210.05");
+  t.same(stripHtml("<!-- <tr> -->aaa<!-- <tr> -->"), "aaa", "210.06");
+  t.same(stripHtml("   <!-- <tr> -->aaa<!-- <tr> -->   "), "aaa", "210.07");
   t.end();
 });
 
-tap.test("14.03 - range tag is unclosed", (t) => {
+tap.test("211 - range tag is unclosed", (t) => {
   // no content besides ranged tag:
-  t.same(stripHtml('<script>alert("123")</script'), "", "14.03.01");
-  t.same(stripHtml("<script>alert('123')</script"), "", "14.03.02");
-  t.same(stripHtml('<script>alert("123")<script'), "", "14.03.03");
-  t.same(stripHtml("<script>alert('123')<script"), "", "14.03.04");
-  t.same(stripHtml('<script>alert("123")</ script'), "", "14.03.05");
-  t.same(stripHtml("<script>alert('123')</ script"), "", "14.03.06");
+  t.same(stripHtml('<script>alert("123")</script'), "", "211.01");
+  t.same(stripHtml("<script>alert('123')</script"), "", "211.02");
+  t.same(stripHtml('<script>alert("123")<script'), "", "211.03");
+  t.same(stripHtml("<script>alert('123')<script"), "", "211.04");
+  t.same(stripHtml('<script>alert("123")</ script'), "", "211.05");
+  t.same(stripHtml("<script>alert('123')</ script"), "", "211.06");
 
   // single letter left:
-  t.same(stripHtml('a<script>alert("123")</script'), "a", "14.03.07");
-  t.same(stripHtml("a<script>alert('123')</script"), "a", "14.03.08");
-  t.same(stripHtml('a<script>alert("123")<script'), "a", "14.03.09");
-  t.same(stripHtml("a<script>alert('123')<script"), "a", "14.03.10");
-  t.same(stripHtml('a<script>alert("123")</ script'), "a", "14.03.11");
-  t.same(stripHtml("a<script>alert('123')</ script"), "a", "14.03.12");
+  t.same(stripHtml('a<script>alert("123")</script'), "a", "211.07");
+  t.same(stripHtml("a<script>alert('123')</script"), "a", "211.08");
+  t.same(stripHtml('a<script>alert("123")<script'), "a", "211.09");
+  t.same(stripHtml("a<script>alert('123')<script"), "a", "211.10");
+  t.same(stripHtml('a<script>alert("123")</ script'), "a", "211.11");
+  t.same(stripHtml("a<script>alert('123')</ script"), "a", "211.12");
 
   // script excluded from ranged tags, so now only tags are removed, no contents between:
   t.same(
@@ -2303,214 +2205,199 @@ tap.test("14.03 - range tag is unclosed", (t) => {
       stripTogetherWithTheirContents: [],
     }),
     'a alert("123")',
-    "14.03.13"
+    "211.13"
   );
   t.same(
     stripHtml("a<script>alert('123')</script", {
       stripTogetherWithTheirContents: [],
     }),
     "a alert('123')",
-    "14.03.14"
+    "211.14"
   );
   t.same(
     stripHtml('a<script>alert("123")<script', {
       stripTogetherWithTheirContents: [],
     }),
     'a alert("123")',
-    "14.03.15"
+    "211.15"
   );
   t.same(
     stripHtml("a<script>alert('123')<script", {
       stripTogetherWithTheirContents: [],
     }),
     "a alert('123')",
-    "14.03.16"
+    "211.16"
   );
   t.same(
     stripHtml('a<script>alert("123")</ script', {
       stripTogetherWithTheirContents: [],
     }),
     'a alert("123")',
-    "14.03.17"
+    "211.17"
   );
   t.same(
     stripHtml("a<script>alert('123')</ script", {
       stripTogetherWithTheirContents: [],
     }),
     "a alert('123')",
-    "14.03.18"
+    "211.18"
   );
 
   // script tag ignored and left intact (opts.ignoreTags):
   t.same(
     stripHtml('a<script>alert("123")</script', { ignoreTags: ["script"] }),
     'a<script>alert("123")</script',
-    "14.03.19"
+    "211.19"
   );
   t.same(
     stripHtml("a<script>alert('123')</script", { ignoreTags: ["script"] }),
     "a<script>alert('123')</script",
-    "14.03.20"
+    "211.20"
   );
   t.same(
     stripHtml('a<script>alert("123")<script', { ignoreTags: ["script"] }),
     'a<script>alert("123")<script',
-    "14.03.21"
+    "211.21"
   );
   t.same(
     stripHtml("a<script>alert('123')<script", { ignoreTags: ["script"] }),
     "a<script>alert('123')<script",
-    "14.03.22"
+    "211.22"
   );
   t.same(
     stripHtml('a<script>alert("123")</ script', { ignoreTags: ["script"] }),
     'a<script>alert("123")</ script',
-    "14.03.23"
+    "211.23"
   );
   t.same(
     stripHtml("a<script>alert('123')</ script", { ignoreTags: ["script"] }),
     "a<script>alert('123')</ script",
-    "14.03.24"
+    "211.24"
   );
   t.end();
 });
 
-tap.test("14.04 - false positives #1 - Nunjucks code", (t) => {
-  t.same(stripHtml("a< 2zzz==>b"), "a< 2zzz==>b", "14.04.01");
+tap.test("212 - false positives #1 - Nunjucks code", (t) => {
+  t.same(stripHtml("a< 2zzz==>b"), "a< 2zzz==>b", "212");
   t.end();
 });
 
-tap.test("14.05 - unclosed tag followed by another tag - range tag", (t) => {
-  t.same(stripHtml('<script>alert("123")</script<body>'), "", "14.05");
+tap.test("213 - unclosed tag followed by another tag - range tag", (t) => {
+  t.same(stripHtml('<script>alert("123")</script<body>'), "", "213");
   t.end();
 });
 
-tap.test("14.06 - unclosed tag followed by self-closing tag", (t) => {
-  t.same(stripHtml('<script>alert("123")</script</body>'), "", "14.06");
+tap.test("214 - unclosed tag followed by self-closing tag", (t) => {
+  t.same(stripHtml('<script>alert("123")</script</body>'), "", "214");
   t.end();
 });
 
-tap.test("14.07 - unclosed tag followed by another tag", (t) => {
-  t.same(stripHtml('<script>alert("123")</script</ body>'), "", "14.07");
+tap.test("215 - unclosed tag followed by another tag", (t) => {
+  t.same(stripHtml('<script>alert("123")</script</ body>'), "", "215");
   t.end();
 });
 
-tap.test("14.08 - unclosed tag followed by another tag", (t) => {
-  t.same(stripHtml('<script>alert("123")</script<body/>'), "", "14.08");
+tap.test("216 - unclosed tag followed by another tag", (t) => {
+  t.same(stripHtml('<script>alert("123")</script<body/>'), "", "216");
   t.end();
 });
 
-tap.test("14.09 - unclosed tag followed by another unclosed tag", (t) => {
-  t.same(stripHtml('<script>alert("123")</script<body'), "", "14.05.09");
+tap.test("217 - unclosed tag followed by another unclosed tag", (t) => {
+  t.same(stripHtml('<script>alert("123")</script<body'), "", "217");
+  t.end();
+});
+
+tap.test("218 - unclosed tag followed by another tag - non-range tag", (t) => {
+  t.same(stripHtml("<article>text here</article<body>"), "text here", "218");
   t.end();
 });
 
 tap.test(
-  "14.10 - unclosed tag followed by another tag - non-range tag",
+  "219 - unclosed tag followed by another tag - non-range, self-closing tag",
   (t) => {
-    t.same(
-      stripHtml("<article>text here</article<body>"),
-      "text here",
-      "14.10"
-    );
+    t.same(stripHtml("<article>text here</article</body>"), "text here", "219");
     t.end();
   }
 );
 
 tap.test(
-  "14.11 - unclosed tag followed by another tag - non-range, self-closing tag",
-  (t) => {
-    t.same(
-      stripHtml("<article>text here</article</body>"),
-      "text here",
-      "14.11"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "14.12 - unclosed tag followed by another tag - self-closing, inner whitespace",
+  "220 - unclosed tag followed by another tag - self-closing, inner whitespace",
   (t) => {
     t.same(
       stripHtml("<article>text here</article</ body>"),
       "text here",
-      "14.12"
+      "220"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.13 - unclosed tag followed by another tag - with closing slash",
+  "221 - unclosed tag followed by another tag - with closing slash",
   (t) => {
-    t.same(
-      stripHtml("<article>text here</article<body/>"),
-      "text here",
-      "14.13"
-    );
+    t.same(stripHtml("<article>text here</article<body/>"), "text here", "221");
     t.end();
   }
 );
 
-tap.test("14.14 - unclosed tag followed by another tag - html", (t) => {
-  t.same(stripHtml("<article>text here</article<body"), "text here", "14.14");
+tap.test("222 - unclosed tag followed by another tag - html", (t) => {
+  t.same(stripHtml("<article>text here</article<body"), "text here", "222");
   t.end();
 });
 
 tap.test(
-  "14.15 - unclosed tag followed by another tag - strips many tags",
+  "223 - unclosed tag followed by another tag - strips many tags",
   (t) => {
-    t.same(stripHtml("a<something<anything<whatever<body<html"), "a", "14.15");
+    t.same(stripHtml("a<something<anything<whatever<body<html"), "a", "223");
     t.end();
   }
 );
 
 tap.test(
-  "14.16 - unclosed tag followed by another tag - bails because of spaces",
+  "224 - unclosed tag followed by another tag - bails because of spaces",
   (t) => {
     t.same(
       stripHtml("a < something < anything < whatever < body < html"),
       "a < something < anything < whatever < body < html",
-      "14.16"
+      "224"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.17 - range tags are overlapping - both default known range tags",
+  "225 - range tags are overlapping - both default known range tags",
   (t) => {
     t.same(
       stripHtml("<script>tra la <style>la</script>la la</style> rr"),
       "rr",
-      "14.17"
+      "225"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.18 - range tags are overlapping - both were just custom-set",
+  "226 - range tags are overlapping - both were just custom-set",
   (t) => {
     t.same(
       stripHtml("<zzz>tra la <yyy>la</zzz>la la</yyy> rr", {
         stripTogetherWithTheirContents: ["zzz", "yyy"],
       }),
       "rr",
-      "14.18"
+      "226"
     );
     t.end();
   }
 );
 
-tap.test("14.19 - range tags are overlapping - nested", (t) => {
+tap.test("227 - range tags are overlapping - nested", (t) => {
   t.same(
     stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["zzz", "yyy"],
     }),
     "rr",
-    "14.19"
+    "227"
   );
   t.end();
 });
@@ -2518,21 +2405,21 @@ tap.test("14.19 - range tags are overlapping - nested", (t) => {
 // 15. opts.returnRangesOnly
 // -----------------------------------------------------------------------------
 
-tap.test("15.01 - opts.returnRangesOnly - anchor wrapping text", (t) => {
+tap.test("228 - opts.returnRangesOnly - anchor wrapping text", (t) => {
   // both default known range tags
   t.same(
     stripHtml(
       'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
     ),
     "Some text click me and more text.",
-    "15.01.01 - default"
+    "228.01 - default"
   );
   t.same(
     stripHtml(
       'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
     ),
     "Some text click me and more text.",
-    "15.01.02 - hardcoded defaults"
+    "228.02 - hardcoded defaults"
   );
   t.same(
     stripHtml(
@@ -2543,19 +2430,19 @@ tap.test("15.01 - opts.returnRangesOnly - anchor wrapping text", (t) => {
       [9, 43, " "],
       [51, 56, " "],
     ],
-    "15.01.03 - opts"
+    "228.03 - opts"
   );
   t.end();
 });
 
-tap.test("15.02 - opts.returnRangesOnly - no tags were present at all", (t) => {
+tap.test("229 - opts.returnRangesOnly - no tags were present at all", (t) => {
   // t.same(stripHtml("Some text"), "Some text", "15.02.01 - control");
   t.same(
     stripHtml("Some text", {
       returnRangesOnly: true,
     }),
     [],
-    "15.02.02 - returns empty array (no ranges inside)"
+    "229 - returns empty array (no ranges inside)"
   );
   t.end();
 });
@@ -2564,196 +2451,189 @@ tap.test("15.02 - opts.returnRangesOnly - no tags were present at all", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "16.01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
+  "230 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
   (t) => {
-    t.same(stripHtml("\xa0 a \xa0"), "a", "16.01.01");
+    t.same(stripHtml("\xa0 a \xa0"), "a", "230");
     t.end();
   }
 );
 
 tap.test(
-  "16.02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all, trailing whitespace",
+  "231 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all, trailing whitespace",
   (t) => {
-    t.same(stripHtml(" \xa0 a \xa0 "), "a", "16.02");
+    t.same(stripHtml(" \xa0 a \xa0 "), "a", "231");
     t.end();
   }
 );
 
-tap.test("16.03 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", (t) => {
+tap.test("232 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", (t) => {
   t.same(
     stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }),
     "\xa0 a \xa0",
-    "16.03"
+    "232"
   );
   t.end();
 });
 
-tap.test(
-  "16.04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose",
-  (t) => {
-    t.same(
-      stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }),
-      "\xa0 a \xa0",
-      "16.04"
-    );
-    t.end();
-  }
-);
-
-tap.test("16.05 - opts.trimOnlySpaces - default", (t) => {
-  t.same(stripHtml("\xa0 <article> \xa0"), "", "16.05");
+tap.test("233 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", (t) => {
+  t.same(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }),
+    "\xa0 a \xa0",
+    "233"
+  );
   t.end();
 });
 
-tap.test("16.06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", (t) => {
+tap.test("234 - opts.trimOnlySpaces - default", (t) => {
+  t.same(stripHtml("\xa0 <article> \xa0"), "", "234");
+  t.end();
+});
+
+tap.test("235 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", (t) => {
   t.same(
     stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }),
     "\xa0\xa0",
-    "16.06"
+    "235"
   );
   t.end();
 });
 
 tap.test(
-  "16.07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags",
+  "236 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags",
   (t) => {
     t.same(
       stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true }),
       "\xa0 \xa0",
-      "16.07"
+      "236"
     );
     t.end();
   }
 );
 
-tap.test("16.08 - opts.trimOnlySpaces - whitespace around", (t) => {
-  t.same(stripHtml(" \xa0 <article> \xa0 "), "", "16.08");
+tap.test("237 - opts.trimOnlySpaces - whitespace around", (t) => {
+  t.same(stripHtml(" \xa0 <article> \xa0 "), "", "237");
   t.end();
 });
 
 tap.test(
-  "16.09 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on",
+  "238 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on",
   (t) => {
     t.same(
       stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }),
       "\xa0\xa0",
-      "16.09"
+      "238"
     );
     t.end();
   }
 );
 
 tap.test(
-  "16.10 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
+  "239 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
   (t) => {
-    t.same(stripHtml(" \t a \n "), "a", "16.10");
+    t.same(stripHtml(" \t a \n "), "a", "239");
     t.end();
   }
 );
 
 tap.test(
-  "16.11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - trimOnlySpaces = on",
+  "240 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - trimOnlySpaces = on",
   (t) => {
-    t.same(
-      stripHtml(" \t a \n ", { trimOnlySpaces: true }),
-      "\t a \n",
-      "16.11"
-    );
+    t.same(stripHtml(" \t a \n ", { trimOnlySpaces: true }), "\t a \n", "240");
     t.end();
   }
 );
 
 tap.test(
-  "16.12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - CRLF",
+  "241 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - CRLF",
   (t) => {
     t.same(
       stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }),
       "\t\n a \r\n",
-      "16.12"
+      "241"
     );
     t.end();
   }
 );
 
 tap.test(
-  "16.13 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - tag",
+  "242 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - tag",
   (t) => {
-    t.same(stripHtml("\t\r\n <article> \t\r\n"), "", "16.13");
+    t.same(stripHtml("\t\r\n <article> \t\r\n"), "", "242");
     t.end();
   }
 );
 
-tap.test("16.14 - opts.trimOnlySpaces - tabs and CRLF", (t) => {
+tap.test("243 - opts.trimOnlySpaces - tabs and CRLF", (t) => {
   t.same(
     stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }),
     "\t\r\n\t\r\n",
-    "16.14"
+    "243"
   );
   t.end();
 });
 
 tap.test(
-  "16.15 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on",
+  "244 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on",
   (t) => {
     t.same(
       stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }),
       "\t \r \n\t \r \n",
-      "16.15"
+      "244"
     );
     t.end();
   }
 );
 
 tap.test(
-  "16.16 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces = on",
+  "245 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces = on",
   (t) => {
     t.same(
       stripHtml(" \n <article> \xa0 <div> \xa0 </article> \t ", {
         trimOnlySpaces: true,
       }),
       "\n \t",
-      "16.16"
+      "245"
     );
     t.end();
   }
 );
 
-tap.test("16.17 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", (t) => {
+tap.test("246 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", (t) => {
   t.same(
     stripHtml(" \na<article> \xa0 <div> \xa0 </article>b\t ", {
       trimOnlySpaces: true,
     }),
     "\na b\t",
-    "16.17"
+    "246"
   );
   t.end();
 });
 
-tap.test("16.18 - opts.trimOnlySpaces - letters around are retained", (t) => {
+tap.test("247 - opts.trimOnlySpaces - letters around are retained", (t) => {
   t.same(
     stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
       trimOnlySpaces: true,
     }),
     "\n a b \t",
-    "16.18"
+    "247"
   );
   t.end();
 });
 
-tap.test("16.19 - opts.trimOnlySpaces - opts.ignoreTags combo", (t) => {
+tap.test("248 - opts.trimOnlySpaces - opts.ignoreTags combo", (t) => {
   t.same(
     stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
       trimOnlySpaces: true,
       ignoreTags: ["div"],
     }),
     "\n a <div> b \t",
-    "16.19"
+    "248"
   );
   t.end();
 });
 
 tap.test(
-  "16.20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognised",
+  "249 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognised",
   (t) => {
     t.same(
       stripHtml(" \n a <article> \xa0 < div> \xa0 </article> b \t ", {
@@ -2761,7 +2641,7 @@ tap.test(
         ignoreTags: ["div"],
       }),
       "\n a < div> b \t",
-      "16.20"
+      "249"
     );
     t.end();
   }
@@ -2770,124 +2650,118 @@ tap.test(
 // 17. opts.dumpLinkHrefsNearby
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "17.01 - opts.dumpLinkHrefsNearby - clean code, double quotes",
-  (t) => {
-    t.same(
-      stripHtml(
-        'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
-      ),
-      "Let's watch RT news this evening",
-      "17.01.01 - control, default behaviour"
-    );
-    t.same(
-      stripHtml(
-        'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-        { dumpLinkHrefsNearby: { enabled: false } }
-      ),
-      "Let's watch RT news this evening",
-      "17.01.02 - control, hardcoded default"
-    );
-    t.same(
-      stripHtml(
-        'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Let's watch RT news https://www.rt.com/ this evening",
-      "17.01.03 - control, default behaviour"
-    );
-    t.same(
-      stripHtml(
-        'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
-      "17.01.04 - mailto links without customisation"
-    );
-    t.same(
-      stripHtml(
-        'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
-      "17.01.05 - mailto links with customisation"
-    );
-    t.end();
-  }
-);
+tap.test("250 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
+  t.same(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
+    ),
+    "Let's watch RT news this evening",
+    "250.01 - control, default behaviour"
+  );
+  t.same(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: { enabled: false } }
+    ),
+    "Let's watch RT news this evening",
+    "250.02 - control, hardcoded default"
+  );
+  t.same(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's watch RT news https://www.rt.com/ this evening",
+    "250.03 - control, default behaviour"
+  );
+  t.same(
+    stripHtml(
+      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "250.04 - mailto links without customisation"
+  );
+  t.same(
+    stripHtml(
+      'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "250.05 - mailto links with customisation"
+  );
+  t.end();
+});
+
+tap.test("251 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+  t.same(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
+    ),
+    "Let's watch RT news this evening",
+    "251.01 - control, default behaviour"
+  );
+  t.same(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: { enabled: false } }
+    ),
+    "Let's watch RT news this evening",
+    "251.02 - control, hardcoded default"
+  );
+  t.same(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's watch RT news https://www.rt.com/ this evening",
+    "251.03 - control, default behaviour"
+  );
+  t.same(
+    stripHtml(
+      "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "251.04 - mailto links without customisation"
+  );
+  t.same(
+    stripHtml(
+      "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "251.05 - mailto links with customisation"
+  );
+  t.end();
+});
 
 tap.test(
-  "17.02 - opts.dumpLinkHrefsNearby - clean code, single quotes",
-  (t) => {
-    t.same(
-      stripHtml(
-        "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
-      ),
-      "Let's watch RT news this evening",
-      "17.02.01 - control, default behaviour"
-    );
-    t.same(
-      stripHtml(
-        "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
-        { dumpLinkHrefsNearby: { enabled: false } }
-      ),
-      "Let's watch RT news this evening",
-      "17.02.02 - control, hardcoded default"
-    );
-    t.same(
-      stripHtml(
-        "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Let's watch RT news https://www.rt.com/ this evening",
-      "17.02.03 - control, default behaviour"
-    );
-    t.same(
-      stripHtml(
-        "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
-      "17.02.04 - mailto links without customisation"
-    );
-    t.same(
-      stripHtml(
-        "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
-        { dumpLinkHrefsNearby: { enabled: true } }
-      ),
-      "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
-      "17.02.05 - mailto links with customisation"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "17.03 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
+  "252 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
   (t) => {
     t.same(
       stripHtml('Let\'s watch <a href="https://www.rt.com/" targ'),
       "Let's watch",
-      "17.03.01 - control, default behaviour"
+      "252.01 - control, default behaviour"
     );
     t.same(
       stripHtml('Let\'s watch <a href="https://www.rt.com/" targ', {
         dumpLinkHrefsNearby: { enabled: true },
       }),
       "Let's watch https://www.rt.com/",
-      "17.03.02 - only href contents are left after stripping"
+      "252.02 - only href contents are left after stripping"
     );
     t.end();
   }
 );
 
-tap.test("17.04 - opts.dumpLinkHrefsNearby - linked image", (t) => {
+tap.test("253 - opts.dumpLinkHrefsNearby - linked image", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ),
     "a b",
-    "17.04.01 - control, default"
+    "253.01 - control, default"
   );
   t.same(
     stripHtml(
@@ -2895,7 +2769,7 @@ tap.test("17.04 - opts.dumpLinkHrefsNearby - linked image", (t) => {
       { dumpLinkHrefsNearby: { enabled: false } }
     ),
     "a b",
-    "17.04.02 - control, hardcoded default"
+    "253.02 - control, hardcoded default"
   );
   t.same(
     stripHtml(
@@ -2903,19 +2777,19 @@ tap.test("17.04 - opts.dumpLinkHrefsNearby - linked image", (t) => {
       { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "a https://codsen.com b",
-    "17.04.03 - dumps href of a linked image"
+    "253.03 - dumps href of a linked image"
   );
   t.end();
 });
 
-tap.test("17.05 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
+tap.test("254 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
   // control
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ),
     "a b",
-    "17.05.01 - control, default, off"
+    "254.01 - control, default, off"
   );
 
   // control
@@ -2930,7 +2804,7 @@ tap.test("17.05 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
       }
     ),
     "a https://codsen.com b",
-    "17.05.02 - dumpLinkHrefsNearby = on; putOnNewLine = off"
+    "254.02 - dumpLinkHrefsNearby = on; putOnNewLine = off"
   );
 
   // control
@@ -2945,7 +2819,7 @@ tap.test("17.05 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
       }
     ),
     "a\n\nhttps://codsen.com\n\nb",
-    "17.05.03 - dumpLinkHrefsNearby = on; putOnNewLine = on"
+    "254.03 - dumpLinkHrefsNearby = on; putOnNewLine = on"
   );
 
   t.same(
@@ -2961,19 +2835,19 @@ tap.test("17.05 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
       }
     ),
     "a\n\n[https://codsen.com]\n\nb",
-    "17.05.04 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
+    "254.04 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
   );
   t.end();
 });
 
-tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
+tap.test("255 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
   // control
   t.same(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`
     ),
     "a z b",
-    "17.06.01 - control, default"
+    "255.01 - control, default"
   );
 
   // default dump
@@ -2987,7 +2861,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a z https://codsen.com b",
-    "17.06.02 - heads only"
+    "255.02 - heads only"
   );
 
   // wrap heads only
@@ -3002,7 +2876,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a z [https://codsen.com b",
-    "17.06.03 - heads only"
+    "255.03 - heads only"
   );
 
   // wrap heads only
@@ -3017,7 +2891,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a z https://codsen.com] b",
-    "17.06.04 - tails only"
+    "255.04 - tails only"
   );
 
   // wrap heads only
@@ -3033,7 +2907,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a z [https://codsen.com] b",
-    "17.06.05 - tails only"
+    "255.05 - tails only"
   );
 
   // + ignoreTags
@@ -3050,7 +2924,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a <div>z</div> [https://codsen.com] b",
-    "17.06.06 - ignore on a div only"
+    "255.06 - ignore on a div only"
   );
 
   // + ignoreTags
@@ -3067,7 +2941,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a z [https://codsen.com] b",
-    "17.06.07 - ignore on a div only"
+    "255.07 - ignore on a div only"
   );
 
   // + stripTogetherWithTheirContents
@@ -3084,7 +2958,7 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
       }
     ),
     "a [https://codsen.com] b",
-    "17.06.08 - whole div pair is removed"
+    "255.08 - whole div pair is removed"
   );
   t.end();
 });
@@ -3092,13 +2966,13 @@ tap.test("17.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", (t) => {
 // 18. opts.onlyStripTags
 // -----------------------------------------------------------------------------
 
-tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
+tap.test("256 - opts.onlyStripTags - base cases", (t) => {
   t.same(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening'
     ),
     "Let's watch RT news this evening",
-    "18.01.01 - control, default behaviour"
+    "256.01 - control, default behaviour"
   );
   t.same(
     stripHtml(
@@ -3106,7 +2980,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: "z" }
     ),
     'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
-    "18.01.02 - non-existent tag option - leaves all tags"
+    "256.02 - non-existent tag option - leaves all tags"
   );
   t.same(
     stripHtml(
@@ -3114,7 +2988,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: null }
     ),
     "Let's watch RT news this evening",
-    "18.01.03 - falsey option"
+    "256.03 - falsey option"
   );
   t.same(
     stripHtml(
@@ -3122,7 +2996,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: [] }
     ),
     "Let's watch RT news this evening",
-    "18.01.04 - no tags mentioned, will strip all"
+    "256.04 - no tags mentioned, will strip all"
   );
   t.same(
     stripHtml(
@@ -3130,7 +3004,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: [""] }
     ),
     "Let's watch RT news this evening",
-    "18.01.05 - empty strings will be removed and will become default, blank setting"
+    "256.05 - empty strings will be removed and will become default, blank setting"
   );
   t.same(
     stripHtml(
@@ -3138,14 +3012,14 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: ["\t", "\n"] }
     ),
     "Let's watch RT news this evening",
-    "18.01.06 - same, whitespace entries will be removed, setting will become default - strip all"
+    "256.06 - same, whitespace entries will be removed, setting will become default - strip all"
   );
   t.same(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening'
     ),
     "Let's watch RT news this evening",
-    "18.01.07 - control, default behaviour"
+    "256.07 - control, default behaviour"
   );
   t.same(
     stripHtml(
@@ -3153,7 +3027,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: "a" }
     ),
     "Let's watch <b>RT news</b> this evening",
-    "18.01.08 - only strip anchor tags"
+    "256.08 - only strip anchor tags"
   );
   t.same(
     stripHtml(
@@ -3161,7 +3035,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: ["a"] }
     ),
     "Let's watch <b>RT news</b> this evening",
-    "18.01.09 - only strip anchor tags"
+    "256.09 - only strip anchor tags"
   );
   t.same(
     stripHtml(
@@ -3169,7 +3043,7 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: "b" }
     ),
     'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
-    "18.01.10 - only strip anchor tags"
+    "256.10 - only strip anchor tags"
   );
   t.same(
     stripHtml(
@@ -3177,18 +3051,18 @@ tap.test("18.01 - opts.onlyStripTags - base cases", (t) => {
       { onlyStripTags: ["b"] }
     ),
     'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
-    "18.01.11 - only strip anchor tags"
+    "256.11 - only strip anchor tags"
   );
   t.end();
 });
 
-tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
+tap.test("257 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
   t.same(
     stripHtml(
       '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>'
     ),
     "Let's watch RT news this evening",
-    "18.02.01 - control, default behaviour"
+    "257.01 - control, default behaviour"
   );
   t.same(
     stripHtml(
@@ -3196,7 +3070,7 @@ tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
       { onlyStripTags: "a" }
     ),
     "<div>Let's watch <b>RT news</b> this evening</div>",
-    "18.02.02"
+    "257.02"
   );
   t.same(
     stripHtml(
@@ -3204,7 +3078,7 @@ tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
       { ignoreTags: "a" }
     ),
     'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
-    "18.02.03"
+    "257.03"
   );
   t.same(
     stripHtml(
@@ -3212,7 +3086,7 @@ tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
       { onlyStripTags: "a", ignoreTags: "a" }
     ),
     '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
-    "18.02.04 - both entries cancel each one out"
+    "257.04 - both entries cancel each one out"
   );
   t.same(
     stripHtml(
@@ -3220,7 +3094,7 @@ tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
       { onlyStripTags: ["a", "b"], ignoreTags: "a" }
     ),
     '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening</div>', // TODO - detect and skip adding the space here
-    "18.02.05 - both entries cancel each one out"
+    "257.05 - both entries cancel each one out"
   );
   t.same(
     stripHtml(
@@ -3228,12 +3102,12 @@ tap.test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
       { onlyStripTags: ["a"], ignoreTags: ["a", "b"] }
     ),
     '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
-    "18.02.06 - both entries cancel each one out"
+    "257.06 - both entries cancel each one out"
   );
   t.end();
 });
 
-tap.test("18.03 - opts.onlyStripTags - multiline text - defaults", (t) => {
+tap.test("258 - opts.onlyStripTags - multiline text - defaults", (t) => {
   t.same(
     stripHtml(
       `Abc
@@ -3247,12 +3121,12 @@ def`
 mn
 
 def`,
-    "18.03"
+    "258"
   );
   t.end();
 });
 
-tap.test("18.04 - opts.onlyStripTags - multiline text - option on", (t) => {
+tap.test("259 - opts.onlyStripTags - multiline text - option on", (t) => {
   t.same(
     stripHtml(
       `Abc
@@ -3297,7 +3171,7 @@ st
 uv
 
 def`,
-    "18.04"
+    "259"
   );
   t.end();
 });
@@ -3305,19 +3179,19 @@ def`,
 // 19. opts.cb
 // -----------------------------------------------------------------------------
 
-tap.test("19.01 - opts.cb - baseline, no ranges requested", (t) => {
+tap.test("260 - opts.cb - baseline, no ranges requested", (t) => {
   // baseline, notice dirty whitespace:
   t.same(
     stripHtml(`<div style="display: inline !important;" >abc</ div>`, {
       returnRangesOnly: false,
     }),
     "abc",
-    "19.01"
+    "260"
   );
   t.end();
 });
 
-tap.test("19.02 - opts.cb - baseline, ranges requested", (t) => {
+tap.test("261 - opts.cb - baseline, ranges requested", (t) => {
   t.same(
     stripHtml("<div >abc</ div>", {
       returnRangesOnly: true,
@@ -3326,12 +3200,12 @@ tap.test("19.02 - opts.cb - baseline, ranges requested", (t) => {
       [0, 6],
       [9, 16],
     ],
-    "19.02"
+    "261"
   );
   t.end();
 });
 
-tap.test("19.03 - opts.cb - replace hr with tralala", (t) => {
+tap.test("262 - opts.cb - replace hr with tralala", (t) => {
   const cb = ({
     // tag,
     deleteFrom,
@@ -3342,16 +3216,16 @@ tap.test("19.03 - opts.cb - replace hr with tralala", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, "<tralala>");
   };
-  t.same(stripHtml("abc<hr>def", { cb }), "abc<tralala>def", "19.03.01");
+  t.same(stripHtml("abc<hr>def", { cb }), "abc<tralala>def", "262.01");
   t.same(
     stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
     [[3, 7, "<tralala>"]],
-    "19.03.02"
+    "262.02"
   );
   t.end();
 });
 
-tap.test("19.04 - opts.cb - replace div with tralala", (t) => {
+tap.test("263 - opts.cb - replace div with tralala", (t) => {
   const cb = ({
     tag,
     deleteFrom,
@@ -3369,7 +3243,7 @@ tap.test("19.04 - opts.cb - replace div with tralala", (t) => {
   t.same(
     stripHtml("<div >abc</ div>", { cb }),
     "<tralala>abc</tralala>",
-    "19.04.01"
+    "263.01"
   );
   t.same(
     stripHtml("<div >abc</ div>", {
@@ -3380,12 +3254,12 @@ tap.test("19.04 - opts.cb - replace div with tralala", (t) => {
       [0, 6, "<tralala>"],
       [9, 16, "</tralala>"],
     ],
-    "19.04.02"
+    "263.02"
   );
   t.end();
 });
 
-tap.test("19.05 - opts.cb - replace only hr", (t) => {
+tap.test("264 - opts.cb - replace only hr", (t) => {
   const cb = ({
     tag,
     deleteFrom,
@@ -3405,17 +3279,17 @@ tap.test("19.05 - opts.cb - replace only hr", (t) => {
   t.same(
     stripHtml("abc<hr>def<span>ghi</span>jkl", { cb }),
     "abc<tralala>def<span>ghi</span>jkl",
-    "19.05.01"
+    "264.01"
   );
   t.same(
     stripHtml("abc<hr>def<span>ghi</span>jkl", { returnRangesOnly: true, cb }),
     [[3, 7, "<tralala>"]],
-    "19.05.02"
+    "264.02"
   );
   t.end();
 });
 
-tap.test("19.06 - opts.cb - readme example one", (t) => {
+tap.test("265 - opts.cb - readme example one", (t) => {
   const cb = ({
     // tag,
     deleteFrom,
@@ -3426,17 +3300,17 @@ tap.test("19.06 - opts.cb - readme example one", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, insert);
   };
-  t.same(stripHtml("abc<hr>def", { cb }), "abc def", "19.06.01");
+  t.same(stripHtml("abc<hr>def", { cb }), "abc def", "265.01");
   t.same(
     stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
     [[3, 7, " "]],
-    "19.06.02"
+    "265.02"
   );
   t.end();
 });
 
 tap.test(
-  "19.07 - opts.cb - ignored tags are also being pinged, with null values",
+  "266 - opts.cb - ignored tags are also being pinged, with null values",
   (t) => {
     const capturedTags = [];
     const cb = ({
@@ -3451,14 +3325,14 @@ tap.test(
       capturedTags.push(tag.name);
     };
     const res = stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] });
-    t.same(res, "abc<hr>def ghi", "19.07.01");
-    t.same(capturedTags, ["hr", "br"], "19.07.02");
+    t.same(res, "abc<hr>def ghi", "266.01");
+    t.same(capturedTags, ["hr", "br"], "266.02");
     t.end();
   }
 );
 
 tap.test(
-  "19.08 - opts.cb - ignored tags are also being pinged, with null values",
+  "267 - opts.cb - ignored tags are also being pinged, with null values",
   (t) => {
     const capturedTags = [];
     const cb = ({
@@ -3477,13 +3351,13 @@ tap.test(
       cb,
       ignoreTags: ["hr"],
     });
-    t.same(res, [[10, 14, " "]], "19.08.01");
-    t.same(capturedTags, ["hr", "br"], "19.08.02");
+    t.same(res, [[10, 14, " "]], "267.01");
+    t.same(capturedTags, ["hr", "br"], "267.02");
     t.end();
   }
 );
 
-tap.test("19.09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
+tap.test("268 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
   const capturedTags = [];
   // const rangesArr = [];
   const cb = ({
@@ -3530,13 +3404,13 @@ tap.test("19.09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
         name: "br",
       },
     ],
-    "19.09"
+    "268.01"
   );
   t.end();
 });
 
 tap.test(
-  "19.10 - opts.cb - cb.tag contents are right on non-ignored tags",
+  "269 - opts.cb - cb.tag contents are right on non-ignored tags",
   (t) => {
     const capturedTags = [];
     // const rangesArr = [];
@@ -3620,7 +3494,7 @@ tap.test(
           slashPresent: 30,
         },
       ],
-      "19.10"
+      "269.01"
     );
     t.end();
   }

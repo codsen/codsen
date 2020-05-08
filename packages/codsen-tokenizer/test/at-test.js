@@ -5,7 +5,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`,
+  `01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`,
   (t) => {
     const gathered = [];
     ct(`<style>@media a {.b{c}}</style>`, {
@@ -54,14 +54,14 @@ tap.test(
           end: 31,
         },
       ],
-      "00.01"
+      "01.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
+  `02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
   (t) => {
     const gathered = [];
     ct(`<style>@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}</style>`, {
@@ -157,7 +157,7 @@ tap.test(
           end: 53,
         },
       ],
-      "00.02"
+      "02.01"
     );
     t.end();
   }
@@ -166,93 +166,90 @@ tap.test(
 // 01. simple
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`,
-  (t) => {
-    const gathered = [];
-    ct(
-      `<style>
+tap.test(`03 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, (t) => {
+  const gathered = [];
+  ct(
+    `<style>
 @media (max-width: 600px) {
   .xx[z] {a:1;}
 }
 </style>`,
+    {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    }
+  );
+  t.match(
+    gathered,
+    [
       {
-        tagCb: (obj) => {
-          gathered.push(obj);
-        },
-      }
-    );
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-        },
-        {
-          type: "text",
-          start: 7,
-          end: 8,
-        },
-        {
-          type: "text",
-          start: 35,
-          end: 38,
-        },
-        {
-          type: "rule",
-          start: 38,
-          end: 51,
-          openingCurlyAt: 45,
-          closingCurlyAt: 50,
-          selectorsStart: 38,
-          selectorsEnd: 44,
-          selectors: [
-            {
-              value: ".xx[z]",
-              selectorStarts: 38,
-              selectorEnds: 44,
-            },
-          ],
-        },
-        {
-          type: "text",
-          start: 51,
-          end: 52,
-        },
-        {
-          type: "at",
-          start: 8,
-          end: 53,
-          identifier: "media",
-          identifierStartsAt: 9,
-          identifierEndsAt: 14,
-          query: "(max-width: 600px)",
-          queryStartsAt: 15,
-          queryEndsAt: 33,
-          openingCurlyAt: 34,
-          closingCurlyAt: 52,
-        },
-        {
-          type: "text",
-          start: 53,
-          end: 54,
-        },
-        {
-          type: "tag",
-          start: 54,
-          end: 62,
-        },
-      ],
-      "01.01"
-    );
-    t.end();
-  }
-);
+        type: "tag",
+        start: 0,
+        end: 7,
+      },
+      {
+        type: "text",
+        start: 7,
+        end: 8,
+      },
+      {
+        type: "text",
+        start: 35,
+        end: 38,
+      },
+      {
+        type: "rule",
+        start: 38,
+        end: 51,
+        openingCurlyAt: 45,
+        closingCurlyAt: 50,
+        selectorsStart: 38,
+        selectorsEnd: 44,
+        selectors: [
+          {
+            value: ".xx[z]",
+            selectorStarts: 38,
+            selectorEnds: 44,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 51,
+        end: 52,
+      },
+      {
+        type: "at",
+        start: 8,
+        end: 53,
+        identifier: "media",
+        identifierStartsAt: 9,
+        identifierEndsAt: 14,
+        query: "(max-width: 600px)",
+        queryStartsAt: 15,
+        queryEndsAt: 33,
+        openingCurlyAt: 34,
+        closingCurlyAt: 52,
+      },
+      {
+        type: "text",
+        start: 53,
+        end: 54,
+      },
+      {
+        type: "tag",
+        start: 54,
+        end: 62,
+      },
+    ],
+    "03.01"
+  );
+  t.end();
+});
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
+  `04 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
   (t) => {
     const gathered = [];
     ct(
@@ -328,7 +325,7 @@ tap.test(
           end: 52,
         },
       ],
-      "01.02"
+      "04.01"
     );
     t.end();
   }

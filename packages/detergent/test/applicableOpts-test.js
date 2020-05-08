@@ -7,7 +7,7 @@ import { det as det1 } from "../dist/detergent.esm";
 // ================================================
 
 tap.test(
-  `01.01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
+  `01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
     t.same(
       Object.keys(
@@ -29,7 +29,8 @@ tap.test(
         "convertDotsToEllipsis",
         "stripHtml",
         "eol",
-      ].sort()
+      ].sort(),
+      "01"
     );
     t.end();
   }

@@ -7,47 +7,47 @@ import { det, mixer, allCombinations } from "../t-util/util";
 // ==============================
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
+  `01 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
   (t) => {
     t.equal(
       det(t, 0, `aAa\n\nbBb\n\ncCc`).res,
       "aAa<br/>\n<br/>\nbBb<br/>\n<br/>\ncCc",
-      "01.01"
+      "01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - turns into an uppercase`,
+  `02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - turns into an uppercase`,
   (t) => {
     t.equal(
       det(t, 0, `aAa\n\nbBb\n\ncCc`, {
         cb: (str) => str.toUpperCase(),
       }).res,
       "AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC",
-      "01.02"
+      "02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
+  `03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`,
   (t) => {
     t.equal(
       det1(`<b>aAa\n\nbBb\n\ncCc</b>`, {
         cb: (str) => str.toUpperCase(),
       }).res,
       "<b>AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC</b>",
-      "01.03"
+      "03"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
+  `04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
   (t) => {
     allCombinations.forEach((opt, n) => {
       t.equal(
@@ -68,7 +68,7 @@ tap.test(
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
+  `05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
   (t) => {
     // warmup:
     t.equal(
@@ -76,7 +76,8 @@ tap.test(
         stripHtml: true,
         cb: (str) => str.toUpperCase(),
       }).res,
-      "ABC DEF"
+      "ABC DEF",
+      "05.01"
     );
     // now mixer:
     mixer({

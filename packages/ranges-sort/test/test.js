@@ -5,26 +5,26 @@ import srt from "../dist/ranges-sort.esm";
 // 0. THROWS
 // ==============================
 
-tap.test("00.01 - not array", (t) => {
+tap.test("01 - not array", (t) => {
   t.throws(() => {
     srt(null);
-  });
+  }, "01.01");
   t.throws(() => {
     srt(1);
-  });
+  }, "01.02");
   t.throws(() => {
     srt(true);
-  });
+  }, "01.03");
   t.throws(() => {
     srt({ e: true });
-  });
+  }, "01.04");
   t.end();
 });
 
-tap.test("00.02 - not two arguments in one of ranges", (t) => {
+tap.test("02 - not two arguments in one of ranges", (t) => {
   t.throws(() => {
     srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true });
-  });
+  }, "02.01");
   t.throws(() => {
     srt(
       [
@@ -33,7 +33,7 @@ tap.test("00.02 - not two arguments in one of ranges", (t) => {
       ],
       { strictlyTwoElementsInRangeArrays: true }
     );
-  });
+  }, "02.02");
   t.throws(() => {
     srt(
       [
@@ -45,59 +45,59 @@ tap.test("00.02 - not two arguments in one of ranges", (t) => {
         strictlyTwoElementsInRangeArrays: true,
       }
     );
-  });
+  }, "02.03");
   t.doesNotThrow(() => {
     srt([
       [1, 2],
       [4, 5],
       [7, 8],
     ]);
-  });
+  }, "02.04");
   t.doesNotThrow(() => {
     srt([]);
-  });
+  }, "02.05");
   // with defaults opts
   t.doesNotThrow(() => {
     srt([[1, 2, 3]]);
-  });
+  }, "02.06");
   t.doesNotThrow(() => {
     srt([
       [1, 2, 3],
       [4, 5, 6],
     ]);
-  });
+  }, "02.07");
   t.doesNotThrow(() => {
     srt([
       [1, 2],
       [4, 5, 6],
       [7, 8],
     ]);
-  });
+  }, "02.08");
   t.end();
 });
 
-tap.test("00.03 - some/all range indexes are not natural numbers", (t) => {
+tap.test("03 - some/all range indexes are not natural numbers", (t) => {
   t.doesNotThrow(() => {
     srt([[0, 3]]);
-  });
+  }, "03.01");
   t.throws(() => {
     srt([[0.2, 3]]);
-  });
+  }, "03.02");
   t.throws(() => {
     srt([[0.2, 3.3]]);
-  });
+  }, "03.03");
   t.throws(() => {
     srt([[2, 3.3]]);
-  });
+  }, "03.04");
   t.throws(() => {
     srt([[0.2, 3.3]]);
-  });
+  }, "03.05");
   t.throws(() => {
     srt([[0.2, 33]]);
-  });
+  }, "03.06");
   t.throws(() => {
     srt([[0.2, 33, 55, 66.7]]);
-  });
+  }, "03.07");
   t.end();
 });
 
@@ -105,18 +105,18 @@ tap.test("00.03 - some/all range indexes are not natural numbers", (t) => {
 // 01. Sorting
 // ==============================
 
-tap.test("01.01 - no ranges given", (t) => {
-  t.same(srt([]), [], "01.01 - copes fine");
+tap.test("04 - no ranges given", (t) => {
+  t.same(srt([]), [], "04 - copes fine");
   t.end();
 });
 
-tap.test("01.02 - only one range given", (t) => {
-  t.same(srt([[0, 3]]), [[0, 3]], "01.02.01");
-  t.same(srt([[0, 3, "zzz"]]), [[0, 3, "zzz"]], "01.02.02");
+tap.test("05 - only one range given", (t) => {
+  t.same(srt([[0, 3]]), [[0, 3]], "05.01");
+  t.same(srt([[0, 3, "zzz"]]), [[0, 3, "zzz"]], "05.02");
   t.end();
 });
 
-tap.test("01.03 - two ranges", (t) => {
+tap.test("06 - two ranges", (t) => {
   t.same(
     srt([
       [0, 3],
@@ -126,7 +126,7 @@ tap.test("01.03 - two ranges", (t) => {
       [0, 3],
       [5, 6],
     ],
-    "01.03.01"
+    "06.01"
   );
   t.same(
     srt([
@@ -137,7 +137,7 @@ tap.test("01.03 - two ranges", (t) => {
       [0, 3],
       [5, 6],
     ],
-    "01.03.02"
+    "06.02"
   );
   t.same(
     srt([
@@ -148,7 +148,7 @@ tap.test("01.03 - two ranges", (t) => {
       [0, 3, "zzz"],
       [5, 6],
     ],
-    "01.03.03"
+    "06.03"
   );
   t.same(
     srt([
@@ -159,12 +159,12 @@ tap.test("01.03 - two ranges", (t) => {
       [0, 3, "zzz"],
       [5, 6],
     ],
-    "01.03.04"
+    "06.04"
   );
   t.end();
 });
 
-tap.test("01.04 - many ranges", (t) => {
+tap.test("07 - many ranges", (t) => {
   t.same(
     srt([
       [0, 3],
@@ -176,7 +176,7 @@ tap.test("01.04 - many ranges", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "01.04.01"
+    "07.01"
   );
   t.same(
     srt([
@@ -189,7 +189,7 @@ tap.test("01.04 - many ranges", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "01.04.02"
+    "07.02"
   );
   t.same(
     srt([
@@ -202,7 +202,7 @@ tap.test("01.04 - many ranges", (t) => {
       [0, 8],
       [5, 6],
     ],
-    "01.04.03"
+    "07.03"
   );
   t.same(
     srt([
@@ -213,7 +213,7 @@ tap.test("01.04 - many ranges", (t) => {
       [5, 6],
       [5, 6],
     ],
-    "01.04.04 - same ranges"
+    "07.04 - same ranges"
   );
   t.same(
     srt([
@@ -224,7 +224,7 @@ tap.test("01.04 - many ranges", (t) => {
       [5, 6],
       [5, 6, "zzz"],
     ],
-    "01.04.05 - same ranges"
+    "07.05 - same ranges"
   );
   t.throws(() => {
     srt(
@@ -234,7 +234,7 @@ tap.test("01.04 - many ranges", (t) => {
       ],
       { strictlyTwoElementsInRangeArrays: true }
     );
-  });
+  }, "07.06");
   t.same(
     srt([
       [9, 12],
@@ -244,7 +244,7 @@ tap.test("01.04 - many ranges", (t) => {
       [9, 12],
       [9, 15],
     ],
-    "01.04.07"
+    "07.07"
   );
   t.end();
 });
@@ -253,7 +253,7 @@ tap.test("01.04 - many ranges", (t) => {
 // 02. Ad-Hoc
 // ==============================
 
-tap.test("02.01 - does not mutate the input arg", (t) => {
+tap.test("08 - does not mutate the input arg", (t) => {
   const original = [
     [5, 6],
     [3, 4],
@@ -267,7 +267,7 @@ tap.test("02.01 - does not mutate the input arg", (t) => {
       [3, 4],
       [1, 2],
     ],
-    "02.01"
+    "08.01"
   );
   t.end();
 });
@@ -276,7 +276,7 @@ tap.test("02.01 - does not mutate the input arg", (t) => {
 // 3. EXAMPLES FROM README
 // ==============================
 
-tap.test("03.01 - readme example #1", (t) => {
+tap.test("09 - readme example #1", (t) => {
   t.same(
     srt([
       [5, 6],
@@ -286,12 +286,12 @@ tap.test("03.01 - readme example #1", (t) => {
       [1, 3],
       [5, 6],
     ],
-    "03.01"
+    "09"
   );
   t.end();
 });
 
-tap.test("03.02 - readme example #2", (t) => {
+tap.test("10 - readme example #2", (t) => {
   t.same(
     srt([
       [5, 6],
@@ -303,40 +303,40 @@ tap.test("03.02 - readme example #2", (t) => {
       [5, 3],
       [5, 6],
     ],
-    "03.02"
+    "10"
   );
   t.end();
 });
 
-tap.test("03.03 - readme example #3", (t) => {
+tap.test("11 - readme example #3", (t) => {
   t.throws(() => {
     srt([[1, 2], []]); // throws, because there's at least one empty range
-  });
+  }, "11");
   t.end();
 });
 
-tap.test("03.04 - readme example #4", (t) => {
+tap.test("12 - readme example #4", (t) => {
   t.throws(() => {
     srt([["a"]]); // throws, because range is given as string
-  });
+  }, "12");
   t.end();
 });
 
-tap.test("03.05 - an extra for readme example #4", (t) => {
+tap.test("13 - an extra for readme example #4", (t) => {
   t.throws(() => {
     srt([[1, "a"]]); // throws, because range is given as string
-  });
+  }, "13");
   t.end();
 });
 
-tap.test("03.06 readme example #5", (t) => {
+tap.test("14 readme example #5", (t) => {
   t.throws(() => {
     srt([[1], [2]]); // throws, because one index is not a range
-  });
+  }, "14");
   t.end();
 });
 
-tap.test("03.07 readme example #6", (t) => {
+tap.test("15 readme example #6", (t) => {
   t.same(
     srt([
       [3, 4, "aaa", "bbb"],
@@ -346,7 +346,7 @@ tap.test("03.07 readme example #6", (t) => {
       [1, 2, "zzz"],
       [3, 4, "aaa", "bbb"],
     ],
-    "03.07 - 3rd argument and onwards are ignored"
+    "15 - 3rd argument and onwards are ignored"
   );
   t.end();
 });
@@ -356,7 +356,7 @@ tap.test("03.07 readme example #6", (t) => {
 // ==============================
 
 // TODO:
-tap.test("04.01 - calls progress callback correctly", (t) => {
+tap.test("16 - calls progress callback correctly", (t) => {
   t.same(
     srt(
       [
@@ -373,7 +373,7 @@ tap.test("04.01 - calls progress callback correctly", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "04.01.01 - callback fn is null"
+    "16.01 - callback fn is null"
   );
   t.same(
     srt(
@@ -391,7 +391,7 @@ tap.test("04.01 - calls progress callback correctly", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "04.01.02 - callback fn is false"
+    "16.02 - callback fn is false"
   );
   t.same(
     srt(
@@ -407,7 +407,7 @@ tap.test("04.01 - calls progress callback correctly", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "04.01.03 - empty opts obj"
+    "16.03 - empty opts obj"
   );
   t.same(
     srt(
@@ -428,7 +428,7 @@ tap.test("04.01 - calls progress callback correctly", (t) => {
       [5, 6],
       [5, 8],
     ],
-    "04.01.04 - baseline, no fn to call"
+    "16.04 - baseline, no fn to call"
   );
   t.end();
 });

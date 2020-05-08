@@ -339,7 +339,7 @@ const prettifiedContents = `{
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - default sort, called on the whole folder", async (t) => {
+tap.test("01 - default sort, called on the whole folder", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -393,11 +393,11 @@ tap.test("01.01 - default sort, called on the whole folder", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents);
+  t.same(await processedFileContents, sortedTestFileContents, "01.01");
   t.end();
 });
 
-tap.test("01.02 - sort, -t (tabs) mode", async (t) => {
+tap.test("02 - sort, -t (tabs) mode", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -436,11 +436,11 @@ tap.test("01.02 - sort, -t (tabs) mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTabbedTestFileContents);
+  t.same(await processedFileContents, sortedTabbedTestFileContents, "02.01");
   t.end();
 });
 
-tap.test("01.03 - sort, there's a broken JSON among files", async (t) => {
+tap.test("03 - sort, there's a broken JSON among files", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -498,11 +498,11 @@ tap.test("01.03 - sort, there's a broken JSON among files", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents);
+  t.same(await processedFileContents, sortedTestFileContents, "03.01");
   t.end();
 });
 
-tap.test("01.04 - silent mode", async (t) => {
+tap.test("04 - silent mode", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -561,11 +561,11 @@ tap.test("01.04 - silent mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(processedFileContents, sortedTestFileContents);
+  t.same(processedFileContents, sortedTestFileContents, "04.01");
   t.end();
 });
 
-tap.test("01.05 - fixes minified dotfiles in JSON format", async (t) => {
+tap.test("05 - fixes minified dotfiles in JSON format", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -583,11 +583,11 @@ tap.test("01.05 - fixes minified dotfiles in JSON format", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, prettifiedContents);
+  t.same(await processedFileContents, prettifiedContents, "05.01");
   t.end();
 });
 
-tap.test("01.06 - topmost level is array", async (t) => {
+tap.test("06 - topmost level is array", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -632,13 +632,14 @@ tap.test("01.06 - topmost level is array", async (t) => {
     "c": "d",
     "p": "r"
   }
-]\n`
+]\n`,
+    "06.01"
   );
   t.end();
 });
 
 tap.test(
-  "01.07 - when asked, sorts arrays which contain only strings",
+  "07 - when asked, sorts arrays which contain only strings",
   async (t) => {
     const tempFolder = tempy.directory();
     // const tempFolder = "temp";
@@ -669,14 +670,15 @@ tap.test(
   "M",
   "z",
   "Z"
-]\n`
+]\n`,
+      "07.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.08 - when not asked, does not sort arrays which contain only strings",
+  "08 - when not asked, does not sort arrays which contain only strings",
   async (t) => {
     const tempFolder = tempy.directory();
     // const tempFolder = "temp";
@@ -697,13 +699,14 @@ tap.test(
       .catch((err) => t.fail(err));
     t.same(
       await processedFileContents,
-      `${JSON.stringify(sourceArr, null, 2)}\n`
+      `${JSON.stringify(sourceArr, null, 2)}\n`,
+      "08.01"
     );
     t.end();
   }
 );
 
-tap.test("01.09 - array in deeper levels sorted (upon request)", async (t) => {
+tap.test("09 - array in deeper levels sorted (upon request)", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -752,34 +755,35 @@ tap.test("01.09 - array in deeper levels sorted (upon request)", async (t) => {
       ]
     ]
   }
-}\n`
+}\n`,
+    "09.01"
   );
   t.end();
 });
 
-tap.test("01.10 - version output mode", async (t) => {
+tap.test("10 - version output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.equal(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version, "10.01");
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.equal(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version, "10.02");
   t.end();
 });
 
-tap.test("01.11 - help output mode", async (t) => {
+tap.test("11 - help output mode", async (t) => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/);
-  t.match(reportedVersion1.stdout, /Options/);
-  t.match(reportedVersion1.stdout, /Example/);
+  t.match(reportedVersion1.stdout, /Usage/, "11.01");
+  t.match(reportedVersion1.stdout, /Options/, "11.02");
+  t.match(reportedVersion1.stdout, /Example/, "11.03");
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/);
-  t.match(reportedVersion2.stdout, /Options/);
-  t.match(reportedVersion2.stdout, /Example/);
+  t.match(reportedVersion2.stdout, /Usage/, "11.04");
+  t.match(reportedVersion2.stdout, /Options/, "11.05");
+  t.match(reportedVersion2.stdout, /Example/, "11.06");
   t.end();
 });
 
-tap.test("01.12 - no files found in the given directory", async (t) => {
+tap.test("12 - no files found in the given directory", async (t) => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -789,12 +793,13 @@ tap.test("01.12 - no files found in the given directory", async (t) => {
   // CLI will complain no files could be found
   t.match(
     stdOutContents.stdout,
-    /The inputs don't lead to any json files! Exiting./
+    /The inputs don't lead to any json files! Exiting./,
+    "12"
   );
   t.end();
 });
 
-tap.test("01.13 - package.json is sorted by default", async (t) => {
+tap.test("13 - package.json is sorted by default", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -827,12 +832,13 @@ tap.test("01.13 - package.json is sorted by default", async (t) => {
   "dependencies": {
     "ast-monkey-traverse": "^1.11.31"
   }
-}\n`
+}\n`,
+    "13.01"
   );
   t.end();
 });
 
-tap.test("01.14 - package.json is not sorted under -p flag", async (t) => {
+tap.test("14 - package.json is not sorted under -p flag", async (t) => {
   const tempFolder = tempy.directory();
   const source = `{
   "dependencies": {
@@ -857,14 +863,14 @@ tap.test("01.14 - package.json is not sorted under -p flag", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, source);
+  t.same(await processedFileContents, source, "14.01");
   t.end();
 });
 
 // 02. opts: -c or --ci - the CI mode
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - CI mode, something to sort, -c flag", async (t) => {
+tap.test("15 - CI mode, something to sort, -c flag", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -905,7 +911,7 @@ tap.test("02.01 - CI mode, something to sort, -c flag", async (t) => {
   t.end();
 });
 
-tap.test("02.02 - CI mode, something to sort, --ci flag", async (t) => {
+tap.test("16 - CI mode, something to sort, --ci flag", async (t) => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";

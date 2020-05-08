@@ -5,7 +5,7 @@ import flattenAllArrays from "../dist/object-flatten-all-arrays.esm";
 // Normal use
 // ==========
 
-tap.test("01.01 - simple plain object, one array", (t) => {
+tap.test("01 - simple plain object, one array", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -35,12 +35,12 @@ tap.test("01.01 - simple plain object, one array", (t) => {
       ],
       d: "d",
     },
-    "01.01"
+    "01"
   );
   t.end();
 });
 
-tap.test("01.02 - simple plain object, two arrays", (t) => {
+tap.test("02 - simple plain object, two arrays", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -86,12 +86,12 @@ tap.test("01.02 - simple plain object, two arrays", (t) => {
         },
       ],
     },
-    "01.02"
+    "02"
   );
   t.end();
 });
 
-tap.test("01.03 - nested simple plain object, one array", (t) => {
+tap.test("03 - nested simple plain object, one array", (t) => {
   t.same(
     flattenAllArrays([
       {
@@ -125,12 +125,12 @@ tap.test("01.03 - nested simple plain object, one array", (t) => {
         d: "d",
       },
     ],
-    "01.03"
+    "03"
   );
   t.end();
 });
 
-tap.test("01.04 - nested objects", (t) => {
+tap.test("04 - nested objects", (t) => {
   t.same(
     flattenAllArrays([
       "z1",
@@ -154,12 +154,12 @@ tap.test("01.04 - nested objects", (t) => {
       },
       "z2",
     ],
-    "01.04"
+    "04"
   );
   t.end();
 });
 
-tap.test("01.05 - multiple nested arrays", (t) => {
+tap.test("05 - multiple nested arrays", (t) => {
   t.same(
     flattenAllArrays([
       [
@@ -221,12 +221,12 @@ tap.test("01.05 - multiple nested arrays", (t) => {
         ],
       ],
     ],
-    "01.05"
+    "05"
   );
   t.end();
 });
 
-tap.test("01.06 - array contents are not of the same type", (t) => {
+tap.test("06 - array contents are not of the same type", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -258,7 +258,7 @@ tap.test("01.06 - array contents are not of the same type", (t) => {
         "z",
       ],
     },
-    "01.06.01 - default"
+    "06.01 - default"
   );
   t.same(
     flattenAllArrays(
@@ -288,12 +288,12 @@ tap.test("01.06 - array contents are not of the same type", (t) => {
       a: "a",
       c: [],
     },
-    "01.06.02 - opts.flattenArraysContainingStringsToBeEmpty"
+    "06.02 - opts.flattenArraysContainingStringsToBeEmpty"
   );
   t.end();
 });
 
-tap.test("01.07 - multiple types in an array #1", (t) => {
+tap.test("07 - multiple types in an array #1", (t) => {
   t.same(
     flattenAllArrays({
       d: "d",
@@ -341,12 +341,12 @@ tap.test("01.07 - multiple types in an array #1", (t) => {
       ],
       d: "d",
     },
-    "01.07"
+    "07"
   );
   t.end();
 });
 
-tap.test("01.08 - multiple types in an array #2", (t) => {
+tap.test("08 - multiple types in an array #2", (t) => {
   t.same(
     flattenAllArrays({
       b: [
@@ -380,12 +380,12 @@ tap.test("01.08 - multiple types in an array #2", (t) => {
       ],
       a: "aaa",
     },
-    "01.08"
+    "08"
   );
   t.end();
 });
 
-tap.test("01.09 - simple array, two ojects", (t) => {
+tap.test("09 - simple array, two ojects", (t) => {
   t.same(
     flattenAllArrays([
       {
@@ -401,12 +401,12 @@ tap.test("01.09 - simple array, two ojects", (t) => {
         b: "b",
       },
     ],
-    "01.09"
+    "09"
   );
   t.end();
 });
 
-tap.test("01.10 - simple array, two nested ojects", (t) => {
+tap.test("10 - simple array, two nested ojects", (t) => {
   t.same(
     flattenAllArrays([
       {
@@ -422,12 +422,12 @@ tap.test("01.10 - simple array, two nested ojects", (t) => {
         b: { b: "b" },
       },
     ],
-    "01.10"
+    "10"
   );
   t.end();
 });
 
-tap.test("01.11 - array, mix of ojects, arrays and strings", (t) => {
+tap.test("11 - array, mix of ojects, arrays and strings", (t) => {
   t.same(
     flattenAllArrays([
       "zzz",
@@ -447,7 +447,7 @@ tap.test("01.11 - array, mix of ojects, arrays and strings", (t) => {
       },
       ["yyy"],
     ],
-    "01.11.01 - default"
+    "11.01 - default"
   );
   t.same(
     flattenAllArrays(
@@ -466,12 +466,12 @@ tap.test("01.11 - array, mix of ojects, arrays and strings", (t) => {
       }
     ),
     [],
-    "01.11.02 - opts"
+    "11.02 - opts"
   );
   t.end();
 });
 
-tap.test("01.12 - arrays within objects, strings as elements", (t) => {
+tap.test("12 - arrays within objects, strings as elements", (t) => {
   t.same(
     flattenAllArrays({
       a: {
@@ -483,7 +483,7 @@ tap.test("01.12 - arrays within objects, strings as elements", (t) => {
         b: ["c", "d"],
       },
     },
-    "01.12.01 - default"
+    "12.01 - default"
   );
   t.same(
     flattenAllArrays(
@@ -501,7 +501,7 @@ tap.test("01.12 - arrays within objects, strings as elements", (t) => {
         b: [],
       },
     },
-    "01.12.02 - opts"
+    "12.02 - opts"
   );
   t.end();
 });
@@ -510,33 +510,33 @@ tap.test("01.12 - arrays within objects, strings as elements", (t) => {
 // Edge cases
 // ==========
 
-tap.test("02.01 - empty object as input", (t) => {
-  t.same(flattenAllArrays({}), {}, "02.01");
+tap.test("13 - empty object as input", (t) => {
+  t.same(flattenAllArrays({}), {}, "13");
   t.end();
 });
 
-tap.test("02.02 - empty array as input", (t) => {
-  t.same(flattenAllArrays([]), [], "02.02");
+tap.test("14 - empty array as input", (t) => {
+  t.same(flattenAllArrays([]), [], "14");
   t.end();
 });
 
-tap.test("02.03 - empty string as input", (t) => {
-  t.same(flattenAllArrays(""), "", "02.03");
+tap.test("15 - empty string as input", (t) => {
+  t.same(flattenAllArrays(""), "", "15");
   t.end();
 });
 
-tap.test("02.04 - null as input", (t) => {
-  t.same(flattenAllArrays(null), null, "02.04");
+tap.test("16 - null as input", (t) => {
+  t.same(flattenAllArrays(null), null, "16");
   t.end();
 });
 
-tap.test("02.05 - undefined as input", (t) => {
-  t.same(flattenAllArrays(undefined), undefined, "02.05");
+tap.test("17 - undefined as input", (t) => {
+  t.same(flattenAllArrays(undefined), undefined, "17");
   t.end();
 });
 
-tap.test("02.06 - nothing in the input", (t) => {
-  t.same(flattenAllArrays(), undefined, "02.06");
+tap.test("18 - nothing in the input", (t) => {
+  t.same(flattenAllArrays(), undefined, "18");
   t.end();
 });
 
@@ -544,7 +544,7 @@ tap.test("02.06 - nothing in the input", (t) => {
 // Does not mutate input args
 // ==========================
 
-tap.test("03.01 - does not mutate input args", (t) => {
+tap.test("19 - does not mutate input args", (t) => {
   const obj = {
     d: "d",
     b: "b",
@@ -579,7 +579,7 @@ tap.test("03.01 - does not mutate input args", (t) => {
         },
       ],
     },
-    "03.01"
+    "19.01"
   );
   t.end();
 });

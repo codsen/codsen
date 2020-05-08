@@ -18,34 +18,34 @@ const eolTypes = ["LF`, `CR`, `CRLF"];
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported removeWidows() is a function`,
+  `01 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported removeWidows() is a function`,
   (t) => {
-    t.equal(typeof removeWidows, `function`, `00.01`);
+    t.equal(typeof removeWidows, `function`, `01`);
     t.end();
   }
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`,
+  `02 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`,
   (t) => {
-    t.equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, `00.02`);
+    t.equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, `02`);
     t.end();
   }
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - sanity check`,
+  `03 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - sanity check`,
   (t) => {
-    t.equal(rawnbsp, `\u00A0`, `00.03.01`);
-    t.equal(encodedNbspHtml, `${encodedNbspHtml}`, `00.03.02`);
+    t.equal(rawnbsp, `\u00A0`, `03.01`);
+    t.equal(encodedNbspHtml, `${encodedNbspHtml}`, `03.02`);
     t.end();
   }
 );
 
 tap.test(
-  `00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`,
+  `04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`,
   (t) => {
-    t.equal(removeWidows(`aaa bbb ccc`, {}).res, `aaa bbb ccc`);
+    t.equal(removeWidows(`aaa bbb ccc`, {}).res, `aaa bbb ccc`, "04");
     t.end();
   }
 );
@@ -55,41 +55,49 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`,
+  `05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`,
   (t) => {
     const resObj = removeWidows(`aaa bbb ccc ddd`, {
       convertEntities: true,
       minCharCount: 5,
     });
-    t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`);
-    t.same(resObj.whatWasDone, {
-      removeWidows: true,
-      convertEntities: false,
-    });
-    t.same(resObj.ranges, [[11, 12, encodedNbspHtml]]);
+    t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "05.01");
+    t.same(
+      resObj.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: false,
+      },
+      "05.02"
+    );
+    t.same(resObj.ranges, [[11, 12, encodedNbspHtml]], "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`,
+  `06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`,
   (t) => {
     const resObj = removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: true,
       minCharCount: 5,
     });
-    t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`);
-    t.same(resObj.whatWasDone, {
-      removeWidows: true,
-      convertEntities: false,
-    });
-    t.same(resObj.ranges, [[11, 13, encodedNbspHtml]]);
+    t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "06.01");
+    t.same(
+      resObj.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: false,
+      },
+      "06.02"
+    );
+    t.same(resObj.ranges, [[11, 13, encodedNbspHtml]], "06.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, no full stop`,
+  `07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, no full stop`,
   (t) => {
     languages.forEach((targetLanguage, i) => {
       t.equal(
@@ -126,7 +134,7 @@ tap.test(
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, full stop`,
+  `08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, full stop`,
   (t) => {
     languages.forEach((targetLanguage, i) => {
       t.equal(
@@ -163,7 +171,7 @@ tap.test(
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full stops`,
+  `09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full stops`,
   (t) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -259,7 +267,7 @@ tap.test(
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - raw non-breaking space already there`,
+  `10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - raw non-breaking space already there`,
   (t) => {
     languages.forEach((targetLanguage, i) => {
       const val1 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
@@ -311,7 +319,7 @@ tap.test(
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed`,
+  `11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed`,
   (t) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -378,7 +386,7 @@ tap.test(
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed and encoded but in wrong format`,
+  `12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed and encoded but in wrong format`,
   (t) => {
     encodedNbsps.forEach((singleEncodedNbsp, z) => {
       ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
@@ -424,7 +432,7 @@ tap.test(
 );
 
 tap.test(
-  `01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`,
+  `13 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`,
   (t) => {
     const str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
     languages.forEach((targetLanguage, i) => {
@@ -480,7 +488,7 @@ tap.test(
 );
 
 tap.test(
-  `01.10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch empty strings`,
+  `14 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch empty strings`,
   (t) => {
     const sources = [
       ``,
@@ -518,7 +526,7 @@ tap.test(
 );
 
 tap.test(
-  `01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`,
+  `15 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`,
   (t) => {
     const source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
     t.equal(
@@ -529,14 +537,14 @@ tap.test(
         hyphens: true,
       }).res,
       source,
-      `01.11`
+      `15`
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp after line breaks`,
+  `16 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp after line breaks`,
   (t) => {
     const source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
     t.equal(
@@ -547,14 +555,14 @@ tap.test(
         hyphens: true,
       }).res,
       source,
-      `01.12`
+      `16`
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.13 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and spaces`,
+  `17 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and spaces`,
   (t) => {
     const source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
     t.equal(
@@ -565,14 +573,14 @@ tap.test(
         hyphens: true,
       }).res,
       source,
-      `01.13`
+      `17`
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.14 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`,
+  `18 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`,
   (t) => {
     const source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
     const res = removeWidows(source, {
@@ -582,55 +590,67 @@ tap.test(
       UKPostcodes: true,
       hyphens: true,
     });
-    t.same(res.ranges, null);
+    t.same(res.ranges, null, "18");
     t.end();
   }
 );
 
 tap.test(
-  `01.15 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp is decoded and reported correctly, mixed with widow case`,
+  `19 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp is decoded and reported correctly, mixed with widow case`,
   (t) => {
     const source = `abc&nbsp;def ghij knmn`;
     const res = removeWidows(source, {
       convertEntities: false,
     });
-    t.equal(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`);
-    t.same(res.whatWasDone, {
-      removeWidows: true,
-      convertEntities: true,
-    });
+    t.equal(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`, "19.01");
+    t.same(
+      res.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: true,
+      },
+      "19.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.16 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp only`,
+  `20 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp only`,
   (t) => {
     const source = `x&nbsp;x`;
     const res = removeWidows(source, {
       convertEntities: false,
     });
-    t.equal(res.res, `x${rawnbsp}x`);
-    t.same(res.whatWasDone, {
-      removeWidows: false,
-      convertEntities: true,
-    });
+    t.equal(res.res, `x${rawnbsp}x`, "20.01");
+    t.same(
+      res.whatWasDone,
+      {
+        removeWidows: false,
+        convertEntities: true,
+      },
+      "20.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.17 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - nbsp only, nothing else`,
+  `21 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - nbsp only, nothing else`,
   (t) => {
     const source = `&nbsp;`;
     const res = removeWidows(source, {
       convertEntities: false,
     });
-    t.equal(res.res, `${rawnbsp}`);
-    t.same(res.whatWasDone, {
-      removeWidows: false,
-      convertEntities: true,
-    });
+    t.equal(res.res, `${rawnbsp}`, "21.01");
+    t.same(
+      res.whatWasDone,
+      {
+        removeWidows: false,
+        convertEntities: true,
+      },
+      "21.02"
+    );
     t.end();
   }
 );
@@ -639,117 +659,125 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string no full stop`,
+  `22 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string no full stop`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd`, {
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "22"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string with full stop`,
+  `23 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string with full stop`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd.`, {
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd.`
+      `aaa bbb ccc${encodedNbspHtml}ddd.`,
+      "23"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string no full stop`,
+  `24 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string no full stop`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${rawnbsp}ddd`
+      `aaa bbb ccc${rawnbsp}ddd`,
+      "24"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string with full stop`,
+  `25 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string with full stop`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd.`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${rawnbsp}ddd.`
+      `aaa bbb ccc${rawnbsp}ddd.`,
+      "25"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break - widow fix needed`,
+  `26 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break - widow fix needed`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd\neee fff ggg hhh.`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`
+      `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`,
+      "26"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break -  - one line break, with full stop - widow fix needed`,
+  `27 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break -  - one line break, with full stop - widow fix needed`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd.\neee fff ggg hhh.`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`
+      `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`,
+      "27"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.07 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing space`,
+  `28 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing space`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd.  \n\neee fff ggg hhh`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`
+      `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`,
+      "28"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.08 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing tabs`,
+  `29 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing tabs`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`
+      `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`,
+      "29"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.09 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
+  `30 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
     const sources = [
       `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
@@ -765,112 +793,120 @@ tap.test(
 );
 
 tap.test(
-  `02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`,
+  `31 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc&#160;ddd`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "31"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`,
+  `32 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc&#160;ddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${rawnbsp}ddd`
+      `aaa bbb ccc${rawnbsp}ddd`,
+      "32"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.12 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`,
+  `33 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`
+      `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
+      "33"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.13 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`,
+  `34 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`
+      `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
+      "34"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.14 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
+  `35 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc  ddd`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "35"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.15 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
+  `36 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc  ddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${rawnbsp}ddd`
+      `aaa bbb ccc${rawnbsp}ddd`,
+      "36"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.16 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`,
+  `37 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc\tddd`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "37"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.17 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`,
+  `38 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc\tddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${rawnbsp}ddd`
+      `aaa bbb ccc${rawnbsp}ddd`,
+      "38"
     );
     t.end();
   }
@@ -878,35 +914,37 @@ tap.test(
 
 // existing, neighbour nbsp's get converted
 tap.test(
-  `02.18 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
+  `39 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`
+      `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
+      "39"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.19 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
+  `40 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`
+      `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
+      "40"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.20 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
+  `41 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
@@ -914,14 +952,15 @@ tap.test(
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`
+      `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
+      "41"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.21 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
+  `42 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
@@ -929,14 +968,15 @@ tap.test(
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`
+      `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`,
+      "42"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.22 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
+  `43 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
@@ -944,14 +984,15 @@ tap.test(
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `aaa bbb${rawnbsp}ccc ddd`
+      `aaa bbb${rawnbsp}ccc ddd`,
+      "43"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.23 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
+  `44 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
@@ -959,14 +1000,15 @@ tap.test(
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspHtml}ccc ddd`
+      `aaa bbb${encodedNbspHtml}ccc ddd`,
+      "44"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.24 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
+  `45 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
@@ -975,7 +1017,8 @@ tap.test(
         targetLanguage: `css`,
         minCharCount: 5,
       }).res,
-      `aaa bbb${encodedNbspCss}ccc ddd`
+      `aaa bbb${encodedNbspCss}ccc ddd`,
+      "45"
     );
     t.end();
   }
@@ -985,7 +1028,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - in front of dashes`,
+  `46 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - in front of dashes`,
   (t) => {
     [rawMdash, rawNdash, "-"].forEach((oneOfDashes) => {
       languages.forEach((targetLanguage, i) => {
@@ -1048,7 +1091,7 @@ tap.test(
 );
 
 tap.test(
-  `03.02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus where currency follows`,
+  `47 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus where currency follows`,
   (t) => {
     [rawMdash, rawNdash, "-"].forEach((oneOfDashes, y) => {
       languages.forEach((targetLanguage, i) => {
@@ -1069,7 +1112,7 @@ tap.test(
 );
 
 tap.test(
-  `03.03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with ${encodedNbspHtml} and double space`,
+  `48 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with ${encodedNbspHtml} and double space`,
   (t) => {
     languages.forEach((targetLanguage, i) => {
       t.equal(
@@ -1092,7 +1135,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - \u001b[${34}m${`line endings`}\u001b[${39}m - does not mangle string with consistent line endings`,
+  `49 - \u001b[${34}m${`line endings`}\u001b[${39}m - does not mangle string with consistent line endings`,
   (t) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -1169,7 +1212,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and nothing happens`,
+  `50 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and nothing happens`,
   (t) => {
     //
     // ganged cases where nothing should happen:
@@ -1194,14 +1237,14 @@ tap.test(
 );
 
 tap.test(
-  `05.02 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`,
+  `51 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`,
   (t) => {
     const source = `{% if something else and also another thing %}tralala {% endif %}some text here`;
     const res = `{% if something else and also another thing %}tralala {% endif %}some text${encodedNbspHtml}here`;
     t.equal(
       removeWidows(source, { minCharCount: 5 }).res,
       res,
-      `05.02.01 - words under threshold outside templating chunk which completes the threshold`
+      `51.01 - words under threshold outside templating chunk which completes the threshold`
     );
     t.equal(
       removeWidows(source, {
@@ -1209,14 +1252,14 @@ tap.test(
         minCharCount: 5,
       }).res,
       res,
-      `05.02.02`
+      `51.02`
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`,
+  `52 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`,
   (t) => {
     languages.forEach((targetLanguage, i) => {
       t.equal(
@@ -1281,35 +1324,37 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `53 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
         UKPostcodes: false,
         minCharCount: 5,
       }).res,
-      `Some text SW1A 1AA and some more${encodedNbspHtml}text.`
+      `Some text SW1A 1AA and some more${encodedNbspHtml}text.`,
+      "53"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.02 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `54 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
         UKPostcodes: true,
         minCharCount: 5,
       }).res,
-      `Some text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`
+      `Some text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
+      "54"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `55 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
@@ -1317,14 +1362,15 @@ tap.test(
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
+      `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
+      "55"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `56 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
@@ -1333,42 +1379,45 @@ tap.test(
         targetLanguage: `css`,
         minCharCount: 5,
       }).res,
-      `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`
+      `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`,
+      "56"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
+  `57 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
   (t) => {
     t.equal(
       removeWidows(
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         { UKPostcodes: false }
       ).res,
-      `Some text SW1A 1AA and some more text SW1A 1AA and some more${encodedNbspHtml}text.`
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more${encodedNbspHtml}text.`,
+      "57"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.06 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
+  `58 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
   (t) => {
     t.equal(
       removeWidows(
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         { UKPostcodes: true }
       ).res,
-      `Some text SW1A${encodedNbspHtml}1AA and some more text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`
+      `Some text SW1A${encodedNbspHtml}1AA and some more text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
+      "58"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.07 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
+  `59 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1378,28 +1427,30 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+      "59"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
+  `60 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(`Postcode SW1A 1AA.`, {
         UKPostcodes: false,
         minCharCount: 5,
       }).res,
-      `Postcode SW1A 1AA.`
+      `Postcode SW1A 1AA.`,
+      "60"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
+  `61 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1409,14 +1460,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+      "61"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.10 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
+  `62 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1427,14 +1479,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
+      "62"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.11 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop) - default minimum word count (4) kicks in`,
+  `63 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop) - default minimum word count (4) kicks in`,
   (t) => {
     t.equal(
       removeWidows(`Postcode SW1A 1AA.`, {
@@ -1442,14 +1495,15 @@ tap.test(
         UKPostcodes: false,
         minCharCount: 5,
       }).res,
-      `Postcode SW1A 1AA.`
+      `Postcode SW1A 1AA.`,
+      "63"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.12 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
+  `64 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1460,33 +1514,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
+      "64"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.13 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
-  (t) => {
-    t.equal(
-      removeWidows(
-        `This very long line of text ends with a postcode SW1A 1AA.`,
-        {
-          targetLanguage: `js`,
-          UKPostcodes: true,
-          convertEntities: false,
-          minCharCount: 5,
-        }
-      ).res,
-      `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `06.14 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
+  `65 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1495,18 +1531,18 @@ tap.test(
           targetLanguage: `js`,
           UKPostcodes: true,
           convertEntities: false,
-          removeWidowPreventionMeasures: true,
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A 1AA.`
+      `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
+      "65"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.15 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
+  `66 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1519,14 +1555,36 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A 1AA.`
+      `This very long line of text ends with a postcode SW1A 1AA.`,
+      "66"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.16 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
+  `67 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`,
+  (t) => {
+    t.equal(
+      removeWidows(
+        `This very long line of text ends with a postcode SW1A 1AA.`,
+        {
+          targetLanguage: `js`,
+          UKPostcodes: true,
+          convertEntities: false,
+          removeWidowPreventionMeasures: true,
+          minCharCount: 5,
+        }
+      ).res,
+      `This very long line of text ends with a postcode SW1A 1AA.`,
+      "67"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `68 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1537,14 +1595,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A 1AA.`
+      `This very long line of text ends with a postcode SW1A 1AA.`,
+      "68"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.17 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
+  `69 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1555,14 +1614,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A 1AA.`
+      `This very long line of text ends with a postcode SW1A 1AA.`,
+      "69"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.18 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
+  `70 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1573,14 +1633,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+      "70"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.19 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
+  `71 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1591,14 +1652,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
+      `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+      "71"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.20 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
+  `72 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1609,14 +1671,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A${encodedNbspHtml}1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`
+      `\uD83E\uDD84 some text text text SW1A${encodedNbspHtml}1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
+      "72"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.21 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
+  `73 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1627,14 +1690,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A${rawnbsp}1AA more text text text \uD83E\uDD84${rawnbsp}aaa`
+      `\uD83E\uDD84 some text text text SW1A${rawnbsp}1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
+      "73"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.22 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
+  `74 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1645,14 +1709,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
+      "74"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.23 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
+  `75 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1663,14 +1728,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${rawnbsp}aaa`
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
+      "75"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.24 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`,
+  `76 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1Aa and some more text.`, {
@@ -1678,14 +1744,15 @@ tap.test(
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`
+      `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
+      "76"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.25 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`,
+  `77 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1Aa and some more text.`, {
@@ -1693,14 +1760,15 @@ tap.test(
         convertEntities: true,
         minCharCount: 5,
       }).res,
-      `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`
+      `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
+      "77"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.26 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `78 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
@@ -1708,14 +1776,15 @@ tap.test(
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `Some text SW1A 1AA and some more${rawnbsp}text.`
+      `Some text SW1A 1AA and some more${rawnbsp}text.`,
+      "78"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.27 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
+  `79 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`,
   (t) => {
     t.equal(
       removeWidows(`Some text SW1A 1AA and some more text.`, {
@@ -1723,14 +1792,15 @@ tap.test(
         convertEntities: false,
         minCharCount: 5,
       }).res,
-      `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
+      `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
+      "79"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.28 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
+  `80 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1740,14 +1810,15 @@ tap.test(
           convertEntities: false,
         }
       ).res,
-      `Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.`
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.`,
+      "80"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.29 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
+  `81 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1757,14 +1828,15 @@ tap.test(
           convertEntities: false,
         }
       ).res,
-      `Some text SW1A${rawnbsp}1AA and some more text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
+      `Some text SW1A${rawnbsp}1AA and some more text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
+      "81"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.30 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`,
+  `82 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1775,14 +1847,15 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa`
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa`,
+      "82"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.31 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`,
+  `83 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1793,7 +1866,8 @@ tap.test(
           minCharCount: 5,
         }
       ).res,
-      `\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa`
+      `\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa`,
+      "83"
     );
     t.end();
   }
@@ -1804,7 +1878,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `07.01 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - baseline`,
+  `84 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - baseline`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1814,14 +1888,14 @@ tap.test(
         }
       ).res,
       `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbspHtml}laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbspHtml}laborum.`,
-      `07.01`
+      `84`
     );
     t.end();
   }
 );
 
 tap.test(
-  `07.02 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in without nbsp's`,
+  `85 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in without nbsp's`,
   (t) => {
     t.equal(
       removeWidows(
@@ -1832,14 +1906,14 @@ tap.test(
         }
       ).res,
       `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      `07.02`
+      `85`
     );
     t.end();
   }
 );
 
 tap.test(
-  `07.03 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in with nbsp's`,
+  `86 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in with nbsp's`,
   (t) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -1868,21 +1942,22 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `08.01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = zero`,
+  `87 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = zero`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb`, {
         minWordCount: 0,
         minCharCount: 5,
       }).res,
-      `aaa${encodedNbspHtml}bbb`
+      `aaa${encodedNbspHtml}bbb`,
+      "87"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`,
+  `88 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1890,14 +1965,15 @@ tap.test(
         minWordCount: null,
         minCharCount: 5,
       }).res,
-      `aaa${encodedNbspCss}bbb`
+      `aaa${encodedNbspCss}bbb`,
+      "88"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`,
+  `89 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1905,49 +1981,53 @@ tap.test(
         minWordCount: false,
         minCharCount: 5,
       }).res,
-      `aaa${encodedNbspCss}bbb`
+      `aaa${encodedNbspCss}bbb`,
+      "89"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`,
+  `90 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd`, {
         minWordCount: 2,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "90"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`,
+  `91 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd`, {
         minWordCount: 4,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`
+      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      "91"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.06 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`,
+  `92 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb ccc ddd`, {
         minWordCount: 999,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc ddd`
+      `aaa bbb ccc ddd`,
+      "92"
     );
     t.end();
   }
@@ -1958,14 +2038,14 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `09.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = zero`,
+  `93 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = zero`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb`, {
         minCharCount: 0,
       }).res,
       `aaa bbb`,
-      `09.01.01 - default word count 4 kicks in and makes program skip this`
+      `93.01 - default word count 4 kicks in and makes program skip this`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1973,7 +2053,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.01.02`
+      `93.02`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1981,7 +2061,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.01.03`
+      `93.03`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1989,7 +2069,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.01.04`
+      `93.04`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -1997,7 +2077,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa bbb`,
-      `09.01.05`
+      `93.05`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -2005,21 +2085,21 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa bbb`,
-      `09.01.06`
+      `93.06`
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = falsey`,
+  `94 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = falsey`,
   (t) => {
     t.equal(
       removeWidows(`aaa bbb`, {
         minCharCount: false,
       }).res,
       `aaa bbb`,
-      `09.02.01`
+      `94.01`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -2027,7 +2107,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.02.02`
+      `94.02`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -2035,7 +2115,7 @@ tap.test(
         minWordCount: false,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.02.03`
+      `94.03`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -2043,7 +2123,7 @@ tap.test(
         minWordCount: null,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.02.04`
+      `94.04`
     );
     t.equal(
       removeWidows(`aaa bbb`, {
@@ -2051,7 +2131,7 @@ tap.test(
         minWordCount: 0,
       }).res,
       `aaa${encodedNbspHtml}bbb`,
-      `09.02.05`
+      `94.05`
     );
     t.end();
   }
@@ -2062,7 +2142,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `10.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
+  `95 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
   (t) => {
     let counter = 0;
     const countingFunction = () => {
@@ -2074,17 +2154,17 @@ tap.test(
     t.same(
       removeWidows(`aaaaaaaaaa`).res,
       `aaaaaaaaaa`,
-      `10.01.01 - default behaviour`
+      `95.01 - default behaviour`
     );
     t.same(
       removeWidows(`aaaaaaaaaa`, { reportProgressFunc: null }).res,
       `aaaaaaaaaa`,
-      `10.01.02`
+      `95.02`
     );
     t.same(
       removeWidows(`aaaaaaaaaa`, { reportProgressFunc: false }).res,
       `aaaaaaaaaa`,
-      `10.01.03`
+      `95.03`
     );
 
     // 1. our function will mutate the counter variable:
@@ -2110,13 +2190,13 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
     );
 
     // 2. check the counter variable:
-    t.ok(counter > 95, `10.01.04 - counter called`);
+    t.ok(counter > 95, `95.04 - counter called`);
     t.end();
   }
 );
 
 tap.test(
-  `10.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
+  `96 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
   (t) => {
     const gather = [];
     const countingFunction = (val) => {
@@ -2205,7 +2285,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
     gather.forEach((perc) =>
       t.ok(compareTo.includes(perc), `checking: ${perc}%`)
     );
-    t.equal(gather.length, 86 - 21 + 1);
+    t.equal(gather.length, 86 - 21 + 1, "96.01");
     // t.same(gather, compareTo, `10.02`)
 
     t.end();
@@ -2216,7 +2296,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `11.01 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known tag ranges and ignores everything`,
+  `97 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known tag ranges and ignores everything`,
   (t) => {
     const source = `<a href="zzz" target="_blank" style="font-size: 10px; line-height: 14px;">`;
     t.equal(
@@ -2224,21 +2304,21 @@ tap.test(
         tagRanges: [[0, 74]],
       }).res,
       source,
-      `11.01 - everything ignored because everything is a tag`
+      `97 - everything ignored because everything is a tag`
     );
     t.end();
   }
 );
 
 tap.test(
-  `11.02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`,
+  `98 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`,
   (t) => {
     t.equal(
       removeWidows(
         `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`
       ).res,
       `something in front here <a style="display: block;">x</a> <b style="display:${encodedNbspHtml}block;">y</b>`,
-      `11.02.01 - default behaviour`
+      `98.01 - default behaviour`
     );
     t.equal(
       removeWidows(
@@ -2253,21 +2333,21 @@ tap.test(
         }
       ).res,
       `something in front here <a style="display: block;">x</a>${encodedNbspHtml}<b style="display: block;">y</b>`,
-      `11.02 - tags skipped`
+      `98.02 - tags skipped`
     );
     t.end();
   }
 );
 
 tap.test(
-  `11.03 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`,
+  `99 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`,
   (t) => {
     t.equal(
       removeWidows(
         `Very long line, long-enough to trigger widow removal.<br/>\n<br/>\n Text.`
       ).res,
       `Very long line, long-enough to trigger widow${encodedNbspHtml}removal.<br/>\n<br/>\n Text.`,
-      `11.03.01`
+      `99.01`
     );
     t.equal(
       removeWidows(
@@ -2280,7 +2360,7 @@ tap.test(
         }
       ).res,
       `Very long line, long-enough to trigger widow${encodedNbspHtml}removal.<br/>\n<br/>\n Text.`,
-      `11.03.02`
+      `99.02`
     );
     t.end();
   }

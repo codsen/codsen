@@ -24,6 +24,6 @@ const res = [
 ];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(get1(source, target), res);
+  t.same(get1(source, target), res, "01");
   t.end();
 });

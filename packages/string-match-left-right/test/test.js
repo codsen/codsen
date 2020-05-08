@@ -9,7 +9,7 @@ import {
 // 1. Input arg validation
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - throws", (t) => {
+tap.test("01 - throws", (t) => {
   // no third arg
   t.throws(() => {
     matchLeftIncl("zzz", 1);
@@ -94,33 +94,29 @@ tap.test("01.01 - throws", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple string`,
+  `02 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple string`,
   (t) => {
-    t.equal(
-      matchLeftIncl("abc", 2, "c"),
-      "c",
-      "02.01.01 - pointless, but still"
-    );
+    t.equal(matchLeftIncl("abc", 2, "c"), "c", "02.01 - pointless, but still");
     t.equal(
       matchLeftIncl("zabcdefghi", 4, ["bcd"]),
       "bcd",
-      "02.01.02 - one elem to match"
+      "02.02 - one elem to match"
     );
     t.equal(
       matchLeftIncl("abcdefghi", 3, ["cd", "bcd"]),
       "cd", // first match
-      "02.01.03 - multiple to match"
+      "02.03 - multiple to match"
     );
-    t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "bcd"]), "bcd");
-    t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "zzz"]), false);
-    t.equal(matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"]), false);
+    t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "bcd"]), "bcd", "02.04");
+    t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "zzz"]), false, "02.05");
+    t.equal(matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"]), false, "02.06");
 
     t.equal(
       matchLeftIncl("zxab      cdef", 9, ["zz", "ab"], {
         trimBeforeMatching: true,
       }),
       "ab",
-      "02.01.07.1"
+      "02.07"
     );
 
     t.equal(
@@ -134,7 +130,7 @@ tap.test(
         },
       }),
       "ab",
-      "02.01.07.2"
+      "02.08"
     );
 
     t.end();
@@ -142,39 +138,39 @@ tap.test(
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      case insensitive`,
+  `03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      case insensitive`,
   (t) => {
-    t.equal(matchLeftIncl("abc", 2, "C"), false, "02.02.01 - control");
-    t.equal(
-      matchLeftIncl("abc", 2, "C", { i: true }),
-      "C",
-      "02.02.02 - opts.i"
-    );
-    t.equal(matchLeftIncl("abc", 2, "BC", { i: true }), "BC");
+    t.equal(matchLeftIncl("abc", 2, "C"), false, "03.01 - control");
+    t.equal(matchLeftIncl("abc", 2, "C", { i: true }), "C", "03.02 - opts.i");
+    t.equal(matchLeftIncl("abc", 2, "BC", { i: true }), "BC", "03.03");
     t.equal(
       matchLeftIncl("abC", 2, "c", { i: true }),
       "c",
-      "02.02.04 - source is uppercase, needle is lowercase"
+      "03.04 - source is uppercase, needle is lowercase"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substring to check is longer than what's on the left`,
+  `04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substring to check is longer than what's on the left`,
   (t) => {
-    t.equal(matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"]), false);
+    t.equal(
+      matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"]),
+      false,
+      "04.01"
+    );
     t.equal(
       matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"], { i: true }),
       false,
-      "02.03.02 - opts should not affect anything here"
+      "04.02 - opts should not affect anything here"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`,
+  `05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`,
   (t) => {
     t.equal(
       matchLeftIncl("abcdef", 3, ["abcd"], {
@@ -186,29 +182,29 @@ tap.test(
         },
       }),
       "abcd",
-      "02.04"
+      "05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
+  `06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
   (t) => {
-    t.equal(matchLeftIncl("abc", 2, "c"), "c", "02.05.01 - control");
+    t.equal(matchLeftIncl("abc", 2, "c"), "c", "06.01 - control");
     t.equal(
       matchLeftIncl("abcd", 2, "c", {
         maxMismatches: 1,
       }),
       "c",
-      "02.05.02 - matching"
+      "06.02 - matching"
     );
     t.equal(
       matchLeft("abcd", 3, "c", {
         maxMismatches: 1,
       }),
       "c",
-      "02.05.03"
+      "06.03"
     );
 
     // at least something from the set must have been matched! In this case,
@@ -219,42 +215,42 @@ tap.test(
         maxMismatches: 1,
       }),
       false, // <-- because at least one character must have been matched (general rule)
-      "02.05.04 - mismatching"
+      "06.04 - mismatching"
     );
     t.equal(
       matchLeft("abc", 2, "x", {
         maxMismatches: 1,
       }),
       false, // <-- because at least one character must have been matched (general rule)
-      "02.05.05"
+      "06.05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`,
+  `07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`,
   (t) => {
     t.equal(
       matchLeftIncl("_abdefghi", 3, ["bcd"], {
         maxMismatches: 1,
       }),
       "bcd",
-      "02.06.01"
+      "07.01"
     );
     t.equal(
       matchLeft("_abdefghi", 4, ["bcd"], {
         maxMismatches: 1,
       }),
       "bcd",
-      "02.06.02"
+      "07.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
+  `08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
   (t) => {
     const opts = {
       maxMismatches: 1,
@@ -262,34 +258,34 @@ tap.test(
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], opts),
       "bcd",
-      "02.07.01 - d mismatching"
+      "08.01 - d mismatching"
     );
     t.equal(
       matchLeftIncl("_ab.defghi", 4, ["bcd"], opts),
       "bcd",
-      "02.07.02 - c mismatching"
+      "08.02 - c mismatching"
     );
     t.equal(
       matchLeftIncl("_a.cdefghi", 4, ["bcd"], opts),
       "bcd",
-      "02.07.03 - b mismatching"
+      "08.03 - b mismatching"
     );
     t.equal(
       matchLeftIncl(".cdefghi", 2, ["bcd"], opts),
       "bcd",
-      "02.07.04 - string starts with the value"
+      "08.04 - string starts with the value"
     );
     t.equal(
       matchLeftIncl("cdefghi", 1, ["bcd"], opts),
       "bcd",
-      "02.07.05 - last char to match would be outside of the str"
+      "08.05 - last char to match would be outside of the str"
     );
     t.equal(
       matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
         maxMismatches: 99,
       }),
       "bcd",
-      "02.07.06"
+      "08.06"
     );
 
     // ensure that opts object was not mutated:
@@ -298,14 +294,14 @@ tap.test(
       {
         maxMismatches: 1,
       },
-      "02.07.07"
+      "08.07"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.maxMismatches === 1, three char set`,
+  `09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.maxMismatches === 1, three char set`,
   (t) => {
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -314,7 +310,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "bcd",
-      "02.08.01"
+      "09.01"
     );
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -323,7 +319,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "02.08.02"
+      "09.02"
     );
 
     t.equal(
@@ -333,7 +329,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "bcd",
-      "02.08.03"
+      "09.03"
     );
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -342,7 +338,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "02.08.04"
+      "09.04"
     );
 
     t.equal(
@@ -352,7 +348,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "bcd",
-      "02.08.05"
+      "09.05"
     );
     t.equal(
       matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -361,7 +357,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "bcd",
-      "02.08.06"
+      "09.06"
     );
 
     t.equal(
@@ -371,7 +367,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "bcd",
-      "02.08.07"
+      "09.07"
     );
     t.equal(
       matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -380,26 +376,26 @@ tap.test(
         lastMustMatch: true,
       }),
       "bcd",
-      "02.08.08"
+      "09.08"
     );
 
     t.equal(
       matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
         maxMismatches: 1,
         firstMustMatch: false,
-        lastMustMatch: true,
-      }),
-      false,
-      "02.08.09"
-    );
-    t.equal(
-      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
         lastMustMatch: true,
       }),
       false,
-      "02.08.10"
+      "09.09"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true,
+      }),
+      false,
+      "09.10"
     );
 
     t.equal(
@@ -409,7 +405,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "bcd",
-      "02.08.11"
+      "09.11"
     );
     t.equal(
       matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -418,14 +414,14 @@ tap.test(
         lastMustMatch: false,
       }),
       "bcd",
-      "02.08.12"
+      "09.12"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`,
+  `10 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`,
   (t) => {
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -434,7 +430,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "02.09"
+      "10"
     );
     t.end();
   }
@@ -444,38 +440,38 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple string`,
+  `11 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple string`,
   (t) => {
-    t.equal(matchLeft("abc", 2, "b"), "b");
+    t.equal(matchLeft("abc", 2, "b"), "b", "11.01");
     t.equal(
       matchLeft("abcdefghi", 3, ["abc"]),
       "abc",
-      "03.01.02 - one elem to match"
+      "11.02 - one elem to match"
     );
     t.equal(
       matchLeft("abcdefghi", 3, ["c", "bc"]),
       "c", // first one matched returned, although both did match
-      "03.01.03 - multiple to match"
+      "11.03 - multiple to match"
     );
-    t.equal(matchLeft("abcdefghi", 3, ["aaa", "bc"]), "bc");
-    t.equal(matchLeft("abcdefghi", 3, ["aaa", "zzz"]), false);
-    t.equal(matchLeft("abcdefghi", 99, ["aaa", "zzz"]), false);
-    t.equal(matchLeft("abc", 2, "zab"), false);
+    t.equal(matchLeft("abcdefghi", 3, ["aaa", "bc"]), "bc", "11.04");
+    t.equal(matchLeft("abcdefghi", 3, ["aaa", "zzz"]), false, "11.05");
+    t.equal(matchLeft("abcdefghi", 99, ["aaa", "zzz"]), false, "11.06");
+    t.equal(matchLeft("abc", 2, "zab"), false, "11.07");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          case insensitive`,
+  `12 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          case insensitive`,
   (t) => {
-    t.equal(matchLeft("abc", 2, "B"), false, "03.02.01 - control");
-    t.equal(matchLeft("abc", 2, "B", { i: true }), "B", "03.02.02 - opts.i");
+    t.equal(matchLeft("abc", 2, "B"), false, "12.01 - control");
+    t.equal(matchLeft("abc", 2, "B", { i: true }), "B", "12.02 - opts.i");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, three-char set`,
+  `13 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, three-char set`,
   (t) => {
     //
     // first char, "d" is dot
@@ -486,7 +482,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.03.01"
+      "13.01"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -495,7 +491,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       false, // because "d" was not matched
-      "03.03.02"
+      "13.02"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -504,7 +500,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       "bcd",
-      "03.03.03"
+      "13.03"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -513,7 +509,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.03.04"
+      "13.04"
     );
 
     //
@@ -525,7 +521,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.03.05"
+      "13.05"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -534,7 +530,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.03.06"
+      "13.06"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -543,7 +539,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       "bcd",
-      "03.03.07"
+      "13.07"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -552,7 +548,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       "bcd",
-      "03.03.08"
+      "13.08"
     );
 
     //
@@ -564,7 +560,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.03.09"
+      "13.09"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -573,7 +569,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.03.10"
+      "13.10"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -582,7 +578,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.03.11"
+      "13.11"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -591,7 +587,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.03.12"
+      "13.12"
     );
 
     t.end();
@@ -599,7 +595,7 @@ tap.test(
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, two-char set`,
+  `14 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, two-char set`,
   (t) => {
     // lastMustMatch=false
     t.equal(
@@ -609,7 +605,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "03.04.01"
+      "14.01"
     );
     t.equal(
       matchLeft("_abc.efghi", 4, ["zc"], {
@@ -618,7 +614,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "zc",
-      "03.04.02"
+      "14.02"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -627,7 +623,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "03.04.03"
+      "14.03"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -636,7 +632,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cz",
-      "03.04.04"
+      "14.04"
     );
 
     // lastMustMatch=true
@@ -647,7 +643,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "03.04.05"
+      "14.05"
     );
     t.equal(
       matchLeft("_abc.efghi", 4, ["zc"], {
@@ -656,7 +652,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "03.04.06"
+      "14.06"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -665,7 +661,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "03.04.07"
+      "14.07"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -674,14 +670,14 @@ tap.test(
         lastMustMatch: true,
       }),
       "cz",
-      "03.04.08"
+      "14.08"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, protruding value`,
+  `15 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, protruding value`,
   (t) => {
     //
     // firstMustMatch = true
@@ -691,7 +687,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.05.01"
+      "15.01"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -699,7 +695,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.05.02"
+      "15.02"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -707,7 +703,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.05.03"
+      "15.03"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -715,7 +711,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.05.04"
+      "15.04"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -723,7 +719,7 @@ tap.test(
         firstMustMatch: true,
       }),
       ".....d",
-      "03.05.05"
+      "15.05"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -731,7 +727,7 @@ tap.test(
         firstMustMatch: true,
       }),
       ".....d",
-      "03.05.06"
+      "15.06"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -739,7 +735,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.05.07"
+      "15.07"
     );
 
     //
@@ -750,7 +746,7 @@ tap.test(
         firstMustMatch: false,
       }),
       false,
-      "03.05.08"
+      "15.08"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -758,7 +754,7 @@ tap.test(
         firstMustMatch: false,
       }),
       false,
-      "03.05.09"
+      "15.09"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -766,7 +762,7 @@ tap.test(
         firstMustMatch: false,
       }),
       false,
-      "03.05.10"
+      "15.10"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -774,7 +770,7 @@ tap.test(
         firstMustMatch: false,
       }),
       false,
-      "03.05.11"
+      "15.11"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -782,7 +778,7 @@ tap.test(
         firstMustMatch: false,
       }),
       ".....d",
-      "03.05.12"
+      "15.12"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -790,7 +786,7 @@ tap.test(
         firstMustMatch: false,
       }),
       ".....d",
-      "03.05.13"
+      "15.13"
     );
     t.equal(
       matchLeft("_abcdef", 5, [".....d"], {
@@ -798,14 +794,14 @@ tap.test(
         firstMustMatch: false,
       }),
       false,
-      "03.05.14"
+      "15.14"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, non-protruding value`,
+  `16 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, non-protruding value`,
   (t) => {
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -813,7 +809,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.06.01"
+      "16.01"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -821,7 +817,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.06.02"
+      "16.02"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -829,7 +825,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.06.03"
+      "16.03"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -837,7 +833,7 @@ tap.test(
         firstMustMatch: true,
       }),
       "....d",
-      "03.06.04"
+      "16.04"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -845,7 +841,7 @@ tap.test(
         firstMustMatch: true,
       }),
       "....d",
-      "03.06.05"
+      "16.05"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -853,7 +849,7 @@ tap.test(
         firstMustMatch: true,
       }),
       "....d",
-      "03.06.06"
+      "16.06"
     );
     t.equal(
       matchLeft("_abcdef", 5, ["....d"], {
@@ -861,7 +857,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "03.06.07"
+      "16.07"
     );
     t.end();
   }
@@ -871,13 +867,13 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, non zero arg`,
+  `17 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, non zero arg`,
   (t) => {
-    t.equal(matchRightIncl("abcdef", 2, "c"), "c");
-    t.equal(matchRightIncl("abcdef", 2, "cde"), "cde");
-    t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde");
-    t.equal(matchRightIncl("abcdef", 2, ["gjd", "cde"]), "cde");
-    t.equal(matchRightIncl("abcdef", 99, ["cde"]), false);
+    t.equal(matchRightIncl("abcdef", 2, "c"), "c", "17.01");
+    t.equal(matchRightIncl("abcdef", 2, "cde"), "cde", "17.02");
+    t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "17.03");
+    t.equal(matchRightIncl("abcdef", 2, ["gjd", "cde"]), "cde", "17.04");
+    t.equal(matchRightIncl("abcdef", 99, ["cde"]), false, "17.05");
 
     t.equal(
       matchRightIncl("ab      cdef", 2, "cd", {
@@ -889,7 +885,8 @@ tap.test(
           return true;
         },
       }),
-      "cd"
+      "cd",
+      "17.06"
     );
 
     t.end();
@@ -897,32 +894,37 @@ tap.test(
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, index zero`,
+  `18 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, index zero`,
   (t) => {
-    t.equal(matchRightIncl("abcdef", 0, "a"), "a");
-    t.equal(matchRightIncl("abcdef", 0, "abc"), "abc");
-    t.equal(matchRightIncl("abcdef", 0, ["abc"]), "abc");
-    t.equal(matchRightIncl("abcdef", 0, ["fiuhjd", "gfds", "abc"]), "abc");
+    t.equal(matchRightIncl("abcdef", 0, "a"), "a", "18.01");
+    t.equal(matchRightIncl("abcdef", 0, "abc"), "abc", "18.02");
+    t.equal(matchRightIncl("abcdef", 0, ["abc"]), "abc", "18.03");
+    t.equal(
+      matchRightIncl("abcdef", 0, ["fiuhjd", "gfds", "abc"]),
+      "abc",
+      "18.04"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, case insensitive`,
+  `19 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, case insensitive`,
   (t) => {
-    t.equal(matchRightIncl("abcdef", 2, "C"), false);
-    t.equal(matchRightIncl("abcdef", 2, "C", { i: true }), "C");
-    t.equal(matchRightIncl("abcdef", 2, ["C"], { i: true }), "C");
+    t.equal(matchRightIncl("abcdef", 2, "C"), false, "19.01");
+    t.equal(matchRightIncl("abcdef", 2, "C", { i: true }), "C", "19.02");
+    t.equal(matchRightIncl("abcdef", 2, ["C"], { i: true }), "C", "19.03");
     t.equal(
       matchRightIncl("abcdef", 2, ["JFHG", "URR", "C"], { i: true }),
-      "C"
+      "C",
+      "19.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`,
+  `20 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`,
   (t) => {
     const matcher = (char, theRemainderOfTheString, index) => {
       t.equal(char, undefined);
@@ -939,7 +941,7 @@ tap.test(
         },
       }),
       "def",
-      "04.04.01"
+      "20.01"
     );
     t.equal(
       matchRight("abcdef", 2, ["def"], {
@@ -949,25 +951,25 @@ tap.test(
         },
       }),
       "def",
-      "04.04.02"
+      "20.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMismatches - middle of the string`,
+  `21 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMismatches - middle of the string`,
   (t) => {
-    t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "04.05.01");
+    t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "21.01");
 
     // first char, "c" mismatching
-    t.equal(matchRightIncl("ab.def", 2, ["cde"]), false, "04.05.02");
+    t.equal(matchRightIncl("ab.def", 2, ["cde"]), false, "21.02");
     t.equal(
       matchRightIncl("ab.def", 2, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "04.05.03"
+      "21.03"
     );
     t.equal(
       matchRightIncl("ab.def", 2, ["cde"], {
@@ -976,7 +978,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.05.04"
+      "21.04"
     );
     t.equal(
       matchRightIncl("ab.def", 2, ["cde"], {
@@ -985,7 +987,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "04.05.05"
+      "21.05"
     );
     t.equal(
       matchRightIncl("ab.def", 2, ["cde"], {
@@ -994,7 +996,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "04.05.06"
+      "21.06"
     );
     t.equal(
       matchRightIncl("ab.def", 2, ["cde"], {
@@ -1003,17 +1005,17 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "04.05.07"
+      "21.07"
     );
 
     // second char, "d" mismatching
-    t.equal(matchRightIncl("abc.ef", 2, ["cde"]), false, "04.05.08");
+    t.equal(matchRightIncl("abc.ef", 2, ["cde"]), false, "21.08");
     t.equal(
       matchRightIncl("abc.ef", 2, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "04.05.09"
+      "21.09"
     );
     t.equal(
       matchRightIncl("abc.ef", 2, ["cde"], {
@@ -1022,7 +1024,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "04.05.10"
+      "21.10"
     );
     t.equal(
       matchRightIncl("abc.ef", 2, ["cde"], {
@@ -1031,7 +1033,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "04.05.11"
+      "21.11"
     );
     t.equal(
       matchRightIncl("abc.ef", 2, ["cde"], {
@@ -1040,7 +1042,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "04.05.12"
+      "21.12"
     );
     t.equal(
       matchRightIncl("abc.ef", 2, ["cde"], {
@@ -1049,17 +1051,17 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "04.05.13"
+      "21.13"
     );
 
     // third char, "e" mismatching
-    t.equal(matchRightIncl("abcd.f", 2, ["cde"]), false, "04.05.14");
+    t.equal(matchRightIncl("abcd.f", 2, ["cde"]), false, "21.14");
     t.equal(
       matchRightIncl("abcd.f", 2, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "04.05.15"
+      "21.15"
     );
     t.equal(
       matchRightIncl("abcd.f", 2, ["cde"], {
@@ -1068,7 +1070,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.05.16"
+      "21.16"
     );
     t.equal(
       matchRightIncl("abcd.f", 2, ["cde"], {
@@ -1077,7 +1079,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "04.05.17"
+      "21.17"
     );
     t.equal(
       matchRightIncl("abcd.f", 2, ["cde"], {
@@ -1086,7 +1088,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.05.18"
+      "21.18"
     );
     t.equal(
       matchRightIncl("abcd.f", 2, ["cde"], {
@@ -1095,7 +1097,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "04.05.19"
+      "21.19"
     );
     t.end();
   }
@@ -1105,19 +1107,20 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`,
+  `22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`,
   (t) => {
-    t.equal(matchRight("abcdef", 2, "d"), "d");
-    t.equal(matchRight("abcdef", 2, ["d"]), "d");
-    t.equal(matchRight("abcdef", 2, "def"), "def");
-    t.equal(matchRight("abcdef", 2, ["def"]), "def");
-    t.equal(matchRight("abcdef", 2, ["defg"]), false);
+    t.equal(matchRight("abcdef", 2, "d"), "d", "22.01");
+    t.equal(matchRight("abcdef", 2, ["d"]), "d", "22.02");
+    t.equal(matchRight("abcdef", 2, "def"), "def", "22.03");
+    t.equal(matchRight("abcdef", 2, ["def"]), "def", "22.04");
+    t.equal(matchRight("abcdef", 2, ["defg"]), false, "22.05");
 
-    t.equal(matchRight("abcdef", 99, ["defg"]), false);
+    t.equal(matchRight("abcdef", 99, ["defg"]), false, "22.06");
 
     t.equal(
       matchRight("ab      cdef", 1, "cd", { trimBeforeMatching: true }),
-      "cd"
+      "cd",
+      "22.07"
     );
 
     matchRight("ab      cdef", 1, "cd", {
@@ -1133,41 +1136,46 @@ tap.test(
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`,
+  `23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`,
   (t) => {
-    t.equal(matchRight("abcdef", 0, "b"), "b");
-    t.equal(matchRight("abcdef", 0, ["b"]), "b");
-    t.equal(matchRight("abcdef", 0, ["bc"]), "bc");
-    t.equal(matchRight("abcdef", 0, ["hfd", "ghja", "bc"]), "bc");
+    t.equal(matchRight("abcdef", 0, "b"), "b", "23.01");
+    t.equal(matchRight("abcdef", 0, ["b"]), "b", "23.02");
+    t.equal(matchRight("abcdef", 0, ["bc"]), "bc", "23.03");
+    t.equal(matchRight("abcdef", 0, ["hfd", "ghja", "bc"]), "bc", "23.04");
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, case insensitive`,
+  `24 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, case insensitive`,
   (t) => {
-    t.equal(matchRight("abcdef", 2, "D"), false);
-    t.equal(matchRight("abcdef", 2, "D", { i: true }), "D");
-    t.equal(matchRight("abcdef", 2, ["D"], { i: true }), "D");
-    t.equal(matchRight("abcdef", 2, ["gDSS", "D"], { i: true }), "D");
+    t.equal(matchRight("abcdef", 2, "D"), false, "24.01");
+    t.equal(matchRight("abcdef", 2, "D", { i: true }), "D", "24.02");
+    t.equal(matchRight("abcdef", 2, ["D"], { i: true }), "D", "24.03");
+    t.equal(matchRight("abcdef", 2, ["gDSS", "D"], { i: true }), "D", "24.04");
     t.end();
   }
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         adhoc test #1`,
+  `25 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         adhoc test #1`,
   (t) => {
-    t.equal(matchRight("aaaa<<<<<<div>>>>something</div>bbbbb", 13, ">"), ">");
+    t.equal(
+      matchRight("aaaa<<<<<<div>>>>something</div>bbbbb", 13, ">"),
+      ">",
+      "25.01"
+    );
     t.equal(
       matchRight("aaaa<<<<<<div>>>>something</div>bbbbb", 10, ">"),
-      false
+      false,
+      "25.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`,
+  `26 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`,
   (t) => {
     t.equal(
       matchRight("a<!->z", 0, ["<!-->"], {
@@ -1180,7 +1188,7 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.05.01"
+      "26.01"
     );
     t.equal(
       matchRightIncl("a<!->z", 1, ["<!-->"], {
@@ -1193,14 +1201,14 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.05.02"
+      "26.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, space follows`,
+  `27 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, space follows`,
   (t) => {
     t.equal(
       matchRight("a<!-> ", 0, ["<!-->"], {
@@ -1213,7 +1221,7 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.06.01"
+      "27.01"
     );
     t.equal(
       matchRightIncl("a<!-> ", 1, ["<!-->"], {
@@ -1226,14 +1234,14 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.06.02"
+      "27.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`,
+  `28 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`,
   (t) => {
     t.equal(
       matchRight("a<!->", 0, ["<!-->"], {
@@ -1246,7 +1254,7 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.07.01"
+      "28.01"
     );
     t.equal(
       matchRightIncl("a<!->", 1, ["<!-->"], {
@@ -1259,14 +1267,14 @@ tap.test(
         },
       }),
       "<!-->",
-      "05.07.02"
+      "28.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, fail`,
+  `29 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, fail`,
   (t) => {
     t.equal(
       matchRight("a<--b", 1, ["!--"], {
@@ -1274,14 +1282,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "!--",
-      "05.08"
+      "29"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, pass`,
+  `30 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, pass`,
   (t) => {
     // enforcing the exclamation mark:
     t.equal(
@@ -1291,7 +1299,7 @@ tap.test(
         firstMustMatch: true,
       }),
       false,
-      "05.09"
+      "30"
     );
 
     t.end();
@@ -1299,7 +1307,7 @@ tap.test(
 );
 
 tap.test(
-  `05.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`,
+  `31 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`,
   (t) => {
     t.equal(
       matchRight("a<!-b", 1, ["!--"], {
@@ -1307,7 +1315,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "!--",
-      "05.10.01"
+      "31.01"
     );
 
     // enforcing the exclamation mark:
@@ -1318,7 +1326,7 @@ tap.test(
         firstMustMatch: true,
       }),
       "!--",
-      "05.10.02"
+      "31.02"
     );
 
     // now matchRightIncl():
@@ -1329,7 +1337,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "!--",
-      "05.10.03"
+      "31.03"
     );
 
     // enforcing the exclamation mark:
@@ -1340,7 +1348,7 @@ tap.test(
         firstMustMatch: true,
       }),
       "!--",
-      "05.10.04"
+      "31.04"
     );
 
     t.end();
@@ -1348,7 +1356,7 @@ tap.test(
 );
 
 tap.test(
-  `05.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`,
+  `32 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`,
   (t) => {
     t.equal(
       matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 1, ["![cdata"], {
@@ -1357,14 +1365,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "05.11"
+      "32"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`,
+  `33 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`,
   (t) => {
     t.equal(
       matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 19, ["<!-->"], {
@@ -1372,14 +1380,14 @@ tap.test(
         maxMismatches: 1,
       }),
       false,
-      "05.12"
+      "33"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`,
+  `34 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["![endif]"], {
@@ -1388,14 +1396,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "![endif]",
-      "05.13"
+      "34"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
+  `35 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["![endif]"], {
@@ -1404,14 +1412,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "![endif]",
-      "05.14"
+      "35"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
+  `36 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<[endif]-->`, 20, ["![endif]"], {
@@ -1420,14 +1428,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "![endif]",
-      "05.15"
+      "36"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
+  `37 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<endif]-->`, 20, ["![endif]"], {
@@ -1436,14 +1444,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "![endif]",
-      "05.16"
+      "37"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `38 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<endif-->`, 20, ["![endif]"], {
@@ -1452,14 +1460,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "05.17"
+      "38"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `39 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<ndif]-->`, 20, ["![endif]"], {
@@ -1468,14 +1476,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "05.18"
+      "39"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `40 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   (t) => {
     t.equal(
       matchRight(`<!--[if gte mso 9]>x<[ndif-->`, 20, ["![endif]"], {
@@ -1484,14 +1492,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "05.19"
+      "40"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `41 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   (t) => {
     t.equal(
       matchRight(`abc<!--[if gte mso 9]><xml>`, 3, ["!--"], {
@@ -1500,25 +1508,25 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "!--",
-      "05.20"
+      "41"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatches - 3-char string`,
+  `42 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatches - 3-char string`,
   (t) => {
-    t.equal(matchRight("abcdef", 1, ["cde"]), "cde", "05.21.01");
+    t.equal(matchRight("abcdef", 1, ["cde"]), "cde", "42.01");
 
     // first char, "c" mismatching
-    t.equal(matchRight("ab.def", 1, ["cde"]), false, "05.21.02");
+    t.equal(matchRight("ab.def", 1, ["cde"]), false, "42.02");
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "05.21.03"
+      "42.03"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
@@ -1527,7 +1535,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "05.21.04"
+      "42.04"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
@@ -1536,7 +1544,7 @@ tap.test(
         lastMustMatch: false,
       }),
       false,
-      "05.21.05"
+      "42.05"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
@@ -1545,7 +1553,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "05.21.06"
+      "42.06"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
@@ -1554,17 +1562,17 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "05.21.07"
+      "42.07"
     );
 
     // second char, "d" mismatching
-    t.equal(matchRight("abc.ef", 1, ["cde"]), false, "05.21.08");
+    t.equal(matchRight("abc.ef", 1, ["cde"]), false, "42.08");
     t.equal(
       matchRight("abc.ef", 1, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "05.21.09"
+      "42.09"
     );
     t.equal(
       matchRight("abc.ef", 1, ["cde"], {
@@ -1573,7 +1581,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "05.21.10"
+      "42.10"
     );
     t.equal(
       matchRight("abc.ef", 1, ["cde"], {
@@ -1582,7 +1590,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "05.21.11"
+      "42.11"
     );
     t.equal(
       matchRight("abc.ef", 1, ["cde"], {
@@ -1591,7 +1599,7 @@ tap.test(
         lastMustMatch: true,
       }),
       "cde",
-      "05.21.12"
+      "42.12"
     );
     t.equal(
       matchRight("abc.ef", 1, ["cde"], {
@@ -1600,17 +1608,17 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "05.21.13"
+      "42.13"
     );
 
     // third char, "e" mismatching
-    t.equal(matchRight("abcd.f", 1, ["cde"]), false, "05.21.14");
+    t.equal(matchRight("abcd.f", 1, ["cde"]), false, "42.14");
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
-      "05.21.15"
+      "42.15"
     );
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
@@ -1619,7 +1627,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "05.21.16"
+      "42.16"
     );
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
@@ -1628,7 +1636,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "05.21.17"
+      "42.17"
     );
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
@@ -1637,7 +1645,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "05.21.18"
+      "42.18"
     );
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
@@ -1646,14 +1654,14 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "05.21.19"
+      "42.19"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1 + lastMustMatch`,
+  `43 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1 + lastMustMatch`,
   (t) => {
     t.equal(
       matchRight(`><!--z>`, 0, ["<!-->"], {
@@ -1662,14 +1670,14 @@ tap.test(
         lastMustMatch: true,
       }),
       "<!-->",
-      "05.22"
+      "43"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  `44 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
   (t) => {
     t.equal(
       matchRight(
@@ -1685,7 +1693,7 @@ tap.test(
         }
       ),
       false,
-      "05.23"
+      "44"
     );
     t.end();
   }
@@ -1695,38 +1703,42 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back. haha!`,
+  `45 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back. haha!`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
     }
     t.equal(
       matchLeft('<a class="something">', 8, "class", { cb: isSpace }),
-      "class"
+      "class",
+      "45.01"
     );
     t.equal(
       matchLeft('<a superclass="something">', 13, "class", { cb: isSpace }),
-      false
+      false,
+      "45.02"
     );
     t.equal(
       matchLeftIncl('<a class="something">', 8, "class=", { cb: isSpace }),
-      "class="
+      "class=",
+      "45.03"
     );
     t.equal(
       matchLeftIncl('<a superclass="something">', 13, "class=", {
         cb: isSpace,
       }),
-      false
+      false,
+      "45.04"
     );
-    t.equal(matchLeftIncl("a", 13, "class=", { cb: isSpace }), false);
+    t.equal(matchLeftIncl("a", 13, "class=", { cb: isSpace }), false, "45.05");
 
     // PART 1. CONTROL.
     // the first part (string matching) is true, "b" is to the left of the character at index #2.
     // the second part of result calculation (callback against outside character) is true too.
-    t.equal(matchLeft(" bc", 2, "b", { cb: isSpace }), "b");
+    t.equal(matchLeft(" bc", 2, "b", { cb: isSpace }), "b", "45.06");
 
     // PART 2. LET'S MAKE VERSION OF '06.01.06' FAIL BECAUSE OF THE CALLBACK.
-    t.equal(matchLeft("abc", 2, "b", { cb: isSpace }), false);
+    t.equal(matchLeft("abc", 2, "b", { cb: isSpace }), false, "45.07");
     // observe that "a" does not satisfy the callback's requirement to be a space thus the
     // main result is false.
     // Now, let's test trimming:
@@ -1735,13 +1747,14 @@ tap.test(
     // character at index #5 is "c".
     // We're checking is "b" to the left of it, plus, is there a space to the left of "b".
     // Answer is no, because there are bunch of line breaks to the left of "c".
-    t.equal(matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace }), false);
+    t.equal(matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace }), false, "45.08");
 
     // PART 4.
     // Now let's enable the opts.trimBeforeMatching:
     t.equal(
       matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
-      "b"
+      "b",
+      "45.09"
     );
     // Answer is now true, because character at index #5 is "c", we look to the left of it, skip
     // all trimmable characters and encounter "b". And then, there's a space to the left of it to
@@ -1753,34 +1766,38 @@ tap.test(
     // Replacing space to the left of "b" with "a".
     t.equal(
       matchLeft("ab\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
-      false
+      false,
+      "45.10"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeft() - various combos`,
+  `46 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeft() - various combos`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
     }
     t.equal(
       matchLeft("ab\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
-      false
+      false,
+      "46.01"
     );
     t.equal(
       matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
-      "b"
+      "b",
+      "46.02"
     );
-    t.equal(matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace }), false);
+    t.equal(matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace }), false, "46.03");
     t.equal(
       matchLeft("ab\n\n\nc", 5, "B", {
         cb: isSpace,
         trimBeforeMatching: true,
         i: true,
       }),
-      false
+      false,
+      "46.04"
     );
     t.equal(
       matchLeft(" b\n\n\nc", 5, "B", {
@@ -1788,15 +1805,20 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "B"
+      "B",
+      "46.05"
     );
-    t.equal(matchLeft(" b\n\n\nc", 5, "B", { cb: isSpace, i: true }), false);
+    t.equal(
+      matchLeft(" b\n\n\nc", 5, "B", { cb: isSpace, i: true }),
+      false,
+      "46.06"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeftIncl() - callback and trimming`,
+  `47 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeftIncl() - callback and trimming`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
@@ -1804,37 +1826,46 @@ tap.test(
     function isA(char) {
       return char === "a";
     }
-    t.equal(matchLeftIncl(" bc\n\n\n", 5, "bc", { cb: isSpace }), false);
+    t.equal(
+      matchLeftIncl(" bc\n\n\n", 5, "bc", { cb: isSpace }),
+      false,
+      "47.01"
+    );
     t.equal(
       matchLeftIncl(" bc\n\n\n", 5, "bc", {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      "bc"
+      "bc",
+      "47.02"
     );
     t.equal(
       matchLeftIncl("abc\n\n\n", 5, "bc", {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      false
+      false,
+      "47.03"
     );
     t.equal(
       matchLeftIncl("abc\n\n\n", 5, "bc", {
         cb: isA,
         trimBeforeMatching: true,
       }),
-      "bc"
+      "bc",
+      "47.04"
     );
     t.equal(
       matchLeftIncl("abc\n\n\n", 5, "bc", { trimBeforeMatching: true }),
-      "bc"
+      "bc",
+      "47.05"
     );
 
     // opts.i
     t.equal(
       matchLeftIncl(" bc\n\n\n", 5, "BC", { cb: isSpace, i: true }),
-      false
+      false,
+      "47.06"
     );
     t.equal(
       matchLeftIncl(" bc\n\n\n", 5, "BC", {
@@ -1842,7 +1873,8 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "47.07"
     );
     t.equal(
       matchLeftIncl(" bc\n\n\n", 5, ["BC"], {
@@ -1850,7 +1882,8 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "47.08"
     );
     t.equal(
       matchLeftIncl(" bc\n\n\n", 5, ["AAA", "BC"], {
@@ -1858,7 +1891,8 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "47.09"
     );
     t.equal(
       matchLeftIncl("abc\n\n\n", 5, "BC", {
@@ -1866,85 +1900,97 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      false
+      false,
+      "47.10"
     );
     t.equal(
       matchLeftIncl("abc\n\n\n", 5, "BC", {
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "47.11"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back, pt.1`,
+  `48 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back, pt.1`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
     }
-    t.equal(
-      matchRight('<a class="something"> text', 19, ">"),
-      ">",
-      "06.03.01.01"
-    );
+    t.equal(matchRight('<a class="something"> text', 19, ">"), ">", "48.01");
     t.equal(
       // we will catch closing double quote, index #19 and check does closing bracket follow
       // if and also does the space follow after it
       matchRight('<a class="something"> text', 19, ">", { cb: isSpace }),
       ">",
-      "06.03.01.02"
+      "48.02"
     );
     t.equal(
       matchRight('<a class="something">text', 19, ">", { cb: isSpace }),
-      false
+      false,
+      "48.03"
     );
-    t.equal(matchRight('<a class="something"> text', 18, '">'), '">');
-    t.equal(matchRightIncl('<a class="something"> text', 19, '">'), '">');
+    t.equal(matchRight('<a class="something"> text', 18, '">'), '">', "48.04");
+    t.equal(
+      matchRightIncl('<a class="something"> text', 19, '">'),
+      '">',
+      "48.05"
+    );
     t.equal(
       matchRightIncl('<a class="something"> text', 19, '">', { cb: isSpace }),
-      '">'
+      '">',
+      "48.06"
     );
     t.equal(
       matchRightIncl('<a class="something">text', 19, '">', { cb: isSpace }),
-      false
+      false,
+      "48.07"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06.04 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called, pt.2`,
+  `49 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called, pt.2`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
     }
     // control
-    t.equal(matchRight("b\n\n\nc z", 0, "c", { cb: isSpace }), false);
+    t.equal(matchRight("b\n\n\nc z", 0, "c", { cb: isSpace }), false, "49.01");
     t.equal(
       matchRight("b\n\n\nc z", 0, "c", {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      "c"
+      "c",
+      "49.02"
     );
     t.equal(
       matchRight("b\n\n\ncz", 0, "c", {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      false
+      false,
+      "49.03"
     );
-    t.equal(matchRight("b\n\n\nc z", 0, "C", { cb: isSpace, i: true }), false);
+    t.equal(
+      matchRight("b\n\n\nc z", 0, "C", { cb: isSpace, i: true }),
+      false,
+      "49.04"
+    );
     t.equal(
       matchRight("b\n\n\nc z", 0, "C", {
         cb: isSpace,
         trimBeforeMatching: true,
         i: true,
       }),
-      "C"
+      "C",
+      "49.05"
     );
     t.equal(
       matchRight("b\n\n\ncz", 0, "C", {
@@ -1952,39 +1998,45 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      false
+      false,
+      "49.06"
     );
 
     // control
     t.equal(
       matchRightIncl("\n\n\nbc z", 0, ["aa", "bc"], { cb: isSpace }),
-      false
+      false,
+      "49.07"
     );
     t.equal(
       matchRightIncl("\n\n\nbc z", 0, ["aa", "bc"], {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      "bc"
+      "bc",
+      "49.08"
     );
     t.equal(
       matchRightIncl("\n\n\nbcz", 0, ["aa", "bc"], {
         cb: isSpace,
         trimBeforeMatching: true,
       }),
-      false
+      false,
+      "49.09"
     );
     t.equal(
       matchRightIncl("\n\n\nbcz", 0, ["aa", "bc"], {
         trimBeforeMatching: true,
       }),
-      "bc"
+      "bc",
+      "49.10"
     );
 
     // opts.i
     t.equal(
       matchRightIncl("\n\n\nbc z", 0, ["ZZ", "BC"], { cb: isSpace, i: true }),
-      false
+      false,
+      "49.11"
     );
     t.equal(
       matchRightIncl("\n\n\nbc z", 0, ["ZZ", "BC"], {
@@ -1992,7 +2044,8 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "49.12"
     );
     t.equal(
       matchRightIncl("\n\n\nbc z", 0, ["KJG", "BC"], {
@@ -2000,7 +2053,8 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "49.13"
     );
     t.equal(
       matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], {
@@ -2008,23 +2062,29 @@ tap.test(
         trimBeforeMatching: true,
         i: true,
       }),
-      false
+      false,
+      "49.14"
     );
     t.equal(
       matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], {
         trimBeforeMatching: true,
         i: true,
       }),
-      "BC"
+      "BC",
+      "49.15"
     );
-    t.equal(matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], { i: true }), false);
+    t.equal(
+      matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], { i: true }),
+      false,
+      "49.16"
+    );
     t.end();
   }
 );
 
 // new in v2.1.0
 tap.test(
-  `06.05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument (index)`,
+  `50 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument (index)`,
   (t) => {
     const inputStr = "some text and some more text";
     function testMe(char, theRemainderOfTheString, index) {
@@ -2044,7 +2104,7 @@ tap.test(
 );
 
 tap.test(
-  `06.06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchLeft -  third callback argument (index)`,
+  `51 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchLeft -  third callback argument (index)`,
   (t) => {
     const inputStr = "some text and some more text";
     function testMe1(char) {
@@ -2072,36 +2132,40 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `07.01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.1`,
+  `52 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.1`,
   (t) => {
     function isSpace(char) {
       return typeof char === "string" && char.trim() === "";
     }
     // control
-    t.equal(matchRight("</div>", 0, ["div"]), false);
+    t.equal(matchRight("</div>", 0, ["div"]), false, "52.01");
     t.equal(
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/", " "] }),
-      "div"
+      "div",
+      "52.02"
     );
     // two character-long opts.trimCharsBeforeMatching
     t.throws(() => {
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/ "] });
-    });
+    }, "52.03");
     t.equal(
       matchRight("< / div>", 0, ["div"], {
         trimCharsBeforeMatching: ["/", " "],
       }),
-      "div"
+      "div",
+      "52.04"
     );
     t.equal(
       matchRight("< / div>", 0, ["hgfdf", "hkjh", "div", "00"], {
         trimCharsBeforeMatching: ["/", " "],
       }),
-      "div"
+      "div",
+      "52.05"
     );
     t.equal(
       matchRight("< / div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
-      false
+      false,
+      "52.06"
     );
 
     // opts.cb
@@ -2110,67 +2174,74 @@ tap.test(
         cb: isSpace,
         trimCharsBeforeMatching: ["/", " "],
       }),
-      false
+      false,
+      "52.07"
     );
     t.equal(
       matchRight("< / div>", 0, ["zzzz", "div"], {
         cb: isSpace,
         trimCharsBeforeMatching: ["/", " "],
       }),
-      false
+      false,
+      "52.08"
     );
     t.equal(
       matchRight("< / div>", 0, ["div"], {
         cb: isSpace,
         trimCharsBeforeMatching: ["/", " "],
       }),
-      false
+      false,
+      "52.09"
     );
     t.equal(
       matchRight("< / div>", 0, ["div"], {
         cb: isSpace,
         trimCharsBeforeMatching: ["/"],
       }),
-      false
+      false,
+      "52.10"
     );
     t.equal(
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/", 1] }),
-      "div"
+      "div",
+      "52.11"
     );
     t.end();
   }
 );
 
 tap.test(
-  `07.02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.2`,
+  `53 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.2`,
   (t) => {
     // matchRight
-    t.equal(matchRight("</div>", 0, ["div"]), false);
+    t.equal(matchRight("</div>", 0, ["div"]), false, "53.01");
     t.equal(
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: "/" }),
       "div",
-      "07.02.02 - opts.trimCharsBeforeMatching given as string"
+      "53.02 - opts.trimCharsBeforeMatching given as string"
     );
     t.equal(
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
       "div",
-      "07.02.03 - opts.trimCharsBeforeMatching given within array"
+      "53.03 - opts.trimCharsBeforeMatching given within array"
     );
     t.equal(
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["a", "/"] }),
       "div",
-      "07.02.04 - opts.trimCharsBeforeMatching given within array"
+      "53.04 - opts.trimCharsBeforeMatching given within array"
     );
     t.equal(
       matchRight("<adiv>", 0, ["div"], { trimCharsBeforeMatching: "A" }),
-      false
+      false,
+      "53.05"
     );
     t.equal(
       matchRight("<adiv>", 0, ["div"], {
         i: false,
         trimCharsBeforeMatching: "A",
       }),
-      false
+      false,
+      "53.06"
     );
     t.equal(
       matchRight("<adiv>", 0, ["div"], {
@@ -2178,187 +2249,211 @@ tap.test(
         trimCharsBeforeMatching: "A",
       }),
       "div",
-      "07.02.07 - case insensitive affects trimCharsBeforeMatching too and yields results"
+      "53.07 - case insensitive affects trimCharsBeforeMatching too and yields results"
     );
     t.equal(
       matchRight("<adiv>", 0, ["dIv"], {
         i: true,
         trimCharsBeforeMatching: ["1", "A"],
       }),
-      "dIv"
+      "dIv",
+      "53.08"
     );
     // matchRightIncl
-    t.equal(matchRightIncl("</div>", 0, ["div"]), false);
+    t.equal(matchRightIncl("</div>", 0, ["div"]), false, "53.09");
     t.equal(
       matchRightIncl("</div>", 0, ["div"], { trimCharsBeforeMatching: "<" }),
-      false
+      false,
+      "53.10"
     );
     t.equal(
       matchRightIncl("</div>", 0, ["yo", "div"], {
         trimCharsBeforeMatching: ["<", "/"],
       }),
-      "div"
+      "div",
+      "53.11"
     );
     t.equal(
       matchRightIncl("abdiv>", 0, ["yo", "div"], {
         trimCharsBeforeMatching: ["c", "a", "b"],
       }),
-      "div"
+      "div",
+      "53.12"
     );
     t.equal(
       matchRightIncl("abdiv>", 0, ["yo", "div"], {
         trimCharsBeforeMatching: ["C", "A", "B"],
       }),
-      false
+      false,
+      "53.13"
     );
     t.equal(
       matchRightIncl("abdiv>", 0, ["yo", "div"], {
         i: true,
         trimCharsBeforeMatching: ["C", "A", "B"],
       }),
-      "div"
+      "div",
+      "53.14"
     );
     t.equal(
       matchRightIncl("abdiv>", 0, ["yo", "dIv"], {
         i: true,
         trimCharsBeforeMatching: ["C", "A", "B"],
       }),
-      "dIv"
+      "dIv",
+      "53.15"
     );
     // matchLeft
-    t.equal(matchLeft("</divz>", 6, ["div"]), false);
+    t.equal(matchLeft("</divz>", 6, ["div"]), false, "53.16");
     t.equal(
       matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: "z" }),
-      "div"
+      "div",
+      "53.17"
     );
     t.equal(
       matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: ["z"] }),
-      "div"
+      "div",
+      "53.18"
     );
     t.equal(
       matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: ["Z"] }),
-      false
+      false,
+      "53.19"
     );
     t.equal(
       matchLeft("</divz>", 6, ["div"], {
         i: false,
         trimCharsBeforeMatching: ["Z"],
       }),
-      false
+      false,
+      "53.20"
     );
     t.equal(
       matchLeft("</divz>", 6, ["div"], {
         i: true,
         trimCharsBeforeMatching: ["Z"],
       }),
-      "div"
+      "div",
+      "53.21"
     );
     t.equal(
       matchLeft("</divz>", 6, ["dIv"], {
         i: true,
         trimCharsBeforeMatching: ["Z"],
       }),
-      "dIv"
+      "dIv",
+      "53.22"
     );
     // matchLeftIncl
-    t.equal(matchLeftIncl("</divz>", 6, ["div"]), false);
+    t.equal(matchLeftIncl("</divz>", 6, ["div"]), false, "53.23");
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], { trimCharsBeforeMatching: "z" }),
-      false
+      false,
+      "53.24"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], {
         trimCharsBeforeMatching: ["z", ">"],
       }),
-      "div"
+      "div",
+      "53.25"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], {
         trimCharsBeforeMatching: ["a", "z", ">"],
       }),
-      "div"
+      "div",
+      "53.26"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], {
         trimCharsBeforeMatching: ["Z", ">"],
       }),
-      false
+      false,
+      "53.27"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], {
         i: false,
         trimCharsBeforeMatching: ["a", "Z", ">"],
       }),
-      false
+      false,
+      "53.28"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["div"], {
         i: true,
         trimCharsBeforeMatching: ["a", "Z", ">"],
       }),
-      "div"
+      "div",
+      "53.29"
     );
     t.equal(
       matchLeftIncl("</divz>", 6, ["dIv"], {
         i: true,
         trimCharsBeforeMatching: ["a", "Z", ">"],
       }),
-      "dIv"
+      "dIv",
+      "53.30"
     );
     t.end();
   }
 );
 
 tap.test(
-  `07.03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       throws`,
+  `54 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       throws`,
   (t) => {
     t.equal(
       matchRight("</div>", 0, ["zz", "div"], {
         trimCharsBeforeMatching: ["/", "<"],
       }),
-      "div"
+      "div",
+      "54.01"
     );
     t.throws(() => {
       matchRight("</div>", 0, ["zz", "div"], {
         trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
       });
-    });
+    }, "54.02");
 
     t.equal(
       matchLeft("</div>", 5, ["zz", "div"], {
         trimCharsBeforeMatching: ["/", "<"],
       }),
-      "div"
+      "div",
+      "54.03"
     );
     t.throws(() => {
       matchLeft("</div>", 5, ["zz", "div"], {
         trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
       });
-    });
+    }, "54.04");
 
     t.equal(
       matchRightIncl("</div>", 1, ["zz", "div"], {
         trimCharsBeforeMatching: ["/", "<"],
       }),
-      "div"
+      "div",
+      "54.05"
     );
     t.throws(() => {
       matchRightIncl("</div>", 1, ["zz", "div"], {
         trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
       });
-    });
+    }, "54.06");
 
     t.equal(
       matchLeftIncl("</div>", 4, ["zz", "div"], {
         trimCharsBeforeMatching: ["/", "<"],
       }),
-      "div"
+      "div",
+      "54.07"
     );
     t.throws(() => {
       matchLeftIncl("</div>", 4, ["zz", "div"], {
         trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
       });
-    });
+    }, "54.08");
     t.end();
   }
 );
@@ -2367,7 +2462,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `08.01 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRight()`,
+  `55 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRight()`,
   (t) => {
     function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -2390,7 +2485,7 @@ tap.test(
         cb: hasEmptyClassRightAfterTheTagName,
       }),
       false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
-      "08.01.02"
+      "55.01"
     );
     t.equal(
       matchRight(input, 0, ["hello", "div"], {
@@ -2398,7 +2493,7 @@ tap.test(
         trimCharsBeforeMatching: ["/", " "],
       }),
       "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "08.01.03"
+      "55.02"
     );
     t.equal(
       matchRight(input, 0, ["hello", "div"], {
@@ -2406,7 +2501,7 @@ tap.test(
         trimCharsBeforeMatching: ["/", " "],
       }),
       "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "08.01.04"
+      "55.03"
     );
 
     matchRight(input, 0, ["zz", "div"], {
@@ -2439,7 +2534,7 @@ tap.test(
 );
 
 tap.test(
-  `08.02 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRightIncl()`,
+  `56 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRightIncl()`,
   (t) => {
     function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -2460,38 +2555,38 @@ tap.test(
     t.equal(
       matchRightIncl('</div class="">', 0, ["</", "Khg"]),
       "</", // base from where we start
-      "08.02.01"
+      "56.01"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["</"], {
         cb: hasEmptyClassRightAfterTheTagName,
       }),
       false, // wrong callback function
-      "08.02.02"
+      "56.02"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["</", ">"], { cb: startsWithDiv }),
       "</", // succeeds because div follows "</"
-      "08.02.03"
+      "56.03"
     );
     t.equal(
       matchRightIncl('</ div class="">', 0, ["</"], { cb: startsWithDiv }),
       false, // fails because space (before "class") is not accounted for
-      "08.02.04"
+      "56.04"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["yo", "</"], {
         cb: startsWithDivWithTrim,
       }),
       "</", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "08.02.05"
+      "56.05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.03 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeft()`,
+  `57 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeft()`,
   (t) => {
     function startsWithZ(firstCharacterOutside, wholeSubstringOutside = "") {
       return wholeSubstringOutside.startsWith("z");
@@ -2500,19 +2595,19 @@ tap.test(
     t.equal(
       matchLeft("<div><b>aaa</b></div>", 5, ["<article>", "<div>"]),
       "<div>", // 5th index is left bracket of <b>. Yes, <div> is on the left.
-      "08.03.01"
+      "57.01"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["<div>"]),
       false, // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "08.03.02"
+      "57.02"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["<b", "<div"], {
         trimCharsBeforeMatching: [">", " "],
       }),
       "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "08.03.03"
+      "57.03"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["yo yo yo", "<div", "gkhjg"], {
@@ -2520,7 +2615,7 @@ tap.test(
         trimCharsBeforeMatching: [">", " "],
       }),
       "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "08.03.04"
+      "57.04"
     );
     t.equal(
       matchLeft("<div ><b>aaa</b></div>", 6, ["<div"], {
@@ -2528,14 +2623,14 @@ tap.test(
         trimCharsBeforeMatching: [" ", ">"],
       }),
       false, // cheeky - deliberately making the second arg of cb to be blank and fail startsWithZ
-      "08.03.05"
+      "57.05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08.04 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeftIncl()`,
+  `58 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeftIncl()`,
   (t) => {
     function startsWithZ(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -2548,31 +2643,38 @@ tap.test(
       "<div>", // 4th index is right bracket of <div>, but it's inclusive so it will get included.
       // not inclusive would give "<div" by the way, that is, given index would not
       // be included in the slice.
-      "08.04.01"
+      "58.01"
     );
-    t.equal(matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["<div>"]), false);
+    t.equal(
+      matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["<div>"]),
+      false,
+      "58.02"
+    );
     t.equal(
       matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["111", "<div >"]),
-      "<div >"
+      "<div >",
+      "58.03"
     );
     t.equal(
       matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["222", "<div >"], {
         cb: startsWithZ,
       }),
-      "<div >"
+      "<div >",
+      "58.04"
     );
     t.equal(
       matchLeftIncl("zxy<div ><b>aaa</b></div>", 8, ["krbd", "<div >"], {
         cb: startsWithZ,
       }),
-      "<div >"
+      "<div >",
+      "58.05"
     );
     t.equal(
       matchLeftIncl("<div ><b>aaa</b></div>", 0, ["krbd", "<div >"], {
         cb: startsWithZ,
       }),
       false,
-      "08.04.06 - cheeky - nothing for callback to hang onto"
+      "58.06 - cheeky - nothing for callback to hang onto"
     );
     t.end();
   }
@@ -2582,19 +2684,21 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `09.01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`,
+  `59 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`,
   (t) => {
     t.ok(
       matchLeft("abc", 1, null, {
         i: true,
         cb: (char) => char === "a",
-      })
+      }),
+      "59.01"
     );
     t.false(
       matchLeft("abc", 1, null, {
         i: true,
         cb: (char) => char === "c",
-      })
+      }),
+      "59.02"
     );
     t.throws(() => {
       matchLeft("abc", 1, null, {
@@ -2606,19 +2710,21 @@ tap.test(
 );
 
 tap.test(
-  `09.02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`,
+  `60 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`,
   (t) => {
     t.false(
       matchLeftIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "a",
-      })
+      }),
+      "60.01"
     );
     t.ok(
       matchLeftIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "b",
-      })
+      }),
+      "60.02"
     );
     t.throws(() => {
       matchLeftIncl("abc", 1, "", {
@@ -2630,19 +2736,21 @@ tap.test(
 );
 
 tap.test(
-  `09.03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`,
+  `61 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`,
   (t) => {
     t.ok(
       matchRight("abc", 1, "", {
         i: true,
         cb: (char) => char === "c",
-      })
+      }),
+      "61.01"
     );
     t.false(
       matchRight("abc", 1, "", {
         i: true,
         cb: (char) => char === "a",
-      })
+      }),
+      "61.02"
     );
     t.throws(() => {
       matchRight("abc", 1, "", {
@@ -2654,19 +2762,21 @@ tap.test(
 );
 
 tap.test(
-  `09.04 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`,
+  `62 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`,
   (t) => {
     t.false(
       matchRightIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "c",
-      })
+      }),
+      "62.01"
     );
     t.ok(
       matchRightIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "b",
-      })
+      }),
+      "62.02"
     );
     t.throws(() => {
       matchRightIncl("abc", 1, "", {
@@ -2678,48 +2788,54 @@ tap.test(
 );
 
 tap.test(
-  `09.05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`,
+  `63 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`,
   (t) => {
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char) => char === "d",
-      })
+      }),
+      "63.01"
     );
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char, rest) => rest === "def",
-      })
+      }),
+      "63.02"
     );
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char, rest, index) => index === 3,
-      })
+      }),
+      "63.03"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `64 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
       matchRight("abc   def", 2, "", {
         cb: (char) => char === "d",
-      })
+      }),
+      "64.01"
     );
     t.false(
       matchRight("abc   def", 2, "", {
         cb: (char, rest) => rest === "def",
-      })
+      }),
+      "64.02"
     );
     t.false(
       matchRight("abc   def", 2, "", {
         cb: (char, rest, index) => index === 6, // "d" is at index 6
-      })
+      }),
+      "64.03"
     );
 
     // with opts.trimBeforeMatching
@@ -2727,42 +2843,48 @@ tap.test(
       matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char) => char === "d",
-      })
+      }),
+      "64.04"
     );
     t.ok(
       matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "def",
-      })
+      }),
+      "64.05"
     );
     t.ok(
       matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 6, // "d" is at index 6
-      })
+      }),
+      "64.06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.07 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `65 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
       matchRightIncl("abc   def", 3, "", {
         cb: (char) => char === "d",
-      })
+      }),
+      "65.01"
     );
     t.false(
       matchRightIncl("abc   def", 3, "", {
         cb: (char, rest) => rest === "def",
-      })
+      }),
+      "65.02"
     );
     t.false(
       matchRightIncl("abc   def", 3, "", {
         cb: (char, rest, index) => index === 6, // "d" is at index 6
-      })
+      }),
+      "65.03"
     );
 
     // with opts.trimBeforeMatching
@@ -2770,26 +2892,29 @@ tap.test(
       matchRightIncl("abc   def", 3, "", {
         trimBeforeMatching: true,
         cb: (char) => char === "d",
-      })
+      }),
+      "65.04"
     );
     t.ok(
       matchRightIncl("abc   def", 3, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "def",
-      })
+      }),
+      "65.05"
     );
     t.ok(
       matchRightIncl("abc   def", 3, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 6, // "d" is at index 6
-      })
+      }),
+      "65.06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.08 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `66 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
@@ -2800,17 +2925,20 @@ tap.test(
         {
           cb: (char) => char === "c",
         }
-      )
+      ),
+      "66.01"
     );
     t.false(
       matchLeft("abc   def", 6, "", {
         cb: (char, rest) => rest === "abc",
-      })
+      }),
+      "66.02"
     );
     t.false(
       matchLeft("abc   def", 6, "", {
         cb: (char, rest, index) => index === 2, // "c" is at index 2
-      })
+      }),
+      "66.03"
     );
 
     // with opts.trimBeforeMatching
@@ -2823,26 +2951,29 @@ tap.test(
           trimBeforeMatching: true,
           cb: (char) => char === "c",
         }
-      )
+      ),
+      "66.04"
     );
     t.ok(
       matchLeft("abc   def", 6, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "abc",
-      })
+      }),
+      "66.05"
     );
     t.ok(
       matchLeft("abc   def", 6, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 2, // "c" is at index 2
-      })
+      }),
+      "66.06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.09 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `67 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
@@ -2853,17 +2984,20 @@ tap.test(
         {
           cb: (char) => char === "c",
         }
-      )
+      ),
+      "67.01"
     );
     t.false(
       matchLeftIncl("abc   def", 5, "", {
         cb: (char, rest) => rest === "abc",
-      })
+      }),
+      "67.02"
     );
     t.false(
       matchLeftIncl("abc   def", 5, "", {
         cb: (char, rest, index) => index === 2, // "c" is at index 2
-      })
+      }),
+      "67.03"
     );
 
     // with opts.trimBeforeMatching
@@ -2876,19 +3010,22 @@ tap.test(
           trimBeforeMatching: true,
           cb: (char) => char === "c",
         }
-      )
+      ),
+      "67.04"
     );
     t.ok(
       matchLeftIncl("abc   def", 5, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "abc",
-      })
+      }),
+      "67.05"
     );
     t.ok(
       matchLeftIncl("abc   def", 5, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 2, // "c" is at index 2
-      })
+      }),
+      "67.06"
     );
     t.end();
   }
@@ -2899,7 +3036,7 @@ tap.test(
 // trimming is on, and because of trimming, string is skipped up to the ending,
 // with nothing left to check against.
 tap.test(
-  `09.10 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`,
+  `68 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`,
   (t) => {
     // In this case, callback always yields "true", no matter what. Input string
     // traversal starts on index 5, which is space to the left of "a". Since the
@@ -2912,7 +3049,8 @@ tap.test(
         {
           cb: () => true,
         }
-      )
+      ),
+      "68.01"
     );
     // Now, even the callback yields "true" in all cases, opts.trimBeforeMatching
     // is on too, which means, starting at index 5 and marching left it encounters
@@ -2927,14 +3065,15 @@ tap.test(
           trimBeforeMatching: true,
           cb: () => true, // <---- notice it's yielding "true" for all the cases
         }
-      )
+      ),
+      "68.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.11 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `69 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
@@ -2945,7 +3084,8 @@ tap.test(
         {
           cb: (char) => char === "_",
         }
-      )
+      ),
+      "69.01"
     );
     t.ok(
       matchLeftIncl(
@@ -2956,33 +3096,36 @@ tap.test(
           trimCharsBeforeMatching: ["b", "c"],
           cb: (char) => char === "_",
         }
-      )
+      ),
+      "69.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.12 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `70 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
       matchRightIncl("_bcbcbcbc+", 1, "", {
         cb: (char) => char === "+",
-      })
+      }),
+      "70.01"
     );
     t.ok(
       matchRightIncl("_bcbcbcbc+", 1, "", {
         trimCharsBeforeMatching: ["b", "c"],
         cb: (char) => char === "+",
-      })
+      }),
+      "70.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.11 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `71 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
@@ -2993,7 +3136,8 @@ tap.test(
         {
           cb: (char) => char === "_",
         }
-      )
+      ),
+      "71.01"
     );
     t.ok(
       matchLeft(
@@ -3004,26 +3148,29 @@ tap.test(
           trimCharsBeforeMatching: ["b", "c"],
           cb: (char) => char === "_",
         }
-      )
+      ),
+      "71.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09.12 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `72 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
       matchRight("_bcbcbcbc+", 1, "", {
         cb: (char) => char === "+",
-      })
+      }),
+      "72.01"
     );
     t.ok(
       matchRight("_bcbcbcbc+", 1, "", {
         trimCharsBeforeMatching: ["b", "c"],
         cb: (char) => char === "+",
-      })
+      }),
+      "72.02"
     );
     t.end();
   }
@@ -3033,26 +3180,27 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `10.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
+  `73 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
-    t.equal(matchLeft("a", 0, "EOL"), false);
+    t.equal(matchLeft("a", 0, "EOL"), false, "73");
     t.end();
   }
 );
 
 tap.test(
-  `10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
+  `74 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchLeft("a", 0, () => "EOL"),
-      "EOL"
+      "EOL",
+      "74"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - cb blocking result`,
+  `75 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - cb blocking result`,
   (t) => {
     t.equal(
       matchLeft("a", 0, () => "EOL", {
@@ -3060,14 +3208,15 @@ tap.test(
           return false;
         },
       }),
-      false
+      false,
+      "75"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - useless cb`,
+  `76 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - useless cb`,
   (t) => {
     t.equal(
       matchLeft("a", 0, () => "EOL", {
@@ -3075,14 +3224,15 @@ tap.test(
           return true;
         },
       }),
-      "EOL"
+      "EOL",
+      "76"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - useless cb`,
+  `77 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - useless cb`,
   (t) => {
     matchLeft("a", 0, () => "EOL", {
       cb: (...args) => {
@@ -3098,95 +3248,102 @@ tap.test(
 );
 
 tap.test(
-  `10.06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
+  `78 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
   (t) => {
     // whitespace trims:
     t.equal(
       matchLeft(" a", 1, () => "EOL"),
-      false
+      false,
+      "78"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - CHEEKY!!!`,
+  `79 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - CHEEKY!!!`,
   (t) => {
     t.equal(
       matchLeft("EOLa", 3, () => "EOL"),
-      false
+      false,
+      "79"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - !!!`,
+  `80 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - !!!`,
   (t) => {
-    t.equal(matchLeft("EOLa", 3, "EOL"), "EOL");
+    t.equal(matchLeft("EOLa", 3, "EOL"), "EOL", "80");
     t.end();
   }
 );
 
 tap.test(
-  `10.09 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
+  `81 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, () => "EOL", {
         trimBeforeMatching: true,
       }),
-      "EOL"
+      "EOL",
+      "81"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.10 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
+  `82 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
   (t) => {
     // character trims:
     t.equal(
       matchLeft("za", 1, () => "EOL"),
-      false
+      false,
+      "82"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.11 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
+  `83 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
   (t) => {
     t.equal(
       matchLeft("za", 1, () => "EOL", {
         trimCharsBeforeMatching: ["z"],
       }),
-      "EOL"
+      "EOL",
+      "83"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.12 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
+  `84 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opts control`,
   (t) => {
     // trim combos - whitespace+character:
     t.equal(
       matchLeft("z a", 2, () => "EOL"),
-      false
+      false,
+      "84"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10.13 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
+  `85 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, () => "EOL", {
         trimCharsBeforeMatching: ["z"],
         trimBeforeMatching: true,
       }),
-      "EOL"
+      "EOL",
+      "85"
     );
     t.end();
   }
@@ -3196,49 +3353,49 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `11.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
+  `86 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("a", 0, ["EOL"]), false);
+    t.equal(matchLeft("a", 0, ["EOL"]), false, "86");
     t.end();
   }
 );
 
 tap.test(
-  `11.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
+  `87 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("a", 0, ["EOL", "a"]), false);
+    t.equal(matchLeft("a", 0, ["EOL", "a"]), false, "87");
     t.end();
   }
 );
 
 tap.test(
-  `11.03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
+  `88 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("a", 0, ["EOL", "z"]), false);
+    t.equal(matchLeft("a", 0, ["EOL", "z"]), false, "88");
     t.end();
   }
 );
 
 tap.test(
-  `11.04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
+  `89 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("a", 0, ["EOL", () => "EOL"]), "EOL");
+    t.equal(matchLeft("a", 0, ["EOL", () => "EOL"]), "EOL", "89");
     t.end();
   }
 );
 
 tap.test(
-  `11.05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
+  `90 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("a", 0, [() => "EOL"]), "EOL");
+    t.equal(matchLeft("a", 0, [() => "EOL"]), "EOL", "90");
     t.end();
   }
 );
 
 tap.test(
-  `11.06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m whitespace trims - whitespace trim opts control - one special`,
+  `91 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m whitespace trims - whitespace trim opts control - one special`,
   (t) => {
-    t.equal(matchLeft(" a", 1, [() => "EOL"]), false);
+    t.equal(matchLeft(" a", 1, [() => "EOL"]), false, "91");
     t.end();
   }
 );
@@ -3247,128 +3404,124 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `12.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `92 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, [() => "EOL", () => "EOL"]),
       false,
-      "12.02.07 - whitespace trim opts control - two specials"
+      "92 - whitespace trim opts control - two specials"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `93 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, [() => "EOL", "EOL"]),
       false,
-      "12.02.08 - whitespace trim opts control - special mixed with cheeky"
+      "93 - whitespace trim opts control - special mixed with cheeky"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `94 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, ["EOL"]),
       false,
-      "12.02.09 - whitespace trim opts control - cheeky only"
+      "94 - whitespace trim opts control - cheeky only"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `95 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("EOLa", 3, [() => "EOL"]), false, "12.02.10 - CHEEKY!!!");
+    t.equal(matchLeft("EOLa", 3, [() => "EOL"]), false, "95 - CHEEKY!!!");
     t.end();
   }
 );
 
 tap.test(
-  `12.05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `96 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("EOLa", 3, ["EOL"]), "EOL");
+    t.equal(matchLeft("EOLa", 3, ["EOL"]), "EOL", "96");
     t.end();
   }
 );
 
 tap.test(
-  `12.06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `97 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
-    t.equal(
-      matchLeft("EOLa", 3, ["a", () => "EOL"]),
-      false,
-      "12.02.12 - CHEEKY!!!"
-    );
+    t.equal(matchLeft("EOLa", 3, ["a", () => "EOL"]), false, "97 - CHEEKY!!!");
     t.end();
   }
 );
 
 tap.test(
-  `12.07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `98 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("EOLa", 3, ["a", "EOL"]), "EOL");
+    t.equal(matchLeft("EOLa", 3, ["a", "EOL"]), "EOL", "98");
     t.end();
   }
 );
 
 tap.test(
-  `12.08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `99 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, [() => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "12.02.14 - whitespace trim opt on"
+      "99 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.09 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `100 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, ["a", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "12.02.15 - whitespace trim opt on"
+      "100 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.10 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `101 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, [() => "EOL", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "12.02.16 - whitespace trim opt on"
+      "101 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.11 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
+  `102 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft(" a", 1, [() => "EOL", "a", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "12.02.17 - whitespace trim opt on"
+      "102 - whitespace trim opt on"
     );
     t.end();
   }
@@ -3378,60 +3531,60 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `13.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
+  `103 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("za", 1, [() => "EOL"]),
       false,
-      "10.02.18 - whitespace trim opts control"
+      "103 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
+  `104 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("za", 1, [() => "EOL"], {
         trimCharsBeforeMatching: ["z"],
       }),
       "EOL",
-      "10.02.19 - whitespace trim opt on"
+      "104 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
+  `105 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("za", 1, ["a", () => "EOL"]),
       false,
-      "10.02.20 - whitespace trim opts control"
+      "105 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
+  `106 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
   (t) => {
-    t.equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "10.02.21 - z caught");
+    t.equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "106 - z caught");
     t.end();
   }
 );
 
 tap.test(
-  `13.05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
+  `107 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("za", 1, ["a", () => "EOL"], {
         trimCharsBeforeMatching: ["z"],
       }),
       "EOL",
-      "10.02.22 - whitespace trim opt on"
+      "107 - whitespace trim opt on"
     );
     t.end();
   }
@@ -3441,19 +3594,19 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `14.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `108 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, [() => "EOL"]),
       false,
-      "10.02.23 - whitespace trim opts control"
+      "108 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `109 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, [() => "EOL"], {
@@ -3461,26 +3614,26 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.02.24 - whitespace trim opt on"
+      "109 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `110 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, ["a", () => "EOL"]),
       false,
-      "10.02.25 - whitespace trim opts control"
+      "110 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `111 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, ["a", () => "EOL"], {
@@ -3488,28 +3641,28 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.02.26 - whitespace trim opt on"
+      "111 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `112 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, ["z", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "z",
-      "10.02.27 - whitespace trim opts control"
+      "112 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `113 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("z a", 2, ["x", () => "EOL"], {
@@ -3517,21 +3670,22 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.02.28 - whitespace trim opt on"
+      "113 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14.07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
+  `114 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
   (t) => {
     t.equal(
       matchLeft("yz a", 2, ["x", () => "EOL"], {
         trimCharsBeforeMatching: ["z"],
         trimBeforeMatching: true,
       }),
-      false
+      false,
+      "114"
     );
     t.end();
   }
@@ -3541,26 +3695,27 @@ tap.test(
 // ------------------------------------------------------------------------------
 
 tap.test(
-  `15.01 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
+  `115 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
-    t.equal(matchLeftIncl("a", 0, "EOL"), false);
+    t.equal(matchLeftIncl("a", 0, "EOL"), false, "115");
     t.end();
   }
 );
 
 tap.test(
-  `15.02 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
+  `116 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchLeftIncl("a", 0, () => "EOL"),
-      false
+      false,
+      "116"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
+  `117 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchLeftIncl("a", 0, () => "EOL", {
@@ -3569,14 +3724,14 @@ tap.test(
         },
       }),
       false,
-      "10.03.03 - cb blocking result"
+      "117 - cb blocking result"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.04 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
+  `118 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchLeftIncl("a", 0, () => "EOL", {
@@ -3585,91 +3740,92 @@ tap.test(
         },
       }),
       false,
-      "10.03.04 - useless cb"
+      "118 - useless cb"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.05 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `119 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchLeftIncl(" a", 1, () => "EOL"),
       false,
-      "10.03.06 - whitespace trim opts control"
+      "119 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.06 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `120 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchLeftIncl("EOLa", 3, () => "EOLa"),
-      false
+      false,
+      "120.01"
     );
-    t.equal(matchLeftIncl("EOLa", 3, "EOL"), false);
+    t.equal(matchLeftIncl("EOLa", 3, "EOL"), false, "120.02");
     t.end();
   }
 );
 
 tap.test(
-  `15.07 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `121 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchLeftIncl(" a", 1, () => "EOL", {
         trimBeforeMatching: true,
       }),
       false,
-      "10.03.09 - whitespace trim opt on"
+      "121 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.08 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `122 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchLeftIncl("za", 1, () => "EOL"),
       false,
-      "10.03.10 - whitespace trim opts control"
+      "122 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.09 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `123 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchLeftIncl("za", 1, () => "EOL", {
         trimCharsBeforeMatching: ["z"],
       }),
       false,
-      "10.03.11 - whitespace trim opt on"
+      "123 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.10 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `124 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     // trim combos - whitespace+character:
     t.equal(
       matchLeftIncl("z a", 2, () => "EOL"),
       false,
-      "10.03.12 - whitespace trim opts control"
+      "124 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15.11 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `125 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     t.equal(
       matchLeftIncl("z a", 2, () => "EOL", {
@@ -3677,7 +3833,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "10.03.13 - whitespace trim opt on"
+      "125 - whitespace trim opt on"
     );
     t.end();
   }
@@ -3687,26 +3843,27 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `16.01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
+  `126 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
-    t.equal(matchRight("a", 0, "EOL"), false);
+    t.equal(matchRight("a", 0, "EOL"), false, "126");
     t.end();
   }
 );
 
 tap.test(
-  `16.02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
+  `127 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRight("a", 0, () => "EOL"),
-      "EOL"
+      "EOL",
+      "127"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.03 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
+  `128 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRight("a", 0, () => "EOL", {
@@ -3715,14 +3872,14 @@ tap.test(
         },
       }),
       false,
-      "10.04.03 - cb blocking result"
+      "128 - cb blocking result"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
+  `129 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRight("a", 0, () => "EOL", {
@@ -3731,14 +3888,14 @@ tap.test(
         },
       }),
       "EOL",
-      "10.04.04 - useless cb, just confirms the incoming truthy result"
+      "129 - useless cb, just confirms the incoming truthy result"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
+  `130 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     matchRight("a", 0, () => "EOL", {
       cb: (...args) => {
@@ -3751,104 +3908,104 @@ tap.test(
 );
 
 tap.test(
-  `16.06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `131 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, () => "EOL"),
       false,
-      "10.04.06-1"
+      "131-1"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `132 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 1, () => "EOL"),
       "EOL",
-      "10.04.06-2"
+      "132-2"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `133 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("aEOL", 0, () => "EOL"),
       false,
-      "10.04.07 - CHEEKY!!!"
+      "133 - CHEEKY!!!"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `134 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
-    t.equal(matchRight("aEOL", 0, "EOL"), "EOL", "10.04.08 - !!!");
+    t.equal(matchRight("aEOL", 0, "EOL"), "EOL", "134 - !!!");
     t.end();
   }
 );
 
 tap.test(
-  `16.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `135 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, () => "EOL", {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.04.09 - whitespace trim opt on"
+      "135 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `136 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, () => "EOL"),
       false,
-      "10.04.10 - whitespace trim opts control"
+      "136 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `137 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, () => "EOL", {
         trimCharsBeforeMatching: ["z"],
       }),
       "EOL",
-      "10.04.11 - whitespace trim opt on"
+      "137 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `138 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     // trim combos - whitespace+character:
     t.equal(
       matchRight("a z", 0, () => "EOL"),
       false,
-      "10.04.12 - whitespace trim opts control"
+      "138 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16.14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `139 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 2, () => "EOL", {
@@ -3856,7 +4013,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.04.13 - whitespace trim opt on"
+      "139 - whitespace trim opt on"
     );
     t.end();
   }
@@ -3866,264 +4023,260 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `17.01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
+  `140 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
   (t) => {
-    t.equal(matchRight("a", 0, ["EOL"]), false);
+    t.equal(matchRight("a", 0, ["EOL"]), false, "140");
     t.end();
   }
 );
 
 tap.test(
-  `17.02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
+  `141 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
   (t) => {
-    t.equal(matchRight("a", 0, ["EOL", "a"]), false);
+    t.equal(matchRight("a", 0, ["EOL", "a"]), false, "141");
     t.end();
   }
 );
 
 tap.test(
-  `17.03 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
+  `142 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
   (t) => {
-    t.equal(matchRight("a", 0, ["EOL", "z"]), false);
+    t.equal(matchRight("a", 0, ["EOL", "z"]), false, "142");
     t.end();
   }
 );
 
 tap.test(
-  `17.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
+  `143 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
   (t) => {
-    t.equal(matchRight("a", 0, ["EOL", () => "EOL"]), "EOL"); // latter, function was matched
+    t.equal(matchRight("a", 0, ["EOL", () => "EOL"]), "EOL", "143"); // latter, function was matched
     t.end();
   }
 );
 
 tap.test(
-  `17.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
+  `144 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`,
   (t) => {
-    t.equal(matchRight("a", 0, [() => "EOL"]), "EOL");
+    t.equal(matchRight("a", 0, [() => "EOL"]), "EOL", "144");
     t.end();
   }
 );
 
 tap.test(
-  `17.06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `145 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL"]),
       false,
-      "10.05.06 - whitespace trim opts control - one special"
+      "145 - whitespace trim opts control - one special"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `146 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL", () => "EOL"]),
       false,
-      "10.05.07 - whitespace trim opts control - two specials"
+      "146 - whitespace trim opts control - two specials"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `147 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL", "EOL"]),
       false,
-      "10.05.08 - whitespace trim opts control - special mixed with cheeky"
+      "147 - whitespace trim opts control - special mixed with cheeky"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `148 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, ["EOL"]),
       false,
-      "10.05.09 - whitespace trim opts control - cheeky only"
+      "148 - whitespace trim opts control - cheeky only"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `149 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
-    t.equal(
-      matchRight("aEOL", 0, [() => "EOL"]),
-      false,
-      "10.05.10 - CHEEKY!!!"
-    );
+    t.equal(matchRight("aEOL", 0, [() => "EOL"]), false, "149 - CHEEKY!!!");
     t.end();
   }
 );
 
 tap.test(
-  `17.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `150 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
-    t.equal(matchRight("aEOL", 0, ["EOL"]), "EOL");
+    t.equal(matchRight("aEOL", 0, ["EOL"]), "EOL", "150");
     t.end();
   }
 );
 
 tap.test(
-  `17.12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `151 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("aEOL", 0, ["z", () => "EOL"]),
       false,
-      "10.05.12 - CHEEKY!!!"
+      "151 - CHEEKY!!!"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `152 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
-    t.equal(matchRight("aEOL", 0, ["z", "EOL"]), "EOL");
+    t.equal(matchRight("aEOL", 0, ["z", "EOL"]), "EOL", "152");
     t.end();
   }
 );
 
 tap.test(
-  `17.14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `153 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.14 - array"
+      "153 - array"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `154 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, ["x", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.15 - other values to match"
+      "154 - other values to match"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `155 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.16 - two identical arrow functions in array, both positive"
+      "155 - two identical arrow functions in array, both positive"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
+  `156 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`,
   (t) => {
     t.equal(
       matchRight("a ", 0, [() => "EOL", "z", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.17 - two arrow f's in arrray + non-found"
+      "156 - two arrow f's in arrray + non-found"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
+  `157 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
   (t) => {
-    t.equal(matchRight("az", 0, [() => "EOL"]), false, "10.05.18 - trim off");
+    t.equal(matchRight("az", 0, [() => "EOL"]), false, "157 - trim off");
     t.end();
   }
 );
 
 tap.test(
-  `17.19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
+  `158 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, [() => "EOL"], {
         trimCharsBeforeMatching: ["z"],
       }),
       "EOL",
-      "10.05.19 - character trim opt on"
+      "158 - character trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
+  `159 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, ["x", () => "EOL"]),
       false,
-      "10.05.20 - wrong character to trim"
+      "159 - wrong character to trim"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
+  `160 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, ["z", () => "EOL"]),
       "z",
-      "10.05.21 - z caught first, before EOL"
+      "160 - z caught first, before EOL"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
+  `161 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`,
   (t) => {
     t.equal(
       matchRight("az", 0, ["a", () => "EOL"], {
         trimCharsBeforeMatching: ["z"],
       }),
       "EOL",
-      "10.05.22 - whitespace trim opt on"
+      "161 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `162 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     // trim combos - whitespace+character:
     t.equal(
       matchRight("a z", 0, [() => "EOL"]),
       false,
-      "10.05.23 - whitespace trim opts control"
+      "162 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.24 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `163 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 0, [() => "EOL"], {
@@ -4131,26 +4284,26 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.24 - whitespace trim opt on"
+      "163 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.25 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `164 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 0, ["x", () => "EOL"]),
       false,
-      "10.05.25 - whitespace trim opts control"
+      "164 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.26 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `165 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 0, ["x", () => "EOL"], {
@@ -4158,28 +4311,28 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.26 - whitespace trim opt on"
+      "165 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.27 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `166 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 0, ["z", () => "EOL"], {
         trimBeforeMatching: true,
       }),
       "z",
-      "10.05.27 - whitespace trim opts control"
+      "166 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.28 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `167 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a z", 0, ["x", () => "EOL"], {
@@ -4187,14 +4340,14 @@ tap.test(
         trimBeforeMatching: true,
       }),
       "EOL",
-      "10.05.28 - unused char to trim"
+      "167 - unused char to trim"
     );
     t.end();
   }
 );
 
 tap.test(
-  `17.29 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
+  `168 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - trim combos`,
   (t) => {
     t.equal(
       matchRight("a zy", 0, ["x", () => "EOL"], {
@@ -4202,7 +4355,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "10.05.29 - y stands in the way"
+      "168 - y stands in the way"
     );
     t.end();
   }
@@ -4217,26 +4370,27 @@ tap.test(
 // matchRightIncl() and matchLeftIncl() that search for EOL will always be "false".
 
 tap.test(
-  `18.01 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
+  `169 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
-    t.equal(matchRightIncl("a", 0, "EOL"), false);
+    t.equal(matchRightIncl("a", 0, "EOL"), false, "169");
     t.end();
   }
 );
 
 tap.test(
-  `18.02 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
+  `170 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRightIncl("a", 0, () => "EOL"),
-      false
+      false,
+      "170"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.03 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
+  `171 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRightIncl("a", 0, () => "EOL", {
@@ -4245,14 +4399,14 @@ tap.test(
         },
       }),
       false,
-      "10.06.03 - cb blocking, but still useless, result was false before cb kicked in"
+      "171 - cb blocking, but still useless, result was false before cb kicked in"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.04 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
+  `172 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`,
   (t) => {
     t.equal(
       matchRightIncl("a", 0, () => "EOL", {
@@ -4261,98 +4415,99 @@ tap.test(
         },
       }),
       false,
-      "10.06.04 - useless cb"
+      "172 - useless cb"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.05 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `173 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRightIncl("a ", 0, () => "EOL"),
       false,
-      "10.06.05 - whitespace trim opts control"
+      "173 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `174 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRightIncl("aEOL", 0, () => "aEOL"),
-      false
+      false,
+      "174"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.07 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `175 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
-    t.equal(matchRightIncl("aEOL", 0, "EOL"), false);
+    t.equal(matchRightIncl("aEOL", 0, "EOL"), false, "175");
     t.end();
   }
 );
 
 tap.test(
-  `18.08 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
+  `176 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`,
   (t) => {
     t.equal(
       matchRightIncl("a ", 0, () => "EOL", {
         trimBeforeMatching: true,
       }),
       false,
-      "10.06.08 - whitespace trim opt on"
+      "176 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.09 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `177 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchRightIncl("az", 0, () => "EOL"),
       false,
-      "10.06.10 - whitespace trim opts control"
+      "177 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.10 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
+  `178 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - character trims`,
   (t) => {
     t.equal(
       matchRightIncl("az", 0, () => "EOL", {
         trimCharsBeforeMatching: ["z"],
       }),
       false,
-      "10.06.11 - whitespace trim opt on"
+      "178 - whitespace trim opt on"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.11 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `179 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     // whitespace+character:
     t.equal(
       matchRightIncl("a z", 0, () => "EOL"),
       false,
-      "10.06.12 - whitespace trim opts control"
+      "179 - whitespace trim opts control"
     );
     t.end();
   }
 );
 
 tap.test(
-  `18.12 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
+  `180 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - trim combos`,
   (t) => {
     t.equal(
       matchRightIncl("a z", 0, () => "EOL", {
@@ -4360,7 +4515,7 @@ tap.test(
         trimBeforeMatching: true,
       }),
       false,
-      "10.06.13 - whitespace trim + character trim"
+      "180 - whitespace trim + character trim"
     );
     t.end();
   }
@@ -4370,82 +4525,90 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `13.01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `181 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
-    t.equal(matchRight('<a class="something"> text', 19, ">"), ">");
+    t.equal(matchRight('<a class="something"> text', 19, ">"), ">", "181");
     t.end();
   }
 );
 
 tap.test(
-  `13.02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `182 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
     t.equal(
       matchRight('<a class="something"> text', 19, ">", {
         cb: (char) => typeof char === "string" && char.trim() === "",
       }),
-      ">"
+      ">",
+      "182"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `183 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
-    t.equal(matchRightIncl('<a class="something"> text', 20, "> t"), "> t");
+    t.equal(
+      matchRightIncl('<a class="something"> text', 20, "> t"),
+      "> t",
+      "183"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `13.04 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `184 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
-    t.equal(matchRight('<a class="something"> text', 19, "> t"), "> t");
+    t.equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "184");
     t.end();
   }
 );
 
 tap.test(
-  `13.05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `185 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
     t.equal(
       matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
-      "cde"
+      "cde",
+      "185"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `186 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
     t.equal(
       matchRight('<a class="something"> text', 19, ">", {
         cb: (char) => char === " ",
       }),
-      ">"
+      ">",
+      "186"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `187 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
     t.equal(
       matchRight("ab      cdef", 1, "cde", {
         cb: (char) => char === "f",
         trimBeforeMatching: true,
       }),
-      "cde"
+      "cde",
+      "187"
     );
     t.end();
   }
 );
 
 tap.test(
-  `13.08 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
+  `188 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   (t) => {
     matchRight("ab      cdef", 1, "cd", {
       trimBeforeMatching: true,
@@ -4459,13 +4622,14 @@ tap.test(
   }
 );
 
-tap.test(`13.09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, (t) => {
+tap.test(`189 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, (t) => {
   t.equal(
     matchRight("a<!DOCTYPE html>b", 1, ["!--", "doctype", "xml", "cdata"], {
       i: true,
       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
     }),
-    "doctype"
+    "doctype",
+    "189"
   );
   t.end();
 });

@@ -30,14 +30,14 @@ import splitEasy from "../dist/csv-split-easy.esm";
 // group 01 - concentrating on line breaks: varying amounts and different types
 // ============================================================================
 //
-tap.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
+tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
   t.same(
     splitEasy("a,b,c\nd,e,f"),
     [
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.01.01 - minimal amount of chars in each col"
+    "01.01 - minimal amount of chars in each col"
   );
   t.same(
     splitEasy(
@@ -47,7 +47,7 @@ tap.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.01.02 - normal words in each col"
+    "01.02 - normal words in each col"
   );
   t.same(
     splitEasy("a,b,c\n\r\n\r\r\r\r\n\n\nd,e,f"),
@@ -55,7 +55,7 @@ tap.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.01.03 - minimal amount of chars in each col"
+    "01.03 - minimal amount of chars in each col"
   );
   t.same(
     splitEasy(
@@ -65,21 +65,21 @@ tap.test("01.01 - breaks lines correctly leaving no empty lines", (t) => {
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.01.04 - normal words in each col"
+    "01.04 - normal words in each col"
   );
   t.end();
 });
 
-tap.test("01.02 - breaks lines that have empty values", (t) => {
+tap.test("02 - breaks lines that have empty values", (t) => {
   t.same(
     splitEasy(",,\na,b,c"),
     [["a", "b", "c"]],
-    "01.02.01 - whole row comprises of empty values"
+    "02.01 - whole row comprises of empty values"
   );
   t.same(
     splitEasy("a,b\n,\n,"),
     [["a", "b"]],
-    "01.02.02 - only first row contains real data"
+    "02.02 - only first row contains real data"
   );
   t.same(
     splitEasy("a,b\n\r,\n,c"),
@@ -87,7 +87,7 @@ tap.test("01.02 - breaks lines that have empty values", (t) => {
       ["a", "b"],
       ["", "c"],
     ],
-    "01.02.02 - only first row contains real data"
+    "02.03 - only first row contains real data"
   );
   t.same(
     splitEasy('a,b\n\r"",""\n,c'),
@@ -95,7 +95,7 @@ tap.test("01.02 - breaks lines that have empty values", (t) => {
       ["a", "b"],
       ["", "c"],
     ],
-    "01.02.03 - empty row all with double quotes"
+    "02.04 - empty row all with double quotes"
   );
   t.same(
     splitEasy('a,b\n\r"",""\n"",c'),
@@ -103,7 +103,7 @@ tap.test("01.02 - breaks lines that have empty values", (t) => {
       ["a", "b"],
       ["", "c"],
     ],
-    "01.02.04 - more double quotes"
+    "02.05 - more double quotes"
   );
   t.same(
     splitEasy('a,"b"\n\r"",""\n"","c"'),
@@ -111,7 +111,7 @@ tap.test("01.02 - breaks lines that have empty values", (t) => {
       ["a", "b"],
       ["", "c"],
     ],
-    "01.02.05 - double quotes almost everywhere"
+    "02.06 - double quotes almost everywhere"
   );
   t.same(
     splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,"),
@@ -119,14 +119,14 @@ tap.test("01.02 - breaks lines that have empty values", (t) => {
       ["a", "b", "c"],
       ["", "d", ""],
     ],
-    "01.02.06 - many empty rows"
+    "02.07 - many empty rows"
   );
-  t.same(splitEasy(",,,"), [[""]], "01.02.07 - three commas");
-  t.same(splitEasy(""), [[""]], "01.02.08 - nothing");
+  t.same(splitEasy(",,,"), [[""]], "02.08 - three commas");
+  t.same(splitEasy(""), [[""]], "02.09 - nothing");
   t.end();
 });
 
-tap.test("01.03 - copes with leading/trailing empty space", (t) => {
+tap.test("03 - copes with leading/trailing empty space", (t) => {
   t.same(
     splitEasy(`Description,Debit Amount,Credit Amount,Balance
 Client #1 payment,,1000,1940
@@ -142,7 +142,7 @@ Bought pens,10,,1000\n`),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "01.03.01 - one trailing \\n"
+    "03.01 - one trailing \\n"
   );
   t.same(
     splitEasy(`\nDescription,Debit Amount,Credit Amount,Balance
@@ -159,7 +159,7 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "01.03.02 - bunch of leading and trailing whitespace"
+    "03.02 - bunch of leading and trailing whitespace"
   );
   t.end();
 });
@@ -168,14 +168,14 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
 // group 02 - concentrating on values wrapped with duoble quotes
 // =============================================================
 //
-tap.test("02.01 - breaks lines correctly leaving no empty lines", (t) => {
+tap.test("04 - breaks lines correctly leaving no empty lines", (t) => {
   t.same(
     splitEasy('"a,b",c,d\ne,f,g'),
     [
       ["a,b", "c", "d"],
       ["e", "f", "g"],
     ],
-    "02.01.01 - minimal amount of chars in each col"
+    "04.01 - minimal amount of chars in each col"
   );
   t.same(
     splitEasy(
@@ -185,13 +185,13 @@ tap.test("02.01 - breaks lines correctly leaving no empty lines", (t) => {
       ["apples, and some other fruits", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "02.01.02 - minimal amount of chars in each col"
+    "04.02 - minimal amount of chars in each col"
   );
   t.end();
 });
 
 tap.test(
-  "02.02 - particular attention of combos of line breaks and double quotes",
+  "05 - particular attention of combos of line breaks and double quotes",
   (t) => {
     t.same(
       splitEasy('"a,b",c,d\n"e,f",g,h'),
@@ -199,26 +199,26 @@ tap.test(
         ["a,b", "c", "d"],
         ["e,f", "g", "h"],
       ],
-      "02.02.01 - double quotes follow line break"
+      "05 - double quotes follow line break"
     );
     t.end();
   }
 );
 
-tap.test("02.03 - particular attention of double quotes at the end", (t) => {
+tap.test("06 - particular attention of double quotes at the end", (t) => {
   t.same(
     splitEasy('"a,b",c,d\n\re,f,"g,h"'),
     [
       ["a,b", "c", "d"],
       ["e", "f", "g,h"],
     ],
-    "02.03.01 - double quotes follow line break"
+    "06 - double quotes follow line break"
   );
   t.end();
 });
 
 tap.test(
-  "02.04 - all values are wrapped with double quotes, some trailing white space",
+  "07 - all values are wrapped with double quotes, some trailing white space",
   (t) => {
     t.same(
       splitEasy(
@@ -228,14 +228,14 @@ tap.test(
         ["Something here", "And something there", "Notice space in front"],
         ["And here", "This is wrapped as well", "And this too"],
       ],
-      "02.04.01 - splits correctly, trimming the space around"
+      "07 - splits correctly, trimming the space around"
     );
     t.end();
   }
 );
 
 tap.test(
-  "02.05 - values wrapped in double quotes that contain double quotes",
+  "08 - values wrapped in double quotes that contain double quotes",
   (t) => {
     t.same(
       splitEasy('"a,""b""",c,d\ne,f,"g ""G"""'),
@@ -243,7 +243,7 @@ tap.test(
         ['a,"b"', "c", "d"],
         ["e", "f", 'g "G"'],
       ],
-      "02.05.01 - double quotes that contain double quotes"
+      "08 - double quotes that contain double quotes"
     );
     t.end();
   }
@@ -253,38 +253,38 @@ tap.test(
 // group 03 - input type validation
 // =============================================================
 //
-tap.test("03.01 - wrong input types causes throwing up", (t) => {
+tap.test("09 - wrong input types causes throwing up", (t) => {
   t.throws(() => {
     splitEasy(null);
-  });
+  }, "09.01");
   t.throws(() => {
     splitEasy(1);
-  });
+  }, "09.02");
   t.throws(() => {
     splitEasy(undefined);
-  });
+  }, "09.03");
   t.throws(() => {
     splitEasy();
-  });
+  }, "09.04");
   t.throws(() => {
     splitEasy(true);
-  });
+  }, "09.05");
   t.throws(() => {
     splitEasy(NaN);
-  });
+  }, "09.06");
   t.throws(() => {
     splitEasy({ a: "a" });
-  });
+  }, "09.07");
   t.throws(() => {
     splitEasy("a", 1); // opts are not object
-  });
+  }, "09.08");
   t.doesNotThrow(() => {
     splitEasy("a"); // opts missing
-  });
+  }, "09.09");
   t.throws(() => {
     const f = () => null;
     splitEasy(f);
-  });
+  }, "09.10");
   t.end();
 });
 
@@ -294,7 +294,7 @@ tap.test("03.01 - wrong input types causes throwing up", (t) => {
 //
 
 tap.test(
-  "04.01 - deals with (or does not) thousand separators in numbers",
+  "10 - deals with (or does not) thousand separators in numbers",
   (t) => {
     t.same(
       splitEasy(
@@ -305,7 +305,7 @@ tap.test(
         ["Testarossa (Type F110)", "100000", "90000"],
         ["F50", "2500000", "1800000"],
       ],
-      "04.01.01 - splits correctly, understanding comma thousand separators and removing them"
+      "10.01 - splits correctly, understanding comma thousand separators and removing them"
     );
     t.same(
       splitEasy(
@@ -317,7 +317,7 @@ tap.test(
         ["Testarossa (Type F110)", "100,000", "90,000"],
         ["F50", "2,500,000", "1,800,000"],
       ],
-      "04.01.02 - leaves thousand separators intact"
+      "10.02 - leaves thousand separators intact"
     );
     t.end();
   }
@@ -328,7 +328,7 @@ tap.test(
 // =============================================================
 //
 
-tap.test("05.01 - to pad or not to pad", (t) => {
+tap.test("11 - to pad or not to pad", (t) => {
   t.same(
     splitEasy(
       'Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"'
@@ -338,7 +338,7 @@ tap.test("05.01 - to pad or not to pad", (t) => {
       ["Pencil HB", "2.20", "2.10"],
       ["Pencil 2H", "2.32", "2.30"],
     ],
-    "05.01.01 - default behaviour, padds"
+    "11.01 - default behaviour, padds"
   );
   t.same(
     splitEasy(
@@ -350,7 +350,7 @@ tap.test("05.01 - to pad or not to pad", (t) => {
       ["Pencil HB", "2.2", "2.1"],
       ["Pencil 2H", "2.32", "2.3"],
     ],
-    "05.01.02 - padding off"
+    "11.02 - padding off"
   );
   t.end();
 });
@@ -361,7 +361,7 @@ tap.test("05.01 - to pad or not to pad", (t) => {
 //
 
 tap.test(
-  "06.01 - Russian/Lithuanian/continental decimal notation style CSV that uses commas",
+  "12 - Russian/Lithuanian/continental decimal notation style CSV that uses commas",
   (t) => {
     t.same(
       splitEasy(
@@ -372,7 +372,7 @@ tap.test(
         ["Cepelinai", "5,25", "5,10"],
         ["Jautienos kepsnys", "14,50", "14,20"],
       ],
-      "06.01.01 - does not convert the notation by default, but does pad"
+      "12.01 - does not convert the notation by default, but does pad"
     );
     t.same(
       splitEasy(
@@ -384,7 +384,7 @@ tap.test(
         ["Cepelinai", "5.25", "5.10"],
         ["Jautienos kepsnys", "14.50", "14.20"],
       ],
-      "06.01.02 - converts the notation as requested, and does pad by default"
+      "12.02 - converts the notation as requested, and does pad by default"
     );
     t.same(
       splitEasy(
@@ -396,7 +396,7 @@ tap.test(
         ["Cepelinai", "5,25", "5,1"],
         ["Jautienos kepsnys", "14,5", "14,2"],
       ],
-      "06.01.03 - does not convert the notation by default, and does not pad as requested"
+      "12.03 - does not convert the notation by default, and does not pad as requested"
     );
     t.same(
       splitEasy(
@@ -408,7 +408,7 @@ tap.test(
         ["Cepelinai", "5.25", "5.1"],
         ["Jautienos kepsnys", "14.5", "14.2"],
       ],
-      "06.01.04 - converts the notation as requested, but does not pad as requested"
+      "12.04 - converts the notation as requested, but does not pad as requested"
     );
     t.end();
   }

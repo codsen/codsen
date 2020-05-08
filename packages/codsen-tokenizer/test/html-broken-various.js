@@ -7,7 +7,7 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
+  `01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
     ct(`a < b class="">`, {
@@ -39,7 +39,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
+  `02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
     ct(`<br${BACKSLASH}>`, {
@@ -63,7 +63,7 @@ tap.test(
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
+  `03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   (t) => {
     const gathered = [];
     ct(`<${BACKSLASH}br${BACKSLASH}>`, {
@@ -80,7 +80,7 @@ tap.test(
           end: 6,
         },
       ],
-      "02.02"
+      "03.01"
     );
     t.end();
   }
@@ -89,7 +89,7 @@ tap.test(
 // 03. Various
 // -----------------------------------------------------------------------------
 
-tap.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
+tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
   const gathered = [];
   ct(
     `a<!--[if]><z>
@@ -141,7 +141,7 @@ tap.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         value: "\n<AAAch>>\n</o:Offict",
       },
     ],
-    "03.01"
+    "04.01"
   );
   t.end();
 });

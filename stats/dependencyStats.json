@@ -132,7 +132,7 @@
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 14,
+        "string-left-right": 15,
         "string-match-left-right": 11,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -245,7 +245,7 @@
             "ranges-apply": 15
         },
         {
-            "string-left-right": 14
+            "string-left-right": 15
         },
         {
             "string-match-left-right": 11

@@ -62,7 +62,7 @@ tap.throws(
   "00.07"
 );
 
-tap.test("00.08 - opts.tagCb", (t) => {
+tap.test("01 - opts.tagCb", (t) => {
   const gathered = [];
   cparser("  <a>z", {
     tagCb: (obj) => {
@@ -89,12 +89,12 @@ tap.test("00.08 - opts.tagCb", (t) => {
         end: 6,
       },
     ],
-    "00.08"
+    "01.01"
   );
   t.end();
 });
 
-tap.test("00.09 - opts.charCb", (t) => {
+tap.test("02 - opts.charCb", (t) => {
   const gathered = [];
   cparser("<a>z1", {
     charCb: (obj) => {
@@ -131,7 +131,7 @@ tap.test("00.09 - opts.charCb", (t) => {
         type: "text",
       },
     ],
-    "00.09"
+    "02.01"
   );
   t.end();
 });

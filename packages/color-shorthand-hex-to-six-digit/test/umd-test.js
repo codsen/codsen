@@ -5,6 +5,6 @@ const input = "aaaa #ccc zzzz\n\t\t\t#000.";
 const result = "aaaa #cccccc zzzz\n\t\t\t#000000.";
 
 tap.test("UMD build works fine", (t) => {
-  t.same(c1(input), result);
+  t.same(c1(input), result, "01");
   t.end();
 });

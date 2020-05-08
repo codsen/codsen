@@ -18,6 +18,6 @@ const opts = { matchKeysStrictly: false, hungryForWhitespace: false };
 const res = ["elem1", "elem4"];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(del1(source, target, opts), res);
+  t.same(del1(source, target, opts), res, "01");
   t.end();
 });

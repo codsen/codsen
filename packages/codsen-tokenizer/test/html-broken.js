@@ -5,7 +5,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
+  `01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
   (t) => {
     const gathered = [];
     ct(`<>`, {
@@ -33,7 +33,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
+  `02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`,
   (t) => {
     const gathered = [];
     ct(`<>a`, {
@@ -59,14 +59,14 @@ tap.test(
           end: 3,
         },
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
+  `03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
     ct(`< >`, {
@@ -87,14 +87,14 @@ tap.test(
           end: 3,
         },
       ],
-      "01.03"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
+  `04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
     ct(`< >< >< >`, {
@@ -131,14 +131,14 @@ tap.test(
           end: 9,
         },
       ],
-      "01.04"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
+  `05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`,
   (t) => {
     const gathered = [];
     ct(` < > < > < > `, {
@@ -195,7 +195,7 @@ tap.test(
           end: 13,
         },
       ],
-      "01.05"
+      "05.01"
     );
     t.end();
   }
@@ -205,7 +205,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `06 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<->`, {
@@ -226,15 +226,15 @@ tap.test(
           end: 3,
         },
       ],
-      "02.01.01"
+      "06.01"
     );
-    t.is(gathered.length, 1, "02.01.02");
+    t.is(gathered.length, 1, "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<-->`, {
@@ -255,15 +255,15 @@ tap.test(
           end: 4,
         },
       ],
-      "02.02.01"
+      "07.01"
     );
-    t.is(gathered.length, 1, "02.02.02");
+    t.is(gathered.length, 1, "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<----->`, {
@@ -284,7 +284,7 @@ tap.test(
           end: 7,
         },
       ],
-      "02.03"
+      "08.01"
     );
     t.end();
   }

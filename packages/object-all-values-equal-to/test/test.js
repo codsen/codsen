@@ -4,7 +4,7 @@ import allValuesEqualTo from "../dist/object-all-values-equal-to.esm";
 // 01. B.A.U.
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - nested objects", (t) => {
+tap.test("01 - nested objects", (t) => {
   t.same(
     allValuesEqualTo(
       {
@@ -21,7 +21,7 @@ tap.test("01.01 - nested objects", (t) => {
       false
     ),
     true,
-    "01.01.01"
+    "01.01"
   );
   t.same(
     allValuesEqualTo(
@@ -39,12 +39,12 @@ tap.test("01.01 - nested objects", (t) => {
       false
     ),
     false,
-    "01.01.02"
+    "01.02"
   );
   t.end();
 });
 
-tap.test("01.02 - nested array", (t) => {
+tap.test("02 - nested array", (t) => {
   t.same(
     allValuesEqualTo(
       [
@@ -58,7 +58,7 @@ tap.test("01.02 - nested array", (t) => {
       false
     ),
     true,
-    "01.02.01"
+    "02.01"
   );
   t.same(
     allValuesEqualTo(
@@ -74,30 +74,30 @@ tap.test("01.02 - nested array", (t) => {
       false
     ),
     false,
-    "01.02.02"
+    "02.02"
   );
-  t.same(allValuesEqualTo(["a"], false), false, "01.02.03");
-  t.same(allValuesEqualTo([[]], false), true, "01.02.04");
+  t.same(allValuesEqualTo(["a"], false), false, "02.03");
+  t.same(allValuesEqualTo([[]], false), true, "02.04");
   t.end();
 });
 
-tap.test("01.03 - nulls", (t) => {
-  t.same(allValuesEqualTo([null], null), false, "01.03.01");
+tap.test("03 - nulls", (t) => {
+  t.same(allValuesEqualTo([null], null), false, "03.01");
   t.same(
     allValuesEqualTo([null], null, { arraysMustNotContainPlaceholders: false }),
     true,
-    "01.03.02"
+    "03.02"
   );
   t.end();
 });
 
-tap.test("01.04 - empty obj/arr", (t) => {
-  t.same(allValuesEqualTo([], false), true, "01.04.01");
-  t.same(allValuesEqualTo({}, false), true, "01.04.02");
+tap.test("04 - empty obj/arr", (t) => {
+  t.same(allValuesEqualTo([], false), true, "04.01");
+  t.same(allValuesEqualTo({}, false), true, "04.02");
   t.same(
     allValuesEqualTo(null, false),
     false,
-    "01.04.03 - only valid for empty container-like types, array and plain object"
+    "04.03 - only valid for empty container-like types, array and plain object"
   );
   t.end();
 });
@@ -105,7 +105,7 @@ tap.test("01.04 - empty obj/arr", (t) => {
 // 02. Throws
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - various throws", (t) => {
+tap.test("05 - various throws", (t) => {
   t.throws(() => {
     allValuesEqualTo();
   }, /THROW_ID_01/); // first arg missing - will throw

@@ -6,7 +6,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
+  `01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     ct(`<a\n<b>`, {
@@ -62,7 +62,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
+  `02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     ct(`<a href="z" click here</a>`, {
@@ -132,7 +132,7 @@ tap.test(
           attribs: [],
         },
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
@@ -142,7 +142,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - space is melded into tag's range`,
+  `03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - space is melded into tag's range`,
   (t) => {
     const gathered = [];
     // notice space at index 11:
@@ -170,14 +170,14 @@ tap.test(
           type: "tag",
         },
       ],
-      "02.01"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - two spaces`,
+  `04 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - two spaces`,
   (t) => {
     const gathered = [];
     // notice space at index 11:
@@ -205,14 +205,14 @@ tap.test(
           type: "tag",
         },
       ],
-      "02.02"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`,
+  `05 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`,
   (t) => {
     const gathered = [];
     ct(`<a href="z"click here</a>`, {
@@ -239,7 +239,7 @@ tap.test(
           type: "tag",
         },
       ],
-      "02.03"
+      "05.01"
     );
     t.end();
   }
@@ -249,7 +249,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`,
+  `06 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`,
   (t) => {
     const gathered = [];
     ct(`<a><b>c</b</a>`, {
@@ -331,14 +331,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "03.01"
+      "06.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
+  `07 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
   (t) => {
     const gathered = [];
     ct(`<br<div>`, {
@@ -380,14 +380,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "03.02"
+      "07.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
+  `08 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`,
   (t) => {
     const gathered = [];
     ct(`<br/<div>`, {
@@ -429,14 +429,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "03.03"
+      "08.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`,
+  `09 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`,
   (t) => {
     const gathered = [];
     ct(`<br/    <div>`, {
@@ -484,7 +484,7 @@ tap.test(
           attribs: [],
         },
       ],
-      "03.04"
+      "09.01"
     );
     t.end();
   }
@@ -494,7 +494,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`,
+  `10 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`,
   (t) => {
     const gathered = [];
     ct(`</div`, {
@@ -522,7 +522,7 @@ tap.test(
           attribs: [],
         },
       ],
-      "04.01"
+      "10.01"
     );
     t.end();
   }

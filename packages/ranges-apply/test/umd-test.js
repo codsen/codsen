@@ -9,6 +9,6 @@ const ranges = [
 const res = "bbb ccc";
 
 tap.test("UMD build works fine", (t) => {
-  t.same(r1(str, ranges), res);
+  t.same(r1(str, ranges), res, "01");
   t.end();
 });

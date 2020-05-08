@@ -6,7 +6,7 @@ import split from "../dist/string-split-by-whitespace.esm";
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - wrong/missing input = throw", (t) => {
+tap.test("01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     split();
   }, /THROW_ID_01/g);
@@ -14,18 +14,18 @@ tap.test("01.01 - wrong/missing input = throw", (t) => {
     split(undefined);
   }, /THROW_ID_01/g);
 
-  t.same(split(1), 1, "01.01.03");
-  t.same(split(null), null, "01.01.04");
-  t.same(split(true), true, "01.01.05");
+  t.same(split(1), 1, "01.03");
+  t.same(split(null), null, "01.04");
+  t.same(split(true), true, "01.05");
   t.end();
 });
 
-tap.test("01.02 - empty string as input", (t) => {
-  t.same(split(""), [], "01.02");
+tap.test("02 - empty string as input", (t) => {
+  t.same(split(""), [], "02");
   t.end();
 });
 
-tap.test("01.03 - opts contain non-array elements", (t) => {
+tap.test("03 - opts contain non-array elements", (t) => {
   t.throws(() => {
     split("a b", { ignoreRanges: ["a"] });
   }, /THROW_ID_03/g);
@@ -36,32 +36,32 @@ tap.test("01.03 - opts contain non-array elements", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - splits two", (t) => {
-  t.same(split("a b"), ["a", "b"], "02.01.01");
-  t.same(split(" a  b "), ["a", "b"], "02.01.02");
-  t.same(split("a  b "), ["a", "b"], "02.01.03");
-  t.same(split("  a  b"), ["a", "b"], "02.01.04");
-  t.same(split("\na\nb\n"), ["a", "b"], "02.01.05");
-  t.same(split("\ta\tb\t"), ["a", "b"], "02.01.06");
-  t.same(split("0\t0\t"), ["0", "0"], "02.01.07");
+tap.test("04 - splits two", (t) => {
+  t.same(split("a b"), ["a", "b"], "04.01");
+  t.same(split(" a  b "), ["a", "b"], "04.02");
+  t.same(split("a  b "), ["a", "b"], "04.03");
+  t.same(split("  a  b"), ["a", "b"], "04.04");
+  t.same(split("\na\nb\n"), ["a", "b"], "04.05");
+  t.same(split("\ta\tb\t"), ["a", "b"], "04.06");
+  t.same(split("0\t0\t"), ["0", "0"], "04.07");
   t.same(
     split(
       "\n\n\n a      \n\n\n \t\t\t\t       b  \n\n\n \t\t\t\t   c   \n\n\n\n \t\t\t\t "
     ),
     ["a", "b", "c"],
-    "02.01.08"
+    "04.08"
   );
-  t.same(split("  some   text"), ["some", "text"], "02.01.09");
+  t.same(split("  some   text"), ["some", "text"], "04.09");
   t.end();
 });
 
-tap.test("02.02 - single substring", (t) => {
-  t.same(split("a"), ["a"], "02.02.01");
-  t.same(split(" a"), ["a"], "02.02.02");
-  t.same(split("a "), ["a"], "02.02.03");
-  t.same(split(" a "), ["a"], "02.02.04");
-  t.same(split("\na\n"), ["a"], "02.02.05");
-  t.same(split("0"), ["0"], "02.02.06");
+tap.test("05 - single substring", (t) => {
+  t.same(split("a"), ["a"], "05.01");
+  t.same(split(" a"), ["a"], "05.02");
+  t.same(split("a "), ["a"], "05.03");
+  t.same(split(" a "), ["a"], "05.04");
+  t.same(split("\na\n"), ["a"], "05.05");
+  t.same(split("0"), ["0"], "05.06");
   t.end();
 });
 
@@ -69,30 +69,30 @@ tap.test("02.02 - single substring", (t) => {
 // 03. opts.ignoreRanges
 // -----------------------------------------------------------------------------
 
-tap.test("03.01 - opts.ignoreRanges offset the start", (t) => {
+tap.test("06 - opts.ignoreRanges offset the start", (t) => {
   t.same(
     split("a b c d e", {
       ignoreRanges: [[0, 2]],
     }),
     ["b", "c", "d", "e"],
-    "03.01.01"
+    "06"
   );
   t.end();
 });
 
-tap.test("03.02 - starts from the middle of a string", (t) => {
+tap.test("07 - starts from the middle of a string", (t) => {
   t.same(
     split("abcdef", {
       ignoreRanges: [[1, 5]],
     }),
     ["a", "f"],
-    "03.02.01"
+    "07"
   );
   t.end();
 });
 
 tap.test(
-  '03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails',
+  '08 - in tandem with package "strFindHeadsTails" - ignores heads and tails',
   (t) => {
     const input = "some interesting {{text}} {% and %} {{ some more }} text.";
     const headsAndTails = strFindHeadsTails(
@@ -109,14 +109,14 @@ tap.test(
         ignoreRanges: headsAndTails,
       }),
       ["some", "interesting", "text", "and", "some", "more", "text."],
-      "03.03.01"
+      "08"
     );
     t.end();
   }
 );
 
 tap.test(
-  '03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables',
+  '09 - in tandem with package "strFindHeadsTails" - ignores whole variables',
   (t) => {
     const input = "some interesting {{text}} {% and %} {{ some more }} text.";
     const wholeVariables = strFindHeadsTails(
@@ -132,7 +132,7 @@ tap.test(
         ignoreRanges: wholeVariables,
       }),
       ["some", "interesting", "text."],
-      "03.04"
+      "09"
     );
     t.end();
   }

@@ -19,7 +19,7 @@ function compare(t, name) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - missing 1st arg`,
+  `01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - missing 1st arg`,
   (t) => {
     t.throws(() => {
       c();
@@ -33,7 +33,7 @@ tap.test(
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg of a wrong type`,
+  `02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg of a wrong type`,
   (t) => {
     t.throws(() => {
       c(1);
@@ -60,7 +60,7 @@ tap.test(
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg is empty string`,
+  `03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg is empty string`,
   (t) => {
     t.same(
       c(""),
@@ -68,7 +68,7 @@ tap.test(
         res: "",
         version,
       },
-      "00.03"
+      "03"
     );
 
     t.end();
@@ -79,7 +79,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - deletes bump-only entries together with their headings`,
+  `04 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - deletes bump-only entries together with their headings`,
   (t) => {
     compare(t, "01_deletes_bump-only");
     t.end();
@@ -87,7 +87,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - turns h1 headings within body into h2`,
+  `05 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - turns h1 headings within body into h2`,
   (t) => {
     compare(t, "02_remove_h1_tags_in_body");
     t.end();
@@ -95,7 +95,7 @@ tap.test(
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - cleans whitespace and replaces bullet dashes with asterisks`,
+  `06 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - cleans whitespace and replaces bullet dashes with asterisks`,
   (t) => {
     compare(t, "03_whitespace");
     t.end();
@@ -103,7 +103,7 @@ tap.test(
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - removes WIP entries`,
+  `07 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - removes WIP entries`,
   (t) => {
     compare(t, "04_wip");
     t.end();

@@ -5,7 +5,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`,
+  `01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -50,7 +50,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookahead`,
+  `02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookahead`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -94,14 +94,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`,
+  `03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -169,14 +169,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.03"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`,
+  `04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -259,14 +259,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.04"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`,
+  `05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -359,14 +359,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.05"
+      "05.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`,
+  `06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -464,14 +464,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.06"
+      "06.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`,
+  `07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -569,14 +569,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.07"
+      "07.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`,
+  `08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -674,14 +674,14 @@ tap.test(
           next: [],
         },
       ],
-      "01.08"
+      "08.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.09 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99 - doesn't push next`,
+  `09 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99 - doesn't push next`,
   (t) => {
     const gathered = [];
     ct("<a>z1", {
@@ -723,7 +723,7 @@ tap.test(
           type: "text",
         },
       ],
-      "01.09"
+      "09.01"
     );
     t.end();
   }

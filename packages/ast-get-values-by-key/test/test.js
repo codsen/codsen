@@ -6,7 +6,7 @@ import get from "../dist/ast-get-values-by-key.esm";
 // GET
 // ==============================
 
-tap.test("01.01 - just a plain object", (t) => {
+tap.test("01 - just a plain object", (t) => {
   const source = {
     tag: "html",
   };
@@ -19,11 +19,11 @@ tap.test("01.01 - just a plain object", (t) => {
         path: "tag",
       },
     ],
-    "01.01.01"
+    "01.01"
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, "tag"), "html", "01.01.02");
+  t.equal(objectPath.get(source, "tag"), "html", "01.02");
 
   t.same(
     get(
@@ -33,12 +33,12 @@ tap.test("01.01 - just a plain object", (t) => {
       "tag"
     ),
     [],
-    "01.01.03"
+    "01.03"
   );
   t.end();
 });
 
-tap.test("01.02 - single plain object within array", (t) => {
+tap.test("02 - single plain object within array", (t) => {
   const source = [
     {
       tag: "html",
@@ -52,15 +52,15 @@ tap.test("01.02 - single plain object within array", (t) => {
         path: "0.tag",
       },
     ],
-    "01.02.01"
+    "02.01"
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, "0.tag"), "html", "01.02.02");
+  t.equal(objectPath.get(source, "0.tag"), "html", "02.02");
   t.end();
 });
 
-tap.test("01.03 - string in array as result", (t) => {
+tap.test("03 - string in array as result", (t) => {
   const source = {
     tag: ["html"],
   };
@@ -70,14 +70,14 @@ tap.test("01.03 - string in array as result", (t) => {
       path: "tag",
     },
   ];
-  t.same(get(source, "tag"), res, "01.03.01");
+  t.same(get(source, "tag"), res, "03.01");
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.same(objectPath.get(source, "tag"), ["html"], "01.03.02");
+  t.same(objectPath.get(source, "tag"), ["html"], "03.02");
   t.end();
 });
 
-tap.test("01.04 - two strings as result", (t) => {
+tap.test("04 - two strings as result", (t) => {
   t.same(
     get(
       [
@@ -105,12 +105,12 @@ tap.test("01.04 - two strings as result", (t) => {
       },
       { val: "html2", path: "1.tag" },
     ],
-    "01.04.01"
+    "04"
   );
   t.end();
 });
 
-tap.test("01.05 - query by key, returns mixed results", (t) => {
+tap.test("05 - query by key, returns mixed results", (t) => {
   t.same(
     get(
       [
@@ -143,12 +143,12 @@ tap.test("01.05 - query by key, returns mixed results", (t) => {
       { val: { html2: "html2" }, path: "1.tag" },
       { val: "html3", path: "2.tag" },
     ],
-    "01.05.01"
+    "05"
   );
   t.end();
 });
 
-tap.test("01.06 - deep tree", (t) => {
+tap.test("06 - deep tree", (t) => {
   const source = [
     {
       a: {
@@ -179,19 +179,15 @@ tap.test("01.06 - deep tree", (t) => {
     },
   ];
   const retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
-  t.same(
-    get(source, "tag"),
-    [{ val: "html", path: retrievedPath }],
-    "01.06.01"
-  );
+  t.same(get(source, "tag"), [{ val: "html", path: retrievedPath }], "06.01");
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, retrievedPath), "html", "01.06.02");
+  t.equal(objectPath.get(source, retrievedPath), "html", "06.02");
   t.end();
 });
 
-tap.test("01.07 - query returns an array", (t) => {
+tap.test("07 - query returns an array", (t) => {
   t.same(
     get(
       [
@@ -202,12 +198,12 @@ tap.test("01.07 - query returns an array", (t) => {
       "tag"
     ),
     [{ val: ["z"], path: "0.tag" }],
-    "01.07"
+    "07"
   );
   t.end();
 });
 
-tap.test("01.08 - query returns a string", (t) => {
+tap.test("08 - query returns a string", (t) => {
   t.same(
     get(
       [
@@ -218,12 +214,12 @@ tap.test("01.08 - query returns a string", (t) => {
       "tag"
     ),
     [{ val: "z", path: "0.tag" }],
-    "01.08"
+    "08"
   );
   t.end();
 });
 
-tap.test("01.09 - query returns array with two objects", (t) => {
+tap.test("09 - query returns array with two objects", (t) => {
   const source = [
     {
       tag: [
@@ -256,12 +252,12 @@ tap.test("01.09 - query returns array with two objects", (t) => {
         path: "0.tag",
       },
     ],
-    "01.09"
+    "09.01"
   );
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.same(objectPath.get(source, "0.tag"), retrievedValue, "01.09.02");
+  t.same(objectPath.get(source, "0.tag"), retrievedValue, "09.02");
   t.end();
 });
 
@@ -269,7 +265,7 @@ tap.test("01.09 - query returns array with two objects", (t) => {
 // GET WITH NO RESULTS
 // ==============================
 
-tap.test("02.01 - no results query", (t) => {
+tap.test("10 - no results query", (t) => {
   t.same(
     get(
       {
@@ -278,7 +274,7 @@ tap.test("02.01 - no results query", (t) => {
       "tag"
     ),
     [],
-    "02.01"
+    "10"
   );
   t.end();
 });
@@ -287,7 +283,7 @@ tap.test("02.01 - no results query", (t) => {
 // SET
 // ==============================
 
-tap.test("03.01 - string replaced", (t) => {
+tap.test("11 - string replaced", (t) => {
   t.same(
     get(
       {
@@ -299,12 +295,12 @@ tap.test("03.01 - string replaced", (t) => {
     {
       tag: "style",
     },
-    "03.01"
+    "11"
   );
   t.end();
 });
 
-tap.test("03.02 - string within array replaced", (t) => {
+tap.test("12 - string within array replaced", (t) => {
   t.same(
     get(
       {
@@ -316,12 +312,12 @@ tap.test("03.02 - string within array replaced", (t) => {
     {
       tag: ["style"],
     },
-    "03.02"
+    "12"
   );
   t.end();
 });
 
-tap.test("03.03 - value is object and is replaced", (t) => {
+tap.test("13 - value is object and is replaced", (t) => {
   t.same(
     get(
       {
@@ -341,12 +337,12 @@ tap.test("03.03 - value is object and is replaced", (t) => {
         c: "d",
       },
     },
-    "03.03"
+    "13"
   );
   t.end();
 });
 
-tap.test("03.04 - two objects replaced", (t) => {
+tap.test("14 - two objects replaced", (t) => {
   t.same(
     get(
       [
@@ -383,12 +379,12 @@ tap.test("03.04 - two objects replaced", (t) => {
         },
       },
     ],
-    "03.04"
+    "14"
   );
   t.end();
 });
 
-tap.test("03.05 - simple edit", (t) => {
+tap.test("15 - simple edit", (t) => {
   t.same(
     get(
       [
@@ -426,12 +422,12 @@ tap.test("03.05 - simple edit", (t) => {
         content: ["\n"],
       },
     ],
-    "03.05"
+    "15"
   );
   t.end();
 });
 
-tap.test("03.06 - replaced to an empty string", (t) => {
+tap.test("16 - replaced to an empty string", (t) => {
   t.same(
     get(
       {
@@ -443,12 +439,12 @@ tap.test("03.06 - replaced to an empty string", (t) => {
     {
       tag: "",
     },
-    "03.06 - empty string given as a replacement"
+    "16 - empty string given as a replacement"
   );
   t.end();
 });
 
-tap.test("03.07 - not enough replacement values given", (t) => {
+tap.test("17 - not enough replacement values given", (t) => {
   t.same(
     get(
       {
@@ -480,7 +476,7 @@ tap.test("03.07 - not enough replacement values given", (t) => {
         },
       ],
     },
-    "03.07 - still works"
+    "17 - still works"
   );
   t.end();
 });
@@ -489,7 +485,7 @@ tap.test("03.07 - not enough replacement values given", (t) => {
 // SET WITH NO RESULTS
 // ==============================
 
-tap.test("04.01 - no results replacement", (t) => {
+tap.test("18 - no results replacement", (t) => {
   t.same(
     get(
       {
@@ -501,7 +497,7 @@ tap.test("04.01 - no results replacement", (t) => {
     {
       style: "html",
     },
-    "04.01"
+    "18"
   );
   t.end();
 });
@@ -510,7 +506,7 @@ tap.test("04.01 - no results replacement", (t) => {
 // EDGE CASES
 // ==============================
 
-tap.test("05.02 - input is plain object, replacement is string", (t) => {
+tap.test("19 - input is plain object, replacement is string", (t) => {
   t.same(
     get(
       {
@@ -522,7 +518,7 @@ tap.test("05.02 - input is plain object, replacement is string", (t) => {
     {
       style: "meta",
     },
-    "05.02"
+    "19"
   );
   t.end();
 });
@@ -531,7 +527,7 @@ tap.test("05.02 - input is plain object, replacement is string", (t) => {
 // THROWS
 // ==============================
 
-tap.test("06.01 - wrong type of second argument", (t) => {
+tap.test("20 - wrong type of second argument", (t) => {
   // throw pinning:
   const error1 = t.throws(() => {
     get(
@@ -542,12 +538,12 @@ tap.test("06.01 - wrong type of second argument", (t) => {
       ["meta"]
     );
   });
-  t.match(error1.message, /THROW_ID_04/g, "06.01.01");
+  t.match(error1.message, /THROW_ID_04/g, "20");
   t.end();
 });
 
 tap.test(
-  "06.02 - input is plain object, replacement is unrecognised (is a function)",
+  "21 - input is plain object, replacement is unrecognised (is a function)",
   (t) => {
     function f() {
       return "zzz";
@@ -560,13 +556,13 @@ tap.test(
         "style",
         f
       );
-    });
+    }, "21");
     t.end();
   }
 );
 
 tap.test(
-  "06.03 - one of the whatToFind array values is a sneaky non-string",
+  "22 - one of the whatToFind array values is a sneaky non-string",
   (t) => {
     t.throws(() => {
       get(
@@ -582,7 +578,7 @@ tap.test(
 );
 
 tap.test(
-  "06.04 - one of the replacement array values is a sneaky non-string",
+  "23 - one of the replacement array values is a sneaky non-string",
   (t) => {
     t.doesNotThrow(() => {
       get(
@@ -592,17 +588,17 @@ tap.test(
         "style",
         ["meta", 1]
       );
-    });
+    }, "23");
     t.end();
   }
 );
 
-tap.test("06.05.01 - input present but non-container sort", (t) => {
-  t.same(get(1, "style", "meta"), 1, "05.05.01");
+tap.test("24 - input present but non-container sort", (t) => {
+  t.same(get(1, "style", "meta"), 1, "24");
   t.end();
 });
 
-tap.test("06.05.02 - input completely missing", (t) => {
+tap.test("25 - input completely missing", (t) => {
   t.throws(() => {
     get();
   }, /THROW_ID_01/g);
@@ -617,7 +613,7 @@ tap.test("06.05.02 - input completely missing", (t) => {
   t.end();
 });
 
-tap.test("06.06 - second argument is completely missing", (t) => {
+tap.test("26 - second argument is completely missing", (t) => {
   t.throws(() => {
     get({
       style: "meta",

@@ -8,6 +8,6 @@ tap.test("UMD build works fine", (t) => {
       gathered.push(obj);
     },
   });
-  t.ok(gathered.length);
+  t.ok(gathered.length, "01.01");
   t.end();
 });

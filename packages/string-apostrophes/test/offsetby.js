@@ -39,8 +39,8 @@ tap.test(
         4
       )}`
     );
-    t.same(res, [[5, 8, `'n'`]]);
-    t.same(gathered, [2]);
+    t.same(res, [[5, 8, `'n'`]], "01.01");
+    t.same(gathered, [2], "01.02");
     t.end();
   }
 );

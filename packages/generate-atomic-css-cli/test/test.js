@@ -37,7 +37,7 @@ tap.test("01 - there are no usable files at all", async (t) => {
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch((err) => t.fail(err));
   // confirm that the existing file is intact:
-  t.equal(await processedFileContents, "zzz");
+  t.equal(await processedFileContents, "zzz", "01");
   t.end();
 });
 
@@ -110,7 +110,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
     .catch((err) => t.fail(err));
 
   // 3. compare:
-  t.equal(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile, "02");
   t.end();
 });
 

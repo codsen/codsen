@@ -5,7 +5,7 @@ import cparser from "../dist/codsen-parser.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`,
+  `01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`,
   (t) => {
     const gatheredErr = [];
     const ast = cparser("</br>", {
@@ -32,9 +32,9 @@ tap.test(
           children: [],
         },
       ],
-      "01.01.01"
+      "01.01"
     );
-    t.is(ast.length, 1, "01.01.02");
+    t.is(ast.length, 1, "01.02");
 
     t.match(
       gatheredErr,
@@ -46,9 +46,9 @@ tap.test(
           fix: { ranges: [[1, 2]] },
         },
       ],
-      "01.01.03"
+      "01.03"
     );
-    t.is(gatheredErr.length, 1, "01.01.04");
+    t.is(gatheredErr.length, 1, "01.04");
     t.end();
   }
 );

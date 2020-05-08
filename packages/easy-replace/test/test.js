@@ -5,7 +5,7 @@ import er from "../dist/easy-replace.esm";
 // only the string to search for
 // ==============================
 
-tap.test("1.1 - replace letter with letter", (t) => {
+tap.test("01 - replace letter with letter", (t) => {
   t.equal(
     er(
       "a b c",
@@ -37,7 +37,7 @@ tap.test("1.1 - replace letter with letter", (t) => {
   t.end();
 });
 
-tap.test("1.2 - replace 1 emoji with 1 emoji", (t) => {
+tap.test("02 - replace 1 emoji with 1 emoji", (t) => {
   t.equal(
     er(
       "🐴 🦄 🐴",
@@ -58,7 +58,7 @@ tap.test("1.2 - replace 1 emoji with 1 emoji", (t) => {
   t.end();
 });
 
-tap.test("1.3 - replace 3 consecutive emoji with emoji", (t) => {
+tap.test("03 - replace 3 consecutive emoji with emoji", (t) => {
   t.equal(
     er(
       "a 🦄🦄🦄 a",
@@ -79,7 +79,7 @@ tap.test("1.3 - replace 3 consecutive emoji with emoji", (t) => {
   t.end();
 });
 
-tap.test("1.4 - gorilla emoji - in escaped JS", (t) => {
+tap.test("04 - gorilla emoji - in escaped JS", (t) => {
   t.equal(
     er(
       "ljghdfjkgzh\ud83e\udd8dlkgljd",
@@ -100,7 +100,7 @@ tap.test("1.4 - gorilla emoji - in escaped JS", (t) => {
   t.end();
 });
 
-tap.test("1.5 - gorilla emoji - in raw", (t) => {
+tap.test("05 - gorilla emoji - in raw", (t) => {
   t.equal(
     er(
       "ljghdfjkgzh🦍lkgljd",
@@ -121,7 +121,7 @@ tap.test("1.5 - gorilla emoji - in raw", (t) => {
   t.end();
 });
 
-tap.test("1.6 - won't find a letter", (t) => {
+tap.test("06 - won't find a letter", (t) => {
   t.equal(
     er(
       "a b c",
@@ -142,7 +142,7 @@ tap.test("1.6 - won't find a letter", (t) => {
   t.end();
 });
 
-tap.test("1.7 - won't find emoji, with new lines", (t) => {
+tap.test("07 - won't find emoji, with new lines", (t) => {
   t.equal(
     er(
       "a\nb\nc",
@@ -163,7 +163,7 @@ tap.test("1.7 - won't find emoji, with new lines", (t) => {
   t.end();
 });
 
-tap.test("1.8 - replacement with new lines", (t) => {
+tap.test("08 - replacement with new lines", (t) => {
   t.equal(
     er(
       "a\nb",
@@ -184,7 +184,7 @@ tap.test("1.8 - replacement with new lines", (t) => {
   t.end();
 });
 
-tap.test("1.9 - multiple letter findings", (t) => {
+tap.test("09 - multiple letter findings", (t) => {
   t.equal(
     er(
       "a a a a a b",
@@ -205,7 +205,7 @@ tap.test("1.9 - multiple letter findings", (t) => {
   t.end();
 });
 
-tap.test("1.10 - single digit of string type replaced", (t) => {
+tap.test("10 - single digit of string type replaced", (t) => {
   t.equal(
     er(
       "0",
@@ -226,7 +226,7 @@ tap.test("1.10 - single digit of string type replaced", (t) => {
   t.end();
 });
 
-tap.test("1.11 - single digit of integer type replaced", (t) => {
+tap.test("11 - single digit of integer type replaced", (t) => {
   t.equal(
     er(
       0,
@@ -247,7 +247,7 @@ tap.test("1.11 - single digit of integer type replaced", (t) => {
   t.end();
 });
 
-tap.test("1.12 - source and replacement are of integer type", (t) => {
+tap.test("12 - source and replacement are of integer type", (t) => {
   t.equal(
     er(
       0,
@@ -268,7 +268,7 @@ tap.test("1.12 - source and replacement are of integer type", (t) => {
   t.end();
 });
 
-tap.test("1.13 - all raw integers: source, replacement and searchFor", (t) => {
+tap.test("13 - all raw integers: source, replacement and searchFor", (t) => {
   t.equal(
     er(
       0,
@@ -289,7 +289,7 @@ tap.test("1.13 - all raw integers: source, replacement and searchFor", (t) => {
   t.end();
 });
 
-tap.test("1.14 - multiple consecutive letter replacements", (t) => {
+tap.test("14 - multiple consecutive letter replacements", (t) => {
   t.equal(
     er(
       "aaavvvvccccc",
@@ -314,7 +314,7 @@ tap.test("1.14 - multiple consecutive letter replacements", (t) => {
 // searchFor + leftMaybe
 // ==============================
 
-tap.test("2.1 - left maybe found", (t) => {
+tap.test("15 - left maybe found", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -352,7 +352,7 @@ tap.test("2.1 - left maybe found", (t) => {
   t.end();
 });
 
-tap.test("2.2 - two replacements with one leftmaybe, nearby", (t) => {
+tap.test("16 - two replacements with one leftmaybe, nearby", (t) => {
   t.equal(
     er(
       "ab🐴🦄🐴c",
@@ -390,7 +390,7 @@ tap.test("2.2 - two replacements with one leftmaybe, nearby", (t) => {
   t.end();
 });
 
-tap.test("2.3 - two consecutive maybes found/replaced", (t) => {
+tap.test("17 - two consecutive maybes found/replaced", (t) => {
   t.equal(
     er(
       "ab🦄🐴🦄🐴c",
@@ -428,7 +428,7 @@ tap.test("2.3 - two consecutive maybes found/replaced", (t) => {
   t.end();
 });
 
-tap.test("2.4 - futile left maybe", (t) => {
+tap.test("18 - futile left maybe", (t) => {
   t.equal(
     er(
       "'🐴",
@@ -466,7 +466,7 @@ tap.test("2.4 - futile left maybe", (t) => {
   t.end();
 });
 
-tap.test("2.5 - line break as search string", (t) => {
+tap.test("19 - line break as search string", (t) => {
   t.equal(
     er(
       "\n\n\n",
@@ -487,7 +487,7 @@ tap.test("2.5 - line break as search string", (t) => {
   t.end();
 });
 
-tap.test("2.6 - line break as both searchFor and maybe replaced", (t) => {
+tap.test("20 - line break as both searchFor and maybe replaced", (t) => {
   t.equal(
     er(
       "\n\n\n",
@@ -525,7 +525,7 @@ tap.test("2.6 - line break as both searchFor and maybe replaced", (t) => {
   t.end();
 });
 
-tap.test("2.7 - operations on line breaks only", (t) => {
+tap.test("21 - operations on line breaks only", (t) => {
   t.equal(
     er(
       "\n\n",
@@ -546,7 +546,7 @@ tap.test("2.7 - operations on line breaks only", (t) => {
   t.end();
 });
 
-tap.test("2.8 - three left maybes (found)", (t) => {
+tap.test("22 - three left maybes (found)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -567,7 +567,7 @@ tap.test("2.8 - three left maybes (found)", (t) => {
   t.end();
 });
 
-tap.test("2.9 - three left maybes (not found)", (t) => {
+tap.test("23 - three left maybes (not found)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -588,7 +588,7 @@ tap.test("2.9 - three left maybes (not found)", (t) => {
   t.end();
 });
 
-tap.test("2.10 - three left maybes (multiple hungry finds)", (t) => {
+tap.test("24 - three left maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "🐴 a🍺🦄🐴🦄c a🦄🍺🐴🦄c a🦄🐴🦄c a🍺🐴🦄c 🐴",
@@ -646,7 +646,7 @@ tap.test("2.10 - three left maybes (multiple hungry finds)", (t) => {
 // explicitly as string on the left side of the searchFor, it will not be found
 // if the order of array is wrong, yet characters are all the same.
 
-tap.test("2.11 - sneaky array conversion situation", (t) => {
+tap.test("25 - sneaky array conversion situation", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -667,7 +667,7 @@ tap.test("2.11 - sneaky array conversion situation", (t) => {
   t.end();
 });
 
-tap.test("2.12 - sneaky array conversion situation", (t) => {
+tap.test("26 - sneaky array conversion situation", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -688,7 +688,7 @@ tap.test("2.12 - sneaky array conversion situation", (t) => {
   t.end();
 });
 
-tap.test("2.13 - normal words, few of them, leftMaybe as array", (t) => {
+tap.test("27 - normal words, few of them, leftMaybe as array", (t) => {
   t.equal(
     er(
       "this emotion is really a promotion in motion",
@@ -709,7 +709,7 @@ tap.test("2.13 - normal words, few of them, leftMaybe as array", (t) => {
   t.end();
 });
 
-tap.test("2.14 - normal words, few of them, leftMaybe as array", (t) => {
+tap.test("28 - normal words, few of them, leftMaybe as array", (t) => {
   t.equal(
     er(
       "this emotion is really a promotion in motion",
@@ -730,7 +730,7 @@ tap.test("2.14 - normal words, few of them, leftMaybe as array", (t) => {
   t.end();
 });
 
-tap.test("2.15 - leftMaybe is array, but with only 1 null value", (t) => {
+tap.test("29 - leftMaybe is array, but with only 1 null value", (t) => {
   t.equal(
     er(
       "some text",
@@ -751,7 +751,7 @@ tap.test("2.15 - leftMaybe is array, but with only 1 null value", (t) => {
   t.end();
 });
 
-tap.test("2.16 - leftMaybe is array, but with only 1 null value", (t) => {
+tap.test("30 - leftMaybe is array, but with only 1 null value", (t) => {
   t.equal(
     er(
       "some text",
@@ -772,7 +772,7 @@ tap.test("2.16 - leftMaybe is array, but with only 1 null value", (t) => {
   t.end();
 });
 
-tap.test("2.17 - leftMaybe is couple integers in an array", (t) => {
+tap.test("31 - leftMaybe is couple integers in an array", (t) => {
   t.equal(
     er(
       "1234",
@@ -793,7 +793,7 @@ tap.test("2.17 - leftMaybe is couple integers in an array", (t) => {
   t.end();
 });
 
-tap.test("2.18 - leftMaybe is couple integers in an array", (t) => {
+tap.test("32 - leftMaybe is couple integers in an array", (t) => {
   t.equal(
     er(
       "1234",
@@ -814,7 +814,7 @@ tap.test("2.18 - leftMaybe is couple integers in an array", (t) => {
   t.end();
 });
 
-tap.test("2.19 - sneaky case of overlapping leftMaybes", (t) => {
+tap.test("33 - sneaky case of overlapping leftMaybes", (t) => {
   t.equal(
     er(
       "this is a word to be searched for",
@@ -879,7 +879,7 @@ tap.test("2.19 - sneaky case of overlapping leftMaybes", (t) => {
 // searchFor + rightMaybe
 // ==============================
 
-tap.test("3.1 - right maybe found", (t) => {
+tap.test("34 - right maybe found", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -917,7 +917,7 @@ tap.test("3.1 - right maybe found", (t) => {
   t.end();
 });
 
-tap.test("3.2 - two replacements with one rightmaybe, nearby", (t) => {
+tap.test("35 - two replacements with one rightmaybe, nearby", (t) => {
   t.equal(
     er(
       "ab🐴🦄🐴c",
@@ -955,7 +955,7 @@ tap.test("3.2 - two replacements with one rightmaybe, nearby", (t) => {
   t.end();
 });
 
-tap.test("3.3 - two consecutive right maybes", (t) => {
+tap.test("36 - two consecutive right maybes", (t) => {
   t.equal(
     er(
       "ab🦄🐴🦄🐴c",
@@ -993,7 +993,7 @@ tap.test("3.3 - two consecutive right maybes", (t) => {
   t.end();
 });
 
-tap.test("3.4 - futile right maybe", (t) => {
+tap.test("37 - futile right maybe", (t) => {
   t.equal(
     er(
       "'🐴",
@@ -1031,7 +1031,7 @@ tap.test("3.4 - futile right maybe", (t) => {
   t.end();
 });
 
-tap.test("3.5 - \\n as search string plus right maybe", (t) => {
+tap.test("38 - \\n as search string plus right maybe", (t) => {
   t.equal(
     er(
       "\na\n\n",
@@ -1069,7 +1069,7 @@ tap.test("3.5 - \\n as search string plus right maybe", (t) => {
   t.end();
 });
 
-tap.test("3.6 - \\n as both searchFor and right maybe, replaced", (t) => {
+tap.test("39 - \\n as both searchFor and right maybe, replaced", (t) => {
   t.equal(
     er(
       "\n\n\n",
@@ -1107,7 +1107,7 @@ tap.test("3.6 - \\n as both searchFor and right maybe, replaced", (t) => {
   t.end();
 });
 
-tap.test("3.7 - rightMaybe with line breaks", (t) => {
+tap.test("40 - rightMaybe with line breaks", (t) => {
   t.equal(
     er(
       "a\n\na",
@@ -1145,7 +1145,7 @@ tap.test("3.7 - rightMaybe with line breaks", (t) => {
   t.end();
 });
 
-tap.test("3.8 - specific case of semi infinite loop with maybe", (t) => {
+tap.test("41 - specific case of semi infinite loop with maybe", (t) => {
   t.equal(
     er(
       "aaaaab",
@@ -1183,7 +1183,7 @@ tap.test("3.8 - specific case of semi infinite loop with maybe", (t) => {
   t.end();
 });
 
-tap.test("3.9 - three right maybes (some found)", (t) => {
+tap.test("42 - three right maybes (some found)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -1204,7 +1204,7 @@ tap.test("3.9 - three right maybes (some found)", (t) => {
   t.end();
 });
 
-tap.test("3.10 - three right maybes (searchFor not found)", (t) => {
+tap.test("43 - three right maybes (searchFor not found)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -1225,7 +1225,7 @@ tap.test("3.10 - three right maybes (searchFor not found)", (t) => {
   t.end();
 });
 
-tap.test("3.11 - three right maybes (maybes not found)", (t) => {
+tap.test("44 - three right maybes (maybes not found)", (t) => {
   t.equal(
     er(
       "🍺🦄🐴🦄c",
@@ -1246,7 +1246,7 @@ tap.test("3.11 - three right maybes (maybes not found)", (t) => {
   t.end();
 });
 
-tap.test("3.12.1 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("45 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "🐴 ",
@@ -1267,7 +1267,7 @@ tap.test("3.12.1 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.13 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("46 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄🍺c",
@@ -1288,7 +1288,7 @@ tap.test("3.13 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.14 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("47 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "a🦄🐴🍺🦄c",
@@ -1309,7 +1309,7 @@ tap.test("3.14 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.15 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("48 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -1330,7 +1330,7 @@ tap.test("3.15 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.16 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("49 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄🍺c a🦄🐴🍺🦄c a🦄🐴🦄c 🐴",
@@ -1351,7 +1351,7 @@ tap.test("3.16 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.17 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("50 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
@@ -1372,7 +1372,7 @@ tap.test("3.17 - three right maybes (multiple hungry finds)", (t) => {
   t.end();
 });
 
-tap.test("3.18 - three right maybes (multiple hungry finds)", (t) => {
+tap.test("51 - three right maybes (multiple hungry finds)", (t) => {
   t.equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
@@ -1396,7 +1396,7 @@ tap.test("3.18 - three right maybes (multiple hungry finds)", (t) => {
 // explicitly as string on the right side of the searchFor, it will not be
 // found if the order of array is wrong, yet characters are all the same.
 
-tap.test("3.19 - sneaky array conversion situation", (t) => {
+tap.test("52 - sneaky array conversion situation", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄c",
@@ -1434,7 +1434,7 @@ tap.test("3.19 - sneaky array conversion situation", (t) => {
   t.end();
 });
 
-tap.test("3.20 - normal words, few of them, rightMaybe as array", (t) => {
+tap.test("53 - normal words, few of them, rightMaybe as array", (t) => {
   t.equal(
     er(
       "this protection is promoting the proper propaganda",
@@ -1455,7 +1455,7 @@ tap.test("3.20 - normal words, few of them, rightMaybe as array", (t) => {
   t.end();
 });
 
-tap.test("3.21 - rightMaybe is array, but with only 1 null value", (t) => {
+tap.test("54 - rightMaybe is array, but with only 1 null value", (t) => {
   t.equal(
     er(
       "some text",
@@ -1476,7 +1476,7 @@ tap.test("3.21 - rightMaybe is array, but with only 1 null value", (t) => {
   t.end();
 });
 
-tap.test("3.22 - rightMaybe is couple integers in an array", (t) => {
+tap.test("55 - rightMaybe is couple integers in an array", (t) => {
   t.equal(
     er(
       "1234",
@@ -1497,7 +1497,7 @@ tap.test("3.22 - rightMaybe is couple integers in an array", (t) => {
   t.end();
 });
 
-tap.test("3.23 - sneaky case of overlapping rightMaybes", (t) => {
+tap.test("56 - sneaky case of overlapping rightMaybes", (t) => {
   t.equal(
     er(
       "this is a word to be searched for",
@@ -1518,7 +1518,7 @@ tap.test("3.23 - sneaky case of overlapping rightMaybes", (t) => {
   t.end();
 });
 
-tap.test("3.24 - case-insensitive flag", (t) => {
+tap.test("57 - case-insensitive flag", (t) => {
   t.equal(
     er(
       "aaaC",
@@ -1546,7 +1546,7 @@ tap.test("3.24 - case-insensitive flag", (t) => {
 // searchFor + both left and right
 // ==============================
 
-tap.test("4.1 - left and right maybes as emoji", (t) => {
+tap.test("58 - left and right maybes as emoji", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄a",
@@ -1584,7 +1584,7 @@ tap.test("4.1 - left and right maybes as emoji", (t) => {
   t.end();
 });
 
-tap.test("4.2 - left and right maybes as text", (t) => {
+tap.test("59 - left and right maybes as text", (t) => {
   t.equal(
     er(
       "abc abc abc",
@@ -1622,7 +1622,7 @@ tap.test("4.2 - left and right maybes as text", (t) => {
   t.end();
 });
 
-tap.test("4.3 - left+right maybes, middle & end of word #1", (t) => {
+tap.test("60 - left+right maybes, middle & end of word #1", (t) => {
   t.equal(
     er(
       "zzzabc zzzzabczzz abczzzz",
@@ -1643,7 +1643,7 @@ tap.test("4.3 - left+right maybes, middle & end of word #1", (t) => {
   t.end();
 });
 
-tap.test("4.4 - left+right maybes, middle & end of word #2", (t) => {
+tap.test("61 - left+right maybes, middle & end of word #2", (t) => {
   t.equal(
     er(
       "zzz🦄🐴🦄 zzzz🦄🐴🦄zzz 🦄🐴🦄zzzz",
@@ -1664,7 +1664,7 @@ tap.test("4.4 - left+right maybes, middle & end of word #2", (t) => {
   t.end();
 });
 
-tap.test("4.5 - normal words", (t) => {
+tap.test("62 - normal words", (t) => {
   t.equal(
     er(
       "aaa some test text testing for somebody",
@@ -1689,7 +1689,7 @@ tap.test("4.5 - normal words", (t) => {
 // searchFor + only outsides
 // ==============================
 
-tap.test("5.1 - both outsides only, emoji, found", (t) => {
+tap.test("63 - both outsides only, emoji, found", (t) => {
   t.equal(
     er(
       "🦄 🐴 🦄",
@@ -1727,7 +1727,7 @@ tap.test("5.1 - both outsides only, emoji, found", (t) => {
   t.end();
 });
 
-tap.test("5.2 - both outsides only, emoji, not found", (t) => {
+tap.test("64 - both outsides only, emoji, not found", (t) => {
   t.equal(
     er(
       "a 🐴 a",
@@ -1748,7 +1748,7 @@ tap.test("5.2 - both outsides only, emoji, not found", (t) => {
   t.end();
 });
 
-tap.test("5.3 - both outsides, emoji, not found", (t) => {
+tap.test("65 - both outsides, emoji, not found", (t) => {
   t.equal(
     er(
       "🦄 🐴 a",
@@ -1769,7 +1769,7 @@ tap.test("5.3 - both outsides, emoji, not found", (t) => {
   t.end();
 });
 
-tap.test("5.4 - both outsides, emoji, not found #1", (t) => {
+tap.test("66 - both outsides, emoji, not found #1", (t) => {
   t.equal(
     er(
       "a 🐴 a🦄",
@@ -1790,7 +1790,7 @@ tap.test("5.4 - both outsides, emoji, not found #1", (t) => {
   t.end();
 });
 
-tap.test("5.5 - both outsides, emoji, not found #2", (t) => {
+tap.test("67 - both outsides, emoji, not found #2", (t) => {
   t.equal(
     er(
       "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
@@ -1811,7 +1811,7 @@ tap.test("5.5 - both outsides, emoji, not found #2", (t) => {
   t.end();
 });
 
-tap.test("5.6 - line break as rightOutside, found", (t) => {
+tap.test("68 - line break as rightOutside, found", (t) => {
   t.equal(
     er(
       "aaab\n",
@@ -1832,7 +1832,7 @@ tap.test("5.6 - line break as rightOutside, found", (t) => {
   t.end();
 });
 
-tap.test("5.7 - line breaks as both outsides", (t) => {
+tap.test("69 - line breaks as both outsides", (t) => {
   t.equal(
     er(
       "aaa\nb\n",
@@ -1853,7 +1853,7 @@ tap.test("5.7 - line breaks as both outsides", (t) => {
   t.end();
 });
 
-tap.test("5.8 - \\n as outsides, replacement = undefined", (t) => {
+tap.test("70 - \\n as outsides, replacement = undefined", (t) => {
   t.equal(
     er(
       "aaa\nb\n",
@@ -1874,7 +1874,7 @@ tap.test("5.8 - \\n as outsides, replacement = undefined", (t) => {
   t.end();
 });
 
-tap.test("5.9 - line breaks as outsides, replacement = Bool", (t) => {
+tap.test("71 - line breaks as outsides, replacement = Bool", (t) => {
   t.equal(
     er(
       "aaa\nb\n",
@@ -1895,7 +1895,7 @@ tap.test("5.9 - line breaks as outsides, replacement = Bool", (t) => {
   t.end();
 });
 
-tap.test("5.10 - line breaks as outsides, replacement = null", (t) => {
+tap.test("72 - line breaks as outsides, replacement = null", (t) => {
   t.equal(
     er(
       "aaa\nb\n",
@@ -1917,7 +1917,7 @@ tap.test("5.10 - line breaks as outsides, replacement = null", (t) => {
 });
 
 tap.test(
-  "5.11 - left outside requirement not satisfied for replacement to happen",
+  "73 - left outside requirement not satisfied for replacement to happen",
   (t) => {
     t.equal(
       er("aaaBBBccc", {
@@ -1941,7 +1941,7 @@ tap.test(
 );
 
 tap.test(
-  "5.12 - right outside requirement not satisfied for replacement to happen",
+  "74 - right outside requirement not satisfied for replacement to happen",
   (t) => {
     t.equal(
       er("aaaBBBccc", {
@@ -1968,7 +1968,7 @@ tap.test(
 // searchFor + maybes + outsides
 // ==============================
 
-tap.test("6.1 - maybes and outsides, emoji - full set", (t) => {
+tap.test("75 - maybes and outsides, emoji - full set", (t) => {
   t.equal(
     er(
       "a🦄🐴💘b",
@@ -1989,7 +1989,7 @@ tap.test("6.1 - maybes and outsides, emoji - full set", (t) => {
   t.end();
 });
 
-tap.test("6.2 - maybes + outsides - 1 of maybes not found #1", (t) => {
+tap.test("76 - maybes + outsides - 1 of maybes not found #1", (t) => {
   t.equal(
     er(
       "a🦄🐴b",
@@ -2010,7 +2010,7 @@ tap.test("6.2 - maybes + outsides - 1 of maybes not found #1", (t) => {
   t.end();
 });
 
-tap.test("6.3 - maybes + outsides - 1 of maybes not found #2", (t) => {
+tap.test("77 - maybes + outsides - 1 of maybes not found #2", (t) => {
   t.equal(
     er(
       "a🐴💘b",
@@ -2031,7 +2031,7 @@ tap.test("6.3 - maybes + outsides - 1 of maybes not found #2", (t) => {
   t.end();
 });
 
-tap.test("6.4 - maybes and outsides, emoji - neither of maybes", (t) => {
+tap.test("78 - maybes and outsides, emoji - neither of maybes", (t) => {
   t.equal(
     er(
       "a🐴b",
@@ -2052,7 +2052,7 @@ tap.test("6.4 - maybes and outsides, emoji - neither of maybes", (t) => {
   t.end();
 });
 
-tap.test("6.5 - multiple findings with maybes and outsides", (t) => {
+tap.test("79 - multiple findings with maybes and outsides", (t) => {
   t.equal(
     er(
       "a🦄🐴💘b a🦄🐴💘b a🦄🐴💘b",
@@ -2073,7 +2073,7 @@ tap.test("6.5 - multiple findings with maybes and outsides", (t) => {
   t.end();
 });
 
-tap.test("6.6 - multiple findings with maybes and not-outsides", (t) => {
+tap.test("80 - multiple findings with maybes and not-outsides", (t) => {
   t.equal(
     er(
       "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🦄🐴💘z",
@@ -2094,7 +2094,7 @@ tap.test("6.6 - multiple findings with maybes and not-outsides", (t) => {
   t.end();
 });
 
-tap.test("6.7 - maybes and outsides, arrays", (t) => {
+tap.test("81 - maybes and outsides, arrays", (t) => {
   t.equal(
     er(
       "a🦄🐴💘b a💘🐴🦄b a🦄🐴🦄b a💘🐴💘b",
@@ -2119,7 +2119,7 @@ tap.test("6.7 - maybes and outsides, arrays", (t) => {
 // no searchFor + no maybes + outsides
 // ==============================
 
-tap.test("7.1 - one rightOutside, not found", (t) => {
+tap.test("82 - one rightOutside, not found", (t) => {
   t.equal(
     er(
       "aaa🦄a bbbb🦄 cccc🦄",
@@ -2140,7 +2140,7 @@ tap.test("7.1 - one rightOutside, not found", (t) => {
   t.end();
 });
 
-tap.test("7.2 - one leftOutside, not found", (t) => {
+tap.test("83 - one leftOutside, not found", (t) => {
   t.equal(
     er(
       "🦄aaaa 🦄bbbb 🦄cccc",
@@ -2161,7 +2161,7 @@ tap.test("7.2 - one leftOutside, not found", (t) => {
   t.end();
 });
 
-tap.test("7.3 - one leftOutside, not found + null replacement", (t) => {
+tap.test("84 - one leftOutside, not found + null replacement", (t) => {
   t.equal(
     er(
       "aa🦄aa bb🦄bb cc🦄cc",
@@ -2182,7 +2182,7 @@ tap.test("7.3 - one leftOutside, not found + null replacement", (t) => {
   t.end();
 });
 
-tap.test("7.4 - leftOutside and replacement are null", (t) => {
+tap.test("85 - leftOutside and replacement are null", (t) => {
   t.equal(
     er(
       "aaaa bbbb cccc",
@@ -2197,7 +2197,7 @@ tap.test("7.4 - leftOutside and replacement are null", (t) => {
   t.end();
 });
 
-tap.test("7.5 - left outside and replacement are undefined", (t) => {
+tap.test("86 - left outside and replacement are undefined", (t) => {
   t.equal(
     er(
       "aaaa bbbb cccc",
@@ -2216,7 +2216,7 @@ tap.test("7.5 - left outside and replacement are undefined", (t) => {
 // infinite loop cases
 // ==============================
 
-tap.test("8.1 - infinite loop, no maybes, emoji", (t) => {
+tap.test("87 - infinite loop, no maybes, emoji", (t) => {
   t.equal(
     er(
       "🐴🦄🐴🦄🐴",
@@ -2237,7 +2237,7 @@ tap.test("8.1 - infinite loop, no maybes, emoji", (t) => {
   t.end();
 });
 
-tap.test("8.2 - infinite loop, maybes, multiple findings, emoji", (t) => {
+tap.test("88 - infinite loop, maybes, multiple findings, emoji", (t) => {
   t.equal(
     er(
       "🐴🦄🐴🦄🐴",
@@ -2258,7 +2258,7 @@ tap.test("8.2 - infinite loop, maybes, multiple findings, emoji", (t) => {
   t.end();
 });
 
-tap.test("8.3 - infinite loop protection, emoji replaced with itself", (t) => {
+tap.test("89 - infinite loop protection, emoji replaced with itself", (t) => {
   t.equal(
     er(
       "🐴",
@@ -2279,7 +2279,7 @@ tap.test("8.3 - infinite loop protection, emoji replaced with itself", (t) => {
   t.end();
 });
 
-tap.test("8.4 - infinite loop protection, right outside", (t) => {
+tap.test("90 - infinite loop protection, right outside", (t) => {
   t.equal(
     er(
       "🐴🦄🐴🦄🐴",
@@ -2300,7 +2300,7 @@ tap.test("8.4 - infinite loop protection, right outside", (t) => {
   t.end();
 });
 
-tap.test("8.5 - infinite loop protection, multiples", (t) => {
+tap.test("91 - infinite loop protection, multiples", (t) => {
   t.equal(
     er(
       "🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🦄🦄🦄",
@@ -2321,7 +2321,7 @@ tap.test("8.5 - infinite loop protection, multiples", (t) => {
   t.end();
 });
 
-tap.test("8.6 - simple infinite loop case", (t) => {
+tap.test("92 - simple infinite loop case", (t) => {
   t.equal(
     er(
       "a",
@@ -2342,7 +2342,7 @@ tap.test("8.6 - simple infinite loop case", (t) => {
   t.end();
 });
 
-tap.test("8.7 - infinite loop, not found", (t) => {
+tap.test("93 - infinite loop, not found", (t) => {
   t.equal(
     er(
       "",
@@ -2367,7 +2367,7 @@ tap.test("8.7 - infinite loop, not found", (t) => {
 // missing searchFor value
 // ==============================
 
-tap.test("9.1 - source present, missing searchFor", (t) => {
+tap.test("94 - source present, missing searchFor", (t) => {
   t.equal(
     er(
       "aaa",
@@ -2388,7 +2388,7 @@ tap.test("9.1 - source present, missing searchFor", (t) => {
   t.end();
 });
 
-tap.test("9.2 - everything is missing", (t) => {
+tap.test("95 - everything is missing", (t) => {
   t.equal(
     er(
       "",
@@ -2409,27 +2409,27 @@ tap.test("9.2 - everything is missing", (t) => {
   t.end();
 });
 
-tap.test("9.3 - everything seriously missing", (t) => {
+tap.test("96 - everything seriously missing", (t) => {
   t.equal(er("", {}, ""), "", "test 9.3");
   t.end();
 });
 
-tap.test("9.4 - everything extremely seriously missing", (t) => {
+tap.test("97 - everything extremely seriously missing", (t) => {
   t.equal(er("", {}), "", "test 9.4");
   t.end();
 });
 
-tap.test("9.5 - everything truly extremely seriously missing", (t) => {
+tap.test("98 - everything truly extremely seriously missing", (t) => {
   t.equal(er(""), "", "test 9.5");
   t.end();
 });
 
-tap.test("9.6 - everything really truly extremely seriously missing", (t) => {
+tap.test("99 - everything really truly extremely seriously missing", (t) => {
   t.equal(er(), "", "test 9.6");
   t.end();
 });
 
-tap.test("9.7 - leftOutsideNot blocking rightOutsideNot being empty", (t) => {
+tap.test("100 - leftOutsideNot blocking rightOutsideNot being empty", (t) => {
   t.equal(
     er(
       "ab a",
@@ -2450,7 +2450,7 @@ tap.test("9.7 - leftOutsideNot blocking rightOutsideNot being empty", (t) => {
   t.end();
 });
 
-tap.test("9.8 - leftOutsideNot is blank array", (t) => {
+tap.test("101 - leftOutsideNot is blank array", (t) => {
   t.equal(
     er(
       "ab a",
@@ -2471,7 +2471,7 @@ tap.test("9.8 - leftOutsideNot is blank array", (t) => {
   t.end();
 });
 
-tap.test("9.9 - missing key in properties obj", (t) => {
+tap.test("102 - missing key in properties obj", (t) => {
   t.equal(
     er(
       "ab a",
@@ -2495,7 +2495,7 @@ tap.test("9.9 - missing key in properties obj", (t) => {
 // missing replacement value = asking for delete mode
 // ==============================
 
-tap.test("10.1 - empty string as replacement = deletion mode", (t) => {
+tap.test("103 - empty string as replacement = deletion mode", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄a",
@@ -2516,7 +2516,7 @@ tap.test("10.1 - empty string as replacement = deletion mode", (t) => {
   t.end();
 });
 
-tap.test("10.2 - null as replacement = deletion mode", (t) => {
+tap.test("104 - null as replacement = deletion mode", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄a",
@@ -2537,7 +2537,7 @@ tap.test("10.2 - null as replacement = deletion mode", (t) => {
   t.end();
 });
 
-tap.test("10.3 - replacement bool, nothing left", (t) => {
+tap.test("105 - replacement bool, nothing left", (t) => {
   t.equal(
     er(
       "🐴",
@@ -2558,7 +2558,7 @@ tap.test("10.3 - replacement bool, nothing left", (t) => {
   t.end();
 });
 
-tap.test("10.4 - replacement Bool, nothing left, searchFor Integer", (t) => {
+tap.test("106 - replacement Bool, nothing left, searchFor Integer", (t) => {
   t.equal(
     er(
       "2",
@@ -2579,7 +2579,7 @@ tap.test("10.4 - replacement Bool, nothing left, searchFor Integer", (t) => {
   t.end();
 });
 
-tap.test("10.5 - nothing left, replacement undefined", (t) => {
+tap.test("107 - nothing left, replacement undefined", (t) => {
   t.equal(
     er(
       "fljlh fdlg ldfhgl abc aldjsdlflkjd ljfl fgklh fl",
@@ -2600,7 +2600,7 @@ tap.test("10.5 - nothing left, replacement undefined", (t) => {
   t.end();
 });
 
-tap.test("10.6 - nothing left - more undefined", (t) => {
+tap.test("108 - nothing left - more undefined", (t) => {
   t.equal(
     er(
       "zzz",
@@ -2621,7 +2621,7 @@ tap.test("10.6 - nothing left - more undefined", (t) => {
   t.end();
 });
 
-tap.test("10.7 - emoji, null replacement, both outsides found", (t) => {
+tap.test("109 - emoji, null replacement, both outsides found", (t) => {
   t.equal(
     er(
       "a🦄🐴🦄a",
@@ -2642,7 +2642,7 @@ tap.test("10.7 - emoji, null replacement, both outsides found", (t) => {
   t.end();
 });
 
-tap.test("10.8 - raw integers everywhere must work too", (t) => {
+tap.test("110 - raw integers everywhere must work too", (t) => {
   t.equal(
     er(
       6,
@@ -2663,7 +2663,7 @@ tap.test("10.8 - raw integers everywhere must work too", (t) => {
   t.end();
 });
 
-tap.test("10.9 - searchFor is an array of 1 element", (t) => {
+tap.test("111 - searchFor is an array of 1 element", (t) => {
   t.equal(
     er(
       "a b c",
@@ -2684,7 +2684,7 @@ tap.test("10.9 - searchFor is an array of 1 element", (t) => {
   t.end();
 });
 
-tap.test("10.10 - searchFor is an array of few elements (no find)", (t) => {
+tap.test("112 - searchFor is an array of few elements (no find)", (t) => {
   t.equal(
     er(
       "a b c",
@@ -2705,7 +2705,7 @@ tap.test("10.10 - searchFor is an array of few elements (no find)", (t) => {
   t.end();
 });
 
-tap.test("10.11 - searchFor is an array of few elements (won't work)", (t) => {
+tap.test("113 - searchFor is an array of few elements (won't work)", (t) => {
   t.equal(
     er(
       "a bx c",
@@ -2730,7 +2730,7 @@ tap.test("10.11 - searchFor is an array of few elements (won't work)", (t) => {
 // outsides
 // ==============================
 
-tap.test("11.1 - left and right outsides as arrays (majority found)", (t) => {
+tap.test("114 - left and right outsides as arrays (majority found)", (t) => {
   t.equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
@@ -2751,7 +2751,7 @@ tap.test("11.1 - left and right outsides as arrays (majority found)", (t) => {
   t.end();
 });
 
-tap.test("11.2 - left and right outsides as arrays (one found)", (t) => {
+tap.test("115 - left and right outsides as arrays (one found)", (t) => {
   t.equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
@@ -2772,7 +2772,7 @@ tap.test("11.2 - left and right outsides as arrays (one found)", (t) => {
   t.end();
 });
 
-tap.test("11.3 - outsides as arrays, beyond found maybes", (t) => {
+tap.test("116 - outsides as arrays, beyond found maybes", (t) => {
   t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
@@ -2793,7 +2793,7 @@ tap.test("11.3 - outsides as arrays, beyond found maybes", (t) => {
   t.end();
 });
 
-tap.test("11.4 - outsides as arrays blocking maybes", (t) => {
+tap.test("117 - outsides as arrays blocking maybes", (t) => {
   t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
@@ -2814,7 +2814,7 @@ tap.test("11.4 - outsides as arrays blocking maybes", (t) => {
   t.end();
 });
 
-tap.test("11.5 - maybes matching outsides, blocking them", (t) => {
+tap.test("118 - maybes matching outsides, blocking them", (t) => {
   t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
@@ -2835,7 +2835,7 @@ tap.test("11.5 - maybes matching outsides, blocking them", (t) => {
   t.end();
 });
 
-tap.test("11.6 - maybes matching outsides, blocking them", (t) => {
+tap.test("119 - maybes matching outsides, blocking them", (t) => {
   t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
@@ -2856,7 +2856,7 @@ tap.test("11.6 - maybes matching outsides, blocking them", (t) => {
   t.end();
 });
 
-tap.test("11.6 - maybes matching outsides, found", (t) => {
+tap.test("120 - maybes matching outsides, found", (t) => {
   t.equal(
     er(
       "🦄🐴🦄 a💘🦄🐴💘🦄a a🦄💘🐴🦄💘a a💘💘🐴💘💘a a🦄🦄🐴🦄🦄a 🦄🐴🦄",
@@ -2877,7 +2877,7 @@ tap.test("11.6 - maybes matching outsides, found", (t) => {
   t.end();
 });
 
-tap.test("11.6 - maybes matching outsides, mismatching", (t) => {
+tap.test("121 - maybes matching outsides, mismatching", (t) => {
   t.equal(
     er(
       "🍺🐴🍺 a💘🍺🐴🌟🦄a a🦄🌟🐴🍺💘a a💘🌟🐴🌟💘a a🦄🍺🐴🍺🦄a 🌟🐴🌟",
@@ -2898,7 +2898,7 @@ tap.test("11.6 - maybes matching outsides, mismatching", (t) => {
   t.end();
 });
 
-tap.test("11.7 - rightOutside & with case-insensitive flag", (t) => {
+tap.test("122 - rightOutside & with case-insensitive flag", (t) => {
   t.equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
@@ -2963,7 +2963,7 @@ tap.test("11.7 - rightOutside & with case-insensitive flag", (t) => {
 // outsideNot's
 // ==============================
 
-tap.test("12.1 - rightOutsideNot satisfied thus not replaced", (t) => {
+tap.test("123 - rightOutsideNot satisfied thus not replaced", (t) => {
   t.equal(
     er(
       "🐴a",
@@ -3001,7 +3001,7 @@ tap.test("12.1 - rightOutsideNot satisfied thus not replaced", (t) => {
   t.end();
 });
 
-tap.test("12.2 - outsideNot left satisfied thus not replaced", (t) => {
+tap.test("124 - outsideNot left satisfied thus not replaced", (t) => {
   t.equal(
     er(
       "a🐴",
@@ -3039,7 +3039,7 @@ tap.test("12.2 - outsideNot left satisfied thus not replaced", (t) => {
   t.end();
 });
 
-tap.test("12.3 - outsideNot's satisfied thus not replaced", (t) => {
+tap.test("125 - outsideNot's satisfied thus not replaced", (t) => {
   t.equal(
     er(
       "a🐴a",
@@ -3060,7 +3060,7 @@ tap.test("12.3 - outsideNot's satisfied thus not replaced", (t) => {
   t.end();
 });
 
-tap.test("12.4 - outsideNot's not satisfied, with 1 maybe replaced", (t) => {
+tap.test("126 - outsideNot's not satisfied, with 1 maybe replaced", (t) => {
   t.equal(
     er(
       "zb🐴y",
@@ -3081,7 +3081,7 @@ tap.test("12.4 - outsideNot's not satisfied, with 1 maybe replaced", (t) => {
   t.end();
 });
 
-tap.test("12.5 - leftOutsideNot blocked positive leftMaybe", (t) => {
+tap.test("127 - leftOutsideNot blocked positive leftMaybe", (t) => {
   t.equal(
     er(
       "zb🐴y",
@@ -3102,7 +3102,7 @@ tap.test("12.5 - leftOutsideNot blocked positive leftMaybe", (t) => {
   t.end();
 });
 
-tap.test("12.6 - rightOutsideNot blocked both L-R maybes", (t) => {
+tap.test("128 - rightOutsideNot blocked both L-R maybes", (t) => {
   t.equal(
     er(
       "zb🐴cy",
@@ -3123,7 +3123,7 @@ tap.test("12.6 - rightOutsideNot blocked both L-R maybes", (t) => {
   t.end();
 });
 
-tap.test("12.7 - rightOutsideNot last char goes outside", (t) => {
+tap.test("129 - rightOutsideNot last char goes outside", (t) => {
   t.equal(
     er(
       "cccccccca",
@@ -3144,7 +3144,7 @@ tap.test("12.7 - rightOutsideNot last char goes outside", (t) => {
   t.end();
 });
 
-tap.test("12.8 - right maybe is last char, outsideNot satisfied", (t) => {
+tap.test("130 - right maybe is last char, outsideNot satisfied", (t) => {
   t.equal(
     er(
       "cccccccca",
@@ -3165,7 +3165,7 @@ tap.test("12.8 - right maybe is last char, outsideNot satisfied", (t) => {
   t.end();
 });
 
-tap.test("12.9 - real life scenario, missing semicol on nbsp #1", (t) => {
+tap.test("131 - real life scenario, missing semicol on nbsp #1", (t) => {
   t.equal(
     er(
       "&nbsp; &nbsp &nbsp",
@@ -3186,7 +3186,7 @@ tap.test("12.9 - real life scenario, missing semicol on nbsp #1", (t) => {
   t.end();
 });
 
-tap.test("12.10 - real life scenario, missing semicol on nbsp #2", (t) => {
+tap.test("132 - real life scenario, missing semicol on nbsp #2", (t) => {
   t.equal(
     er(
       "&nbsp;&nbsp&nbsp",
@@ -3207,7 +3207,7 @@ tap.test("12.10 - real life scenario, missing semicol on nbsp #2", (t) => {
   t.end();
 });
 
-tap.test("12.11 - real life scenario, missing ampersand, text", (t) => {
+tap.test("133 - real life scenario, missing ampersand, text", (t) => {
   t.equal(
     er(
       "tralalalanbsp;nbsp;&nbsp;",
@@ -3228,7 +3228,7 @@ tap.test("12.11 - real life scenario, missing ampersand, text", (t) => {
   t.end();
 });
 
-tap.test("12.12 - as before but with emoji instead", (t) => {
+tap.test("134 - as before but with emoji instead", (t) => {
   t.equal(
     er(
       "🍺🍺👌🍺",
@@ -3249,7 +3249,7 @@ tap.test("12.12 - as before but with emoji instead", (t) => {
   t.end();
 });
 
-tap.test("12.13 - rightOutsideNot with L-R maybes", (t) => {
+tap.test("135 - rightOutsideNot with L-R maybes", (t) => {
   t.equal(
     er(
       "zb🐴cy",
@@ -3270,7 +3270,7 @@ tap.test("12.13 - rightOutsideNot with L-R maybes", (t) => {
   t.end();
 });
 
-tap.test("12.14 - all of 'em #1", (t) => {
+tap.test("136 - all of 'em #1", (t) => {
   t.equal(
     er(
       "zb🐴cy",
@@ -3291,7 +3291,7 @@ tap.test("12.14 - all of 'em #1", (t) => {
   t.end();
 });
 
-tap.test("12.14 - all of 'em #2", (t) => {
+tap.test("137 - all of 'em #2", (t) => {
   t.equal(
     er(
       "zb🐴cy",
@@ -3316,7 +3316,7 @@ tap.test("12.14 - all of 'em #2", (t) => {
 // double-check the README's corectness
 // ==============================
 
-tap.test("13.1 - readme example #1", (t) => {
+tap.test("138 - readme example #1", (t) => {
   t.equal(
     er(
       "a x c x d",
@@ -3337,7 +3337,7 @@ tap.test("13.1 - readme example #1", (t) => {
   t.end();
 });
 
-tap.test("13.2 - readme example #2", (t) => {
+tap.test("139 - readme example #2", (t) => {
   t.equal(
     er(
       "🐴i🦄 🐴i i🦄 i",
@@ -3358,7 +3358,7 @@ tap.test("13.2 - readme example #2", (t) => {
   t.end();
 });
 
-tap.test("13.3 - readme example #3", (t) => {
+tap.test("140 - readme example #3", (t) => {
   t.equal(
     er(
       "a🦄c x🦄x",
@@ -3379,7 +3379,7 @@ tap.test("13.3 - readme example #3", (t) => {
   t.end();
 });
 
-tap.test("13.4 - readme example #4", (t) => {
+tap.test("141 - readme example #4", (t) => {
   t.equal(
     er(
       "zzzzz  zzzzzz zzzzzz",
@@ -3400,7 +3400,7 @@ tap.test("13.4 - readme example #4", (t) => {
   t.end();
 });
 
-tap.test("13.5 - readme example #5", (t) => {
+tap.test("142 - readme example #5", (t) => {
   t.equal(
     er(
       "<br /><br/><br />",
@@ -3421,7 +3421,7 @@ tap.test("13.5 - readme example #5", (t) => {
   t.end();
 });
 
-tap.test("13.6 - readme example #6", (t) => {
+tap.test("143 - readme example #6", (t) => {
   t.equal(
     er(
       "&nbsp; nbsp &nbsp nbsp;",
@@ -3446,7 +3446,7 @@ tap.test("13.6 - readme example #6", (t) => {
 // random tests from the front lines
 // ==============================
 
-tap.test("14.1 - special case #1", (t) => {
+tap.test("144 - special case #1", (t) => {
   t.equal(
     er(
       "&fnof;",
@@ -3467,7 +3467,7 @@ tap.test("14.1 - special case #1", (t) => {
   t.end();
 });
 
-tap.test("14.2 - special case #2", (t) => {
+tap.test("145 - special case #2", (t) => {
   t.equal(
     er(
       "🐴 a🦄🐴🦄🍺c a🦄🐴🍺🦄c a🦄🐴🦄c a🐴🍺c 🐴",
@@ -3492,7 +3492,7 @@ tap.test("14.2 - special case #2", (t) => {
 // case-insensitive opts flag
 // ==============================
 
-tap.test("15.1 - case-insensitive flag works", (t) => {
+tap.test("146 - case-insensitive flag works", (t) => {
   t.equal(
     er(
       "zzz abbb zzz",

@@ -5,7 +5,7 @@ import cparser from "../dist/codsen-parser.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
+  `01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
     t.match(
       cparser("a<!--b-->c"),
@@ -40,14 +40,14 @@ tap.test(
           end: 10,
         },
       ],
-      "01.01"
+      "01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
+  `02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
     t.match(
       cparser("a<!--b->c"),
@@ -90,14 +90,14 @@ tap.test(
           value: "c",
         },
       ],
-      "01.02"
+      "02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
+  `03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
   (t) => {
     t.match(
       cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
@@ -182,14 +182,14 @@ tap.test(
           value: "c",
         },
       ],
-      "01.03"
+      "03"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
+  `04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
   (t) => {
     t.match(
       cparser("x<a>y->b"),
@@ -214,14 +214,14 @@ tap.test(
           value: "<a>",
         },
       ],
-      "01.04"
+      "04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
+  `05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
   (t) => {
     t.match(
       cparser("<!--x<a>-->y->b"),
@@ -259,14 +259,14 @@ tap.test(
           value: "y->b",
         },
       ],
-      "01.05"
+      "05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
+  `06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
   (t) => {
     t.match(
       cparser(`a<!--b--!>c`),
@@ -301,7 +301,7 @@ tap.test(
           end: 11,
         },
       ],
-      "01.06"
+      "06"
     );
     t.end();
   }
@@ -310,7 +310,7 @@ tap.test(
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-tap.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
+tap.test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
     [
@@ -346,7 +346,7 @@ tap.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
         end: 34,
       },
     ],
-    "02.01"
+    "07"
   );
   t.end();
 });
@@ -354,7 +354,7 @@ tap.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-tap.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
+tap.test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
   t.match(
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
     [
@@ -390,13 +390,13 @@ tap.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
         end: 38,
       },
     ],
-    "03.01"
+    "08"
   );
   t.end();
 });
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
+  `09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
   (t) => {
     t.match(
       cparser(`<img/>!--<![endif]-->`),
@@ -414,14 +414,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.02"
+      "09"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
+  `10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
   (t) => {
     t.match(
       cparser(`<img/><--<![endif]-->`),
@@ -439,14 +439,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.03"
+      "10"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
+  `11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
   (t) => {
     t.match(
       cparser(`<img/><1--<![endif]-->`),
@@ -464,14 +464,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.04"
+      "11"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  `12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
       cparser(`<img/><!-<![endif]-->`),
@@ -489,14 +489,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.05"
+      "12"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  `13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
       cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
@@ -522,14 +522,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.06"
+      "13"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.07 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  `14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
     t.match(
       cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
@@ -552,14 +552,14 @@ tap.test(
           closing: true,
         },
       ],
-      "03.07"
+      "14"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
+  `15 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
   (t) => {
     // below, two tokens,
     // "<img src="gif"/>"
@@ -627,14 +627,14 @@ tap.test(
           children: [],
         },
       ],
-      "03.08"
+      "15"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
+  `16 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
   (t) => {
     // below, two tokens,
     // "<img src="gif"/>"
@@ -709,92 +709,89 @@ tap.test(
           children: [],
         },
       ],
-      "03.09"
+      "16"
     );
     t.end();
   }
 );
 
-tap.test(
-  `03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`,
-  (t) => {
-    // clauses are triggered but nothing's found from characters: <, ! and -
-    t.same(
-      cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
-      [
-        {
-          type: "comment",
-          start: 0,
-          end: 19,
-          value: "<!--[if !mso]><!-->",
-          kind: "not",
-          closing: false,
-          children: [
-            {
-              type: "tag",
-              start: 19,
-              end: 35,
-              value: '<img src="gif"/>',
-              tagNameStartsAt: 20,
-              tagNameEndsAt: 23,
-              tagName: "img",
-              recognised: true,
-              closing: false,
-              void: true,
-              pureHTML: true,
+tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
+  // clauses are triggered but nothing's found from characters: <, ! and -
+  t.same(
+    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
+    [
+      {
+        type: "comment",
+        start: 0,
+        end: 19,
+        value: "<!--[if !mso]><!-->",
+        kind: "not",
+        closing: false,
+        children: [
+          {
+            type: "tag",
+            start: 19,
+            end: 35,
+            value: '<img src="gif"/>',
+            tagNameStartsAt: 20,
+            tagNameEndsAt: 23,
+            tagName: "img",
+            recognised: true,
+            closing: false,
+            void: true,
+            pureHTML: true,
 
-              kind: null,
-              attribs: [
-                {
-                  attribName: "src",
-                  attribNameRecognised: true,
-                  attribNameStartsAt: 24,
-                  attribNameEndsAt: 27,
-                  attribOpeningQuoteAt: 28,
-                  attribClosingQuoteAt: 32,
-                  attribValueRaw: "gif",
-                  attribValue: [
-                    {
-                      type: "text",
-                      start: 29,
-                      end: 32,
-                      value: "gif",
-                    },
-                  ],
-                  attribValueStartsAt: 29,
-                  attribValueEndsAt: 32,
-                  attribStart: 24,
-                  attribEnd: 33,
-                },
-              ],
-              children: [],
-            },
-            {
-              type: "text",
-              start: 35,
-              end: 39,
-              value: "zzz-",
-            },
-          ],
-        },
-        {
-          type: "comment",
-          start: 39,
-          end: 51,
-          value: "<![endif]-->",
-          kind: "only",
-          closing: true,
-          children: [],
-        },
-      ],
-      "03.10"
-    );
-    t.end();
-  }
-);
+            kind: null,
+            attribs: [
+              {
+                attribName: "src",
+                attribNameRecognised: true,
+                attribNameStartsAt: 24,
+                attribNameEndsAt: 27,
+                attribOpeningQuoteAt: 28,
+                attribClosingQuoteAt: 32,
+                attribValueRaw: "gif",
+                attribValue: [
+                  {
+                    type: "text",
+                    start: 29,
+                    end: 32,
+                    value: "gif",
+                  },
+                ],
+                attribValueStartsAt: 29,
+                attribValueEndsAt: 32,
+                attribStart: 24,
+                attribEnd: 33,
+              },
+            ],
+            children: [],
+          },
+          {
+            type: "text",
+            start: 35,
+            end: 39,
+            value: "zzz-",
+          },
+        ],
+      },
+      {
+        type: "comment",
+        start: 39,
+        end: 51,
+        value: "<![endif]-->",
+        kind: "only",
+        closing: true,
+        children: [],
+      },
+    ],
+    "17"
+  );
+  t.end();
+});
 
 tap.test(
-  `03.11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
+  `18 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
   (t) => {
     // clauses are triggered but nothing's found from characters: <, ! and -
     t.same(
@@ -816,7 +813,7 @@ tap.test(
           children: [],
         },
       ],
-      "03.11"
+      "18"
     );
     t.end();
   }

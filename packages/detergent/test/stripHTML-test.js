@@ -6,7 +6,7 @@ import {
 } from "../t-util/util";
 
 tap.test(
-  `01.01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
+  `01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -22,7 +22,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
+  `02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
   (t) => {
     mixer({
       stripHtml: 0,
@@ -38,7 +38,7 @@ tap.test(
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without a slash`,
+  `03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without a slash`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -54,7 +54,7 @@ tap.test(
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`,
+  `04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -70,7 +70,7 @@ tap.test(
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags`,
+  `05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -91,7 +91,7 @@ tap.test(
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`,
+  `06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -108,7 +108,7 @@ tap.test(
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored singleton tags`,
+  `07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored singleton tags`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -120,7 +120,7 @@ tap.test(
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
+  `08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
   (t) => {
     mixer({
       stripHtml: 0,
@@ -133,7 +133,7 @@ tap.test(
 );
 
 tap.test(
-  `01.09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
+  `09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
   (t) => {
     mixer({
       stripHtml: 0,
@@ -150,7 +150,7 @@ tap.test(
 );
 
 tap.test(
-  `01.10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singleton tag`,
+  `10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singleton tag`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -168,7 +168,7 @@ tap.test(
 );
 
 tap.test(
-  `01.11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - removes slash`,
+  `11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - removes slash`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -186,7 +186,7 @@ tap.test(
 );
 
 tap.test(
-  `01.12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds slash`,
+  `12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds slash`,
   (t) => {
     mixer({
       useXHTML: 1,
@@ -204,7 +204,7 @@ tap.test(
 );
 
 tap.test(
-  `01.13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keeps slash`,
+  `13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keeps slash`,
   (t) => {
     mixer({
       useXHTML: 1,
@@ -222,7 +222,7 @@ tap.test(
 );
 
 tap.test(
-  `01.14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -238,7 +238,7 @@ tap.test(
 );
 
 tap.test(
-  `01.15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: 0,
@@ -254,7 +254,7 @@ tap.test(
 );
 
 tap.test(
-  `01.16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: 0,
@@ -271,7 +271,7 @@ tap.test(
 );
 
 tap.test(
-  `01.17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       convertEntities: 1,
@@ -289,85 +289,91 @@ tap.test(
 );
 
 tap.test(
-  `01.18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, `<div>`, {
         stripHtml: 0,
       }).res,
-      "<div>"
+      "<div>",
+      "18"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, `<a>`, {
         stripHtml: 0,
       }).res,
-      "<a>"
+      "<a>",
+      "19"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, '<a style="font-size: red;">', {
         stripHtml: 0,
       }).res,
-      '<a style="font-size: red;">'
+      '<a style="font-size: red;">',
+      "20"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, `<div>`, {
         stripHtml: 1,
       }).res,
-      ""
+      "",
+      "21"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, `<a>`, {
         stripHtml: 1,
       }).res,
-      ""
+      "",
+      "22"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, '<a style="font-size: red;">', {
         stripHtml: 1,
       }).res,
-      ""
+      "",
+      "23"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -383,7 +389,7 @@ tap.test(
 );
 
 tap.test(
-  `01.25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -399,7 +405,7 @@ tap.test(
 );
 
 tap.test(
-  `01.26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -415,7 +421,7 @@ tap.test(
 );
 
 tap.test(
-  `01.27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -431,7 +437,7 @@ tap.test(
 );
 
 tap.test(
-  `01.28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with whitespace within closing tags`,
+  `28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with whitespace within closing tags`,
   (t) => {
     mixer({
       stripHtml: 1,
@@ -447,7 +453,7 @@ tap.test(
 );
 
 tap.test(
-  `01.29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
+  `29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
       removeLineBreaks: 0,
@@ -465,7 +471,7 @@ tap.test(
 );
 
 tap.test(
-  `01.30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
+  `30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
       removeLineBreaks: 0,
@@ -483,7 +489,7 @@ tap.test(
 );
 
 tap.test(
-  `01.31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
+  `31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -504,7 +510,7 @@ tap.test(
 );
 
 tap.test(
-  `01.32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
+  `32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -525,7 +531,7 @@ tap.test(
 );
 
 tap.test(
-  `01.33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -541,7 +547,7 @@ tap.test(
 );
 
 tap.test(
-  `01.34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -557,7 +563,7 @@ tap.test(
 );
 
 tap.test(
-  `01.35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -573,7 +579,7 @@ tap.test(
 );
 
 tap.test(
-  `01.36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -590,7 +596,7 @@ tap.test(
 );
 
 tap.test(
-  `01.37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -606,7 +612,7 @@ tap.test(
 );
 
 tap.test(
-  `01.38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -623,7 +629,7 @@ tap.test(
 );
 
 tap.test(
-  `01.39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -640,7 +646,7 @@ tap.test(
 );
 
 tap.test(
-  `01.40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -661,7 +667,7 @@ tap.test(
 );
 
 tap.test(
-  `01.41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -682,7 +688,7 @@ tap.test(
 );
 
 tap.test(
-  `01.42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -703,7 +709,7 @@ tap.test(
 );
 
 tap.test(
-  `01.43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -719,7 +725,7 @@ tap.test(
 );
 
 tap.test(
-  `01.44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -740,7 +746,7 @@ tap.test(
 );
 
 tap.test(
-  `01.45 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `45 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: 0,
@@ -765,141 +771,141 @@ tap.test(
 // ==============================
 
 tap.test(
-  `02.01 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - simple case`,
+  `46 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - simple case`,
+  (t) => {
+    t.equal(det(t, 0, `a <div><a>z</a></div> c`).res, "a z c", "46 - control");
+    t.end();
+  }
+);
+
+tap.test(
+  `47 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`).res,
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: "a",
+      }).res,
+      "a <a>z</a> c",
+      "47"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `48 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  (t) => {
+    t.equal(
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: ["a"],
+      }).res,
+      "a <a>z</a> c",
+      "48"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `49 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  (t) => {
+    t.equal(
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: "div",
+        removeWidows: false,
+      }).res,
+      "a <div> z </div> c",
+      "49"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `50 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  (t) => {
+    t.equal(
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: ["div"],
+        removeWidows: false,
+      }).res,
+      "a <div> z </div> c",
+      "50"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `51 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - both tags ignored`,
+  (t) => {
+    t.equal(
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: ["a", "div"],
+        removeWidows: false,
+      }).res,
+      "a <div><a>z</a></div> c",
+      "51"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `52 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - other tags ignored, not present in the input`,
+  (t) => {
+    t.equal(
+      det(t, 0, `a <div><a>z</a></div> c`, {
+        stripHtmlButIgnoreTags: ["article", "z"],
+        removeWidows: false,
+      }).res,
       "a z c",
-      "11.01 - control"
+      "52"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  `53 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - control for stripHtml`,
   (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: "a",
-      }).res,
-      "a <a>z</a> c"
-    );
+    t.equal(det(t, 0, `a <div><a>z</a></div> c`).res, "a z c", "53 - control");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `54 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: ["a"],
-      }).res,
-      "a <a>z</a> c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.04 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: "div",
+        stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div> z </div> c"
+      "a <div><a>z</a></div> c",
+      "54"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `55 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: ["div"],
+        stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <div> z </div> c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.06 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - both tags ignored`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: ["a", "div"],
-        removeWidows: false,
-      }).res,
-      "a <div><a>z</a></div> c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.07 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - other tags ignored, not present in the input`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtmlButIgnoreTags: ["article", "z"],
-        removeWidows: false,
-      }).res,
-      "a z c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.08 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - control for stripHtml`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`).res,
       "a z c",
-      "11.08 - control"
+      "55"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtml: false,
-        removeWidows: false,
-      }).res,
-      "a <div><a>z</a></div> c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.10 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a <div><a>z</a></div> c`, {
-        stripHtml: true,
-        removeWidows: false,
-      }).res,
-      "a z c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02.11 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  `56 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -907,14 +913,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "56"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.12 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  `57 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -922,14 +929,15 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <a>z</a> c"
+      "a <a>z</a> c",
+      "57"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.13 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `58 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -937,14 +945,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "58"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.14 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `59 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -952,14 +961,15 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <a>z</a> c"
+      "a <a>z</a> c",
+      "59"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.15 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  `60 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -967,14 +977,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "60"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.16 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
+  `61 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -982,14 +993,15 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <div> z </div> c"
+      "a <div> z </div> c",
+      "61"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.17 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `62 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -997,14 +1009,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "62"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.18 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
+  `63 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -1012,14 +1025,15 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <div> z </div> c"
+      "a <div> z </div> c",
+      "63"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.19 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
+  `64 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -1027,14 +1041,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "64"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.20 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
+  `65 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -1042,14 +1057,15 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "65"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.21 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
+  `66 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -1057,14 +1073,15 @@ tap.test(
         stripHtml: false,
         removeWidows: false,
       }).res,
-      "a <div><a>z</a></div> c"
+      "a <div><a>z</a></div> c",
+      "66"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.22 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
+  `67 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`,
   (t) => {
     t.equal(
       det(t, 0, `a <div><a>z</a></div> c`, {
@@ -1072,118 +1089,127 @@ tap.test(
         stripHtml: true,
         removeWidows: false,
       }).res,
-      "a z c"
+      "a z c",
+      "67"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.23 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
+  `68 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
       det(t, 0, `<sup>`, {
         stripHtmlButIgnoreTags: [],
         stripHtml: true,
       }).res,
-      ""
+      "",
+      "68"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.24 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
+  `69 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
       det(t, 0, `<sup>`, {
         stripHtml: true,
       }).res,
-      "<sup>"
+      "<sup>",
+      "69"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.25 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
+  `70 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
       det(t, 0, `<sup>`, {
         stripHtmlButIgnoreTags: ["sup"],
         stripHtml: true,
       }).res,
-      "<sup>"
+      "<sup>",
+      "70"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.26 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
+  `71 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`,
   (t) => {
     t.equal(
       det(t, 0, `<sup>`, {
         stripHtmlButIgnoreTags: ["a"],
         stripHtml: true,
       }).res,
-      ""
+      "",
+      "71"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.27 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
+  `72 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
       det(t, 0, `<sup><a><b><c>`, {
         stripHtmlButIgnoreTags: ["a", "b", "c"],
         stripHtml: true,
       }).res,
-      "<a><b><c>"
+      "<a><b><c>",
+      "72"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.28 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
+  `73 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
       det(t, 0, `<sup><a><b><c>`, {
         stripHtmlButIgnoreTags: ["sup", "b", "c"],
         stripHtml: true,
       }).res,
-      "<sup> <b><c>"
+      "<sup> <b><c>",
+      "73"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.29 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
+  `74 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
       det(t, 0, `<sup><a><b><c>`, {
         stripHtmlButIgnoreTags: ["sup", "a", "c"],
         stripHtml: true,
       }).res,
-      "<sup><a> <c>"
+      "<sup><a> <c>",
+      "74"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.30 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
+  `75 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`,
   (t) => {
     t.equal(
       det(t, 0, `<sup><a><b><c>`, {
         stripHtmlButIgnoreTags: ["sup", "a", "b"],
         stripHtml: true,
       }).res,
-      "<sup><a><b>"
+      "<sup><a><b>",
+      "75"
     );
     t.end();
   }
@@ -1193,7 +1219,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
+  `76 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
   (t) => {
     const input = `<a b c d>`;
     // t.equal(
@@ -1221,7 +1247,7 @@ tap.test(
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
+  `77 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`,
   (t) => {
     const input = `<a w="1" x="y" z="x">\n<!--[if (gte mso 9)|(IE)]>\n<td a="b:c;" d="e" f="g">`;
     // t.equal(

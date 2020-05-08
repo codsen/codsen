@@ -278,6 +278,13 @@
         ]
     },
     {
+        "name": "eslint-plugin-test-num",
+        "size": 12503,
+        "imports": [
+            "string-left-right"
+        ]
+    },
+    {
         "name": "generate-atomic-css",
         "size": 20704,
         "imports": [

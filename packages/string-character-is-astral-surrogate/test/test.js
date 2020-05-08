@@ -8,26 +8,26 @@ import {
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - wrong/missing input = throw", (t) => {
+tap.test("01 - wrong/missing input = throw", (t) => {
   t.throws(() => {
     isHighSurrogate(1);
-  });
+  }, "01.01");
   t.throws(() => {
     isHighSurrogate(null);
-  });
+  }, "01.02");
   t.throws(() => {
     isHighSurrogate(true);
-  });
+  }, "01.03");
 
   t.throws(() => {
     isLowSurrogate(1);
-  });
+  }, "01.04");
   t.throws(() => {
     isLowSurrogate(null);
-  });
+  }, "01.05");
   t.throws(() => {
     isLowSurrogate(true);
-  });
+  }, "01.06");
   t.end();
 });
 
@@ -40,40 +40,40 @@ tap.test("01.01 - wrong/missing input = throw", (t) => {
 // "false" and as far as the issue of surrogates is concerned, it's
 // "false". This will save us from otherwise unnecessary if-else
 // statements during traversal.
-tap.test("02.01 - undefined yields false", (t) => {
-  t.same(isHighSurrogate(undefined), false, "02.01.01");
-  t.same(isLowSurrogate(undefined), false, "02.01.02");
+tap.test("02 - undefined yields false", (t) => {
+  t.same(isHighSurrogate(undefined), false, "02.01");
+  t.same(isLowSurrogate(undefined), false, "02.02");
   t.end();
 });
 
-tap.test("02.02 - empty string yields false", (t) => {
-  t.same(isHighSurrogate(""), false, "02.02.01");
-  t.same(isLowSurrogate(""), false, "02.02.02");
+tap.test("03 - empty string yields false", (t) => {
+  t.same(isHighSurrogate(""), false, "03.01");
+  t.same(isLowSurrogate(""), false, "03.02");
   t.end();
 });
 
-tap.test("02.03 - isHighSurrogate()", (t) => {
-  t.same(isHighSurrogate("zzz"), false, "02.03.01");
+tap.test("04 - isHighSurrogate()", (t) => {
+  t.same(isHighSurrogate("zzz"), false, "04.01");
   // 🧢 = \uD83E\uDDE2
-  t.same(isHighSurrogate("\uD83E"), true, "02.03.02");
-  t.same(isHighSurrogate("\uDDE2"), false, "02.03.03");
+  t.same(isHighSurrogate("\uD83E"), true, "04.02");
+  t.same(isHighSurrogate("\uDDE2"), false, "04.03");
   t.same(
     isHighSurrogate("\uD83E\uDDE2"),
     true,
-    "02.03.04" // second Unicode code point (and onwards) doesn't matter
+    "04.04" // second Unicode code point (and onwards) doesn't matter
   );
   t.end();
 });
 
-tap.test("02.04 - isLowSurrogate()", (t) => {
-  t.same(isLowSurrogate("zzz"), false, "02.04.01");
+tap.test("05 - isLowSurrogate()", (t) => {
+  t.same(isLowSurrogate("zzz"), false, "05.01");
   // 🧢 = \uD83E\uDDE2
-  t.same(isLowSurrogate("\uD83E"), false, "02.04.02");
-  t.same(isLowSurrogate("\uDDE2"), true, "02.04.03");
+  t.same(isLowSurrogate("\uD83E"), false, "05.02");
+  t.same(isLowSurrogate("\uDDE2"), true, "05.03");
   t.same(
     isLowSurrogate("\uD83E\uDDE2"),
     false,
-    "02.04.04" // second Unicode code point (and onwards) doesn't matter
+    "05.04" // second Unicode code point (and onwards) doesn't matter
   );
   t.end();
 });

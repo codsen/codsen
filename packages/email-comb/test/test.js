@@ -7,7 +7,7 @@ import { comb } from "../dist/email-comb.esm";
 // testing basic class/id removal
 // ==============================
 
-tap.test("01.01 - mvp #1", (t) => {
+tap.test("01 - mvp #1", (t) => {
   const source = `<head>
 <style type="text/css">
   .unused1[z] {a:1;}
@@ -27,11 +27,11 @@ tap.test("01.01 - mvp #1", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.01");
+  t.equal(comb(source).result, intended, "01");
   t.end();
 });
 
-tap.test("01.02 - mvp #2", (t) => {
+tap.test("02 - mvp #2", (t) => {
   const source = `<head>
 <style type="text/css">
 @namespace url(z);
@@ -53,11 +53,11 @@ tap.test("01.02 - mvp #2", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.02");
+  t.equal(comb(source).result, intended, "02");
   t.end();
 });
 
-tap.test("01.03 - removes @charset", (t) => {
+tap.test("03 - removes @charset", (t) => {
   const source = `<head>
 @charset "utf-8";
 <style type="text/css">@media (max-width: 600px) {
@@ -83,11 +83,11 @@ tap.test("01.03 - removes @charset", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.03");
+  t.equal(comb(source).result, intended, "03");
   t.end();
 });
 
-tap.test("01.04 - multiple classes and id's", (t) => {
+tap.test("04 - multiple classes and id's", (t) => {
   const source = `<style>
 <!--[if mso]>
 <![endif]-->
@@ -108,11 +108,11 @@ tap.test("01.04 - multiple classes and id's", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.04");
+  t.equal(comb(source).result, intended, "04");
   t.end();
 });
 
-tap.test("01.05 - mixed classes and non-classes", (t) => {
+tap.test("05 - mixed classes and non-classes", (t) => {
   const source = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -131,11 +131,11 @@ tap.test("01.05 - mixed classes and non-classes", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.05");
+  t.equal(comb(source).result, intended, "05");
   t.end();
 });
 
-tap.test("01.06 - mixed classes and non-classes", (t) => {
+tap.test("06 - mixed classes and non-classes", (t) => {
   const source = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -154,11 +154,11 @@ tap.test("01.06 - mixed classes and non-classes", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.06.01");
+  t.equal(comb(source).result, intended, "06");
   t.end();
 });
 
-tap.test("01.07 - sandwitched used and unused", (t) => {
+tap.test("07 - sandwitched used and unused", (t) => {
   const source = `<head>
 <style type="text/css">
   .used1 {z:1;}
@@ -178,11 +178,11 @@ tap.test("01.07 - sandwitched used and unused", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.07.01");
+  t.equal(comb(source).result, intended, "07");
   t.end();
 });
 
-tap.test("01.08 - sandwitched used and unused", (t) => {
+tap.test("08 - sandwitched used and unused", (t) => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd   { w:1; }
@@ -201,11 +201,11 @@ tap.test("01.08 - sandwitched used and unused", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.08.01");
+  t.equal(actual, intended, "08");
   t.end();
 });
 
-tap.test("01.09 - sandwitched used and unused", (t) => {
+tap.test("09 - sandwitched used and unused", (t) => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef, .cd, .cd#ef   { w:1; }
@@ -224,11 +224,11 @@ tap.test("01.09 - sandwitched used and unused", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.09.01");
+  t.equal(actual, intended, "09");
   t.end();
 });
 
-tap.test("01.10 - sandwitched used and unused", (t) => {
+tap.test("10 - sandwitched used and unused", (t) => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef { w:1; }
@@ -244,11 +244,11 @@ tap.test("01.10 - sandwitched used and unused", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.10.01");
+  t.equal(actual, intended, "10");
   t.end();
 });
 
-tap.test("01.11 - mixed: classes and tag names", (t) => {
+tap.test("11 - mixed: classes and tag names", (t) => {
   const actual = comb(`<head>
 <style>
 /*! .x *//*! .y */
@@ -267,14 +267,12 @@ tap.test("01.11 - mixed: classes and tag names", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.11");
+  t.equal(actual, intended, "11");
   t.end();
 });
 
-tap.test(
-  "01.12 - removes unused classes and uglifies at the same time",
-  (t) => {
-    const source = `<head>
+tap.test("12 - removes unused classes and uglifies at the same time", (t) => {
+  const source = `<head>
 <style>
   .r, .t, .y, .u, .i, .o,
   #xx, .xx, .yy { w:1; }
@@ -283,9 +281,9 @@ tap.test(
 </body>
 `;
 
-    // one and two character-long names are just left as they were!
-    // in this test both uglified and non-uglified result looks the same
-    const intended = `<head>
+  // one and two character-long names are just left as they were!
+  // in this test both uglified and non-uglified result looks the same
+  const intended = `<head>
 <style>
   #xx, .xx, .yy { w:1; }
 </style>
@@ -293,7 +291,7 @@ tap.test(
 </body>
 `;
 
-    const uglified = `<head>
+  const uglified = `<head>
 <style>
   #x, .x, .y { w:1; }
 </style>
@@ -301,32 +299,31 @@ tap.test(
 </body>
 `;
 
-    const actual = comb(source, { uglify: true }).result;
-    const actualNotUglified = comb(source, { uglify: false }).result;
-    const actual2 = comb(source, { uglify: 1 }).result;
+  const actual = comb(source, { uglify: true }).result;
+  const actualNotUglified = comb(source, { uglify: false }).result;
+  const actual2 = comb(source, { uglify: 1 }).result;
 
-    t.equal(actual, uglified, "01.12.01");
+  t.equal(actual, uglified, "12.01");
 
-    // uglify option given as number:
-    t.equal(actual2, uglified, "01.12.04");
+  // uglify option given as number:
+  t.equal(actual2, uglified, "12.02");
 
-    // not uglified:
-    t.equal(actualNotUglified, intended, "01.12.07");
+  // not uglified:
+  t.equal(actualNotUglified, intended, "12.03");
 
-    // uglification disabled:
-    const actual3 = comb(source, { uglify: false }).result;
-    t.equal(actual3, intended, "01.12.10");
+  // uglification disabled:
+  const actual3 = comb(source, { uglify: false }).result;
+  t.equal(actual3, intended, "12.04");
 
-    const actual4 = comb(source, { uglify: 0 }).result;
-    t.equal(actual4, intended, "01.12.11");
+  const actual4 = comb(source, { uglify: 0 }).result;
+  t.equal(actual4, intended, "12.05");
 
-    const actual5 = comb(source, { uglify: 1 }).result;
-    t.equal(actual5, uglified, "01.12.12");
-    t.end();
-  }
-);
+  const actual5 = comb(source, { uglify: 1 }).result;
+  t.equal(actual5, uglified, "12.06");
+  t.end();
+});
 
-tap.test("01.13 - adhoc #1", (t) => {
+tap.test("13 - adhoc #1", (t) => {
   const actual = comb(`<style>
   .aa{b: c;}
 </style>
@@ -343,11 +340,11 @@ tap.test("01.13 - adhoc #1", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.13");
+  t.equal(actual, intended, "13");
   t.end();
 });
 
-tap.test("01.14 - adhoc 2", (t) => {
+tap.test("14 - adhoc 2", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
   .aa {z:2;}
@@ -366,11 +363,11 @@ tap.test("01.14 - adhoc 2", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.14");
+  t.equal(actual, intended, "14");
   t.end();
 });
 
-tap.test("01.15 - adhoc 3", (t) => {
+tap.test("15 - adhoc 3", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
   @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
@@ -389,11 +386,11 @@ tap.test("01.15 - adhoc 3", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.15");
+  t.equal(actual, intended, "15");
   t.end();
 });
 
-tap.test("01.16 - mixed classes and non-classes", (t) => {
+tap.test("16 - mixed classes and non-classes", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
   @import;
@@ -413,11 +410,11 @@ tap.test("01.16 - mixed classes and non-classes", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.16");
+  t.equal(actual, intended, "16");
   t.end();
 });
 
-tap.test("01.17 - removes classes and id's from HTML5 (normal input)", (t) => {
+tap.test("17 - removes classes and id's from HTML5 (normal input)", (t) => {
   const source = `
 <!DOCTYPE html>
 <head>
@@ -471,11 +468,11 @@ tap.test("01.17 - removes classes and id's from HTML5 (normal input)", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "01.17");
+  t.same(comb(source).result, intended, "17");
   t.end();
 });
 
-tap.test("01.18 - removes classes and id's from HTML5 - uglifies", (t) => {
+tap.test("18 - removes classes and id's from HTML5 - uglifies", (t) => {
   const actual = comb(
     `
 <!DOCTYPE html>
@@ -536,11 +533,11 @@ tap.test("01.18 - removes classes and id's from HTML5 - uglifies", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.18");
+  t.same(actual, intended, "18");
   t.end();
 });
 
-tap.test("01.19 - deletes blank class/id attrs", (t) => {
+tap.test("19 - deletes blank class/id attrs", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -598,12 +595,12 @@ tap.test("01.19 - deletes blank class/id attrs", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.19");
+  t.same(actual, intended, "19");
   t.end();
 });
 
 tap.test(
-  "01.20 - class present in both head and body, but head has it joined with nonexistent id",
+  "20 - class present in both head and body, but head has it joined with nonexistent id",
   (t) => {
     const actual = comb(`
 <!DOCTYPE html>
@@ -644,12 +641,12 @@ tap.test(
 </body>
 </html>
 `;
-    t.same(actual, intended, "01.20");
+    t.same(actual, intended, "20");
     t.end();
   }
 );
 
-tap.test("01.21 - multiple style tags recognised and transformed", (t) => {
+tap.test("21 - multiple style tags recognised and transformed", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -703,11 +700,11 @@ tap.test("01.21 - multiple style tags recognised and transformed", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.21");
+  t.same(actual, intended, "21");
   t.end();
 });
 
-tap.test("01.22 - multiple levels of media queries cleaned", (t) => {
+tap.test("22 - multiple levels of media queries cleaned", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -770,12 +767,12 @@ tap.test("01.22 - multiple levels of media queries cleaned", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.22");
+  t.same(actual, intended, "22");
   t.end();
 });
 
 tap.test(
-  "01.23 - multiple levels of media queries cleaned + @supports wrap",
+  "23 - multiple levels of media queries cleaned + @supports wrap",
   (t) => {
     const actual = comb(`
 <!DOCTYPE html>
@@ -845,12 +842,12 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.23");
+    t.same(actual, intended, "23");
     t.end();
   }
 );
 
-tap.test("01.24 - empty media queries removed", (t) => {
+tap.test("24 - empty media queries removed", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -904,11 +901,11 @@ tap.test("01.24 - empty media queries removed", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.24");
+  t.same(actual, intended, "24");
   t.end();
 });
 
-tap.test("01.25 - style tags are outside HEAD", (t) => {
+tap.test("25 - style tags are outside HEAD", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <style>
@@ -962,13 +959,13 @@ tap.test("01.25 - style tags are outside HEAD", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.25");
+  t.same(actual, intended, "25");
   t.end();
 });
 
 // original GitHub issue #3
 tap.test(
-  "01.26 - removes media query together with the whole style tag #1",
+  "26 - removes media query together with the whole style tag #1",
   (t) => {
     const actual = comb(`<!doctype html>
 <html>
@@ -1000,13 +997,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.26");
+    t.same(actual, intended, "26");
     t.end();
   }
 );
 
 tap.test(
-  "01.27 - removes media query together with the whole style tag #2",
+  "27 - removes media query together with the whole style tag #2",
   (t) => {
     const actual = comb(`<!doctype html>
 <html>
@@ -1046,13 +1043,13 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "01.27");
+    t.same(actual, intended, "27");
     t.end();
   }
 );
 
 tap.test(
-  "01.28 - removes three media queries together with the style tags",
+  "28 - removes three media queries together with the style tags",
   (t) => {
     const actual = comb(`<!doctype html>
 <html>
@@ -1099,15 +1096,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.28");
+    t.same(actual, intended, "28");
     t.end();
   }
 );
 
-tap.test(
-  "01.29 - removes last styles together with the whole style tag",
-  (t) => {
-    const actual = comb(`<!doctype html>
+tap.test("29 - removes last styles together with the whole style tag", (t) => {
+  const actual = comb(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1123,7 +1118,7 @@ color:  black;
 </html>
 `).result;
 
-    const intended = `<!doctype html>
+  const intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1135,12 +1130,11 @@ color:  black;
 </html>
 `;
 
-    t.same(actual, intended, "01.29");
-    t.end();
-  }
-);
+  t.same(actual, intended, "29");
+  t.end();
+});
 
-tap.test("01.30 - media query with asterisk", (t) => {
+tap.test("30 - media query with asterisk", (t) => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1172,11 +1166,11 @@ tap.test("01.30 - media query with asterisk", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.30");
+  t.same(actual, intended, "30");
   t.end();
 });
 
-tap.test("01.31 - complex media query #1", (t) => {
+tap.test("31 - complex media query #1", (t) => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1208,11 +1202,11 @@ tap.test("01.31 - complex media query #1", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.31");
+  t.same(actual, intended, "31");
   t.end();
 });
 
-tap.test("01.32 - complex media query #2", (t) => {
+tap.test("32 - complex media query #2", (t) => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1244,11 +1238,11 @@ tap.test("01.32 - complex media query #2", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.32");
+  t.same(actual, intended, "32");
   t.end();
 });
 
-tap.test("01.33 - deletes multiple empty style tags", (t) => {
+tap.test("33 - deletes multiple empty style tags", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -1289,11 +1283,11 @@ tap.test("01.33 - deletes multiple empty style tags", (t) => {
 </body>
 </html>
 `;
-  t.same(actual, intended, "01.33");
+  t.same(actual, intended, "33");
   t.end();
 });
 
-tap.test("01.34 - does not touch @font-face", (t) => {
+tap.test("34 - does not touch @font-face", (t) => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -1361,12 +1355,12 @@ tap.test("01.34 - does not touch @font-face", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01.34");
+  t.same(actual, intended, "34");
   t.end();
 });
 
 tap.test(
-  "01.35 - does not touch @import with query strings containing commas",
+  "35 - does not touch @import with query strings containing commas",
   (t) => {
     const actual = comb(`
 <!DOCTYPE html>
@@ -1407,13 +1401,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.35");
+    t.same(actual, intended, "35");
     t.end();
   }
 );
 
 tap.test(
-  "01.36 - @media contains classes to remove, @import present in the vicinity",
+  "36 - @media contains classes to remove, @import present in the vicinity",
   (t) => {
     const actual = comb(
       `<html lang="en">
@@ -1459,12 +1453,12 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "01.36");
+    t.same(actual, intended, "36");
     t.end();
   }
 );
 
-tap.test("01.37 - @charset #1", (t) => {
+tap.test("37 - @charset #1", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1510,11 +1504,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.37");
+  t.same(actual, intended, "37");
   t.end();
 });
 
-tap.test("01.38 - @charset #2", (t) => {
+tap.test("38 - @charset #2", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1553,11 +1547,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.38");
+  t.same(actual, intended, "38");
   t.end();
 });
 
-tap.test("01.39 - @charset #3", (t) => {
+tap.test("39 - @charset #3", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1598,11 +1592,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.39");
+  t.same(actual, intended, "39");
   t.end();
 });
 
-tap.test("01.40 - @charset #4", (t) => {
+tap.test("40 - @charset #4", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1645,11 +1639,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.40");
+  t.same(actual, intended, "40");
   t.end();
 });
 
-tap.test("01.41 - @charset #5", (t) => {
+tap.test("41 - @charset #5", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1690,15 +1684,13 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.41");
+  t.same(actual, intended, "41");
   t.end();
 });
 
-tap.test(
-  "01.42 - at-rule is followed by whitespace and another at-rule",
-  (t) => {
-    const actual = comb(
-      `<html lang="en">
+tap.test("42 - at-rule is followed by whitespace and another at-rule", (t) => {
+  const actual = comb(
+    `<html lang="en">
 <head>
 <style type="text/css">
 
@@ -1716,19 +1708,19 @@ zzz
 </body>
 </html>
 `,
-      {
-        whitelist: [
-          "#outlook",
-          ".ExternalClass",
-          ".module-*",
-          ".Mso*",
-          ".ReadMsgBody",
-          ".yshortcuts",
-        ],
-      }
-    ).result;
+    {
+      whitelist: [
+        "#outlook",
+        ".ExternalClass",
+        ".module-*",
+        ".Mso*",
+        ".ReadMsgBody",
+        ".yshortcuts",
+      ],
+    }
+  ).result;
 
-    const intended = `<html lang="en">
+  const intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -1740,16 +1732,13 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "01.42");
-    t.end();
-  }
-);
+  t.same(actual, intended, "42");
+  t.end();
+});
 
-tap.test(
-  "01.43 - at-rule is followed by whitespace and another at-rule",
-  (t) => {
-    const actual = comb(
-      `<html lang="en">
+tap.test("43 - at-rule is followed by whitespace and another at-rule", (t) => {
+  const actual = comb(
+    `<html lang="en">
 <head>
 <style type="text/css">
 
@@ -1767,19 +1756,19 @@ zzz
 </body>
 </html>
 `,
-      {
-        whitelist: [
-          "#outlook",
-          ".ExternalClass",
-          ".module-*",
-          ".Mso*",
-          ".ReadMsgBody",
-          ".yshortcuts",
-        ],
-      }
-    ).result;
+    {
+      whitelist: [
+        "#outlook",
+        ".ExternalClass",
+        ".module-*",
+        ".Mso*",
+        ".ReadMsgBody",
+        ".yshortcuts",
+      ],
+    }
+  ).result;
 
-    const intended = `<html lang="en">
+  const intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -1791,12 +1780,11 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "01.43");
-    t.end();
-  }
-);
+  t.same(actual, intended, "43");
+  t.end();
+});
 
-tap.test("01.44 - at-rule followed by closing </style>", (t) => {
+tap.test("44 - at-rule followed by closing </style>", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1838,11 +1826,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.44");
+  t.same(actual, intended, "44");
   t.end();
 });
 
-tap.test("01.45 - at-rule followed by semicolon without contents", (t) => {
+tap.test("45 - at-rule followed by semicolon without contents", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1886,11 +1874,11 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.45");
+  t.same(actual, intended, "45");
   t.end();
 });
 
-tap.test("01.46 - at-rule with single quotes", (t) => {
+tap.test("46 - at-rule with single quotes", (t) => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1935,12 +1923,12 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "01.46");
+  t.same(actual, intended, "46");
   t.end();
 });
 
 tap.test(
-  "01.47 - removes classes wrapped with conditional Outlook comments",
+  "47 - removes classes wrapped with conditional Outlook comments",
   (t) => {
     const source = `
 <!DOCTYPE html>
@@ -2035,14 +2023,14 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.47.01");
-    t.same(actualUglified, intendedUglified, "01.47.02");
+    t.same(actual, intended, "47.01");
+    t.same(actualUglified, intendedUglified, "47.02");
     t.end();
   }
 );
 
 tap.test(
-  "01.48 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments",
+  "48 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments",
   (t) => {
     const source = `
 <!DOCTYPE html>
@@ -2187,52 +2175,48 @@ tap.test(
 </body>
 </html>
 `;
-    t.same(
-      comb(source).result,
-      cssAndHtmlCommentsRemoved,
-      "01.48.01 - defaults"
-    );
+    t.same(comb(source).result, cssAndHtmlCommentsRemoved, "48.01 - defaults");
     t.same(
       comb(source, { removeCSSComments: true }).result,
       cssAndHtmlCommentsRemoved,
-      "01.48.02 - hardcoded defaults"
+      "48.02 - hardcoded defaults"
     );
     t.same(
       comb(source, { removeCSSComments: false }).result,
       htmlRemovedCssNot,
-      "01.48.03 - off"
+      "48.03 - off"
     );
 
     t.same(
       comb(source, { removeCSSComments: true, removeHTMLComments: true })
         .result,
       cssAndHtmlCommentsRemoved,
-      "01.48.04 - html on, css on"
+      "48.04 - html on, css on"
     );
     t.same(
       comb(source, { removeCSSComments: false, removeHTMLComments: true })
         .result,
       htmlRemovedCssNot,
-      "01.48.05 - html on, css off"
+      "48.05 - html on, css off"
     );
     t.same(
       comb(source, { removeCSSComments: true, removeHTMLComments: false })
         .result,
       cssRemovedHtmlNot,
-      "01.48.06 - html off, css on"
+      "48.06 - html off, css on"
     );
     t.same(
       comb(source, { removeCSSComments: false, removeHTMLComments: false })
         .result,
       neitherCssNorHtml,
-      "01.48.07 - html off, css off"
+      "48.07 - html off, css off"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.49 - false real class is commented-out and therefore gets removed",
+  "49 - false real class is commented-out and therefore gets removed",
   (t) => {
     const source = `
 <!DOCTYPE html>
@@ -2290,12 +2274,12 @@ tap.test(
 </html>
 `;
 
-    t.same(comb(source).result, intended, "01.49");
+    t.same(comb(source).result, intended, "49");
     t.end();
   }
 );
 
-tap.test("01.50 - copes with @font-face within media query", (t) => {
+tap.test("50 - copes with @font-face within media query", (t) => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -2382,11 +2366,11 @@ tap.test("01.50 - copes with @font-face within media query", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source).result, intended, "01.50");
+  t.same(comb(source).result, intended, "50");
   t.end();
 });
 
-tap.test("01.51 - copes with @font-face not within media query", (t) => {
+tap.test("51 - copes with @font-face not within media query", (t) => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -2439,12 +2423,12 @@ tap.test("01.51 - copes with @font-face not within media query", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source).result, intended, "01.51");
+  t.same(comb(source).result, intended, "51");
   t.end();
 });
 
 tap.test(
-  "01.52 - peculiar pattern - two classes to be removed, then used class",
+  "52 - peculiar pattern - two classes to be removed, then used class",
   (t) => {
     const source = `
 <html>
@@ -2491,12 +2475,12 @@ tap.test(
   </body>
 </html>
 `;
-    t.same(comb(source).result, intended, "01.52");
+    t.same(comb(source).result, intended, "52");
     t.end();
   }
 );
 
-tap.test("01.53 - head CSS is given minified", (t) => {
+tap.test("53 - head CSS is given minified", (t) => {
   const source1 = `<head>
   <style>.col-3{z:2%}.col-4{y:3%}</style>
 </head>
@@ -2531,12 +2515,12 @@ tap.test("01.53 - head CSS is given minified", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source1).result, intended1, "01.53.01");
-  t.same(comb(source2).result, intended2, "01.53.02");
+  t.same(comb(source1).result, intended1, "53.01");
+  t.same(comb(source2).result, intended2, "53.02");
   t.end();
 });
 
-tap.test("01.54 - head CSS is given minified, comma separated", (t) => {
+tap.test("54 - head CSS is given minified, comma separated", (t) => {
   const source1 = `<head>
   <style>.col-12,.col-3,.col-4, .col-6{y:3%}</style>
 </head>
@@ -2574,13 +2558,13 @@ tap.test("01.54 - head CSS is given minified, comma separated", (t) => {
 </html>
 `;
 
-  t.same(comb(source1).result, intended, "01.54.01");
-  t.same(comb(source2).result, intended, "01.54.02");
-  t.same(comb(source3).result, intended, "01.54.03");
+  t.same(comb(source1).result, intended, "54.01");
+  t.same(comb(source2).result, intended, "54.02");
+  t.same(comb(source3).result, intended, "54.03");
   t.end();
 });
 
-tap.test("01.55 - head CSS is expanded", (t) => {
+tap.test("55 - head CSS is expanded", (t) => {
   const source = `<head>
   <style>
     .col-12,
@@ -2608,11 +2592,11 @@ tap.test("01.55 - head CSS is expanded", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "01.55");
+  t.same(comb(source).result, intended, "55");
   t.end();
 });
 
-tap.test("01.56 - retains media queries", (t) => {
+tap.test("56 - retains media queries", (t) => {
   const source = `<head>
 <style>
 .zz{a:1;}
@@ -2642,7 +2626,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     source,
-    "01.56.01"
+    "56.01"
   );
   t.equal(
     comb(source, {
@@ -2651,7 +2635,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     source,
-    "01.56.02"
+    "56.02"
   );
   t.equal(
     comb(source, {
@@ -2660,7 +2644,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     uglified,
-    "01.56.03"
+    "56.03"
   );
   t.equal(
     comb(source, {
@@ -2669,7 +2653,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     uglified,
-    "01.56.04"
+    "56.04"
   );
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains empty
@@ -2680,7 +2664,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     source,
-    "01.56.05"
+    "56.05"
   );
   t.equal(
     comb(source, {
@@ -2689,7 +2673,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     source,
-    "01.56.06"
+    "56.06"
   );
   t.equal(
     comb(source, {
@@ -2698,7 +2682,7 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     uglified,
-    "01.56.07"
+    "56.07"
   );
   t.equal(
     comb(source, {
@@ -2707,17 +2691,17 @@ tap.test("01.56 - retains media queries", (t) => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     uglified,
-    "01.56.08"
+    "56.08"
   );
   t.end();
 });
 
-tap.test("01.57 - empty string produces empty string", (t) => {
-  t.same(comb("").result, "", "01.57");
+tap.test("57 - empty string produces empty string", (t) => {
+  t.same(comb("").result, "", "57");
   t.end();
 });
 
-tap.test("01.58 - issue no.2 - mini", (t) => {
+tap.test("58 - issue no.2 - mini", (t) => {
   const source = `<html>
 <head>
 <!--[if gte mso 9]>
@@ -2740,11 +2724,11 @@ tap.test("01.58 - issue no.2 - mini", (t) => {
 </html>
 `;
 
-  t.equal(source, comb(source).result, "01.58");
+  t.equal(source, comb(source).result, "58");
   t.end();
 });
 
-tap.test("01.59 - issue no.2 - full", (t) => {
+tap.test("59 - issue no.2 - full", (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -2810,12 +2794,12 @@ tap.test("01.59 - issue no.2 - full", (t) => {
 </html>
 `;
 
-  t.equal(actual, intended, "01.59");
+  t.equal(actual, intended, "59");
   t.end();
 });
 
 tap.test(
-  "01.60 - separate style tags, wrapped with Outlook comments - used CSS",
+  "60 - separate style tags, wrapped with Outlook comments - used CSS",
   (t) => {
     const source = `<html>
 <head>
@@ -2906,14 +2890,14 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.60.01");
-    t.same(actualUglified, intendedUglified, "01.60.02");
+    t.same(actual, intended, "60.01");
+    t.same(actualUglified, intendedUglified, "60.02");
     t.end();
   }
 );
 
 tap.test(
-  "01.61 - separate style tags, wrapped with Outlook comments - unused CSS",
+  "61 - separate style tags, wrapped with Outlook comments - unused CSS",
   (t) => {
     const source = `<html>
 <head>
@@ -2996,14 +2980,14 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.61.01");
-    t.same(actualUglified, intendedUglified, "01.61.02");
+    t.same(actual, intended, "61.01");
+    t.same(actualUglified, intendedUglified, "61.02");
     t.end();
   }
 );
 
 tap.test(
-  "01.62 - separate style tags, wrapped with Outlook comments - part-used CSS",
+  "62 - separate style tags, wrapped with Outlook comments - part-used CSS",
   (t) => {
     const source = `<html>
 <head>
@@ -3149,13 +3133,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "01.62.01");
-    t.same(actualUglified, intendedUglified, "01.62.02");
-    t.same(actualAllCommentsDeleted, intendedAllCommentsDeleted, "01.62.03");
+    t.same(actual, intended, "62.01");
+    t.same(actualUglified, intendedUglified, "62.02");
+    t.same(actualAllCommentsDeleted, intendedAllCommentsDeleted, "62.03");
     t.same(
       actualAllCommentsDeletedUglified,
       intendedAllCommentsDeletedUglified,
-      "01.62.04"
+      "62.04"
     );
 
     // comment removal off:
@@ -3163,23 +3147,23 @@ tap.test(
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result;
-    t.same(actualUglifiedCommentsOffAndIgnored, intended, "01.62.05");
+    t.same(actualUglifiedCommentsOffAndIgnored, intended, "62.05");
 
     const actualUglifiedCommentsOff = comb(source, {
       removeHTMLComments: false,
     }).result;
-    t.same(actualUglifiedCommentsOff, intended, "01.62.06");
+    t.same(actualUglifiedCommentsOff, intended, "62.06");
 
     const actualUglifiedCommentsOffUglify = comb(source, {
       removeHTMLComments: false,
       uglify: true,
     }).result;
-    t.same(actualUglifiedCommentsOffUglify, intendedUglified, "01.62.07");
+    t.same(actualUglifiedCommentsOffUglify, intendedUglified, "62.07");
     t.end();
   }
 );
 
-tap.test("01.63 - comments in the inline styles", (t) => {
+tap.test("63 - comments in the inline styles", (t) => {
   const actual = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3196,11 +3180,11 @@ tap.test("01.63 - comments in the inline styles", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.63");
+  t.equal(actual, intended, "63");
   t.end();
 });
 
-tap.test("01.64 - dirty code - space between class and =", (t) => {
+tap.test("64 - dirty code - space between class and =", (t) => {
   const actual = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3217,11 +3201,11 @@ tap.test("01.64 - dirty code - space between class and =", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "01.64");
+  t.equal(actual, intended, "64");
   t.end();
 });
 
-tap.test("01.65 - dirty code - blank class attribute name", (t) => {
+tap.test("65 - dirty code - blank class attribute name", (t) => {
   const actual1 = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3252,12 +3236,12 @@ tap.test("01.65 - dirty code - blank class attribute name", (t) => {
 </body>
 `;
 
-  t.equal(actual1, intended1, "01.65.01");
-  t.equal(actual2, intended2, "01.65.02");
+  t.equal(actual1, intended1, "65.01");
+  t.equal(actual2, intended2, "65.02");
   t.end();
 });
 
-tap.test("01.66 - dirty code - blank class attribute name", (t) => {
+tap.test("66 - dirty code - blank class attribute name", (t) => {
   const actual1 = comb(`<head>
 <style>@media screen and (min-width:1px){.unused {color: red;}}</style>
 </head>
@@ -3271,11 +3255,11 @@ zzz
 </body>
 `;
 
-  t.equal(actual1, intended1, "01.66");
+  t.equal(actual1, intended1, "66");
   t.end();
 });
 
-tap.test("01.67 - plus selector", (t) => {
+tap.test("67 - plus selector", (t) => {
   const actual1 = comb(`<style>
 [owa] .klm,
 body[nop] .klm,
@@ -3299,11 +3283,11 @@ u+.a .jb{uvw}
 <u><a class="a"><i class="jb">z</i></a></u>
 `;
 
-  t.equal(actual1, intended1, "01.67");
+  t.equal(actual1, intended1, "67");
   t.end();
 });
 
-tap.test("01.68 - double curlies around values", (t) => {
+tap.test("68 - double curlies around values", (t) => {
   const actual1 = comb(`<style>
 .used-1 {
 display: {{ abc.de_fg | hi_jk: 10 }};
@@ -3331,7 +3315,7 @@ display: {{ abc.de_fg | hi_jk: 10 }};
 text
 `;
 
-  t.equal(actual1, intended1, "01.68");
+  t.equal(actual1, intended1, "68");
   t.end();
 });
 
@@ -3590,7 +3574,7 @@ text
 // 3. SHADES OF MESSED UP HTML
 // ==============================
 
-tap.test("03.01 - missing closing TD, TR, TABLE will not throw", (t) => {
+tap.test("69 - missing closing TD, TR, TABLE will not throw", (t) => {
   const actual = comb(`
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
@@ -3604,12 +3588,12 @@ tap.test("03.01 - missing closing TD, TR, TABLE will not throw", (t) => {
     some text
 `;
 
-  t.same(actual, intended, "03.01 - does nothing as head has no styles");
+  t.same(actual, intended, "69 - does nothing as head has no styles");
   t.end();
 });
 
 tap.test(
-  "03.02 - doesn't remove any other empty attributes besides class/id (mini)",
+  "70 - doesn't remove any other empty attributes besides class/id (mini)",
   (t) => {
     const actual = comb(`<html>
 <body>
@@ -3629,13 +3613,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "03.02");
+    t.same(actual, intended, "70");
     t.end();
   }
 );
 
 tap.test(
-  "03.03 - doesn't remove any other empty attributes besides class/id",
+  "71 - doesn't remove any other empty attributes besides class/id",
   (t) => {
     const actual = comb(`<html>
 <body>
@@ -3663,13 +3647,13 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "03.03");
+    t.same(actual, intended, "71");
     t.end();
   }
 );
 
 tap.test(
-  "03.04 - removes classes and id's from HTML even if it's heavily messed up",
+  "72 - removes classes and id's from HTML even if it's heavily messed up",
   (t) => {
     const actual = comb(`
 <title>Dummy HTML</title>
@@ -3715,13 +3699,13 @@ tap.test(
     t.same(
       actual,
       intended,
-      "03.04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
+      "72 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
     );
     t.end();
   }
 );
 
-tap.test("03.05 - missing last @media curlie", (t) => {
+tap.test("73 - missing last @media curlie", (t) => {
   const source = `<head>
 <style type="text/css">
 @namespace url(z);
@@ -3743,7 +3727,7 @@ tap.test("03.05 - missing last @media curlie", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "03.05");
+  t.equal(comb(source).result, intended, "73");
   t.end();
 });
 
@@ -3751,23 +3735,23 @@ tap.test("03.05 - missing last @media curlie", (t) => {
 // 4. Emoji content
 // ==============================
 
-tap.test("04.01 - doesn't affect emoji characters within the code", (t) => {
+tap.test("74 - doesn't affect emoji characters within the code", (t) => {
   const actual = comb("<td>🦄</td>").result;
   const intended = `<td>🦄</td>
 `;
 
-  t.same(actual, intended, "04.01");
+  t.same(actual, intended, "74");
   t.end();
 });
 
 tap.test(
-  "04.02 - doesn't affect emoji characters within the attribute names",
+  "75 - doesn't affect emoji characters within the attribute names",
   (t) => {
     const actual = comb('<td data-emoji="🦄">emoji</td>').result;
     const intended = `<td data-emoji="🦄">emoji</td>
 `;
 
-    t.same(actual, intended, "04.02");
+    t.same(actual, intended, "75");
     t.end();
   }
 );
@@ -3776,7 +3760,7 @@ tap.test(
 // 5. Missing/wrong input args
 // ==============================
 
-tap.test("05.01 - wrong inputs result in throw'ing", (t) => {
+tap.test("76 - wrong inputs result in throw'ing", (t) => {
   // pinning throws by throw ID:
   t.throws(() => {
     comb();
@@ -3796,14 +3780,14 @@ tap.test("05.01 - wrong inputs result in throw'ing", (t) => {
 
   t.doesNotThrow(() => {
     comb("");
-  });
+  }, "76.05");
   t.doesNotThrow(() => {
     comb("a");
-  });
+  }, "76.06");
   t.end();
 });
 
-tap.test("05.02 - wrong opts", (t) => {
+tap.test("77 - wrong opts", (t) => {
   t.throws(() => {
     comb("", 1);
   }, /THROW_ID_02/);
@@ -3818,13 +3802,13 @@ tap.test("05.02 - wrong opts", (t) => {
 
   t.doesNotThrow(() => {
     comb("", {});
-  });
+  }, "77.04");
   t.doesNotThrow(() => {
     comb("", null);
-  });
+  }, "77.05");
   t.doesNotThrow(() => {
     comb("", undefined);
-  });
+  }, "77.06");
 
   t.throws(() => {
     comb("zzz", { whitelist: true });
@@ -3832,13 +3816,13 @@ tap.test("05.02 - wrong opts", (t) => {
 
   t.doesNotThrow(() => {
     comb("zzz", { whitelist: [] });
-  });
+  }, "77.08");
   t.doesNotThrow(() => {
     comb("zzz", { whitelist: "" });
-  });
+  }, "77.09");
   t.doesNotThrow(() => {
     comb("zzz", { whitelist: "a" });
-  });
+  }, "77.10");
 
   t.throws(() => {
     comb("zzz", { whitelist: [true] });
@@ -3859,33 +3843,33 @@ tap.test("05.02 - wrong opts", (t) => {
 
   t.doesNotThrow(() => {
     comb("zzz", { backend: [{}] }); // empty arrays are permitted
-  });
+  }, "77.15");
   t.throws(() => {
     comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
   }, /THROW_ID_07/);
   t.end();
 });
 
-tap.test("05.03 - opts.uglify wrong", (t) => {
+tap.test("78 - opts.uglify wrong", (t) => {
   t.doesNotThrow(() => {
     comb("z", { uglify: 0 });
-  });
+  }, "78.01");
   t.doesNotThrow(() => {
     comb("z", { uglify: 1 });
-  });
+  }, "78.02");
   t.throws(() => {
     comb("z", { uglify: "z" });
   }, /THROW_ID_08/);
   t.end();
 });
 
-tap.test("05.04 - opts.reportProgressFunc wrong", (t) => {
+tap.test("79 - opts.reportProgressFunc wrong", (t) => {
   t.doesNotThrow(() => {
     comb("z", { reportProgressFunc: 0 });
-  });
+  }, "79.01");
   t.doesNotThrow(() => {
     comb("z", { reportProgressFunc: false });
-  });
+  }, "79.02");
   t.throws(() => {
     comb("z", { reportProgressFunc: "z" });
   }, /THROW_ID_09/);
@@ -3897,7 +3881,7 @@ tap.test("05.04 - opts.reportProgressFunc wrong", (t) => {
 // ==============================
 
 tap.test(
-  "06.01 - returned correct info object, nothing to delete from body, damaged HTML",
+  "80 - returned correct info object, nothing to delete from body, damaged HTML",
   (t) => {
     const actual = comb(`<!DOCTYPE html>
 <html>
@@ -3921,20 +3905,20 @@ tap.test(
     t.same(
       actual.allInHead,
       ["#non-existent-id", "#other", ".non-existent-class"],
-      "06.01.01"
+      "80.01"
     );
-    t.same(actual.allInBody, [], "06.01.02");
+    t.same(actual.allInBody, [], "80.02");
     t.same(
       actual.deletedFromHead,
       ["#non-existent-id", "#other", ".non-existent-class"],
-      "06.01.03"
+      "80.03"
     );
-    t.same(actual.deletedFromBody, [], "06.01.04");
+    t.same(actual.deletedFromBody, [], "80.04");
     t.end();
   }
 );
 
-tap.test("06.02 - returned correct info object, clean HTML", (t) => {
+tap.test("81 - returned correct info object, clean HTML", (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -3962,27 +3946,27 @@ tap.test("06.02 - returned correct info object, clean HTML", (t) => {
   t.same(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
-    "06.02.01"
+    "81.01"
   );
   t.same(
     actual.allInBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
-    "06.02.02"
+    "81.02"
   );
   t.same(
     actual.deletedFromHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
-    "06.02.03"
+    "81.03"
   );
   t.same(
     actual.deletedFromBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
-    "06.02.04"
+    "81.04"
   );
   t.end();
 });
 
-tap.test("06.03 - as 06.02 but now with whitelist, dirty HTML", (t) => {
+tap.test("82 - as 06.02 but now with whitelist, dirty HTML", (t) => {
   const actual = comb(
     `<!DOCTYPE html>
 <html>
@@ -4014,27 +3998,27 @@ tap.test("06.03 - as 06.02 but now with whitelist, dirty HTML", (t) => {
   t.same(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
-    "06.03.01"
+    "82.01"
   );
   t.same(
     actual.allInBody,
     [".body-only-class-1", ".body-only-class-2"],
-    "06.03.02"
+    "82.02"
   );
   t.same(
     actual.deletedFromHead,
     [],
-    "06.03.03 - nothing removed because of whitelist"
+    "82.03 - nothing removed because of whitelist"
   );
   t.same(
     actual.deletedFromBody,
     [],
-    "06.03.04 - nothing removed because of whitelist"
+    "82.04 - nothing removed because of whitelist"
   );
   t.end();
 });
 
-tap.test("06.04 - correct classes reported in info/deletedFromBody", (t) => {
+tap.test("83 - correct classes reported in info/deletedFromBody", (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -4056,18 +4040,18 @@ tap.test("06.04 - correct classes reported in info/deletedFromBody", (t) => {
 </html>
 `);
 
-  t.same(actual.allInHead, [".unused", ".used"], "06.04.01");
-  t.same(actual.allInBody, [".used"], "06.04.02");
-  t.same(actual.deletedFromHead, [".unused", ".used"], "06.04.03");
+  t.same(actual.allInHead, [".unused", ".used"], "83.01");
+  t.same(actual.allInBody, [".used"], "83.02");
+  t.same(actual.deletedFromHead, [".unused", ".used"], "83.03");
   t.same(
     actual.deletedFromBody,
     [".used"],
-    "06.04.04 - sneaky case - it is within head, but it is sandwitched with an unused class, so it does not count!"
+    "83.04 - sneaky case - it is within head, but it is sandwitched with an unused class, so it does not count!"
   );
   t.end();
 });
 
-tap.test("06.05 - more sandwitched classes/ids cases", (t) => {
+tap.test("84 - more sandwitched classes/ids cases", (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -4094,18 +4078,18 @@ tap.test("06.05 - more sandwitched classes/ids cases", (t) => {
   t.same(
     actual.allInHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
-    "06.05.01"
+    "84.01"
   );
-  t.same(actual.allInBody, ["#used-id", ".used-class"], "06.05.02");
+  t.same(actual.allInBody, ["#used-id", ".used-class"], "84.02");
   t.same(
     actual.deletedFromHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
-    "06.05.03 - deleted because they'e sandwitched with unused classes/ids"
+    "84.03 - deleted because they'e sandwitched with unused classes/ids"
   );
   t.same(
     actual.deletedFromBody,
     ["#used-id", ".used-class"],
-    "06.05.04 - deleted because they'e sandwitched with unused classes/ids"
+    "84.04 - deleted because they'e sandwitched with unused classes/ids"
   );
   t.end();
 });
@@ -4114,7 +4098,7 @@ tap.test("06.05 - more sandwitched classes/ids cases", (t) => {
 // 7. Whitelist
 // ==============================
 
-tap.test("07.01 - nothing removed because of settings.whitelist", (t) => {
+tap.test("85 - nothing removed because of settings.whitelist", (t) => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4170,11 +4154,11 @@ tap.test("07.01 - nothing removed because of settings.whitelist", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "07.01");
+  t.same(actual, intended, "85");
   t.end();
 });
 
-tap.test("07.02 - some removed, some whitelisted", (t) => {
+tap.test("86 - some removed, some whitelisted", (t) => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4230,11 +4214,11 @@ tap.test("07.02 - some removed, some whitelisted", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "07.02");
+  t.same(actual, intended, "86");
   t.end();
 });
 
-tap.test("07.03 - case of whitelisting everything", (t) => {
+tap.test("87 - case of whitelisting everything", (t) => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4292,11 +4276,11 @@ tap.test("07.03 - case of whitelisting everything", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "07.03");
+  t.same(actual, intended, "87");
   t.end();
 });
 
-tap.test("07.04 - special case - checking adjacent markers #1", (t) => {
+tap.test("88 - special case - checking adjacent markers #1", (t) => {
   const actual = comb(`<style type="text/css">
   .del-1{display: none;}
   .real{display: none;}
@@ -4314,11 +4298,11 @@ zzz
 </body>
 `;
 
-  t.same(actual, intended, "07.04");
+  t.same(actual, intended, "88");
   t.end();
 });
 
-tap.test("07.05 - special case - checking adjacent markers #2", (t) => {
+tap.test("89 - special case - checking adjacent markers #2", (t) => {
   const actual = comb(`<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
 <body>
 zzz
@@ -4329,12 +4313,12 @@ zzz
 </body>
 `;
 
-  t.same(actual, intended, "07.05");
+  t.same(actual, intended, "89");
   t.end();
 });
 
 // div~[^whatever] .del-1 {display: none;}
-tap.test("07.06 - special case - checking commas within curly braces", (t) => {
+tap.test("90 - special case - checking commas within curly braces", (t) => {
   const actual = comb(`
 <style type="text/css">
   .used {display: block;}
@@ -4352,7 +4336,7 @@ zzz
 </body>
 `;
 
-  t.same(actual, intended, "07.06");
+  t.same(actual, intended, "90");
   t.end();
 });
 
@@ -4360,10 +4344,8 @@ zzz
 // 8. Discovered bugs
 // ==============================
 
-tap.test(
-  "08.01 - color code hashes within head styles with no selectors",
-  (t) => {
-    const actual = comb(`<head>
+tap.test("91 - color code hashes within head styles with no selectors", (t) => {
+  const actual = comb(`<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
 </style>
@@ -4373,7 +4355,7 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 </body>
 `);
 
-    const intended = `<head>
+  const intended = `<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
 </style>
@@ -4383,16 +4365,15 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 </body>
 `;
 
-    t.same(
-      actual.result,
-      intended,
-      "08.01 - there are no classes or id's in the query selector, checking false positives"
-    );
-    t.end();
-  }
-);
+  t.same(
+    actual.result,
+    intended,
+    "91 - there are no classes or id's in the query selector, checking false positives"
+  );
+  t.end();
+});
 
-tap.test("08.02 - selectors in head styles without classes or ids", (t) => {
+tap.test("92 - selectors in head styles without classes or ids", (t) => {
   const actual = comb(`<head>
 <style>
 a {color: #525252;}
@@ -4416,12 +4397,12 @@ a {color: #525252;}
   t.same(
     actual.result,
     intended,
-    "08.02 - there are no classes or id's in the query selector, checking false positives"
+    "92 - there are no classes or id's in the query selector, checking false positives"
   );
   t.end();
 });
 
-tap.test('08.03 - sneaky attributes that end with characters "id"', (t) => {
+tap.test('93 - sneaky attributes that end with characters "id"', (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4478,12 +4459,12 @@ tap.test('08.03 - sneaky attributes that end with characters "id"', (t) => {
 </html>
 `;
 
-  t.same(actual.result, intended, "08.03 - sneaky urlid attribute");
+  t.same(actual.result, intended, "93 - sneaky urlid attribute");
   t.end();
 });
 
 tap.test(
-  '08.04 - mini version of 08.05, sneaky attributes ending with "class"',
+  '94 - mini version of 08.05, sneaky attributes ending with "class"',
   (t) => {
     const actual = comb(`<body>
 <a href="zzz" superclass="26489" >Links</a>
@@ -4497,12 +4478,12 @@ tap.test(
 </html>
 `;
 
-    t.same(actual.result, intended, "08.04 - sneaky superclass attribute");
+    t.same(actual.result, intended, "94 - sneaky superclass attribute");
     t.end();
   }
 );
 
-tap.test('08.05 - sneaky attributes that end with characters "class"', (t) => {
+tap.test('95 - sneaky attributes that end with characters "class"', (t) => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4559,14 +4540,12 @@ tap.test('08.05 - sneaky attributes that end with characters "class"', (t) => {
 </html>
 `;
 
-  t.same(actual.result, intended, "08.05 - sneaky superclass attribute");
+  t.same(actual.result, intended, "95 - sneaky superclass attribute");
   t.end();
 });
 
-tap.test(
-  "08.06 - color code hashes interpreted correctly, not as id's",
-  (t) => {
-    const actual = comb(`<!DOCTYPE html>
+tap.test("96 - color code hashes interpreted correctly, not as id's", (t) => {
+  const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -4597,18 +4576,17 @@ tap.test(
 </html>
 `);
 
-    const intended = ["#head-only-id1", ".mobile_link"];
+  const intended = ["#head-only-id1", ".mobile_link"];
 
-    t.same(
-      actual.deletedFromHead,
-      intended,
-      "08.06 - look for #525252 in head styles, it should not be among results - v2.6.0+"
-    );
-    t.end();
-  }
-);
+  t.same(
+    actual.deletedFromHead,
+    intended,
+    "96 - look for #525252 in head styles, it should not be among results - v2.6.0+"
+  );
+  t.end();
+});
 
-tap.test("08.07 - one-letter classes (modern notation)", (t) => {
+tap.test("97 - one-letter classes (modern notation)", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
 .h{display:none !important;}
@@ -4629,11 +4607,11 @@ tap.test("08.07 - one-letter classes (modern notation)", (t) => {
 </body>
 `;
 
-  t.same(actual.result, intended, "08.07 - class .h should not get removed");
+  t.same(actual.result, intended, "97 - class .h should not get removed");
   t.end();
 });
 
-tap.test("08.08 - one-letter classes (old notation)", (t) => {
+tap.test("98 - one-letter classes (old notation)", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
 *[class].h{display:none !important;}
@@ -4654,11 +4632,11 @@ tap.test("08.08 - one-letter classes (old notation)", (t) => {
 </body>
 `;
 
-  t.same(actual.result, intended, "08.08 - class .h should not get removed");
+  t.same(actual.result, intended, "98 - class .h should not get removed");
   t.end();
 });
 
-tap.test("08.09 - one-letter classes - comprehensive comparison", (t) => {
+tap.test("99 - one-letter classes - comprehensive comparison", (t) => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4711,28 +4689,28 @@ tap.test("08.09 - one-letter classes - comprehensive comparison", (t) => {
   t.equal(
     actual.allInHead.sort().join(" - "),
     intended.allInHead.sort().join(" - "),
-    "08.09.01 - allInHead"
+    "99.01 - allInHead"
   );
   t.equal(
     actual.allInBody.sort().join(" - "),
     intended.allInBody.sort().join(" - "),
-    "08.09.02 - allInBody"
+    "99.02 - allInBody"
   );
   t.equal(
     actual.deletedFromHead.sort().join(" - "),
     intended.deletedFromHead.sort().join(" - "),
-    "08.09.03 - deletedFromHead"
+    "99.03 - deletedFromHead"
   );
   t.equal(
     actual.deletedFromBody.sort().join(" - "),
     intended.deletedFromBody.sort().join(" - "),
-    "08.09.04 - deletedFromBody"
+    "99.04 - deletedFromBody"
   );
-  t.equal(actual.result, intended.result, "08.09.05 - result");
+  t.equal(actual.result, intended.result, "99.05 - result");
   t.end();
 });
 
-tap.test("08.10 - checking whole results object, all its keys #1", (t) => {
+tap.test("100 - checking whole results object, all its keys #1", (t) => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4764,28 +4742,28 @@ tap.test("08.10 - checking whole results object, all its keys #1", (t) => {
   t.same(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
-    "08.10.01 - allInHead"
+    "100.01 - allInHead"
   );
   t.same(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
-    "08.10.02 - allInBody"
+    "100.02 - allInBody"
   );
   t.same(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "08.10.03 - deletedFromHead"
+    "100.03 - deletedFromHead"
   );
   t.same(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "08.10.04 - deletedFromBody"
+    "100.04 - deletedFromBody"
   );
-  t.same(actual.result, intended.result, "08.10.05 - result");
+  t.same(actual.result, intended.result, "100.05 - result");
   t.end();
 });
 
-tap.test("08.11 - checking whole results object, all its keys #2", (t) => {
+tap.test("101 - checking whole results object, all its keys #2", (t) => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4822,28 +4800,28 @@ tap.test("08.11 - checking whole results object, all its keys #2", (t) => {
   t.same(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
-    "08.11.01 - allInHead"
+    "101.01 - allInHead"
   );
   t.same(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
-    "08.11.02 - allInBody"
+    "101.02 - allInBody"
   );
   t.same(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "08.11.03 - deletedFromHead"
+    "101.03 - deletedFromHead"
   );
   t.same(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "08.11.04 - deletedFromBody"
+    "101.04 - deletedFromBody"
   );
-  t.same(actual.result, intended.result, "08.11.05 - result");
+  t.same(actual.result, intended.result, "101.05 - result");
   t.end();
 });
 
-tap.test("08.12 - Cosmin's reported bug", (t) => {
+tap.test("102 - Cosmin's reported bug", (t) => {
   const srcs = [
     `<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n`,
     `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`,
@@ -4854,7 +4832,7 @@ tap.test("08.12 - Cosmin's reported bug", (t) => {
   t.end();
 });
 
-tap.test("08.13 - inner whitespace #1", (t) => {
+tap.test("103 - inner whitespace #1", (t) => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4872,11 +4850,11 @@ tap.test("08.13 - inner whitespace #1", (t) => {
 <br class="abc">
 </td>
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "103");
   t.end();
 });
 
-tap.test("08.14 - inner whitespace #2", (t) => {
+tap.test("104 - inner whitespace #2", (t) => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4894,11 +4872,11 @@ tap.test("08.14 - inner whitespace #2", (t) => {
 <br class="abc">
 </td>
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "104");
   t.end();
 });
 
-tap.test("08.15 - inner whitespace #3", (t) => {
+tap.test("105 - inner whitespace #3", (t) => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4916,11 +4894,11 @@ tap.test("08.15 - inner whitespace #3", (t) => {
 <br class="abc">
 </td>
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "105");
   t.end();
 });
 
-tap.test("08.16 - adhoc", (t) => {
+tap.test("106 - adhoc", (t) => {
   const inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
@@ -4940,11 +4918,11 @@ tap.test("08.16 - adhoc", (t) => {
 <a href="a("'")">
 <td class="klm">
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "106");
   t.end();
 });
 
-tap.test("08.17 - adhoc", (t) => {
+tap.test("107 - adhoc", (t) => {
   const inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
@@ -4964,11 +4942,11 @@ tap.test("08.17 - adhoc", (t) => {
 <a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "107");
   t.end();
 });
 
-tap.test("08.18 - adhoc", (t) => {
+tap.test("108 - adhoc", (t) => {
   const inp = `<style>
 @media screen {
   .sm-border-0 {
@@ -4992,7 +4970,7 @@ tap.test("08.18 - adhoc", (t) => {
 <span>S's</span>
 <td class="sm-border-0">
 `;
-  t.same(comb(inp).result, outp);
+  t.same(comb(inp).result, outp, "108");
   t.end();
 });
 
@@ -5000,7 +4978,7 @@ tap.test("08.18 - adhoc", (t) => {
 // 9. Release 2.11.0 - backend variables with spaces as classes
 // ============================================================
 
-tap.test("09.01 - nunjucks variable as a class name", (t) => {
+tap.test("109 - nunjucks variable as a class name", (t) => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -5027,11 +5005,11 @@ color:  black;
 </html>
 `;
 
-  t.same(actual, intended, "09.01 - default behaviour - lib will extract var1");
+  t.same(actual, intended, "109 - default behaviour - lib will extract var1");
   t.end();
 });
 
-tap.test("09.02 - nunjucks variable as a class name", (t) => {
+tap.test("110 - nunjucks variable as a class name", (t) => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -5065,13 +5043,13 @@ color: black;
   t.same(
     actual,
     intended,
-    "09.02 - default behaviour - curlies are not legal characters to be used as class names"
+    "110 - default behaviour - curlies are not legal characters to be used as class names"
   );
   t.end();
 });
 
 tap.test(
-  "09.03 - nunjucks variable as a class name (simplified version)",
+  "111 - nunjucks variable as a class name (simplified version)",
   (t) => {
     const actual = comb(
       `<style>
@@ -5104,13 +5082,13 @@ tap.test(
     t.same(
       actual,
       intended,
-      "09.03 - we taught it how heads and tails look so it skips them now"
+      "111 - we taught it how heads and tails look so it skips them now"
     );
     t.end();
   }
 );
 
-tap.test("09.04 - nunjucks variable as a class name (full version)", (t) => {
+tap.test("112 - nunjucks variable as a class name (full version)", (t) => {
   const actual = comb(
     `<!doctype html>
 <html>
@@ -5154,13 +5132,13 @@ color:  black;
   t.same(
     actual,
     intended,
-    "09.04 - we taught it how heads and tails look so it skips them now"
+    "112 - we taught it how heads and tails look so it skips them now"
   );
   t.end();
 });
 
 tap.test(
-  "09.05 - nunjucks variables mixed with classes and id's (minimal version)",
+  "113 - nunjucks variables mixed with classes and id's (minimal version)",
   (t) => {
     const actual = comb(
       `<style>
@@ -5193,14 +5171,14 @@ tap.test(
     t.same(
       actual,
       intended,
-      "09.05 - we taught it how heads and tails look so it skips them now"
+      "113 - we taught it how heads and tails look so it skips them now"
     );
     t.end();
   }
 );
 
 tap.test(
-  "09.06 - nunjucks variables mixed with classes and id's (full version)",
+  "114 - nunjucks variables mixed with classes and id's (full version)",
   (t) => {
     const actual = comb(
       `<!DOCTYPE html>
@@ -5264,12 +5242,12 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "09.06");
+    t.same(actual, intended, "114");
     t.end();
   }
 );
 
-tap.test("09.07 - esp tag at the end of ignored class", (t) => {
+tap.test("115 - esp tag at the end of ignored class", (t) => {
   const actual = comb(
     `<body>
 <table class="module-zzz-{{ loop.index }}">
@@ -5300,11 +5278,11 @@ tap.test("09.07 - esp tag at the end of ignored class", (t) => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.same(actual, intended, "99.07");
+  t.same(actual, intended, "115");
   t.end();
 });
 
-tap.test("09.08 - esp tag at the end of ignored class", (t) => {
+tap.test("116 - esp tag at the end of ignored class", (t) => {
   const actual = comb(
     `<body>
 <table class="module-zzz-{{ loop.index }}">
@@ -5327,7 +5305,7 @@ tap.test("09.08 - esp tag at the end of ignored class", (t) => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.same(actual, intended, "99.08");
+  t.same(actual, intended, "116");
   t.end();
 });
 
@@ -5335,7 +5313,7 @@ tap.test("09.08 - esp tag at the end of ignored class", (t) => {
 // 10. Various tests
 // ============================================================
 
-tap.test("10.01 - bug #01", (t) => {
+tap.test("117 - bug #01", (t) => {
   const {
     allInBody,
     allInHead,
@@ -5352,8 +5330,8 @@ tap.test("10.01 - bug #01", (t) => {
 </body>
 `);
 
-  t.same(allInBody, [], "10.01.01");
-  t.same(allInHead, [".unused"], "10.01.02");
+  t.same(allInBody, [], "117.01");
+  t.same(allInHead, [".unused"], "117.02");
   t.same(
     result,
     `<head>
@@ -5364,14 +5342,14 @@ tap.test("10.01 - bug #01", (t) => {
 <body a="z;">
 </body>
 `,
-    "10.01.03"
+    "117.03"
   );
-  t.same(deletedFromHead, [".unused"], "10.01.04");
-  t.same(deletedFromBody, [], "10.01.05");
+  t.same(deletedFromHead, [".unused"], "117.04");
+  t.same(deletedFromBody, [], "117.05");
   t.end();
 });
 
-tap.test("10.02 - working on early (stage I) per-line removal", (t) => {
+tap.test("118 - working on early (stage I) per-line removal", (t) => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -5418,13 +5396,13 @@ tap.test("10.02 - working on early (stage I) per-line removal", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "10.02");
+  t.same(comb(source).result, intended, "118");
   t.end();
 });
 
 // sneaky matching used/unused class/id names
 tap.test(
-  "10.03 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments",
+  "119 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments",
   (t) => {
     const source = `<style>
   .aa {z:2;}
@@ -5442,13 +5420,13 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "01.03");
+    t.equal(comb(source).result, intended, "119");
     t.end();
   }
 );
 
 tap.test(
-  "10.04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol",
+  "120 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol",
   (t) => {
     const source = `<style>
   .aa {z:2;}
@@ -5466,13 +5444,13 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "01.04");
+    t.equal(comb(source).result, intended, "120");
     t.end();
   }
 );
 
 tap.test(
-  "10.05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments",
+  "121 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments",
   (t) => {
     const source = `<head>
 <style type="text/css">
@@ -5492,13 +5470,13 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "01.05");
+    t.equal(comb(source).result, intended, "121");
     t.end();
   }
 );
 
 tap.test(
-  "10.06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads",
+  "122 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads",
   (t) => {
     const source = `<style>
   .aa {bb:2;}
@@ -5513,15 +5491,13 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "10.06");
+    t.equal(comb(source).result, intended, "122");
     t.end();
   }
 );
 
-tap.test(
-  "10.07 - empty class/id without equals and value gets deleted",
-  (t) => {
-    const source = `<style>
+tap.test("123 - empty class/id without equals and value gets deleted", (t) => {
+  const source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -5529,18 +5505,17 @@ tap.test(
 </body>
 `;
 
-    const intended = `</head>
+  const intended = `</head>
 <body><a>
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "10.07");
-    t.end();
-  }
-);
+  t.equal(comb(source).result, intended, "123");
+  t.end();
+});
 
 tap.test(
-  "10.08 - empty class/id with equals but without value gets deleted",
+  "124 - empty class/id with equals but without value gets deleted",
   (t) => {
     const source = `<style>
   .aa {bb:2;}
@@ -5558,12 +5533,12 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "10.08");
+    t.equal(comb(source).result, intended, "124");
     t.end();
   }
 );
 
-tap.test("10.09 - cleans spaces within classes and id's", (t) => {
+tap.test("125 - cleans spaces within classes and id's", (t) => {
   const source = `<head>
 <style type="text/css">
   .unused1[z], .unused.used {a:1;}
@@ -5583,21 +5558,21 @@ tap.test("10.09 - cleans spaces within classes and id's", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "10.09");
+  t.equal(comb(source).result, intended, "125");
   t.end();
 });
 
-tap.test("10.10 - does not mangle different-type line endings", (t) => {
+tap.test("126 - does not mangle different-type line endings", (t) => {
   const source1 = "a\n";
   const source2 = "a\r";
   const source3 = "a\r\n";
-  t.equal(comb(source1).result, source1, "10.10.01");
-  t.equal(comb(source2).result, source2, "10.10.02");
-  t.equal(comb(source3).result, source3, "10.10.03");
+  t.equal(comb(source1).result, source1, "126.01");
+  t.equal(comb(source2).result, source2, "126.02");
+  t.equal(comb(source3).result, source3, "126.03");
   t.end();
 });
 
-tap.test("10.11 - dirty code #1", (t) => {
+tap.test("127 - dirty code #1", (t) => {
   const actual = comb(`<body>
 
 <style>
@@ -5623,7 +5598,7 @@ float:left !important;}
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
 `;
 
-  t.equal(actual, intended, "10.11");
+  t.equal(actual, intended, "127");
   t.end();
 });
 
@@ -5631,7 +5606,7 @@ float:left !important;}
 // 11. HTML Comment removal
 // ============================================================
 
-tap.test("11.01 - removes HTML comments - healthy code", (t) => {
+tap.test("128 - removes HTML comments - healthy code", (t) => {
   const source = `<style>
   .a {b:2;}
 </style>
@@ -5662,17 +5637,13 @@ tap.test("11.01 - removes HTML comments - healthy code", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "11.01.01");
+  t.equal(comb(source).result, intended, "128.01");
   t.equal(
     comb(source, { removeHTMLComments: true }).result,
     intended,
-    "11.01.02 - hardcoded default"
+    "128.02 - hardcoded default"
   );
-  t.equal(
-    comb(source, { removeHTMLComments: false }).result,
-    source,
-    "11.01.03"
-  );
+  t.equal(comb(source, { removeHTMLComments: false }).result, source, "128.03");
 
   // uglify on:
   t.equal(
@@ -5680,22 +5651,22 @@ tap.test("11.01 - removes HTML comments - healthy code", (t) => {
       uglify: true,
     }).result,
     uglified,
-    "11.01.04"
+    "128.04"
   );
   t.equal(
     comb(source, { removeHTMLComments: true, uglify: true }).result,
     uglified,
-    "11.01.05 - hardcoded default"
+    "128.05 - hardcoded default"
   );
   t.equal(
     comb(source, { removeHTMLComments: false, uglify: true }).result,
     uglifiedWithComments,
-    "11.01.06"
+    "128.06"
   );
   t.end();
 });
 
-tap.test("11.02 - removes bogus HTML comments", (t) => {
+tap.test("129 - removes bogus HTML comments", (t) => {
   const source = `<style>
   .a {b:2;}
 </style>
@@ -5719,24 +5690,24 @@ tap.test("11.02 - removes bogus HTML comments", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "11.02.01");
+  t.equal(comb(source).result, intended, "129.01");
   t.equal(
     comb(source, { removeHTMLComments: true }).result,
     intended,
-    "11.02.02"
+    "129.02"
   );
   // when HTML comment removal is off, redundant whitespace within the tag is
   // still removed
   t.equal(
     comb(source, { removeHTMLComments: false }).result,
     slightlyProcessed,
-    "11.02.03"
+    "129.03"
   );
   t.end();
 });
 
 tap.test(
-  "11.03 - removes HTML comments - healthy code with mso conditional - one liner",
+  "130 - removes HTML comments - healthy code with mso conditional - one liner",
   (t) => {
     const source = `abc<!--[if gte mso 9]><xml></xml><![endif]-->xyz
 `;
@@ -5744,58 +5715,58 @@ tap.test(
     const conditionalRemoved = `abc xyz
 `;
 
-    t.equal(comb(source).result, source, "11.03.01");
+    t.equal(comb(source).result, source, "130.01");
     t.equal(
       comb(source, { removeHTMLComments: true }).result,
       source,
-      "11.03.02 - hardcoded default"
+      "130.02 - hardcoded default"
     );
     t.equal(
       comb(source, { removeHTMLComments: false }).result,
       source,
-      "11.03.03"
+      "130.03"
     );
     t.equal(
       comb(source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"],
       }).result,
       source,
-      "11.03.04 - both mso and ie ignores cause a complete skip"
+      "130.04 - both mso and ie ignores cause a complete skip"
     );
     t.equal(
       comb(source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso",
       }).result,
       source,
-      "11.03.05 - mso ignore causes a complete skip"
+      "130.05 - mso ignore causes a complete skip"
     );
     t.equal(
       comb(source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie",
       }).result,
       conditionalRemoved,
-      "11.03.06 - ie ignore is redundant and comment is removed"
+      "130.06 - ie ignore is redundant and comment is removed"
     );
     t.equal(
       comb(source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "",
       }).result,
       conditionalRemoved,
-      "11.03.07 - empty string"
+      "130.07 - empty string"
     );
     t.equal(
       comb(source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
       conditionalRemoved,
-      "11.03.08 - empty array"
+      "130.08 - empty array"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.04 - removes HTML comments - everywhere-except-outlook conditional - type 1",
+  "131 - removes HTML comments - everywhere-except-outlook conditional - type 1",
   (t) => {
     const source = `aaa<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -5806,16 +5777,16 @@ tap.test(
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-    t.equal(comb(source).result, source, "11.04.01");
+    t.equal(comb(source).result, source, "131.01");
     t.equal(
       comb(source, { removeHTMLComments: true }).result,
       source,
-      "11.04.02 - hardcoded default"
+      "131.02 - hardcoded default"
     );
     t.equal(
       comb(source, { removeHTMLComments: false }).result,
       source,
-      "11.04.03"
+      "131.03"
     );
     t.equal(
       comb(source, {
@@ -5823,7 +5794,7 @@ tap.test(
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
       completelyStripped,
-      "11.04.04 - completely strips all comments, including outlook conditionals"
+      "131.04 - completely strips all comments, including outlook conditionals"
     );
 
     t.end();
@@ -5831,7 +5802,7 @@ tap.test(
 );
 
 tap.test(
-  "11.05 - removes HTML comments - everywhere-except-outlook conditional - type 2",
+  "132 - removes HTML comments - everywhere-except-outlook conditional - type 2",
   (t) => {
     // not <!-- --> but <!-->
 
@@ -5843,16 +5814,16 @@ tap.test(
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-    t.equal(comb(source2).result, source2, "11.05.01");
+    t.equal(comb(source2).result, source2, "132.01");
     t.equal(
       comb(source2, { removeHTMLComments: true }).result,
       source2,
-      "11.05.02 - hardcoded default"
+      "132.02 - hardcoded default"
     );
     t.equal(
       comb(source2, { removeHTMLComments: false }).result,
       source2,
-      "11.05.03"
+      "132.03"
     );
     t.equal(
       comb(source2, {
@@ -5860,14 +5831,14 @@ tap.test(
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
       completelyStripped,
-      "11.05.04 - completely strips all comments, including outlook conditionals"
+      "132.04 - completely strips all comments, including outlook conditionals"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.06 - removes HTML comments - everywhere-except-outlook conditional - alternative",
+  "133 - removes HTML comments - everywhere-except-outlook conditional - alternative",
   (t) => {
     // theoretical alternatives: mso, ie
     const source3 = `aaa<!--[if mso]><!-->
@@ -5880,7 +5851,7 @@ tap.test(
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "endif"],
       }).result,
       source3,
-      "11.06.01"
+      "133.01"
     );
 
     const source4 = `aaa<!--[if ie]><!-->
@@ -5893,14 +5864,14 @@ tap.test(
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["ie", "endif"],
       }).result,
       source4,
-      "11.06.02"
+      "133.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.07 - does not touch a table with conditional comment on the columns",
+  "134 - does not touch a table with conditional comment on the columns",
   (t) => {
     const source = `<table>
   <tr>
@@ -5919,22 +5890,22 @@ tap.test(
 </table>
 `;
 
-    t.equal(comb(source).result, source, "11.07.01");
+    t.equal(comb(source).result, source, "134.01");
     t.equal(
       comb(source, { removeHTMLComments: true }).result,
       source,
-      "11.07.02 - hardcoded default"
+      "134.02 - hardcoded default"
     );
     t.equal(
       comb(source, { removeHTMLComments: false }).result,
       source,
-      "11.07.03"
+      "134.03"
     );
     t.end();
   }
 );
 
-tap.test("11.08 - trims commented-out HTML", (t) => {
+tap.test("135 - trims commented-out HTML", (t) => {
   const source = `<table>
 <tr>
   <span>
@@ -5953,30 +5924,26 @@ tap.test("11.08 - trims commented-out HTML", (t) => {
 </table>
 `;
 
-  t.equal(comb(source).result, intended, "11.08.01");
+  t.equal(comb(source).result, intended, "135.01");
   t.equal(
     comb(source, { removeHTMLComments: true }).result,
     intended,
-    "11.08.02 - hardcoded default"
+    "135.02 - hardcoded default"
   );
-  t.equal(
-    comb(source, { removeHTMLComments: false }).result,
-    source,
-    "11.08.03"
-  );
+  t.equal(comb(source, { removeHTMLComments: false }).result, source, "135.03");
   t.end();
 });
 
-tap.test("11.09 - outer trims - single leading space", (t) => {
+tap.test("136 - outer trims - single leading space", (t) => {
   const source = ` <body>`;
   const intended = `<body>
 `;
 
-  t.equal(comb(source).result, intended, "11.09");
+  t.equal(comb(source).result, intended, "136");
   t.end();
 });
 
-tap.test("11.10 - outer trims - doctype with leading line break", (t) => {
+tap.test("137 - outer trims - doctype with leading line break", (t) => {
   const source = `\n<!DOCTYPE html>
 <html>`;
 
@@ -5987,48 +5954,48 @@ tap.test("11.10 - outer trims - doctype with leading line break", (t) => {
   t.equal(
     comb(source, { uglify: true, removeIndentations: true }).result,
     intended,
-    "11.10"
+    "137"
   );
   t.end();
 });
 
-tap.test("11.11 - outer trims - trailing line breaks", (t) => {
+tap.test("138 - outer trims - trailing line breaks", (t) => {
   const source = ` <body>\n\n\n`;
   const intended = `<body>
 `;
 
-  t.equal(comb(source).result, intended, "11.11");
+  t.equal(comb(source).result, intended, "138");
   t.end();
 });
 
-tap.test("11.12 - comment surrounded by tags", (t) => {
+tap.test("139 - comment surrounded by tags", (t) => {
   const source = ` <strong><!-- --></strong> `;
   const intended = `<strong></strong>
 `;
 
-  t.equal(comb(source).result, intended, "11.12");
+  t.equal(comb(source).result, intended, "139");
   t.end();
 });
 
-tap.test("11.13 - leading comment", (t) => {
+tap.test("140 - leading comment", (t) => {
   const source = `<!-- something -->zzz`;
   const intended = `zzz
 `;
 
-  t.equal(comb(source).result, intended, "11.13");
+  t.equal(comb(source).result, intended, "140");
   t.end();
 });
 
-tap.test("11.14 - leading spaces #1 - just text", (t) => {
+tap.test("141 - leading spaces #1 - just text", (t) => {
   const source = `  a`;
   const intended = `a
 `;
 
-  t.equal(comb(source).result, intended, "11.14");
+  t.equal(comb(source).result, intended, "141");
   t.end();
 });
 
-tap.test("11.15 - leading spaces #2 - no body", (t) => {
+tap.test("142 - leading spaces #2 - no body", (t) => {
   const source = `<style>
     /* Media Queries */
     @media screen and (max-width: 480px) {
@@ -6044,25 +6011,25 @@ tap.test("11.15 - leading spaces #2 - no body", (t) => {
 </style>
 `;
 
-  t.equal(comb(source).result, intended, "11.15");
+  t.equal(comb(source).result, intended, "142");
   t.end();
 });
 
-tap.test("11.16 - outer trims - some leading tabs", (t) => {
+tap.test("143 - outer trims - some leading tabs", (t) => {
   const source = `\n\t\t<body>`;
   const intended = `<body>
 `;
 
-  t.equal(comb(source).result, intended, "11.16");
+  t.equal(comb(source).result, intended, "143");
   t.end();
 });
 
-tap.test("11.17 - outer trims - doctype with leading space", (t) => {
+tap.test("144 - outer trims - doctype with leading space", (t) => {
   const source = ` <!DOCTYPE>`;
   const intended = `<!DOCTYPE>
 `;
 
-  t.equal(comb(source).result, intended, "11.17");
+  t.equal(comb(source).result, intended, "144");
   t.end();
 });
 
@@ -6070,10 +6037,8 @@ tap.test("11.17 - outer trims - doctype with leading space", (t) => {
 // 12. opts.uglify
 // ============================================================
 
-tap.test(
-  `12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`,
-  (t) => {
-    const source = `<head>
+tap.test(`145 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, (t) => {
+  const source = `<head>
 <style>
 .abc { w:1; }
 </style>
@@ -6081,7 +6046,7 @@ tap.test(
 </body>
 `;
 
-    const baseline = `<head>
+  const baseline = `<head>
 <style>
 .abc { w:1; }
 </style>
@@ -6089,7 +6054,7 @@ tap.test(
 </body>
 `;
 
-    const baselineUglified = `<head>
+  const baselineUglified = `<head>
 <style>
 .c { w:1; }
 </style>
@@ -6097,7 +6062,7 @@ tap.test(
 </body>
 `;
 
-    const ignores = `<head>
+  const ignores = `<head>
 <style>
 .abc { w:1; }
 </style>
@@ -6105,7 +6070,7 @@ tap.test(
 </body>
 `;
 
-    const ignoresUglified = `<head>
+  const ignoresUglified = `<head>
 <style>
 .c { w:1; }
 </style>
@@ -6113,42 +6078,41 @@ tap.test(
 </body>
 `;
 
-    t.equal(
-      comb(source, { uglify: false }).result,
-      baseline,
-      "12.01.01 - default settings (no uglify, no ignores)"
-    );
+  t.equal(
+    comb(source, { uglify: false }).result,
+    baseline,
+    "145.01 - default settings (no uglify, no ignores)"
+  );
 
-    t.equal(
-      comb(source, { uglify: true }).result,
-      baselineUglified,
-      "12.01.02 - uglified, no ignores"
-    );
+  t.equal(
+    comb(source, { uglify: true }).result,
+    baselineUglified,
+    "145.02 - uglified, no ignores"
+  );
 
-    t.equal(
-      comb(source, {
-        uglify: false,
-        whitelist: ".zzz*",
-      }).result,
-      ignores,
-      "12.01.03 - no uglify, with ignores"
-    );
+  t.equal(
+    comb(source, {
+      uglify: false,
+      whitelist: ".zzz*",
+    }).result,
+    ignores,
+    "145.03 - no uglify, with ignores"
+  );
 
-    t.equal(
-      comb(source, {
-        uglify: true,
-        whitelist: ".zzz*",
-      }).result,
-      ignoresUglified,
-      "12.01.04 - uglified + with ignores"
-    );
+  t.equal(
+    comb(source, {
+      uglify: true,
+      whitelist: ".zzz*",
+    }).result,
+    ignoresUglified,
+    "145.04 - uglified + with ignores"
+  );
 
-    t.end();
-  }
-);
+  t.end();
+});
 
 tap.test(
-  `12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`,
+  `146 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`,
   (t) => {
     const actual = `<head>
 <style>
@@ -6227,11 +6191,11 @@ tap.test(
     t.equal(
       comb(actual, { uglify: false }).result,
       actual,
-      "12.02.01 - uglify is off"
+      "146.01 - uglify is off"
     );
 
     const res = comb(actual, { uglify: true });
-    t.equal(res.result, intended, "12.02.02 - uglify is on");
+    t.equal(res.result, intended, "146.02 - uglify is on");
 
     t.same(
       res.log.uglified,
@@ -6267,7 +6231,7 @@ tap.test(
         [".aaa29", ".c"],
         [".aaa30", ".ueq6m"],
       ],
-      "12.02.03"
+      "146.03"
     );
 
     t.end();
@@ -6275,7 +6239,7 @@ tap.test(
 );
 
 tap.test(
-  `12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`,
+  `147 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`,
   (t) => {
     const source = `<html>
 <head>
@@ -6322,21 +6286,21 @@ tap.test(
         uglify: false,
       }).result,
       intended,
-      "12.03.01"
+      "147.01"
     );
     t.equal(
       comb(source, {
         uglify: true,
       }).result,
       uglified,
-      "12.03.02"
+      "147.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`,
+  `148 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`,
   (t) => {
     const source = `<html>
 <head>
@@ -6390,14 +6354,14 @@ tap.test(
         uglify: false,
       }).result,
       intended,
-      "12.04.01"
+      "148.01"
     );
     t.equal(
       comb(source, {
         uglify: true,
       }).result,
       uglified,
-      "12.04.02"
+      "148.02"
     );
     // now ignores are set, so deletion is prevented:
     t.equal(
@@ -6406,7 +6370,7 @@ tap.test(
         whitelist: ["#outlook", ".myclass"],
       }).result,
       ignored,
-      "12.04.03"
+      "148.03"
     );
     t.equal(
       comb(source, {
@@ -6414,14 +6378,14 @@ tap.test(
         whitelist: ["#outlook", ".myclass"],
       }).result,
       ignored,
-      "12.04.04"
+      "148.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`,
+  `149 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`,
   (t) => {
     const source = `<html>
 <head>
@@ -6437,7 +6401,7 @@ tap.test(
         whitelist: ["#mn", ".op"],
       }).result,
       source,
-      "12.05.01"
+      "149.01"
     );
     t.equal(
       comb(source, {
@@ -6445,14 +6409,14 @@ tap.test(
         whitelist: ["#mn"],
       }).result,
       source,
-      "12.05.02"
+      "149.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`,
+  `150 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`,
   (t) => {
     const source = `<html>
 <head>
@@ -6468,7 +6432,7 @@ tap.test(
         whitelist: [".mn", ".op"],
       }).result,
       source,
-      "12.06.01"
+      "150.01"
     );
     t.equal(
       comb(source, {
@@ -6476,14 +6440,14 @@ tap.test(
         whitelist: [".mn"],
       }).result,
       source,
-      "12.06.02"
+      "150.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12.07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`,
+  `151 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`,
   (t) => {
     const actual = comb(
       `<html lang="en">
@@ -6530,16 +6494,16 @@ zzz
 `;
 
     // whatever uglified class is named, it's there, Merriweather font is kept:
-    t.ok(actual.result.includes("Merriweather"), "12.07.01");
+    t.ok(actual.result.includes("Merriweather"), "151.01");
 
     // also, the result contains whitelisted entries...
-    t.ok(intended.includes("#outlook"), "12.07.02");
+    t.ok(intended.includes("#outlook"), "151.02");
 
     // ... and uglified legend doesn't contain it
-    t.false(actual.log.uglified.includes("#outlook"), "12.07.03");
+    t.false(actual.log.uglified.includes("#outlook"), "151.03");
 
     // but there's "serif" uglified value in the uglification legend:
-    t.equal(actual.log.uglified.length, 1, "12.07.04");
+    t.equal(actual.log.uglified.length, 1, "151.04");
 
     t.end();
   }
@@ -6550,7 +6514,7 @@ zzz
 // ============================================================
 
 tap.test(
-  `13.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
+  `152 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
   (t) => {
     function shouldveBeenCalled(val) {
       throw new Error(val);
@@ -6566,17 +6530,17 @@ tap.test(
     t.same(
       comb("aaaaaaaaaa").result,
       "aaaaaaaaaa\n",
-      "13.01.01 - default behaviour"
+      "152.01 - default behaviour"
     );
     t.same(
       comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
       "aaaaaaaaaa\n",
-      "13.01.02"
+      "152.02"
     );
     t.same(
       comb("aaaaaaaaaa", { reportProgressFunc: false }).result,
       "aaaaaaaaaa\n",
-      "13.01.03"
+      "152.03"
     );
 
     // short input string should report only when passing at 50%:
@@ -6662,14 +6626,14 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     );
 
     // 2. check the counter variable:
-    t.ok(counter > 50, "13.01.04 - counter called");
+    t.ok(counter > 50, "152.05 - counter called");
 
     t.end();
   }
 );
 
 tap.test(
-  `13.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`,
+  `153 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`,
   (t) => {
     function shouldveBeenCalled(val) {
       throw new Error(val);
@@ -6713,7 +6677,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 );
 
 tap.test(
-  `13.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
+  `154 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
   (t) => {
     const gather = [];
     const countingFunction = (val) => {
@@ -6982,9 +6946,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     // since we use Math.floor, some percentages can be skipped, so let's just
     // confirm that no numbers outside of permitted values are reported
     gather.forEach((perc) => t.ok(compareTo.includes(perc)));
-    t.equal(gather.length, 86 - 21);
+    t.equal(gather.length, 86 - 21, "154.01");
 
-    t.same(gather, compareTo, "13.03");
+    t.same(gather, compareTo, "154.02");
     t.end();
   }
 );
@@ -6994,7 +6958,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 // ============================================================
 
 tap.test(
-  `14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, quoteless attr is the last`,
+  `155 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, quoteless attr is the last`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7014,14 +6978,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.01");
+    t.equal(actual, intended, "155");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, just patches up`,
+  `156 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, just patches up`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7041,14 +7005,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.02");
+    t.equal(actual, intended, "156");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - removed`,
+  `157 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - removed`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7068,14 +7032,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.03");
+    t.equal(actual, intended, "157");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, quoteless attr is the last`,
+  `158 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, quoteless attr is the last`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7095,14 +7059,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.04");
+    t.equal(actual, intended, "158");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, just patches up`,
+  `159 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, just patches up`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7122,14 +7086,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.05");
+    t.equal(actual, intended, "159");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`,
+  `160 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7149,14 +7113,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(actual, intended, "14.06");
+    t.equal(actual, intended, "160");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
+  `161 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7175,14 +7139,14 @@ tap.test(
 <body class="aa-1"><a>z</a>
 </body>
 `;
-    t.equal(actual, intended, "14.07");
+    t.equal(actual, intended, "161");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
+  `162 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7201,14 +7165,14 @@ tap.test(
 <body id="aa-1"><a>z</a>
 </body>
 `;
-    t.equal(actual, intended, "14.08");
+    t.equal(actual, intended, "162");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - underscores`,
+  `163 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - underscores`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7227,14 +7191,14 @@ tap.test(
 <body class="aa_1"><a>z</a>
 </body>
 `;
-    t.equal(actual, intended, "14.09");
+    t.equal(actual, intended, "163");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one removed, one retainer quoteless neighbour - underscores`,
+  `164 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one removed, one retainer quoteless neighbour - underscores`,
   (t) => {
     const actual = comb(`<head>
 <style>
@@ -7253,14 +7217,14 @@ tap.test(
 <body id="aa_1"><a>z</a>
 </body>
 `;
-    t.equal(actual, intended, "14.10");
+    t.equal(actual, intended, "164");
 
     t.end();
   }
 );
 
 tap.test(
-  `14.11 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whitespace control`,
+  `165 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whitespace control`,
   (t) => {
     const actual = comb(`<html>
 <head>
@@ -7275,7 +7239,7 @@ tap.test(
 <body align="center">
 <table align="center">
 `;
-    t.equal(actual, intended, "14.11");
+    t.equal(actual, intended, "165");
 
     t.end();
   }
@@ -7286,7 +7250,7 @@ tap.test(
 // ============================================================
 
 tap.test(
-  `15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`,
+  `166 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`,
   (t) => {
     const source = `<head>
 <style type="text/css">
@@ -7307,14 +7271,14 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "15.01");
+    t.equal(comb(source).result, intended, "166");
 
     t.end();
   }
 );
 
 tap.test(
-  `15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`,
+  `167 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`,
   (t) => {
     const source = `<head>
 <style type="text/css">
@@ -7335,7 +7299,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "15.02");
+    t.equal(comb(source).result, intended, "167");
 
     t.end();
   }

@@ -18,7 +18,7 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-tap.test("01.01 - there are no usable files at all", async (t) => {
+tap.test("01 - there are no usable files at all", async (t) => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
@@ -27,10 +27,14 @@ tap.test("01.01 - there are no usable files at all", async (t) => {
     return execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js`, {
       shell: true,
     });
-  });
+  }, "01.01");
 
   // confirm that the existing file is intact:
-  t.same(await fs.readFile(path.join(tempFolder, "file.md"), "utf8"), "zzz");
+  t.same(
+    await fs.readFile(path.join(tempFolder, "file.md"), "utf8"),
+    "zzz",
+    "01.02"
+  );
 
   t.end();
 });
@@ -49,7 +53,7 @@ tap.test("01.01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-tap.test("01.02 - sorts a file", async (t) => {
+tap.test("02 - sorts a file", async (t) => {
   const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
@@ -88,14 +92,14 @@ tap.test("01.02 - sorts a file", async (t) => {
     .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
     .catch((err) => t.fail(err));
 
-  t.same(await newlyGeneratedCsvFile, intendedCSV, "01.02.02");
+  t.same(await newlyGeneratedCsvFile, intendedCSV, "02.01");
 
   // 3. check, is original file intact
   const originalCsvFile = fs.readFile(
     path.join(tempFolder, "testfile.csv"),
     "utf8"
   );
-  t.same(await originalCsvFile, originalCSV, "01.02.02");
+  t.same(await originalCsvFile, originalCSV, "02.02");
 
   t.end();
 });

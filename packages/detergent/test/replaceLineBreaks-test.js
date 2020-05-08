@@ -10,7 +10,7 @@ const key = ["crlf", "cr", "lf"];
 // 01. basic tests on opts.replaceLineBreaks
 // -----------------------------------------------------------------------------
 
-tap.test(`01.01 - minimal example - correct existing linebreaks`, (t) => {
+tap.test(`01 - minimal example - correct existing linebreaks`, (t) => {
   ["\r\n", "\r", "\n"].forEach((requestedEolType, idx1) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx2) => {
       mixer({
@@ -35,7 +35,7 @@ tap.test(`01.01 - minimal example - correct existing linebreaks`, (t) => {
   t.end();
 });
 
-tap.test(`01.02 - minimal example - br`, (t) => {
+tap.test(`02 - minimal example - br`, (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -51,7 +51,7 @@ tap.test(`01.02 - minimal example - br`, (t) => {
   t.end();
 });
 
-tap.test(`01.03 - replace \\n line breaks with BR - useXHTML=on`, (t) => {
+tap.test(`03 - replace \\n line breaks with BR - useXHTML=on`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType, i) => {
     mixer({
       replaceLineBreaks: 1,
@@ -74,7 +74,7 @@ tap.test(`01.03 - replace \\n line breaks with BR - useXHTML=on`, (t) => {
   t.end();
 });
 
-tap.test(`01.04 - replace \\n line breaks with BR - useXHTML=off`, (t) => {
+tap.test(`04 - replace \\n line breaks with BR - useXHTML=off`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: 1,
@@ -97,7 +97,7 @@ tap.test(`01.04 - replace \\n line breaks with BR - useXHTML=off`, (t) => {
   t.end();
 });
 
-tap.test(`01.05 - br with attribute, line break present`, (t) => {
+tap.test(`05 - br with attribute, line break present`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: 1,
@@ -123,12 +123,13 @@ tap.test(`01.05 - br with attribute, line break present`, (t) => {
       useXHTML: 0,
       convertEntities: 1,
     }).res,
-    `a<br class="z">\nb`
+    `a<br class="z">\nb`,
+    "05.01"
   );
   t.end();
 });
 
-tap.test(`01.06 - only adds a slash, respects existing attrs`, (t) => {
+tap.test(`06 - only adds a slash, respects existing attrs`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: 1,
@@ -150,7 +151,7 @@ tap.test(`01.06 - only adds a slash, respects existing attrs`, (t) => {
   t.end();
 });
 
-tap.test(`01.07 - br with attribute, no line break, HTML`, (t) => {
+tap.test(`07 - br with attribute, no line break, HTML`, (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -166,7 +167,7 @@ tap.test(`01.07 - br with attribute, no line break, HTML`, (t) => {
   t.end();
 });
 
-tap.test(`01.08 - br with attribute, no line break, XHTML`, (t) => {
+tap.test(`08 - br with attribute, no line break, XHTML`, (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -185,7 +186,7 @@ tap.test(`01.08 - br with attribute, no line break, XHTML`, (t) => {
 // 02. consistency in whitespace collapsing across different linebreak-processing settings
 // -----------------------------------------------------------------------------
 
-tap.test(`02.01 - multiple consecutive line breaks`, (t) => {
+tap.test(`09 - multiple consecutive line breaks`, (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -200,7 +201,7 @@ tap.test(`02.01 - multiple consecutive line breaks`, (t) => {
   t.end();
 });
 
-tap.test(`02.02 - multiple consecutive line breaks`, (t) => {
+tap.test(`10 - multiple consecutive line breaks`, (t) => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -215,7 +216,7 @@ tap.test(`02.02 - multiple consecutive line breaks`, (t) => {
   t.end();
 });
 
-tap.test(`02.03 - multiple consecutive line breaks`, (t) => {
+tap.test(`11 - multiple consecutive line breaks`, (t) => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
@@ -229,7 +230,7 @@ tap.test(`02.03 - multiple consecutive line breaks`, (t) => {
   t.end();
 });
 
-tap.test(`02.04 - multiple consecutive line breaks`, (t) => {
+tap.test(`12 - multiple consecutive line breaks`, (t) => {
   mixer({
     removeLineBreaks: 1,
   }).forEach((opt, n) => {

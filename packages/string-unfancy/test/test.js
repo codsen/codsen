@@ -29,26 +29,23 @@ tap.test("01 - wrong/missing input = throw", (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - unfancies fancy strings", (t) => {
-  t.same(unfancy("“zzz”"), '"zzz"', "02.01");
+tap.test("02 - unfancies fancy strings", (t) => {
+  t.same(unfancy("“zzz”"), '"zzz"', "02");
   t.end();
 });
 
-tap.test(
-  "02.02 - copes with encoded HTML chars that happen to be fancy",
-  (t) => {
-    t.same(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "02.02");
-    t.end();
-  }
-);
-
-tap.test("02.03 - fancies with triple-encoded HTML", (t) => {
-  t.same(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "02.03");
+tap.test("03 - copes with encoded HTML chars that happen to be fancy", (t) => {
+  t.same(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "03");
   t.end();
 });
 
-tap.test("02.04 - removes non-breaking spaces", (t) => {
-  t.same(unfancy("aaaa&nbsp;&ndash; bbbb"), "aaaa - bbbb", "02.04.01");
-  t.same(unfancy("aaaa\u00A0\u2013 bbbb"), "aaaa - bbbb", "02.04.02");
+tap.test("04 - fancies with triple-encoded HTML", (t) => {
+  t.same(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "04");
+  t.end();
+});
+
+tap.test("05 - removes non-breaking spaces", (t) => {
+  t.same(unfancy("aaaa&nbsp;&ndash; bbbb"), "aaaa - bbbb", "05.01");
+  t.same(unfancy("aaaa\u00A0\u2013 bbbb"), "aaaa - bbbb", "05.02");
   t.end();
 });

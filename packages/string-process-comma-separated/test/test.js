@@ -29,7 +29,7 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`,
+  `01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -43,25 +43,25 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [], "01.01.01");
-    t.match(gatheredErrors, [], "01.01.02");
+    t.match(gatheredChunks, [], "01.01");
+    t.match(gatheredErrors, [], "01.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
+  `02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
   (t) => {
     t.doesNotThrow(() => {
       processCommaSeparated("");
-    });
+    }, "02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
+  `03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
   (t) => {
     t.throws(() => {
       processCommaSeparated(true);
@@ -74,7 +74,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - one chunk`,
+  `04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - one chunk`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -88,15 +88,15 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[0, 3]], "02.01.01");
-    t.match(gatheredErrors, [], "02.01.02");
+    t.match(gatheredChunks, [[0, 3]], "04.01");
+    t.match(gatheredErrors, [], "04.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - two chunks`,
+  `05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - two chunks`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -116,16 +116,16 @@ tap.test(
         [0, 3],
         [4, 7],
       ],
-      "02.02.01"
+      "05.01"
     );
-    t.match(gatheredErrors, [], "02.02.02");
+    t.match(gatheredErrors, [], "05.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - space after comma, default`,
+  `06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - space after comma, default`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -145,12 +145,12 @@ tap.test(
         [16, 19],
         [21, 24],
       ],
-      "02.03.01"
+      "06.01"
     );
     t.match(
       gatheredErrors,
       [{ ranges: [[20, 21]], message: "Remove whitespace." }],
-      "02.03.02"
+      "06.02"
     );
 
     t.end();
@@ -158,7 +158,7 @@ tap.test(
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
+  `07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -179,7 +179,7 @@ tap.test(
         [17, 20],
         [21, 24],
       ],
-      "02.04.01"
+      "07.01"
     );
     t.match(
       gatheredErrors,
@@ -189,7 +189,7 @@ tap.test(
         { ranges: [[24, 25]], message: "Remove separator.", fixable: true },
         { ranges: [[27, 28]], message: "Remove separator.", fixable: true },
       ],
-      "02.04.02"
+      "07.02"
     );
 
     t.end();
@@ -197,7 +197,7 @@ tap.test(
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
+  `08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - starts with separator, ends with separator`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -218,7 +218,7 @@ tap.test(
         [20, 23],
         [27, 30],
       ],
-      "02.05.01"
+      "08.01"
     );
     t.match(
       gatheredErrors,
@@ -234,7 +234,7 @@ tap.test(
         { ranges: [[31, 32]], message: "Remove separator.", fixable: true },
         { ranges: [[34, 35]], message: "Remove separator.", fixable: true },
       ],
-      "02.05.02"
+      "08.02"
     );
 
     t.end();
@@ -242,7 +242,7 @@ tap.test(
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, default`,
+  `09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, default`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -262,7 +262,7 @@ tap.test(
         [16, 19],
         [22, 25],
       ],
-      "02.06.01"
+      "09.01"
     );
     t.match(
       gatheredErrors,
@@ -273,7 +273,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "02.06.02"
+      "09.02"
     );
 
     t.end();
@@ -281,7 +281,7 @@ tap.test(
 );
 
 tap.test(
-  `02.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
+  `10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -302,7 +302,7 @@ tap.test(
         [16, 19],
         [22, 25],
       ],
-      "02.07.01"
+      "10.01"
     );
     // not indexes 20-22 but 21-22 because of opts.oneSpaceAfterCommaOK
     t.match(
@@ -314,7 +314,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "02.07.02"
+      "10.02"
     );
 
     t.end();
@@ -322,7 +322,7 @@ tap.test(
 );
 
 tap.test(
-  `02.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
+  `11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -343,7 +343,7 @@ tap.test(
         [16, 19],
         [22, 25],
       ],
-      "02.08.01"
+      "11.01"
     );
     // not indexes 20-22 but 21-22 because of opts.oneSpaceAfterCommaOK
     t.match(
@@ -355,7 +355,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "02.08.02"
+      "11.02"
     );
 
     t.end();
@@ -363,7 +363,7 @@ tap.test(
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
+  `12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -384,7 +384,7 @@ tap.test(
         [18, 35],
         [37, 44],
       ],
-      "02.09.01"
+      "12.01"
     );
     t.match(
       gatheredErrors,
@@ -410,7 +410,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "02.09.02"
+      "12.02"
     );
 
     t.end();
@@ -418,7 +418,7 @@ tap.test(
 );
 
 tap.test(
-  `02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
+  `13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -437,7 +437,7 @@ tap.test(
         [1, 18],
         [20, 27],
       ],
-      "02.10.01"
+      "13.01"
     );
     t.match(
       gatheredErrors,
@@ -463,7 +463,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "02.10.02"
+      "13.02"
     );
 
     t.end();
@@ -474,7 +474,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - from-to ranges`,
+  `14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - from-to ranges`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -489,15 +489,15 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.01.01");
-    t.match(gatheredErrors, [], "03.01.02");
+    t.match(gatheredChunks, [[16, 20]], "14.01");
+    t.match(gatheredErrors, [], "14.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string`,
+  `15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -510,15 +510,15 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[1, 5]], "03.02.01");
-    t.match(gatheredErrors, [], "03.02.02");
+    t.match(gatheredChunks, [[1, 5]], "15.01");
+    t.match(gatheredErrors, [], "15.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string + offset`,
+  `16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string + offset`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -532,15 +532,15 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.03.01");
-    t.match(gatheredErrors, [], "03.03.02");
+    t.match(gatheredChunks, [[16, 20]], "16.01");
+    t.match(gatheredErrors, [], "16.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -555,7 +555,7 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.04.01");
+    t.match(gatheredChunks, [[16, 20]], "17.01");
     t.match(
       gatheredErrors,
       [
@@ -565,7 +565,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "03.04.02"
+      "17.02"
     );
 
     t.end();
@@ -573,7 +573,7 @@ tap.test(
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -589,15 +589,15 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.05.01");
-    t.match(gatheredErrors, [], "03.05.02"); // <--- none
+    t.match(gatheredChunks, [[16, 20]], "18.01");
+    t.match(gatheredErrors, [], "18.02"); // <--- none
 
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -612,7 +612,7 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.06.01");
+    t.match(gatheredChunks, [[16, 20]], "19.01");
     t.match(
       gatheredErrors,
       [
@@ -622,7 +622,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "03.06.02"
+      "19.02"
     );
 
     t.end();
@@ -630,7 +630,7 @@ tap.test(
 );
 
 tap.test(
-  `03.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -645,7 +645,7 @@ tap.test(
       gatheredErrors
     );
 
-    t.match(gatheredChunks, [[16, 20]], "03.07.01");
+    t.match(gatheredChunks, [[16, 20]], "20.01");
     t.match(
       gatheredErrors,
       [
@@ -655,7 +655,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "03.07.02"
+      "20.02"
     );
 
     t.end();
@@ -663,7 +663,7 @@ tap.test(
 );
 
 tap.test(
-  `03.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - more complex`,
+  `21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - more complex`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -687,7 +687,7 @@ tap.test(
         [offset + 1, offset + 18],
         [offset + 20, offset + 27],
       ],
-      "03.08.01"
+      "21.01"
     );
     t.match(
       gatheredErrors,
@@ -713,7 +713,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "03.08.02"
+      "21.02"
     );
 
     t.end();
@@ -724,7 +724,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -746,7 +746,7 @@ tap.test(
         [19, 26],
         [28, 31],
       ],
-      "04.01.01"
+      "22.01"
     );
     t.match(
       gatheredErrors,
@@ -762,7 +762,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "04.01.02"
+      "22.02"
     );
 
     t.end();
@@ -770,7 +770,7 @@ tap.test(
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  `23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredErrors = [];
@@ -793,7 +793,7 @@ tap.test(
         [19, 26],
         [28, 31],
       ],
-      "04.02.01"
+      "23.01"
     );
     t.match(
       gatheredErrors,
@@ -804,7 +804,7 @@ tap.test(
           fixable: true,
         },
       ],
-      "04.02.02"
+      "23.02"
     );
 
     t.end();

@@ -5,7 +5,7 @@ import deepContains from "../dist/ast-deep-contains.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of the first`,
+  `01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of the first`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -27,15 +27,15 @@ tap.test(
         ["1", "1"],
         ["2", "2"],
       ],
-      "01.01.01"
+      "01.01"
     );
-    t.same(errors, [], "01.01.02");
+    t.same(errors, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the second (error)`,
+  `02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the second (error)`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -57,16 +57,16 @@ tap.test(
         ["1", "1"],
         ["2", "2"],
       ],
-      "01.02.01"
+      "02.01"
     );
-    t.equal(errors.length, 1, "01.02.02");
-    t.match(errors[0], /does not have the path "c"/g, "01.02.03");
+    t.equal(errors.length, 1, "02.02");
+    t.match(errors[0], /does not have the path "c"/g, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`,
+  `03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -82,16 +82,16 @@ tap.test(
       }
     );
 
-    t.same(gathered, [], "01.02.01");
-    t.equal(errors.length, 1, "01.02.02");
-    t.match(errors[0], /string/g, "01.02.03");
-    t.match(errors[0], /object/g, "01.02.04");
+    t.same(gathered, [], "03.01");
+    t.equal(errors.length, 1, "03.02");
+    t.match(errors[0], /string/g, "03.03");
+    t.match(errors[0], /object/g, "03.04");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, OK`,
+  `04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, OK`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -114,15 +114,15 @@ tap.test(
         ["2", "5"],
         ["3", "6"],
       ],
-      "01.04.01"
+      "04.01"
     );
-    t.same(errors, [], "01.04.02");
+    t.same(errors, [], "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, not OK`,
+  `05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, not OK`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -144,16 +144,16 @@ tap.test(
         ["1", "4"],
         ["2", "5"],
       ],
-      "01.05.01"
+      "05.01"
     );
-    t.equal(errors.length, 1, "01.05.02");
-    t.match(errors[0], /does not have the path/g, "01.05.03");
+    t.equal(errors.length, 1, "05.02");
+    t.match(errors[0], /does not have the path/g, "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
+  `06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -174,15 +174,15 @@ tap.test(
         ["1", "4"],
         ["2", "5"],
       ],
-      "01.06.01"
+      "06.01"
     );
-    t.same(errors, [], "01.06.02");
+    t.same(errors, [], "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`,
+  `07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -205,9 +205,9 @@ tap.test(
         ["1", "4"], // <---- skipped [{ a: "1" }, { b: "2" }, { c: "3" }] because it's at the root level
         ["2", "5"],
       ],
-      "01.07.01"
+      "07.01"
     );
-    t.same(errors, [], "01.07.02");
+    t.same(errors, [], "07.02");
     t.end();
   }
 );
@@ -216,7 +216,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
+  `08 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -249,15 +249,15 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "02.01.01"
+      "08.01"
     );
-    t.same(errors, [], "02.01.02");
+    t.same(errors, [], "08.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
+  `09 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -282,7 +282,7 @@ tap.test(
       { skipContainers: false, arrayStrictComparison: true }
     );
 
-    t.same(gathered, [], "02.02.01");
+    t.same(gathered, [], "09.01");
     t.same(
       errors,
       [
@@ -311,14 +311,14 @@ tap.test(
         ["x", "a"],
         ["y", "b"],
       ],
-      "02.02.02"
+      "09.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
+  `10 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -351,15 +351,15 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "02.03.01"
+      "10.01"
     );
-    t.same(errors, [], "02.03.02");
+    t.same(errors, [], "10.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
+  `11 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -384,7 +384,7 @@ tap.test(
       { skipContainers: true, arrayStrictComparison: true }
     );
 
-    t.same(gathered, [], "02.04.01");
+    t.same(gathered, [], "11.01");
     t.same(
       errors,
       [
@@ -393,7 +393,7 @@ tap.test(
         ["x", "a"],
         ["y", "b"],
       ],
-      "02.04.02"
+      "11.02"
     );
     t.end();
   }
@@ -403,7 +403,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
+  `12 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -458,15 +458,15 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "03.01.01"
+      "12.01"
     );
-    t.same(errors, [], "03.01.02");
+    t.same(errors, [], "12.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
+  `13 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -499,15 +499,15 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "03.02.01"
+      "13.01"
     );
-    t.same(errors, [], "03.02.02");
+    t.same(errors, [], "13.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
+  `14 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -530,15 +530,15 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "03.03.01"
+      "14.01"
     );
-    t.same(errors, [], "03.03.02");
+    t.same(errors, [], "14.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
+  `15 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -630,9 +630,9 @@ tap.test(
         [5, 5],
         ["/", "/"],
       ],
-      "03.04.01"
+      "15.01"
     );
-    t.same(errors, [], "03.04.02");
+    t.same(errors, [], "15.02");
     t.end();
   }
 );
@@ -696,7 +696,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - tree 1 has one more than tree 2`,
+  `16 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - tree 1 has one more than tree 2`,
   (t) => {
     const gathered = [];
     const errors = [];
@@ -730,9 +730,9 @@ tap.test(
         ["a", "a"],
         ["b", "b"],
       ],
-      "05.01.01"
+      "16.01"
     );
-    t.same(errors, [], "05.01.02");
+    t.same(errors, [], "16.02");
     t.end();
   }
 );

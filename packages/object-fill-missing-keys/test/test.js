@@ -5,7 +5,7 @@ import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
 // 1. Adds missing keys
 // ==============================
 
-tap.test("01.01 - filling in missing keys, simple plain object", (t) => {
+tap.test("01 - filling in missing keys, simple plain object", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -22,12 +22,12 @@ tap.test("01.01 - filling in missing keys, simple plain object", (t) => {
       b: false,
       c: false,
     },
-    "01.01"
+    "01"
   );
   t.end();
 });
 
-tap.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
+tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -56,7 +56,7 @@ tap.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
         y: "y",
       },
     },
-    "01.02.01"
+    "02.01"
   );
   t.same(
     fillMissingKeys(
@@ -86,12 +86,12 @@ tap.test("01.02 - filling in missing keys, nested, with arrays", (t) => {
         y: "y",
       },
     },
-    "01.02.02"
+    "02.02"
   );
   t.end();
 });
 
-tap.test("01.03 - multiple values, sorting as well", (t) => {
+tap.test("03 - multiple values, sorting as well", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -109,13 +109,13 @@ tap.test("01.03 - multiple values, sorting as well", (t) => {
       b: "b",
       c: false,
     },
-    "01.03"
+    "03"
   );
   t.end();
 });
 
 tap.test(
-  "01.04 - nested arrays as values (array in schema overwrites Boolean)",
+  "04 - nested arrays as values (array in schema overwrites Boolean)",
   (t) => {
     t.same(
       fillMissingKeys(
@@ -137,13 +137,13 @@ tap.test(
           },
         ],
       },
-      "01.04"
+      "04"
     );
     t.end();
   }
 );
 
-tap.test("01.05 - more complex nested arrays", (t) => {
+tap.test("05 - more complex nested arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -170,12 +170,12 @@ tap.test("01.05 - more complex nested arrays", (t) => {
       ],
       c: "c",
     },
-    "01.05"
+    "05"
   );
   t.end();
 });
 
-tap.test("01.06 - ridiculously deep nesting", (t) => {
+tap.test("06 - ridiculously deep nesting", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -268,13 +268,13 @@ tap.test("01.06 - ridiculously deep nesting", (t) => {
         },
       ],
     },
-    "01.06"
+    "06"
   );
   t.end();
 });
 
 tap.test(
-  "01.07 - cheeky case, custom placeholder on schema has value null",
+  "07 - cheeky case, custom placeholder on schema has value null",
   (t) => {
     t.same(
       fillMissingKeys(
@@ -293,7 +293,7 @@ tap.test(
         c: null,
         d: null,
       },
-      "01.07"
+      "07"
     );
     t.end();
   }
@@ -303,7 +303,7 @@ tap.test(
 // 2. Normalises array contents
 // ==============================
 
-tap.test("02.01 - array one level-deep", (t) => {
+tap.test("08 - array one level-deep", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -361,12 +361,12 @@ tap.test("02.01 - array one level-deep", (t) => {
         },
       ],
     },
-    "02.01"
+    "08"
   );
   t.end();
 });
 
-tap.test("02.02 - multiple levels of nested arrays", (t) => {
+tap.test("09 - multiple levels of nested arrays", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -405,7 +405,7 @@ tap.test("02.02 - multiple levels of nested arrays", (t) => {
       ],
       c: "c",
     },
-    "02.02"
+    "09"
   );
   t.end();
 });
@@ -414,7 +414,7 @@ tap.test("02.02 - multiple levels of nested arrays", (t) => {
 // 3. String vs array clashes
 // ==============================
 
-tap.test("03.01 - string vs array clash", (t) => {
+tap.test("10 - string vs array clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -435,12 +435,12 @@ tap.test("03.01 - string vs array clash", (t) => {
         },
       ],
     },
-    "03.01"
+    "10"
   );
   t.end();
 });
 
-tap.test("03.02 - string vs object clash", (t) => {
+tap.test("11 - string vs object clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -457,12 +457,12 @@ tap.test("03.02 - string vs object clash", (t) => {
         b: false,
       },
     },
-    "03.02"
+    "11"
   );
   t.end();
 });
 
-tap.test("03.03 - object vs array clash", (t) => {
+tap.test("12 - object vs array clash", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -485,12 +485,12 @@ tap.test("03.03 - object vs array clash", (t) => {
         },
       ],
     },
-    "03.03"
+    "12"
   );
   t.end();
 });
 
-tap.test("03.04 - array vs empty array", (t) => {
+tap.test("13 - array vs empty array", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -518,12 +518,12 @@ tap.test("03.04 - array vs empty array", (t) => {
       b: "b",
       c: false,
     },
-    "03.04"
+    "13"
   );
   t.end();
 });
 
-tap.test("03.05 - array vs string", (t) => {
+tap.test("14 - array vs string", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -551,12 +551,12 @@ tap.test("03.05 - array vs string", (t) => {
       b: "b",
       c: false,
     },
-    "03.05"
+    "14"
   );
   t.end();
 });
 
-tap.test("03.06 - array vs bool", (t) => {
+tap.test("15 - array vs bool", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -584,12 +584,12 @@ tap.test("03.06 - array vs bool", (t) => {
       b: "b",
       c: false,
     },
-    "03.06"
+    "15"
   );
   t.end();
 });
 
-tap.test("03.06 - multiple levels of nested arrays #1", (t) => {
+tap.test("16 - multiple levels of nested arrays #1", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -629,12 +629,12 @@ tap.test("03.06 - multiple levels of nested arrays #1", (t) => {
       ],
       c: "c",
     },
-    "03.06"
+    "16"
   );
   t.end();
 });
 
-tap.test("03.07 - multiple levels of nested arrays #2", (t) => {
+tap.test("17 - multiple levels of nested arrays #2", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -690,7 +690,7 @@ tap.test("03.07 - multiple levels of nested arrays #2", (t) => {
       ],
       c: false,
     },
-    "03.07"
+    "17"
   );
   t.end();
 });
@@ -699,7 +699,7 @@ tap.test("03.07 - multiple levels of nested arrays #2", (t) => {
 // 4. Contingencies
 // ==============================
 
-tap.test("04.01 - number as input", (t) => {
+tap.test("18 - number as input", (t) => {
   t.throws(() => {
     fillMissingKeys(1, {
       a: {
@@ -710,7 +710,7 @@ tap.test("04.01 - number as input", (t) => {
   t.end();
 });
 
-tap.test("04.02 - boolean as input", (t) => {
+tap.test("19 - boolean as input", (t) => {
   t.throws(() => {
     fillMissingKeys(true, {
       a: {
@@ -721,7 +721,7 @@ tap.test("04.02 - boolean as input", (t) => {
   t.end();
 });
 
-tap.test("04.03 - null as input", (t) => {
+tap.test("20 - null as input", (t) => {
   t.throws(() => {
     fillMissingKeys(null, {
       a: {
@@ -732,38 +732,38 @@ tap.test("04.03 - null as input", (t) => {
   t.end();
 });
 
-tap.test("04.04 - both args missing (as in hardcoded undefined)", (t) => {
+tap.test("21 - both args missing (as in hardcoded undefined)", (t) => {
   t.throws(() => {
     fillMissingKeys(undefined, undefined);
   }, /THROW_ID_02/g);
   t.end();
 });
 
-tap.test("04.05 - both args completely missing", (t) => {
+tap.test("22 - both args completely missing", (t) => {
   t.throws(() => {
     fillMissingKeys();
   }, /THROW_ID_01/g);
   t.end();
 });
 
-tap.test("04.06 - second arg is not a plain object", (t) => {
+tap.test("23 - second arg is not a plain object", (t) => {
   t.throws(() => {
     fillMissingKeys({ a: "b" }, 1);
   }, /THROW_ID_03/g);
   t.end();
 });
 
-tap.test("04.07 - opts is not a plain object", (t) => {
+tap.test("24 - opts is not a plain object", (t) => {
   t.throws(() => {
     fillMissingKeys({ a: "c" }, { a: "b" }, 1);
   }, /THROW_ID_04/g);
   t.doesNotThrow(() => {
     fillMissingKeys({ a: "c" }, { a: "b" }, null);
-  });
+  }, "24.02");
   t.end();
 });
 
-tap.test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
+tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
   t.throws(() => {
     fillMissingKeys(
       { a: "c" },
@@ -794,7 +794,7 @@ tap.test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
 // 5. Input arg mutation prevention
 // ================================
 
-tap.test("05.01 - does not mutate the input args", (t) => {
+tap.test("26 - does not mutate the input args", (t) => {
   const testObj = {
     a: "a",
   };
@@ -809,7 +809,7 @@ tap.test("05.01 - does not mutate the input args", (t) => {
     {
       a: "a",
     },
-    "05.01"
+    "26.01"
   ); // real deal
   t.end();
 });
@@ -819,7 +819,7 @@ tap.test("05.01 - does not mutate the input args", (t) => {
 // ========================================================
 
 tap.test(
-  "06.01 - some keys filled, some ignored because they have placeholders-only",
+  "27 - some keys filled, some ignored because they have placeholders-only",
   (t) => {
     // baseline behaviour
 
@@ -853,7 +853,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.01 - default behaviour - keys are added"
+      "27.01 - default behaviour - keys are added"
     );
 
     t.same(
@@ -886,7 +886,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
+      "27.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
     );
 
     t.same(
@@ -923,7 +923,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.03 - triggering the normalisation when it's off from opts"
+      "27.03 - triggering the normalisation when it's off from opts"
     );
 
     t.same(
@@ -955,7 +955,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.04 - key in given path is missing completely"
+      "27.04 - key in given path is missing completely"
     );
 
     t.same(
@@ -976,7 +976,7 @@ tap.test(
         a: "zzz",
         b: false,
       },
-      "06.01.05"
+      "27.05"
     );
 
     // will also truncate the already normalised branches if they're on the path:
@@ -1019,7 +1019,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.06"
+      "27.06"
     );
 
     // will also truncate the already normalised branches if they're on the path:
@@ -1065,7 +1065,7 @@ tap.test(
         },
         z: "z",
       },
-      "06.01.07"
+      "27.07"
     );
     t.end();
   }
@@ -1075,7 +1075,7 @@ tap.test(
 // 7. opts.useNullAsExplicitFalse
 // ========================================================
 
-tap.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
+tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -1109,7 +1109,7 @@ tap.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
       },
       z: "z",
     },
-    "07.01.01"
+    "28.01"
   );
 
   t.same(
@@ -1142,12 +1142,12 @@ tap.test("07.01 - opts.useNullAsExplicitFalse - case #1", (t) => {
       },
       z: "z",
     },
-    "07.01.02"
+    "28.02"
   );
   t.end();
 });
 
-tap.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
+tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -1163,7 +1163,7 @@ tap.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
     {
       a: true,
     },
-    "07.02.01"
+    "29.01"
   );
   t.same(
     fillMissingKeys(
@@ -1180,12 +1180,12 @@ tap.test("07.02 - opts.useNullAsExplicitFalse - case #2", (t) => {
     {
       a: null,
     },
-    "07.02.02"
+    "29.02"
   );
   t.end();
 });
 
-tap.test("07.03 - opts.useNullAsExplicitFalse - case #3", (t) => {
+tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
   t.same(
     fillMissingKeys(
       {
@@ -1201,7 +1201,7 @@ tap.test("07.03 - opts.useNullAsExplicitFalse - case #3", (t) => {
     {
       a: ["z"],
     },
-    "07.03.01"
+    "30.01"
   );
   t.same(
     fillMissingKeys(
@@ -1218,7 +1218,7 @@ tap.test("07.03 - opts.useNullAsExplicitFalse - case #3", (t) => {
     {
       a: null,
     },
-    "07.03.02"
+    "30.02"
   );
   t.end();
 });

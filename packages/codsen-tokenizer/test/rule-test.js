@@ -5,7 +5,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
   (t) => {
     const gathered = [];
     ct(`<style>.a-b{c}</style>`, {
@@ -48,7 +48,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
+  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
   (t) => {
     const gathered = [];
     ct(
@@ -99,14 +99,14 @@ tap.test(
           end: 24,
         },
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two selectors`,
+  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two selectors`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,.b{c}</style>`, {
@@ -149,14 +149,14 @@ tap.test(
           end: 23,
         },
       ],
-      "01.03"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
   (t) => {
     const gathered = [];
     ct(
@@ -211,14 +211,14 @@ tap.test(
           end: 29,
         },
       ],
-      "01.04"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - dangling comma`,
+  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - dangling comma`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,.b,{c}</style>`, {
@@ -261,14 +261,14 @@ tap.test(
           end: 24,
         },
       ],
-      "01.05"
+      "05.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`,
+  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,,.b{c}</style>`, {
@@ -311,14 +311,14 @@ tap.test(
           end: 24,
         },
       ],
-      "01.06"
+      "06.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tags can't have curlies`,
+  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tags can't have curlies`,
   (t) => {
     const gathered = [];
     ct(`<style>.b%{c}</style>`, {
@@ -376,14 +376,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "01.07"
+      "07.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tag false positives`,
+  `08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tag false positives`,
   (t) => {
     const gathered = [];
     ct(
@@ -458,7 +458,7 @@ tap.test(
           ],
         },
       ],
-      "01.08"
+      "08.01"
     );
     t.end();
   }

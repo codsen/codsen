@@ -26,10 +26,14 @@ tap.test(
           from: 17,
         })
       );
-    t.same(gatheredRes, [
-      [8, 9, "&ldquo;"],
-      [17, 18, "&rdquo;"],
-    ]);
+    t.same(
+      gatheredRes,
+      [
+        [8, 9, "&ldquo;"],
+        [17, 18, "&rdquo;"],
+      ],
+      "01"
+    );
     t.end();
   }
 );
@@ -51,10 +55,14 @@ tap.test(
           convertEntities: 0,
         })
       );
-    t.same(gatheredRes, [
-      [8, 9, `${leftDoubleQuote}`],
-      [17, 18, `${rightDoubleQuote}`],
-    ]);
+    t.same(
+      gatheredRes,
+      [
+        [8, 9, `${leftDoubleQuote}`],
+        [17, 18, `${rightDoubleQuote}`],
+      ],
+      "02"
+    );
     t.end();
   }
 );
@@ -76,7 +84,7 @@ tap.test(
           convertApostrophes: 0,
         })
       );
-    t.same(gatheredRes, []);
+    t.same(gatheredRes, [], "03");
     t.end();
   }
 );
@@ -89,7 +97,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}What!${rightDoubleQuote} he said`
+      `${leftDoubleQuote}What!${rightDoubleQuote} he said`,
+      "04"
     );
     t.end();
   }
@@ -103,7 +112,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}What.${rightDoubleQuote} he said`
+      `${leftDoubleQuote}What.${rightDoubleQuote} he said`,
+      "05"
     );
     t.end();
   }
@@ -117,7 +127,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}What,${rightDoubleQuote} he said`
+      `${leftDoubleQuote}What,${rightDoubleQuote} he said`,
+      "06"
     );
     t.end();
   }
@@ -131,7 +142,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}What;${rightDoubleQuote} he said`
+      `${leftDoubleQuote}What;${rightDoubleQuote} he said`,
+      "07"
     );
     t.end();
   }
@@ -145,7 +157,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}What?${rightDoubleQuote} he said`
+      `${leftDoubleQuote}What?${rightDoubleQuote} he said`,
+      "08"
     );
     t.end();
   }
@@ -159,7 +172,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}${leftDoubleQuote}What!${rightDoubleQuote}${rightSingleQuote} he said`
+      `${leftSingleQuote}${leftDoubleQuote}What!${rightDoubleQuote}${rightSingleQuote} he said`,
+      "09"
     );
     t.end();
   }
@@ -173,7 +187,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}${leftDoubleQuote}What.${rightDoubleQuote}${rightSingleQuote} he said`
+      `${leftSingleQuote}${leftDoubleQuote}What.${rightDoubleQuote}${rightSingleQuote} he said`,
+      "10"
     );
     t.end();
   }
@@ -187,7 +202,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}${leftDoubleQuote}What,${rightDoubleQuote}${rightSingleQuote} he said`
+      `${leftSingleQuote}${leftDoubleQuote}What,${rightDoubleQuote}${rightSingleQuote} he said`,
+      "11"
     );
     t.end();
   }
@@ -201,7 +217,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}${leftDoubleQuote}What;${rightDoubleQuote}${rightSingleQuote} he said`
+      `${leftSingleQuote}${leftDoubleQuote}What;${rightDoubleQuote}${rightSingleQuote} he said`,
+      "12"
     );
     t.end();
   }
@@ -215,7 +232,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}${leftDoubleQuote}What?${rightDoubleQuote}${rightSingleQuote} he said`
+      `${leftSingleQuote}${leftDoubleQuote}What?${rightDoubleQuote}${rightSingleQuote} he said`,
+      "13"
     );
     t.end();
   }
@@ -230,7 +248,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      []
+      [],
+      "14"
     );
     t.end();
   }
@@ -245,7 +264,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 1,
       }),
-      [[0, 1, `"`]]
+      [[0, 1, `"`]],
+      "15"
     );
     t.end();
   }
@@ -265,7 +285,8 @@ tap.test(
           [1, 2, `"`],
           [12, 13, `"`],
         ],
-      }
+      },
+      "16"
     );
     t.end();
   }

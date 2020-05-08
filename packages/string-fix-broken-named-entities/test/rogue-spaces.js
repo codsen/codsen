@@ -59,7 +59,7 @@ tap.test(
 );
 
 tap.test(
-  `101 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`,
+  `02 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`,
   (t) => {
     const inp5 = "& nbsp;";
     const outp5 = [
@@ -72,13 +72,13 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "101");
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "02");
     t.end();
   }
 );
 
 tap.test(
-  `102 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`,
+  `03 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`,
   (t) => {
     const inp5 = "&nbsp ;";
     const outp5 = [
@@ -91,13 +91,13 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "102");
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "03");
     t.end();
   }
 );
 
 tap.test(
-  `103 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`,
+  `04 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`,
   (t) => {
     const inp5 = "& nbsp ;";
     const outp5 = [
@@ -110,7 +110,7 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "103");
+    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "04");
     t.end();
   }
 );

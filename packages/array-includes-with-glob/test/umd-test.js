@@ -4,7 +4,8 @@ import i1 from "../dist/array-includes-with-glob.umd";
 tap.test("UMD build works fine", (t) => {
   t.equal(
     i1("something", ["*thing", "zzz"], { arrayVsArrayAllMustBeFound: "all" }),
-    false
+    false,
+    "01"
   );
   t.end();
 });

@@ -29,29 +29,29 @@ function makePromise(arr) {
 // 01. getKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - getKeysetSync() - throws when there's no input", (t) => {
+tap.test("01 - getKeysetSync() - throws when there's no input", (t) => {
   t.throws(() => {
     getKeysetSync();
-  });
+  }, "01");
   t.end();
 });
 
-tap.test("01.02 - getKeysetSync() - throws when input is not an array", (t) => {
+tap.test("02 - getKeysetSync() - throws when input is not an array", (t) => {
   t.throws(() => {
     getKeysetSync("aa");
-  });
+  }, "02");
   t.end();
 });
 
-tap.test("01.03 - getKeysetSync() - throws when input array is empty", (t) => {
+tap.test("03 - getKeysetSync() - throws when input array is empty", (t) => {
   t.throws(() => {
     getKeysetSync([]);
-  });
+  }, "03");
   t.end();
 });
 
 tap.test(
-  "01.04 - getKeysetSync() - throws when input array contains not only plain objects",
+  "04 - getKeysetSync() - throws when input array contains not only plain objects",
   (t) => {
     t.throws(() => {
       getKeysetSync([
@@ -64,13 +64,13 @@ tap.test(
         },
         "zzzz",
       ]);
-    });
+    }, "04");
     t.end();
   }
 );
 
 tap.test(
-  "01.05 - getKeysetSync() - calculates - three objects - default placeholder",
+  "05 - getKeysetSync() - calculates - three objects - default placeholder",
   (t) => {
     t.same(
       getKeysetSync([
@@ -100,14 +100,14 @@ tap.test(
           f: false,
         },
       },
-      "01.05"
+      "05"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.06 - getKeysetSync() - calculates - three objects - custom placeholder",
+  "06 - getKeysetSync() - calculates - three objects - custom placeholder",
   (t) => {
     t.same(
       getKeysetSync(
@@ -140,7 +140,7 @@ tap.test(
           f: true,
         },
       },
-      "01.06.01"
+      "06.01"
     );
     t.same(
       getKeysetSync(
@@ -173,7 +173,7 @@ tap.test(
           f: "",
         },
       },
-      "01.06.02"
+      "06.02"
     );
     t.same(
       getKeysetSync(
@@ -206,14 +206,14 @@ tap.test(
           f: { a: "a" },
         },
       },
-      "01.06.03"
+      "06.03"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.07 - getKeysetSync() - settings argument is not a plain object - throws",
+  "07 - getKeysetSync() - settings argument is not a plain object - throws",
   (t) => {
     t.throws(() => {
       getKeysetSync([{ a: "a" }, { b: "b" }], "zzz");
@@ -222,7 +222,7 @@ tap.test(
   }
 );
 
-tap.test("01.08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
+tap.test("08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
   t.same(
     getKeysetSync([
       {
@@ -263,80 +263,77 @@ tap.test("01.08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
       ],
       key3: false,
     },
-    "01.08"
+    "08"
+  );
+  t.end();
+});
+
+tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
+  t.same(
+    getKeysetSync([
+      {
+        a: {
+          b: "c",
+          d: "e",
+        },
+        k: "l",
+      },
+      {
+        a: {
+          f: "g",
+          b: "c",
+          h: "i",
+        },
+        m: "n",
+      },
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    "09.01"
+  );
+  t.same(
+    getKeysetSync([
+      {
+        a: {
+          f: "g",
+          b: "c",
+          h: "i",
+        },
+        m: "n",
+      },
+      {
+        a: {
+          b: "c",
+          d: "e",
+        },
+        k: "l",
+      },
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    "09.02"
   );
   t.end();
 });
 
 tap.test(
-  "01.09 - getKeysetSync() - objects that are directly in values",
-  (t) => {
-    t.same(
-      getKeysetSync([
-        {
-          a: {
-            b: "c",
-            d: "e",
-          },
-          k: "l",
-        },
-        {
-          a: {
-            f: "g",
-            b: "c",
-            h: "i",
-          },
-          m: "n",
-        },
-      ]),
-      {
-        a: {
-          b: false,
-          d: false,
-          f: false,
-          h: false,
-        },
-        k: false,
-        m: false,
-      },
-      "01.09.01"
-    );
-    t.same(
-      getKeysetSync([
-        {
-          a: {
-            f: "g",
-            b: "c",
-            h: "i",
-          },
-          m: "n",
-        },
-        {
-          a: {
-            b: "c",
-            d: "e",
-          },
-          k: "l",
-        },
-      ]),
-      {
-        a: {
-          b: false,
-          d: false,
-          f: false,
-          h: false,
-        },
-        k: false,
-        m: false,
-      },
-      "01.09.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "01.10 - getKeysetSync() - deeper level arrays containing only strings",
+  "10 - getKeysetSync() - deeper level arrays containing only strings",
   (t) => {
     t.same(
       getKeysetSync([
@@ -360,14 +357,14 @@ tap.test(
           },
         },
       },
-      "01.10.01"
+      "10"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.11 - getKeysetSync() - deeper level array with string vs false",
+  "11 - getKeysetSync() - deeper level array with string vs false",
   (t) => {
     t.same(
       getKeysetSync([
@@ -391,49 +388,46 @@ tap.test(
           },
         },
       },
-      "01.11 - if arrays contain any strings, result is empty array"
+      "11 - if arrays contain any strings, result is empty array"
     );
     t.end();
   }
 );
 
-tap.test(
-  "01.12 - getKeysetSync() - two deeper level arrays with strings",
-  (t) => {
-    t.same(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: ["eee", "fff", "ggg"],
-            },
-          },
-        },
-      ]),
+tap.test("12 - getKeysetSync() - two deeper level arrays with strings", (t) => {
+  t.same(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [],
+            d: ["eee"],
           },
         },
       },
-      "01.12 - if arrays contain any strings, result is empty array"
-    );
-    t.end();
-  }
-);
+      {
+        b: {
+          c: {
+            d: ["eee", "fff", "ggg"],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    "12 - if arrays contain any strings, result is empty array"
+  );
+  t.end();
+});
 
 tap.test(
-  "01.13 - getKeysetSync() - two deeper level arrays with mixed contents",
+  "13 - getKeysetSync() - two deeper level arrays with mixed contents",
   (t) => {
     t.same(
       getKeysetSync([
@@ -461,14 +455,14 @@ tap.test(
           },
         },
       },
-      "01.13 - plain object vs string"
+      "13 - plain object vs string"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.14 - getKeysetSync() - two deeper level arrays with plain objects",
+  "14 - getKeysetSync() - two deeper level arrays with plain objects",
   (t) => {
     t.same(
       getKeysetSync([
@@ -508,7 +502,7 @@ tap.test(
           },
         },
       },
-      "01.14.01 - object vs object"
+      "14.01 - object vs object"
     );
     t.same(
       getKeysetSync([
@@ -536,7 +530,7 @@ tap.test(
           },
         },
       },
-      "01.14.02 - object vs object"
+      "14.02 - object vs object"
     );
     t.same(
       getKeysetSync([
@@ -564,7 +558,7 @@ tap.test(
           },
         },
       },
-      "01.14.03 - object vs object"
+      "14.03 - object vs object"
     );
     t.same(
       getKeysetSync([
@@ -592,7 +586,7 @@ tap.test(
           },
         },
       },
-      "01.14.04 - object vs object"
+      "14.04 - object vs object"
     );
     t.end();
   }
@@ -602,7 +596,7 @@ tap.test(
 // 02. enforceKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - enforceKeysetSync() - enforces a simple schema", (t) => {
+tap.test("15 - enforceKeysetSync() - enforces a simple schema", (t) => {
   const schema = getKeysetSync([
     {
       a: "aaa",
@@ -623,93 +617,90 @@ tap.test("02.01 - enforceKeysetSync() - enforces a simple schema", (t) => {
       a: "ccc",
       b: false,
     },
-    "02.01"
+    "15"
   );
   t.end();
 });
 
-tap.test(
-  "02.02 - enforceKeysetSync() - enforces a more complex schema",
-  (t) => {
-    const obj1 = {
+tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
+  const obj1 = {
+    b: [
+      {
+        c: "ccc",
+        d: "ddd",
+      },
+    ],
+    a: "aaa",
+  };
+  const obj2 = {
+    a: "ccc",
+    e: "eee",
+  };
+  const obj3 = {
+    a: "zzz",
+  };
+  const schema = getKeysetSync([obj1, obj2, obj3]);
+  t.same(
+    schema,
+    {
+      a: false,
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    "16.01 - .getKeysetSync"
+  );
+  t.same(
+    enforceKeysetSync(obj1, schema),
+    {
+      a: "aaa",
       b: [
         {
           c: "ccc",
           d: "ddd",
         },
       ],
-      a: "aaa",
-    };
-    const obj2 = {
+      e: false,
+    },
+    "16.02 - .enforceKeysetSync"
+  );
+  t.same(
+    enforceKeysetSync(obj2, schema),
+    {
       a: "ccc",
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
       e: "eee",
-    };
-    const obj3 = {
+    },
+    "16.03 - .enforceKeysetSync"
+  );
+  t.same(
+    enforceKeysetSync(obj3, schema),
+    {
       a: "zzz",
-    };
-    const schema = getKeysetSync([obj1, obj2, obj3]);
-    t.same(
-      schema,
-      {
-        a: false,
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: false,
-      },
-      "02.02 - .getKeysetSync"
-    );
-    t.same(
-      enforceKeysetSync(obj1, schema),
-      {
-        a: "aaa",
-        b: [
-          {
-            c: "ccc",
-            d: "ddd",
-          },
-        ],
-        e: false,
-      },
-      "02.02.01 - .enforceKeysetSync"
-    );
-    t.same(
-      enforceKeysetSync(obj2, schema),
-      {
-        a: "ccc",
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: "eee",
-      },
-      "02.02.02 - .enforceKeysetSync"
-    );
-    t.same(
-      enforceKeysetSync(obj3, schema),
-      {
-        a: "zzz",
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: false,
-      },
-      "02.02.03 - .enforceKeysetSync"
-    );
-    t.end();
-  }
-);
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    "16.04 - .enforceKeysetSync"
+  );
+  t.end();
+});
 
 tap.test(
-  "02.03 - enforceKeysetSync() - enforces a schema involving arrays",
+  "17 - enforceKeysetSync() - enforces a schema involving arrays",
   (t) => {
     const obj1 = {
       a: [
@@ -731,7 +722,7 @@ tap.test(
           },
         ],
       },
-      "02.03 - .getKeysetSync"
+      "17.01 - .getKeysetSync"
     );
     t.same(
       enforceKeysetSync(obj1, schema),
@@ -742,7 +733,7 @@ tap.test(
           },
         ],
       },
-      "02.03.01 - .enforceKeysetSync"
+      "17.02 - .enforceKeysetSync"
     );
     t.same(
       enforceKeysetSync(obj2, schema),
@@ -753,13 +744,13 @@ tap.test(
           },
         ],
       },
-      "02.03.02 - .enforceKeysetSync"
+      "17.03 - .enforceKeysetSync"
     );
     t.end();
   }
 );
 
-tap.test("02.04 - enforceKeysetSync() - another set involving arrays", (t) => {
+tap.test("18 - enforceKeysetSync() - another set involving arrays", (t) => {
   t.same(
     prepArraySync([
       {
@@ -797,12 +788,12 @@ tap.test("02.04 - enforceKeysetSync() - another set involving arrays", (t) => {
         c: false,
       },
     ],
-    "02.04"
+    "18"
   );
   t.end();
 });
 
-tap.test("02.05 - enforceKeysetSync() - deep-nested arrays", (t) => {
+tap.test("19 - enforceKeysetSync() - deep-nested arrays", (t) => {
   t.same(
     prepArraySync([
       {
@@ -904,13 +895,13 @@ tap.test("02.05 - enforceKeysetSync() - deep-nested arrays", (t) => {
         ],
       },
     ],
-    "02.05"
+    "19"
   );
   t.end();
 });
 
 tap.test(
-  "02.06 - enforceKeysetSync() - enforces a schema involving arrays",
+  "20 - enforceKeysetSync() - enforces a schema involving arrays",
   (t) => {
     const obj1 = {
       a: [
@@ -932,7 +923,7 @@ tap.test(
           },
         ],
       },
-      "02.06.01 - .getKeysetSync"
+      "20.01 - .getKeysetSync"
     );
     t.same(
       enforceKeysetSync(obj1, schema),
@@ -943,7 +934,7 @@ tap.test(
           },
         ],
       },
-      "02.06.02 - .enforceKeysetSync"
+      "20.02 - .enforceKeysetSync"
     );
     t.same(
       enforceKeysetSync(obj2, schema),
@@ -954,84 +945,81 @@ tap.test(
           },
         ],
       },
-      "02.06.03 - .enforceKeysetSync"
+      "20.03 - .enforceKeysetSync"
     );
     t.end();
   }
 );
 
-tap.test(
-  "02.07 - enforceKeysetSync() - multiple objects within an array",
-  (t) => {
-    t.same(
-      prepArraySync([
-        {
-          a: "a",
-        },
-        {
-          a: [
-            {
-              d: "d",
-            },
-            {
-              c: "c",
-            },
-            {
-              a: "a",
-            },
-            {
-              b: "b",
-            },
-          ],
-        },
-      ]),
-      [
-        {
-          a: [
-            {
-              a: false,
-              b: false,
-              c: false,
-              d: false,
-            },
-          ],
-        },
-        {
-          a: [
-            {
-              a: false,
-              b: false,
-              c: false,
-              d: "d",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-              d: false,
-            },
-            {
-              a: "a",
-              b: false,
-              c: false,
-              d: false,
-            },
-            {
-              a: false,
-              b: "b",
-              c: false,
-              d: false,
-            },
-          ],
-        },
-      ],
-      "02.07"
-    );
-    t.end();
-  }
-);
+tap.test("21 - enforceKeysetSync() - multiple objects within an array", (t) => {
+  t.same(
+    prepArraySync([
+      {
+        a: "a",
+      },
+      {
+        a: [
+          {
+            d: "d",
+          },
+          {
+            c: "c",
+          },
+          {
+            a: "a",
+          },
+          {
+            b: "b",
+          },
+        ],
+      },
+    ]),
+    [
+      {
+        a: [
+          {
+            a: false,
+            b: false,
+            c: false,
+            d: false,
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            a: false,
+            b: false,
+            c: false,
+            d: "d",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+            d: false,
+          },
+          {
+            a: "a",
+            b: false,
+            c: false,
+            d: false,
+          },
+          {
+            a: false,
+            b: "b",
+            c: false,
+            d: false,
+          },
+        ],
+      },
+    ],
+    "21"
+  );
+  t.end();
+});
 
-tap.test("02.08 - enforceKeysetSync() - multiple levels of arrays", (t) => {
+tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
   const obj1 = {
     b: [
       {
@@ -1093,12 +1081,12 @@ tap.test("02.08 - enforceKeysetSync() - multiple levels of arrays", (t) => {
         c: "ccc",
       },
     ],
-    "02.08"
+    "22"
   );
   t.end();
 });
 
-tap.test("02.09 - enforceKeysetSync() - array vs string clashes", (t) => {
+tap.test("23 - enforceKeysetSync() - array vs string clashes", (t) => {
   t.same(
     prepArraySync([
       {
@@ -1128,49 +1116,49 @@ tap.test("02.09 - enforceKeysetSync() - array vs string clashes", (t) => {
         ],
       },
     ],
-    "02.09"
+    "23"
   );
   t.end();
 });
 
-tap.test("02.10 - enforceKeysetSync() - all inputs missing - throws", (t) => {
+tap.test("24 - enforceKeysetSync() - all inputs missing - throws", (t) => {
   t.throws(() => {
     enforceKeysetSync();
-  });
+  }, "24");
   t.end();
 });
 
 tap.test(
-  "02.11 - enforceKeysetSync() - second input arg missing - throws",
+  "25 - enforceKeysetSync() - second input arg missing - throws",
   (t) => {
     t.throws(() => {
       enforceKeysetSync({ a: "a" });
-    });
+    }, "25");
     t.end();
   }
 );
 
 tap.test(
-  "02.12 - enforceKeysetSync() - second input arg is not a plain obj - throws",
+  "26 - enforceKeysetSync() - second input arg is not a plain obj - throws",
   (t) => {
     t.throws(() => {
       enforceKeysetSync({ a: "a" }, "zzz");
-    });
+    }, "26");
     t.end();
   }
 );
 
 tap.test(
-  "02.13 - enforceKeysetSync() - first input arg is not a plain obj - throws",
+  "27 - enforceKeysetSync() - first input arg is not a plain obj - throws",
   (t) => {
     t.throws(() => {
       enforceKeysetSync("zzz", "zzz");
-    });
+    }, "27");
     t.end();
   }
 );
 
-tap.test("02.14 - enforceKeysetSync() - array over empty array", (t) => {
+tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
   const obj1 = {
     a: [
       {
@@ -1199,7 +1187,7 @@ tap.test("02.14 - enforceKeysetSync() - array over empty array", (t) => {
       b: false,
       c: false,
     },
-    "02.14.01"
+    "28.01"
   );
   t.same(
     enforceKeysetSync(obj1, schema),
@@ -1217,7 +1205,7 @@ tap.test("02.14 - enforceKeysetSync() - array over empty array", (t) => {
       b: false,
       c: "c",
     },
-    "02.14.02"
+    "28.02"
   );
   t.same(
     enforceKeysetSync(obj2, schema),
@@ -1231,12 +1219,12 @@ tap.test("02.14 - enforceKeysetSync() - array over empty array", (t) => {
       b: "b",
       c: false,
     },
-    "02.14.03"
+    "28.03"
   );
   t.end();
 });
 
-tap.test("02.15.01 - enforceKeysetSync() - opts", (t) => {
+tap.test("29 - enforceKeysetSync() - opts", (t) => {
   const schema = getKeysetSync([
     {
       a: "aaa",
@@ -1262,12 +1250,12 @@ tap.test("02.15.01 - enforceKeysetSync() - opts", (t) => {
       a: "zzz",
       b: false,
     },
-    "02.15.01"
+    "29"
   );
   t.end();
 });
 
-tap.test("02.15.02 - enforceKeysetSync() - opts", (t) => {
+tap.test("30 - enforceKeysetSync() - opts", (t) => {
   const schema = getKeysetSync([
     {
       a: "aaa",
@@ -1292,12 +1280,12 @@ tap.test("02.15.02 - enforceKeysetSync() - opts", (t) => {
       a: "zzz",
       b: false,
     },
-    "02.15.02 - opts-targeted key is absent"
+    "30 - opts-targeted key is absent"
   );
   t.end();
 });
 
-tap.test("02.15.03 - enforceKeysetSync() - opts off", (t) => {
+tap.test("31 - enforceKeysetSync() - opts off", (t) => {
   const schema = getKeysetSync([
     {
       a: "aaa",
@@ -1322,13 +1310,13 @@ tap.test("02.15.03 - enforceKeysetSync() - opts off", (t) => {
       a: "zzz",
       b: { c: false },
     },
-    "02.15.03"
+    "31"
   );
   t.end();
 });
 
 tap.test(
-  "02.16 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholders is wrong",
+  "32 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholders is wrong",
   (t) => {
     t.throws(() => {
       enforceKeysetSync(
@@ -1336,19 +1324,19 @@ tap.test(
         { a: "a", b: "b" },
         { doNotFillThesePathsIfTheyContainPlaceholders: 1 }
       );
-    });
+    }, "32.01");
     t.throws(() => {
       enforceKeysetSync(
         { a: "a" },
         { a: "a", b: "b" },
         { doNotFillThesePathsIfTheyContainPlaceholders: [1] }
       );
-    });
+    }, "32.02");
     t.end();
   }
 );
 
-tap.test("02.17 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
+tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
   const schema = getKeysetSync([
     {
       a: "aaa",
@@ -1371,7 +1359,7 @@ tap.test("02.17 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
       a: null,
       b: false,
     },
-    "02.17.01 - default behaviour"
+    "33.01 - default behaviour"
   );
   t.same(
     enforceKeysetSync(
@@ -1387,7 +1375,7 @@ tap.test("02.17 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
       },
       b: false,
     },
-    "02.17.02 - off via opts"
+    "33.02 - off via opts"
   );
   t.end();
 });
@@ -1396,49 +1384,46 @@ tap.test("02.17 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
 // 03. guards against input arg mutation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "03.01 - enforceKeysetSync() - does not mutate the input args",
-  (t) => {
-    const obj1 = {
-      b: [
-        {
-          e: [
-            {
-              f: "fff",
-            },
-            {
-              g: "ggg",
-            },
-          ],
-          d: "ddd",
-          c: "ccc",
-        },
-      ],
-      a: "aaa",
-    };
-    const obj2 = {
+tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
+  const obj1 = {
+    b: [
+      {
+        e: [
+          {
+            f: "fff",
+          },
+          {
+            g: "ggg",
+          },
+        ],
+        d: "ddd",
+        c: "ccc",
+      },
+    ],
+    a: "aaa",
+  };
+  const obj2 = {
+    c: "ccc",
+    a: false,
+  };
+  const dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]));
+  t.pass(dummyResult); // necessary to avoid unused vars
+  t.same(
+    obj2,
+    {
       c: "ccc",
       a: false,
-    };
-    const dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]));
-    t.pass(dummyResult); // necessary to avoid unused vars
-    t.same(
-      obj2,
-      {
-        c: "ccc",
-        a: false,
-      },
-      "03.01"
-    );
-    t.end();
-  }
-);
+    },
+    "34.01"
+  );
+  t.end();
+});
 
 // -----------------------------------------------------------------------------
 // 04. noNewKeysSync()
 // -----------------------------------------------------------------------------
 
-tap.test("04.01 - noNewKeysSync() - BAU", (t) => {
+tap.test("35 - noNewKeysSync() - BAU", (t) => {
   t.same(
     noNewKeysSync(
       {
@@ -1452,7 +1437,7 @@ tap.test("04.01 - noNewKeysSync() - BAU", (t) => {
       }
     ),
     [],
-    "04.01.01 - no new keys"
+    "35.01 - no new keys"
   );
   t.same(
     noNewKeysSync(
@@ -1467,117 +1452,114 @@ tap.test("04.01 - noNewKeysSync() - BAU", (t) => {
       }
     ),
     ["b"],
-    "04.01.02 - new key, b"
+    "35.02 - new key, b"
   );
   t.end();
 });
 
-tap.test(
-  "04.02 - noNewKeysSync() - objects within arrays within objects",
-  (t) => {
-    t.same(
-      noNewKeysSync(
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-              c: "c",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-            },
-          ],
-        },
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-              c: "c",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-            },
-          ],
-        }
-      ),
-      [],
-      "04.02.01 - same key set, just values differ"
-    );
-    t.same(
-      noNewKeysSync(
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-            },
-            {
-              a: false,
-              b: false,
-            },
-          ],
-        },
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-              c: "c",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-            },
-          ],
-        }
-      ),
-      [],
-      "04.02.02 - less keys"
-    );
-    t.same(
-      noNewKeysSync(
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-              c: "c",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-            },
-          ],
-        },
-        {
-          z: [
-            {
-              a: "a",
-              b: "b",
-            },
-            {
-              a: false,
-              b: false,
-            },
-          ],
-        }
-      ),
-      ["z[0].c", "z[1].c"],
-      "04.02.03 - key c"
-    );
-    t.end();
-  }
-);
+tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
+  t.same(
+    noNewKeysSync(
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+            c: "c",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+          },
+        ],
+      },
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+            c: "c",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+          },
+        ],
+      }
+    ),
+    [],
+    "36.01 - same key set, just values differ"
+  );
+  t.same(
+    noNewKeysSync(
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+          },
+          {
+            a: false,
+            b: false,
+          },
+        ],
+      },
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+            c: "c",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+          },
+        ],
+      }
+    ),
+    [],
+    "36.02 - less keys"
+  );
+  t.same(
+    noNewKeysSync(
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+            c: "c",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+          },
+        ],
+      },
+      {
+        z: [
+          {
+            a: "a",
+            b: "b",
+          },
+          {
+            a: false,
+            b: false,
+          },
+        ],
+      }
+    ),
+    ["z[0].c", "z[1].c"],
+    "36.03 - key c"
+  );
+  t.end();
+});
 
-tap.test("04.03 - noNewKeysSync() - various throws", (t) => {
+tap.test("37 - noNewKeysSync() - various throws", (t) => {
   t.throws(() => {
     noNewKeysSync();
   }, /THROW_ID_51/g);
@@ -1600,7 +1582,7 @@ tap.test("04.03 - noNewKeysSync() - various throws", (t) => {
 // 05. findUnusedSync()
 // -----------------------------------------------------------------------------
 
-tap.test("05.01 - findUnusedSync() - single-level plain objects", (t) => {
+tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
   t.same(
     findUnusedSync([
       {
@@ -1615,7 +1597,7 @@ tap.test("05.01 - findUnusedSync() - single-level plain objects", (t) => {
       },
     ]),
     ["c"],
-    "05.01.01 - running on defaults"
+    "38.01 - running on defaults"
   );
   t.same(
     findUnusedSync([
@@ -1632,12 +1614,12 @@ tap.test("05.01 - findUnusedSync() - single-level plain objects", (t) => {
       {},
     ]),
     ["c"],
-    "05.01.02 - not normalised is fine as well"
+    "38.02 - not normalised is fine as well"
   );
   t.end();
 });
 
-tap.test("05.02 - findUnusedSync() - multiple-level plain objects", (t) => {
+tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
   t.same(
     findUnusedSync([
       {
@@ -1674,7 +1656,7 @@ tap.test("05.02 - findUnusedSync() - multiple-level plain objects", (t) => {
       },
     ]),
     ["c", "a[0].l"],
-    "05.02.01 - multiple levels, two objects, two unused keys, defaults"
+    "39.01 - multiple levels, two objects, two unused keys, defaults"
   );
   t.same(
     findUnusedSync([
@@ -1714,12 +1696,12 @@ tap.test("05.02 - findUnusedSync() - multiple-level plain objects", (t) => {
       { c: false },
     ]),
     ["c", "a[0].l"],
-    "05.02.02 - not normalised, see third and fourth args, not normalised objects"
+    "39.02 - not normalised, see third and fourth args, not normalised objects"
   );
   t.end();
 });
 
-tap.test("05.03 - findUnusedSync() - double-nested arrays", (t) => {
+tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
   t.same(
     findUnusedSync([
       {
@@ -1760,7 +1742,7 @@ tap.test("05.03 - findUnusedSync() - double-nested arrays", (t) => {
       },
     ]),
     ["c", "a[0][0].l", "a[0][1].k"],
-    "05.03.01"
+    "40.01"
   );
   t.same(
     findUnusedSync([
@@ -1805,105 +1787,99 @@ tap.test("05.03 - findUnusedSync() - double-nested arrays", (t) => {
       },
     ]),
     ["c", "a[0][0].l", "a[0][1].k"],
-    "05.03.02 - value false vs values as arrays - in the context of unused-ness"
+    "40.02 - value false vs values as arrays - in the context of unused-ness"
   );
   t.end();
 });
 
-tap.test("05.04 - findUnusedSync() - works on empty arrays", (t) => {
-  t.same(findUnusedSync([]), [], "05.04.01");
-  t.same(findUnusedSync([{}]), [], "05.04.02");
-  t.same(findUnusedSync([{}, {}]), [], "05.04.03");
+tap.test("41 - findUnusedSync() - works on empty arrays", (t) => {
+  t.same(findUnusedSync([]), [], "41.01");
+  t.same(findUnusedSync([{}]), [], "41.02");
+  t.same(findUnusedSync([{}, {}]), [], "41.03");
   t.end();
 });
 
-tap.test("05.05 - findUnusedSync() - various throws", (t) => {
+tap.test("42 - findUnusedSync() - various throws", (t) => {
   t.throws(() => {
     findUnusedSync(1, { placeholder: false });
-  });
+  }, "42.01");
   t.doesNotThrow(() => {
     findUnusedSync([1, 2, 3]);
-  });
+  }, "42.02");
   t.throws(() => {
     findUnusedSync([{ a: "a" }, { a: "b" }], 1);
-  });
+  }, "42.03");
+  t.end();
+});
+
+tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
+  t.same(
+    findUnusedSync([
+      {
+        a: [[]],
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: [[]],
+        b: "bbb2",
+        c: false,
+      },
+    ]),
+    ["c"],
+    "43.01 - normal"
+  );
+  t.same(
+    findUnusedSync([
+      {
+        a: [[]],
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: [[]],
+        b: "bbb2",
+        c: false,
+      },
+      {},
+      {},
+    ]),
+    ["c"],
+    "43.02 - not normalised"
+  );
+  t.end();
+});
+
+tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
+  t.same(
+    findUnusedSync([
+      {
+        a: [[]],
+        b: "bbb1",
+        c: false,
+      },
+    ]),
+    [],
+    "44.01 - normalised"
+  );
+  t.same(
+    findUnusedSync([
+      {
+        a: [[]],
+        b: "bbb1",
+        c: false,
+      },
+      {},
+      { a: false },
+    ]),
+    ["c"],
+    "44.02 - not normalised. Now that there are three inputs (even two of them empty-ish) result is the key c"
+  );
   t.end();
 });
 
 tap.test(
-  "05.06 - findUnusedSync() - case of empty array within an array",
-  (t) => {
-    t.same(
-      findUnusedSync([
-        {
-          a: [[]],
-          b: "bbb1",
-          c: false,
-        },
-        {
-          a: [[]],
-          b: "bbb2",
-          c: false,
-        },
-      ]),
-      ["c"],
-      "05.06.01 - normal"
-    );
-    t.same(
-      findUnusedSync([
-        {
-          a: [[]],
-          b: "bbb1",
-          c: false,
-        },
-        {
-          a: [[]],
-          b: "bbb2",
-          c: false,
-        },
-        {},
-        {},
-      ]),
-      ["c"],
-      "05.06.02 - not normalised"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "05.07 - findUnusedSync() - case of empty array within an array",
-  (t) => {
-    t.same(
-      findUnusedSync([
-        {
-          a: [[]],
-          b: "bbb1",
-          c: false,
-        },
-      ]),
-      [],
-      "05.07.01 - normalised"
-    );
-    t.same(
-      findUnusedSync([
-        {
-          a: [[]],
-          b: "bbb1",
-          c: false,
-        },
-        {},
-        { a: false },
-      ]),
-      ["c"],
-      "05.07.02 - not normalised. Now that there are three inputs (even two of them empty-ish) result is the key c"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "05.08 - findUnusedSync() - objects containing objects (2 in total)",
+  "45 - findUnusedSync() - objects containing objects (2 in total)",
   (t) => {
     t.same(
       findUnusedSync([
@@ -1925,7 +1901,7 @@ tap.test(
         },
       ]),
       ["c", "a.x"],
-      "05.08.01"
+      "45.01"
     );
     t.same(
       findUnusedSync([
@@ -1957,7 +1933,7 @@ tap.test(
         },
       ]),
       ["c", "e", "a.x", "d.x"],
-      "05.08.02"
+      "45.02"
     );
     t.same(
       findUnusedSync([
@@ -1990,14 +1966,14 @@ tap.test(
         { c: false },
       ]),
       ["c", "e", "a.x", "d.x"],
-      "05.08.03 - not normalised"
+      "45.03 - not normalised"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.09 - findUnusedSync() - objects containing objects (3 in total)",
+  "46 - findUnusedSync() - objects containing objects (3 in total)",
   (t) => {
     t.same(
       findUnusedSync([
@@ -2027,7 +2003,7 @@ tap.test(
         },
       ]),
       ["c", "a.x", "a.k.l"],
-      "05.09.01 - normalised, on default placeholder"
+      "46.01 - normalised, on default placeholder"
     );
     t.same(
       findUnusedSync([
@@ -2059,14 +2035,14 @@ tap.test(
         { c: false },
       ]),
       ["c", "a.x", "a.k.l"],
-      "05.09.02 - not normalised, on default placeholder"
+      "46.02 - not normalised, on default placeholder"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.10 - findUnusedSync() - objects containing objects, mixed with arrays",
+  "47 - findUnusedSync() - objects containing objects, mixed with arrays",
   (t) => {
     t.same(
       findUnusedSync([
@@ -2120,7 +2096,7 @@ tap.test(
         },
       ]),
       ["c", "a.x", "a.k.l"],
-      "05.10.01"
+      "47.01"
     );
     t.same(
       findUnusedSync([
@@ -2174,7 +2150,7 @@ tap.test(
         },
       ]),
       ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-      "05.10.02 - even deeper"
+      "47.02 - even deeper"
     );
     t.same(
       findUnusedSync([
@@ -2230,36 +2206,36 @@ tap.test(
         {},
       ]),
       ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-      "05.10.03 - even deeper plus not normalised in deeper levels"
+      "47.03 - even deeper plus not normalised in deeper levels"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.11 - findUnusedSync() - array contents are not objects/arrays",
+  "48 - findUnusedSync() - array contents are not objects/arrays",
   (t) => {
     t.same(
       findUnusedSync([false, false, false]),
       [],
-      "05.11.01 - topmost level, Booleans"
+      "48.01 - topmost level, Booleans"
     );
     t.same(
       findUnusedSync(["zzz", "zzz", "zzz"]),
       [],
-      "05.11.02 - topmost level, strings"
+      "48.02 - topmost level, strings"
     );
     t.same(
       findUnusedSync([{}, {}, {}]),
       [],
-      "05.11.03 - topmost level, empty plain objects"
+      "48.03 - topmost level, empty plain objects"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.12 - findUnusedSync() - array > single object > array > unused inside",
+  "49 - findUnusedSync() - array > single object > array > unused inside",
   (t) => {
     t.same(
       findUnusedSync([
@@ -2286,7 +2262,7 @@ tap.test(
         },
       ]),
       ["a[0].k"],
-      "05.12.01 - topmost array has a single object"
+      "49.01 - topmost array has a single object"
     );
     t.same(
       findUnusedSync([
@@ -2334,39 +2310,36 @@ tap.test(
         },
       ]),
       ["a[0].k"],
-      "05.12.02 - topmost array has multiple objects"
+      "49.02 - topmost array has multiple objects"
     );
     t.end();
   }
 );
 
-tap.test(
-  "05.13 - findUnusedSync() - simple case of not normalised input",
-  (t) => {
-    t.same(
-      findUnusedSync([
-        {
-          a: false,
-          b: false,
-          c: "c",
-        },
-        {
-          a: false,
-          b: false,
-          c: "c",
-        },
-        {
-          c: "c",
-        },
-      ]),
-      ["a", "b"],
-      "05.13 - default placeholder"
-    );
-    t.end();
-  }
-);
+tap.test("50 - findUnusedSync() - simple case of not normalised input", (t) => {
+  t.same(
+    findUnusedSync([
+      {
+        a: false,
+        b: false,
+        c: "c",
+      },
+      {
+        a: false,
+        b: false,
+        c: "c",
+      },
+      {
+        c: "c",
+      },
+    ]),
+    ["a", "b"],
+    "50 - default placeholder"
+  );
+  t.end();
+});
 
-tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
+tap.test("51 - findUnusedSync() - opts.comments", (t) => {
   t.same(
     findUnusedSync([
       {
@@ -2383,7 +2356,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       },
     ]),
     ["c"],
-    "05.14.01 - defaults recognise the comment substring within the key"
+    "51.01 - defaults recognise the comment substring within the key"
   );
   t.same(
     findUnusedSync(
@@ -2404,7 +2377,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: "zzz" }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.02 - ignores comment fields because they match default value"
+    "51.02 - ignores comment fields because they match default value"
   );
   t.same(
     findUnusedSync(
@@ -2425,7 +2398,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: false }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.03 - falsey opts.comments - instruction to turn it off"
+    "51.03 - falsey opts.comments - instruction to turn it off"
   );
   t.same(
     findUnusedSync(
@@ -2446,7 +2419,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: 0 }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.04 - falsey opts.comments - instruction to turn it off"
+    "51.04 - falsey opts.comments - instruction to turn it off"
   );
   t.same(
     findUnusedSync(
@@ -2467,7 +2440,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: null }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.05 - falsey opts.comments - instruction to turn it off"
+    "51.05 - falsey opts.comments - instruction to turn it off"
   );
   t.same(
     findUnusedSync(
@@ -2488,7 +2461,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: undefined }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.06 - falsey opts.comments - instruction to turn it off"
+    "51.06 - falsey opts.comments - instruction to turn it off"
   );
   t.same(
     findUnusedSync(
@@ -2509,7 +2482,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       { comments: "" }
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "05.14.07 - falsey opts.comments - instruction to turn it off"
+    "51.07 - falsey opts.comments - instruction to turn it off"
   );
   t.throws(() => {
     findUnusedSync(
@@ -2529,7 +2502,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       ],
       { comments: 1 }
     );
-  });
+  }, "51.08");
   t.throws(() => {
     findUnusedSync(
       [
@@ -2548,7 +2521,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       ],
       { comments: "1" }
     );
-  });
+  }, "51.09");
   t.throws(() => {
     findUnusedSync(
       [
@@ -2567,7 +2540,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       ],
       { comments: true }
     );
-  });
+  }, "51.10");
   t.throws(() => {
     findUnusedSync(
       [
@@ -2586,7 +2559,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
       ],
       { comments: "true" }
     );
-  });
+  }, "51.11");
   t.end();
 });
 
@@ -2594,7 +2567,7 @@ tap.test("05.14 - findUnusedSync() - opts.comments", (t) => {
 // 06. sortAllObjectsSync()
 // -----------------------------------------------------------------------------
 
-tap.test("06.01 - sortAllObjectsSync() - plain object", (t) => {
+tap.test("52 - sortAllObjectsSync() - plain object", (t) => {
   let original = {
     a: "a",
     c: "c",
@@ -2609,22 +2582,22 @@ tap.test("06.01 - sortAllObjectsSync() - plain object", (t) => {
   t.same(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
-    "06.01"
+    "52.01"
   ); // test
   t.end();
 });
 
-tap.test("06.02 - sortAllObjectsSync() - non-sortable input types", (t) => {
-  t.same(sortAllObjectsSync(null), null, "06.02.01");
-  t.same(sortAllObjectsSync(1), 1, "06.02.02");
-  t.same(sortAllObjectsSync("zzz"), "zzz", "06.02.03");
-  t.same(sortAllObjectsSync(undefined), undefined, "06.02.04");
+tap.test("53 - sortAllObjectsSync() - non-sortable input types", (t) => {
+  t.same(sortAllObjectsSync(null), null, "53.01");
+  t.same(sortAllObjectsSync(1), 1, "53.02");
+  t.same(sortAllObjectsSync("zzz"), "zzz", "53.03");
+  t.same(sortAllObjectsSync(undefined), undefined, "53.04");
   const f = (a) => a;
-  t.same(sortAllObjectsSync(f), f, "06.02.05");
+  t.same(sortAllObjectsSync(f), f, "53.05");
   t.end();
 });
 
-tap.test("06.03 - sortAllObjectsSync() - object-array-object", (t) => {
+tap.test("54 - sortAllObjectsSync() - object-array-object", (t) => {
   t.same(
     sortAllObjectsSync({
       a: "a",
@@ -2658,12 +2631,12 @@ tap.test("06.03 - sortAllObjectsSync() - object-array-object", (t) => {
         },
       ],
     },
-    "06.03"
+    "54"
   );
   t.end();
 });
 
-tap.test("06.04 - sortAllObjectsSync() - object very deep", (t) => {
+tap.test("55 - sortAllObjectsSync() - object very deep", (t) => {
   t.same(
     sortAllObjectsSync({
       a: [
@@ -2765,12 +2738,12 @@ tap.test("06.04 - sortAllObjectsSync() - object very deep", (t) => {
         ],
       ],
     },
-    "06.04"
+    "55"
   );
   t.end();
 });
 
-tap.test("06.05 - sortAllObjectsSync() - nested case", (t) => {
+tap.test("56 - sortAllObjectsSync() - nested case", (t) => {
   let original = {
     b: "bbb",
     a: [
@@ -2797,12 +2770,12 @@ tap.test("06.05 - sortAllObjectsSync() - nested case", (t) => {
   t.same(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
-    "06.05.02"
+    "56.01"
   );
   t.end();
 });
 
-tap.test("06.06 - sortAllObjectsSync() - nested case", (t) => {
+tap.test("57 - sortAllObjectsSync() - nested case", (t) => {
   const original = {
     lastRan: 6,
     lastPublished: 5,
@@ -2820,7 +2793,7 @@ tap.test("06.06 - sortAllObjectsSync() - nested case", (t) => {
   "lastRan": 6
 }`;
 
-  t.equal(JSON.stringify(sortAllObjectsSync(original), null, 2), res);
+  t.equal(JSON.stringify(sortAllObjectsSync(original), null, 2), res, "57");
   t.end();
 });
 
@@ -2831,7 +2804,7 @@ tap.test("06.06 - sortAllObjectsSync() - nested case", (t) => {
 /* eslint prefer-const:0 */
 // we deliberately use VAR to "allow" mutation. In theory, of course, because it does not happen.
 
-tap.test("07.01 - does not mutate input args: enforceKeysetSync()", (t) => {
+tap.test("58 - does not mutate input args: enforceKeysetSync()", (t) => {
   let source = {
     a: "a",
   };
@@ -2840,11 +2813,11 @@ tap.test("07.01 - does not mutate input args: enforceKeysetSync()", (t) => {
   };
   let dummyResult = enforceKeysetSync(source, { a: false, b: false });
   t.pass(dummyResult); // a mickey assertion to trick the Standard
-  t.equal(JSON.stringify(source), JSON.stringify(frozen));
+  t.equal(JSON.stringify(source), JSON.stringify(frozen), "58.01");
   t.end();
 });
 
-tap.test("07.02 - does not mutate input args: noNewKeysSync()", (t) => {
+tap.test("59 - does not mutate input args: noNewKeysSync()", (t) => {
   let source = {
     a: "a",
   };
@@ -2853,11 +2826,11 @@ tap.test("07.02 - does not mutate input args: noNewKeysSync()", (t) => {
   };
   let dummyResult = noNewKeysSync(source, { a: false, b: false });
   t.pass(dummyResult); // a mickey assertion to trick ESLint to think it's used
-  t.equal(JSON.stringify(source), JSON.stringify(frozen));
+  t.equal(JSON.stringify(source), JSON.stringify(frozen), "59.01");
   t.end();
 });
 
-tap.test("07.03 - does not mutate input args: sortAllObjectsSync()", (t) => {
+tap.test("60 - does not mutate input args: sortAllObjectsSync()", (t) => {
   let source = {
     a: "a",
     c: "c",
@@ -2870,7 +2843,7 @@ tap.test("07.03 - does not mutate input args: sortAllObjectsSync()", (t) => {
   };
   let dummyResult = sortAllObjectsSync(source); // let's try to mutate "source"
   t.pass(dummyResult); // a mickey assertion to trick ESLint to think it's used
-  t.equal(JSON.stringify(source), JSON.stringify(frozen));
+  t.equal(JSON.stringify(source), JSON.stringify(frozen), "60.01");
   t.end();
 });
 
@@ -2878,25 +2851,25 @@ tap.test("07.03 - does not mutate input args: sortAllObjectsSync()", (t) => {
 // 08. getKeyset()  - async version of getKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("08.01 - getKeyset() - throws when there's no input", (t) => {
+tap.test("61 - getKeyset() - throws when there's no input", (t) => {
   t.throws(() => {
     getKeyset();
-  });
+  }, "61");
   t.end();
 });
 
 tap.test(
-  "08.02 - getKeyset() - throws when input is not an array of promises",
+  "62 - getKeyset() - throws when input is not an array of promises",
   (t) => {
     t.throws(() => {
       getKeyset(makePromise("aa"));
-    });
+    }, "62");
     t.end();
   }
 );
 
 tap.test(
-  "08.03 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects",
+  "63 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects",
   async (t) => {
     await getKeyset(
       makePromise([
@@ -2921,7 +2894,7 @@ tap.test(
 );
 
 tap.test(
-  "08.04 - getKeyset() - calculates - three objects - default placeholder",
+  "64 - getKeyset() - calculates - three objects - default placeholder",
   async (t) => {
     t.same(
       await getKeyset(
@@ -2953,14 +2926,14 @@ tap.test(
           f: false,
         },
       },
-      "08.04"
+      "64"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.05 - getKeyset() - calculates - three objects - custom placeholder",
+  "65 - getKeyset() - calculates - three objects - custom placeholder",
   async (t) => {
     t.same(
       await getKeyset(
@@ -2993,7 +2966,7 @@ tap.test(
           f: true,
         },
       },
-      "08.05.01"
+      "65.01"
     );
 
     t.same(
@@ -3027,7 +3000,7 @@ tap.test(
           f: "",
         },
       },
-      "08.05.02"
+      "65.02"
     );
 
     t.same(
@@ -3061,14 +3034,14 @@ tap.test(
           f: { a: "a" },
         },
       },
-      "08.05.03"
+      "65.03"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.06 - getKeyset() - settings argument is not a plain object - throws",
+  "66 - getKeyset() - settings argument is not a plain object - throws",
   (t) => {
     t.throws(() => {
       getKeyset([{ a: "a" }, { b: "b" }], "zzz");
@@ -3077,57 +3050,54 @@ tap.test(
   }
 );
 
-tap.test(
-  "08.07 - getKeyset() - multiple levels of nested arrays",
-  async (t) => {
-    t.same(
-      await getKeyset([
-        {
-          key2: [
-            {
-              key5: "val5",
-              key4: "val4",
-              key6: [
-                {
-                  key8: "val8",
-                },
-                {
-                  key7: "val7",
-                },
-              ],
-            },
-          ],
-          key1: "val1",
-        },
-        {
-          key1: false,
-          key3: "val3",
-        },
-      ]),
+tap.test("67 - getKeyset() - multiple levels of nested arrays", async (t) => {
+  t.same(
+    await getKeyset([
       {
-        key1: false,
         key2: [
           {
-            key4: false,
-            key5: false,
+            key5: "val5",
+            key4: "val4",
             key6: [
               {
-                key7: false,
-                key8: false,
+                key8: "val8",
+              },
+              {
+                key7: "val7",
               },
             ],
           },
         ],
-        key3: false,
+        key1: "val1",
       },
-      "08.07"
-    );
-    t.end();
-  }
-);
+      {
+        key1: false,
+        key3: "val3",
+      },
+    ]),
+    {
+      key1: false,
+      key2: [
+        {
+          key4: false,
+          key5: false,
+          key6: [
+            {
+              key7: false,
+              key8: false,
+            },
+          ],
+        },
+      ],
+      key3: false,
+    },
+    "67"
+  );
+  t.end();
+});
 
 tap.test(
-  "08.08 - getKeyset() - objects that are directly in values",
+  "68 - getKeyset() - objects that are directly in values",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3157,7 +3127,7 @@ tap.test(
         k: false,
         m: false,
       },
-      "08.08.01"
+      "68.01"
     );
     t.same(
       await getKeyset([
@@ -3187,14 +3157,14 @@ tap.test(
         k: false,
         m: false,
       },
-      "08.08.02"
+      "68.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.09 - getKeyset() - deeper level arrays containing only strings",
+  "69 - getKeyset() - deeper level arrays containing only strings",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3218,14 +3188,14 @@ tap.test(
           },
         },
       },
-      "08.09"
+      "69"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.10 - getKeyset() - deeper level array with string vs false",
+  "70 - getKeyset() - deeper level array with string vs false",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3249,14 +3219,14 @@ tap.test(
           },
         },
       },
-      "08.10 - if arrays contain any strings, result is empty array"
+      "70 - if arrays contain any strings, result is empty array"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.11 - getKeyset() - two deeper level arrays with strings",
+  "71 - getKeyset() - two deeper level arrays with strings",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3284,14 +3254,14 @@ tap.test(
           },
         },
       },
-      "08.11 - if arrays contain any strings, result is empty array"
+      "71 - if arrays contain any strings, result is empty array"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.12 - getKeyset() - two deeper level arrays with mixed contents",
+  "72 - getKeyset() - two deeper level arrays with mixed contents",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3319,14 +3289,14 @@ tap.test(
           },
         },
       },
-      "08.12 - plain object vs string"
+      "72 - plain object vs string"
     );
     t.end();
   }
 );
 
 tap.test(
-  "08.13 - getKeyset() - two deeper level arrays with plain objects",
+  "73 - getKeyset() - two deeper level arrays with plain objects",
   async (t) => {
     t.same(
       await getKeyset([
@@ -3366,7 +3336,7 @@ tap.test(
           },
         },
       },
-      "08.13.01 - object vs object"
+      "73.01 - object vs object"
     );
     t.same(
       await getKeyset([
@@ -3394,7 +3364,7 @@ tap.test(
           },
         },
       },
-      "08.13.02 - object vs object"
+      "73.02 - object vs object"
     );
     t.same(
       await getKeyset([
@@ -3422,7 +3392,7 @@ tap.test(
           },
         },
       },
-      "08.13.03 - object vs object"
+      "73.03 - object vs object"
     );
     t.same(
       await getKeyset([
@@ -3450,7 +3420,7 @@ tap.test(
           },
         },
       },
-      "08.13.04 - object vs object"
+      "73.04 - object vs object"
     );
     t.end();
   }
@@ -3460,7 +3430,7 @@ tap.test(
 // 09. enforceKeyset()
 // -----------------------------------------------------------------------------
 
-tap.test("09.01 - enforceKeyset() - enforces a simple schema", async (t) => {
+tap.test("74 - enforceKeyset() - enforces a simple schema", async (t) => {
   const schema = await getKeyset([
     {
       a: "aaa",
@@ -3481,93 +3451,90 @@ tap.test("09.01 - enforceKeyset() - enforces a simple schema", async (t) => {
       a: "ccc",
       b: false,
     },
-    "09.01"
+    "74"
   );
   t.end();
 });
 
-tap.test(
-  "09.02 - enforceKeyset() - enforces a more complex schema",
-  async (t) => {
-    const obj1 = {
+tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
+  const obj1 = {
+    b: [
+      {
+        c: "ccc",
+        d: "ddd",
+      },
+    ],
+    a: "aaa",
+  };
+  const obj2 = {
+    a: "ccc",
+    e: "eee",
+  };
+  const obj3 = {
+    a: "zzz",
+  };
+  const schema = await getKeyset([obj1, obj2, obj3]);
+  t.same(
+    schema,
+    {
+      a: false,
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    "75.01 - .getKeyset itself"
+  );
+  t.same(
+    await enforceKeyset(obj1, schema),
+    {
+      a: "aaa",
       b: [
         {
           c: "ccc",
           d: "ddd",
         },
       ],
-      a: "aaa",
-    };
-    const obj2 = {
+      e: false,
+    },
+    "75.02 - .enforceKeyset"
+  );
+  t.same(
+    await enforceKeyset(obj2, schema),
+    {
       a: "ccc",
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
       e: "eee",
-    };
-    const obj3 = {
+    },
+    "75.03 - .enforceKeyset"
+  );
+  t.same(
+    await enforceKeyset(obj3, schema),
+    {
       a: "zzz",
-    };
-    const schema = await getKeyset([obj1, obj2, obj3]);
-    t.same(
-      schema,
-      {
-        a: false,
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: false,
-      },
-      "09.02.00 - .getKeyset itself"
-    );
-    t.same(
-      await enforceKeyset(obj1, schema),
-      {
-        a: "aaa",
-        b: [
-          {
-            c: "ccc",
-            d: "ddd",
-          },
-        ],
-        e: false,
-      },
-      "09.02.01 - .enforceKeyset"
-    );
-    t.same(
-      await enforceKeyset(obj2, schema),
-      {
-        a: "ccc",
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: "eee",
-      },
-      "09.02.02 - .enforceKeyset"
-    );
-    t.same(
-      await enforceKeyset(obj3, schema),
-      {
-        a: "zzz",
-        b: [
-          {
-            c: false,
-            d: false,
-          },
-        ],
-        e: false,
-      },
-      "09.02.03 - .enforceKeyset"
-    );
-    t.end();
-  }
-);
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    "75.04 - .enforceKeyset"
+  );
+  t.end();
+});
 
 tap.test(
-  "09.03 - enforceKeyset() - enforces a schema involving arrays",
+  "76 - enforceKeyset() - enforces a schema involving arrays",
   async (t) => {
     const obj1 = {
       a: [
@@ -3589,7 +3556,7 @@ tap.test(
           },
         ],
       },
-      "09.03 - .getKeyset"
+      "76.01 - .getKeyset"
     );
     t.same(
       await enforceKeyset(obj1, schema),
@@ -3600,7 +3567,7 @@ tap.test(
           },
         ],
       },
-      "09.03.01 - .enforceKeyset"
+      "76.02 - .enforceKeyset"
     );
     t.same(
       await enforceKeyset(obj2, schema),
@@ -3611,61 +3578,58 @@ tap.test(
           },
         ],
       },
-      "09.03.02 - .enforceKeyset"
+      "76.03 - .enforceKeyset"
     );
     t.end();
   }
 );
 
-tap.test(
-  "09.04 - enforceKeyset() - another set involving arrays",
-  async (t) => {
-    t.same(
-      await prepArray(
-        makePromise([
-          {
-            c: "c val",
-          },
-          {
-            b: [
-              {
-                b2: "b2 val",
-                b1: "b1 val",
-              },
-            ],
-            a: "a val",
-          },
-        ])
-      ),
-      [
+tap.test("77 - enforceKeyset() - another set involving arrays", async (t) => {
+  t.same(
+    await prepArray(
+      makePromise([
         {
-          a: false,
-          b: [
-            {
-              b1: false,
-              b2: false,
-            },
-          ],
           c: "c val",
         },
         {
-          a: "a val",
           b: [
             {
-              b1: "b1 val",
               b2: "b2 val",
+              b1: "b1 val",
             },
           ],
-          c: false,
+          a: "a val",
         },
-      ],
-      "09.04"
-    );
-    t.end();
-  }
-);
+      ])
+    ),
+    [
+      {
+        a: false,
+        b: [
+          {
+            b1: false,
+            b2: false,
+          },
+        ],
+        c: "c val",
+      },
+      {
+        a: "a val",
+        b: [
+          {
+            b1: "b1 val",
+            b2: "b2 val",
+          },
+        ],
+        c: false,
+      },
+    ],
+    "77"
+  );
+  t.end();
+});
 
-tap.test("09.05 - enforceKeyset() - deep-nested arrays", async (t) => {
+tap.test("78 - enforceKeyset() - deep-nested arrays", async (t) => {
   t.same(
     await prepArray([
       {
@@ -3767,13 +3731,13 @@ tap.test("09.05 - enforceKeyset() - deep-nested arrays", async (t) => {
         ],
       },
     ],
-    "09.05"
+    "78"
   );
   t.end();
 });
 
 tap.test(
-  "09.06 - enforceKeyset() - enforces a schema involving arrays",
+  "79 - enforceKeyset() - enforces a schema involving arrays",
   async (t) => {
     const obj1 = {
       a: [
@@ -3795,7 +3759,7 @@ tap.test(
           },
         ],
       },
-      "09.06.01 - .getKeyset"
+      "79.01 - .getKeyset"
     );
     t.same(
       await enforceKeyset(obj1, schema),
@@ -3806,7 +3770,7 @@ tap.test(
           },
         ],
       },
-      "09.06.02 - .enforceKeyset"
+      "79.02 - .enforceKeyset"
     );
     t.same(
       await enforceKeyset(obj2, schema),
@@ -3817,14 +3781,14 @@ tap.test(
           },
         ],
       },
-      "09.06.03 - .enforceKeyset"
+      "79.03 - .enforceKeyset"
     );
     t.end();
   }
 );
 
 tap.test(
-  "09.07 - enforceKeyset() - multiple objects within an array",
+  "80 - enforceKeyset() - multiple objects within an array",
   async (t) => {
     t.same(
       await prepArray([
@@ -3888,13 +3852,13 @@ tap.test(
           ],
         },
       ],
-      "09.07"
+      "80"
     );
     t.end();
   }
 );
 
-tap.test("09.08 - enforceKeyset() - multiple levels of arrays", async (t) => {
+tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
   const obj1 = {
     b: [
       {
@@ -3956,12 +3920,12 @@ tap.test("09.08 - enforceKeyset() - multiple levels of arrays", async (t) => {
         c: "ccc",
       },
     ],
-    "09.08"
+    "81"
   );
   t.end();
 });
 
-tap.test("09.09 - enforceKeyset() - array vs string clashes", async (t) => {
+tap.test("82 - enforceKeyset() - array vs string clashes", async (t) => {
   t.same(
     await prepArray([
       {
@@ -3991,13 +3955,13 @@ tap.test("09.09 - enforceKeyset() - array vs string clashes", async (t) => {
         ],
       },
     ],
-    "09.09"
+    "82"
   );
   t.end();
 });
 
 tap.test(
-  "09.10 - enforceKeyset() - all inputs missing - resolves to rejected promise",
+  "83 - enforceKeyset() - all inputs missing - resolves to rejected promise",
   (t) => {
     t.throws(() => {
       enforceKeyset();
@@ -4007,7 +3971,7 @@ tap.test(
 );
 
 tap.test(
-  "09.11 - enforceKeyset() - second input arg missing - resolves to rejected promise",
+  "84 - enforceKeyset() - second input arg missing - resolves to rejected promise",
   (t) => {
     t.throws(() => {
       enforceKeyset({ a: "a" });
@@ -4017,7 +3981,7 @@ tap.test(
 );
 
 tap.test(
-  "09.12 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise",
+  "85 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise",
   async (t) => {
     await enforceKeyset({ a: "a" }, "zzz")
       .then(() => {
@@ -4031,7 +3995,7 @@ tap.test(
 );
 
 tap.test(
-  "09.13 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise",
+  "86 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise",
   async (t) => {
     await enforceKeyset("zzz", "zzz")
       .then(() => {
@@ -4044,7 +4008,7 @@ tap.test(
   }
 );
 
-tap.test("09.14 - enforceKeyset() - array over empty array", async (t) => {
+tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
   const obj1 = {
     a: [
       {
@@ -4073,7 +4037,7 @@ tap.test("09.14 - enforceKeyset() - array over empty array", async (t) => {
       b: false,
       c: false,
     },
-    "09.14.01"
+    "87.01"
   );
   t.same(
     await enforceKeyset(obj1, schema),
@@ -4091,7 +4055,7 @@ tap.test("09.14 - enforceKeyset() - array over empty array", async (t) => {
       b: false,
       c: "c",
     },
-    "09.14.02"
+    "87.02"
   );
   t.same(
     await enforceKeyset(obj2, schema),
@@ -4105,13 +4069,13 @@ tap.test("09.14 - enforceKeyset() - array over empty array", async (t) => {
       b: "b",
       c: false,
     },
-    "09.14.03"
+    "87.03"
   );
   t.end();
 });
 
 tap.test(
-  "09.15 - enforceKeyset() - wrong opts - resolves to rejected promise",
+  "88 - enforceKeyset() - wrong opts - resolves to rejected promise",
   (t) => {
     t.rejects(async () => {
       await enforceKeyset(
@@ -4119,12 +4083,12 @@ tap.test(
         { a: "false", b: "b" },
         { doNotFillThesePathsIfTheyContainPlaceholders: ["a", 1] }
       );
-    });
+    }, "88");
     t.end();
   }
 );
 
-tap.test("09.16 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
+tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
   const schema = await getKeyset(
     makePromise([
       {
@@ -4149,7 +4113,7 @@ tap.test("09.16 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
       a: null,
       b: false,
     },
-    "09.16.01 - defaults - null is explicit false"
+    "89.01 - defaults - null is explicit false"
   );
   t.same(
     await enforceKeyset(
@@ -4165,7 +4129,7 @@ tap.test("09.16 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
       },
       b: false,
     },
-    "09.16.02 - off via the opts"
+    "89.02 - off via the opts"
   );
   t.end();
 });

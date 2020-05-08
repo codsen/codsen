@@ -5,13 +5,13 @@ import mergeRanges from "../dist/ranges-merge.esm";
 // 00. throws
 // ==========================
 
-tap.test("00.00 - does not throw when the first arg is wrong", (t) => {
-  t.same(mergeRanges("z"), "z", "00.01.01");
-  t.same(mergeRanges(true), true, "00.01.02");
+tap.test("01 - does not throw when the first arg is wrong", (t) => {
+  t.same(mergeRanges("z"), "z", "01.01");
+  t.same(mergeRanges(true), true, "01.02");
   t.end();
 });
 
-tap.test("00.01 - throws when opts.progressFn is wrong", (t) => {
+tap.test("02 - throws when opts.progressFn is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -24,7 +24,7 @@ tap.test("00.01 - throws when opts.progressFn is wrong", (t) => {
   t.end();
 });
 
-tap.test("00.02 - throws when opts.mergeType is wrong", (t) => {
+tap.test("03 - throws when opts.mergeType is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -37,7 +37,7 @@ tap.test("00.02 - throws when opts.mergeType is wrong", (t) => {
   t.end();
 });
 
-tap.test("00.03 - throws when the second arg is wrong", (t) => {
+tap.test("04 - throws when the second arg is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -50,7 +50,7 @@ tap.test("00.03 - throws when the second arg is wrong", (t) => {
   t.end();
 });
 
-tap.test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
+tap.test("05 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
   t.throws(() => {
     mergeRanges(
       [
@@ -65,7 +65,7 @@ tap.test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", (t) => {
   t.end();
 });
 
-tap.test("00.05", (t) => {
+tap.test("06", (t) => {
   t.doesNotThrow(() => {
     mergeRanges(
       [
@@ -76,35 +76,35 @@ tap.test("00.05", (t) => {
         progressFn: {},
       }
     );
-  });
+  }, "06");
   t.end();
 });
 
 // 01. mergeRanges()
 // ==========================
 
-tap.test("01.01 - simples: merges three overlapping ranges", (t) => {
+tap.test("07 - simples: merges three overlapping ranges", (t) => {
   const input = [
     [3, 8],
     [1, 4],
     [2, 5],
   ];
   const inputBackup = clone(input);
-  t.same(mergeRanges(input), [[1, 8]], "01.01.01 - two args");
+  t.same(mergeRanges(input), [[1, 8]], "07.01 - two args");
   t.same(
     mergeRanges(input, {
       joinRangesThatTouchEdges: false,
     }),
     [[1, 8]],
-    "01.01.02 - two args"
+    "07.02 - two args"
   );
 
   // input argument mutation checks:
-  t.same(input, inputBackup, "01.01.03 - no mutation happened");
+  t.same(input, inputBackup, "07.03 - no mutation happened");
   t.end();
 });
 
-tap.test("01.02 - nothing to merge", (t) => {
+tap.test("08 - nothing to merge", (t) => {
   t.same(
     mergeRanges([
       [3, 8],
@@ -114,7 +114,7 @@ tap.test("01.02 - nothing to merge", (t) => {
       [1, 2],
       [3, 8],
     ],
-    "01.02.01 - just sorted"
+    "08.01 - just sorted"
   );
   t.same(
     mergeRanges(
@@ -130,33 +130,33 @@ tap.test("01.02 - nothing to merge", (t) => {
       [1, 2],
       [3, 8],
     ],
-    "01.02.02"
+    "08.02"
   );
   t.end();
 });
 
-tap.test("01.03 - empty input", (t) => {
-  t.same(mergeRanges([]), [], "01.03.01 - empty array");
-  t.same(mergeRanges(null), null, "01.03.02 - null");
+tap.test("09 - empty input", (t) => {
+  t.same(mergeRanges([]), [], "09.01 - empty array");
+  t.same(mergeRanges(null), null, "09.02 - null");
   // with opts
   t.same(
     mergeRanges([], {
       joinRangesThatTouchEdges: false,
     }),
     [],
-    "01.03.03 - empty array"
+    "09.03 - empty array"
   );
   t.same(
     mergeRanges(null, {
       joinRangesThatTouchEdges: false,
     }),
     null,
-    "01.03.04 - null"
+    "09.04 - null"
   );
   t.end();
 });
 
-tap.test("01.04 - more complex case", (t) => {
+tap.test("10 - more complex case", (t) => {
   let counter = 0;
   t.same(
     mergeRanges([
@@ -170,7 +170,7 @@ tap.test("01.04 - more complex case", (t) => {
       [1, 5],
       [6, 30],
     ],
-    "01.04.01"
+    "10.01"
   );
   t.same(
     mergeRanges(
@@ -189,7 +189,7 @@ tap.test("01.04 - more complex case", (t) => {
       [1, 5],
       [6, 30],
     ],
-    "01.04.02"
+    "10.02"
   );
   t.same(
     mergeRanges(
@@ -208,7 +208,7 @@ tap.test("01.04 - more complex case", (t) => {
       [1, 5],
       [6, 30],
     ],
-    "01.04.03"
+    "10.03"
   );
   t.same(
     mergeRanges(
@@ -231,9 +231,9 @@ tap.test("01.04 - more complex case", (t) => {
       [1, 5],
       [6, 30],
     ],
-    "01.04.04"
+    "10.04"
   );
-  t.ok(counter > 5, "01.04.05");
+  t.ok(counter > 5, "10.05");
 
   // with opts
   t.same(
@@ -254,7 +254,7 @@ tap.test("01.04 - more complex case", (t) => {
       [6, 10],
       [10, 30],
     ],
-    "01.04.06"
+    "10.06"
   );
   t.same(
     mergeRanges(
@@ -275,12 +275,12 @@ tap.test("01.04 - more complex case", (t) => {
       [6, 10],
       [10, 30],
     ],
-    "01.04.07"
+    "10.07"
   );
   t.end();
 });
 
-tap.test("01.05 - even more complex case", (t) => {
+tap.test("11 - even more complex case", (t) => {
   let last;
   const counter = 0;
   t.same(
@@ -325,13 +325,13 @@ tap.test("01.05 - even more complex case", (t) => {
       [29, 38],
       [40, 40, "rrrr"],
     ],
-    "01.05.01"
+    "11.01"
   );
-  t.ok(counter < 100, "01.05.02");
+  t.ok(counter < 100, "11.02");
   t.end();
 });
 
-tap.test("01.06 - more merging examples", (t) => {
+tap.test("12 - more merging examples", (t) => {
   t.same(
     mergeRanges([
       [7, 14],
@@ -344,13 +344,13 @@ tap.test("01.06 - more merging examples", (t) => {
       [24, 28, "  "],
       [29, 31],
     ],
-    "01.06.01"
+    "12"
   );
   t.end();
 });
 
 tap.test(
-  "01.07 - superset range discards to-add content of their subset ranges #1",
+  "13 - superset range discards to-add content of their subset ranges #1",
   (t) => {
     t.same(
       mergeRanges([
@@ -358,14 +358,14 @@ tap.test(
         [1, 10],
       ]),
       [[1, 10]],
-      "01.07"
+      "13"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.08 - superset range discards to-add content of their subset ranges #2",
+  "14 - superset range discards to-add content of their subset ranges #2",
   (t) => {
     t.same(
       mergeRanges([
@@ -375,14 +375,14 @@ tap.test(
         [1, 10],
       ]),
       [[1, 10]],
-      "01.08"
+      "14"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.09 - superset range discards to-add content of their subset ranges #3",
+  "15 - superset range discards to-add content of their subset ranges #3",
   (t) => {
     t.same(
       mergeRanges([
@@ -393,7 +393,7 @@ tap.test(
         [3, 10],
       ]),
       [[1, 10, " "]],
-      "01.09.01"
+      "15.01"
     );
     t.same(
       mergeRanges([
@@ -404,7 +404,7 @@ tap.test(
         [7, 9, " "],
       ]),
       [[1, 10, " "]],
-      "01.09.02"
+      "15.02"
     );
     t.same(
       mergeRanges([
@@ -415,7 +415,7 @@ tap.test(
         [7, 9, " "],
       ]),
       [[1, 10, " "]],
-      "01.09.03"
+      "15.03"
     );
     t.same(
       mergeRanges([
@@ -429,13 +429,13 @@ tap.test(
         [1, 2, " "],
         [3, 10],
       ],
-      "01.09.04"
+      "15.04"
     );
     t.end();
   }
 );
 
-tap.test("01.10 - third arg is null", (t) => {
+tap.test("16 - third arg is null", (t) => {
   t.same(
     mergeRanges([
       [3, 8, "c"],
@@ -443,7 +443,7 @@ tap.test("01.10 - third arg is null", (t) => {
       [2, 5, "b"],
     ]),
     [[1, 8, null]],
-    "01.10.01"
+    "16.01"
   );
   t.same(
     mergeRanges([
@@ -451,7 +451,7 @@ tap.test("01.10 - third arg is null", (t) => {
       [1, 4, null],
     ]),
     [[1, 8, null]],
-    "01.10.02"
+    "16.02"
   );
   t.same(
     mergeRanges([
@@ -459,7 +459,7 @@ tap.test("01.10 - third arg is null", (t) => {
       [3, 8, "c"],
     ]),
     [[1, 8, null]],
-    "01.10.03"
+    "16.03"
   );
   t.same(
     mergeRanges([
@@ -467,7 +467,7 @@ tap.test("01.10 - third arg is null", (t) => {
       [3, 8, null],
     ]),
     [[1, 8, null]],
-    "01.10.04"
+    "16.04"
   );
   t.same(
     mergeRanges([
@@ -475,18 +475,18 @@ tap.test("01.10 - third arg is null", (t) => {
       [1, 4, "c"],
     ]),
     [[1, 8, null]],
-    "01.10.05"
+    "16.05"
   );
   t.end();
 });
 
-tap.test("01.11 - only one range, nothing to merge", (t) => {
-  t.same(mergeRanges([[1, 4, null]]), [[1, 4, null]], "01.11.01");
-  t.same(mergeRanges([[1, 4]]), [[1, 4]], "01.11.02");
+tap.test("17 - only one range, nothing to merge", (t) => {
+  t.same(mergeRanges([[1, 4, null]]), [[1, 4, null]], "17.01");
+  t.same(mergeRanges([[1, 4]]), [[1, 4]], "17.02");
   t.end();
 });
 
-tap.test("01.12 - input arg mutation prevention", (t) => {
+tap.test("18 - input arg mutation prevention", (t) => {
   const originalInput = [
     [5, 7, " "],
     [1, 3, " "],
@@ -497,11 +497,11 @@ tap.test("01.12 - input arg mutation prevention", (t) => {
   const originalRef = Array.from(originalInput); // clone it
 
   t.same(mergeRanges(originalInput), [[1, 10, " "]], "useless test");
-  t.same(originalInput, originalRef, "01.12.01 - mutation didn't happen");
+  t.same(originalInput, originalRef, "18.02 - mutation didn't happen");
   t.end();
 });
 
-tap.test("01.13 - only two identical args in the range", (t) => {
+tap.test("19 - only two identical args in the range", (t) => {
   t.same(
     mergeRanges([
       [1, 1],
@@ -512,9 +512,9 @@ tap.test("01.13 - only two identical args in the range", (t) => {
       [2, 2, "zzz"],
       [3, 4],
     ],
-    "01.13.01"
+    "19.01"
   );
-  t.same(mergeRanges([[1, 1]]), [], "01.13.02");
+  t.same(mergeRanges([[1, 1]]), [], "19.02");
 
   // opts.mergeType === 2
   t.same(
@@ -530,13 +530,13 @@ tap.test("01.13 - only two identical args in the range", (t) => {
       [2, 2, "zzz"],
       [3, 4],
     ],
-    "01.13.03"
+    "19.03"
   );
-  t.same(mergeRanges([[1, 1]], { mergeType: 2 }), [], "01.13.04");
+  t.same(mergeRanges([[1, 1]], { mergeType: 2 }), [], "19.04");
   t.end();
 });
 
-tap.test("01.14 - third arg", (t) => {
+tap.test("20 - third arg", (t) => {
   // opts.mergeType === 1
   t.same(
     mergeRanges([
@@ -545,7 +545,7 @@ tap.test("01.14 - third arg", (t) => {
       [2, 5, "b"],
     ]),
     [[1, 8, "abc"]],
-    "01.14.01"
+    "20.01"
   );
   t.same(
     mergeRanges([
@@ -554,7 +554,7 @@ tap.test("01.14 - third arg", (t) => {
       [2, 5, "b"],
     ]),
     [[1, 8, "bc"]],
-    "01.14.02"
+    "20.02"
   );
   t.same(
     mergeRanges([
@@ -563,7 +563,7 @@ tap.test("01.14 - third arg", (t) => {
       [2, 5],
     ]),
     [[1, 8, "ac"]],
-    "01.14.03"
+    "20.03"
   );
   t.same(
     mergeRanges([
@@ -572,7 +572,7 @@ tap.test("01.14 - third arg", (t) => {
       [2, 5, "b"],
     ]),
     [[1, 8, "ab"]],
-    "01.14.04"
+    "20.04"
   );
 
   // opts.mergeType === 2
@@ -586,7 +586,7 @@ tap.test("01.14 - third arg", (t) => {
       { mergeType: 2 }
     ),
     [[1, 8, "abc"]],
-    "01.14.05"
+    "20.05"
   );
   t.same(
     mergeRanges(
@@ -598,7 +598,7 @@ tap.test("01.14 - third arg", (t) => {
       { mergeType: 2 }
     ),
     [[1, 8, "bc"]],
-    "01.14.06"
+    "20.06"
   );
   t.same(
     mergeRanges(
@@ -610,7 +610,7 @@ tap.test("01.14 - third arg", (t) => {
       { mergeType: 2 }
     ),
     [[1, 8, "ac"]],
-    "01.14.07"
+    "20.07"
   );
   t.same(
     mergeRanges(
@@ -622,7 +622,7 @@ tap.test("01.14 - third arg", (t) => {
       { mergeType: 2 }
     ),
     [[1, 8, "ab"]],
-    "01.14.08"
+    "20.08"
   );
   t.end();
 });
@@ -630,7 +630,7 @@ tap.test("01.14 - third arg", (t) => {
 // 02. opts.mergeType === 2
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - few ranges starting at the same index", (t) => {
+tap.test("21 - few ranges starting at the same index", (t) => {
   // hors d'oeuvres - opts.mergeType === 1
   t.same(
     mergeRanges([
@@ -638,7 +638,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       [3, 12, "zzz"],
     ]),
     [[3, 12, "aaazzz"]],
-    "02.01.01 - control #1"
+    "21.01 - control #1"
   );
   t.same(
     mergeRanges([
@@ -646,7 +646,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       [3, 4, "aaa"],
     ]), // notice order is opposite
     [[3, 12, "aaazzz"]], // <--- order does not matter, ranges are sorted
-    "02.01.02 - control #2"
+    "21.02 - control #2"
   );
   t.same(
     mergeRanges(
@@ -657,7 +657,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       { mergeType: 1 }
     ),
     [[3, 12, "aaazzz"]],
-    "02.01.03 - hardcoded correct default value"
+    "21.03 - hardcoded correct default value"
   );
   t.same(
     mergeRanges(
@@ -668,7 +668,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       { mergeType: "1" }
     ),
     [[3, 12, "aaazzz"]],
-    "02.01.04 - hardcoded incorrect type default value"
+    "21.04 - hardcoded incorrect type default value"
   );
 
   // entrée - opts.mergeType === 2
@@ -681,7 +681,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       { mergeType: 2 }
     ),
     [[3, 12, "zzz"]],
-    "02.01.05"
+    "21.05"
   );
   t.same(
     mergeRanges(
@@ -692,7 +692,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       { mergeType: "2" }
     ),
     [[3, 12, "zzz"]],
-    "02.01.06"
+    "21.06"
   );
   t.same(
     mergeRanges(
@@ -703,7 +703,7 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
       { mergeType: 2 }
     ),
     [[3, 12, "zzz"]], // ^ order does not matter
-    "02.01.07"
+    "21.07"
   );
   t.end();
 });
@@ -711,26 +711,26 @@ tap.test("02.01 - few ranges starting at the same index", (t) => {
 // 3. opts.joinRangesThatTouchEdges
 // -----------------------------------------------------------------------------
 
-tap.test("03.01 - third arg", (t) => {
+tap.test("22 - third arg", (t) => {
   const inp1 = [
     [1, 3, "a"],
     [3, 6, "b"],
   ];
   const res1 = [[1, 6, "ab"]];
-  t.same(mergeRanges(inp1), res1, "03.01.01");
+  t.same(mergeRanges(inp1), res1, "22.01");
   t.same(
     mergeRanges(inp1, {
       joinRangesThatTouchEdges: true,
     }),
     res1,
-    "03.01.02"
+    "22.02"
   );
   t.same(
     mergeRanges(inp1, {
       joinRangesThatTouchEdges: false,
     }),
     inp1,
-    "03.01.03"
+    "22.03"
   );
   t.end();
 });

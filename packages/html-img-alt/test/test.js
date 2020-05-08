@@ -5,137 +5,137 @@ import alt from "../dist/html-img-alt.esm";
 // -----------------------------------------------------------------------------
 // no alt attr is missing, only whitespace control
 
-tap.test("00.01 - nothing is missing", (t) => {
+tap.test("01 - nothing is missing", (t) => {
   t.same(
     alt('zzz<img        alt="123" >zzz'),
     'zzz<img alt="123" >zzz',
-    "00.01 - one HTML tag, only excessive whitespace"
+    "01 - one HTML tag, only excessive whitespace"
   );
   t.end();
 });
 
-tap.test("00.02 - nothing is missing", (t) => {
+tap.test("02 - nothing is missing", (t) => {
   t.same(
     alt('<img   alt="123"    >'),
     '<img alt="123" >',
-    "00.02 - whitespace on both sides, one tag"
+    "02 - whitespace on both sides, one tag"
   );
   t.end();
 });
 
-tap.test("00.03 - nothing is missing", (t) => {
+tap.test("03 - nothing is missing", (t) => {
   t.same(
     alt('xxx<img        alt="123" >yyy<img   alt="123"    >zzz'),
     'xxx<img alt="123" >yyy<img alt="123" >zzz',
-    "00.03 - multiple HTML tags, only excessive whitespace"
+    "03 - multiple HTML tags, only excessive whitespace"
   );
   t.end();
 });
 
-tap.test("00.04 - nothing is missing", (t) => {
+tap.test("04 - nothing is missing", (t) => {
   t.same(
     alt('zzz<img        alt="123" />zzz'),
     'zzz<img alt="123" />zzz',
-    "00.04 - one XHTML tag, only excessive whitespace"
+    "04 - one XHTML tag, only excessive whitespace"
   );
   t.end();
 });
 
-tap.test("00.05 - nothing is missing", (t) => {
+tap.test("05 - nothing is missing", (t) => {
   t.same(
     alt('xxx<img        alt="123" />yyy<img   alt="123"    />zzz'),
     'xxx<img alt="123" />yyy<img alt="123" />zzz',
-    "00.05 - multiple XHTML tags, only excessive whitespace"
+    "05 - multiple XHTML tags, only excessive whitespace"
   );
   t.end();
 });
 
-tap.test("00.06 - nothing is missing", (t) => {
+tap.test("06 - nothing is missing", (t) => {
   t.same(
     alt("aaaa        bbbbb"),
     "aaaa        bbbbb",
-    "00.06 - excessive whitespace, no tags at all"
+    "06 - excessive whitespace, no tags at all"
   );
   t.end();
 });
 
-tap.test("00.07 - nothing is missing", (t) => {
+tap.test("07 - nothing is missing", (t) => {
   t.same(
     alt("aaaa alt bbbbb"),
     "aaaa alt bbbbb",
-    "00.07 - suspicious alt within copy but not IMG tag"
+    "07 - suspicious alt within copy but not IMG tag"
   );
   t.end();
 });
 
-tap.test("00.08 - nothing is missing", (t) => {
+tap.test("08 - nothing is missing", (t) => {
   t.same(
     alt("aaaa alt= bbbbb"),
     "aaaa alt= bbbbb",
-    "00.08 - suspicious alt= within copy but not IMG tag"
+    "08 - suspicious alt= within copy but not IMG tag"
   );
   t.end();
 });
 
-tap.test("00.09 - nothing is missing", (t) => {
+tap.test("09 - nothing is missing", (t) => {
   t.same(
     alt("aaaa alt = bbbbb"),
     "aaaa alt = bbbbb",
-    "00.09 - suspicious alt= within copy but not IMG tag"
+    "09 - suspicious alt= within copy but not IMG tag"
   );
   t.end();
 });
 
-tap.test("00.10 - nothing is missing", (t) => {
+tap.test("10 - nothing is missing", (t) => {
   t.same(
     alt('<img alt="1   23" >'),
     '<img alt="1   23" >',
-    "00.10 - does nothing"
+    "10 - does nothing"
   );
   t.end();
 });
 
-tap.test("00.11 - nothing is missing", (t) => {
+tap.test("11 - nothing is missing", (t) => {
   t.same(
     alt('<img    class="zzz"   alt="123"    >'),
     '<img class="zzz" alt="123" >',
-    "00.11 - whitespace on both sides, one tag"
+    "11 - whitespace on both sides, one tag"
   );
   t.end();
 });
 
-tap.test("00.12 - nothing is missing", (t) => {
+tap.test("12 - nothing is missing", (t) => {
   t.same(
     alt('zzz<img        alt="123"    /  >yyy'),
     'zzz<img alt="123" />yyy',
-    "00.12"
+    "12"
   );
   t.end();
 });
 
-tap.test("00.13 - nothing is missing", (t) => {
+tap.test("13 - nothing is missing", (t) => {
   t.same(
     alt('z/zz<img        alt="/123/"    /  >y/yy'),
     'z/zz<img alt="/123/" />y/yy',
-    "00.13"
+    "13"
   );
   t.end();
 });
 
-tap.test("00.14 - nothing is missing", (t) => {
+tap.test("14 - nothing is missing", (t) => {
   t.same(
     alt('zzz<img     alt    =     ""    /     >zzz'),
     'zzz<img alt="" />zzz',
-    "00.14"
+    "14"
   );
   t.end();
 });
 
-tap.test("00.15 - nothing is missing", (t) => {
+tap.test("15 - nothing is missing", (t) => {
   t.same(
     alt('zzz<img        alt="123"   class="test" >zzz'),
     'zzz<img alt="123" class="test" >zzz',
-    "00.15"
+    "15"
   );
   t.end();
 });
@@ -144,57 +144,57 @@ tap.test("00.15 - nothing is missing", (t) => {
 // -----------------------------------------------------------------------------
 // alt attr is missing
 
-tap.test("01.01 - missing alt", (t) => {
-  t.same(alt("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01.01 - html - tight");
+tap.test("16 - missing alt", (t) => {
+  t.same(alt("zzz<img>zzz"), 'zzz<img alt="" >zzz', "16 - html - tight");
   t.end();
 });
 
-tap.test("01.02 - missing alt", (t) => {
+tap.test("17 - missing alt", (t) => {
   t.same(
     alt("zzz<img >zzz"),
     'zzz<img alt="" >zzz',
-    "01.02 - html - trailing space"
+    "17 - html - trailing space"
   );
   t.end();
 });
 
-tap.test("01.03 - missing alt", (t) => {
+tap.test("18 - missing alt", (t) => {
   t.same(
     alt("zzz<img      >zzz"),
     'zzz<img alt="" >zzz',
-    "01.03 - html - excessive trailing space"
+    "18 - html - excessive trailing space"
   );
   t.end();
 });
 
-tap.test("01.04 - missing alt", (t) => {
-  t.same(alt("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "01.04 - xhtml - tight");
+tap.test("19 - missing alt", (t) => {
+  t.same(alt("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "19 - xhtml - tight");
   t.end();
 });
 
-tap.test("01.05 - missing alt", (t) => {
+tap.test("20 - missing alt", (t) => {
   t.same(
     alt("zzz<img />zzz"),
     'zzz<img alt="" />zzz',
-    "01.05 - xhtml - one space before slash"
+    "20 - xhtml - one space before slash"
   );
   t.end();
 });
 
-tap.test("01.06 - missing alt", (t) => {
+tap.test("21 - missing alt", (t) => {
   t.same(
     alt("zzz<img           />zzz"),
     'zzz<img alt="" />zzz',
-    "01.06 - xhtml - many spaces before slash"
+    "21 - xhtml - many spaces before slash"
   );
   t.end();
 });
 
-tap.test("01.07 - missing alt", (t) => {
+tap.test("22 - missing alt", (t) => {
   t.same(
     alt("zzz<img           /    >zzz"),
     'zzz<img alt="" />zzz',
-    "01.07 - xhtml - many spaces on both sides"
+    "22 - xhtml - many spaces on both sides"
   );
   t.end();
 });
@@ -203,60 +203,60 @@ tap.test("01.07 - missing alt", (t) => {
 // -----------------------------------------------------------------------------
 // adds ALT
 
-tap.test("02.01 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("23 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt('z<img         a="zz"        >z'),
     'z<img a="zz" alt="" >z',
-    "02.01 - html simples"
+    "23 - html simples"
   );
   t.end();
 });
 
-tap.test("02.02 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("24 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt('z<img         a="zz"        />z'),
     'z<img a="zz" alt="" />z',
-    "02.02 - xhtml simples"
+    "24 - xhtml simples"
   );
   t.end();
 });
 
-tap.test("02.03 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("25 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt('z<img         a="zz"        /     >z'),
     'z<img a="zz" alt="" />z',
-    "02.03 - xhtml simples"
+    "25 - xhtml simples"
   );
   t.end();
 });
 
-tap.test("02.04 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("26 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt('z<img         a="zz"/     >z'),
     'z<img a="zz" alt="" />z',
-    "02.04 - xhtml simples"
+    "26 - xhtml simples"
   );
   t.end();
 });
 
-tap.test("02.05 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("27 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt(
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       >zzz'
     ),
     'zzz<img whatever="sjldldljg; slhljdfg" also="sdfkdh:232423 ; kgkd: 1223678638" alt="" >zzz',
-    "02.05 - html advanced"
+    "27 - html advanced"
   );
   t.end();
 });
 
-tap.test("02.06 - normalising all attributes on IMG, adding ALT", (t) => {
+tap.test("28 - normalising all attributes on IMG, adding ALT", (t) => {
   t.same(
     alt(
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       />zzz'
     ),
     'zzz<img whatever="sjldldljg; slhljdfg" also="sdfkdh:232423 ; kgkd: 1223678638" alt="" />zzz',
-    "02.06 - xhtml advanced"
+    "28 - xhtml advanced"
   );
   t.end();
 });
@@ -266,138 +266,130 @@ tap.test("02.06 - normalising all attributes on IMG, adding ALT", (t) => {
 // missing ALT, other attributes present
 
 tap.test(
-  "03.01 - alt attribute is missing, there are other attributes too - HTML - #1",
+  "29 - alt attribute is missing, there are other attributes too - HTML - #1",
   (t) => {
     // HTML
-    t.same(
-      alt('zzz<img class="">zzz'),
-      'zzz<img class="" alt="" >zzz',
-      "03.01"
-    );
+    t.same(alt('zzz<img class="">zzz'), 'zzz<img class="" alt="" >zzz', "29");
     t.end();
   }
 );
 
 tap.test(
-  "03.02 - alt attribute is missing, there are other attributes too - HTML - #2",
+  "30 - alt attribute is missing, there are other attributes too - HTML - #2",
   (t) => {
     t.same(
       alt('zzz<img    class="">zzz'),
       'zzz<img class="" alt="" >zzz',
-      "03.02"
+      "30"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.03 - alt attribute is missing, there are other attributes too - HTML - #3",
+  "31 - alt attribute is missing, there are other attributes too - HTML - #3",
   (t) => {
     t.same(
       alt('zzz<img class=""    >zzz<img class=""    >zzz<img class=""    >zzz'),
       'zzz<img class="" alt="" >zzz<img class="" alt="" >zzz<img class="" alt="" >zzz',
-      "03.03"
+      "31"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.04 - alt attribute is missing, there are other attributes too - XHTML - #1",
+  "32 - alt attribute is missing, there are other attributes too - XHTML - #1",
   (t) => {
     // XHTML
-    t.same(
-      alt('zzz<img class=""/>zzz'),
-      'zzz<img class="" alt="" />zzz',
-      "03.04"
-    );
+    t.same(alt('zzz<img class=""/>zzz'), 'zzz<img class="" alt="" />zzz', "32");
     t.end();
   }
 );
 
 tap.test(
-  "03.05 - alt attribute is missing, there are other attributes too - XHTML - #1",
+  "33 - alt attribute is missing, there are other attributes too - XHTML - #1",
   (t) => {
     t.same(
       alt('zzz<img    class=""/>zzz'),
       'zzz<img class="" alt="" />zzz',
-      "03.05"
+      "33"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.06 - alt attribute is missing, there are other attributes too - XHTML - #2",
+  "34 - alt attribute is missing, there are other attributes too - XHTML - #2",
   (t) => {
     t.same(
       alt('zzz<img class=""    />zzz'),
       'zzz<img class="" alt="" />zzz',
-      "03.06"
+      "34"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.07 - alt attribute is missing, there are other attributes too - XHTML - #3",
+  "35 - alt attribute is missing, there are other attributes too - XHTML - #3",
   (t) => {
     t.same(
       alt('zzz<img    class=""   />zzz'),
       'zzz<img class="" alt="" />zzz',
-      "03.07"
+      "35"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.08 - alt attribute is missing, there are other attributes too - XHTML - #4",
+  "36 - alt attribute is missing, there are other attributes too - XHTML - #4",
   (t) => {
     t.same(
       alt(
         'zzz<img class=""       />zzz<img class=""       />zzz<img class=""       />zzz'
       ),
       'zzz<img class="" alt="" />zzz<img class="" alt="" />zzz<img class="" alt="" />zzz',
-      "03.08"
+      "36"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.09 - alt attribute is missing, there are other attributes too - XHTML - #5",
+  "37 - alt attribute is missing, there are other attributes too - XHTML - #5",
   (t) => {
     t.same(
       alt('zzz<img class=""/   >zzz'),
       'zzz<img class="" alt="" />zzz',
-      "03.09"
+      "37"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.10 - alt attribute is missing, there are other attributes too - XHTML - #6",
+  "38 - alt attribute is missing, there are other attributes too - XHTML - #6",
   (t) => {
     t.same(
       alt('zzz<img    class=""/   >zzz'),
       'zzz<img class="" alt="" />zzz',
-      "03.10"
+      "38"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03.11 - alt attribute is missing, there are other attributes too - XHTML - #7",
+  "39 - alt attribute is missing, there are other attributes too - XHTML - #7",
   (t) => {
     t.same(
       alt(
         'zzz<img class=""    /   >zzz<img class=""    /   >zzz<img class=""    /   >zzz'
       ),
       'zzz<img class="" alt="" />zzz<img class="" alt="" />zzz<img class="" alt="" />zzz',
-      "03.11"
+      "39"
     );
     t.end();
   }
@@ -407,70 +399,66 @@ tap.test(
 // -----------------------------------------------------------------------------
 // alt attr is present, but without equal and double quotes.
 
-tap.test("04.01 - alt without equal", (t) => {
-  t.same(alt("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "04.01 - html - tight");
+tap.test("40 - alt without equal", (t) => {
+  t.same(alt("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "40 - html - tight");
   t.end();
 });
 
-tap.test("04.02 - alt without equal", (t) => {
+tap.test("41 - alt without equal", (t) => {
   t.same(
     alt("zzz<img    alt>zzz"),
     'zzz<img alt="" >zzz',
-    "04.02 - html - excessive white space"
+    "41 - html - excessive white space"
   );
   t.end();
 });
 
-tap.test("04.03 - alt without equal", (t) => {
+tap.test("42 - alt without equal", (t) => {
   t.same(
     alt("zzz<img alt >zzz"),
     'zzz<img alt="" >zzz',
-    "04.03 - html - one trailing space"
+    "42 - html - one trailing space"
   );
   t.end();
 });
 
-tap.test("04.04 - alt without equal", (t) => {
+tap.test("43 - alt without equal", (t) => {
   t.same(
     alt("zzz<img      alt      >zzz"),
     'zzz<img alt="" >zzz',
-    "04.04 - html - excessive white space on both sides"
+    "43 - html - excessive white space on both sides"
   );
   t.end();
 });
 
-tap.test("04.05 - alt without equal", (t) => {
-  t.same(
-    alt("zzz<img alt/>zzz"),
-    'zzz<img alt="" />zzz',
-    "04.05 - xhtml - tight"
-  );
+tap.test("44 - alt without equal", (t) => {
+  t.same(alt("zzz<img alt/>zzz"), 'zzz<img alt="" />zzz', "44 - xhtml - tight");
   t.end();
 });
 
-tap.test("04.06 - alt without equal", (t) => {
+tap.test("45 - alt without equal", (t) => {
   t.same(
     alt("zzz<img alt />zzz"),
     'zzz<img alt="" />zzz',
-    "04.06 - xhtml - single space on both sides"
+    "45 - xhtml - single space on both sides"
   );
   t.end();
 });
 
-tap.test("04.07 - alt without equal", (t) => {
+tap.test("46 - alt without equal", (t) => {
   t.same(
     alt("zzz<img      alt   />zzz"),
     'zzz<img alt="" />zzz',
-    "04.07 - xhtml - excessive white space on both sides"
+    "46 - xhtml - excessive white space on both sides"
   );
   t.end();
 });
 
-tap.test("04.08 - alt without equal", (t) => {
+tap.test("47 - alt without equal", (t) => {
   t.same(
     alt("zzz<img      alt   /   >zzz"),
     'zzz<img alt="" />zzz',
-    "04.08 - xhtml - excessive white space everywhere"
+    "47 - xhtml - excessive white space everywhere"
   );
   t.end();
 });
@@ -479,128 +467,128 @@ tap.test("04.08 - alt without equal", (t) => {
 // -----------------------------------------------------------------------------
 // alt attr is present, but with only equal character
 
-tap.test("05.01 - alt with just equal", (t) => {
+tap.test("48 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=>zzz"),
     'zzz<img alt="" >zzz',
-    "05.01 - html, no space after"
+    "48 - html, no space after"
   );
   t.end();
 });
 
-tap.test("05.02 - alt with just equal", (t) => {
+tap.test("49 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=>zzz<img alt=>zzz"),
     'zzz<img alt="" >zzz<img alt="" >zzz',
-    "05.02 - html, two imag tags, no space after each"
+    "49 - html, two imag tags, no space after each"
   );
   t.end();
 });
 
-tap.test("05.03 - alt with just equal", (t) => {
+tap.test("50 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt= >zzz"),
     'zzz<img alt="" >zzz',
-    "05.03 - html, space after"
+    "50 - html, space after"
   );
   t.end();
 });
 
-tap.test("05.04 - alt with just equal", (t) => {
+tap.test("51 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img    alt=>zzz"),
     'zzz<img alt="" >zzz',
-    "05.04 - html, excessive space in front"
+    "51 - html, excessive space in front"
   );
   t.end();
 });
 
-tap.test("05.05 - alt with just equal", (t) => {
+tap.test("52 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=    >zzz"),
     'zzz<img alt="" >zzz',
-    "05.05 - html, excessive space after"
+    "52 - html, excessive space after"
   );
   t.end();
 });
 
-tap.test("05.06 - alt with just equal", (t) => {
+tap.test("53 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=/>zzz"),
     'zzz<img alt="" />zzz',
-    "05.06 - xhtml, no space after"
+    "53 - xhtml, no space after"
   );
   t.end();
 });
 
-tap.test("05.07 - alt with just equal", (t) => {
+tap.test("54 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=/   >zzz"),
     'zzz<img alt="" />zzz',
-    "05.07 - xhtml, no space after"
+    "54 - xhtml, no space after"
   );
   t.end();
 });
 
-tap.test("05.08 - alt with just equal", (t) => {
+tap.test("55 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt= />zzz"),
     'zzz<img alt="" />zzz',
-    "05.08 - xhtml, space after"
+    "55 - xhtml, space after"
   );
   t.end();
 });
 
-tap.test("05.09 - alt with just equal", (t) => {
+tap.test("56 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img    alt=/>zzz"),
     'zzz<img alt="" />zzz',
-    "05.09 - xhtml, excessive space before"
+    "56 - xhtml, excessive space before"
   );
   t.end();
 });
 
-tap.test("05.10 - alt with just equal", (t) => {
+tap.test("57 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt=    />zzz"),
     'zzz<img alt="" />zzz',
-    "05.10 - xhtml, excessive space after"
+    "57 - xhtml, excessive space after"
   );
   t.end();
 });
 
-tap.test("05.11 - alt with just equal", (t) => {
+tap.test("58 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img     alt=    />zzz"),
     'zzz<img alt="" />zzz',
-    "05.11 - xhtml, excessive space on both sides of alt="
+    "58 - xhtml, excessive space on both sides of alt="
   );
   t.end();
 });
 
-tap.test("05.12 - alt with just equal", (t) => {
+tap.test("59 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img     alt   =    />zzz"),
     'zzz<img alt="" />zzz',
-    "05.12 - xhtml, excessive space on both sides of equal, no quotes"
+    "59 - xhtml, excessive space on both sides of equal, no quotes"
   );
   t.end();
 });
 
-tap.test("05.13 - alt with just equal", (t) => {
+tap.test("60 - alt with just equal", (t) => {
   t.same(
     alt("zzz<img alt    =>zzz"),
     'zzz<img alt="" >zzz',
-    "05.13 - html, no space after"
+    "60 - html, no space after"
   );
   t.end();
 });
 
-tap.test("05.14 - alt with just equal", (t) => {
+tap.test("61 - alt with just equal", (t) => {
   t.same(
     alt('zzz<img alt    =   "">zzz'),
     'zzz<img alt="" >zzz',
-    "05.14 - html, no space after"
+    "61 - html, no space after"
   );
   t.end();
 });
@@ -609,66 +597,66 @@ tap.test("05.14 - alt with just equal", (t) => {
 // -----------------------------------------------------------------------------
 // alt attr is present, but with only one quote (double or single), one tag
 
-tap.test("06.01 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt=">zzz'), 'zzz<img alt="" >zzz', "06.01");
+tap.test("62 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt=">zzz'), 'zzz<img alt="" >zzz', "62");
   t.end();
 });
 
-tap.test("06.02 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt =">zzz'), 'zzz<img alt="" >zzz', "06.02");
+tap.test("63 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt =">zzz'), 'zzz<img alt="" >zzz', "63");
   t.end();
 });
 
-tap.test("06.03 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt= ">zzz'), 'zzz<img alt="" >zzz', "06.03");
+tap.test("64 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt= ">zzz'), 'zzz<img alt="" >zzz', "64");
   t.end();
 });
 
-tap.test("06.04 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt=" >zzz'), 'zzz<img alt="" >zzz', "06.04");
+tap.test("65 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt=" >zzz'), 'zzz<img alt="" >zzz', "65");
   t.end();
 });
 
-tap.test("06.05 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt   =">zzz'), 'zzz<img alt="" >zzz', "06.05");
+tap.test("66 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt   =">zzz'), 'zzz<img alt="" >zzz', "66");
   t.end();
 });
 
-tap.test("06.06 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt=   ">zzz'), 'zzz<img alt="" >zzz', "06.06");
+tap.test("67 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt=   ">zzz'), 'zzz<img alt="" >zzz', "67");
   t.end();
 });
 
-tap.test("06.07 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt="   >zzz'), 'zzz<img alt="" >zzz', "06.07");
+tap.test("68 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt="   >zzz'), 'zzz<img alt="" >zzz', "68");
   t.end();
 });
 
-tap.test("06.08 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt   =   ">zzz'), 'zzz<img alt="" >zzz', "06.08");
+tap.test("69 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt   =   ">zzz'), 'zzz<img alt="" >zzz', "69");
   t.end();
 });
 
-tap.test("06.09 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt=   "   >zzz'), 'zzz<img alt="" >zzz', "06.09");
+tap.test("70 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt=   "   >zzz'), 'zzz<img alt="" >zzz', "70");
   t.end();
 });
 
-tap.test("06.10 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt   ="   >zzz'), 'zzz<img alt="" >zzz', "06.10");
+tap.test("71 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt   ="   >zzz'), 'zzz<img alt="" >zzz', "71");
   t.end();
 });
 
-tap.test("06.11 - alt with only one double quote, one HTML tag", (t) => {
-  t.same(alt('zzz<img alt   =   "   >zzz'), 'zzz<img alt="" >zzz', "06.11");
+tap.test("72 - alt with only one double quote, one HTML tag", (t) => {
+  t.same(alt('zzz<img alt   =   "   >zzz'), 'zzz<img alt="" >zzz', "72");
   t.end();
 });
 
-tap.test("06.12 - alt with only one double quote, one HTML tag", (t) => {
+tap.test("73 - alt with only one double quote, one HTML tag", (t) => {
   t.same(
     alt('<img alt="legit quote: \'" >'),
     '<img alt="legit quote: \'" >',
-    "06.12"
+    "73"
   );
   t.end();
 });
@@ -677,114 +665,114 @@ tap.test("06.12 - alt with only one double quote, one HTML tag", (t) => {
 // -----------------------------------------------------------------------------
 // alt attr is present, but with only one quote (double or single), 3 tags
 
-tap.test("07.01 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("74 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt=">zzz<img alt=">zzz<img alt=">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.01"
+    "74"
   );
   t.end();
 });
 
-tap.test("07.02 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("75 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt =">zzz<img alt =">zzz<img alt =">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.02"
+    "75"
   );
   t.end();
 });
 
-tap.test("07.03 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("76 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt= ">zzz<img alt= ">zzz<img alt= ">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.03"
+    "76"
   );
   t.end();
 });
 
-tap.test("07.04 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("77 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt=" >zzz<img alt=" >zzz<img alt=" >zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.04"
+    "77"
   );
   t.end();
 });
 
-tap.test("07.05 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("78 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt   =">zzz<img alt   =">zzz<img alt   =">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.05"
+    "78"
   );
   t.end();
 });
 
-tap.test("07.06 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("79 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt=   ">zzz<img alt=   ">zzz<img alt=   ">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.06"
+    "79"
   );
   t.end();
 });
 
-tap.test("07.07 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("80 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt="   >zzz<img alt="   >zzz<img alt="   >zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.07"
+    "80"
   );
   t.end();
 });
 
-tap.test("07.08 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("81 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt   =   ">zzz<img alt   =   ">zzz<img alt   =   ">zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.08"
+    "81"
   );
   t.end();
 });
 
-tap.test("07.09 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("82 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt=   "   >zzz<img alt=   "   >zzz<img alt=   "   >zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.09"
+    "82"
   );
   t.end();
 });
 
-tap.test("07.10 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("83 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt('zzz<img alt   ="   >zzz<img alt   ="   >zzz<img alt   ="   >zzz'),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.10"
+    "83"
   );
   t.end();
 });
 
-tap.test("07.11 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("84 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt(
       'zzz<img alt   =   "   >zzz<img alt   =   "   >zzz<img alt   =   "   >zzz'
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "07.11"
+    "84"
   );
   t.end();
 });
 
-tap.test("07.12 - alt with only one double quote, three HTML tags", (t) => {
+tap.test("85 - alt with only one double quote, three HTML tags", (t) => {
   t.same(
     alt(
       '<img alt="legit quote: \'" ><img alt="legit quote: \'" ><img alt="legit quote: \'" >'
     ),
     '<img alt="legit quote: \'" ><img alt="legit quote: \'" ><img alt="legit quote: \'" >',
-    "07.12"
+    "85"
   );
   t.end();
 });
@@ -793,51 +781,51 @@ tap.test("07.12 - alt with only one double quote, three HTML tags", (t) => {
 // -----------------------------------------------------------------------------
 // alt with only one double quote, one XHTML tag
 
-tap.test("08.01 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt="/>zzz'), 'zzz<img alt="" />zzz', "08.01");
+tap.test("86 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt="/>zzz'), 'zzz<img alt="" />zzz', "86");
   t.end();
 });
 
-tap.test("08.02 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt ="/>zzz'), 'zzz<img alt="" />zzz', "08.02");
+tap.test("87 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt ="/>zzz'), 'zzz<img alt="" />zzz', "87");
   t.end();
 });
 
-tap.test("08.03 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt= "/>zzz'), 'zzz<img alt="" />zzz', "08.03");
+tap.test("88 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt= "/>zzz'), 'zzz<img alt="" />zzz', "88");
   t.end();
 });
 
-tap.test("08.04 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt=" />zzz'), 'zzz<img alt="" />zzz', "08.04");
+tap.test("89 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt=" />zzz'), 'zzz<img alt="" />zzz', "89");
   t.end();
 });
 
-tap.test("08.05 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt   ="/>zzz'), 'zzz<img alt="" />zzz', "08.05");
+tap.test("90 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt   ="/>zzz'), 'zzz<img alt="" />zzz', "90");
   t.end();
 });
 
-tap.test("08.06 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt\n="/>zzz'), 'zzz<img alt="" />zzz', "08.06");
+tap.test("91 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt\n="/>zzz'), 'zzz<img alt="" />zzz', "91");
   t.end();
 });
 
-tap.test("08.07 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt="   />zzz'), 'zzz<img alt="" />zzz', "08.07");
+tap.test("92 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt="   />zzz'), 'zzz<img alt="" />zzz', "92");
   t.end();
 });
 
-tap.test("08.08 - alt with only one double quote, one XHTML tag", (t) => {
-  t.same(alt('zzz<img alt   ="   />zzz'), 'zzz<img alt="" />zzz', "08.08");
+tap.test("93 - alt with only one double quote, one XHTML tag", (t) => {
+  t.same(alt('zzz<img alt   ="   />zzz'), 'zzz<img alt="" />zzz', "93");
   t.end();
 });
 
-tap.test("08.09 - alt with only one double quote, one XHTML tag", (t) => {
+tap.test("94 - alt with only one double quote, one XHTML tag", (t) => {
   t.same(
     alt('<img alt="legit quote: \'" />'),
     '<img alt="legit quote: \'" />',
-    "08.09"
+    "94"
   );
   t.end();
 });
@@ -846,83 +834,83 @@ tap.test("08.09 - alt with only one double quote, one XHTML tag", (t) => {
 // -----------------------------------------------------------------------------
 // alt with only one double quote, three XHTML tags
 
-tap.test("09.01 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("95 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt="/>zzz<img alt="   />zzz<img alt="/    >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.01"
+    "95"
   );
   t.end();
 });
 
-tap.test("09.02 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("96 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt ="/>zzz<img alt ="   />zzz<img alt ="/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.02"
+    "96"
   );
   t.end();
 });
 
-tap.test("09.03 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("97 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt= "/>zzz<img alt= "   />zzz<img alt= "/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.03"
+    "97"
   );
   t.end();
 });
 
-tap.test("09.04 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("98 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt=" />zzz<img alt="    />zzz<img alt=" /   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.04"
+    "98"
   );
   t.end();
 });
 
-tap.test("09.05 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("99 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt   ="/>zzz<img alt   ="    />zzz<img alt   ="/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.05"
+    "99"
   );
   t.end();
 });
 
-tap.test("09.06 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("100 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt('zzz<img alt="   />zzz<img alt="     />zzz<img alt="   /   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.06"
+    "100"
   );
   t.end();
 });
 
-tap.test("09.07 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("101 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt(
       'zzz<img alt   ="   />zzz<img alt   ="     />zzz<img alt   ="   /    >zzz'
     ),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
-    "09.07"
+    "101"
   );
   t.end();
 });
 
-tap.test("09.08 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(alt('<img alt="z"/   >'), '<img alt="z" />', "09.08");
+tap.test("102 - alt with only one double quote, three XHTML tags", (t) => {
+  t.same(alt('<img alt="z"/   >'), '<img alt="z" />', "102");
   t.end();
 });
 
-tap.test("09.09 - alt with only one double quote, three XHTML tags", (t) => {
+tap.test("103 - alt with only one double quote, three XHTML tags", (t) => {
   t.same(
     alt(
       '<img alt="legit quote: \'"/><img alt="legit quote: \'"   /><img alt="legit quote: \'"/   >'
     ),
     '<img alt="legit quote: \'" /><img alt="legit quote: \'" /><img alt="legit quote: \'" />',
-    "09.09"
+    "103"
   );
   t.end();
 });
@@ -931,65 +919,65 @@ tap.test("09.09 - alt with only one double quote, three XHTML tags", (t) => {
 // -----------------------------------------------------------------------------
 // alt with only one single quote
 
-tap.test("10.01 - alt with only one single quote", (t) => {
+tap.test("104 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt='>zzz"),
     'zzz<img alt="" >zzz',
-    "10.01 - html, one single quote"
+    "104 - html, one single quote"
   );
   t.end();
 });
 
-tap.test("10.02 - alt with only one single quote", (t) => {
+tap.test("105 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt=  '  >zzz"),
     'zzz<img alt="" >zzz',
-    "10.02 - html, one single quote"
+    "105 - html, one single quote"
   );
   t.end();
 });
 
-tap.test("10.03 - alt with only one single quote", (t) => {
+tap.test("106 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt   =  '  >zzz"),
     'zzz<img alt="" >zzz',
-    "10.03 - html, one single quote"
+    "106 - html, one single quote"
   );
   t.end();
 });
 
-tap.test("10.04 - alt with only one single quote", (t) => {
+tap.test("107 - alt with only one single quote", (t) => {
   t.same(
     alt("zz'z<img alt='>zzz<img alt=\"legit quote: '\" >zz"),
     'zz\'z<img alt="" >zzz<img alt="legit quote: \'" >zz',
-    "10.04 - html, one single quote"
+    "107 - html, one single quote"
   );
   t.end();
 });
 
-tap.test("10.05 - alt with only one single quote", (t) => {
+tap.test("108 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt=  ''  >zzz"),
     'zzz<img alt="" >zzz',
-    "10.05 - html, two single quotes"
+    "108 - html, two single quotes"
   );
   t.end();
 });
 
-tap.test("10.06 - alt with only one single quote", (t) => {
+tap.test("109 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt=  ''>zzz"),
     'zzz<img alt="" >zzz',
-    "10.06 - html, two single quotes"
+    "109 - html, two single quotes"
   );
   t.end();
 });
 
-tap.test("10.07 - alt with only one single quote", (t) => {
+tap.test("110 - alt with only one single quote", (t) => {
   t.same(
     alt("zzz<img alt    ='>zzz"),
     'zzz<img alt="" >zzz',
-    "10.07 - html, one single quote"
+    "110 - html, one single quote"
   );
   t.end();
 });
@@ -999,234 +987,234 @@ tap.test("10.07 - alt with only one single quote", (t) => {
 // alt with two double quotes, excessive whitespace, HTML
 
 tap.test(
-  "11.01 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "111 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt=""    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.01 - html, excessive white space"
+      "111 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.02 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "112 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =""    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.02 - html, excessive white space"
+      "112 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.03 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "113 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.03 - html, excessive white space"
+      "113 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.04 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "114 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "">zzz'),
       'zzz<img alt="" >zzz',
-      "11.04 - html, excessive white space"
+      "114 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.05 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "115 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt="   "    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.05 - html, excessive white space"
+      "115 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.06 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "116 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    ="   "    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.06 - html, excessive white space"
+      "116 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.07 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "117 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "    >zzz'),
       'zzz<img alt="" >zzz',
-      "11.07 - html, excessive white space"
+      "117 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.08 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "118 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   ">zzz'),
       'zzz<img alt="" >zzz',
-      "11.08 - html, excessive white space"
+      "118 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.09 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
+  "119 - alt with two double quotes, excessive whitespace, HTML, 1 img tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   ">zzz'),
       'zzz<img alt="" >zzz',
-      "11.09 - html, excessive white space"
+      "119 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.10 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "120 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt=""    >zzz<img     alt=""    >zzz<img     alt=""    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.10 - html, excessive white space"
+      "120 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.11 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "121 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =""    >zzz<img     alt    =""    >zzz<img     alt    =""    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.11 - html, excessive white space"
+      "121 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.12 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "122 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.12 - html, excessive white space"
+      "122 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.13 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "123 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =    "">zzz<img     alt    =    "">zzz<img     alt    =    "">zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.13 - html, excessive white space"
+      "123 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.14 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "124 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt="   "    >zzz<img     alt="   "    >zzz<img     alt="   "    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.14 - html, excessive white space"
+      "124 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.15 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "125 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.15 - html, excessive white space"
+      "125 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.16 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "126 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.16 - html, excessive white space"
+      "126 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.17 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "127 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.17 - html, excessive white space"
+      "127 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "11.18 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
+  "128 - alt with two double quotes, excessive whitespace, HTML, 3 img tags",
   (t) => {
     t.same(
       alt(
         'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'
       ),
       'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-      "11.18 - html, excessive white space"
+      "128 - html, excessive white space"
     );
     t.end();
   }
@@ -1237,108 +1225,108 @@ tap.test(
 // alt with two double quotes, no space after slash, one XHTML tag
 
 tap.test(
-  "12.01 - alt with two double quotes, no space after slash, one XHTML tag",
+  "129 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt=""    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.01 - html, excessive white space"
+      "129 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.02 - alt with two double quotes, no space after slash, one XHTML tag",
+  "130 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =""    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.02 - html, excessive white space"
+      "130 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.03 - alt with two double quotes, no space after slash, one XHTML tag",
+  "131 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.03 - html, excessive white space"
+      "131 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.04 - alt with two double quotes, no space after slash, one XHTML tag",
+  "132 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""/>zzz'),
       'zzz<img alt="" />zzz',
-      "12.04 - html, excessive white space"
+      "132 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.05 - alt with two double quotes, no space after slash, one XHTML tag",
+  "133 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt="   "    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.05 - html, excessive white space"
+      "133 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.06 - alt with two double quotes, no space after slash, one XHTML tag",
+  "134 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    ="   "    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.06 - html, excessive white space"
+      "134 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.07 - alt with two double quotes, no space after slash, one XHTML tag",
+  "135 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "    />zzz'),
       'zzz<img alt="" />zzz',
-      "12.07 - html, excessive white space"
+      "135 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.08 - alt with two double quotes, no space after slash, one XHTML tag",
+  "136 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/>zzz'),
       'zzz<img alt="" />zzz',
-      "12.08 - html, excessive white space"
+      "136 - html, excessive white space"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12.09 - alt with two double quotes, no space after slash, one XHTML tag",
+  "137 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/>zzz'),
       'zzz<img alt="" />zzz',
-      "12.09 - html, excessive white space"
+      "137 - html, excessive white space"
     );
     t.end();
   }
@@ -1349,108 +1337,104 @@ tap.test(
 // alt with two double quotes, no space after slash, one XHTML tag
 
 tap.test(
-  "13.01 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "138 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
-      alt('zzz<img     alt=""    / >zzz'),
-      'zzz<img alt="" />zzz',
-      "13.01"
-    );
+    t.same(alt('zzz<img     alt=""    / >zzz'), 'zzz<img alt="" />zzz', "138");
     t.end();
   }
 );
 
 tap.test(
-  "13.02 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "139 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =""    / >zzz'),
       'zzz<img alt="" />zzz',
-      "13.02"
+      "139"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.03 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "140 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""    / >zzz'),
       'zzz<img alt="" />zzz',
-      "13.03"
+      "140"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.04 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "141 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""/ >zzz'),
       'zzz<img alt="" />zzz',
-      "13.04"
+      "141"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.05 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "142 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt="   "    / >zzz'),
       'zzz<img alt="" />zzz',
-      "13.05"
+      "142"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.06 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "143 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    ="   "    / >zzz'),
       'zzz<img alt="" />zzz',
-      "13.06"
+      "143"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.07 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "144 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "    / >zzz'),
       'zzz<img alt="" />zzz',
-      "13.07"
+      "144"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.08 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "145 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/ >zzz'),
       'zzz<img alt="" />zzz',
-      "13.08"
+      "145"
     );
     t.end();
   }
 );
 
 tap.test(
-  "13.09 - alt with two double quotes, one space between slash & bracket, XHTML",
+  "146 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/ >zzz'),
       'zzz<img alt="" />zzz',
-      "13.09"
+      "146"
     );
     t.end();
   }
@@ -1462,108 +1446,108 @@ tap.test(
 // same but with many spaces between slash and closing bracket:
 
 tap.test(
-  "14.01 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "147 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt=""    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.01"
+      "147"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.02 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "148 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =""    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.02"
+      "148"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.03 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "149 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.03"
+      "149"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.04 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "150 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    ""/    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.04"
+      "150"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.05 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "151 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt="   "    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.05"
+      "151"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.06 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "152 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    ="   "    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.06"
+      "152"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.07 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "153 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "    /    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.07"
+      "153"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.08 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "154 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.08"
+      "154"
     );
     t.end();
   }
 );
 
 tap.test(
-  "14.09 - alt with two double quotes, many spaces between slash & bracket, XHTML",
+  "155 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
     t.same(
       alt('zzz<img     alt    =    "   "/    >zzz'),
       'zzz<img alt="" />zzz',
-      "14.09"
+      "155"
     );
     t.end();
   }
@@ -1573,58 +1557,58 @@ tap.test(
 // -----------------------------------------------------------------------------
 // alt with two single quotes, HTML
 
-tap.test("15.01 - alt with two single quotes, HTML", (t) => {
-  t.same(alt("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "15.01");
+tap.test("156 - alt with two single quotes, HTML", (t) => {
+  t.same(alt("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "156");
   t.end();
 });
 
-tap.test("15.02 - alt with two single quotes, HTML", (t) => {
-  t.same(alt("zzz<img     alt    =''    >zzz"), 'zzz<img alt="" >zzz', "15.02");
+tap.test("157 - alt with two single quotes, HTML", (t) => {
+  t.same(alt("zzz<img     alt    =''    >zzz"), 'zzz<img alt="" >zzz', "157");
   t.end();
 });
 
-tap.test("15.03 - alt with two single quotes, HTML", (t) => {
+tap.test("158 - alt with two single quotes, HTML", (t) => {
   t.same(
     alt("zzz<img     alt    =    ''    >zzz"),
     'zzz<img alt="" >zzz',
-    "15.03"
+    "158"
   );
   t.end();
 });
 
-tap.test("15.04 - alt with two single quotes, HTML", (t) => {
-  t.same(alt("zzz<img     alt    =    ''>zzz"), 'zzz<img alt="" >zzz', "15.04");
+tap.test("159 - alt with two single quotes, HTML", (t) => {
+  t.same(alt("zzz<img     alt    =    ''>zzz"), 'zzz<img alt="" >zzz', "159");
   t.end();
 });
 
-tap.test("15.05 - alt with two single quotes, HTML", (t) => {
-  t.same(alt("zzz<img     alt='   '    >zzz"), 'zzz<img alt="" >zzz', "15.05");
+tap.test("160 - alt with two single quotes, HTML", (t) => {
+  t.same(alt("zzz<img     alt='   '    >zzz"), 'zzz<img alt="" >zzz', "160");
   t.end();
 });
 
-tap.test("15.06 - alt with two single quotes, HTML", (t) => {
+tap.test("161 - alt with two single quotes, HTML", (t) => {
   t.same(
     alt("zzz<img     alt    ='   '    >zzz"),
     'zzz<img alt="" >zzz',
-    "15.06"
+    "161"
   );
   t.end();
 });
 
-tap.test("15.07 - alt with two single quotes, HTML", (t) => {
+tap.test("162 - alt with two single quotes, HTML", (t) => {
   t.same(
     alt("zzz<img     alt    =    '   '    >zzz"),
     'zzz<img alt="" >zzz',
-    "15.07"
+    "162"
   );
   t.end();
 });
 
-tap.test("15.08 - alt with two single quotes, HTML", (t) => {
+tap.test("163 - alt with two single quotes, HTML", (t) => {
   t.same(
     alt("zzz<img     alt    =    '   '>zzz"),
     'zzz<img alt="" >zzz',
-    "15.08"
+    "163"
   );
   t.end();
 });
@@ -1634,7 +1618,7 @@ tap.test("15.08 - alt with two single quotes, HTML", (t) => {
 // weird code cases, all broken (X)HTML
 
 tap.test(
-  "16.01 - testing escape latch for missing second double quote cases",
+  "164 - testing escape latch for missing second double quote cases",
   (t) => {
     // it kicks in when encounters equals sign after the first double quote
     // until we add function to recognise the attributes within IMG tags,
@@ -1642,87 +1626,87 @@ tap.test(
     t.same(
       alt('zzz<img alt="  class="" />zzz'),
       'zzz<img alt="  class="" />zzz',
-      "16.01"
+      "164"
     );
     t.end();
   }
 );
 
-tap.test("16.02 - testing seriously messed up code", (t) => {
+tap.test("165 - testing seriously messed up code", (t) => {
   // it kicks in when encounters equals sign after the first double quote
   // until we add function to recognise the attributes within IMG tags,
   // escape latch will kick in and prevent all action when second double quote is missing
   t.same(
     alt("zzz<img >>>>>>>>>>zzz"),
     'zzz<img alt="" >>>>>>>>>>zzz',
-    "16.02.01"
+    "165.01"
   );
-  t.same(alt("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "16.02.02");
+  t.same(alt("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "165.02");
   t.same(
     alt("zzz<><><<>><<<>>>><img >>zzz"),
     'zzz<><><<>><<<>>>><img alt="" >>zzz',
-    "16.02.03"
+    "165.03"
   );
   t.end();
 });
 
-tap.test("16.03 - other attributes don't have equal and value", (t) => {
+tap.test("166 - other attributes don't have equal and value", (t) => {
   t.same(
     alt('<img something alt="" >'),
     '<img something alt="" >',
-    "16.03.01 - img tag only, with alt"
+    "166.01 - img tag only, with alt"
   );
   t.same(
     alt("<img something>"),
     '<img something alt="" >',
-    "16.03.02 - img tag only, no alt"
+    "166.02 - img tag only, no alt"
   );
   t.same(
     alt("<img something >"),
     '<img something alt="" >',
-    "16.03.03 - img tag only, no alt"
+    "166.03 - img tag only, no alt"
   );
   // XHTML counterparts:
   t.same(
     alt('<img something alt="" />'),
     '<img something alt="" />',
-    "16.03.04 - img tag only, with alt"
+    "166.04 - img tag only, with alt"
   );
   t.same(
     alt("<img something/>"),
     '<img something alt="" />',
-    "16.03.05 - img tag only, no alt, tight"
+    "166.05 - img tag only, no alt, tight"
   );
   t.same(
     alt("<img something />"),
     '<img something alt="" />',
-    "16.03.06 - img tag only, no alt"
+    "166.06 - img tag only, no alt"
   );
   t.same(
     alt('<img something alt="" /     >'),
     '<img something alt="" />',
-    "16.03.07 - img tag only, with alt, excessive white space"
+    "166.07 - img tag only, with alt, excessive white space"
   );
   t.same(
     alt("<img something/     >"),
     '<img something alt="" />',
-    "16.03.08 - img tag only, no alt, excessive white space"
+    "166.08 - img tag only, no alt, excessive white space"
   );
   t.same(
     alt("<img something /     >"),
     '<img something alt="" />',
-    "16.03.09 - img tag only, no alt, excessive white space"
+    "166.09 - img tag only, no alt, excessive white space"
   );
   t.end();
 });
 
 tap.test(
-  "16.04 - specific place in the algorithm, protection against rogue slashes",
+  "167 - specific place in the algorithm, protection against rogue slashes",
   (t) => {
     t.same(
       alt('<img alt="/ class="" />'),
       '<img alt="/ class="" />',
-      "16.04 - should do nothing."
+      "167 - should do nothing."
     );
     t.end();
   }
@@ -1732,14 +1716,14 @@ tap.test(
 // -----------------------------------------------------------------------------
 // throws
 
-tap.test("17.01 - throws if encounters img tag within img tag", (t) => {
+tap.test("168 - throws if encounters img tag within img tag", (t) => {
   t.throws(() => {
     alt('zzz<img alt="  <img />zzz');
   }, /THROW_ID_02/g);
   t.end();
 });
 
-tap.test("17.02 - throws if input is not string", (t) => {
+tap.test("169 - throws if input is not string", (t) => {
   t.throws(() => {
     alt(null);
   }, /THROW_ID_01/g);
@@ -1758,22 +1742,22 @@ tap.test("17.02 - throws if input is not string", (t) => {
   t.end();
 });
 
-tap.test("17.03 - throws if opts is not a plain object", (t) => {
+tap.test("170 - throws if opts is not a plain object", (t) => {
   t.throws(() => {
     alt("zzz", ["aaa"]);
   }, /THROW_ID_02/g);
   t.doesNotThrow(() => {
     alt("zzz", null); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
-  });
+  }, "170.02");
   t.doesNotThrow(() => {
     alt("zzz", undefined); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
-  });
+  }, "170.03");
   t.throws(() => {
     alt("zzz", 1);
   }, /THROW_ID_02/g);
   t.doesNotThrow(() => {
     alt("zzz", {});
-  });
+  }, "170.05");
   t.throws(() => {
     alt("zzz", { zzz: "yyy" }); // rogue keys - throws. WTF?
   }, /THROW_ID_03/g);
@@ -1784,104 +1768,104 @@ tap.test("17.03 - throws if opts is not a plain object", (t) => {
 // -----------------------------------------------------------------------------
 // opts.unfancyTheAltContents
 
-tap.test("18.01 - cleans alt tag contents - fancy quote", (t) => {
+tap.test("171 - cleans alt tag contents - fancy quote", (t) => {
   t.same(
     alt('<img alt    ="   someone’s " >'),
     '<img alt="someone\'s" >',
-    "18.01.01 - default"
+    "171.01 - default"
   );
   t.same(
     alt('<img alt    ="   someone’s " >', { unfancyTheAltContents: true }),
     '<img alt="someone\'s" >',
-    "18.01.02 - hardcoded default, unfancyTheAltContents on"
+    "171.02 - hardcoded default, unfancyTheAltContents on"
   );
   t.same(
     alt('<img alt    ="   someone’s " >', { unfancyTheAltContents: false }),
     '<img alt="   someone’s " >',
-    "18.01.03 - unfancyTheAltContents off - no character substitution, no trim"
+    "171.03 - unfancyTheAltContents off - no character substitution, no trim"
   );
   t.end();
 });
 
-tap.test("18.02 - cleans alt tag contents - m-dash + trim", (t) => {
+tap.test("172 - cleans alt tag contents - m-dash + trim", (t) => {
   t.same(
     alt('<img alt    =" The new offer \u2014 50% discount " >'),
     '<img alt="The new offer - 50% discount" >',
-    "18.02.01 - default"
+    "172.01 - default"
   );
   t.same(
     alt('<img alt    =" The new offer \u2014 50% discount " >'),
     '<img alt="The new offer - 50% discount" >',
-    "18.02.02 - hardcoded default, unfancyTheAltContents on"
+    "172.02 - hardcoded default, unfancyTheAltContents on"
   );
   t.same(
     alt('<img alt    =" The new offer \u2014 50% discount " >', {
       unfancyTheAltContents: false,
     }),
     '<img alt=" The new offer \u2014 50% discount " >',
-    "18.02.03 - unfancyTheAltContents off - no character substitution, no trimming done"
+    "172.03 - unfancyTheAltContents off - no character substitution, no trimming done"
   );
   t.end();
 });
 
-tap.test("18.03 - un-fancies multiple alt tags", (t) => {
+tap.test("173 - un-fancies multiple alt tags", (t) => {
   t.same(
     alt(
       'abc <img alt    ="   someone’s " > def\n <img alt    =" The new offer \u2014 50% discount " > ghi <img      >\n\n\njkl'
     ),
     'abc <img alt="someone\'s" > def\n <img alt="The new offer - 50% discount" > ghi <img alt="" >\n\n\njkl',
-    "18.03.01 - default"
+    "173 - default"
   );
   t.end();
 });
 
-tap.test("18.04 - adds an ALT within a nunjucks-sprinkled HTML", (t) => {
+tap.test("174 - adds an ALT within a nunjucks-sprinkled HTML", (t) => {
   t.same(
     alt(
       '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %}></td>'
     ),
     '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %} alt="" ></td>',
-    "18.04.01 - minime of 18.04.02"
+    "174.01 - minime of 18.04.02"
   );
   t.same(
     alt(
       '<td class="anything-here" background="{%- include "partials/zzz.nunjucks" -%}" bgcolor="{{ color }}" height="{{ something_here }}" valign="top" style="background-image: url({%- include "partials/partials-location.nunjucks" -%}); background-position: top center; background-repeat: no-repeat; font-size: 0; line-height: 0;" align="center"><img {% if something.is_right %}class="right-class"{% else %}id="alternative dont-know-why-i-put-id here" style="display: block;"{% endif %}></td>'
     ),
     '<td class="anything-here" background="{%- include "partials/zzz.nunjucks" -%}" bgcolor="{{ color }}" height="{{ something_here }}" valign="top" style="background-image: url({%- include "partials/partials-location.nunjucks" -%}); background-position: top center; background-repeat: no-repeat; font-size: 0; line-height: 0;" align="center"><img {% if something.is_right %}class="right-class"{% else %}id="alternative dont-know-why-i-put-id here" style="display: block;"{% endif %} alt="" ></td>',
-    "18.04.02"
+    "174.02"
   );
   t.end();
 });
 
 tap.test(
-  '18.05 - Nunjucks code following straight after character g of "img"',
+  '175 - Nunjucks code following straight after character g of "img"',
   (t) => {
     t.same(
       alt(
         '<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;">'
       ),
       '<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;" alt="" >',
-      "18.05"
+      "175"
     );
     t.end();
   }
 );
 
-tap.test("18.06 - Nunjucks code tight before ALT", (t) => {
+tap.test("176 - Nunjucks code tight before ALT", (t) => {
   t.same(
     alt('<img {% if variables %}class="variables" {% endif %}alt=>'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "18.06.01 - alt with equal with no quotes"
+    "176.01 - alt with equal with no quotes"
   );
   t.same(
     alt('<img {% if variables %}class="variables" {% endif %}alt=">'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "18.06.02 - alt with equal and single quote, second is missing"
+    "176.02 - alt with equal and single quote, second is missing"
   );
   t.same(
     alt('<img {% if variables %}class="variables" {% endif %}alt>'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "18.06.03 - alt with both equal and quotes missing"
+    "176.03 - alt with both equal and quotes missing"
   );
   t.end();
 });

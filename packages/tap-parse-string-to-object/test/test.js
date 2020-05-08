@@ -53,7 +53,7 @@ tap.test("01 - wrong/missing input = throw", (t) => {
 //                            |
 //                            |
 
-tap.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
+tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
   ok 1 - 01.01.01
@@ -97,7 +97,7 @@ tap.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
       suitesPassed: 2,
       suitesFailed: 0,
     },
-    "02.01"
+    "02"
   );
   t.end();
 });
@@ -123,7 +123,7 @@ tap.test("02.01 - case 01 - arrayiffy-if-string - all pass", (t) => {
 //                            |
 //                            |
 
-tap.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
+tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
   const input = `TAP version 13
   not ok 1 - test/test.js # time=229.587ms
     ---
@@ -420,7 +420,7 @@ tap.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
       suitesPassed: 0,
       suitesFailed: 2,
     },
-    "02.02"
+    "03"
   );
   t.end();
 });
@@ -446,7 +446,7 @@ tap.test("02.02 - case 01 - arrayiffy-if-string - none pass", (t) => {
 //                            |
 //                            |
 
-tap.test("02.03 - ranges-merge", (t) => {
+tap.test("04 - ranges-merge", (t) => {
   const input = `TAP version 13
   ok 1 - test/test.js # time=203.828ms {
       # Subtest: 00.00 - does not throw when the first arg is wrong
@@ -649,7 +649,7 @@ tap.test("02.03 - ranges-merge", (t) => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "02.02"
+    "04"
   );
   t.end();
 });
@@ -675,7 +675,7 @@ tap.test("02.03 - ranges-merge", (t) => {
 //                            |
 //                            |
 
-tap.test("02.04 - object-set-all-values-to", (t) => {
+tap.test("05 - object-set-all-values-to", (t) => {
   const input = `TAP version 13
   # Subtest: test/test.js
       # Subtest: 01.01 - input simple plain object, default
@@ -803,7 +803,7 @@ tap.test("02.04 - object-set-all-values-to", (t) => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "02.04"
+    "05"
   );
   t.end();
 });
@@ -834,7 +834,7 @@ tap.test("02.04 - object-set-all-values-to", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`,
+  `06 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`,
   async (t) => {
     const tempFolder = tempy.directory();
     // const tempFolder = "temp";
@@ -898,7 +898,7 @@ ok 1 - UMD build works fine # time=10.033ms
         suitesPassed: 2,
         suitesFailed: 0,
       },
-      "03.01"
+      "06.01"
     );
     t.end();
   }

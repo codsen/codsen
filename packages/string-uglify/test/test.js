@@ -84,7 +84,7 @@ tap.test(
     // all are unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length));
-    t.equal(generated.length, length);
+    t.equal(generated.length, length, "05.01");
     generated.forEach((name1, index1) =>
       t.false(
         generated.some((name2, index2) => name1 === name2 && index1 !== index2),
@@ -117,8 +117,8 @@ tap.test(
     // where there's extra thing on top.
     const randArr1 = makeRandomArr(howMany);
     const randArr2 = [".something"].concat(randArr1);
-    t.equal(randArr1.length, howMany);
-    t.equal(randArr2.length, howMany + 1);
+    t.equal(randArr1.length, howMany, "07.01");
+    t.equal(randArr2.length, howMany + 1, "07.02");
     // alphabet has 26 letters so two position uglified names should cover at
     // least 26 * 36 = 936 variations and should definitely accommodate 500
     // uglified class/id names.
@@ -141,7 +141,7 @@ tap.test(
     // );
     t.ok(
       counter < generated2.length * 0.001,
-      "07 - less than 1% of classes/id's affected "
+      "07.03 - less than 1% of classes/id's affected "
     );
     t.end();
   }
@@ -156,7 +156,7 @@ tap.test(
       randArr1.push(randArr1[0]);
     }
     const generated = uglifyArr(randArr1);
-    t.equal(generated.length, randArr1.length);
+    t.equal(generated.length, randArr1.length, "08.01");
     generated.forEach((val, i) => {
       // all values are repeated on both:
       t.equal(generated[i], generated[0]);
@@ -172,7 +172,7 @@ tap.test(
     // all are still unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length, false));
-    t.equal(generated.length, length);
+    t.equal(generated.length, length, "09.01");
     generated.forEach((name1, index1) =>
       t.false(
         generated.some((name2, index2) => name1 === name2 && index1 !== index2),

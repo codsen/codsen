@@ -10,7 +10,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - only an ESP tag`,
+  `01 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - only an ESP tag`,
   (t) => {
     const gathered = [];
     ct(`{% zz %}`, {
@@ -38,7 +38,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text and ESP tag`,
+  `02 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text and ESP tag`,
   (t) => {
     const gathered = [];
     ct(`a{% zz %}`, {
@@ -65,14 +65,14 @@ tap.test(
           kind: null,
         },
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text-ESP-text`,
+  `03 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - text-ESP-text`,
   (t) => {
     const gathered = [];
     ct(`ab {% if something %} cd`, {
@@ -100,14 +100,14 @@ tap.test(
           end: 24,
         },
       ],
-      "01.03"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - tag-ESP-tag`,
+  `04 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - tag-ESP-tag`,
   (t) => {
     const gathered = [];
     ct(`<a>{% if something %}<b>`, {
@@ -135,14 +135,14 @@ tap.test(
           end: 24,
         },
       ],
-      "01.04"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - Responsys-style ESP tag`,
+  `05 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - Responsys-style ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a>$(something)<b>`, {
@@ -170,7 +170,7 @@ tap.test(
           end: 18,
         },
       ],
-      "01.05"
+      "05.01"
     );
     t.end();
   }
@@ -178,7 +178,7 @@ tap.test(
 
 // heuristically detecting tails and again new heads
 tap.test(
-  `01.06 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two Nunjucks tags, same pattern set of two, tight`,
+  `06 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two Nunjucks tags, same pattern set of two, tight`,
   (t) => {
     const gathered = [];
     ct(`{%- a -%}{%- b -%}`, {
@@ -200,7 +200,7 @@ tap.test(
           end: 18,
         },
       ],
-      "01.06"
+      "06.01"
     );
     t.end();
   }
@@ -208,7 +208,7 @@ tap.test(
 
 // heuristically detecting tails and again new heads, this time slightly different
 tap.test(
-  `01.07 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two nunjucks tags, different pattern set of two, tight`,
+  `07 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two nunjucks tags, different pattern set of two, tight`,
   (t) => {
     const gathered = [];
     ct(`{%- if count > 1 -%}{% if count > 1 %}`, {
@@ -230,7 +230,7 @@ tap.test(
           end: 38,
         },
       ],
-      "01.07"
+      "07.01"
     );
     t.end();
   }
@@ -238,7 +238,7 @@ tap.test(
 
 // heuristically detecting tails and again new heads
 tap.test(
-  `01.08 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - different set, *|zzz|*`,
+  `08 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - different set, *|zzz|*`,
   (t) => {
     const gathered = [];
     ct(`*|zzz|**|yyy|*`, {
@@ -260,14 +260,14 @@ tap.test(
           end: 14,
         },
       ],
-      "01.08"
+      "08.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.09 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
+  `09 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
   (t) => {
     const gathered = [];
     ct(`*|zzz*|*|yyy|*`, {
@@ -289,7 +289,7 @@ tap.test(
           end: 14,
         },
       ],
-      "01.09"
+      "09.01"
     );
     t.end();
   }
@@ -299,7 +299,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${31}m${`false positives`}\u001b[${39}m`} - double percentage`,
+  `10 - ${`\u001b[${31}m${`false positives`}\u001b[${39}m`} - double percentage`,
   (t) => {
     const gathered = [];
     ct(`<table width="100%%">`, {
@@ -339,7 +339,7 @@ tap.test(
           ],
         },
       ],
-      "02.01"
+      "10.01"
     );
     t.end();
   }
@@ -349,7 +349,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in as attribute`,
+  `11 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in as attribute`,
   (t) => {
     const gathered = [];
     ct(`<td{% z %}>`, {
@@ -379,14 +379,14 @@ tap.test(
           ],
         },
       ],
-      "03.01"
+      "11.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
+  `12 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
   (t) => {
     const gathered = [];
     ct(`<td{% x %} class="z"{% y %} id="z">`, {
@@ -467,14 +467,14 @@ tap.test(
           ],
         },
       ],
-      "03.02"
+      "12.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
+  `13 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`,
   (t) => {
     const gathered = [];
     ct(`<td{% if something %} class="z"{% endif %} id="y">`, {
@@ -563,7 +563,7 @@ tap.test(
           ],
         },
       ],
-      "03.03"
+      "13.01"
     );
     t.end();
   }
@@ -573,7 +573,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag inside`,
+  `14 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag inside`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% if something %}"><c>`, {
@@ -640,14 +640,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "04.01"
+      "14.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
+  `15 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
     ct(`<a b="{{ c }}d">`, {
@@ -691,14 +691,14 @@ tap.test(
           ],
         },
       ],
-      "04.02"
+      "15.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
+  `16 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
     ct(`<img src="{{ root }}z" width="9"/>`, {
@@ -778,14 +778,14 @@ tap.test(
           ],
         },
       ],
-      "04.03"
+      "16.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp-text-esp-text`,
+  `17 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp-text-esp-text`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x %}1{% y %}2">`, {
@@ -856,14 +856,14 @@ tap.test(
           ],
         },
       ],
-      "04.04"
+      "17.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`,
+  `18 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>`, {
@@ -955,14 +955,14 @@ tap.test(
           ],
         },
       ],
-      "04.05"
+      "18.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
+  `19 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
   (t) => {
     const gathered = [];
     ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, {
@@ -990,14 +990,14 @@ tap.test(
           end: 38,
         },
       ],
-      "04.06"
+      "19.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
+  `20 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
     ct(`<a b="c{{ z("'") }}"><b>`, {
@@ -1019,14 +1019,14 @@ tap.test(
           end: 24,
         },
       ],
-      "04.07"
+      "20.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
+  `21 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`,
   (t) => {
     const gathered = [];
     ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, {
@@ -1048,14 +1048,14 @@ tap.test(
           end: 52,
         },
       ],
-      "04.08"
+      "21.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
+  `22 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`,
   (t) => {
     const gathered = [];
     ct(
@@ -1080,7 +1080,7 @@ tap.test(
           end: 114,
         },
       ],
-      "04.09"
+      "22.01"
     );
     t.end();
   }
@@ -1090,7 +1090,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - mini`,
+  `23 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - mini`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x }">`, {
@@ -1142,14 +1142,14 @@ tap.test(
           ],
         },
       ],
-      "05.01"
+      "23.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - midi`,
+  `24 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - midi`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x }1{% y %}2">`, {
@@ -1222,7 +1222,7 @@ tap.test(
           ],
         },
       ],
-      "05.02"
+      "24.01"
     );
     t.end();
   }

@@ -4,7 +4,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - text-tag-text", (t) => {
+tap.test("01 - text-tag-text", (t) => {
   const gathered = [];
   ct("  <a>z", {
     tagCb: (obj) => {
@@ -33,11 +33,11 @@ tap.test("01.01 - text-tag-text", (t) => {
     ],
     "01.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "01.02");
   t.end();
 });
 
-tap.test("01.02 - text only", (t) => {
+tap.test("02 - text only", (t) => {
   const gathered = [];
   ct("  ", {
     tagCb: (obj) => {
@@ -54,12 +54,12 @@ tap.test("01.02 - text only", (t) => {
         value: "  ",
       },
     ],
-    "01.02"
+    "02.01"
   );
   t.end();
 });
 
-tap.test("01.03 - opening tag only", (t) => {
+tap.test("03 - opening tag only", (t) => {
   const gathered = [];
   ct("<a>", {
     tagCb: (obj) => {
@@ -86,12 +86,12 @@ tap.test("01.03 - opening tag only", (t) => {
         attribs: [],
       },
     ],
-    "01.03"
+    "03.01"
   );
   t.end();
 });
 
-tap.test("01.04 - closing tag only", (t) => {
+tap.test("04 - closing tag only", (t) => {
   const gathered = [];
   ct("</a>", {
     tagCb: (obj) => {
@@ -118,13 +118,13 @@ tap.test("01.04 - closing tag only", (t) => {
         attribs: [],
       },
     ],
-    "01.04"
+    "04.01"
   );
   t.end();
 });
 
 // notice the tag name case is upper:
-tap.test("01.05 - self-closing tag only", (t) => {
+tap.test("05 - self-closing tag only", (t) => {
   const gathered = [];
   ct("<BR/>", {
     tagCb: (obj) => {
@@ -145,13 +145,13 @@ tap.test("01.05 - self-closing tag only", (t) => {
         end: 5,
       },
     ],
-    "01.05"
+    "05.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "05.02");
   t.end();
 });
 
-tap.test("01.06 - multiple tags", (t) => {
+tap.test("06 - multiple tags", (t) => {
   const gathered = [];
   ct("<a><b><c>", {
     tagCb: (obj) => {
@@ -177,13 +177,13 @@ tap.test("01.06 - multiple tags", (t) => {
         end: 9,
       },
     ],
-    "01.06"
+    "06.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "06.02");
   t.end();
 });
 
-tap.test("01.07 - closing bracket in the attribute's value", (t) => {
+tap.test("07 - closing bracket in the attribute's value", (t) => {
   const gathered = [];
   ct(`<a alt=">">`, {
     tagCb: (obj) => {
@@ -199,13 +199,13 @@ tap.test("01.07 - closing bracket in the attribute's value", (t) => {
         end: 11,
       },
     ],
-    "01.07"
+    "07.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "07.02");
   t.end();
 });
 
-tap.test("01.08 - closing bracket layers of nested quotes", (t) => {
+tap.test("08 - closing bracket layers of nested quotes", (t) => {
   const gathered = [];
   ct(`<a alt='"'">"'"'>`, {
     tagCb: (obj) => {
@@ -221,13 +221,13 @@ tap.test("01.08 - closing bracket layers of nested quotes", (t) => {
         end: 17,
       },
     ],
-    "01.08"
+    "08.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "08.02");
   t.end();
 });
 
-tap.test("01.09 - bracket as text", (t) => {
+tap.test("09 - bracket as text", (t) => {
   const gathered = [];
   ct("a < b", {
     tagCb: (obj) => {
@@ -243,13 +243,13 @@ tap.test("01.09 - bracket as text", (t) => {
         end: 5,
       },
     ],
-    "01.09"
+    "09.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "09.02");
   t.end();
 });
 
-tap.test("01.10 - tag followed by brackets", (t) => {
+tap.test("10 - tag followed by brackets", (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj, next) => {
@@ -302,13 +302,13 @@ tap.test("01.10 - tag followed by brackets", (t) => {
         end: 37,
       },
     ],
-    "01.10"
+    "10.01"
   );
-  t.is(gathered.length, 6);
+  t.is(gathered.length, 6, "10.02");
   t.end();
 });
 
-tap.test("01.11 - html5 doctype", (t) => {
+tap.test("11 - html5 doctype", (t) => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj) => {
@@ -335,13 +335,13 @@ tap.test("01.11 - html5 doctype", (t) => {
         end: 17,
       },
     ],
-    "01.11"
+    "11.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "11.02");
   t.end();
 });
 
-tap.test("01.12 - xhtml doctype", (t) => {
+tap.test("12 - xhtml doctype", (t) => {
   const gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -384,13 +384,13 @@ tap.test("01.12 - xhtml doctype", (t) => {
         end: 191,
       },
     ],
-    "01.12"
+    "12.01"
   );
-  t.is(gathered.length, 5);
+  t.is(gathered.length, 5, "12.02");
   t.end();
 });
 
-tap.test("01.13 - xhtml DTD doctype", (t) => {
+tap.test("13 - xhtml DTD doctype", (t) => {
   const gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -445,13 +445,13 @@ tap.test("01.13 - xhtml DTD doctype", (t) => {
         end: 230,
       },
     ],
-    "01.13"
+    "13.01"
   );
-  t.is(gathered.length, 7);
+  t.is(gathered.length, 7, "13.02");
   t.end();
 });
 
-tap.test("01.14 - void tags", (t) => {
+tap.test("14 - void tags", (t) => {
   const gathered = [];
   ct("<br>", {
     tagCb: (obj) => {
@@ -468,13 +468,13 @@ tap.test("01.14 - void tags", (t) => {
         void: true,
       },
     ],
-    "01.14"
+    "14.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "14.02");
   t.end();
 });
 
-tap.test("01.15 - recognised tags", (t) => {
+tap.test("15 - recognised tags", (t) => {
   const gathered = [];
   ct("<content>", {
     tagCb: (obj) => {
@@ -492,13 +492,13 @@ tap.test("01.15 - recognised tags", (t) => {
         recognised: true,
       },
     ],
-    "01.15"
+    "15.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "15.02");
   t.end();
 });
 
-tap.test("01.16 - unrecognised tags", (t) => {
+tap.test("16 - unrecognised tags", (t) => {
   const gathered = [];
   ct("<contentz>", {
     tagCb: (obj) => {
@@ -516,13 +516,13 @@ tap.test("01.16 - unrecognised tags", (t) => {
         recognised: false,
       },
     ],
-    "01.16"
+    "16.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "16.02");
   t.end();
 });
 
-tap.test("01.17 - wrong case but still recognised tags", (t) => {
+tap.test("17 - wrong case but still recognised tags", (t) => {
   const gathered = [];
   ct("</tablE>", {
     tagCb: (obj) => {
@@ -540,13 +540,13 @@ tap.test("01.17 - wrong case but still recognised tags", (t) => {
         recognised: true,
       },
     ],
-    "01.17"
+    "17.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "17.02");
   t.end();
 });
 
-tap.test("01.18 - correct HTML5 doctype", (t) => {
+tap.test("18 - correct HTML5 doctype", (t) => {
   const gathered = [];
   ct("<!DOCTYPE html>", {
     tagCb: (obj) => {
@@ -564,13 +564,13 @@ tap.test("01.18 - correct HTML5 doctype", (t) => {
         recognised: true,
       },
     ],
-    "01.18"
+    "18.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "18.02");
   t.end();
 });
 
-tap.test("01.19 - correct HTML5 doctype", (t) => {
+tap.test("19 - correct HTML5 doctype", (t) => {
   const gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -592,13 +592,13 @@ tap.test("01.19 - correct HTML5 doctype", (t) => {
         recognised: true,
       },
     ],
-    "01.19"
+    "19.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "19.02");
   t.end();
 });
 
-tap.test("01.20 - tag names with numbers", (t) => {
+tap.test("20 - tag names with numbers", (t) => {
   const gathered = [];
   ct("<h1>", {
     tagCb: (obj) => {
@@ -620,13 +620,13 @@ tap.test("01.20 - tag names with numbers", (t) => {
         end: 4,
       },
     ],
-    "01.20"
+    "20.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "20.02");
   t.end();
 });
 
-tap.test("01.21 - exact match, tag pair with whitespace", (t) => {
+tap.test("21 - exact match, tag pair with whitespace", (t) => {
   const gathered = [];
   ct("<a href> </a>", {
     tagCb: (obj) => {
@@ -690,13 +690,13 @@ tap.test("01.21 - exact match, tag pair with whitespace", (t) => {
         attribs: [],
       },
     ],
-    "01.21"
+    "21.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "21.02");
   t.end();
 });
 
-tap.test("01.22 - closing tag with attributes", (t) => {
+tap.test("22 - closing tag with attributes", (t) => {
   const gathered = [];
   ct(`</a class="z">`, {
     tagCb: (obj) => {
@@ -745,13 +745,13 @@ tap.test("01.22 - closing tag with attributes", (t) => {
         ],
       },
     ],
-    "01.22"
+    "22.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "22.02");
   t.end();
 });
 
-tap.test("01.23 - empty style tag pair", (t) => {
+tap.test("23 - empty style tag pair", (t) => {
   const gathered = [];
   ct(`<style>\n\n</style>`, {
     tagCb: (obj) => {
@@ -790,13 +790,13 @@ tap.test("01.23 - empty style tag pair", (t) => {
         void: false,
       },
     ],
-    "01.23"
+    "23.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "23.02");
   t.end();
 });
 
-tap.test("01.24 - line break", (t) => {
+tap.test("24 - line break", (t) => {
   const gathered = [];
   ct(`a<a>\nb`, {
     tagCb: (obj) => {
@@ -836,13 +836,13 @@ tap.test("01.24 - line break", (t) => {
         value: "\nb",
       },
     ],
-    "01.24"
+    "24.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "24.02");
   t.end();
 });
 
-tap.test("01.25 - dir attribute is also a known valid tag name", (t) => {
+tap.test("25 - dir attribute is also a known valid tag name", (t) => {
   const gathered = [];
   ct(`<html dir="ltr">`, {
     tagCb: (obj) => {
@@ -860,16 +860,16 @@ tap.test("01.25 - dir attribute is also a known valid tag name", (t) => {
         value: `<html dir="ltr">`,
       },
     ],
-    "01.23"
+    "25.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "25.02");
   t.end();
 });
 
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - CDATA - correct", (t) => {
+tap.test("26 - CDATA - correct", (t) => {
   const gathered = [];
   ct(`<![CDATA[x<y]]>`, {
     tagCb: (obj) => {
@@ -888,13 +888,13 @@ tap.test("02.01 - CDATA - correct", (t) => {
         kind: "cdata",
       },
     ],
-    "02.01"
+    "26.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "26.02");
   t.end();
 });
 
-tap.test("02.02 - CDATA - messed up 1", (t) => {
+tap.test("27 - CDATA - messed up 1", (t) => {
   const gathered = [];
   ct(`<[CDATA[x<y]]>`, {
     tagCb: (obj) => {
@@ -913,13 +913,13 @@ tap.test("02.02 - CDATA - messed up 1", (t) => {
         kind: "cdata",
       },
     ],
-    "02.02"
+    "27.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "27.02");
   t.end();
 });
 
-tap.test("02.03 - CDATA - messed up 2", (t) => {
+tap.test("28 - CDATA - messed up 2", (t) => {
   const gathered = [];
   ct(`<!CDATA[x<y]]>`, {
     tagCb: (obj) => {
@@ -938,13 +938,13 @@ tap.test("02.03 - CDATA - messed up 2", (t) => {
         kind: "cdata",
       },
     ],
-    "02.03"
+    "28.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "28.02");
   t.end();
 });
 
-tap.test("02.04 - CDATA - messed up 3", (t) => {
+tap.test("29 - CDATA - messed up 3", (t) => {
   const gathered = [];
   ct(`<![ CData[x<y]]>`, {
     tagCb: (obj) => {
@@ -963,13 +963,13 @@ tap.test("02.04 - CDATA - messed up 3", (t) => {
         kind: "cdata",
       },
     ],
-    "02.04"
+    "29.01"
   );
-  t.is(gathered.length, 1);
+  t.is(gathered.length, 1, "29.02");
   t.end();
 });
 
-tap.test("02.05 - CDATA - with line breaks", (t) => {
+tap.test("30 - CDATA - with line breaks", (t) => {
   const gathered = [];
   ct(
     `a\n<![CDATA[
@@ -1004,16 +1004,16 @@ tap.test("02.05 - CDATA - with line breaks", (t) => {
         end: 92,
       },
     ],
-    "02.05"
+    "30.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "30.02");
   t.end();
 });
 
 // 03. XML
 // -----------------------------------------------------------------------------
 
-tap.test("03.01 - XML - correct", (t) => {
+tap.test("31 - XML - correct", (t) => {
   const gathered = [];
   ct(`<?xml version="1.0" encoding="UTF-8"?>`, {
     tagCb: (obj) => {
@@ -1032,12 +1032,12 @@ tap.test("03.01 - XML - correct", (t) => {
         kind: "xml",
       },
     ],
-    "03.01"
+    "31.01"
   );
   t.end();
 });
 
-tap.test("03.02 - XML - incorrect 1", (t) => {
+tap.test("32 - XML - incorrect 1", (t) => {
   const gathered = [];
   ct(`< ?xml version="1.0" encoding="UTF-8"?>`, {
     tagCb: (obj) => {
@@ -1056,12 +1056,12 @@ tap.test("03.02 - XML - incorrect 1", (t) => {
         kind: "xml",
       },
     ],
-    "03.02"
+    "32.01"
   );
   t.end();
 });
 
-tap.test("03.03 - XML - incorrect 2", (t) => {
+tap.test("33 - XML - incorrect 2", (t) => {
   const gathered = [];
   ct(`<? xml version="1.0" encoding="UTF-8"?>`, {
     tagCb: (obj) => {
@@ -1080,12 +1080,12 @@ tap.test("03.03 - XML - incorrect 2", (t) => {
         kind: "xml",
       },
     ],
-    "03.03"
+    "33.01"
   );
   t.end();
 });
 
-tap.test("03.04 - XML - incorrect 3", (t) => {
+tap.test("34 - XML - incorrect 3", (t) => {
   const gathered = [];
   ct(`< ?XML version="1.0" encoding="UTF-8"?>`, {
     tagCb: (obj) => {
@@ -1104,7 +1104,7 @@ tap.test("03.04 - XML - incorrect 3", (t) => {
         kind: "xml",
       },
     ],
-    "03.04"
+    "34.01"
   );
   t.end();
 });
@@ -1112,7 +1112,7 @@ tap.test("03.04 - XML - incorrect 3", (t) => {
 // 04. custom tags
 // -----------------------------------------------------------------------------
 
-tap.test("04.01 - unrecognised tag name", (t) => {
+tap.test("35 - unrecognised tag name", (t) => {
   const gathered = [];
   ct("<something>", {
     tagCb: (obj) => {
@@ -1139,12 +1139,12 @@ tap.test("04.01 - unrecognised tag name", (t) => {
         attribs: [],
       },
     ],
-    "04.01"
+    "35.01"
   );
   t.end();
 });
 
-tap.test("04.02 - unrecognised tag name with dash", (t) => {
+tap.test("36 - unrecognised tag name with dash", (t) => {
   const gathered = [];
   ct("<something-here>", {
     tagCb: (obj) => {
@@ -1171,7 +1171,7 @@ tap.test("04.02 - unrecognised tag name with dash", (t) => {
         attribs: [],
       },
     ],
-    "04.01"
+    "36.01"
   );
   t.end();
 });
@@ -1179,74 +1179,71 @@ tap.test("04.02 - unrecognised tag name with dash", (t) => {
 // 05. lookaheads
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `06.01 - lookaheads - tag followed by brackets - without next`,
-  (t) => {
-    const gathered = [];
-    ct(`<a>"something"<span>'here'</span></a>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+tap.test(`37 - lookaheads - tag followed by brackets - without next`, (t) => {
+  const gathered = [];
+  ct(`<a>"something"<span>'here'</span></a>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+    tagCbLookahead: 3,
+  });
+  gathered.forEach((obj) => {
+    // eslint-disable-next-line no-prototype-builtins
+    t.false(obj.hasOwnProperty("next"));
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        tagName: "a",
+        closing: false,
+        void: false,
+        start: 0,
+        end: 3,
       },
-      tagCbLookahead: 3,
-    });
-    gathered.forEach((obj) => {
-      // eslint-disable-next-line no-prototype-builtins
-      t.false(obj.hasOwnProperty("next"));
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          tagName: "a",
-          closing: false,
-          void: false,
-          start: 0,
-          end: 3,
-        },
-        {
-          type: "text",
-          start: 3,
-          end: 14,
-        },
-        {
-          type: "tag",
-          tagName: "span",
-          closing: false,
-          void: false,
-          start: 14,
-          end: 20,
-        },
-        {
-          type: "text",
-          start: 20,
-          end: 26,
-        },
-        {
-          type: "tag",
-          tagName: "span",
-          closing: true,
-          void: false,
-          start: 26,
-          end: 33,
-        },
-        {
-          type: "tag",
-          tagName: "a",
-          closing: true,
-          void: false,
-          start: 33,
-          end: 37,
-        },
-      ],
-      "01.10"
-    );
-    t.is(gathered.length, 6);
-    t.end();
-  }
-);
+      {
+        type: "text",
+        start: 3,
+        end: 14,
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: false,
+        void: false,
+        start: 14,
+        end: 20,
+      },
+      {
+        type: "text",
+        start: 20,
+        end: 26,
+      },
+      {
+        type: "tag",
+        tagName: "span",
+        closing: true,
+        void: false,
+        start: 26,
+        end: 33,
+      },
+      {
+        type: "tag",
+        tagName: "a",
+        closing: true,
+        void: false,
+        start: 33,
+        end: 37,
+      },
+    ],
+    "37.01"
+  );
+  t.is(gathered.length, 6, "37.02");
+  t.end();
+});
 
-tap.test(`06.02 - lookaheads - tag followed by brackets - with next`, (t) => {
+tap.test(`38 - lookaheads - tag followed by brackets - with next`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj, next) => {
@@ -1394,13 +1391,13 @@ tap.test(`06.02 - lookaheads - tag followed by brackets - with next`, (t) => {
         end: 37,
       },
     ],
-    "01.10"
+    "38.01"
   );
-  t.is(gathered.length, 6);
+  t.is(gathered.length, 6, "38.02");
   t.end();
 });
 
-tap.test(`06.02 - lookaheads - html5 doctype`, (t) => {
+tap.test(`39 - lookaheads - html5 doctype`, (t) => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj, next) => {
@@ -1448,8 +1445,8 @@ tap.test(`06.02 - lookaheads - html5 doctype`, (t) => {
         end: 17,
       },
     ],
-    "06.02"
+    "39.01"
   );
-  t.is(gathered.length, 3);
+  t.is(gathered.length, 3, "39.02");
   t.end();
 });

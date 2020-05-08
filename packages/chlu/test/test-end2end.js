@@ -47,63 +47,63 @@ function throws(t, name, gitTags = null) {
 
 // -----------------------------------------------------------------------------
 
-tap.test("00. if no input, will silently return indefined", (t) => {
-  t.same(c(), undefined, "00.01");
+tap.test("01. if no input, will silently return indefined", (t) => {
+  t.same(c(), undefined, "01");
   t.end();
 });
 
-tap.test("01. ascending order, with wrong package names", (t) => {
+tap.test("02. ascending order, with wrong package names", (t) => {
   compare(t, "01_asc_order_wrong_package");
   t.end();
 });
 
-tap.test("02. ascending order, with correct package names", (t) => {
+tap.test("03. ascending order, with correct package names", (t) => {
   compare(t, "02_asc_order_correct_package");
   t.end();
 });
 
-tap.test("03. correct package names, no footer links at all", (t) => {
+tap.test("04. correct package names, no footer links at all", (t) => {
   compare(t, "03_no_footer_links");
   t.end();
 });
 
-tap.test("04. descending order, with wrong package names", (t) => {
+tap.test("05. descending order, with wrong package names", (t) => {
   compare(t, "04_desc_order_wrong_package");
   t.end();
 });
 
-tap.test("05. descending order, with correct package names", (t) => {
+tap.test("06. descending order, with correct package names", (t) => {
   compare(t, "05_desc_order_correct_package");
   t.end();
 });
 
-tap.test("06. there are no linked titles", (t) => {
+tap.test("07. there are no linked titles", (t) => {
   compare(t, "06_not_linked_titles");
   t.end();
 });
 
-tap.test("07. non-GitHub package.json - throws", (t) => {
+tap.test("08. non-GitHub package.json - throws", (t) => {
   throws(t, "07_gitlab_package_json");
   t.end();
 });
 
-tap.test("08. mid links missing in changelog.md", (t) => {
+tap.test("09. mid links missing in changelog.md", (t) => {
   compare(t, "08_mid_links_missing");
   t.end();
 });
 
-tap.test("09. sneaky cases with tight spacing", (t) => {
+tap.test("10. sneaky cases with tight spacing", (t) => {
   compare(t, "09_tight_spacing");
   t.end();
 });
 
-tap.test("10. redundant footer links present, no git logs in context", (t) => {
+tap.test("11. redundant footer links present, no git logs in context", (t) => {
   compare(t, "10_redundant_links");
   t.end();
 });
 
 tap.test(
-  "11. title dates are in wrong formats, no git logs in context",
+  "12. title dates are in wrong formats, no git logs in context",
   (t) => {
     compare(t, "11_wrong_dates");
     t.end();
@@ -111,32 +111,32 @@ tap.test(
 );
 
 tap.test(
-  "12. footer links match titles but have wrong versions in URLs",
+  "13. footer links match titles but have wrong versions in URLs",
   (t) => {
     compare(t, "12_wrong_footer_link_versions");
     t.end();
   }
 );
 
-tap.test("13. Real world case - https://github.com/guigrpa/giu/", (t) => {
+tap.test("14. Real world case - https://github.com/guigrpa/giu/", (t) => {
   compare(t, "13_real_world");
   t.end();
 });
 
 tap.test(
-  "14. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/",
+  "15. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/",
   (t) => {
     compare(t, "14_slashes");
     t.end();
   }
 );
 
-tap.test("15. Unrecogniseable date - version gets still linked!", (t) => {
+tap.test("16. Unrecogniseable date - version gets still linked!", (t) => {
   compare(t, "15_bad_date");
   t.end();
 });
 
-tap.test("16. Git Tags supplemented", (t) => {
+tap.test("17. Git Tags supplemented", (t) => {
   const tags = {
     latest: "2017-04-18|v1.3.5",
     all: [
@@ -165,7 +165,7 @@ tap.test("16. Git Tags supplemented", (t) => {
   t.end();
 });
 
-tap.test("17. Unit test from chlu-cli", (t) => {
+tap.test("18. Unit test from chlu-cli", (t) => {
   const tags = {
     latest: "2018-06-14|v1.3.1",
     all: [
@@ -183,7 +183,7 @@ tap.test("17. Unit test from chlu-cli", (t) => {
 });
 
 tap.test(
-  `18. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`,
+  `19. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`,
   (t) => {
     const original = `# Seed Change Log
 All notable changes to this project will be documented in this file.
@@ -287,14 +287,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0
 `;
-    t.same(c(original), expected, "18");
+    t.same(c(original), expected, "19");
 
     t.end();
   }
 );
 
 tap.test(
-  `19. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`,
+  `20. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`,
   (t) => {
     const original = `# Seed Change Log
 All notable changes to this project will be documented in this file.
@@ -401,7 +401,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     t.same(
       c(original),
       expected,
-      "18 - result has descending order links because source had one row only"
+      "20 - result has descending order links because source had one row only"
     );
     t.end();
   }

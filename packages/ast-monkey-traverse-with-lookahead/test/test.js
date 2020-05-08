@@ -10,7 +10,7 @@ import traverse from "../dist/ast-monkey-traverse-with-lookahead.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 0`,
+  `01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 0`,
   (t) => {
     const input = [
       {
@@ -162,7 +162,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 1`,
+  `02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 1`,
   (t) => {
     const input = [
       {
@@ -396,14 +396,14 @@ tap.test(
         ],
         // ===================
       ],
-      "01.02"
+      "02.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 2`,
+  `03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 2`,
   (t) => {
     const input = [
       {
@@ -705,14 +705,14 @@ tap.test(
         ],
         // ===================
       ],
-      "01.03"
+      "03.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 3`,
+  `04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 3`,
   (t) => {
     const input = [
       {
@@ -1060,14 +1060,14 @@ tap.test(
         ],
         // ===================
       ],
-      "01.04"
+      "04.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 5`,
+  `05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 5`,
   (t) => {
     const input = [
       {
@@ -1461,14 +1461,14 @@ tap.test(
         ],
         // ===================
       ],
-      "01.05"
+      "05.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 6`,
+  `06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 6`,
   (t) => {
     const input = [
       {
@@ -1862,14 +1862,14 @@ tap.test(
         ],
         // ===================
       ],
-      "01.06"
+      "06.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 99`,
+  `07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 99`,
   (t) => {
     const input = [
       {
@@ -2263,7 +2263,7 @@ tap.test(
         ],
         // ===================
       ],
-      "01.07"
+      "07.01"
     );
     t.end();
   }
@@ -2273,7 +2273,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays`,
+  `08 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -2326,14 +2326,14 @@ tap.test(
           },
         ],
       ],
-      "02.01"
+      "08.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 1`,
+  `09 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 1`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -2412,14 +2412,14 @@ tap.test(
           },
         ],
       ],
-      "02.02"
+      "09.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 2`,
+  `10 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 2`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -2508,14 +2508,14 @@ tap.test(
           },
         ],
       ],
-      "02.03"
+      "10.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 3`,
+  `11 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 3`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -2604,14 +2604,14 @@ tap.test(
           },
         ],
       ],
-      "02.04"
+      "11.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 4`,
+  `12 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 4`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -2700,7 +2700,7 @@ tap.test(
           },
         ],
       ],
-      "02.04"
+      "12.01"
     );
     t.end();
   }
@@ -2710,7 +2710,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects`,
+  `13 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects`,
   (t) => {
     const input = {
       a: "k",
@@ -2786,14 +2786,14 @@ tap.test(
         ],
         // ===================
       ],
-      "03.01"
+      "13.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - object key's value is an array`,
+  `14 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - object key's value is an array`,
   (t) => {
     const input = {
       a: ["1", "2", "3"],
@@ -2865,7 +2865,7 @@ tap.test(
           },
         ],
       ],
-      "03.02"
+      "14.01"
     );
     t.end();
   }
@@ -2875,7 +2875,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`,
+  `15 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`,
   (t) => {
     const input = {
       a: {
@@ -3362,14 +3362,14 @@ tap.test(
         ],
         // ===================
       ],
-      "04.01"
+      "15.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`,
+  `16 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`,
   (t) => {
     const input = ["1", "2", { a: "3" }];
     const gathered = [];
@@ -3454,7 +3454,7 @@ tap.test(
           },
         ],
       ],
-      "04.02"
+      "16.01"
     );
     t.end();
   }
@@ -3464,7 +3464,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`,
+  `17 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
     const gathered = [];
@@ -3473,13 +3473,13 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["a", "b", "b.c"], "05.01");
+    t.same(gathered, ["a", "b", "b.c"], "17.01");
     t.end();
   }
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`,
+  `18 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`,
   (t) => {
     const input = { a: "1", b: { c: "2" } };
     const gathered = [];
@@ -3491,13 +3491,13 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["a", "b"], "05.02");
+    t.same(gathered, ["a", "b"], "18.01");
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`,
+  `19 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`,
   (t) => {
     const input = ["a", ["b", "c"]];
     const gathered = [];
@@ -3506,13 +3506,13 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["0", "1", "1.0", "1.1"], "05.03");
+    t.same(gathered, ["0", "1", "1.0", "1.1"], "19.01");
     t.end();
   }
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`,
+  `20 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`,
   (t) => {
     const input = ["a", ["b", "c"]];
     const gathered = [];
@@ -3524,7 +3524,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["0", "1"], "05.04");
+    t.same(gathered, ["0", "1"], "20.01");
     t.end();
   }
 );

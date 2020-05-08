@@ -4,42 +4,42 @@ import e from "../dist/string-range-expander.esm";
 // 00. THROWS.
 // -----------------------------------------------------------------------------
 
-tap.test("00.01 - throws on Boolean input", (t) => {
+tap.test("01 - throws on Boolean input", (t) => {
   t.throws(() => {
     e(true);
   }, /THROW_ID_01/);
   t.end();
 });
 
-tap.test("00.02 - throws on missing input", (t) => {
+tap.test("02 - throws on missing input", (t) => {
   t.throws(() => {
     e();
   }, /missing completely/);
   t.end();
 });
 
-tap.test("00.03 - throws on null input", (t) => {
+tap.test("03 - throws on null input", (t) => {
   t.throws(() => {
     e(null);
   }, /THROW_ID_01/);
   t.end();
 });
 
-tap.test("00.03 - throws on string input", (t) => {
+tap.test("04 - throws on string input", (t) => {
   t.throws(() => {
     e("zzz");
   }, /THROW_ID_01/);
   t.end();
 });
 
-tap.only("00.04 - throws on empty plain object", (t) => {
+tap.only("05 - throws on empty plain object", (t) => {
   t.throws(() => {
     e({});
   }, /THROW_ID_02/);
   t.end();
 });
 
-tap.test('00.05 - throws when "from" is not a number', (t) => {
+tap.test('06 - throws when "from" is not a number', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -50,7 +50,7 @@ tap.test('00.05 - throws when "from" is not a number', (t) => {
   t.end();
 });
 
-tap.test('00.06 - throws when "to" is not a number', (t) => {
+tap.test('07 - throws when "to" is not a number', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -61,7 +61,7 @@ tap.test('00.06 - throws when "to" is not a number', (t) => {
   t.end();
 });
 
-tap.test('00.07 - throws when "from" is outside the str boundaries', (t) => {
+tap.test('08 - throws when "from" is outside the str boundaries', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -72,7 +72,7 @@ tap.test('00.07 - throws when "from" is outside the str boundaries', (t) => {
   t.end();
 });
 
-tap.test('00.08 - throws when "to" is way outside the str boundaries', (t) => {
+tap.test('09 - throws when "to" is way outside the str boundaries', (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -88,11 +88,11 @@ tap.test('00.08 - throws when "to" is way outside the str boundaries', (t) => {
       from: 0,
       to: 3,
     });
-  });
+  }, "09.02");
   t.end();
 });
 
-tap.test("00.09 - throws when opts.extendToOneSide is unrecognised", (t) => {
+tap.test("10 - throws when opts.extendToOneSide is unrecognised", (t) => {
   t.throws(() => {
     e({
       str: "aaa",
@@ -117,7 +117,7 @@ tap.test("00.09 - throws when opts.extendToOneSide is unrecognised", (t) => {
 // 01. BAU.
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - nothing to expand", (t) => {
+tap.test("11 - nothing to expand", (t) => {
   // reference
   t.same(
     e({
@@ -126,7 +126,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       to: 5,
     }),
     [2, 5],
-    "01.01.01"
+    "11.01"
   );
   t.same(
     e({
@@ -136,7 +136,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.01.02"
+    "11.02"
   );
   t.same(
     e({
@@ -146,7 +146,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5],
-    "01.01.03"
+    "11.03"
   );
 
   //
@@ -159,7 +159,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       to: 5,
     }),
     [2, 5],
-    "01.01.04 - addSingleSpaceToPreventAccidentalConcatenation default"
+    "11.04 - addSingleSpaceToPreventAccidentalConcatenation default"
   );
   t.same(
     e({
@@ -169,7 +169,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.01.05 - addSingleSpaceToPreventAccidentalConcatenation hardcoded default"
+    "11.05 - addSingleSpaceToPreventAccidentalConcatenation hardcoded default"
   );
   t.same(
     e({
@@ -179,7 +179,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5, " "],
-    "01.01.06"
+    "11.06"
   );
 
   //
@@ -192,7 +192,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       to: 5,
     }),
     [0, 5],
-    "01.01.07"
+    "11.07"
   );
   t.same(
     e({
@@ -202,7 +202,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [0, 5],
-    "01.01.08"
+    "11.08"
   );
   t.same(
     e({
@@ -212,7 +212,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [0, 5],
-    "01.01.09 - does not add space if touching EOL"
+    "11.09 - does not add space if touching EOL"
   );
 
   //
@@ -225,7 +225,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       to: 12,
     }),
     [2, 12],
-    "01.01.10"
+    "11.10"
   );
   t.same(
     e({
@@ -235,7 +235,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 12],
-    "01.01.11"
+    "11.11"
   );
   t.same(
     e({
@@ -245,7 +245,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 12],
-    "01.01.12"
+    "11.12"
   );
 
   //
@@ -258,7 +258,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       to: 12,
     }),
     [12, 12],
-    "01.01.13"
+    "11.13"
   );
   t.same(
     e({
@@ -268,7 +268,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [12, 12],
-    "01.01.14"
+    "11.14"
   );
   t.same(
     e({
@@ -278,7 +278,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [12, 12],
-    "01.01.15"
+    "11.15"
   );
 
   //
@@ -292,7 +292,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [2, 5],
-    "01.01.16"
+    "11.16"
   );
   t.same(
     e({
@@ -303,7 +303,7 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.01.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default"
+    "11.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default"
   );
   t.same(
     e({
@@ -314,12 +314,12 @@ tap.test("01.01 - nothing to expand", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5, " "],
-    "01.01.18 - combo, no whitespace"
+    "11.18 - combo, no whitespace"
   );
   t.end();
 });
 
-tap.test("01.02 - expanding from the middle of a gap", (t) => {
+tap.test("12 - expanding from the middle of a gap", (t) => {
   t.same(
     e({
       str: "a     b",
@@ -327,7 +327,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       to: 3,
     }),
     [2, 5],
-    "01.02.01"
+    "12.01"
   );
   t.same(
     e({
@@ -336,7 +336,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       to: 3,
     }),
     [2, 5],
-    "01.02.02"
+    "12.02"
   );
   t.same(
     e({
@@ -345,7 +345,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       to: 5,
     }),
     [2, 5],
-    "01.02.03"
+    "12.03"
   );
   t.same(
     e({
@@ -354,7 +354,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       to: 3,
     }),
     [1, 5],
-    "01.02.04"
+    "12.04"
   );
   t.same(
     e({
@@ -363,7 +363,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       to: 6,
     }),
     [2, 6],
-    "01.02.05"
+    "12.05"
   );
   t.same(
     e({
@@ -373,7 +373,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [2, 6],
-    "01.02.06"
+    "12.06"
   );
   t.same(
     e({
@@ -383,7 +383,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [1, 5],
-    "01.02.07"
+    "12.07"
   );
   t.same(
     e({
@@ -393,7 +393,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [1, 6],
-    "01.02.08"
+    "12.08"
   );
   t.same(
     e({
@@ -403,7 +403,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 6],
-    "01.02.09"
+    "12.09"
   );
   t.same(
     e({
@@ -413,7 +413,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 6],
-    "01.02.10"
+    "12.10"
   );
   t.same(
     e({
@@ -424,7 +424,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnRight: true,
     }),
     [1, 6],
-    "01.02.11"
+    "12.11"
   );
   t.same(
     e({
@@ -435,7 +435,7 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnRight: true,
     }),
     [1, 6],
-    "01.02.12"
+    "12.12"
   );
   t.same(
     e({
@@ -446,13 +446,13 @@ tap.test("01.02 - expanding from the middle of a gap", (t) => {
       wipeAllWhitespaceOnRight: false,
     }),
     [1, 6],
-    "01.02.13"
+    "12.13"
   );
   t.end();
 });
 
 tap.test(
-  "01.03 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled",
+  "13 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled",
   (t) => {
     t.same(
       e({
@@ -461,7 +461,7 @@ tap.test(
         to: 3,
       }),
       [1, 5],
-      "01.03.01"
+      "13.01"
     );
     t.same(
       e({
@@ -470,7 +470,7 @@ tap.test(
         to: 6,
       }),
       [2, 6],
-      "01.03.02"
+      "13.02"
     );
     t.same(
       e({
@@ -479,7 +479,7 @@ tap.test(
         to: 6,
       }),
       [2, 6],
-      "01.03.03"
+      "13.03"
     );
     t.same(
       e({
@@ -488,13 +488,13 @@ tap.test(
         to: 6,
       }),
       [1, 6],
-      "01.03.04"
+      "13.04"
     );
     t.end();
   }
 );
 
-tap.test("01.04 - both ends are equal", (t) => {
+tap.test("14 - both ends are equal", (t) => {
   t.same(
     e({
       str: "ab",
@@ -502,7 +502,7 @@ tap.test("01.04 - both ends are equal", (t) => {
       to: 1,
     }),
     [1, 1],
-    "01.04.01"
+    "14.01"
   );
   t.same(
     e({
@@ -511,12 +511,12 @@ tap.test("01.04 - both ends are equal", (t) => {
       to: 2,
     }),
     [2, 2],
-    "01.04.02"
+    "14.02"
   );
   t.end();
 });
 
-tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
+tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   t.same(
     e({
       str: "aaaaa aaaaaaa",
@@ -524,7 +524,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       to: 6,
     }),
     [5, 6],
-    "01.05.01"
+    "15.01"
   );
 
   // wipeAllWhitespaceOnLeft
@@ -536,7 +536,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [5, 6],
-    "01.05.02 - wipeAllWhitespaceOnLeft hardcoded default"
+    "15.02 - wipeAllWhitespaceOnLeft hardcoded default"
   );
   t.same(
     e({
@@ -546,7 +546,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [5, 6],
-    "01.05.03 - wipeAllWhitespaceOnLeft on"
+    "15.03 - wipeAllWhitespaceOnLeft on"
   );
 
   // addSingleSpaceToPreventAccidentalConcatenation
@@ -558,7 +558,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "01.05.04"
+    "15.04"
   );
   t.same(
     e({
@@ -568,7 +568,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "01.05.05 - combo, no whitespace"
+    "15.05 - combo, no whitespace"
   );
 
   // combo
@@ -581,7 +581,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "01.05.06 - true-true"
+    "15.06 - true-true"
   );
   t.same(
     e({
@@ -592,7 +592,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "01.05.07 - true-false"
+    "15.07 - true-false"
   );
   t.same(
     e({
@@ -603,7 +603,7 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "01.05.08 - false-true"
+    "15.08 - false-true"
   );
   t.same(
     e({
@@ -614,13 +614,13 @@ tap.test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "01.05.09 - false-false"
+    "15.09 - false-false"
   );
   t.end();
 });
 
 tap.test(
-  "01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation",
+  "16 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
       e({
@@ -631,7 +631,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [6, 7],
-      "01.06.01"
+      "16.01"
     );
     t.same(
       e({
@@ -642,7 +642,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       [6, 7],
-      "01.06.02"
+      "16.02"
     );
     t.same(
       e({
@@ -653,7 +653,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [5, 7],
-      "01.06.03"
+      "16.03"
     );
     t.same(
       e({
@@ -664,14 +664,14 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       [5, 7, " "],
-      "01.06.04"
+      "16.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
+  "17 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
       e({
@@ -682,7 +682,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [5, 6],
-      "01.07.01"
+      "17.01"
     );
     t.same(
       e({
@@ -693,7 +693,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       [5, 6],
-      "01.07.02"
+      "17.02"
     );
     t.same(
       e({
@@ -704,7 +704,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [5, 7],
-      "01.07.03"
+      "17.03"
     );
     t.same(
       e({
@@ -715,14 +715,14 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       [5, 7, " "],
-      "01.07.04"
+      "17.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  "01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
+  "18 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
     t.same(
       e({
@@ -733,7 +733,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [6, 7],
-      "01.08.01"
+      "18.01"
     );
     t.same(
       e({
@@ -744,7 +744,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [5, 7],
-      "01.08.02"
+      "18.02"
     );
     t.same(
       e({
@@ -755,7 +755,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [6, 8],
-      "01.08.03"
+      "18.03"
     );
 
     // both on result in tight crop:
@@ -769,7 +769,7 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: false,
       }),
       [5, 8],
-      "01.08.04"
+      "18.04"
     );
 
     t.same(
@@ -782,151 +782,148 @@ tap.test(
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       [5, 8, " "],
-      "01.08.05"
+      "18.05"
     );
     t.end();
   }
 );
 
-tap.test(
-  "01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored",
-  (t) => {
-    t.same(
-      e({
-        str: "<strong><!-- --></strong>",
-        from: 8,
-        to: 16,
-        addSingleSpaceToPreventAccidentalConcatenation: false,
-      }),
-      [8, 16],
-      "01.09.01 - baseline"
-    );
-    t.same(
-      e({
-        str: "<strong><!-- --></strong>",
-        from: 8,
-        to: 16,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-      }),
-      [8, 16],
-      "01.09.02.01 - non digits and non letters"
-    );
-    t.same(
-      e({
-        str: "a<!-- -->b",
-        from: 1,
-        to: 9,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-      }),
-      [1, 9, " "],
-      "01.09.02.02 - letters"
-    );
-    t.same(
-      e({
-        str: "<zzz><!-- -->b",
-        from: 5,
-        to: 13,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-      }),
-      [5, 13, " "],
-      "01.09.02.03 - letter on one side"
-    );
-    t.same(
-      e({
-        str: "<strong><!-- --></strong>",
-        from: 8,
-        to: 16,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [8, 16],
-      "01.09.03"
-    );
-    t.same(
-      e({
-        str: "<strong><!-- -->a</strong>",
-        from: 8,
-        to: 16,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [8, 16, " "],
-      "01.09.04"
-    );
-    t.same(
-      e({
-        str: "<strong>a<!-- --></strong>",
-        from: 9,
-        to: 17,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [9, 17, " "],
-      "01.09.05"
-    );
-    t.same(
-      e({
-        str: "<strong>a<!-- -->a</strong>",
-        from: 9,
-        to: 17,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [9, 17, " "],
-      "01.09.06"
-    );
+tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
+  t.same(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: false,
+    }),
+    [8, 16],
+    "19.01 - baseline"
+  );
+  t.same(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+    }),
+    [8, 16],
+    "19.02 - non digits and non letters"
+  );
+  t.same(
+    e({
+      str: "a<!-- -->b",
+      from: 1,
+      to: 9,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+    }),
+    [1, 9, " "],
+    "19.03 - letters"
+  );
+  t.same(
+    e({
+      str: "<zzz><!-- -->b",
+      from: 5,
+      to: 13,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+    }),
+    [5, 13, " "],
+    "19.04 - letter on one side"
+  );
+  t.same(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [8, 16],
+    "19.05"
+  );
+  t.same(
+    e({
+      str: "<strong><!-- -->a</strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [8, 16, " "],
+    "19.06"
+  );
+  t.same(
+    e({
+      str: "<strong>a<!-- --></strong>",
+      from: 9,
+      to: 17,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [9, 17, " "],
+    "19.07"
+  );
+  t.same(
+    e({
+      str: "<strong>a<!-- -->a</strong>",
+      from: 9,
+      to: 17,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [9, 17, " "],
+    "19.08"
+  );
 
-    // AND...
+  // AND...
 
-    t.same(
-      e({
-        str: "<strong>  <!-- -->  </strong>",
-        from: 10,
-        to: 18,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [8, 20],
-      "01.09.07"
-    );
-    t.same(
-      e({
-        str: "<strong>  <!-- --></strong>",
-        from: 10,
-        to: 18,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [8, 18],
-      "01.09.08"
-    );
-    t.same(
-      e({
-        str: "<strong><!-- -->  </strong>",
-        from: 8,
-        to: 16,
-        addSingleSpaceToPreventAccidentalConcatenation: true,
-        ifLeftSideIncludesThisThenCropTightly: ">",
-        ifRightSideIncludesThisThenCropTightly: "<",
-      }),
-      [8, 18],
-      "01.09.09"
-    );
-    t.end();
-  }
-);
+  t.same(
+    e({
+      str: "<strong>  <!-- -->  </strong>",
+      from: 10,
+      to: 18,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [8, 20],
+    "19.09"
+  );
+  t.same(
+    e({
+      str: "<strong>  <!-- --></strong>",
+      from: 10,
+      to: 18,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [8, 18],
+    "19.10"
+  );
+  t.same(
+    e({
+      str: "<strong><!-- -->  </strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<",
+    }),
+    [8, 18],
+    "19.11"
+  );
+  t.end();
+});
 
 // 02. opts.ifLeftSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
+  `20 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
     t.same(
       e({
@@ -936,7 +933,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [2, 7],
-      "02.01.01"
+      "20.01"
     );
     t.same(
       e({
@@ -946,7 +943,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [2, 7],
-      "02.01.02"
+      "20.02"
     );
     t.same(
       e({
@@ -956,7 +953,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [2, 7],
-      "02.01.03"
+      "20.03"
     );
     t.same(
       e({
@@ -966,14 +963,14 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [2, 7],
-      "02.01.04"
+      "20.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
+  `21 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
     t.same(
       e({
@@ -983,7 +980,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "02.02.01"
+      "21.01"
     );
     t.same(
       e({
@@ -993,7 +990,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "02.02.02"
+      "21.02"
     );
     t.same(
       e({
@@ -1003,7 +1000,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "02.02.03"
+      "21.03"
     );
     t.same(
       e({
@@ -1013,7 +1010,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [2, 6],
-      "02.02.04"
+      "21.04"
     );
     t.same(
       e({
@@ -1023,7 +1020,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [3, 7],
-      "02.02.05"
+      "21.05"
     );
     t.same(
       e({
@@ -1033,14 +1030,14 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [2, 7],
-      "02.02.06"
+      "21.06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
+  `22 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
     t.same(
       e({
@@ -1050,7 +1047,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "z",
       }),
       [5, 5],
-      "02.03.01"
+      "22.01"
     );
     t.same(
       e({
@@ -1060,7 +1057,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "a",
       }),
       [5, 5],
-      "02.03.02"
+      "22.02"
     );
     t.same(
       e({
@@ -1070,7 +1067,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: "a",
       }),
       [5, 5],
-      "02.03.03"
+      "22.03"
     );
     t.end();
   }
@@ -1080,7 +1077,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
+  `23 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
     t.same(
       e({
@@ -1090,7 +1087,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [2, 7],
-      "03.01.01"
+      "23.01"
     );
     t.same(
       e({
@@ -1100,7 +1097,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [2, 7],
-      "03.01.02"
+      "23.02"
     );
     t.same(
       e({
@@ -1110,7 +1107,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [2, 7],
-      "03.01.03"
+      "23.03"
     );
     t.same(
       e({
@@ -1120,14 +1117,14 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [2, 7],
-      "03.01.04"
+      "23.04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
+  `24 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
     t.same(
       e({
@@ -1137,7 +1134,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "03.02.01"
+      "24.01"
     );
     t.same(
       e({
@@ -1147,7 +1144,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "03.02.02"
+      "24.02"
     );
     t.same(
       e({
@@ -1157,7 +1154,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [3, 6],
-      "03.02.03"
+      "24.03"
     );
     t.same(
       e({
@@ -1167,7 +1164,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [2, 6],
-      "03.02.04"
+      "24.04"
     );
     t.same(
       e({
@@ -1177,7 +1174,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [3, 7],
-      "03.02.05"
+      "24.05"
     );
     t.same(
       e({
@@ -1187,14 +1184,14 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [2, 7],
-      "03.02.06"
+      "24.06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
+  `25 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
     t.same(
       e({
@@ -1204,7 +1201,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "z",
       }),
       [5, 5],
-      "03.03.01"
+      "25.01"
     );
     t.same(
       e({
@@ -1214,7 +1211,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "a",
       }),
       [5, 5],
-      "03.03.02"
+      "25.02"
     );
     t.same(
       e({
@@ -1224,7 +1221,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "a",
       }),
       [5, 5],
-      "03.03.03"
+      "25.03"
     );
     t.end();
   }
@@ -1234,7 +1231,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}m`} - combo with tight crop`,
+  `26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}m`} - combo with tight crop`,
   (t) => {
     t.same(
       e({
@@ -1244,7 +1241,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [10, 21],
-      "04.01.01 - control #1"
+      "26.01 - control #1"
     );
     t.same(
       e({
@@ -1254,7 +1251,7 @@ tap.test(
         ifLeftSideIncludesThisCropItToo: "\n\t",
       }),
       [10, 20],
-      "04.01.02 - control #2"
+      "26.02 - control #2"
     );
     t.same(
       e({
@@ -1265,7 +1262,7 @@ tap.test(
         ifRightSideIncludesThisThenCropTightly: "<",
       }),
       [10, 21],
-      "04.01.03"
+      "26.03"
     );
     t.same(
       e({
@@ -1276,7 +1273,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [12, 21],
-      "04.01.04"
+      "26.04"
     );
     t.same(
       e({
@@ -1288,7 +1285,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [10, 21],
-      "04.01.05"
+      "26.05"
     );
     t.same(
       e({
@@ -1299,7 +1296,7 @@ tap.test(
         ifLeftSideIncludesThisThenCropTightly: ">",
       }),
       [10, 21],
-      "04.01.06"
+      "26.06"
     );
     t.end();
   }
@@ -1309,7 +1306,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side only`,
+  `27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side only`,
   (t) => {
     t.same(
       e({
@@ -1318,7 +1315,7 @@ tap.test(
         to: 5,
       }),
       [3, 6],
-      "05.01.01 - default, a control"
+      "27.01 - default, a control"
     );
     t.same(
       e({
@@ -1328,7 +1325,7 @@ tap.test(
         extendToOneSide: false,
       }),
       [3, 6],
-      "05.01.02 - hardcoded default"
+      "27.02 - hardcoded default"
     );
     t.same(
       e({
@@ -1338,7 +1335,7 @@ tap.test(
         extendToOneSide: "right",
       }),
       [4, 6],
-      "05.01.03 - right only"
+      "27.03 - right only"
     );
     t.same(
       e({
@@ -1348,7 +1345,7 @@ tap.test(
         extendToOneSide: "left",
       }),
       [3, 5],
-      "05.01.04 - left only"
+      "27.04 - left only"
     );
     t.end();
   }
@@ -1358,7 +1355,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`,
+  `28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`,
   (t) => {
     t.same(
       e({
@@ -1367,7 +1364,7 @@ tap.test(
         to: 5,
       }),
       [3, 6],
-      "06.01.01 - a control"
+      "28.01 - a control"
     );
     t.same(
       e({
@@ -1377,7 +1374,7 @@ tap.test(
         wipeAllWhitespaceOnLeft: true,
       }),
       [2, 6],
-      "06.01.02 - left"
+      "28.02 - left"
     );
     t.same(
       e({
@@ -1387,7 +1384,7 @@ tap.test(
         wipeAllWhitespaceOnRight: true,
       }),
       [3, 7],
-      "06.01.03 - right"
+      "28.03 - right"
     );
     t.same(
       e({
@@ -1398,7 +1395,7 @@ tap.test(
         wipeAllWhitespaceOnRight: true,
       }),
       [2, 7],
-      "06.01.04 - both"
+      "28.04 - both"
     );
     t.end();
   }
@@ -1407,10 +1404,8 @@ tap.test(
 // 07. Various
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `07.01 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`,
-  (t) => {
-    const str = `<head>
+tap.test(`29 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, (t) => {
+  const str = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
 </style>
@@ -1418,25 +1413,22 @@ tap.test(
 <body id   =   ""  ><a class  =  "" >z</a>
 </body>`;
 
-    t.same(
-      e({
-        str,
-        from: 82,
-        to: 93,
-        ifRightSideIncludesThisThenCropTightly: "/>",
-        wipeAllWhitespaceOnLeft: true,
-      }),
-      [81, 95],
-      "07.01"
-    );
-    t.end();
-  }
-);
+  t.same(
+    e({
+      str,
+      from: 82,
+      to: 93,
+      ifRightSideIncludesThisThenCropTightly: "/>",
+      wipeAllWhitespaceOnLeft: true,
+    }),
+    [81, 95],
+    "29"
+  );
+  t.end();
+});
 
-tap.test(
-  `07.02 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`,
-  (t) => {
-    const str = `<head>
+tap.test(`30 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, (t) => {
+  const str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}
 </style>
@@ -1444,26 +1436,23 @@ tap.test(
 <body>z
 </body>`;
 
-    t.same(
-      e({
-        str,
-        from: 32,
-        to: 38,
-        ifRightSideIncludesThisCropItToo: ",",
-        ifRightSideIncludesThisThenCropTightly: ".#",
-        extendToOneSide: "right",
-      }),
-      [32, 39],
-      "07.02"
-    );
-    t.end();
-  }
-);
+  t.same(
+    e({
+      str,
+      from: 32,
+      to: 38,
+      ifRightSideIncludesThisCropItToo: ",",
+      ifRightSideIncludesThisThenCropTightly: ".#",
+      extendToOneSide: "right",
+    }),
+    [32, 39],
+    "30"
+  );
+  t.end();
+});
 
-tap.test(
-  `07.03 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`,
-  (t) => {
-    const str = `<head>
+tap.test(`31 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`, (t) => {
+  const str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}
 </style>
@@ -1471,21 +1460,20 @@ tap.test(
 <body>z
 </body>`;
 
-    t.same(
-      e({
-        str,
-        from: 39,
-        to: 45,
-        ifLeftSideIncludesThisCropItToo: ",",
-        ifLeftSideIncludesThisThenCropTightly: ".#",
-        extendToOneSide: "left",
-      }),
-      [38, 45],
-      "07.03"
-    );
-    t.end();
-  }
-);
+  t.same(
+    e({
+      str,
+      from: 39,
+      to: 45,
+      ifLeftSideIncludesThisCropItToo: ",",
+      ifLeftSideIncludesThisThenCropTightly: ".#",
+      extendToOneSide: "left",
+    }),
+    [38, 45],
+    "31"
+  );
+  t.end();
+});
 
 // -----------------------------------------------------------------------------
 

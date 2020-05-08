@@ -20,7 +20,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}Hello!${rightDoubleQuote}`
+      `${leftDoubleQuote}Hello!${rightDoubleQuote}`,
+      "01"
     );
     t.end();
   }
@@ -34,7 +35,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `ain${rightSingleQuote}t`
+      `ain${rightSingleQuote}t`,
+      "02"
     );
     t.end();
   }
@@ -48,7 +50,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `ma${rightSingleQuote}am`
+      `ma${rightSingleQuote}am`,
+      "03"
     );
     t.end();
   }
@@ -62,7 +65,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twas the night`
+      `${rightSingleQuote}Twas the night`,
+      "04"
     );
     t.end();
   }
@@ -76,7 +80,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote} is my name.${rightDoubleQuote}`
+      `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote} is my name.${rightDoubleQuote}`,
+      "05"
     );
     t.end();
   }
@@ -90,7 +95,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}A${rightSingleQuote}, ${leftSingleQuote}B${rightSingleQuote}, and ${leftSingleQuote}C${rightSingleQuote} are letters.`
+      `${leftSingleQuote}A${rightSingleQuote}, ${leftSingleQuote}B${rightSingleQuote}, and ${leftSingleQuote}C${rightSingleQuote} are letters.`,
+      "06"
     );
     t.end();
   }
@@ -107,7 +113,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `${leftSingleQuote}Oak,${rightSingleQuote} ${leftSingleQuote}elm,${rightSingleQuote} and ${leftSingleQuote}beech${rightSingleQuote} are names of trees. So is ${leftSingleQuote}pine.${rightSingleQuote}`
+      `${leftSingleQuote}Oak,${rightSingleQuote} ${leftSingleQuote}elm,${rightSingleQuote} and ${leftSingleQuote}beech${rightSingleQuote} are names of trees. So is ${leftSingleQuote}pine.${rightSingleQuote}`,
+      "07"
     );
     t.end();
   }
@@ -121,7 +128,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}He said, ${leftDoubleQuote}I want to go.${rightDoubleQuote}${rightSingleQuote} Were you alive in the 70${rightSingleQuote}s?`
+      `${leftSingleQuote}He said, ${leftDoubleQuote}I want to go.${rightDoubleQuote}${rightSingleQuote} Were you alive in the 70${rightSingleQuote}s?`,
+      "08"
     );
     t.end();
   }
@@ -135,7 +143,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}That${rightSingleQuote}s a ${leftSingleQuote}magic${rightSingleQuote} sock.${rightDoubleQuote}`
+      `${leftDoubleQuote}That${rightSingleQuote}s a ${leftSingleQuote}magic${rightSingleQuote} sock.${rightDoubleQuote}`,
+      "09"
     );
     t.end();
   }
@@ -152,7 +161,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `Welcome to Website Name! Company Name, Inc. (${leftDoubleQuote}Company Name${rightDoubleQuote} or ${leftDoubleQuote}Company${rightDoubleQuote}) recommends that you read the following terms and conditions carefully.`
+      `Welcome to Website Name! Company Name, Inc. (${leftDoubleQuote}Company Name${rightDoubleQuote} or ${leftDoubleQuote}Company${rightDoubleQuote}) recommends that you read the following terms and conditions carefully.`,
+      "10"
     );
     t.end();
   }
@@ -169,7 +179,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `Welcome to Website Name! Company Name, Inc. (${leftSingleQuote}Company Name${rightSingleQuote} or ${leftSingleQuote}Company${rightSingleQuote}) recommends that you read the following terms and conditions carefully.`
+      `Welcome to Website Name! Company Name, Inc. (${leftSingleQuote}Company Name${rightSingleQuote} or ${leftSingleQuote}Company${rightSingleQuote}) recommends that you read the following terms and conditions carefully.`,
+      "11"
     );
     t.end();
   }
@@ -183,7 +194,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}85 was a good year. (The entire ${rightSingleQuote}80s were.)`
+      `${rightSingleQuote}85 was a good year. (The entire ${rightSingleQuote}80s were.)`,
+      "12"
     );
     t.end();
   }
@@ -197,7 +209,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `Workin${rightSingleQuote} hard`
+      `Workin${rightSingleQuote} hard`,
+      "13"
     );
     t.end();
   }
@@ -211,7 +224,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twas the night before Christmas.`
+      `${rightSingleQuote}Twas the night before Christmas.`,
+      "14"
     );
     t.end();
   }
@@ -225,7 +239,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twasn${rightSingleQuote}t the night before Christmas.`
+      `${rightSingleQuote}Twasn${rightSingleQuote}t the night before Christmas.`,
+      "15"
     );
     t.end();
   }
@@ -239,7 +254,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Tis the night before Christmas.`
+      `${rightSingleQuote}Tis the night before Christmas.`,
+      "16"
     );
     t.end();
   }
@@ -253,7 +269,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Tisn${rightSingleQuote}t the night before Christmas.`
+      `${rightSingleQuote}Tisn${rightSingleQuote}t the night before Christmas.`,
+      "17"
     );
     t.end();
   }
@@ -267,7 +284,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twill be the night before Christmas.`
+      `${rightSingleQuote}Twill be the night before Christmas.`,
+      "18"
     );
     t.end();
   }
@@ -281,7 +299,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twould be the night before Christmas.`
+      `${rightSingleQuote}Twould be the night before Christmas.`,
+      "19"
     );
     t.end();
   }
@@ -295,7 +314,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twere the night before Christmas, I would be happy.`
+      `${rightSingleQuote}Twere the night before Christmas, I would be happy.`,
+      "20"
     );
     t.end();
   }
@@ -309,7 +329,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Tweren${rightSingleQuote}t the night before Christmas, I would be happy.`
+      `${rightSingleQuote}Tweren${rightSingleQuote}t the night before Christmas, I would be happy.`,
+      "21"
     );
     t.end();
   }
@@ -323,7 +344,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}Twon${rightSingleQuote}t be the night before Christmas.`
+      `${rightSingleQuote}Twon${rightSingleQuote}t be the night before Christmas.`,
+      "22"
     );
     t.end();
   }
@@ -337,7 +359,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}70s are my favorite numbers,${rightSingleQuote} she said.`
+      `${rightSingleQuote}70s are my favorite numbers,${rightSingleQuote} she said.`,
+      "23"
     );
     t.end();
   }
@@ -351,7 +374,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${rightSingleQuote}70s fashion was weird.`
+      `${rightSingleQuote}70s fashion was weird.`,
+      "24"
     );
     t.end();
   }
@@ -365,7 +389,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`
+      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
+      "25"
     );
     t.end();
   }
@@ -379,7 +404,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`
+      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
+      "26"
     );
     t.end();
   }
@@ -396,7 +422,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`
+      `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
+      "27"
     );
     t.end();
   }
@@ -410,7 +437,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `Model ${leftDoubleQuote}T2000${rightDoubleQuote}`
+      `Model ${leftDoubleQuote}T2000${rightDoubleQuote}`,
+      "28"
     );
     t.end();
   }
@@ -424,7 +452,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `iPad 3${rightSingleQuote}s battery life is not great.`
+      `iPad 3${rightSingleQuote}s battery life is not great.`,
+      "29"
     );
     t.end();
   }
@@ -438,7 +467,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
+      "30"
     );
     t.end();
   }
@@ -455,7 +485,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
+      "31"
     );
     t.end();
   }
@@ -472,7 +503,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
+      "32"
     );
     t.end();
   }
@@ -489,7 +521,8 @@ tap.test(
           convertEntities: 1,
         }
       ).result,
-      `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`
+      `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`,
+      "33"
     );
     t.end();
   }
@@ -506,7 +539,8 @@ tap.test(
           convertEntities: 1,
         }
       ).result,
-      `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`
+      `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`,
+      "34"
     );
     t.end();
   }
@@ -523,7 +557,8 @@ tap.test(
           convertEntities: 0,
         }
       ).result,
-      `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote}${rightDoubleQuote} abruptly she announced.`
+      `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote}${rightDoubleQuote} abruptly she announced.`,
+      "35"
     );
     t.end();
   }
@@ -538,7 +573,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      input
+      input,
+      "36"
     );
     t.end();
   }

@@ -4,7 +4,7 @@ import cparser from "../dist/codsen-parser.esm";
 // 01. basics
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - basics - two tags", (t) => {
+tap.test("01 - basics - two tags", (t) => {
   t.match(
     cparser("<div><div>"),
     [
@@ -24,12 +24,12 @@ tap.test("01.01 - basics - two tags", (t) => {
         ],
       },
     ],
-    "01.01"
+    "01"
   );
   t.end();
 });
 
-tap.test("01.02 - basics - text and tag", (t) => {
+tap.test("02 - basics - text and tag", (t) => {
   t.match(
     cparser("z<div>"),
     [
@@ -46,12 +46,12 @@ tap.test("01.02 - basics - text and tag", (t) => {
         children: [],
       },
     ],
-    "01.02"
+    "02"
   );
   t.end();
 });
 
-tap.test("01.03 - basics - tag text tag", (t) => {
+tap.test("03 - basics - tag text tag", (t) => {
   t.match(
     cparser("<div>a<div>"),
     [
@@ -76,12 +76,12 @@ tap.test("01.03 - basics - tag text tag", (t) => {
         ],
       },
     ],
-    "01.03"
+    "03"
   );
   t.end();
 });
 
-tap.test("01.04 - basics - two div pairs", (t) => {
+tap.test("04 - basics - two div pairs", (t) => {
   t.match(
     cparser("<div>a</div><div>b</div>"),
     [
@@ -130,12 +130,12 @@ tap.test("01.04 - basics - two div pairs", (t) => {
         children: [],
       },
     ],
-    "01.04"
+    "04"
   );
   t.end();
 });
 
-tap.test("01.05 - basics - mixed combo", (t) => {
+tap.test("05 - basics - mixed combo", (t) => {
   t.match(
     cparser("<br>z</a>"),
     [
@@ -161,12 +161,12 @@ tap.test("01.05 - basics - mixed combo", (t) => {
         children: [],
       },
     ],
-    "01.05"
+    "05"
   );
   t.end();
 });
 
-tap.test("01.06 - basics - two nested pairs", (t) => {
+tap.test("06 - basics - two nested pairs", (t) => {
   t.match(
     cparser("<div>1<a>2</a>3</div>"),
     [
@@ -220,12 +220,12 @@ tap.test("01.06 - basics - two nested pairs", (t) => {
         children: [],
       },
     ],
-    "01.06"
+    "06"
   );
   t.end();
 });
 
-tap.test("01.07 - basics - three nested pairs, empty", (t) => {
+tap.test("07 - basics - three nested pairs, empty", (t) => {
   t.match(
     cparser("<table><tr><td></td></tr></table>"),
     [
@@ -334,7 +334,7 @@ tap.test("01.07 - basics - three nested pairs, empty", (t) => {
         children: [],
       },
     ],
-    "01.07"
+    "07"
   );
   t.end();
 });

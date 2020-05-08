@@ -60,66 +60,66 @@ function deleter(t, source, result, path, idNum) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - wrong/missing 1st arg = throw`,
+  `01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - wrong/missing 1st arg = throw`,
   (t) => {
     // throw test pinning:
     const error1 = t.throws(() => {
       set();
     });
-    t.match(error1.message, /THROW_ID_01/);
+    t.match(error1.message, /THROW_ID_01/, "01.01");
 
     const error2 = t.throws(() => {
       set("");
     });
-    t.match(error2.message, /THROW_ID_01/);
+    t.match(error2.message, /THROW_ID_01/, "01.02");
 
     const error3 = t.throws(() => {
       set(null);
     });
-    t.match(error3.message, /THROW_ID_01/);
+    t.match(error3.message, /THROW_ID_01/, "01.03");
 
     const error4 = t.throws(() => {
       set(undefined);
     });
-    t.match(error4.message, /THROW_ID_01/);
+    t.match(error4.message, /THROW_ID_01/, "01.04");
 
     const error5 = t.throws(() => {
       set(true);
     });
-    t.match(error5.message, /THROW_ID_01/);
+    t.match(error5.message, /THROW_ID_01/, "01.05");
 
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${32}m${`del`}\u001b[${39}m`} - wrong/missing 1st arg = throw`,
+  `02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${32}m${`del`}\u001b[${39}m`} - wrong/missing 1st arg = throw`,
   (t) => {
     // throw test pinning:
     const error1 = t.throws(() => {
       del();
     });
-    t.match(error1.message, /THROW_ID_02/);
+    t.match(error1.message, /THROW_ID_02/, "02.01");
 
     const error2 = t.throws(() => {
       del("");
     });
-    t.match(error2.message, /THROW_ID_02/);
+    t.match(error2.message, /THROW_ID_02/, "02.02");
 
     const error3 = t.throws(() => {
       del(null);
     });
-    t.match(error3.message, /THROW_ID_02/);
+    t.match(error3.message, /THROW_ID_02/, "02.03");
 
     const error4 = t.throws(() => {
       del(undefined);
     });
-    t.match(error4.message, /THROW_ID_02/);
+    t.match(error4.message, /THROW_ID_02/, "02.04");
 
     const error5 = t.throws(() => {
       del(true);
     });
-    t.match(error5.message, /THROW_ID_02/);
+    t.match(error5.message, /THROW_ID_02/, "02.05");
 
     t.end();
   }
@@ -130,7 +130,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `03 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -147,7 +147,7 @@ tap.test(
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `04 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -163,7 +163,7 @@ tap.test(
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `05 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -179,7 +179,7 @@ tap.test(
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `06 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -195,7 +195,7 @@ tap.test(
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - second level key`,
+  `07 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - second level key`,
   (t) => {
     const source = `{
   "a": "b",
@@ -215,7 +215,7 @@ tap.test(
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - second level key`,
+  `08 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - second level key`,
   (t) => {
     // notice deliberate mis-indentation after "d": "e"
     const source = `{
@@ -243,7 +243,7 @@ tap.test(
 );
 
 tap.test(
-  `02.07 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is number`,
+  `09 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is number`,
   (t) => {
     const source = `{
   "a": "b",
@@ -259,7 +259,7 @@ tap.test(
 );
 
 tap.test(
-  `02.08 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - null overwritten with null`,
+  `10 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - null overwritten with null`,
   (t) => {
     const source = `{
   "a": "b",
@@ -275,7 +275,7 @@ tap.test(
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is object and it leads to contents end`,
+  `11 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is object and it leads to contents end`,
   (t) => {
     const input = `{
   "a": "b",
@@ -291,7 +291,7 @@ tap.test(
 );
 
 tap.test(
-  `02.10 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is a stringified object - escapes`,
+  `12 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value is a stringified object - escapes`,
   (t) => {
     const input = `{
   "a": "b",
@@ -307,7 +307,7 @@ tap.test(
 );
 
 tap.test(
-  `02.11 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 1`,
+  `13 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 1`,
   (t) => {
     const input = `{
   "a": {
@@ -322,7 +322,7 @@ tap.test(
 );
 
 tap.test(
-  `02.12 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 2`,
+  `14 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 2`,
   (t) => {
     const input = `{
   "a": {
@@ -339,7 +339,7 @@ tap.test(
 );
 
 tap.test(
-  `02.13 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - nested objects`,
+  `15 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - nested objects`,
   (t) => {
     const input = `{
   "a": {
@@ -359,7 +359,7 @@ tap.test(
 );
 
 tap.test(
-  `02.14 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`,
+  `16 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`,
   (t) => {
     const input = `{
   "a": {
@@ -387,7 +387,7 @@ tap.test(
 );
 
 tap.test(
-  `02.15 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`,
+  `17 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`,
   (t) => {
     const input = `{
   "a": {
@@ -415,7 +415,7 @@ tap.test(
 );
 
 tap.test(
-  `02.16 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with quoted`,
+  `18 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -435,7 +435,7 @@ tap.test(
 );
 
 tap.test(
-  `02.17 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with non-quoted`,
+  `19 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -455,7 +455,7 @@ tap.test(
 );
 
 tap.test(
-  `02.18 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - quoted value replaced with non-quoted`,
+  `20 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - quoted value replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -475,7 +475,7 @@ tap.test(
 );
 
 tap.test(
-  `02.19 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
+  `21 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -495,7 +495,7 @@ tap.test(
 );
 
 tap.test(
-  `02.20 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
+  `22 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -515,7 +515,7 @@ tap.test(
 );
 
 tap.test(
-  `02.21 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
+  `23 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -541,7 +541,7 @@ tap.test(
 );
 
 tap.test(
-  `02.22 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
+  `24 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`,
   (t) => {
     const input = `{
   "a": {
@@ -567,7 +567,7 @@ tap.test(
 );
 
 tap.test(
-  `02.23 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - middle element in the array`,
+  `25 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - middle element in the array`,
   (t) => {
     const input = `{
   "k": {
@@ -599,7 +599,7 @@ tap.test(
 );
 
 tap.test(
-  `02.24 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - the last element in the array`,
+  `26 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - the last element in the array`,
   (t) => {
     const input = `{
   "k": {
@@ -631,7 +631,7 @@ tap.test(
 );
 
 tap.test(
-  `02.25 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - last value in array, bool replaced with a quoted string`,
+  `27 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - last value in array, bool replaced with a quoted string`,
   (t) => {
     const input = `{
   "a": {
@@ -691,7 +691,7 @@ const testObj = `{
 }`;
 
 tap.test(
-  `04.01 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is number`,
+  `28 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is number`,
   (t) => {
     const source = `{
   "15\u00f8C": {
@@ -709,7 +709,7 @@ tap.test(
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is string`,
+  `29 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is string`,
   (t) => {
     const source = `{
   "15\u00f8C": {
@@ -727,7 +727,7 @@ tap.test(
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using dot in key`,
+  `30 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using dot in key`,
   (t) => {
     const source = `{
   "a.b": {
@@ -745,7 +745,7 @@ tap.test(
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
+  `31 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
   (t) => {
     const input = `{
   "b": {
@@ -765,7 +765,7 @@ tap.test(
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
+  `32 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
   (t) => {
     const input = `{
   "a": "b",
@@ -793,7 +793,7 @@ tap.test(
 );
 
 tap.test(
-  `04.06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
+  `33 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
   (t) => {
     const input = `{
   "a": "b",
@@ -823,7 +823,7 @@ tap.test(
 
 // TODO
 tap.test(
-  `04.07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
+  `34 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
   (t) => {
     const source = `{
   "a": "b",
@@ -848,7 +848,7 @@ tap.test(
 );
 
 tap.test(
-  `04.08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
+  `35 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
   (t) => {
     const result = `{
   "a": "b",
@@ -865,7 +865,7 @@ tap.test(
 );
 
 tap.test(
-  `04.09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
+  `36 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
   (t) => {
     // crop of test "should set value using number path", obj.b.d
     setter(t, `["a", "b"]`, `["x", "b"]`, 0, `x`, "04.09");
@@ -874,7 +874,7 @@ tap.test(
 );
 
 tap.test(
-  `04.10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
+  `37 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
   (t) => {
     const result = `{
   "a": "b",
@@ -891,7 +891,7 @@ tap.test(
 );
 
 tap.test(
-  `04.11 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
+  `38 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
   (t) => {
     const result = `{
   "a": "b",
@@ -909,7 +909,7 @@ tap.test(
 );
 
 tap.test(
-  `04.12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
+  `39 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
   (t) => {
     const result = `{
   "a": "b",
@@ -926,7 +926,7 @@ tap.test(
 );
 
 tap.test(
-  `04.13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
+  `40 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
   (t) => {
     const result = `{
   "a": "b",
@@ -944,7 +944,7 @@ tap.test(
 );
 
 tap.test(
-  `04.14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
+  `41 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
   (t) => {
     const result = `{
   "a": "b",
@@ -964,7 +964,7 @@ tap.test(
 );
 
 tap.test(
-  `04.15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
+  `42 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
   (t) => {
     const result = `{
   "a": "b",
@@ -984,7 +984,7 @@ tap.test(
 );
 
 tap.test(
-  `04.16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`,
+  `43 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`,
   (t) => {
     const source = `{
   "a": [{}, { "b": "c" }]
@@ -998,7 +998,7 @@ tap.test(
 );
 
 tap.test(
-  `04.17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`,
+  `44 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`,
   (t) => {
     const source = `{
   "a": [{ "b": "c" }]
@@ -1012,7 +1012,7 @@ tap.test(
 );
 
 tap.test(
-  `04.18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`,
+  `45 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`,
   (t) => {
     const source = `{
   "a": "[",
@@ -1034,7 +1034,7 @@ tap.test(
 );
 
 tap.test(
-  `04.19 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
+  `46 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
   (t) => {
     const source = `{
   "a": "{",
@@ -1056,7 +1056,7 @@ tap.test(
 );
 
 tap.test(
-  `04.20 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
+  `47 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
   (t) => {
     const source = `{"a": {},"gh": {"mn": "1","yz": "-"}}`;
     const result = `{"a": {},"gh": {"mn": "1","yz": "x"}}`;
@@ -1070,7 +1070,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `48 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -1085,7 +1085,7 @@ tap.test(
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `49 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -1100,7 +1100,7 @@ tap.test(
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
+  `50 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - key in the root`,
   (t) => {
     const source = `{
   "a": "b",
@@ -1117,7 +1117,7 @@ tap.test(
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`,
+  `51 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`,
   (t) => {
     const source = `{"qwe": [
   "ab",
@@ -1134,7 +1134,7 @@ tap.test(
 );
 
 tap.test(
-  `05.05 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`,
+  `52 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`,
   (t) => {
     const source = `{"qwe": [
   "ab",
@@ -1151,7 +1151,7 @@ tap.test(
 );
 
 tap.test(
-  `05.06 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`,
+  `53 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`,
   (t) => {
     const source = `{"qwe": [
   "ab",
@@ -1168,7 +1168,7 @@ tap.test(
 );
 
 tap.test(
-  `05.07 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`,
+  `54 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`,
   (t) => {
     const source = `{"qwe": [
   true,
@@ -1185,7 +1185,7 @@ tap.test(
 );
 
 tap.test(
-  `05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`,
+  `55 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`,
   (t) => {
     const source = `{"qwe": [
   "ab",
@@ -1202,7 +1202,7 @@ tap.test(
 );
 
 tap.test(
-  `05.09 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`,
+  `56 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`,
   (t) => {
     const source = `{"qwe": [
   "ab",
@@ -1219,7 +1219,7 @@ tap.test(
 );
 
 tap.test(
-  `05.10 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - dips to root level key before going to second branch`,
+  `57 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - dips to root level key before going to second branch`,
   (t) => {
     const source = `{
   "ab": {
@@ -1260,7 +1260,7 @@ tap.test(
 );
 
 tap.test(
-  `05.11 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`,
+  `58 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`,
   (t) => {
     const source = `{
   "a": {
@@ -1295,7 +1295,7 @@ tap.test(
 );
 
 tap.test(
-  `05.12 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`,
+  `59 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`,
   (t) => {
     const source = `{
   "a": {
@@ -1338,7 +1338,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
+  `60 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
   (t) => {
     const input = `[[]]`;
     const result = `[true]`;
@@ -1348,7 +1348,7 @@ tap.test(
 );
 
 tap.test(
-  `06.02 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
+  `61 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
   (t) => {
     const input = `[{}]`;
     const result = `[true]`;
@@ -1358,7 +1358,7 @@ tap.test(
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
+  `62 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
   (t) => {
     const input = `[false]`;
     const result = `[true]`;
@@ -1368,7 +1368,7 @@ tap.test(
 );
 
 tap.test(
-  `06.04 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
+  `63 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`,
   (t) => {
     const input = `["z"]`;
     const result = `[true]`;

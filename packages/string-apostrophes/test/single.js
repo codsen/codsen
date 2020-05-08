@@ -20,7 +20,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      [[4, 5, "&rsquo;"]]
+      [[4, 5, "&rsquo;"]],
+      "01"
     );
     t.end();
   }
@@ -36,7 +37,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      [[4, 5, "&rsquo;"]]
+      [[4, 5, "&rsquo;"]],
+      "02"
     );
     t.end();
   }
@@ -52,7 +54,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }),
-      [[4, 5, rightSingleQuote]]
+      [[4, 5, rightSingleQuote]],
+      "03"
     );
     t.end();
   }
@@ -67,7 +70,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 1,
       }),
-      []
+      [],
+      "04"
     );
     t.end();
   }
@@ -83,7 +87,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 1,
       }),
-      []
+      [],
+      "05"
     );
     t.end();
   }
@@ -99,7 +104,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }),
-      []
+      [],
+      "06"
     );
     t.end();
   }
@@ -113,7 +119,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What!${rightSingleQuote} he said`
+      `${leftSingleQuote}What!${rightSingleQuote} he said`,
+      "07"
     );
     t.end();
   }
@@ -127,7 +134,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What.${rightSingleQuote} he said`
+      `${leftSingleQuote}What.${rightSingleQuote} he said`,
+      "08"
     );
     t.end();
   }
@@ -141,7 +149,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What;${rightSingleQuote} he said`
+      `${leftSingleQuote}What;${rightSingleQuote} he said`,
+      "09"
     );
     t.end();
   }
@@ -155,7 +164,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What?${rightSingleQuote} he said`
+      `${leftSingleQuote}What?${rightSingleQuote} he said`,
+      "10"
     );
     t.end();
   }
@@ -169,7 +179,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`
+      `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`,
+      "11"
     );
     t.end();
   }
@@ -183,7 +194,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`
+      `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`,
+      "12"
     );
     t.end();
   }
@@ -197,7 +209,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`
+      `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`,
+      "13"
     );
     t.end();
   }
@@ -211,7 +224,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`
+      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
+      "14"
     );
     t.end();
   }
@@ -225,7 +239,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`
+      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
+      "15"
     );
     t.end();
   }
@@ -239,7 +254,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `${leftSingleQuote}What,${rightSingleQuote} he said`
+      `${leftSingleQuote}What,${rightSingleQuote} he said`,
+      "16"
     );
     t.end();
   }
@@ -255,7 +271,8 @@ tap.test(
         value: "'",
         convertEntities: 0,
       }),
-      [[4, 10, "\u2019"]]
+      [[4, 10, "\u2019"]],
+      "17"
     );
     t.end();
   }
@@ -270,7 +287,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      []
+      [],
+      "18"
     );
     t.end();
   }
@@ -285,7 +303,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      [[4, 5, "&rsquo;"]]
+      [[4, 5, "&rsquo;"]],
+      "19"
     );
     t.end();
   }
@@ -301,7 +320,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 1,
       }),
-      [[4, 5, "&rsquo;"]]
+      [[4, 5, "&rsquo;"]],
+      "20"
     );
     t.end();
   }
@@ -317,7 +337,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }),
-      [[4, 5, rightSingleQuote]]
+      [[4, 5, rightSingleQuote]],
+      "21"
     );
     t.end();
   }
@@ -332,7 +353,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 1,
       }),
-      [[4, 5, `'`]]
+      [[4, 5, `'`]],
+      "22"
     );
     t.end();
   }
@@ -348,7 +370,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 1,
       }),
-      [[4, 5, `'`]]
+      [[4, 5, `'`]],
+      "23"
     );
     t.end();
   }
@@ -364,7 +387,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }),
-      [[4, 5, `'`]]
+      [[4, 5, `'`]],
+      "24"
     );
     t.end();
   }

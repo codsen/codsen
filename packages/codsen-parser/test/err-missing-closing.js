@@ -5,37 +5,37 @@ import cparser from "../dist/codsen-parser.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
+  `01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
     const gatheredErr = [];
     cparser(`<div></div>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "00.01");
+    t.same(gatheredErr, [], "01.01");
     t.end();
   }
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
+  `02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     const gatheredErr = [];
     cparser(`<style>\n\n</style>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "00.02");
+    t.same(gatheredErr, [], "02.01");
     t.end();
   }
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
+  `03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
     const gatheredErr = [];
     cparser(`<div>\n\n</div>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "00.03");
+    t.same(gatheredErr, [], "03.01");
     t.end();
   }
 );
@@ -44,7 +44,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
+  `04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -95,7 +95,7 @@ tap.test(
           ],
         },
       ],
-      "01.01.01"
+      "04.01"
     );
     t.match(
       gatheredErr,
@@ -106,15 +106,15 @@ tap.test(
           idxTo: 7,
         },
       ],
-      "01.01.02"
+      "04.02"
     );
-    t.is(gatheredErr.length, 1, "01.01.03");
+    t.is(gatheredErr.length, 1, "04.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
+  `05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -165,7 +165,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "01.02.01"
+      "05.01"
     );
     t.match(
       gatheredErr,
@@ -176,15 +176,15 @@ tap.test(
           idxTo: 11,
         },
       ],
-      "01.02.02"
+      "05.02"
     );
-    t.is(gatheredErr.length, 1, "01.02.03");
+    t.is(gatheredErr.length, 1, "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
+  `06 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -235,7 +235,7 @@ tap.test(
           value: "</table>",
         },
       ],
-      "01.03.01"
+      "06.01"
     );
     t.match(
       gatheredErr,
@@ -246,9 +246,9 @@ tap.test(
           idxTo: 15,
         },
       ],
-      "01.03.02"
+      "06.02"
     );
-    t.is(gatheredErr.length, 1, "01.03.03");
+    t.is(gatheredErr.length, 1, "06.03");
     t.end();
   }
 );
@@ -257,13 +257,13 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
+  `07 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
   (t) => {
     const gatheredErr = [];
     cparser(`<!doctype html>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "02.01");
+    t.same(gatheredErr, [], "07.01");
     t.end();
   }
 );

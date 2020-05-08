@@ -2,14 +2,14 @@ import tap from "tap";
 import stripHtml from "../dist/string-strip-html.esm";
 
 tap.test(
-  "001 - missing closing bracket - opening brackets acts as delimeter",
+  "01 - missing closing bracket - opening brackets acts as delimeter",
   (t) => {
     t.same(stripHtml("<body>text<script>zzz</script</body>"), "text", "01");
     t.end();
   }
 );
 
-tap.test("002 - missing closing brackets", (t) => {
+tap.test("02 - missing closing brackets", (t) => {
   t.same(
     stripHtml(" < body > text < script > zzz <    /    script < / body >"),
     "text",
@@ -18,7 +18,7 @@ tap.test("002 - missing closing brackets", (t) => {
   t.end();
 });
 
-tap.test("003 - missing closing brackets", (t) => {
+tap.test("03 - missing closing brackets", (t) => {
   t.same(
     stripHtml("<body>text<script"),
     "text",
@@ -27,28 +27,28 @@ tap.test("003 - missing closing brackets", (t) => {
   t.end();
 });
 
-tap.test("004 - missing closing brackets", (t) => {
+tap.test("04 - missing closing brackets", (t) => {
   t.same(stripHtml("<script>text<script"), "", "04");
   t.end();
 });
 
-tap.test("005 - missing closing brackets, leading to EOL", (t) => {
+tap.test("05 - missing closing brackets, leading to EOL", (t) => {
   t.same(stripHtml("<a>text<a"), "text", "05");
   t.end();
 });
 
-tap.test("006 - missing closing brackets, multiple tags", (t) => {
+tap.test("06 - missing closing brackets, multiple tags", (t) => {
   t.same(stripHtml("<a>text<a<a"), "text", "06");
   t.end();
 });
 
-tap.test("007 - missing closing brackets + line breaks", (t) => {
+tap.test("07 - missing closing brackets + line breaks", (t) => {
   t.same(stripHtml("<body>text<script>\nzzz\n<script</body>"), "text", "07");
   t.end();
 });
 
 tap.test(
-  "008 - missing closing brackets + line breaks, with lots whitespace",
+  "08 - missing closing brackets + line breaks, with lots whitespace",
   (t) => {
     t.same(
       stripHtml("< body > text < script >\nzzz\n< script < / body >"),
@@ -59,13 +59,13 @@ tap.test(
   }
 );
 
-tap.test("009 - missing opening bracket, but recognised tag name", (t) => {
+tap.test("09 - missing opening bracket, but recognised tag name", (t) => {
   t.same(stripHtml("body>zzz</body>"), "zzz", "09");
   t.end();
 });
 
 tap.test(
-  "010 - missing opening bracket, but recognised tag name, inner whitespace",
+  "10 - missing opening bracket, but recognised tag name, inner whitespace",
   (t) => {
     t.same(stripHtml("body >zzz</body>"), "zzz", "10");
     t.end();
@@ -73,7 +73,7 @@ tap.test(
 );
 
 tap.test(
-  "011 - missing opening bracket, but recognised tag name, closing slash",
+  "11 - missing opening bracket, but recognised tag name, closing slash",
   (t) => {
     t.same(stripHtml("body/>zzz</body>"), "zzz", "11");
     t.end();
@@ -81,7 +81,7 @@ tap.test(
 );
 
 tap.test(
-  "012 - missing opening bracket, but recognised tag name, whitespace in front of slash",
+  "12 - missing opening bracket, but recognised tag name, whitespace in front of slash",
   (t) => {
     t.same(stripHtml("body />zzz</body>"), "zzz", "12");
     t.end();
@@ -89,7 +89,7 @@ tap.test(
 );
 
 tap.test(
-  "013 - missing opening bracket, but recognised tag name, rogue whitespace around slash",
+  "13 - missing opening bracket, but recognised tag name, rogue whitespace around slash",
   (t) => {
     t.same(stripHtml("body / >zzz</body>"), "zzz", "13");
     t.end();
@@ -97,7 +97,7 @@ tap.test(
 );
 
 tap.test(
-  "014 - missing opening bracket, but recognised tag name, recognised article tag",
+  "14 - missing opening bracket, but recognised tag name, recognised article tag",
   (t) => {
     t.same(
       stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
@@ -109,7 +109,7 @@ tap.test(
 );
 
 tap.test(
-  "015 - missing opening bracket, but recognised tag name - at index position zero",
+  "15 - missing opening bracket, but recognised tag name - at index position zero",
   (t) => {
     t.same(stripHtml("tralala>zzz</body>"), "tralala>zzz", "15");
     t.end();
@@ -117,7 +117,7 @@ tap.test(
 );
 
 tap.test(
-  "016 - missing opening bracket, but recognised tag name - all caps, recognised",
+  "16 - missing opening bracket, but recognised tag name - all caps, recognised",
   (t) => {
     t.same(stripHtml("BODY>zzz</BODY>"), "zzz", "16");
     t.end();
@@ -125,74 +125,74 @@ tap.test(
 );
 
 tap.test(
-  "017 - missing opening bracket, but recognised tag name - low caps, unrecognised",
+  "17 - missing opening bracket, but recognised tag name - low caps, unrecognised",
   (t) => {
     t.same(stripHtml("tralala>zzz</BODY>"), "tralala>zzz", "17");
     t.end();
   }
 );
 
-tap.test("018 - incomplete attribute", (t) => {
+tap.test("18 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything=>b"), "a b", "18");
   t.end();
 });
 
-tap.test("019 - incomplete attribute", (t) => {
+tap.test("19 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything= >b"), "a b", "19");
   t.end();
 });
 
-tap.test("020 - incomplete attribute", (t) => {
+tap.test("20 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything=/>b"), "a b", "20");
   t.end();
 });
 
-tap.test("021 - incomplete attribute", (t) => {
+tap.test("21 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything= />b"), "a b", "21");
   t.end();
 });
 
-tap.test("022 - incomplete attribute", (t) => {
+tap.test("22 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything=/ >b"), "a b", "22");
   t.end();
 });
 
-tap.test("023 - incomplete attribute", (t) => {
+tap.test("23 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything= / >b"), "a b", "23");
   t.end();
 });
 
-tap.test("024 - incomplete attribute", (t) => {
+tap.test("24 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything= / >b"), "a b", "24");
   t.end();
 });
 
-tap.test("025 - incomplete attribute", (t) => {
+tap.test("25 - incomplete attribute", (t) => {
   t.same(stripHtml("a<article anything=  / >b"), "a b", "25");
   t.end();
 });
 
-tap.test("026 - multiple incomplete attributes", (t) => {
+tap.test("26 - multiple incomplete attributes", (t) => {
   t.same(stripHtml("a<article anything= whatever=>b"), "a b", "26");
   t.end();
 });
 
-tap.test("027 - multiple incomplete attributes", (t) => {
+tap.test("27 - multiple incomplete attributes", (t) => {
   t.same(stripHtml("a<article anything= whatever=/>b"), "a b", "27");
   t.end();
 });
 
-tap.test("028 - multiple incomplete attributes", (t) => {
+tap.test("28 - multiple incomplete attributes", (t) => {
   t.same(stripHtml("a<article anything= whatever= >b"), "a b", "28");
   t.end();
 });
 
-tap.test("029 - multiple incomplete attributes", (t) => {
+tap.test("29 - multiple incomplete attributes", (t) => {
   t.same(stripHtml("a<article anything= whatever= />b"), "a b", "29");
   t.end();
 });
 
-tap.test("030 - multiple incomplete attributes", (t) => {
+tap.test("30 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a<article anything= class="zz" whatever= id="lalala">b'),
     "a b",
@@ -201,7 +201,7 @@ tap.test("030 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("031 - multiple incomplete attributes", (t) => {
+tap.test("31 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"/>b'),
     "a b",
@@ -210,7 +210,7 @@ tap.test("031 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("032 - multiple incomplete attributes", (t) => {
+tap.test("32 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" />b'),
     "a b",
@@ -219,7 +219,7 @@ tap.test("032 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("033 - multiple incomplete attributes", (t) => {
+tap.test("33 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" / >b'),
     "a b",
@@ -228,7 +228,7 @@ tap.test("033 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("034 - multiple incomplete attributes", (t) => {
+tap.test("34 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"  /  >b'),
     "a b",
@@ -237,7 +237,7 @@ tap.test("034 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("035 - multiple incomplete attributes", (t) => {
+tap.test("35 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml('a <article anything= class="zz" whatever= id="lalala"  /  > b'),
     "a b",
@@ -246,7 +246,7 @@ tap.test("035 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("036 - multiple incomplete attributes", (t) => {
+tap.test("36 - multiple incomplete attributes", (t) => {
   t.same(
     stripHtml(
       'a <article anything = class="zz" whatever = id="lalala"  /  > b'
@@ -257,70 +257,70 @@ tap.test("036 - multiple incomplete attributes", (t) => {
   t.end();
 });
 
-tap.test("037 - tag name, equals and end of a tag", (t) => {
+tap.test("37 - tag name, equals and end of a tag", (t) => {
   // html
   t.same(stripHtml("a<article=>b"), "a b", "37");
   t.end();
 });
 
-tap.test("038 - tag name, equals and end of a tag", (t) => {
+tap.test("38 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article =>b"), "a b", "38");
   t.end();
 });
 
-tap.test("039 - tag name, equals and end of a tag", (t) => {
+tap.test("39 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article= >b"), "a b", "39");
   t.end();
 });
 
-tap.test("040 - tag name, equals and end of a tag", (t) => {
+tap.test("40 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article = >b"), "a b", "40");
   t.end();
 });
 
-tap.test("041 - tag name, equals and end of a tag", (t) => {
+tap.test("41 - tag name, equals and end of a tag", (t) => {
   // xhtml without space between the slash and closing tag
   t.same(stripHtml("a<article=/>b"), "a b", "41");
   t.end();
 });
 
-tap.test("042 - tag name, equals and end of a tag", (t) => {
+tap.test("42 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article =/>b"), "a b", "42");
   t.end();
 });
 
-tap.test("043 - tag name, equals and end of a tag", (t) => {
+tap.test("43 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article= />b"), "a b", "43");
   t.end();
 });
 
-tap.test("044 - tag name, equals and end of a tag", (t) => {
+tap.test("44 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article = />b"), "a b", "44");
   t.end();
 });
 
-tap.test("045 - tag name, equals and end of a tag", (t) => {
+tap.test("45 - tag name, equals and end of a tag", (t) => {
   // xhtml with space after the closing slash
   t.same(stripHtml("a<article=/ >b"), "a b", "45");
   t.end();
 });
 
-tap.test("046 - tag name, equals and end of a tag", (t) => {
+tap.test("46 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article =/ >b"), "a b", "46");
   t.end();
 });
 
-tap.test("047 - tag name, equals and end of a tag", (t) => {
+tap.test("47 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article= / >b"), "a b", "47");
   t.end();
 });
 
-tap.test("048 - tag name, equals and end of a tag", (t) => {
+tap.test("48 - tag name, equals and end of a tag", (t) => {
   t.same(stripHtml("a<article = / >b"), "a b", "48");
   t.end();
 });
 
-tap.test("049 - multiple equals after attribute's name", (t) => {
+tap.test("49 - multiple equals after attribute's name", (t) => {
   // 1. consecutive equals
   // normal tag:
   t.same(
@@ -331,7 +331,7 @@ tap.test("049 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("050 - multiple equals after attribute's name", (t) => {
+tap.test("50 - multiple equals after attribute's name", (t) => {
   // ranged tag:
   t.same(
     stripHtml('aaaaaaa<script class =="zzzz">x</script>bbbbbbbb'),
@@ -341,7 +341,7 @@ tap.test("050 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("051 - multiple equals after attribute's name", (t) => {
+tap.test("51 - multiple equals after attribute's name", (t) => {
   // 2. consecutive equals with space
   // normal tag:
   t.same(
@@ -352,7 +352,7 @@ tap.test("051 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("052 - multiple equals after attribute's name", (t) => {
+tap.test("52 - multiple equals after attribute's name", (t) => {
   // ranged tag:
   t.same(
     stripHtml('aaaaaaa<script class = ="zzzz">x</script>bbbbbbbb'),
@@ -362,7 +362,7 @@ tap.test("052 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("053 - multiple equals after attribute's name", (t) => {
+tap.test("53 - multiple equals after attribute's name", (t) => {
   // 3. consecutive equals with more spaces in between
   // normal tag:
   t.same(
@@ -373,7 +373,7 @@ tap.test("053 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("054 - multiple equals after attribute's name", (t) => {
+tap.test("54 - multiple equals after attribute's name", (t) => {
   // ranged tag:
   t.same(
     stripHtml('aaaaaaa<script class = = "zzzz">x</script>bbbbbbbb'),
@@ -383,7 +383,7 @@ tap.test("054 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("055 - multiple equals after attribute's name", (t) => {
+tap.test("55 - multiple equals after attribute's name", (t) => {
   // 4. consecutive equals, following attribute's name tightly
   // normal tag:
   t.same(
@@ -394,7 +394,7 @@ tap.test("055 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("056 - multiple equals after attribute's name", (t) => {
+tap.test("56 - multiple equals after attribute's name", (t) => {
   // ranged tag:
   t.same(
     stripHtml('aaaaaaa<script class= = "zzzz">x</script>bbbbbbbb'),
@@ -404,7 +404,7 @@ tap.test("056 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("057 - multiple equals after attribute's name", (t) => {
+tap.test("57 - multiple equals after attribute's name", (t) => {
   // 5. consecutive equals, tight
   // normal tag:
   t.same(
@@ -415,7 +415,7 @@ tap.test("057 - multiple equals after attribute's name", (t) => {
   t.end();
 });
 
-tap.test("058 - multiple equals after attribute's name", (t) => {
+tap.test("58 - multiple equals after attribute's name", (t) => {
   // ranged tag:
   t.same(
     stripHtml('aaaaaaa<script class=="zzzz">x</script>bbbbbbbb'),
@@ -426,7 +426,7 @@ tap.test("058 - multiple equals after attribute's name", (t) => {
 });
 
 tap.test(
-  "059 - multiple quotes in the attributes - double, opening only - normal",
+  "59 - multiple quotes in the attributes - double, opening only - normal",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
@@ -438,7 +438,7 @@ tap.test(
 );
 
 tap.test(
-  "060 - multiple quotes in the attributes - double, opening only - ranged",
+  "60 - multiple quotes in the attributes - double, opening only - ranged",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
@@ -450,7 +450,7 @@ tap.test(
 );
 
 tap.test(
-  "061 - multiple quotes in the attributes - double, closing - normal",
+  "61 - multiple quotes in the attributes - double, closing - normal",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
@@ -462,7 +462,7 @@ tap.test(
 );
 
 tap.test(
-  "062 - multiple quotes in the attributes - double, closing - ranged",
+  "62 - multiple quotes in the attributes - double, closing - ranged",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
@@ -474,7 +474,7 @@ tap.test(
 );
 
 tap.test(
-  "063 - multiple quotes in the attributes - double, both closing and opening - normal",
+  "63 - multiple quotes in the attributes - double, both closing and opening - normal",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<div class=""zzzz"">x</div>bbbbbbbb'),
@@ -486,7 +486,7 @@ tap.test(
 );
 
 tap.test(
-  "064 - multiple quotes in the attributes - double, both closing and opening - ranged",
+  "64 - multiple quotes in the attributes - double, both closing and opening - ranged",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<script class=""zzzz"">x</script>bbbbbbbb'),
@@ -498,7 +498,7 @@ tap.test(
 );
 
 tap.test(
-  "065 - multiple quotes in the attributes - single, opening only - normal",
+  "65 - multiple quotes in the attributes - single, opening only - normal",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
@@ -510,7 +510,7 @@ tap.test(
 );
 
 tap.test(
-  "066 - multiple quotes in the attributes - single, opening only - ranged",
+  "66 - multiple quotes in the attributes - single, opening only - ranged",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
@@ -522,7 +522,7 @@ tap.test(
 );
 
 tap.test(
-  "067 - multiple quotes in the attributes - single, closing - normal",
+  "67 - multiple quotes in the attributes - single, closing - normal",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
@@ -534,7 +534,7 @@ tap.test(
 );
 
 tap.test(
-  "068 - multiple quotes in the attributes - single, closing - ranged",
+  "68 - multiple quotes in the attributes - single, closing - ranged",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
@@ -546,7 +546,7 @@ tap.test(
 );
 
 tap.test(
-  "069 - multiple quotes in the attributes - single, both closing and opening - normal",
+  "69 - multiple quotes in the attributes - single, both closing and opening - normal",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<div class=''zzzz''>x</div>bbbbbbbb"),
@@ -558,7 +558,7 @@ tap.test(
 );
 
 tap.test(
-  "070 - multiple quotes in the attributes - single, both closing and opening - ranged",
+  "70 - multiple quotes in the attributes - single, both closing and opening - ranged",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<script class=''zzzz''>x</script>bbbbbbbb"),
@@ -570,7 +570,7 @@ tap.test(
 );
 
 tap.test(
-  "071 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - normal",
+  "71 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - normal",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<div class= ==''zzzz''>x</div>bbbbbbbb"),
@@ -582,7 +582,7 @@ tap.test(
 );
 
 tap.test(
-  "072 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - ranged",
+  "72 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - ranged",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<script class = ==''zzzz''>x</script>bbbbbbbb"),
@@ -594,7 +594,7 @@ tap.test(
 );
 
 tap.test(
-  "073 - multiple quotes in the attributes - mismatching quotes only - normal",
+  "73 - multiple quotes in the attributes - mismatching quotes only - normal",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<div class=''zzzz\"\">x</div>bbbbbbbb"),
@@ -606,7 +606,7 @@ tap.test(
 );
 
 tap.test(
-  "074 - multiple quotes in the attributes - mismatching quotes only - ranged",
+  "74 - multiple quotes in the attributes - mismatching quotes only - ranged",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<script class=''zzzz\"\">x</script>bbbbbbbb"),
@@ -618,7 +618,7 @@ tap.test(
 );
 
 tap.test(
-  "075 - multiple quotes in the attributes - crazy messed up - normal",
+  "75 - multiple quotes in the attributes - crazy messed up - normal",
   (t) => {
     t.same(
       stripHtml(`aaaaaaa<div class= =='  'zzzz" " ">x</div>bbbbbbbb`),
@@ -630,7 +630,7 @@ tap.test(
 );
 
 tap.test(
-  "076 - multiple quotes in the attributes - crazy messed up - ranged",
+  "76 - multiple quotes in the attributes - crazy messed up - ranged",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " ">x</script>bbbbbbbb'),
@@ -642,7 +642,7 @@ tap.test(
 );
 
 tap.test(
-  "077 - multiple quotes in the attributes - even more crazy messed up - normal",
+  "77 - multiple quotes in the attributes - even more crazy messed up - normal",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " " /// >x</div>bbbbbbbb'),
@@ -654,7 +654,7 @@ tap.test(
 );
 
 tap.test(
-  "078 - multiple quotes in the attributes - even more crazy messed up - ranged",
+  "78 - multiple quotes in the attributes - even more crazy messed up - ranged",
   (t) => {
     t.same(
       stripHtml(
@@ -667,7 +667,7 @@ tap.test(
   }
 );
 
-tap.test("079 - unclosed attributes - normal", (t) => {
+tap.test("79 - unclosed attributes - normal", (t) => {
   t.same(
     stripHtml('aaaaaaa<div class="zzzz>x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
@@ -676,7 +676,7 @@ tap.test("079 - unclosed attributes - normal", (t) => {
   t.end();
 });
 
-tap.test("080 - unclosed attributes - ranged", (t) => {
+tap.test("80 - unclosed attributes - ranged", (t) => {
   t.same(
     stripHtml('aaaaaaa<script class="zzzz>x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
@@ -685,7 +685,7 @@ tap.test("080 - unclosed attributes - ranged", (t) => {
   t.end();
 });
 
-tap.test("081 - unclosed attributes - single tag", (t) => {
+tap.test("81 - unclosed attributes - single tag", (t) => {
   t.same(
     stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
@@ -695,7 +695,7 @@ tap.test("081 - unclosed attributes - single tag", (t) => {
 });
 
 tap.test(
-  "082 - unclosed attributes - new tag starts, closing quote missing",
+  "82 - unclosed attributes - new tag starts, closing quote missing",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb'),
@@ -707,7 +707,7 @@ tap.test(
 );
 
 tap.test(
-  "083 - unclosed attributes - new tag starts, both quotes present",
+  "83 - unclosed attributes - new tag starts, both quotes present",
   (t) => {
     t.same(
       stripHtml('aaaaaaa<br class="zzzz" <br>bbbbbbbb'),
@@ -719,7 +719,7 @@ tap.test(
 );
 
 tap.test(
-  "084 - unclosed attributes - cut off at the end of attribute's name",
+  "84 - unclosed attributes - cut off at the end of attribute's name",
   (t) => {
     t.same(stripHtml("aaaaaaa<br class<br>bbbbbbbb"), "aaaaaaa bbbbbbbb", "84");
     t.end();
@@ -727,7 +727,7 @@ tap.test(
 );
 
 tap.test(
-  "085 - unclosed attributes - cut off with a rogue exclamation mark",
+  "85 - unclosed attributes - cut off with a rogue exclamation mark",
   (t) => {
     t.same(
       stripHtml("aaaaaaa<br class!<br>bbbbbbbb"),
@@ -739,7 +739,7 @@ tap.test(
 );
 
 tap.test(
-  "086 - duplicated consecutive attribute values - inner whitespace",
+  "86 - duplicated consecutive attribute values - inner whitespace",
   (t) => {
     t.same(
       stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
@@ -750,68 +750,68 @@ tap.test(
   }
 );
 
-tap.test("087 - space after bracket, multiple attrs, no equals", (t) => {
+tap.test("87 - space after bracket, multiple attrs, no equals", (t) => {
   t.same(stripHtml("aa< br a b >cc"), "aa< br a b >cc", "87");
   t.end();
 });
 
-tap.test("088 - space after bracket, multiple attrs, no equals", (t) => {
+tap.test("88 - space after bracket, multiple attrs, no equals", (t) => {
   t.same(stripHtml("aa < br a b >cc"), "aa < br a b >cc", "88");
   t.end();
 });
 
-tap.test("089 - space after bracket, multiple attrs, no equals", (t) => {
+tap.test("89 - space after bracket, multiple attrs, no equals", (t) => {
   t.same(stripHtml("aa< br a b > cc"), "aa< br a b > cc", "89");
   t.end();
 });
 
-tap.test("090 - space after bracket, multiple attrs, no equals", (t) => {
+tap.test("90 - space after bracket, multiple attrs, no equals", (t) => {
   t.same(stripHtml("aa < br a b > cc"), "aa < br a b > cc", "90");
   t.end();
 });
 
-tap.test("091 - space after bracket, multiple attrs, no equals", (t) => {
+tap.test("91 - space after bracket, multiple attrs, no equals", (t) => {
   t.same(stripHtml("aa  < br a b >  cc"), "aa  < br a b >  cc", "91");
   t.end();
 });
 
-tap.test("092 - various, #1", (t) => {
+tap.test("92 - various, #1", (t) => {
   t.same(stripHtml('aa< br a b=" >cc'), "aa cc", "92");
   t.end();
 });
 
-tap.test("093 - various, #2", (t) => {
+tap.test("93 - various, #2", (t) => {
   t.same(stripHtml('aa< br a b= " >cc'), "aa cc", "93");
   t.end();
 });
 
-tap.test("094 - various, #3", (t) => {
+tap.test("94 - various, #3", (t) => {
   t.same(stripHtml('aa< br a b =" >cc'), "aa cc", "94");
   t.end();
 });
 
-tap.test("095 - various, #4", (t) => {
+tap.test("95 - various, #4", (t) => {
   t.same(stripHtml('aa< br a b = " >cc'), "aa cc", "95");
   t.end();
 });
 
-tap.test("096 - various, #5", (t) => {
+tap.test("96 - various, #5", (t) => {
   // xhtml
   t.same(stripHtml('aa< br a b=" />cc'), "aa cc", "96");
   t.end();
 });
 
-tap.test("097 - various, #6", (t) => {
+tap.test("97 - various, #6", (t) => {
   t.same(stripHtml('aa< br a b= " />cc'), "aa cc", "97");
   t.end();
 });
 
-tap.test("098 - various, #7", (t) => {
+tap.test("98 - various, #7", (t) => {
   t.same(stripHtml('aa< br a b =" />cc'), "aa cc", "98");
   t.end();
 });
 
-tap.test("099 - various, #8", (t) => {
+tap.test("99 - various, #8", (t) => {
   t.same(stripHtml('aa< br a b = " />cc'), "aa cc", "99");
   t.end();
 });

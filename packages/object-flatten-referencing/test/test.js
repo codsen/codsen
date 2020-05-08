@@ -13,7 +13,7 @@ import {
 // 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - throws when inputs are missing/wrong", (t) => {
+tap.test("01 - throws when inputs are missing/wrong", (t) => {
   t.throws(() => {
     ofr();
   }, /THROW_ID_01/g);
@@ -30,7 +30,7 @@ tap.test("01.01 - throws when inputs are missing/wrong", (t) => {
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - defaults - objects, one level", (t) => {
+tap.test("02 - defaults - objects, one level", (t) => {
   t.same(
     ofr(
       {
@@ -46,7 +46,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "02.01.01 - defaults wrapping strings"
+    "02.01 - defaults wrapping strings"
   );
   t.same(
     ofr(
@@ -67,7 +67,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.01.02 - heads/tails override, wrapping with empty strings"
+    "02.02 - heads/tails override, wrapping with empty strings"
   );
   t.same(
     ofr(
@@ -88,7 +88,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "{val11.val12",
       key2: "{val21.val22",
     },
-    "02.01.03 - wrapping only with heads; tails empty"
+    "02.03 - wrapping only with heads; tails empty"
   );
   t.same(
     ofr(
@@ -109,7 +109,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "val11.val12}",
       key2: "val21.val22}",
     },
-    "02.01.04 - wrapping only with heads; tails empty"
+    "02.04 - wrapping only with heads; tails empty"
   );
   t.same(
     ofr(
@@ -129,7 +129,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    '02.01.05 - does not wrap because starts with "key", string opt'
+    '02.05 - does not wrap because starts with "key", string opt'
   );
   t.same(
     ofr(
@@ -149,7 +149,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    '02.01.06 - does not wrap because starts with "key", array opt'
+    '02.06 - does not wrap because starts with "key", array opt'
   );
   t.same(
     ofr(
@@ -169,7 +169,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.01.07 - does not wrap because ends with 1 or 2"
+    "02.07 - does not wrap because ends with 1 or 2"
   );
   t.same(
     ofr(
@@ -189,7 +189,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.01.08 - mix of various wildcards, sources are strings"
+    "02.08 - mix of various wildcards, sources are strings"
   );
   t.same(
     ofr(
@@ -209,7 +209,7 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.01.09 - mix of various wildcards, sources are plain objects"
+    "02.09 - mix of various wildcards, sources are plain objects"
   );
   t.same(
     ofr(
@@ -229,12 +229,12 @@ tap.test("02.01 - defaults - objects, one level", (t) => {
       KEY1: "val11.val12",
       KEY2: "val21.val22",
     },
-    "02.01.10 - wildcards are case sensitive since v4.3.0"
+    "02.10 - wildcards are case sensitive since v4.3.0"
   );
   t.end();
 });
 
-tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
+tap.test("03 - opts.preventDoubleWrapping", (t) => {
   t.same(
     ofr(
       {
@@ -250,7 +250,7 @@ tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "02.02.01 - preventDoubleWrapping reading default heads/tails"
+    "03.01 - preventDoubleWrapping reading default heads/tails"
   );
   t.same(
     ofr(
@@ -270,7 +270,7 @@ tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
       key1: "%%_%%_val11.val12_%%_%%",
       key2: "%%_val21.val22_%%",
     },
-    "02.02.02 - preventDoubleWrapping off"
+    "03.02 - preventDoubleWrapping off"
   );
   t.same(
     ofr(
@@ -291,7 +291,7 @@ tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
       key1: "{val11.val12}",
       key2: "{val21.val22}",
     },
-    "02.02.03 - preventDoubleWrapping reading default heads/tails"
+    "03.03 - preventDoubleWrapping reading default heads/tails"
   );
   t.same(
     ofr(
@@ -312,12 +312,12 @@ tap.test("02.02 - opts.preventDoubleWrapping", (t) => {
       key1: "aaa %%val11.val12%% bbb",
       key2: "%%val21.val22%%",
     },
-    "02.02.04 - preventDoubleWrapping reading default heads/tails"
+    "03.04 - preventDoubleWrapping reading default heads/tails"
   );
   t.end();
 });
 
-tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
+tap.test("04 - flattens an array value but doesn't touch other one", (t) => {
   t.same(
     ofr(
       {
@@ -341,7 +341,7 @@ tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.03.01"
+    "04.01"
   );
   t.same(
     ofr(
@@ -369,7 +369,7 @@ tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.03.02"
+    "04.02"
   );
   t.same(
     ofr(
@@ -398,7 +398,7 @@ tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.03.03"
+    "04.03"
   );
   t.same(
     ofr(
@@ -428,7 +428,7 @@ tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.03.04"
+    "04.04"
   );
   t.same(
     ofr(
@@ -456,12 +456,12 @@ tap.test("02.03 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.03.05 - does not put <br /> at all when flattening arrays"
+    "04.05 - does not put <br /> at all when flattening arrays"
   );
   t.end();
 });
 
-tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
+tap.test("05 - wildcards in opts.dontWrapKeys", (t) => {
   t.same(
     ofr(
       {
@@ -488,7 +488,7 @@ tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.04.01 - does not wrap the key1 contents"
+    "05.01 - does not wrap the key1 contents"
   );
   t.same(
     ofr(
@@ -516,7 +516,7 @@ tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.04.02 - opposite key order"
+    "05.02 - opposite key order"
   );
   t.same(
     ofr(
@@ -545,7 +545,7 @@ tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "02.04.03 - does not touch key3 children"
+    "05.03 - does not touch key3 children"
   );
   t.same(
     ofr(
@@ -575,7 +575,7 @@ tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "02.04.04 - does not wrap the key3 children"
+    "05.04 - does not wrap the key3 children"
   );
   t.same(
     ofr(
@@ -606,12 +606,12 @@ tap.test("02.04 - wildcards in opts.dontWrapKeys", (t) => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "02.04.05 - nothing, because key4 is not top-level"
+    "05.05 - nothing, because key4 is not top-level"
   );
   t.end();
 });
 
-tap.test("02.05 - array of input vs string of reference", (t) => {
+tap.test("06 - array of input vs string of reference", (t) => {
   t.same(
     ofr(
       {
@@ -633,12 +633,12 @@ tap.test("02.05 - array of input vs string of reference", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%"],
       },
     },
-    "02.05"
+    "06"
   );
   t.end();
 });
 
-tap.test("02.06 - action within an array's contents", (t) => {
+tap.test("07 - action within an array's contents", (t) => {
   t.same(
     ofr(
       {
@@ -686,12 +686,12 @@ tap.test("02.06 - action within an array's contents", (t) => {
         },
       ],
     },
-    "02.06.01"
+    "07"
   );
   t.end();
 });
 
-tap.test("02.07 - doesn't wrap empty string values", (t) => {
+tap.test("08 - doesn't wrap empty string values", (t) => {
   t.same(
     ofr(
       {
@@ -713,12 +713,12 @@ tap.test("02.07 - doesn't wrap empty string values", (t) => {
         key4: ["%%_val4_%%", ""],
       },
     },
-    "02.07"
+    "08"
   );
   t.end();
 });
 
-tap.test("02.08 - reference array as value is shorter than input's", (t) => {
+tap.test("09 - reference array as value is shorter than input's", (t) => {
   t.same(
     ofr(
       {
@@ -740,12 +740,12 @@ tap.test("02.08 - reference array as value is shorter than input's", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "02.08"
+    "09"
   );
   t.end();
 });
 
-tap.test("02.09 - one ignore works on multiple keys", (t) => {
+tap.test("10 - one ignore works on multiple keys", (t) => {
   t.same(
     ofr(
       {
@@ -768,7 +768,7 @@ tap.test("02.09 - one ignore works on multiple keys", (t) => {
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "02.09.01 - defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.01 - defaults on opts.whatToDoWhenReferenceIsMissing"
   );
   t.same(
     ofr(
@@ -793,7 +793,7 @@ tap.test("02.09 - one ignore works on multiple keys", (t) => {
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "02.09.02 - hardcoded defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.02 - hardcoded defaults on opts.whatToDoWhenReferenceIsMissing"
   );
   t.same(
     ofr(
@@ -818,7 +818,7 @@ tap.test("02.09 - one ignore works on multiple keys", (t) => {
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    "02.09.03 - defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.03 - defaults on opts.whatToDoWhenReferenceIsMissing"
   );
   t.same(
     ofr(
@@ -843,7 +843,7 @@ tap.test("02.09 - one ignore works on multiple keys", (t) => {
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    '02.09.04 - normal case, where reference is provided for key "wrapme"'
+    '10.04 - normal case, where reference is provided for key "wrapme"'
   );
   t.same(
     ofr(
@@ -868,12 +868,12 @@ tap.test("02.09 - one ignore works on multiple keys", (t) => {
       key_bbbb: "b.b",
       wrapme: "${c.c}",
     },
-    "02.09.05 - same as #04 but with objects"
+    "10.05 - same as #04 but with objects"
   );
   t.end();
 });
 
-tap.test("02.10 - deeper level - array VS. string", (t) => {
+tap.test("11 - deeper level - array VS. string", (t) => {
   t.same(
     ofr(
       {
@@ -912,12 +912,12 @@ tap.test("02.10 - deeper level - array VS. string", (t) => {
       ],
       b_key: "%%_b_val_%%",
     },
-    "02.10"
+    "11"
   );
   t.end();
 });
 
-tap.test("02.11 - deeper level - array within array VS. string", (t) => {
+tap.test("12 - deeper level - array within array VS. string", (t) => {
   t.same(
     ofr(
       {
@@ -934,12 +934,12 @@ tap.test("02.11 - deeper level - array within array VS. string", (t) => {
         "%%_xxxx_%%<br />%%_1111_%% %%_2222_%% %%_3333_%%<br />%%_yyyy_%%<br />%%_zzzz_%%",
       b_key: "%%_b_val_%%",
     },
-    "02.11"
+    "12"
   );
   t.end();
 });
 
-tap.test("02.12 - deeper level - array within array VS. string #2", (t) => {
+tap.test("13 - deeper level - array within array VS. string #2", (t) => {
   t.same(
     ofr(
       {
@@ -971,7 +971,7 @@ tap.test("02.12 - deeper level - array within array VS. string #2", (t) => {
         },
       ],
     },
-    "02.12.01 - innermost array is first element"
+    "13.01 - innermost array is first element"
   );
   t.same(
     ofr(
@@ -1004,12 +1004,12 @@ tap.test("02.12 - deeper level - array within array VS. string #2", (t) => {
         },
       ],
     },
-    "02.12.02 - innermost array is second element"
+    "13.02 - innermost array is second element"
   );
   t.end();
 });
 
-tap.test("02.13 - one ignore works on multiple keys", (t) => {
+tap.test("14 - one ignore works on multiple keys", (t) => {
   t.same(
     ofr(
       {
@@ -1097,12 +1097,12 @@ tap.test("02.13 - one ignore works on multiple keys", (t) => {
         },
       ],
     },
-    "02.13.01"
+    "14"
   );
   t.end();
 });
 
-tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
+tap.test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
   t.same(
     ofr(
       {
@@ -1123,7 +1123,7 @@ tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       key1:
         "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "02.14.01 - default - BRs are detected and no additional BRs are added"
+    "15.01 - default - BRs are detected and no additional BRs are added"
   );
   t.same(
     ofr(
@@ -1146,7 +1146,7 @@ tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       key1:
         "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "02.14.02 - hardcoded default - same as #01"
+    "15.02 - hardcoded default - same as #01"
   );
   t.same(
     ofr(
@@ -1169,7 +1169,7 @@ tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       key1:
         "{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "02.14.03 - off - will add excessive BRs"
+    "15.03 - off - will add excessive BRs"
   );
 
   // NOW COMBOS:
@@ -1196,7 +1196,7 @@ tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       key1:
         "{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "02.14.04 - xhtml = false"
+    "15.04 - xhtml = false"
   );
   t.end();
 });
@@ -1205,7 +1205,7 @@ tap.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
 // 03. opts.ignore
 // -----------------------------------------------------------------------------
 
-tap.test("03.01 - opts.ignore & wrapping function", (t) => {
+tap.test("16 - opts.ignore & wrapping function", (t) => {
   t.same(
     ofr(
       {
@@ -1221,7 +1221,7 @@ tap.test("03.01 - opts.ignore & wrapping function", (t) => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "03.01.01 - default behaviour"
+    "16.01 - default behaviour"
   );
   t.same(
     ofr(
@@ -1241,7 +1241,7 @@ tap.test("03.01 - opts.ignore & wrapping function", (t) => {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "03.01.02 - does not wrap ignored string"
+    "16.02 - does not wrap ignored string"
   );
   t.same(
     ofr(
@@ -1261,12 +1261,12 @@ tap.test("03.01 - opts.ignore & wrapping function", (t) => {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "03.01.03 - does not wrap ignored array"
+    "16.03 - does not wrap ignored array"
   );
   t.end();
 });
 
-tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
+tap.test("17 - flattens an array value but doesn't touch other one", (t) => {
   t.same(
     ofr(
       {
@@ -1290,7 +1290,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "03.02.01"
+    "17.01"
   );
   t.same(
     ofr(
@@ -1319,7 +1319,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "03.02.02"
+    "17.02"
   );
   t.same(
     ofr(
@@ -1349,7 +1349,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "03.02.03 - ignore affects key1, default wrapping"
+    "17.03 - ignore affects key1, default wrapping"
   );
   t.same(
     ofr(
@@ -1381,7 +1381,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "03.02.04 - ignore affects key1, custom wrapping"
+    "17.04 - ignore affects key1, custom wrapping"
   );
   t.same(
     ofr(
@@ -1418,7 +1418,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "03.02.05 - some ignored, some flattened"
+    "17.05 - some ignored, some flattened"
   );
   t.end();
 });
@@ -1427,7 +1427,7 @@ tap.test("03.02 - flattens an array value but doesn't touch other one", (t) => {
 // 04. opts.whatToDoWhenReferenceIsMissing
 // -----------------------------------------------------------------------------
 
-tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
+tap.test("18 - opts.whatToDoWhenReferenceIsMissing", (t) => {
   t.same(
     ofr(
       {
@@ -1448,7 +1448,7 @@ tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
         e: "f",
       },
     },
-    "04.01.01 - no opts - opt. 0 - skips"
+    "18.01 - no opts - opt. 0 - skips"
   );
   t.same(
     ofr(
@@ -1470,7 +1470,7 @@ tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
         e: "f",
       },
     },
-    "04.01.02 - opts - opt. 0 hardcoded - skips (same as #01)"
+    "18.02 - opts - opt. 0 hardcoded - skips (same as #01)"
   );
   t.throws(() => {
     ofr(
@@ -1489,7 +1489,7 @@ tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
         whatToDoWhenReferenceIsMissing: 1,
       }
     );
-  });
+  }, "18.03");
   t.same(
     ofr(
       {
@@ -1511,7 +1511,7 @@ tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
       a: "%%_c.d_%%",
       b: "%%_e.f_%%",
     },
-    "04.01.04 - opts - opt. 2 - flattens to string anyway + wraps if permitted"
+    "18.04 - opts - opt. 2 - flattens to string anyway + wraps if permitted"
   );
   t.end();
 });
@@ -1521,7 +1521,7 @@ tap.test("04.01 - opts.whatToDoWhenReferenceIsMissing", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "05.01 - double-wrapping prevention when markers have white space",
+  "19 - double-wrapping prevention when markers have white space",
   (t) => {
     t.same(
       ofr(
@@ -1538,7 +1538,7 @@ tap.test(
         key1: "%%_val11.val12_%%",
         key2: "%%_val21.val22_%%",
       },
-      "05.01.01 - base"
+      "19.01 - base"
     );
     t.same(
       ofr(
@@ -1559,7 +1559,7 @@ tap.test(
         key1: "%%_val11.val12_%%",
         key2: "%%_ val21.val22 _%%",
       },
-      "05.01.02 - whitespace on default heads and tails, checking double wrapping prevention"
+      "19.02 - whitespace on default heads and tails, checking double wrapping prevention"
     );
     t.same(
       ofr(
@@ -1580,14 +1580,14 @@ tap.test(
         key1: "{val11.val12}", // << not { {val11.val12} }
         key2: "{ val21.val22 }",
       },
-      "05.01.03 - whitespace on custom heads and tails, checking double wrapping prevention"
+      "19.03 - whitespace on custom heads and tails, checking double wrapping prevention"
     );
     t.end();
   }
 );
 
 tap.test(
-  "05.02 - double-wrapping prevention from setting opts.preventWrappingIfContains",
+  "20 - double-wrapping prevention from setting opts.preventWrappingIfContains",
   (t) => {
     t.same(
       ofr(
@@ -1609,7 +1609,7 @@ tap.test(
           "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
         key2: "{{ val21.val22 }}",
       },
-      "05.02.01 - default - double wrapping on key1 because {%...%} is not recognised"
+      "20.01 - default - double wrapping on key1 because {%...%} is not recognised"
     );
     t.same(
       ofr(
@@ -1631,7 +1631,7 @@ tap.test(
         key1: "{% if some_module.some_special_value %}some text{% endif %}",
         key2: "{{ val21.val22 }}",
       },
-      "05.02.02 - opts.preventWrappingIfContains, value as string"
+      "20.02 - opts.preventWrappingIfContains, value as string"
     );
     t.same(
       ofr(
@@ -1653,7 +1653,7 @@ tap.test(
         key1: "{% if some_module.some_special_value %}some text{% endif %}",
         key2: "{{ val21.val22 }}",
       },
-      "05.02.03 - opts.preventWrappingIfContains, value as array"
+      "20.03 - opts.preventWrappingIfContains, value as array"
     );
     t.same(
       ofr(
@@ -1676,7 +1676,7 @@ tap.test(
           "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
         key2: "{{ val21.val22 }}",
       },
-      "05.02.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"
+      "20.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"
     );
     t.same(
       ofr(
@@ -1699,7 +1699,7 @@ tap.test(
         key1: "{% if some_module.some_special_value %}some text{% endif %}",
         key2: "val21.val22",
       },
-      "05.02.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on"
+      "20.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on"
     );
     t.end();
   }
@@ -1710,31 +1710,31 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "95.01 - util.reclaimIntegerString - does what it says on strings",
+  "21 - util.reclaimIntegerString - does what it says on strings",
   (t) => {
-    t.same(reclaimIntegerString("1"), 1, "95.01.03");
+    t.same(reclaimIntegerString("1"), 1, "21");
     t.end();
   }
 );
 
 tap.test(
-  "95.02 - util.reclaimIntegerString - doesn't parse non-integer strings",
+  "22 - util.reclaimIntegerString - doesn't parse non-integer strings",
   (t) => {
-    t.same(reclaimIntegerString("1.1"), "1.1", "95.02");
+    t.same(reclaimIntegerString("1.1"), "1.1", "22");
     t.end();
   }
 );
 
 tap.test(
-  "95.03 - util.reclaimIntegerString - doesn't parse non-number strings either",
+  "23 - util.reclaimIntegerString - doesn't parse non-number strings either",
   (t) => {
-    t.same(reclaimIntegerString("zz"), "zz", "95.03");
+    t.same(reclaimIntegerString("zz"), "zz", "23");
     t.end();
   }
 );
 
-tap.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
-  t.same(reclaimIntegerString(true), true, "95.04");
+tap.test("24 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
+  t.same(reclaimIntegerString(true), true, "24");
   t.end();
 });
 
@@ -1742,26 +1742,26 @@ tap.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
 // 96. util.arrayiffyString
 // -----------------------------------------------------------------------------
 
-tap.test("96.01 - util.arrayiffyString - turns string into an array", (t) => {
-  t.same(arrayiffyString("zzz"), ["zzz"], "96.01");
+tap.test("25 - util.arrayiffyString - turns string into an array", (t) => {
+  t.same(arrayiffyString("zzz"), ["zzz"], "25");
   t.end();
 });
 
 tap.test(
-  "96.02 - util.arrayiffyString - turns empty string into an empty array",
+  "26 - util.arrayiffyString - turns empty string into an empty array",
   (t) => {
-    t.same(arrayiffyString(""), [], "96.02");
+    t.same(arrayiffyString(""), [], "26");
     t.end();
   }
 );
 
 tap.test(
-  "96.03 - util.arrayiffyString - doesn't touch any other input types",
+  "27 - util.arrayiffyString - doesn't touch any other input types",
   (t) => {
-    t.same(arrayiffyString(["a"]), ["a"], "96.03.01");
-    t.same(arrayiffyString([]), [], "96.03.02");
-    t.same(arrayiffyString(1), 1, "96.03.03");
-    t.same(arrayiffyString(null), null, "96.03.04");
+    t.same(arrayiffyString(["a"]), ["a"], "27.01");
+    t.same(arrayiffyString([]), [], "27.02");
+    t.same(arrayiffyString(1), 1, "27.03");
+    t.same(arrayiffyString(null), null, "27.04");
     t.end();
   }
 );
@@ -1770,13 +1770,13 @@ tap.test(
 // 98. util.flattenObject
 // -----------------------------------------------------------------------------
 
-tap.test("98.01 - util.flattenObject > empty input", (t) => {
-  t.same(flattenObject(), [], "98.01.01");
-  t.same(flattenObject({}), [], "98.01.02");
+tap.test("28 - util.flattenObject > empty input", (t) => {
+  t.same(flattenObject(), [], "28.01");
+  t.same(flattenObject({}), [], "28.02");
   t.end();
 });
 
-tap.test("98.02 - util.flattenObject > simple object", (t) => {
+tap.test("29 - util.flattenObject > simple object", (t) => {
   t.same(
     flattenObject(
       {
@@ -1793,12 +1793,12 @@ tap.test("98.02 - util.flattenObject > simple object", (t) => {
       }
     ),
     ["a.b", "c.d"],
-    "98.02"
+    "29"
   );
   t.end();
 });
 
-tap.test("98.03 - util.flattenObject > nested objects", (t) => {
+tap.test("30 - util.flattenObject > nested objects", (t) => {
   t.same(
     flattenObject(
       {
@@ -1815,7 +1815,7 @@ tap.test("98.03 - util.flattenObject > nested objects", (t) => {
       }
     ),
     ["a.b.c", "a.d.e", "f.g.h", "f.e.j"],
-    "98.03"
+    "30"
   );
   t.end();
 });
@@ -1824,12 +1824,12 @@ tap.test("98.03 - util.flattenObject > nested objects", (t) => {
 // 99. util.flattenArr
 // -----------------------------------------------------------------------------
 
-tap.test("99.01 - util.flattenArr > empty input", (t) => {
-  t.same(flattenArr(), "", "99.01");
+tap.test("31 - util.flattenArr > empty input", (t) => {
+  t.same(flattenArr(), "", "31");
   t.end();
 });
 
-tap.test("99.02 - util.flattenArr > simple array", (t) => {
+tap.test("32 - util.flattenArr > simple array", (t) => {
   t.same(
     flattenArr(
       ["a", "b", "c"],
@@ -1844,7 +1844,7 @@ tap.test("99.02 - util.flattenArr > simple array", (t) => {
       true
     ),
     "%%_a_%% %%_b_%% %%_c_%%",
-    "99.02.01"
+    "32.01"
   );
   t.same(
     flattenArr(
@@ -1860,12 +1860,12 @@ tap.test("99.02 - util.flattenArr > simple array", (t) => {
       false
     ),
     "a b c",
-    "99.02.02"
+    "32.02"
   );
   t.end();
 });
 
-tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
+tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
   t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
@@ -1882,7 +1882,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "99.03.01"
+    "33.01"
   );
   t.same(
     flattenArr(
@@ -1900,7 +1900,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "99.03.02"
+    "33.02"
   );
   t.same(
     flattenArr(
@@ -1918,7 +1918,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "99.03.03"
+    "33.03"
   );
   t.same(
     flattenArr(
@@ -1936,7 +1936,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "99.03.04"
+    "33.04"
   );
 
   // joinArraysUsingBrs = true
@@ -1956,7 +1956,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%<br />%%_b_%% %%_c_%% %%_d_%%<br />%%_e_%%",
-    "99.03.05"
+    "33.05"
   );
   t.same(
     flattenArr(
@@ -1974,7 +1974,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "a<br />b c d<br />e",
-    "99.03.06"
+    "33.06"
   );
   t.same(
     flattenArr(
@@ -1992,7 +1992,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%%%_b_%% %%_c_%% %%_d_%%%%_e_%%",
-    "99.03.07"
+    "33.07"
   );
   t.same(
     flattenArr(
@@ -2010,7 +2010,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "ab c de",
-    "99.03.08"
+    "33.08"
   );
 
   // HTML - no slashes
@@ -2030,7 +2030,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%<br>%%_b_%% %%_c_%% %%_d_%%<br>%%_e_%%",
-    "99.03.09"
+    "33.09"
   );
   t.same(
     flattenArr(
@@ -2048,7 +2048,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "a<br>b c d<br>e",
-    "99.03.10"
+    "33.10"
   );
   t.same(
     flattenArr(
@@ -2066,7 +2066,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "99.03.11"
+    "33.11"
   );
   t.same(
     flattenArr(
@@ -2084,7 +2084,7 @@ tap.test("99.03 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "99.03.12"
+    "33.12"
   );
   t.end();
 });

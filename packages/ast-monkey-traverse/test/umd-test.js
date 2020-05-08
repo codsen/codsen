@@ -19,6 +19,6 @@ tap.test("UMD build works fine", (t) => {
     }
     return current;
   });
-  t.same(actual, intended);
+  t.same(actual, intended, "01");
   t.end();
 });

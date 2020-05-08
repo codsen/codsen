@@ -5,8 +5,8 @@ import nonEmpty from "../dist/util-nonempty.esm";
 // Precautions
 // ==============================
 
-tap.test("1.1 - inputs missing - returns false", (t) => {
-  t.equal(nonEmpty(), false, "1.1");
+tap.test("01 - inputs missing - returns false", (t) => {
+  t.equal(nonEmpty(), false, "01");
   t.end();
 });
 
@@ -14,50 +14,50 @@ tap.test("1.1 - inputs missing - returns false", (t) => {
 // Normal use
 // ==============================
 
-tap.test("2.1 - Array", (t) => {
-  t.equal(nonEmpty(["a"]), true, "2.1.1");
-  t.equal(nonEmpty([]), false, "2.1.2");
+tap.test("02 - Array", (t) => {
+  t.equal(nonEmpty(["a"]), true, "02.01");
+  t.equal(nonEmpty([]), false, "02.02");
   t.end();
 });
 
-tap.test("2.2 - Plain object", (t) => {
-  t.equal(nonEmpty({ a: "a" }), true, "2.2.1");
-  t.equal(nonEmpty({}), false, "2.2.2");
+tap.test("03 - Plain object", (t) => {
+  t.equal(nonEmpty({ a: "a" }), true, "03.01");
+  t.equal(nonEmpty({}), false, "03.02");
   t.end();
 });
 
-tap.test("2.3 - String", (t) => {
-  t.equal(nonEmpty("a"), true, "2.3.1");
-  t.equal(nonEmpty(""), false, "2.3.2");
+tap.test("04 - String", (t) => {
+  t.equal(nonEmpty("a"), true, "04.01");
+  t.equal(nonEmpty(""), false, "04.02");
   t.end();
 });
 
-tap.test("2.4 - null", (t) => {
-  t.equal(nonEmpty(null), false, "2.4");
+tap.test("05 - null", (t) => {
+  t.equal(nonEmpty(null), false, "05");
   t.end();
 });
 
-tap.test('2.5 - hardcoded "undefined" - same as missing input', (t) => {
-  t.equal(nonEmpty(undefined), false, "2.5");
+tap.test('06 - hardcoded "undefined" - same as missing input', (t) => {
+  t.equal(nonEmpty(undefined), false, "06");
   t.end();
 });
 
-tap.test("2.5 - boolean - still empty (!)", (t) => {
-  t.equal(nonEmpty(true), false, "2.5.1");
-  t.equal(nonEmpty(false), false, "2.5.2");
+tap.test("07 - boolean - still empty (!)", (t) => {
+  t.equal(nonEmpty(true), false, "07.01");
+  t.equal(nonEmpty(false), false, "07.02");
   t.end();
 });
 
-tap.test("2.6 - function - still empty, no matter what's returned (!)", (t) => {
+tap.test("08 - function - still empty, no matter what's returned (!)", (t) => {
   const f = function dummy() {
     return "a";
   };
-  t.equal(nonEmpty(f), false, "2.6");
+  t.equal(nonEmpty(f), false, "08");
   t.end();
 });
 
-tap.test("2.7 - Number", (t) => {
-  t.equal(nonEmpty(10), true, "2.7.1");
-  t.equal(nonEmpty(0), true, "2.7.2");
+tap.test("09 - Number", (t) => {
+  t.equal(nonEmpty(10), true, "09.01");
+  t.equal(nonEmpty(0), true, "09.02");
   t.end();
 });

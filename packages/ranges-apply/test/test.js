@@ -5,7 +5,7 @@ import repl from "../dist/ranges-apply.esm";
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01.01 - wrong inputs", (t) => {
+tap.test("01 - wrong inputs", (t) => {
   // no input
   t.throws(() => {
     repl();
@@ -36,19 +36,19 @@ tap.test("01.01 - wrong inputs", (t) => {
 
   t.doesNotThrow(() => {
     repl("aaa", [["1", 2]]);
-  });
+  }, "01.07");
   t.doesNotThrow(() => {
     repl("aaa", [[1, "2"]]);
-  });
+  }, "01.08");
   t.doesNotThrow(() => {
     repl("aaa", [
       [1, "2"],
       ["3", "4"],
     ]);
-  });
+  }, "01.09");
   t.doesNotThrow(() => {
     repl("aaa", [[1, 2]]);
-  });
+  }, "01.10");
 
   t.throws(() => {
     repl("aaa", [[1], [10, 20]]);
@@ -90,19 +90,19 @@ tap.test("01.01 - wrong inputs", (t) => {
   t.end();
 });
 
-tap.test("01.02 - correct inputs", (t) => {
+tap.test("02 - correct inputs", (t) => {
   // all inputs can be empty as long as types are correct
   t.doesNotThrow(() => {
     repl("", []);
-  });
+  }, "02.01");
 
   // opts can be falsey, the absence being hardcoded
   t.doesNotThrow(() => {
     repl("", [], null);
-  });
+  }, "02.02");
   t.doesNotThrow(() => {
     repl("", [], undefined);
-  });
+  }, "02.03");
   t.end();
 });
 
@@ -110,7 +110,7 @@ tap.test("01.02 - correct inputs", (t) => {
 // 02. normal use, no opts
 // -----------------------------------------------------------------------------
 
-tap.test("02.01 - deletes multiple chunks correctly", (t) => {
+tap.test("03 - deletes multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n115.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -121,12 +121,12 @@ tap.test("02.01 - deletes multiple chunks correctly", (t) => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "02.01"
+    "03"
   );
   t.end();
 });
 
-tap.test("02.02 - replaces multiple chunks correctly", (t) => {
+tap.test("04 - replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n131.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -137,12 +137,12 @@ tap.test("02.02 - replaces multiple chunks correctly", (t) => {
       [18, 28, "yyy"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "02.02"
+    "04"
   );
   t.end();
 });
 
-tap.test("02.03 - deletes and replaces multiple chunks correctly", (t) => {
+tap.test("05 - deletes and replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb replace me ccc";
   // console.log('\n===============\n147.03')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -153,17 +153,17 @@ tap.test("02.03 - deletes and replaces multiple chunks correctly", (t) => {
       [18, 28, "zzz"],
     ]),
     "aaa  bbb zzz ccc",
-    "02.03"
+    "05"
   );
   t.end();
 });
 
-tap.test("02.04 - empty ranges array", (t) => {
-  t.same(repl("some text", []), "some text", "02.04");
+tap.test("06 - empty ranges array", (t) => {
+  t.same(repl("some text", []), "some text", "06");
   t.end();
 });
 
-tap.test("02.05 - deletes multiple chunks with zero indexes correctly", (t) => {
+tap.test("07 - deletes multiple chunks with zero indexes correctly", (t) => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n168.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
@@ -174,46 +174,43 @@ tap.test("02.05 - deletes multiple chunks with zero indexes correctly", (t) => {
       [14, 25],
     ]),
     "bbb ccc",
-    "02.05"
+    "07"
   );
   t.end();
 });
 
-tap.test(
-  "02.06 - replaces multiple chunks with zero indexes correctly",
-  (t) => {
-    const str = "delete me bbb and me too ccc";
-    // console.log('\n===============\n184.06')
-    // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
-    // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
-    t.same(
-      repl(str, [
-        [0, 9, "aaa"],
-        [14, 25],
-      ]),
-      "aaa bbb ccc",
-      "02.06"
-    );
-    t.end();
-  }
-);
+tap.test("08 - replaces multiple chunks with zero indexes correctly", (t) => {
+  const str = "delete me bbb and me too ccc";
+  // console.log('\n===============\n184.06')
+  // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
+  t.same(
+    repl(str, [
+      [0, 9, "aaa"],
+      [14, 25],
+    ]),
+    "aaa bbb ccc",
+    "08"
+  );
+  t.end();
+});
 
-tap.test("02.07 - replace with ending index zero", (t) => {
+tap.test("09 - replace with ending index zero", (t) => {
   const str = "bbb ccc";
   t.same(
     repl(str, [[0, 0, "aaa "]]),
     "aaa bbb ccc",
-    "02.07.01 - both from and to indexes are zeros, because we're adding content in front"
+    "09.01 - both from and to indexes are zeros, because we're adding content in front"
   );
   t.same(
     repl(str, [0, 0, "aaa "]),
     "aaa bbb ccc",
-    "02.07.02 - single range, put straight into argument"
+    "09.02 - single range, put straight into argument"
   );
   t.end();
 });
 
-tap.test("02.08 - null in third arg does nothing", (t) => {
+tap.test("10 - null in third arg does nothing", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n215.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -224,7 +221,7 @@ tap.test("02.08 - null in third arg does nothing", (t) => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "02.08.01"
+    "10.01"
   );
   t.same(
     repl(str, [
@@ -232,7 +229,7 @@ tap.test("02.08 - null in third arg does nothing", (t) => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "02.08.02"
+    "10.02"
   );
   t.same(
     repl(str, [
@@ -240,12 +237,12 @@ tap.test("02.08 - null in third arg does nothing", (t) => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "02.08.03"
+    "10.03"
   );
   t.end();
 });
 
-tap.test("02.09 - replaces multiple chunks correctly", (t) => {
+tap.test("11 - replaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n247.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -256,13 +253,13 @@ tap.test("02.09 - replaces multiple chunks correctly", (t) => {
       [18, 28, null],
     ]),
     "aaa zzz bbb  ccc",
-    "02.09"
+    "11"
   );
   t.end();
 });
 
 tap.test(
-  "02.10 - replaces multiple chunks correctly given in a wrong order",
+  "12 - replaces multiple chunks correctly given in a wrong order",
   (t) => {
     const str = "aaa delete me bbb and me too ccc";
     // console.log('\n===============\n265.10')
@@ -274,15 +271,15 @@ tap.test(
         [4, 13, "zzz"],
       ]),
       "aaa zzz bbb yyy ccc",
-      "02.10"
+      "12"
     );
     t.end();
   }
 );
 
-tap.test("02.11 - null as replacement range - does nothing", (t) => {
+tap.test("13 - null as replacement range - does nothing", (t) => {
   const str = "zzzzzzzz";
-  t.same(repl(str, null), str, "02.11.01");
+  t.same(repl(str, null), str, "13");
   t.end();
 });
 
@@ -290,13 +287,13 @@ tap.test("02.11 - null as replacement range - does nothing", (t) => {
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
 
-tap.test("03.01 - basic replacement", (t) => {
-  t.same(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "03.01.01");
-  t.same(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "03.01.02");
+tap.test("14 - basic replacement", (t) => {
+  t.same(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "14.01");
+  t.same(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "14.02");
   t.end();
 });
 
-tap.test("03.02 - multiple replacement pieces", (t) => {
+tap.test("15 - multiple replacement pieces", (t) => {
   // let str = 'aaa  ccc  eee'
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
@@ -306,14 +303,14 @@ tap.test("03.02 - multiple replacement pieces", (t) => {
       [9, 9, "ddd"],
     ]),
     "aaa bbb ccc ddd eee",
-    "03.02"
+    "15"
   );
   t.end();
 });
 
-tap.test("03.03 - null in replacement op - does nothing", (t) => {
-  t.same(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "03.03.01");
-  t.same(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "03.03.02");
+tap.test("16 - null in replacement op - does nothing", (t) => {
+  t.same(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "16.01");
+  t.same(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "16.02");
   t.end();
 });
 
@@ -321,7 +318,7 @@ tap.test("03.03 - null in replacement op - does nothing", (t) => {
 // 04. progressFn
 // -----------------------------------------------------------------------------
 
-tap.test("04.01 - progressFn - basic replacement", (t) => {
+tap.test("17 - progressFn - basic replacement", (t) => {
   let count = 0;
   t.same(
     repl("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
@@ -345,7 +342,7 @@ tap.test("04.01 - progressFn - basic replacement", (t) => {
       [5, 7],
     ]),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "04.01 - baseline"
+    "17.01 - baseline"
   );
   t.same(
     repl(
@@ -377,8 +374,8 @@ tap.test("04.01 - progressFn - basic replacement", (t) => {
       }
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "04.02 - calls the progress function"
+    "17.02 - calls the progress function"
   );
-  t.ok(count <= 101, "04.03");
+  t.ok(count <= 101, "17.03");
   t.end();
 });

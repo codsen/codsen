@@ -24,18 +24,18 @@ for (let i = 0, len = filesInSamples.length; i < len; i++) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`,
+  `01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`,
   (t) => {
-    t.same(isMediaD(), []);
+    t.same(isMediaD(), [], "01");
     t.end();
   }
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
+  `02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
   (t) => {
     const str = "";
-    t.same(isMediaD(str), []);
+    t.same(isMediaD(str), [], "02.01");
     writeSample({
       id: "00.02",
       str,
@@ -46,10 +46,10 @@ tap.test(
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
+  `03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
   (t) => {
     const str = " ";
-    t.same(isMediaD(str), []);
+    t.same(isMediaD(str), [], "03.01");
     writeSample({
       id: "00.03",
       str,
@@ -60,10 +60,10 @@ tap.test(
 );
 
 tap.test(
-  `00.04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
+  `04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
   (t) => {
     const str = "\n\n\n";
-    t.same(isMediaD(str), []);
+    t.same(isMediaD(str), [], "04.01");
     writeSample({
       id: "00.04",
       str,
@@ -74,7 +74,7 @@ tap.test(
 );
 
 tap.test(
-  `00.05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`,
+  `05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`,
   (t) => {
     t.throws(() => {
       isMediaD("", { offset: true });
@@ -87,7 +87,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`,
+  `06 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`,
   (t) => {
     [
       "all",
@@ -109,7 +109,7 @@ tap.test(
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offset`,
+  `07 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offset`,
   (t) => {
     [
       "all",
@@ -131,7 +131,7 @@ tap.test(
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
+  `08 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = ` zzz`;
     writeSample({
@@ -140,29 +140,33 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 1 + offset,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[0 + offset, 1 + offset]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 1 + offset,
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [[0 + offset, 1 + offset]],
+          },
         },
-      },
-      {
-        idxFrom: 1 + offset,
-        idxTo: 4 + offset,
-        message: `Unrecognised media type "zzz".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), `zzz`);
+        {
+          idxFrom: 1 + offset,
+          idxTo: 4 + offset,
+          message: `Unrecognised media type "zzz".`,
+          fix: null,
+        },
+      ],
+      "08.01"
+    );
+    t.equal(applyFixes(str, res, offset), `zzz`, "08.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
+  `09 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = `only`;
     writeSample({
@@ -170,21 +174,25 @@ tap.test(
       str,
     });
     const res = isMediaD(str);
-    t.equal(applyFixes(str, res), str);
-    t.same(res, [
-      {
-        idxFrom: 0,
-        idxTo: 4,
-        message: "Missing media type or condition.",
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, res), str, "09.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0,
+          idxTo: 4,
+          message: "Missing media type or condition.",
+          fix: null,
+        },
+      ],
+      "09.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
+  `10 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
   (t) => {
     const str = `not`;
     writeSample({
@@ -192,15 +200,19 @@ tap.test(
       str,
     });
     const res = isMediaD(str);
-    t.equal(applyFixes(str, res), str);
-    t.same(res, [
-      {
-        idxFrom: 0,
-        idxTo: 3,
-        message: "Missing media type or condition.",
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, res), str, "10.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0,
+          idxTo: 3,
+          message: "Missing media type or condition.",
+          fix: null,
+        },
+      ],
+      "10.02"
+    );
     t.end();
   }
 );
@@ -209,7 +221,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`,
+  `11 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`,
   (t) => {
     const str = `\tall`;
     const fixed = `all`;
@@ -220,23 +232,27 @@ tap.test(
     });
     const offset = 90;
     const res = isMediaD(str, { offset });
-    t.equal(applyFixes(str, res, offset), fixed);
-    t.same(res, [
-      {
-        idxFrom: 90,
-        idxTo: 91,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[90, 91]],
+    t.equal(applyFixes(str, res, offset), fixed, "11.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 90,
+          idxTo: 91,
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [[90, 91]],
+          },
         },
-      },
-    ]);
+      ],
+      "11.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`,
+  `12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`,
   (t) => {
     const str = `all\t`;
     const fixed = `all`;
@@ -246,23 +262,27 @@ tap.test(
       fixed,
     });
     const res = isMediaD(str);
-    t.equal(applyFixes(str, res), fixed);
-    t.same(res, [
-      {
-        idxFrom: 3,
-        idxTo: 4,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[3, 4]],
+    t.equal(applyFixes(str, res), fixed, "12.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 3,
+          idxTo: 4,
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [[3, 4]],
+          },
         },
-      },
-    ]);
+      ],
+      "12.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading and trailing`,
+  `13 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading and trailing`,
   (t) => {
     const str = `\t\t\tall\t\n`;
     const fixed = `all`;
@@ -272,26 +292,30 @@ tap.test(
       fixed,
     });
     const res = isMediaD(str);
-    t.equal(applyFixes(str, res), fixed);
-    t.same(res, [
-      {
-        idxFrom: 0, // first element of the first range
-        idxTo: 8, // last element of the last range
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [
-            [0, 3],
-            [6, 8],
-          ],
+    t.equal(applyFixes(str, res), fixed, "13.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0, // first element of the first range
+          idxTo: 8, // last element of the last range
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [
+              [0, 3],
+              [6, 8],
+            ],
+          },
         },
-      },
-    ]);
+      ],
+      "13.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab whitespace chunk`,
+  `14 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab whitespace chunk`,
   (t) => {
     const str = `only\tscreen`;
     const fixed = `only screen`;
@@ -302,23 +326,27 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 5 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4 + offset, 5 + offset, " "]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 5 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4 + offset, 5 + offset, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "14.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "14.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whitespace chunk`,
+  `15 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whitespace chunk`,
   (t) => {
     const str = `only\t\tscreen`;
     const fixed = `only screen`;
@@ -329,23 +357,27 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 6 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4 + offset, 6 + offset, " "]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 6 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4 + offset, 6 + offset, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "15.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "15.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab end`,
+  `16 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab end`,
   (t) => {
     const str = `only  \tscreen`;
     const fixed = `only screen`;
@@ -356,23 +388,27 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 7 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[5 + offset, 7 + offset]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 7 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[5 + offset, 7 + offset]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "16.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "16.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.07 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`,
+  `17 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`,
   (t) => {
     const str = `only\t \tscreen`;
     const fixed = `only screen`;
@@ -383,23 +419,27 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 7 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4 + offset, 7 + offset, " "]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 7 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4 + offset, 7 + offset, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "17.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "17.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.08 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start`,
+  `18 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start`,
   (t) => {
     const str = `only\t  screen`;
     const fixed = `only screen`;
@@ -410,23 +450,27 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 7 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4 + offset, 6 + offset]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 7 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4 + offset, 6 + offset]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), `only screen`);
+      ],
+      "18.01"
+    );
+    t.equal(applyFixes(str, res, offset), `only screen`, "18.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
+  `19 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
   (t) => {
     const str = `not (monochrome)`;
     writeSample({
@@ -436,21 +480,25 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 16 + offset,
+          message: `"not" can be only in front of media type.`,
+          fix: null,
+        },
+      ],
+      "19.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "19.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.10 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
+  `20 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`,
   (t) => {
     const str = `not (width <= -100px)`;
     writeSample({
@@ -460,21 +508,25 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 21 + offset,
-        message: `"not" can be only in front of media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 21 + offset,
+          message: `"not" can be only in front of media type.`,
+          fix: null,
+        },
+      ],
+      "20.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "20.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.11 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type, whitespace`,
+  `21 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type, whitespace`,
   (t) => {
     const str = `not ( monochrome )`;
     const fixed = `not (monochrome)`;
@@ -485,37 +537,41 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 6 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[5 + offset, 6 + offset]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 6 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[5 + offset, 6 + offset]],
+          },
         },
-      },
-      {
-        idxFrom: 16 + offset,
-        idxTo: 17 + offset,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[16 + offset, 17 + offset]],
+        {
+          idxFrom: 16 + offset,
+          idxTo: 17 + offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[16 + offset, 17 + offset]],
+          },
         },
-      },
-      {
-        idxFrom: 4 + offset,
-        idxTo: 18 + offset,
-        message: `"not" can be only in front of media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+        {
+          idxFrom: 4 + offset,
+          idxTo: 18 + offset,
+          message: `"not" can be only in front of media type.`,
+          fix: null,
+        },
+      ],
+      "21.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "21.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
+  `22 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
   (t) => {
     const str = `screen `;
     const fixed = `screen`;
@@ -525,17 +581,21 @@ tap.test(
       fixed,
     });
     const res = isMediaD(str);
-    t.same(res, [
-      {
-        idxFrom: 6,
-        idxTo: 7,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[6, 7]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 6,
+          idxTo: 7,
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [[6, 7]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res), fixed);
+      ],
+      "22.01"
+    );
+    t.equal(applyFixes(str, res), fixed, "22.02");
     t.end();
   }
 );
@@ -544,7 +604,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`,
+  `23 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`,
   (t) => {
     const str = `screeen`;
     const fixed = `screen`;
@@ -555,23 +615,27 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.equal(applyFixes(str, res, offset), fixed);
-    t.same(res, [
-      {
-        idxFrom: 10,
-        idxTo: 17,
-        message: `Did you mean "screen"?`,
-        fix: {
-          ranges: [[10, 17, "screen"]],
+    t.equal(applyFixes(str, res, offset), fixed, "23.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 10,
+          idxTo: 17,
+          message: `Did you mean "screen"?`,
+          fix: {
+            ranges: [[10, 17, "screen"]],
+          },
         },
-      },
-    ]);
+      ],
+      "23.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`,
+  `24 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`,
   (t) => {
     const str = `\t\t\tal\t\n`;
     const fixed = `all`;
@@ -581,28 +645,32 @@ tap.test(
       fixed,
     });
     const res = isMediaD(str);
-    t.equal(applyFixes(str, res), fixed);
-    t.same(res, [
-      {
-        idxFrom: 0, // first element of the first range
-        idxTo: 7, // last element of the last range
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [
-            [0, 3],
-            [5, 7],
-          ],
+    t.equal(applyFixes(str, res), fixed, "24.01");
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0, // first element of the first range
+          idxTo: 7, // last element of the last range
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [
+              [0, 3],
+              [5, 7],
+            ],
+          },
         },
-      },
-      {
-        idxFrom: 3, // first element of the first range
-        idxTo: 5, // last element of the last range
-        message: `Did you mean "all"?`,
-        fix: {
-          ranges: [[3, 5, "all"]],
+        {
+          idxFrom: 3, // first element of the first range
+          idxTo: 5, // last element of the last range
+          message: `Did you mean "all"?`,
+          fix: {
+            ranges: [[3, 5, "all"]],
+          },
         },
-      },
-    ]);
+      ],
+      "24.02"
+    );
     t.end();
   }
 );
@@ -611,7 +679,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 1`,
+  `25 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 1`,
   (t) => {
     const str = `only (screen))`;
     writeSample({
@@ -620,21 +688,25 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 14 + offset,
-        message: "More closing brackets than opening.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 14 + offset,
+          message: "More closing brackets than opening.",
+          fix: null,
+        },
+      ],
+      "25.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "25.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 2`,
+  `26 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 2`,
   (t) => {
     const str = `only ((screen)`;
     writeSample({
@@ -643,21 +715,25 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 14 + offset,
-        message: "More opening brackets than closing.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 14 + offset,
+          message: "More opening brackets than closing.",
+          fix: null,
+        },
+      ],
+      "26.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "26.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  `27 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `only ())screen(()`;
     writeSample({
@@ -666,21 +742,26 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 17 + offset,
-        message: "Some closing brackets are before their opening counterparts.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 17 + offset,
+          message:
+            "Some closing brackets are before their opening counterparts.",
+          fix: null,
+        },
+      ],
+      "27.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "27.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  `28 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `only )))))`;
     writeSample({
@@ -689,21 +770,25 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 10 + offset,
-        message: "More closing brackets than opening.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 10 + offset,
+          message: "More closing brackets than opening.",
+          fix: null,
+        },
+      ],
+      "28.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "28.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon present`,
+  `29 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon present`,
   (t) => {
     // for example
     // @media test;,all { body { background:lime } }
@@ -714,21 +799,25 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 5 + offset,
-        message: "Semicolon found!",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 5 + offset,
+          message: "Semicolon found!",
+          fix: null,
+        },
+      ],
+      "29.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "29.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.06 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  `30 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `screen and ()`;
     writeSample({
@@ -737,21 +826,25 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 13 + offset,
-        message: "Empty bracket pair.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 13 + offset,
+          message: "Empty bracket pair.",
+          fix: null,
+        },
+      ],
+      "30.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "30.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.07 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  `31 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
   (t) => {
     const str = `screen and (\t\r)`;
     writeSample({
@@ -760,15 +853,19 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 15 + offset,
-        message: "Empty bracket pair.",
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 15 + offset,
+          message: "Empty bracket pair.",
+          fix: null,
+        },
+      ],
+      "31.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "31.02");
     t.end();
   }
 );
@@ -777,7 +874,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
+  `32 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
   (t) => {
     const str = `only screen`;
     writeSample({
@@ -786,14 +883,14 @@ tap.test(
     });
     const offset = 60;
     const res = isMediaD(str, { offset });
-    t.same(res, []);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(res, [], "32.01");
+    t.equal(applyFixes(str, res, offset), str, "32.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
+  `33 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
   (t) => {
     const str = `onlies screen`;
     writeSample({
@@ -802,21 +899,25 @@ tap.test(
     });
     const offset = 50;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 6 + offset,
-        message: `Unrecognised "onlies".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 6 + offset,
+          message: `Unrecognised "onlies".`,
+          fix: null,
+        },
+      ],
+      "33.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "33.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`,
+  `34 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`,
   (t) => {
     const str = `not (monochrome)`;
     writeSample({
@@ -825,21 +926,25 @@ tap.test(
     });
     const offset = 40;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 16 + offset,
+          message: `"not" can be only in front of media type.`,
+          fix: null,
+        },
+      ],
+      "34.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "34.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
+  `35 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `only .`;
     writeSample({
@@ -848,21 +953,25 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 6 + offset,
-        message: `Strange symbol ".".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 6 + offset,
+          message: `Strange symbol ".".`,
+          fix: null,
+        },
+      ],
+      "35.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "35.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.05 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
+  `36 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`,
   (t) => {
     const str = `only --`;
     writeSample({
@@ -871,21 +980,25 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 7 + offset,
-        message: `Strange symbols "--".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 7 + offset,
+          message: `Strange symbols "--".`,
+          fix: null,
+        },
+      ],
+      "36.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "36.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.06 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
+  `37 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only and`;
     writeSample({
@@ -894,21 +1007,25 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 8 + offset,
-        message: `"and" instead of a media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 8 + offset,
+          message: `"and" instead of a media type.`,
+          fix: null,
+        },
+      ],
+      "37.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "37.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
+  `38 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only only`;
     writeSample({
@@ -917,21 +1034,25 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 9 + offset,
-        message: `"only" instead of a media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 9 + offset,
+          message: `"only" instead of a media type.`,
+          fix: null,
+        },
+      ],
+      "38.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "38.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.08 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
+  `39 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`,
   (t) => {
     const str = `only not`;
     writeSample({
@@ -940,21 +1061,25 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 5 + offset,
-        idxTo: 8 + offset,
-        message: `"not" instead of a media type.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 5 + offset,
+          idxTo: 8 + offset,
+          message: `"not" instead of a media type.`,
+          fix: null,
+        },
+      ],
+      "39.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "39.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.09 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
+  `40 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
   (t) => {
     // const str = `screen and (color)`;
     const str = `screen and (max-width: 100px)`;
@@ -964,13 +1089,13 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, []);
+    t.same(res, [], "40.01");
     t.end();
   }
 );
 
 tap.test(
-  `05.10 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
+  `41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
   (t) => {
     const str = `not (monochrome)`;
     writeSample({
@@ -979,20 +1104,24 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 4 + offset,
-        idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
-        fix: null,
-      },
-    ]);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 4 + offset,
+          idxTo: 16 + offset,
+          message: `"not" can be only in front of media type.`,
+          fix: null,
+        },
+      ],
+      "41.01"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.11 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
+  `42 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
   (t) => {
     const str = `not screen and color`;
     const fixed = `not screen and (color)`;
@@ -1003,26 +1132,30 @@ tap.test(
     });
     const offset = 88;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 15 + offset,
-        idxTo: 20 + offset,
-        message: `Missing brackets.`,
-        fix: {
-          ranges: [
-            [15 + offset, 15 + offset, "("],
-            [20 + offset, 20 + offset, ")"],
-          ],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 15 + offset,
+          idxTo: 20 + offset,
+          message: `Missing brackets.`,
+          fix: {
+            ranges: [
+              [15 + offset, 15 + offset, "("],
+              [20 + offset, 20 + offset, ")"],
+            ],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "42.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "42.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.12 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
+  `43 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
   (t) => {
     const str = `not screen and screen`;
     writeSample({
@@ -1032,21 +1165,25 @@ tap.test(
     });
     const offset = 88;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 15 + offset,
-        idxTo: 21 + offset,
-        message: `Unexpected media type, try using a comma.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 15 + offset,
+          idxTo: 21 + offset,
+          message: `Unexpected media type, try using a comma.`,
+          fix: null,
+        },
+      ],
+      "43.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "43.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.13 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
+  `44 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
   (t) => {
     const str = `not screen and (monochrome) \tand`;
     const fixed = `not screen and (monochrome)`;
@@ -1057,31 +1194,35 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 27 + offset,
-        idxTo: 29 + offset,
-        message: `Bad whitespace.`,
-        fix: {
-          ranges: [[28 + offset, 29 + offset]],
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 27 + offset,
+          idxTo: 29 + offset,
+          message: `Bad whitespace.`,
+          fix: {
+            ranges: [[28 + offset, 29 + offset]],
+          },
         },
-      },
-      {
-        idxFrom: 29 + offset,
-        idxTo: 32 + offset,
-        message: `Dangling "and".`,
-        fix: {
-          ranges: [[27 + offset, 32 + offset]],
+        {
+          idxFrom: 29 + offset,
+          idxTo: 32 + offset,
+          message: `Dangling "and".`,
+          fix: {
+            ranges: [[27 + offset, 32 + offset]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), fixed);
+      ],
+      "44.01"
+    );
+    t.equal(applyFixes(str, res, offset), fixed, "44.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.14 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
+  `45 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
   (t) => {
     const str = `screeen and (color), projection and (color)`;
     writeSample({
@@ -1091,15 +1232,19 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 0 + offset,
-        idxTo: 7 + offset,
-        message: `Unrecognised "screeen".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 0 + offset,
+          idxTo: 7 + offset,
+          message: `Unrecognised "screeen".`,
+          fix: null,
+        },
+      ],
+      "45.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "45.02");
     t.end();
   }
 );
@@ -1108,7 +1253,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, healthy`,
+  `46 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, healthy`,
   (t) => {
     const str = `speech and (device-aspect-ratio: 16/9)`;
     writeSample({
@@ -1118,14 +1263,14 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, []);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(res, [], "46.01");
+    t.equal(applyFixes(str, res, offset), str, "46.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.02 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
+  `47 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
   (t) => {
     const str = `speech and device-aspect-ratio : 16/9`;
     writeSample({
@@ -1135,21 +1280,25 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 30 + offset,
-        message: `Expected brackets on "device-aspect-ratio" and its value.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 30 + offset,
+          message: `Expected brackets on "device-aspect-ratio" and its value.`,
+          fix: null,
+        },
+      ],
+      "47.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "47.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
+  `48 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
   (t) => {
     const str = `speech and device-aspect-ratio`;
     writeSample({
@@ -1159,21 +1308,25 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 30 + offset,
-        message: `Expected brackets on "device-aspect-ratio".`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 30 + offset,
+          message: `Expected brackets on "device-aspect-ratio".`,
+          fix: null,
+        },
+      ],
+      "48.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "48.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.04 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
+  `49 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and not (print)`;
     writeSample({
@@ -1183,21 +1336,25 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 14 + offset,
-        message: `"not" can't be here.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 14 + offset,
+          message: `"not" can't be here.`,
+          fix: null,
+        },
+      ],
+      "49.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "49.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.05 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
+  `50 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and (not print)`;
     writeSample({
@@ -1207,21 +1364,25 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 16 + offset,
-        idxTo: 21 + offset,
-        message: `Media type "print" inside brackets.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 16 + offset,
+          idxTo: 21 + offset,
+          message: `Media type "print" inside brackets.`,
+          fix: null,
+        },
+      ],
+      "50.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "50.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.06 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
+  `51 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and (print and (zzz))`;
     writeSample({
@@ -1231,27 +1392,31 @@ tap.test(
     });
     const offset = 9;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 23 + offset,
-        idxTo: 26 + offset,
-        message: `Unrecognised "zzz".`,
-        fix: null,
-      },
-      {
-        idxFrom: 12 + offset,
-        idxTo: 17 + offset,
-        message: `Media type "print" inside brackets.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 23 + offset,
+          idxTo: 26 + offset,
+          message: `Unrecognised "zzz".`,
+          fix: null,
+        },
+        {
+          idxFrom: 12 + offset,
+          idxTo: 17 + offset,
+          message: `Media type "print" inside brackets.`,
+          fix: null,
+        },
+      ],
+      "51.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "51.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.07 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
+  `52 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`,
   (t) => {
     const str = `screen and not (print and (zzz))`;
     writeSample({
@@ -1261,21 +1426,25 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 11 + offset,
-        idxTo: 14 + offset,
-        message: `"not" can't be here.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 11 + offset,
+          idxTo: 14 + offset,
+          message: `"not" can't be here.`,
+          fix: null,
+        },
+      ],
+      "52.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "52.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.08 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets`,
+  `53 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets`,
   (t) => {
     const str = `(screen and (color))`;
     writeSample({
@@ -1285,21 +1454,25 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 1 + offset,
-        idxTo: 7 + offset,
-        message: `Media type "screen" inside brackets.`,
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 1 + offset,
+          idxTo: 7 + offset,
+          message: `Media type "screen" inside brackets.`,
+          fix: null,
+        },
+      ],
+      "53.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "53.02");
     t.end();
   }
 );
 
 tap.test(
-  `06.09 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets, chained`,
+  `54 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets, chained`,
   (t) => {
     const str = `(screen and (color)) and (print and (color)) and (speech and (update))`;
     writeSample({
@@ -1309,27 +1482,31 @@ tap.test(
     });
     const offset = 99;
     const res = isMediaD(str, { offset });
-    t.same(res, [
-      {
-        idxFrom: 1 + offset,
-        idxTo: 7 + offset,
-        message: 'Media type "screen" inside brackets.',
-        fix: null,
-      },
-      {
-        idxFrom: 26 + offset,
-        idxTo: 31 + offset,
-        message: 'Media type "print" inside brackets.',
-        fix: null,
-      },
-      {
-        idxFrom: 50 + offset,
-        idxTo: 56 + offset,
-        message: 'Media type "speech" inside brackets.',
-        fix: null,
-      },
-    ]);
-    t.equal(applyFixes(str, res, offset), str);
+    t.same(
+      res,
+      [
+        {
+          idxFrom: 1 + offset,
+          idxTo: 7 + offset,
+          message: 'Media type "screen" inside brackets.',
+          fix: null,
+        },
+        {
+          idxFrom: 26 + offset,
+          idxTo: 31 + offset,
+          message: 'Media type "print" inside brackets.',
+          fix: null,
+        },
+        {
+          idxFrom: 50 + offset,
+          idxTo: 56 + offset,
+          message: 'Media type "speech" inside brackets.',
+          fix: null,
+        },
+      ],
+      "54.01"
+    );
+    t.equal(applyFixes(str, res, offset), str, "54.02");
     t.end();
   }
 );
@@ -1337,7 +1514,7 @@ tap.test(
 // 07. comma
 // -----------------------------------------------------------------------------
 
-tap.test(`07.01 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
+tap.test(`55 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
   const str = `screen, print`;
   writeSample({
     id: "07.01",
@@ -1346,7 +1523,7 @@ tap.test(`07.01 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
   });
   const offset = 1;
   const res = isMediaD(str, { offset });
-  t.same(res, []);
-  t.equal(applyFixes(str, res, offset), str);
+  t.same(res, [], "55.01");
+  t.equal(applyFixes(str, res, offset), str, "55.02");
   t.end();
 });

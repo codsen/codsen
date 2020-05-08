@@ -6,7 +6,7 @@ import strFindMalformed from "../dist/string-find-malformed.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  "01.01 - throws when the first argument, source string, is not a string",
+  "01 - throws when the first argument, source string, is not a string",
   (t) => {
     t.throws(() => {
       strFindMalformed(1);
@@ -28,7 +28,7 @@ tap.test(
 );
 
 tap.test(
-  "01.02 - throws when the second argument, ref string, is not a string",
+  "02 - throws when the second argument, ref string, is not a string",
   (t) => {
     t.throws(() => {
       strFindMalformed("aaa", 1);
@@ -50,7 +50,7 @@ tap.test(
 );
 
 tap.test(
-  "01.03 - throws when the third argument, callback, is not a function",
+  "03 - throws when the third argument, callback, is not a function",
   (t) => {
     t.throws(() => {
       strFindMalformed("aaa", "zzz", 1);
@@ -64,7 +64,7 @@ tap.test(
 );
 
 tap.test(
-  "01.04 - throws when the fourth argument, optional options object, is not a plain object",
+  "04 - throws when the fourth argument, optional options object, is not a plain object",
   (t) => {
     t.throws(() => {
       strFindMalformed("aaa", "bbb", () => {}, "ccc");
@@ -73,28 +73,28 @@ tap.test(
   }
 );
 
-tap.test("01.05 - throws when opts.stringOffset is not a number", (t) => {
+tap.test("05 - throws when opts.stringOffset is not a number", (t) => {
   t.throws(() => {
     strFindMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
   }, /THROW_ID_05/);
   t.end();
 });
 
-tap.test(`01.06 - empty string`, (t) => {
+tap.test(`06 - empty string`, (t) => {
   const gathered = [];
   strFindMalformed("", "bde", (obj) => {
     gathered.push(obj);
   });
-  t.same(gathered, [], "01.06");
+  t.same(gathered, [], "06.01");
   t.end();
 });
 
-tap.test(`01.07 - empty string`, (t) => {
+tap.test(`07 - empty string`, (t) => {
   const gathered = [];
   strFindMalformed("abc", "", (obj) => {
     gathered.push(obj);
   });
-  t.same(gathered, [], "01.07");
+  t.same(gathered, [], "07.01");
   t.end();
 });
 
@@ -102,7 +102,7 @@ tap.test(`01.07 - empty string`, (t) => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-tap.test(`02.01 - rogue character, "c"`, (t) => {
+tap.test(`08 - rogue character, "c"`, (t) => {
   const gathered = [];
   strFindMalformed("abcdef", "bde", (obj) => {
     gathered.push(obj);
@@ -115,12 +115,12 @@ tap.test(`02.01 - rogue character, "c"`, (t) => {
         idxTo: 5,
       },
     ],
-    "02.01"
+    "08.01"
   );
   t.end();
 });
 
-tap.test(`02.02 - overlapping and extended maxDistance`, (t) => {
+tap.test(`09 - overlapping and extended maxDistance`, (t) => {
   const gathered = [];
   strFindMalformed(
     "abcabcd.f",
@@ -140,12 +140,12 @@ tap.test(`02.02 - overlapping and extended maxDistance`, (t) => {
         idxTo: 9,
       },
     ],
-    "02.02"
+    "09.01"
   );
   t.end();
 });
 
-tap.test(`02.03 - with opts.stringOffset`, (t) => {
+tap.test(`10 - with opts.stringOffset`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!-something--></div>",
@@ -166,12 +166,12 @@ tap.test(`02.03 - with opts.stringOffset`, (t) => {
         idxTo: 108,
       },
     ],
-    "02.03"
+    "10.01"
   );
   t.end();
 });
 
-tap.test(`02.04 - correct, fully matching value is not pinged`, (t) => {
+tap.test(`11 - correct, fully matching value is not pinged`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!--something--></div>",
@@ -184,11 +184,11 @@ tap.test(`02.04 - correct, fully matching value is not pinged`, (t) => {
       stringOffset: 100,
     }
   );
-  t.same(gathered, [], "02.04");
+  t.same(gathered, [], "11.01");
   t.end();
 });
 
-tap.test(`02.05 - like before but strings in opts`, (t) => {
+tap.test(`12 - like before but strings in opts`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div><!-\n\n\n-something--></div>",
@@ -209,12 +209,12 @@ tap.test(`02.05 - like before but strings in opts`, (t) => {
         idxTo: 112,
       },
     ],
-    "02.04"
+    "12.01"
   );
   t.end();
 });
 
-tap.test(`02.06 - whitespace`, (t) => {
+tap.test(`13 - whitespace`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<div>< ! - -something--></div>",
@@ -232,12 +232,12 @@ tap.test(`02.06 - whitespace`, (t) => {
         idxTo: 12,
       },
     ],
-    "02.06"
+    "13.01"
   );
   t.end();
 });
 
-tap.test(`02.07 - repeated characters after failed match`, (t) => {
+tap.test(`14 - repeated characters after failed match`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<--z",
@@ -255,12 +255,12 @@ tap.test(`02.07 - repeated characters after failed match`, (t) => {
         idxTo: 3,
       },
     ],
-    "02.07"
+    "14.01"
   );
   t.end();
 });
 
-tap.test(`02.08 - repeated characters after failed match`, (t) => {
+tap.test(`15 - repeated characters after failed match`, (t) => {
   const gathered = [];
   strFindMalformed(
     "<!-[if mso]>",
@@ -278,7 +278,7 @@ tap.test(`02.08 - repeated characters after failed match`, (t) => {
         idxTo: 4,
       },
     ],
-    "02.08"
+    "15.01"
   );
   t.end();
 });

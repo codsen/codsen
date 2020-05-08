@@ -16,7 +16,7 @@ tap.test(
         [53, 57, "&ang;"],
         [62, 66, "&ang;"],
       ],
-      "01"
+      "01.01"
     );
 
     let count = 0;
@@ -39,9 +39,9 @@ tap.test(
         [53, 57, "&ang;"],
         [62, 66, "&ang;"],
       ],
-      "02 - calls the progress function"
+      "01.02 - calls the progress function"
     );
-    t.ok(typeof count === "number" && count <= 101 && count > 0, "03");
+    t.ok(typeof count === "number" && count <= 101 && count > 0, "01.03");
     t.end();
   }
 );

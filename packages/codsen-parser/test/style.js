@@ -4,90 +4,87 @@ import cparser from "../dist/codsen-parser.esm";
 // 01. basics
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`,
-  (t) => {
-    t.same(
-      cparser(`<style>
+tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
+  t.same(
+    cparser(`<style>
 .red{color: red;}
 </style>`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          value: `<style>`,
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 6,
-          tagName: "style",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: `<style>`,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
 
-          kind: null,
-          attribs: [],
-          children: [
-            {
-              type: "text",
-              start: 7,
-              end: 8,
-              value: "\n",
-            },
-            {
-              type: "rule",
-              start: 8,
-              end: 25,
-              value: `.red{color: red;}`,
-              openingCurlyAt: 12,
-              closingCurlyAt: 24,
-              selectorsStart: 8,
-              selectorsEnd: 12,
-              selectors: [
-                {
-                  value: ".red",
-                  selectorStarts: 8,
-                  selectorEnds: 12,
-                },
-              ],
-            },
-            {
-              type: "text",
-              start: 25,
-              end: 26,
-              value: `\n`,
-            },
-          ],
-        },
-        {
-          children: [],
-          type: "tag",
-          start: 26,
-          end: 34,
-          value: `</style>`,
-          tagNameStartsAt: 28,
-          tagNameEndsAt: 33,
-          tagName: "style",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [
+          {
+            type: "text",
+            start: 7,
+            end: 8,
+            value: "\n",
+          },
+          {
+            type: "rule",
+            start: 8,
+            end: 25,
+            value: `.red{color: red;}`,
+            openingCurlyAt: 12,
+            closingCurlyAt: 24,
+            selectorsStart: 8,
+            selectorsEnd: 12,
+            selectors: [
+              {
+                value: ".red",
+                selectorStarts: 8,
+                selectorEnds: 12,
+              },
+            ],
+          },
+          {
+            type: "text",
+            start: 25,
+            end: 26,
+            value: `\n`,
+          },
+        ],
+      },
+      {
+        children: [],
+        type: "tag",
+        start: 26,
+        end: 34,
+        value: `</style>`,
+        tagNameStartsAt: 28,
+        tagNameEndsAt: 33,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
 
-          kind: null,
-          attribs: [],
-        },
-      ],
-      "01.01"
-    );
-    t.end();
-  }
-);
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "01"
+  );
+  t.end();
+});
 
 // 02. media
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
+  `02 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
   (t) => {
     t.same(
       cparser(`<style>
@@ -192,7 +189,7 @@ tap.test(
           attribs: [],
         },
       ],
-      "02.01"
+      "02"
     );
     t.end();
   }

@@ -16,10 +16,14 @@ tap.test("UMD build works fine", (t) => {
     }
   );
 
-  t.same(gathered, [
-    ["1", "1"],
-    ["2", "2"],
-  ]);
-  t.same(errors, []);
+  t.same(
+    gathered,
+    [
+      ["1", "1"],
+      ["2", "2"],
+    ],
+    "01.01"
+  );
+  t.same(errors, [], "01.02");
   t.end();
 });

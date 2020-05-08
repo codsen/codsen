@@ -5,29 +5,29 @@ import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
 // Basic, no overrides
 // ==============================
 
-tap.test("01.01 - one property - 1, no override", (t) => {
+tap.test("01 - one property - 1, no override", (t) => {
   t.same(
     objectBooleanCombinations({
       a: 1,
     }),
     [{ a: 0 }, { a: 1 }],
-    "01.01"
+    "01"
   );
   t.end();
 });
 
-tap.test("01.02 - one property - 0, no override", (t) => {
+tap.test("02 - one property - 0, no override", (t) => {
   t.same(
     objectBooleanCombinations({
       a: 0,
     }),
     [{ a: 0 }, { a: 1 }],
-    "01.02"
+    "02"
   );
   t.end();
 });
 
-tap.test("01.03 - three properties, no override", (t) => {
+tap.test("03 - three properties, no override", (t) => {
   t.same(
     objectBooleanCombinations({
       a: 1,
@@ -44,7 +44,7 @@ tap.test("01.03 - three properties, no override", (t) => {
       { a: 0, b: 1, c: 1 },
       { a: 1, b: 1, c: 1 },
     ],
-    "01.03"
+    "03"
   );
   t.end();
 });
@@ -53,14 +53,14 @@ tap.test("01.03 - three properties, no override", (t) => {
 // Overrides or slicing
 // ==============================
 
-tap.test("02.04 - three properties 2 overrides", (t) => {
+tap.test("04 - three properties 2 overrides", (t) => {
   t.same(
     objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: 1, b: 1 }),
     [
       { a: 1, b: 1, c: 0 },
       { a: 1, b: 1, c: 1 },
     ],
-    "02.04.01"
+    "04.01"
   );
   t.same(
     objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: "z", b: "y" }),
@@ -68,12 +68,12 @@ tap.test("02.04 - three properties 2 overrides", (t) => {
       { a: "z", b: "y", c: 0 },
       { a: "z", b: "y", c: 1 },
     ],
-    "02.04.02 - override key values are strings"
+    "04.02 - override key values are strings"
   );
   t.end();
 });
 
-tap.test("02.05 - four properties three overrides", (t) => {
+tap.test("05 - four properties three overrides", (t) => {
   t.same(
     objectBooleanCombinations(
       {
@@ -98,14 +98,14 @@ tap.test("02.05 - four properties three overrides", (t) => {
         c: 1,
       },
     ],
-    "02.05"
+    "05"
   );
   t.end();
 });
 
 // edge cases:
 
-tap.test("02.06 - empty override object", (t) => {
+tap.test("06 - empty override object", (t) => {
   t.same(
     objectBooleanCombinations({ a: 1, b: 0, c: 0 }, {}),
     [
@@ -118,13 +118,13 @@ tap.test("02.06 - empty override object", (t) => {
       { a: 0, b: 1, c: 1 },
       { a: 1, b: 1, c: 1 },
     ],
-    "02.06"
+    "06"
   );
   t.end();
 });
 
-tap.test("02.07 - both input and override objects empty", (t) => {
-  t.same(objectBooleanCombinations({}, {}), [{}], "02.07");
+tap.test("07 - both input and override objects empty", (t) => {
+  t.same(objectBooleanCombinations({}, {}), [{}], "07");
   t.end();
 });
 
@@ -132,31 +132,31 @@ tap.test("02.07 - both input and override objects empty", (t) => {
 // Edge cases
 // ==============================
 
-tap.test("03.01 - both inputs missing - throws", (t) => {
+tap.test("08 - both inputs missing - throws", (t) => {
   t.throws(() => {
     objectBooleanCombinations();
-  });
+  }, "08");
   t.end();
 });
 
-tap.test("03.02 - first input is not an object - throws", (t) => {
+tap.test("09 - first input is not an object - throws", (t) => {
   t.throws(() => {
     objectBooleanCombinations("a");
-  });
+  }, "09");
   t.end();
 });
 
-tap.test("03.03 - second input is not an object - throws", (t) => {
+tap.test("10 - second input is not an object - throws", (t) => {
   t.throws(() => {
     objectBooleanCombinations("a", "a");
-  });
+  }, "10.01");
   t.throws(() => {
     objectBooleanCombinations({ a: "a" }, "a");
-  });
+  }, "10.02");
   t.end();
 });
 
-tap.test("03.04 - non-boolean object overrides - throws", (t) => {
+tap.test("11 - non-boolean object overrides - throws", (t) => {
   t.same(
     objectBooleanCombinations(
       {
@@ -171,7 +171,7 @@ tap.test("03.04 - non-boolean object overrides - throws", (t) => {
       { a: "1", b: "1", c: "1", d: 0 },
       { a: "1", b: "1", c: "1", d: 1 },
     ],
-    "03.04"
+    "11"
   );
   t.end();
 });

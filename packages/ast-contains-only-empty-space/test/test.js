@@ -9,28 +9,28 @@ function dudFunction() {
 // arrays
 // ==============================
 
-tap.test("01.01 - array containing empty string", (t) => {
-  t.equal(empty([" "]), true, "01.01.01");
-  t.equal(empty(["a"]), false, "01.01.02");
+tap.test("01 - array containing empty string", (t) => {
+  t.equal(empty([" "]), true, "01.01");
+  t.equal(empty(["a"]), false, "01.02");
   t.end();
 });
 
-tap.only("01.02 - array containing plain object with empty string", (t) => {
+tap.only("02 - array containing plain object with empty string", (t) => {
   // t.equal(empty([{ a: " " }]), true, "01.02.01");
-  t.equal(empty([{ a: "a" }]), false, "01.02.02");
+  t.equal(empty([{ a: "a" }]), false, "02");
   t.end();
 });
 
 tap.test(
-  "01.03 - array containing plain obj containing array containing string",
+  "03 - array containing plain obj containing array containing string",
   (t) => {
-    t.equal(empty([{ a: [" "] }]), true, "01.03.01");
-    t.equal(empty([{ a: ["a"] }]), false, "01.03.02");
+    t.equal(empty([{ a: [" "] }]), true, "03.01");
+    t.equal(empty([{ a: ["a"] }]), false, "03.02");
     t.end();
   }
 );
 
-tap.test("01.04 - ast with multiple objects containing empty space", (t) => {
+tap.test("04 - ast with multiple objects containing empty space", (t) => {
   t.equal(
     empty([
       "   ",
@@ -42,7 +42,7 @@ tap.test("01.04 - ast with multiple objects containing empty space", (t) => {
       "\n\n\n\n\n\n   \t   ",
     ]),
     true,
-    "01.04.01"
+    "04.01"
   );
   t.equal(
     empty([
@@ -55,7 +55,7 @@ tap.test("01.04 - ast with multiple objects containing empty space", (t) => {
       "\n\n\n\n\n\n   \t   .",
     ]),
     false,
-    "01.04.02"
+    "04.02"
   );
   t.end();
 });
@@ -64,7 +64,7 @@ tap.test("01.04 - ast with multiple objects containing empty space", (t) => {
 // objects
 // ==============================
 
-tap.test("02.01 - object containing empty strings", (t) => {
+tap.test("05 - object containing empty strings", (t) => {
   t.equal(
     empty({
       a: "\n\n\n",
@@ -73,7 +73,7 @@ tap.test("02.01 - object containing empty strings", (t) => {
       d: "\t   ",
     }),
     true,
-    "02.01.01"
+    "05.01"
   );
   t.equal(
     empty({
@@ -83,12 +83,12 @@ tap.test("02.01 - object containing empty strings", (t) => {
       d: "\t   ",
     }),
     false,
-    "02.01.02"
+    "05.02"
   );
   t.end();
 });
 
-tap.test("02.02 - object containing arrays of empty strings", (t) => {
+tap.test("06 - object containing arrays of empty strings", (t) => {
   t.equal(
     empty({
       a: ["\n\n\n"],
@@ -97,12 +97,12 @@ tap.test("02.02 - object containing arrays of empty strings", (t) => {
       d: ["\t   "],
     }),
     true,
-    "02.02"
+    "06"
   );
   t.end();
 });
 
-tap.test("02.03 - object containing arrays of empty strings", (t) => {
+tap.test("07 - object containing arrays of empty strings", (t) => {
   t.equal(
     empty({
       a: ["\n\n\n."],
@@ -111,12 +111,12 @@ tap.test("02.03 - object containing arrays of empty strings", (t) => {
       d: ["\t   "],
     }),
     false,
-    "02.03"
+    "07"
   );
   t.end();
 });
 
-tap.test("02.04 - object containing arrays of empty strings", (t) => {
+tap.test("08 - object containing arrays of empty strings", (t) => {
   t.equal(
     empty({
       a: ["aaaaaaa"],
@@ -125,12 +125,12 @@ tap.test("02.04 - object containing arrays of empty strings", (t) => {
       d: ["\t   "],
     }),
     false,
-    "02.04"
+    "08"
   );
   t.end();
 });
 
-tap.test("02.05 - object containing arrays of empty strings", (t) => {
+tap.test("09 - object containing arrays of empty strings", (t) => {
   t.equal(
     empty({
       a: [
@@ -149,12 +149,12 @@ tap.test("02.05 - object containing arrays of empty strings", (t) => {
       d: ["\t   "],
     }),
     false,
-    "02.05"
+    "09"
   );
   t.end();
 });
 
-tap.test("02.06 - object containing arrays of empty strings", (t) => {
+tap.test("10 - object containing arrays of empty strings", (t) => {
   t.equal(
     empty({
       a: [
@@ -173,18 +173,18 @@ tap.test("02.06 - object containing arrays of empty strings", (t) => {
       d: ["\t   "],
     }),
     true,
-    "02.06"
+    "10"
   );
   t.end();
 });
 
-tap.test("02.07 - object's value is null", (t) => {
+tap.test("11 - object's value is null", (t) => {
   t.equal(
     empty({
       a: null,
     }),
     true,
-    "02.07"
+    "11"
   );
   t.end();
 });
@@ -193,17 +193,17 @@ tap.test("02.07 - object's value is null", (t) => {
 // strings
 // ==============================
 
-tap.test("03.01 - object containing empty strings", (t) => {
-  t.equal(empty("\n\n\n"), true, "03.01.01");
-  t.equal(empty("\t\t\t"), true, "03.01.02");
-  t.equal(empty("   "), true, "03.01.03");
-  t.equal(empty("   \n \t \n   "), true, "03.01.04");
-  t.equal(empty("a"), false, "03.01.05");
+tap.test("12 - object containing empty strings", (t) => {
+  t.equal(empty("\n\n\n"), true, "12.01");
+  t.equal(empty("\t\t\t"), true, "12.02");
+  t.equal(empty("   "), true, "12.03");
+  t.equal(empty("   \n \t \n   "), true, "12.04");
+  t.equal(empty("a"), false, "12.05");
   t.end();
 });
 
-tap.test("03.02 - true empty string", (t) => {
-  t.equal(empty(""), true);
+tap.test("13 - true empty string", (t) => {
+  t.equal(empty(""), true, "13");
   t.end();
 });
 
@@ -211,27 +211,27 @@ tap.test("03.02 - true empty string", (t) => {
 // precautions
 // ==============================
 
-tap.test("04.01 - function passed", (t) => {
-  t.equal(empty(dudFunction), false, "04.01");
+tap.test("14 - function passed", (t) => {
+  t.equal(empty(dudFunction), false, "14");
   t.end();
 });
 
-tap.test("04.02 - bool passed", (t) => {
-  t.equal(empty(true), false, "04.02");
+tap.test("15 - bool passed", (t) => {
+  t.equal(empty(true), false, "15");
   t.end();
 });
 
-tap.test("04.03 - null passed", (t) => {
-  t.equal(empty(null), false, "04.03");
+tap.test("16 - null passed", (t) => {
+  t.equal(empty(null), false, "16");
   t.end();
 });
 
-tap.test("04.04 - undefined passed", (t) => {
-  t.equal(empty(undefined), false, "04.04");
+tap.test("17 - undefined passed", (t) => {
+  t.equal(empty(undefined), false, "17");
   t.end();
 });
 
-tap.test("04.05 - null deeper in an array", (t) => {
+tap.test("18 - null deeper in an array", (t) => {
   t.equal(
     empty([
       {
@@ -240,7 +240,7 @@ tap.test("04.05 - null deeper in an array", (t) => {
       },
     ]),
     false,
-    "04.05"
+    "18"
   );
   t.end();
 });

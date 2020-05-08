@@ -7,7 +7,7 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
+  `01 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
   (t) => {
     t.throws(() => {
       isRel();
@@ -17,7 +17,7 @@ tap.test(
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
+  `02 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
   (t) => {
     t.throws(() => {
       isRel(true);
@@ -27,7 +27,7 @@ tap.test(
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
+  `03 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`,
   (t) => {
     t.throws(() => {
       isRel(1);
@@ -37,7 +37,7 @@ tap.test(
 );
 
 tap.test(
-  `00.04 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
+  `04 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
   (t) => {
     t.throws(() => {
       isRel("", true);
@@ -47,7 +47,7 @@ tap.test(
 );
 
 tap.test(
-  `00.05 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
+  `05 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`,
   (t) => {
     t.throws(() => {
       isRel("", 1);
@@ -59,7 +59,7 @@ tap.test(
 // 01. correct values
 // -----------------------------------------------------------------------------
 
-tap.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, (t) => {
+tap.test(`06 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, (t) => {
   [
     "//example.com/path/resource.txt",
     "/path/resource.txt",
@@ -83,7 +83,7 @@ tap.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, (t) => {
 // Examples from:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} Part II`,
+  `07 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} Part II`,
   (t) => {
     [
       "g:h", // -> "g:h"
@@ -117,25 +117,25 @@ tap.test(
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  `08 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
   (t) => {
-    t.ok(isRel(`.`).res);
+    t.ok(isRel(`.`).res, "08");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  `09 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
   (t) => {
-    t.ok(isRel(`..`).res);
+    t.ok(isRel(`..`).res, "09");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  `10 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
   (t) => {
-    t.ok(isRel(`../..`).res);
+    t.ok(isRel(`../..`).res, "10");
     t.end();
   }
 );
@@ -144,31 +144,31 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with three or more slashes`,
+  `11 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with three or more slashes`,
   (t) => {
-    t.notOk(isRel(`///example.com`).res);
+    t.notOk(isRel(`///example.com`).res, "11");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - two or more slashes anywhere in the middle`,
+  `12 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - two or more slashes anywhere in the middle`,
   (t) => {
-    t.notOk(isRel(`path//resource.txt`).res);
+    t.notOk(isRel(`path//resource.txt`).res, "12");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with more than two dots`,
+  `13 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - starts with more than two dots`,
   (t) => {
-    t.notOk(isRel(`.../resource.txt`).res);
+    t.notOk(isRel(`.../resource.txt`).res, "13");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - bad characters`,
+  `14 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - bad characters`,
   (t) => {
     [BACKSLASH, "%g", "<", ">", "[", "]", "{", "}", "|", "^"].forEach((val) => {
       t.notOk(isRel(`a${val}b`).res, val);
@@ -178,17 +178,17 @@ tap.test(
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with dot`,
+  `15 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with dot`,
   (t) => {
-    t.notOk(isRel(`path/resource.`).res);
+    t.notOk(isRel(`path/resource.`).res, "15");
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - dot dot not-slash`,
+  `16 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - dot dot not-slash`,
   (t) => {
-    t.notOk(isRel(`..a/g`).res);
+    t.notOk(isRel(`..a/g`).res, "16");
     t.end();
   }
 );
@@ -197,17 +197,17 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - hash followed by slash`,
+  `17 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - hash followed by slash`,
   (t) => {
-    t.notOk(isRel(`abc/def#ghi/jkl`).res);
+    t.notOk(isRel(`abc/def#ghi/jkl`).res, "17");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with hash`,
+  `18 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with hash`,
   (t) => {
-    t.notOk(isRel(`abc/def#`).res);
+    t.notOk(isRel(`abc/def#`).res, "18");
     t.end();
   }
 );
@@ -216,20 +216,21 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
+  `19 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
   (t) => {
-    t.notOk(isRel(`mailto:John.Doe@example.com`).res);
+    t.notOk(isRel(`mailto:John.Doe@example.com`).res, "19");
     t.end();
   }
 );
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
+  `20 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
   (t) => {
     t.ok(
       isRel(`mailto:John.Doe@example.com`, {
         flagUpUrisWithSchemes: false,
-      }).res
+      }).res,
+      "20"
     );
     t.end();
   }

@@ -6,6 +6,6 @@ const target = ["something"];
 const res = ["one", "two", "three"];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(pull1(source, target), res);
+  t.same(pull1(source, target), res, "01");
   t.end();
 });

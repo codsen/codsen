@@ -7,49 +7,49 @@ import c from "../dist/color-shorthand-hex-to-six-digit.esm";
 // 01. String inputs
 // ==============================
 
-tap.test("01.01 - string input - doesn't touch full hex codes", (t) => {
+tap.test("01 - string input - doesn't touch full hex codes", (t) => {
   t.same(
     c("aaaa #cccccc zzzz\n\t\t\t#000000."),
     "aaaa #cccccc zzzz\n\t\t\t#000000.",
-    "01.01"
+    "01"
   );
   t.end();
 });
 
-tap.test("01.02 - string input - changes one shorthand, lowercase", (t) => {
+tap.test("02 - string input - changes one shorthand, lowercase", (t) => {
   t.same(
     c("aaaa #f0c zzzz\n\t\t\t#ffcc00"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.01"
+    "02.01"
   );
   t.same(
     c("aaaa #ff00cc zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.02"
+    "02.02"
   );
   t.same(
     c("aaaa #f0c zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.03"
+    "02.03"
   );
   t.end();
 });
 
-tap.test("01.02 - string input - changes one shorthand, uppercase", (t) => {
+tap.test("03 - string input - changes one shorthand, uppercase", (t) => {
   t.same(
     c("aaaa #f0c zzzz\n\t\t\t#ffcc00"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.01"
+    "03.01"
   );
   t.same(
     c("aaaa #ff00cc zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.02"
+    "03.02"
   );
   t.same(
     c("aaaa #f0c zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
-    "01.02.03"
+    "03.03"
   );
   t.end();
 });
@@ -58,7 +58,7 @@ tap.test("01.02 - string input - changes one shorthand, uppercase", (t) => {
 // 02. Plain object inputs
 // ==============================
 
-tap.test("02.01 - plain object input - simple one level object", (t) => {
+tap.test("04 - plain object input - simple one level object", (t) => {
   t.same(
     c({
       a: "#ffcc00",
@@ -70,7 +70,7 @@ tap.test("02.01 - plain object input - simple one level object", (t) => {
       b: "#ff00cc",
       c: "text",
     },
-    "02.01.01"
+    "04.01"
   );
   t.same(
     c({
@@ -83,12 +83,12 @@ tap.test("02.01 - plain object input - simple one level object", (t) => {
       b: "#ff00cc",
       c: "text",
     },
-    "02.01.02"
+    "04.02"
   );
   t.end();
 });
 
-tap.test("02.02 - plain object input - nested", (t) => {
+tap.test("05 - plain object input - nested", (t) => {
   t.same(
     c({
       a: ["#fc0"],
@@ -102,7 +102,7 @@ tap.test("02.02 - plain object input - nested", (t) => {
       c: "text",
       d: null,
     },
-    "02.02"
+    "05"
   );
   t.end();
 });
@@ -111,20 +111,20 @@ tap.test("02.02 - plain object input - nested", (t) => {
 // 03. Array inputs
 // ==============================
 
-tap.test("03.01 - array input - one level, strings inside", (t) => {
+tap.test("06 - array input - one level, strings inside", (t) => {
   t.same(
     c(["#fc0", "#f0c", "text", ""]),
     ["#ffcc00", "#ff00cc", "text", ""],
-    "03.01"
+    "06"
   );
   t.end();
 });
 
-tap.test("03.02 - array input - nested objects & arrays", (t) => {
+tap.test("07 - array input - nested objects & arrays", (t) => {
   t.same(
     c([[[[[[{ x: ["#fc0"] }]]]]], { z: "#f0c" }, ["text"], { y: "" }]),
     [[[[[[{ x: ["#ffcc00"] }]]]]], { z: "#ff00cc" }, ["text"], { y: "" }],
-    "03.02"
+    "07"
   );
   t.end();
 });
@@ -133,31 +133,31 @@ tap.test("03.02 - array input - nested objects & arrays", (t) => {
 // 04. Unaccepted inputs are returned
 // ==================================
 
-tap.test("04.01 - function as input - returned", (t) => {
+tap.test("08 - function as input - returned", (t) => {
   const dummy = function () {
     return null;
   };
-  t.same(c(dummy), dummy, "04.01");
+  t.same(c(dummy), dummy, "08");
   t.end();
 });
 
-tap.test("04.02 - null input - returned", (t) => {
-  t.same(c(null), null, "04.02");
+tap.test("09 - null input - returned", (t) => {
+  t.same(c(null), null, "09");
   t.end();
 });
 
-tap.test("04.03 - undefined input - returned", (t) => {
-  t.same(c(undefined), undefined, "04.03");
+tap.test("10 - undefined input - returned", (t) => {
+  t.same(c(undefined), undefined, "10");
   t.end();
 });
 
-tap.test("04.04 - NaN input - returned", (t) => {
-  t.same(c(NaN), NaN, "04.04");
+tap.test("11 - NaN input - returned", (t) => {
+  t.same(c(NaN), NaN, "11");
   t.end();
 });
 
-tap.test("04.05 - no input - returned undefined", (t) => {
-  t.same(c(), undefined, "04.05");
+tap.test("12 - no input - returned undefined", (t) => {
+  t.same(c(), undefined, "12");
   t.end();
 });
 
@@ -165,11 +165,11 @@ tap.test("04.05 - no input - returned undefined", (t) => {
 // 05. Enforces all hexes to be lowercase only
 // ==============================
 
-tap.test("05.01 - fixes mixed case three and six digit hexes", (t) => {
+tap.test("13 - fixes mixed case three and six digit hexes", (t) => {
   t.same(
     c("aaaa #cCccCc zzzz\n\t\t\t#ffF."),
     "aaaa #cccccc zzzz\n\t\t\t#ffffff.",
-    "05.01"
+    "13"
   );
   t.end();
 });
@@ -178,7 +178,7 @@ tap.test("05.01 - fixes mixed case three and six digit hexes", (t) => {
 // 06. Does not mutate input args
 // ==============================
 
-tap.test("06.01 - does not mutate the input args", (t) => {
+tap.test("14 - does not mutate the input args", (t) => {
   const input1 = {
     a: "aaaa #f0c zzzz\n\t\t\t#FFcc00",
     b: "aaaa #ff00CC zzzz\n\t\t\t#ffcc00",
@@ -192,7 +192,7 @@ tap.test("06.01 - does not mutate the input args", (t) => {
       a: "aaaa #f0c zzzz\n\t\t\t#FFcc00",
       b: "aaaa #ff00CC zzzz\n\t\t\t#ffcc00",
     },
-    "06.01.02"
+    "14.01"
   ); // real deal
   t.end();
 });
@@ -201,34 +201,34 @@ tap.test("06.01 - does not mutate the input args", (t) => {
 // 07. Deals with real HTML code
 // =============================
 
-tap.test("07.01 - does not remove closing slashes from XHTML, #1", (t) => {
+tap.test("15 - does not remove closing slashes from XHTML, #1", (t) => {
   t.same(
     c(
       '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n  <style type="text/css">\n    @media (max-width: 600px) {\n      .real-class-1#head-only-class-1[lang|en]{width:100% !important;}\n      #real-id-1.head-only-class-1:hover{display: block !important;}\n      .head-only-class-2[lang|en]{color: #CCC !important;}\n      @media (max-width: 200px) {\n        #real-id-1{background-color: #000;}\n      }\n      @media (max-width: 100px) {\n        .head-only-class-1{border: 1px solid #FfF !important;}\n      }\n    }\n  </style>\n  <title>zzzz</title>\n  <style type="text/css">\n    .real-class-1#head-only-class-1[lang|en]{color: #c0f !important;}\n    #real-id-1.head-only-class-1:hover{display: block !important;}\n    .head-only-class-3[lang|en]{background-color: #ff0 !important;}\n    div .real-class-1 a:hover {color: #00c;}\n  </style>\n</head>\n<body>\n  <table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">\n    <tr>\n      <td class="real-class-1" style="color: #ffc;">\n        <img src="spacer.gif" alt="spacer" />\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n'
     ),
 
     '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n  <style type="text/css">\n    @media (max-width: 600px) {\n      .real-class-1#head-only-class-1[lang|en]{width:100% !important;}\n      #real-id-1.head-only-class-1:hover{display: block !important;}\n      .head-only-class-2[lang|en]{color: #cccccc !important;}\n      @media (max-width: 200px) {\n        #real-id-1{background-color: #000000;}\n      }\n      @media (max-width: 100px) {\n        .head-only-class-1{border: 1px solid #ffffff !important;}\n      }\n    }\n  </style>\n  <title>zzzz</title>\n  <style type="text/css">\n    .real-class-1#head-only-class-1[lang|en]{color: #cc00ff !important;}\n    #real-id-1.head-only-class-1:hover{display: block !important;}\n    .head-only-class-3[lang|en]{background-color: #ffff00 !important;}\n    div .real-class-1 a:hover {color: #0000cc;}\n  </style>\n</head>\n<body>\n  <table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">\n    <tr>\n      <td class="real-class-1" style="color: #ffffcc;">\n        <img src="spacer.gif" alt="spacer" />\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n',
-    "07.01"
+    "15"
   );
   t.end();
 });
 
-tap.test("07.02 - does not remove closing slashes from XHTML, #2", (t) => {
+tap.test("16 - does not remove closing slashes from XHTML, #2", (t) => {
   t.same(
     c('<img src="spacer.gif" alt="spacer" />'),
     '<img src="spacer.gif" alt="spacer" />',
-    "07.02"
+    "16"
   );
   t.end();
 });
 
 tap.test(
-  "07.03 - does not mangle encoded HTML entities that look like hex codes",
+  "17 - does not mangle encoded HTML entities that look like hex codes",
   (t) => {
     t.same(
       c("aaa &#124; bbb #125 ccc &#126; ddd"),
       "aaa &#124; bbb #112255 ccc &#126; ddd",
-      "07.03"
+      "17"
     );
     t.end();
   }

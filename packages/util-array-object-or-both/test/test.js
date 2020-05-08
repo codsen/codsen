@@ -5,7 +5,7 @@ import aoob from "../dist/util-array-object-or-both.esm";
 // precautions
 // ===========
 
-tap.test("1.1 - wrong/missing inputs - throws", (t) => {
+tap.test("01 - wrong/missing inputs - throws", (t) => {
   t.throws(() => {
     aoob();
   }, /THROW_ID_01/g);
@@ -17,13 +17,13 @@ tap.test("1.1 - wrong/missing inputs - throws", (t) => {
   }, /THROW_ID_02/g);
   t.doesNotThrow(() => {
     aoob("any");
-  });
+  }, "01.04");
   t.throws(() => {
     aoob("any", 1);
   }, /THROW_ID_03/g);
   t.doesNotThrow(() => {
     aoob("any", null);
-  });
+  }, "01.06");
   t.end();
 });
 
@@ -31,36 +31,36 @@ tap.test("1.1 - wrong/missing inputs - throws", (t) => {
 // BAU
 // ===
 
-tap.test("2.1 - arrays", (t) => {
-  t.same(aoob("array"), "array", "2.1.1");
-  t.same(aoob("Array"), "array", "2.1.2");
-  t.same(aoob("\n\nArray\t \t"), "array", "2.1.3");
-  t.same(aoob("\n\n   a \t"), "array", "2.1.4");
-  t.same(aoob("\n\n   arr \t"), "array", "2.1.5");
-  t.same(aoob("\n\n   ARR \t"), "array", "2.1.6");
+tap.test("02 - arrays", (t) => {
+  t.same(aoob("array"), "array", "02.01");
+  t.same(aoob("Array"), "array", "02.02");
+  t.same(aoob("\n\nArray\t \t"), "array", "02.03");
+  t.same(aoob("\n\n   a \t"), "array", "02.04");
+  t.same(aoob("\n\n   arr \t"), "array", "02.05");
+  t.same(aoob("\n\n   ARR \t"), "array", "02.06");
   t.end();
 });
 
-tap.test("2.2 - objects", (t) => {
-  t.same(aoob("object"), "object", "2.2.1");
-  t.same(aoob("Object"), "object", "2.2.2");
-  t.same(aoob("obj"), "object", "2.2.3");
-  t.same(aoob("o"), "object", "2.2.4");
-  t.same(aoob("  object"), "object", "2.2.5");
-  t.same(aoob("Object   "), "object", "2.2.6");
-  t.same(aoob("\nobj"), "object", "2.2.7");
-  t.same(aoob("o\n\n "), "object", "2.2.8");
-  t.same(aoob(" OBJ"), "object", "2.2.9");
+tap.test("03 - objects", (t) => {
+  t.same(aoob("object"), "object", "03.01");
+  t.same(aoob("Object"), "object", "03.02");
+  t.same(aoob("obj"), "object", "03.03");
+  t.same(aoob("o"), "object", "03.04");
+  t.same(aoob("  object"), "object", "03.05");
+  t.same(aoob("Object   "), "object", "03.06");
+  t.same(aoob("\nobj"), "object", "03.07");
+  t.same(aoob("o\n\n "), "object", "03.08");
+  t.same(aoob(" OBJ"), "object", "03.09");
   t.end();
 });
 
-tap.test("2.3 - any", (t) => {
-  t.same(aoob("any"), "any", "2.3.1");
-  t.same(aoob("all"), "any", "2.3.2");
-  t.same(aoob("Everything"), "any", "2.3.3");
-  t.same(aoob("e"), "any", "2.3.4");
-  t.same(aoob("ANY"), "any", "2.3.5");
-  t.same(aoob("\n\n all"), "any", "2.3.6");
+tap.test("04 - any", (t) => {
+  t.same(aoob("any"), "any", "04.01");
+  t.same(aoob("all"), "any", "04.02");
+  t.same(aoob("Everything"), "any", "04.03");
+  t.same(aoob("e"), "any", "04.04");
+  t.same(aoob("ANY"), "any", "04.05");
+  t.same(aoob("\n\n all"), "any", "04.06");
   t.end();
 });
 
@@ -68,13 +68,13 @@ tap.test("2.3 - any", (t) => {
 // opts
 // ====
 
-tap.test("3.1 - opts.msg", (t) => {
+tap.test("05 - opts.msg", (t) => {
   t.same(
     aoob("object", {
       msg: "z",
     }),
     "object",
-    "2.2.1"
+    "05.01"
   );
   t.throws(() => {
     aoob("aaa", {

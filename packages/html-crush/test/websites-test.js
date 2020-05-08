@@ -24,7 +24,7 @@ const websitesToTest = [
 ];
 
 tap.test(
-  `08.01-0${
+  `01-0${
     websitesToTest.length
   } - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`}`,
   async (t) => {
