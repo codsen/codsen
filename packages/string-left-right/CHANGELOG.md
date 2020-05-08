@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.3.23](https://gitlab.com/codsen/codsen/compare/string-left-right@2.3.22...string-left-right@2.3.23) (2020-05-08)
-
-**Note:** Version bump only for package string-left-right
-
-
-
-
-
 ## 2.3.0 (2019-09-04)
 
 ### Features

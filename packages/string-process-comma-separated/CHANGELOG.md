@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.8](https://gitlab.com/codsen/codsen/compare/string-process-comma-separated@1.2.7...string-process-comma-separated@1.2.8) (2020-05-08)
-
-**Note:** Version bump only for package string-process-comma-separated
-
-
-
-
-
 ## 1.2.6 (2020-04-26)
 
 ### Bug Fixes
