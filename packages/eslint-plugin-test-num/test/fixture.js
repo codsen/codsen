@@ -45,8 +45,8 @@ tap.test(
     );
 
     // ensure no more errors are raised about "out"
-    const resOut = linter.verifyAndFix(read("01-out"), c);
-    t.same(resOut.messages, [], `01.04`);
+    const messages = linter.verify(read("01-out"), c);
+    t.same(messages, [], `01.04`);
     t.end();
   }
 );
@@ -64,10 +64,11 @@ tap.test(
       },
       `02.02`
     );
+    t.same(resIn.messages, [], `02.03`);
 
     // ensure no more errors are raised about "out"
-    const resOut = linter.verifyAndFix(read("02-out"), c);
-    t.same(resOut.messages, [], `02.04`);
+    const messages = linter.verify(read("02-out"), c);
+    t.same(messages, [], `02.05`);
     t.end();
   }
 );
@@ -83,10 +84,11 @@ tap.test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `03.02`
   );
+  t.same(resIn.messages, [], `03.03`);
 
   // ensure no more errors are raised about "out"
-  const resOut = linter.verifyAndFix(read("03-out"), c);
-  t.same(resOut.messages, [], `03.04`);
+  const messages = linter.verify(read("03-out"), c);
+  t.same(messages, [], `03.05`);
   t.end();
 });
 
@@ -101,14 +103,15 @@ tap.test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `04.02`
   );
+  t.same(resIn.messages, [], `04.03`);
 
   // ensure no more errors are raised about "out"
-  const resOut = linter.verifyAndFix(read("04-out"), c);
-  t.same(resOut.messages, [], `04.04`);
+  const messages = linter.verify(read("04-out"), c);
+  t.same(messages, [], `04.05`);
   t.end();
 });
 
-tap.only(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
+tap.test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   // ensure "in" is fixed
   const resIn = linter.verifyAndFix(read("05-in"), c);
   t.match(
@@ -119,9 +122,28 @@ tap.only(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `05.02`
   );
+  t.same(resIn.messages, [], `05.03`);
 
-  // // ensure no more errors are raised about "out"
-  // const resOut = linter.verifyAndFix(read("05-out"), c);
-  // t.same(resOut.messages, [], `05.04`);
+  // ensure no more errors are raised about "out"
+  const messages = linter.verify(read("05-out"), c);
+  t.same(messages, [], `05.05`);
+  t.end();
+});
+
+tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
+  // ensure "in" is fixed
+  const resIn = linter.verifyAndFix(read("06-in"), c);
+  t.match(
+    resIn,
+    {
+      fixed: true,
+      output: read("06-out"),
+    },
+    `06.02`
+  );
+
+  // ensure no more errors are raised about "out"
+  const messages = linter.verify(read("06-out"), c);
+  t.same(messages, [], `06.04`);
   t.end();
 });

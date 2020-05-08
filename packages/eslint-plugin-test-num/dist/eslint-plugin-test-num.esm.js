@@ -162,7 +162,7 @@ const create = (context) => {
     ExpressionStatement(node) {
       if (
         op.get(node, "expression.type") === "CallExpression" &&
-        ["test", "only"].includes(
+        ["test", "only", "skip"].includes(
           op.get(node, "expression.callee.property.name")
         ) &&
         ["TemplateLiteral", "Literal"].includes(
@@ -230,6 +230,7 @@ const create = (context) => {
           );
           /* istanbul ignore else */
           if (Array.isArray(exprStatements)) {
+            let counter2 = 0;
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               const assertsName = op.get(
                 exprStatements[i],
@@ -268,6 +269,7 @@ const create = (context) => {
                     exprStatements[i],
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0.start`
                   );
+                  counter2 += 1;
                 } else if (
                   op.get(
                     exprStatements[i],
@@ -282,6 +284,7 @@ const create = (context) => {
                     exprStatements[i],
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.start`
                   );
+                  counter2 += 1;
                 }
                 const { start, end } =
                   prep(pathToMsgArgValue, {
@@ -294,7 +297,7 @@ const create = (context) => {
                 const newValue =
                   subTestCount === "single"
                     ? testOrderNumber
-                    : `${testOrderNumber}.${`${i + 1}`.padStart(2, "0")}`;
+                    : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   context.report({
                     node,

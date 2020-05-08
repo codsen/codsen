@@ -123,7 +123,7 @@ const create = (context) => {
     ExpressionStatement(node) {
       if (
         op.get(node, "expression.type") === "CallExpression" &&
-        ["test", "only"].includes(
+        ["test", "only", "skip"].includes(
           op.get(node, "expression.callee.property.name")
         ) &&
         ["TemplateLiteral", "Literal"].includes(
@@ -294,9 +294,31 @@ const create = (context) => {
           /* istanbul ignore else */
           if (Array.isArray(exprStatements)) {
             // loop through expression statements, t.* calls inside the (t) => {...}
+
+            // this counter is to count expression statements and whatnot
+            // within the "expression.arguments.1.body.body" path (array).
+            //
+            // For example, within:
+            // tap.test(`01 - a`, (t) => {
+            //
+            // one might have many bits:
+            // 1. const k = ...
+            // 2. t.match(... <----- true index - #1
+            // 3. const l = ...
+            // 4. t.match(... <----- true index - #2
+            // 5. const m = ...
+            // 6. t.match(... <----- true index - #3
+            //
+            // but this index system above is wrong, we count only assertions -
+            // only *.only, *.test and *.skip
+            //
+            // this counter below will be that index counter
+            //
+            let counter2 = 0;
+
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               // console.log(
-              //   `299 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              //   `321 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               // );
               const assertsName = op.get(
                 exprStatements[i],
@@ -304,13 +326,13 @@ const create = (context) => {
               );
               if (!assertsName) {
                 // console.log(
-                //   `307 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                //   `329 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                 // );
                 continue;
               }
 
               // console.log(
-              //   `313 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+              //   `335 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
               //     messageIsThirdArg.has(assertsName)
               //       ? "III"
               //       : messageIsSecondArg.has(assertsName)
@@ -339,7 +361,7 @@ const create = (context) => {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               }
               // console.log(
-              //   `342 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `364 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${JSON.stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -348,7 +370,7 @@ const create = (context) => {
 
               if (messageArgsPositionWeWillAimFor) {
                 // console.log(
-                //   `351 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                //   `373 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                 // );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -371,6 +393,7 @@ const create = (context) => {
                     exprStatements[i],
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0.start`
                   );
+                  counter2 += 1;
                 } else if (
                   op.get(
                     exprStatements[i],
@@ -385,6 +408,7 @@ const create = (context) => {
                     exprStatements[i],
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.start`
                   );
+                  counter2 += 1;
                 }
 
                 const { start, end } =
@@ -395,16 +419,16 @@ const create = (context) => {
 
                 if (!start || !end) {
                   // console.log(
-                  //   `398 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                  //   `422 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                   // );
                   continue;
                 }
 
                 // console.log(
-                //   `404 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                //   `428 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                 // );
                 // console.log(
-                //   `407 old prepped value: ${`\u001b[${35}m${
+                //   `431 old prepped value: ${`\u001b[${35}m${
                 //     prep(pathToMsgArgValue).value
                 //   }\u001b[${39}m`}`
                 // );
@@ -412,15 +436,15 @@ const create = (context) => {
                 const newValue =
                   subTestCount === "single"
                     ? testOrderNumber
-                    : `${testOrderNumber}.${`${i + 1}`.padStart(2, "0")}`;
+                    : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
 
                 // console.log(
-                //   `418 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
+                //   `442 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
                 // );
 
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   // console.log(
-                  //   `423 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                  //   `447 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   // );
                   context.report({
                     node,
@@ -433,14 +457,14 @@ const create = (context) => {
               }
             }
             // console.log(
-            //   `436 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+            //   `460 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             // );
           }
         }
 
         // console.log(" ");
         // console.log(
-        //   `443 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `467 ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
         //     finalDigitChunk,
         //     null,
         //     4
@@ -449,7 +473,7 @@ const create = (context) => {
 
         if (finalDigitChunk) {
           // console.log(
-          //   `452 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+          //   `476 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
           //     finalDigitChunk.start
           //   }, ${
           //     finalDigitChunk.end
