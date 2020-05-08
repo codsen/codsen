@@ -125,7 +125,7 @@
     "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^6.6.22",
-    "meow": "^6.1.1",
+    "meow": "^7.0.0",
     "p-map": "^4.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^4.1.0"

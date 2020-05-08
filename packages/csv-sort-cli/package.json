@@ -130,7 +130,7 @@
     "inquirer": "^7.1.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
-    "meow": "^6.1.1",
+    "meow": "^7.0.0",
     "update-notifier": "^4.1.0"
   },
   "devDependencies": {

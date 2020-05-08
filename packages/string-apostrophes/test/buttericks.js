@@ -26,7 +26,8 @@ tap.test(
           [7, 8, `${rightSingleQuote}`],
           [18, 21, `${rightSingleQuote}n${rightSingleQuote}`],
         ],
-      }
+      },
+      `01`
     );
     t.end();
   }
@@ -40,7 +41,8 @@ tap.test(
         convertApostrophes: 0,
         convertEntities: 0,
       }).result,
-      `In the '60s, rock 'n' roll`
+      `In the '60s, rock 'n' roll`,
+      `02`
     );
     t.end();
   }
@@ -54,7 +56,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `Hawai${leftSingleQuote}i`
+      `Hawai${leftSingleQuote}i`,
+      `03`
     );
     t.end();
   }
@@ -68,7 +71,8 @@ tap.test(
         convertApostrophes: 1,
         convertEntities: 0,
       }).result,
-      `O${leftSingleQuote}ahu`
+      `O${leftSingleQuote}ahu`,
+      `04`
     );
     t.end();
   }
