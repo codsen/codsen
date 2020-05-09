@@ -40,7 +40,7 @@
     "no-continue": 0,
     "no-use-before-define": ["error", { "functions": false }],
     "no-param-reassign": 0,
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-plusplus": 0,
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -68,7 +68,7 @@
     "prefer-destructuring": 0,
     "prefer-template": "error",
     "row-num/correct-row-num": "error",
-    "test-num/correct-test-num": 0,
+    "test-num/correct-test-num": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [

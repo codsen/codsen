@@ -561,7 +561,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7428,
+        "size": 7429,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
