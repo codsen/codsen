@@ -125,7 +125,7 @@ const create = (context) => {
     ExpressionStatement(node) {
       if (
         op.get(node, "expression.type") === "CallExpression" &&
-        ["test", "only", "skip"].includes(
+        ["test", "only", "skip", "todo"].includes(
           op.get(node, "expression.callee.property.name")
         ) &&
         ["TemplateLiteral", "Literal"].includes(

@@ -121,7 +121,7 @@ var create = function create(context) {
   var counter = 0;
   return {
     ExpressionStatement: function ExpressionStatement(node) {
-      if (op.get(node, "expression.type") === "CallExpression" && ["test", "only", "skip"].includes(op.get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(op.get(node, "expression.arguments.0.type"))) {
+      if (op.get(node, "expression.type") === "CallExpression" && ["test", "only", "skip", "todo"].includes(op.get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(op.get(node, "expression.arguments.0.type"))) {
         counter += 1;
         var testOrderNumber = "".concat(counter).padStart(2, "0");
         var finalDigitChunk;

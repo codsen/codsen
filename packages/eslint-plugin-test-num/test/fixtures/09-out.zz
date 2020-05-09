@@ -1,4 +1,4 @@
-tap.test(
+tap.todo(
   `01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: +entities`,
   (t) => {
     const str = 'this is "citation"';
@@ -21,7 +21,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.todo(
   `02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: -entities`,
   (t) => {
     const str = 'this is "citation"';

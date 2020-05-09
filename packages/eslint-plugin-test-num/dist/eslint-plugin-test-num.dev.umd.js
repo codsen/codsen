@@ -2422,7 +2422,7 @@
 	  var counter = 0;
 	  return {
 	    ExpressionStatement: function ExpressionStatement(node) {
-	      if (objectPath.get(node, "expression.type") === "CallExpression" && ["test", "only", "skip"].includes(objectPath.get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(objectPath.get(node, "expression.arguments.0.type"))) {
+	      if (objectPath.get(node, "expression.type") === "CallExpression" && ["test", "only", "skip", "todo"].includes(objectPath.get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(objectPath.get(node, "expression.arguments.0.type"))) {
 	        // console.log(" ");
 	        // console.log("-------------------------------");
 	        // console.log(" ");
