@@ -162,7 +162,8 @@ tap.test(
           type: "esp",
           start: 3,
           end: 15,
-          tail: ")$",
+          head: "$(",
+          tail: ")",
         },
         {
           type: "tag",
@@ -176,9 +177,45 @@ tap.test(
   }
 );
 
+tap.test(
+  `06 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - just for kicks, completely mirrored version`,
+  (t) => {
+    const gathered = [];
+    ct(`<a>$(something)$<b>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 3,
+        },
+        {
+          type: "esp",
+          start: 3,
+          end: 16,
+          head: "$(",
+          tail: ")$",
+        },
+        {
+          type: "tag",
+          start: 16,
+          end: 19,
+        },
+      ],
+      "06.01"
+    );
+    t.end();
+  }
+);
+
 // heuristically detecting tails and again new heads
 tap.test(
-  `06 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two Nunjucks tags, same pattern set of two, tight`,
+  `07 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two Nunjucks tags, same pattern set of two, tight`,
   (t) => {
     const gathered = [];
     ct(`{%- a -%}{%- b -%}`, {
@@ -200,7 +237,7 @@ tap.test(
           end: 18,
         },
       ],
-      "06.01"
+      "07.01"
     );
     t.end();
   }
@@ -208,7 +245,7 @@ tap.test(
 
 // heuristically detecting tails and again new heads, this time slightly different
 tap.test(
-  `07 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two nunjucks tags, different pattern set of two, tight`,
+  `08 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - two nunjucks tags, different pattern set of two, tight`,
   (t) => {
     const gathered = [];
     ct(`{%- if count > 1 -%}{% if count > 1 %}`, {
@@ -230,7 +267,7 @@ tap.test(
           end: 38,
         },
       ],
-      "07.01"
+      "08.01"
     );
     t.end();
   }
@@ -238,7 +275,7 @@ tap.test(
 
 // heuristically detecting tails and again new heads
 tap.test(
-  `08 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - different set, *|zzz|*`,
+  `09 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - different set, *|zzz|*`,
   (t) => {
     const gathered = [];
     ct(`*|zzz|**|yyy|*`, {
@@ -260,14 +297,14 @@ tap.test(
           end: 14,
         },
       ],
-      "08.01"
+      "09.01"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
+  `10 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
   (t) => {
     const gathered = [];
     ct(`*|zzz*|*|yyy|*`, {
@@ -289,7 +326,7 @@ tap.test(
           end: 14,
         },
       ],
-      "09.01"
+      "10.01"
     );
     t.end();
   }

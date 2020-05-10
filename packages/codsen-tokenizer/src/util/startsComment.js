@@ -61,7 +61,7 @@ function startsComment(str, i, token) {
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["-", "!"],
         }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
+    (token.type !== "esp" || !token.tail || token.tail.includes(str[i]))
   );
 }
 

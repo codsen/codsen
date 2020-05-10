@@ -48,7 +48,7 @@ tap.test(
           value: "${profile.firstName}",
           kind: null,
           head: "${",
-          tail: "}$",
+          tail: "}",
         },
         {
           type: "text",
@@ -120,7 +120,7 @@ tap.test(
                   value: "${latestProduct.url}",
                   kind: null,
                   head: "${",
-                  tail: "}$",
+                  tail: "}",
                 },
               ],
               attribValueStartsAt: 9,
@@ -137,7 +137,7 @@ tap.test(
           value: "${latestProduct.name}",
           kind: null,
           head: "${",
-          tail: "}$",
+          tail: "}",
         },
         {
           type: "tag",

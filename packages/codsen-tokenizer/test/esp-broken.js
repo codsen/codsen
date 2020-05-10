@@ -51,7 +51,7 @@ tap.test(
                   value: "{% x }",
                   kind: null,
                   head: "{%",
-                  tail: "%}",
+                  tail: "}",
                 },
               ],
               attribValueStartsAt: 6,
@@ -148,7 +148,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - new heads follow`,
   (t) => {
     const gathered = [];
@@ -167,7 +167,7 @@ tap.only(
           value: "{% x ",
           kind: null,
           head: "{%",
-          tail: "%}",
+          tail: null,
         },
         {
           type: "tag",
@@ -190,7 +190,7 @@ tap.only(
               attribNameEndsAt: 4,
               attribOpeningQuoteAt: 5,
               attribClosingQuoteAt: 19,
-              attribValueRaw: '{% x {% y %}2"',
+              attribValueRaw: "{% x {% y %}2",
               attribValue: [
                 {
                   type: "esp",
@@ -199,7 +199,7 @@ tap.only(
                   value: "{% x ",
                   kind: null,
                   head: "{%",
-                  tail: "%}",
+                  tail: null,
                 },
                 {
                   type: "esp",

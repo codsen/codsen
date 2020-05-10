@@ -15,39 +15,6 @@ import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
 import isTagOpening from 'is-html-tag-opening';
 
-function startsComment(str, i, token) {
-  return (
-    ((str[i] === "<" &&
-      (matchRight(str, i, ["!--"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
-        trimBeforeMatching: true,
-      }) ||
-        matchRight(str, i, ["![endif]"], {
-          i: true,
-          maxMismatches: 2,
-          trimBeforeMatching: true,
-        })) &&
-      !matchRight(str, i, ["![cdata", "<"], {
-        i: true,
-        maxMismatches: 1,
-        trimBeforeMatching: true,
-      }) &&
-      (token.type !== "comment" || token.kind !== "not")) ||
-      (str[i] === "-" &&
-        matchRight(str, i, ["->"], {
-          trimBeforeMatching: true,
-        }) &&
-        (token.type !== "comment" ||
-          (!token.closing && token.kind !== "not")) &&
-        !matchLeft(str, i, "<", {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"],
-        }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
-  );
-}
-
 const allHTMLTagsKnownToHumanity = [
   "a",
   "abbr",
@@ -195,7 +162,7 @@ const allHTMLTagsKnownToHumanity = [
   "wbr",
   "xmp",
 ];
-const espChars = `{}%-$_()*|`;
+const espChars = `{}%-$_()*|#`;
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 function isStr(something) {
   return typeof something === "string";
@@ -216,10 +183,20 @@ function flipEspTag(str) {
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i] === "[") {
       res = `]${res}`;
+    } else if (str[i] === "]") {
+      res = `[${res}`;
     } else if (str[i] === "{") {
       res = `}${res}`;
+    } else if (str[i] === "}") {
+      res = `{${res}`;
     } else if (str[i] === "(") {
       res = `)${res}`;
+    } else if (str[i] === ")") {
+      res = `(${res}`;
+    } else if (str[i] === "<") {
+      res = `>${res}`;
+    } else if (str[i] === ">") {
+      res = `<${res}`;
     } else {
       res = `${str[i]}${res}`;
     }
@@ -242,6 +219,121 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     }
   }
   return false;
+}
+
+function matchLayerLast(str, i, layers, matchFirstInstead) {
+  if (!layers.length) {
+    return false;
+  }
+  const whichLayerToMatch = matchFirstInstead
+    ? layers[0]
+    : layers[layers.length - 1];
+  if (whichLayerToMatch.type === "simple") {
+    return (
+      !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value)
+    );
+  }
+  if (whichLayerToMatch.type === "esp") {
+    if (
+      !espChars.includes(str[i]) &&
+      !(
+        str[i] === ">" &&
+        Array.isArray(layers) &&
+        layers.length &&
+        layers[layers.length - 1].type === "esp" &&
+        layers[layers.length - 1].openingLump[0] === "<"
+      )
+    ) {
+      return false;
+    }
+    let wholeEspTagLump = "";
+    if (str[i] === ">") {
+      wholeEspTagLump = ">";
+    } else {
+      for (let y = i; y < str.length; y++) {
+        if (espChars.includes(str[y])) {
+          wholeEspTagLump += str[y];
+        } else {
+          break;
+        }
+      }
+    }
+    if (wholeEspTagLump.length === 1) {
+      return 1;
+    }
+    if (
+      wholeEspTagLump &&
+      whichLayerToMatch.openingLump &&
+      wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length
+    ) {
+      if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
+        return wholeEspTagLump.length - whichLayerToMatch.openingLump.length;
+      }
+      let uniqueCharsListFromGuessedClosingLumpArr = new Set(
+        whichLayerToMatch.guessedClosingLump
+      );
+      let found = 0;
+      for (let y = 0, len2 = wholeEspTagLump.length; y < len2; y++) {
+        if (
+          !uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y]) &&
+          found > 1
+        ) {
+          return y;
+        }
+        if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])) {
+          found += 1;
+          uniqueCharsListFromGuessedClosingLumpArr = new Set(
+            [...uniqueCharsListFromGuessedClosingLumpArr].filter(
+              (el) => el !== wholeEspTagLump[y]
+            )
+          );
+        }
+      }
+    } else if (
+      whichLayerToMatch.guessedClosingLump
+        .split("")
+        .every((char) => wholeEspTagLump.includes(char))
+    ) {
+      return wholeEspTagLump.length;
+    }
+  }
+}
+
+function matchLayerFirst(str2, i, layers) {
+  return matchLayerLast(str2, i, layers, true);
+}
+
+function startsComment(str, i, token) {
+  return (
+    ((str[i] === "<" &&
+      (matchRight(str, i, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true,
+      }) ||
+        matchRight(str, i, ["![endif]"], {
+          i: true,
+          maxMismatches: 2,
+          trimBeforeMatching: true,
+        })) &&
+      !matchRight(str, i, ["![cdata", "<"], {
+        i: true,
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+      }) &&
+      (token.type !== "comment" || token.kind !== "not")) ||
+      (str[i] === "-" &&
+        matchRight(str, i, ["->"], {
+          trimBeforeMatching: true,
+        }) &&
+        (token.type !== "comment" ||
+          (!token.closing && token.kind !== "not")) &&
+        !matchLeft(str, i, "<", {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["-", "!"],
+        }))) &&
+    (token.type !== "esp" || !token.tail || token.tail.includes(str[i]))
+  );
 }
 
 const BACKSLASH = "\u005C";
@@ -269,32 +361,42 @@ function startsTag(str, i, token, layers) {
           allowCustomTagNames: false,
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
   );
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return (
-    espChars.includes(str[i]) &&
-    str[i + 1] &&
-    espChars.includes(str[i + 1]) &&
-    token.type !== "rule" &&
-    token.type !== "at" &&
-    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
-    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
-    !(
-      (
-        str[i] === "%" &&
-        "0123456789".includes(str[left(str, i)]) &&
-        (!str[i + 2] ||
-          [`"`, `'`, ";"].includes(str[i + 2]) ||
-          !str[i + 2].trim().length)
-      )
-    ) &&
-    !(
-      styleStarts &&
-      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
-    )
+    (espChars.includes(str[i]) &&
+      str[i + 1] &&
+      espChars.includes(str[i + 1]) &&
+      token.type !== "rule" &&
+      token.type !== "at" &&
+      !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
+      !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
+      !(
+        (
+          str[i] === "%" &&
+          "0123456789".includes(str[left(str, i)]) &&
+          (!str[i + 2] ||
+            [`"`, `'`, ";"].includes(str[i + 2]) ||
+            !str[i + 2].trim().length)
+        )
+      ) &&
+      !(
+        styleStarts &&
+        ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+      )) ||
+    (str[i] === "<" &&
+      ((str[i + 1] === "/" && espChars.includes(str[i + 2])) ||
+        (espChars.includes(str[i + 1]) &&
+          !["-"].includes(str[i + 1])))) ||
+    (`>})`.includes(str[i]) &&
+      Array.isArray(layers) &&
+      layers.length &&
+      layers[layers.length - 1].type === "esp" &&
+      layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) &&
+      (str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")))
   );
 }
 
@@ -438,73 +540,6 @@ function tokenizer(str, originalOpts) {
   let parentTokenToBackup;
   let attribToBackup;
   let layers = [];
-  function matchLayerLast(str2, i, matchFirstInstead) {
-    if (!layers.length) {
-      return false;
-    }
-    const whichLayerToMatch = matchFirstInstead
-      ? layers[0]
-      : layers[layers.length - 1];
-    if (whichLayerToMatch.type === "simple") {
-      return (
-        !whichLayerToMatch.value ||
-        str2[i] === flipEspTag(whichLayerToMatch.value)
-      );
-    }
-    if (whichLayerToMatch.type === "esp") {
-      if (!espChars.includes(str2[i])) {
-        return false;
-      }
-      let wholeEspTagLump = "";
-      for (let y = i; y < len; y++) {
-        if (espChars.includes(str2[y])) {
-          wholeEspTagLump += str2[y];
-        } else {
-          break;
-        }
-      }
-      if (
-        wholeEspTagLump &&
-        whichLayerToMatch.openingLump &&
-        wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length
-      ) {
-        if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
-          return wholeEspTagLump.length - whichLayerToMatch.openingLump.length;
-        }
-        let uniqueCharsListFromGuessedClosingLumpArr = new Set(
-          whichLayerToMatch.guessedClosingLump
-        );
-        let found = 0;
-        for (let y = 0, len2 = wholeEspTagLump.length; y < len2; y++) {
-          if (
-            !uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y]) &&
-            found > 1
-          ) {
-            return y;
-          }
-          if (
-            uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[y])
-          ) {
-            found += 1;
-            uniqueCharsListFromGuessedClosingLumpArr = new Set(
-              [...uniqueCharsListFromGuessedClosingLumpArr].filter(
-                (el) => el !== wholeEspTagLump[y]
-              )
-            );
-          }
-        }
-      } else if (
-        whichLayerToMatch.guessedClosingLump
-          .split("")
-          .every((char) => wholeEspTagLump.includes(char))
-      ) {
-        return wholeEspTagLump.length;
-      }
-    }
-  }
-  function matchLayerFirst(str2, i) {
-    return matchLayerLast(str2, i, true);
-  }
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     const currentElem = stash.shift();
     const next = [];
@@ -872,7 +907,7 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (
-        ["tag", "esp", "rule", "at"].includes(token.type) &&
+        ["tag", "rule", "at"].includes(token.type) &&
         token.kind !== "cdata"
       ) {
         if (
@@ -884,7 +919,7 @@ function tokenizer(str, originalOpts) {
             )
           )
         ) {
-          if (matchLayerLast(str, i)) {
+          if (matchLayerLast(str, i, layers)) {
             layers.pop();
           } else {
             layers.push({
@@ -899,7 +934,7 @@ function tokenizer(str, originalOpts) {
         ["only", "not"].includes(token.kind)
       ) {
         if ([`[`, `]`].includes(str[i])) {
-          if (matchLayerLast(str, i)) {
+          if (matchLayerLast(str, i, layers)) {
             layers.pop();
           } else {
             layers.push({
@@ -1059,9 +1094,9 @@ function tokenizer(str, originalOpts) {
           styleStarts = false;
         }
       } else if (startsEsp(str, i, token, layers, styleStarts)) {
-        let wholeEspTagLump = "";
-        for (let y = i; y < len; y++) {
-          if (espChars.includes(str[y])) {
+        let wholeEspTagLump = str[i];
+        for (let y = i + 1; y < len; y++) {
+          if (espChars.includes(str[y]) || (str[i] === "<" && str[y] === "/")) {
             wholeEspTagLump += str[y];
           } else {
             break;
@@ -1075,12 +1110,13 @@ function tokenizer(str, originalOpts) {
             layers[layers.length - 1].value !== str[i + wholeEspTagLump.length])
         ) {
           let lengthOfClosingEspChunk;
-          if (layers.length && matchLayerLast(str, i)) {
-            lengthOfClosingEspChunk = matchLayerLast(str, i);
+          if (layers.length && matchLayerLast(str, i, layers)) {
+            lengthOfClosingEspChunk = matchLayerLast(str, i, layers);
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
                 token.end = i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
+                token.tail = str.slice(i, i + lengthOfClosingEspChunk);
               }
               if (parentTokenToBackup) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
@@ -1103,8 +1139,8 @@ function tokenizer(str, originalOpts) {
               tokenReset();
             }
             layers.pop();
-          } else if (layers.length && matchLayerFirst(str, i)) {
-            lengthOfClosingEspChunk = matchLayerFirst(str, i);
+          } else if (layers.length && matchLayerFirst(str, i, layers)) {
+            lengthOfClosingEspChunk = matchLayerFirst(str, i, layers);
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
                 token.end = i + lengthOfClosingEspChunk;
@@ -1115,6 +1151,19 @@ function tokenizer(str, originalOpts) {
             }
             layers = [];
           } else {
+            if (
+              Array.isArray(layers) &&
+              layers.length &&
+              layers[layers.length - 1].type === "esp"
+            ) {
+              layers.pop();
+            }
+            if (attribToBackup) {
+              if (!Array.isArray(attribToBackup.attribValue)) {
+                attribToBackup.attribValue = [];
+              }
+              attribToBackup.attribValue.push(token);
+            }
             layers.push({
               type: "esp",
               openingLump: wholeEspTagLump,
@@ -1137,7 +1186,6 @@ function tokenizer(str, originalOpts) {
               }
             }
             initToken("esp", i);
-            token.tail = flipEspTag(wholeEspTagLump);
             token.head = wholeEspTagLump;
             if (
               parentTokenToBackup &&

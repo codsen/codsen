@@ -58,7 +58,7 @@ function startsTag(str, i, token, layers) {
     //     })
     //   ))
     // ) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
   );
 }
 

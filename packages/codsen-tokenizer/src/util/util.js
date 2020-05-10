@@ -148,7 +148,7 @@ const allHTMLTagsKnownToHumanity = [
 ];
 
 // contains all common templating language head/tail marker characters:
-const espChars = `{}%-$_()*|`;
+const espChars = `{}%-$_()*|#`;
 
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 
@@ -240,10 +240,20 @@ function flipEspTag(str) {
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i] === "[") {
       res = `]${res}`;
+    } else if (str[i] === "]") {
+      res = `[${res}`;
     } else if (str[i] === "{") {
       res = `}${res}`;
+    } else if (str[i] === "}") {
+      res = `{${res}`;
     } else if (str[i] === "(") {
       res = `)${res}`;
+    } else if (str[i] === ")") {
+      res = `(${res}`;
+    } else if (str[i] === "<") {
+      res = `>${res}`;
+    } else if (str[i] === ">") {
+      res = `<${res}`;
     } else {
       res = `${str[i]}${res}`;
     }
