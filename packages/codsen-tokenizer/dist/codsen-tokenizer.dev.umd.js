@@ -2861,119 +2861,111 @@
     return false;
   }
 
-  function matchLayerLast(str, i, layers, matchFirstInstead) {
+  function getWholeEspTagLumpOnTheRight(str, i, layers) {
+    var wholeEspTagLumpOnTheRight = str[i];
+    var len = str.length;
+
+    for (var y = i + 1; y < len; y++) {
+      if ( // consider:
+      // ${(y/4)?int}
+      //   ^
+      //   we're here - is this opening bracket part of heads?!?
+      // if lump already is two chars long
+      wholeEspTagLumpOnTheRight.length > 1 && ( // contains one of opening-polarity characters
+      wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
+      str[y] === "(") {
+        break;
+      }
+
+      if (espChars.includes(str[y]) || str[i] === "<" && str[y] === "/" || // accept closing bracket if it's RPL comment, tails of: <#-- z -->
+      str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-") {
+        wholeEspTagLumpOnTheRight += str[y];
+      } else {
+        break;
+      }
+    } // if lump is tails+heads, report the length of tails only:
+    // {%- a -%}{%- b -%}
+    //        ^
+    //      we're talking about this lump of tails and heads
+
+
+    if (wholeEspTagLumpOnTheRight && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].guessedClosingLump && wholeEspTagLumpOnTheRight.length > layers[layers.length - 1].guessedClosingLump.length) {
+      //
+      // case I.
+      //
+      if (wholeEspTagLumpOnTheRight.endsWith(layers[layers.length - 1].openingLump)) {
+        // no need to extract tails, heads "{%-" were confirmed in example:
+        // {%- a -%}{%- b -%}
+        //          ^
+        //         here
+        // return string, extracted ESP tails
+        return wholeEspTagLumpOnTheRight.slice(0, wholeEspTagLumpOnTheRight.length - layers[layers.length - 1].openingLump.length);
+      } // ELSE
+      // imagine a case like:
+      // {%- aa %}{% bb %}
+      // opening heads were {%-, flipped were -%}. Now when we take lump %}{%
+      // and match, the dash will be missing.
+      // What we're going to do is we'll split the lump where last matched
+      // continuous chunk ends (%} in example above) with condition that
+      // at least one character from ESP-list follows, which is not part of
+      // guessed closing lump.
+
+
+      var uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
+      var found = 0;
+
+      var _loop = function _loop(len2, _y) {
+        if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y]) && found > 1) {
+          return {
+            v: wholeEspTagLumpOnTheRight.slice(0, _y)
+          };
+        }
+
+        if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y])) {
+          found += 1;
+          uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
+            return el !== wholeEspTagLumpOnTheRight[_y];
+          }));
+        }
+      };
+
+      for (var _y = 0, len2 = wholeEspTagLumpOnTheRight.length; _y < len2; _y++) {
+        var _ret = _loop(len2, _y);
+
+        if (_typeof(_ret) === "object") return _ret.v;
+      }
+    }
+
+    return wholeEspTagLumpOnTheRight;
+  }
+
+  // RETURNS: undefined or integer, length of a matched ESP lump.
+  function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
     if (!layers.length) {
-      return false;
+      return;
     }
 
     var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
 
-    if (whichLayerToMatch.type === "simple") {
-      return !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value);
+    if (whichLayerToMatch.type !== "esp") {
+      // we aim to match ESP tag layers, so instantly it's falsey result
+      // because layer we match against is not ESP tag layer
+      return;
     }
 
-    if (whichLayerToMatch.type === "esp") {
-      var _ret = function () {
-        if (!espChars.includes(str[i]) && !(str[i] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<")) {
-          return {
-            v: false
-          };
-        }
-
-        var wholeEspTagLump = "";
-
-        if (str[i] === ">") {
-          wholeEspTagLump = ">";
-        } else {
-          // so the first character is from ESP tags list
-          // 1. extract esp tag lump
-          for (var y = i; y < str.length; y++) {
-            if (espChars.includes(str[y])) {
-              wholeEspTagLump += str[y];
-            } else {
-              break;
-            }
-          }
-        }
-
-        if (wholeEspTagLump.length === 1) {
-          return {
-            v: 1
-          };
-        } // if lump is tails+heads, report the length of tails only:
-        // {%- a -%}{%- b -%}
-        //        ^
-        //      we're talking about this lump of tails and heads
-
-
-        if (wholeEspTagLump && whichLayerToMatch.openingLump && wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length) {
-          if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
-            // no need to extract tails, heads "{%-" were confirmed in example:
-            // {%- a -%}{%- b -%}
-            //          ^
-            //         here
-            return {
-              v: wholeEspTagLump.length - whichLayerToMatch.openingLump.length
-            };
-          } // else {
-          // imagine case like:
-          // {%- aa %}{% bb %}
-          // opening heads were {%-, flipped were -%}. Now when we take lump %}{%
-          // and match, the dash will be missing.
-          // What we're going to do is we'll split the lump where last matched
-          // continuous chunk ends (%} in example above) with condition that
-          // at least one character from ESP-list follows, which is not part of
-          // guessed closing lump.
-
-
-          var uniqueCharsListFromGuessedClosingLumpArr = new Set(whichLayerToMatch.guessedClosingLump);
-          var found = 0;
-
-          var _loop = function _loop(len2, _y) {
-            if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[_y]) && found > 1) {
-              return {
-                v: {
-                  v: _y
-                }
-              };
-            }
-
-            if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLump[_y])) {
-              found += 1;
-              uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
-                return el !== wholeEspTagLump[_y];
-              }));
-            }
-          };
-
-          for (var _y = 0, len2 = wholeEspTagLump.length; _y < len2; _y++) {
-            var _ret2 = _loop(len2, _y);
-
-            if (_typeof(_ret2) === "object") return _ret2.v;
-          }
-        } else if ( // match every character from the last "layers" complex-type entry must be
-        // present in the extracted lump
-        whichLayerToMatch.guessedClosingLump.split("").every(function (char) {
-          return wholeEspTagLump.includes(char);
-        })) {
-          return {
-            v: wholeEspTagLump.length
-          };
-        }
-      }();
-
-      if (_typeof(_ret) === "object") return _ret.v;
+    if ( // match every character from the last "layers" complex-type entry must be
+    // present in the extracted lump
+    Array.from(wholeEspTagLump).every(function (char) {
+      return whichLayerToMatch.guessedClosingLump.includes(char);
+    })) {
+      return wholeEspTagLump.length;
     }
-  }
-
-  function matchLayerFirst(str2, i, layers) {
-    return matchLayerLast(str2, i, layers, true);
   }
 
   // starts. Previously it sat within if() clauses but became unwieldy and
   // so we extracted into a function.
 
-  function startsComment(str, i, token) {
+  function startsComment(str, i, token, layers) {
     // console.log(
     //   `R1: ${!!matchRight(str, i, ["!--"], {
     //     maxMismatches: 1,
@@ -3002,7 +2994,7 @@
     //   )}`
     // );
     return (// the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
-      (str[i] === "<" && (matchRight(str, i, ["!--"], {
+      str[i] === "<" && (matchRight(str, i, ["!--"], {
         maxMismatches: 1,
         firstMustMatch: true,
         // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
@@ -3020,7 +3012,8 @@
       }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["-", "!"]
-      })) && (token.type !== "esp" || !token.tail || token.tail.includes(str[i]))
+      }) && ( // insurance against ESP tag, RPL comments: <#-- z -->
+      !Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"))
     );
   }
 
@@ -3168,7 +3161,10 @@
       ">})".includes(str[i]) && // heads include the opposite of it
       Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
       // <#if product.weight > 100>
-      str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<"))
+      str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+      // 4. comment closing in RPL-like templating languages, for example:
+      // <#-- z -->
+      str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"
     );
   }
 
@@ -3181,7 +3177,8 @@
   // @supports (display: grid) {...
   // const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
-  var charsThatEndCSSChunks = ["{", "}", ","]; // TODO remove:
+  var charsThatEndCSSChunks = ["{", "}", ","];
+  var BACKTICK = "\x60"; // TODO remove:
   // same as used in string-extract-class-names
   // const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
 
@@ -3822,8 +3819,7 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
-            token = tokenReset(); // skip the remaining of the program clauses for this index
-
+            token = tokenReset();
             doNothing = _i + 1;
           }
         } else if (token.type === "text" && str[_i] && str[_i].trim()) {
@@ -3871,14 +3867,13 @@
 
 
       if (!doNothing) {
-        if ( // ["tag", "esp", "rule", "at"].includes(token.type) &&
-        ["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+        if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
           if (["\"", "'", "(", ")"].includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
           // "'" or '"' - templating languages might put single quote as a sttring
           // character, not meaning wrapped-something.
-          ["\"", "'"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
-            if (matchLayerLast(str, _i, layers)) {
-              // maybe it's the closing counterpart?
+          ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
+            if ( // maybe it's the closing counterpart?
+            Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[_i])) {
               layers.pop();
             } else {
               // it's opening then
@@ -3891,7 +3886,8 @@
           }
         } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
           if (["[", "]"].includes(str[_i])) {
-            if (matchLayerLast(str, _i, layers)) {
+            if ( // maybe it's the closing counterpart?
+            Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[_i])) {
               // maybe it's the closing counterpart?
               layers.pop();
             } else {
@@ -3902,6 +3898,23 @@
                 position: _i
               });
             }
+          }
+        } else if (token.type === "esp" && "'\"".concat(BACKTICK, "()").includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
+        // "'" or '"' - templating languages might put single quote as a sttring
+        // character, not meaning wrapped-something.
+        ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
+          if ( // maybe it's the closing counterpart?
+          Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[_i])) {
+            // maybe it's the closing counterpart?
+            layers.pop();
+            doNothing = _i + 1;
+          } else if (!"]})>".includes(str[_i])) {
+            // it's opening then
+            layers.push({
+              type: "simple",
+              value: str[_i],
+              position: _i
+            });
           }
         } // console.log(
         //   `1094 FIY, currently ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
@@ -4083,7 +4096,7 @@
           })) {
             token.kind = "xml";
           }
-        } else if (startsComment(str, _i, token)) {
+        } else if (startsComment(str, _i, token, layers)) {
           //
           //
           //
@@ -4114,7 +4127,14 @@
           if (styleStarts) {
             styleStarts = false;
           }
-        } else if (startsEsp(str, _i, token, layers, styleStarts)) {
+        } else if (startsEsp(str, _i, token, layers, styleStarts) && ( // ensure we're not inside quotes, so it's not an expression within a value
+        // ${"${name}${name}${name}${name}"}
+        //    ^
+        //   we could be here - notice quotes wrapping all around
+        //
+        !Array.isArray(layers) || !layers.length || // last layer is not quotes
+        layers[layers.length - 1].type !== "simple" || !["'", "\""].includes(layers[layers.length - 1].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
+        attrib && attrib.attribStart && !attrib.attribEnd)) {
           //
           //
           //
@@ -4128,27 +4148,21 @@
           //
           //
           // FIRST, extract the tag opening and guess the closing judging from it
-          var wholeEspTagLump = str[_i];
-
-          for (var y = _i + 1; y < len; y++) {
-            if (espChars.includes(str[y]) || str[_i] === "<" && str[y] === "/") {
-              wholeEspTagLump += str[y];
-            } else {
-              break;
-            }
-          } // lump can't end with attribute's ending, that is, something like:
+          var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers); // lump can't end with attribute's ending, that is, something like:
           // <frameset cols="**">
           // that's a false positive
 
-
-          if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[_i + wholeEspTagLump.length])) {
+          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[_i + wholeEspTagLumpOnTheRight.length])) {
             // check the "layers" records - maybe it's a closing part of a set?
             var lengthOfClosingEspChunk;
 
-            if (layers.length && matchLayerLast(str, _i, layers)) {
-              lengthOfClosingEspChunk = matchLayerLast(str, _i, layers); // if this was closing of a standalone esp tag, terminate it and ping
+            if (layers.length && ( //
+            // if layer match result is truthy, we take it, otherwise, move on
+            // but don't calculate twice!
+            // eslint-disable-next-line no-cond-assign
+            lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
+              // if this was closing of a standalone esp tag, terminate it and ping
               // it to the cb()
-
               if (token.type === "esp") {
                 if (!Number.isInteger(token.end)) {
                   token.end = _i + lengthOfClosingEspChunk;
@@ -4196,10 +4210,10 @@
 
 
               layers.pop();
-            } else if (layers.length && matchLayerFirst(str, _i, layers)) {
-              lengthOfClosingEspChunk = matchLayerFirst(str, _i, layers); // if this was closing of a standalone esp tag, terminate it and ping
+            } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
+            lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
+              // if this was closing of a standalone esp tag, terminate it and ping
               // it to the cb()
-
               if (token.type === "esp") {
                 if (!Number.isInteger(token.end)) {
                   token.end = _i + lengthOfClosingEspChunk;
@@ -4232,8 +4246,8 @@
 
               layers.push({
                 type: "esp",
-                openingLump: wholeEspTagLump,
-                guessedClosingLump: flipEspTag(wholeEspTagLump),
+                openingLump: wholeEspTagLumpOnTheRight,
+                guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
                 position: _i
               }); // also, if it's a standalone ESP token, terminate the previous token
               // and start recording a new-one
@@ -4265,7 +4279,7 @@
 
 
               initToken("esp", _i);
-              token.head = wholeEspTagLump; // toggle parentTokenToBackup.pureHTML
+              token.head = wholeEspTagLumpOnTheRight; // toggle parentTokenToBackup.pureHTML
 
               if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
                 parentTokenToBackup.pureHTML = false;
@@ -4298,7 +4312,7 @@
             } // do nothing for the second and following characters from the lump
 
 
-            doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLump.length);
+            doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           } //
 
         } else if (token.start === null || token.end === _i) {
@@ -4470,9 +4484,9 @@
           // extract the whole lump of ESP tag characters:
           var wholeEspTagClosing = "";
 
-          for (var _y = _i; _y < len; _y++) {
-            if (espChars.includes(str[_y])) {
-              wholeEspTagClosing += str[_y];
+          for (var y = _i; y < len; y++) {
+            if (espChars.includes(str[y])) {
+              wholeEspTagClosing += str[y];
             } else {
               break;
             }
@@ -4756,14 +4770,14 @@
           var whitespaceFound;
           var attribClosingQuoteAt;
 
-          for (var _y2 = left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
+          for (var _y = left(str, _i); _y >= attrib.attribValueStartsAt; _y--) {
             // catch where whitespace starts
-            if (!whitespaceFound && str[_y2] && !str[_y2].trim()) {
+            if (!whitespaceFound && str[_y] && !str[_y].trim()) {
               whitespaceFound = true;
 
               if (attribClosingQuoteAt) {
                 // slice the captured chunk
-                var extractedChunksVal = str.slice(_y2, attribClosingQuoteAt);
+                var extractedChunksVal = str.slice(_y, attribClosingQuoteAt);
               }
             } // where that caught whitespace ends, that's the default location
             // of double quotes.
@@ -4774,12 +4788,12 @@
             //         to here
 
 
-            if (whitespaceFound && str[_y2] && str[_y2].trim()) {
+            if (whitespaceFound && str[_y] && str[_y].trim()) {
               whitespaceFound = false;
 
               if (!attribClosingQuoteAt) {
                 // that's the first, default location
-                attribClosingQuoteAt = _y2 + 1;
+                attribClosingQuoteAt = _y + 1;
               }
             }
           }
@@ -4957,25 +4971,25 @@
 
         if (str[_i + 1]) {
           // Traverse then
-          for (var _y3 = _i + 1; _y3 < len; _y3++) {
+          for (var _y2 = _i + 1; _y2 < len; _y2++) {
             // if we reach the closing counterpart of the quotes, terminate
-            if (attrib.attribOpeningQuoteAt !== null && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
-              if (_y3 !== _i + 1 && str[_y3 - 1] !== "=") {
+            if (attrib.attribOpeningQuoteAt !== null && str[_y2] === str[attrib.attribOpeningQuoteAt]) {
+              if (_y2 !== _i + 1 && str[_y2 - 1] !== "=") {
                 thisIsRealEnding = true;
               }
 
               break;
-            } else if (str[_y3] === ">") {
+            } else if (str[_y2] === ">") {
               // must be real tag closing, we just tackle missing quotes
               // TODO - missing closing quotes
               break;
-            } else if (str[_y3] === "<") {
+            } else if (str[_y2] === "<") {
               thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
               // quotes of this attribute
 
               layers.pop();
               break;
-            } else if (!str[_y3 + 1]) {
+            } else if (!str[_y2 + 1]) {
               // if end was reached and nothing caught, that's also positive sign
               thisIsRealEnding = true;
               break;

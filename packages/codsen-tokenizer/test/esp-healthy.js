@@ -142,7 +142,7 @@ tap.test(
 );
 
 tap.test(
-  `05 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - Responsys-style ESP tag`,
+  `05 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - dollar + round brackets`,
   (t) => {
     const gathered = [];
     ct(`<a>$(something)<b>`, {
@@ -157,6 +157,7 @@ tap.test(
           type: "tag",
           start: 0,
           end: 3,
+          value: "<a>",
         },
         {
           type: "esp",
@@ -164,11 +165,13 @@ tap.test(
           end: 15,
           head: "$(",
           tail: ")",
+          value: "$(something)",
         },
         {
           type: "tag",
           start: 15,
           end: 18,
+          value: "<b>",
         },
       ],
       "05.01"

@@ -397,7 +397,7 @@ tap.test(
   `06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`,
   (t) => {
     const gathered = [];
-    ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, {
+    ct(`<a>{% if a<b and c>d '"' ><>< %}<b>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -413,13 +413,14 @@ tap.test(
         {
           type: "esp",
           start: 3,
-          end: 35,
+          end: 32,
+          head: "{%",
           tail: "%}",
         },
         {
           type: "tag",
-          start: 35,
-          end: 38,
+          start: 32,
+          end: 35,
         },
       ],
       "06.01"

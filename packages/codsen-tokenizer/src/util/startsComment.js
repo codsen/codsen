@@ -4,7 +4,7 @@ import { matchLeft, matchRight } from "string-match-left-right";
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsComment(str, i, token) {
+function startsComment(str, i, token, layers) {
   // console.log(
   //   `R1: ${!!matchRight(str, i, ["!--"], {
   //     maxMismatches: 1,
@@ -34,7 +34,7 @@ function startsComment(str, i, token) {
   // );
   return (
     // the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
-    ((str[i] === "<" &&
+    (str[i] === "<" &&
       (matchRight(str, i, ["!--"], {
         maxMismatches: 1,
         firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
@@ -51,17 +51,24 @@ function startsComment(str, i, token) {
         trimBeforeMatching: true,
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
-      (str[i] === "-" &&
-        matchRight(str, i, ["->"], {
-          trimBeforeMatching: true,
-        }) &&
-        (token.type !== "comment" ||
-          (!token.closing && token.kind !== "not")) &&
-        !matchLeft(str, i, "<", {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["-", "!"],
-        }))) &&
-    (token.type !== "esp" || !token.tail || token.tail.includes(str[i]))
+    (str[i] === "-" &&
+      matchRight(str, i, ["->"], {
+        trimBeforeMatching: true,
+      }) &&
+      (token.type !== "comment" || (!token.closing && token.kind !== "not")) &&
+      !matchLeft(str, i, "<", {
+        trimBeforeMatching: true,
+        trimCharsBeforeMatching: ["-", "!"],
+      }) &&
+      // insurance against ESP tag, RPL comments: <#-- z -->
+      (!Array.isArray(layers) ||
+        !layers.length ||
+        layers[layers.length - 1].type !== "esp" ||
+        !(
+          layers[layers.length - 1].openingLump[0] === "<" &&
+          layers[layers.length - 1].openingLump[2] === "-" &&
+          layers[layers.length - 1].openingLump[3] === "-"
+        )))
   );
 }
 
