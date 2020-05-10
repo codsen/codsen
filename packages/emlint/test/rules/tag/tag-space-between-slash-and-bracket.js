@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
+  `01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
   (t) => {
     const str = "<br/ >";
     const linter = new Linter();
@@ -19,27 +19,31 @@ tap.test(
         "tag-space-between-slash-and-bracket": 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-space-between-slash-and-bracket",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        line: 1,
-        column: 5,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4, 5]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-space-between-slash-and-bracket",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          line: 1,
+          column: 5,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4, 5]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "01.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
+  `02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
   (t) => {
     const str = "<br/ >";
     const linter = new Linter();
@@ -48,36 +52,40 @@ tap.test(
         tag: 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-space-between-slash-and-bracket",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        line: 1,
-        column: 5,
-        message: "Bad whitespace.",
-        fix: {
-          ranges: [[4, 5]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-space-between-slash-and-bracket",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          line: 1,
+          column: 5,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[4, 5]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "02.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "02.02");
     t.end();
   }
 );
 
-tap.test(
-  `01.03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`,
-  (t) => {
-    const str = "<br/\t>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        tag: 2,
-      },
-    });
-    t.match(messages, [
+tap.test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, (t) => {
+  const str = "<br/\t>";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2,
+    },
+  });
+  t.match(
+    messages,
+    [
       {
         ruleId: "tag-space-between-slash-and-bracket",
         severity: 2,
@@ -90,8 +98,9 @@ tap.test(
           ranges: [[4, 5]],
         },
       },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.end();
-  }
-);
+    ],
+    "03.01"
+  );
+  t.equal(applyFixes(str, messages), "<br/>", "03.02");
+  t.end();
+});

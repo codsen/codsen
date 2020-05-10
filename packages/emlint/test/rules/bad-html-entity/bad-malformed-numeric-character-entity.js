@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
+  `01 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
   (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
@@ -19,25 +19,29 @@ tap.test(
         "bad-html-entity": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "az");
-    t.match(messages, [
-      {
-        ruleId: "bad-malformed-numeric-character-entity",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 21,
-        message: "Malformed numeric entity.",
-        fix: {
-          ranges: [[1, 21]],
+    t.equal(applyFixes(str, messages), "az", "01.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-malformed-numeric-character-entity",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 21,
+          message: "Malformed numeric entity.",
+          fix: {
+            ranges: [[1, 21]],
+          },
         },
-      },
-    ]);
+      ],
+      "01.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 1`,
+  `02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 1`,
   (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
@@ -46,25 +50,29 @@ tap.test(
         "bad-malformed-numeric-character-entity": 1,
       },
     });
-    t.equal(applyFixes(str, messages), "az");
-    t.match(messages, [
-      {
-        ruleId: "bad-malformed-numeric-character-entity",
-        severity: 1,
-        idxFrom: 1,
-        idxTo: 21,
-        message: "Malformed numeric entity.",
-        fix: {
-          ranges: [[1, 21]],
+    t.equal(applyFixes(str, messages), "az", "02.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-malformed-numeric-character-entity",
+          severity: 1,
+          idxFrom: 1,
+          idxTo: 21,
+          message: "Malformed numeric entity.",
+          fix: {
+            ranges: [[1, 21]],
+          },
         },
-      },
-    ]);
+      ],
+      "02.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 2`,
+  `03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 2`,
   (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
@@ -73,19 +81,23 @@ tap.test(
         "bad-malformed-numeric-character-entity": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "az");
-    t.match(messages, [
-      {
-        ruleId: "bad-malformed-numeric-character-entity",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 21,
-        message: "Malformed numeric entity.",
-        fix: {
-          ranges: [[1, 21]],
+    t.equal(applyFixes(str, messages), "az", "03.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-malformed-numeric-character-entity",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 21,
+          message: "Malformed numeric entity.",
+          fix: {
+            ranges: [[1, 21]],
+          },
         },
-      },
-    ]);
+      ],
+      "03.02"
+    );
     t.end();
   }
 );
@@ -94,7 +106,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar instead of hash - rule by wildcard`,
+  `04 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar instead of hash - rule by wildcard`,
   (t) => {
     const str = `_&$65;_`;
     const linter = new Linter();
@@ -103,19 +115,23 @@ tap.test(
         "bad-malformed-*": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "__");
-    t.match(messages, [
-      {
-        ruleId: "bad-malformed-numeric-character-entity",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 6,
-        message: "Malformed numeric entity.",
-        fix: {
-          ranges: [[1, 6]],
+    t.equal(applyFixes(str, messages), "__", "04.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-malformed-numeric-character-entity",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 6,
+          message: "Malformed numeric entity.",
+          fix: {
+            ranges: [[1, 6]],
+          },
         },
-      },
-    ]);
+      ],
+      "04.02"
+    );
     t.end();
   }
 );
@@ -124,7 +140,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
+  `05 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - group rule`,
   (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
@@ -133,14 +149,14 @@ tap.test(
         "bad-html-entity": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.same(messages, [], "05.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 0`,
+  `06 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 0`,
   (t) => {
     const str = `a&#99999999999999999;z`;
     const linter = new Linter();
@@ -149,14 +165,14 @@ tap.test(
         "bad-malformed-numeric-character-entity": [0],
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "06.01");
+    t.same(messages, [], "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, with other rules`,
+  `07 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, with other rules`,
   (t) => {
     const str = `a&#99999999999999999;z<br>`;
     const linter = new Linter();
@@ -166,19 +182,23 @@ tap.test(
         "tag-void-slash": [1],
       },
     });
-    t.equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 1,
-        idxFrom: 25,
-        idxTo: 25,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[25, 25, "/"]],
+    t.equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>", "07.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 1,
+          idxFrom: 25,
+          idxTo: 25,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[25, 25, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "07.02"
+    );
     t.end();
   }
 );

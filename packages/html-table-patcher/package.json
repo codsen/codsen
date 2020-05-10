@@ -129,7 +129,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "dom-serializer": "^0.2.2",
+    "dom-serializer": "^1.0.1",
     "domutils-bastardised": "^1.7.3",
     "html-comment-regex": "^1.1.2",
     "html-dom-parser": "^0.2.3"

@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 0`,
+  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 0`,
   (t) => {
     const str = `<html><p>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
@@ -15,14 +15,14 @@ tap.test(
         "attribute-validate-lang": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 1`,
+  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 1`,
   (t) => {
     const str = `<html><p>`;
     const linter = new Linter();
@@ -31,14 +31,14 @@ tap.test(
         "attribute-validate-lang": 1,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "02.01");
+    t.same(messages, [], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 2`,
+  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 2`,
   (t) => {
     const str = `<html><p>`;
     const linter = new Linter();
@@ -47,14 +47,14 @@ tap.test(
         "attribute-validate-lang": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "03.01");
+    t.same(messages, [], "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
+  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
   (t) => {
     const healthyValues = [
       "fr-Brai",
@@ -88,7 +88,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
+  `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const badParentTags = [
       "applet",
@@ -126,7 +126,7 @@ tap.test(
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`,
+  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`,
   (t) => {
     const str = `<script lang="de">`;
     const linter = new Linter();
@@ -136,15 +136,19 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 8,
-        idxTo: 17,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 8,
+          idxTo: 17,
+          fix: null,
+        },
+      ],
+      "06.02"
+    );
     t.end();
   }
 );
@@ -153,7 +157,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`,
+  `07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div lang="a-DE">`;
     const linter = new Linter();
@@ -163,22 +167,26 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 11,
-        idxTo: 15,
-        message: `Starts with singleton, "a".`,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "07.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 11,
+          idxTo: 15,
+          message: `Starts with singleton, "a".`,
+          fix: null,
+        },
+      ],
+      "07.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`,
+  `08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`,
   (t) => {
     const str = `<a lang=" de">`;
     const linter = new Linter();
@@ -187,24 +195,28 @@ tap.test(
         "attribute-validate-lang": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<a lang="de">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 9,
-        idxTo: 10,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [[9, 10]],
+    t.equal(applyFixes(str, messages), `<a lang="de">`, "08.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 9,
+          idxTo: 10,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[9, 10]],
+          },
         },
-      },
-    ]);
+      ],
+      "08.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`,
+  `09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`,
   (t) => {
     // notice wrong tag name case - it won't get reported because
     // that's different rule and we didn't ask for it
@@ -215,34 +227,38 @@ tap.test(
         "attribute-validate-lang": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<A lang="123">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 9,
-        idxTo: 14,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [
-            [9, 10],
-            [13, 14],
-          ],
+    t.equal(applyFixes(str, messages), `<A lang="123">`, "09.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 9,
+          idxTo: 14,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [
+              [9, 10],
+              [13, 14],
+            ],
+          },
         },
-      },
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 10,
-        idxTo: 13,
-        message: `Unrecognised language subtag, "123".`,
-        fix: null,
-      },
-    ]);
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 10,
+          idxTo: 13,
+          message: `Unrecognised language subtag, "123".`,
+          fix: null,
+        },
+      ],
+      "09.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`,
+  `10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`,
   (t) => {
     const str = `<A lang=" 123 ">`;
     const linter = new Linter();
@@ -252,37 +268,41 @@ tap.test(
         "tag-name-case": 2, // <--------------- !
       },
     });
-    t.equal(applyFixes(str, messages), `<a lang="123">`);
-    t.match(messages, [
-      {
-        ruleId: "tag-name-case",
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Bad tag name case.",
-        fix: {
-          ranges: [[1, 2, "a"]],
+    t.equal(applyFixes(str, messages), `<a lang="123">`, "10.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-name-case",
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Bad tag name case.",
+          fix: {
+            ranges: [[1, 2, "a"]],
+          },
         },
-      },
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 9,
-        idxTo: 14,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [
-            [9, 10],
-            [13, 14],
-          ],
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 9,
+          idxTo: 14,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [
+              [9, 10],
+              [13, 14],
+            ],
+          },
         },
-      },
-      {
-        ruleId: "attribute-validate-lang",
-        idxFrom: 10,
-        idxTo: 13,
-        message: `Unrecognised language subtag, "123".`,
-        fix: null,
-      },
-    ]);
+        {
+          ruleId: "attribute-validate-lang",
+          idxFrom: 10,
+          idxTo: 13,
+          message: `Unrecognised language subtag, "123".`,
+          fix: null,
+        },
+      ],
+      "10.02"
+    );
     t.end();
   }
 );

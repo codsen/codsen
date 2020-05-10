@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 0`,
+  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 0`,
   (t) => {
     const str = `<form>`;
     const linter = new Linter();
@@ -15,14 +15,14 @@ tap.test(
         "attribute-validate-abbr": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 1`,
+  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 1`,
   (t) => {
     const str = `<input>`;
     const linter = new Linter();
@@ -31,14 +31,14 @@ tap.test(
         "attribute-validate-abbr": 1,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "02.01");
+    t.same(messages, [], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 2`,
+  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no abbr, error level 2`,
   (t) => {
     const str = `<input>`;
     const linter = new Linter();
@@ -47,14 +47,14 @@ tap.test(
         "attribute-validate-abbr": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "03.01");
+    t.same(messages, [], "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
+  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
   (t) => {
     const str = `<td abbr='something'>`; // <-- notice single quotes
     const linter = new Linter();
@@ -63,8 +63,8 @@ tap.test(
         "attribute-validate-abbr": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "04.01");
+    t.same(messages, [], "04.02");
     t.end();
   }
 );
@@ -73,7 +73,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
+  `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const str = `<div abbr="something">`;
     const linter = new Linter();
@@ -83,21 +83,25 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-abbr",
-        idxFrom: 5,
-        idxTo: 21,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-abbr",
+          idxFrom: 5,
+          idxTo: 21,
+          fix: null,
+        },
+      ],
+      "05.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
+  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
     const str = `<zzz abbr="something" yyy>`;
     const linter = new Linter();
@@ -107,15 +111,19 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-abbr",
-        idxFrom: 5,
-        idxTo: 21,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-abbr",
+          idxFrom: 5,
+          idxTo: 21,
+          fix: null,
+        },
+      ],
+      "06.02"
+    );
     t.end();
   }
 );

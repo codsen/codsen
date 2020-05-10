@@ -135,3 +135,24 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.same(messages, [], `06.02`);
   t.end();
 });
+
+tap.todo(
+  `07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - more complex code to be disregarded inside test`,
+  (t) => {
+    // ensure "in" is fixed
+    const resIn = linter.verifyAndFix(read("10-in"), c);
+    t.match(
+      resIn,
+      {
+        fixed: true,
+        output: read("10-out"),
+      },
+      `07.01`
+    );
+
+    // ensure no more errors are raised about "out"
+    const messages = linter.verify(read("10-out"), c);
+    t.same(messages, [], `07.02`);
+    t.end();
+  }
+);

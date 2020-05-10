@@ -12,7 +12,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`,
+  `01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`,
   (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
@@ -21,14 +21,14 @@ tap.test(
         "bad-character-tabulation": 0, // means every TAB will be flagged up
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "01.01");
+    t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`,
+  `02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`,
   (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
@@ -37,14 +37,14 @@ tap.test(
         "bad-character-tabulation": [0], // means every TAB will be flagged up
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "02.01");
+    t.equal(applyFixes(str, messages), str, "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`,
+  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`,
   (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
@@ -53,39 +53,43 @@ tap.test(
         "bad-character-tabulation": 1, // means every TAB will be flagged up
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 1,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[0, 1, " "]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 1,
+          idxFrom: 0,
+          idxTo: 1,
+          line: 1,
+          column: 1, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[0, 1, " "]],
+          },
         },
-      },
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 1,
-        idxFrom: 8,
-        idxTo: 9,
-        line: 1,
-        column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[8, 9, " "]],
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 1,
+          idxFrom: 8,
+          idxTo: 9,
+          line: 1,
+          column: 9, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[8, 9, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), " dlkgjld j");
+      ],
+      "03.01"
+    );
+    t.equal(applyFixes(str, messages), " dlkgjld j", "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`,
+  `04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`,
   (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
@@ -94,33 +98,37 @@ tap.test(
         "bad-character-tabulation": 2, // means every TAB will be flagged up
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[0, 1, " "]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 1,
+          line: 1,
+          column: 1, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[0, 1, " "]],
+          },
         },
-      },
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 2,
-        idxFrom: 8,
-        idxTo: 9,
-        line: 1,
-        column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[8, 9, " "]],
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 2,
+          idxFrom: 8,
+          idxTo: 9,
+          line: 1,
+          column: 9, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[8, 9, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), " dlkgjld j");
+      ],
+      "04.01"
+    );
+    t.equal(applyFixes(str, messages), " dlkgjld j", "04.02");
     t.end();
   }
 );
@@ -129,7 +137,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`,
+  `05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`,
   (t) => {
     const str = "\tdlkgjld\tj";
     const linter = new Linter();
@@ -138,39 +146,43 @@ tap.test(
         "bad-character-tabulation": [1, "never"], // means every TAB will be flagged up
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 1,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[0, 1, " "]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 1,
+          idxFrom: 0,
+          idxTo: 1,
+          line: 1,
+          column: 1, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[0, 1, " "]],
+          },
         },
-      },
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 1,
-        idxFrom: 8,
-        idxTo: 9,
-        line: 1,
-        column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[8, 9, " "]],
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 1,
+          idxFrom: 8,
+          idxTo: 9,
+          line: 1,
+          column: 9, // remember columns numbers start from 1, not zero
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[8, 9, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), " dlkgjld j");
+      ],
+      "05.01"
+    );
+    t.equal(applyFixes(str, messages), " dlkgjld j", "05.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`,
+  `06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`,
   (t) => {
     const str = "\t\t\tdlkgjld\tj";
     const linter = new Linter();
@@ -179,19 +191,23 @@ tap.test(
         "bad-character-tabulation": [2, "indentationIsFine"], // btw, setting is not case sensitive
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "bad-character-tabulation",
-        severity: 2,
-        idxFrom: 10,
-        idxTo: 11,
-        message: "Bad character - TABULATION.",
-        fix: {
-          ranges: [[10, 11, " "]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "bad-character-tabulation",
+          severity: 2,
+          idxFrom: 10,
+          idxTo: 11,
+          message: "Bad character - TABULATION.",
+          fix: {
+            ranges: [[10, 11, " "]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "\t\t\tdlkgjld j");
+      ],
+      "06.01"
+    );
+    t.equal(applyFixes(str, messages), "\t\t\tdlkgjld j", "06.02");
     t.end();
   }
 );

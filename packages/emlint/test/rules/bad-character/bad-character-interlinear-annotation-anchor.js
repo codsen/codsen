@@ -10,17 +10,17 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-tap.test(
-  `01.01 - detects two INTERLINEAR ANNOTATION ANCHOR characters`,
-  (t) => {
-    const str = "\uFFF9dlkgjld\uFFF9j";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "bad-character-interlinear-annotation-anchor": 2,
-      },
-    });
-    t.match(messages, [
+tap.test(`01 - detects two INTERLINEAR ANNOTATION ANCHOR characters`, (t) => {
+  const str = "\uFFF9dlkgjld\uFFF9j";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-character-interlinear-annotation-anchor": 2,
+    },
+  });
+  t.match(
+    messages,
+    [
       {
         ruleId: "bad-character-interlinear-annotation-anchor",
         severity: 2,
@@ -45,8 +45,9 @@ tap.test(
           ranges: [[8, 9]],
         },
       },
-    ]);
-    t.equal(applyFixes(str, messages), "dlkgjldj");
-    t.end();
-  }
-);
+    ],
+    "01.01"
+  );
+  t.equal(applyFixes(str, messages), "dlkgjldj", "01.02");
+  t.end();
+});

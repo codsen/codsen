@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-tap.test(`01.01 - detects two REPLACEMENT CHARACTERS`, (t) => {
+tap.test(`01 - detects two REPLACEMENT CHARACTERS`, (t) => {
   const str = "\uFFFDdlkgjld\uFFFDj";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -18,33 +18,37 @@ tap.test(`01.01 - detects two REPLACEMENT CHARACTERS`, (t) => {
       "bad-character-replacement-character": 2,
     },
   });
-  t.match(messages, [
-    {
-      ruleId: "bad-character-replacement-character",
-      severity: 2,
-      idxFrom: 0,
-      idxTo: 1,
-      line: 1,
-      column: 1, // remember columns numbers start from 1, not zero
-      message: "Bad character - REPLACEMENT CHARACTER.",
-      fix: {
-        ranges: [[0, 1]],
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "bad-character-replacement-character",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 1,
+        line: 1,
+        column: 1, // remember columns numbers start from 1, not zero
+        message: "Bad character - REPLACEMENT CHARACTER.",
+        fix: {
+          ranges: [[0, 1]],
+        },
       },
-    },
-    {
-      ruleId: "bad-character-replacement-character",
-      severity: 2,
-      idxFrom: 8,
-      idxTo: 9,
-      line: 1,
-      column: 9, // remember columns numbers start from 1, not zero
-      message: "Bad character - REPLACEMENT CHARACTER.",
-      fix: {
-        ranges: [[8, 9]],
+      {
+        ruleId: "bad-character-replacement-character",
+        severity: 2,
+        idxFrom: 8,
+        idxTo: 9,
+        line: 1,
+        column: 9, // remember columns numbers start from 1, not zero
+        message: "Bad character - REPLACEMENT CHARACTER.",
+        fix: {
+          ranges: [[8, 9]],
+        },
       },
-    },
-  ]);
-  t.equal(applyFixes(str, messages), "dlkgjldj");
+    ],
+    "01.01"
+  );
+  t.equal(applyFixes(str, messages), "dlkgjldj", "01.02");
   t.end();
 });
 

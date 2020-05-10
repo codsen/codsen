@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `00.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  `01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap >`;
     const linter = new Linter();
@@ -15,14 +15,14 @@ tap.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "00.01.01");
-    t.same(messages, [], "00.01.02");
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `00.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  `02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap>`;
     const linter = new Linter();
@@ -31,14 +31,14 @@ tap.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "00.02.01");
-    t.same(messages, [], "00.02.02");
+    t.equal(applyFixes(str, messages), str, "02.01");
+    t.same(messages, [], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `00.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  `03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap/>`;
     const linter = new Linter();
@@ -47,14 +47,14 @@ tap.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "00.03.01");
-    t.same(messages, [], "00.03.02");
+    t.equal(applyFixes(str, messages), str, "03.01");
+    t.same(messages, [], "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `00.04 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  `04 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<br nowrap />`;
     const linter = new Linter();
@@ -63,14 +63,14 @@ tap.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "00.04.01");
-    t.same(messages, [], "00.04.02");
+    t.equal(applyFixes(str, messages), str, "04.01");
+    t.same(messages, [], "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `00.05 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  `05 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `</td nowrap nowrap>`;
     const linter = new Linter();
@@ -79,8 +79,8 @@ tap.test(
         "attribute-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "00.05.01");
-    t.same(messages, [], "00.05.02");
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.same(messages, [], "05.02");
     t.end();
   }
 );
@@ -88,7 +88,7 @@ tap.test(
 // 01. no config
 // -----------------------------------------------------------------------------
 
-tap.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = `<a b"c" d'e'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -96,97 +96,91 @@ tap.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
       "attribute-malformed": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01.01");
-  t.same(messages, [], "01.01.02");
+  t.equal(applyFixes(str, messages), str, "06.01");
+  t.same(messages, [], "06.02");
   t.end();
 });
 
-tap.test(
-  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`,
-  (t) => {
-    const str = `<a class"b" id'c'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-malformed": 1,
+tap.test(`07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
+  const str = `<a class"b" id'c'>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-malformed": 1,
+    },
+  });
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "07.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        severity: 1,
+        idxFrom: 3,
+        idxTo: 11,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[8, 8, "="]],
+        },
       },
-    });
-    t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "01.02.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-malformed",
-          severity: 1,
-          idxFrom: 3,
-          idxTo: 11,
-          message: `Equal is missing.`,
-          fix: {
-            ranges: [[8, 8, "="]],
-          },
+      {
+        ruleId: "attribute-malformed",
+        severity: 1,
+        idxFrom: 12,
+        idxTo: 17,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[14, 14, "="]],
         },
-        {
-          ruleId: "attribute-malformed",
-          severity: 1,
-          idxFrom: 12,
-          idxTo: 17,
-          message: `Equal is missing.`,
-          fix: {
-            ranges: [[14, 14, "="]],
-          },
-        },
-      ],
-      "01.02.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "07.02"
+  );
+  t.end();
+});
 
-tap.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`,
-  (t) => {
-    const str = `<a class"b" id'c'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-malformed": 2,
+tap.test(`08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
+  const str = `<a class"b" id'c'>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "08.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 3,
+        idxTo: 11,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[8, 8, "="]],
+        },
       },
-    });
-    t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "01.03.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-malformed",
-          severity: 2,
-          idxFrom: 3,
-          idxTo: 11,
-          message: `Equal is missing.`,
-          fix: {
-            ranges: [[8, 8, "="]],
-          },
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 12,
+        idxTo: 17,
+        message: `Equal is missing.`,
+        fix: {
+          ranges: [[14, 14, "="]],
         },
-        {
-          ruleId: "attribute-malformed",
-          severity: 2,
-          idxFrom: 12,
-          idxTo: 17,
-          message: `Equal is missing.`,
-          fix: {
-            ranges: [[14, 14, "="]],
-          },
-        },
-      ],
-      "01.03.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "08.02"
+  );
+  t.end();
+});
 
 // 02. mis-typed
 // -----------------------------------------------------------------------------
 
-tap.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`09 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = `<td clas="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -194,7 +188,7 @@ tap.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), `<td class="w100p">`, "02.01.01");
+  t.equal(applyFixes(str, messages), `<td class="w100p">`, "09.01");
   t.match(
     messages,
     [
@@ -208,12 +202,12 @@ tap.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
         },
       },
     ],
-    "02.01.02"
+    "09.02"
   );
   t.end();
 });
 
-tap.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
+tap.test(`10 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = `<td zzzz="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -222,7 +216,7 @@ tap.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str, "02.02.01");
+  t.equal(applyFixes(str, messages), str, "10.01");
   t.match(
     messages,
     [
@@ -234,7 +228,7 @@ tap.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
         fix: null,
       },
     ],
-    "02.02.02"
+    "10.02"
   );
   t.end();
 });
@@ -243,7 +237,7 @@ tap.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double`,
+  `11 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double`,
   (t) => {
     const str = `<table width=""100">\n  zzz\n</table>`;
     const fixed = `<table width="100">\n  zzz\n</table>`;
@@ -254,7 +248,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.equal(applyFixes(str, messages), fixed, "11.01");
     t.match(
       messages,
       [
@@ -268,14 +262,14 @@ tap.test(
           },
         },
       ],
-      "03.01.02"
+      "11.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single`,
+  `12 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single`,
   (t) => {
     const str = `<table width=''100'>\n  zzz\n</table>`;
     const fixed = `<table width='100'>\n  zzz\n</table>`;
@@ -286,7 +280,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "03.02.01");
+    t.equal(applyFixes(str, messages), fixed, "12.01");
     t.match(
       messages,
       [
@@ -300,14 +294,14 @@ tap.test(
           },
         },
       ],
-      "03.02.02"
+      "12.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single quotes instead of equal`,
+  `13 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - single quotes instead of equal`,
   (t) => {
     const str = `<table width''100'>\n  zzz\n</table>`;
     const fixed = `<table width='100'>\n  zzz\n</table>`;
@@ -318,13 +312,13 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "03.03");
+    t.equal(applyFixes(str, messages), fixed, "13");
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double quotes instead of equal`,
+  `14 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - double quotes instead of equal`,
   (t) => {
     const str = `<table width""100">\n  zzz\n</table>`;
     const fixed = `<table width="100">\n  zzz\n</table>`;
@@ -335,7 +329,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "03.04");
+    t.equal(applyFixes(str, messages), fixed, "14");
     t.end();
   }
 );
@@ -344,7 +338,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue single`,
+  `15 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue single`,
   (t) => {
     const str = `<table width='"100">zzz</table>`;
     const fixed = `<table width="100">zzz</table>`;
@@ -355,13 +349,13 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "04.01");
+    t.equal(applyFixes(str, messages), fixed, "15");
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue double`,
+  `16 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue double`,
   (t) => {
     const str = `<table width="'100'>zzz</table>`;
     const fixed = `<table width='100'>zzz</table>`;
@@ -372,7 +366,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "04.02");
+    t.equal(applyFixes(str, messages), fixed, "16");
     t.end();
   }
 );
@@ -381,7 +375,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue characters around equal`,
+  `17 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue characters around equal`,
   (t) => {
     const str = `<span width...=....."100"></span>`;
     const fixed = `<span width="100"></span>`;
@@ -392,7 +386,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "05.01");
+    t.equal(applyFixes(str, messages), fixed, "17");
     t.end();
   }
 );
@@ -401,7 +395,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
+  `18 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
   (t) => {
     const str = `<a class"c" id'e'>`;
     const fixed = `<a class="c" id='e'>`;
@@ -412,13 +406,13 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "06.01");
+    t.equal(applyFixes(str, messages), fixed, "18");
     t.end();
   }
 );
 
 tap.test(
-  `06.02 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - space instead of equal, recognised attr names followed by quoted value`,
+  `19 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - space instead of equal, recognised attr names followed by quoted value`,
   (t) => {
     const str = `<a class "c" id 'e' href "www">`;
     const fixed = `<a class="c" id='e' href="www">`;
@@ -429,13 +423,13 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "06.02");
+    t.equal(applyFixes(str, messages), fixed, "19");
     t.end();
   }
 );
 
 tap.test(
-  `06.03 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
+  `20 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
   (t) => {
     const str = `<a class"c' id"e'>`;
     const fixed = `<a class="c" id="e">`;
@@ -446,13 +440,13 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "06.03");
+    t.equal(applyFixes(str, messages), fixed, "20");
     t.end();
   }
 );
 
 tap.test(
-  `06.04 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
+  `21 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
   (t) => {
     const str = `<a class"c' id'e">`;
     const fixed = `<a class="c" id="e">`;
@@ -463,7 +457,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "06.04");
+    t.equal(applyFixes(str, messages), fixed, "21");
     t.end();
   }
 );
@@ -472,7 +466,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `07.01 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
+  `22 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
   (t) => {
     const str = `<div class="c'>.</div>`;
     const fixed = `<div class="c">.</div>`;
@@ -483,7 +477,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.01");
+    t.equal(applyFixes(str, messages), fixed, "22.01");
     t.match(
       messages,
       [
@@ -498,15 +492,15 @@ tap.test(
           },
         },
       ],
-      "07.01.02"
+      "22.02"
     );
-    t.equal(messages.length, 1, "07.01.03");
+    t.equal(messages.length, 1, "22.03");
     t.end();
   }
 );
 
 tap.test(
-  `07.02 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
+  `23 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
   (t) => {
     const str = `<div class='c">.</div>`;
     const fixed = `<div class="c">.</div>`;
@@ -517,7 +511,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.02.01");
+    t.equal(applyFixes(str, messages), fixed, "23.01");
     t.match(
       messages,
       [
@@ -532,15 +526,15 @@ tap.test(
           },
         },
       ],
-      "07.02.02"
+      "23.02"
     );
-    t.equal(messages.length, 1, "07.02.03");
+    t.equal(messages.length, 1, "23.03");
     t.end();
   }
 );
 
 tap.test(
-  `07.03 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B`,
+  `24 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B`,
   (t) => {
     const str = `<img alt='so-called "artists"!"/>`;
     const fixed = `<img alt='so-called "artists"!'/>`;
@@ -551,7 +545,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.03.01");
+    t.equal(applyFixes(str, messages), fixed, "24.01");
     t.match(
       messages,
       [
@@ -566,15 +560,15 @@ tap.test(
           },
         },
       ],
-      "07.03.02"
+      "24.02"
     );
-    t.equal(messages.length, 1, "07.03.03");
+    t.equal(messages.length, 1, "24.03");
     t.end();
   }
 );
 
 tap.test(
-  `07.04 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
+  `25 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
   (t) => {
     const str = `<img alt="so-called "artists"!'/>`;
     const fixed = `<img alt='so-called "artists"!'/>`;
@@ -585,7 +579,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.04.01");
+    t.equal(applyFixes(str, messages), fixed, "25.01");
     t.match(
       messages,
       [
@@ -600,15 +594,15 @@ tap.test(
           },
         },
       ],
-      "07.04.02"
+      "25.02"
     );
-    t.equal(messages.length, 1, "07.04.03");
+    t.equal(messages.length, 1, "25.03");
     t.end();
   }
 );
 
 tap.test(
-  `07.05 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
+  `26 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
   (t) => {
     const str = `<img alt="Deal is your's!'/>`;
     const fixed = `<img alt="Deal is your's!"/>`;
@@ -619,7 +613,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.05.01");
+    t.equal(applyFixes(str, messages), fixed, "26.01");
     t.match(
       messages,
       [
@@ -634,15 +628,15 @@ tap.test(
           },
         },
       ],
-      "07.05.02"
+      "26.02"
     );
-    t.equal(messages.length, 1, "07.05.03");
+    t.equal(messages.length, 1, "26.03");
     t.end();
   }
 );
 
 tap.test(
-  `07.06 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
+  `27 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
   (t) => {
     const str = `<img alt='Deal is your's!"/>`;
     const fixed = `<img alt="Deal is your's!"/>`;
@@ -653,7 +647,7 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "07.06.01");
+    t.equal(applyFixes(str, messages), fixed, "27.01");
     t.match(
       messages,
       [
@@ -668,9 +662,9 @@ tap.test(
           },
         },
       ],
-      "07.06.02"
+      "27.02"
     );
-    t.equal(messages.length, 1, "07.06.03");
+    t.equal(messages.length, 1, "27.03");
     t.end();
   }
 );

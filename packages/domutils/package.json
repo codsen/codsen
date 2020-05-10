@@ -54,7 +54,7 @@
     "unused": true
   },
   "dependencies": {
-    "dom-serializer": "^0.2.2",
+    "dom-serializer": "^1.0.1",
     "domelementtype": "^2.0.1"
   },
   "devDependencies": {

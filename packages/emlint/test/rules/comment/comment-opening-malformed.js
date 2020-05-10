@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`,
+  `01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`,
   (t) => {
     const str = `<--z-->`;
     const fixed = `<!--z-->`;
@@ -16,7 +16,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.01.01");
+    t.equal(applyFixes(str, messages), fixed, "01.01");
     t.match(
       messages,
       [
@@ -31,15 +31,15 @@ tap.test(
           },
         },
       ],
-      "01.01.02"
+      "01.02"
     );
-    t.is(messages.length, 1, "01.01.03");
+    t.is(messages.length, 1, "01.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`,
+  `02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`,
   (t) => {
     const str = `<--<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -49,7 +49,7 @@ tap.test(
         "comment-opening-malformed": 1,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.02.01");
+    t.equal(applyFixes(str, messages), fixed, "02.01");
     t.match(
       messages,
       [
@@ -64,15 +64,15 @@ tap.test(
           },
         },
       ],
-      "01.02.02"
+      "02.02"
     );
-    t.is(messages.length, 1, "01.02.03");
+    t.is(messages.length, 1, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`,
+  `03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`,
   (t) => {
     const str = `.< !--z-->`;
     const fixed = `.<!--z-->`;
@@ -82,7 +82,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.03.01");
+    t.equal(applyFixes(str, messages), fixed, "03.01");
     t.match(
       messages,
       [
@@ -97,15 +97,15 @@ tap.test(
           },
         },
       ],
-      "01.03.02"
+      "03.02"
     );
-    t.is(messages.length, 1, "01.03.03");
+    t.is(messages.length, 1, "03.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`,
+  `04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`,
   (t) => {
     const str = `< !--<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -115,7 +115,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.04.01");
+    t.equal(applyFixes(str, messages), fixed, "04.01");
     t.match(
       messages,
       [
@@ -130,15 +130,15 @@ tap.test(
           },
         },
       ],
-      "01.04.02"
+      "04.02"
     );
-    t.is(messages.length, 1, "01.04.03");
+    t.is(messages.length, 1, "04.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`,
+  `05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`,
   (t) => {
     const str = `<! --z-->`;
     const fixed = `<!--z-->`;
@@ -148,7 +148,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.05.01");
+    t.equal(applyFixes(str, messages), fixed, "05.01");
     t.match(
       messages,
       [
@@ -163,15 +163,15 @@ tap.test(
           },
         },
       ],
-      "01.05.02"
+      "05.02"
     );
-    t.is(messages.length, 1, "01.05.03");
+    t.is(messages.length, 1, "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`,
+  `06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`,
   (t) => {
     const str = `<! --<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -181,7 +181,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.06.01");
+    t.equal(applyFixes(str, messages), fixed, "06.01");
     t.match(
       messages,
       [
@@ -196,15 +196,15 @@ tap.test(
           },
         },
       ],
-      "01.06.02"
+      "06.02"
     );
-    t.is(messages.length, 1, "01.06.03");
+    t.is(messages.length, 1, "06.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`,
+  `07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`,
   (t) => {
     const str = `<!- -z-->`;
     const fixed = `<!--z-->`;
@@ -214,7 +214,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.07.01");
+    t.equal(applyFixes(str, messages), fixed, "07.01");
     t.match(
       messages,
       [
@@ -229,15 +229,15 @@ tap.test(
           },
         },
       ],
-      "01.07.02"
+      "07.02"
     );
-    t.is(messages.length, 1, "01.07.03");
+    t.is(messages.length, 1, "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`,
+  `08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`,
   (t) => {
     const str = `<!- -<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -247,7 +247,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.08.01");
+    t.equal(applyFixes(str, messages), fixed, "08.01");
     t.match(
       messages,
       [
@@ -262,9 +262,9 @@ tap.test(
           },
         },
       ],
-      "01.08.02"
+      "08.02"
     );
-    t.is(messages.length, 1, "01.08.03");
+    t.is(messages.length, 1, "08.03");
     t.end();
   }
 );
@@ -273,7 +273,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`,
+  `09 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`,
   (t) => {
     const str = `<!-[if mso]>
   <img src="z"/>
@@ -287,7 +287,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.01.01");
+    t.equal(applyFixes(str, messages), fixed, "09.01");
     t.match(
       messages,
       [
@@ -302,15 +302,15 @@ tap.test(
           },
         },
       ],
-      "02.01.02"
+      "09.02"
     );
-    t.is(messages.length, 1, "02.01.03");
+    t.is(messages.length, 1, "09.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`,
+  `10 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`,
   (t) => {
     const str = `<!--if mso]>
   <img src="z"/>
@@ -324,7 +324,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.equal(applyFixes(str, messages), fixed, "10.01");
     t.match(
       messages,
       [
@@ -339,15 +339,15 @@ tap.test(
           },
         },
       ],
-      "02.02.02"
+      "10.02"
     );
-    t.is(messages.length, 1, "02.02.03");
+    t.is(messages.length, 1, "10.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`,
+  `11 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`,
   (t) => {
     const str = `<!--[if mso>
   <img src="z"/>
@@ -361,14 +361,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.03.01");
-    t.is(messages.length, 1, "02.03.03");
+    t.equal(applyFixes(str, messages), fixed, "11.01");
+    t.is(messages.length, 1, "11.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`,
+  `12 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`,
   (t) => {
     const str = `<!--[if mso>]
   <img src="z"/>
@@ -382,14 +382,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.04.01");
-    t.is(messages.length, 1, "02.04.03");
+    t.equal(applyFixes(str, messages), fixed, "12.01");
+    t.is(messages.length, 1, "12.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`,
+  `13 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`,
   (t) => {
     const str = `<!--(if mso)>
   <img src="z"/>
@@ -403,13 +403,13 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.05.01");
+    t.equal(applyFixes(str, messages), fixed, "13");
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`,
+  `14 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`,
   (t) => {
     const str = `<!--{if mso}>
   <img src="z"/>
@@ -423,7 +423,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.06.01");
+    t.equal(applyFixes(str, messages), fixed, "14");
     t.end();
   }
 );
@@ -432,7 +432,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`,
+  `15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`,
   (t) => {
     const str = `<!--[if !mso><!-->
   <img src="gif"/>
@@ -446,7 +446,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.equal(applyFixes(str, messages), fixed, "15.01");
     t.match(
       messages,
       [
@@ -461,15 +461,15 @@ tap.test(
           },
         },
       ],
-      "03.01.02"
+      "15.02"
     );
-    t.is(messages.length, 1, "03.01.03");
+    t.is(messages.length, 1, "15.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`,
+  `16 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`,
   (t) => {
     const str = `<!--  [if !mso]><!-->
   <img src="gif"/>
@@ -483,7 +483,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.02.01");
+    t.equal(applyFixes(str, messages), fixed, "16.01");
     t.match(
       messages,
       [
@@ -498,15 +498,15 @@ tap.test(
           },
         },
       ],
-      "03.02.02"
+      "16.02"
     );
-    t.is(messages.length, 1, "03.02.03");
+    t.is(messages.length, 1, "16.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`,
+  `17 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`,
   (t) => {
     const str = `<!-[if !mso]><!-->
   <img src="gif"/>
@@ -520,7 +520,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.03.01");
+    t.equal(applyFixes(str, messages), fixed, "17.01");
     t.match(
       messages,
       [
@@ -535,15 +535,15 @@ tap.test(
           },
         },
       ],
-      "03.03.02"
+      "17.02"
     );
-    t.is(messages.length, 1, "03.03.02");
+    t.is(messages.length, 1, "17.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`,
+  `18 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`,
   (t) => {
     const str = `<!--[if !mso]><!->
   <img src="gif"/>
@@ -557,7 +557,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.04.01");
+    t.equal(applyFixes(str, messages), fixed, "18.01");
     t.match(
       messages,
       [
@@ -572,15 +572,15 @@ tap.test(
           },
         },
       ],
-      "03.04.02"
+      "18.02"
     );
-    t.is(messages.length, 1, "03.04.02");
+    t.is(messages.length, 1, "18.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`,
+  `19 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`,
   (t) => {
     const str = `<!--[if !mso]><!--z>
   <img src="gif"/>
@@ -594,14 +594,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.05.01");
-    t.is(messages.length, 1, "03.05.02");
+    t.equal(applyFixes(str, messages), fixed, "19.01");
+    t.is(messages.length, 1, "19.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`,
+  `20 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`,
   (t) => {
     const str = `<!--[if !mso]>\n\n<!-->
   <img src="gif"/>
@@ -615,14 +615,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.06.01");
-    t.is(messages.length, 1, "03.06.02");
+    t.equal(applyFixes(str, messages), fixed, "20.01");
+    t.is(messages.length, 1, "20.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
+  `21 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
   (t) => {
     const str = `<!--[if !mso]><!-->
 <!--<![endif]-->`;
@@ -632,14 +632,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.07.01");
-    t.same(messages, [], "03.07.02");
+    t.equal(applyFixes(str, messages), str, "21.01");
+    t.same(messages, [], "21.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.08 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`,
+  `22 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`,
   (t) => {
     const str = `<!--(if !mso)><!-->
       <img src="gif"/>
@@ -653,13 +653,13 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.08.01");
+    t.equal(applyFixes(str, messages), fixed, "22");
     t.end();
   }
 );
 
 tap.test(
-  `03.09 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`,
+  `23 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`,
   (t) => {
     const str = `<!--{if !mso}><!-->
       <img src="gif"/>
@@ -673,13 +673,13 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.09");
+    t.equal(applyFixes(str, messages), fixed, "23");
     t.end();
   }
 );
 
 tap.test(
-  `03.10 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
+  `24 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
   (t) => {
     const str = `<!--[if !mso]><-->
   <img src="gif"/>
@@ -693,14 +693,14 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.10.01");
-    t.is(messages.length, 1, "03.10.02");
+    t.equal(applyFixes(str, messages), fixed, "24.01");
+    t.is(messages.length, 1, "24.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.11 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
+  `25 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
   (t) => {
     const str = `<!--if !mso><!-->
   <img src="gif"/>
@@ -714,7 +714,7 @@ tap.test(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.11");
+    t.equal(applyFixes(str, messages), fixed, "25");
     t.end();
   }
 );
@@ -794,7 +794,7 @@ tap.todo(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
+  `26 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
   (t) => {
     const str = `<!--[if !mso><!--><!--z-->
   <img src="gif"/>
@@ -809,7 +809,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "04.01.01");
+    t.equal(applyFixes(str, messages), fixed, "26.01");
     t.match(
       messages,
       [
@@ -840,7 +840,7 @@ tap.test(
           fix: null,
         },
       ],
-      "04.01.02"
+      "26.02"
     );
     t.end();
   }

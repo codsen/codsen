@@ -12,7 +12,7 @@ import { applyFixes } from "../../../t-util/util";
 // <![endif]-->
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`,
+  `01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--tralala--><![endif]-->`;
     const linter = new Linter();
@@ -21,7 +21,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.01.01");
+    t.equal(applyFixes(str, messages), str, "01.01");
     t.match(
       messages,
       [
@@ -42,15 +42,15 @@ tap.test(
           fix: null,
         },
       ],
-      "01.01.02"
+      "01.02"
     );
-    t.equal(messages.length, 2, "01.01.03");
+    t.equal(messages.length, 2, "01.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`,
+  `02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`,
   (t) => {
     const str = `<!--[if mso]>
     z <!--tralala--> y
@@ -61,7 +61,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.02.01");
+    t.equal(applyFixes(str, messages), str, "02.01");
     t.match(
       messages,
       [
@@ -82,15 +82,15 @@ tap.test(
           fix: null,
         },
       ],
-      "01.02.02"
+      "02.02"
     );
-    t.equal(messages.length, 2, "01.02.03");
+    t.equal(messages.length, 2, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`,
+  `03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`,
   (t) => {
     const str = `<!--[if mso]>
     x <!--tralala--> z <!--tralala--> y
@@ -101,7 +101,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.03.01");
+    t.equal(applyFixes(str, messages), str, "03.01");
     t.match(
       messages,
       [
@@ -138,15 +138,15 @@ tap.test(
           fix: null,
         },
       ],
-      "01.03.02"
+      "03.02"
     );
-    t.equal(messages.length, 4, "01.03.03");
+    t.equal(messages.length, 4, "03.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`,
+  `04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`,
   (t) => {
     const str = `<!--[if mso]>
     <img src="fallback"/>
@@ -160,7 +160,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.04.01");
+    t.equal(applyFixes(str, messages), str, "04.01");
     t.match(
       messages,
       [
@@ -181,9 +181,9 @@ tap.test(
           fix: null,
         },
       ],
-      "01.04.02"
+      "04.02"
     );
-    t.equal(messages.length, 2, "01.04.03");
+    t.equal(messages.length, 2, "04.03");
     t.end();
   }
 );
@@ -198,7 +198,7 @@ tap.test(
 // <!--<![endif]-->
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`,
+  `05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--><!--tralala--><!--<![endif]-->`;
     const linter = new Linter();
@@ -207,7 +207,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "02.01.01");
+    t.equal(applyFixes(str, messages), str, "05.01");
     t.match(
       messages,
       [
@@ -228,15 +228,15 @@ tap.test(
           fix: null,
         },
       ],
-      "02.01.02"
+      "05.02"
     );
-    t.equal(messages.length, 2, "02.01.03");
+    t.equal(messages.length, 2, "05.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`,
+  `06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`,
   (t) => {
     const str = `<!--[if mso]><!-->
     z <!--tralala--> y
@@ -247,7 +247,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "02.02.01");
+    t.equal(applyFixes(str, messages), str, "06.01");
     t.match(
       messages,
       [
@@ -268,15 +268,15 @@ tap.test(
           fix: null,
         },
       ],
-      "02.02.02"
+      "06.02"
     );
-    t.equal(messages.length, 2, "02.02.03");
+    t.equal(messages.length, 2, "06.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`,
+  `07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`,
   (t) => {
     const str = `<!--[if mso]><!-->
     x <!--tralala--> z <!--tralala--> y
@@ -287,7 +287,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "02.03.01");
+    t.equal(applyFixes(str, messages), str, "07.01");
     t.match(
       messages,
       [
@@ -324,15 +324,15 @@ tap.test(
           fix: null,
         },
       ],
-      "02.03.02"
+      "07.02"
     );
-    t.equal(messages.length, 4, "02.03.03");
+    t.equal(messages.length, 4, "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`,
+  `08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`,
   (t) => {
     const str = `<!--[if mso]><!-->
     <img src="fallback"/>
@@ -346,7 +346,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "02.04.01");
+    t.equal(applyFixes(str, messages), str, "08.01");
     t.match(
       messages,
       [
@@ -367,9 +367,9 @@ tap.test(
           fix: null,
         },
       ],
-      "02.04.02"
+      "08.02"
     );
-    t.equal(messages.length, 2, "02.04.03");
+    t.equal(messages.length, 2, "08.03");
     t.end();
   }
 );

@@ -5,7 +5,7 @@ import splitByWhitespace from "../../src/util/splitByWhitespace";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`,
+  `01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -18,14 +18,14 @@ tap.test(
         gatheredWhitespace.push(whitespaceArr);
       }
     );
-    t.match(gatheredChunks, [[0, 3]]);
-    t.match(gatheredWhitespace, []);
+    t.match(gatheredChunks, [[0, 3]], "01.01");
+    t.match(gatheredWhitespace, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
+  `02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -38,14 +38,14 @@ tap.test(
         gatheredWhitespace.push(whitespaceArr);
       }
     );
-    t.match(gatheredChunks, []);
-    t.match(gatheredWhitespace, [[0, 3]]);
+    t.match(gatheredChunks, [], "02.01");
+    t.match(gatheredWhitespace, [[0, 3]], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
+  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -58,21 +58,29 @@ tap.test(
         gatheredWhitespace.push(whitespaceArr);
       }
     );
-    t.match(gatheredChunks, [
-      [3, 6],
-      [9, 12],
-    ]);
-    t.match(gatheredWhitespace, [
-      [0, 3],
-      [6, 9],
-      [12, 14],
-    ]);
+    t.match(
+      gatheredChunks,
+      [
+        [3, 6],
+        [9, 12],
+      ],
+      "03.01"
+    );
+    t.match(
+      gatheredWhitespace,
+      [
+        [0, 3],
+        [6, 9],
+        [12, 14],
+      ],
+      "03.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
+  `04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -85,17 +93,21 @@ tap.test(
         gatheredWhitespace.push(whitespaceArr);
       }
     );
-    t.match(gatheredChunks, [
-      [0, 3],
-      [7, 10],
-    ]);
-    t.match(gatheredWhitespace, [[3, 7]]);
+    t.match(
+      gatheredChunks,
+      [
+        [0, 3],
+        [7, 10],
+      ],
+      "04.01"
+    );
+    t.match(gatheredWhitespace, [[3, 7]], "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`,
+  `05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -108,15 +120,23 @@ tap.test(
         gatheredWhitespace.push(whitespaceArr);
       }
     );
-    t.match(gatheredChunks, [
-      [1, 3],
-      [7, 9],
-    ]);
-    t.match(gatheredWhitespace, [
-      [0, 1],
-      [3, 7],
-      [9, 10],
-    ]);
+    t.match(
+      gatheredChunks,
+      [
+        [1, 3],
+        [7, 9],
+      ],
+      "05.01"
+    );
+    t.match(
+      gatheredWhitespace,
+      [
+        [0, 1],
+        [3, 7],
+        [9, 10],
+      ],
+      "05.02"
+    );
     t.end();
   }
 );
@@ -125,7 +145,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${35}m${`custom`}\u001b[${39}m`} - crops inside`,
+  `06 - ${`\u001b[${35}m${`custom`}\u001b[${39}m`} - crops inside`,
   (t) => {
     const gatheredChunks = [];
     const gatheredWhitespace = [];
@@ -142,11 +162,15 @@ tap.test(
         to: 11,
       }
     );
-    t.match(gatheredChunks, [
-      [3, 5],
-      [9, 11],
-    ]);
-    t.match(gatheredWhitespace, [[5, 9]]);
+    t.match(
+      gatheredChunks,
+      [
+        [3, 5],
+        [9, 11],
+      ],
+      "06.01"
+    );
+    t.match(gatheredWhitespace, [[5, 9]], "06.02");
     t.end();
   }
 );

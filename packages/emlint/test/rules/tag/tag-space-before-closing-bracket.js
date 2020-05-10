@@ -8,7 +8,7 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single tag`,
+  `01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single tag`,
   (t) => {
     const str = "<a >";
     const linter = new Linter();
@@ -31,16 +31,16 @@ tap.test(
           },
         },
       ],
-      "01.01.01"
+      "01.01"
     );
-    t.equal(messages.length, 1, "01.01.02");
-    t.equal(applyFixes(str, messages), "<a>", "01.01.03");
+    t.equal(messages.length, 1, "01.02");
+    t.equal(applyFixes(str, messages), "<a>", "01.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single closing tag, space before slash`,
+  `02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single closing tag, space before slash`,
   (t) => {
     const str = "\n</a\t\t>";
     const linter = new Linter();
@@ -63,16 +63,16 @@ tap.test(
           },
         },
       ],
-      "01.02.01"
+      "02.01"
     );
-    t.equal(messages.length, 1, "01.02.02");
-    t.equal(applyFixes(str, messages), "\n</a>", "01.02.03");
+    t.equal(messages.length, 1, "02.02");
+    t.equal(applyFixes(str, messages), "\n</a>", "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - works with attributes, double quotes`,
+  `03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - works with attributes, double quotes`,
   (t) => {
     const str = `<div class="zz yy" >`;
     const linter = new Linter();
@@ -95,10 +95,10 @@ tap.test(
           },
         },
       ],
-      "01.03.01"
+      "03.01"
     );
-    t.equal(messages.length, 1, "01.03.02");
-    t.equal(applyFixes(str, messages), `<div class="zz yy">`, "01.03.03");
+    t.equal(messages.length, 1, "03.02");
+    t.equal(applyFixes(str, messages), `<div class="zz yy">`, "03.03");
     t.end();
   }
 );
@@ -106,47 +106,44 @@ tap.test(
 // 02. XML
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `02.01 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`,
-  (t) => {
-    const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "tag-space-before-closing-bracket": 2,
-      },
-    });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-space-before-closing-bracket",
-          severity: 2,
-          idxFrom: 37,
-          idxTo: 40,
-          message: "Bad whitespace.",
-          fix: {
-            ranges: [[37, 40]],
-          },
+tap.test(`04 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
+  const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-space-before-closing-bracket": 2,
+    },
+  });
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-space-before-closing-bracket",
+        severity: 2,
+        idxFrom: 37,
+        idxTo: 40,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[37, 40]],
         },
-      ],
-      "02.01.01"
-    );
-    t.equal(messages.length, 1, "02.01.02");
-    t.equal(
-      applyFixes(str, messages),
-      `<?xml version="1.0" encoding="UTF-8"?>`,
-      "02.01.03"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "04.01"
+  );
+  t.equal(messages.length, 1, "04.02");
+  t.equal(
+    applyFixes(str, messages),
+    `<?xml version="1.0" encoding="UTF-8"?>`,
+    "04.03"
+  );
+  t.end();
+});
 
 // 03. doesn't raise errors
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - does not touch tags with closing slash`,
+  `05 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - does not touch tags with closing slash`,
   (t) => {
     const str = "<br\t\t/\t\t>";
     const linter = new Linter();
@@ -155,14 +152,14 @@ tap.test(
         "tag-space-before-closing-bracket": 2,
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "05.01");
+    t.equal(applyFixes(str, messages), str, "05.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - because of a backslash`,
+  `06 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - because of a backslash`,
   (t) => {
     const str = `<br\t\t${BACKSLASH}\t\t>`;
     const linter = new Linter();
@@ -171,8 +168,8 @@ tap.test(
         "tag-space-before-closing-bracket": 2,
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "06.01");
+    t.equal(applyFixes(str, messages), str, "06.02");
     t.end();
   }
 );

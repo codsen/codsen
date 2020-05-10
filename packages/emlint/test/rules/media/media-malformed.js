@@ -7,7 +7,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - off`,
+  `01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - off`,
   (t) => {
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
@@ -18,14 +18,14 @@ tap.test(
         "media-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - warn`,
+  `02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - warn`,
   (t) => {
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
@@ -36,14 +36,14 @@ tap.test(
         "media-malformed": 1,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "02.01");
+    t.same(messages, [], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - error`,
+  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - error`,
   (t) => {
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
@@ -54,14 +54,14 @@ tap.test(
         "media-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "03.01");
+    t.same(messages, [], "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`,
+  `04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`,
   (t) => {
     const str = `<style>
   @media screeen and (color), projection and (color) {zzz}
@@ -72,17 +72,21 @@ tap.test(
         "media-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "media-malformed",
-        severity: 2,
-        idxFrom: 17,
-        idxTo: 24,
-        message: `Unrecognised "screeen".`,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "04.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "media-malformed",
+          severity: 2,
+          idxFrom: 17,
+          idxTo: 24,
+          message: `Unrecognised "screeen".`,
+          fix: null,
+        },
+      ],
+      "04.02"
+    );
     t.end();
   }
 );
@@ -91,7 +95,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - not media`,
+  `05 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - not media`,
   (t) => {
     const str = `<style>
   @supports screeen and (color), projection and (color) {zzz}
@@ -102,8 +106,8 @@ tap.test(
         "media-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.same(messages, [], "05.02");
     t.end();
   }
 );

@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`,
+  `01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`,
   (t) => {
     const str = "</br>";
     const fixed = "<br>";
@@ -16,7 +16,7 @@ tap.test(
         "tag-void-frontal-slash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.01.01");
+    t.equal(applyFixes(str, messages), fixed, "01.01");
     t.match(
       messages,
       [
@@ -29,15 +29,15 @@ tap.test(
           fix: { ranges: [[1, 2]] },
         },
       ],
-      "01.01.02"
+      "01.02"
     );
-    t.is(messages.length, 1);
+    t.is(messages.length, 1, "01.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`,
+  `02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`,
   (t) => {
     const str = "</br>";
     const fixed = "<br/>";
@@ -47,7 +47,7 @@ tap.test(
         tag: 1,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.02.01");
+    t.equal(applyFixes(str, messages), fixed, "02.01");
     t.match(
       messages,
       [
@@ -72,15 +72,15 @@ tap.test(
           },
         },
       ],
-      "01.02.02"
+      "02.02"
     );
-    t.equal(messages.length, 2);
+    t.equal(messages.length, 2, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`,
+  `03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`,
   (t) => {
     const str = "</br>";
     const fixed = "<br/>";
@@ -90,7 +90,7 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.03.01");
+    t.equal(applyFixes(str, messages), fixed, "03.01");
     t.match(
       messages,
       [
@@ -115,9 +115,9 @@ tap.test(
           },
         },
       ],
-      "01.03.02"
+      "03.02"
     );
-    t.equal(messages.length, 2);
+    t.equal(messages.length, 2, "03.03");
     t.end();
   }
 );

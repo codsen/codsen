@@ -11,7 +11,7 @@ import { applyFixes } from "../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`Apple Safari Web Content Guide`}\u001b[${39}m`} - no rules should be triggered`,
+  `01 - ${`\u001b[${33}m${`Apple Safari Web Content Guide`}\u001b[${39}m`} - no rules should be triggered`,
   (t) => {
     const exampleSnippets = [
       `<link rel="apple-touch-icon" href="/custom_icon.png"/>`,

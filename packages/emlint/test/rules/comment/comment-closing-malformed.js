@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - off, missing dash`,
+  `01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - off, missing dash`,
   (t) => {
     const str = "<!--z->";
     const linter = new Linter();
@@ -15,14 +15,14 @@ tap.test(
         "comment-closing-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.01.01");
-    t.same(messages, [], "01.01.02");
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, text inside`,
+  `02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, text inside`,
   (t) => {
     const str = "<!--z->";
     const fixed = "<!--z-->";
@@ -32,7 +32,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.02.01");
+    t.equal(applyFixes(str, messages), fixed, "02.01");
     t.same(
       messages,
       [
@@ -50,14 +50,14 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "01.02.02"
+      "02.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, tag inside`,
+  `03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, tag inside`,
   (t) => {
     const str = `<!--<img class="z"/>->`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -67,7 +67,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.03.01");
+    t.equal(applyFixes(str, messages), fixed, "03.01");
     t.same(
       messages,
       [
@@ -85,14 +85,14 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "01.03.02"
+      "03.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space`,
+  `04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<!--<img class="z"/>-- >`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -102,7 +102,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.04.01");
+    t.equal(applyFixes(str, messages), fixed, "04.01");
     t.same(
       messages,
       [
@@ -120,14 +120,14 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "01.04.02"
+      "04.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue excl mark`,
+  `05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue excl mark`,
   (t) => {
     const str = `<!--<img class="z"/>--!>`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -137,7 +137,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.05.01");
+    t.equal(applyFixes(str, messages), fixed, "05.01");
     t.same(
       messages,
       [
@@ -155,14 +155,14 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "01.05.02"
+      "05.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue single character, z`,
+  `06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue single character, z`,
   (t) => {
     const str = `<!--<img class="z"/>--z>`;
     const fixed = `<!--<img class="z"/>-->`;
@@ -172,7 +172,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "01.05.01");
+    t.equal(applyFixes(str, messages), fixed, "06.01");
     t.same(
       messages,
       [
@@ -190,7 +190,7 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "01.05.02"
+      "06.02"
     );
     t.end();
   }
@@ -206,7 +206,7 @@ tap.test(
 // <![endif]-->
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missing`,
+  `07 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missing`,
   (t) => {
     const str = "<!--[if mso]>x<[endif]-->";
     const linter = new Linter();
@@ -215,14 +215,14 @@ tap.test(
         "comment-closing-malformed": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "02.01.01");
-    t.same(messages, [], "02.01.02");
+    t.equal(applyFixes(str, messages), str, "07.01");
+    t.same(messages, [], "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl mark missing`,
+  `08 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl mark missing`,
   (t) => {
     const str = "<!--[if mso]>x<[endif]-->";
     const fixed = "<!--[if mso]>x<![endif]-->";
@@ -232,7 +232,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.equal(applyFixes(str, messages), fixed, "08.01");
     t.match(
       messages,
       [
@@ -247,15 +247,15 @@ tap.test(
           },
         },
       ],
-      "02.02.02"
+      "08.02"
     );
-    t.is(messages.length, 1, "02.02.03");
+    t.is(messages.length, 1, "08.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
+  `09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
   (t) => {
     const str = "<!--[if mso]>x<1[endif]-->";
     const fixed = "<!--[if mso]>x<![endif]-->";
@@ -265,7 +265,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.03.01");
+    t.equal(applyFixes(str, messages), fixed, "09.01");
     t.match(
       messages,
       [
@@ -280,15 +280,15 @@ tap.test(
           },
         },
       ],
-      "02.03.02"
+      "09.02"
     );
-    t.is(messages.length, 1, "02.03.03");
+    t.is(messages.length, 1, "09.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
+  `10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`,
   (t) => {
     const str = "<!--[if mso]>x<![ndif]-->";
     const fixed = "<!--[if mso]>x<![endif]-->";
@@ -298,7 +298,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.04.01");
+    t.equal(applyFixes(str, messages), fixed, "10.01");
     t.match(
       messages,
       [
@@ -313,15 +313,15 @@ tap.test(
           },
         },
       ],
-      "02.04.02"
+      "10.02"
     );
-    t.is(messages.length, 1, "02.04.03");
+    t.is(messages.length, 1, "10.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, tight`,
+  `11 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, tight`,
   (t) => {
     const str = "<!--[if mso]>x<![endif]--<a>";
     const fixed = "<!--[if mso]>x<![endif]--><a>";
@@ -331,7 +331,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.05.01");
+    t.equal(applyFixes(str, messages), fixed, "11.01");
     t.match(
       messages,
       [
@@ -346,15 +346,15 @@ tap.test(
           ruleId: "comment-closing-malformed",
         },
       ],
-      "02.05.02"
+      "11.02"
     );
-    t.is(messages.length, 1, "02.05.03");
+    t.is(messages.length, 1, "11.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`,
+  `12 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`,
   (t) => {
     const str = "<!--[if mso]>x<![endif]--\n\n<a>";
     const fixed = "<!--[if mso]>x<![endif]-->\n\n<a>";
@@ -364,7 +364,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.06.01");
+    t.equal(applyFixes(str, messages), fixed, "12.01");
     t.match(
       messages,
       [
@@ -379,9 +379,9 @@ tap.test(
           ruleId: "comment-closing-malformed",
         },
       ],
-      "02.06.02"
+      "12.02"
     );
-    t.is(messages.length, 1, "02.06.03");
+    t.is(messages.length, 1, "12.03");
     t.end();
   }
 );
@@ -396,7 +396,7 @@ tap.test(
 // <!--<![endif]-->
 
 tap.test(
-  `03.01 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`,
+  `13 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -407,7 +407,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.equal(applyFixes(str, messages), fixed, "13.01");
     t.match(
       messages,
       [
@@ -422,15 +422,15 @@ tap.test(
           },
         },
       ],
-      "03.01.02"
+      "13.02"
     );
-    t.is(messages.length, 1, "03.01.03");
+    t.is(messages.length, 1, "13.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`,
+  `14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><--<![endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -440,7 +440,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.02.01");
+    t.equal(applyFixes(str, messages), fixed, "14.01");
     t.match(
       messages,
       [
@@ -455,15 +455,15 @@ tap.test(
           },
         },
       ],
-      "03.02.02"
+      "14.02"
     );
-    t.is(messages.length, 1, "03.02.03");
+    t.is(messages.length, 1, "14.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`,
+  `15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!-<![endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -473,7 +473,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.03.01");
+    t.equal(applyFixes(str, messages), fixed, "15.01");
     t.match(
       messages,
       [
@@ -488,15 +488,15 @@ tap.test(
           },
         },
       ],
-      "03.03.02"
+      "15.02"
     );
-    t.is(messages.length, 1, "03.03.03");
+    t.is(messages.length, 1, "15.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`,
+  `16 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!- -<![endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -506,7 +506,7 @@ tap.test(
         "comment-closing-malformed": 1,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.04.01");
+    t.equal(applyFixes(str, messages), fixed, "16.01");
     t.match(
       messages,
       [
@@ -521,15 +521,15 @@ tap.test(
           },
         },
       ],
-      "03.04.02"
+      "16.02"
     );
-    t.is(messages.length, 1, "03.04.03");
+    t.is(messages.length, 1, "16.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.05 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`,
+  `17 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--\n<![endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -539,7 +539,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.05.01");
+    t.equal(applyFixes(str, messages), fixed, "17.01");
     t.match(
       messages,
       [
@@ -554,15 +554,15 @@ tap.test(
           },
         },
       ],
-      "03.05.02"
+      "17.02"
     );
-    t.is(messages.length, 1, "03.05.03");
+    t.is(messages.length, 1, "17.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.06 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
+  `18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<[endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -572,13 +572,13 @@ tap.test(
         all: 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.06.01");
+    t.equal(applyFixes(str, messages), fixed, "18");
     t.end();
   }
 );
 
 tap.test(
-  `03.07 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`,
+  `19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<!endif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -588,7 +588,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.07.01");
+    t.equal(applyFixes(str, messages), fixed, "19.01");
     t.match(
       messages,
       [
@@ -603,15 +603,15 @@ tap.test(
           ruleId: "comment-closing-malformed",
         },
       ],
-      "03.07.02"
+      "19.02"
     );
-    t.is(messages.length, 1, "03.07.03");
+    t.is(messages.length, 1, "19.03");
     t.end();
   }
 );
 
 tap.test(
-  `03.08 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`,
+  `20 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<![ndif]-->`;
     const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
@@ -621,7 +621,7 @@ tap.test(
         "comment-closing-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "03.08.01");
+    t.equal(applyFixes(str, messages), fixed, "20.01");
     t.match(
       messages,
       [
@@ -636,9 +636,9 @@ tap.test(
           ruleId: "comment-closing-malformed",
         },
       ],
-      "03.08.02"
+      "20.02"
     );
-    t.is(messages.length, 1, "03.08.03");
+    t.is(messages.length, 1, "20.03");
     t.end();
   }
 );

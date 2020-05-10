@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 0`,
+  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 0`,
   (t) => {
     const str = `<body>`;
     const linter = new Linter();
@@ -15,14 +15,14 @@ tap.test(
         "attribute-validate-text": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 1`,
+  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 1`,
   (t) => {
     const str = `<body>`;
     const linter = new Linter();
@@ -31,14 +31,14 @@ tap.test(
         "attribute-validate-text": 1,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "02.01");
+    t.same(messages, [], "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 2`,
+  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no text, error level 2`,
   (t) => {
     const str = `<body>`;
     const linter = new Linter();
@@ -47,14 +47,14 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "03.01");
+    t.same(messages, [], "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy text`,
+  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy text`,
   (t) => {
     const str = `<body class='zz' text='#CCCCCC' id='yy aa'>`; // <-- notice single quotes
     const linter = new Linter();
@@ -63,8 +63,8 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str, "04.01");
+    t.same(messages, [], "04.02");
     t.end();
   }
 );
@@ -73,7 +73,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
+  `05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<body text=" #CCCCCC">`;
     const linter = new Linter();
@@ -82,24 +82,28 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 13,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [[12, 13]],
+    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`, "05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 13,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[12, 13]],
+          },
         },
-      },
-    ]);
+      ],
+      "05.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
+  `06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<body text="#CCCCCC ">`;
     const linter = new Linter();
@@ -108,24 +112,28 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 19,
-        idxTo: 20,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [[19, 20]],
+    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`, "06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 19,
+          idxTo: 20,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[19, 20]],
+          },
         },
-      },
-    ]);
+      ],
+      "06.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit hex`,
+  `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit hex`,
   (t) => {
     const str = `<body text="  #CCCCCC  ">`;
     const linter = new Linter();
@@ -134,27 +142,31 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 23,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [
-            [12, 14],
-            [21, 23],
-          ],
+    t.equal(applyFixes(str, messages), `<body text="#CCCCCC">`, "07.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 23,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [
+              [12, 14],
+              [21, 23],
+            ],
+          },
         },
-      },
-    ]);
+      ],
+      "07.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - named`,
+  `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - named`,
   (t) => {
     const str = `<body text="  PeachPuff  ">`;
     const linter = new Linter();
@@ -163,27 +175,31 @@ tap.test(
         "attribute-validate-text": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<body text="PeachPuff">`);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 25,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [
-            [12, 14],
-            [23, 25],
-          ],
+    t.equal(applyFixes(str, messages), `<body text="PeachPuff">`, "08.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 25,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [
+              [12, 14],
+              [23, 25],
+            ],
+          },
         },
-      },
-    ]);
+      ],
+      "08.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
+  `09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<body text="  \t">`;
     const linter = new Linter();
@@ -193,22 +209,26 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 15,
-        message: `Missing value.`,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "09.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 15,
+          message: `Missing value.`,
+          fix: null,
+        },
+      ],
+      "09.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
+  `10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
   (t) => {
     const str = `<body text="">`;
     const linter = new Linter();
@@ -218,16 +238,20 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 12,
-        message: `Missing value.`,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "10.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 12,
+          message: `Missing value.`,
+          fix: null,
+        },
+      ],
+      "10.02"
+    );
     t.end();
   }
 );
@@ -235,7 +259,7 @@ tap.test(
 // 03. named colors
 // -----------------------------------------------------------------------------
 
-tap.test(`03.01 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, (t) => {
+tap.test(`11 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, (t) => {
   const str = `<body class='zz' text='blue' id='yy aa'>`; // <-- notice single quotes
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -243,13 +267,13 @@ tap.test(`03.01 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, (t) => {
       "attribute-validate-text": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str, "11.01");
+  t.same(messages, [], "11.02");
   t.end();
 });
 
 tap.test(
-  `03.02 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`,
+  `12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`,
   (t) => {
     const str = `<body text="nearlyRed">`;
     const linter = new Linter();
@@ -259,16 +283,20 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-text",
-        idxFrom: 12,
-        idxTo: 21,
-        message: `Unrecognised color value.`,
-        fix: null,
-      },
-    ]);
+    t.equal(applyFixes(str, messages), str, "12.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-text",
+          idxFrom: 12,
+          idxTo: 21,
+          message: `Unrecognised color value.`,
+          fix: null,
+        },
+      ],
+      "12.02"
+    );
     t.end();
   }
 );
@@ -276,19 +304,19 @@ tap.test(
 // 04. hex colors
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `04.01 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`,
-  (t) => {
-    const str = `<body text="#gg0000">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-text": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
+tap.test(`13 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`, (t) => {
+  const str = `<body text="#gg0000">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-text": 2,
+    },
+  });
+  // can't fix:
+  t.equal(applyFixes(str, messages), str, "13.01");
+  t.match(
+    messages,
+    [
       {
         ruleId: "attribute-validate-text",
         idxFrom: 12,
@@ -296,12 +324,13 @@ tap.test(
         message: `Unrecognised hex code.`,
         fix: null,
       },
-    ]);
-    t.end();
-  }
-);
+    ],
+    "13.02"
+  );
+  t.end();
+});
 
-tap.test(`04.02 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
+tap.test(`14 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
   const str = `<body text="#ccc">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -310,20 +339,24 @@ tap.test(`04.02 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-text",
-      idxFrom: 12,
-      idxTo: 16,
-      message: `Hex color code should be 6 digits-long.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "14.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-validate-text",
+        idxFrom: 12,
+        idxTo: 16,
+        message: `Hex color code should be 6 digits-long.`,
+        fix: null,
+      },
+    ],
+    "14.02"
+  );
   t.end();
 });
 
-tap.test(`04.03 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
+tap.test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
   const str = `<body text="#aaaa">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -332,23 +365,27 @@ tap.test(`04.03 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-text",
-      idxFrom: 12,
-      idxTo: 17,
-      message: `Hex color code should be 6 digits-long.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "15.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-validate-text",
+        idxFrom: 12,
+        idxTo: 17,
+        message: `Hex color code should be 6 digits-long.`,
+        fix: null,
+      },
+    ],
+    "15.02"
+  );
   t.end();
 });
 
 // 05. hex colors
 // -----------------------------------------------------------------------------
 
-tap.test(`05.01 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, (t) => {
+tap.test(`16 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, (t) => {
   const str = `<body text="rgb(255, 0, 153)">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -357,20 +394,24 @@ tap.test(`05.01 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-text",
-      idxFrom: 12,
-      idxTo: 28,
-      message: `rgb() is not allowed.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "16.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-validate-text",
+        idxFrom: 12,
+        idxTo: 28,
+        message: `rgb() is not allowed.`,
+        fix: null,
+      },
+    ],
+    "16.02"
+  );
   t.end();
 });
 
-tap.test(`05.02 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
+tap.test(`17 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
   const str = `<body text="rgb(255)">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -379,20 +420,24 @@ tap.test(`05.02 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-text",
-      idxFrom: 12,
-      idxTo: 20,
-      message: `rgb() is not allowed.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "17.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-validate-text",
+        idxFrom: 12,
+        idxTo: 20,
+        message: `rgb() is not allowed.`,
+        fix: null,
+      },
+    ],
+    "17.02"
+  );
   t.end();
 });
 
-tap.test(`05.03 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
+tap.test(`18 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
   const str = `<body text="rgb()">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -401,15 +446,19 @@ tap.test(`05.03 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "attribute-validate-text",
-      idxFrom: 12,
-      idxTo: 17,
-      message: `rgb() is not allowed.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "18.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-validate-text",
+        idxFrom: 12,
+        idxTo: 17,
+        message: `rgb() is not allowed.`,
+        fix: null,
+      },
+    ],
+    "18.02"
+  );
   t.end();
 });

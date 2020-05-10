@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  `01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "fsdhkfdfgh kj ";
     const linter = new Linter();
@@ -19,14 +19,14 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "01.01.01");
-    t.equal(applyFixes(str, messages), str, "01.01.02");
+    t.same(messages, [], "01.01");
+    t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  `02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -50,15 +50,15 @@ tap.test(
           },
         },
       ],
-      "01.02.01"
+      "02.01"
     );
-    t.equal(applyFixes(str, messages), "&pound;100", "01.02.02");
+    t.equal(applyFixes(str, messages), "&pound;100", "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  `03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -82,9 +82,9 @@ tap.test(
           },
         },
       ],
-      "01.03.01"
+      "03.01"
     );
-    t.equal(applyFixes(str, messages), "&pound;100", "01.03.02");
+    t.equal(applyFixes(str, messages), "&pound;100", "03.02");
     t.end();
   }
 );
@@ -93,7 +93,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`,
+  `04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -117,15 +117,15 @@ tap.test(
           },
         },
       ],
-      "02.01.01"
+      "04.01"
     );
-    t.equal(applyFixes(str, messages), "&pound;100", "02.01.02");
+    t.equal(applyFixes(str, messages), "&pound;100", "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
+  `05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -149,15 +149,15 @@ tap.test(
           },
         },
       ],
-      "02.02.01"
+      "05.01"
     );
-    t.equal(applyFixes(str, messages), "&#xA3;100", "02.02.02");
+    t.equal(applyFixes(str, messages), "&#xA3;100", "05.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
+  `06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -181,15 +181,15 @@ tap.test(
           },
         },
       ],
-      "02.03.01"
+      "06.01"
     );
-    t.equal(applyFixes(str, messages), "&pound;100", "02.03.02");
+    t.equal(applyFixes(str, messages), "&pound;100", "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
+  `07 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
   (t) => {
     const str = "£100";
     const linter = new Linter();
@@ -213,15 +213,15 @@ tap.test(
           },
         },
       ],
-      "02.04.01"
+      "07.01"
     );
-    t.equal(applyFixes(str, messages), "&pound;100", "02.04.02");
+    t.equal(applyFixes(str, messages), "&pound;100", "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
+  `08 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
   (t) => {
     const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
     const linter = new Linter();
@@ -230,8 +230,8 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "02.05.01");
-    t.equal(applyFixes(str, messages), str, "02.05.02");
+    t.same(messages, [], "08.01");
+    t.equal(applyFixes(str, messages), str, "08.02");
     t.end();
   }
 );
@@ -240,7 +240,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  `09 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
@@ -264,15 +264,15 @@ tap.test(
           },
         },
       ],
-      "03.01.01"
+      "09.01"
     );
-    t.equal(applyFixes(str, messages), "&#x424;", "03.01.02");
+    t.equal(applyFixes(str, messages), "&#x424;", "09.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  `10 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
@@ -296,15 +296,15 @@ tap.test(
           },
         },
       ],
-      "03.02.01"
+      "10.01"
     );
-    t.equal(applyFixes(str, messages), "&#x424;", "03.02.02");
+    t.equal(applyFixes(str, messages), "&#x424;", "10.02");
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  `11 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
     const linter = new Linter();
@@ -328,9 +328,9 @@ tap.test(
           },
         },
       ],
-      "03.03.01"
+      "11.01"
     );
-    t.equal(applyFixes(str, messages), "&#x424;", "03.03.02");
+    t.equal(applyFixes(str, messages), "&#x424;", "11.02");
     t.end();
   }
 );
@@ -339,7 +339,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
+  `12 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
   (t) => {
     const str = `><'"&`;
     const linter = new Linter();
@@ -396,15 +396,15 @@ tap.test(
           },
         },
       ],
-      "04.01.01"
+      "12.01"
     );
-    t.equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "04.01.02");
+    t.equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "12.02");
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
+  `13 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
   (t) => {
     const str = `><'"&`;
     const linter = new Linter();
@@ -461,9 +461,9 @@ tap.test(
           },
         },
       ],
-      "04.02.01"
+      "13.01"
     );
-    t.equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "04.02.02");
+    t.equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "13.02");
     t.end();
   }
 );
@@ -472,7 +472,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
+  `14 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
   (t) => {
     const str = "a<!--b->c";
     const linter = new Linter();
@@ -481,14 +481,14 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "05.01.01");
-    t.equal(applyFixes(str, messages), str, "05.01.02");
+    t.same(messages, [], "14.01");
+    t.equal(applyFixes(str, messages), str, "14.02");
     t.end();
   }
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
+  `15 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
   (t) => {
     const str = "a<!--b->c";
     const fixed = "a<!--b-->c";
@@ -513,9 +513,9 @@ tap.test(
           },
         },
       ],
-      "05.02.01"
+      "15.01"
     );
-    t.equal(applyFixes(str, messages), fixed, "05.02.02");
+    t.equal(applyFixes(str, messages), fixed, "15.02");
     t.end();
   }
 );

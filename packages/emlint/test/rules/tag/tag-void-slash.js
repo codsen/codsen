@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash present`,
+  `01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash present`,
   (t) => {
     const str = "<br/>";
     const linter = new Linter();
@@ -19,14 +19,14 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "01.01");
+    t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash absent`,
+  `02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash absent`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -35,27 +35,31 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "02.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "02.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-slash"`,
+  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-slash"`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -65,27 +69,31 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "03.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "tag"`,
+  `04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "tag"`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -94,27 +102,31 @@ tap.test(
         tag: 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "04.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=always`,
+  `05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=always`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -124,27 +136,31 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, " /"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, " /"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br />");
+      ],
+      "05.01"
+    );
+    t.equal(applyFixes(str, messages), "<br />", "05.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never`,
+  `06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -154,27 +170,31 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "06.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never, hardcoded void's default always`,
+  `07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never, hardcoded void's default always`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -184,27 +204,31 @@ tap.test(
         "tag-void-slash": [2, "always"],
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "07.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - both never`,
+  `08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - both never`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -214,8 +238,8 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "08.01");
+    t.equal(applyFixes(str, messages), str, "08.02");
     t.end();
   }
 );
@@ -224,7 +248,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=always`,
+  `09 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=always`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -233,27 +257,31 @@ tap.test(
         "tag-void-slash": [2, "always"],
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[3, 3, "/"]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 3,
+          line: 1,
+          column: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[3, 3, "/"]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br/>");
+      ],
+      "09.01"
+    );
+    t.equal(applyFixes(str, messages), "<br/>", "09.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=never`,
+  `10 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=never`,
   (t) => {
     const str = "<br>";
     const linter = new Linter();
@@ -262,14 +290,14 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "10.01");
+    t.equal(applyFixes(str, messages), str, "10.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=never`,
+  `11 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=never`,
   (t) => {
     const str = "<br/>";
     const linter = new Linter();
@@ -278,27 +306,31 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.match(messages, [
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 4,
-        line: 1,
-        column: 4,
-        message: "Remove the slash.",
-        fix: {
-          ranges: [[3, 4]],
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 4,
+          line: 1,
+          column: 4,
+          message: "Remove the slash.",
+          fix: {
+            ranges: [[3, 4]],
+          },
         },
-      },
-    ]);
-    t.equal(applyFixes(str, messages), "<br>");
+      ],
+      "11.01"
+    );
+    t.equal(applyFixes(str, messages), "<br>", "11.02");
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=always`,
+  `12 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=always`,
   (t) => {
     const str = "<br/>";
     const linter = new Linter();
@@ -307,8 +339,8 @@ tap.test(
         "tag-void-slash": [2, "always"],
       },
     });
-    t.same(messages, []);
-    t.equal(applyFixes(str, messages), str);
+    t.same(messages, [], "12.01");
+    t.equal(applyFixes(str, messages), str, "12.02");
     t.end();
   }
 );

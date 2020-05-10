@@ -6,7 +6,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01.01 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - off, missing dash`,
+  `01 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - off, missing dash`,
   (t) => {
     const str = `<!--[if mso]>
   <img src="fallback">
@@ -17,14 +17,14 @@ tap.test(
         "comment-mismatching-pair": 0,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.01.01");
-    t.same(messages, [], "01.01.02");
+    t.equal(applyFixes(str, messages), str, "01.01");
+    t.same(messages, [], "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are healthy`,
+  `02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are healthy`,
   (t) => {
     const str = `<!--[if mso]>
   <img src="fallback"/>
@@ -39,7 +39,7 @@ tap.test(
       },
     });
     // turns tails comment tag into "only"-kind
-    t.equal(applyFixes(str, messages), fixed, "01.02.01");
+    t.equal(applyFixes(str, messages), fixed, "02.01");
     t.match(
       messages,
       [
@@ -54,15 +54,15 @@ tap.test(
           },
         },
       ],
-      "01.02.02"
+      "02.02"
     );
-    t.is(messages.length, 1, "01.02.03");
+    t.is(messages.length, 1, "02.03");
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`,
+  `03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`,
   (t) => {
     const str = `<!-- [if mso]>
   <img src="fallback"/>
@@ -104,15 +104,15 @@ tap.test(
           },
         },
       ],
-      "01.03.01"
+      "03.01"
     );
-    t.equal(applyFixes(str, messages), fixed, "01.03.02");
+    t.equal(applyFixes(str, messages), fixed, "03.02");
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`,
+  `04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`,
   (t) => {
     const str = `<!--[if mso]>
   <img src="fallback"/>
@@ -135,14 +135,14 @@ tap.test(
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
       fixed,
-      "01.04"
+      "04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are also dirty`,
+  `05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are also dirty`,
   (t) => {
     const str = `<!-[if mso]>
   <img src="fallback"/>
@@ -165,7 +165,7 @@ tap.test(
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
       fixed,
-      "01.05"
+      "05"
     );
     t.end();
   }
@@ -175,7 +175,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`,
+  `06 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`,
   (t) => {
     const str = `<!--[if !mso]><!-->
   <img src="fallback"/>
@@ -190,7 +190,7 @@ tap.test(
       },
     });
     // turns tails comment tag into "not"-kind
-    t.equal(applyFixes(str, messages), fixed, "02.01.01");
+    t.equal(applyFixes(str, messages), fixed, "06.01");
     t.same(
       messages,
       [
@@ -208,14 +208,14 @@ tap.test(
           keepSeparateWhenFixing: true,
         },
       ],
-      "02.01.02"
+      "06.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`,
+  `07 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`,
   (t) => {
     const str = `<!-[if !mso]><!-->
   <img src="fallback"/>
@@ -230,7 +230,7 @@ tap.test(
       },
     });
     // turns tails comment tag into "not"-kind
-    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.equal(applyFixes(str, messages), fixed, "07.01");
     t.match(
       messages,
       [
@@ -257,15 +257,15 @@ tap.test(
           },
         },
       ],
-      "02.02.02"
+      "07.02"
     );
-    t.is(messages.length, 2, "02.02.03");
+    t.is(messages.length, 2, "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`,
+  `08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`,
   (t) => {
     const str = `<!--[if mso]><!-->
   <img src="fallback"/>
@@ -288,14 +288,14 @@ tap.test(
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
       fixed,
-      "02.03"
+      "08"
     );
     t.end();
   }
 );
 
 tap.test(
-  `02.04 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`,
+  `09 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`,
   (t) => {
     const str = `<!-[if mso]><!-->
   <img src="fallback"/>
@@ -318,7 +318,7 @@ tap.test(
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
       fixed,
-      "02.04"
+      "09"
     );
     t.end();
   }

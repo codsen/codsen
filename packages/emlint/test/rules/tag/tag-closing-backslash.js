@@ -11,18 +11,18 @@ const BACKSLASH = "\u005C";
 // 01. void tag, no "tag-void-slash" rule
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01.01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`,
-  (t) => {
-    const str = `<br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "tag-closing-backslash": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
+tap.test(`01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, (t) => {
+  const str = `<br${BACKSLASH}>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), "<br/>", "01.01");
+  t.match(
+    messages,
+    [
       {
         ruleId: "tag-closing-backslash",
         severity: 2,
@@ -33,13 +33,14 @@ tap.test(
           ranges: [[3, 4, "/"]],
         },
       },
-    ]);
-    t.end();
-  }
-);
+    ],
+    "01.02"
+  );
+  t.end();
+});
 
 tap.test(
-  `01.02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
+  `02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -49,25 +50,29 @@ tap.test(
         "tag-space-before-closing-slash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "02.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "02.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
+  `03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -77,25 +82,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "never"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "03.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "03.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule demands it`,
+  `04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule demands it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -105,25 +114,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[4, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br />", "04.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[4, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "04.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands space`,
+  `05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands space`,
   (t) => {
     const str = `<br\t${BACKSLASH}>`;
     const linter = new Linter();
@@ -133,25 +146,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 5,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 5, " /"]],
+    t.equal(applyFixes(str, messages), "<br />", "05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 5,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 5, " /"]],
+          },
         },
-      },
-    ]);
+      ],
+      "05.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `01.06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands space`,
+  `06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands space`,
   (t) => {
     const str = `<br\t\t${BACKSLASH}>`;
     const linter = new Linter();
@@ -161,36 +178,40 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, " /"]],
+    t.equal(applyFixes(str, messages), "<br />", "06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, " /"]],
+          },
         },
-      },
-    ]);
+      ],
+      "06.02"
+    );
     t.end();
   }
 );
 
-tap.test(
-  `01.07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`,
-  (t) => {
-    const str = `<br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
-      },
-    });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
+tap.test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, (t) => {
+  const str = `<br${BACKSLASH}>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2,
+      "tag-space-before-closing-slash": [2, "always"],
+    },
+  });
+  t.equal(applyFixes(str, messages), "<br />", "07.01");
+  t.match(
+    messages,
+    [
       {
         ruleId: "tag-closing-backslash",
         severity: 2,
@@ -201,16 +222,17 @@ tap.test(
           ranges: [[3, 4, " /"]],
         },
       },
-    ]);
-    t.end();
-  }
-);
+    ],
+    "07.02"
+  );
+  t.end();
+});
 
 // 02. void tag, with "tag-void-slash" rule
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02.01 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
+  `08 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
     const linter = new Linter();
@@ -220,25 +242,29 @@ tap.test(
         "tag-void-slash": 2, // default is "always"
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 4,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 4, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "08.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 4,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 4, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "08.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.02 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
+  `09 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
     const linter = new Linter();
@@ -248,25 +274,29 @@ tap.test(
         "tag-void-slash": [2, "always"], // hardcoded default
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 4,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 4, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "09.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 4,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 4, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "09.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.03 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
+  `10 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
     const linter = new Linter();
@@ -276,19 +306,23 @@ tap.test(
         "tag-void-slash": [2, "never"], // off
       },
     });
-    t.equal(applyFixes(str, messages), "<br>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 4,
-        message: "Delete this.",
-        fix: {
-          ranges: [[3, 4]],
+    t.equal(applyFixes(str, messages), "<br>", "10.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 4,
+          message: "Delete this.",
+          fix: {
+            ranges: [[3, 4]],
+          },
         },
-      },
-    ]);
+      ],
+      "10.02"
+    );
     t.end();
   }
 );
@@ -296,7 +330,7 @@ tap.test(
 // SPACE IN FRONT
 
 tap.test(
-  `02.04 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -306,25 +340,29 @@ tap.test(
         "tag-void-slash": 2, // default
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "11.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "11.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.05 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -334,25 +372,29 @@ tap.test(
         "tag-void-slash": [2, "always"], // hardcoded default
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "12.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "12.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.06 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -362,19 +404,23 @@ tap.test(
         "tag-void-slash": [2, "never"], // off
       },
     });
-    t.equal(applyFixes(str, messages), "<br>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Delete this.",
-        fix: {
-          ranges: [[3, 6]],
+    t.equal(applyFixes(str, messages), "<br>", "13.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Delete this.",
+          fix: {
+            ranges: [[3, 6]],
+          },
         },
-      },
-    ]);
+      ],
+      "13.02"
+    );
     t.end();
   }
 );
@@ -382,7 +428,7 @@ tap.test(
 // "tag-space-before-closing-slash" = always
 
 tap.test(
-  `02.07 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -393,25 +439,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[4, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br />", "14.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[4, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "14.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.08 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -422,25 +472,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[4, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br />", "15.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[4, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "15.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.09 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -451,19 +505,23 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"], // doesn't matter!
       },
     });
-    t.equal(applyFixes(str, messages), "<br>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Delete this.",
-        fix: {
-          ranges: [[3, 6]],
+    t.equal(applyFixes(str, messages), "<br>", "16.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Delete this.",
+          fix: {
+            ranges: [[3, 6]],
+          },
         },
-      },
-    ]);
+      ],
+      "16.02"
+    );
     t.end();
   }
 );
@@ -471,7 +529,7 @@ tap.test(
 // "tag-space-before-closing-slash" = never
 
 tap.test(
-  `02.10 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -482,25 +540,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "never"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "17.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "17.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -511,25 +573,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "never"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 6, "/"]],
+    t.equal(applyFixes(str, messages), "<br/>", "18.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[3, 6, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "18.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `02.12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const linter = new Linter();
@@ -540,19 +606,23 @@ tap.test(
         "tag-space-before-closing-slash": [2, "never"], // doesn't matter
       },
     });
-    t.equal(applyFixes(str, messages), "<br>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 6,
-        message: "Delete this.",
-        fix: {
-          ranges: [[3, 6]],
+    t.equal(applyFixes(str, messages), "<br>", "19.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 3,
+          idxTo: 6,
+          message: "Delete this.",
+          fix: {
+            ranges: [[3, 6]],
+          },
         },
-      },
-    ]);
+      ],
+      "19.02"
+    );
     t.end();
   }
 );
@@ -561,7 +631,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03.01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - not void tag`,
+  `20 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - not void tag`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
     const linter = new Linter();
@@ -570,25 +640,29 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Delete this.",
-        fix: {
-          ranges: [[4, 5]],
+    t.equal(applyFixes(str, messages), "<div>", "20.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Delete this.",
+          fix: {
+            ranges: [[4, 5]],
+          },
         },
-      },
-    ]);
+      ],
+      "20.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.02 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
+  `21 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
     const linter = new Linter();
@@ -598,25 +672,29 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Delete this.",
-        fix: {
-          ranges: [[4, 5]],
+    t.equal(applyFixes(str, messages), "<div>", "21.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Delete this.",
+          fix: {
+            ranges: [[4, 5]],
+          },
         },
-      },
-    ]);
+      ],
+      "21.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.03 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
+  `22 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
     const linter = new Linter();
@@ -625,33 +703,37 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-missing-closing",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 6,
-        message: "Closing tag is missing.",
-        fix: null,
-      },
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Delete this.",
-        fix: {
-          ranges: [[4, 5]],
+    t.equal(applyFixes(str, messages), "<div>", "22.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-missing-closing",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 6,
+          message: "Closing tag is missing.",
+          fix: null,
         },
-      },
-    ]);
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Delete this.",
+          fix: {
+            ranges: [[4, 5]],
+          },
+        },
+      ],
+      "22.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `03.04 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-slash does not matter`,
+  `23 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-slash does not matter`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
     const linter = new Linter();
@@ -662,19 +744,23 @@ tap.test(
         "tag-void-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Delete this.",
-        fix: {
-          ranges: [[4, 5]],
+    t.equal(applyFixes(str, messages), "<div>", "23.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Delete this.",
+          fix: {
+            ranges: [[4, 5]],
+          },
         },
-      },
-    ]);
+      ],
+      "23.02"
+    );
     t.end();
   }
 );
@@ -683,7 +769,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `04.01 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts`,
+  `24 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts`,
   (t) => {
     const str = `<${BACKSLASH}br>`;
     const linter = new Linter();
@@ -692,35 +778,39 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<br/>", "24.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 4,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[4, 4, "/"]],
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 4,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[4, 4, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "24.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `04.02 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, no opts`,
+  `25 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, no opts`,
   (t) => {
     const str = `<${BACKSLASH}br/>`;
     const linter = new Linter();
@@ -729,25 +819,29 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<br/>", "25.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-    ]);
+      ],
+      "25.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `04.03 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
+  `26 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br\t>`;
     const linter = new Linter();
@@ -756,13 +850,13 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
+    t.equal(applyFixes(str, messages), "<br/>", "26");
     t.end();
   }
 );
 
 tap.test(
-  `04.04 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`,
+  `27 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`,
   (t) => {
     const str = `<${BACKSLASH}br>`;
     const linter = new Linter();
@@ -772,25 +866,29 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<br>", "27.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-    ]);
+      ],
+      "27.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `04.05 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
+  `28 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br\t>`;
     const linter = new Linter();
@@ -801,35 +899,39 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<br />", "28.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[4, 5, " /"]],
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[4, 5, " /"]],
+          },
         },
-      },
-    ]);
+      ],
+      "28.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `04.06 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
+  `29 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br >`;
     const linter = new Linter();
@@ -840,29 +942,33 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<br />", "29.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-      {
-        ruleId: "tag-void-slash",
-        severity: 2,
-        idxFrom: 5,
-        idxTo: 5,
-        message: "Missing slash.",
-        fix: {
-          ranges: [[5, 5, "/"]],
+        {
+          ruleId: "tag-void-slash",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 5,
+          message: "Missing slash.",
+          fix: {
+            ranges: [[5, 5, "/"]],
+          },
         },
-      },
-    ]);
+      ],
+      "29.02"
+    );
     t.end();
   }
 );
@@ -871,7 +977,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05.01 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, tight`,
+  `30 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, tight`,
   (t) => {
     const str = `<${BACKSLASH}div>`;
     const linter = new Linter();
@@ -880,25 +986,29 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "<div>", "30.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-    ]);
+      ],
+      "30.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.02 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, leading space`,
+  `31 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, leading space`,
   (t) => {
     const str = `< ${BACKSLASH}div>`;
     const linter = new Linter();
@@ -907,25 +1017,29 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "< div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 2,
-        idxTo: 3,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[2, 3]],
+    t.equal(applyFixes(str, messages), "< div>", "31.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 2,
+          idxTo: 3,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[2, 3]],
+          },
         },
-      },
-    ]);
+      ],
+      "31.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.03 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, trailing space`,
+  `32 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, trailing space`,
   (t) => {
     const str = `<${BACKSLASH} div>`;
     const linter = new Linter();
@@ -934,25 +1048,29 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "< div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]],
+    t.equal(applyFixes(str, messages), "< div>", "32.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]],
+          },
         },
-      },
-    ]);
+      ],
+      "32.02"
+    );
     t.end();
   }
 );
 
 tap.test(
-  `05.04 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, spaced`,
+  `33 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, spaced`,
   (t) => {
     const str = `< ${BACKSLASH} div>`;
     const linter = new Linter();
@@ -961,19 +1079,23 @@ tap.test(
         "tag-closing-backslash": 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<  div>");
-    t.match(messages, [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 2,
-        idxTo: 3,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[2, 3]],
+    t.equal(applyFixes(str, messages), "<  div>", "33.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 2,
+          idxTo: 3,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[2, 3]],
+          },
         },
-      },
-    ]);
+      ],
+      "33.02"
+    );
     t.end();
   }
 );
@@ -982,7 +1104,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`,
+  `34 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`,
   (t) => {
     const str = `<${BACKSLASH}br${BACKSLASH}>`;
     const linter = new Linter();
@@ -991,7 +1113,7 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>");
+    t.equal(applyFixes(str, messages), "<br/>", "34.01");
     astDeepContains(
       messages,
       [
