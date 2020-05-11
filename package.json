@@ -32,7 +32,7 @@
     "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate && npm run info",
     "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
-    "wipe": "rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
+    "wipe": "rm package-lock.json && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
   "husky": {
     "hooks": {
