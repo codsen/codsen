@@ -5171,6 +5171,28 @@
     return obj;
   }
 
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
   var Buffer$2 = bufferEs6.Buffer;
   var inspect$1 = require$$1.inspect;
   var custom = inspect$1 && inspect$1.custom || 'inspect';
@@ -5181,170 +5203,183 @@
 
   var buffer_list = /*#__PURE__*/function () {
     function BufferList() {
+      _classCallCheck(this, BufferList);
+
       this.head = null;
       this.tail = null;
       this.length = 0;
     }
 
-    var _proto = BufferList.prototype;
-
-    _proto.push = function push(v) {
-      var entry = {
-        data: v,
-        next: null
-      };
-      if (this.length > 0) this.tail.next = entry;else this.head = entry;
-      this.tail = entry;
-      ++this.length;
-    };
-
-    _proto.unshift = function unshift(v) {
-      var entry = {
-        data: v,
-        next: this.head
-      };
-      if (this.length === 0) this.tail = entry;
-      this.head = entry;
-      ++this.length;
-    };
-
-    _proto.shift = function shift() {
-      if (this.length === 0) return;
-      var ret = this.head.data;
-      if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
-      --this.length;
-      return ret;
-    };
-
-    _proto.clear = function clear() {
-      this.head = this.tail = null;
-      this.length = 0;
-    };
-
-    _proto.join = function join(s) {
-      if (this.length === 0) return '';
-      var p = this.head;
-      var ret = '' + p.data;
-
-      while (p = p.next) {
-        ret += s + p.data;
+    _createClass(BufferList, [{
+      key: "push",
+      value: function push(v) {
+        var entry = {
+          data: v,
+          next: null
+        };
+        if (this.length > 0) this.tail.next = entry;else this.head = entry;
+        this.tail = entry;
+        ++this.length;
       }
-
-      return ret;
-    };
-
-    _proto.concat = function concat(n) {
-      if (this.length === 0) return Buffer$2.alloc(0);
-      var ret = Buffer$2.allocUnsafe(n >>> 0);
-      var p = this.head;
-      var i = 0;
-
-      while (p) {
-        copyBuffer(p.data, ret, i);
-        i += p.data.length;
-        p = p.next;
+    }, {
+      key: "unshift",
+      value: function unshift(v) {
+        var entry = {
+          data: v,
+          next: this.head
+        };
+        if (this.length === 0) this.tail = entry;
+        this.head = entry;
+        ++this.length;
       }
-
-      return ret;
-    } // Consumes a specified amount of bytes or characters from the buffered data.
-    ;
-
-    _proto.consume = function consume(n, hasStrings) {
-      var ret;
-
-      if (n < this.head.data.length) {
-        // `slice` is the same for buffers and strings.
-        ret = this.head.data.slice(0, n);
-        this.head.data = this.head.data.slice(n);
-      } else if (n === this.head.data.length) {
-        // First chunk is a perfect match.
-        ret = this.shift();
-      } else {
-        // Result spans more than one buffer.
-        ret = hasStrings ? this._getString(n) : this._getBuffer(n);
+    }, {
+      key: "shift",
+      value: function shift() {
+        if (this.length === 0) return;
+        var ret = this.head.data;
+        if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
+        --this.length;
+        return ret;
       }
+    }, {
+      key: "clear",
+      value: function clear() {
+        this.head = this.tail = null;
+        this.length = 0;
+      }
+    }, {
+      key: "join",
+      value: function join(s) {
+        if (this.length === 0) return '';
+        var p = this.head;
+        var ret = '' + p.data;
 
-      return ret;
-    };
-
-    _proto.first = function first() {
-      return this.head.data;
-    } // Consumes a specified amount of characters from the buffered data.
-    ;
-
-    _proto._getString = function _getString(n) {
-      var p = this.head;
-      var c = 1;
-      var ret = p.data;
-      n -= ret.length;
-
-      while (p = p.next) {
-        var str = p.data;
-        var nb = n > str.length ? str.length : n;
-        if (nb === str.length) ret += str;else ret += str.slice(0, n);
-        n -= nb;
-
-        if (n === 0) {
-          if (nb === str.length) {
-            ++c;
-            if (p.next) this.head = p.next;else this.head = this.tail = null;
-          } else {
-            this.head = p;
-            p.data = str.slice(nb);
-          }
-
-          break;
+        while (p = p.next) {
+          ret += s + p.data;
         }
 
-        ++c;
+        return ret;
       }
+    }, {
+      key: "concat",
+      value: function concat(n) {
+        if (this.length === 0) return Buffer$2.alloc(0);
+        var ret = Buffer$2.allocUnsafe(n >>> 0);
+        var p = this.head;
+        var i = 0;
 
-      this.length -= c;
-      return ret;
-    } // Consumes a specified amount of bytes from the buffered data.
-    ;
-
-    _proto._getBuffer = function _getBuffer(n) {
-      var ret = Buffer$2.allocUnsafe(n);
-      var p = this.head;
-      var c = 1;
-      p.data.copy(ret);
-      n -= p.data.length;
-
-      while (p = p.next) {
-        var buf = p.data;
-        var nb = n > buf.length ? buf.length : n;
-        buf.copy(ret, ret.length - n, 0, nb);
-        n -= nb;
-
-        if (n === 0) {
-          if (nb === buf.length) {
-            ++c;
-            if (p.next) this.head = p.next;else this.head = this.tail = null;
-          } else {
-            this.head = p;
-            p.data = buf.slice(nb);
-          }
-
-          break;
+        while (p) {
+          copyBuffer(p.data, ret, i);
+          i += p.data.length;
+          p = p.next;
         }
 
-        ++c;
+        return ret;
+      } // Consumes a specified amount of bytes or characters from the buffered data.
+
+    }, {
+      key: "consume",
+      value: function consume(n, hasStrings) {
+        var ret;
+
+        if (n < this.head.data.length) {
+          // `slice` is the same for buffers and strings.
+          ret = this.head.data.slice(0, n);
+          this.head.data = this.head.data.slice(n);
+        } else if (n === this.head.data.length) {
+          // First chunk is a perfect match.
+          ret = this.shift();
+        } else {
+          // Result spans more than one buffer.
+          ret = hasStrings ? this._getString(n) : this._getBuffer(n);
+        }
+
+        return ret;
       }
+    }, {
+      key: "first",
+      value: function first() {
+        return this.head.data;
+      } // Consumes a specified amount of characters from the buffered data.
 
-      this.length -= c;
-      return ret;
-    } // Make sure the linked list only shows the minimal necessary information.
-    ;
+    }, {
+      key: "_getString",
+      value: function _getString(n) {
+        var p = this.head;
+        var c = 1;
+        var ret = p.data;
+        n -= ret.length;
 
-    _proto[custom] = function (_, options) {
-      return inspect$1(this, _objectSpread({}, options, {
-        // Only inspect one level.
-        depth: 0,
-        // It should not recurse.
-        customInspect: false
-      }));
-    };
+        while (p = p.next) {
+          var str = p.data;
+          var nb = n > str.length ? str.length : n;
+          if (nb === str.length) ret += str;else ret += str.slice(0, n);
+          n -= nb;
+
+          if (n === 0) {
+            if (nb === str.length) {
+              ++c;
+              if (p.next) this.head = p.next;else this.head = this.tail = null;
+            } else {
+              this.head = p;
+              p.data = str.slice(nb);
+            }
+
+            break;
+          }
+
+          ++c;
+        }
+
+        this.length -= c;
+        return ret;
+      } // Consumes a specified amount of bytes from the buffered data.
+
+    }, {
+      key: "_getBuffer",
+      value: function _getBuffer(n) {
+        var ret = Buffer$2.allocUnsafe(n);
+        var p = this.head;
+        var c = 1;
+        p.data.copy(ret);
+        n -= p.data.length;
+
+        while (p = p.next) {
+          var buf = p.data;
+          var nb = n > buf.length ? buf.length : n;
+          buf.copy(ret, ret.length - n, 0, nb);
+          n -= nb;
+
+          if (n === 0) {
+            if (nb === buf.length) {
+              ++c;
+              if (p.next) this.head = p.next;else this.head = this.tail = null;
+            } else {
+              this.head = p;
+              p.data = buf.slice(nb);
+            }
+
+            break;
+          }
+
+          ++c;
+        }
+
+        this.length -= c;
+        return ret;
+      } // Make sure the linked list only shows the minimal necessary information.
+
+    }, {
+      key: custom,
+      value: function value(_, options) {
+        return inspect$1(this, _objectSpread({}, options, {
+          // Only inspect one level.
+          depth: 0,
+          // It should not recurse.
+          customInspect: false
+        }));
+      }
+    }]);
 
     return BufferList;
   }();
@@ -11097,13 +11132,13 @@
   through2_1.ctor = ctor;
   through2_1.obj = obj;
 
-  function _classCallCheck(instance, Constructor) {
+  function _classCallCheck$1(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
   }
 
-  function _defineProperties(target, props) {
+  function _defineProperties$1(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
@@ -11113,9 +11148,9 @@
     }
   }
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
+  function _createClass$1(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties$1(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties$1(Constructor, staticProps);
     return Constructor;
   }
 
@@ -11199,7 +11234,7 @@
 
   var Counter = /*#__PURE__*/function () {
     function Counter() {
-      _classCallCheck(this, Counter);
+      _classCallCheck$1(this, Counter);
 
       this.canCount = false;
       this.doNothing = false;
@@ -11215,7 +11250,7 @@
       };
     }
 
-    _createClass(Counter, [{
+    _createClass$1(Counter, [{
       key: "readLine",
       value: function readLine(lineStr) {
         // catch the --- to ...
