@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.0.0](https://gitlab.com/codsen/codsen/compare/html-table-patcher@1.1.53...html-table-patcher@2.0.0) (2020-05-11)
-
+## 2.0.0 (2020-05-11)
 
 ### Features
 
-* rewrite ([ef39ee9](https://gitlab.com/codsen/codsen/commit/ef39ee9b51f4a53a52ed186d52bc289e6b08dbd7))
-
+- rewrite ([ef39ee9](https://gitlab.com/codsen/codsen/commit/ef39ee9b51f4a53a52ed186d52bc289e6b08dbd7))
 
 ### BREAKING CHANGES
 
-* rewrite
-
-
-
-
+- rewrite
 
 ## 2.0.0 (2020-05-12)
 

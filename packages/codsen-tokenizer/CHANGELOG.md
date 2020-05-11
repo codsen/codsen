@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.15.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.14.3...codsen-tokenizer@2.15.0) (2020-05-11)
-
+## 2.15.0 (2020-05-11)
 
 ### Features
 
-* improvements to esp tag recognition + some rebasing around esp tag extraction ([2117466](https://gitlab.com/codsen/codsen/commit/21174667c15ce313f788aa1ad641d5070903efe6))
-* responsys RPL-like ESP tag recognition ([543214a](https://gitlab.com/codsen/codsen/commit/543214ab0bee9448f99370f395954bd8543b1f11))
-
-
-
-
+- improvements to esp tag recognition + some rebasing around esp tag extraction ([2117466](https://gitlab.com/codsen/codsen/commit/21174667c15ce313f788aa1ad641d5070903efe6))
+- responsys RPL-like ESP tag recognition ([543214a](https://gitlab.com/codsen/codsen/commit/543214ab0bee9448f99370f395954bd8543b1f11))
 
 ## 2.14.0 (2020-04-20)
 

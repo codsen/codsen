@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.5](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.6.4...codsen-parser@0.6.5) (2020-05-11)
-
+## 0.6.5 (2020-05-11)
 
 ### Bug Fixes
 
-* nesting fix - closing tags don't next text tokens that follow ([de384b5](https://gitlab.com/codsen/codsen/commit/de384b5a3e89f6521cc4c080da1f9de3ebe96f4f))
-
-
-
-
+- nesting fix - closing tags don't next text tokens that follow ([de384b5](https://gitlab.com/codsen/codsen/commit/de384b5a3e89f6521cc4c080da1f9de3ebe96f4f))
 
 ## 0.6.2 (2020-04-26)
 
