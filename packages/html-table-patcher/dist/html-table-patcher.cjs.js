@@ -13,9 +13,27 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var parser = _interopDefault(require('html-dom-parser'));
-var domUtils = _interopDefault(require('domutils-bastardised'));
-var renderer = _interopDefault(require('dom-serializer'));
+var parser = _interopDefault(require('codsen-parser'));
+var Ranges = _interopDefault(require('ranges-push'));
+var apply = _interopDefault(require('ranges-apply'));
+var traverse = _interopDefault(require('ast-monkey-traverse-with-lookahead'));
+var htmlCommentRegex = _interopDefault(require('html-comment-regex'));
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -68,199 +86,118 @@ function _objectSpread2(target) {
 
 var version = "1.1.53";
 
-var replaceElement = domUtils.replaceElement,
-    appendChild = domUtils.appendChild,
-    getSiblings = domUtils.getSiblings,
-    getChildren = domUtils.getChildren;
+var ranges = new Ranges();
 function isStr(something) {
   return typeof something === "string";
 }
-var isArr = Array.isArray;
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
 var defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
-function traverse() {
-  var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var cb = arguments.length > 1 ? arguments[1] : undefined;
-  if (!isArr(nodes) || !nodes.length) {
-    return;
-  }
-  nodes.forEach(function (node) {
-    cb(node);
-    traverse(node.children, cb);
-  });
-}
-function patcher(html, generalOpts) {
-  if (typeof html !== "string" || html.length === 0) {
-    return html;
+function patcher(str, generalOpts) {
+  if (typeof str !== "string" || str.length === 0) {
+    return {
+      result: str
+    };
   }
   var opts = _objectSpread2(_objectSpread2({}, defaults), generalOpts);
-  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())) {
-    opts.cssStylesContent = undefined;
+  if (opts.cssStylesContent && (
+  !isStr(opts.cssStylesContent) ||
+  !opts.cssStylesContent.trim())) {
+    opts.cssStylesContent = "";
   }
-  var dom = parser(html);
-  traverse(dom, function (node) {
-    if (node.type === "text" && node.parent && node.parent.type === "tag" && node.parent.name === "table" && isStr(node.data) && node.data.trim()) {
-      (function () {
-        var colspan = 1;
-        var centered = !!opts.alwaysCenter;
-        var siblings = getSiblings(node);
-        if (isArr(siblings) && siblings.length) {
-          for (var i = 0, len = siblings.length; i < len; i++) {
-            if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-              var tdcount = getChildren(siblings[i]).reduce(function (acc, currNode) {
-                if (currNode.name === "td" && currNode.type === "tag") {
-                  if (!centered && currNode.attribs && (currNode.attribs.align && currNode.attribs.align === "center" || isStr(currNode.attribs.style) && currNode.attribs.style.match(/text-align:\s*center/gi) && currNode.attribs.style.match(/text-align:\s*center/gi).length)) {
-                    centered = true;
-                  }
-                  return acc + 1;
-                }
-                return acc;
-              }, 0);
-              if (tdcount && tdcount > 1) {
-                colspan = tdcount;
-              }
-              break;
-            }
-          }
-        }
-        var replacementTr = {
-          type: "tag",
-          name: "tr",
-          children: []
-        };
-        var replacementTd = {
-          type: "tag",
-          name: "td",
-          children: [node]
-        };
-        if (colspan && colspan > 1) {
-          if (!replacementTd.attribs) {
-            replacementTd.attribs = {};
-          }
-          replacementTd.attribs.colspan = String(colspan);
-        }
-        if (centered) {
-          if (!replacementTd.attribs) {
-            replacementTd.attribs = {};
-          }
-          replacementTd.attribs.align = "center";
-        }
-        if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-          replacementTd.attribs.style = opts.cssStylesContent;
-        }
-        var linebreak = {
-          type: "text",
-          data: "\n"
-        };
-        appendChild(replacementTr, replacementTd);
-        appendChild(replacementTr, linebreak);
-        replaceElement(node, replacementTr);
-      })();
-    } else if (node.type === "tag" && node.name === "table" && node.children && node.children.some(function (currNode) {
-      return currNode.type === "tag" && currNode.name === "tr" && currNode.children && currNode.children.some(function (childNode) {
-        return childNode.type === "text" && isStr(childNode.data) && childNode.data.trim();
-      });
+  var knownCommentTokenPaths = [];
+  traverse(parser(str), function (key, val, innerObj) {
+    /* istanbul ignore else */
+    if (isObj(key) && key.type === "comment" && !knownCommentTokenPaths.some(function (oneOfRecordedPaths) {
+      return innerObj.path.startsWith(oneOfRecordedPaths);
     })) {
-      var centered = !!opts.alwaysCenter;
-      var newChildren = [];
-      node.children.forEach(function (oneOfNodes) {
-        if (oneOfNodes.type === "text" && isStr(oneOfNodes.data) && !oneOfNodes.data.trim()) {
-          newChildren.push(oneOfNodes);
-        }
-        if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
-          var consecutiveTDs = 0;
-          var lastWasTd = false;
-          oneOfNodes.children.forEach(function (oneOfSubNodes) {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              if (!centered && oneOfSubNodes.attribs && (oneOfSubNodes.attribs.align && oneOfSubNodes.attribs.align === "center" || oneOfSubNodes.attribs.style && oneOfSubNodes.attribs.style.match(/text-align:\s*center/gi).length)) {
-                centered = true;
-              }
-              if (!lastWasTd) {
-                lastWasTd = true;
-              } else {
-                consecutiveTDs += 1;
-              }
-            } else if (lastWasTd && (oneOfSubNodes.type !== "text" || isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim())) {
-              lastWasTd = false;
-            }
-          });
-          lastWasTd = false;
-          var staging = [];
-          oneOfNodes.children.forEach(function (oneOfSubNodes) {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              if (!lastWasTd) {
-                lastWasTd = true;
-              }
-              staging.push(oneOfSubNodes);
-            } else if (oneOfSubNodes.type === "text" && isStr(oneOfSubNodes.data)) {
-              if (!oneOfSubNodes.data.trim()) {
-                staging.push(oneOfSubNodes);
-              } else {
-                lastWasTd = false;
-                if (staging.length) {
-                  newChildren.push({
-                    type: "tag",
-                    name: "tr",
-                    children: Array.from(staging)
-                  });
-                  staging = [];
-                }
-                var replacementTr = {
-                  type: "tag",
-                  name: "tr",
-                  children: []
-                };
-                var replacementTd = {
-                  type: "tag",
-                  name: "td",
-                  children: [oneOfSubNodes]
-                };
-                if (consecutiveTDs > 0) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.colspan = String(consecutiveTDs + 1);
-                }
-                if (centered) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.align = "center";
-                }
-                if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-                  replacementTd.attribs.style = opts.cssStylesContent;
-                }
-                appendChild(replacementTr, replacementTd);
-                newChildren.push(replacementTr);
-                staging = [];
-              }
-            } else {
-              lastWasTd = false;
-              newChildren.push({
-                type: "tag",
-                name: "tr",
-                children: Array.from(staging)
+      knownCommentTokenPaths.push(innerObj.path);
+    } else if (
+    isObj(key) &&
+    key.type === "tag" && key.tagName === "table" && !knownCommentTokenPaths.some(function (oneOfKnownCommentPaths) {
+      return innerObj.path.startsWith(oneOfKnownCommentPaths);
+    }) &&
+    !key.closing &&
+    key.children.some(function (childNodeObj) {
+      return ["text", "esp"].includes(childNodeObj.type);
+    })) {
+      var colspanVal = 1;
+      var centered = false;
+      var firstTrFound;
+      if (
+      key.children.some(function (childNodeObj) {
+        return childNodeObj.type === "tag" && childNodeObj.tagName === "tr" && !childNodeObj.closing && (firstTrFound = childNodeObj);
+      })) {
+        var count = 0;
+        for (var i = 0, len = firstTrFound.children.length; i < len; i++) {
+          var obj = firstTrFound.children[i];
+          if (obj.type === "tag" && obj.tagName === "td") {
+            if (!obj.closing) {
+              centered = obj.attribs.some(function (attrib) {
+                return attrib.attribName === "align" && attrib.attribValueRaw === "center" || attrib.attribName === "style" && /text-align:\s*center/i.test(attrib.attribValueRaw);
               });
-              staging = [];
-              staging.push(oneOfSubNodes);
+              count++;
+              if (count > colspanVal) {
+                colspanVal = count;
+              }
             }
-          });
-          if (staging.length) {
-            newChildren.push({
-              type: "tag",
-              name: "tr",
-              children: Array.from(staging)
-            });
-            staging = [];
+          } else if (obj.type !== "text" || obj.value.replace(htmlCommentRegex, "").trim()) {
+            count = 0;
+          }
+        }
+      }
+      key.children
+      .filter(function (childNodeObj) {
+        return ["text", "esp"].includes(childNodeObj.type);
+      })
+      .forEach(function (obj) {
+        if (obj.value.replace(htmlCommentRegex, "").trim()) {
+          ranges.push(obj.start, obj.end, "\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(obj.value.trim(), "\n  </td>\n</tr>\n"));
+        }
+      });
+      key.children
+      .filter(function (obj) {
+        return obj.type === "tag" && obj.tagName === "tr" && !obj.closing;
+      }).forEach(function (trTag) {
+        var doNothing = false;
+        for (var _i = 0, _len = trTag.children.length; _i < _len; _i++) {
+          var childNodeObj = trTag.children[_i];
+          if (doNothing && childNodeObj.type === "comment" && childNodeObj.closing) {
+            doNothing = false;
+            continue;
+          }
+          if (!doNothing && childNodeObj.type === "comment" && !childNodeObj.closing) {
+            doNothing = true;
+          }
+          if (!doNothing && ["text", "esp"].includes(childNodeObj.type) && childNodeObj.value.trim()) {
+            if (childNodeObj.value.trim()) {
+              if (!_i) {
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n</tr>\n<tr>\n"));
+              } else if (_i && _len > 1 && _i === _len - 1) {
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n"));
+              } else {
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n</tr>\n<tr>\n"));
+              }
+            }
           }
         }
       });
-      node.children = newChildren;
     }
   });
-  return renderer(dom);
+  if (ranges.current()) {
+    var result = apply(str, ranges.current());
+    ranges.wipe();
+    return {
+      result: result
+    };
+  }
+  return {
+    result: str
+  };
 }
 
 exports.defaults = defaults;

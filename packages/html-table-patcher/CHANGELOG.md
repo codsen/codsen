@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2020-05-12)
+
+### Complete rewrite. But no changes to API. Still bumping major.
+
+We switched to all in-house components:
+
+- `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) — produces AST
+- `ast-monkey-traverse-with-lookahead` ([npm](https://www.npmjs.com/package/ast-monkey-traverse-with-lookahead)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead/)) — traverses that AST
+- `ranges-push` ([npm](https://www.npmjs.com/package/ranges-push)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/)) — records what needs to be done in source code while traversing AST
+- `ranges-apply` ([npm](https://www.npmjs.com/package/ranges-apply)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/)) — performs all amends in string in one go when finished traversing AST
+
+As a result, UMD bundle is half-the size (was 191KB minified, now 87KB)!
+
 ## 1.1.13 (2019-08-08)
 
 ### Bug Fixes

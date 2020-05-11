@@ -1,342 +1,436 @@
-import parser from "html-dom-parser";
-import domUtils from "domutils-bastardised";
-import renderer from "dom-serializer";
+/* eslint no-return-assign: 0 */
+
+import parser from "codsen-parser";
+import Ranges from "ranges-push";
+import apply from "ranges-apply";
+import traverse from "ast-monkey-traverse-with-lookahead";
+import htmlCommentRegex from "html-comment-regex";
 import { version } from "../package.json";
 
-const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;
+const ranges = new Ranges();
 
 function isStr(something) {
   return typeof something === "string";
 }
-const isArr = Array.isArray;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
+
+// the plan is to use defaults on the UI, so export them as first-class citizen
 const defaults = {
   cssStylesContent: "",
   alwaysCenter: false,
 };
 
-function traverse(nodes = [], cb) {
-  if (!isArr(nodes) || !nodes.length) {
-    return;
-  }
-  nodes.forEach((node) => {
-    cb(node);
-    traverse(node.children, cb);
-  });
-}
+function patcher(str, generalOpts) {
+  // insurance
+  // ---------------------------------------------------------------------------
 
-function patcher(html, generalOpts) {
-  if (typeof html !== "string" || html.length === 0) {
-    return html;
+  // if inputs are wrong, just return what was given
+  if (typeof str !== "string" || str.length === 0) {
+    return { result: str };
   }
 
+  // setup
+  // ---------------------------------------------------------------------------
+
+  // clone the defaults, don't mutate the input argument object
   const opts = { ...defaults, ...generalOpts };
   if (
     opts.cssStylesContent &&
-    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())
+    // if not a string was passed
+    (!isStr(opts.cssStylesContent) ||
+      // or it was empty of full of whitespace
+      !opts.cssStylesContent.trim())
   ) {
-    opts.cssStylesContent = undefined;
+    opts.cssStylesContent = "";
   }
 
-  const dom = parser(html);
-  traverse(dom, (node) => {
+  console.log(
+    `052 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+
+  // the bizness
+  // ---------------------------------------------------------------------------
+
+  // traversal is done from a callback, same like Array.prototype.forEach()
+  // you don't assign anything, as in "const x = traverse(..." -
+  // instead, you do the deed inside the callback function
+  //
+
+  // ensure that we don't traverse inside comment tokens
+  // practically we achieve that by comparing does current path start with
+  // and of the known comment token paths:
+  const knownCommentTokenPaths = [];
+
+  console.log(`072 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`);
+  traverse(parser(str), (key, val, innerObj) => {
+    /* istanbul ignore else */
     if (
-      node.type === "text" &&
-      node.parent &&
-      node.parent.type === "tag" &&
-      node.parent.name === "table" &&
-      isStr(node.data) &&
-      node.data.trim()
-    ) {
-      let colspan = 1;
-      let centered = !!opts.alwaysCenter;
-
-      // 1. calculate the colspan (if needed at all, that is, colspan > 1)
-      const siblings = getSiblings(node);
-
-      // Loop through all siblings and look for the first TR.
-      // If such exists, count its TD's. If more than two, Bob's your uncle,
-      // here's the colspan value.
-      if (isArr(siblings) && siblings.length) {
-        for (let i = 0, len = siblings.length; i < len; i++) {
-          if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-            const tdcount = getChildren(siblings[i]).reduce((acc, currNode) => {
-              if (currNode.name === "td" && currNode.type === "tag") {
-                if (
-                  !centered &&
-                  currNode.attribs &&
-                  ((currNode.attribs.align &&
-                    currNode.attribs.align === "center") ||
-                    (isStr(currNode.attribs.style) &&
-                      currNode.attribs.style.match(/text-align:\s*center/gi) &&
-                      currNode.attribs.style.match(/text-align:\s*center/gi)
-                        .length))
-                ) {
-                  centered = true;
-                }
-                return acc + 1;
-              }
-              return acc;
-            }, 0);
-            if (tdcount && tdcount > 1) {
-              colspan = tdcount;
-            }
-            break;
-          }
-        }
-      }
-
-      // 2. append TR with a nested TD.
-      // create a blank TR:
-      const replacementTr = {
-        type: "tag",
-        name: "tr",
-        children: [],
-      };
-      const replacementTd = {
-        type: "tag",
-        name: "td",
-        children: [node],
-      };
-      if (colspan && colspan > 1) {
-        if (!replacementTd.attribs) {
-          replacementTd.attribs = {};
-        }
-        replacementTd.attribs.colspan = String(colspan);
-      }
-      if (centered) {
-        if (!replacementTd.attribs) {
-          replacementTd.attribs = {};
-        }
-        replacementTd.attribs.align = "center";
-      }
-      if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-        replacementTd.attribs.style = opts.cssStylesContent;
-      }
-      const linebreak = {
-        type: "text",
-        data: "\n",
-      };
-      appendChild(replacementTr, replacementTd);
-      appendChild(replacementTr, linebreak);
-      replaceElement(node, replacementTr);
-    } else if (
-      node.type === "tag" &&
-      node.name === "table" &&
-      node.children &&
-      node.children.some(
-        (currNode) =>
-          currNode.type === "tag" &&
-          currNode.name === "tr" &&
-          currNode.children &&
-          currNode.children.some(
-            (childNode) =>
-              childNode.type === "text" &&
-              isStr(childNode.data) &&
-              childNode.data.trim()
-          )
+      isObj(key) &&
+      key.type === "comment" &&
+      !knownCommentTokenPaths.some((oneOfRecordedPaths) =>
+        innerObj.path.startsWith(oneOfRecordedPaths)
       )
     ) {
-      // type 2 - <tr>zzz<td>... ; ...</td>zzz<td>... - content around TD tags
+      knownCommentTokenPaths.push(innerObj.path);
+    } else if (
+      // tags are always stuck in an array, "root" level is array too
+      // ast-monkey reports array elements as "key" and "value" is undefined.
+      // if this was object, "key" would be key of key/value pair, "value"
+      // would be value of the key/value pair.
       //
-      // filter all TABLES which have TR's which have non-whitespace text nodes.
+      // The tag itself is a plain object:
+      isObj(key) &&
+      // filter by type and tag name
+      key.type === "tag" &&
+      key.tagName === "table" &&
+      !knownCommentTokenPaths.some((oneOfKnownCommentPaths) =>
+        innerObj.path.startsWith(oneOfKnownCommentPaths)
+      ) &&
+      // ensure it's not closing, otherwise closing tags will be caught too:
+      !key.closing &&
+      // we wrap either raw text or esp template tag nodes only:
+      key.children.some((childNodeObj) =>
+        ["text", "esp"].includes(childNodeObj.type)
+      )
+    ) {
+      // so this table does have some text nodes straight inside TABLE tag
+      console.log(
+        `106 ${`\u001b[${32}m${`TABLE caught!`}\u001b[${39}m`} Path: ${
+          innerObj.path
+        }`
+      );
 
-      let centered = !!opts.alwaysCenter;
+      // find out how many TD's are there on TR's that have TD's (if any exist)
+      // then, that value, if greater then 1 will be the colspan value -
+      // we'll wrap this text node's contents with one TR and one TD - but
+      // set TD colspan to this value:
+      let colspanVal = 1;
 
-      const newChildren = [];
-      node.children.forEach((oneOfNodes) => {
-        // 1. if it's whitespace text node, let it pass:
-        if (
-          oneOfNodes.type === "text" &&
-          isStr(oneOfNodes.data) &&
-          !oneOfNodes.data.trim()
-        ) {
-          newChildren.push(oneOfNodes);
-        }
-        // 2. if it's TR, process its children and push separate TR for each
-        // text node
-        if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
-          // PART 2-1.
-          // ███████████████████████████████████████
+      // if td we decide the colspan contains some attributes, we'll note
+      // down the range of where first attrib starts and last attrib ends
+      // then slice that range and insert of every td, along the colspan
+      let centered = false;
 
-          // Count how many TD's within this TR are consecutive. That will be colspan
-          // value we'll append on each newly wrapped TR's TD.
+      let firstTrFound;
+      if (
+        // some TR's exist inside this TABLE tag
+        key.children.some(
+          (childNodeObj) =>
+            childNodeObj.type === "tag" &&
+            childNodeObj.tagName === "tr" &&
+            !childNodeObj.closing &&
+            (firstTrFound = childNodeObj)
+        )
+      ) {
+        console.log(`133 ${`\u001b[${32}m${`TR`}\u001b[${39}m`} found`);
+        // console.log(
+        //   `108 ${`\u001b[${33}m${`firstTrFound`}\u001b[${39}m`} = ${JSON.stringify(
+        //     firstTrFound,
+        //     null,
+        //     4
+        //   )}`
+        // );
 
-          // For example, consider this:
-          //
-          // <table>
-          //   <tr>
-          //     x
-          //     <td> <---- TD #1
-          //       1
-          //     </td>
-          //     <td> <---- TD #2
-          //       2
-          //     </td>
-          //   </tr>
-          // </table>
+        // colspanVal is equal to the count of TD's inside children[] array
+        // the only condition - we count consecutive TD's, any ESP or text
+        // token breaks the counting
 
-          // this would get patched to:
+        let count = 0;
 
-          // <table>
-          //   <tr>
-          //     <td colspan="2">  <---- colspan="2" because there were two consecutive TD's
-          //       x
-          //     </td>
-          //   </tr>
-          //   <tr>
-          //     <td>
-          //       1
-          //     </td>
-          //     <td>
-          //       2
-          //     </td>
-          //   </tr>
-          // </table>
+        // console.log(
+        //   `132 FILTER ${`\u001b[${33}m${`firstTrFound.children`}\u001b[${39}m`} = ${JSON.stringify(
+        //     firstTrFound.children,
+        //     null,
+        //     4
+        //   )}`
+        // );
+        for (let i = 0, len = firstTrFound.children.length; i < len; i++) {
+          const obj = firstTrFound.children[i];
+          // console.log(
+          //   `141 ---------------- ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+          //     obj,
+          //     null,
+          //     4
+          //   )}`
+          // );
 
-          let consecutiveTDs = 0;
-          let lastWasTd = false;
-          oneOfNodes.children.forEach((oneOfSubNodes) => {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              // 1. check for centered'ness
-              if (
-                !centered &&
-                oneOfSubNodes.attribs &&
-                ((oneOfSubNodes.attribs.align &&
-                  oneOfSubNodes.attribs.align === "center") ||
-                  (oneOfSubNodes.attribs.style &&
-                    oneOfSubNodes.attribs.style.match(/text-align:\s*center/gi)
-                      .length))
-              ) {
-                centered = true;
+          // count consecutive TD's
+          if (obj.type === "tag" && obj.tagName === "td") {
+            if (!obj.closing) {
+              // detect center-alignment
+              centered = obj.attribs.some(
+                (attrib) =>
+                  (attrib.attribName === "align" &&
+                    attrib.attribValueRaw === "center") ||
+                  (attrib.attribName === "style" &&
+                    /text-align:\s*center/i.test(attrib.attribValueRaw))
+              );
+              count++;
+              if (count > colspanVal) {
+                colspanVal = count;
               }
-
-              // 2. count TD consecutive'ness
-              if (!lastWasTd) {
-                lastWasTd = true;
-              } else {
-                consecutiveTDs += 1;
-              }
-            } else if (
-              lastWasTd &&
-              (oneOfSubNodes.type !== "text" ||
-                (isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim()))
-            ) {
-              lastWasTd = false;
             }
-          });
-
-          // PART 2-2.
-          // ███████████████████████████████████████
-
-          // push each text node or chunk of consecutive TD's into separate
-          // TR's and replace this TR with those TR's.
-
-          lastWasTd = false;
-
-          // We gather consecutive TD's or whitespace into staging.
-          // Reaching the end or a first non-TD and non-whitespace node submits
-          // everything what was staged under a separate TR, this TR goes into
-          // "newChildren" array.
-          let staging = [];
-
-          oneOfNodes.children.forEach((oneOfSubNodes) => {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              // if it's a TD, submit it
-
-              if (!lastWasTd) {
-                lastWasTd = true;
-              }
-              // push the current node into staging:
-              staging.push(oneOfSubNodes);
-            } else if (
-              oneOfSubNodes.type === "text" &&
-              isStr(oneOfSubNodes.data)
-            ) {
-              if (!oneOfSubNodes.data.trim()) {
-                // if it's whitespace, stage it
-                staging.push(oneOfSubNodes);
-              } else {
-                lastWasTd = false;
-                // release stage contents
-                if (staging.length) {
-                  newChildren.push({
-                    type: "tag",
-                    name: "tr",
-                    children: Array.from(staging),
-                  });
-                  staging = [];
-                }
-
-                // push raw text within TR > TD > this-text-node
-                const replacementTr = {
-                  type: "tag",
-                  name: "tr",
-                  children: [],
-                };
-                const replacementTd = {
-                  type: "tag",
-                  name: "td",
-                  children: [oneOfSubNodes],
-                };
-                if (consecutiveTDs > 0) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.colspan = String(consecutiveTDs + 1);
-                }
-                if (centered) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.align = "center";
-                }
-                if (
-                  isStr(opts.cssStylesContent) &&
-                  opts.cssStylesContent.trim()
-                ) {
-                  replacementTd.attribs.style = opts.cssStylesContent;
-                }
-                appendChild(replacementTr, replacementTd);
-                newChildren.push(replacementTr);
-
-                // reset stage
-                staging = [];
-              }
-            } else {
-              lastWasTd = false;
-              // Wrap this TD with a new TR and push into the new CHILDREN array
-              newChildren.push({
-                type: "tag",
-                name: "tr",
-                children: Array.from(staging),
-              });
-
-              // 2. Wipe stage
-              staging = [];
-
-              // 3. Push current node to stage
-              staging.push(oneOfSubNodes);
-            }
-          });
-
-          if (staging.length) {
-            // if there's anything in staging after the loop, push and wipe
-            newChildren.push({
-              type: "tag",
-              name: "tr",
-              children: Array.from(staging),
-            });
-            // wipe
-            staging = [];
+            // else - ignore closing tags
+          } else if (
+            obj.type !== "text" ||
+            obj.value.replace(htmlCommentRegex, "").trim()
+          ) {
+            // reset
+            count = 0;
           }
-        }
-      });
 
-      // eslint-disable-next-line no-param-reassign
-      node.children = newChildren;
+          // console.log(
+          //   `174 ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
+          //     count,
+          //     null,
+          //     4
+          //   )}`
+          // );
+        }
+      }
+
+      console.log(
+        `201 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`colspanVal`}\u001b[${39}m`} = ${JSON.stringify(
+          colspanVal,
+          null,
+          4
+        )}`
+      );
+
+      //
+      //
+      //
+      //                         T Y P E      I.
+      //
+      //
+      //
+      // -----------------------------------------------------------------------------
+
+      console.log(" ");
+      console.log(
+        `219                        ${`\u001b[${35}m${`TYPE I.`}\u001b[${39}m`}`
+      );
+      console.log(" ");
+
+      // now filter all "text" type children nodes from this TABLE tag
+      // this key below is the table tag we filtered in the beginning
+      key.children
+        // filter out text nodes:
+        .filter((childNodeObj) => ["text", "esp"].includes(childNodeObj.type))
+        // wrap each with TR+TD with colspan:
+        .forEach((obj) => {
+          console.log(
+            `231 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`
+          );
+          console.log(
+            `234 text node, ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              obj,
+              null,
+              4
+            )}`
+          );
+          console.log(" ");
+          console.log(
+            `242 ${
+              obj.value.trim()
+                ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
+                : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
+            }`
+          );
+          if (obj.value.replace(htmlCommentRegex, "").trim()) {
+            // There will always be whitespace in nicely formatted tags,
+            // so ignore text tokens which have values that trim to zero length.
+            //
+            // Since trimmed value of zero length is already falsey, we don't
+            // need to do
+            // "if (obj.value.trim().length)" or
+            // "if (obj.value.trim() === "")" or
+            // "if (obj.value.trim().length === 0)"
+            //
+            ranges.push(
+              obj.start,
+              obj.end,
+              `\n<tr>\n  <td${
+                colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+              }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                opts.cssStylesContent ? ` style="${opts.cssStylesContent}"` : ""
+              }>\n    ${obj.value.trim()}\n  </td>\n</tr>\n`
+            );
+          }
+        });
+
+      //
+      //
+      //
+      //                         T Y P E      II.
+      //
+      //
+      //
+      // -----------------------------------------------------------------------------
+
+      console.log(" ");
+      console.log(
+        `281                        ${`\u001b[${35}m${`TYPE II.`}\u001b[${39}m`}`
+      );
+      console.log(" ");
+
+      key.children
+        // filter out text nodes:
+        .filter(
+          (obj) => obj.type === "tag" && obj.tagName === "tr" && !obj.closing
+        )
+        .forEach((trTag) => {
+          // console.log(
+          //   `224 ██ ${`\u001b[${33}m${`trTag`}\u001b[${39}m`} = ${JSON.stringify(
+          //     trTag,
+          //     null,
+          //     4
+          //   )}`
+          // );
+
+          // we use for loop because we need to look back, what token was
+          // before, plus filter
+
+          let doNothing = false;
+          for (let i = 0, len = trTag.children.length; i < len; i++) {
+            console.log(
+              `305 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TR`}\u001b[${39}m`} --------------------`
+            );
+            const childNodeObj = trTag.children[i];
+
+            // deactivate
+            if (
+              doNothing &&
+              childNodeObj.type === "comment" &&
+              childNodeObj.closing
+            ) {
+              doNothing = false;
+              continue;
+            }
+
+            // if a child node is opening comment node, activate doNothing
+            // until closing counterpart is found
+            if (
+              !doNothing &&
+              childNodeObj.type === "comment" &&
+              !childNodeObj.closing
+            ) {
+              doNothing = true;
+            }
+
+            if (
+              !doNothing &&
+              ["text", "esp"].includes(childNodeObj.type) &&
+              childNodeObj.value.trim()
+            ) {
+              console.log(
+                `335 ██ ${`\u001b[${33}m${`childNodeObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  childNodeObj,
+                  null,
+                  4
+                )}`
+              );
+
+              console.log(" ");
+              console.log(
+                `344 ${
+                  childNodeObj.value.trim()
+                    ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
+                    : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
+                }`
+              );
+              if (childNodeObj.value.trim()) {
+                // There will always be whitespace in nicely formatted tags,
+                // so ignore text tokens which have values that trim to zero length.
+
+                console.log(
+                  `355 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+                    i,
+                    null,
+                    4
+                  )}`
+                );
+
+                if (!i) {
+                  console.log(`363 it's the first element, so TR is behind`);
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n</tr>\n<tr>\n`
+                  );
+                } else if (i && len > 1 && i === len - 1) {
+                  console.log(`376 it's the last element, closing TR is next`);
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n</tr>\n<tr>\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n`
+                  );
+                } else {
+                  console.log(`389 the previous tag was TD`);
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n</tr>\n<tr>\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n</tr>\n<tr>\n`
+                  );
+                }
+              }
+            }
+          }
+        });
+
+      console.log(
+        `408 ---------------------------- ${`\u001b[${32}m${`DONE`}\u001b[${39}m`} ----------------------------`
+      );
     }
   });
-  return renderer(dom);
+
+  console.log(
+    `414 after traversal, ${`\u001b[${33}m${`knownCommentTokenPaths`}\u001b[${39}m`} = ${JSON.stringify(
+      knownCommentTokenPaths,
+      null,
+      4
+    )}`
+  );
+
+  console.log(" ");
+  console.log(`422 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+
+  if (ranges.current()) {
+    const result = apply(str, ranges.current());
+    ranges.wipe();
+    console.log(
+      `428 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`
+    );
+    return { result };
+  }
+
+  return { result: str };
 }
 
 export { patcher, defaults, version };

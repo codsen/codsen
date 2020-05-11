@@ -1,5 +1,4 @@
 import builtins from "rollup-plugin-node-builtins";
-import globals from "rollup-plugin-node-globals";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -32,7 +31,6 @@ export default (commandLineArgs) => {
           sourceMap: false,
         }),
         builtins(),
-        globals(),
         resolve(),
         json(),
         commonjs(),
@@ -55,7 +53,6 @@ export default (commandLineArgs) => {
           sourceMap: false,
         }),
         builtins(),
-        globals(),
         resolve(),
         json(),
         commonjs(),
@@ -69,17 +66,17 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "dom-serializer",
-        "domutils-bastardised",
+        "ast-monkey-traverse-with-lookahead",
+        "codsen-parser",
         "html-comment-regex",
-        "html-dom-parser",
+        "ranges-apply",
+        "ranges-push",
       ],
       plugins: [
         strip({
           sourceMap: false,
         }),
         builtins(),
-        globals(),
         json(),
         babel(),
         cleanup({ comments: "istanbul" }),
@@ -92,17 +89,17 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "dom-serializer",
-        "domutils-bastardised",
+        "ast-monkey-traverse-with-lookahead",
+        "codsen-parser",
         "html-comment-regex",
-        "html-dom-parser",
+        "ranges-apply",
+        "ranges-push",
       ],
       plugins: [
         strip({
           sourceMap: false,
         }),
         builtins(),
-        globals(),
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),

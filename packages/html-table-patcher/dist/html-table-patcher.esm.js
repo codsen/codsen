@@ -7,251 +7,192 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
  */
 
-import parser from 'html-dom-parser';
-import domUtils from 'domutils-bastardised';
-import renderer from 'dom-serializer';
+import parser from 'codsen-parser';
+import Ranges from 'ranges-push';
+import apply from 'ranges-apply';
+import traverse from 'ast-monkey-traverse-with-lookahead';
+import htmlCommentRegex from 'html-comment-regex';
 
 var version = "1.1.53";
 
-const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;
+const ranges = new Ranges();
 function isStr(something) {
   return typeof something === "string";
 }
-const isArr = Array.isArray;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
 const defaults = {
   cssStylesContent: "",
   alwaysCenter: false,
 };
-function traverse(nodes = [], cb) {
-  if (!isArr(nodes) || !nodes.length) {
-    return;
-  }
-  nodes.forEach((node) => {
-    cb(node);
-    traverse(node.children, cb);
-  });
-}
-function patcher(html, generalOpts) {
-  if (typeof html !== "string" || html.length === 0) {
-    return html;
+function patcher(str, generalOpts) {
+  if (typeof str !== "string" || str.length === 0) {
+    return { result: str };
   }
   const opts = { ...defaults, ...generalOpts };
   if (
     opts.cssStylesContent &&
-    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim())
+    (!isStr(opts.cssStylesContent) ||
+      !opts.cssStylesContent.trim())
   ) {
-    opts.cssStylesContent = undefined;
+    opts.cssStylesContent = "";
   }
-  const dom = parser(html);
-  traverse(dom, (node) => {
+  const knownCommentTokenPaths = [];
+  traverse(parser(str), (key, val, innerObj) => {
+    /* istanbul ignore else */
     if (
-      node.type === "text" &&
-      node.parent &&
-      node.parent.type === "tag" &&
-      node.parent.name === "table" &&
-      isStr(node.data) &&
-      node.data.trim()
-    ) {
-      let colspan = 1;
-      let centered = !!opts.alwaysCenter;
-      const siblings = getSiblings(node);
-      if (isArr(siblings) && siblings.length) {
-        for (let i = 0, len = siblings.length; i < len; i++) {
-          if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-            const tdcount = getChildren(siblings[i]).reduce((acc, currNode) => {
-              if (currNode.name === "td" && currNode.type === "tag") {
-                if (
-                  !centered &&
-                  currNode.attribs &&
-                  ((currNode.attribs.align &&
-                    currNode.attribs.align === "center") ||
-                    (isStr(currNode.attribs.style) &&
-                      currNode.attribs.style.match(/text-align:\s*center/gi) &&
-                      currNode.attribs.style.match(/text-align:\s*center/gi)
-                        .length))
-                ) {
-                  centered = true;
-                }
-                return acc + 1;
-              }
-              return acc;
-            }, 0);
-            if (tdcount && tdcount > 1) {
-              colspan = tdcount;
-            }
-            break;
-          }
-        }
-      }
-      const replacementTr = {
-        type: "tag",
-        name: "tr",
-        children: [],
-      };
-      const replacementTd = {
-        type: "tag",
-        name: "td",
-        children: [node],
-      };
-      if (colspan && colspan > 1) {
-        if (!replacementTd.attribs) {
-          replacementTd.attribs = {};
-        }
-        replacementTd.attribs.colspan = String(colspan);
-      }
-      if (centered) {
-        if (!replacementTd.attribs) {
-          replacementTd.attribs = {};
-        }
-        replacementTd.attribs.align = "center";
-      }
-      if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim()) {
-        replacementTd.attribs.style = opts.cssStylesContent;
-      }
-      const linebreak = {
-        type: "text",
-        data: "\n",
-      };
-      appendChild(replacementTr, replacementTd);
-      appendChild(replacementTr, linebreak);
-      replaceElement(node, replacementTr);
-    } else if (
-      node.type === "tag" &&
-      node.name === "table" &&
-      node.children &&
-      node.children.some(
-        (currNode) =>
-          currNode.type === "tag" &&
-          currNode.name === "tr" &&
-          currNode.children &&
-          currNode.children.some(
-            (childNode) =>
-              childNode.type === "text" &&
-              isStr(childNode.data) &&
-              childNode.data.trim()
-          )
+      isObj(key) &&
+      key.type === "comment" &&
+      !knownCommentTokenPaths.some((oneOfRecordedPaths) =>
+        innerObj.path.startsWith(oneOfRecordedPaths)
       )
     ) {
-      let centered = !!opts.alwaysCenter;
-      const newChildren = [];
-      node.children.forEach((oneOfNodes) => {
-        if (
-          oneOfNodes.type === "text" &&
-          isStr(oneOfNodes.data) &&
-          !oneOfNodes.data.trim()
-        ) {
-          newChildren.push(oneOfNodes);
-        }
-        if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
-          let consecutiveTDs = 0;
-          let lastWasTd = false;
-          oneOfNodes.children.forEach((oneOfSubNodes) => {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              if (
-                !centered &&
-                oneOfSubNodes.attribs &&
-                ((oneOfSubNodes.attribs.align &&
-                  oneOfSubNodes.attribs.align === "center") ||
-                  (oneOfSubNodes.attribs.style &&
-                    oneOfSubNodes.attribs.style.match(/text-align:\s*center/gi)
-                      .length))
-              ) {
-                centered = true;
+      knownCommentTokenPaths.push(innerObj.path);
+    } else if (
+      isObj(key) &&
+      key.type === "tag" &&
+      key.tagName === "table" &&
+      !knownCommentTokenPaths.some((oneOfKnownCommentPaths) =>
+        innerObj.path.startsWith(oneOfKnownCommentPaths)
+      ) &&
+      !key.closing &&
+      key.children.some((childNodeObj) =>
+        ["text", "esp"].includes(childNodeObj.type)
+      )
+    ) {
+      let colspanVal = 1;
+      let centered = false;
+      let firstTrFound;
+      if (
+        key.children.some(
+          (childNodeObj) =>
+            childNodeObj.type === "tag" &&
+            childNodeObj.tagName === "tr" &&
+            !childNodeObj.closing &&
+            (firstTrFound = childNodeObj)
+        )
+      ) {
+        let count = 0;
+        for (let i = 0, len = firstTrFound.children.length; i < len; i++) {
+          const obj = firstTrFound.children[i];
+          if (obj.type === "tag" && obj.tagName === "td") {
+            if (!obj.closing) {
+              centered = obj.attribs.some(
+                (attrib) =>
+                  (attrib.attribName === "align" &&
+                    attrib.attribValueRaw === "center") ||
+                  (attrib.attribName === "style" &&
+                    /text-align:\s*center/i.test(attrib.attribValueRaw))
+              );
+              count++;
+              if (count > colspanVal) {
+                colspanVal = count;
               }
-              if (!lastWasTd) {
-                lastWasTd = true;
-              } else {
-                consecutiveTDs += 1;
-              }
-            } else if (
-              lastWasTd &&
-              (oneOfSubNodes.type !== "text" ||
-                (isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim()))
-            ) {
-              lastWasTd = false;
             }
-          });
-          lastWasTd = false;
-          let staging = [];
-          oneOfNodes.children.forEach((oneOfSubNodes) => {
-            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
-              if (!lastWasTd) {
-                lastWasTd = true;
-              }
-              staging.push(oneOfSubNodes);
-            } else if (
-              oneOfSubNodes.type === "text" &&
-              isStr(oneOfSubNodes.data)
-            ) {
-              if (!oneOfSubNodes.data.trim()) {
-                staging.push(oneOfSubNodes);
-              } else {
-                lastWasTd = false;
-                if (staging.length) {
-                  newChildren.push({
-                    type: "tag",
-                    name: "tr",
-                    children: Array.from(staging),
-                  });
-                  staging = [];
-                }
-                const replacementTr = {
-                  type: "tag",
-                  name: "tr",
-                  children: [],
-                };
-                const replacementTd = {
-                  type: "tag",
-                  name: "td",
-                  children: [oneOfSubNodes],
-                };
-                if (consecutiveTDs > 0) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.colspan = String(consecutiveTDs + 1);
-                }
-                if (centered) {
-                  if (!replacementTd.attribs) {
-                    replacementTd.attribs = {};
-                  }
-                  replacementTd.attribs.align = "center";
-                }
-                if (
-                  isStr(opts.cssStylesContent) &&
-                  opts.cssStylesContent.trim()
-                ) {
-                  replacementTd.attribs.style = opts.cssStylesContent;
-                }
-                appendChild(replacementTr, replacementTd);
-                newChildren.push(replacementTr);
-                staging = [];
-              }
-            } else {
-              lastWasTd = false;
-              newChildren.push({
-                type: "tag",
-                name: "tr",
-                children: Array.from(staging),
-              });
-              staging = [];
-              staging.push(oneOfSubNodes);
-            }
-          });
-          if (staging.length) {
-            newChildren.push({
-              type: "tag",
-              name: "tr",
-              children: Array.from(staging),
-            });
-            staging = [];
+          } else if (
+            obj.type !== "text" ||
+            obj.value.replace(htmlCommentRegex, "").trim()
+          ) {
+            count = 0;
           }
         }
-      });
-      node.children = newChildren;
+      }
+      key.children
+        .filter((childNodeObj) => ["text", "esp"].includes(childNodeObj.type))
+        .forEach((obj) => {
+          if (obj.value.replace(htmlCommentRegex, "").trim()) {
+            ranges.push(
+              obj.start,
+              obj.end,
+              `\n<tr>\n  <td${
+                colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+              }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                opts.cssStylesContent ? ` style="${opts.cssStylesContent}"` : ""
+              }>\n    ${obj.value.trim()}\n  </td>\n</tr>\n`
+            );
+          }
+        });
+      key.children
+        .filter(
+          (obj) => obj.type === "tag" && obj.tagName === "tr" && !obj.closing
+        )
+        .forEach((trTag) => {
+          let doNothing = false;
+          for (let i = 0, len = trTag.children.length; i < len; i++) {
+            const childNodeObj = trTag.children[i];
+            if (
+              doNothing &&
+              childNodeObj.type === "comment" &&
+              childNodeObj.closing
+            ) {
+              doNothing = false;
+              continue;
+            }
+            if (
+              !doNothing &&
+              childNodeObj.type === "comment" &&
+              !childNodeObj.closing
+            ) {
+              doNothing = true;
+            }
+            if (
+              !doNothing &&
+              ["text", "esp"].includes(childNodeObj.type) &&
+              childNodeObj.value.trim()
+            ) {
+              if (childNodeObj.value.trim()) {
+                if (!i) {
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n</tr>\n<tr>\n`
+                  );
+                } else if (i && len > 1 && i === len - 1) {
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n</tr>\n<tr>\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n`
+                  );
+                } else {
+                  ranges.push(
+                    childNodeObj.start,
+                    childNodeObj.end,
+                    `\n</tr>\n<tr>\n  <td${
+                      colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
+                    }${opts.alwaysCenter || centered ? ` align="center"` : ""}${
+                      opts.cssStylesContent
+                        ? ` style="${opts.cssStylesContent}"`
+                        : ""
+                    }>\n    ${childNodeObj.value.trim()}\n  </td>\n</tr>\n<tr>\n`
+                  );
+                }
+              }
+            }
+          }
+        });
     }
   });
-  return renderer(dom);
+  if (ranges.current()) {
+    const result = apply(str, ranges.current());
+    ranges.wipe();
+    return { result };
+  }
+  return { result: str };
 }
 
 export { defaults, patcher, version };
