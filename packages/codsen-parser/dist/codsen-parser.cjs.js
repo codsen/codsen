@@ -147,13 +147,8 @@ function cparser(str, originalOpts) {
       }
       if (nestNext &&
       !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (
-      !Array.isArray(next) ||
-      !next.length ||
-      !Array.isArray(layers) ||
-      !layers.length ||
-      layers.length < 3 ||
-      !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing &&
-      next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
+      !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing ||
+      layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
         nestNext = false;
         path = "".concat(path, ".children.0");
       } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (

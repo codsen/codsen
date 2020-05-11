@@ -338,3 +338,95 @@ tap.test("07 - basics - three nested pairs, empty", (t) => {
   );
   t.end();
 });
+
+tap.only(
+  "08 - basics - single text node is not nested after closing tag",
+  (t) => {
+    t.match(
+      cparser(`<td>
+<table></table>
+</td>`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 4,
+          value: "<td>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "td",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+          children: [
+            {
+              type: "text",
+              start: 4,
+              end: 5,
+              value: "\n",
+            },
+            {
+              type: "tag",
+              start: 5,
+              end: 12,
+              value: "<table>",
+              tagNameStartsAt: 6,
+              tagNameEndsAt: 11,
+              tagName: "table",
+              recognised: true,
+              closing: false,
+              void: false,
+              pureHTML: true,
+              kind: null,
+              attribs: [],
+              children: [],
+            },
+            {
+              type: "tag",
+              start: 12,
+              end: 20,
+              value: "</table>",
+              tagNameStartsAt: 14,
+              tagNameEndsAt: 19,
+              tagName: "table",
+              recognised: true,
+              closing: true,
+              void: false,
+              pureHTML: true,
+              kind: null,
+              attribs: [],
+              children: [],
+            },
+            {
+              type: "text",
+              start: 20,
+              end: 21,
+              value: "\n",
+            },
+          ],
+        },
+        {
+          type: "tag",
+          start: 21,
+          end: 26,
+          value: "</td>",
+          tagNameStartsAt: 23,
+          tagNameEndsAt: 25,
+          tagName: "td",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+          children: [],
+        },
+      ],
+      "08"
+    );
+    t.end();
+  }
+);

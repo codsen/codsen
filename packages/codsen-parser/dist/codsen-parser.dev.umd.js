@@ -4821,13 +4821,8 @@
         // behind (the layers[layers.length - 3] below):
         // --------
         //
-        !Array.isArray(next) || // another early escape latch:
-        !next.length || // another early escape latch:
-        !Array.isArray(layers) || // another early escape latch:
-        !layers.length || // another early escape latch:
-        layers.length < 3 || // the real clause:
-        !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing && // ensure it's not legit closing tag following:
-        next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
+        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not legit closing tag following:
+        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
           // 1. reset the flag
           nestNext = false; // 2. go deeper
           // "1.children.3" -> "1.children.3.children.0"
