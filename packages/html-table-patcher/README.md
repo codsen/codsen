@@ -148,7 +148,11 @@ Here's the options object's API:
 
 ## The algorithm
 
-We parse using `htmlparser2` and use `domutils` to patch a new DOM which we later render using `dom-serializer`.
+Uses home-brewn ingredients.
+
+We parse using `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) then traverse using `ast-monkey-traverse-with-lookahead` ([npm](https://www.npmjs.com/package/ast-monkey-traverse-with-lookahead)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead/)) and record what needs to be amended using `ranges-push` ([npm](https://www.npmjs.com/package/ranges-push)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/)) and finally, apply all changes in one go using `ranges-apply` ([npm](https://www.npmjs.com/package/ranges-apply)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/)).
+
+**[⬆ back to top](#)**
 
 ## Using the GUI tap
 

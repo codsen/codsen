@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.0 (2020-05-12)
 
-### Complete rewrite. But no changes to API. Still bumping major.
+**Complete rewrite. But no changes to API. Still bumping major.**
 
 We switched to all in-house components:
 
