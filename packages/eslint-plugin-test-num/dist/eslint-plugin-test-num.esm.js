@@ -229,8 +229,11 @@ const create = (context) => {
           if (
             (filteredExpressionStatements = op
               .get(node, "expression.arguments.1.body.body")
-              .filter((nodeObj) => nodeObj.type === "ExpressionStatement"))
-              .length === 2 &&
+              .filter(
+                (nodeObj) =>
+                  nodeObj.type === "ExpressionStatement" &&
+                  op.get(nodeObj, "expression.callee.object.name") === "t"
+              )).length === 2 &&
             op.get(
               filteredExpressionStatements[
                 filteredExpressionStatements.length - 1

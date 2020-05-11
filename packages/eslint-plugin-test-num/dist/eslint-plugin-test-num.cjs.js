@@ -163,7 +163,7 @@ var create = function create(context) {
           var subTestCount = "multiple";
           var filteredExpressionStatements = {};
           if ((filteredExpressionStatements = op.get(node, "expression.arguments.1.body.body").filter(function (nodeObj) {
-            return nodeObj.type === "ExpressionStatement";
+            return nodeObj.type === "ExpressionStatement" && op.get(nodeObj, "expression.callee.object.name") === "t";
           })).length === 2 &&
           op.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
             subTestCount = "single";

@@ -278,8 +278,11 @@ const create = (context) => {
           if (
             (filteredExpressionStatements = op
               .get(node, "expression.arguments.1.body.body")
-              .filter((nodeObj) => nodeObj.type === "ExpressionStatement"))
-              .length === 2 &&
+              .filter(
+                (nodeObj) =>
+                  nodeObj.type === "ExpressionStatement" &&
+                  op.get(nodeObj, "expression.callee.object.name") === "t"
+              )).length === 2 &&
             // ensure last expression is t.end:
             op.get(
               filteredExpressionStatements[
@@ -291,7 +294,7 @@ const create = (context) => {
             subTestCount = "single";
           }
           // console.log(
-          //   `294 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
+          //   `297 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -330,7 +333,7 @@ const create = (context) => {
 
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               // console.log(
-              //   `333 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              //   `336 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               // );
               const assertsName = op.get(
                 exprStatements[i],
@@ -338,13 +341,13 @@ const create = (context) => {
               );
               if (!assertsName) {
                 // console.log(
-                //   `341 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                //   `344 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                 // );
                 continue;
               }
 
               // console.log(
-              //   `347 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+              //   `350 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
               //     messageIsThirdArg.has(assertsName)
               //       ? "III"
               //       : messageIsSecondArg.has(assertsName)
@@ -373,7 +376,7 @@ const create = (context) => {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               }
               // console.log(
-              //   `376 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
+              //   `379 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -382,11 +385,11 @@ const create = (context) => {
 
               if (messageArgsPositionWeWillAimFor) {
                 // console.log(
-                //   `385 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                //   `388 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                 // );
                 //
                 // console.log(
-                //   `389 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                //   `392 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                 // );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -438,16 +441,16 @@ const create = (context) => {
 
                 if (!start || !end) {
                   // console.log(
-                  //   `441 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                  //   `444 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                   // );
                   continue;
                 }
 
                 // console.log(
-                //   `447 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                //   `450 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                 // );
                 // console.log(
-                //   `450 old prepped value: ${`\u001b[${35}m${
+                //   `453 old prepped value: ${`\u001b[${35}m${
                 //     prep(pathToMsgArgValue).value
                 //   }\u001b[${39}m`}`
                 // );
@@ -459,12 +462,12 @@ const create = (context) => {
                 );
 
                 // console.log(
-                //   `462 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
+                //   `465 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
                 // );
 
                 if (prep(pathToMsgArgValue).value !== newValue) {
                   // console.log(
-                  //   `467 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                  //   `470 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   // );
                   context.report({
                     node: op.get(exprStatements[i], rawPathToMsgArgValue),
@@ -476,7 +479,7 @@ const create = (context) => {
                 }
               } else {
                 // console.log(
-                //   `479 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                //   `482 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                 // );
 
                 // First, find out at which index position should message
@@ -508,7 +511,7 @@ const create = (context) => {
 
                 if (positionDecided) {
                   // console.log(
-                  //   `511 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
+                  //   `514 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
                   //     positionDecided,
                   //     null,
                   //     4
@@ -519,7 +522,7 @@ const create = (context) => {
                   const positionToInsertAt =
                     op.get(exprStatements[i], "expression.end") - 1;
                   // console.log(
-                  //   `522 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                  //   `525 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
                   // );
 
                   const newValue = getNewValue(
@@ -538,7 +541,7 @@ const create = (context) => {
                   const startIdx = left(wholeSourceStr, endIdx) + 1;
 
                   // console.log(
-                  //   `541 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                  //   `544 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   //     startIdx,
                   //     null,
                   //     4
@@ -563,8 +566,8 @@ const create = (context) => {
 
                     wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
-                    // console.log(`566 we've got a multi-line case`);
-                    // console.log(`567 slice [${startIdx}, ${endIdx}]`);
+                    // console.log(`569 we've got a multi-line case`);
+                    // console.log(`570 slice [${startIdx}, ${endIdx}]`);
 
                     const frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
@@ -575,7 +578,7 @@ const create = (context) => {
                   }
 
                   // console.log(
-                  //   `578 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+                  //   `581 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
                   //     [startIdx, endIdx, valueToInsert],
                   //     null,
                   //     4
@@ -594,13 +597,13 @@ const create = (context) => {
                   });
                 } else {
                   // console.log(
-                  //   `597 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                  //   `600 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
                   // );
                 }
               }
             }
             // console.log(
-            //   `603 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+            //   `606 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             // );
           }
         }
@@ -609,7 +612,7 @@ const create = (context) => {
 
         if (finalDigitChunk) {
           // console.log(
-          //   `612 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+          //   `615 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
           //     finalDigitChunk.start
           //   }, ${
           //     finalDigitChunk.end

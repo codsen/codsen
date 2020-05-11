@@ -136,7 +136,7 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.end();
 });
 
-tap.todo(
+tap.test(
   `07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - more complex code to be disregarded inside test`,
   (t) => {
     // ensure "in" is fixed
