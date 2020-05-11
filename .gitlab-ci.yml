@@ -36,16 +36,14 @@ deploy:
     - git status
     - git add packages
     - git add stats
-    - git add readme.md
+    - git add README.md
+    - git add package-lock.json
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify"
-    - npx lerna changed
     - npm run pub:vers
     - echo '█████████████████████████████ 5 █████████████████████████████'
     - git status
-    - git rm -f packages/ava/CHANGELOG.md || true
-    - git rm -f packages/domutils/CHANGELOG.md || true
     - git add packages
-    - git add readme.md
+    - git add README.md
     - echo '█████████████████████████████ 6 █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: automated build tasks' --no-verify"
