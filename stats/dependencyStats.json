@@ -13,12 +13,13 @@
         "ast-is-empty": 2,
         "ast-monkey": 2,
         "ast-monkey-traverse": 10,
+        "ast-monkey-traverse-with-lookahead": 1,
         "ast-monkey-util": 2,
         "bitbucket-slug": 1,
         "chalk": 6,
         "check-types-mini": 4,
         "chlu": 1,
-        "codsen-parser": 1,
+        "codsen-parser": 2,
         "codsen-tokenizer": 2,
         "compare-versions": 1,
         "csv-sort": 1,
@@ -26,8 +27,6 @@
         "currency.js": 1,
         "define-lazy-prop": 1,
         "dehumanize-date": 1,
-        "dom-serializer": 1,
-        "domutils-bastardised": 1,
         "easy-replace": 1,
         "edit-package-json": 1,
         "email-all-chars-within-ascii": 1,
@@ -47,7 +46,6 @@
         "hex-color-regex": 1,
         "html-all-known-attributes": 3,
         "html-comment-regex": 1,
-        "html-dom-parser": 1,
         "html-entities-not-email-friendly": 2,
         "inquirer": 3,
         "is-char-suitable-for-html-attr-name": 2,
@@ -105,13 +103,13 @@
         "package-json-editor": 1,
         "pacote": 1,
         "plugin-error": 1,
-        "ranges-apply": 15,
+        "ranges-apply": 16,
         "ranges-crop": 2,
         "ranges-invert": 2,
         "ranges-is-index-within": 2,
         "ranges-merge": 7,
         "ranges-process-outside": 1,
-        "ranges-push": 10,
+        "ranges-push": 11,
         "ranges-sort": 1,
         "regex-empty-conditional-comments": 1,
         "request": 1,
@@ -179,16 +177,13 @@
         "execa": 10,
         "fs-extra": 3,
         "globby": 1,
-        "html-crush": 1,
         "is-ci": 1,
-        "json-stringify-safe": 1,
         "lect": 115,
         "lodash.clonedeep": 5,
         "lodash.isequal": 3,
         "map-stream": 1,
         "node-fetch": 1,
         "object-boolean-combinations": 1,
-        "object-delete-key": 1,
         "object-path": 6,
         "p-map": 4,
         "posthtml-parser": 1,
@@ -201,7 +196,6 @@
         "rollup-plugin-banner": 102,
         "rollup-plugin-cleanup": 102,
         "rollup-plugin-node-builtins": 9,
-        "rollup-plugin-node-globals": 1,
         "rollup-plugin-terser": 102,
         "string-find-heads-tails": 1,
         "tap": 115,
@@ -242,7 +236,7 @@
     ],
     "top10OwnDeps": [
         {
-            "ranges-apply": 15
+            "ranges-apply": 16
         },
         {
             "string-left-right": 15
@@ -251,13 +245,13 @@
             "string-match-left-right": 11
         },
         {
+            "ranges-push": 11
+        },
+        {
             "ast-monkey-traverse": 10
         },
         {
             "arrayiffy-if-string": 10
-        },
-        {
-            "ranges-push": 10
         },
         {
             "ranges-merge": 7

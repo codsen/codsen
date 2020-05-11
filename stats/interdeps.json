@@ -105,6 +105,11 @@
         "imports": []
     },
     {
+        "name": "ast-monkey-traverse-with-lookahead",
+        "size": 2802,
+        "imports": []
+    },
+    {
         "name": "ast-monkey-util",
         "size": 1458,
         "imports": []
@@ -146,7 +151,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 18513,
+        "size": 18479,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -156,7 +161,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 55606,
+        "size": 59675,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -279,7 +284,7 @@
     },
     {
         "name": "eslint-plugin-test-num",
-        "size": 12503,
+        "size": 12511,
         "imports": [
             "string-left-right"
         ]
@@ -335,6 +340,16 @@
             "ranges-apply",
             "ranges-push",
             "string-unfancy"
+        ]
+    },
+    {
+        "name": "html-table-patcher",
+        "size": 6588,
+        "imports": [
+            "ast-monkey-traverse-with-lookahead",
+            "codsen-parser",
+            "ranges-apply",
+            "ranges-push"
         ]
     },
     {
