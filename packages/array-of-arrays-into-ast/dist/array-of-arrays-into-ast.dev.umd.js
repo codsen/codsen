@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * turns an array of arrays of data into a nested tree of plain objects
- * Version: 1.9.38
+ * Version: 1.9.39
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast
@@ -6439,7 +6439,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * object-merge-advanced
    * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.19
+   * Version: 10.11.20
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced

@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 4.4.3
+ * Version: 4.4.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -547,7 +547,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.10
+   * Version: 3.7.11
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push

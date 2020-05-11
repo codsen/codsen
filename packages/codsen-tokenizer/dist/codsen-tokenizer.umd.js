@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 2.14.3
+ * Version: 2.15.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer

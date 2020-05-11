@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 1.9.6
+ * Version: 1.9.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object

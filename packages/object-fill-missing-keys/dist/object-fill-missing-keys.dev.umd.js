@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 7.10.17
+ * Version: 7.10.18
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
@@ -4050,7 +4050,7 @@
   /**
    * object-merge-advanced
    * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.19
+   * Version: 10.11.20
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
@@ -6385,7 +6385,7 @@
   /**
    * object-all-values-equal-to
    * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
-   * Version: 1.8.16
+   * Version: 1.8.17
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to

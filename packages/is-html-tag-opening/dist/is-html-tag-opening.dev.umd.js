@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Is given opening bracket a beginning of a tag?
- * Version: 1.7.8
+ * Version: 1.7.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -85,7 +85,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.7
+   * Version: 4.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right

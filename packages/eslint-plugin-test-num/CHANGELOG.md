@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://gitlab.com/codsen/codsen/compare/eslint-plugin-test-num@1.2.0...eslint-plugin-test-num@1.3.0) (2020-05-11)
+
+
+### Bug Fixes
+
+* improve the test count calculation ([7372146](https://gitlab.com/codsen/codsen/commit/7372146df3832347f6c81bd8b6517ded1f9b8416))
+
+
+### Features
+
+* add t.todo to be recognised (besides usual t.test, t.only and t.skip) ([fa8f53e](https://gitlab.com/codsen/codsen/commit/fa8f53ec674f6bde9e95f32950787720bb3817bf))
+
+
+
+
+
 ## 1.2.0 (2020-05-08)
 
 ### Bug Fixes

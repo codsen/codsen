@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.2.5
+ * Version: 8.2.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
@@ -2445,7 +2445,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.7
+   * Version: 4.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -2762,7 +2762,7 @@
   /**
    * string-find-heads-tails
    * Search for string pairs. A special case of string search algorithm.
-   * Version: 3.16.9
+   * Version: 3.16.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
@@ -3411,7 +3411,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.10
+   * Version: 3.7.11
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3946,7 +3946,7 @@
   /**
    * string-remove-duplicate-heads-tails
    * Detect and (recursively) remove head and tail wrappings around the input string
-   * Version: 3.0.60
+   * Version: 3.0.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails

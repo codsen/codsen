@@ -1,7 +1,7 @@
 /**
  * ast-delete-object
  * Delete all plain objects that contain a certain key/value pair
- * Version: 1.8.65
+ * Version: 1.8.66
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object
@@ -2544,7 +2544,7 @@
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.7
+   * Version: 1.13.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare

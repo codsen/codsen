@@ -1,7 +1,7 @@
 /**
  * js-row-num
  * Update all row numbers in all console.logs in JS code
- * Version: 2.7.15
+ * Version: 2.7.16
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
@@ -346,7 +346,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.10
+   * Version: 3.7.11
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push

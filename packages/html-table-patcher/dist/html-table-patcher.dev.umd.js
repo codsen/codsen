@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 1.1.53
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -2235,7 +2235,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.7
+   * Version: 4.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -2612,7 +2612,7 @@
   /**
    * string-split-by-whitespace
    * Split string into array by chunks of whitespace
-   * Version: 1.6.64
+   * Version: 1.6.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -2671,7 +2671,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.5
+   * Version: 1.1.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -2940,7 +2940,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.8
+   * Version: 1.7.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -3019,7 +3019,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.14.3
+   * Version: 2.15.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -4661,7 +4661,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.4
+   * Version: 0.6.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -5337,7 +5337,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.10
+   * Version: 3.7.11
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -5743,7 +5743,7 @@
 
   var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
-  var version = "1.1.53";
+  var version = "2.0.0";
 
   var ranges = new Ranges();
 

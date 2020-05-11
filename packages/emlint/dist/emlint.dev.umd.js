@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.2
+ * Version: 2.18.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -10974,7 +10974,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.7
+   * Version: 4.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -11351,7 +11351,7 @@
   /**
    * string-split-by-whitespace
    * Split string into array by chunks of whitespace
-   * Version: 1.6.64
+   * Version: 1.6.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -11410,7 +11410,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.5
+   * Version: 1.1.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -11679,7 +11679,7 @@
   /**
    * is-html-tag-opening
    * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.8
+   * Version: 1.7.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -11758,7 +11758,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.14.3
+   * Version: 2.15.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -13400,7 +13400,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.4
+   * Version: 0.6.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -13477,7 +13477,7 @@
           prevToken = null;
         }
 
-        if (nestNext && !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (!Array.isArray(next) || !next.length || !Array.isArray(layers) || !layers.length || layers.length < 3 || !(tokenObj.type === "text" && next[0].type === "tag" && next[0].closing && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName))) {
+        if (nestNext && !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (!next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
           nestNext = false;
           path = `${path}.children.0`;
         } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
@@ -43234,7 +43234,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.18.2";
+  var version = "2.18.3";
 
   exports.Linter = Linter;
   exports.version = version;

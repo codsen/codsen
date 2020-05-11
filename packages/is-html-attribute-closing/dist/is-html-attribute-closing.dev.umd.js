@@ -1,7 +1,7 @@
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -2015,7 +2015,7 @@
   /**
    * string-split-by-whitespace
    * Split string into array by chunks of whitespace
-   * Version: 1.6.64
+   * Version: 1.6.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -2094,7 +2094,7 @@
   /**
    * string-match-left-right
    * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.7
+   * Version: 4.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
