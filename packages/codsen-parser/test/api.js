@@ -89,7 +89,7 @@ tap.test("01 - opts.tagCb", (t) => {
         end: 6,
       },
     ],
-    "01.01"
+    "01"
   );
   t.end();
 });
@@ -131,7 +131,7 @@ tap.test("02 - opts.charCb", (t) => {
         type: "text",
       },
     ],
-    "02.01"
+    "02"
   );
   t.end();
 });

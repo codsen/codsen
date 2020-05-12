@@ -577,7 +577,7 @@ tap.test(
           eol: false,
         },
       },
-      "36.01"
+      "36"
     );
     t.end();
   }
@@ -631,7 +631,7 @@ tap.test(
           eol: false,
         },
       },
-      "38.01"
+      "38"
     );
     t.end();
   }
@@ -704,7 +704,7 @@ tap.test(
           eol: false,
         },
       },
-      "41.01"
+      "41"
     );
     t.end();
   }
@@ -1127,7 +1127,7 @@ tap.test(
           eol: false,
         },
       },
-      "58.01"
+      "58"
     );
 
     t.end();
@@ -1723,7 +1723,7 @@ tap.test(
           eol: false,
         },
       },
-      "87.01"
+      "87"
     );
     t.end();
   }
@@ -1776,7 +1776,7 @@ tap.test(
           eol: false,
         },
       },
-      "88.01"
+      "88"
     );
     t.end();
   }
@@ -1859,7 +1859,7 @@ tap.test(
         }
       ).res,
       "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-      "91.01"
+      "91"
     );
 
     t.end();
@@ -2061,7 +2061,7 @@ tap.test(
           eol: false,
         },
       },
-      "100.01"
+      "100"
     );
     t.end();
   }

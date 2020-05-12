@@ -794,7 +794,7 @@ tap.test(
 );
 
 tap.todo(
-  `02.08 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing - with whitespace`,
+  `11 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - closing - with whitespace`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -813,7 +813,7 @@ tap.todo(
         }
       ),
       [],
-      "02.08.01"
+      "11.01"
     );
     t.match(
       gatheredErr,
@@ -824,15 +824,15 @@ tap.todo(
           idxTo: 24,
         },
       ],
-      "02.08.02"
+      "11.02"
     );
-    t.is(gatheredErr.length, 1, "02.08.03");
+    t.is(gatheredErr.length, 1, "11.03");
     t.end();
   }
 );
 
 tap.todo(
-  `02.09 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void - with whitespace`,
+  `12 - ${`\u001b[${32}m${`tag formation`}\u001b[${39}m`} - rogue tag in place of another tag - void - with whitespace`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -851,7 +851,7 @@ tap.todo(
         }
       ),
       [],
-      "02.09.01"
+      "12.01"
     );
     t.match(
       gatheredErr,
@@ -862,9 +862,9 @@ tap.todo(
           idxTo: 24,
         },
       ],
-      "02.09.02"
+      "12.02"
     );
-    t.is(gatheredErr.length, 1, "02.09.03");
+    t.is(gatheredErr.length, 1, "12.03");
     t.end();
   }
 );
@@ -873,7 +873,7 @@ tap.todo(
 // -----------------------------------------------------------------------------
 
 tap.todo(
-  `03.01 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - opening`,
+  `13 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - opening`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -892,7 +892,7 @@ tap.todo(
           children: [],
         },
       ],
-      "03.01.01"
+      "13.01"
     );
     t.match(
       gatheredErr,
@@ -903,15 +903,15 @@ tap.todo(
           idxTo: 24,
         },
       ],
-      "03.01.02"
+      "13.02"
     );
-    t.is(gatheredErr.length, 1, "03.01.03");
+    t.is(gatheredErr.length, 1, "13.03");
     t.end();
   }
 );
 
 tap.todo(
-  `03.02 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - closing`,
+  `14 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - closing`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -930,7 +930,7 @@ tap.todo(
           children: [],
         },
       ],
-      "03.02.01"
+      "14.01"
     );
     t.match(
       gatheredErr,
@@ -941,15 +941,15 @@ tap.todo(
           idxTo: 24,
         },
       ],
-      "03.02.02"
+      "14.02"
     );
-    t.is(gatheredErr.length, 1, "03.02.03");
+    t.is(gatheredErr.length, 1, "14.03");
     t.end();
   }
 );
 
 tap.todo(
-  `03.03 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - void`,
+  `15 - ${`\u001b[${36}m${`between tags`}\u001b[${39}m`} - rogue tag between tags - void`,
   (t) => {
     const gatheredErr = [];
     t.match(
@@ -968,7 +968,7 @@ tap.todo(
           children: [],
         },
       ],
-      "03.03.01"
+      "15.01"
     );
     t.match(
       gatheredErr,
@@ -979,9 +979,9 @@ tap.todo(
           idxTo: 24,
         },
       ],
-      "03.03.02"
+      "15.02"
     );
-    t.is(gatheredErr.length, 1, "03.03.03");
+    t.is(gatheredErr.length, 1, "15.03");
     t.end();
   }
 );

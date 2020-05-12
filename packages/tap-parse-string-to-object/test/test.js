@@ -898,7 +898,7 @@ ok 1 - UMD build works fine # time=10.033ms
         suitesPassed: 2,
         suitesFailed: 0,
       },
-      "06.01"
+      "06"
     );
     t.end();
   }

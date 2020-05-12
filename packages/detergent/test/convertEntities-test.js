@@ -707,7 +707,7 @@ tap.test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
       removeWidows: 1,
     }).res,
     `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`,
-    "34.01"
+    "34"
   );
 
   t.end();
@@ -1003,7 +1003,7 @@ tap.test(
         removeWidows: 0,
       }).res,
       "Discount: -&pound;10.00",
-      "51.01"
+      "51"
     );
 
     t.end();

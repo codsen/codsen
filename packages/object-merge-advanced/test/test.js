@@ -93,7 +93,7 @@ tap.test("06 - testing for mutation of the input args", (t) => {
     d: "d",
   };
   mergeAdvanced(obj1, obj2);
-  t.same(obj1, originalObj1, "06.01");
+  t.same(obj1, originalObj1, "06");
   t.end();
 });
 

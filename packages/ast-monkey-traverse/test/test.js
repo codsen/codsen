@@ -276,7 +276,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["a", "b", "b.c"], "09.01");
+    t.same(gathered, ["a", "b", "b.c"], "09");
     t.end();
   }
 );
@@ -295,7 +295,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["a", "b"], "10.01");
+    t.same(gathered, ["a", "b"], "10");
     t.end();
   }
 );
@@ -310,7 +310,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["0", "1", "1.0", "1.1"], "11.01");
+    t.same(gathered, ["0", "1", "1.0", "1.1"], "11");
     t.end();
   }
 );
@@ -329,7 +329,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["0", "1"], "12.01");
+    t.same(gathered, ["0", "1"], "12");
     t.end();
   }
 );
@@ -477,14 +477,14 @@ tap.test(
         ],
         // ===================
       ],
-      "13.01"
+      "13"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `03.02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
+  `14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = ["a", undefined, "b"];
     const gathered = [];
@@ -524,14 +524,14 @@ tap.todo(
           },
         ],
       ],
-      "03.02"
+      "14"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `03.03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole, deeper`,
+  `15 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole, deeper`,
   (t) => {
     const input = [{ a: "b" }, undefined, { x: "y" }];
     t.pass(input);
@@ -540,7 +540,7 @@ tap.todo(
 );
 
 tap.test(
-  `14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
+  `16 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = {
       a: "k",
@@ -609,14 +609,14 @@ tap.test(
           },
         ],
       ],
-      "14.01"
+      "16"
     );
     t.end();
   }
 );
 
 tap.test(
-  `15 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
+  `17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`,
   (t) => {
     const input = {
       a: ["1", "2", "3"],
@@ -684,14 +684,14 @@ tap.test(
           },
         ],
       ],
-      "15.01"
+      "17"
     );
     t.end();
   }
 );
 
 tap.test(
-  `16 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`,
+  `18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`,
   (t) => {
     const input = {
       a: {
@@ -1159,14 +1159,14 @@ tap.test(
         ],
         // ===================
       ],
-      "16.01"
+      "18"
     );
     t.end();
   }
 );
 
 tap.only(
-  `17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`,
+  `19 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`,
   (t) => {
     const input = ["1", "2", { a: "3" }];
     const gathered = [];
@@ -1248,7 +1248,7 @@ tap.only(
           },
         ],
       ],
-      "17.01"
+      "19"
     );
     t.end();
   }

@@ -54,7 +54,7 @@ tap.test("02 - text only", (t) => {
         value: "  ",
       },
     ],
-    "02.01"
+    "02"
   );
   t.end();
 });
@@ -86,7 +86,7 @@ tap.test("03 - opening tag only", (t) => {
         attribs: [],
       },
     ],
-    "03.01"
+    "03"
   );
   t.end();
 });
@@ -118,7 +118,7 @@ tap.test("04 - closing tag only", (t) => {
         attribs: [],
       },
     ],
-    "04.01"
+    "04"
   );
   t.end();
 });
@@ -1032,7 +1032,7 @@ tap.test("31 - XML - correct", (t) => {
         kind: "xml",
       },
     ],
-    "31.01"
+    "31"
   );
   t.end();
 });
@@ -1056,7 +1056,7 @@ tap.test("32 - XML - incorrect 1", (t) => {
         kind: "xml",
       },
     ],
-    "32.01"
+    "32"
   );
   t.end();
 });
@@ -1080,7 +1080,7 @@ tap.test("33 - XML - incorrect 2", (t) => {
         kind: "xml",
       },
     ],
-    "33.01"
+    "33"
   );
   t.end();
 });
@@ -1104,7 +1104,7 @@ tap.test("34 - XML - incorrect 3", (t) => {
         kind: "xml",
       },
     ],
-    "34.01"
+    "34"
   );
   t.end();
 });
@@ -1139,7 +1139,7 @@ tap.test("35 - unrecognised tag name", (t) => {
         attribs: [],
       },
     ],
-    "35.01"
+    "35"
   );
   t.end();
 });
@@ -1171,7 +1171,7 @@ tap.test("36 - unrecognised tag name with dash", (t) => {
         attribs: [],
       },
     ],
-    "36.01"
+    "36"
   );
   t.end();
 });

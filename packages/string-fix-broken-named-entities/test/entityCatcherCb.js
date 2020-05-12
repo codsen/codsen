@@ -80,7 +80,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "04.01"); // <- because it's encoded and user asked unencoded
+    t.same(gatheredHealthy, [], "04"); // <- because it's encoded and user asked unencoded
     t.end();
   }
 );
@@ -127,7 +127,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 11]], "06.01");
+    t.same(gatheredEntityRanges, [[2, 11]], "06");
     t.end();
   }
 );
@@ -141,7 +141,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 11]], "07.01");
+    t.same(gatheredEntityRanges, [[2, 11]], "07");
     t.end();
   }
 );
@@ -189,7 +189,7 @@ tap.test(
       decode: true,
     });
 
-    t.same(healthy, [], "09.01");
+    t.same(healthy, [], "09");
     t.end();
   }
 );
@@ -236,7 +236,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [], "11.01");
+    t.same(gatheredHealthy, [], "11");
     t.end();
   }
 );
@@ -271,7 +271,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "13.01");
+    t.same(gatheredHealthy, [], "13");
     t.end();
   }
 );
@@ -318,7 +318,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [], "15.01");
+    t.same(gatheredHealthy, [], "15");
     t.end();
   }
 );
@@ -353,7 +353,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "17.01");
+    t.same(gatheredHealthy, [], "17");
     t.end();
   }
 );
@@ -380,7 +380,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "18.01");
+    t.same(gatheredEntityRanges, [[2, 7]], "18");
     t.end();
   }
 );
@@ -394,7 +394,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "19.01");
+    t.same(gatheredEntityRanges, [[2, 7]], "19");
     t.end();
   }
 );
@@ -409,7 +409,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "20.01");
+    t.same(gatheredEntityRanges, [[2, 7]], "20");
     t.end();
   }
 );
@@ -423,7 +423,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "21.01");
+    t.same(gatheredEntityRanges, [[2, 7]], "21");
     t.end();
   }
 );
@@ -449,7 +449,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 6]], "22.01");
+    t.same(gatheredEntityRanges, [[2, 6]], "22");
     t.end();
   }
 );
@@ -463,7 +463,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 25]], "23.01");
+    t.same(gatheredEntityRanges, [[2, 25]], "23");
     t.end();
   }
 );
@@ -490,7 +490,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "24.01");
+    t.same(gatheredEntityRanges, [[2, 8]], "24");
     t.end();
   }
 );
@@ -504,7 +504,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "25.01");
+    t.same(gatheredEntityRanges, [[2, 8]], "25");
     t.end();
   }
 );
@@ -519,7 +519,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "26.01");
+    t.same(gatheredEntityRanges, [[2, 8]], "26");
     t.end();
   }
 );
@@ -533,7 +533,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "27.01");
+    t.same(gatheredEntityRanges, [[2, 8]], "27");
     t.end();
   }
 );

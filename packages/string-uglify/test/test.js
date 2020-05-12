@@ -84,7 +84,7 @@ tap.test(
     // all are unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length));
-    t.equal(generated.length, length, "05.01");
+    t.equal(generated.length, length, "05");
     generated.forEach((name1, index1) =>
       t.false(
         generated.some((name2, index2) => name1 === name2 && index1 !== index2),
@@ -156,7 +156,7 @@ tap.test(
       randArr1.push(randArr1[0]);
     }
     const generated = uglifyArr(randArr1);
-    t.equal(generated.length, randArr1.length, "08.01");
+    t.equal(generated.length, randArr1.length, "08");
     generated.forEach((val, i) => {
       // all values are repeated on both:
       t.equal(generated[i], generated[0]);
@@ -172,7 +172,7 @@ tap.test(
     // all are still unique
     const length = 1000;
     const generated = uglifyArr(makeRandomArr(length, false));
-    t.equal(generated.length, length, "09.01");
+    t.equal(generated.length, length, "09");
     generated.forEach((name1, index1) =>
       t.false(
         generated.some((name2, index2) => name1 === name2 && index1 !== index2),

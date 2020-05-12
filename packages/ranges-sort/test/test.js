@@ -267,7 +267,7 @@ tap.test("08 - does not mutate the input arg", (t) => {
       [3, 4],
       [1, 2],
     ],
-    "08.01"
+    "08"
   );
   t.end();
 });

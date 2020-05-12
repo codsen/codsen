@@ -29,7 +29,7 @@ tap.test("01 - called upon a single file which is healthy", async (t) => {
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
     { shell: true }
   );
-  t.match(stdOutContents.stdout, /ALL OK/, "01.01");
+  t.match(stdOutContents.stdout, /ALL OK/, "01");
   t.end();
 });
 

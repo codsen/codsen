@@ -75,7 +75,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abxyzhij`, "06.01");
+    t.equal(pinged, `abxyzhij`, "06");
     t.end();
   }
 );
@@ -93,7 +93,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abxyzcdefghij`, "07.01");
+    t.equal(pinged, `abxyzcdefghij`, "07");
     t.end();
   }
 );
@@ -113,7 +113,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `xyzhij`, "08.01");
+    t.equal(pinged, `xyzhij`, "08");
     t.end();
   }
 );
@@ -133,7 +133,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghijxyz`, "09.01");
+    t.equal(pinged, `abcdefghijxyz`, "09");
     t.end();
   }
 );
@@ -152,7 +152,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghijxyz`, "10.01");
+    t.equal(pinged, `abcdefghijxyz`, "10");
     t.end();
   }
 );
@@ -171,7 +171,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `abcdefghij`, "11.01");
+    t.equal(pinged, `abcdefghij`, "11");
     t.end();
   }
 );
@@ -196,7 +196,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, `abxyzhi_`, "12.01");
+    t.equal(pinged, `abxyzhi_`, "12");
     t.end();
   }
 );
@@ -214,7 +214,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, `xyz`, "13.01");
+    t.equal(pinged, `xyz`, "13");
     t.end();
   }
 );
@@ -232,7 +232,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "", "14.01");
+    t.equal(pinged, "", "14");
     t.end();
   }
 );
@@ -250,7 +250,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "abcdefghij", "15.01");
+    t.equal(pinged, "abcdefghij", "15");
     t.end();
   }
 );
@@ -268,7 +268,7 @@ tap.test(
       t.equal(i, index);
       index += 1;
     });
-    t.equal(pinged, "abcdefghij", "16.01");
+    t.equal(pinged, "abcdefghij", "16");
     t.end();
   }
 );
@@ -295,7 +295,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, "", "17.01");
+    t.equal(pinged, "", "17");
     t.end();
   }
 );
@@ -322,7 +322,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, "", "18.01");
+    t.equal(pinged, "", "18");
     t.end();
   }
 );
@@ -370,7 +370,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, source, "20.01");
+    t.equal(pinged, source, "20");
     t.end();
   }
 );
@@ -396,7 +396,7 @@ tap.test(
         index += 1;
       }
     );
-    t.equal(pinged, source, "21.01");
+    t.equal(pinged, source, "21");
     t.end();
   }
 );

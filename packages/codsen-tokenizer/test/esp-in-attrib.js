@@ -72,7 +72,7 @@ tap.test(
           attribs: [],
         },
       ],
-      "01.01"
+      "01"
     );
     t.end();
   }
@@ -123,7 +123,7 @@ tap.test(
           ],
         },
       ],
-      "02.01"
+      "02"
     );
     t.end();
   }
@@ -210,7 +210,7 @@ tap.test(
           ],
         },
       ],
-      "03.01"
+      "03"
     );
     t.end();
   }
@@ -288,7 +288,7 @@ tap.test(
           ],
         },
       ],
-      "04.01"
+      "04"
     );
     t.end();
   }
@@ -387,7 +387,7 @@ tap.test(
           ],
         },
       ],
-      "05.01"
+      "05"
     );
     t.end();
   }
@@ -423,7 +423,7 @@ tap.test(
           end: 35,
         },
       ],
-      "06.01"
+      "06"
     );
     t.end();
   }
@@ -452,7 +452,7 @@ tap.test(
           end: 24,
         },
       ],
-      "07.01"
+      "07"
     );
     t.end();
   }
@@ -481,7 +481,7 @@ tap.test(
           end: 52,
         },
       ],
-      "08.01"
+      "08"
     );
     t.end();
   }
@@ -513,14 +513,14 @@ tap.test(
           end: 114,
         },
       ],
-      "09.01"
+      "09"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
+  `10 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
     ct(`<a b="{%- c %}">`, {
@@ -528,13 +528,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "23.01");
+    t.match(gathered, [], "10");
     t.end();
   }
 );
 
 tap.todo(
-  `24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `11 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="{%- c %}x">`, {
@@ -542,13 +542,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "24.01");
+    t.match(gathered, [], "11");
     t.end();
   }
 );
 
 tap.todo(
-  `25 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `12 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="x{%- c %}">`, {
@@ -556,13 +556,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "25.01");
+    t.match(gathered, [], "12");
     t.end();
   }
 );
 
 tap.todo(
-  `26 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
+  `13 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
     ct(`<a b="{%- c -%}">`, {
@@ -570,13 +570,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "26.01");
+    t.match(gathered, [], "13");
     t.end();
   }
 );
 
 tap.todo(
-  `27 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `14 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="x{%- c -%}">`, {
@@ -584,13 +584,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "27.01");
+    t.match(gathered, [], "14");
     t.end();
   }
 );
 
 tap.todo(
-  `28 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `15 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="{%- c -%}x">`, {
@@ -598,13 +598,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "28.01");
+    t.match(gathered, [], "15");
     t.end();
   }
 );
 
 tap.todo(
-  `29 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `16 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="z {%- c -%} x">`, {
@@ -612,13 +612,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "29.01");
+    t.match(gathered, [], "16");
     t.end();
   }
 );
 
 tap.todo(
-  `30 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
+  `17 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% c -%}">`, {
@@ -626,13 +626,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "30.01");
+    t.match(gathered, [], "17");
     t.end();
   }
 );
 
 tap.todo(
-  `31 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `18 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="x{% c -%}">`, {
@@ -640,13 +640,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "31.01");
+    t.match(gathered, [], "18");
     t.end();
   }
 );
 
 tap.todo(
-  `32 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `19 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% c -%}x">`, {
@@ -654,13 +654,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "32.01");
+    t.match(gathered, [], "19");
     t.end();
   }
 );
 
 tap.todo(
-  `33 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
+  `20 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
     ct(`<a b="z{% c -%}x">`, {
@@ -668,7 +668,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "33.01");
+    t.match(gathered, [], "20");
     t.end();
   }
 );
@@ -677,7 +677,7 @@ tap.todo(
 // -----------------------------------------------------------------------------
 
 tap.todo(
-  `23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - A, baseline`,
+  `21 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - A, baseline`,
   (t) => {
     const gathered = [];
     ct(`<a b="c{% x %}d{% y %}e{% z %}f">`, {
@@ -685,13 +685,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "23.01");
+    t.match(gathered, [], "21");
     t.end();
   }
 );
 
 tap.todo(
-  `24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - B`,
+  `22 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - B`,
   (t) => {
     const gathered = [];
     ct(`<a b="c{%- x %}d{%- y %}e{%- z %}f">`, {
@@ -699,7 +699,35 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "24.01");
+    t.match(gathered, [], "22");
+    t.end();
+  }
+);
+
+tap.todo(
+  `23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="c{% x -%}d{% y -%}e{% z -%}f">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "23");
+    t.end();
+  }
+);
+
+tap.todo(
+  `24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="c{%- x %}d{% y -%}e{%- z %}f">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "24");
     t.end();
   }
 );
@@ -708,12 +736,12 @@ tap.todo(
   `25 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{% x -%}d{% y -%}e{% z -%}f">`, {
+    ct(`<a b="c{% x -%}d{%- y %}e{% z -%}f">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "25.01");
+    t.match(gathered, [], "25");
     t.end();
   }
 );
@@ -722,40 +750,12 @@ tap.todo(
   `26 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{%- x %}d{% y -%}e{%- z %}f">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.match(gathered, [], "26.01");
-    t.end();
-  }
-);
-
-tap.todo(
-  `27 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
-  (t) => {
-    const gathered = [];
-    ct(`<a b="c{% x -%}d{%- y %}e{% z -%}f">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.match(gathered, [], "27.01");
-    t.end();
-  }
-);
-
-tap.todo(
-  `28 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
-  (t) => {
-    const gathered = [];
     ct(`<a b="c{% x -%}d{%- y %}e{%- z %}f">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "28.01");
+    t.match(gathered, [], "26");
     t.end();
   }
 );

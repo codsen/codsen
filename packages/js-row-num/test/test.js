@@ -371,7 +371,7 @@ tap.test(
   (t) => {
     let allAscii = new Array(127);
     allAscii = allAscii.map((val, i) => String.fromCharCode(i)).join(``);
-    t.is(fixRowNums(allAscii), allAscii, `22.01`);
+    t.is(fixRowNums(allAscii), allAscii, `22`);
     t.end();
   }
 );

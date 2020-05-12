@@ -81,7 +81,7 @@ tap.test(`03 - false positive prevention`, (t) => {
   falseCases.forEach((str) => {
     t.same(fix(str), [], `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`);
   });
-  t.same(fix("paste & copy & paste again"), [], "03.01");
+  t.same(fix("paste & copy & paste again"), [], "03");
   t.end();
 });
 

@@ -393,7 +393,7 @@ tap.test("01 - default sort, called on the whole folder", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents, "01.01");
+  t.same(await processedFileContents, sortedTestFileContents, "01");
   t.end();
 });
 
@@ -436,7 +436,7 @@ tap.test("02 - sort, -t (tabs) mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTabbedTestFileContents, "02.01");
+  t.same(await processedFileContents, sortedTabbedTestFileContents, "02");
   t.end();
 });
 
@@ -498,7 +498,7 @@ tap.test("03 - sort, there's a broken JSON among files", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents, "03.01");
+  t.same(await processedFileContents, sortedTestFileContents, "03");
   t.end();
 });
 
@@ -561,7 +561,7 @@ tap.test("04 - silent mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(processedFileContents, sortedTestFileContents, "04.01");
+  t.same(processedFileContents, sortedTestFileContents, "04");
   t.end();
 });
 
@@ -583,7 +583,7 @@ tap.test("05 - fixes minified dotfiles in JSON format", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, prettifiedContents, "05.01");
+  t.same(await processedFileContents, prettifiedContents, "05");
   t.end();
 });
 
@@ -633,7 +633,7 @@ tap.test("06 - topmost level is array", async (t) => {
     "p": "r"
   }
 ]\n`,
-    "06.01"
+    "06"
   );
   t.end();
 });
@@ -671,7 +671,7 @@ tap.test(
   "z",
   "Z"
 ]\n`,
-      "07.01"
+      "07"
     );
     t.end();
   }
@@ -700,7 +700,7 @@ tap.test(
     t.same(
       await processedFileContents,
       `${JSON.stringify(sourceArr, null, 2)}\n`,
-      "08.01"
+      "08"
     );
     t.end();
   }
@@ -756,7 +756,7 @@ tap.test("09 - array in deeper levels sorted (upon request)", async (t) => {
     ]
   }
 }\n`,
-    "09.01"
+    "09"
   );
   t.end();
 });
@@ -833,7 +833,7 @@ tap.test("13 - package.json is sorted by default", async (t) => {
     "ast-monkey-traverse": "^1.11.31"
   }
 }\n`,
-    "13.01"
+    "13"
   );
   t.end();
 });
@@ -863,7 +863,7 @@ tap.test("14 - package.json is not sorted under -p flag", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, source, "14.01");
+  t.same(await processedFileContents, source, "14");
   t.end();
 });
 

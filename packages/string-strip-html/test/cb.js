@@ -229,7 +229,7 @@ tap.test("09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
         name: "br",
       },
     ],
-    "09.01"
+    "09"
   );
   t.end();
 });
@@ -319,7 +319,7 @@ tap.test(
           slashPresent: 30,
         },
       ],
-      "10.01"
+      "10"
     );
     t.end();
   }

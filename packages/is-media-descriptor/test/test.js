@@ -35,7 +35,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
   (t) => {
     const str = "";
-    t.same(isMediaD(str), [], "02.01");
+    t.same(isMediaD(str), [], "02");
     writeSample({
       id: "00.02",
       str,
@@ -49,7 +49,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
   (t) => {
     const str = " ";
-    t.same(isMediaD(str), [], "03.01");
+    t.same(isMediaD(str), [], "03");
     writeSample({
       id: "00.03",
       str,
@@ -63,7 +63,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
   (t) => {
     const str = "\n\n\n";
-    t.same(isMediaD(str), [], "04.01");
+    t.same(isMediaD(str), [], "04");
     writeSample({
       id: "00.04",
       str,
@@ -1089,7 +1089,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [], "40.01");
+    t.same(res, [], "40");
     t.end();
   }
 );
@@ -1114,7 +1114,7 @@ tap.test(
           fix: null,
         },
       ],
-      "41.01"
+      "41"
     );
     t.end();
   }

@@ -185,7 +185,7 @@ tap.test(
       )
       .catch((err) => t.fail(err));
 
-    t.same(await processedFileContents, normalisedFileContents, "04.01");
+    t.same(await processedFileContents, normalisedFileContents, "04");
     t.end();
   }
 );

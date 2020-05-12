@@ -62,7 +62,7 @@ tap.test(
           ],
         },
       ],
-      "01.01"
+      "01"
     );
     t.end();
   }
@@ -142,7 +142,7 @@ tap.test(
           ],
         },
       ],
-      "02.01"
+      "02"
     );
     t.end();
   }
@@ -225,14 +225,14 @@ tap.test(
           ],
         },
       ],
-      "03.01"
+      "03"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `05.04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`,
+  `04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x">`, {
@@ -240,13 +240,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.04");
+    t.match(gathered, [], "04");
     t.end();
   }
 );
 
 tap.todo(
-  `05.04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`,
+  `05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x"><c d="y %}">`, {
@@ -254,13 +254,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.04");
+    t.match(gathered, [], "05");
     t.end();
   }
 );
 
 tap.todo(
-  `05.05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`,
+  `06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`,
   (t) => {
     const gathered = [];
     ct(`<a b="{ x %}1{% y %}2">`, {
@@ -268,13 +268,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.05");
+    t.match(gathered, [], "06");
     t.end();
   }
 );
 
 tap.todo(
-  `05.06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`,
+  `07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`,
   (t) => {
     const gathered = [];
     ct(`<a b="x %}1{% y %}2">`, {
@@ -282,13 +282,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.06");
+    t.match(gathered, [], "07");
     t.end();
   }
 );
 
 tap.todo(
-  `05.07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`,
+  `08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x"><b c="y %}">`, {
@@ -296,13 +296,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.07");
+    t.match(gathered, [], "08");
     t.end();
   }
 );
 
 tap.todo(
-  `05.08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`,
+  `09 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% {% %}">`, {
@@ -310,13 +310,13 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.08");
+    t.match(gathered, [], "09");
     t.end();
   }
 );
 
 tap.todo(
-  `05.09 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`,
+  `10 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`,
   (t) => {
     const gathered = [];
     ct(`<a b="%} %}">`, {
@@ -324,7 +324,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "05.09");
+    t.match(gathered, [], "10");
     t.end();
   }
 );

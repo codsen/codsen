@@ -7,15 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- rewrite ([ef39ee9](https://gitlab.com/codsen/codsen/commit/ef39ee9b51f4a53a52ed186d52bc289e6b08dbd7))
-
-### BREAKING CHANGES
-
-- rewrite
-
-## 2.0.0 (2020-05-12)
-
 **Complete rewrite. But no changes to API. Still bumping major.**
+
+- rewrite ([ef39ee9](https://gitlab.com/codsen/codsen/commit/ef39ee9b51f4a53a52ed186d52bc289e6b08dbd7))
 
 We switched to all in-house components:
 
@@ -25,6 +19,10 @@ We switched to all in-house components:
 - `ranges-apply` ([npm](https://www.npmjs.com/package/ranges-apply)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/)) — performs all amends in string in one go when finished traversing AST
 
 As a result, UMD bundle is half-the size (was 191KB minified, now 87KB)!
+
+### BREAKING CHANGES
+
+- no changes in API
 
 ## 1.1.13 (2019-08-08)
 

@@ -9,7 +9,7 @@ tap.test("generates the homepage with correct folders", async (t) => {
   t.same(
     fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8"),
-    "01.01"
+    "01"
   );
   await fs.unlink("./fixtures/index.html", () => {});
   t.end();
@@ -21,7 +21,7 @@ tap.test("unused flags are OK", async (t) => {
   t.same(
     fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8"),
-    "02.01"
+    "02"
   );
   await fs.unlink("./fixtures/index.html", () => {});
   t.end();

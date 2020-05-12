@@ -82,7 +82,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "01.01");
+    t.same(cleanupMsg.exitCode, 0, "01");
     t.end();
   }
 );
@@ -139,7 +139,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "02.01");
+    t.same(cleanupMsg.exitCode, 0, "02");
 
     t.end();
   }
@@ -197,7 +197,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "03.01");
+    t.same(cleanupMsg.exitCode, 0, "03");
 
     t.end();
   }
@@ -267,7 +267,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "04.01");
+    t.same(cleanupMsg.exitCode, 0, "04");
 
     t.end();
   }
@@ -332,7 +332,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "05.01");
+    t.same(cleanupMsg.exitCode, 0, "05");
 
     t.end();
   }
@@ -408,7 +408,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "06.01");
+    t.same(cleanupMsg.exitCode, 0, "06");
 
     t.end();
   }
@@ -472,7 +472,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "07.01");
+    t.same(cleanupMsg.exitCode, 0, "07");
 
     t.end();
   }
@@ -537,7 +537,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "08.01");
+    t.same(cleanupMsg.exitCode, 0, "08");
 
     t.end();
   }
@@ -594,7 +594,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "09.01");
+    t.same(cleanupMsg.exitCode, 0, "09");
 
     t.end();
   }
@@ -646,7 +646,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "10.01");
+    t.same(cleanupMsg.exitCode, 0, "10");
 
     t.end();
   }
@@ -698,7 +698,7 @@ tap.test(
         })
       );
 
-    t.same(cleanupMsg.exitCode, 0, "11.01");
+    t.same(cleanupMsg.exitCode, 0, "11");
 
     t.end();
   }

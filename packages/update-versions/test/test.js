@@ -332,7 +332,7 @@ tap.test("06 - no files found in the given directory", async (t) => {
   );
 
   // CLI should exit with a non-error code zero:
-  t.equal(stdOutContents.exitCode, 0, "06.01");
+  t.equal(stdOutContents.exitCode, 0, "06");
 
   // delete folder:
   await execa.command(`rm -rf ${path.join(__dirname, "../temp")}`);

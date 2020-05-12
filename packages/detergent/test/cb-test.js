@@ -77,7 +77,7 @@ tap.test(
         cb: (str) => str.toUpperCase(),
       }).res,
       "ABC DEF",
-      "05.01"
+      "05"
     );
     // now mixer:
     mixer({

@@ -124,7 +124,7 @@ tap.test(`05 - br with attribute, line break present`, (t) => {
       convertEntities: 1,
     }).res,
     `a<br class="z">\nb`,
-    "05.01"
+    "05"
   );
   t.end();
 });

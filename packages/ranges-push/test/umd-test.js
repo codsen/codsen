@@ -11,7 +11,7 @@ tap.test("UMD build works fine", (t) => {
       [1, 2],
       [3, 4],
     ],
-    "01.01"
+    "01"
   );
   t.end();
 });
