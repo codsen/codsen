@@ -27,8 +27,11 @@ tap.test(
           end: 8,
           value: "{% zz %}",
           head: "{%",
+          headStartsAt: 0,
+          headEndsAt: 2,
           tail: "%}",
-          kind: null,
+          tailStartsAt: 6,
+          tailEndsAt: 8,
         },
       ],
       "01"
@@ -61,8 +64,11 @@ tap.test(
           end: 9,
           value: "{% zz %}",
           head: "{%",
+          headStartsAt: 1,
+          headEndsAt: 3,
           tail: "%}",
-          kind: null,
+          tailStartsAt: 7,
+          tailEndsAt: 9,
         },
       ],
       "02"
@@ -80,24 +86,32 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "text",
           start: 0,
           end: 3,
+          value: "ab ",
         },
         {
           type: "esp",
           start: 3,
           end: 21,
+          value: "{% if something %}",
+          head: "{%",
+          headStartsAt: 3,
+          headEndsAt: 5,
           tail: "%}",
+          tailStartsAt: 19,
+          tailEndsAt: 21,
         },
         {
           type: "text",
           start: 21,
           end: 24,
+          value: " cd",
         },
       ],
       "03"
@@ -115,24 +129,50 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 3,
+          value: "<a>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
         {
           type: "esp",
           start: 3,
           end: 21,
+          value: "{% if something %}",
+          head: "{%",
+          headStartsAt: 3,
+          headEndsAt: 5,
           tail: "%}",
+          tailStartsAt: 19,
+          tailEndsAt: 21,
         },
         {
           type: "tag",
           start: 21,
           end: 24,
+          value: "<b>",
+          tagNameStartsAt: 22,
+          tagNameEndsAt: 23,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "04"
@@ -150,7 +190,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
@@ -158,20 +198,42 @@ tap.test(
           start: 0,
           end: 3,
           value: "<a>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
         {
           type: "esp",
           start: 3,
           end: 15,
-          head: "$(",
-          tail: ")",
           value: "$(something)",
+          head: "$(",
+          headStartsAt: 3,
+          headEndsAt: 5,
+          tail: ")",
+          tailStartsAt: 14,
+          tailEndsAt: 15,
         },
         {
           type: "tag",
           start: 15,
           end: 18,
           value: "<b>",
+          tagNameStartsAt: 16,
+          tagNameEndsAt: 17,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "05"
@@ -189,25 +251,50 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 3,
+          value: "<a>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
         {
           type: "esp",
           start: 3,
           end: 16,
+          value: "$(something)$",
           head: "$(",
+          headStartsAt: 3,
+          headEndsAt: 5,
           tail: ")$",
+          tailStartsAt: 14,
+          tailEndsAt: 16,
         },
         {
           type: "tag",
           start: 16,
           end: 19,
+          value: "<b>",
+          tagNameStartsAt: 17,
+          tagNameEndsAt: 18,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "06"
@@ -226,18 +313,32 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "esp",
           start: 0,
           end: 9,
+          value: "{%- a -%}",
+          head: "{%-",
+          headStartsAt: 0,
+          headEndsAt: 3,
+          tail: "-%}",
+          tailStartsAt: 6,
+          tailEndsAt: 9,
         },
         {
           type: "esp",
           start: 9,
           end: 18,
+          value: "{%- b -%}",
+          head: "{%-",
+          headStartsAt: 9,
+          headEndsAt: 12,
+          tail: "-%}",
+          tailStartsAt: 15,
+          tailEndsAt: 18,
         },
       ],
       "07"
@@ -256,18 +357,32 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "esp",
           start: 0,
           end: 20,
+          value: "{%- if count > 1 -%}",
+          head: "{%-",
+          headStartsAt: 0,
+          headEndsAt: 3,
+          tail: "-%}",
+          tailStartsAt: 17,
+          tailEndsAt: 20,
         },
         {
           type: "esp",
           start: 20,
           end: 38,
+          value: "{% if count > 1 %}",
+          head: "{%",
+          headStartsAt: 20,
+          headEndsAt: 22,
+          tail: "%}",
+          tailStartsAt: 36,
+          tailEndsAt: 38,
         },
       ],
       "08"
@@ -286,18 +401,32 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "esp",
           start: 0,
           end: 7,
+          value: "*|zzz|*",
+          head: "*|",
+          headStartsAt: 0,
+          headEndsAt: 2,
+          tail: "|*",
+          tailStartsAt: 5,
+          tailEndsAt: 7,
         },
         {
           type: "esp",
           start: 7,
           end: 14,
+          value: "*|yyy|*",
+          head: "*|",
+          headStartsAt: 7,
+          headEndsAt: 9,
+          tail: "|*",
+          tailStartsAt: 12,
+          tailEndsAt: 14,
         },
       ],
       "09"
@@ -306,31 +435,11 @@ tap.test(
   }
 );
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`no overlap`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
-  (t) => {
-    const gathered = [];
-    ct(`*|zzz*|*|yyy|*`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "esp",
-          start: 0,
-          end: 7,
-        },
-        {
-          type: "esp",
-          start: 7,
-          end: 14,
-        },
-      ],
-      "10"
-    );
-    t.end();
-  }
-);
+// -----------------------------------------------------------------------------
+
+// TODO:
+// Java:
+// <%@ ... %>
+// <c:forEach ... > (no slash)
+// <jsp:useBean ... />
+// <c:set ... />

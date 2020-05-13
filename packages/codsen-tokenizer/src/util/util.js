@@ -152,6 +152,8 @@ const espChars = `{}%-$_()*|#`;
 
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 
+const punctuationChars = [".", ",", ";", "!", "?"];
+
 function lastChar(str) {
   if (!isStr(str) || !str.length) {
     return "";
@@ -313,6 +315,7 @@ export {
   isUppercaseLetter,
   espLumpBlacklist,
   secondToLastChar,
+  punctuationChars,
   isNumOrNumStr,
   isLatinLetter,
   isLowercase,

@@ -14,14 +14,22 @@ tap.test(
       },
     });
 
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 11,
-          value: `<td{% z %}>`,
+          value: "<td{% z %}>",
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "td",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
           attribs: [
             {
               type: "esp",
@@ -29,8 +37,11 @@ tap.test(
               end: 10,
               value: "{% z %}",
               head: "{%",
+              headStartsAt: 3,
+              headEndsAt: 5,
               tail: "%}",
-              kind: null,
+              tailStartsAt: 8,
+              tailEndsAt: 10,
             },
           ],
         },
@@ -51,14 +62,22 @@ tap.test(
       },
     });
 
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 35,
-          value: `<td{% x %} class="z"{% y %} id="z">`,
+          value: '<td{% x %} class="z"{% y %} id="z">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 3,
+          tagName: "td",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
           attribs: [
             {
               type: "esp",
@@ -66,8 +85,11 @@ tap.test(
               end: 10,
               value: "{% x %}",
               head: "{%",
+              headStartsAt: 3,
+              headEndsAt: 5,
               tail: "%}",
-              kind: null,
+              tailStartsAt: 8,
+              tailEndsAt: 10,
             },
             {
               attribName: "class",
@@ -96,8 +118,11 @@ tap.test(
               end: 27,
               value: "{% y %}",
               head: "{%",
+              headStartsAt: 20,
+              headEndsAt: 22,
               tail: "%}",
-              kind: null,
+              tailStartsAt: 25,
+              tailEndsAt: 27,
             },
             {
               attribName: "id",
@@ -139,7 +164,7 @@ tap.test(
       },
     });
 
-    t.match(
+    t.same(
       gathered,
       [
         {
@@ -162,8 +187,11 @@ tap.test(
               end: 21,
               value: "{% if something %}",
               head: "{%",
+              headStartsAt: 3,
+              headEndsAt: 5,
               tail: "%}",
-              kind: null,
+              tailStartsAt: 19,
+              tailEndsAt: 21,
             },
             {
               attribName: "class",
@@ -192,8 +220,11 @@ tap.test(
               end: 42,
               value: "{% endif %}",
               head: "{%",
+              headStartsAt: 31,
+              headEndsAt: 33,
               tail: "%}",
-              kind: null,
+              tailStartsAt: 40,
+              tailEndsAt: 42,
             },
             {
               attribName: "id",

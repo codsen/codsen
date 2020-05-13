@@ -49,9 +49,12 @@ tap.test(
                   start: 6,
                   end: 12,
                   value: "{% x }",
-                  kind: null,
                   head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: "}",
+                  tailStartsAt: 11,
+                  tailEndsAt: 12,
                 },
               ],
               attribValueStartsAt: 6,
@@ -77,7 +80,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
@@ -108,9 +111,12 @@ tap.test(
                   start: 6,
                   end: 12,
                   value: "{% x }",
-                  kind: null,
                   head: "{%",
-                  tail: "}", // <----- error in Nunjucks/Jinja
+                  headStartsAt: 6,
+                  headEndsAt: 8,
+                  tail: "}", // <----- ends up with an error in Nunjucks/Jinja
+                  tailStartsAt: 11,
+                  tailEndsAt: 12,
                 },
                 {
                   type: "text",
@@ -123,9 +129,12 @@ tap.test(
                   start: 13,
                   end: 20,
                   value: "{% y %}",
-                  kind: null,
                   head: "{%",
+                  headStartsAt: 13,
+                  headEndsAt: 15,
                   tail: "%}",
+                  tailStartsAt: 18,
+                  tailEndsAt: 20,
                 },
                 {
                   type: "text",
@@ -149,7 +158,7 @@ tap.test(
 );
 
 tap.test(
-  `03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - new heads follow`,
+  `03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails null - new heads follow`,
   (t) => {
     const gathered = [];
     ct(`<a b="{% x {% y %}2">`, {
@@ -157,18 +166,9 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
-        {
-          type: "esp",
-          start: 6,
-          end: 11,
-          value: "{% x ",
-          kind: null,
-          head: "{%",
-          tail: null,
-        },
         {
           type: "tag",
           start: 0,
@@ -197,18 +197,24 @@ tap.test(
                   start: 6,
                   end: 11,
                   value: "{% x ",
-                  kind: null,
                   head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: null,
+                  tailStartsAt: null,
+                  tailEndsAt: null,
                 },
                 {
                   type: "esp",
                   start: 11,
                   end: 18,
                   value: "{% y %}",
-                  kind: null,
                   head: "{%",
+                  headStartsAt: 11,
+                  headEndsAt: 13,
                   tail: "%}",
+                  tailStartsAt: 16,
+                  tailEndsAt: 18,
                 },
                 {
                   type: "text",
@@ -231,25 +237,54 @@ tap.test(
   }
 );
 
-tap.todo(
-  `04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`,
+tap.test(
+  `04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% x">`, {
+    ct(`*|zzz*|*|yyy|*`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "04");
+    t.same(
+      gathered,
+      [
+        {
+          type: "esp",
+          start: 0,
+          end: 7,
+          value: "*|zzz*|",
+          head: "*|",
+          headStartsAt: 0,
+          headEndsAt: 2,
+          tail: "*|",
+          tailStartsAt: 5,
+          tailEndsAt: 7,
+        },
+        {
+          type: "esp",
+          start: 7,
+          end: 14,
+          value: "*|yyy|*",
+          head: "*|",
+          headStartsAt: 7,
+          headEndsAt: 9,
+          tail: "|*",
+          tailStartsAt: 12,
+          tailEndsAt: 14,
+        },
+      ],
+      "04"
+    );
     t.end();
   }
 );
 
 tap.todo(
-  `05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`,
+  `05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% x"><c d="y %}">`, {
+    ct(`<a b="{% x">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -260,10 +295,10 @@ tap.todo(
 );
 
 tap.todo(
-  `06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`,
+  `06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{ x %}1{% y %}2">`, {
+    ct(`<a b="{% x"><c d="y %}">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -274,10 +309,10 @@ tap.todo(
 );
 
 tap.todo(
-  `07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`,
+  `07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`,
   (t) => {
     const gathered = [];
-    ct(`<a b="x %}1{% y %}2">`, {
+    ct(`<a b="{ x %}1{% y %}2">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -288,10 +323,10 @@ tap.todo(
 );
 
 tap.todo(
-  `08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`,
+  `08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% x"><b c="y %}">`, {
+    ct(`<a b="x %}1{% y %}2">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -302,10 +337,10 @@ tap.todo(
 );
 
 tap.todo(
-  `09 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`,
+  `09 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% {% %}">`, {
+    ct(`<a b="{% x"><b c="y %}">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -316,10 +351,10 @@ tap.todo(
 );
 
 tap.todo(
-  `10 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`,
+  `10 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`,
   (t) => {
     const gathered = [];
-    ct(`<a b="%} %}">`, {
+    ct(`<a b="{% {% %}">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -329,10 +364,16 @@ tap.todo(
   }
 );
 
-// -----------------------------------------------------------------------------
-
-// Java:
-// <%@ ... %>
-// <c:forEach ... > (no slash)
-// <jsp:useBean ... />
-// <c:set ... />
+tap.todo(
+  `11 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="%} %}">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "11");
+    t.end();
+  }
+);

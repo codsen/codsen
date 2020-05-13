@@ -1,52 +1,17 @@
-import { left, right } from "string-left-right";
-import { flipEspTag, espChars, xBeforeYOnTheRight } from "./util";
+import { right } from "string-left-right";
+import {
+  punctuationChars,
+  flipEspTag,
+  espChars,
+  xBeforeYOnTheRight,
+} from "./util";
 
 // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
 function startsEsp(str, i, token, layers, styleStarts) {
-  console.log(
-    `010 startsEsp(): RETURNS ${
-      (espChars.includes(str[i]) &&
-        str[i + 1] &&
-        espChars.includes(str[i + 1]) &&
-        token.type !== "rule" &&
-        token.type !== "at" &&
-        !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
-        !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
-        !(
-          str[i] === "%" &&
-          "0123456789".includes(str[left(str, i)]) &&
-          (!str[i + 2] ||
-            [`"`, `'`, ";"].includes(str[i + 2]) ||
-            !str[i + 2].trim().length)
-        ) &&
-        !(
-          styleStarts &&
-          ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
-        )) ||
-      (str[i] === "<" &&
-        ((str[i + 1] === "/" && espChars.includes(str[i + 2])) ||
-          (espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])))) ||
-      (`>})`.includes(str[i]) &&
-        Array.isArray(layers) &&
-        layers.length &&
-        layers[layers.length - 1].type === "esp" &&
-        layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) &&
-        (str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<"))) ||
-      (str[i] === "-" &&
-        str[i + 1] === "-" &&
-        str[i + 2] === ">" &&
-        Array.isArray(layers) &&
-        layers.length &&
-        layers[layers.length - 1].type === "esp" &&
-        layers[layers.length - 1].openingLump[0] === "<" &&
-        layers[layers.length - 1].openingLump[2] === "-" &&
-        layers[layers.length - 1].openingLump[3] === "-")
-    }`
-  );
-  return (
+  const res =
     // 1. two consecutive esp characters - Liquid, Mailchimp etc.
     // {{ or |* and so on
     (espChars.includes(str[i]) &&
@@ -58,11 +23,16 @@ function startsEsp(str, i, token, layers, styleStarts) {
       !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
       !(
         // insurance against repeated percentages
+        //
+        // imagine: "99%%."
+        //             ^
+        //      we're here
         (
           str[i] === "%" &&
-          "0123456789".includes(str[left(str, i)]) &&
+          str[i + 1] === "%" &&
+          "0123456789".includes(str[i - 1]) &&
           (!str[i + 2] ||
-            [`"`, `'`, ";"].includes(str[i + 2]) ||
+            punctuationChars.includes(str[i + 2]) ||
             !str[i + 2].trim().length)
         )
       ) &&
@@ -107,8 +77,10 @@ function startsEsp(str, i, token, layers, styleStarts) {
       layers[layers.length - 1].type === "esp" &&
       layers[layers.length - 1].openingLump[0] === "<" &&
       layers[layers.length - 1].openingLump[2] === "-" &&
-      layers[layers.length - 1].openingLump[3] === "-")
-  );
+      layers[layers.length - 1].openingLump[3] === "-");
+
+  console.log(`082 startsEsp(): RETURNS ${res}`);
+  return res;
 }
 
 export default startsEsp;

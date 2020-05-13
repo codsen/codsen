@@ -8,7 +8,8 @@ tap.test(
   `01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag inside`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% if something %}"><c>`, {
+    const value = `<a b="{% if something %}"><c>`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -20,7 +21,7 @@ tap.test(
           type: "tag",
           start: 0,
           end: 26,
-          value: '<a b="{% if something %}">',
+          value: `<a b="{% if something %}">`,
           tagNameStartsAt: 1,
           tagNameEndsAt: 2,
           tagName: "a",
@@ -45,8 +46,11 @@ tap.test(
                   end: 24,
                   value: "{% if something %}",
                   head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: "%}",
-                  kind: null,
+                  tailStartsAt: 22,
+                  tailEndsAt: 24,
                 },
               ],
               attribValueStartsAt: 6,
@@ -82,23 +86,37 @@ tap.test(
   `02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{{ c }}d">`, {
+    const value = `<a b="{{ c }}d">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 16,
-          value: `<a b="{{ c }}d">`,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
           attribs: [
             {
               attribName: "b",
-              attribValueRaw: `{{ c }}d`,
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 14,
+              attribValueRaw: "{{ c }}d",
               attribValue: [
                 {
                   type: "esp",
@@ -106,7 +124,11 @@ tap.test(
                   end: 13,
                   value: "{{ c }}",
                   head: "{{",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: "}}",
+                  tailStartsAt: 11,
+                  tailEndsAt: 13,
                 },
                 {
                   type: "text",
@@ -133,19 +155,20 @@ tap.test(
   `03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`,
   (t) => {
     const gathered = [];
-    ct(`<img src="{{ root }}z" width="9"/>`, {
+    const value = `<img src="{{ root }}z" width="9"/>`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 34,
-          value: `<img src="{{ root }}z" width="9"/>`,
+          value,
           tagNameStartsAt: 1,
           tagNameEndsAt: 4,
           tagName: "img",
@@ -162,7 +185,7 @@ tap.test(
               attribNameEndsAt: 8,
               attribOpeningQuoteAt: 9,
               attribClosingQuoteAt: 21,
-              attribValueRaw: `{{ root }}z`,
+              attribValueRaw: "{{ root }}z",
               attribValue: [
                 {
                   type: "esp",
@@ -170,7 +193,11 @@ tap.test(
                   end: 20,
                   value: "{{ root }}",
                   head: "{{",
+                  headStartsAt: 10,
+                  headEndsAt: 12,
                   tail: "}}",
+                  tailStartsAt: 18,
+                  tailEndsAt: 20,
                 },
                 {
                   type: "text",
@@ -184,8 +211,6 @@ tap.test(
               attribStart: 5,
               attribEnd: 22,
             },
-            // then,
-            // continues recording attributes as normal:
             {
               attribName: "width",
               attribNameRecognised: true,
@@ -225,7 +250,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
@@ -257,7 +282,11 @@ tap.test(
                   end: 13,
                   value: "{% x %}",
                   head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: "%}",
+                  tailStartsAt: 11,
+                  tailEndsAt: 13,
                 },
                 {
                   type: "text",
@@ -271,7 +300,11 @@ tap.test(
                   end: 21,
                   value: "{% y %}",
                   head: "{%",
+                  headStartsAt: 14,
+                  headEndsAt: 16,
                   tail: "%}",
+                  tailStartsAt: 19,
+                  tailEndsAt: 21,
                 },
                 {
                   type: "text",
@@ -303,7 +336,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
@@ -311,6 +344,14 @@ tap.test(
           start: 0,
           end: 56,
           value: `<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
           attribs: [
             {
               attribName: "z",
@@ -327,7 +368,11 @@ tap.test(
                   end: 24,
                   value: "{% if something %}",
                   head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
                   tail: "%}",
+                  tailStartsAt: 22,
+                  tailEndsAt: 24,
                 },
                 {
                   type: "text",
@@ -341,7 +386,11 @@ tap.test(
                   end: 35,
                   value: "{% else %}",
                   head: "{%",
+                  headStartsAt: 25,
+                  headEndsAt: 27,
                   tail: "%}",
+                  tailStartsAt: 33,
+                  tailEndsAt: 35,
                 },
                 {
                   type: "text",
@@ -355,7 +404,11 @@ tap.test(
                   end: 47,
                   value: "{% endif %}",
                   head: "{%",
+                  headStartsAt: 36,
+                  headEndsAt: 38,
                   tail: "%}",
+                  tailStartsAt: 45,
+                  tailEndsAt: 47,
                 },
               ],
               attribValueStartsAt: 6,
@@ -414,8 +467,14 @@ tap.test(
           type: "esp",
           start: 3,
           end: 32,
+          value: "{% if a<b and c>d '\"' ><>< %}",
+          kind: null,
           head: "{%",
+          headStartsAt: 3,
+          headEndsAt: 5,
           tail: "%}",
+          tailStartsAt: 30,
+          tailEndsAt: 32,
         },
         {
           type: "tag",
@@ -429,7 +488,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.only(
   `07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
@@ -438,18 +497,72 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 21,
+          value: `<a b="c{{ z("'") }}">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 19,
+              attribValueRaw: `c{{ z("'") }}`,
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 19,
+                  value: `{{ z("'") }}`,
+                  head: "{{",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "}}",
+                  tailStartsAt: 17,
+                  tailEndsAt: 19,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 19,
+              attribStart: 3,
+              attribEnd: 20,
+            },
+          ],
         },
         {
           type: "tag",
           start: 21,
           end: 24,
+          value: "<b>",
+          tagNameStartsAt: 22,
+          tagNameEndsAt: 23,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "07"
@@ -467,18 +580,72 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 49,
+          value: `<a href="https://z.y/?a=1&q={{ r("'", "%27") }}">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "href",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 7,
+              attribOpeningQuoteAt: 8,
+              attribClosingQuoteAt: 47,
+              attribValueRaw: `https://z.y/?a=1&q={{ r("'", "%27") }}`,
+              attribValue: [
+                {
+                  type: "text",
+                  start: 9,
+                  end: 28,
+                  value: `https://z.y/?a=1&q=`,
+                },
+                {
+                  type: "esp",
+                  start: 28,
+                  end: 47,
+                  value: `{{ r("'", "%27") }}`,
+                  head: "{{",
+                  headStartsAt: 28,
+                  headEndsAt: 30,
+                  tail: "}}",
+                  tailStartsAt: 45,
+                  tailEndsAt: 47,
+                },
+              ],
+              attribValueStartsAt: 9,
+              attribValueEndsAt: 47,
+              attribStart: 3,
+              attribEnd: 48,
+            },
+          ],
         },
         {
           type: "tag",
           start: 49,
           end: 52,
+          value: "<b>",
+          tagNameStartsAt: 50,
+          tagNameEndsAt: 51,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "08"
@@ -499,18 +666,72 @@ tap.test(
         },
       }
     );
-    t.match(
+    t.same(
       gathered,
       [
         {
           type: "tag",
           start: 0,
           end: 111,
+          value: `<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "href",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 7,
+              attribOpeningQuoteAt: 8,
+              attribClosingQuoteAt: 109,
+              attribValueRaw: `https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}`,
+              attribValue: [
+                {
+                  type: "text",
+                  start: 9,
+                  end: 28,
+                  value: "https://z.y/?a=1&q=",
+                },
+                {
+                  type: "esp",
+                  start: 28,
+                  end: 109,
+                  value: `{{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}`,
+                  head: "{{",
+                  headStartsAt: 28,
+                  headEndsAt: 30,
+                  tail: "}}",
+                  tailStartsAt: 107,
+                  tailEndsAt: 109,
+                },
+              ],
+              attribValueStartsAt: 9,
+              attribValueEndsAt: 109,
+              attribStart: 3,
+              attribEnd: 110,
+            },
+          ],
         },
         {
           type: "tag",
           start: 111,
           end: 114,
+          value: "<b>",
+          tagNameStartsAt: 112,
+          tagNameEndsAt: 113,
+          tagName: "b",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
         },
       ],
       "09"
@@ -528,7 +749,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "10");
+    t.same(gathered, [], "10");
     t.end();
   }
 );
@@ -542,7 +763,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "11");
+    t.same(gathered, [], "11");
     t.end();
   }
 );
@@ -556,7 +777,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "12");
+    t.same(gathered, [], "12");
     t.end();
   }
 );
@@ -570,7 +791,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "13");
+    t.same(gathered, [], "13");
     t.end();
   }
 );
@@ -584,7 +805,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "14");
+    t.same(gathered, [], "14");
     t.end();
   }
 );
@@ -598,7 +819,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "15");
+    t.same(gathered, [], "15");
     t.end();
   }
 );
@@ -612,7 +833,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "16");
+    t.same(gathered, [], "16");
     t.end();
   }
 );
@@ -626,7 +847,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "17");
+    t.same(gathered, [], "17");
     t.end();
   }
 );
@@ -640,7 +861,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "18");
+    t.same(gathered, [], "18");
     t.end();
   }
 );
@@ -654,7 +875,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "19");
+    t.same(gathered, [], "19");
     t.end();
   }
 );
@@ -668,7 +889,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "20");
+    t.same(gathered, [], "20");
     t.end();
   }
 );
@@ -685,7 +906,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "21");
+    t.same(gathered, [], "21");
     t.end();
   }
 );
@@ -699,7 +920,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "22");
+    t.same(gathered, [], "22");
     t.end();
   }
 );
@@ -713,7 +934,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "23");
+    t.same(gathered, [], "23");
     t.end();
   }
 );
@@ -727,7 +948,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "24");
+    t.same(gathered, [], "24");
     t.end();
   }
 );
@@ -741,7 +962,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "25");
+    t.same(gathered, [], "25");
     t.end();
   }
 );
@@ -755,7 +976,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "26");
+    t.same(gathered, [], "26");
     t.end();
   }
 );

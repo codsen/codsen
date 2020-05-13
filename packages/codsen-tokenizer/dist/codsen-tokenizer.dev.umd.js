@@ -2630,6 +2630,10 @@
       }
 
       if (`'"`.includes(str[i])) {
+        if (str[i] === `'` && str[i - 1] === `"` && str[i + 1] === `"` || str[i] === `"` && str[i - 1] === `'` && str[i + 1] === `'`) {
+          continue;
+        }
+
         if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
           quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
           lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
@@ -2788,6 +2792,7 @@
 
   var espChars = "{}%-$_()*|#";
   var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
+  var punctuationChars = [".", ",", ";", "!", "?"];
 
   function isStr$1(something) {
     return typeof something === "string";
@@ -3143,29 +3148,33 @@
   // so we extracted into a function.
 
   function startsEsp(str, i, token, layers, styleStarts) {
-    return (// 1. two consecutive esp characters - Liquid, Mailchimp etc.
-      // {{ or |* and so on
-      espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
-      str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || //
-      // 2. html-like syntax - Responsys RPL and similar
-      // <#if z> or </#if> and so on
-      // normal opening tag
-      str[i] === "<" && ( // and
-      // either it's closing tag and what follows is ESP-char
-      str[i + 1] === "/" && espChars.includes(str[i + 2]) || // or
-      // it's not closing and esp char follows right away
-      espChars.includes(str[i + 1]) && // but no cheating, character must not be second-grade
-      !["-"].includes(str[i + 1])) || //
-      // 3. single character tails, for example RPL's closing curlies: ${zzz}
-      // it's specifically a closing-kind character
-      ">})".includes(str[i]) && // heads include the opposite of it
-      Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
-      // <#if product.weight > 100>
-      str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
-      // 4. comment closing in RPL-like templating languages, for example:
-      // <#-- z -->
-      str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"
-    );
+    var res = // 1. two consecutive esp characters - Liquid, Mailchimp etc.
+    // {{ or |* and so on
+    espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
+    //
+    // imagine: "99%%."
+    //             ^
+    //      we're here
+    str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || //
+    // 2. html-like syntax - Responsys RPL and similar
+    // <#if z> or </#if> and so on
+    // normal opening tag
+    str[i] === "<" && ( // and
+    // either it's closing tag and what follows is ESP-char
+    str[i + 1] === "/" && espChars.includes(str[i + 2]) || // or
+    // it's not closing and esp char follows right away
+    espChars.includes(str[i + 1]) && // but no cheating, character must not be second-grade
+    !["-"].includes(str[i + 1])) || //
+    // 3. single character tails, for example RPL's closing curlies: ${zzz}
+    // it's specifically a closing-kind character
+    ">})".includes(str[i]) && // heads include the opposite of it
+    Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
+    // <#if product.weight > 100>
+    str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+    // 4. comment closing in RPL-like templating languages, for example:
+    // <#-- z -->
+    str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    return res;
   }
 
   function isObj$1(something) {
@@ -3572,169 +3581,79 @@
       attribReset();
 
       if (type === "tag") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        token.tagNameStartsAt = null;
-        token.tagNameEndsAt = null;
-        token.tagName = null;
-        token.recognised = null;
-        token.closing = false;
-        token.void = false;
-        token.pureHTML = true; // meaning there are no esp bits
-
-        token.kind = null;
-        token.attribs = [];
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null,
+          tagNameStartsAt: null,
+          tagNameEndsAt: null,
+          tagName: null,
+          recognised: null,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          // meaning there are no esp bits
+          kind: null,
+          attribs: []
+        };
       } else if (type === "comment") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        token.closing = false;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = "simple"; // or "only" or "not"
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null,
+          closing: false,
+          kind: "simple" // or "only" or "not"
 
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        };
       } else if (type === "rule") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        token.selectorsStart = null;
-        token.selectorsEnd = null;
-        token.selectors = [];
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null,
+          openingCurlyAt: null,
+          closingCurlyAt: null,
+          selectorsStart: null,
+          selectorsEnd: null,
+          selectors: []
+        };
       } else if (type === "at") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        token.identifier = null;
-        token.identifierStartsAt = null;
-        token.identifierEndsAt = null;
-        token.query = null;
-        token.queryStartsAt = null;
-        token.queryEndsAt = null;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null,
+          openingCurlyAt: null,
+          closingCurlyAt: null,
+          identifier: null,
+          identifierStartsAt: null,
+          identifierEndsAt: null,
+          query: null,
+          queryStartsAt: null,
+          queryEndsAt: null
+        };
       } else if (type === "text") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null
+        };
       } else if (type === "esp") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = null;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        token.head = null;
-        token.tail = null;
+        token = {
+          type: type,
+          start: startVal,
+          end: null,
+          value: null,
+          head: null,
+          headStartsAt: null,
+          headEndsAt: null,
+          tail: null,
+          tailStartsAt: null,
+          tailEndsAt: null
+        };
       }
     } //
     //
@@ -4168,6 +4087,8 @@
                   token.end = _i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
                   token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
+                  token.tailStartsAt = _i;
+                  token.tailEndsAt = token.end;
                 } // it depends will we ping it as a standalone token or will we
                 // nest inside the parent tag among attributes
 
@@ -4270,8 +4191,11 @@
                   if (attrib.attribStart && !attrib.attribEnd) {
                     attribToBackup = lodash_clonedeep(attrib);
                   }
-                } else {
+                } else if (!attribToBackup) {
                   dumpCurrentToken(token, _i);
+                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "esp" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
                 }
               } // now, either way, if parent tag was stashed in "parentTokenToBackup"
               // or if this is a new ESP token and there's nothing to nest,
@@ -4279,9 +4203,11 @@
 
 
               initToken("esp", _i);
-              token.head = wholeEspTagLumpOnTheRight; // toggle parentTokenToBackup.pureHTML
+              token.head = wholeEspTagLumpOnTheRight;
+              token.headStartsAt = _i;
+              token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
 
-              if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
+              if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
                 parentTokenToBackup.pureHTML = false;
               } // if text token has been initiated, imagine:
               //  "attribValue": [
@@ -4672,7 +4598,11 @@
 
       if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
         if ("'\"".includes(str[_i])) {
-          //
+          var R1 = !layers.some(function (layerObj) {
+            return layerObj.type === "esp";
+          });
+          var R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i); //
+
           if (str[left(str, _i)] === str[_i] && // str[i + 1].trim() &&
           !"/>".concat(espChars).includes(str[right(str, _i)]) && !xBeforeYOnTheRight$1(str, _i, "=", "\"") && !xBeforeYOnTheRight$1(str, _i, "=", "'") && (xBeforeYOnTheRight$1(str, _i, "\"", ">") || xBeforeYOnTheRight$1(str, _i, "'", ">")) && ( // and either "<" doesn't follow:
           !str.slice(_i + 1).includes("<") || // or there's no equal leading up to it:
