@@ -152,6 +152,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
     }
     if ("'\"".includes(str[i])) {
+      if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
+        continue;
+      }
       if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
         quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
         lastMatchedQuotesPairsStartIsAt = lastQuoteAt;

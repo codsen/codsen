@@ -2717,6 +2717,11 @@
         // catch the non-overlapping matched pairs of quotes
         // for example that's three pairs in total below:
         // <z bbb"c" ddd'e'>.<z fff"g">
+        // Insurace against the Killer Triplet - a quoted quote
+        if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
+          continue;
+        }
+
         if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
           quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
           lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
