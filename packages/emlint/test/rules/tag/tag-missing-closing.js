@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // 01. basic
 // -----------------------------------------------------------------------------
 
-tap.todo(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
+tap.todo(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
   const str = "z <div>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -18,12 +18,12 @@ tap.todo(`01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
       "tag-missing-opening": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str);
-  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str, "01.01");
+  t.same(messages, [], "01.02");
   t.end();
 });
 
-tap.todo(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
+tap.todo(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
   const str = "z <div>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -31,21 +31,25 @@ tap.todo(`01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
       "tag-missing-opening": 1,
     },
   });
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "tag-missing-opening",
-      severity: 1,
-      idxFrom: 2,
-      idxTo: 7,
-      message: `Closing tag is missing.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "02.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-missing-opening",
+        severity: 1,
+        idxFrom: 2,
+        idxTo: 7,
+        message: `Closing tag is missing.`,
+        fix: null,
+      },
+    ],
+    "02.02"
+  );
   t.end();
 });
 
-tap.todo(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
+tap.todo(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
   const str = "z <div>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -53,22 +57,26 @@ tap.todo(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
       "tag-missing-opening": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str);
-  t.match(messages, [
-    {
-      ruleId: "tag-missing-opening",
-      severity: 2,
-      idxFrom: 2,
-      idxTo: 7,
-      message: `Closing tag is missing.`,
-      fix: null,
-    },
-  ]);
+  t.equal(applyFixes(str, messages), str, "03.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-missing-opening",
+        severity: 2,
+        idxFrom: 2,
+        idxTo: 7,
+        message: `Closing tag is missing.`,
+        fix: null,
+      },
+    ],
+    "03.02"
+  );
   t.end();
 });
 
 tap.todo(
-  `01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`,
+  `04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`,
   (t) => {
     const str = "z <div>";
     const linter = new Linter();
@@ -77,7 +85,7 @@ tap.todo(
         tag: 1,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.04.01");
+    t.equal(applyFixes(str, messages), str, "04.01");
     t.match(
       messages,
       [
@@ -90,14 +98,14 @@ tap.todo(
           fix: null,
         },
       ],
-      "01.04.01"
+      "04.02"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `01.05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`,
+  `05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`,
   (t) => {
     const str = "z <div>";
     const linter = new Linter();
@@ -106,7 +114,7 @@ tap.todo(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.05.01");
+    t.equal(applyFixes(str, messages), str, "05.01");
     t.match(
       messages,
       [
@@ -119,14 +127,14 @@ tap.todo(
           fix: null,
         },
       ],
-      "01.05.02"
+      "05.02"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `01.06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
+  `06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
   (t) => {
     const str = "<style>\n\n</style>";
     const linter = new Linter();
@@ -135,56 +143,50 @@ tap.todo(
         "tag-missing-opening": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.06.01");
-    t.same(messages, [], "01.06.02");
+    t.equal(applyFixes(str, messages), str, "06.01");
+    t.same(messages, [], "06.02");
     t.end();
   }
 );
 
-tap.todo(
-  `01.07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`,
-  (t) => {
-    const str = `<table>
+tap.todo(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, (t) => {
+  const str = `<table>
   <tr>
     <td>
       z
   </tr>
 </table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "tag-missing-opening": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.07.01");
-    t.same(messages, [], "01.07.02");
-    t.end();
-  }
-);
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-missing-opening": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "07.01");
+  t.same(messages, [], "07.02");
+  t.end();
+});
 
-tap.todo(
-  `01.08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`,
-  (t) => {
-    const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
+tap.todo(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, (t) => {
+  const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       z
     </td>
 </table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "tag-missing-opening": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.08.01");
-    t.same(messages, [], "01.08.02");
-    t.end();
-  }
-);
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-missing-opening": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "08.01");
+  t.same(messages, [], "08.02");
+  t.end();
+});
 
 tap.todo(
-  `01.09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`,
+  `09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`,
   (t) => {
     const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -198,14 +200,14 @@ tap.todo(
         "tag-missing-opening": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.09.01");
-    t.same(messages, [], "01.09.02");
+    t.equal(applyFixes(str, messages), str, "09.01");
+    t.same(messages, [], "09.02");
     t.end();
   }
 );
 
 tap.todo(
-  `01.10 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR+TD missing`,
+  `10 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR+TD missing`,
   (t) => {
     const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -218,8 +220,8 @@ tap.todo(
         "tag-missing-opening": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "01.10.01");
-    t.same(messages, [], "01.10.02");
+    t.equal(applyFixes(str, messages), str, "10.01");
+    t.same(messages, [], "10.02");
     t.end();
   }
 );
@@ -228,7 +230,7 @@ tap.todo(
 // -----------------------------------------------------------------------------
 
 tap.todo(
-  `02.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
+  `11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
   (t) => {
     const str = `<br><br>zzz</br></br>`;
     const fixed = `<br/><br/>zzz<br/><br/>`;
@@ -238,13 +240,13 @@ tap.todo(
         all: 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.01");
+    t.equal(applyFixes(str, messages), fixed, "11");
     t.end();
   }
 );
 
 tap.todo(
-  `02.02 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
+  `12 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
   (t) => {
     const str = `<br><br>zzz<br>`;
     const fixed = `<br/><br/>zzz<br/>`;
@@ -254,7 +256,7 @@ tap.todo(
         all: 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "02.02.01");
+    t.equal(applyFixes(str, messages), fixed, "12.01");
     t.match(
       messages,
       [
@@ -289,9 +291,9 @@ tap.todo(
           },
         },
       ],
-      "02.02.02"
+      "12.02"
     );
-    t.is(messages.length, 3, "02.02.03");
+    t.is(messages.length, 3, "12.03");
     t.end();
   }
 );

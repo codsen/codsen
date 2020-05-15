@@ -190,7 +190,7 @@ tap.test(`06 - in front of backslash`, (t) => {
     t.is,
     t.fail
   );
-  t.equal(applyFixes(str, messages), `<a>`, "06.01");
+  t.equal(applyFixes(str, messages), `<a>`, "06");
   t.end();
 });
 

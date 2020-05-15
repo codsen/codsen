@@ -11523,6 +11523,10 @@
       }
 
       if (`'"`.includes(str[i])) {
+        if (str[i] === `'` && str[i - 1] === `"` && str[i + 1] === `"` || str[i] === `"` && str[i - 1] === `'` && str[i + 1] === `'`) {
+          continue;
+        }
+
         if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
           quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
           lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
@@ -11766,6 +11770,7 @@
   const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
   const espChars = `{}%-$_()*|#`;
   const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
+  const punctuationChars = [".", ",", ";", "!", "?"];
 
   function isStr$5(something) {
     return typeof something === "string";
@@ -11917,7 +11922,8 @@
   }
 
   function startsEsp(str, i, token, layers, styleStarts) {
-    return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && "0123456789".includes(str[left(str, i)]) && (!str[i + 2] || [`"`, `'`, ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    return res;
   }
 
   function isObj$4(something) {
@@ -12125,167 +12131,77 @@
       attribReset();
 
       if (type === "tag") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        token.tagNameStartsAt = null;
-        token.tagNameEndsAt = null;
-        token.tagName = null;
-        token.recognised = null;
-        token.closing = false;
-        token.void = false;
-        token.pureHTML = true;
-        token.kind = null;
-        token.attribs = [];
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null,
+          tagNameStartsAt: null,
+          tagNameEndsAt: null,
+          tagName: null,
+          recognised: null,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: []
+        };
       } else if (type === "comment") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        token.closing = false;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = "simple";
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null,
+          closing: false,
+          kind: "simple"
+        };
       } else if (type === "rule") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        token.selectorsStart = null;
-        token.selectorsEnd = null;
-        token.selectors = [];
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null,
+          openingCurlyAt: null,
+          closingCurlyAt: null,
+          selectorsStart: null,
+          selectorsEnd: null,
+          selectors: []
+        };
       } else if (type === "at") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        token.openingCurlyAt = null;
-        token.closingCurlyAt = null;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        token.identifier = null;
-        token.identifierStartsAt = null;
-        token.identifierEndsAt = null;
-        token.query = null;
-        token.queryStartsAt = null;
-        token.queryEndsAt = null;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null,
+          openingCurlyAt: null,
+          closingCurlyAt: null,
+          identifier: null,
+          identifierStartsAt: null,
+          identifierEndsAt: null,
+          query: null,
+          queryStartsAt: null,
+          queryEndsAt: null
+        };
       } else if (type === "text") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        delete token.kind;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        delete token.head;
-        delete token.tail;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null
+        };
       } else if (type === "esp") {
-        token.type = type;
-        token.start = startVal;
-        token.end = null;
-        token.value = null;
-        delete token.tagNameStartsAt;
-        delete token.tagNameEndsAt;
-        delete token.tagName;
-        delete token.recognised;
-        delete token.closing;
-        delete token.void;
-        delete token.pureHTML;
-        token.kind = null;
-        delete token.attribs;
-        delete token.openingCurlyAt;
-        delete token.closingCurlyAt;
-        delete token.selectorsStart;
-        delete token.selectorsEnd;
-        delete token.selectors;
-        delete token.identifier;
-        delete token.identifierStartsAt;
-        delete token.identifierEndsAt;
-        delete token.query;
-        delete token.queryStartsAt;
-        delete token.queryEndsAt;
-        token.head = null;
-        token.tail = null;
+        token = {
+          type,
+          start: startVal,
+          end: null,
+          value: null,
+          head: null,
+          headStartsAt: null,
+          headEndsAt: null,
+          tail: null,
+          tailStartsAt: null,
+          tailEndsAt: null
+        };
       }
     }
 
@@ -12525,6 +12441,8 @@
                   token.end = i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
                   token.tail = str.slice(i, i + lengthOfClosingEspChunk);
+                  token.tailStartsAt = i;
+                  token.tailEndsAt = token.end;
                 }
 
                 if (parentTokenToBackup) {
@@ -12597,15 +12515,20 @@
                   if (attrib.attribStart && !attrib.attribEnd) {
                     attribToBackup = lodash_clonedeep(attrib);
                   }
-                } else {
+                } else if (!attribToBackup) {
                   dumpCurrentToken(token, i);
+                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "esp" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = i;
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, i);
                 }
               }
 
               initToken("esp", i);
               token.head = wholeEspTagLumpOnTheRight;
+              token.headStartsAt = i;
+              token.headEndsAt = i + wholeEspTagLumpOnTheRight.length;
 
-              if (parentTokenToBackup && parentTokenToBackup.type === "tag" && parentTokenToBackup.pureHTML) {
+              if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
                 parentTokenToBackup.pureHTML = false;
               }
 
@@ -12845,6 +12768,9 @@
 
       if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
         if (`'"`.includes(str[i])) {
+          const R1 = !layers.some(layerObj => layerObj.type === "esp");
+          const R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i);
+
           if (str[left(str, i)] === str[i] && !`/>${espChars}`.includes(str[right(str, i)]) && !xBeforeYOnTheRight$1(str, i, "=", `"`) && !xBeforeYOnTheRight$1(str, i, "=", `'`) && (xBeforeYOnTheRight$1(str, i, `"`, `>`) || xBeforeYOnTheRight$1(str, i, `'`, `>`)) && (!str.slice(i + 1).includes("<") || !str.slice(0, str.indexOf("<")).includes("="))) {
             attrib.attribOpeningQuoteAt = i;
             attrib.attribValueStartsAt = i + 1;

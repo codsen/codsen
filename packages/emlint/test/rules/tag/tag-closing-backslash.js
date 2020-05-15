@@ -1113,7 +1113,7 @@ tap.test(
         tag: 2,
       },
     });
-    t.equal(applyFixes(str, messages), "<br/>", "34.01");
+    t.equal(applyFixes(str, messages), "<br/>", "34");
     astDeepContains(
       messages,
       [

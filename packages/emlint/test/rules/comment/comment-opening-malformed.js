@@ -720,7 +720,7 @@ tap.test(
 );
 
 tap.todo(
-  `03.12 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
+  `26 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
   (t) => {
     const str = `<!--[if !mso]><!--><!-->
   <img src="gif"/>
@@ -731,13 +731,13 @@ tap.todo(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.12");
+    t.equal(applyFixes(str, messages), str, "26");
     t.end();
   }
 );
 
 tap.todo(
-  `03.13 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`,
+  `27 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`,
   (t) => {
     const str = `<!--[if !mso]><!---->
   <img src="gif"/>
@@ -748,14 +748,14 @@ tap.todo(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.13.01");
-    t.match(messages, [], "03.13.02");
+    t.equal(applyFixes(str, messages), str, "27.01");
+    t.match(messages, [], "27.02");
     t.end();
   }
 );
 
 tap.todo(
-  `03.14 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`,
+  `28 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`,
   (t) => {
     const str = `<!--[if !mso]><!-- -->
   <img src="gif"/>
@@ -766,14 +766,14 @@ tap.todo(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.14.01");
-    t.match(messages, [], "03.14.02");
+    t.equal(applyFixes(str, messages), str, "28.01");
+    t.match(messages, [], "28.02");
     t.end();
   }
 );
 
 tap.todo(
-  `03.15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`,
+  `29 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`,
   (t) => {
     const str = `<!--[if !mso]><!--\t -->
   <img src="gif"/>
@@ -784,8 +784,8 @@ tap.todo(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.15.01");
-    t.match(messages, [], "03.15.02");
+    t.equal(applyFixes(str, messages), str, "29.01");
+    t.match(messages, [], "29.02");
     t.end();
   }
 );
@@ -794,7 +794,7 @@ tap.todo(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `26 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
+  `30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
   (t) => {
     const str = `<!--[if !mso><!--><!--z-->
   <img src="gif"/>
@@ -809,7 +809,7 @@ tap.test(
         "comment-conditional-nested": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "26.01");
+    t.equal(applyFixes(str, messages), fixed, "30.01");
     t.match(
       messages,
       [
@@ -840,14 +840,14 @@ tap.test(
           fix: null,
         },
       ],
-      "26.02"
+      "30.02"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `04.02 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`,
+  `31 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`,
   (t) => {
     const str = `<!-->
   <img src="gif"/>
@@ -858,8 +858,8 @@ tap.todo(
         "comment-opening-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "04.02.01");
-    t.match(messages, [], "04.02.02");
+    t.equal(applyFixes(str, messages), str, "31.01");
+    t.match(messages, [], "31.02");
     t.end();
   }
 );
