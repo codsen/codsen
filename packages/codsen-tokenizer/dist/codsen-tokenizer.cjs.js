@@ -223,6 +223,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
     return;
   }
   if (
+  wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) ||
   Array.from(wholeEspTagLump).every(function (char) {
     return whichLayerToMatch.guessedClosingLump.includes(char);
   })) {
@@ -745,6 +746,7 @@ function tokenizer(str, originalOpts) {
                 token.tailStartsAt = _i;
                 token.tailEndsAt = token.end;
               }
+              doNothing = token.tailEndsAt;
               if (parentTokenToBackup) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];

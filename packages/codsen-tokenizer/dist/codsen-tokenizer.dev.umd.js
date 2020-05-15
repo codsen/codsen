@@ -2944,6 +2944,17 @@
     return wholeEspTagLumpOnTheRight;
   }
 
+  // We record ESP tag head and tails as we traverse code because we need to know
+  // the arrangement of all pieces: start, end, nesting etc.
+  //
+  // Now, we keep records of each "layer" - new opening of some sorts: quotes,
+  // heads of ESP tags and so on.
+  //
+  // This function is a helper to check, does something match as a counterpart
+  // to the last/first layer.
+  //
+  // Quotes could be checked here but are not at the moment, here currently
+  // we deal with ESP tokens only
   // RETURNS: undefined or integer, length of a matched ESP lump.
   function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
     if (!layers.length) {
@@ -2958,7 +2969,8 @@
       return;
     }
 
-    if ( // match every character from the last "layers" complex-type entry must be
+    if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
+    wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
     // present in the extracted lump
     Array.from(wholeEspTagLump).every(function (char) {
       return whichLayerToMatch.guessedClosingLump.includes(char);
@@ -4089,25 +4101,29 @@
                   token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
                   token.tailStartsAt = _i;
                   token.tailEndsAt = token.end;
-                } // it depends will we ping it as a standalone token or will we
-                // nest inside the parent tag among attributes
+                } // activate doNothing until the end of tails because otherwise,
+                // mid-tail characters will initiate new tail start clauses
+                // and we'll have overlap/false result
 
+
+                doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
+                // nest inside the parent tag among attributes
 
                 if (parentTokenToBackup) {
                   // push token to parent, to be among its attributes
                   // 1. ensure key "attribs" exist (thinking about comment tokens etc)
                   if (!Array.isArray(parentTokenToBackup.attribs)) {
                     parentTokenToBackup.attribs = [];
-                  } // 2. push
+                  } // 2. push somewhere
 
 
                   if (attribToBackup) {
                     // 1. restore
-                    attrib = attribToBackup; // 2. push
+                    attrib = attribToBackup; // 2. push to attribValue
 
                     attrib.attribValue.push(lodash_clonedeep(token)); // 3. attribToBackup is reset in all cases, below
                   } else {
-                    // push
+                    // push to attribs
                     parentTokenToBackup.attribs.push(lodash_clonedeep(token));
                   } // 3. parentTokenToBackup becomes token
 

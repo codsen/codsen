@@ -488,7 +488,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`,
   (t) => {
     const gathered = [];
@@ -740,7 +740,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `10 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
@@ -749,12 +749,60 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "10");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 16,
+          value: '<a b="{%- c %}">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 14,
+              attribValueRaw: "{%- c %}",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 14,
+                  value: "{%- c %}",
+                  head: "{%-",
+                  headStartsAt: 6,
+                  headEndsAt: 9,
+                  tail: "%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 14,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 14,
+              attribStart: 3,
+              attribEnd: 15,
+            },
+          ],
+        },
+      ],
+      "10"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `11 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
@@ -763,12 +811,66 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "11");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value: '<a b="{%- c %}x">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 15,
+              attribValueRaw: "{%- c %}x",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 14,
+                  value: "{%- c %}",
+                  head: "{%-",
+                  headStartsAt: 6,
+                  headEndsAt: 9,
+                  tail: "%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 14,
+                },
+                {
+                  type: "text",
+                  start: 14,
+                  end: 15,
+                  value: "x",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 15,
+              attribStart: 3,
+              attribEnd: 16,
+            },
+          ],
+        },
+      ],
+      "11"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `12 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
@@ -777,12 +879,66 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "12");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value: '<a b="x{%- c %}">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 15,
+              attribValueRaw: "x{%- c %}",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "x",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{%- c %}",
+                  head: "{%-",
+                  headStartsAt: 7,
+                  headEndsAt: 10,
+                  tail: "%}",
+                  tailStartsAt: 13,
+                  tailEndsAt: 15,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 15,
+              attribStart: 3,
+              attribEnd: 16,
+            },
+          ],
+        },
+      ],
+      "12"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `13 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
@@ -791,12 +947,60 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "13");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value: '<a b="{%- c -%}">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 15,
+              attribValueRaw: "{%- c -%}",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 15,
+                  value: "{%- c -%}",
+                  head: "{%-",
+                  headStartsAt: 6,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 15,
+              attribStart: 3,
+              attribEnd: 16,
+            },
+          ],
+        },
+      ],
+      "13"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `14 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
@@ -805,91 +1009,481 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "14");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: '<a b="x{%- c -%}">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 16,
+              attribValueRaw: "x{%- c -%}",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "x",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 16,
+                  value: "{%- c -%}",
+                  head: "{%-",
+                  headStartsAt: 7,
+                  headEndsAt: 10,
+                  tail: "-%}",
+                  tailStartsAt: 13,
+                  tailEndsAt: 16,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 16,
+              attribStart: 3,
+              attribEnd: 17,
+            },
+          ],
+        },
+      ],
+      "14"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `15 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{%- c -%}x">`, {
+    const value = `<a b="{%- c -%}x">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "15");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 16,
+              attribValueRaw: "{%- c -%}x",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 15,
+                  value: "{%- c -%}",
+                  head: "{%-",
+                  headStartsAt: 6,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "x",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 16,
+              attribStart: 3,
+              attribEnd: 17,
+            },
+          ],
+        },
+      ],
+      "15"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `16 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
+    const value = `<a b="z {%- c -%} x">`;
     ct(`<a b="z {%- c -%} x">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "16");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 21,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 19,
+              attribValueRaw: "z {%- c -%} x",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 8,
+                  value: "z ",
+                },
+                {
+                  type: "esp",
+                  start: 8,
+                  end: 17,
+                  value: "{%- c -%}",
+                  head: "{%-",
+                  headStartsAt: 8,
+                  headEndsAt: 11,
+                  tail: "-%}",
+                  tailStartsAt: 14,
+                  tailEndsAt: 17,
+                },
+                {
+                  type: "text",
+                  start: 17,
+                  end: 19,
+                  value: " x",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 19,
+              attribStart: 3,
+              attribEnd: 20,
+            },
+          ],
+        },
+      ],
+      "16"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `17 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% c -%}">`, {
+    const value = `<a b="{% c -%}">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "17");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 16,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 14,
+              attribValueRaw: "{% c -%}",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 14,
+                  value: "{% c -%}",
+                  head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
+                  tail: "-%}",
+                  tailStartsAt: 11,
+                  tailEndsAt: 14,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 14,
+              attribStart: 3,
+              attribEnd: 15,
+            },
+          ],
+        },
+      ],
+      "17"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `18 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
-    ct(`<a b="x{% c -%}">`, {
+    const value = `<a b="x{% c -%}">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "18");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 15,
+              attribValueRaw: "x{% c -%}",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "x",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{% c -%}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 15,
+              attribStart: 3,
+              attribEnd: 16,
+            },
+          ],
+        },
+      ],
+      "18"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `19 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
-    ct(`<a b="{% c -%}x">`, {
+    const value = `<a b="{% c -%}x">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "19");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 17,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 15,
+              attribValueRaw: "{% c -%}x",
+              attribValue: [
+                {
+                  type: "esp",
+                  start: 6,
+                  end: 14,
+                  value: "{% c -%}",
+                  head: "{%",
+                  headStartsAt: 6,
+                  headEndsAt: 8,
+                  tail: "-%}",
+                  tailStartsAt: 11,
+                  tailEndsAt: 14,
+                },
+                {
+                  type: "text",
+                  start: 14,
+                  end: 15,
+                  value: "x",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 15,
+              attribStart: 3,
+              attribEnd: 16,
+            },
+          ],
+        },
+      ],
+      "19"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `20 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`,
   (t) => {
     const gathered = [];
-    ct(`<a b="z{% c -%}x">`, {
+    const value = `<a b="z{% c -%}x">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "20");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 16,
+              attribValueRaw: "z{% c -%}x",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "z",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{% c -%}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "x",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 16,
+              attribStart: 3,
+              attribEnd: 17,
+            },
+          ],
+        },
+      ],
+      "20"
+    );
     t.end();
   }
 );
@@ -897,86 +1491,668 @@ tap.todo(
 // triplets, slightly mismatching heads and tails
 // -----------------------------------------------------------------------------
 
-tap.todo(
+tap.test(
   `21 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - A, baseline`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{% x %}d{% y %}e{% z %}f">`, {
+    const value = `<a b="c{% x %}d{% y %}e{% z %}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "21");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 33,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 31,
+              attribValueRaw: "c{% x %}d{% y %}e{% z %}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 14,
+                  value: "{% x %}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 14,
+                },
+                {
+                  type: "text",
+                  start: 14,
+                  end: 15,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 15,
+                  end: 22,
+                  value: "{% y %}",
+                  head: "{%",
+                  headStartsAt: 15,
+                  headEndsAt: 17,
+                  tail: "%}",
+                  tailStartsAt: 20,
+                  tailEndsAt: 22,
+                },
+                {
+                  type: "text",
+                  start: 22,
+                  end: 23,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 23,
+                  end: 30,
+                  value: "{% z %}",
+                  head: "{%",
+                  headStartsAt: 23,
+                  headEndsAt: 25,
+                  tail: "%}",
+                  tailStartsAt: 28,
+                  tailEndsAt: 30,
+                },
+                {
+                  type: "text",
+                  start: 30,
+                  end: 31,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 31,
+              attribStart: 3,
+              attribEnd: 32,
+            },
+          ],
+        },
+      ],
+      "21"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `22 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - B`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{%- x %}d{%- y %}e{%- z %}f">`, {
+    const value = `<a b="c{%- x %}d{%- y %}e{%- z %}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "22");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "c{%- x %}d{%- y %}e{%- z %}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{%- x %}",
+                  head: "{%-",
+                  headStartsAt: 7,
+                  headEndsAt: 10,
+                  tail: "%}",
+                  tailStartsAt: 13,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 16,
+                  end: 24,
+                  value: "{%- y %}",
+                  head: "{%-",
+                  headStartsAt: 16,
+                  headEndsAt: 19,
+                  tail: "%}",
+                  tailStartsAt: 22,
+                  tailEndsAt: 24,
+                },
+                {
+                  type: "text",
+                  start: 24,
+                  end: 25,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 25,
+                  end: 33,
+                  value: "{%- z %}",
+                  head: "{%-",
+                  headStartsAt: 25,
+                  headEndsAt: 28,
+                  tail: "%}",
+                  tailStartsAt: 31,
+                  tailEndsAt: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 34,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 34,
+              attribStart: 3,
+              attribEnd: 35,
+            },
+          ],
+        },
+      ],
+      "22"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{% x -%}d{% y -%}e{% z -%}f">`, {
+    const value = `<a b="c{% x -%}d{% y -%}e{% z -%}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "23");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "c{% x -%}d{% y -%}e{% z -%}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{% x -%}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 16,
+                  end: 24,
+                  value: "{% y -%}",
+                  head: "{%",
+                  headStartsAt: 16,
+                  headEndsAt: 18,
+                  tail: "-%}",
+                  tailStartsAt: 21,
+                  tailEndsAt: 24,
+                },
+                {
+                  type: "text",
+                  start: 24,
+                  end: 25,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 25,
+                  end: 33,
+                  value: "{% z -%}",
+                  head: "{%",
+                  headStartsAt: 25,
+                  headEndsAt: 27,
+                  tail: "-%}",
+                  tailStartsAt: 30,
+                  tailEndsAt: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 34,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 34,
+              attribStart: 3,
+              attribEnd: 35,
+            },
+          ],
+        },
+      ],
+      "23"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{%- x %}d{% y -%}e{%- z %}f">`, {
+    const value = `<a b="c{%- x %}d{% y -%}e{%- z %}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "24");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "c{%- x %}d{% y -%}e{%- z %}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{%- x %}",
+                  head: "{%-",
+                  headStartsAt: 7,
+                  headEndsAt: 10,
+                  tail: "%}",
+                  tailStartsAt: 13,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 16,
+                  end: 24,
+                  value: "{% y -%}",
+                  head: "{%",
+                  headStartsAt: 16,
+                  headEndsAt: 18,
+                  tail: "-%}",
+                  tailStartsAt: 21,
+                  tailEndsAt: 24,
+                },
+                {
+                  type: "text",
+                  start: 24,
+                  end: 25,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 25,
+                  end: 33,
+                  value: "{%- z %}",
+                  head: "{%-",
+                  headStartsAt: 25,
+                  headEndsAt: 28,
+                  tail: "%}",
+                  tailStartsAt: 31,
+                  tailEndsAt: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 34,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 34,
+              attribStart: 3,
+              attribEnd: 35,
+            },
+          ],
+        },
+      ],
+      "24"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `25 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{% x -%}d{%- y %}e{% z -%}f">`, {
+    const value = `<a b="c{% x -%}d{%- y %}e{% z -%}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "25");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "c{% x -%}d{%- y %}e{% z -%}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{% x -%}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 16,
+                  end: 24,
+                  value: "{%- y %}",
+                  head: "{%-",
+                  headStartsAt: 16,
+                  headEndsAt: 19,
+                  tail: "%}",
+                  tailStartsAt: 22,
+                  tailEndsAt: 24,
+                },
+                {
+                  type: "text",
+                  start: 24,
+                  end: 25,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 25,
+                  end: 33,
+                  value: "{% z -%}",
+                  head: "{%",
+                  headStartsAt: 25,
+                  headEndsAt: 27,
+                  tail: "-%}",
+                  tailStartsAt: 30,
+                  tailEndsAt: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 34,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 34,
+              attribStart: 3,
+              attribEnd: 35,
+            },
+          ],
+        },
+      ],
+      "25"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `26 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`,
   (t) => {
     const gathered = [];
-    ct(`<a b="c{% x -%}d{%- y %}e{%- z %}f">`, {
+    const value = `<a b="c{% x -%}d{%- y %}e{%- z %}f">`;
+    ct(value, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "26");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "b",
+              attribNameRecognised: false,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 4,
+              attribOpeningQuoteAt: 5,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "c{% x -%}d{%- y %}e{%- z %}f",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 6,
+                  end: 7,
+                  value: "c",
+                },
+                {
+                  type: "esp",
+                  start: 7,
+                  end: 15,
+                  value: "{% x -%}",
+                  head: "{%",
+                  headStartsAt: 7,
+                  headEndsAt: 9,
+                  tail: "-%}",
+                  tailStartsAt: 12,
+                  tailEndsAt: 15,
+                },
+                {
+                  type: "text",
+                  start: 15,
+                  end: 16,
+                  value: "d",
+                },
+                {
+                  type: "esp",
+                  start: 16,
+                  end: 24,
+                  value: "{%- y %}",
+                  head: "{%-",
+                  headStartsAt: 16,
+                  headEndsAt: 19,
+                  tail: "%}",
+                  tailStartsAt: 22,
+                  tailEndsAt: 24,
+                },
+                {
+                  type: "text",
+                  start: 24,
+                  end: 25,
+                  value: "e",
+                },
+                {
+                  type: "esp",
+                  start: 25,
+                  end: 33,
+                  value: "{%- z %}",
+                  head: "{%-",
+                  headStartsAt: 25,
+                  headEndsAt: 28,
+                  tail: "%}",
+                  tailStartsAt: 31,
+                  tailEndsAt: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 34,
+                  value: "f",
+                },
+              ],
+              attribValueStartsAt: 6,
+              attribValueEndsAt: 34,
+              attribStart: 3,
+              attribEnd: 35,
+            },
+          ],
+        },
+      ],
+      "26"
+    );
     t.end();
   }
 );
