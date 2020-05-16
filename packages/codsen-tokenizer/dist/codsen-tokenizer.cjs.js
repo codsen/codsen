@@ -1149,6 +1149,24 @@ function tokenizer(str, originalOpts) {
           value: null
         });
       }
+    } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && attributeEnds(str, attribToBackup.attribOpeningQuoteAt, _i)) {
+      token.end = _i;
+      token.value = str.slice(token.start, _i);
+      if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
+        attribToBackup.attribValue = [];
+      }
+      attribToBackup.attribValue.push(token);
+      attribToBackup.attribValueEndsAt = _i;
+      attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
+      attribToBackup.attribClosingQuoteAt = _i;
+      attribToBackup.attribEnd = _i + 1;
+      token = clone(parentTokenToBackup);
+      token.attribs.push(attribToBackup);
+      attribToBackup = undefined;
+      parentTokenToBackup = undefined;
+      layers.pop();
+      layers.pop();
+      layers.pop();
     }
     if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
       if (str[_i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, _i)]) && !espChars.includes(str[stringLeftRight.right(str, _i)])

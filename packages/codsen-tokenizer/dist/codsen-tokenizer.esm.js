@@ -1745,6 +1745,35 @@ function tokenizer(str, originalOpts) {
           value: null,
         });
       }
+    } else if (
+      token.type === "esp" &&
+      attribToBackup &&
+      parentTokenToBackup &&
+      attribToBackup.attribOpeningQuoteAt &&
+      `'"`.includes(str[i]) &&
+      str[attribToBackup.attribOpeningQuoteAt] === str[i] &&
+      attributeEnds(str, attribToBackup.attribOpeningQuoteAt, i)
+    ) {
+      token.end = i;
+      token.value = str.slice(token.start, i);
+      if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
+        attribToBackup.attribValue = [];
+      }
+      attribToBackup.attribValue.push(token);
+      attribToBackup.attribValueEndsAt = i;
+      attribToBackup.attribValueRaw = str.slice(
+        attribToBackup.attribValueStartsAt,
+        i
+      );
+      attribToBackup.attribClosingQuoteAt = i;
+      attribToBackup.attribEnd = i + 1;
+      token = clone(parentTokenToBackup);
+      token.attribs.push(attribToBackup);
+      attribToBackup = undefined;
+      parentTokenToBackup = undefined;
+      layers.pop();
+      layers.pop();
+      layers.pop();
     }
     if (
       !doNothing &&

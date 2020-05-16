@@ -2961,11 +2961,18 @@
       return;
     }
 
-    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
+    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1]; // console.log(
+    //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
+    //     whichLayerToMatch,
+    //     null,
+    //     4
+    //   )}`
+    // );
 
     if (whichLayerToMatch.type !== "esp") {
       // we aim to match ESP tag layers, so instantly it's falsey result
       // because layer we match against is not ESP tag layer
+      // console.log(`033 matchLayer(): early return undefined`);
       return;
     }
 
@@ -2975,8 +2982,14 @@
     Array.from(wholeEspTagLump).every(function (char) {
       return whichLayerToMatch.guessedClosingLump.includes(char);
     })) {
+      // console.log(
+      //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+      //     wholeEspTagLump.length
+      //   }`
+      // );
       return wholeEspTagLump.length;
-    }
+    } // console.log(`054 matchLayer(): finally, return undefined`);
+
   }
 
   // starts. Previously it sat within if() clauses but became unwieldy and
@@ -4805,6 +4818,56 @@
             value: null
           });
         }
+      } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
+        // imagine unclosed ESP tag inside attr value:
+        // <tr class="{% x">
+        //                ^
+        //             we're here
+        // we need to still proactively look for closing attribute quotes,
+        // even inside ESP tags, if we're inside tag attributes
+        // 1. patch up missing token (which is type="esp" currently) values
+        token.end = _i;
+        token.value = str.slice(token.start, _i); // 2. push token into attribToBackup.attribValue
+
+        if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
+          attribToBackup.attribValue = [];
+        }
+
+        attribToBackup.attribValue.push(token); // 3. patch up missing values in attribToBackup
+
+        attribToBackup.attribValueEndsAt = _i;
+        attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
+        attribToBackup.attribClosingQuoteAt = _i;
+        attribToBackup.attribEnd = _i + 1; // 4. restore parent token
+
+        token = lodash_clonedeep(parentTokenToBackup);
+        token.attribs.push(attribToBackup); // 5. reset all
+
+        attribToBackup = undefined;
+        parentTokenToBackup = undefined; // 6. pop the last 3 layers
+        // currently layers array should be like:
+        // [
+        //   {
+        //     "type": "simple",
+        //     "value": '"',
+        //     "position": 10
+        //   },
+        //   {
+        //     "type": "esp",
+        //     "openingLump": "{%",
+        //     "guessedClosingLump": "%}",
+        //     "position": 11
+        //   }
+        //   {
+        //     "type": "simple",
+        //     "value": '"',
+        //     "position": 15
+        //   },
+        // ]
+
+        layers.pop();
+        layers.pop();
+        layers.pop();
       } // Catch the start of a tag attribute's value:
       // -------------------------------------------------------------------------
 
