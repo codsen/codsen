@@ -59,7 +59,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "husky": "^4.2.5",
     "lect": "^0.13.3",
-    "lerna": "^3.20.2",
+    "lerna": "^3.21.0",
     "lerna-clean-changelogs-cli": "^1.2.60",
     "npm-watch": "^0.6.0",
     "prettier": "^2.0.5",

@@ -339,7 +339,7 @@ tap.test("07 - basics - three nested pairs, empty", (t) => {
   t.end();
 });
 
-tap.only(
+tap.test(
   "08 - basics - single text node is not nested after closing tag",
   (t) => {
     t.match(

@@ -53,7 +53,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `03 - ${`\u001b[${33}m${`adds the "message" arg`}\u001b[${39}m`} - adds 3rd arg, ends with array value`,
   (t) => {
     // ensure "in" is fixed

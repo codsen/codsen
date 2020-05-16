@@ -25,7 +25,7 @@
         "chlu": 180,
         "chlu-cli": 5,
         "codsen-parser": 89,
-        "codsen-tokenizer": 379,
+        "codsen-tokenizer": 408,
         "color-shorthand-hex-to-six-digit": 24,
         "csv-sort": 24,
         "csv-sort-cli": 4,
@@ -41,7 +41,7 @@
         "emlint": 4166,
         "eslint-plugin-row-num": 17,
         "eslint-plugin-test-num": 29,
-        "generate-atomic-css": 233,
+        "generate-atomic-css": 232,
         "generate-atomic-css-cli": 4,
         "gulp-email-remove-unused-css": 1,
         "helga": 4,
@@ -53,7 +53,7 @@
         "is-char-suitable-for-html-attr-name": 37,
         "is-html-attribute-closing": 1021,
         "is-html-tag-opening": 181,
-        "is-language-code": 269,
+        "is-language-code": 813,
         "is-media-descriptor": 132,
         "is-relative-uri": 76,
         "js-row-num": 80,
@@ -117,12 +117,12 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 115,
-    "totalAssertsCount": 794457,
+    "totalAssertsCount": 795029,
     "minAssertsCount": 3,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 741597,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 50,
-    "assertsCountArithmeticMean": 6908,
-    "assertsCountGeometricMean": 64
+    "assertsCountArithmeticMean": 6913,
+    "assertsCountGeometricMean": 65
 }

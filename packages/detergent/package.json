@@ -163,7 +163,7 @@
     "lodash.clonedeep": "^4.5.0",
     "object-boolean-combinations": "^2.11.59",
     "object-path": "^0.11.4",
-    "rollup": "^2.9.1",
+    "rollup": "^2.10.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.1.1",

@@ -1165,7 +1165,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `19 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`,
   (t) => {
     const input = ["1", "2", { a: "3" }];

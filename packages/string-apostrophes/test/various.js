@@ -72,7 +72,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`,
   (t) => {
     const input = ` a${rightDoubleQuote}`;

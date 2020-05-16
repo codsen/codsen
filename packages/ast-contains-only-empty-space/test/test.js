@@ -15,7 +15,7 @@ tap.test("01 - array containing empty string", (t) => {
   t.end();
 });
 
-tap.only("02 - array containing plain object with empty string", (t) => {
+tap.test("02 - array containing plain object with empty string", (t) => {
   // t.equal(empty([{ a: " " }]), true, "01.02.01");
   t.equal(empty([{ a: "a" }]), false, "02");
   t.end();

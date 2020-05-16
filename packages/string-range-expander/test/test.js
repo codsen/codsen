@@ -32,7 +32,7 @@ tap.test("04 - throws on string input", (t) => {
   t.end();
 });
 
-tap.only("05 - throws on empty plain object", (t) => {
+tap.test("05 - throws on empty plain object", (t) => {
   t.throws(() => {
     e({});
   }, /THROW_ID_02/);
