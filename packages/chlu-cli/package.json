@@ -124,7 +124,7 @@
     "chlu": "^3.7.66",
     "fs-extra": "^9.0.0",
     "meow": "^7.0.1",
-    "simple-git": "^2.4.0",
+    "simple-git": "^2.5.0",
     "update-notifier": "^4.1.0",
     "write-file-atomic": "^3.0.3"
   },
