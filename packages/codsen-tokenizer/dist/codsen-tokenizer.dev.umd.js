@@ -2791,8 +2791,10 @@
   var allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]; // contains all common templating language head/tail marker characters:
 
   var espChars = "{}%-$_()*|#";
-  var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
-  var punctuationChars = [".", ",", ";", "!", "?"];
+  var veryEspChars = "{}()|#";
+  var notVeryEspChars = "%$_*#";
+  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+  var punctuationChars = ".,;!?";
 
   function isStr$1(something) {
     return typeof something === "string";
@@ -3175,7 +3177,16 @@
   function startsEsp(str, i, token, layers, styleStarts) {
     var res = // 1. two consecutive esp characters - Liquid, Mailchimp etc.
     // {{ or |* and so on
-    espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
+    espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && // ensure our suspected lump doesn't comprise only
+    // of "notVeryEspChars" - real ESP tag |**| can
+    // contain asterisk (*) but only asterisks can't
+    // comprise an ESP tag. But curly braces can -
+    // {{ and }} are valid Nunjucks heads/tails.
+    // So not all ESP tag characters are equal.
+    !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && ( // only "veryEspChars" group characters can
+    // be repeated, like {{ and }} - other's can't
+    // for example, ** is not real ESP heads
+    str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
     //
     // imagine: "99%%."
     //             ^
@@ -3601,12 +3612,11 @@
       return layers.length && layers[layers.length - 1].type === "at" && isObj$1(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
     }
 
-    function initToken(type, startVal) {
-      // we mutate the object on the parent scope, so no Object.assign here
-      attribReset();
+    function getNewToken(type) {
+      var startVal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       if (type === "tag") {
-        token = {
+        return {
           type: type,
           start: startVal,
           end: null,
@@ -3622,8 +3632,10 @@
           kind: null,
           attribs: []
         };
-      } else if (type === "comment") {
-        token = {
+      }
+
+      if (type === "comment") {
+        return {
           type: type,
           start: startVal,
           end: null,
@@ -3632,8 +3644,10 @@
           kind: "simple" // or "only" or "not"
 
         };
-      } else if (type === "rule") {
-        token = {
+      }
+
+      if (type === "rule") {
+        return {
           type: type,
           start: startVal,
           end: null,
@@ -3644,8 +3658,10 @@
           selectorsEnd: null,
           selectors: []
         };
-      } else if (type === "at") {
-        token = {
+      }
+
+      if (type === "at") {
+        return {
           type: type,
           start: startVal,
           end: null,
@@ -3659,15 +3675,19 @@
           queryStartsAt: null,
           queryEndsAt: null
         };
-      } else if (type === "text") {
-        token = {
+      }
+
+      if (type === "text") {
+        return {
           type: type,
           start: startVal,
           end: null,
           value: null
         };
-      } else if (type === "esp") {
-        token = {
+      }
+
+      if (type === "esp") {
+        return {
           type: type,
           start: startVal,
           end: null,
@@ -3680,6 +3700,12 @@
           tailEndsAt: null
         };
       }
+    }
+
+    function initToken(type, startVal) {
+      // we mutate the object on the parent scope, so no Object.assign here
+      attribReset();
+      token = getNewToken(type, startVal);
     } //
     //
     //
@@ -4096,180 +4122,256 @@
           // <frameset cols="**">
           // that's a false positive
 
-          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[_i + wholeEspTagLumpOnTheRight.length])) {
-            // check the "layers" records - maybe it's a closing part of a set?
-            var lengthOfClosingEspChunk;
+          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight) // &&
+          // (!Array.isArray(layers) ||
+          //   !layers.length ||
+          //   layers[layers.length - 1].type !== "simple" ||
+          //   layers[layers.length - 1].value !==
+          //     str[i + wholeEspTagLumpOnTheRight.length])
+          ) {
+              // check the "layers" records - maybe it's a closing part of a set?
+              var lengthOfClosingEspChunk;
+              var disposableVar;
 
-            if (layers.length && ( //
-            // if layer match result is truthy, we take it, otherwise, move on
-            // but don't calculate twice!
-            // eslint-disable-next-line no-cond-assign
-            lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
-              // if this was closing of a standalone esp tag, terminate it and ping
-              // it to the cb()
-              if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
-                  token.end = _i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                  token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
-                  token.tailStartsAt = _i;
-                  token.tailEndsAt = token.end;
-                } // activate doNothing until the end of tails because otherwise,
-                // mid-tail characters will initiate new tail start clauses
-                // and we'll have overlap/false result
-
-
-                doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
-                // nest inside the parent tag among attributes
-
-                if (parentTokenToBackup) {
-                  // push token to parent, to be among its attributes
-                  // 1. ensure key "attribs" exist (thinking about comment tokens etc)
-                  if (!Array.isArray(parentTokenToBackup.attribs)) {
-                    parentTokenToBackup.attribs = [];
-                  } // 2. push somewhere
+              if (layers.length && ( //
+              // if layer match result is truthy, we take it, otherwise, move on
+              // but don't calculate twice!
+              // eslint-disable-next-line no-cond-assign
+              lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
+                // if this was closing of a standalone esp tag, terminate it and ping
+                // it to the cb()
+                if (token.type === "esp") {
+                  if (!Number.isInteger(token.end)) {
+                    token.end = _i + lengthOfClosingEspChunk;
+                    token.value = str.slice(token.start, token.end);
+                    token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
+                    token.tailStartsAt = _i;
+                    token.tailEndsAt = token.end;
+                  } // activate doNothing until the end of tails because otherwise,
+                  // mid-tail characters will initiate new tail start clauses
+                  // and we'll have overlap/false result
 
 
-                  if (attribToBackup) {
-                    // 1. restore
-                    attrib = attribToBackup; // 2. push to attribValue
+                  doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
+                  // nest inside the parent tag among attributes
 
-                    attrib.attribValue.push(lodash_clonedeep(token)); // 3. attribToBackup is reset in all cases, below
+                  if (parentTokenToBackup) {
+                    // push token to parent, to be among its attributes
+                    // 1. ensure key "attribs" exist (thinking about comment tokens etc)
+                    if (!Array.isArray(parentTokenToBackup.attribs)) {
+                      parentTokenToBackup.attribs = [];
+                    } // 2. push somewhere
+
+
+                    if (attribToBackup) {
+                      // 1. restore
+                      attrib = attribToBackup; // 2. push to attribValue
+
+                      attrib.attribValue.push(lodash_clonedeep(token)); // 3. attribToBackup is reset in all cases, below
+                    } else {
+                      // push to attribs
+                      parentTokenToBackup.attribs.push(lodash_clonedeep(token));
+                    } // 3. parentTokenToBackup becomes token
+
+
+                    token = lodash_clonedeep(parentTokenToBackup); // 4. resets
+
+                    parentTokenToBackup = undefined;
+                    attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
+
+                    layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
+
+                    i = _i;
+                    return "continue";
                   } else {
-                    // push to attribs
-                    parentTokenToBackup.attribs.push(lodash_clonedeep(token));
-                  } // 3. parentTokenToBackup becomes token
+                    dumpCurrentToken(token, _i);
+                  }
+
+                  tokenReset();
+                } // pop the recorded layers, at this moment record of ESP chunk
+                // will be lost:
 
 
-                  token = lodash_clonedeep(parentTokenToBackup); // 4. resets
-
-                  parentTokenToBackup = undefined;
-                  attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
-
-                  layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
-
-                  i = _i;
-                  return "continue";
-                } else {
-                  dumpCurrentToken(token, _i);
-                }
-
-                tokenReset();
-              } // pop the recorded layers, at this moment record of ESP chunk
-              // will be lost:
-
-
-              layers.pop();
-            } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
-            lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
-              // if this was closing of a standalone esp tag, terminate it and ping
-              // it to the cb()
-              if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
-                  token.end = _i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                }
-
-                dumpCurrentToken(token, _i);
-                tokenReset();
-              } // pop the recorded layers, at this moment record of ESP chunk
-              // will be lost:
-
-
-              layers = [];
-            } else {
-              // If we've got an unclosed heads and here new heads are starting,
-              // pop the last heads in layers - they will never be matched anyway.
-              // Let parser/linter deal with it
-              if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
                 layers.pop();
-              } // if we're within a tag attribute, push the last esp token there
-
-
-              if (attribToBackup) {
-                if (!Array.isArray(attribToBackup.attribValue)) {
-                  attribToBackup.attribValue = [];
-                }
-
-                attribToBackup.attribValue.push(token);
-              }
-
-              layers.push({
-                type: "esp",
-                openingLump: wholeEspTagLumpOnTheRight,
-                guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
-                position: _i
-              }); // also, if it's a standalone ESP token, terminate the previous token
-              // and start recording a new-one
-
-              if (token.start !== null) {
-                // it means token has already being recorded, we need to tackle it -
-                // the new, ESP token is incoming!
-                // we nest ESP tokens inside "tag" type attributes
-                if (token.type === "tag") {
-                  // instead of dumping the tag token and starting a new-one,
-                  // save the parent token, then nest all ESP tags among attributes
-                  if (!token.tagName || !token.tagNameEndsAt) {
-                    token.tagNameEndsAt = _i;
-                    token.tagName = str.slice(token.tagNameStartsAt, _i);
-                    token.recognised = isTagNameRecognised(token.tagName);
+              } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
+              lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
+                // if this was closing of a standalone esp tag, terminate it and ping
+                // it to the cb()
+                if (token.type === "esp") {
+                  if (!Number.isInteger(token.end)) {
+                    token.end = _i + lengthOfClosingEspChunk;
+                    token.value = str.slice(token.start, token.end);
                   }
 
-                  parentTokenToBackup = lodash_clonedeep(token);
-
-                  if (attrib.attribStart && !attrib.attribEnd) {
-                    attribToBackup = lodash_clonedeep(attrib);
-                  }
-                } else if (!attribToBackup) {
                   dumpCurrentToken(token, _i);
-                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "esp" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
+                  tokenReset();
+                } // pop the recorded layers, at this moment record of ESP chunk
+                // will be lost:
+
+
+                layers = [];
+              } else if ( // insurance against stray tails inside attributes:
+              // <a b="{ x %}">
+              //       ^   ^
+              //       |   |
+              //       |   we're here
+              //       |
+              //       |
+              //     this opening bracket is incomplete
+              //     and therefore not recognised as an opening
+              //
+              //
+              // if ESP character lump we extracted, for example,
+              // %} contains a closing character, in this case, a }
+              attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, _i)).some(function (char, idx) {
+                return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && ( // ensure it's not a false alarm, "notVeryEspChars"
+                // bunch, for example, % or $ can be legit characters
+                //
+                // either it's from "veryEspChars" list so
+                // it can be anywhere, not necessarily at the
+                // beginning, for example, broken mailchimp:
+                // <a b="some text | x *|">
+                //                 ^
+                //               this is
+                //
+                veryEspChars.includes(char) || // or that character must be the first character
+                // of the attribute's value, for example:
+                // <a b="% x %}">
+                //       ^
+                //     this
+                //
+                // because imagine false positive, legit %:
+                // <a b="Real 5% discount! x %}">
+                //             ^
+                //    definitely not a part of broken opening {%
+                //
+                // it's zero'th index:
+                !idx) && (disposableVar = {
+                  char: char,
+                  idx: idx
+                });
+              }) && // we're inside attribute
+              token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // last attribute's value element is text-type
+              // imagine, the { x from <a b="{ x %}"> would be
+              // such unrecognised text:
+              attrib.attribValue[attrib.attribValue.length - 1] && attrib.attribValue[attrib.attribValue.length - 1].type === "text") {
+                // token does contain ESP tags, so it's not pure HTML
+                token.pureHTML = false;
+                var lastAttrValueObj = attrib.attribValue[attrib.attribValue.length - 1]; // getNewToken() just creates a new token according
+                // the latest (DRY) reference, it doesn't reset
+                // the "token" unlike initToken()
+
+                var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start); // for remaining values, we need to consider, is there
+                // text in front:
+                //
+                // <a b="{ x %}">
+                // vs.
+                // <a b="something { x %}">
+
+                if (!disposableVar || !disposableVar.idx) {
+                  newTokenToPutInstead.head = disposableVar.char;
+                  newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
+                  newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
+                  newTokenToPutInstead.tailStartsAt = _i;
+                  newTokenToPutInstead.tailEndsAt = _i + wholeEspTagLumpOnTheRight.length;
+                  newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
+                  attrib.attribValue[attrib.attribValue.length - 1] = newTokenToPutInstead;
+                } // attrib.attribValue[
+                //   attrib.attribValue.length - 1
+                // ].head =
+
+              } else {
+                // If we've got an unclosed heads and here new heads are starting,
+                // pop the last heads in layers - they will never be matched anyway.
+                // Let parser/linter deal with it
+                if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+                  layers.pop();
+                } // if we're within a tag attribute, push the last esp token there
+
+
+                if (attribToBackup) {
+                  if (!Array.isArray(attribToBackup.attribValue)) {
+                    attribToBackup.attribValue = [];
+                  }
+
+                  attribToBackup.attribValue.push(token);
                 }
-              } // now, either way, if parent tag was stashed in "parentTokenToBackup"
-              // or if this is a new ESP token and there's nothing to nest,
-              // let's initiate it:
+
+                layers.push({
+                  type: "esp",
+                  openingLump: wholeEspTagLumpOnTheRight,
+                  guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
+                  position: _i
+                }); // also, if it's a standalone ESP token, terminate the previous token
+                // and start recording a new-one
+
+                if (token.start !== null) {
+                  // it means token has already being recorded, we need to tackle it -
+                  // the new, ESP token is incoming!
+                  // we nest ESP tokens inside "tag" type attributes
+                  if (token.type === "tag") {
+                    // instead of dumping the tag token and starting a new-one,
+                    // save the parent token, then nest all ESP tags among attributes
+                    if (!token.tagName || !token.tagNameEndsAt) {
+                      token.tagNameEndsAt = _i;
+                      token.tagName = str.slice(token.tagNameStartsAt, _i);
+                      token.recognised = isTagNameRecognised(token.tagName);
+                    }
+
+                    parentTokenToBackup = lodash_clonedeep(token);
+
+                    if (attrib.attribStart && !attrib.attribEnd) {
+                      attribToBackup = lodash_clonedeep(attrib);
+                    }
+                  } else if (!attribToBackup) {
+                    dumpCurrentToken(token, _i);
+                  } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "esp" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                    attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
+                    attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
+                  }
+                } // now, either way, if parent tag was stashed in "parentTokenToBackup"
+                // or if this is a new ESP token and there's nothing to nest,
+                // let's initiate it:
 
 
-              initToken("esp", _i);
-              token.head = wholeEspTagLumpOnTheRight;
-              token.headStartsAt = _i;
-              token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
+                initToken("esp", _i);
+                token.head = wholeEspTagLumpOnTheRight;
+                token.headStartsAt = _i;
+                token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
 
-              if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
-                parentTokenToBackup.pureHTML = false;
-              } // if text token has been initiated, imagine:
-              //  "attribValue": [
-              //     {
-              //         "type": "text",
-              //         "start": 6, <-------- after the initiation of this, we started ESP token at 6
-              //         "end": null,
-              //         "value": null
-              //     },
-              //     {
-              //         "type": "esp",
-              //         "start": 6, <-------- same start on real ESP token
-              //           ...
-              //  ],
+                if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
+                  parentTokenToBackup.pureHTML = false;
+                } // if text token has been initiated, imagine:
+                //  "attribValue": [
+                //     {
+                //         "type": "text",
+                //         "start": 6, <-------- after the initiation of this, we started ESP token at 6
+                //         "end": null,
+                //         "value": null
+                //     },
+                //     {
+                //         "type": "esp",
+                //         "start": 6, <-------- same start on real ESP token
+                //           ...
+                //  ],
 
 
-              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
-                if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
-                  // erase it from stash
-                  attribToBackup.attribValue.pop();
-                } else if ( // if the "text" type object is the last in "attribValue" and
-                // it's not closed, let's close it and calculate its value:
-                attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
+                if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
+                  if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+                    // erase it from stash
+                    attribToBackup.attribValue.pop();
+                  } else if ( // if the "text" type object is the last in "attribValue" and
+                  // it's not closed, let's close it and calculate its value:
+                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
+                    attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = _i;
+                    attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, _i);
+                  }
                 }
-              }
-            } // do nothing for the second and following characters from the lump
+              } // do nothing for the second and following characters from the lump
 
 
-            doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
-          } //
-
+              doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
+            }
         } else if (token.start === null || token.end === _i) {
           if (styleStarts) {
             // 1. if there's whitespace, ping it as text

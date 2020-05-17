@@ -149,10 +149,12 @@ const allHTMLTagsKnownToHumanity = [
 
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|#`;
+const veryEspChars = `{}()|#`;
+const notVeryEspChars = `%$_*#`;
 
-const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 
-const punctuationChars = [".", ",", ";", "!", "?"];
+const punctuationChars = `.,;!?`;
 
 function lastChar(str) {
   if (!isStr(str) || !str.length) {
@@ -316,8 +318,10 @@ export {
   espLumpBlacklist,
   secondToLastChar,
   punctuationChars,
+  notVeryEspChars,
   isNumOrNumStr,
   isLatinLetter,
+  veryEspChars,
   isLowercase,
   flipEspTag,
   secondChar,

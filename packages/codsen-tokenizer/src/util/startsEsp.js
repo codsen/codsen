@@ -1,8 +1,10 @@
 import { right } from "string-left-right";
 import {
-  punctuationChars,
-  flipEspTag,
   espChars,
+  flipEspTag,
+  veryEspChars,
+  notVeryEspChars,
+  punctuationChars,
   xBeforeYOnTheRight,
 } from "./util";
 
@@ -17,6 +19,19 @@ function startsEsp(str, i, token, layers, styleStarts) {
     (espChars.includes(str[i]) &&
       str[i + 1] &&
       espChars.includes(str[i + 1]) &&
+      // ensure our suspected lump doesn't comprise only
+      // of "notVeryEspChars" - real ESP tag |**| can
+      // contain asterisk (*) but only asterisks can't
+      // comprise an ESP tag. But curly braces can -
+      // {{ and }} are valid Nunjucks heads/tails.
+      // So not all ESP tag characters are equal.
+      !(
+        notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])
+      ) &&
+      // only "veryEspChars" group characters can
+      // be repeated, like {{ and }} - other's can't
+      // for example, ** is not real ESP heads
+      (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) &&
       token.type !== "rule" &&
       token.type !== "at" &&
       !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
@@ -79,7 +94,7 @@ function startsEsp(str, i, token, layers, styleStarts) {
       layers[layers.length - 1].openingLump[2] === "-" &&
       layers[layers.length - 1].openingLump[3] === "-");
 
-  console.log(`082 startsEsp(): RETURNS ${res}`);
+  console.log(`097 startsEsp(): RETURNS ${res}`);
   return res;
 }
 
