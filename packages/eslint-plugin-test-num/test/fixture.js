@@ -31,7 +31,7 @@ tap.test(
     t.is(
       sha256(input),
       "8b40134cfe373a347521d895126cdcae00d7af3d2a29cd9e37472582619ce22f",
-      "01.01"
+      "01.01 - inputs were mangled!"
     );
     // ensure "in" is fixed
     const resIn = linter.verifyAndFix(input, c);
@@ -58,7 +58,7 @@ tap.test(
     t.is(
       sha256(input),
       "270b1a851a24884d2aa870aa400271289daa98bd9ef3f369a810485571181e1d",
-      "02.01"
+      "02.01 - inputs were mangled!"
     );
     // ensure "in" is fixed
     const resIn = linter.verifyAndFix(input, c);
@@ -84,7 +84,7 @@ tap.test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.is(
     sha256(input),
     "ee2b27660e5d0e3932803a3a4cd82c1cf861b5902bfc7eaa3341d23fb6639cba",
-    "03.01"
+    "03.01 - inputs were mangled!"
   );
   // ensure "in" is fixed
   const resIn = linter.verifyAndFix(input, c);
@@ -109,7 +109,7 @@ tap.test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.is(
     sha256(input),
     "162842a3debd3140d91336d63223c852d726147ea400e60fabd2935ad4cb29eb",
-    "04.01"
+    "04.01 - inputs were mangled!"
   );
   // ensure "in" is fixed
   const resIn = linter.verifyAndFix(input, c);
@@ -134,7 +134,7 @@ tap.test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.is(
     sha256(input),
     "01288e3b3217526061615abf7f76040c6192225996cb80bf76cb90d5459daec1",
-    "05.01"
+    "05.01 - inputs were mangled!"
   );
   // ensure "in" is fixed
   const resIn = linter.verifyAndFix(input, c);
@@ -159,7 +159,7 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   t.is(
     sha256(input),
     "1ed7b5e97f46b5e10d55c68ec76a59908d7ad083daae12c0b5b8503fe3a2398e",
-    "06.01"
+    "06.01 - inputs were mangled!"
   );
   // ensure "in" is fixed
   const resIn = linter.verifyAndFix(input, c);
@@ -185,7 +185,7 @@ tap.test(
     t.is(
       sha256(input),
       "e920867a63a9d0f4c3d9ee9990517514106dcadd3e94daaabaff3fc43377bc00",
-      "07.01"
+      "07.01 - inputs were mangled!"
     );
     // ensure "in" is fixed
     const resIn = linter.verifyAndFix(input, c);
