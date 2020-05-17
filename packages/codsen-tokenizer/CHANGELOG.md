@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.16.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.15.0...codsen-tokenizer@2.16.0) (2020-05-17)
+
+
+### Features
+
+* broken ESP tag recognition improvements ([f3741e8](https://gitlab.com/codsen/codsen/commit/f3741e8fd34430e4a0ab5484cb94dc5918c99761))
+* improve ESP tag recognition, add more tests and make existing ones more precise ([31e923c](https://gitlab.com/codsen/codsen/commit/31e923c8283001675522525c3ad097747d7df8d8))
+* improvements to esp tag recognition ([13740c1](https://gitlab.com/codsen/codsen/commit/13740c171f4b9e4d207d4d1a718193f6715cbf78))
+* recognise unclosed/terminated ESP tags within tag attributes ([28015ba](https://gitlab.com/codsen/codsen/commit/28015ba0b2deed5bb181e8064fa683cfb8dafb19))
+
+
+
+
+
 ## 2.15.0 (2020-05-11)
 
 ### Features

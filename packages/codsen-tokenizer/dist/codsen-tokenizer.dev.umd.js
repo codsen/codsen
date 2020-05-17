@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 2.15.0
+ * Version: 2.16.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -2517,7 +2517,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.6
+   * Version: 1.2.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing

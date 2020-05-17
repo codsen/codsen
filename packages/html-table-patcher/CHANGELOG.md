@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://gitlab.com/codsen/codsen/compare/html-table-patcher@2.0.0...html-table-patcher@2.0.1) (2020-05-17)
+
+**Note:** Version bump only for package html-table-patcher
+
+
+
+
+
 ## 2.0.0 (2020-05-11)
 
 ### Features

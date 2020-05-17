@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.2.6
+ * Version: 8.2.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
@@ -1932,7 +1932,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.11
+   * Version: 1.12.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -3021,7 +3021,7 @@
   /**
    * ast-get-values-by-key
    * Read or edit parsed HTML (or AST in general)
-   * Version: 2.6.63
+   * Version: 2.6.64
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key
@@ -3211,7 +3211,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.5
+   * Version: 3.11.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -3289,7 +3289,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.6
+   * Version: 4.3.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -3411,7 +3411,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.11
+   * Version: 3.7.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3590,7 +3590,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.7
+   * Version: 3.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -3946,7 +3946,7 @@
   /**
    * string-remove-duplicate-heads-tails
    * Detect and (recursively) remove head and tail wrappings around the input string
-   * Version: 3.0.61
+   * Version: 3.0.62
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails

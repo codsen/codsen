@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -2096,7 +2096,7 @@
   /**
    * string-find-malformed
    * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.7
+   * Version: 1.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -2671,7 +2671,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.6
+   * Version: 1.2.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -3023,7 +3023,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.15.0
+   * Version: 2.16.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -4642,7 +4642,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.5
+   * Version: 0.6.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -5118,7 +5118,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.5
+   * Version: 3.11.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -5196,7 +5196,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.6
+   * Version: 4.3.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -5318,7 +5318,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.11
+   * Version: 3.7.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -5497,7 +5497,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.7
+   * Version: 3.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -5616,7 +5616,7 @@
   /**
    * ast-monkey-traverse-with-lookahead
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.1.4
+   * Version: 1.1.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead
@@ -5724,7 +5724,7 @@
 
   var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
-  var version = "2.0.0";
+  var version = "2.0.1";
 
   var ranges = new Ranges();
 

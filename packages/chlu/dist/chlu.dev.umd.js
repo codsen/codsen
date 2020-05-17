@@ -1,7 +1,7 @@
 /**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
- * Version: 3.7.66
+ * Version: 3.7.67
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
@@ -3580,7 +3580,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.11
+   * Version: 1.12.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -3679,7 +3679,7 @@
   /**
    * ast-contains-only-empty-space
    * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.7
+   * Version: 1.9.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space

@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Manage the array of ranges referencing the index ranges within the string
- * Version: 3.7.11
+ * Version: 3.7.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -250,7 +250,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.5
+   * Version: 3.11.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort

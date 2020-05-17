@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.3
+ * Version: 2.18.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -9949,7 +9949,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 3.0.1
+   * Version: 3.0.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10501,7 +10501,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.11
+   * Version: 1.12.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -10835,7 +10835,7 @@
   /**
    * string-find-malformed
    * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.7
+   * Version: 1.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -11410,7 +11410,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.6
+   * Version: 1.2.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -11762,15 +11762,17 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.15.0
+   * Version: 2.16.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
    */
   const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
   const espChars = `{}%-$_()*|#`;
-  const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
-  const punctuationChars = [".", ",", ";", "!", "?"];
+  const veryEspChars = `{}()|#`;
+  const notVeryEspChars = `%$_*#`;
+  const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+  const punctuationChars = `.,;!?`;
 
   function isStr$5(something) {
     return typeof something === "string";
@@ -11880,7 +11882,7 @@
       return;
     }
 
-    if (Array.from(wholeEspTagLump).every(char => whichLayerToMatch.guessedClosingLump.includes(char))) {
+    if (wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || Array.from(wholeEspTagLump).every(char => whichLayerToMatch.guessedClosingLump.includes(char))) {
       return wholeEspTagLump.length;
     }
   }
@@ -11922,7 +11924,7 @@
   }
 
   function startsEsp(str, i, token, layers, styleStarts) {
-    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
     return res;
   }
 
@@ -12127,11 +12129,9 @@
       return layers.length && layers[layers.length - 1].type === "at" && isObj$4(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
     }
 
-    function initToken(type, startVal) {
-      attribReset();
-
+    function getNewToken(type, startVal = null) {
       if (type === "tag") {
-        token = {
+        return {
           type,
           start: startVal,
           end: null,
@@ -12146,8 +12146,10 @@
           kind: null,
           attribs: []
         };
-      } else if (type === "comment") {
-        token = {
+      }
+
+      if (type === "comment") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -12155,8 +12157,10 @@
           closing: false,
           kind: "simple"
         };
-      } else if (type === "rule") {
-        token = {
+      }
+
+      if (type === "rule") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -12167,8 +12171,10 @@
           selectorsEnd: null,
           selectors: []
         };
-      } else if (type === "at") {
-        token = {
+      }
+
+      if (type === "at") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -12182,15 +12188,19 @@
           queryStartsAt: null,
           queryEndsAt: null
         };
-      } else if (type === "text") {
-        token = {
+      }
+
+      if (type === "text") {
+        return {
           type,
           start: startVal,
           end: null,
           value: null
         };
-      } else if (type === "esp") {
-        token = {
+      }
+
+      if (type === "esp") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -12203,6 +12213,11 @@
           tailEndsAt: null
         };
       }
+    }
+
+    function initToken(type, startVal) {
+      attribReset();
+      token = getNewToken(type, startVal);
     }
 
     for (let i = 0; i <= len; i++) {
@@ -12432,8 +12447,9 @@
         } else if (startsEsp(str, i, token, layers, styleStarts) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || ![`'`, `"`].includes(layers[layers.length - 1].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
           const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
 
-          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[i + wholeEspTagLumpOnTheRight.length])) {
+          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
             let lengthOfClosingEspChunk;
+            let disposableVar;
 
             if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
               if (token.type === "esp") {
@@ -12444,6 +12460,8 @@
                   token.tailStartsAt = i;
                   token.tailEndsAt = token.end;
                 }
+
+                doNothing = token.tailEndsAt;
 
                 if (parentTokenToBackup) {
                   if (!Array.isArray(parentTokenToBackup.attribs)) {
@@ -12482,6 +12500,23 @@
               }
 
               layers = [];
+            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i)).some((char, idx) => wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
+              char,
+              idx
+            })) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[attrib.attribValue.length - 1] && attrib.attribValue[attrib.attribValue.length - 1].type === "text") {
+              token.pureHTML = false;
+              const lastAttrValueObj = attrib.attribValue[attrib.attribValue.length - 1];
+              const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
+
+              if (!disposableVar || !disposableVar.idx) {
+                newTokenToPutInstead.head = disposableVar.char;
+                newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
+                newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
+                newTokenToPutInstead.tailStartsAt = i;
+                newTokenToPutInstead.tailEndsAt = i + wholeEspTagLumpOnTheRight.length;
+                newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
+                attrib.attribValue[attrib.attribValue.length - 1] = newTokenToPutInstead;
+              }
             } else {
               if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
                 layers.pop();
@@ -12886,6 +12921,26 @@
             value: null
           });
         }
+      } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && `'"`.includes(str[i]) && str[attribToBackup.attribOpeningQuoteAt] === str[i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)) {
+        token.end = i;
+        token.value = str.slice(token.start, i);
+
+        if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
+          attribToBackup.attribValue = [];
+        }
+
+        attribToBackup.attribValue.push(token);
+        attribToBackup.attribValueEndsAt = i;
+        attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, i);
+        attribToBackup.attribClosingQuoteAt = i;
+        attribToBackup.attribEnd = i + 1;
+        token = lodash_clonedeep(parentTokenToBackup);
+        token.attribs.push(attribToBackup);
+        attribToBackup = undefined;
+        parentTokenToBackup = undefined;
+        layers.pop();
+        layers.pop();
+        layers.pop();
       }
 
       if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
@@ -13326,7 +13381,7 @@
   /**
    * codsen-parser
    * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.6.5
+   * Version: 0.6.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -29265,7 +29320,7 @@
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.11
+   * Version: 1.0.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -32809,7 +32864,7 @@
   /**
    * is-media-descriptor
    * Is given string a valid media descriptor (including media query)?
-   * Version: 1.2.9
+   * Version: 1.2.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -43160,7 +43215,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.18.3";
+  var version = "2.18.4";
 
   exports.Linter = Linter;
   exports.version = version;

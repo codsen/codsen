@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken code, especially HTML & CSS
- * Version: 0.6.5
+ * Version: 0.6.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -2096,7 +2096,7 @@
   /**
    * string-find-malformed
    * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.7
+   * Version: 1.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -2671,7 +2671,7 @@
   /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.1.6
+   * Version: 1.2.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -3023,7 +3023,7 @@
   /**
    * codsen-tokenizer
    * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.15.0
+   * Version: 2.16.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer

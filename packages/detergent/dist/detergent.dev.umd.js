@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.10.3
+ * Version: 5.10.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -9909,7 +9909,7 @@
   /**
    * string-fix-broken-named-entities
    * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-   * Version: 3.0.1
+   * Version: 3.0.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10912,7 +10912,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.5
+   * Version: 3.11.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -10990,7 +10990,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.6
+   * Version: 4.3.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -11112,7 +11112,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.11
+   * Version: 3.7.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -11291,7 +11291,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.7
+   * Version: 3.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -11410,7 +11410,7 @@
   /**
    * string-remove-widows
    * Helps to prevent widow words in a text
-   * Version: 1.6.4
+   * Version: 1.6.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -11820,7 +11820,7 @@
   /**
    * ranges-crop
    * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.53
+   * Version: 2.0.54
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
@@ -11893,7 +11893,7 @@
   /**
    * ranges-invert
    * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
-   * Version: 2.1.40
+   * Version: 2.1.41
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
@@ -12167,7 +12167,7 @@
   /**
    * ranges-process-outside
    * Iterate through string and optionally a given ranges as if they were one
-   * Version: 2.2.25
+   * Version: 2.2.26
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
@@ -12226,7 +12226,7 @@
   /**
    * string-collapse-white-space
    * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
-   * Version: 5.2.21
+   * Version: 5.2.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
@@ -18618,7 +18618,7 @@
   /**
    * string-strip-html
    * Strips HTML tags from strings. No parser, accepts mixed sources.
-   * Version: 4.4.4
+   * Version: 4.4.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -23486,7 +23486,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.10.3";
+  var version$1 = "5.10.4";
 
   /**
    * html-entities-not-email-friendly
@@ -25343,7 +25343,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.4
+   * Version: 1.11.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
@@ -25501,7 +25501,7 @@
   /**
    * string-apostrophes
    * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
-   * Version: 1.2.21
+   * Version: 1.2.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes
