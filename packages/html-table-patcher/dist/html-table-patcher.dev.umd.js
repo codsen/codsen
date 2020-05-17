@@ -3030,8 +3030,10 @@
    */
   const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
   const espChars = `{}%-$_()*|#`;
-  const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
-  const punctuationChars = [".", ",", ";", "!", "?"];
+  const veryEspChars = `{}()|#`;
+  const notVeryEspChars = `%$_*#`;
+  const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+  const punctuationChars = `.,;!?`;
 
   function isStr$3(something) {
     return typeof something === "string";
@@ -3183,7 +3185,7 @@
   }
 
   function startsEsp(str, i, token, layers, styleStarts) {
-    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
     return res;
   }
 
@@ -3388,11 +3390,9 @@
       return layers.length && layers[layers.length - 1].type === "at" && isObj$2(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
     }
 
-    function initToken(type, startVal) {
-      attribReset();
-
+    function getNewToken(type, startVal = null) {
       if (type === "tag") {
-        token = {
+        return {
           type,
           start: startVal,
           end: null,
@@ -3407,8 +3407,10 @@
           kind: null,
           attribs: []
         };
-      } else if (type === "comment") {
-        token = {
+      }
+
+      if (type === "comment") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -3416,8 +3418,10 @@
           closing: false,
           kind: "simple"
         };
-      } else if (type === "rule") {
-        token = {
+      }
+
+      if (type === "rule") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -3428,8 +3432,10 @@
           selectorsEnd: null,
           selectors: []
         };
-      } else if (type === "at") {
-        token = {
+      }
+
+      if (type === "at") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -3443,15 +3449,19 @@
           queryStartsAt: null,
           queryEndsAt: null
         };
-      } else if (type === "text") {
-        token = {
+      }
+
+      if (type === "text") {
+        return {
           type,
           start: startVal,
           end: null,
           value: null
         };
-      } else if (type === "esp") {
-        token = {
+      }
+
+      if (type === "esp") {
+        return {
           type,
           start: startVal,
           end: null,
@@ -3464,6 +3474,11 @@
           tailEndsAt: null
         };
       }
+    }
+
+    function initToken(type, startVal) {
+      attribReset();
+      token = getNewToken(type, startVal);
     }
 
     for (let i = 0; i <= len; i++) {
@@ -3693,8 +3708,9 @@
         } else if (startsEsp(str, i, token, layers, styleStarts) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || ![`'`, `"`].includes(layers[layers.length - 1].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
           const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
 
-          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[i + wholeEspTagLumpOnTheRight.length])) {
+          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
             let lengthOfClosingEspChunk;
+            let disposableVar;
 
             if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
               if (token.type === "esp") {
@@ -3745,6 +3761,23 @@
               }
 
               layers = [];
+            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i)).some((char, idx) => wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
+              char,
+              idx
+            })) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[attrib.attribValue.length - 1] && attrib.attribValue[attrib.attribValue.length - 1].type === "text") {
+              token.pureHTML = false;
+              const lastAttrValueObj = attrib.attribValue[attrib.attribValue.length - 1];
+              const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
+
+              if (!disposableVar || !disposableVar.idx) {
+                newTokenToPutInstead.head = disposableVar.char;
+                newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
+                newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
+                newTokenToPutInstead.tailStartsAt = i;
+                newTokenToPutInstead.tailEndsAt = i + wholeEspTagLumpOnTheRight.length;
+                newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
+                attrib.attribValue[attrib.attribValue.length - 1] = newTokenToPutInstead;
+              }
             } else {
               if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
                 layers.pop();
