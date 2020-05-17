@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://gitlab.com/codsen/codsen/compare/is-html-attribute-closing@1.1.6...is-html-attribute-closing@1.2.0) (2020-05-17)
-
+## 1.2.0 (2020-05-17)
 
 ### Features
 
-* insurance against the Killer Triplet ([21c64a2](https://gitlab.com/codsen/codsen/commit/21c64a2fbba5c2e5edc2cdb1fcfbd2c81c6ee67a))
-
-
-
-
+- insurance against the Killer Triplet ([21c64a2](https://gitlab.com/codsen/codsen/commit/21c64a2fbba5c2e5edc2cdb1fcfbd2c81c6ee67a))
 
 ## 1.1.0 (2020-04-13)
 
