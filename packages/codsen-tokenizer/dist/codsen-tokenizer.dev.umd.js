@@ -2492,14 +2492,14 @@
     const res = [];
 
     for (let i = 0, len = str.length; i < len; i++) {
-      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
+      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() && (!opts.ignoreRanges.length || opts.ignoreRanges.length && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
         inclusiveRangeEnds: true
       }))) {
         nonWhitespaceSubStringStartsAt = i;
       }
 
       if (nonWhitespaceSubStringStartsAt !== null) {
-        if (str[i].trim() === "") {
+        if (!str[i].trim()) {
           res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
           nonWhitespaceSubStringStartsAt = null;
         } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
@@ -3353,8 +3353,7 @@
     // Initial resets:
 
 
-    tokenReset();
-    attribReset(); // ---------------------------------------------------------------------------
+    tokenReset(); // ---------------------------------------------------------------------------
 
     var selectorChunkStartedAt; // For example:
     //
@@ -3552,7 +3551,7 @@
                   // not suitable, for example:
                   // <a click here</a>
                   // all attributes ("click", "here") are removed:
-                  incomingToken.attribs = [];
+                  incomingToken.attribs.length = 0;
                 } else {
                   // leave only attributes up to i2-th
                   incomingToken.attribs = incomingToken.attribs.splice(0, i2);
@@ -3577,12 +3576,10 @@
           }
 
           pingTagCb(incomingToken);
-          token = tokenReset(); // if (str[i] !== "<") {
-
-          initToken("text", cutOffIndex); // }
+          initToken("text", cutOffIndex);
         } else {
           pingTagCb(incomingToken);
-          token = tokenReset(); // if there was whitespace after token's end:
+          tokenReset(); // if there was whitespace after token's end:
 
           if (str[i - 1] && !str[i - 1].trim()) {
             initToken("text", left(str, i) + 1);
@@ -3760,6 +3757,23 @@
 
       if (Number.isInteger(doNothing) && _i >= doNothing) {
         doNothing = false;
+      } // skip chain of the same-type characters
+      // -------------------------------------------------------------------------
+
+
+      if (isLatinLetter(str[_i]) && isLatinLetter(str[_i - 1]) && isLatinLetter(str[_i + 1])) {
+        i = _i;
+        return "continue";
+      }
+
+      if ("0123456789".includes(str[_i]) && "0123456789".includes(str[_i - 1]) && "0123456789".includes(str[_i + 1])) {
+        i = _i;
+        return "continue";
+      }
+
+      if (" \t\r\n".includes(str[_i]) && str[_i] === str[_i - 1] && str[_i] === str[_i + 1]) {
+        i = _i;
+        return "continue";
       } // catch the curly tails of at-rules
       // -------------------------------------------------------------------------
 
@@ -3820,7 +3834,7 @@
           parentTokenToBackup = undefined;
         } else {
           dumpCurrentToken(token, _i);
-          layers = [];
+          layers.length = 0;
         }
       } //
       //
@@ -3966,7 +3980,6 @@
             pingTagCb(token);
           }
 
-          tokenReset();
           initToken("rule", charIdxOnTheRight);
           doNothing = charIdxOnTheRight;
         }
@@ -4000,7 +4013,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing) {
+      if (!doNothing && str[_i]) {
         // console.log(
         //   `1260 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
         //     str,
@@ -4076,10 +4089,9 @@
           //
           if (Number.isInteger(token.start)) {
             dumpCurrentToken(token, _i);
-          }
-
-          tokenReset(); // add other HTML-specific keys onto the object
+          } // add other HTML-specific keys onto the object
           // second arg is "start" key:
+
 
           initToken("comment", _i); // set "closing"
 
@@ -4159,7 +4171,7 @@
                     // push token to parent, to be among its attributes
                     // 1. ensure key "attribs" exist (thinking about comment tokens etc)
                     if (!Array.isArray(parentTokenToBackup.attribs)) {
-                      parentTokenToBackup.attribs = [];
+                      parentTokenToBackup.attribs.length = 0;
                     } // 2. push somewhere
 
 
@@ -4209,7 +4221,7 @@
                 // will be lost:
 
 
-                layers = [];
+                layers.length = 0;
               } else if ( // insurance against stray tails inside attributes:
               // <a b="{ x %}">
               //       ^   ^
@@ -4291,7 +4303,7 @@
 
                 if (attribToBackup) {
                   if (!Array.isArray(attribToBackup.attribValue)) {
-                    attribToBackup.attribValue = [];
+                    attribToBackup.attribValue.length = 0;
                   }
 
                   attribToBackup.attribValue.push(token);
@@ -4376,7 +4388,6 @@
           if (styleStarts) {
             // 1. if there's whitespace, ping it as text
             if (str[_i] && !str[_i].trim()) {
-              tokenReset();
               initToken("text", _i);
               token.end = right(str, _i) || str.length;
               token.value = str.slice(token.start, token.end);
@@ -4396,8 +4407,7 @@
               }
             } else if (str[_i]) {
               // css starts right away after opening tag
-              tokenReset(); // for broken code cases, all characters go as "text"
-
+              // for broken code cases, all characters go as "text"
               if ("}".includes(str[_i])) {
                 initToken("text", _i);
                 doNothing = _i + 1;
@@ -4409,11 +4419,6 @@
             }
           } else if (str[_i]) {
             // finally, the last, default token type is "text"
-            // if token were not reassigned, the reset woudln't work:
-            if (_i) {
-              token = tokenReset();
-            }
-
             initToken("text", _i);
           }
         } else if (token.type === "text" && styleStarts && str[_i] && str[_i].trim() && !"{},".includes(str[_i])) {
@@ -4422,7 +4427,6 @@
           // "styleStarts" is on, non-whitespace character terminates
           // this text token and "rule" token starts
           dumpCurrentToken(token, _i);
-          tokenReset();
           initToken("rule", _i);
         } // END OF if (!doNothing)
 
@@ -4932,7 +4936,7 @@
         token.value = str.slice(token.start, _i); // 2. push token into attribToBackup.attribValue
 
         if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
-          attribToBackup.attribValue = [];
+          attribToBackup.attribValue.length = 0;
         }
 
         attribToBackup.attribValue.push(token); // 3. patch up missing values in attribToBackup

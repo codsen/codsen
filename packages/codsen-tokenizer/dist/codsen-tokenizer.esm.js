@@ -575,11 +575,10 @@ function tokenizer(str, originalOpts) {
     attrib = clone(attribDefault);
   }
   tokenReset();
-  attribReset();
   let selectorChunkStartedAt;
   let parentTokenToBackup;
   let attribToBackup;
-  let layers = [];
+  const layers = [];
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     const currentElem = stash.shift();
     const next = [];
@@ -643,7 +642,7 @@ function tokenizer(str, originalOpts) {
               }
             } else {
               if (i2 === 0) {
-                incomingToken.attribs = [];
+                incomingToken.attribs.length = 0;
               } else {
                 incomingToken.attribs = incomingToken.attribs.splice(0, i2);
               }
@@ -668,11 +667,10 @@ function tokenizer(str, originalOpts) {
           incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
         }
         pingTagCb(incomingToken);
-        token = tokenReset();
         initToken("text", cutOffIndex);
       } else {
         pingTagCb(incomingToken);
-        token = tokenReset();
+        tokenReset();
         if (str[i - 1] && !str[i - 1].trim()) {
           initToken("text", left(str, i) + 1);
         }
@@ -815,6 +813,27 @@ function tokenizer(str, originalOpts) {
     if (Number.isInteger(doNothing) && i >= doNothing) {
       doNothing = false;
     }
+    if (
+      isLatinLetter(str[i]) &&
+      isLatinLetter(str[i - 1]) &&
+      isLatinLetter(str[i + 1])
+    ) {
+      continue;
+    }
+    if (
+      `0123456789`.includes(str[i]) &&
+      `0123456789`.includes(str[i - 1]) &&
+      `0123456789`.includes(str[i + 1])
+    ) {
+      continue;
+    }
+    if (
+      ` \t\r\n`.includes(str[i]) &&
+      str[i] === str[i - 1] &&
+      str[i] === str[i + 1]
+    ) {
+      continue;
+    }
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
       if (str[i] === "}") {
         if (
@@ -860,7 +879,7 @@ function tokenizer(str, originalOpts) {
         parentTokenToBackup = undefined;
       } else {
         dumpCurrentToken(token, i);
-        layers = [];
+        layers.length = 0;
       }
     }
     if (!doNothing) {
@@ -990,7 +1009,6 @@ function tokenizer(str, originalOpts) {
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
         }
-        tokenReset();
         initToken("rule", charIdxOnTheRight);
         doNothing = charIdxOnTheRight;
       }
@@ -1033,7 +1051,7 @@ function tokenizer(str, originalOpts) {
       selectorChunkStartedAt = undefined;
       token.selectorsEnd = i;
     }
-    if (!doNothing) {
+    if (!doNothing && str[i]) {
       if (startsTag(str, i, token, layers)) {
         if (token.type && token.start !== null) {
           dumpCurrentToken(token, i);
@@ -1069,7 +1087,6 @@ function tokenizer(str, originalOpts) {
         if (Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
         }
-        tokenReset();
         initToken("comment", i);
         if (str[i] === "-") {
           token.closing = true;
@@ -1122,7 +1139,7 @@ function tokenizer(str, originalOpts) {
               doNothing = token.tailEndsAt;
               if (parentTokenToBackup) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
-                  parentTokenToBackup.attribs = [];
+                  parentTokenToBackup.attribs.length = 0;
                 }
                 if (attribToBackup) {
                   attrib = attribToBackup;
@@ -1157,7 +1174,7 @@ function tokenizer(str, originalOpts) {
               dumpCurrentToken(token, i);
               tokenReset();
             }
-            layers = [];
+            layers.length = 0;
           } else if (
             attrib &&
             attrib.attribValue &&
@@ -1211,7 +1228,7 @@ function tokenizer(str, originalOpts) {
             }
             if (attribToBackup) {
               if (!Array.isArray(attribToBackup.attribValue)) {
-                attribToBackup.attribValue = [];
+                attribToBackup.attribValue.length = 0;
               }
               attribToBackup.attribValue.push(token);
             }
@@ -1304,7 +1321,6 @@ function tokenizer(str, originalOpts) {
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
           if (str[i] && !str[i].trim()) {
-            tokenReset();
             initToken("text", i);
             token.end = right(str, i) || str.length;
             token.value = str.slice(token.start, token.end);
@@ -1325,7 +1341,6 @@ function tokenizer(str, originalOpts) {
               }
             }
           } else if (str[i]) {
-            tokenReset();
             if ("}".includes(str[i])) {
               initToken("text", i);
               doNothing = i + 1;
@@ -1334,9 +1349,6 @@ function tokenizer(str, originalOpts) {
             }
           }
         } else if (str[i]) {
-          if (i) {
-            token = tokenReset();
-          }
           initToken("text", i);
         }
       } else if (
@@ -1347,7 +1359,6 @@ function tokenizer(str, originalOpts) {
         !"{},".includes(str[i])
       ) {
         dumpCurrentToken(token, i);
-        tokenReset();
         initToken("rule", i);
       }
     }
@@ -1810,7 +1821,7 @@ function tokenizer(str, originalOpts) {
       token.end = i;
       token.value = str.slice(token.start, i);
       if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
-        attribToBackup.attribValue = [];
+        attribToBackup.attribValue.length = 0;
       }
       attribToBackup.attribValue.push(token);
       attribToBackup.attribValueEndsAt = i;
