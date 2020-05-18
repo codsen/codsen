@@ -3205,7 +3205,7 @@ tap.test("64 - dirty code - space between class and =", (t) => {
   t.end();
 });
 
-tap.test("65 - dirty code - blank class attribute name", (t) => {
+tap.todo("65 - dirty code - blank class attribute name", (t) => {
   const actual1 = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -5496,7 +5496,7 @@ tap.test(
   }
 );
 
-tap.test("123 - empty class/id without equals and value gets deleted", (t) => {
+tap.todo("123 - empty class/id without equals and value gets deleted", (t) => {
   const source = `<style>
   .aa {bb:2;}
 </style>

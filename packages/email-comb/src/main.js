@@ -1843,20 +1843,20 @@ function comb(str, opts) {
                   }
                 }
               }
-              // not equals is followed by "class" attribute's name
-              else if (round === 1) {
-                const calculatedRange = expander({
-                  str,
-                  from: i,
-                  to: y - 1, // leave that space in front
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true,
-                });
-                console.log(
-                  `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
-                );
-                finalIndexesToDelete.push(...calculatedRange);
-              }
+              // // not equals is followed by "class" attribute's name
+              // else if (round === 1) {
+              //   const calculatedRange = expander({
+              //     str,
+              //     from: i,
+              //     to: y - 1, // leave that space in front
+              //     ifRightSideIncludesThisThenCropTightly: "/>",
+              //     wipeAllWhitespaceOnLeft: true,
+              //   });
+              //   console.log(
+              //     `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+              //   );
+              //   finalIndexesToDelete.push(...calculatedRange);
+              // }
 
               // 2. stop anyway
               break;
@@ -1974,20 +1974,20 @@ function comb(str, opts) {
                   }
                 }
               }
-              // not equals is followed by "id" attribute's name
-              else if (round === 1) {
-                const calculatedRange = expander({
-                  str,
-                  from: i,
-                  to: y - 1, // leave that space in front
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true,
-                });
-                console.log(
-                  `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
-                );
-                finalIndexesToDelete.push(...calculatedRange);
-              }
+              // // not equals is followed by "id" attribute's name
+              // else if (round === 1) {
+              //   const calculatedRange = expander({
+              //     str,
+              //     from: i,
+              //     to: y - 1, // leave that space in front
+              //     ifRightSideIncludesThisThenCropTightly: "/>",
+              //     wipeAllWhitespaceOnLeft: true,
+              //   });
+              //   console.log(
+              //     `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+              //   );
+              //   finalIndexesToDelete.push(...calculatedRange);
+              // }
 
               // 2. stop anyway
               break;

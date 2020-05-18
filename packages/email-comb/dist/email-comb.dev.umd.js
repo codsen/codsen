@@ -7022,19 +7022,21 @@
                         }
                       }
                     }
-                  } // not equals is followed by "class" attribute's name
-                  else if (round === 1) {
-                      var _calculatedRange = expander({
-                        str: str,
-                        from: i,
-                        to: _y6 - 1,
-                        // leave that space in front
-                        ifRightSideIncludesThisThenCropTightly: "/>",
-                        wipeAllWhitespaceOnLeft: true
-                      });
-
-                      finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
-                    } // 2. stop anyway
+                  } // // not equals is followed by "class" attribute's name
+                  // else if (round === 1) {
+                  //   const calculatedRange = expander({
+                  //     str,
+                  //     from: i,
+                  //     to: y - 1, // leave that space in front
+                  //     ifRightSideIncludesThisThenCropTightly: "/>",
+                  //     wipeAllWhitespaceOnLeft: true,
+                  //   });
+                  //   console.log(
+                  //     `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                  //   );
+                  //   finalIndexesToDelete.push(...calculatedRange);
+                  // }
+                  // 2. stop anyway
 
 
                   break;
@@ -7074,7 +7076,7 @@
                 _valuesStart = i + 3;
                 _quoteless = true;
               } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
-                var _calculatedRange2 = expander({
+                var _calculatedRange = expander({
                   str: str,
                   from: i,
                   to: i + 3,
@@ -7082,7 +7084,7 @@
                   wipeAllWhitespaceOnLeft: true
                 });
 
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
               }
             } else if (!str[i + 2].trim()) {
               // loop forward:
@@ -7119,19 +7121,21 @@
                         }
                       }
                     }
-                  } // not equals is followed by "id" attribute's name
-                  else if (round === 1) {
-                      var _calculatedRange3 = expander({
-                        str: str,
-                        from: i,
-                        to: _y7 - 1,
-                        // leave that space in front
-                        ifRightSideIncludesThisThenCropTightly: "/>",
-                        wipeAllWhitespaceOnLeft: true
-                      });
-
-                      finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
-                    } // 2. stop anyway
+                  } // // not equals is followed by "id" attribute's name
+                  // else if (round === 1) {
+                  //   const calculatedRange = expander({
+                  //     str,
+                  //     from: i,
+                  //     to: y - 1, // leave that space in front
+                  //     ifRightSideIncludesThisThenCropTightly: "/>",
+                  //     wipeAllWhitespaceOnLeft: true,
+                  //   });
+                  //   console.log(
+                  //     `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                  //   );
+                  //   finalIndexesToDelete.push(...calculatedRange);
+                  // }
+                  // 2. stop anyway
 
 
                   break;
@@ -7167,7 +7171,7 @@
               bodyClassOrIdCanBeDeleted = false;
 
               if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-                var _calculatedRange4 = expander({
+                var _calculatedRange2 = expander({
                   str: str,
                   from: whitespaceStartedAt,
                   to: i,
@@ -7175,7 +7179,7 @@
                   ifRightSideIncludesThisThenCropTightly: "\"'"
                 });
 
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange4));
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
                 whitespaceStartedAt = null;
               } else if (whitespaceStartedAt) {
                 whitespaceStartedAt = null;
@@ -7438,7 +7442,7 @@
               bodyClassOrIdCanBeDeleted = false;
 
               if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-                var _calculatedRange5 = expander({
+                var _calculatedRange3 = expander({
                   str: str,
                   from: whitespaceStartedAt,
                   to: i,
@@ -7446,7 +7450,7 @@
                   ifRightSideIncludesThisThenCropTightly: "\"'"
                 });
 
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange5));
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
                 whitespaceStartedAt = null;
               } else if (whitespaceStartedAt) {
                 whitespaceStartedAt = null;
@@ -7510,7 +7514,7 @@
             // 1. catch healthy comment ending
             if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
               // not bogus
-              var _calculatedRange6 = expander({
+              var _calculatedRange4 = expander({
                 str: str,
                 from: commentStartedAt,
                 to: i + 1,
@@ -7521,15 +7525,15 @@
               if (opts.removeHTMLComments && canDelete) {
                 // Instead of finalIndexesToDelete.push(i, y + 3); use expander()
                 // so that we manage the whitespace outwards properly:
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange6));
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange4));
               }
 
-              commentsLength += _calculatedRange6[1] - _calculatedRange6[0]; // reset the markers:
+              commentsLength += _calculatedRange4[1] - _calculatedRange4[0]; // reset the markers:
 
               commentStartedAt = null;
               bogusHTMLComment = undefined;
             } else if (bogusHTMLComment) {
-              var _calculatedRange7 = expander({
+              var _calculatedRange5 = expander({
                 str: str,
                 from: commentStartedAt,
                 to: i + 1,
@@ -7538,10 +7542,10 @@
               });
 
               if (opts.removeHTMLComments && canDelete) {
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange7));
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange5));
               }
 
-              commentsLength += _calculatedRange7[1] - _calculatedRange7[0]; // reset the markers:
+              commentsLength += _calculatedRange5[1] - _calculatedRange5[0]; // reset the markers:
 
               commentStartedAt = null;
               bogusHTMLComment = undefined;

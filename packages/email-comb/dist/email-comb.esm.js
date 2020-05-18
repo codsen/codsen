@@ -922,16 +922,6 @@ function comb(str, opts) {
                   }
                 }
               }
-              else if (round === 1) {
-                const calculatedRange = expander({
-                  str,
-                  from: i,
-                  to: y - 1,
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true,
-                });
-                finalIndexesToDelete.push(...calculatedRange);
-              }
               break;
             }
           }
@@ -1003,16 +993,6 @@ function comb(str, opts) {
                     }
                   }
                 }
-              }
-              else if (round === 1) {
-                const calculatedRange = expander({
-                  str,
-                  from: i,
-                  to: y - 1,
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true,
-                });
-                finalIndexesToDelete.push(...calculatedRange);
               }
               break;
             }
