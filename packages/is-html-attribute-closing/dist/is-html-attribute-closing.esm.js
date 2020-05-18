@@ -10,7 +10,6 @@
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
 import { left, right } from 'string-left-right';
-import split from 'string-split-by-whitespace';
 import { matchRight } from 'string-match-left-right';
 
 function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
@@ -197,17 +196,21 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const A1 = i > isThisClosingIdx;
         const A21 = !lastQuoteAt;
         const A22 = lastQuoteAt + 1 >= i;
-        const A23 = split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
-          allHtmlAttribs.has(chunk)
-        );
+        const A23 = str
+          .slice(lastQuoteAt + 1, i)
+          .trim()
+          .split(/\s+/)
+          .every((chunk) => allHtmlAttribs.has(chunk));
         const B1 = i === isThisClosingIdx;
         const B21 = totalQuotesCount < 3;
         const B22 = !!lastQuoteWasMatched;
         const B23 = !lastQuoteAt;
         const B24 = lastQuoteAt + 1 >= i;
-        const B25 = !split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
-          allHtmlAttribs.has(chunk)
-        );
+        const B25 = !str
+          .slice(lastQuoteAt + 1, i)
+          .trim()
+          .split(/\s+/)
+          .every((chunk) => allHtmlAttribs.has(chunk));
         return (
           (A1 && (A21 || A22 || A23)) ||
           (B1 && (B21 || B22 || B23 || B24 || B25))
@@ -274,9 +277,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const Y1 = !!lastQuoteAt;
         const Y2 = lastQuoteAt === isThisClosingIdx;
         const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-        const Y4 = split(str.slice(lastQuoteAt + 1, i)).every((chunk) =>
-          allHtmlAttribs.has(chunk)
-        );
+        const Y4 = str
+          .slice(lastQuoteAt + 1, i)
+          .trim()
+          .split(/\s+/)
+          .every((chunk) => allHtmlAttribs.has(chunk));
         const Y5 = i >= isThisClosingIdx;
         return Y1 && Y2 && Y3 && Y4 && Y5;
       }

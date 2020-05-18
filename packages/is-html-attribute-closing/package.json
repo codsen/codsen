@@ -129,8 +129,7 @@
     "html-all-known-attributes": "^2.0.3",
     "is-char-suitable-for-html-attr-name": "^1.1.4",
     "string-left-right": "^2.3.23",
-    "string-match-left-right": "^4.0.8",
-    "string-split-by-whitespace": "^1.6.65"
+    "string-match-left-right": "^4.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

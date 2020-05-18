@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
 var stringLeftRight = require('string-left-right');
-var split = _interopDefault(require('string-split-by-whitespace'));
 var stringMatchLeftRight = require('string-match-left-right');
 
 function _typeof(obj) {
@@ -189,7 +188,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
         var A22 = lastQuoteAt + 1 >= i;
-        var A23 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+        var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         var B1 = i === isThisClosingIdx;
@@ -197,7 +196,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var B22 = !!lastQuoteWasMatched;
         var B23 = !lastQuoteAt;
         var B24 = lastQuoteAt + 1 >= i;
-        var B25 = !split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+        var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
@@ -240,7 +239,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var Y1 = !!lastQuoteAt;
         var Y2 = lastQuoteAt === isThisClosingIdx;
         var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-        var Y4 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+        var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         var Y5 = i >= isThisClosingIdx;

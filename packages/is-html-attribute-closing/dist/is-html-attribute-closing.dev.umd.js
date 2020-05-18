@@ -1983,95 +1983,6 @@
   }
 
   /**
-   * ranges-is-index-within
-   * Efficiently checks if index is within any of the given ranges
-   * Version: 1.14.35
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
-   */
-  const isArr = Array.isArray;
-
-  function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-    const defaults = {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: false
-    };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-
-    if (!isArr(rangesArr)) {
-      return false;
-    }
-
-    if (opts.returnMatchedRangeInsteadOfTrue) {
-      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
-    }
-
-    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
-  }
-
-  /**
-   * string-split-by-whitespace
-   * Split string into array by chunks of whitespace
-   * Version: 1.6.65
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
-   */
-
-  function split(str, originalOpts) {
-    if (str === undefined) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
-    }
-
-    if (typeof str !== "string") {
-      return str;
-    }
-
-    if (str.trim() === "") {
-      return [];
-    }
-
-    const defaults = {
-      ignoreRanges: []
-    };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-
-    if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
-    }
-
-    let nonWhitespaceSubStringStartsAt = null;
-    const res = [];
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
-        inclusiveRangeEnds: true
-      }))) {
-        nonWhitespaceSubStringStartsAt = i;
-      }
-
-      if (nonWhitespaceSubStringStartsAt !== null) {
-        if (str[i].trim() === "") {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (str[i + 1] === undefined) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
-        }
-      }
-    }
-
-    return res;
-  }
-
-  /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
    * Version: 3.11.32
@@ -2826,7 +2737,7 @@
 
           var A21 = !lastQuoteAt;
           var A22 = lastQuoteAt + 1 >= i;
-          var A23 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+          var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
           var B1 = i === isThisClosingIdx;
@@ -2834,7 +2745,7 @@
           var B22 = !!lastQuoteWasMatched;
           var B23 = !lastQuoteAt;
           var B24 = lastQuoteAt + 1 >= i;
-          var B25 = !split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+          var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
@@ -2953,7 +2864,7 @@
           var Y2 = lastQuoteAt === isThisClosingIdx; // ensure there's some content between suspected and "here":
 
           var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-          var Y4 = split(str.slice(lastQuoteAt + 1, i)).every(function (chunk) {
+          var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
           var Y5 = i >= isThisClosingIdx;
