@@ -59,10 +59,10 @@ This package has three builds in `dist/` folder:
 
 ### Idea
 
-Split by a single space is easy - use `String.split(" ")`:
+Split by whitespace is easy - [use](https://stackoverflow.com/a/32727737/3943954) `String.split(/\s+/)`:
 
 ```js
-console.log(JSON.stringify("abc def ghi".split(" "), null, 4));
+console.log(JSON.stringify("abc  def ghi".split(/\s+/), null, 4));
 // => [
 //      "abc",
 //      "def",
@@ -70,9 +70,7 @@ console.log(JSON.stringify("abc def ghi".split(" "), null, 4));
 //    ]
 ```
 
-Some basics: term _whitespace_ means any character which `Strim.trim()` to a zero-length string. That's space, tab, LF (what "Enter" key places on a Mac), CR, non-breaking space and handful of others.
-
-But sometimes you need to split the string by whitespace which does not necessarily is a single space.
+But sometimes you need to ignore certain index ranges:
 
 ```js
 const splitByW = require("string-split-by-whitespace");

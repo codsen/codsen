@@ -124,7 +124,7 @@
 
     for (var i = 0, len = str.length; i < len; i++) {
       // catch the first non-whitespace character
-      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(function (arr) {
+      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() && (!opts.ignoreRanges.length || opts.ignoreRanges.length && !rangesIsIndexWithin(i, opts.ignoreRanges.map(function (arr) {
         return [arr[0], arr[1] - 1];
       }), {
         inclusiveRangeEnds: true
@@ -134,7 +134,7 @@
 
 
       if (nonWhitespaceSubStringStartsAt !== null) {
-        if (str[i].trim() === "") {
+        if (!str[i].trim()) {
           res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
           nonWhitespaceSubStringStartsAt = null;
         } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {

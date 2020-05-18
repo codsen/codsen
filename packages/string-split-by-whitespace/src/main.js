@@ -33,9 +33,9 @@ function split(str, originalOpts) {
     // catch the first non-whitespace character
     if (
       nonWhitespaceSubStringStartsAt === null &&
-      str[i].trim() !== "" &&
-      (opts.ignoreRanges.length === 0 ||
-        (opts.ignoreRanges.length !== 0 &&
+      str[i].trim() &&
+      (!opts.ignoreRanges.length ||
+        (opts.ignoreRanges.length &&
           !within(
             i,
             opts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
@@ -48,7 +48,7 @@ function split(str, originalOpts) {
     }
     // catch the first whitespace char when recording substring
     if (nonWhitespaceSubStringStartsAt !== null) {
-      if (str[i].trim() === "") {
+      if (!str[i].trim()) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
         nonWhitespaceSubStringStartsAt = null;
       } else if (opts.ignoreRanges.length && within(i, opts.ignoreRanges)) {

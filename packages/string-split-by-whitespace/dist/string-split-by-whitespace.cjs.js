@@ -84,7 +84,7 @@ function split(str, originalOpts) {
   var nonWhitespaceSubStringStartsAt = null;
   var res = [];
   for (var i = 0, len = str.length; i < len; i++) {
-    if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !within(i, opts.ignoreRanges.map(function (arr) {
+    if (nonWhitespaceSubStringStartsAt === null && str[i].trim() && (!opts.ignoreRanges.length || opts.ignoreRanges.length && !within(i, opts.ignoreRanges.map(function (arr) {
       return [arr[0], arr[1] - 1];
     }), {
       inclusiveRangeEnds: true
@@ -92,7 +92,7 @@ function split(str, originalOpts) {
       nonWhitespaceSubStringStartsAt = i;
     }
     if (nonWhitespaceSubStringStartsAt !== null) {
-      if (str[i].trim() === "") {
+      if (!str[i].trim()) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
         nonWhitespaceSubStringStartsAt = null;
       } else if (opts.ignoreRanges.length && within(i, opts.ignoreRanges)) {
