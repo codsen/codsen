@@ -406,7 +406,7 @@ function tokenizer(str, originalOpts) {
           for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
             if (incomingToken.attribs[i2].attribNameRecognised) {
               cutOffIndex = incomingToken.attribs[i2].attribEnd;
-              if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
+              if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                 cutOffIndex += 1;
               }
             } else {

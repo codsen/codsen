@@ -633,7 +633,6 @@ function tokenizer(str, originalOpts) {
             if (incomingToken.attribs[i2].attribNameRecognised) {
               cutOffIndex = incomingToken.attribs[i2].attribEnd;
               if (
-                str[cutOffIndex] &&
                 str[cutOffIndex + 1] &&
                 !str[cutOffIndex].trim() &&
                 str[cutOffIndex + 1].trim()
