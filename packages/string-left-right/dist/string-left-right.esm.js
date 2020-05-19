@@ -24,10 +24,10 @@ function x(something) {
     res.optional = true;
     res.hungry = true;
   } else if (res.value.endsWith("?") && res.value.length > 1) {
-    res.value = res.value.slice(0, res.value.length - 1);
+    res.value = res.value.slice(0, ~-res.value.length);
     res.optional = true;
   } else if (res.value.endsWith("*") && res.value.length > 1) {
-    res.value = res.value.slice(0, res.value.length - 1);
+    res.value = res.value.slice(0, ~-res.value.length);
     res.hungry = true;
   }
   return res;
@@ -92,12 +92,11 @@ function leftMain(str, idx, stopAtNewlines) {
     return null;
   }
   if (
-    str[idx - 1] &&
-    ((!stopAtNewlines && str[idx - 1].trim()) ||
-      (stopAtNewlines &&
-        (str[idx - 1].trim() || "\n\r".includes(str[idx - 1]))))
+    str[~-idx] &&
+    ((!stopAtNewlines && str[~-idx].trim()) ||
+      (stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx]))))
   ) {
-    return idx - 1;
+    return ~-idx;
   }
   if (
     str[idx - 2] &&
@@ -133,7 +132,7 @@ function seq(direction, str, idx, opts, args) {
   }
   if (
     (direction === "right" && !str[idx + 1]) ||
-    (direction === "left" && !str[idx - 1])
+    (direction === "left" && !str[~-idx])
   ) {
     return null;
   }
@@ -170,7 +169,7 @@ function seq(direction, str, idx, opts, args) {
       }
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
-      } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
+      } else if (direction === "left" && whattsOnTheSide < ~-lastFinding) {
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
       }
       lastFinding = whattsOnTheSide;
@@ -282,7 +281,7 @@ function chomp(direction, str, idx, opts, args) {
           }
         }
       } else {
-        return whatsOnTheRight ? whatsOnTheRight - 1 : str.length;
+        return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
       }
     } else if (opts.mode === 1) {
       return lastIdx;
@@ -303,7 +302,7 @@ function chomp(direction, str, idx, opts, args) {
     }
     return whatsOnTheRight || str.length;
   }
-  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
+  if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
     return lastIdx;
   }
   const whatsOnTheLeft = left(str, lastIdx);

@@ -1,4 +1,4 @@
-/* eslint no-param-reassign:0 */
+/* eslint no-param-reassign:0, no-bitwise:0 */
 
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
@@ -21,10 +21,10 @@ function x(something) {
     res.optional = true;
     res.hungry = true;
   } else if (res.value.endsWith("?") && res.value.length > 1) {
-    res.value = res.value.slice(0, res.value.length - 1);
+    res.value = res.value.slice(0, ~-res.value.length);
     res.optional = true;
   } else if (res.value.endsWith("*") && res.value.length > 1) {
-    res.value = res.value.slice(0, res.value.length - 1);
+    res.value = res.value.slice(0, ~-res.value.length);
     res.hungry = true;
   }
   // console.log(
@@ -153,13 +153,13 @@ function leftMain(str, idx, stopAtNewlines) {
     return null;
   }
   if (
-    str[idx - 1] &&
-    ((!stopAtNewlines && str[idx - 1].trim()) ||
-      (stopAtNewlines &&
-        (str[idx - 1].trim() || "\n\r".includes(str[idx - 1]))))
+    // ~- means minus one, in bitwise
+    str[~-idx] &&
+    ((!stopAtNewlines && str[~-idx].trim()) ||
+      (stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx]))))
   ) {
     // best case scenario - next character is non-whitespace:
-    return idx - 1;
+    return ~-idx;
   }
   if (
     str[idx - 2] &&
@@ -232,7 +232,7 @@ function seq(direction, str, idx, opts, args) {
   }
   if (
     (direction === "right" && !str[idx + 1]) ||
-    (direction === "left" && !str[idx - 1])
+    (direction === "left" && !str[~-idx])
   ) {
     // if next character on the particular side doesn't even exist, that's a quick end
     console.log(`238 RETURN null`);
@@ -327,7 +327,7 @@ function seq(direction, str, idx, opts, args) {
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         console.log(`328 push gap [${lastFinding + 1}, ${whattsOnTheSide}]`);
         gaps.push([lastFinding + 1, whattsOnTheSide]);
-      } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
+      } else if (direction === "left" && whattsOnTheSide < ~-lastFinding) {
         console.log(`331 unshift gap [${whattsOnTheSide + 1}, ${lastFinding}]`);
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
       }
@@ -642,10 +642,10 @@ function chomp(direction, str, idx, opts, args) {
       } else {
         console.log(
           `644 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-            whatsOnTheRight ? whatsOnTheRight - 1 : str.length
+            whatsOnTheRight ? ~-whatsOnTheRight : str.length
           }`
         );
-        return whatsOnTheRight ? whatsOnTheRight - 1 : str.length;
+        return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
       }
     } else if (opts.mode === 1) {
       // mode 1 doesn't touch the whitespace, so it's quick:
@@ -701,7 +701,7 @@ function chomp(direction, str, idx, opts, args) {
   //
 
   // quick ending - no whitespace on the left at all:
-  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
+  if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
     // if the non-whitespace character is on the left
     console.log(`706 RETURN ${lastIdx}`);
     return lastIdx;

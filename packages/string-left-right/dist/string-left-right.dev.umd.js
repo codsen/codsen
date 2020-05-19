@@ -2123,10 +2123,10 @@
       res.optional = true;
       res.hungry = true;
     } else if (res.value.endsWith("?") && res.value.length > 1) {
-      res.value = res.value.slice(0, res.value.length - 1);
+      res.value = res.value.slice(0, ~-res.value.length);
       res.optional = true;
     } else if (res.value.endsWith("*") && res.value.length > 1) {
-      res.value = res.value.slice(0, res.value.length - 1);
+      res.value = res.value.slice(0, ~-res.value.length);
       res.hungry = true;
     } // console.log(
     //   `029 ${`\u001b[${35}m${`x() returning ${JSON.stringify(
@@ -2250,9 +2250,10 @@
       return null;
     }
 
-    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
+    if ( // ~- means minus one, in bitwise
+    str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
       // best case scenario - next character is non-whitespace:
-      return idx - 1;
+      return ~-idx;
     }
 
     if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
@@ -2317,7 +2318,7 @@
       idx = 0;
     }
 
-    if (direction === "right" && !str[idx + 1] || direction === "left" && !str[idx - 1]) {
+    if (direction === "right" && !str[idx + 1] || direction === "left" && !str[~-idx]) {
       // if next character on the particular side doesn't even exist, that's a quick end
       return null;
     } // we start to look on the particular side from index "idx".
@@ -2369,7 +2370,7 @@
 
         if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
           gaps.push([lastFinding + 1, whattsOnTheSide]);
-        } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
+        } else if (direction === "left" && whattsOnTheSide < ~-lastFinding) {
           gaps.unshift([whattsOnTheSide + 1, lastFinding]);
         } // 2. second, tackle the matching
 
@@ -2597,7 +2598,7 @@
             }
           }
         } else {
-          return whatsOnTheRight ? whatsOnTheRight - 1 : str.length;
+          return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
         }
       } else if (opts.mode === 1) {
         // mode 1 doesn't touch the whitespace, so it's quick:
@@ -2638,7 +2639,7 @@
     // quick ending - no whitespace on the left at all:
 
 
-    if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim()) {
+    if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
       // if the non-whitespace character is on the left
       return lastIdx;
     } // Default, 0 is leave single space if possible or chomp up to nearest line
