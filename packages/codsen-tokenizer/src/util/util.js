@@ -1,5 +1,5 @@
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-const allHTMLTagsKnownToHumanity = [
+const allHTMLTagsKnownToHumanity = new Set([
   "a",
   "abbr",
   "acronym",
@@ -145,7 +145,7 @@ const allHTMLTagsKnownToHumanity = [
   "video",
   "wbr",
   "xmp",
-];
+]);
 
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|#`;
@@ -267,7 +267,7 @@ function flipEspTag(str) {
 
 function isTagNameRecognised(tagName) {
   return (
-    allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) ||
+    allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) ||
     ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
   );
 }

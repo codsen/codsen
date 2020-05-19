@@ -15,7 +15,7 @@ import { allHtmlAttribs } from 'html-all-known-attributes';
 import charSuitableForHTMLAttrName from 'is-char-suitable-for-html-attr-name';
 import isTagOpening from 'is-html-tag-opening';
 
-const allHTMLTagsKnownToHumanity = [
+const allHTMLTagsKnownToHumanity = new Set([
   "a",
   "abbr",
   "acronym",
@@ -161,7 +161,7 @@ const allHTMLTagsKnownToHumanity = [
   "video",
   "wbr",
   "xmp",
-];
+]);
 const espChars = `{}%-$_()*|#`;
 const veryEspChars = `{}()|#`;
 const notVeryEspChars = `%$_*#`;
@@ -208,7 +208,7 @@ function flipEspTag(str) {
 }
 function isTagNameRecognised(tagName) {
   return (
-    allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) ||
+    allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) ||
     ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
   );
 }
@@ -612,13 +612,13 @@ function tokenizer(str, originalOpts) {
       !["text", "esp"].includes(incomingToken.type) &&
       incomingToken.start !== null &&
       incomingToken.start < i &&
-      ((str[i - 1] && !str[i - 1].trim()) || str[i] === "<")
+      ((str[~-i] && !str[~-i].trim()) || str[i] === "<")
     ) {
       incomingToken.end = left(str, i) + 1;
       incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
       if (
         incomingToken.type === "tag" &&
-        !"/>".includes(str[incomingToken.end - 1])
+        !"/>".includes(str[~-incomingToken.end])
       ) {
         let cutOffIndex = incomingToken.tagNameEndsAt || i;
         if (
@@ -656,8 +656,8 @@ function tokenizer(str, originalOpts) {
           incomingToken.tagNameEndsAt = cutOffIndex;
         }
         if (
-          Number.isInteger(incomingToken.tagNameStartsAt) &&
-          Number.isInteger(incomingToken.tagNameEndsAt) &&
+          incomingToken.tagNameStartsAt &&
+          incomingToken.tagNameEndsAt &&
           !incomingToken.tagName
         ) {
           incomingToken.tagName = str.slice(
@@ -671,7 +671,7 @@ function tokenizer(str, originalOpts) {
       } else {
         pingTagCb(incomingToken);
         tokenReset();
-        if (str[i - 1] && !str[i - 1].trim()) {
+        if (str[~-i] && !str[~-i].trim()) {
           initToken("text", left(str, i) + 1);
         }
       }
@@ -690,10 +690,10 @@ function tokenizer(str, originalOpts) {
   function atRuleWaitingForClosingCurlie() {
     return (
       layers.length &&
-      layers[layers.length - 1].type === "at" &&
-      isObj(layers[layers.length - 1].token) &&
-      Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) &&
-      !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt)
+      layers[~-layers.length].type === "at" &&
+      isObj(layers[~-layers.length].token) &&
+      layers[~-layers.length].token.openingCurlyAt &&
+      !layers[~-layers.length].token.closingCurlyAt
     );
   }
   function getNewToken(type, startVal = null) {
@@ -810,26 +810,19 @@ function tokenizer(str, originalOpts) {
     ) {
       styleStarts = false;
     }
-    if (Number.isInteger(doNothing) && i >= doNothing) {
+    if (doNothing && i >= doNothing) {
       doNothing = false;
     }
     if (
       isLatinLetter(str[i]) &&
-      isLatinLetter(str[i - 1]) &&
+      isLatinLetter(str[~-i]) &&
       isLatinLetter(str[i + 1])
     ) {
       continue;
     }
     if (
-      `0123456789`.includes(str[i]) &&
-      `0123456789`.includes(str[i - 1]) &&
-      `0123456789`.includes(str[i + 1])
-    ) {
-      continue;
-    }
-    if (
       ` \t\r\n`.includes(str[i]) &&
-      str[i] === str[i - 1] &&
+      str[i] === str[~-i] &&
       str[i] === str[i + 1]
     ) {
       continue;
@@ -846,7 +839,7 @@ function tokenizer(str, originalOpts) {
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
             token = tokenReset();
-            if (left(str, i) < i - 1) {
+            if (left(str, i) < ~-i) {
               initToken("text", left(str, i) + 1);
             }
           }
@@ -857,14 +850,14 @@ function tokenizer(str, originalOpts) {
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
-          token = tokenReset();
+          tokenReset();
           doNothing = i + 1;
         }
       } else if (token.type === "text" && str[i] && str[i].trim()) {
         token.end = i;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
-        token = tokenReset();
+        tokenReset();
       }
     }
     if (token.end && token.end === i) {
@@ -873,7 +866,7 @@ function tokenizer(str, originalOpts) {
       }
       if (attribToBackup) {
         attrib = attribToBackup;
-        attrib.attribValue.push(clone(token));
+        attrib.attribValue.push(token);
         token = clone(parentTokenToBackup);
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
@@ -899,8 +892,8 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(layers) &&
             layers.length &&
-            layers[layers.length - 1].type === "simple" &&
-            layers[layers.length - 1].value === flipEspTag(str[i])
+            layers[~-layers.length].type === "simple" &&
+            layers[~-layers.length].value === flipEspTag(str[i])
           ) {
             layers.pop();
           } else {
@@ -919,8 +912,8 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(layers) &&
             layers.length &&
-            layers[layers.length - 1].type === "simple" &&
-            layers[layers.length - 1].value === flipEspTag(str[i])
+            layers[~-layers.length].type === "simple" &&
+            layers[~-layers.length].value === flipEspTag(str[i])
           ) {
             layers.pop();
           } else {
@@ -944,8 +937,8 @@ function tokenizer(str, originalOpts) {
         if (
           Array.isArray(layers) &&
           layers.length &&
-          layers[layers.length - 1].type === "simple" &&
-          layers[layers.length - 1].value === flipEspTag(str[i])
+          layers[~-layers.length].type === "simple" &&
+          layers[~-layers.length].value === flipEspTag(str[i])
         ) {
           layers.pop();
           doNothing = i + 1;
@@ -961,9 +954,9 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "at" &&
-      Number.isInteger(token.start) &&
+      token.start != null &&
       i >= token.start &&
-      !Number.isInteger(token.identifierStartsAt) &&
+      !token.identifierStartsAt &&
       str[i] &&
       str[i].trim() &&
       str[i] !== "@"
@@ -973,11 +966,11 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "at" &&
-      Number.isInteger(token.queryStartsAt) &&
-      !Number.isInteger(token.queryEndsAt) &&
+      token.queryStartsAt != null &&
+      !token.queryEndsAt &&
       "{};".includes(str[i])
     ) {
-      if (str[i - 1] && str[i - 1].trim()) {
+      if (str[~-i] && str[~-i].trim()) {
         token.queryEndsAt = i;
       } else {
         token.queryEndsAt = left(str, i) + 1;
@@ -989,7 +982,7 @@ function tokenizer(str, originalOpts) {
       token.type === "at" &&
       str[i] === "{" &&
       token.identifier &&
-      !Number.isInteger(token.openingCurlyAt)
+      !token.openingCurlyAt
     ) {
       token.openingCurlyAt = i;
       layers.push({
@@ -1019,25 +1012,25 @@ function tokenizer(str, originalOpts) {
       token.identifier &&
       str[i] &&
       str[i].trim() &&
-      !Number.isInteger(token.queryStartsAt)
+      !token.queryStartsAt
     ) {
       token.queryStartsAt = i;
     }
     if (
       !doNothing &&
       token.type === "at" &&
-      Number.isInteger(token.identifierStartsAt) &&
+      token.identifierStartsAt != null &&
       i >= token.start &&
       str[i] &&
       (!str[i].trim() || "()".includes(str[i])) &&
-      !Number.isInteger(token.identifierEndsAt)
+      !token.identifierEndsAt
     ) {
       token.identifierEndsAt = i;
       token.identifier = str.slice(token.identifierStartsAt, i);
     }
     if (
       token.type === "rule" &&
-      Number.isInteger(selectorChunkStartedAt) &&
+      selectorChunkStartedAt &&
       (charsThatEndCSSChunks.includes(str[i]) ||
         (str[i] &&
           !str[i].trim() &&
@@ -1084,7 +1077,7 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         }
       } else if (startsComment(str, i, token, layers)) {
-        if (Number.isInteger(token.start)) {
+        if (token.start != null) {
           dumpCurrentToken(token, i);
         }
         initToken("comment", i);
@@ -1107,8 +1100,8 @@ function tokenizer(str, originalOpts) {
         startsEsp(str, i, token, layers, styleStarts) &&
         (!Array.isArray(layers) ||
           !layers.length ||
-          layers[layers.length - 1].type !== "simple" ||
-          ![`'`, `"`].includes(layers[layers.length - 1].value) ||
+          layers[~-layers.length].type !== "simple" ||
+          ![`'`, `"`].includes(layers[~-layers.length].value) ||
           (attrib && attrib.attribStart && !attrib.attribEnd))
       ) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(
@@ -1116,9 +1109,7 @@ function tokenizer(str, originalOpts) {
           i,
           layers
         );
-        if (
-          !espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)
-        ) {
+        if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
           let disposableVar;
           if (
@@ -1129,7 +1120,7 @@ function tokenizer(str, originalOpts) {
             ))
           ) {
             if (token.type === "esp") {
-              if (!Number.isInteger(token.end)) {
+              if (!token.end) {
                 token.end = i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
                 token.tail = str.slice(i, i + lengthOfClosingEspChunk);
@@ -1167,7 +1158,7 @@ function tokenizer(str, originalOpts) {
             ))
           ) {
             if (token.type === "esp") {
-              if (!Number.isInteger(token.end)) {
+              if (!token.end) {
                 token.end = i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
               }
@@ -1181,7 +1172,7 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue.length &&
             Array.from(
               str.slice(
-                attrib.attribValue[attrib.attribValue.length - 1].start,
+                attrib.attribValue[~-attrib.attribValue.length].start,
                 i
               )
             ).some(
@@ -1195,12 +1186,12 @@ function tokenizer(str, originalOpts) {
             attrib &&
             attrib.attribValueStartsAt &&
             !attrib.attribValueEndsAt &&
-            attrib.attribValue[attrib.attribValue.length - 1] &&
-            attrib.attribValue[attrib.attribValue.length - 1].type === "text"
+            attrib.attribValue[~-attrib.attribValue.length] &&
+            attrib.attribValue[~-attrib.attribValue.length].type === "text"
           ) {
             token.pureHTML = false;
             const lastAttrValueObj =
-              attrib.attribValue[attrib.attribValue.length - 1];
+              attrib.attribValue[~-attrib.attribValue.length];
             const newTokenToPutInstead = getNewToken(
               "esp",
               lastAttrValueObj.start
@@ -1215,14 +1206,14 @@ function tokenizer(str, originalOpts) {
                 i + wholeEspTagLumpOnTheRight.length;
               newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
               attrib.attribValue[
-                attrib.attribValue.length - 1
+                ~-attrib.attribValue.length
               ] = newTokenToPutInstead;
             }
           } else {
             if (
               Array.isArray(layers) &&
               layers.length &&
-              layers[layers.length - 1].type === "esp"
+              layers[~-layers.length].type === "esp"
             ) {
               layers.pop();
             }
@@ -1255,21 +1246,19 @@ function tokenizer(str, originalOpts) {
                 attribToBackup &&
                 Array.isArray(attribToBackup.attribValue) &&
                 attribToBackup.attribValue.length &&
-                attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
-                ].type === "esp" &&
-                !attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
-                ].end
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length]
+                  .type === "esp" &&
+                !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
+                  .end
               ) {
                 attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
+                  ~-attribToBackup.attribValue.length
                 ].end = i;
                 attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
+                  ~-attribToBackup.attribValue.length
                 ].value = str.slice(
                   attribToBackup.attribValue[
-                    attribToBackup.attribValue.length - 1
+                    ~-attribToBackup.attribValue.length
                   ].start,
                   i
                 );
@@ -1288,27 +1277,24 @@ function tokenizer(str, originalOpts) {
               attribToBackup.attribValue.length
             ) {
               if (
-                attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
-                ].start === token.start
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length]
+                  .start === token.start
               ) {
                 attribToBackup.attribValue.pop();
               } else if (
-                attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
-                ].type === "text" &&
-                !attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
-                ].end
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length]
+                  .type === "text" &&
+                !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
+                  .end
               ) {
                 attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
+                  ~-attribToBackup.attribValue.length
                 ].end = i;
                 attribToBackup.attribValue[
-                  attribToBackup.attribValue.length - 1
+                  ~-attribToBackup.attribValue.length
                 ].value = str.slice(
                   attribToBackup.attribValue[
-                    attribToBackup.attribValue.length - 1
+                    ~-attribToBackup.attribValue.length
                   ].start,
                   i
                 );
@@ -1368,8 +1354,8 @@ function tokenizer(str, originalOpts) {
       str[i] &&
       str[i].trim() &&
       !"{}".includes(str[i]) &&
-      !Number.isInteger(selectorChunkStartedAt) &&
-      !Number.isInteger(token.openingCurlyAt)
+      !selectorChunkStartedAt &&
+      !token.openingCurlyAt
     ) {
       if (!",".includes(str[i])) {
         selectorChunkStartedAt = i;
@@ -1456,7 +1442,7 @@ function tokenizer(str, originalOpts) {
         if (
           Array.isArray(layers) &&
           layers.length &&
-          layers[layers.length - 1].value === "["
+          layers[~-layers.length].value === "["
         ) {
           layers.pop();
         }
@@ -1532,7 +1518,7 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(layers) &&
             layers.length &&
-            layers[layers.length - 1].type === "esp"
+            layers[~-layers.length].type === "esp"
           ) {
             layers.pop();
           }
@@ -1543,8 +1529,8 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "tag" &&
-      Number.isInteger(token.tagNameStartsAt) &&
-      !Number.isInteger(token.tagNameEndsAt)
+      token.tagNameStartsAt &&
+      !token.tagNameEndsAt
     ) {
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
@@ -1561,8 +1547,8 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "tag" &&
-      !Number.isInteger(token.tagNameStartsAt) &&
-      Number.isInteger(token.start) &&
+      !token.tagNameStartsAt &&
+      token.start != null &&
       (token.start < i || str[token.start] !== "<")
     ) {
       if (str[i] === "/") {
@@ -1578,7 +1564,7 @@ function tokenizer(str, originalOpts) {
       !doNothing &&
       token.type === "tag" &&
       token.kind !== "cdata" &&
-      Number.isInteger(attrib.attribNameStartsAt) &&
+      attrib.attribNameStartsAt &&
       i > attrib.attribNameStartsAt &&
       attrib.attribNameEndsAt === null &&
       !charSuitableForHTMLAttrName(str[i])
@@ -1603,7 +1589,7 @@ function tokenizer(str, originalOpts) {
       str[i] &&
       token.type === "tag" &&
       token.kind !== "cdata" &&
-      Number.isInteger(token.tagNameEndsAt) &&
+      token.tagNameEndsAt &&
       i > token.tagNameEndsAt &&
       attrib.attribStart === null &&
       charSuitableForHTMLAttrName(str[i])
@@ -1612,12 +1598,12 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameStartsAt = i;
     }
     if (!doNothing && token.type === "rule") {
-      if (str[i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
+      if (str[i] === "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = i;
       } else if (
         str[i] === "}" &&
-        Number.isInteger(token.openingCurlyAt) &&
-        !Number.isInteger(token.closingCurlyAt)
+        token.openingCurlyAt &&
+        !token.closingCurlyAt
       ) {
         token.closingCurlyAt = i;
         token.end = i + 1;
@@ -1629,7 +1615,7 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "tag" &&
-      Number.isInteger(attrib.attribValueStartsAt) &&
+      attrib.attribValueStartsAt &&
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
     ) {
@@ -1655,12 +1641,12 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(attrib.attribValue) &&
             attrib.attribValue.length &&
-            attrib.attribValue[attrib.attribValue.length - 1].start &&
-            !attrib.attribValue[attrib.attribValue.length - 1].end &&
+            attrib.attribValue[~-attrib.attribValue.length].start &&
+            !attrib.attribValue[~-attrib.attribValue.length].end &&
             attrib.attribValueStartsAt >
-              attrib.attribValue[attrib.attribValue.length - 1].start
+              attrib.attribValue[~-attrib.attribValue.length].start
           ) {
-            attrib.attribValue[attrib.attribValue.length - 1].start =
+            attrib.attribValue[~-attrib.attribValue.length].start =
               attrib.attribValueStartsAt;
           }
           layers.push({
@@ -1678,18 +1664,18 @@ function tokenizer(str, originalOpts) {
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
-          if (Number.isInteger(attrib.attribValueStartsAt)) {
+          if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
           if (
             Array.isArray(attrib.attribValue) &&
             attrib.attribValue.length &&
-            !attrib.attribValue[attrib.attribValue.length - 1].end
+            !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = i;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
-              attrib.attribValue[attrib.attribValue.length - 1].start,
+            attrib.attribValue[~-attrib.attribValue.length].end = i;
+            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
+              attrib.attribValue[~-attrib.attribValue.length].start,
               i
             );
           }
@@ -1711,12 +1697,12 @@ function tokenizer(str, originalOpts) {
         if (
           Array.isArray(attrib.attribValue) &&
           attrib.attribValue.length &&
-          !attrib.attribValue[attrib.attribValue.length - 1].end
+          !attrib.attribValue[~-attrib.attribValue.length].end
         ) {
-          attrib.attribValue[attrib.attribValue.length - 1].end = i;
-          attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
-            attrib.attribValue[attrib.attribValue.length - 1].start,
-            attrib.attribValue[attrib.attribValue.length - 1].end
+          attrib.attribValue[~-attrib.attribValue.length].end = i;
+          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
+            attrib.attribValue[~-attrib.attribValue.length].start,
+            attrib.attribValue[~-attrib.attribValue.length].end
           );
         }
         attrib.attribEnd = i;
@@ -1730,7 +1716,7 @@ function tokenizer(str, originalOpts) {
       } else if (
         str[i] === "=" &&
         (`'"`.includes(str[right(str, i)]) ||
-          (str[i - 1] && isLatinLetter(str[i - 1])))
+          (str[~-i] && isLatinLetter(str[~-i])))
       ) {
         let whitespaceFound;
         let attribClosingQuoteAt;
@@ -1750,7 +1736,7 @@ function tokenizer(str, originalOpts) {
         }
         if (attribClosingQuoteAt) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
-          if (Number.isInteger(attrib.attribValueStartsAt)) {
+          if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(
               attrib.attribValueStartsAt,
               attribClosingQuoteAt
@@ -1758,14 +1744,12 @@ function tokenizer(str, originalOpts) {
             if (
               Array.isArray(attrib.attribValue) &&
               attrib.attribValue.length &&
-              !attrib.attribValue[attrib.attribValue.length - 1].end
+              !attrib.attribValue[~-attrib.attribValue.length].end
             ) {
-              attrib.attribValue[attrib.attribValue.length - 1].end =
+              attrib.attribValue[~-attrib.attribValue.length].end =
                 attrib.attribValueEndsAt;
-              attrib.attribValue[
-                attrib.attribValue.length - 1
-              ].value = str.slice(
-                attrib.attribValue[attrib.attribValue.length - 1].start,
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
+                attrib.attribValue[~-attrib.attribValue.length].start,
                 attrib.attribValueEndsAt
               );
             }
@@ -1776,7 +1760,7 @@ function tokenizer(str, originalOpts) {
           }
           token.attribs.push(clone(attrib));
           attribReset();
-          i = attribClosingQuoteAt - 1;
+          i = ~-attribClosingQuoteAt;
           continue;
         } else if (
           attrib.attribOpeningQuoteAt &&
@@ -1799,8 +1783,8 @@ function tokenizer(str, originalOpts) {
         !attrib.attribEnd &&
         (!Array.isArray(attrib.attribValue) ||
           !attrib.attribValue.length ||
-          (attrib.attribValue[attrib.attribValue.length - 1].end &&
-            attrib.attribValue[attrib.attribValue.length - 1].end <= i))
+          (attrib.attribValue[~-attrib.attribValue.length].end &&
+            attrib.attribValue[~-attrib.attribValue.length].end <= i))
       ) {
         attrib.attribValue.push({
           type: "text",
@@ -1842,8 +1826,8 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "tag" &&
-      !Number.isInteger(attrib.attribValueStartsAt) &&
-      Number.isInteger(attrib.attribNameEndsAt) &&
+      !attrib.attribValueStartsAt &&
+      attrib.attribNameEndsAt &&
       attrib.attribNameEndsAt <= i &&
       str[i] &&
       str[i].trim()
@@ -1880,7 +1864,7 @@ function tokenizer(str, originalOpts) {
           )
         ) {
           attrib.attribEnd = i + 1;
-          token.attribs.push(clone(attrib));
+          token.attribs.push({ ...attrib });
           attribReset();
         } else if (
           !firstQuoteOnTheRightIdx ||
@@ -1935,7 +1919,7 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(attrib.attribValue) &&
             (!attrib.attribValue.length ||
-              attrib.attribValue[attrib.attribValue.length - 1].end)
+              attrib.attribValue[~-attrib.attribValue.length].end)
           ) {
             attrib.attribValue.push({
               type: "text",
@@ -1950,17 +1934,17 @@ function tokenizer(str, originalOpts) {
     if (
       str[i] === ">" &&
       token.type === "tag" &&
-      attrib.attribStart !== null &&
-      attrib.attribEnd === null
+      attrib.attribStart &&
+      !attrib.attribEnd
     ) {
       let thisIsRealEnding = false;
       if (str[i + 1]) {
         for (let y = i + 1; y < len; y++) {
           if (
-            attrib.attribOpeningQuoteAt !== null &&
+            attrib.attribOpeningQuoteAt &&
             str[y] === str[attrib.attribOpeningQuoteAt]
           ) {
-            if (y !== i + 1 && str[y - 1] !== "=") {
+            if (y !== i + 1 && str[~-y] !== "=") {
               thisIsRealEnding = true;
             }
             break;
@@ -1982,7 +1966,7 @@ function tokenizer(str, originalOpts) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
         if (
-          Number.isInteger(attrib.attribValueStartsAt) &&
+          attrib.attribValueStartsAt &&
           i &&
           attrib.attribValueStartsAt < i &&
           str.slice(attrib.attribValueStartsAt, i).trim()
@@ -1992,11 +1976,11 @@ function tokenizer(str, originalOpts) {
           if (
             Array.isArray(attrib.attribValue) &&
             attrib.attribValue.length &&
-            !attrib.attribValue[attrib.attribValue.length - 1].end
+            !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = i;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(
-              attrib.attribValue[attrib.attribValue.length - 1].start,
+            attrib.attribValue[~-attrib.attribValue.length].end = i;
+            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
+              attrib.attribValue[~-attrib.attribValue.length].start,
               i
             );
           }
