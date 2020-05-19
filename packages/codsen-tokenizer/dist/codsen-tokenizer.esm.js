@@ -680,7 +680,7 @@ function tokenizer(str, originalOpts) {
         token.end = i;
         token.value = str.slice(token.start, token.end);
       }
-      if (token.start !== null && token.end !== null) {
+      if (token.start !== null && token.end) {
         pingTagCb(token);
       }
       token = tokenReset();

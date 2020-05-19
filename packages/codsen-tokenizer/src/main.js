@@ -669,7 +669,7 @@ function tokenizer(str, originalOpts) {
       // in "attribToBackup" and "parentTokenToBackup"
 
       console.log(`671 *`);
-      if (token.start !== null && token.end !== null) {
+      if (token.start !== null && token.end) {
         console.log(`673 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
         pingTagCb(token);
       }
@@ -4012,7 +4012,7 @@ function tokenizer(str, originalOpts) {
         null,
         4
       )}${
-        attrib.attribStart !== null
+        attrib.attribStart
           ? `\n██ attrib: ${JSON.stringify(attrib, null, 4)}`
           : ""
       }${

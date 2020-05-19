@@ -3508,7 +3508,7 @@
         // in "attribToBackup" and "parentTokenToBackup"
 
 
-        if (token.start !== null && token.end !== null) {
+        if (token.start !== null && token.end) {
           pingTagCb(token);
         }
 

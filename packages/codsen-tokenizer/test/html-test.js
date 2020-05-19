@@ -626,7 +626,7 @@ tap.test("20 - tag names with numbers", (t) => {
   t.end();
 });
 
-tap.only("21 - exact match, tag pair with whitespace", (t) => {
+tap.test("21 - exact match, tag pair with whitespace", (t) => {
   const gathered = [];
   ct("<a href> </a>", {
     tagCb: (obj) => {
