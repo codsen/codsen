@@ -1526,7 +1526,7 @@
                 resArray.push(rowArray);
               } else {
                 // wipe rowArray
-                rowArray = [];
+                rowArray.length = 0;
               } // 4. reset thisRowContainsOnlyEmptySpace
 
 
@@ -1557,7 +1557,7 @@
           var _newElem3 = str.slice(colStarts, i + 1); // if the element contains only empty space,
 
 
-          if (_newElem3.trim() !== "") {
+          if (_newElem3.trim()) {
             thisRowContainsOnlyEmptySpace = false;
           }
 

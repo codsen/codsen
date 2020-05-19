@@ -150,7 +150,7 @@ function splitEasy(str, originalOpts) {
           resArray.push(rowArray);
         } else {
           // wipe rowArray
-          rowArray = [];
+          rowArray.length = 0;
         }
         // 4. reset thisRowContainsOnlyEmptySpace
         thisRowContainsOnlyEmptySpace = true;
@@ -178,7 +178,7 @@ function splitEasy(str, originalOpts) {
       if (str[i] !== '"') {
         const newElem = str.slice(colStarts, i + 1);
         // if the element contains only empty space,
-        if (newElem.trim() !== "") {
+        if (newElem.trim()) {
           thisRowContainsOnlyEmptySpace = false;
         }
         rowArray.push(
