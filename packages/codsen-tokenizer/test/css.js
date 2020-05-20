@@ -71,3 +71,52 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`02 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
+  const gathered = [];
+  ct(
+    `<head>
+<style type="text/css">
+@namespace url(z);
+@media (max-width: 600px) {
+  .xx[z] {a:1;}
+}
+</style>
+</head>
+<body  class="  zz  "><a   class="yy zz">z</a>
+</body>`,
+    {
+      tagCb: (obj) => {
+        if (obj.type === "rule") {
+          gathered.push(obj);
+        }
+      },
+    }
+  );
+
+  t.same(
+    gathered,
+    [
+      {
+        type: "rule",
+        start: 80,
+        end: 93,
+        value: ".xx[z] {a:1;}",
+        left: 76,
+        openingCurlyAt: 87,
+        closingCurlyAt: 92,
+        selectorsStart: 80,
+        selectorsEnd: 86,
+        selectors: [
+          {
+            value: ".xx[z]",
+            selectorStarts: 80,
+            selectorEnds: 86,
+          },
+        ],
+      },
+    ],
+    "02"
+  );
+  t.end();
+});

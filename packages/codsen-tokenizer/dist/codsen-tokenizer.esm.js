@@ -1006,6 +1006,7 @@ function tokenizer(str, originalOpts) {
           pingTagCb(token);
         }
         initToken("rule", charIdxOnTheRight);
+        token.left = i;
         doNothing = charIdxOnTheRight;
       }
     }
@@ -1350,6 +1351,7 @@ function tokenizer(str, originalOpts) {
       ) {
         dumpCurrentToken(token, i);
         initToken("rule", i);
+        token.left = lastNonWhitespaceCharAt;
       }
     }
     if (

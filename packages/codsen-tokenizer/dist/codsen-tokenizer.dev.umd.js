@@ -3892,6 +3892,7 @@
           }
 
           initToken("rule", charIdxOnTheRight);
+          token.left = _i;
           doNothing = charIdxOnTheRight;
         }
       } // catch the start of the query
@@ -4331,6 +4332,7 @@
           // this text token and "rule" token starts
           dumpCurrentToken(token, _i);
           initToken("rule", _i);
+          token.left = lastNonWhitespaceCharAt;
         } // END OF if (!doNothing)
 
       } // catch the start of a css chunk

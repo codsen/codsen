@@ -688,6 +688,7 @@ function tokenizer(str, originalOpts) {
           pingTagCb(token);
         }
         initToken("rule", charIdxOnTheRight);
+        token.left = _i;
         doNothing = charIdxOnTheRight;
       }
     }
@@ -910,6 +911,7 @@ function tokenizer(str, originalOpts) {
       } else if (token.type === "text" && styleStarts && str[_i] && str[_i].trim() && !"{},".includes(str[_i])) {
         dumpCurrentToken(token, _i);
         initToken("rule", _i);
+        token.left = lastNonWhitespaceCharAt;
       }
     }
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
