@@ -550,6 +550,7 @@ function tokenizer(str, originalOpts) {
     type: null,
     start: null,
     end: null,
+    value: null,
   };
   function tokenReset() {
     token = clone(tokenDefault);
@@ -578,6 +579,7 @@ function tokenizer(str, originalOpts) {
   let selectorChunkStartedAt;
   let parentTokenToBackup;
   let attribToBackup;
+  let lastNonWhitespaceCharAt;
   const layers = [];
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     const currentElem = stash.shift();
@@ -729,6 +731,7 @@ function tokenizer(str, originalOpts) {
         start: startVal,
         end: null,
         value: null,
+        left: null,
         openingCurlyAt: null,
         closingCurlyAt: null,
         selectorsStart: null,
@@ -1321,6 +1324,7 @@ function tokenizer(str, originalOpts) {
                 str[idxOnTheRight] === "@" ? "at" : "rule",
                 idxOnTheRight
               );
+              token.left = lastNonWhitespaceCharAt;
               if (str[i + 1] && !str[i + 1].trim()) {
                 doNothing = right(str, i);
               }
@@ -2002,6 +2006,9 @@ function tokenizer(str, originalOpts) {
       token.end = i;
       token.value = str.slice(token.start, token.end);
       pingTagCb(token);
+    }
+    if (str[i] && str[i].trim()) {
+      lastNonWhitespaceCharAt = i;
     }
   }
   if (charStash.length) {

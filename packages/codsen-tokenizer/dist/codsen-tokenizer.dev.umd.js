@@ -3225,7 +3225,8 @@
     var tokenDefault = {
       type: null,
       start: null,
-      end: null
+      end: null,
+      value: null
     };
 
     function tokenReset() {
@@ -3321,7 +3322,8 @@
     //     value: "d",
     //   },
     // ],
-    // ---------------------------------------------------------------------------
+
+    var lastNonWhitespaceCharAt; // ---------------------------------------------------------------------------
     //
     //
     //
@@ -3560,6 +3562,7 @@
           start: startVal,
           end: null,
           value: null,
+          left: null,
           openingCurlyAt: null,
           closingCurlyAt: null,
           selectorsStart: null,
@@ -3658,7 +3661,7 @@
             opts.reportProgressFunc(currentPercentageDone);
           }
         }
-      } // turn off doNothing if marker passed
+      } // Turn off doNothing if marker passed
       // -------------------------------------------------------------------------
 
 
@@ -4297,7 +4300,8 @@
 
               if (right(str, _i) && !["{", "}", "<"].includes(str[right(str, _i)])) {
                 var idxOnTheRight = right(str, _i);
-                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight); // jump over the whitespace if such follows
+                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
+                token.left = lastNonWhitespaceCharAt; // jump over the whitespace if such follows
 
                 if (str[_i + 1] && !str[_i + 1].trim()) {
                   doNothing = right(str, _i);
@@ -5085,6 +5089,19 @@
         token.end = _i;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
+      } //
+      //
+      //
+      //
+      //
+      //
+      //
+      // Record last non-whitespace character
+      // -------------------------------------------------------------------------
+
+
+      if (str[_i] && str[_i].trim()) {
+        lastNonWhitespaceCharAt = _i;
       } //
       //
       //

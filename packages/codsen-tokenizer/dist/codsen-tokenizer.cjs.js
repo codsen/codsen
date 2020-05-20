@@ -338,7 +338,8 @@ function tokenizer(str, originalOpts) {
   var tokenDefault = {
     type: null,
     start: null,
-    end: null
+    end: null,
+    value: null
   };
   function tokenReset() {
     token = clone(tokenDefault);
@@ -367,6 +368,7 @@ function tokenizer(str, originalOpts) {
   var selectorChunkStartedAt;
   var parentTokenToBackup;
   var attribToBackup;
+  var lastNonWhitespaceCharAt;
   var layers = [];
   function reportFirstFromStash(stash, cb, lookaheadLength) {
     var currentElem = stash.shift();
@@ -487,6 +489,7 @@ function tokenizer(str, originalOpts) {
         start: startVal,
         end: null,
         value: null,
+        left: null,
         openingCurlyAt: null,
         closingCurlyAt: null,
         selectorsStart: null,
@@ -887,6 +890,7 @@ function tokenizer(str, originalOpts) {
             if (stringLeftRight.right(str, _i) && !["{", "}", "<"].includes(str[stringLeftRight.right(str, _i)])) {
               var idxOnTheRight = stringLeftRight.right(str, _i);
               initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
+              token.left = lastNonWhitespaceCharAt;
               if (str[_i + 1] && !str[_i + 1].trim()) {
                 doNothing = stringLeftRight.right(str, _i);
               }
@@ -1317,6 +1321,9 @@ function tokenizer(str, originalOpts) {
       token.end = _i;
       token.value = str.slice(token.start, token.end);
       pingTagCb(token);
+    }
+    if (str[_i] && str[_i].trim()) {
+      lastNonWhitespaceCharAt = _i;
     }
     i = _i;
   };
