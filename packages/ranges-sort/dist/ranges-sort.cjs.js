@@ -9,22 +9,6 @@
 
 'use strict';
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -75,10 +59,7 @@ function _objectSpread2(target) {
 }
 
 function rangesSort(arrOfRanges, originalOptions) {
-  if (!Array.isArray(arrOfRanges)) {
-    throw new TypeError("ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
-  }
-  if (arrOfRanges.length === 0) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
   var defaults = {

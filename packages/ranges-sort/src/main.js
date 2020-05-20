@@ -11,21 +11,10 @@
 // sorts first by first element, then by second. Retains possible third element.
 
 function rangesSort(arrOfRanges, originalOptions) {
-  // arrOfRanges validation
-  if (!Array.isArray(arrOfRanges)) {
-    throw new TypeError(
-      `ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
-        arrOfRanges,
-        null,
-        4
-      )}`
-    );
-  }
-  if (arrOfRanges.length === 0) {
+  // quick ending
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
-
-  // opts validation
 
   // declare defaults, so we can enforce types later:
   const defaults = {

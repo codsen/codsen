@@ -13,22 +13,6 @@
   (global = global || self, global.rangesSort = factory());
 }(this, (function () { 'use strict';
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -89,15 +73,10 @@
   // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
   // sorts first by first element, then by second. Retains possible third element.
   function rangesSort(arrOfRanges, originalOptions) {
-    // arrOfRanges validation
-    if (!Array.isArray(arrOfRanges)) {
-      throw new TypeError("ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
-    }
-
-    if (arrOfRanges.length === 0) {
+    // quick ending
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
-    } // opts validation
-    // declare defaults, so we can enforce types later:
+    } // declare defaults, so we can enforce types later:
 
 
     var defaults = {

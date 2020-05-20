@@ -8,16 +8,7 @@
  */
 
 function rangesSort(arrOfRanges, originalOptions) {
-  if (!Array.isArray(arrOfRanges)) {
-    throw new TypeError(
-      `ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
-        arrOfRanges,
-        null,
-        4
-      )}`
-    );
-  }
-  if (arrOfRanges.length === 0) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
   const defaults = {

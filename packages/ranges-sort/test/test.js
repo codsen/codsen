@@ -6,18 +6,10 @@ import srt from "../dist/ranges-sort.esm";
 // ==============================
 
 tap.test("01 - not array", (t) => {
-  t.throws(() => {
-    srt(null);
-  }, "01.01");
-  t.throws(() => {
-    srt(1);
-  }, "01.02");
-  t.throws(() => {
-    srt(true);
-  }, "01.03");
-  t.throws(() => {
-    srt({ e: true });
-  }, "01.04");
+  t.is(srt(null), null, "01.01");
+  t.is(srt(1), 1, "01.02");
+  t.is(srt(true), true, "01.03");
+  t.same(srt({ e: true }), { e: true }, "01.04");
   t.end();
 });
 
