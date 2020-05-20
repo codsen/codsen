@@ -111,6 +111,7 @@ tap.test(
               attribValueEndsAt: 19,
               attribStart: 11,
               attribEnd: 20,
+              attribLeft: 9,
             },
             {
               type: "esp",
@@ -144,6 +145,7 @@ tap.test(
               attribValueEndsAt: 33,
               attribStart: 28,
               attribEnd: 34,
+              attribLeft: 26,
             },
           ],
         },
@@ -213,6 +215,7 @@ tap.test(
               attribValueEndsAt: 30,
               attribStart: 22,
               attribEnd: 31,
+              attribLeft: 20,
             },
             {
               type: "esp",
@@ -246,6 +249,7 @@ tap.test(
               attribValueEndsAt: 48,
               attribStart: 43,
               attribEnd: 49,
+              attribLeft: 41,
             },
           ],
         },

@@ -571,6 +571,7 @@ function tokenizer(str, originalOpts) {
     attribValueEndsAt: null,
     attribStart: null,
     attribEnd: null,
+    attribLeft: null,
   };
   function attribReset() {
     attrib = clone(attribDefault);
@@ -1598,6 +1599,7 @@ function tokenizer(str, originalOpts) {
       charSuitableForHTMLAttrName(str[i])
     ) {
       attrib.attribStart = i;
+      attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = i;
     }
     if (!doNothing && token.type === "rule") {

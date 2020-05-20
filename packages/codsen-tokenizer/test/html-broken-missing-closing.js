@@ -107,6 +107,7 @@ tap.test(
               attribValueEndsAt: 10,
               attribStart: 3,
               attribEnd: 11,
+              attribLeft: 1,
             },
           ],
         },

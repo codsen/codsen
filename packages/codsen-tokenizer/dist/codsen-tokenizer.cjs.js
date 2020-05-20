@@ -359,7 +359,8 @@ function tokenizer(str, originalOpts) {
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStart: null,
-    attribEnd: null
+    attribEnd: null,
+    attribLeft: null
   };
   function attribReset() {
     attrib = clone(attribDefault);
@@ -1060,6 +1061,7 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i])) {
       attrib.attribStart = _i;
+      attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = _i;
     }
     if (!doNothing && token.type === "rule") {

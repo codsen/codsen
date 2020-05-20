@@ -664,6 +664,7 @@ tap.test("21 - exact match, tag pair with whitespace", (t) => {
             attribValueEndsAt: null,
             attribStart: 3,
             attribEnd: 7,
+            attribLeft: 1,
           },
         ],
       },
@@ -723,8 +724,6 @@ tap.test("22 - closing tag with attributes", (t) => {
         attribs: [
           {
             attribName: "class",
-            attribStart: 4,
-            attribEnd: 13,
             attribNameRecognised: true,
             attribNameStartsAt: 4,
             attribNameEndsAt: 9,
@@ -741,6 +740,9 @@ tap.test("22 - closing tag with attributes", (t) => {
             ],
             attribValueStartsAt: 11,
             attribValueEndsAt: 12,
+            attribStart: 4,
+            attribEnd: 13,
+            attribLeft: 2,
           },
         ],
       },
