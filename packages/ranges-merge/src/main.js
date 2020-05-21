@@ -22,7 +22,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
 
   // quick ending:
   // ---------------------------------------------------------------------------
-  if (!Array.isArray(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
 

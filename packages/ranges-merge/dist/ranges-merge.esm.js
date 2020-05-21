@@ -18,7 +18,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       something && typeof something === "object" && !Array.isArray(something)
     );
   }
-  if (!Array.isArray(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
   const defaults = {

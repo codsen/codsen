@@ -118,7 +118,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   function isObj(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
   }
-  if (!Array.isArray(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
   var defaults = {
