@@ -542,7 +542,7 @@ function tokenizer(str, originalOpts) {
   const len = str.length;
   const midLen = Math.floor(len / 2);
   let doNothing;
-  let styleStarts = false;
+  let withinStyle = false;
   const tagStash = [];
   const charStash = [];
   let token = {};
@@ -684,9 +684,17 @@ function tokenizer(str, originalOpts) {
         token.value = str.slice(token.start, token.end);
       }
       if (token.start !== null && token.end) {
-        pingTagCb(token);
+        if (
+          Array.isArray(layers) &&
+          layers.length &&
+          layers[layers.length - 1].type === "at"
+        ) {
+          layers[layers.length - 1].token.rules.push(token);
+        } else {
+          pingTagCb(token);
+        }
       }
-      token = tokenReset();
+      tokenReset();
     }
   }
   function atRuleWaitingForClosingCurlie() {
@@ -733,6 +741,7 @@ function tokenizer(str, originalOpts) {
         end: null,
         value: null,
         left: null,
+        nested: false,
         openingCurlyAt: null,
         closingCurlyAt: null,
         selectorsStart: null,
@@ -746,6 +755,8 @@ function tokenizer(str, originalOpts) {
         start: startVal,
         end: null,
         value: null,
+        left: null,
+        nested: false,
         openingCurlyAt: null,
         closingCurlyAt: null,
         identifier: null,
@@ -754,6 +765,7 @@ function tokenizer(str, originalOpts) {
         query: null,
         queryStartsAt: null,
         queryEndsAt: null,
+        rules: [],
       };
     }
     if (type === "text") {
@@ -807,11 +819,11 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (
-      styleStarts &&
+      withinStyle &&
       token.type &&
       !["rule", "at", "text"].includes(token.type)
     ) {
-      styleStarts = false;
+      withinStyle = false;
     }
     if (doNothing && i >= doNothing) {
       doNothing = false;
@@ -841,7 +853,14 @@ function tokenizer(str, originalOpts) {
             token.end = left(str, i) + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
-            token = tokenReset();
+            if (
+              Array.isArray(layers) &&
+              layers.length &&
+              layers[layers.length - 1].type === "at"
+            ) {
+              layers[layers.length - 1].token.rules.push(token);
+            }
+            tokenReset();
             if (left(str, i) < ~-i) {
               initToken("text", left(str, i) + 1);
             }
@@ -853,19 +872,34 @@ function tokenizer(str, originalOpts) {
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
+          if (
+            Array.isArray(layers) &&
+            layers.length &&
+            layers[layers.length - 1].type === "at"
+          ) {
+            layers[layers.length - 1].token.rules.push(token);
+          }
           tokenReset();
           doNothing = i + 1;
         }
       } else if (token.type === "text" && str[i] && str[i].trim()) {
         token.end = i;
         token.value = str.slice(token.start, token.end);
-        pingTagCb(token);
+        if (
+          Array.isArray(layers) &&
+          layers.length &&
+          layers[layers.length - 1].type === "at"
+        ) {
+          layers[layers.length - 1].token.rules.push(token);
+        } else {
+          pingTagCb(token);
+        }
         tokenReset();
       }
     }
     if (token.end && token.end === i) {
       if (token.tagName === "style" && !token.closing) {
-        styleStarts = true;
+        withinStyle = true;
       }
       if (attribToBackup) {
         attrib = attribToBackup;
@@ -971,44 +1005,31 @@ function tokenizer(str, originalOpts) {
       token.type === "at" &&
       token.queryStartsAt != null &&
       !token.queryEndsAt &&
-      "{};".includes(str[i])
+      `{;`.includes(str[i])
     ) {
-      if (str[~-i] && str[~-i].trim()) {
-        token.queryEndsAt = i;
+      if (str[i] === "{") {
+        if (str[~-i] && str[~-i].trim()) {
+          token.queryEndsAt = i;
+        } else {
+          token.queryEndsAt = left(str, i) + 1;
+        }
       } else {
-        token.queryEndsAt = left(str, i) + 1;
+        token.queryEndsAt = left(str, i + 1);
       }
       token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-    }
-    if (
-      !doNothing &&
-      token.type === "at" &&
-      str[i] === "{" &&
-      token.identifier &&
-      !token.openingCurlyAt
-    ) {
-      token.openingCurlyAt = i;
-      layers.push({
-        type: "at",
-        token,
-      });
-      const charIdxOnTheRight = right(str, i);
-      if (str[charIdxOnTheRight] === "}") {
-        token.closingCurlyAt = charIdxOnTheRight;
+      token.end = str[i] === ";" ? i + 1 : i;
+      token.value = str.slice(token.start, token.end);
+      if (str[i] === ";") {
         pingTagCb(token);
-        doNothing = charIdxOnTheRight;
       } else {
-        tokenReset();
-        if (charIdxOnTheRight > i + 1) {
-          initToken("text", i + 1);
-          token.end = charIdxOnTheRight;
-          token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
-        }
-        initToken("rule", charIdxOnTheRight);
-        token.left = i;
-        doNothing = charIdxOnTheRight;
+        token.openingCurlyAt = i;
+        layers.push({
+          type: "at",
+          token,
+        });
       }
+      tokenReset();
+      doNothing = i + 1;
     }
     if (
       !doNothing &&
@@ -1055,8 +1076,8 @@ function tokenizer(str, originalOpts) {
           tokenReset();
         }
         initToken("tag", i);
-        if (styleStarts) {
-          styleStarts = false;
+        if (withinStyle) {
+          withinStyle = false;
         }
         if (
           matchRight(str, i, "doctype", {
@@ -1097,11 +1118,11 @@ function tokenizer(str, originalOpts) {
           token.closing = true;
           token.kind = "only";
         }
-        if (styleStarts) {
-          styleStarts = false;
+        if (withinStyle) {
+          withinStyle = false;
         }
       } else if (
-        startsEsp(str, i, token, layers, styleStarts) &&
+        startsEsp(str, i, token, layers, withinStyle) &&
         (!Array.isArray(layers) ||
           !layers.length ||
           layers[~-layers.length].type !== "simple" ||
@@ -1308,50 +1329,21 @@ function tokenizer(str, originalOpts) {
           doNothing =
             i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (token.start === null || token.end === i) {
-        if (styleStarts) {
-          if (str[i] && !str[i].trim()) {
-            initToken("text", i);
-            token.end = right(str, i) || str.length;
-            token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
-            doNothing = token.end;
-            tokenReset();
-            if (
-              right(str, i) &&
-              !["{", "}", "<"].includes(str[right(str, i)])
-            ) {
-              const idxOnTheRight = right(str, i);
-              initToken(
-                str[idxOnTheRight] === "@" ? "at" : "rule",
-                idxOnTheRight
-              );
-              token.left = lastNonWhitespaceCharAt;
-              if (str[i + 1] && !str[i + 1].trim()) {
-                doNothing = right(str, i);
-              }
-            }
-          } else if (str[i]) {
-            if ("}".includes(str[i])) {
-              initToken("text", i);
-              doNothing = i + 1;
-            } else {
-              initToken(str[i] === "@" ? "at" : "rule", i);
-            }
-          }
-        } else if (str[i]) {
-          initToken("text", i);
-        }
       } else if (
-        token.type === "text" &&
-        styleStarts &&
+        withinStyle &&
         str[i] &&
         str[i].trim() &&
-        !"{},".includes(str[i])
+        (!token.type ||
+          ["text"].includes(token.type))
       ) {
-        dumpCurrentToken(token, i);
-        initToken("rule", i);
+        if (token.type) {
+          dumpCurrentToken(token, i);
+        }
+        initToken(str[i] === "@" ? "at" : "rule", i);
         token.left = lastNonWhitespaceCharAt;
+        token.nested = layers.some((o) => o.type === "at");
+      } else if (!token.type) {
+        initToken("text", i);
       }
     }
     if (
@@ -1616,6 +1608,13 @@ function tokenizer(str, originalOpts) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
+        if (
+          Array.isArray(layers) &&
+          layers.length &&
+          layers[layers.length - 1].type === "at"
+        ) {
+          layers[layers.length - 1].token.rules.push(token);
+        }
         tokenReset();
       }
     }
@@ -2025,8 +2024,9 @@ function tokenizer(str, originalOpts) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
   }
+  const timeTakenInMilliseconds = Date.now() - start;
   return {
-    timeTakenInMilliseconds: Date.now() - start,
+    timeTakenInMilliseconds,
   };
 }
 

@@ -458,8 +458,18 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  	  path: basedir,
+  	  exports: {},
+  	  require: function (path, base) {
+        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+      }
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
 
   var lodash_clonedeep = createCommonjsModule(function (module, exports) {
@@ -3209,7 +3219,7 @@
     var midLen = Math.floor(len / 2);
     var doNothing; // normally set to a number, index until where to do nothing
 
-    var styleStarts = false; // flag used to instruct content after <style> to toggle type="css"
+    var withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
     // opts.*CbLookahead allows to request "x"-many tokens "from the future"
     // to be reported upon each token. You can check what's coming next.
     // To implement this, we need to stash "x"-many tokens and only when enough
@@ -3512,10 +3522,16 @@
 
 
         if (token.start !== null && token.end) {
-          pingTagCb(token);
+          // if it's a text token inside "at" rule, nest it, push into that
+          // "at" rule pending in layers - otherwise, ping as standalone
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          } else {
+            pingTagCb(token);
+          }
         }
 
-        token = tokenReset();
+        tokenReset();
       }
     }
 
@@ -3564,6 +3580,7 @@
           end: null,
           value: null,
           left: null,
+          nested: false,
           openingCurlyAt: null,
           closingCurlyAt: null,
           selectorsStart: null,
@@ -3578,6 +3595,8 @@
           start: startVal,
           end: null,
           value: null,
+          left: null,
+          nested: false,
           openingCurlyAt: null,
           closingCurlyAt: null,
           identifier: null,
@@ -3585,7 +3604,8 @@
           identifierEndsAt: null,
           query: null,
           queryStartsAt: null,
-          queryEndsAt: null
+          queryEndsAt: null,
+          rules: []
         };
       }
 
@@ -3666,8 +3686,8 @@
       // -------------------------------------------------------------------------
 
 
-      if (styleStarts && token.type && !["rule", "at", "text"].includes(token.type)) {
-        styleStarts = false;
+      if (withinStyle && token.type && !["rule", "at", "text"].includes(token.type)) {
+        withinStyle = false;
       }
 
       if (doNothing && _i >= doNothing) {
@@ -3698,8 +3718,14 @@
             if (token.type === "rule") {
               token.end = left(str, _i) + 1;
               token.value = str.slice(token.start, token.end);
-              pingTagCb(token);
-              token = tokenReset(); // if there was trailing whitespace, initiate it
+              pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
+              // "at" rule pending in layers - otherwise, ping as standalone
+
+              if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+                layers[layers.length - 1].token.rules.push(token);
+              }
+
+              tokenReset(); // if there was trailing whitespace, initiate it
 
               if (left(str, _i) < ~-_i) {
                 initToken("text", left(str, _i) + 1);
@@ -3713,7 +3739,13 @@
             token.closingCurlyAt = _i;
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
+            pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
+            // also put this "rule" into that parent in layers
+
+            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+              layers[layers.length - 1].token.rules.push(token);
+            }
+
             tokenReset();
             doNothing = _i + 1;
           }
@@ -3721,15 +3753,22 @@
           // terminate the text token, all the non-whitespace characters comprise
           // rules because we're inside the at-token, it's CSS!
           token.end = _i;
-          token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
+          token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
+          // "at" rule pending in layers - otherwise, ping as standalone
+
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          } else {
+            pingTagCb(token);
+          }
+
           tokenReset();
         }
       }
 
       if (token.end && token.end === _i) {
         if (token.tagName === "style" && !token.closing) {
-          styleStarts = true;
+          withinStyle = true;
         } // we need to retain the information after tag was dumped to tagCb() and wiped
 
 
@@ -3829,72 +3868,54 @@
         // adds a comma, @,media
         // or adds a space, @ media
         token.identifierStartsAt = _i;
-      } // catch the end of the query
+      } // catch the end of the "at" rule token
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && "{};".includes(str[_i])) {
-        if (str[~-_i] && str[~-_i].trim()) {
-          token.queryEndsAt = _i;
+      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && "{;".includes(str[_i])) {
+        if (str[_i] === "{") {
+          if (str[~-_i] && str[~-_i].trim()) {
+            token.queryEndsAt = _i;
+          } else {
+            // trim the trailing whitespace:
+            // @media (max-width: 600px) {
+            //                          ^
+            //                        this
+            //
+            token.queryEndsAt = left(str, _i) + 1; // left() stops "to the left" of a character, if you used that index
+            // for slicing, that character would be included, in our case,
+            // @media (max-width: 600px) {
+            //                         ^
+            //            that would be index of this bracket
+          }
         } else {
-          // trim the trailing whitespace:
-          // @media (max-width: 600px) {
-          //                          ^
-          //                        this
+          // ; closing, for example, illegal:
+          // @charset "UTF-8";
+          //                 ^
+          //          we're here
           //
-          token.queryEndsAt = left(str, _i) + 1; // left() stops "to the left" of a character, if you used that index
-          // for slicing, that character would be included, in our case,
-          // @media (max-width: 600px) {
-          //                         ^
-          //            that would be index of this bracket
+          token.queryEndsAt = left(str, _i + 1);
         }
 
         token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-      } // catch the curlies inside the query
-      // -------------------------------------------------------------------------
+        token.end = str[_i] === ";" ? _i + 1 : _i;
+        token.value = str.slice(token.start, token.end);
 
-
-      if (!doNothing && token.type === "at" && str[_i] === "{" && token.identifier && !token.openingCurlyAt) {
-        token.openingCurlyAt = _i; // push so far gathered token into layers
-
-        layers.push({
-          type: "at",
-          token: token
-        }); // look what's inside, maybe curlies pair is empty, or maybe there's
-        // something weird like a tag?
-
-        var charIdxOnTheRight = right(str, _i);
-
-        if (str[charIdxOnTheRight] === "}") {
-          // empty media query
-          token.closingCurlyAt = charIdxOnTheRight; // submit the token
-
-          pingTagCb(token); // skip the characters until after that closing curlie
-
-          doNothing = charIdxOnTheRight;
+        if (str[_i] === ";") {
+          // if code is clean, that would be @charset for example, no curlies
+          pingTagCb(token);
         } else {
-          // rule token starts
-          tokenReset(); // imagine we've got:
-          // <style>
-          // @media (max-width: 600px) {
-          //   .xx[z] {a:1;}
-          // }
-          // </style>
-          // we are at "{" which follows "600px)".
-          // we need to submit this line break and indentation, a text token
+          // then it's opening curlie
+          token.openingCurlyAt = _i; // push so far gathered token into layers
 
-          if (charIdxOnTheRight > _i + 1) {
-            initToken("text", _i + 1);
-            token.end = charIdxOnTheRight;
-            token.value = str.slice(token.start, token.end); // submit the token
-
-            pingTagCb(token);
-          }
-
-          initToken("rule", charIdxOnTheRight);
-          token.left = _i;
-          doNothing = charIdxOnTheRight;
+          layers.push({
+            type: "at",
+            token: token
+          });
         }
+
+        tokenReset();
+        doNothing = _i + 1;
       } // catch the start of the query
       // -------------------------------------------------------------------------
 
@@ -3932,7 +3953,7 @@
         //     i,
         //     token,
         //     layers,
-        //     styleStarts
+        //     withinStyle
         //   )}`
         // );
         // console.log(
@@ -3941,7 +3962,7 @@
         //     i,
         //     token,
         //     layers,
-        //     styleStarts
+        //     withinStyle
         //   )}`
         // );
         // console.log(
@@ -3950,7 +3971,7 @@
         //     i,
         //     token,
         //     layers,
-        //     styleStarts
+        //     withinStyle
         //   )}`
         // );
         if (startsTag(str, _i, token, layers)) {
@@ -3970,8 +3991,8 @@
 
           initToken("tag", _i);
 
-          if (styleStarts) {
-            styleStarts = false;
+          if (withinStyle) {
+            withinStyle = false;
           } // set the kind:
 
 
@@ -4018,10 +4039,10 @@
             token.kind = "only";
           }
 
-          if (styleStarts) {
-            styleStarts = false;
+          if (withinStyle) {
+            withinStyle = false;
           }
-        } else if (startsEsp(str, _i, token, layers, styleStarts) && ( // ensure we're not inside quotes, so it's not an expression within a value
+        } else if (startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
         // ${"${name}${name}${name}${name}"}
         //    ^
         //   we could be here - notice quotes wrapping all around
@@ -4287,52 +4308,36 @@
 
             doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           }
-        } else if (token.start === null || token.end === _i) {
-          if (styleStarts) {
-            // 1. if there's whitespace, ping it as text
-            if (str[_i] && !str[_i].trim()) {
-              initToken("text", _i);
-              token.end = right(str, _i) || str.length;
-              token.value = str.slice(token.start, token.end);
-              pingTagCb(token); // activate donothing
-
-              doNothing = token.end;
-              tokenReset(); // consider <style> ...  EOL - nothing inside, whitespace leading to
-              // end of the string
-
-              if (right(str, _i) && !["{", "}", "<"].includes(str[right(str, _i)])) {
-                var idxOnTheRight = right(str, _i);
-                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
-                token.left = lastNonWhitespaceCharAt; // jump over the whitespace if such follows
-
-                if (str[_i + 1] && !str[_i + 1].trim()) {
-                  doNothing = right(str, _i);
-                }
-              }
-            } else if (str[_i]) {
-              // css starts right away after opening tag
-              // for broken code cases, all characters go as "text"
-              if ("}".includes(str[_i])) {
-                initToken("text", _i);
-                doNothing = _i + 1;
-              } else {
-                // add other CSS rule-specific keys onto the object
-                // second arg is "start" key:
-                initToken(str[_i] === "@" ? "at" : "rule", _i);
-              }
+        } else if (withinStyle && str[_i] && str[_i].trim() && ( // if at rule starts right after <style>, if we're on "@"
+        // for example:
+        // <style>@media a {.b{c}}</style>
+        // first the <style> tag token will be pushed and then tag object
+        // reset and then, still at "@"
+        !token.type || // or, there was whitespace and we started recording a text token
+        // <style>  @media a {.b{c}}</style>
+        //          ^
+        //        we're here - look at the whitespace on the left.
+        //
+        ["text"].includes(token.type)) //
+        // TODO: remove below
+        // &&
+        // !"{},".includes(str[i])
+        ) {
+            // Text token inside styles can be either whitespace chunk
+            // or rogue characters. In either case, inside styles, when
+            // "withinStyle" is on, non-whitespace character terminates
+            // this text token and "rule" token starts
+            if (token.type) {
+              dumpCurrentToken(token, _i);
             }
-          } else if (str[_i]) {
-            // finally, the last, default token type is "text"
-            initToken("text", _i);
-          }
-        } else if (token.type === "text" && styleStarts && str[_i] && str[_i].trim() && !"{},".includes(str[_i])) {
-          // Text token inside styles can be either whitespace chunk
-          // or rogue characters. In either case, inside styles, when
-          // "styleStarts" is on, non-whitespace character terminates
-          // this text token and "rule" token starts
-          dumpCurrentToken(token, _i);
-          initToken("rule", _i);
-          token.left = lastNonWhitespaceCharAt;
+
+            initToken(str[_i] === "@" ? "at" : "rule", _i);
+            token.left = lastNonWhitespaceCharAt;
+            token.nested = layers.some(function (o) {
+              return o.type === "at";
+            });
+          } else if (!token.type) {
+          initToken("text", _i);
         } // END OF if (!doNothing)
 
       } // catch the start of a css chunk
@@ -4630,7 +4635,13 @@
           token.closingCurlyAt = _i;
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
+          pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
+          // also put this "rule" into that parent in layers
+
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          }
+
           tokenReset();
         }
       } // Catch the end of a tag attribute's value:
@@ -5142,8 +5153,9 @@
     } // return stats
 
 
+    var timeTakenInMilliseconds = Date.now() - start;
     return {
-      timeTakenInMilliseconds: Date.now() - start
+      timeTakenInMilliseconds: timeTakenInMilliseconds
     };
   } // -----------------------------------------------------------------------------
 
