@@ -128,6 +128,10 @@ function _nonIterableSpread() {
 
 var version = "3.9.16";
 
+var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
+var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
+var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
+
 var isArr = Array.isArray;
 var defaults = {
   whitelist: [],
@@ -206,9 +210,6 @@ function comb(str, opts) {
   var round1RangesClone;
   var nonIndentationsWhitespaceLength = 0;
   var commentsLength = 0;
-  var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
-  var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
-  var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`\t\n";
   var atRulesWhichMightWrapStyles = ["media", "supports", "document"];
   var atRulesWhichNeedToBeIgnored = ["font-feature-values", "counter-style", "namespace", "font-face", "keyframes", "viewport", "charset", "import", "page"];

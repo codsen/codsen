@@ -57,7 +57,7 @@ tap.test("02 - mvp #2", (t) => {
   t.end();
 });
 
-tap.test("03 - removes @charset", (t) => {
+tap.only("03 - @charset", (t) => {
   const source = `<head>
 @charset "utf-8";
 <style type="text/css">@media (max-width: 600px) {

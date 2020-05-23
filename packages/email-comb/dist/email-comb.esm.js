@@ -24,6 +24,10 @@ import matcher from 'matcher';
 
 var version = "3.9.16";
 
+const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
+const regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
+const regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
+
 const isArr = Array.isArray;
 const defaults = {
   whitelist: [],
@@ -107,9 +111,6 @@ function comb(str, opts) {
   let round1RangesClone;
   let nonIndentationsWhitespaceLength = 0;
   let commentsLength = 0;
-  const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
-  const regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
-  const regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
   const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
   const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
   const atRulesWhichNeedToBeIgnored = [
