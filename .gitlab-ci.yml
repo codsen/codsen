@@ -37,7 +37,7 @@ deploy:
     - git add packages
     - git add stats
     - git add README.md
-    - git add package-lock.json
+    - git add package-lock.json || echo 'no package-lock.json'
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify"
     - npm run pub:vers
     - echo '█████████████████████████████ 5 █████████████████████████████'
