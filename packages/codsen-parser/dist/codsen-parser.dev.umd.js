@@ -167,8 +167,18 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  	  path: basedir,
+  	  exports: {},
+  	  require: function (path, base) {
+        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+      }
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
 
   var lodash_clonedeep = createCommonjsModule(function (module, exports) {
@@ -2072,8 +2082,8 @@
       return null;
     }
 
-    if (str[idx - 1] && (!stopAtNewlines && str[idx - 1].trim() || stopAtNewlines && (str[idx - 1].trim() || "\n\r".includes(str[idx - 1])))) {
-      return idx - 1;
+    if (str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
+      return ~-idx;
     }
 
     if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
@@ -2580,95 +2590,6 @@
   }
 
   /**
-   * ranges-is-index-within
-   * Efficiently checks if index is within any of the given ranges
-   * Version: 1.14.35
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
-   */
-  const isArr = Array.isArray;
-
-  function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-    const defaults = {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: false
-    };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-
-    if (!isArr(rangesArr)) {
-      return false;
-    }
-
-    if (opts.returnMatchedRangeInsteadOfTrue) {
-      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
-    }
-
-    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
-  }
-
-  /**
-   * string-split-by-whitespace
-   * Split string into array by chunks of whitespace
-   * Version: 1.6.65
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
-   */
-
-  function split(str, originalOpts) {
-    if (str === undefined) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
-    }
-
-    if (typeof str !== "string") {
-      return str;
-    }
-
-    if (str.trim() === "") {
-      return [];
-    }
-
-    const defaults = {
-      ignoreRanges: []
-    };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-
-    if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(arr => Array.isArray(arr))) {
-      throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
-    }
-
-    let nonWhitespaceSubStringStartsAt = null;
-    const res = [];
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !rangesIsIndexWithin(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
-        inclusiveRangeEnds: true
-      }))) {
-        nonWhitespaceSubStringStartsAt = i;
-      }
-
-      if (nonWhitespaceSubStringStartsAt !== null) {
-        if (str[i].trim() === "") {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (opts.ignoreRanges.length && rangesIsIndexWithin(i, opts.ignoreRanges)) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
-          nonWhitespaceSubStringStartsAt = null;
-        } else if (str[i + 1] === undefined) {
-          res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
-        }
-      }
-    }
-
-    return res;
-  }
-
-  /**
    * is-html-attribute-closing
    * Is a character on a given index a closing of an HTML attribute?
    * Version: 1.2.0
@@ -2827,13 +2748,13 @@
           const A1 = i > isThisClosingIdx;
           const A21 = !lastQuoteAt;
           const A22 = lastQuoteAt + 1 >= i;
-          const A23 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          const A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
           const B1 = i === isThisClosingIdx;
           const B21 = totalQuotesCount < 3;
           const B22 = !!lastQuoteWasMatched;
           const B23 = !lastQuoteAt;
           const B24 = lastQuoteAt + 1 >= i;
-          const B25 = !split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          const B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
         }
 
@@ -2862,7 +2783,7 @@
           const Y1 = !!lastQuoteAt;
           const Y2 = lastQuoteAt === isThisClosingIdx;
           const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-          const Y4 = split(str.slice(lastQuoteAt + 1, i)).every(chunk => allHtmlAttribs.has(chunk));
+          const Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
           const Y5 = i >= isThisClosingIdx;
           return Y1 && Y2 && Y3 && Y4 && Y5;
         }
@@ -3028,7 +2949,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
    */
-  const allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
+  const allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
   const espChars = `{}%-$_()*|#`;
   const veryEspChars = `{}()|#`;
   const notVeryEspChars = `%$_*#`;
@@ -3076,7 +2997,7 @@
   }
 
   function isTagNameRecognised(tagName) {
-    return allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
+    return allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
   }
 
   function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
@@ -3241,14 +3162,15 @@
     const len = str.length;
     const midLen = Math.floor(len / 2);
     let doNothing;
-    let styleStarts = false;
+    let withinStyle = false;
     const tagStash = [];
     const charStash = [];
     let token = {};
     const tokenDefault = {
       type: null,
       start: null,
-      end: null
+      end: null,
+      value: null
     };
 
     function tokenReset() {
@@ -3270,7 +3192,8 @@
       attribValueStartsAt: null,
       attribValueEndsAt: null,
       attribStart: null,
-      attribEnd: null
+      attribEnd: null,
+      attribLeft: null
     };
 
     function attribReset() {
@@ -3278,11 +3201,11 @@
     }
 
     tokenReset();
-    attribReset();
     let selectorChunkStartedAt;
     let parentTokenToBackup;
     let attribToBackup;
-    let layers = [];
+    let lastNonWhitespaceCharAt;
+    const layers = [];
 
     function reportFirstFromStash(stash, cb, lookaheadLength) {
       const currentElem = stash.shift();
@@ -3320,11 +3243,11 @@
     }
 
     function dumpCurrentToken(incomingToken, i) {
-      if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[i - 1] && !str[i - 1].trim() || str[i] === "<")) {
+      if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[~-i] && !str[~-i].trim() || str[i] === "<")) {
         incomingToken.end = left(str, i) + 1;
         incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
-        if (incomingToken.type === "tag" && !"/>".includes(str[incomingToken.end - 1])) {
+        if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
           let cutOffIndex = incomingToken.tagNameEndsAt || i;
 
           if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
@@ -3332,12 +3255,12 @@
               if (incomingToken.attribs[i2].attribNameRecognised) {
                 cutOffIndex = incomingToken.attribs[i2].attribEnd;
 
-                if (str[cutOffIndex] && str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
+                if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                   cutOffIndex += 1;
                 }
               } else {
                 if (i2 === 0) {
-                  incomingToken.attribs = [];
+                  incomingToken.attribs.length = 0;
                 } else {
                   incomingToken.attribs = incomingToken.attribs.splice(0, i2);
                 }
@@ -3354,19 +3277,18 @@
             incomingToken.tagNameEndsAt = cutOffIndex;
           }
 
-          if (Number.isInteger(incomingToken.tagNameStartsAt) && Number.isInteger(incomingToken.tagNameEndsAt) && !incomingToken.tagName) {
+          if (incomingToken.tagNameStartsAt && incomingToken.tagNameEndsAt && !incomingToken.tagName) {
             incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
             incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
           }
 
           pingTagCb(incomingToken);
-          token = tokenReset();
           initToken("text", cutOffIndex);
         } else {
           pingTagCb(incomingToken);
-          token = tokenReset();
+          tokenReset();
 
-          if (str[i - 1] && !str[i - 1].trim()) {
+          if (str[~-i] && !str[~-i].trim()) {
             initToken("text", left(str, i) + 1);
           }
         }
@@ -3378,16 +3300,20 @@
           token.value = str.slice(token.start, token.end);
         }
 
-        if (token.start !== null && token.end !== null) {
-          pingTagCb(token);
+        if (token.start !== null && token.end) {
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          } else {
+            pingTagCb(token);
+          }
         }
 
-        token = tokenReset();
+        tokenReset();
       }
     }
 
     function atRuleWaitingForClosingCurlie() {
-      return layers.length && layers[layers.length - 1].type === "at" && isObj$2(layers[layers.length - 1].token) && Number.isInteger(layers[layers.length - 1].token.openingCurlyAt) && !Number.isInteger(layers[layers.length - 1].token.closingCurlyAt);
+      return layers.length && layers[~-layers.length].type === "at" && isObj$2(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
     }
 
     function getNewToken(type, startVal = null) {
@@ -3426,6 +3352,8 @@
           start: startVal,
           end: null,
           value: null,
+          left: null,
+          nested: false,
           openingCurlyAt: null,
           closingCurlyAt: null,
           selectorsStart: null,
@@ -3440,6 +3368,8 @@
           start: startVal,
           end: null,
           value: null,
+          left: null,
+          nested: false,
           openingCurlyAt: null,
           closingCurlyAt: null,
           identifier: null,
@@ -3447,7 +3377,8 @@
           identifierEndsAt: null,
           query: null,
           queryStartsAt: null,
-          queryEndsAt: null
+          queryEndsAt: null,
+          rules: []
         };
       }
 
@@ -3497,12 +3428,20 @@
         }
       }
 
-      if (styleStarts && token.type && !["rule", "at", "text"].includes(token.type)) {
-        styleStarts = false;
+      if (withinStyle && token.type && !["rule", "at", "text"].includes(token.type)) {
+        withinStyle = false;
       }
 
-      if (Number.isInteger(doNothing) && i >= doNothing) {
+      if (doNothing && i >= doNothing) {
         doNothing = false;
+      }
+
+      if (isLatinLetter(str[i]) && isLatinLetter(str[~-i]) && isLatinLetter(str[i + 1])) {
+        continue;
+      }
+
+      if (` \t\r\n`.includes(str[i]) && str[i] === str[~-i] && str[i] === str[i + 1]) {
+        continue;
       }
 
       if (!doNothing && atRuleWaitingForClosingCurlie()) {
@@ -3512,9 +3451,14 @@
               token.end = left(str, i) + 1;
               token.value = str.slice(token.start, token.end);
               pingTagCb(token);
-              token = tokenReset();
 
-              if (left(str, i) < i - 1) {
+              if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+                layers[layers.length - 1].token.rules.push(token);
+              }
+
+              tokenReset();
+
+              if (left(str, i) < ~-i) {
                 initToken("text", left(str, i) + 1);
               }
             }
@@ -3526,38 +3470,49 @@
             token.end = i + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
-            token = tokenReset();
+
+            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+              layers[layers.length - 1].token.rules.push(token);
+            }
+
+            tokenReset();
             doNothing = i + 1;
           }
         } else if (token.type === "text" && str[i] && str[i].trim()) {
           token.end = i;
           token.value = str.slice(token.start, token.end);
-          pingTagCb(token);
-          token = tokenReset();
+
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          } else {
+            pingTagCb(token);
+          }
+
+          tokenReset();
         }
       }
 
       if (token.end && token.end === i) {
         if (token.tagName === "style" && !token.closing) {
-          styleStarts = true;
+          withinStyle = true;
         }
 
         if (attribToBackup) {
           attrib = attribToBackup;
-          attrib.attribValue.push(lodash_clonedeep(token));
+          attrib.attribValue.push(token);
           token = lodash_clonedeep(parentTokenToBackup);
           attribToBackup = undefined;
           parentTokenToBackup = undefined;
         } else {
           dumpCurrentToken(token, i);
-          layers = [];
+          layers.length = 0;
         }
       }
 
       if (!doNothing) {
         if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
           if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[i])) {
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
               layers.pop();
             } else {
               layers.push({
@@ -3569,7 +3524,7 @@
           }
         } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
           if ([`[`, `]`].includes(str[i])) {
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[i])) {
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
               layers.pop();
             } else {
               layers.push({
@@ -3580,7 +3535,7 @@
             }
           }
         } else if (token.type === "esp" && `'"${BACKTICK}()`.includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "simple" && layers[layers.length - 1].value === flipEspTag(str[i])) {
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
             layers.pop();
             doNothing = i + 1;
           } else if (!`]})>`.includes(str[i])) {
@@ -3593,58 +3548,49 @@
         }
       }
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.start) && i >= token.start && !Number.isInteger(token.identifierStartsAt) && str[i] && str[i].trim() && str[i] !== "@") {
+      if (!doNothing && token.type === "at" && token.start != null && i >= token.start && !token.identifierStartsAt && str[i] && str[i].trim() && str[i] !== "@") {
         token.identifierStartsAt = i;
       }
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.queryStartsAt) && !Number.isInteger(token.queryEndsAt) && "{};".includes(str[i])) {
-        if (str[i - 1] && str[i - 1].trim()) {
-          token.queryEndsAt = i;
+      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && `{;`.includes(str[i])) {
+        if (str[i] === "{") {
+          if (str[~-i] && str[~-i].trim()) {
+            token.queryEndsAt = i;
+          } else {
+            token.queryEndsAt = left(str, i) + 1;
+          }
         } else {
-          token.queryEndsAt = left(str, i) + 1;
+          token.queryEndsAt = left(str, i + 1);
         }
 
         token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-      }
+        token.end = str[i] === ";" ? i + 1 : i;
+        token.value = str.slice(token.start, token.end);
 
-      if (!doNothing && token.type === "at" && str[i] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
-        token.openingCurlyAt = i;
-        layers.push({
-          type: "at",
-          token
-        });
-        const charIdxOnTheRight = right(str, i);
-
-        if (str[charIdxOnTheRight] === "}") {
-          token.closingCurlyAt = charIdxOnTheRight;
+        if (str[i] === ";") {
           pingTagCb(token);
-          doNothing = charIdxOnTheRight;
         } else {
-          tokenReset();
-
-          if (charIdxOnTheRight > i + 1) {
-            initToken("text", i + 1);
-            token.end = charIdxOnTheRight;
-            token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
-          }
-
-          tokenReset();
-          initToken("rule", charIdxOnTheRight);
-          doNothing = charIdxOnTheRight;
+          token.openingCurlyAt = i;
+          layers.push({
+            type: "at",
+            token
+          });
         }
+
+        tokenReset();
+        doNothing = i + 1;
       }
 
-      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !Number.isInteger(token.queryStartsAt)) {
+      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !token.queryStartsAt) {
         token.queryStartsAt = i;
       }
 
-      if (!doNothing && token.type === "at" && Number.isInteger(token.identifierStartsAt) && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !Number.isInteger(token.identifierEndsAt)) {
+      if (!doNothing && token.type === "at" && token.identifierStartsAt != null && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !token.identifierEndsAt) {
         token.identifierEndsAt = i;
         token.identifier = str.slice(token.identifierStartsAt, i);
       }
 
-      if (token.type === "rule" && Number.isInteger(selectorChunkStartedAt) && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
+      if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
         token.selectors.push({
           value: str.slice(selectorChunkStartedAt, i),
           selectorStarts: selectorChunkStartedAt,
@@ -3654,7 +3600,7 @@
         token.selectorsEnd = i;
       }
 
-      if (!doNothing) {
+      if (!doNothing && str[i]) {
         if (startsTag(str, i, token, layers)) {
           if (token.type && token.start !== null) {
             dumpCurrentToken(token, i);
@@ -3663,8 +3609,8 @@
 
           initToken("tag", i);
 
-          if (styleStarts) {
-            styleStarts = false;
+          if (withinStyle) {
+            withinStyle = false;
           }
 
           if (matchRight(str, i, "doctype", {
@@ -3684,11 +3630,10 @@
             token.kind = "xml";
           }
         } else if (startsComment(str, i, token, layers)) {
-          if (Number.isInteger(token.start)) {
+          if (token.start != null) {
             dumpCurrentToken(token, i);
           }
 
-          tokenReset();
           initToken("comment", i);
 
           if (str[i] === "-") {
@@ -3702,10 +3647,10 @@
             token.kind = "only";
           }
 
-          if (styleStarts) {
-            styleStarts = false;
+          if (withinStyle) {
+            withinStyle = false;
           }
-        } else if (startsEsp(str, i, token, layers, styleStarts) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || ![`'`, `"`].includes(layers[layers.length - 1].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
+        } else if (startsEsp(str, i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || ![`'`, `"`].includes(layers[~-layers.length].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
           const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
 
           if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
@@ -3714,7 +3659,7 @@
 
             if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
               if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
+                if (!token.end) {
                   token.end = i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
                   token.tail = str.slice(i, i + lengthOfClosingEspChunk);
@@ -3726,7 +3671,7 @@
 
                 if (parentTokenToBackup) {
                   if (!Array.isArray(parentTokenToBackup.attribs)) {
-                    parentTokenToBackup.attribs = [];
+                    parentTokenToBackup.attribs.length = 0;
                   }
 
                   if (attribToBackup) {
@@ -3751,7 +3696,7 @@
               layers.pop();
             } else if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
               if (token.type === "esp") {
-                if (!Number.isInteger(token.end)) {
+                if (!token.end) {
                   token.end = i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
                 }
@@ -3760,13 +3705,13 @@
                 tokenReset();
               }
 
-              layers = [];
-            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i)).some((char, idx) => wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
+              layers.length = 0;
+            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i)).some((char, idx) => wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
               char,
               idx
-            })) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[attrib.attribValue.length - 1] && attrib.attribValue[attrib.attribValue.length - 1].type === "text") {
+            })) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
               token.pureHTML = false;
-              const lastAttrValueObj = attrib.attribValue[attrib.attribValue.length - 1];
+              const lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
               const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
 
               if (!disposableVar || !disposableVar.idx) {
@@ -3776,16 +3721,16 @@
                 newTokenToPutInstead.tailStartsAt = i;
                 newTokenToPutInstead.tailEndsAt = i + wholeEspTagLumpOnTheRight.length;
                 newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
-                attrib.attribValue[attrib.attribValue.length - 1] = newTokenToPutInstead;
+                attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
               }
             } else {
-              if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+              if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
                 layers.pop();
               }
 
               if (attribToBackup) {
                 if (!Array.isArray(attribToBackup.attribValue)) {
-                  attribToBackup.attribValue = [];
+                  attribToBackup.attribValue.length = 0;
                 }
 
                 attribToBackup.attribValue.push(token);
@@ -3813,9 +3758,9 @@
                   }
                 } else if (!attribToBackup) {
                   dumpCurrentToken(token, i);
-                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "esp" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = i;
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, i);
+                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = i;
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, i);
                 }
               }
 
@@ -3829,61 +3774,31 @@
               }
 
               if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
-                if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start === token.start) {
+                if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
                   attribToBackup.attribValue.pop();
-                } else if (attribToBackup.attribValue[attribToBackup.attribValue.length - 1].type === "text" && !attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end) {
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].end = i;
-                  attribToBackup.attribValue[attribToBackup.attribValue.length - 1].value = str.slice(attribToBackup.attribValue[attribToBackup.attribValue.length - 1].start, i);
+                } else if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = i;
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, i);
                 }
               }
             }
 
             doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           }
-        } else if (token.start === null || token.end === i) {
-          if (styleStarts) {
-            if (str[i] && !str[i].trim()) {
-              tokenReset();
-              initToken("text", i);
-              token.end = right(str, i) || str.length;
-              token.value = str.slice(token.start, token.end);
-              pingTagCb(token);
-              doNothing = token.end;
-              tokenReset();
-
-              if (right(str, i) && !["{", "}", "<"].includes(str[right(str, i)])) {
-                const idxOnTheRight = right(str, i);
-                initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
-
-                if (str[i + 1] && !str[i + 1].trim()) {
-                  doNothing = right(str, i);
-                }
-              }
-            } else if (str[i]) {
-              tokenReset();
-
-              if ("}".includes(str[i])) {
-                initToken("text", i);
-                doNothing = i + 1;
-              } else {
-                initToken(str[i] === "@" ? "at" : "rule", i);
-              }
-            }
-          } else if (str[i]) {
-            if (i) {
-              token = tokenReset();
-            }
-
-            initToken("text", i);
+        } else if (withinStyle && str[i] && str[i].trim() && (!token.type || ["text"].includes(token.type))) {
+          if (token.type) {
+            dumpCurrentToken(token, i);
           }
-        } else if (token.type === "text" && styleStarts && str[i] && str[i].trim() && !"{},".includes(str[i])) {
-          dumpCurrentToken(token, i);
-          tokenReset();
-          initToken("rule", i);
+
+          initToken(str[i] === "@" ? "at" : "rule", i);
+          token.left = lastNonWhitespaceCharAt;
+          token.nested = layers.some(o => o.type === "at");
+        } else if (!token.type) {
+          initToken("text", i);
         }
       }
 
-      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !Number.isInteger(selectorChunkStartedAt) && !Number.isInteger(token.openingCurlyAt)) {
+      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
         if (!",".includes(str[i])) {
           selectorChunkStartedAt = i;
 
@@ -3940,7 +3855,7 @@
             token.value = str.slice(token.start, token.end);
           }
         } else if (token.type === "comment" && str[i] === ">" && (!layers.length || str[right(str, i)] === "<")) {
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
             layers.pop();
           }
 
@@ -3994,7 +3909,7 @@
             token.end = i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
 
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp") {
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
               layers.pop();
             }
 
@@ -4003,7 +3918,7 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
+      if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
         if (!str[i] || !charSuitableForTagName(str[i])) {
           token.tagNameEndsAt = i;
           token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
@@ -4020,7 +3935,7 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && (token.start < i || str[token.start] !== "<")) {
+      if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < i || str[token.start] !== "<")) {
         if (str[i] === "/") {
           token.closing = true;
         } else if (isLatinLetter(str[i])) {
@@ -4032,7 +3947,7 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
+      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
         attrib.attribNameEndsAt = i;
         attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
@@ -4045,24 +3960,30 @@
         }
       }
 
-      if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
+      if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
         attrib.attribStart = i;
+        attrib.attribLeft = lastNonWhitespaceCharAt;
         attrib.attribNameStartsAt = i;
       }
 
       if (!doNothing && token.type === "rule") {
-        if (str[i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
+        if (str[i] === "{" && !token.openingCurlyAt) {
           token.openingCurlyAt = i;
-        } else if (str[i] === "}" && Number.isInteger(token.openingCurlyAt) && !Number.isInteger(token.closingCurlyAt)) {
+        } else if (str[i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
           token.closingCurlyAt = i;
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
+
+          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
+            layers[layers.length - 1].token.rules.push(token);
+          }
+
           tokenReset();
         }
       }
 
-      if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+      if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
         if (`'"`.includes(str[i])) {
           const R1 = !layers.some(layerObj => layerObj.type === "esp");
           const R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i);
@@ -4071,8 +3992,8 @@
             attrib.attribOpeningQuoteAt = i;
             attrib.attribValueStartsAt = i + 1;
 
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[attrib.attribValue.length - 1].start && !attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValueStartsAt > attrib.attribValue[attrib.attribValue.length - 1].start) {
-              attrib.attribValue[attrib.attribValue.length - 1].start = attrib.attribValueStartsAt;
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValueStartsAt > attrib.attribValue[~-attrib.attribValue.length].start) {
+              attrib.attribValue[~-attrib.attribValue.length].start = attrib.attribValueStartsAt;
             }
 
             layers.push({
@@ -4084,15 +4005,15 @@
             attrib.attribClosingQuoteAt = i;
             attrib.attribValueEndsAt = i;
 
-            if (Number.isInteger(attrib.attribValueStartsAt)) {
+            if (attrib.attribValueStartsAt) {
               attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
             }
 
             attrib.attribEnd = i + 1;
 
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-              attrib.attribValue[attrib.attribValue.length - 1].end = i;
-              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+              attrib.attribValue[~-attrib.attribValue.length].end = i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
             }
 
             if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
@@ -4107,9 +4028,9 @@
           attrib.attribValueEndsAt = i;
           attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
 
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-            attrib.attribValue[attrib.attribValue.length - 1].end = i;
-            attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValue[attrib.attribValue.length - 1].end);
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            attrib.attribValue[~-attrib.attribValue.length].end = i;
+            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
           }
 
           attrib.attribEnd = i;
@@ -4121,7 +4042,7 @@
             token.end = i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[i - 1] && isLatinLetter(str[i - 1]))) {
+        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter(str[~-i]))) {
           let whitespaceFound;
           let attribClosingQuoteAt;
 
@@ -4146,12 +4067,12 @@
           if (attribClosingQuoteAt) {
             attrib.attribValueEndsAt = attribClosingQuoteAt;
 
-            if (Number.isInteger(attrib.attribValueStartsAt)) {
+            if (attrib.attribValueStartsAt) {
               attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
 
-              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-                attrib.attribValue[attrib.attribValue.length - 1].end = attrib.attribValueEndsAt;
-                attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, attrib.attribValueEndsAt);
+              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+                attrib.attribValue[~-attrib.attribValue.length].end = attrib.attribValueEndsAt;
+                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValueEndsAt);
               }
             }
 
@@ -4163,7 +4084,7 @@
 
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
-            i = attribClosingQuoteAt - 1;
+            i = ~-attribClosingQuoteAt;
             continue;
           } else if (attrib.attribOpeningQuoteAt && (`'"`.includes(str[right(str, i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()))) {
             i = attrib.attribOpeningQuoteAt;
@@ -4174,7 +4095,7 @@
             attribReset();
             continue;
           }
-        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end && attrib.attribValue[attrib.attribValue.length - 1].end <= i)) {
+        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= i)) {
           attrib.attribValue.push({
             type: "text",
             start: i,
@@ -4187,7 +4108,7 @@
         token.value = str.slice(token.start, i);
 
         if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
-          attribToBackup.attribValue = [];
+          attribToBackup.attribValue.length = 0;
         }
 
         attribToBackup.attribValue.push(token);
@@ -4204,14 +4125,15 @@
         layers.pop();
       }
 
-      if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
+      if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
         if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
           const firstCharOnTheRight = right(str, i);
           const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
 
           if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
             attrib.attribEnd = i + 1;
-            token.attribs.push(lodash_clonedeep(attrib));
+            token.attribs.push({ ...attrib
+            });
             attribReset();
           } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(char => `<>=`.includes(char))) {
             attrib.attribValueStartsAt = firstCharOnTheRight;
@@ -4233,7 +4155,7 @@
               attrib.attribValueStartsAt = i + 1;
             }
 
-            if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[attrib.attribValue.length - 1].end)) {
+            if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end)) {
               attrib.attribValue.push({
                 type: "text",
                 start: attrib.attribValueStartsAt,
@@ -4245,13 +4167,13 @@
         }
       }
 
-      if (str[i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
+      if (str[i] === ">" && token.type === "tag" && attrib.attribStart && !attrib.attribEnd) {
         let thisIsRealEnding = false;
 
         if (str[i + 1]) {
           for (let y = i + 1; y < len; y++) {
-            if (attrib.attribOpeningQuoteAt !== null && str[y] === str[attrib.attribOpeningQuoteAt]) {
-              if (y !== i + 1 && str[y - 1] !== "=") {
+            if (attrib.attribOpeningQuoteAt && str[y] === str[attrib.attribOpeningQuoteAt]) {
+              if (y !== i + 1 && str[~-y] !== "=") {
                 thisIsRealEnding = true;
               }
 
@@ -4275,13 +4197,13 @@
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
 
-          if (Number.isInteger(attrib.attribValueStartsAt) && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
+          if (attrib.attribValueStartsAt && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
             attrib.attribValueEndsAt = i;
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
 
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[attrib.attribValue.length - 1].end) {
-              attrib.attribValue[attrib.attribValue.length - 1].end = i;
-              attrib.attribValue[attrib.attribValue.length - 1].value = str.slice(attrib.attribValue[attrib.attribValue.length - 1].start, i);
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+              attrib.attribValue[~-attrib.attribValue.length].end = i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
             }
           } else {
             attrib.attribValueStartsAt = null;
@@ -4306,6 +4228,10 @@
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
       }
+
+      if (str[i] && str[i].trim()) {
+        lastNonWhitespaceCharAt = i;
+      }
     }
 
     if (charStash.length) {
@@ -4320,8 +4246,9 @@
       }
     }
 
+    const timeTakenInMilliseconds = Date.now() - start;
     return {
-      timeTakenInMilliseconds: Date.now() - start
+      timeTakenInMilliseconds
     };
   }
 
@@ -4774,427 +4701,430 @@
         // pass the token to the 3rd parties through opts.tagCb
         if (typeof opts.tagCb === "function") {
           opts.tagCb(tokenObj);
-        } // consume the token ourselves
-        // tokenizer does not build AST's so there is no
-        // "children" key reported on each node. However,
-        // here we do build AST's and while some tokens might
-        // not have children tokens or can't (text nodes),
-        // for consistency we will add children key with
-        // an empty array value to each token in AST.
-        // recalculate the path for this token
+        } // tokenizer pings nested "rule" and "at" rule tokens separately,
+        // which means, there might be duplication. To consume each "rule" and "at"
+        // only once, we have to ensure their "nested" key is false.
 
 
-        var prevToken = objectPath.get(res, path);
+        if (!tokenObj.nested) {
+          // tokenizer does not build AST's so there is no
+          // "children" key reported on each node. However,
+          // here we do build AST's and while some tokens might
+          // not have children tokens or can't (text nodes),
+          // for consistency we will add children key with
+          // an empty array value to each token in AST.
+          // recalculate the path for this token
+          var prevToken = objectPath.get(res, path);
 
-        if (!isObj$3(prevToken)) {
-          prevToken = null;
-        }
+          if (!isObj$3(prevToken)) {
+            prevToken = null;
+          }
 
-        if (nestNext && // ensure it's not a closing tag of a pair, in which case
-        // don't nest it!
-        !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
-        // --------
-        // imagine the case:
-        // <div><a> </div>
-        // we don't want to nest that space text token under "a" if the following
-        // token </div> closes the pending layer -
-        // this means matching token that comes next against second layer
-        // behind (the layers[layers.length - 3] below):
-        // --------
-        //
-        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not legit closing tag following:
-        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
-          // 1. reset the flag
-          nestNext = false; // 2. go deeper
-          // "1.children.3" -> "1.children.3.children.0"
+          if (nestNext && // ensure it's not a closing tag of a pair, in which case
+          // don't nest it!
+          !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
+          // --------
+          // imagine the case:
+          // <div><a> </div>
+          // we don't want to nest that space text token under "a" if the following
+          // token </div> closes the pending layer -
+          // this means matching token that comes next against second layer
+          // behind (the layers[layers.length - 3] below):
+          // --------
+          //
+          !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not legit closing tag following:
+          layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
+            // 1. reset the flag
+            nestNext = false; // 2. go deeper
+            // "1.children.3" -> "1.children.3.children.0"
 
-          path = "".concat(path, ".children.0");
-        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && ( // ensure preceding token was not an opening counterpart:
-        !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
-          // goes up and then bumps,
-          // "1.children.3" -> "2"
-          path = pathNext(pathUp(path));
+            path = "".concat(path, ".children.0");
+          } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && ( // ensure preceding token was not an opening counterpart:
+          !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
+            // goes up and then bumps,
+            // "1.children.3" -> "2"
+            path = pathNext(pathUp(path));
 
-          if (layerPending(layers, tokenObj)) {
-            //
-            // in case of comment layers, there can be more layers leading
-            // up to this, so more popping might be needed.
-            // Imagine <!--<a><a><a><a><a><a>-->
-            //                                ^
-            //                              we're here
-            while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
+            if (layerPending(layers, tokenObj)) {
+              //
+              // in case of comment layers, there can be more layers leading
+              // up to this, so more popping might be needed.
+              // Imagine <!--<a><a><a><a><a><a>-->
+              //                                ^
+              //                              we're here
+              while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
+                layers.pop();
+              }
+
               layers.pop();
-            }
+              nestNext = false;
+            } else {
+              // if this is a gap and current token closes parent token,
+              // go another level up
+              if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
+                // 1. amend the path
+                path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
 
-            layers.pop();
-            nestNext = false;
+                if (opts.errCb) {
+                  var lastLayersToken = layers[layers.length - 1];
+                  opts.errCb({
+                    ruleId: "".concat(lastLayersToken.type).concat(lastLayersToken.type === "comment" ? "-".concat(lastLayersToken.kind) : "", "-missing-closing"),
+                    idxFrom: lastLayersToken.start,
+                    idxTo: lastLayersToken.end,
+                    tokenObj: lastLayersToken
+                  });
+                } // 3. clean up the layers
+
+
+                layers.pop();
+                layers.pop();
+              } else if ( // so it's a closing tag (</table> in example below)
+              // and it was not pending (meaning opening heads were not in front)
+              // and this token is tag and it's closing the second layer backwards
+              // imagine code: <table><tr><td>x</td><a></table>
+              // imagine on </table> we have layers:
+              // <table>, <tr>, <a> - so <a> is rogue, maybe in its place the
+              // </tr> was meant to be, hance the second layer backwards,
+              // the "layers[layers.length - 3]"
+              layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
+                // 1. amend the path
+                path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+
+                if (opts.errCb) {
+                  var _lastLayersToken = layers[layers.length - 1];
+                  opts.errCb({
+                    ruleId: "tag-rogue",
+                    idxFrom: _lastLayersToken.start,
+                    idxTo: _lastLayersToken.end,
+                    tokenObj: _lastLayersToken
+                  });
+                } // 3. pop all 3
+
+
+                layers.pop();
+                layers.pop();
+                layers.pop();
+              } else if ( // so it's a closing tag (</table> in example below)
+              // and it was not pending (meaning opening heads were not in front)
+              // and this token is tag and it's closing the first layer backwards
+              // imagine code: <table><tr><td>x</td></a></table>
+              // imagine we're on </table>
+              // The </a> didn't open a new layer so we have layers:
+              // <table>, <tr>
+              // </tr> was meant to be instead of </a>,
+              // the first layer backwards, the <table> does match our </table>
+              // that's path "layers[layers.length - 2]"
+              layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
+                // 1. don't amend the path, because this rogue closing tag has
+                // already triggered "UP", tree is fine
+                // 2. report the last layer's token as missing closing
+                if (opts.errCb) {
+                  var _lastLayersToken2 = layers[layers.length - 1];
+                  opts.errCb({
+                    ruleId: "tag-rogue",
+                    idxFrom: _lastLayersToken2.start,
+                    idxTo: _lastLayersToken2.end,
+                    tokenObj: _lastLayersToken2
+                  });
+                } // 3. pop all 2
+
+
+                layers.pop();
+                layers.pop();
+              }
+            }
+          } else if (!path) {
+            // it's the first element - push the token into index 0
+            path = "0";
           } else {
-            // if this is a gap and current token closes parent token,
-            // go another level up
-            if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+            // bumps the index,
+            // "1.children.3" -> "1.children.4"
+            path = pathNext(path);
 
-              if (opts.errCb) {
-                var lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "".concat(lastLayersToken.type).concat(lastLayersToken.type === "comment" ? "-".concat(lastLayersToken.kind) : "", "-missing-closing"),
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              } // 3. clean up the layers
-
-
-              layers.pop();
-              layers.pop();
-            } else if ( // so it's a closing tag (</table> in example below)
-            // and it was not pending (meaning opening heads were not in front)
-            // and this token is tag and it's closing the second layer backwards
-            // imagine code: <table><tr><td>x</td><a></table>
-            // imagine on </table> we have layers:
-            // <table>, <tr>, <a> - so <a> is rogue, maybe in its place the
-            // </tr> was meant to be, hance the second layer backwards,
-            // the "layers[layers.length - 3]"
-            layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
-
-              if (opts.errCb) {
-                var _lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken.start,
-                  idxTo: _lastLayersToken.end,
-                  tokenObj: _lastLayersToken
-                });
-              } // 3. pop all 3
-
-
-              layers.pop();
-              layers.pop();
-              layers.pop();
-            } else if ( // so it's a closing tag (</table> in example below)
-            // and it was not pending (meaning opening heads were not in front)
-            // and this token is tag and it's closing the first layer backwards
-            // imagine code: <table><tr><td>x</td></a></table>
-            // imagine we're on </table>
-            // The </a> didn't open a new layer so we have layers:
-            // <table>, <tr>
-            // </tr> was meant to be instead of </a>,
-            // the first layer backwards, the <table> does match our </table>
-            // that's path "layers[layers.length - 2]"
-            layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
-              // 1. don't amend the path, because this rogue closing tag has
-              // already triggered "UP", tree is fine
-              // 2. report the last layer's token as missing closing
-              if (opts.errCb) {
-                var _lastLayersToken2 = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken2.start,
-                  idxTo: _lastLayersToken2.end,
-                  tokenObj: _lastLayersToken2
-                });
-              } // 3. pop all 2
-
-
-              layers.pop();
+            if (layerPending(layers, tokenObj)) {
               layers.pop();
             }
+          } // activate the nestNext
+
+
+          if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
+            nestNext = true;
+
+            if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
+              layers.push(_objectSpread2({}, tokenObj));
+            }
+          } // check, does this closing tag have an
+          // opening counterpart
+
+
+          var previousPath = pathPrev(path); // console.log(
+          //   `269 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
+          //     previousPath,
+          //     null,
+          //     4
+          //   )}`
+          // );
+
+          var parentPath = pathUp(path);
+          var parentTagsToken;
+
+          if (parentPath && path.includes(".")) {
+            parentTagsToken = objectPath.get(res, parentPath);
           }
-        } else if (!path) {
-          // it's the first element - push the token into index 0
-          path = "0";
-        } else {
-          // bumps the index,
-          // "1.children.3" -> "1.children.4"
-          path = pathNext(path);
 
-          if (layerPending(layers, tokenObj)) {
-            layers.pop();
+          var previousTagsToken;
+
+          if (previousPath) {
+            previousTagsToken = objectPath.get(res, previousPath);
+          } //
+          // AST CORRECTION PART
+          //
+          // We change nodes where we recognise the error.
+          //
+          // case of "a<!--b->c", current token being "text" type, value "b->c"
+
+
+          var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
+          var parentsLastChildTokenValue;
+          var parentsLastChildTokenPath;
+
+          if (isObj$3(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
+            parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
+            parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1);
           }
-        } // activate the nestNext
+
+          var tokenTakenCareOf = false;
+
+          if (tokenObj.type === "text" && isObj$3(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+            var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
+            var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
+            // if any text precedes the "->" that text goes in as normal,
+            // at this level, under this path:
+
+            if (suspiciousEndingStartsAt > 0) {
+              objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                end: tokenObj.start + suspiciousEndingStartsAt,
+                value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
+              }));
+
+              if (tokensWithChildren.includes(tokenObj.type)) {
+                tokenObj.children = [];
+              }
+            } // part 2.
+            // further, the "->" goes as closing token at parent level
 
 
-        if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
-          nestNext = true;
+            path = pathNext(pathUp(path));
+            objectPath.set(res, path, {
+              type: "comment",
+              kind: "simple",
+              closing: true,
+              start: tokenObj.start + suspiciousEndingStartsAt,
+              end: tokenObj.start + suspiciousEndingEndsAt,
+              value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
+              children: []
+            }); // part 3.
+            // if any text follows "->" add that after
 
-          if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-            layers.push(_objectSpread2({}, tokenObj));
-          }
-        } // check, does this closing tag have an
-        // opening counterpart
-
-
-        var previousPath = pathPrev(path); // console.log(
-        //   `269 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
-        //     previousPath,
-        //     null,
-        //     4
-        //   )}`
-        // );
-
-        var parentPath = pathUp(path);
-        var parentTagsToken;
-
-        if (parentPath && path.includes(".")) {
-          parentTagsToken = objectPath.get(res, parentPath);
-        }
-
-        var previousTagsToken;
-
-        if (previousPath) {
-          previousTagsToken = objectPath.get(res, previousPath);
-        } //
-        // AST CORRECTION PART
-        //
-        // We change nodes where we recognise the error.
-        //
-        // case of "a<!--b->c", current token being "text" type, value "b->c"
+            if (suspiciousEndingEndsAt < tokenObj.value.length) {
+              path = pathNext(path);
+              objectPath.set(res, path, {
+                type: "text",
+                start: tokenObj.start + suspiciousEndingEndsAt,
+                end: tokenObj.end,
+                value: tokenObj.value.slice(suspiciousEndingEndsAt)
+              });
+            } // part 4.
+            // stop token from being pushed in the ELSE clauses below
 
 
-        var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
-        var parentsLastChildTokenValue;
-        var parentsLastChildTokenPath;
+            tokenTakenCareOf = true; //
+          } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$3(previousTagsToken)) {
+            // check "only" kind comment-type tokens for malformed front parts,
+            // "<!--", which would turn them into "not" kind comment-type tokens
+            if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
+              // if "only" kind token is preceded by something that resembles
+              // opening HTML comment ("simple" kind), that might be first part
+              // of "not" kind comment:
+              //
+              // <img/><--<![endif]-->
+              //       ^
+              //      excl. mark missing on the first part ("<!--")
+              // strFindMalformed
+              var capturedMalformedTagRanges = []; // Contents will be objects like:
+              // {
+              //   idxFrom: 3,
+              //   idxTo: 9
+              // }
 
-        if (isObj$3(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
-          parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-          parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1);
-        }
+              strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
+                capturedMalformedTagRanges.push(obj);
+              }, {
+                maxDistance: 2
+              });
 
-        var tokenTakenCareOf = false;
+              if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+                // pick the last
+                // imagine, there were multiple malformed opening comments:
+                // <img/><1--<1--<1--<1--<![endif]-->
+                var malformedRange = capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
+                // or were there characters in front of text token which remain and
+                // form the shorter, text token?
 
-        if (tokenObj.type === "text" && isObj$3(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
-          var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
-          var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
-          // if any text precedes the "->" that text goes in as normal,
-          // at this level, under this path:
+                if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$3(previousTagsToken)) {
+                  // if there are no whitespace characters to the left of "from" index
+                  // of the malformed "<!--", this means whole token is a malformed
+                  // value and needs to be merged into current "comment" type token
+                  // and its kind should be changed from "only" to "not".
+                  if (tokensWithChildren.includes(tokenObj.type)) {
+                    tokenObj.children = [];
+                  } // path becomes the path of previous, text token - we overwrite it
 
-          if (suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
-              end: tokenObj.start + suspiciousEndingStartsAt,
-              value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
-            }));
 
+                  path = previousPath;
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: malformedRange.idxFrom + previousTagsToken.start,
+                    kind: "not",
+                    value: "".concat(previousTagsToken.value).concat(tokenObj.value)
+                  })); // stop token from being pushed in the ELSE clauses below
+
+                  tokenTakenCareOf = true;
+                } else if (previousPath && isObj$3(previousTagsToken)) {
+                  // if there are text characters which are not part of "<!--",
+                  // shorten the text token, push a new comment token
+                  // 1. tweak the "text" token
+                  objectPath.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
+                    end: malformedRange.idxFrom + previousTagsToken.start,
+                    value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
+                  })); // 2. tweak the current "comment" token
+
+                  if (tokensWithChildren.includes(tokenObj.type)) {
+                    tokenObj.children = [];
+                  }
+
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: malformedRange.idxFrom + previousTagsToken.start,
+                    kind: "not",
+                    value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
+                  })); // stop token from being pushed in the ELSE clauses below
+
+                  tokenTakenCareOf = true;
+                }
+              }
+            } else if (isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+              // the text token might be in parent token's children array, as
+              // last element, for example, consider the AST of:
+              // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
+              //
+              // strFindMalformed
+              var _capturedMalformedTagRanges = []; // Contents will be objects like:
+              // {
+              //   idxFrom: 3,
+              //   idxTo: 9
+              // }
+
+              strFindMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
+                _capturedMalformedTagRanges.push(obj);
+              }, {
+                maxDistance: 2
+              });
+
+              if (_capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, _capturedMalformedTagRanges[_capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+                // pick the last
+                // imagine, there were multiple malformed opening comments:
+                // <!--[if !mso]><!--><img src="gif"/>!--!--!--!--<![endif]-->
+                var _malformedRange = _capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
+                // or were there characters in front of text token which remain and
+                // form the shorter, text token?
+
+
+                if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$3(parentsLastChildTokenValue)) {
+                  // if there are no whitespace characters to the left of "from" index
+                  // of the malformed "<!--", this means whole token is a malformed
+                  // value and needs to be merged into current "comment" type token
+                  // and its kind should be changed from "only" to "not".
+                  if (tokensWithChildren.includes(tokenObj.type)) {
+                    tokenObj.children = [];
+                  } // 1. Insert current node. The path for current token remains the same - text node was among
+                  // the previous token's children tokens
+
+
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                    kind: "not",
+                    value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
+                  })); // 2. Delete the text node.
+
+                  objectPath.del(res, "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
+
+                  tokenTakenCareOf = true;
+                } else if (previousPath && isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
+                  // if there are text characters which are not part of "<!--",
+                  // shorten the text token, push a new comment token
+                  // 1. tweak the "text" token
+                  objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
+                    end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                    value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
+                  })); // 2. tweak the current "comment" token
+
+                  if (tokensWithChildren.includes(tokenObj.type)) {
+                    tokenObj.children = [];
+                  }
+
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                    kind: "not",
+                    value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)
+                  })); // stop token from being pushed in the ELSE clauses below
+
+                  tokenTakenCareOf = true;
+                }
+              }
+            }
+          } // if token was not pushed yet, push it
+
+
+          if (!tokenTakenCareOf) {
             if (tokensWithChildren.includes(tokenObj.type)) {
               tokenObj.children = [];
             }
-          } // part 2.
-          // further, the "->" goes as closing token at parent level
+
+            objectPath.set(res, path, tokenObj);
+          } //
+          // CHECK CHILD-PARENT MATCH
+          //
 
 
-          path = pathNext(pathUp(path));
-          objectPath.set(res, path, {
-            type: "comment",
-            kind: "simple",
-            closing: true,
-            start: tokenObj.start + suspiciousEndingStartsAt,
-            end: tokenObj.start + suspiciousEndingEndsAt,
-            value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
-            children: []
-          }); // part 3.
-          // if any text follows "->" add that after
-
-          if (suspiciousEndingEndsAt < tokenObj.value.length) {
-            path = pathNext(path);
-            objectPath.set(res, path, {
-              type: "text",
-              start: tokenObj.start + suspiciousEndingEndsAt,
-              end: tokenObj.end,
-              value: tokenObj.value.slice(suspiciousEndingEndsAt)
-            });
-          } // part 4.
-          // stop token from being pushed in the ELSE clauses below
-
-
-          tokenTakenCareOf = true; //
-        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$3(previousTagsToken)) {
-          // check "only" kind comment-type tokens for malformed front parts,
-          // "<!--", which would turn them into "not" kind comment-type tokens
-          if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
-            // if "only" kind token is preceded by something that resembles
-            // opening HTML comment ("simple" kind), that might be first part
-            // of "not" kind comment:
-            //
-            // <img/><--<![endif]-->
-            //       ^
-            //      excl. mark missing on the first part ("<!--")
-            // strFindMalformed
-            var capturedMalformedTagRanges = []; // Contents will be objects like:
-            // {
-            //   idxFrom: 3,
-            //   idxTo: 9
-            // }
-
-            strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
-              capturedMalformedTagRanges.push(obj);
-            }, {
-              maxDistance: 2
-            });
-
-            if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              // pick the last
-              // imagine, there were multiple malformed opening comments:
-              // <img/><1--<1--<1--<1--<![endif]-->
-              var malformedRange = capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
-              // or were there characters in front of text token which remain and
-              // form the shorter, text token?
-
-              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$3(previousTagsToken)) {
-                // if there are no whitespace characters to the left of "from" index
-                // of the malformed "<!--", this means whole token is a malformed
-                // value and needs to be merged into current "comment" type token
-                // and its kind should be changed from "only" to "not".
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                } // path becomes the path of previous, text token - we overwrite it
-
-
-                path = previousPath;
-                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: "".concat(previousTagsToken.value).concat(tokenObj.value)
-                })); // stop token from being pushed in the ELSE clauses below
-
-                tokenTakenCareOf = true;
-              } else if (previousPath && isObj$3(previousTagsToken)) {
-                // if there are text characters which are not part of "<!--",
-                // shorten the text token, push a new comment token
-                // 1. tweak the "text" token
-                objectPath.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
-                  end: malformedRange.idxFrom + previousTagsToken.start,
-                  value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
-                })); // 2. tweak the current "comment" token
-
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
-                  start: malformedRange.idxFrom + previousTagsToken.start,
-                  kind: "not",
-                  value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
-                })); // stop token from being pushed in the ELSE clauses below
-
-                tokenTakenCareOf = true;
+          if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$3(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+            if (tokenObj.void) {
+              if (opts.errCb) {
+                opts.errCb({
+                  ruleId: "tag-void-frontal-slash",
+                  idxFrom: tokenObj.start,
+                  idxTo: tokenObj.end,
+                  fix: {
+                    ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
+                  },
+                  tokenObj: tokenObj
+                });
+              }
+            } else {
+              if (opts.errCb) {
+                opts.errCb({
+                  ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
+                  idxFrom: tokenObj.start,
+                  idxTo: tokenObj.end,
+                  tokenObj: tokenObj
+                });
               }
             }
-          } else if (isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
-            // the text token might be in parent token's children array, as
-            // last element, for example, consider the AST of:
-            // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
-            //
-            // strFindMalformed
-            var _capturedMalformedTagRanges = []; // Contents will be objects like:
-            // {
-            //   idxFrom: 3,
-            //   idxTo: 9
-            // }
-
-            strFindMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
-              _capturedMalformedTagRanges.push(obj);
-            }, {
-              maxDistance: 2
-            });
-
-            if (_capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, _capturedMalformedTagRanges[_capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              // pick the last
-              // imagine, there were multiple malformed opening comments:
-              // <!--[if !mso]><!--><img src="gif"/>!--!--!--!--<![endif]-->
-              var _malformedRange = _capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
-              // or were there characters in front of text token which remain and
-              // form the shorter, text token?
+          } // SET a new previous token's value
 
 
-              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$3(parentsLastChildTokenValue)) {
-                // if there are no whitespace characters to the left of "from" index
-                // of the malformed "<!--", this means whole token is a malformed
-                // value and needs to be merged into current "comment" type token
-                // and its kind should be changed from "only" to "not".
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                } // 1. Insert current node. The path for current token remains the same - text node was among
-                // the previous token's children tokens
-
-
-                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
-                  start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
-                })); // 2. Delete the text node.
-
-                objectPath.del(res, "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
-
-                tokenTakenCareOf = true;
-              } else if (previousPath && isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                // if there are text characters which are not part of "<!--",
-                // shorten the text token, push a new comment token
-                // 1. tweak the "text" token
-                objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
-                  end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
-                })); // 2. tweak the current "comment" token
-
-                if (tokensWithChildren.includes(tokenObj.type)) {
-                  tokenObj.children = [];
-                }
-
-                objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
-                  start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                  kind: "not",
-                  value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)
-                })); // stop token from being pushed in the ELSE clauses below
-
-                tokenTakenCareOf = true;
-              }
-            }
-          }
-        } // if token was not pushed yet, push it
-
-
-        if (!tokenTakenCareOf) {
-          if (tokensWithChildren.includes(tokenObj.type)) {
-            tokenObj.children = [];
-          }
-
-          objectPath.set(res, path, tokenObj);
+          lastProcessedToken = _objectSpread2({}, tokenObj); //
+          // LOGGING
+          //
         } //
-        // CHECK CHILD-PARENT MATCH
-        //
-
-
-        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$3(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-          if (tokenObj.void) {
-            if (opts.errCb) {
-              opts.errCb({
-                ruleId: "tag-void-frontal-slash",
-                idxFrom: tokenObj.start,
-                idxTo: tokenObj.end,
-                fix: {
-                  ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
-                },
-                tokenObj: tokenObj
-              });
-            }
-          } else {
-            if (opts.errCb) {
-              opts.errCb({
-                ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
-                idxFrom: tokenObj.start,
-                idxTo: tokenObj.end,
-                tokenObj: tokenObj
-              });
-            }
-          }
-        } // SET a new previous token's value
-
-
-        lastProcessedToken = _objectSpread2({}, tokenObj); //
-        // LOGGING
-        //
-        //
         //
         //
         //
@@ -5211,6 +5141,7 @@
         //
         //
         //
+
       },
       charCb: opts.charCb
     }); // if there are some unclosed layer tokens, raise errors about them all:

@@ -140,400 +140,413 @@ function cparser(str, originalOpts) {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
-      let prevToken = op.get(res, path);
-      if (!isObj(prevToken)) {
-        prevToken = null;
-      }
-      if (
-        nestNext &&
-        !tokenObj.closing &&
-        (!prevToken ||
-          !(
-            prevToken.tagName === tokenObj.tagName &&
-            !prevToken.closing &&
-            tokenObj.closing
-          )) &&
-        !layerPending(layers, tokenObj) &&
-        (!next.length ||
-          !(
-            tokenObj.type === "text" &&
-            next[0].type === "tag" &&
-            ((next[0].closing && lastProcessedToken.closing) ||
-              (layers[layers.length - 3] &&
-                next[0].tagName !== layers[layers.length - 1].tagName &&
-                layers[layers.length - 3].type === "tag" &&
-                !layers[layers.length - 3].closing &&
-                next[0].tagName === layers[layers.length - 3].tagName))
-          ))
-      ) {
-        nestNext = false;
-        path = `${path}.children.0`;
-      } else if (
-        tokenObj.closing &&
-        typeof path === "string" &&
-        path.includes(".") &&
-        (!tokenObj.tagName ||
-          lastProcessedToken.tagName !== tokenObj.tagName ||
-          lastProcessedToken.closing)
-      ) {
-        path = pathNext(pathUp(path));
-        if (layerPending(layers, tokenObj)) {
-          while (
-            layers.length &&
-            layers[layers.length - 1].type !== tokenObj.type &&
-            layers[layers.length - 1].kind !== tokenObj.kind
-          ) {
-            layers.pop();
-          }
-          layers.pop();
+      if (!tokenObj.nested) {
+        let prevToken = op.get(res, path);
+        if (!isObj(prevToken)) {
+          prevToken = null;
+        }
+        if (
+          nestNext &&
+          !tokenObj.closing &&
+          (!prevToken ||
+            !(
+              prevToken.tagName === tokenObj.tagName &&
+              !prevToken.closing &&
+              tokenObj.closing
+            )) &&
+          !layerPending(layers, tokenObj) &&
+          (!next.length ||
+            !(
+              tokenObj.type === "text" &&
+              next[0].type === "tag" &&
+              ((next[0].closing && lastProcessedToken.closing) ||
+                (layers[layers.length - 3] &&
+                  next[0].tagName !== layers[layers.length - 1].tagName &&
+                  layers[layers.length - 3].type === "tag" &&
+                  !layers[layers.length - 3].closing &&
+                  next[0].tagName === layers[layers.length - 3].tagName))
+            ))
+        ) {
           nestNext = false;
+          path = `${path}.children.0`;
+        } else if (
+          tokenObj.closing &&
+          typeof path === "string" &&
+          path.includes(".") &&
+          (!tokenObj.tagName ||
+            lastProcessedToken.tagName !== tokenObj.tagName ||
+            lastProcessedToken.closing)
+        ) {
+          path = pathNext(pathUp(path));
+          if (layerPending(layers, tokenObj)) {
+            while (
+              layers.length &&
+              layers[layers.length - 1].type !== tokenObj.type &&
+              layers[layers.length - 1].kind !== tokenObj.kind
+            ) {
+              layers.pop();
+            }
+            layers.pop();
+            nestNext = false;
+          } else {
+            if (
+              layers.length > 1 &&
+              tokenObj.tagName &&
+              tokenObj.tagName === layers[layers.length - 2].tagName
+            ) {
+              path = pathNext(pathUp(path));
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `${lastLayersToken.type}${
+                    lastLayersToken.type === "comment"
+                      ? `-${lastLayersToken.kind}`
+                      : ""
+                  }-missing-closing`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken,
+                });
+              }
+              layers.pop();
+              layers.pop();
+            } else if (
+              layers.length > 2 &&
+              layers[layers.length - 3].type === tokenObj.type &&
+              layers[layers.length - 3].type === tokenObj.type &&
+              layers[layers.length - 3].tagName === tokenObj.tagName
+            ) {
+              path = pathNext(pathUp(path));
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `tag-rogue`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken,
+                });
+              }
+              layers.pop();
+              layers.pop();
+              layers.pop();
+            } else if (
+              layers.length > 1 &&
+              layers[layers.length - 2].type === tokenObj.type &&
+              layers[layers.length - 2].type === tokenObj.type &&
+              layers[layers.length - 2].tagName === tokenObj.tagName
+            ) {
+              if (opts.errCb) {
+                const lastLayersToken = layers[layers.length - 1];
+                opts.errCb({
+                  ruleId: `tag-rogue`,
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken,
+                });
+              }
+              layers.pop();
+              layers.pop();
+            }
+          }
+        } else if (!path) {
+          path = "0";
         } else {
-          if (
-            layers.length > 1 &&
-            tokenObj.tagName &&
-            tokenObj.tagName === layers[layers.length - 2].tagName
-          ) {
-            path = pathNext(pathUp(path));
-            if (opts.errCb) {
-              const lastLayersToken = layers[layers.length - 1];
-              opts.errCb({
-                ruleId: `${lastLayersToken.type}${
-                  lastLayersToken.type === "comment"
-                    ? `-${lastLayersToken.kind}`
-                    : ""
-                }-missing-closing`,
-                idxFrom: lastLayersToken.start,
-                idxTo: lastLayersToken.end,
-                tokenObj: lastLayersToken,
-              });
-            }
-            layers.pop();
-            layers.pop();
-          } else if (
-            layers.length > 2 &&
-            layers[layers.length - 3].type === tokenObj.type &&
-            layers[layers.length - 3].type === tokenObj.type &&
-            layers[layers.length - 3].tagName === tokenObj.tagName
-          ) {
-            path = pathNext(pathUp(path));
-            if (opts.errCb) {
-              const lastLayersToken = layers[layers.length - 1];
-              opts.errCb({
-                ruleId: `tag-rogue`,
-                idxFrom: lastLayersToken.start,
-                idxTo: lastLayersToken.end,
-                tokenObj: lastLayersToken,
-              });
-            }
-            layers.pop();
-            layers.pop();
-            layers.pop();
-          } else if (
-            layers.length > 1 &&
-            layers[layers.length - 2].type === tokenObj.type &&
-            layers[layers.length - 2].type === tokenObj.type &&
-            layers[layers.length - 2].tagName === tokenObj.tagName
-          ) {
-            if (opts.errCb) {
-              const lastLayersToken = layers[layers.length - 1];
-              opts.errCb({
-                ruleId: `tag-rogue`,
-                idxFrom: lastLayersToken.start,
-                idxTo: lastLayersToken.end,
-                tokenObj: lastLayersToken,
-              });
-            }
-            layers.pop();
+          path = pathNext(path);
+          if (layerPending(layers, tokenObj)) {
             layers.pop();
           }
         }
-      } else if (!path) {
-        path = "0";
-      } else {
-        path = pathNext(path);
-        if (layerPending(layers, tokenObj)) {
-          layers.pop();
+        if (
+          tokensWithChildren.includes(tokenObj.type) &&
+          !tokenObj.void &&
+          Object.prototype.hasOwnProperty.call(tokenObj, "closing") &&
+          !tokenObj.closing
+        ) {
+          nestNext = true;
+          if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
+            layers.push({ ...tokenObj });
+          }
         }
-      }
-      if (
-        tokensWithChildren.includes(tokenObj.type) &&
-        !tokenObj.void &&
-        Object.prototype.hasOwnProperty.call(tokenObj, "closing") &&
-        !tokenObj.closing
-      ) {
-        nestNext = true;
-        if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-          layers.push({ ...tokenObj });
+        const previousPath = pathPrev(path);
+        const parentPath = pathUp(path);
+        let parentTagsToken;
+        if (parentPath && path.includes(".")) {
+          parentTagsToken = op.get(res, parentPath);
         }
-      }
-      const previousPath = pathPrev(path);
-      const parentPath = pathUp(path);
-      let parentTagsToken;
-      if (parentPath && path.includes(".")) {
-        parentTagsToken = op.get(res, parentPath);
-      }
-      let previousTagsToken;
-      if (previousPath) {
-        previousTagsToken = op.get(res, previousPath);
-      }
-      const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
-      let parentsLastChildTokenValue;
-      let parentsLastChildTokenPath;
-      if (
-        isObj(previousTagsToken) &&
-        Array.isArray(previousTagsToken.children) &&
-        previousTagsToken.children.length &&
-        previousTagsToken.children[previousTagsToken.children.length - 1]
-      ) {
-        parentsLastChildTokenValue =
-          previousTagsToken.children[previousTagsToken.children.length - 1];
-        parentsLastChildTokenPath = `${previousPath}.children.${
-          op.get(res, previousPath).children.length - 1
-        }`;
-      }
-      let tokenTakenCareOf = false;
-      if (
-        tokenObj.type === "text" &&
-        isObj(parentTagsToken) &&
-        parentTagsToken.type === "comment" &&
-        parentTagsToken.kind === "simple" &&
-        !parentTagsToken.closing &&
-        suspiciousCommentTagEndingRegExp.test(tokenObj.value)
-      ) {
-        const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
-          tokenObj.value
-        ).index;
-        const suspiciousEndingEndsAt =
-          suspiciousEndingStartsAt +
-          tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
-          1;
-        if (suspiciousEndingStartsAt > 0) {
+        let previousTagsToken;
+        if (previousPath) {
+          previousTagsToken = op.get(res, previousPath);
+        }
+        const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
+        let parentsLastChildTokenValue;
+        let parentsLastChildTokenPath;
+        if (
+          isObj(previousTagsToken) &&
+          Array.isArray(previousTagsToken.children) &&
+          previousTagsToken.children.length &&
+          previousTagsToken.children[previousTagsToken.children.length - 1]
+        ) {
+          parentsLastChildTokenValue =
+            previousTagsToken.children[previousTagsToken.children.length - 1];
+          parentsLastChildTokenPath = `${previousPath}.children.${
+            op.get(res, previousPath).children.length - 1
+          }`;
+        }
+        let tokenTakenCareOf = false;
+        if (
+          tokenObj.type === "text" &&
+          isObj(parentTagsToken) &&
+          parentTagsToken.type === "comment" &&
+          parentTagsToken.kind === "simple" &&
+          !parentTagsToken.closing &&
+          suspiciousCommentTagEndingRegExp.test(tokenObj.value)
+        ) {
+          const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
+            tokenObj.value
+          ).index;
+          const suspiciousEndingEndsAt =
+            suspiciousEndingStartsAt +
+            tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
+            1;
+          if (suspiciousEndingStartsAt > 0) {
+            op.set(res, path, {
+              ...tokenObj,
+              end: tokenObj.start + suspiciousEndingStartsAt,
+              value: tokenObj.value.slice(0, suspiciousEndingStartsAt),
+            });
+            if (tokensWithChildren.includes(tokenObj.type)) {
+              tokenObj.children = [];
+            }
+          }
+          path = pathNext(pathUp(path));
           op.set(res, path, {
-            ...tokenObj,
-            end: tokenObj.start + suspiciousEndingStartsAt,
-            value: tokenObj.value.slice(0, suspiciousEndingStartsAt),
+            type: "comment",
+            kind: "simple",
+            closing: true,
+            start: tokenObj.start + suspiciousEndingStartsAt,
+            end: tokenObj.start + suspiciousEndingEndsAt,
+            value: tokenObj.value.slice(
+              suspiciousEndingStartsAt,
+              suspiciousEndingEndsAt
+            ),
+            children: [],
           });
+          if (suspiciousEndingEndsAt < tokenObj.value.length) {
+            path = pathNext(path);
+            op.set(res, path, {
+              type: "text",
+              start: tokenObj.start + suspiciousEndingEndsAt,
+              end: tokenObj.end,
+              value: tokenObj.value.slice(suspiciousEndingEndsAt),
+            });
+          }
+          tokenTakenCareOf = true;
+        } else if (
+          tokenObj.type === "comment" &&
+          tokenObj.kind === "only" &&
+          isObj(previousTagsToken)
+        ) {
+          if (
+            previousTagsToken.type === "text" &&
+            previousTagsToken.value.trim() &&
+            "<!-".includes(
+              previousTagsToken.value[
+                left(previousTagsToken.value, previousTagsToken.value.length)
+              ]
+            )
+          ) {
+            const capturedMalformedTagRanges = [];
+            strFindMalformed(
+              previousTagsToken.value,
+              "<!--",
+              (obj) => {
+                capturedMalformedTagRanges.push(obj);
+              },
+              {
+                maxDistance: 2,
+              }
+            );
+            if (
+              capturedMalformedTagRanges.length &&
+              !right(
+                previousTagsToken.value,
+                capturedMalformedTagRanges[
+                  capturedMalformedTagRanges.length - 1
+                ].idxTo - 1
+              )
+            ) {
+              const malformedRange = capturedMalformedTagRanges.pop();
+              if (
+                !left(previousTagsToken.value, malformedRange.idxFrom) &&
+                previousPath &&
+                isObj(previousTagsToken)
+              ) {
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+                path = previousPath;
+                op.set(res, path, {
+                  ...tokenObj,
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value}${tokenObj.value}`,
+                });
+                tokenTakenCareOf = true;
+              } else if (previousPath && isObj(previousTagsToken)) {
+                op.set(res, previousPath, {
+                  ...previousTagsToken,
+                  end: malformedRange.idxFrom + previousTagsToken.start,
+                  value: previousTagsToken.value.slice(
+                    0,
+                    malformedRange.idxFrom
+                  ),
+                });
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+                op.set(res, path, {
+                  ...tokenObj,
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value.slice(
+                    malformedRange.idxFrom
+                  )}${tokenObj.value}`,
+                });
+                tokenTakenCareOf = true;
+              }
+            }
+          } else if (
+            isObj(parentsLastChildTokenValue) &&
+            parentsLastChildTokenValue.type === "text" &&
+            parentsLastChildTokenValue.value.trim() &&
+            "<!-".includes(
+              parentsLastChildTokenValue.value[
+                left(
+                  parentsLastChildTokenValue.value,
+                  parentsLastChildTokenValue.value.length
+                )
+              ]
+            )
+          ) {
+            const capturedMalformedTagRanges = [];
+            strFindMalformed(
+              parentsLastChildTokenValue.value,
+              "<!--",
+              (obj) => {
+                capturedMalformedTagRanges.push(obj);
+              },
+              {
+                maxDistance: 2,
+              }
+            );
+            if (
+              capturedMalformedTagRanges.length &&
+              !right(
+                parentsLastChildTokenValue.value,
+                capturedMalformedTagRanges[
+                  capturedMalformedTagRanges.length - 1
+                ].idxTo - 1
+              )
+            ) {
+              const malformedRange = capturedMalformedTagRanges.pop();
+              if (
+                !left(
+                  parentsLastChildTokenValue.value,
+                  malformedRange.idxFrom
+                ) &&
+                previousPath &&
+                isObj(parentsLastChildTokenValue)
+              ) {
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+                op.set(res, path, {
+                  ...tokenObj,
+                  start:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`,
+                });
+                op.del(
+                  res,
+                  `${previousPath}.children.${
+                    op.get(res, previousPath).children.length - 1
+                  }`
+                );
+                tokenTakenCareOf = true;
+              } else if (
+                previousPath &&
+                isObj(parentsLastChildTokenValue) &&
+                parentsLastChildTokenPath
+              ) {
+                op.set(res, parentsLastChildTokenPath, {
+                  ...parentsLastChildTokenValue,
+                  end:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  value: parentsLastChildTokenValue.value.slice(
+                    0,
+                    malformedRange.idxFrom
+                  ),
+                });
+                if (tokensWithChildren.includes(tokenObj.type)) {
+                  tokenObj.children = [];
+                }
+                op.set(res, path, {
+                  ...tokenObj,
+                  start:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value.slice(
+                    malformedRange.idxFrom
+                  )}${tokenObj.value}`,
+                });
+                tokenTakenCareOf = true;
+              }
+            }
+          }
+        }
+        if (!tokenTakenCareOf) {
           if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
+          op.set(res, path, tokenObj);
         }
-        path = pathNext(pathUp(path));
-        op.set(res, path, {
-          type: "comment",
-          kind: "simple",
-          closing: true,
-          start: tokenObj.start + suspiciousEndingStartsAt,
-          end: tokenObj.start + suspiciousEndingEndsAt,
-          value: tokenObj.value.slice(
-            suspiciousEndingStartsAt,
-            suspiciousEndingEndsAt
-          ),
-          children: [],
-        });
-        if (suspiciousEndingEndsAt < tokenObj.value.length) {
-          path = pathNext(path);
-          op.set(res, path, {
-            type: "text",
-            start: tokenObj.start + suspiciousEndingEndsAt,
-            end: tokenObj.end,
-            value: tokenObj.value.slice(suspiciousEndingEndsAt),
-          });
-        }
-        tokenTakenCareOf = true;
-      } else if (
-        tokenObj.type === "comment" &&
-        tokenObj.kind === "only" &&
-        isObj(previousTagsToken)
-      ) {
         if (
-          previousTagsToken.type === "text" &&
-          previousTagsToken.value.trim() &&
-          "<!-".includes(
-            previousTagsToken.value[
-              left(previousTagsToken.value, previousTagsToken.value.length)
-            ]
-          )
+          tokensWithChildren.includes(tokenObj.type) &&
+          tokenObj.closing &&
+          (!previousPath ||
+            !isObj(previousTagsToken) ||
+            previousTagsToken.closing ||
+            previousTagsToken.type !== tokenObj.type ||
+            previousTagsToken.tagName !== tokenObj.tagName)
         ) {
-          const capturedMalformedTagRanges = [];
-          strFindMalformed(
-            previousTagsToken.value,
-            "<!--",
-            (obj) => {
-              capturedMalformedTagRanges.push(obj);
-            },
-            {
-              maxDistance: 2,
+          if (tokenObj.void) {
+            if (opts.errCb) {
+              opts.errCb({
+                ruleId: `tag-void-frontal-slash`,
+                idxFrom: tokenObj.start,
+                idxTo: tokenObj.end,
+                fix: {
+                  ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]],
+                },
+                tokenObj,
+              });
             }
-          );
-          if (
-            capturedMalformedTagRanges.length &&
-            !right(
-              previousTagsToken.value,
-              capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1]
-                .idxTo - 1
-            )
-          ) {
-            const malformedRange = capturedMalformedTagRanges.pop();
-            if (
-              !left(previousTagsToken.value, malformedRange.idxFrom) &&
-              previousPath &&
-              isObj(previousTagsToken)
-            ) {
-              if (tokensWithChildren.includes(tokenObj.type)) {
-                tokenObj.children = [];
-              }
-              path = previousPath;
-              op.set(res, path, {
-                ...tokenObj,
-                start: malformedRange.idxFrom + previousTagsToken.start,
-                kind: "not",
-                value: `${previousTagsToken.value}${tokenObj.value}`,
+          } else {
+            if (opts.errCb) {
+              opts.errCb({
+                ruleId: `${tokenObj.type}${
+                  tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+                }-missing-opening`,
+                idxFrom: tokenObj.start,
+                idxTo: tokenObj.end,
+                tokenObj,
               });
-              tokenTakenCareOf = true;
-            } else if (previousPath && isObj(previousTagsToken)) {
-              op.set(res, previousPath, {
-                ...previousTagsToken,
-                end: malformedRange.idxFrom + previousTagsToken.start,
-                value: previousTagsToken.value.slice(0, malformedRange.idxFrom),
-              });
-              if (tokensWithChildren.includes(tokenObj.type)) {
-                tokenObj.children = [];
-              }
-              op.set(res, path, {
-                ...tokenObj,
-                start: malformedRange.idxFrom + previousTagsToken.start,
-                kind: "not",
-                value: `${previousTagsToken.value.slice(
-                  malformedRange.idxFrom
-                )}${tokenObj.value}`,
-              });
-              tokenTakenCareOf = true;
-            }
-          }
-        } else if (
-          isObj(parentsLastChildTokenValue) &&
-          parentsLastChildTokenValue.type === "text" &&
-          parentsLastChildTokenValue.value.trim() &&
-          "<!-".includes(
-            parentsLastChildTokenValue.value[
-              left(
-                parentsLastChildTokenValue.value,
-                parentsLastChildTokenValue.value.length
-              )
-            ]
-          )
-        ) {
-          const capturedMalformedTagRanges = [];
-          strFindMalformed(
-            parentsLastChildTokenValue.value,
-            "<!--",
-            (obj) => {
-              capturedMalformedTagRanges.push(obj);
-            },
-            {
-              maxDistance: 2,
-            }
-          );
-          if (
-            capturedMalformedTagRanges.length &&
-            !right(
-              parentsLastChildTokenValue.value,
-              capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1]
-                .idxTo - 1
-            )
-          ) {
-            const malformedRange = capturedMalformedTagRanges.pop();
-            if (
-              !left(parentsLastChildTokenValue.value, malformedRange.idxFrom) &&
-              previousPath &&
-              isObj(parentsLastChildTokenValue)
-            ) {
-              if (tokensWithChildren.includes(tokenObj.type)) {
-                tokenObj.children = [];
-              }
-              op.set(res, path, {
-                ...tokenObj,
-                start:
-                  malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                kind: "not",
-                value: `${parentsLastChildTokenValue.value}${tokenObj.value}`,
-              });
-              op.del(
-                res,
-                `${previousPath}.children.${
-                  op.get(res, previousPath).children.length - 1
-                }`
-              );
-              tokenTakenCareOf = true;
-            } else if (
-              previousPath &&
-              isObj(parentsLastChildTokenValue) &&
-              parentsLastChildTokenPath
-            ) {
-              op.set(res, parentsLastChildTokenPath, {
-                ...parentsLastChildTokenValue,
-                end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                value: parentsLastChildTokenValue.value.slice(
-                  0,
-                  malformedRange.idxFrom
-                ),
-              });
-              if (tokensWithChildren.includes(tokenObj.type)) {
-                tokenObj.children = [];
-              }
-              op.set(res, path, {
-                ...tokenObj,
-                start:
-                  malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                kind: "not",
-                value: `${parentsLastChildTokenValue.value.slice(
-                  malformedRange.idxFrom
-                )}${tokenObj.value}`,
-              });
-              tokenTakenCareOf = true;
             }
           }
         }
+        lastProcessedToken = { ...tokenObj };
       }
-      if (!tokenTakenCareOf) {
-        if (tokensWithChildren.includes(tokenObj.type)) {
-          tokenObj.children = [];
-        }
-        op.set(res, path, tokenObj);
-      }
-      if (
-        tokensWithChildren.includes(tokenObj.type) &&
-        tokenObj.closing &&
-        (!previousPath ||
-          !isObj(previousTagsToken) ||
-          previousTagsToken.closing ||
-          previousTagsToken.type !== tokenObj.type ||
-          previousTagsToken.tagName !== tokenObj.tagName)
-      ) {
-        if (tokenObj.void) {
-          if (opts.errCb) {
-            opts.errCb({
-              ruleId: `tag-void-frontal-slash`,
-              idxFrom: tokenObj.start,
-              idxTo: tokenObj.end,
-              fix: { ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]] },
-              tokenObj,
-            });
-          }
-        } else {
-          if (opts.errCb) {
-            opts.errCb({
-              ruleId: `${tokenObj.type}${
-                tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
-              }-missing-opening`,
-              idxFrom: tokenObj.start,
-              idxTo: tokenObj.end,
-              tokenObj,
-            });
-          }
-        }
-      }
-      lastProcessedToken = { ...tokenObj };
     },
     charCb: opts.charCb,
   });
