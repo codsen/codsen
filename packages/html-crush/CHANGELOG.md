@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.35](https://gitlab.com/codsen/codsen/compare/html-crush@1.9.34...html-crush@1.9.35) (2020-05-24)
-
+## 1.9.35 (2020-05-24)
 
 ### Bug Fixes
 
-* fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://gitlab.com/codsen/codsen/commit/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://gitlab.com/codsen/codsen/issues/29)
-
-
-
-
+- fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://gitlab.com/codsen/codsen/commit/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://gitlab.com/codsen/codsen/issues/29)
 
 ## 1.9.0 (2019-09-14)
 
