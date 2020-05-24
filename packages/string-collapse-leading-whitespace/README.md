@@ -94,7 +94,7 @@ String of zero or more characters. If input was not a string, same thing will be
 
 ## TLDR
 
-It's like custom trim - whitespace in the beginning and in the ending of a string is collapsed with an algorithm, aimed to retain only one space out of each spaces/tabs chunk; or all encountered line breaks; or all encountered non-breaking spaces.
+It's like custom trim — whitespace in the beginning and in the ending of a string is collapsed with an algorithm, aimed to retain only one space out of each spaces/tabs chunk; or all encountered line breaks; or all encountered non-breaking spaces.
 
 **[⬆ back to top](#)**
 
@@ -102,7 +102,7 @@ It's like custom trim - whitespace in the beginning and in the ending of a strin
 
 When we process strings, sometimes we take notes of what needs to be deleted/added and in the end, process the string in one go. That's opposed to mutating string over and over, where first step's output is second step's input.
 
-Now, we call those "notes" _ranges_ and use familiar format - array and string indexes.
+Now, we call those "notes" _ranges_ and use familiar format — array and string indexes.
 
 For example, sentence "delete character from string index 1 to index 4" is range `[1, 4]`.
 
@@ -110,9 +110,9 @@ To mark something as to be added, we use third element in array: `[1, 4, "replac
 
 Now, when we process these ranges, "to add" values sometimes clash.
 
-This program does the processing of those merged "to add" values, specifically, whitespace control - collapsing or trimming any deemed-to-be-excessive whitespace characters.
+This program does the processing of those merged "to add" values, specifically, whitespace control — collapsing or trimming any deemed-to-be-excessive whitespace characters.
 
-I'm going to use it in [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push).
+We're going to use it in [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push).
 
 **[⬆ back to top](#)**
 
@@ -134,7 +134,6 @@ Tabs and other whitespace characters which are not non-breaking spaces or new li
 const coll = require("string-collapse-leading-whitespace");
 const res2 = coll("\t\t\t\t\t     zzz zzz\t      \t\t\t\t");
 console.log(res2);
-// Those two trailing spaces got trimmed to one space
 // => " zzz zzz "
 ```
 

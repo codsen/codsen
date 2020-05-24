@@ -151,7 +151,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 18479,
+        "size": 19508,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -161,7 +161,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 60634,
+        "size": 59966,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -187,7 +187,7 @@
     },
     {
         "name": "csv-split-easy",
-        "size": 4899,
+        "size": 4898,
         "imports": [
             "string-remove-thousand-separators"
         ]
@@ -241,7 +241,7 @@
     },
     {
         "name": "email-comb",
-        "size": 61201,
+        "size": 60436,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -359,13 +359,12 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 13818,
+        "size": 13884,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
             "string-left-right",
-            "string-match-left-right",
-            "string-split-by-whitespace"
+            "string-match-left-right"
         ]
     },
     {
@@ -382,7 +381,7 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 14321,
+        "size": 14322,
         "imports": [
             "string-process-comma-separated"
         ]
@@ -561,7 +560,7 @@
     },
     {
         "name": "ranges-merge",
-        "size": 5015,
+        "size": 5038,
         "imports": [
             "ranges-sort"
         ]
@@ -592,7 +591,7 @@
     },
     {
         "name": "ranges-sort",
-        "size": 2705,
+        "size": 2443,
         "imports": []
     },
     {
@@ -633,7 +632,7 @@
     },
     {
         "name": "string-convert-indexes",
-        "size": 5038,
+        "size": 5039,
         "imports": [
             "ast-monkey"
         ]
@@ -670,7 +669,7 @@
     },
     {
         "name": "string-left-right",
-        "size": 10782,
+        "size": 10750,
         "imports": []
     },
     {
@@ -723,7 +722,7 @@
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1996,
+        "size": 1972,
         "imports": [
             "ranges-is-index-within"
         ]

@@ -138,7 +138,6 @@
         "string-remove-thousand-separators": 1,
         "string-remove-widows": 1,
         "string-splice": 1,
-        "string-split-by-whitespace": 1,
         "string-strip-html": 1,
         "string-trim-spaces-only": 3,
         "string-uglify": 1,

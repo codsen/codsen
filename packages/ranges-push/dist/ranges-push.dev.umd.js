@@ -256,11 +256,7 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
    */
   function rangesSort(arrOfRanges, originalOptions) {
-    if (!Array.isArray(arrOfRanges)) {
-      throw new TypeError(`ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
-    }
-
-    if (arrOfRanges.length === 0) {
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
@@ -328,7 +324,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.6
+   * Version: 4.3.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -343,7 +339,7 @@
       return something && typeof something === "object" && !Array.isArray(something);
     }
 
-    if (!Array.isArray(arrOfRanges)) {
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 

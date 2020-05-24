@@ -38,11 +38,7 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
    */
   function rangesSort(arrOfRanges, originalOptions) {
-    if (!Array.isArray(arrOfRanges)) {
-      throw new TypeError(`ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
-    }
-
-    if (arrOfRanges.length === 0) {
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
@@ -125,7 +121,7 @@
       return something && typeof something === "object" && !Array.isArray(something);
     }
 
-    if (!Array.isArray(arrOfRanges)) {
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
@@ -789,8 +785,18 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  	  path: basedir,
+  	  exports: {},
+  	  require: function (path, base) {
+        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+      }
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
 
   var isNumeric = createCommonjsModule(function (module, exports) {
@@ -1456,7 +1462,7 @@
           if (!thisRowContainsOnlyEmptySpace) {
             resArray.push(rowArray);
           } else {
-            rowArray = [];
+            rowArray.length = 0;
           }
 
           thisRowContainsOnlyEmptySpace = true;
@@ -1473,7 +1479,7 @@
         if (str[i] !== '"') {
           const newElem = str.slice(colStarts, i + 1);
 
-          if (newElem.trim() !== "") {
+          if (newElem.trim()) {
             thisRowContainsOnlyEmptySpace = false;
           }
 
