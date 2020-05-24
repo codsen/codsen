@@ -3,23 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.17.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.16.0...codsen-tokenizer@2.17.0) (2020-05-24)
-
+## 2.17.0 (2020-05-24)
 
 ### Bug Fixes
 
-* fix "rule" type node "left" key when it is preceded by at-rule ([96e3a65](https://gitlab.com/codsen/codsen/commit/96e3a650f9e4da6caa6f9ee5c3a15bcc88370aef))
-
+- fix "rule" type node "left" key when it is preceded by at-rule ([96e3a65](https://gitlab.com/codsen/codsen/commit/96e3a650f9e4da6caa6f9ee5c3a15bcc88370aef))
 
 ### Features
 
-* add attribs[].attribLeft to HTML tokens ([44046c1](https://gitlab.com/codsen/codsen/commit/44046c15f5124c447e86b9d2dd43058883b5b30a))
-* add token.left key to rule-type tokens ([93564de](https://gitlab.com/codsen/codsen/commit/93564dea0739b67cba7ce083cec225435daaefaf))
-* proper "at" and "rule" token nesting ([bd5db56](https://gitlab.com/codsen/codsen/commit/bd5db5619c559806b06f60d019888785613a3476))
-
-
-
-
+- add attribs[].attribLeft to HTML tokens ([44046c1](https://gitlab.com/codsen/codsen/commit/44046c15f5124c447e86b9d2dd43058883b5b30a))
+- add token.left key to rule-type tokens ([93564de](https://gitlab.com/codsen/codsen/commit/93564dea0739b67cba7ce083cec225435daaefaf))
+- proper "at" and "rule" token nesting ([bd5db56](https://gitlab.com/codsen/codsen/commit/bd5db5619c559806b06f60d019888785613a3476))
 
 ## 2.16.0 (2020-05-17)
 

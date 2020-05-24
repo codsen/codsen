@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.12.0](https://gitlab.com/codsen/codsen/compare/ranges-sort@3.11.6...ranges-sort@3.12.0) (2020-05-24)
-
+## 3.12.0 (2020-05-24)
 
 ### Features
 
-* don't throw error if input is not array or it's empty - just quickly return it ([e169a87](https://gitlab.com/codsen/codsen/commit/e169a8747c3a98411d8e7923af334ddc1c6b1fe1))
-
-
-
-
+- don't throw error if input is not array or it's empty - just quickly return it ([e169a87](https://gitlab.com/codsen/codsen/commit/e169a8747c3a98411d8e7923af334ddc1c6b1fe1))
 
 ## 3.11.0 (2020-02-01)
 

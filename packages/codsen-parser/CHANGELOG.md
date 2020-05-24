@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.7.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.6.6...codsen-parser@0.7.0) (2020-05-24)
-
+## 0.7.0 (2020-05-24)
 
 ### Features
 
-* update to the latest tokenizer algorithm ([6d92c43](https://gitlab.com/codsen/codsen/commit/6d92c430d23a116a7c4a643b3caf92b1c785a515))
-
-
-
-
+- update to the latest tokenizer algorithm ([6d92c43](https://gitlab.com/codsen/codsen/commit/6d92c430d23a116a7c4a643b3caf92b1c785a515))
 
 ## 0.6.5 (2020-05-11)
 

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.55](https://gitlab.com/codsen/codsen/compare/ranges-crop@2.0.54...ranges-crop@2.0.55) (2020-05-24)
-
-**Note:** Version bump only for package ranges-crop
-
-
-
-
-
 ## 2.0.35 (2019-10-02)
 
 ### Performance Improvements
