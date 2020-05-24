@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 1.6.6
+ * Version: 1.6.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -2808,7 +2808,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.13
+   * Version: 3.7.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3103,7 +3103,7 @@
     return str;
   }
 
-  var version = "1.6.6";
+  var version = "1.6.7";
 
   // consts
   var rawnbsp = "\xA0";

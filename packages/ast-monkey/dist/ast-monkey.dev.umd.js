@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST's (like parsed HTML or anything nested)
- * Version: 7.11.12
+ * Version: 7.11.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
@@ -5225,7 +5225,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.64
+   * Version: 5.7.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini

@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * turns an array of arrays of data into a nested tree of plain objects
- * Version: 1.9.41
+ * Version: 1.9.42
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast
@@ -4214,7 +4214,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.64
+   * Version: 5.7.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini

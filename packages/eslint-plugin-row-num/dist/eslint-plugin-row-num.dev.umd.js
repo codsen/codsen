@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-row-num
  * ESLint plugin to update row numbers on each console.log
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num
@@ -342,7 +342,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.13
+   * Version: 3.7.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -640,7 +640,7 @@
   /**
    * js-row-num
    * Update all row numbers in all console.logs in JS code
-   * Version: 2.7.18
+   * Version: 2.7.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num

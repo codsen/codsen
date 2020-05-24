@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -13,7 +13,7 @@ import apply from 'ranges-apply';
 import traverse from 'ast-monkey-traverse-with-lookahead';
 import htmlCommentRegex from 'html-comment-regex';
 
-var version = "2.0.2";
+var version = "2.0.3";
 
 const ranges = new Ranges();
 function isStr(something) {

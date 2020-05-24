@@ -1,7 +1,7 @@
 /**
  * csv-split-easy
  * Splits the CSV string into array of arrays, each representing a row of columns
- * Version: 3.0.62
+ * Version: 3.0.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
@@ -510,7 +510,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.13
+   * Version: 3.7.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -1300,7 +1300,7 @@
   /**
    * string-remove-thousand-separators
    * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
-   * Version: 3.0.62
+   * Version: 3.0.63
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators

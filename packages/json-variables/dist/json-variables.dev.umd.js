@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.2.8
+ * Version: 8.2.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
@@ -3417,7 +3417,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.13
+   * Version: 3.7.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -3952,7 +3952,7 @@
   /**
    * string-remove-duplicate-heads-tails
    * Detect and (recursively) remove head and tail wrappings around the input string
-   * Version: 3.0.63
+   * Version: 3.0.64
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails

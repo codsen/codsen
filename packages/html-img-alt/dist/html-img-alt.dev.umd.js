@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
- * Version: 1.4.53
+ * Version: 1.4.54
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
@@ -4715,7 +4715,7 @@
   /**
    * ranges-push
    * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.13
+   * Version: 3.7.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
@@ -9011,7 +9011,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.64
+   * Version: 5.7.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini

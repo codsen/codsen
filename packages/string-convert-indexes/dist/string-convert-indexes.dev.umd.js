@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
- * Version: 1.10.11
+ * Version: 1.10.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
@@ -4233,7 +4233,7 @@
   /**
    * check-types-mini
    * Check the types of your options object's values after user has customised them
-   * Version: 5.7.64
+   * Version: 5.7.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
@@ -4701,7 +4701,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-monkey
    * Traverse and edit AST's (like parsed HTML or anything nested)
-   * Version: 7.11.12
+   * Version: 7.11.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
