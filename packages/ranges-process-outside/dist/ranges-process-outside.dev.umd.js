@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate through string and optionally a given ranges as if they were one
- * Version: 2.2.26
+ * Version: 2.2.27
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
@@ -88,7 +88,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.11.6
+   * Version: 3.12.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -162,7 +162,7 @@
   /**
    * ranges-merge
    * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.7
+   * Version: 4.3.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -284,7 +284,7 @@
   /**
    * ranges-crop
    * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.54
+   * Version: 2.0.55
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
@@ -357,7 +357,7 @@
   /**
    * ranges-invert
    * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
-   * Version: 2.1.41
+   * Version: 2.1.42
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert

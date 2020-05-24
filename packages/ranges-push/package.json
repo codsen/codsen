@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.7.12",
+  "version": "3.7.13",
   "description": "Manage the array of ranges referencing the index ranges within the string",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -122,7 +122,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-merge": "^4.3.7",
+    "ranges-merge": "^4.3.8",
     "string-collapse-leading-whitespace": "^2.0.20",
     "string-trim-spaces-only": "^2.8.17"
   },
@@ -134,7 +134,7 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-strip": "^1.3.3",
     "benchmark": "^2.1.4",
-    "lect": "^0.13.4",
+    "lect": "^0.13.5",
     "rollup": "^2.10.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

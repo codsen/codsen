@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.17](https://gitlab.com/codsen/codsen/compare/email-comb@3.9.16...email-comb@3.9.17) (2020-05-24)
+
+
+### Bug Fixes
+
+* stop removing "class" or "id" without following equals, completely (for now) ([c07cce5](https://gitlab.com/codsen/codsen/commit/c07cce56d8633ef72ea9451617d8b06d96efc5db)), closes [#27](https://gitlab.com/codsen/codsen/issues/27)
+
+
+
+
+
 ## 3.9.0 (2020-01-26)
 
 ### Features

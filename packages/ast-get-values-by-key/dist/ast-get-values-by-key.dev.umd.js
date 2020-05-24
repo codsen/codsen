@@ -1,7 +1,7 @@
 /**
  * ast-get-values-by-key
  * Read or edit parsed HTML (or AST in general)
- * Version: 2.6.64
+ * Version: 2.6.65
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key
@@ -1893,7 +1893,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.12
+   * Version: 1.12.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse

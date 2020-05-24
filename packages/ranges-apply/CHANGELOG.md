@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.9](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.1.8...ranges-apply@3.1.9) (2020-05-24)
+
+**Note:** Version bump only for package ranges-apply
+
+
+
+
+
 ## 3.1.5 (2020-04-26)
 
 ### Bug Fixes

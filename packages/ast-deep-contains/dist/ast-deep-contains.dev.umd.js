@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * an alternative assertion for Ava's t.deepEqual and Tap's t.same
- * Version: 1.1.13
+ * Version: 1.1.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
@@ -2256,7 +2256,7 @@
   /**
    * ast-monkey-traverse
    * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.12
+   * Version: 1.12.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
