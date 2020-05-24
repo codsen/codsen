@@ -3440,11 +3440,9 @@
 
     var withinInlineStyle = null;
     var styleCommentStartedAt = null;
-    var scriptStartedAt = null;
-    var preStartedAt = null;
-    var codeStartedAt = null; // main do nothing switch, used to skip chunks of code and perform no action
+    var scriptStartedAt = null; // main do nothing switch, used to skip chunks of code and perform no action
 
-    var doNothing = false; // we use staging "from" and "to" to preemptively mark the chunks
+    var doNothing; // we use staging "from" and "to" to preemptively mark the chunks
     // of whitespace that will be either: a) replaced with a space; or
     // b) replaced with linebreak. If opts.removeLineBreaks is on,
     // if we need to break where the particular whitespace chunk is
@@ -3522,98 +3520,25 @@
         // ███████████████████████████████████████
 
 
-        if (Number.isInteger(doNothing) && _i >= doNothing) {
-          doNothing = false;
-        } // catch state being within <pre><code>...</code></pre> chunk
-        // ███████████████████████████████████████
-        // activation:
-
-
-        if (!doNothing && preStartedAt !== null && codeStartedAt !== null && _i >= preStartedAt && _i >= codeStartedAt) {
-          doNothing = true;
-        } // catch </code...>
-        // ███████████████████████████████████████
-
-
-        if (!doNothing && !withinStyleTag && codeStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "c" && str[_i + 3] === "o" && str[_i + 4] === "d" && str[_i + 5] === "e" && !isLetter(str[_i + 6])) {
-          if (preStartedAt !== null && doNothing) {
-            doNothing = false;
-          }
-
-          codeStartedAt = null;
-        } // catch <code...>
-        // ███████████████████████████████████████
-
-
-        if (!doNothing && !withinStyleTag && codeStartedAt === null && str[_i] === "<" && str[_i + 1] === "c" && str[_i + 2] === "o" && str[_i + 3] === "d" && str[_i + 4] === "e" && !isLetter(str[_i + 5])) {
-          if (str[_i + 5] === ">") {
-            codeStartedAt = _i + 6;
-          } else {
-            // march forward and find where is the closing bracket
-            for (var y = _i + 5; y < len; y++) {
-              if (str[y] === ">") {
-                codeStartedAt = y + 1;
-                _i = y;
-                break;
-              }
-            }
-          }
-        } // catch </pre...>
-        // ███████████████████████████████████████
-
-
-        if (!doNothing && !withinStyleTag && preStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "p" && str[_i + 3] === "r" && str[_i + 4] === "e" && !isLetter(str[_i + 5])) {
-          preStartedAt = null;
-        } // catch <pre...>
-        // ███████████████████████████████████████
-
-
-        if (!doNothing && !withinStyleTag && preStartedAt === null && str[_i] === "<" && str[_i + 1] === "p" && str[_i + 2] === "r" && str[_i + 3] === "e" && !isLetter(str[_i + 4])) {
-          if (str[_i + 4] === ">") {
-            preStartedAt = _i + 5;
-          } else {
-            // march forward and find where is the closing bracket
-            for (var _y = _i + 4; _y < len; _y++) {
-              if (str[_y] === ">") {
-                preStartedAt = _y + 1;
-                _i = _y;
-                break;
-              }
-            }
-          }
-        } // catch ending of CDATA, ]]>
-        // ███████████████████████████████████████
-
-
-        if (str[_i] === ">" && str[_i - 1] === "]" && str[_i - 2] === "]") {
-          if (doNothing) {
-            doNothing = false;
-            continue;
-          }
-        } // catch start of <![CDATA[
-        // ███████████████████████████████████████
-
-
-        if (!doNothing && str[_i] === "<" && str[_i + 1] === "!" && str[_i + 2] === "[" && str[_i + 3] === "C" && str[_i + 4] === "D" && str[_i + 5] === "A" && str[_i + 6] === "T" && str[_i + 7] === "A" && str[_i + 8] === "[") {
-          doNothing = true;
-          whitespaceStartedAt = null;
+        if (doNothing && typeof doNothing === "number" && _i >= doNothing) {
+          doNothing = undefined;
         } // catch ending of </script...
         // ███████████████████████████████████████
 
 
-        if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t" && !isLetter(str[_i + 8])) {
+        if (scriptStartedAt !== null && str.startsWith("</script", _i) && !isLetter(str[_i + 8])) {
           // 1. if there is a line break, chunk of whitespace and </script>,
           // delete that chunk of whitespace, leave line break.
           // If there's non-whitespace character, chunk of whitespace and </script>,
           // delete that chunk of whitespace.
           // Basically, traverse backwards from "<" of "</script>", stop either
           // at first line break or non-whitespace character.
-          if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim()) {
+          if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[~-_i] && !str[~-_i].trim()) {
             // march backwards
-            for (var _y2 = _i; _y2--;) {
-              if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim()) {
-                if (_y2 + 1 < _i) {
-                  finalIndexesToDelete.push(_y2 + 1, _i);
+            for (var y = _i; y--;) {
+              if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
+                if (y + 1 < _i) {
+                  finalIndexesToDelete.push(y + 1, _i);
                 }
 
                 break;
@@ -3630,7 +3555,7 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "c" && str[_i + 3] === "r" && str[_i + 4] === "i" && str[_i + 5] === "p" && str[_i + 6] === "t" && !isLetter(str[_i + 7])) {
+        if (!doNothing && !withinStyleTag && str.startsWith("<script", _i) && !isLetter(str[_i + 7])) {
           scriptStartedAt = _i;
           doNothing = true;
           var whatToInsert = "";
@@ -3682,28 +3607,28 @@
         ) {
             tagName = str.slice(tagNameStartsAt, _i); // check for inner tag whitespace
 
-            if (str[right(str, _i - 1)] === ">" && !str[_i].trim()) {
+            if (str[right(str, ~-_i)] === ">" && !str[_i].trim()) {
               finalIndexesToDelete.push(_i, right(str, _i));
-            } else if (str[right(str, _i - 1)] === "/" && str[right(str, right(str, _i - 1))] === ">") {
+            } else if (str[right(str, ~-_i)] === "/" && str[right(str, right(str, ~-_i))] === ">") {
               // if there's a space in front of "/>"
               if (!str[_i].trim()) {
                 finalIndexesToDelete.push(_i, right(str, _i));
               } // if there's space between slash and bracket
 
 
-              if (str[right(str, _i - 1) + 1] !== ">") {
-                finalIndexesToDelete.push(right(str, _i - 1) + 1, right(str, right(str, _i - 1) + 1));
+              if (str[right(str, ~-_i) + 1] !== ">") {
+                finalIndexesToDelete.push(right(str, ~-_i) + 1, right(str, right(str, ~-_i) + 1));
               }
             }
           } // catch tag's opening bracket
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && !withinInlineStyle && str[_i - 1] === "<" && tagNameStartsAt === null) {
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-_i] === "<" && tagNameStartsAt === null) {
           if (/\w/.test(str[_i])) {
             tagNameStartsAt = _i;
-          } else if (str[right(str, _i - 1)] === "/" && /\w/.test(str[right(str, right(str, _i - 1))])) {
-            tagNameStartsAt = right(str, right(str, _i - 1));
+          } else if (str[right(str, ~-_i)] === "/" && /\w/.test(str[right(str, right(str, ~-_i))])) {
+            tagNameStartsAt = right(str, right(str, ~-_i));
           }
         } // catch the end of CSS comments
         // ███████████████████████████████████████
@@ -3749,20 +3674,20 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" && !isLetter(str[_i + 7])) {
+        if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", _i) && !isLetter(str[_i + 7])) {
           withinStyleTag = false;
-        } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e" && !isLetter(str[_i + 6])) {
+        } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", _i) && !isLetter(str[_i + 6])) {
           withinStyleTag = true; // if opts.breakToTheLeftOf have "<style" among them, break to the
           // right of this tag as well
 
-          if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.slice(_i + 6, _i + 23) === " type=\"text/css\">" && str[_i + 24]) {
+          if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(" type=\"text/css\">", _i + 6) && str[_i + 24]) {
             finalIndexesToDelete.push(_i + 23, _i + 23, "\n");
           }
         } // catch start of inline styles
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinInlineStyle && "\"'".includes(str[_i]) && str[_i - 1] === "=" && str[_i - 2] === "e" && str[_i - 3] === "l" && str[_i - 4] === "y" && str[_i - 5] === "t" && str[_i - 6] === "s") {
+        if (!doNothing && !withinInlineStyle && "\"'".includes(str[_i]) && str.endsWith("style=", _i)) {
           withinInlineStyle = _i;
         } // catch whitespace
         // ███████████████████████████████████████
@@ -3803,8 +3728,8 @@
                   // chunk and adding single space again.
                   if (str[whitespaceStartedAt] === " ") {
                     finalIndexesToDelete.push(whitespaceStartedAt + 1, _i);
-                  } else if (str[_i - 1] === " ") {
-                    finalIndexesToDelete.push(whitespaceStartedAt, _i - 1);
+                  } else if (str[~-_i] === " ") {
+                    finalIndexesToDelete.push(whitespaceStartedAt, ~-_i);
                   } else {
                     finalIndexesToDelete.push(whitespaceStartedAt, _i, " ");
                   }
@@ -3818,7 +3743,7 @@
                 // ██ CASE 2-1 - special break points from opts.breakToTheLeftOf
                 if (breakToTheLeftOfFirstLetters.size && breakToTheLeftOfFirstLetters.has(str[_i]) && matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
                   // maybe there was just single line break?
-                  if (!(str[_i - 1] === "\n" && whitespaceStartedAt === _i - 1)) {
+                  if (!(str[~-_i] === "\n" && whitespaceStartedAt === ~-_i)) {
                     finalIndexesToDelete.push(whitespaceStartedAt, _i, "\n");
                   }
 
@@ -3844,7 +3769,7 @@
                 // ("<>".includes(str[i]) &&
                 //   ("0123456789".includes(str[right(str, i)]) ||
                 //     "0123456789".includes(str[left(str, i)])))
-                ) ; else if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" && !withinHTMLConditional || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"') || str[whitespaceStartedAt - 1] === "}" && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" || str[_i] === ">" && ("'\"".includes(str[left(str, _i)]) || str[right(str, _i)] === "<") || str[_i] === "/" && str[right(str, _i)] === ">") {
+                ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str.startsWith("!important", _i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", _i) || str[_i] === ">" && ("'\"".includes(str[left(str, _i)]) || str[right(str, _i)] === "<") || str[_i] === "/" && str[right(str, _i)] === ">") {
                   whatToAdd = "";
 
                   if (str[_i] === "/" && str[right(str, _i)] === ">" && right(str, _i) > _i + 1) {
@@ -3956,7 +3881,7 @@
 
                 if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
                   // push this range only if it's not between curlies, } and {
-                  if (!(str[stageFrom - 1] === "}" && str[stageTo] === "{")) {
+                  if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
                     finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
                   }
                 } else {
@@ -3966,7 +3891,7 @@
               // =============================================================
 
 
-              if (str[_i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              if (str[_i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[~-_i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-_i])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
                 } // not a letter
@@ -4080,7 +4005,7 @@
             // all whitespace on the left if whatToAdd is a line break
 
 
-            if (_whatToAdd2 === "\n" && !str[stageFrom - 1].trim()) {
+            if (_whatToAdd2 === "\n" && !str[~-stageFrom].trim()) {
               stageFrom = left(str, stageFrom) + 1;
             }
 
@@ -4158,6 +4083,36 @@
 
         if (!doNothing && withinInlineStyle && withinInlineStyle < _i && str[withinInlineStyle] === str[_i]) {
           withinInlineStyle = null;
+        } // catch <pre...>
+        // ███████████████████████████████████████
+
+
+        if (!doNothing && !withinStyleTag && str.startsWith("<pre", _i) && !isLetter(str[_i + 4])) {
+          var locationOfClosingPre = str.indexOf("</pre", _i + 5);
+
+          if (locationOfClosingPre > 0) {
+            doNothing = locationOfClosingPre;
+          }
+        } // catch <code...>
+        // ███████████████████████████████████████
+
+
+        if (!doNothing && !withinStyleTag && str.startsWith("<code", _i) && !isLetter(str[_i + 5])) {
+          var locationOfClosingCode = str.indexOf("</code", _i + 5);
+
+          if (locationOfClosingCode > 0) {
+            doNothing = locationOfClosingCode;
+          }
+        } // catch start of <![CDATA[
+        // ███████████████████████████████████████
+
+
+        if (!doNothing && str.startsWith("<![CDATA[", _i)) {
+          var locationOfClosingCData = str.indexOf("]]>", _i + 9);
+
+          if (locationOfClosingCData > 0) {
+            doNothing = locationOfClosingCData;
+          }
         } // catch tag's closing bracket
         // ███████████████████████████████████████
 
