@@ -33,6 +33,7 @@
       }
     ],
     "import/prefer-default-export": 0,
+    "no-bitwise": 0,
     "no-else-return": "error",
     "no-inner-declarations": "error",
     "no-loop-func": 0,
