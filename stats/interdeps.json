@@ -36,7 +36,7 @@
     },
     {
         "name": "ast-compare",
-        "size": 7627,
+        "size": 7628,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -318,7 +318,7 @@
     },
     {
         "name": "html-crush",
-        "size": 32436,
+        "size": 29191,
         "imports": [
             "ranges-apply",
             "ranges-push",
