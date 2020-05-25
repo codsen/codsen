@@ -53,4 +53,13 @@ deploy:
     - echo '█████████████████████████████ 8 █████████████████████████████'
     - git status
     - git push origin master
-    - echo '█████████████████████████████ 9 █████████████████████████████ - done'
+    - echo '█████████████████████████████ 9 █████████████████████████████'
+    - "curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'"
+    - "curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'"
+    - echo '█████████████████████████████ 10 ████████████████████████████ - done'
