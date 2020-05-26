@@ -1,6 +1,9 @@
 import tap from "tap";
 import { comb } from "../dist/email-comb.esm";
 
+// false positives
+// -----------------------------------------------------------------------------
+
 tap.test(
   `01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word class in text`,
   (t) => {
