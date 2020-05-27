@@ -143,7 +143,7 @@
     "ast-monkey-traverse": "^1.12.13",
     "benchmark": "^2.1.4",
     "globby": "^11.0.0",
-    "lect": "^0.13.5",
+    "lect": "^0.13.6",
     "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",
