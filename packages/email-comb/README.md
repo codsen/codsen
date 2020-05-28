@@ -19,8 +19,8 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-- [Options - `opts.whitelist`](#options-optswhitelist)
-- [Options - `opts.backend`](#options-optsbackend)
+- [comb() - Options - `opts.whitelist`](#comb-options---optswhitelist)
+- [comb() - Options - `opts.backend`](#comb-options---optsbackend)
 - [Tapping the stream in Gulp](#tapping-the-stream-in-gulp)
 - [Extreme example of unused CSS](#extreme-example-of-unused-css)
 - [Removing unused CSS from web pages](#removing-unused-css-from-web-pages)
@@ -120,7 +120,15 @@ comb(str, [options]);
 
 **[⬆ back to top](#)**
 
-### API - Input
+### API - comb() - Input
+
+The main function `comb` which you require/import
+
+```js
+import { comb } from "email-comb";
+```
+
+takes two input arguments:
 
 | Input argument | Type         | Obligatory? | Description                               |
 | -------------- | ------------ | ----------- | ----------------------------------------- |
@@ -144,7 +152,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 **[⬆ back to top](#)**
 
-### API - Input - Options object
+### API - comb() - Input - Options object
 
 Optionally, you can pass the Optional Options Object as a second argument:
 
@@ -162,7 +170,7 @@ Optionally, you can pass the Optional Options Object as a second argument:
 
 Here are all options in one place in case you need to copy the whole thing:
 
-```json5
+```js
 {
   whitelist: [], // for example, [".class-1", "#id-1", ".module-*"]
   backend: [], // for example, [{ heads: "{{", tails: "}}" }, { heads: "{%", tails: "%}" }]
@@ -178,11 +186,11 @@ Here are all options in one place in case you need to copy the whole thing:
 
 **[⬆ back to top](#)**
 
-### API - Output
+### API - comb() - Output
 
 For example, **output** could look like this:
 
-```json5
+```js
 {
   log: {
     timeTakenInMiliseconds: 55,
@@ -224,7 +232,7 @@ So a **plain object** is returned. It will have the following keys:
 
 **[⬆ back to top](#)**
 
-## Options - `opts.whitelist`
+## comb() - Options - `opts.whitelist`
 
 Since the main purpose of this library is to clean **email** HTML, it needs to cater for email code specifics. One of them is that CSS styles will contain fix or hack styles, meant for email software. For example, here are few of them:
 
@@ -255,7 +263,7 @@ comb(html, {
 
 **[⬆ back to top](#)**
 
-## Options - `opts.backend`
+## comb() - Options - `opts.backend`
 
 This library, differently from competition, is aiming to support code which contains back-end code: other programming languages (Java JSP's), other templating languages (like Nunjucks) and/or proprietary ESP templating languages.
 

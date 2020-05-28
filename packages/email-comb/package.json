@@ -128,7 +128,6 @@
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.66",
     "ast-is-empty": "^1.10.5",
-    "codsen-tokenizer": "^2.17.0",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",

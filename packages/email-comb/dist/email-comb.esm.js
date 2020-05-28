@@ -27,8 +27,6 @@ var version = "3.9.18";
 const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
 const regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
 const regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
-
-const isArr = Array.isArray;
 const defaults = {
   whitelist: [],
   backend: [],
@@ -40,6 +38,16 @@ const defaults = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
 };
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
+function hasOwnProp(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+const isArr = Array.isArray;
 function comb(str, opts) {
   const start = Date.now();
   const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
@@ -47,14 +55,6 @@ function comb(str, opts) {
   const lineBreaksToDelete = new Ranges();
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
-  }
-  function isObj(something) {
-    return (
-      something && typeof something === "object" && !Array.isArray(something)
-    );
-  }
-  function hasOwnProp(obj, prop) {
-    return Object.prototype.hasOwnProperty.call(obj, prop);
   }
   function isStr(something) {
     return typeof something === "string";

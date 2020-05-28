@@ -5991,8 +5991,6 @@
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
   var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
-
-  var isArr$1 = Array.isArray;
   var defaults = {
     whitelist: [],
     backend: [],
@@ -6006,6 +6004,16 @@
     reportProgressFuncTo: 100
   };
 
+  function isObj$2(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
+  }
+
+  function hasOwnProp(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+  }
+
+  var isArr$1 = Array.isArray;
+
   function comb(str, opts) {
     var start = Date.now();
     var finalIndexesToDelete = new Ranges({
@@ -6016,14 +6024,6 @@
 
     function characterSuitableForNames(char) {
       return /[-_A-Za-z0-9]/.test(char); // notice, there's no dot or hash!
-    }
-
-    function isObj(something) {
-      return something && _typeof(something) === "object" && !Array.isArray(something);
-    }
-
-    function hasOwnProp(obj, prop) {
-      return Object.prototype.hasOwnProperty.call(obj, prop);
     }
 
     function isStr(something) {
@@ -6169,7 +6169,7 @@
       throw new TypeError("email-remove-unused-css: [THROW_ID_01] Input must be string! Currently it's ".concat(_typeof(str)));
     }
 
-    if (!isObj(opts)) {
+    if (!isObj$2(opts)) {
       if (opts === undefined || opts === null) {
         opts = {};
       } else {
@@ -6186,7 +6186,7 @@
       }
     }
 
-    if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
+    if (isObj$2(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
       opts.backend = [];
     }
 
@@ -6212,7 +6212,7 @@
     }
 
     if (opts.backend.length > 0 && opts.backend.some(function (val) {
-      return !isObj(val);
+      return !isObj$2(val);
     })) {
       throw new TypeError("email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n".concat(JSON.stringify(opts.backend, null, 4)));
     }
